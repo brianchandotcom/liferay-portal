@@ -166,7 +166,6 @@ test(
 		);
 
 		await instanceSettingsPage.checkRadioSetting(
-			true,
 			'Include Thumbnails And Previews During Staging'
 		);
 

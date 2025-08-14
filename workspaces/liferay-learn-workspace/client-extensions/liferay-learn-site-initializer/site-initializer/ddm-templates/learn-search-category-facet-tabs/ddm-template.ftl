@@ -1,6 +1,6 @@
 <#if entries?has_content>
 	<#assign
-		knowledgeBaseFrequency = 0 
+		knowledgeBaseFrequency = 0
 		knowledgeBaseIds = []
 		sortedTaxonomyCategories = []
 		totalCount = 0
@@ -9,20 +9,20 @@
 	<#list entries as entry>
 		<#assign label = entry.bucketText?upper_case />
 
-		<#if label == "OFFICIAL DOCUMENTATION">
+		<#if stringUtil.equals(label, "OFFICIAL DOCUMENTATION")>
 			<#assign sortedTaxonomyCategories = [entry] + sortedTaxonomyCategories />
-		<#elseif label == "HOW TO" || label == "TROUBLESHOOTING" || label == "REFERENCE">
-			<#assign 
-				knowledgeBaseFrequency += entry.getFrequency() 
+		<#elseif stringUtil.equals(label, "HOW TO") || stringUtil.equals(label, "TROUBLESHOOTING") || stringUtil.equals(label, "REFERENCE")>
+			<#assign
+				knowledgeBaseFrequency += entry.getFrequency()
 				knowledgeBaseIds += [entry.getFilterValue()]
 			/>
 		</#if>
 	</#list>
-		
+
 	<#list assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts() as bucketDisplayContext>
 		<#assign totalCount = totalCount + bucketDisplayContext.getCount() />
 	</#list>
-	
+
 	<ul class="learn-category-facet-tabs list-unstyled tab-list" id="tab-list">
 		<li class="facet-value">
 			<@clay.button
@@ -60,12 +60,12 @@
 				</@clay.button>
 			</li>
 		</#list>
-		
-		<#assign selectedIds = (paramUtil.getParameterValues(request, "resource-type")![])?join(",") />
+
+		<#assign selectedResourceTypeIds = (paramUtil.getParameterValues(request, "resource-type")![])?join(",") />
 
 		<li class="facet-value">
 			<@clay.button
-				cssClass="btn-unstyled facet-term tab-btn term-name text-center  ${(selectedIds?contains(knowledgeBaseIds?join(',')))?then('selected-tab-btn', '')}"
+				cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(selectedResourceTypeIds?contains(knowledgeBaseIds?join(',')))?then('selected-tab-btn', '')}"
 				data\-term\-ids="${knowledgeBaseIds?join(',')}"
 				displayType="link"
 				onClick="${namespace}updateSelection(event)"
@@ -83,11 +83,11 @@
 <@liferay_aui.script>
 	function handleStyleTabs(event) {
 		const buttons = document.querySelectorAll('.tab-btn');
-		
+
 		buttons.forEach(button => button.classList.remove('selected-tab-btn'));
 
 		const targetButton = event.currentTarget;
-		
+
 		if (targetButton.classList.contains('tab-btn')) {
 			targetButton.classList.add('selected-tab-btn');
 		}
@@ -98,40 +98,40 @@
 
 		handleStyleTabs(event);
 
-		const form = event.currentTarget.form;
-		
-		if (!form) {
+		const formElement = event.currentTarget.form;
+
+		if (!formElement) {
 			return;
 		}
 
 		const dataTermIds = event.currentTarget.getAttribute('data-term-ids');
 		const dataTermId = event.currentTarget.getAttribute('data-term-id');
-		
-		const params = new URLSearchParams(window.location.search);
-		
-		params.delete('resource-type');
+
+		const urlSearchParams = new URLSearchParams(window.location.search);
+
+		urlSearchParams.delete('resource-type');
 
 		if (event.currentTarget.value === 'clear') {
-			const newUrlClear = window.location.pathname + '?' + params.toString();
+			const clearedUrl = window.location.pathname + '?' + urlSearchParams.toString();
 
-			window.location.href = newUrlClear;
+			window.location.href = clearedUrl;
 
 			return;
 		}
 
 		if (dataTermIds) {
-			const ids = dataTermIds.split(',');
+			const resourceTypeIds = dataTermIds.split(',');
 
-			ids.forEach(id => {
-				params.append('resource-type', id.trim());
+			resourceTypeIds.forEach(id => {
+				urlSearchParams.append('resource-type', id.trim());
 			});
 
 		} else if (dataTermId) {
-			params.append('resource-type', dataTermId);
+			urlSearchParams.append('resource-type', dataTermId);
 		}
 
-		const newUrl = window.location.pathname + '?' + params.toString();
-	
+		const newUrl = window.location.pathname + '?' + urlSearchParams.toString();
+
 		window.location.href = newUrl;
 	}
 </@liferay_aui.script>

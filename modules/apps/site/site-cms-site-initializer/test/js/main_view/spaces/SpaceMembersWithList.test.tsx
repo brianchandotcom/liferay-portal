@@ -617,7 +617,7 @@ describe('SpaceMembersWithList', () => {
 		});
 	});
 
-	describe('When updating member roles', () => {
+	describe('When updating user member roles', () => {
 		it("updates a user's roles and shows a success toast", async () => {
 			const updateUserRolesSpy = jest
 				.spyOn(SpaceService, 'updateUserRoles')
@@ -647,7 +647,7 @@ describe('SpaceMembersWithList', () => {
 
 			await waitFor(() => {
 				expect(updateUserRolesSpy).toHaveBeenCalledWith({
-					roleIds: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
+					roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
 					spaceId: testSpace.id,
 					userId: testUsers[1].id,
 				});
@@ -692,6 +692,107 @@ describe('SpaceMembersWithList', () => {
 
 			expect(mockedOpenToast).toHaveBeenCalledWith({
 				message: `unable-to-update-roles-for-user-<strong>${testUsers[1].name}</strong>`,
+				type: 'danger',
+			});
+
+			expect(permissionSelect).toHaveTextContent('Space Member');
+			expect(permissionSelect).not.toHaveTextContent('Role 1');
+		});
+	});
+
+	describe('When updating user group member roles', () => {
+		it("updates a user group's roles and shows a success toast", async () => {
+			const updateUserGroupRolesSpy = jest
+				.spyOn(SpaceService, 'updateUserGroupRoles')
+				.mockResolvedValue({
+					data: {
+						roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
+						spaceId: testSpace.id,
+						userGroupId: testUserGroups[0].id,
+					},
+					error: null,
+				});
+
+			render(<SpaceMembersWithList {...props} />);
+
+			await userEvent.selectOptions(
+				screen.getByRole('combobox', {
+					name: 'add-people-to-collaborate',
+				}),
+				SelectOptions.GROUPS
+			);
+
+			const groupItem = await screen.findByText(testUserGroups[0].name);
+			const permissionSelect = within(groupItem.closest('li')!).getByRole(
+				'button',
+				{
+					name: 'Space Member',
+				}
+			);
+
+			await userEvent.click(permissionSelect);
+
+			const menu = await screen.findByRole('menu');
+			const roleCheckbox = await within(menu).findByLabelText('Role 1');
+			await userEvent.click(roleCheckbox);
+
+			await waitFor(() => {
+				expect(updateUserGroupRolesSpy).toHaveBeenCalledWith({
+					roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
+					spaceId: testSpace.id,
+					userGroupId: testUserGroups[0].id,
+				});
+			});
+
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `<strong>${testUserGroups[0].name}</strong>-role-as-successfully-updated`,
+				type: 'success',
+			});
+
+			expect(
+				within(groupItem.closest('li')!).getByRole('button', {
+					name: 'Space Member, Role 1',
+				})
+			).toBeInTheDocument();
+		});
+
+		it('shows an error toast and reverts roles when update fails', async () => {
+			const updateUserGroupRolesSpy = jest
+				.spyOn(SpaceService, 'updateUserGroupRoles')
+				.mockResolvedValue({
+					data: null,
+					error: 'Update failed',
+				});
+
+			render(<SpaceMembersWithList {...props} />);
+
+			await userEvent.selectOptions(
+				screen.getByRole('combobox', {
+					name: 'add-people-to-collaborate',
+				}),
+				SelectOptions.GROUPS
+			);
+
+			const groupItem = await screen.findByText(testUserGroups[0].name);
+			const permissionSelect = within(groupItem.closest('li')!).getByRole(
+				'button',
+				{
+					name: 'Space Member',
+				}
+			);
+
+			await userEvent.click(permissionSelect);
+
+			const menu = await screen.findByRole('menu');
+			const roleCheckbox = await within(menu).findByLabelText('Role 1');
+			await userEvent.click(roleCheckbox);
+
+			await waitFor(() =>
+				expect(updateUserGroupRolesSpy).toHaveBeenCalled()
+			);
+
+			expect(mockedOpenToast).toHaveBeenCalledWith({
+				message: `unable-to-update-roles-for-group-<strong>${testUserGroups[0].name}</strong>`,
 				type: 'danger',
 			});
 

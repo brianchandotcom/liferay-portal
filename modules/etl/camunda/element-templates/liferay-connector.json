@@ -342,6 +342,7 @@
 			"condition": {
 				"oneOf": [
 					"GET_object",
+					"GET_objects",
 					"PUT_object",
 					"PATCH_object",
 					"DELETE_object"
@@ -450,9 +451,10 @@
 				"equals": "customObjects",
 				"property": "modelType"
 			},
+			"feel": "optional",
 			"group": "endpoint",
 			"label": "URL",
-			"type": "Hidden",
+			"type": "String",
 			"value": "=baseUrl + string(if operationType = \"GET_objects\" or operationType = \"POST_object\" then \"/\" else \"/by-external-reference-code/\" + externalReferenceCode)"
 		},
 		{
@@ -464,9 +466,10 @@
 				"equals": "other",
 				"property": "modelType"
 			},
+			"feel": "optional",
 			"group": "endpoint",
 			"label": "URL",
-			"type": "Hidden",
+			"type": "String",
 			"value": "=baseUrl + path"
 		},
 		{

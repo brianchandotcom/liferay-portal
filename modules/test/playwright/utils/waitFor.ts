@@ -21,7 +21,7 @@ export async function waitForEditor({
 	page: Page;
 }) {
 	if (editorType === EEditorType.CKEDITOR5) {
-		const container = containerProp ?? page.locator('.lfr-ck');
+		const container = containerProp ?? page.locator('.lfr-ck').first();
 
 		await container.locator('.ck-content').waitFor({state: 'visible'});
 	}

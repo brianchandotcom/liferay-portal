@@ -15,17 +15,26 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Map;
 
@@ -36,12 +45,14 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	extends BaseObjectEntryRelatedObjectsResourceImpl {
 
 	public ObjectEntryRelatedObjectsResourceImpl(
+		EntityModelProvider entityModelProvider,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
+		_entityModelProvider = entityModelProvider;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
@@ -132,12 +143,14 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	public Page<Object>
 			getByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNamePage(
 				String currentExternalReferenceCode,
-				String objectRelationshipName, Pagination pagination)
+				String objectRelationshipName, String search,
+				Aggregation aggregation, Filter filter, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		return _getRelatedObjectEntries(
-			null, currentExternalReferenceCode, objectRelationshipName,
-			pagination);
+			aggregation, currentExternalReferenceCode, objectRelationshipName,
+			pagination, null, search, sorts);
 	}
 
 	@Override
@@ -202,6 +215,21 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				GetterUtil.getString(
+					multivaluedMap.getFirst("objectRelationshipName")));
+
+		return _entityModelProvider.getEntityModel(
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2()));
+	}
+
+	@Override
 	public Object getObjectEntryObjectRelationshipNameRelatedObjectEntry(
 			Long currentObjectEntryId, String objectRelationshipName,
 			Long relatedObjectEntryId)
@@ -224,12 +252,14 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	public Page<Object>
 			getScopeScopeKeyByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNamePage(
 				String scopeKey, String currentExternalReferenceCode,
-				String objectRelationshipName, Pagination pagination)
+				String objectRelationshipName, String search,
+				Aggregation aggregation, Filter filter, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		return _getRelatedObjectEntries(
-			scopeKey, currentExternalReferenceCode, objectRelationshipName,
-			pagination);
+			aggregation, currentExternalReferenceCode, objectRelationshipName,
+			pagination, scopeKey, search, sorts);
 	}
 
 	@Override
@@ -467,6 +497,9 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			currentExternalReferenceCode, scopeKey);
 	}
 
+	public void setContextCompany(Company contextCompany) {
+	}
+
 	private void _checkCurrentObjectEntry(
 			DefaultObjectEntryManager defaultObjectEntryManager,
 			long relatedObjectEntryId)
@@ -532,9 +565,25 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			contextUser);
 	}
 
+	private String _getFilterString() {
+		if (contextHttpServletRequest != null) {
+			return ParamUtil.getString(contextHttpServletRequest, "filter");
+		}
+
+		if (contextUriInfo == null) {
+			return null;
+		}
+
+		MultivaluedMap<String, String> queryParameters =
+			contextUriInfo.getQueryParameters();
+
+		return queryParameters.getFirst("filter");
+	}
+
 	private Page<Object> _getRelatedObjectEntries(
-			String scopeKey, String currentExternalReferenceCode,
-			String objectRelationshipName, Pagination pagination)
+			Aggregation aggregation, String externalReferenceCode,
+			String objectRelationshipName, Pagination pagination,
+			String scopeKey, String search, Sort[] sorts)
 		throws Exception {
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
@@ -549,11 +598,12 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 		Page<ObjectEntry> page =
 			defaultObjectEntryManager.getRelatedObjectEntries(
-				_getDTOConverterContext(null), currentExternalReferenceCode,
-				objectRelationship, pagination, scopeKey);
+				aggregation, _getDTOConverterContext(null),
+				externalReferenceCode, _getFilterString(), objectRelationship,
+				pagination, scopeKey, search, sorts);
 
 		return Page.of(
-			page.getActions(),
+			page.getActions(), page.getFacets(),
 			transform(
 				page.getItems(),
 				objectEntry -> _getRelatedObjectEntry(
@@ -593,6 +643,8 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 		return objectEntry;
 	}
+
+	private final EntityModelProvider _entityModelProvider;
 
 	@Context
 	private ObjectDefinition _objectDefinition;

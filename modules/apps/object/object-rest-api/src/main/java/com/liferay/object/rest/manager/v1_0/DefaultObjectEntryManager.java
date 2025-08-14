@@ -164,14 +164,15 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 		throws Exception;
 
 	public Page<ObjectEntry> getRelatedObjectEntries(
-			DTOConverterContext dtoConverterContext, long objectEntryId,
-			ObjectRelationship objectRelationship, Pagination pagination)
+			Aggregation aggregation, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, String filterString,
+			ObjectRelationship objectRelationship, Pagination pagination,
+			String scopeKey, String search, Sort[] sorts)
 		throws Exception;
 
 	public Page<ObjectEntry> getRelatedObjectEntries(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectRelationship objectRelationship,
-			Pagination pagination, String scopeKey)
+			DTOConverterContext dtoConverterContext, long objectEntryId,
+			ObjectRelationship objectRelationship, Pagination pagination)
 		throws Exception;
 
 	public ObjectEntry getRelatedObjectEntry(

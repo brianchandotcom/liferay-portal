@@ -6,8 +6,10 @@
 package com.liferay.object.related.models;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.search.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +44,13 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 	public String getObjectRelationshipType();
 
 	public List<T> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey,
-			String search, int start, int end)
+			long groupId, long objectRelationshipId, Predicate predicate,
+			long primaryKey, String search, int start, int end, Sort[] sorts)
 		throws PortalException;
 
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			String search)
+			long groupId, long objectRelationshipId, Predicate predicate,
+			long primaryKey, String search)
 		throws PortalException;
 
 	public default List<T> getUnrelatedModels(

@@ -765,7 +765,7 @@ public class ObjectRelatedModelsProviderTest {
 		Assert.assertEquals(
 			0,
 			_objectRelatedModelsProvider.getRelatedModelsCount(
-				0, _objectRelationship.getObjectRelationshipId(),
+				0, _objectRelationship.getObjectRelationshipId(), null,
 				parentObjectEntry.getObjectEntryId(), null));
 
 		_resourcePermissionLocalService.setResourcePermissions(
@@ -776,7 +776,7 @@ public class ObjectRelatedModelsProviderTest {
 		Assert.assertEquals(
 			expectedRelatedModelsCount,
 			_objectRelatedModelsProvider.getRelatedModelsCount(
-				0, _objectRelationship.getObjectRelationshipId(),
+				0, _objectRelationship.getObjectRelationshipId(), null,
 				parentObjectEntry.getObjectEntryId(), null));
 
 		_resourcePermissionLocalService.removeResourcePermission(

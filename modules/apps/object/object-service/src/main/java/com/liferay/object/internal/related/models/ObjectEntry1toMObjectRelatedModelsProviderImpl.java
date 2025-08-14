@@ -15,8 +15,10 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -57,8 +59,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			groupId, objectRelationshipId, null, primaryKey, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -148,23 +150,23 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey,
-			String search, int start, int end)
+			long groupId, long objectRelationshipId, Predicate predicate,
+			long primaryKey, String search, int start, int end, Sort[] sorts)
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, true, search, start,
-			end);
+			groupId, objectRelationshipId, predicate, primaryKey, true, search,
+			start, end, sorts);
 	}
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			String search)
+			long groupId, long objectRelationshipId, Predicate predicate,
+			long primaryKey, String search)
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, true, search);
+			groupId, objectRelationshipId, predicate, primaryKey, true, search);
 	}
 
 	@Override
@@ -175,8 +177,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, objectEntryId, false, search, start,
-			end);
+			groupId, objectRelationshipId, null, objectEntryId, false, search,
+			start, end, null);
 	}
 
 	@Override
@@ -186,7 +188,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, objectEntryId, false, search);
+			groupId, objectRelationshipId, null, objectEntryId, false, search);
 	}
 
 	@Override
@@ -200,8 +202,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			groupId, objectRelationshipId, null, primaryKey, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -239,8 +241,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 		for (ObjectEntry objectEntry :
 				getRelatedModels(
-					groupId, objectRelationshipId, primaryKey, null,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+					groupId, objectRelationshipId, null, primaryKey, null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			if (!objectEntry.isInTrash()) {
 				continue;

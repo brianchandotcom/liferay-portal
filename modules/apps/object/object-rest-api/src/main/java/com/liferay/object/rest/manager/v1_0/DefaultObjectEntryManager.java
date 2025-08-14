@@ -33,10 +33,14 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 		throws Exception;
 
 	public ObjectEntry addRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext, ObjectEntry objectEntry,
+			long objectEntryId, ObjectRelationship objectRelationship)
+		throws Exception;
+
+	public ObjectEntry addRelatedObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ObjectRelationship objectRelationship, long parentObjectEntryId,
-			String scopeKey)
+			String externalReferenceCode, ObjectEntry objectEntry,
+			ObjectRelationship objectRelationship, String scopeKey)
 		throws Exception;
 
 	public Object addSystemObjectRelationshipMappingTableValues(

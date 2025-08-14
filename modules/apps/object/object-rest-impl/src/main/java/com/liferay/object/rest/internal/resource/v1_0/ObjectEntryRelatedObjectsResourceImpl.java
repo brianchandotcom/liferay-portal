@@ -238,6 +238,27 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 	@Override
 	public Object
+			getScopeScopeKeyByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				String scopeKey, String currentExternalReferenceCode,
+				String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.getRelatedObjectEntry(
+			_getDTOConverterContext(null), currentExternalReferenceCode,
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName),
+			relatedExternalReferenceCode, scopeKey);
+	}
+
+	@Override
+	public Object
 			patchByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
 				String currentExternalReferenceCode, ObjectEntry objectEntry,
 				String objectRelationshipName,
@@ -302,15 +323,18 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			String objectRelationshipName)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry currentObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				currentExternalReferenceCode,
-				ObjectDefinitionConstants.GROUP_ID_DEFAULT,
-				_objectDefinition.getObjectDefinitionId());
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
-		return postObjectEntryObjectRelationshipName(
-			currentObjectEntry.getObjectEntryId(), objectEntry,
-			objectRelationshipName);
+		return defaultObjectEntryManager.addRelatedObjectEntry(
+			_getDTOConverterContext(null), currentExternalReferenceCode,
+			objectEntry,
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName),
+			null);
 	}
 
 	@Override
@@ -319,10 +343,24 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			String objectRelationshipName)
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.addRelatedObjectEntry(
+			_getDTOConverterContext(null), objectEntry, currentObjectEntryId,
 			_objectRelationshipLocalService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
+				objectRelationshipName));
+	}
+
+	@Override
+	public Object
+			postScopeScopeKeyByExternalReferenceCodeObjectEntryObjectRelationshipName(
+				String scopeKey, String currentExternalReferenceCode,
+				ObjectEntry objectEntry, String objectRelationshipName)
+		throws Exception {
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -330,11 +368,12 @@ public class ObjectEntryRelatedObjectsResourceImpl
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.addRelatedObjectEntry(
-			_getDTOConverterContext(currentObjectEntryId),
-			ObjectRelationshipUtil.getRelatedObjectDefinition(
-				_objectDefinition, objectRelationship),
-			objectEntry, objectRelationship, currentObjectEntryId,
-			objectEntry.getScopeKey());
+			_getDTOConverterContext(null), currentExternalReferenceCode,
+			objectEntry,
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName),
+			scopeKey);
 	}
 
 	@Override

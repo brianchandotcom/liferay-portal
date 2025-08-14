@@ -380,12 +380,12 @@ export function SpaceMembersWithList({
 
 			const {error} = isUser
 				? await SpaceService.updateUserRoles({
-						roleIds: newRoles,
+						roleNames: newRoles,
 						spaceId: assetLibraryId,
 						userId: itemToUpdate.id,
 					})
 				: await SpaceService.updateUserGroupRoles({
-						roleIds: newRoles,
+						roleNames: newRoles,
 						spaceId: assetLibraryId,
 						userGroupId: itemToUpdate.id,
 					});

@@ -412,6 +412,8 @@ test(
 		});
 
 		await test.step('Terminate test', async () => {
+			await page.getByText('Terminate Test').click();
+
 			await clickOnABTestModalButton({buttonName: 'Terminate', page});
 
 			await assertTerminatedABTest(page);

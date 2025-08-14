@@ -454,40 +454,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			1);
 	}
 
-	private void _testAddAttributesAndParameters(
-		DynamicServletRequest dynamicServletRequest, String groupId,
-		String languageId, String layoutId, LayoutSet layoutSet,
-		int wantedNumberOfInvocations) {
-
-		_commonStatusLayoutUtilityPageEntryRequestContributor.
-			addAttributesAndParameters(dynamicServletRequest);
-
-		Assert.assertEquals(
-			groupId, dynamicServletRequest.getParameter("groupId"));
-		Assert.assertEquals(
-			layoutId, dynamicServletRequest.getParameter("layoutId"));
-		Assert.assertEquals(
-			layoutSet,
-			dynamicServletRequest.getAttribute(
-				WebKeys.VIRTUAL_HOST_LAYOUT_SET));
-		Assert.assertEquals(
-			languageId,
-			dynamicServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
-
-		_portalInstancesMockedStatic.verify(
-			() -> PortalInstances.getCompanyId(dynamicServletRequest));
-
-		_permissionThreadLocalMockedStatic.verify(
-			() -> PermissionThreadLocal.setPermissionChecker(
-				_permissionChecker),
-			Mockito.times(wantedNumberOfInvocations));
-
-		_permissionThreadLocalMockedStatic.verify(
-			() -> PermissionThreadLocal.setPermissionChecker(
-				_originalPermissionChecker),
-			Mockito.times(wantedNumberOfInvocations));
-	}
-
 	private DynamicServletRequest _getDynamicServletRequest(
 		String contextPath, Long companyId) {
 
@@ -705,6 +671,40 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				return httpServletRequest.getAttribute(WebKeys.COMPANY_ID);
 			}
 		);
+	}
+
+	private void _testAddAttributesAndParameters(
+		DynamicServletRequest dynamicServletRequest, String groupId,
+		String languageId, String layoutId, LayoutSet layoutSet,
+		int wantedNumberOfInvocations) {
+
+		_commonStatusLayoutUtilityPageEntryRequestContributor.
+			addAttributesAndParameters(dynamicServletRequest);
+
+		Assert.assertEquals(
+			groupId, dynamicServletRequest.getParameter("groupId"));
+		Assert.assertEquals(
+			layoutId, dynamicServletRequest.getParameter("layoutId"));
+		Assert.assertEquals(
+			layoutSet,
+			dynamicServletRequest.getAttribute(
+				WebKeys.VIRTUAL_HOST_LAYOUT_SET));
+		Assert.assertEquals(
+			languageId,
+			dynamicServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+
+		_portalInstancesMockedStatic.verify(
+			() -> PortalInstances.getCompanyId(dynamicServletRequest));
+
+		_permissionThreadLocalMockedStatic.verify(
+			() -> PermissionThreadLocal.setPermissionChecker(
+				_permissionChecker),
+			Mockito.times(wantedNumberOfInvocations));
+
+		_permissionThreadLocalMockedStatic.verify(
+			() -> PermissionThreadLocal.setPermissionChecker(
+				_originalPermissionChecker),
+			Mockito.times(wantedNumberOfInvocations));
 	}
 
 	private static final String _PATH_CONTEXT = "/context";

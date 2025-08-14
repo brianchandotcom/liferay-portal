@@ -81,16 +81,16 @@ export function UserNotificationSettings({
 
 		const {items} = (await response.json()) as {items: User[]};
 
+		const selectedUser = new Set(
+			(values.recipients as Partial<UserNotificationRecipients>[]).map(
+				(recipient) => recipient.userScreenName
+			)
+		);
+
 		const users = {
 			children: items.map(({alternateName, givenName}) => {
-				const selectedUser = !!(
-					values.recipients as Partial<UserNotificationRecipients>[]
-				).find(
-					(recipient) => recipient['userScreenName'] === alternateName
-				);
-
 				return {
-					checked: selectedUser,
+					checked: selectedUser.has(alternateName),
 					label: givenName,
 					value: alternateName,
 				};
@@ -115,18 +115,18 @@ export function UserNotificationSettings({
 
 		const {items} = (await response.json()) as {items: {name: string}[]};
 
-		const userGroups = {
-			children: items.map(({name}) => {
-				const selectedUserGroup = !!(
-					values.recipients as Partial<UserNotificationRecipients>[]
-				).find((recipient) => recipient['userGroupName'] === name);
+		const selectedUserGroups = new Set(
+			(values.recipients as Partial<UserNotificationRecipients>[]).map(
+				(recipient) => recipient.userGroupName
+			)
+		);
 
-				return {
-					checked: selectedUserGroup,
-					label: name,
-					value: name,
-				};
-			}),
+		const userGroups = {
+			children: items.map(({name}) => ({
+				checked: selectedUserGroups.has(name),
+				label: name,
+				value: name,
+			})),
 			label: '',
 			value: 'userGroupList',
 		} as MultiSelectItem;

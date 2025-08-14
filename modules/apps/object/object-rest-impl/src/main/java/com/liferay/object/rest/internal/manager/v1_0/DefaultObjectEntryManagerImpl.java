@@ -219,45 +219,32 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public ObjectEntry addRelatedObjectEntry(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ObjectRelationship objectRelationship, long parentObjectEntryId,
-			String scopeKey)
+			DTOConverterContext dtoConverterContext, ObjectEntry objectEntry,
+			long objectEntryId, ObjectRelationship objectRelationship)
 		throws Exception {
 
-		if (!objectRelationship.isEdge()) {
-			throw new UnsupportedOperationException();
-		}
+		return _addRelatedObjectEntry(
+			dtoConverterContext, objectEntry, objectEntryId, objectRelationship,
+			null);
+	}
 
-		long groupId = getGroupId(objectDefinition, scopeKey);
+	@Override
+	public ObjectEntry addRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectEntry objectEntry,
+			ObjectRelationship objectRelationship, String scopeKey)
+		throws Exception {
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
+		ObjectEntry parentObjectEntry = getObjectEntry(
+			objectRelationship.getCompanyId(), dtoConverterContext,
+			externalReferenceCode,
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1()),
+			scopeKey);
 
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		properties.put(objectField.getName(), parentObjectEntryId);
-
-		ServiceContext serviceContext = _createServiceContext(
-			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
-
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition,
-			_addOrUpdateNestedObjectEntries(
-				dtoConverterContext, objectDefinition, objectEntry,
-				_getObjectRelationships(objectDefinition, objectEntry),
-				_objectEntryService.addObjectEntry(
-					groupId, objectDefinition.getObjectDefinitionId(),
-					_getObjectEntryFolderId(
-						objectDefinition.getCompanyId(), groupId, objectEntry,
-						serviceContext),
-					objectEntry.getDefaultLanguageId(),
-					_toObjectValues(
-						objectField.getObjectFieldId(),
-						dtoConverterContext.getLocale(), objectDefinition,
-						objectEntry, scopeKey, serviceContext),
-					serviceContext),
-				scopeKey));
+		return _addRelatedObjectEntry(
+			dtoConverterContext, objectEntry, parentObjectEntry.getId(),
+			objectRelationship, scopeKey);
 	}
 
 	@Override
@@ -1505,6 +1492,51 @@ public class DefaultObjectEntryManagerImpl
 
 		return objectEntryLocalService.getObjectEntry(
 			serviceBuilderObjectEntry.getPrimaryKey());
+	}
+
+	private ObjectEntry _addRelatedObjectEntry(
+			DTOConverterContext dtoConverterContext, ObjectEntry objectEntry,
+			long objectEntryId, ObjectRelationship objectRelationship,
+			String scopeKey)
+		throws Exception {
+
+		if (!objectRelationship.isEdge()) {
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		properties.put(objectField.getName(), objectEntryId);
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_addOrUpdateNestedObjectEntries(
+				dtoConverterContext, objectDefinition, objectEntry,
+				_getObjectRelationships(objectDefinition, objectEntry),
+				_objectEntryService.addObjectEntry(
+					groupId, objectDefinition.getObjectDefinitionId(),
+					_getObjectEntryFolderId(
+						objectDefinition.getCompanyId(), groupId, objectEntry,
+						serviceContext),
+					objectEntry.getDefaultLanguageId(),
+					_toObjectValues(
+						objectField.getObjectFieldId(),
+						dtoConverterContext.getLocale(), objectDefinition,
+						objectEntry, scopeKey, serviceContext),
+					serviceContext),
+				scopeKey));
 	}
 
 	private void _checkObjectEntryObjectDefinitionId(

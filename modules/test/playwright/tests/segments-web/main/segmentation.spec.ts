@@ -11,11 +11,19 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {goToSegmentsAdmin } from '../../change-tracking-web/main/utils/segments';
+import { segmentsPageTest } from './fixtures/segmentsPageTest';
+import { pageEditorPagesTest } from '../../../fixtures/pageEditorPagesTest';
+import { waitForAlert } from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
+	pageEditorPagesTest,
 	productMenuPageTest,
+	segmentsPageTest,
+	usersAndOrganizationsPagesTest,
 	loginTest()
 );
 
@@ -38,6 +46,451 @@ test.afterEach(async ({apiHelpers, page}) => {
 		await apiHelpers.headlessSite.deleteSite(String(site.id));
 	});
 });
+
+test(
+	`Can validate a segment can be created using the "Organization > Country" criterion`,
+
+	{
+		tag: '@LPS-130281',
+	},
+
+	async ({apiHelpers, editOrganizationPage, page, pageEditorPage, segmentsPage, usersAndOrganizationsPage}) => {
+		const segmentName = 'AddSegmentByOrganizationCountry Test';
+
+		await test.step('Given a user and an organization were created and the user was assigned to the organization', async () => {
+			const orgName = await apiHelpers.headlessAdminUser.postOrganization({
+				name: 'Organization1',
+			});
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount({
+				emailAddress: 'userea@liferay.com'
+			});
+
+			await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+				orgName.id,
+				user.emailAddress
+			);
+
+			await usersAndOrganizationsPage.goToOrganizations();
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					'Organization1'
+				)
+			).click();
+			await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+			await editOrganizationPage.countrySelect.selectOption(
+				'Spain'
+			);
+			await editOrganizationPage.regionSelect.selectOption(
+				'Madrid'
+			);
+			await editOrganizationPage.saveButton.click();
+		});
+
+		await test.step('When a segment designer adds a segment and checks the user belongs to the segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				"user-organization": ['Country'],
+			});
+
+			await segmentsPage.editSegmentsEntry(segmentName);
+
+			await segmentsPage.selectOption('Spain');
+
+			await segmentsPage.editSegmentsEntry(segmentName);
+
+			await segmentsPage.viewMembers('userea@liferay.com');
+		});
+		
+		await test.step('Then can assert the segment is correctly created', async () => {
+			await goToSegmentsAdmin(page);
+			
+			const linkLocator = page.locator(`a:has-text('${segmentName}')`);
+			await linkLocator.click();
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('spain');
+		});
+	}
+);
+
+test(
+	`Can validate a segment can be created using the "Organization > Name" criterion`,
+
+	{
+		tag: '@LPS-130277',
+	},
+
+	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
+		const segmentName = 'AddSegmentByOrganizationName Test';
+
+		await test.step('Given a user and an organization were created and the user was assigned to the organization', async () => {
+			const orgName = await apiHelpers.headlessAdminUser.postOrganization({
+				name: 'Organization Name',
+			});
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount({
+				emailAddress: 'userea@liferay.com'
+			});
+
+			await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+				orgName.id,
+				user.emailAddress
+			);
+		});
+
+		await test.step('When a segment designer adds a segment and checks the user belongs to the segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				"user-organization": ['Name'],
+			});
+
+			await segmentsPage.editSegmentsEntry(segmentName);
+
+			await segmentsPage.fillField('Organization Name');
+
+			await segmentsPage.saveButton.click();
+
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await segmentsPage.viewMembers('userea@liferay.com');
+		});
+		
+		await test.step('Then can assert the segment is correctly created', async () => {
+			await goToSegmentsAdmin(page);
+			
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('Organization Name');
+		});
+	}
+);
+
+test(
+	`Can validate a segment can be created using the "Organization > Type" criterion`,
+
+	{
+		tag: '@LPS-130280',
+	},
+
+	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
+		const segmentName = 'AddSegmentByOrganizationType Test';
+
+		await test.step('Given a user and an organization were created and the user was assigned to the organization', async () => {
+			const orgName = await apiHelpers.headlessAdminUser.postOrganization({
+				name: 'Organization Name',
+			});
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount({
+				emailAddress: 'userea@liferay.com'
+			});
+
+			await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+				orgName.id,
+				user.emailAddress
+			);
+		});
+
+		await test.step('When a segment designer adds a segment and checks the user belongs to the segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				"user-organization": ['Type'],
+			});
+
+			await segmentsPage.fillField('organization');
+
+			await segmentsPage.saveButton.click();
+
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await segmentsPage.viewMembers('userea@liferay.com');
+		});
+		
+		await test.step('Then can assert the segment is correctly created', async () => {
+			await goToSegmentsAdmin(page);
+			
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('organization');
+		});
+	}
+);
+
+test(
+	`Can validate that a user cannot create a segment when no segments are available`,
+
+	{
+		tag: '@LPS-130346',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName = 'AddSegment Test';
+
+		await test.step('When a segment designer adds a new segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				segments: ['Segments'],
+			});
+
+			await expect(segmentsPage.plusButton).not.toBeVisible();
+		});
+		
+		await test.step(`Then asserts that segment creation is disabled within the segment selector`, async () => {
+			await segmentsPage.selectButton.click();
+
+			await expect(segmentsPage.plusButton).not.toBeVisible();
+		});
+	}
+);
+
+test(
+	`Can validate a warning message is displayed when a non-existent entity name is entered in the segments editor.`,
+
+	{
+		tag: '@LPS-130347',
+	},
+
+	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
+		const segmentName1 = 'Segment With User1';
+		const segmentName2 = 'Segment With User2';
+		const segmentName3 = 'AddSegmentByOtherSegmentsWarning Test';
+
+		page.on('dialog', async (dialog) => await dialog.accept());
+
+		await test.step('Given 2 users were created', async () => {
+			const user1 = await apiHelpers.headlessAdminUser.postUserAccount({
+				emailAddress: `userea1@liferay.com`,
+			});
+
+			const user2 = await apiHelpers.headlessAdminUser.postUserAccount({
+				emailAddress: `userea2@liferay.com`,
+			});			
+		});
+
+		await test.step('When a segment designer adds 2 segments', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('userea1@liferay.com');
+
+			await segmentsPage.saveButton.click();
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName2, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('userea2@liferay.com');
+
+			await segmentsPage.saveButton.click();
+
+		});
+
+		await test.step('And verifies a new segment correctly includes users from other segments', async () => {
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName3, {
+				segments: ['Segments'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectSegment('Segment With User1');
+
+			await segmentsPage.clickDuplicateButton();
+
+			await page.getByRole('button', { name: 'Select' }).nth(1).click();
+
+			await segmentsPage.selectSegment('Segment With User2');
+
+			await segmentsPage.chooseLogic('Or');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('And deletes one of the segments', async () => {
+			await segmentsPage.deleteSegment('Segment With User1');
+		});
+		
+		await test.step('Then asserts that a warning is shown', async () => {			
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.editSegmentsEntry(segmentName3);
+
+			await page.waitForLoadState('networkidle');
+
+    		const expectedMessage = 'Delete this condition. It was created from an element that no longer exists.';
+
+			await segmentsPage.assertErrorMessageIsVisible(expectedMessage);
+		});
+});
+
+test(
+	`Can validate a segment can be created using the "Session > Browser" criterion`,
+
+	{
+		tag: '@LPS-130313',
+	},
+
+	async ({page, segmentsPage}) => {
+		const segmentName = 'AddSegmentBySessionBrowser Test';
+
+		await test.step('When a segment designer adds a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await segmentsPage.addSessionSegment('Browser',segmentName)
+
+			await segmentsPage.fillField('Chrome');
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);		
+		});
+		
+		await test.step('Then asserts that the segment is correctly created', async () => {			
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('Chrome');
+		});
+	}
+);
+
+test(
+	`Can validate a segment can be created using the "Session > Language" criterion`,
+
+	{
+		tag: '@LPS-130351',
+	},
+
+	async ({page, segmentsPage}) => {
+		const segmentName = 'AddSegmentBySessionLanguage Test';
+
+		await test.step('When a segment designer adds a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await segmentsPage.addSessionSegment('Language',segmentName)
+
+			await segmentsPage.selectOption('Spanish (Spain)');
+
+			await waitForAlert(page);		
+		});
+		
+		await test.step('Then asserts that the segment is correctly created', async () => {			
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('es_ES');
+		});
+	}
+);
+
+test(
+	`Can validate a segment can be created using the "Session > URL" criterion`,
+
+	{
+		tag: '@LPS-130325',
+	},
+
+	async ({page, segmentsPage}) => {
+		const segmentName = 'AddSegmentBySessionURL Test';
+
+		await test.step('When a segment designer adds a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await segmentsPage.addSessionSegment('URL',segmentName)
+
+			await segmentsPage.fillField('http://localhost:8080');
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+		});
+		
+		await test.step('Then asserts that the segment is correctly created', async () => {			
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('http://localhost:8080');
+		});
+	}
+);
+
+test(
+	`Can validate a segment can be created using an 'Apostrophe' in segment property`,
+
+	{
+		tag: '@LPS-146550',
+	},
+
+	async ({editUserPage, page, pageEditorPage, segmentsPage, usersAndOrganizationsPage}) => {
+		const segmentName = 'Segment with Apostrophe';
+
+		await test.step('Given a user is created', async () => {
+			await usersAndOrganizationsPage.goToUsers();	
+			await usersAndOrganizationsPage.addUserButton.click();
+
+			await editUserPage.emailAddressInput.fill('shaquille@liferay.com');
+			await editUserPage.firstNameInput.fill('Shaquille');
+			await editUserPage.lastNameInput.fill(`O'Neal`);
+			await editUserPage.screenNameInput.fill('shaquille');
+
+			await editUserPage.saveButton.click();
+		});
+
+		await test.step('When a segment designer adds a segment with last name property', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				user: ['Last Name'],
+			});
+
+			await segmentsPage.fillField(`O'Neal`);
+
+			await segmentsPage.saveButton.click();
+		});
+		
+		await test.step('Then asserts that the segment is correctly created including the user', async () => {
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await segmentsPage.viewMembers(undefined,`Shaquille O'Neal`);
+		});
+	}
+);
 
 test(
 	'Can understand the actions of keyboard from screen reader.',

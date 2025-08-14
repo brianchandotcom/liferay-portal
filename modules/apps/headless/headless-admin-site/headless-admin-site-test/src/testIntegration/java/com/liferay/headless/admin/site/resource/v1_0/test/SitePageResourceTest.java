@@ -1073,9 +1073,54 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getUuid()));
 	}
 
+	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification()
+		throws Exception {
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		randomSitePage.setPageSpecifications(
+			PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, "1_column", randomSitePage.getExternalReferenceCode()));
+
+		SitePage sitePage =
+			sitePageResource.postByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(), randomSitePage);
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setLayoutTemplateId("2_columns_ii");
+
+		PageSpecification[] widgetPageSpecifications =
+			PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, "2_columns_ii",
+				randomSitePage.getExternalReferenceCode());
+
+		SitePage patchSitePage =
+			sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(),
+				new SitePage() {
+					{
+						setExternalReferenceCode(
+							sitePage.getExternalReferenceCode());
+						setPageSettings(widgetPageSettings);
+						setPageSpecifications(widgetPageSpecifications);
+						setType(Type.WIDGET_PAGE);
+					}
+				});
+
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
+			widgetPageSpecifications, patchSitePage.getPageSpecifications());
+	}
+
 	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
+		_testPatchSiteSiteByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification();
 		_testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,

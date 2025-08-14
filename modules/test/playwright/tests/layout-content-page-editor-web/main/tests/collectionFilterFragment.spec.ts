@@ -5,23 +5,23 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import getRandomString from '../../../utils/getRandomString';
-import addApprovedStructuredContent from '../../../utils/structured-content/addApprovedStructuredContent';
-import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
-import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
-import {ANIMALS_COLLECTION_NAME} from '../../setup/page-management-site/main/constants/animals';
-import createPageWithCollectionAndFilterCollection from './utils/createPageWithCollectionAndFilterCollection';
-import getCollectionDefinition from './utils/getCollectionDefinition';
-import getFragmentDefinition from './utils/getFragmentDefinition';
-import getPageDefinition from './utils/getPageDefinition';
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../../../fixtures/collectionsPagesTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import getRandomString from '../../../../utils/getRandomString';
+import addApprovedStructuredContent from '../../../../utils/structured-content/addApprovedStructuredContent';
+import getBasicWebContentStructureId from '../../../../utils/structured-content/getBasicWebContentStructureId';
+import {journalPagesTest} from '../../../journal-web/main/fixtures/journalPagesTest';
+import {ANIMALS_COLLECTION_NAME} from '../../../setup/page-management-site/main/constants/animals';
+import createPageWithCollectionAndFilterCollection from '../utils/createPageWithCollectionAndFilterCollection';
+import getCollectionDefinition from '../utils/getCollectionDefinition';
+import getFragmentDefinition from '../utils/getFragmentDefinition';
+import getPageDefinition from '../utils/getPageDefinition';
 
 const FRAGMENT_FIELDS = [
 	{

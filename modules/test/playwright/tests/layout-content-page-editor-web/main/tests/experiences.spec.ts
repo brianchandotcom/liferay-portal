@@ -5,18 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import createUserWithPermissions from '../../../utils/createUserWithPermissions';
-import getRandomString from '../../../utils/getRandomString';
-import {performUserSwitch} from '../../../utils/performLogin';
-import getFragmentDefinition from './utils/getFragmentDefinition';
-import getPageDefinition from './utils/getPageDefinition';
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import createUserWithPermissions from '../../../../utils/createUserWithPermissions';
+import getRandomString from '../../../../utils/getRandomString';
+import {performUserSwitch} from '../../../../utils/performLogin';
+import getFragmentDefinition from '../utils/getFragmentDefinition';
+import getPageDefinition from '../utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,

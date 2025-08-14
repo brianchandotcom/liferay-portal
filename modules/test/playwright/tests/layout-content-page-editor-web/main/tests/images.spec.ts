@@ -5,14 +5,14 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
-import getRandomString from '../../../utils/getRandomString';
-import getFragmentDefinition from './utils/getFragmentDefinition';
-import getPageDefinition from './utils/getPageDefinition';
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../../fixtures/pageManagementSiteTest';
+import getRandomString from '../../../../utils/getRandomString';
+import getFragmentDefinition from '../utils/getFragmentDefinition';
+import getPageDefinition from '../utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,

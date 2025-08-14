@@ -6,26 +6,26 @@
 import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import dragAndDropElement from '../../../utils/dragAndDropElement';
-import getRandomString from '../../../utils/getRandomString';
-import {ANIMALS_COLLECTION_NAME} from '../../setup/page-management-site/main/constants/animals';
-import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
-import getCollectionDefinition from './utils/getCollectionDefinition';
-import getContainerDefinition from './utils/getContainerDefinition';
-import getFormContainerDefinition from './utils/getFormContainerDefinition';
-import getFragmentDefinition from './utils/getFragmentDefinition';
-import getGridDefinition from './utils/getGridDefinition';
-import getPageDefinition from './utils/getPageDefinition';
-import getWidgetDefinition from './utils/getWidgetDefinition';
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../../../fixtures/collectionsPagesTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../../../fixtures/masterPagesPagesTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import dragAndDropElement from '../../../../utils/dragAndDropElement';
+import getRandomString from '../../../../utils/getRandomString';
+import {ANIMALS_COLLECTION_NAME} from '../../../setup/page-management-site/main/constants/animals';
+import {getObjectERC} from '../../../setup/page-management-site/main/utils/getObjectERC';
+import getCollectionDefinition from '../utils/getCollectionDefinition';
+import getContainerDefinition from '../utils/getContainerDefinition';
+import getFormContainerDefinition from '../utils/getFormContainerDefinition';
+import getFragmentDefinition from '../utils/getFragmentDefinition';
+import getGridDefinition from '../utils/getGridDefinition';
+import getPageDefinition from '../utils/getPageDefinition';
+import getWidgetDefinition from '../utils/getWidgetDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,

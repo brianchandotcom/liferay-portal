@@ -5,14 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import getRandomString from '../../../utils/getRandomString';
-import {cmsPagesTest} from '../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
-import {structureBuilderPagesTest} from '../../site-cms-site-initializer/structure-builder/fixtures/structureBuilderPagesTest';
-import {FieldType} from '../../site-cms-site-initializer/structure-builder/pages/StructureBuilderPage';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {fragmentsPagesTest} from '../../../../fixtures/fragmentPagesTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
+import getRandomString from '../../../../utils/getRandomString';
+import {cmsPagesTest} from '../../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
+import {structureBuilderPagesTest} from '../../../site-cms-site-initializer/structure-builder/fixtures/structureBuilderPagesTest';
+import {FieldType} from '../../../site-cms-site-initializer/structure-builder/pages/StructureBuilderPage';
 
 const test = mergeTests(
 	featureFlagsTest({

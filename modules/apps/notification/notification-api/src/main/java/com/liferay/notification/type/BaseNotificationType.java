@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -125,10 +126,13 @@ public abstract class BaseNotificationType implements NotificationType {
 					continue;
 				}
 
+				String recipientType = GetterUtil.getString(
+					recipientMap.get(
+						NotificationRecipientSettingConstants.
+							getRecipientTypeName(entry.getKey())));
+
 				if (Objects.equals(
-						recipientMap.get(
-							NotificationRecipientSettingConstants.
-								getRecipientTypeName(entry.getKey())),
+						recipientType,
 						NotificationRecipientConstants.TYPE_ROLE)) {
 
 					Set<String> roleNames = new HashSet<>();
@@ -166,9 +170,7 @@ public abstract class BaseNotificationType implements NotificationType {
 					}
 				}
 				else if (Objects.equals(
-							recipientMap.get(
-								NotificationRecipientSettingConstants.
-									getRecipientTypeName(entry.getKey())),
+							recipientType,
 							NotificationRecipientConstants.TYPE_USER_GROUP)) {
 
 					Set<String> userGroupNames = new HashSet<>();

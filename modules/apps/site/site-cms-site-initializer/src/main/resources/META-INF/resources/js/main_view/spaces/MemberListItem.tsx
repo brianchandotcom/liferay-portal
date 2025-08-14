@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {sub} from 'frontend-js-web';
 import React from 'react';
+import cx from 'classnames';
 
 import {Role} from '../../common/types/Role';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
@@ -44,6 +45,12 @@ export function MembersListItem({
 
 				const memberRoles = item.roles.map((r) => r.name);
 				const selectedRoles = memberRoles.length ? memberRoles : [];
+				const classes = cx(
+					'align-items-center d-flex justify-content-between',
+					{
+						'c-pt-2 c-pb-2': isOwner,
+					}
+				);
 
 				const renderGroupCount = () => {
 					if (!isUser) {
@@ -60,10 +67,7 @@ export function MembersListItem({
 				};
 
 				return (
-					<li
-						className="align-items-center d-flex justify-content-between"
-						key={item.id}
-					>
+					<li className={classes} key={item.id}>
 						<div className="align-items-center d-flex">
 							<ClaySticker
 								displayType="primary"

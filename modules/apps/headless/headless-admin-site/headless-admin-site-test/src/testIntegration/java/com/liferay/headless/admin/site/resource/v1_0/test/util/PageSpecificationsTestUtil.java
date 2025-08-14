@@ -297,6 +297,22 @@ public class PageSpecificationsTestUtil {
 			actualWidgetPageSpecification.getWidgetPageSections());
 	}
 
+	public static void assertWidgetPageSpecifications(
+		PageSpecification[] expectedPageSpecifications,
+		PageSpecification[] actualPageSpecifications) {
+
+		Assert.assertEquals(
+			actualPageSpecifications.toString(),
+			expectedPageSpecifications.length, actualPageSpecifications.length);
+		Assert.assertEquals(
+			actualPageSpecifications.toString(), 1,
+			actualPageSpecifications.length);
+
+		assertWidgetPageSpecification(
+			(WidgetPageSpecification)expectedPageSpecifications[0],
+			(WidgetPageSpecification)actualPageSpecifications[0]);
+	}
+
 	public static ContentPageSpecification getContentPageSpecification(
 		String contentPageSpecificationExternalReferenceCode,
 		CustomField[] customFields,

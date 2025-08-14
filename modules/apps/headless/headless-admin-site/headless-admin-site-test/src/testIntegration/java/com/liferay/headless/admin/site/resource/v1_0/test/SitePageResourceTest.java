@@ -1260,9 +1260,31 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			postSitePage);
 	}
 
+	private void _testPostByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification()
+		throws Exception {
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		randomSitePage.setPageSpecifications(
+			PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, "1_column", randomSitePage.getExternalReferenceCode()));
+
+		SitePage sitePage =
+			sitePageResource.postByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(), randomSitePage);
+
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
+			randomSitePage.getPageSpecifications(),
+			sitePage.getPageSpecifications());
+	}
+
 	private void _testPostByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
+		_testPostByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification();
 		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);

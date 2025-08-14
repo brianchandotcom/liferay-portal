@@ -217,6 +217,10 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 		ProjectUsageMetric projectUsageMetric = projectUsageMetrics.get(
 			faroProject.getProjectId());
 
+		if (projectUsageMetric == null) {
+			return;
+		}
+
 		_faroProjectUsageLocalService.addFaroProjectUsage(
 			faroProject.getCompanyId(), 0, faroProject.getFaroProjectId(),
 			projectUsageMetric.getKnownIndividualsCount(),

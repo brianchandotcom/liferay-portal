@@ -10,13 +10,18 @@ import com.liferay.headless.asset.library.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
+import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -51,6 +56,22 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	}
 
 	@Override
+	public Page<Role>
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
+				String assetLibraryExternalReferenceCode,
+				String userGroupExternalReferenceCode)
+		throws Exception {
+
+		Group group = _getGroup(assetLibraryExternalReferenceCode);
+		UserGroup userGroup =
+			_userGroupService.getUserGroupByExternalReferenceCode(
+				userGroupExternalReferenceCode, contextCompany.getCompanyId());
+
+		return getAssetLibraryUserGroupRolesPage(
+			group.getGroupId(), userGroup.getUserGroupId());
+	}
+
+	@Override
 	public Page<Role> getAssetLibraryUserAccountRolesPage(
 			Long assetLibraryId, Long userAccountId)
 		throws Exception {
@@ -70,6 +91,29 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 			transform(
 				_roleService.getUserGroupRoles(userAccountId, assetLibraryId),
 				this::_toRole));
+	}
+
+	@Override
+	public Page<Role> getAssetLibraryUserGroupRolesPage(
+			Long assetLibraryId, Long userGroupId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		if (!_userGroupLocalService.hasGroupUserGroup(
+				assetLibraryId, userGroupId)) {
+
+			throw new NoSuchUserGroupException(
+				"No user group exists with user group ID " + userGroupId);
+		}
+
+		return Page.of(
+			transform(
+				_userGroupGroupRoleLocalService.getUserGroupGroupRoles(
+					userGroupId, assetLibraryId),
+				userGroupGroupRole -> _toRole(userGroupGroupRole.getRole())));
 	}
 
 	@Override
@@ -161,7 +205,16 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	private RoleService _roleService;
 
 	@Reference
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
 	private UserGroupRoleService _userGroupRoleService;
+
+	@Reference
+	private UserGroupService _userGroupService;
 
 	@Reference
 	private UserService _userService;

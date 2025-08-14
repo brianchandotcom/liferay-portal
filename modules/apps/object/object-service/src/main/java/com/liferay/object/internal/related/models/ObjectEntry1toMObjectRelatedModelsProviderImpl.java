@@ -224,6 +224,31 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		}
 	}
 
+	@Override
+	public void restoreRelatedModelsFromTrash(
+			long userId, long groupId, long objectRelationshipId,
+			long primaryKey, String deletionType)
+		throws PortalException {
+
+		if (Objects.equals(
+				deletionType,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
+
+			for (ObjectEntry objectEntry :
+					getRelatedModels(
+						groupId, objectRelationshipId, primaryKey, null,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+				if (!objectEntry.isInTrash()) {
+					continue;
+				}
+
+				_objectEntryService.restoreObjectEntryFromTrash(
+					userId, objectEntry, new ServiceContext());
+			}
+		}
+	}
+
 	private final String _className;
 	private final long _companyId;
 	private final ObjectEntryService _objectEntryService;

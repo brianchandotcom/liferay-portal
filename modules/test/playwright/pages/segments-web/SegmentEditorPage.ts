@@ -11,7 +11,7 @@ import getRandomString from '../../utils/getRandomString';
 
 type SegmentSection = 'context' | 'segments' | 'user' | 'user-organization';
 
-type SegmentProperty = 'Date of Birth' | 'First Name' | 'Name';
+type SegmentProperty = 'Country' | 'Date of Birth' | 'Email Address' | 'First Name' | 'Last Name' | 'Name' | 'Segments' | 'Type';
 
 type SegmentProperties = Partial<Record<SegmentSection, SegmentProperty[]>>;
 
@@ -83,8 +83,18 @@ export class SegmentEditorPage {
 
 		// Add property to desired dropzone
 
-		await this.page.locator('li', {hasText: property}).press('Enter');
-
+		if (property === 'Country') {
+			await this.page.getByLabel('Drag Country').press('Enter');
+		}
+		else if (property === 'Name'){
+			await this.page.getByLabel('Drag Name').press('Enter');
+		}
+		else if (property === 'Segments'){
+			await this.page.getByLabel('Drag Segment').press('Enter');
+		}
+		else{
+			await this.page.locator('li', {hasText: property}).press('Enter');
+		}
 		await target.press('Enter');
 
 		await this.loading.waitFor();

@@ -197,14 +197,7 @@ export class NavigationMenusPage {
 	async addNavigationMenuToGlobalSite(navigationMenuName: string) {
 		await this.gotoGlobalSiteNavigationMenuPortlet();
 
-		await this.page
-			.getByRole('button', {name: 'Add'})
-			.getByText('New')
-			.click();
-
-		await this.page.getByPlaceholder('Name').fill(navigationMenuName);
-
-		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.createNavigationMenu(navigationMenuName);
 	}
 
 	async addOrChangeIcon(iconName: string) {

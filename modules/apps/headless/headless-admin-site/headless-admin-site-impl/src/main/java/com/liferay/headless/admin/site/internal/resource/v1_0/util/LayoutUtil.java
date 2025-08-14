@@ -31,6 +31,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -988,18 +989,29 @@ public class LayoutUtil {
 
 	private static Layout _updatePortletLayout(
 			Layout layout, ServiceContext serviceContext,
-			UnicodeProperties unicodeProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			WidgetPageSpecification widgetPageSpecification)
 		throws Exception {
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		boolean layoutCustomizable = GetterUtil.getBoolean(
+			typeSettingsUnicodeProperties.get(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT));
+
+		if (!layoutCustomizable) {
+			layoutTypePortlet.removeCustomization(unicodeProperties);
+		}
 
 		if (widgetPageSpecification == null) {
 			return LayoutServiceUtil.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), unicodeProperties.toString());
 		}
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
 
 		WidgetPageSection[] widgetPageSections =
 			widgetPageSpecification.getWidgetPageSections();
@@ -1011,7 +1023,14 @@ public class LayoutUtil {
 		}
 
 		for (WidgetPageSection widgetPageSection : widgetPageSections) {
-			if (!columns.contains(widgetPageSection.getId())) {
+			boolean customizable = GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.get(
+					CustomizedPages.namespaceColumnId(
+						widgetPageSection.getId())));
+
+			if (!columns.contains(widgetPageSection.getId()) ||
+				(!layoutCustomizable && customizable)) {
+
 				throw new UnsupportedOperationException();
 			}
 

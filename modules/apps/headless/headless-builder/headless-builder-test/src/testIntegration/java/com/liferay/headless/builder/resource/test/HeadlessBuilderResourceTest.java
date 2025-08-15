@@ -1383,21 +1383,21 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 		assertSuccessfulJSONObject(
-			null,
+			"{}",
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,
 				"/responseAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_1),
 			Http.Method.PUT);
 		assertSuccessfulJSONObject(
-			null,
+			"{}",
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,
 				"/requestAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_2),
 			Http.Method.PUT);
 		assertSuccessfulJSONObject(
-			null,
+			"{}",
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,

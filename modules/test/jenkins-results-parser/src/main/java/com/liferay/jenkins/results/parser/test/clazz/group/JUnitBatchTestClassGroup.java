@@ -750,8 +750,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				!testClassMethodNames.isEmpty()) {
 
 				testClass = TestClassFactory.newTestClass(
-					this, javaTestClassFile,
-					testClassMethodNames);
+					this, javaTestClassFile, testClassMethodNames);
 			}
 			else {
 				testClass = TestClassFactory.newTestClass(

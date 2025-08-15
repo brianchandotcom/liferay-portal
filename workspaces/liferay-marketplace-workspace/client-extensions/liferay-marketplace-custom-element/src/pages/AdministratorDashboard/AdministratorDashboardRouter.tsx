@@ -108,4 +108,6 @@ const AdministratorDashboardRouter = () => (
 	</HashRouter>
 );
 
-export default withProviders(AdministratorDashboardRouter);
+export default withProviders(AdministratorDashboardRouter, {
+	withErrorBoundary: true,
+});

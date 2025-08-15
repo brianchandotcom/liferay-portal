@@ -23,4 +23,4 @@ const SSADashboardRouter = () => (
 	</HashRouter>
 );
 
-export default withProviders(SSADashboardRouter);
+export default withProviders(SSADashboardRouter, {withErrorBoundary: true});

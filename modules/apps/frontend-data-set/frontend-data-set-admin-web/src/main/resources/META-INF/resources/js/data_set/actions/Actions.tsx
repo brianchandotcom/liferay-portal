@@ -14,6 +14,7 @@ import React, {useEffect, useState} from 'react';
 import {
 	DEFAULT_FETCH_HEADERS,
 	OBJECT_RELATIONSHIP,
+	PAGE_SIZE,
 } from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
@@ -157,6 +158,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 			params: {
 				filter: `type eq '${type}'`,
 				nestedFields: OBJECT_RELATIONSHIP.DATA_SET_ACTIONS,
+				pageSize: PAGE_SIZE,
 				sort: 'dateCreated:asc',
 			},
 			relationship: OBJECT_RELATIONSHIP.DATA_SET_ACTIONS,

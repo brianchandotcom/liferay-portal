@@ -14,7 +14,6 @@
 			"accountEntryRestricted": false,
 			"active": true,
 			"className": "com.liferay.portal.kernel.model.User",
-			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableIndexSearch": true,
@@ -276,7 +275,8 @@
 							"name": {
 								"en_US": "Learning Path"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_ASSESSMENT_TO_P2S3_LEARNING_PATHS",
 							"priority": 0
 						}
@@ -752,7 +752,8 @@
 							"name": {
 								"en_US": "Assessments"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_CERTIFICATION_TO_P2S3_ASSESSMENTS",
 							"priority": 0
 						}
@@ -1090,7 +1091,8 @@
 									"name": {
 										"en_US": "Categorization"
 									},
-									"objectLayoutRows": [],
+									"objectLayoutRows": [
+									],
 									"priority": 0,
 									"type": "categorization"
 								}
@@ -1102,7 +1104,8 @@
 							"name": {
 								"en_US": "Modules"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_COURSE_TO_P2S3_MODULES",
 							"priority": 0
 						}
@@ -2738,7 +2741,8 @@
 									"name": {
 										"en_US": "Categorization"
 									},
-									"objectLayoutRows": [],
+									"objectLayoutRows": [
+									],
 									"priority": 0,
 									"type": "categorization"
 								}
@@ -2750,7 +2754,8 @@
 							"name": {
 								"en_US": "Steps"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_LEARNING_PATH_TO_P2S3_LEARNING_PATH_STEPS",
 							"priority": 0
 						}
@@ -2975,7 +2980,8 @@
 							"name": {
 								"en_US": "Courses"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_COURSE_TO_P2S3_LEARNING_PATH_STEP",
 							"priority": 1
 						},
@@ -2983,7 +2989,8 @@
 							"name": {
 								"en_US": "External Media"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_EXTERNAL_MEDIA_TO_P2S3_LEARNING_PATH_STEP",
 							"priority": 4
 						}
@@ -3359,7 +3366,8 @@
 						},
 						{
 							"name": "filters",
-							"value": []
+							"value": [
+							]
 						}
 					],
 					"readOnly": "true",
@@ -3392,7 +3400,8 @@
 						},
 						{
 							"name": "filters",
-							"value": []
+							"value": [
+							]
 						}
 					],
 					"readOnly": "true",
@@ -3464,7 +3473,8 @@
 						},
 						{
 							"name": "filters",
-							"value": []
+							"value": [
+							]
 						}
 					],
 					"readOnly": "true",
@@ -3497,7 +3507,8 @@
 						},
 						{
 							"name": "filters",
-							"value": []
+							"value": [
+							]
 						}
 					],
 					"readOnly": "true",
@@ -3603,7 +3614,8 @@
 							"name": {
 								"en_US": "Lessons"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_MODULE_TO_P2S3_LESSONS",
 							"priority": 0
 						},
@@ -3611,7 +3623,8 @@
 							"name": {
 								"en_US": "Quizzes"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_MODULE_TO_P2S3_QUIZZES",
 							"priority": 0
 						}
@@ -3872,7 +3885,8 @@
 							"name": {
 								"en_US": "Questions"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_QUIZ_TO_P2S3_QUIZ_QUESTIONS",
 							"priority": 0
 						},
@@ -3880,7 +3894,8 @@
 							"name": {
 								"en_US": "Quiz Badge"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_QUIZ_TO_P2S3_BADGES",
 							"priority": 0
 						}
@@ -4126,7 +4141,8 @@
 						},
 						{
 							"name": "filters",
-							"value": []
+							"value": [
+							]
 						}
 					],
 					"readOnly": "true",
@@ -4303,7 +4319,8 @@
 							"name": {
 								"en_US": "Answers"
 							},
-							"objectLayoutBoxes": [],
+							"objectLayoutBoxes": [
+							],
 							"objectRelationshipExternalReferenceCode": "P2S3_QUIZ_QUESTION_TO_P2S3_QUIZ_ANSWERS",
 							"priority": 0
 						}

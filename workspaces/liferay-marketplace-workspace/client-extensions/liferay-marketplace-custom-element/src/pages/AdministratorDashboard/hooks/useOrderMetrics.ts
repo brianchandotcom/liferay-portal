@@ -7,7 +7,7 @@ import {addDays} from 'date-fns';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
-import {GraphQL} from '../../../services/rest/graphql';
+import GraphQL from '../../../services/rest/HeadlessGraphQL';
 import {getLastDayOfMonth} from '../../../utils/date';
 
 export const METRIC_PARAMETER = {

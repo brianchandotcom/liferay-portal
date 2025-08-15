@@ -20,7 +20,7 @@ const baseSearchBuilder = new SearchBuilder()
 	.in('statusCode', [ProductWorkflowStatusCode.APPROVED])
 	.and();
 
-const baseSearchBuilderWithQuarterly = baseSearchBuilder
+const appsAndConnectorSupportingQReleaseFilter = baseSearchBuilder
 	.clone()
 	.group('OPEN')
 	.lambdaContains('specificationValues', '2025 Q')
@@ -28,10 +28,7 @@ const baseSearchBuilderWithQuarterly = baseSearchBuilder
 	.lambdaContains('specificationValues', '2024 Q')
 	.or()
 	.lambdaContains('specificationValues', '2023 Q')
-	.group('CLOSE');
-
-const appsAndConnectorSupportingQReleaseFilter = baseSearchBuilderWithQuarterly
-	.clone()
+	.group('CLOSE')
 	.and()
 	.not()
 	.lambda('specificationValues', ProductType.LOW_CODE_CONFIGURATION)

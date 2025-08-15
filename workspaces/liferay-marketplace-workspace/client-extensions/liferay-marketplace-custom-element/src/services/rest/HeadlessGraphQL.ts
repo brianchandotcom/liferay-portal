@@ -7,7 +7,7 @@ import fetcher from '../fetcher';
 
 type Metrics<T> = {[key: string]: APIResponse<T>};
 
-export class GraphQL {
+export default class GraphQL {
 	static async metrics<T>(
 		query: {
 			group: string;

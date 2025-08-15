@@ -7,7 +7,7 @@ import {UploadedImage} from '../../components/FileList/FileList';
 import {MarketplaceProduct} from '../../entity/MarketplaceProduct';
 import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
-import {GraphQL} from './GraphQL';
+import GraphQL from './HeadlessGraphQL';
 
 export default class HeadlessCommerceAdminCatalog {
 	static async addOrUpdateProductImageByExternalReferenceCode(
@@ -190,7 +190,7 @@ export default class HeadlessCommerceAdminCatalog {
 		filters: Record<string, string>,
 		options?: Record<string, any>
 	) {
-		return GraphQL.metrics(
+		return GraphQL.metrics<Product>(
 			{
 				group: 'headlessCommerceAdminCatalog_v1_0',
 				name: 'products',

@@ -78,8 +78,9 @@ public class LPD_8040 {
 		HttpUtil.shortenURL(null);
 	}
 
-	public void method(Http http) {
+	public void method(Http http, HttpServletRequest httpServletRequest) {
 		http.encodeParameters(null);
+		httpServletRequest.getParameter(null);
 	}
 
 	@Reference

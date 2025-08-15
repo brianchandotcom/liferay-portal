@@ -61,11 +61,19 @@
 			</li>
 		</#list>
 
-		<#assign selectedResourceTypeIds = (paramUtil.getParameterValues(request, "resource-type")![])?join(",") />
+		<#assign selectedResourceTypeIds = paramUtil.getParameterValues(request, "resource-type")![] />
 
+		<#assign knowledgeBaseSelected = false />
+
+		<#list selectedResourceTypeIds as selectedId>
+			<#if knowledgeBaseIds?seq_contains(selectedId)>
+				<#assign knowledgeBaseSelected = true />
+			</#if>
+		</#list>
+		
 		<li class="facet-value">
 			<@clay.button
-				cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(selectedResourceTypeIds?contains(knowledgeBaseIds?join(',')))?then('selected-tab-btn', '')}"
+				cssClass="btn-unstyled facet-term tab-btn term-name text-center ${knowledgeBaseSelected?then('selected-tab-btn', '')}"
 				data\-term\-ids="${knowledgeBaseIds?join(',')}"
 				displayType="link"
 				onClick="${namespace}updateSelection(event)"
@@ -95,7 +103,6 @@
 
 	function ${namespace}updateSelection(event) {
 		event.preventDefault();
-
 		handleStyleTabs(event);
 
 		const formElement = event.currentTarget.form;
@@ -109,15 +116,17 @@
 
 		const urlSearchParams = new URLSearchParams(window.location.search);
 
-		urlSearchParams.delete('resource-type');
+		if (event.currentTarget.value === 'clear') { 
+			urlSearchParams.delete('resource-type');
 
-		if (event.currentTarget.value === 'clear') {
-			const clearedUrl = window.location.pathname + '?' + urlSearchParams.toString();
+			const clearedUrl = window.location.pathname + '?' + urlSearchParams.toString(); 
 
-			window.location.href = clearedUrl;
+			window.location.href = clearedUrl; 
 
-			return;
+			return; 
 		}
+	
+		urlSearchParams.delete('resource-type');
 
 		if (dataTermIds) {
 			const resourceTypeIds = dataTermIds.split(',');

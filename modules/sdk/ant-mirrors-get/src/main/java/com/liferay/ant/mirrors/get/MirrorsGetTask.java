@@ -509,9 +509,10 @@ public class MirrorsGetTask extends Task {
 			}
 
 			URL localURL = _getLocalURL();
-			URL remoteURL = _getRemoteURL();
 
 			urls.add(localURL);
+
+			URL remoteURL = _getRemoteURL();
 
 			if (!Objects.equals(localURL, remoteURL)) {
 				urls.add(remoteURL);

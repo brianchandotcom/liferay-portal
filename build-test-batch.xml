@@ -3130,10 +3130,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							return JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
 						}
 
-						public static String getTestClassNameForTestResults(String testClassName) {
+						public static String getTestClassNameForTestResults(String testClassFilePath) {
 							Pattern pattern = Pattern.compile("([^#]+)\\.java(#.*)?");
 
-							Matcher matcher = pattern.matcher(testClassName);
+							Matcher matcher = pattern.matcher(testClassFilePath);
+
+							String testClassName = testClassFilePath;
 
 							if (matcher.matches()) {
 								testClassName = matcher.group(1);
@@ -3242,16 +3244,16 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 						String testClassGroup = project.getProperty("test.class.group");
 
-						String[] testClassPathList = testClassGroup.split(",");
+						String[] testClassFilePathList = testClassGroup.split(",");
 
 						Map projectTestMap = new HashMap();
 
 						File baseDir = getPortalGitWorkingDirectory();
 
-						for (String testClassPath : testClassPathList) {
-							testClassPath = testClassPath.replaceAll("\\.class", "\\.java");
+						for (String testClassFilePath : testClassFilePathList) {
+							testClassFilePath = testClassFilePath.replaceAll("\\.class", "\\.java");
 
-							String testClassName = getTestClassNameForTestResults(testClassPath);
+							String testClassName = getTestClassNameForTestResults(testClassFilePath);
 
 							File testClassFile = JenkinsResultsParserUtil.getFileFromPathSnippet(projectDir, testClassName);
 
@@ -3261,7 +3263,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							generateJunitReport(baseDir, testClassName, testTaskName);
 
-							String testName = getTestName(testClassPath);
+							String testName = getTestName(testClassFilePath);
 
 							addProjectToMap(testProjectName, testName, projectTestMap);
 						}

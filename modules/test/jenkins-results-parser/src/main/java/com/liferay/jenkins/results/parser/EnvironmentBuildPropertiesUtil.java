@@ -50,6 +50,15 @@ public class EnvironmentBuildPropertiesUtil {
 		}
 	}
 
+	public static void generateEnvironmentBuildProperties(
+			File rootDirectory, boolean deleteBasePropertiesFile)
+		throws IOException {
+
+		generateEnvironmentBuildProperties(
+			EnvironmentBuildProperties.getCurrentEnvironment(), rootDirectory,
+			deleteBasePropertiesFile);
+	}
+
 	private static String _getBasePropertiesFileName(
 		String extendedPropertiesFileName) {
 

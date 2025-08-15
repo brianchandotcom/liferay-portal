@@ -146,17 +146,6 @@ public class RenderResponseImplTest {
 			portletConfigFactory);
 
 		ReflectionTestUtil.setFieldValue(
-			new PortletConfigFactoryImpl(), "_pool",
-			ConcurrentHashMapBuilder.<String, Map<String, PortletConfig>>put(
-				StringBundler.concat(
-					JavaConstants.JAKARTA_PORTLET_TITLE, StringPool.PERIOD,
-					portletId),
-				HashMapBuilder.<String, PortletConfig>put(
-					portletId, portletConfig
-				).build()
-			).build());
-
-		ReflectionTestUtil.setFieldValue(
 			renderResponseImpl, "portletRequestImpl", portletRequestImpl);
 
 		renderResponseImpl.setTitle("");

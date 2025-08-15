@@ -930,6 +930,84 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Certification Create / Edit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_CERTIFICATION",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Certification Information"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Main"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "title",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "persona",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"objectRelationshipId": 0,
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Assessments"
+							},
+							"objectLayoutBoxes": [],
+							"objectRelationshipExternalReferenceCode": "P2S3_CERTIFICATION_TO_P2S3_ASSESSMENTS",
+							"priority": 0
+						}
+					]
+				}
+			],
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",

@@ -19,7 +19,7 @@ public class EnvironmentBuildPropertiesUtil {
 
 	public static void generateEnvironmentBuildProperties(
 			EnvironmentBuildProperties.Environment environment,
-			File rootDirectory)
+			File rootDirectory, boolean deleteBasePropertiesFile)
 		throws IOException {
 
 		List<File> sharedPropertiesFiles = JenkinsResultsParserUtil.findFiles(
@@ -32,6 +32,12 @@ public class EnvironmentBuildPropertiesUtil {
 				sharedPropertiesFile.getParentFile(),
 				_getBasePropertiesFileName(sharedPropertiesFileName));
 
+			if (deleteBasePropertiesFile &&
+				environmentBuildPropertiesFile.exists()) {
+
+				JenkinsResultsParserUtil.delete(environmentBuildPropertiesFile);
+			}
+
 			String urlString = EnvironmentBuildProperties.toURLString(
 				environmentBuildPropertiesFile);
 
@@ -39,6 +45,8 @@ public class EnvironmentBuildPropertiesUtil {
 				new EnvironmentBuildProperties(environment, urlString);
 
 			environmentBuildProperties.store(environmentBuildPropertiesFile);
+
+			System.out.println("Writing " + environmentBuildPropertiesFile);
 		}
 	}
 
@@ -54,7 +62,7 @@ public class EnvironmentBuildPropertiesUtil {
 					extendedPropertiesFileName);
 		}
 
-		return matcher.group(1) + matcher.group(3);
+		return matcher.group(1) + "." + matcher.group(3);
 	}
 
 	private static final Pattern _extendedPropertyFileNamePattern =

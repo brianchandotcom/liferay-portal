@@ -178,6 +178,115 @@ public class LayoutActionDropdownItemsProvider {
 		).build();
 	}
 
+	public List<DropdownItem> getEmptyLayoutActionDropdownItems(Layout layout)
+		throws Exception {
+
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_layoutsAdminDisplayContext.
+									getSelectLayoutPageTemplateEntryURL(
+										0, layout.getPlid(),
+										layout.isPrivateLayout()));
+							dropdownItem.setIcon("pencil");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_httpServletRequest, "edit"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setDisabled(true);
+							dropdownItem.setIcon("automatic-translate");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "translate"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setDisabled(true);
+							dropdownItem.setIcon("view");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_httpServletRequest, "view"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setDisabled(true);
+							dropdownItem.setIcon("page-template");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									"convert-to-page-template"));
+						}
+					).addContext(
+						dropdownContextItem -> {
+							dropdownContextItem.setDisabled(true);
+							dropdownContextItem.setIcon("copy");
+							dropdownContextItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "make-a-copy"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setDisabled(true);
+							dropdownItem.setIcon("upload");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									"export-for-translation"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setDisabled(true);
+							dropdownItem.setIcon("download");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "import-translation"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setDisabled(true);
+							dropdownItem.setIcon("cog");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "configure"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setDisabled(true);
+							dropdownItem.setIcon("password-policies");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "permissions"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _layoutActionsHelper.isShowDeleteAction(layout),
+						_getDeleteLayoutActionUnsafeConsumer(layout)
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getAddLayoutActionUnsafeConsumer(Layout layout) {
 

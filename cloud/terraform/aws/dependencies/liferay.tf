@@ -206,3 +206,30 @@ resource "kubernetes_secret" "managed_service_details" {
 	}
 	type="Opaque"
 }
+resource "random_password" "opensearch_password" {
+	length=16
+	min_lower=1
+	min_numeric=1
+	min_special=1
+	min_upper=1
+	override_special="!#%&*()-_=+[]{}<>:?"
+	special=true
+}
+resource "random_password" "opensearch_username" {
+	length=16
+	special=false
+}
+resource "random_password" "postgres_password" {
+	length=16
+	override_special="!#%&*()-_=+[]{}<>:?"
+	special=true
+}
+resource "random_password" "postgres_username" {
+	length=16
+	special=false
+}
+resource "random_password" "s3_bucket_suffix" {
+	length=4
+	special=false
+	upper=false
+}

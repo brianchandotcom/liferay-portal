@@ -269,18 +269,16 @@ public class TicketAttachmentsCompleteUploadRestController
 	}
 
 	private JSONArray _getCommentBodyJSONArray(String commentBody) {
-		String[] commentStrings = commentBody.split(_REGEX);
-
 		Matcher matcher = _pattern.matcher(commentBody);
 
 		JSONArray jsonArray = new JSONArray();
 
-		for (String string : commentStrings) {
-			if (Validator.isNotNull(string)) {
+		for (String commentBodyPart : commentBody.split(_URL_REGEX)) {
+			if (Validator.isNotNull(commentBodyPart)) {
 				jsonArray.put(
 					new JSONObject(
 					).put(
-						"text", string
+						"text", commentBodyPart
 					).put(
 						"type", "text"
 					));
@@ -317,13 +315,13 @@ public class TicketAttachmentsCompleteUploadRestController
 		return jsonArray;
 	}
 
-	private static final String _REGEX =
+	private static final String _URL_REGEX =
 		"((?:https?:\\/\\/|www\\.)[^\\s()]+\\b)";
 
 	private static final Log _log = LogFactory.getLog(
 		TicketAttachmentsCompleteUploadRestController.class);
 
-	private static final Pattern _pattern = Pattern.compile(_REGEX);
+	private static final Pattern _pattern = Pattern.compile(_URL_REGEX);
 
 	@Value("${liferay.customer.portal.url}")
 	private String _customerPortalURL;

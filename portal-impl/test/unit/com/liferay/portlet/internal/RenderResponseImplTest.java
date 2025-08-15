@@ -141,25 +141,21 @@ public class RenderResponseImplTest {
 			portletDisplay
 		);
 
-		Map<String, PortletConfig> portletConfigs =
-			HashMapBuilder.<String, PortletConfig>put(
-				portletId, portletConfig
-			).build();
-
-		Map<String, Map<String, PortletConfig>> pool =
-			ConcurrentHashMapBuilder.<String, Map<String, PortletConfig>>put(
-				StringBundler.concat(
-					JavaConstants.JAKARTA_PORTLET_TITLE, StringPool.PERIOD,
-					portletId),
-				portletConfigs
-			).build();
 
 		ReflectionTestUtil.setFieldValue(
 			new PortletConfigFactoryUtil(), "_portletConfigFactory",
 			portletConfigFactory);
 
 		ReflectionTestUtil.setFieldValue(
-			new PortletConfigFactoryImpl(), "_pool", pool);
+			new PortletConfigFactoryImpl(), "_pool",
+			ConcurrentHashMapBuilder.<String, Map<String, PortletConfig>>put(
+				StringBundler.concat(
+					JavaConstants.JAKARTA_PORTLET_TITLE, StringPool.PERIOD,
+					portletId),
+				HashMapBuilder.<String, PortletConfig>put(
+					portletId, portletConfig
+				).build()
+			).build());
 
 		ReflectionTestUtil.setFieldValue(
 			renderResponseImpl, "portletRequestImpl", portletRequestImpl);

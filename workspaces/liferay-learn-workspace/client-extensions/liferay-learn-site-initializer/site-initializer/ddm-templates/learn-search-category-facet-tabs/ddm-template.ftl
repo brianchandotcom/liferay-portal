@@ -112,8 +112,8 @@
 			return;
 		}
 
-		const dataTermIds = event.currentTarget.getAttribute('data-term-ids');
 		const dataTermId = event.currentTarget.getAttribute('data-term-id');
+		const dataTermIds = event.currentTarget.getAttribute('data-term-ids');
 
 		const urlSearchParams = new URLSearchParams(window.location.search);
 

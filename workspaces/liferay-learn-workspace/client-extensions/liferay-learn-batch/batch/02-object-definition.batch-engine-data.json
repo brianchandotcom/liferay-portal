@@ -1622,15 +1622,15 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "EMAIL",
+					"externalReferenceCode": "EMAIL_ADDRESS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "E-mail"
+						"en_US": "E-mail Address"
 					},
 					"localized": false,
-					"name": "email",
+					"name": "emailAddress",
 					"readOnly": "false",
 					"required": true,
 					"state": false,

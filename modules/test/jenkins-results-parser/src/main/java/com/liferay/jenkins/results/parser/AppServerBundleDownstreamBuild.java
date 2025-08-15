@@ -63,6 +63,10 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 		sb.append("/build-failure");
 
 		CloudBucketUtil.createS3ObjectRef(s3ObjectPath, sb.toString());
+
+		NotificationUtil.sendSlackNotification(
+			getBuildURL(), "#ci-aws-notifications", ":ci:",
+			"Bundle Builder Failure", "Liferay CI");
 	}
 
 }

@@ -922,14 +922,13 @@ public class TestrayImporter {
 		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
 		List<Callable<Void>> callables = new ArrayList<>();
 
-		String testSuiteName = _topLevelBuildReport.getTestSuiteName();
-
 		for (Job job : _jobs) {
 			if (job instanceof TestSuiteJob) {
 				TestSuiteJob testSuiteJob = (TestSuiteJob)job;
 
 				if (!Objects.equals(
-						testSuiteName, testSuiteJob.getTestSuiteName())) {
+						_topLevelBuildReport.getTestSuiteName(),
+						testSuiteJob.getTestSuiteName())) {
 
 					continue;
 				}

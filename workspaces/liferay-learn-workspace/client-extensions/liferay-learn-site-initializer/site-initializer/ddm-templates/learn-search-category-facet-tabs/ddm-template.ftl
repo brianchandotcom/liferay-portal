@@ -71,7 +71,7 @@
 				<#assign knowledgeBaseSelected = true />
 			</#if>
 		</#list>
-		
+
 		<li class="facet-value">
 			<@clay.button
 				cssClass="btn-unstyled facet-term tab-btn term-name text-center ${knowledgeBaseSelected?then('selected-tab-btn', '')}"
@@ -112,22 +112,22 @@
 			return;
 		}
 
-		const dataTermId = event.currentTarget.getAttribute('data-term-id');
-		const dataTermIds = event.currentTarget.getAttribute('data-term-ids');
-
 		const urlSearchParams = new URLSearchParams(window.location.search);
 
-		if (event.currentTarget.value === 'clear') { 
+		if (event.currentTarget.value === 'clear') {
 			urlSearchParams.delete('resource-type');
 
-			const clearedUrl = window.location.pathname + '?' + urlSearchParams.toString(); 
+			const clearedUrl = window.location.pathname + '?' + urlSearchParams.toString();
 
-			window.location.href = clearedUrl; 
+			window.location.href = clearedUrl;
 
-			return; 
+			return;
 		}
-	
+
 		urlSearchParams.delete('resource-type');
+
+		const dataTermId = event.currentTarget.getAttribute('data-term-id');
+		const dataTermIds = event.currentTarget.getAttribute('data-term-ids');
 
 		if (dataTermIds) {
 			const resourceTypeIds = dataTermIds.split(',');
@@ -135,7 +135,6 @@
 			resourceTypeIds.forEach(id => {
 				urlSearchParams.append('resource-type', id.trim());
 			});
-
 		} else if (dataTermId) {
 			urlSearchParams.append('resource-type', dataTermId);
 		}

@@ -50,13 +50,92 @@ test(
 		await test.step('Go to the Recycle Bin and delete the content permanently', async () => {
 			await recycleBinPage.goto();
 
-			await page.getByRole('button', {name: 'Delete'}).click();
+			await page
+				.getByRole('row', {name: contentName})
+				.getByRole('button')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
 
 			await expect(
 				recycleBinPage.deleteItemConfirmationText
 			).toBeVisible();
 
-			await recycleBinPage.deleteButton.click();
+			await recycleBinPage.deleteButton.last().click();
+
+			await waitForAlert(
+				page,
+				`Success:${contentName} has been permanently deleted.`
+			);
+		});
+	}
+);
+
+test(
+	'Can restore a single content from Recycle Bin',
+	{tag: '@LPD-55830'},
+	async ({contentsPage, page, recycleBinPage}) => {
+		const contentName = getRandomString();
+		const friendlyUrl = getRandomString();
+
+		await test.step('Create new content', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.createContent('Knowledge Base');
+
+			await page.getByLabel('Title').fill(contentName);
+
+			await page.getByLabel('Friendly URL').fill(friendlyUrl);
+
+			await contentsPage.saveContent();
+		});
+
+		await test.step('Delete the created content so it goes into the Recycle Bin', async () => {
+			await contentsPage.deleteContent(contentName);
+		});
+
+		await test.step('Go to the Recycle Bin and restore the item ', async () => {
+			await recycleBinPage.goto();
+
+			await page
+				.getByRole('row', {name: contentName})
+				.getByRole('button')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Restore'}).click();
+
+			await waitForAlert(
+				page,
+				`Success:${contentName} was restored to Contents.`,
+				{autoClose: false}
+			);
+		});
+
+		await test.step('Assert item is restored', async () => {
+			await page.getByRole('link', {name: 'Contents'}).click();
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+		});
+
+		await test.step('Clean up', async () => {
+			await contentsPage.deleteContent(contentName);
+
+			await recycleBinPage.goto();
+
+			await page
+				.getByRole('row', {name: contentName})
+				.getByRole('button')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			await expect(
+				recycleBinPage.deleteItemConfirmationText
+			).toBeVisible();
+
+			await recycleBinPage.deleteButton.last().click();
 
 			await waitForAlert(
 				page,

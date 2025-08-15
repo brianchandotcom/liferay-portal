@@ -1210,14 +1210,14 @@ public class MirrorsGetTask extends Task {
 			"(?<hostName>[^/]+(/\\d+)?)/(?<path>.+/)(?<fileName>.+)");
 	private static final Pattern _mirrorsHostNamePattern = Pattern.compile(
 		"^mirrors\\.[^\\.]+\\.liferay.com/");
-	private static final Pattern _releaseHostNamePattern = Pattern.compile(
-		"(release-\\d+|release.liferay.com)/(?<id>\\d+)");
-	private static final Pattern _testHostNamePattern = Pattern.compile(
-		"test-\\d+-\\d+");
 	private static final Pattern _nexusTomcatURLPattern = Pattern.compile(
 		"http://archive.apache.org/dist/tomcat/tomcat-\\d+/" +
 			"v(?<tomcatVersion>[^/]+)/bin/" +
 				"apache-(?<tomcatFileName>.+(\\.tar\\.gz|\\.zip))");
+	private static final Pattern _releaseHostNamePattern = Pattern.compile(
+		"(release-\\d+|release.liferay.com)/(?<id>\\d+)");
+	private static final Pattern _testHostNamePattern = Pattern.compile(
+		"test-\\d+-\\d+");
 
 	private File _dest;
 	private String _fileName;

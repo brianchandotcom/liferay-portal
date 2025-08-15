@@ -11,6 +11,77 @@
 	},
 	"items": [
 		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"className": "com.liferay.portal.kernel.model.User",
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "L_USER",
+			"label": {
+				"en_US": "User",
+				"ja_JP": "ユーザー"
+			},
+			"modifiable": false,
+			"name": "User",
+			"objectFolderExternalReferenceCode": "default",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "L_USER_TO_P2S3_ENROLLMENTS",
+					"label": {
+						"en_US": "L User to P2S3 Enrollment"
+					},
+					"name": "lUserToP2S3Enrollments",
+					"objectDefinitionExternalReferenceCode1": "L_USER",
+					"objectDefinitionExternalReferenceCode2": "P2S3_ENROLLMENT",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "L_USER_TO_P2S3_QUIZ_RESULTS",
+					"label": {
+						"en_US": "L User to P2S3 Quiz Result"
+					},
+					"name": "lUserToP2S3QuizResults",
+					"objectDefinitionExternalReferenceCode1": "L_USER",
+					"objectDefinitionExternalReferenceCode2": "P2S3_QUIZ_RESULT",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "L_USER_TO_P2S3_USER_BADGES",
+					"label": {
+						"en_US": "L User to P2S3 User Badges"
+					},
+					"name": "lUserToP2S3UserBadges",
+					"objectDefinitionExternalReferenceCode1": "L_USER",
+					"objectDefinitionExternalReferenceCode2": "P2S3_USER_BADGE",
+					"type": "oneToMany"
+				}
+			],
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Users",
+				"ja_JP": "ユーザー"
+			},
+			"portlet": false,
+			"restContextPath": "/o/headless-admin-user/v1.0/user-accounts",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"storageType": "default",
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
 			"active": true,
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,

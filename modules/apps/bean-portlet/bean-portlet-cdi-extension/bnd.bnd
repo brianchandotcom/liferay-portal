@@ -12,8 +12,8 @@ Provide-Capability:\
 Require-Capability:\
 	osgi.extender;\
 		filter:="(osgi.extender=osgi.serviceloader.registrar)";\
-		osgi.extender=osgi.serviceloader.registrar,\
+		osgi.extender="osgi.serviceloader.registrar",\
 	osgi.implementation;\
 		filter:="(osgi.implementation=osgi.cdi)";\
-		osgi.implementation=osgi.cdi
+		osgi.implementation="osgi.cdi"
 -contract: *

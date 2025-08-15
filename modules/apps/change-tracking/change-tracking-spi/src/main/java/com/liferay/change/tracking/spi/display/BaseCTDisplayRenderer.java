@@ -12,6 +12,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -21,6 +22,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -215,6 +217,8 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 					}
 				});
 
+			Locale locale = displayBuilder.getLocale();
+
 			if (!nonimageDDMFormFieldValues.isEmpty()) {
 				displayBuilder.displaySectionHeader("fields");
 
@@ -235,30 +239,52 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				imageDDMFormFieldValues,
 				ddmFormFieldValue -> {
 					try {
-						displayBuilder.displaySectionHeader("image");
-
 						Value value = ddmFormFieldValue.getValue();
 
 						JSONObject jsonObject =
 							JSONFactoryUtil.createJSONObject(
-								value.getString(displayBuilder.getLocale()));
+								value.getString(locale));
+
+						DDMFormField ddmFormField =
+							ddmFormFieldValue.getDDMFormField();
+
+						LocalizedValue label = ddmFormField.getLabel();
+
+						displayBuilder.displaySectionHeader(
+							StringBundler.concat(
+								LanguageUtil.get(locale, "image"),
+								StringPool.COLON, StringPool.SPACE,
+								label.getString(locale)));
 
 						DLFileEntry dlFileEntry =
-							DLFileEntryLocalServiceUtil.getDLFileEntry(
+							DLFileEntryLocalServiceUtil.fetchDLFileEntry(
 								jsonObject.getLong("fileEntryId"));
 
 						displayBuilder.display(
-							"mime-type", dlFileEntry.getMimeType()
+							"mime-type",
+							(dlFileEntry != null) ? dlFileEntry.getMimeType() :
+								StringPool.BLANK
 						).display(
-							"version", dlFileEntry.getVersion()
+							"version",
+							(dlFileEntry != null) ? dlFileEntry.getVersion() :
+								StringPool.BLANK
 						).display(
-							"size", dlFileEntry.getSize()
+							"size",
+							(dlFileEntry != null) ? dlFileEntry.getSize() :
+								StringPool.BLANK
 						).display(
 							"download",
-							getDownloadLink(
-								displayBuilder.getDisplayContext(),
-								dlFileEntry.getVersion(), dlFileEntry.getSize(),
-								dlFileEntry.getFileName()),
+							() -> {
+								if (dlFileEntry != null) {
+									return getDownloadLink(
+										displayBuilder.getDisplayContext(),
+										dlFileEntry.getVersion(),
+										dlFileEntry.getSize(),
+										dlFileEntry.getFileName());
+								}
+
+								return StringPool.BLANK;
+							},
 							false
 						);
 					}

@@ -1887,6 +1887,24 @@
 					"unique": false
 				},
 				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"localized": true,
+					"name": "description",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
 					"DBType": "String",
 					"businessType": "Picklist",
 					"externalReferenceCode": "KNOWLEDGE_ARTICLE_SOURCE_TEAMS",
@@ -2047,6 +2065,16 @@
 											"objectLayoutColumns": [
 												{
 													"objectFieldName": "name",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
 													"priority": 0,
 													"size": 12
 												}

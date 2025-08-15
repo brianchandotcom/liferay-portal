@@ -55,11 +55,21 @@ public class RenderResponseImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.isAvailableLocale(LocaleUtil.US)
+		).thenReturn(
+			true
+		);
+
+		languageUtil.setLanguage(language);
+
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
-
-		_setUpLanguageUtil();
 	}
 
 	@Test
@@ -78,15 +88,11 @@ public class RenderResponseImplTest {
 
 		PortletConfig portletConfig = Mockito.mock(PortletConfig.class);
 
-		_portletId = RandomTestUtil.randomString();
-
 		Mockito.when(
 			portletConfigFactory.get(_portletId)
 		).thenReturn(
 			portletConfig
 		);
-
-		_portletTitle = RandomTestUtil.randomString();
 
 		ResourceBundle testResourceBundle = new TestResourceBundle();
 
@@ -180,21 +186,8 @@ public class RenderResponseImplTest {
 
 	}
 
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
+	private String _portletId = RandomTestUtil.randomString();
+	private String _portletTitle = RandomTestUtil.randomString();
 
-		Language language = Mockito.mock(Language.class);
-
-		languageUtil.setLanguage(language);
-
-		Mockito.when(
-			language.isAvailableLocale(LocaleUtil.US)
-		).thenReturn(
-			true
-		);
-	}
-
-	private String _portletId;
-	private String _portletTitle;
 
 }

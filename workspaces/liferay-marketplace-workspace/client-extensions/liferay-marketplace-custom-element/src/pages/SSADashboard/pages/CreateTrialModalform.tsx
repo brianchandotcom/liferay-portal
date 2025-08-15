@@ -7,7 +7,7 @@ import Button from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Size} from '@clayui/modal/lib/types';
-import {MultiSelect} from '@clayui/multi-select/lib/MultiSelect';
+import MultiSelect from '@clayui/multi-select';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
 import {useCallback, useEffect, useMemo, useState} from 'react';

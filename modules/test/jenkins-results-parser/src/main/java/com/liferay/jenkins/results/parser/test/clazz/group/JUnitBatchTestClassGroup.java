@@ -724,13 +724,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		long start = System.currentTimeMillis();
 
-		List<PathMatcher> filterPathMatchers = getPathMatchers(
-			getFilterJobProperties());
-
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			getExcludesJobProperties());
-
-		BatchTestClassGroup batchTestClassGroup = this;
+		List<PathMatcher> filterPathMatchers = getPathMatchers(
+			getFilterJobProperties());
 
 		for (final File javaTestClassFile : _javaTestClassFiles) {
 			if (JenkinsResultsParserUtil.isFileExcluded(
@@ -744,21 +741,21 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
+			TestClass testClass = null;
+
 			List<String> testClassMethodNames = getTestClassMethodNames(
 				javaTestClassFile, getGlobTestClassMethodNamesMap());
-
-			TestClass testClass = null;
 
 			if ((testClassMethodNames != null) &&
 				!testClassMethodNames.isEmpty()) {
 
 				testClass = TestClassFactory.newTestClass(
-					batchTestClassGroup, javaTestClassFile,
+					this, javaTestClassFile,
 					testClassMethodNames);
 			}
 			else {
 				testClass = TestClassFactory.newTestClass(
-					batchTestClassGroup, javaTestClassFile);
+					this, javaTestClassFile);
 			}
 
 			if ((testClass != null) && !testClass.isIgnored() &&

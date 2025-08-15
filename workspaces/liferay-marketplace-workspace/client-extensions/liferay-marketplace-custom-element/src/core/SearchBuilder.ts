@@ -162,6 +162,10 @@ export default class SearchBuilder {
 		return this.setContext(SearchBuilder.gt(key, values));
 	}
 
+	public group(type: 'CLOSE' | 'OPEN') {
+		return this.setContext(SearchBuilder.group(type));
+	}
+
 	public lt(key: Key, values: Value) {
 		return this.setContext(SearchBuilder.lt(key, values));
 	}
@@ -198,8 +202,8 @@ export default class SearchBuilder {
 		return this.setContext(parseFn(SearchBuilder.ne(key, value)));
 	}
 
-	public group(type: 'CLOSE' | 'OPEN') {
-		return this.setContext(SearchBuilder.group(type));
+	public not() {
+		return this.setContext('not');
 	}
 
 	private setContext(query: string) {

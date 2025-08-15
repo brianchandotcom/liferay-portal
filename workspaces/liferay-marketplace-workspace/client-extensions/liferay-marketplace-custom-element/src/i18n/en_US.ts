@@ -252,7 +252,7 @@ export default {
 	'expired': 'Expired',
 	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':
 		'Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster.',
-	'export-csv': 'Export CSV',
+	'export': 'Export',
 	'extend-trial': 'Extend Trial',
 	'extension': 'Extension',
 	'extension-optional': 'Extension (optional)',

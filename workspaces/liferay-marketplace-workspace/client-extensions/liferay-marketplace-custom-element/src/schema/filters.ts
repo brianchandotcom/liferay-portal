@@ -266,6 +266,14 @@ const filterSchema = {
 						value: OrderTypes.LOW_CODE_CONFIGURATION,
 					},
 					{
+						label: i18n.translate('trial'),
+						value: OrderTypes.SOLUTIONS7,
+					},
+					{
+						label: i18n.translate('ssa-trials'),
+						value: OrderTypes.SSA_SAAS,
+					},
+					{
 						label: i18n.translate('other'),
 						value: OrderTypes.OTHER,
 					},

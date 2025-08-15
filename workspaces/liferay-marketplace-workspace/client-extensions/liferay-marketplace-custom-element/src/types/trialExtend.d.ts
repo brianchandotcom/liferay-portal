@@ -6,6 +6,7 @@ type TrialExtend = {
 	dueStatus: {[key: string]: string};
 	duration: number;
 	id: number;
+	projectId: string;
 	r_accountToTrialExtensionRequest_accountEntryId: number;
 	r_orderToTrialExtensionRequest_commerceOrderId: number;
 	reason: string;

@@ -114,6 +114,7 @@ type Product = {
 	active: boolean;
 	attachments: ProductAttachment[];
 	catalog: Catalog;
+	catalogExternalReferenceCode: string;
 	catalogId: number;
 	catalogName: string;
 	categories: ProductCategories[];

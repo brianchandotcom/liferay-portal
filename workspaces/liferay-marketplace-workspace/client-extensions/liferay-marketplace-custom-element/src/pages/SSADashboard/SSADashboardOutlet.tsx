@@ -30,8 +30,10 @@ const SSADashboardOutlet = () => {
 		mutate: ssaTrialExtendMutate,
 	} = useSSATrialsExtend(ssaAccount!);
 
+	const fetching = isSSALoading || isLoading;
+
 	return (
-		<PageRenderer error={error} isLoading={isLoading || isSSALoading}>
+		<PageRenderer error={error} isLoading={fetching}>
 			<div className="published-apps-dashboard-page-container">
 				<DashboardNavigation
 					currentAccount={ssaAccount}
@@ -43,15 +45,22 @@ const SSADashboardOutlet = () => {
 						},
 					]}
 				/>
+
 				<span className="h-vh-100 ml-6 w-100">
-					<Outlet
-						context={{
-							selectedAccountId: ssaAccount?.id,
-							ssaAccount,
-							ssaTrialExtend,
-							ssaTrialExtendMutate,
-						}}
-					/>
+					{ssaAccount ? (
+						<Outlet
+							context={{
+								selectedAccountId: ssaAccount?.id,
+								ssaAccount,
+								ssaTrialExtend,
+								ssaTrialExtendMutate,
+							}}
+						/>
+					) : (
+						<h1>
+							{`Unable to find ${properties.accountExternalReferenceCode}`}
+						</h1>
+					)}
 				</span>
 			</div>
 		</PageRenderer>

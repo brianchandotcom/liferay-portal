@@ -7,29 +7,34 @@ import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import DOMPurify from 'dompurify';
-import {Link, useNavigate, useOutletContext, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import {PageRenderer} from '../../../../components/Page';
 import QATable, {Orientation} from '../../../../components/QATable';
-import {OrderCustomFields, OrderStatus} from '../../../../enums/Order';
+import {
+	OrderCustomFields,
+	OrderWorkflowStatusCode,
+} from '../../../../enums/Order';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import {formatDate} from '../../../../utils/date';
+import {safeJSONParse} from '../../../../utils/util';
 import OrderDetailsHeader from '../../../CustomerDashboard/components/OrderDetailsHeader';
+import {useSSADashboardOutlet} from '../../SSADashboardOutlet';
 import ExtensionStatus from '../../components/ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../../components/TrialStatus/TrialStatus';
+import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
 import TrialActions from './TrialActions';
 
 const TrialDetails = () => {
 	const navigate = useNavigate();
 	const {orderId} = useParams();
-	const {ssaTrialExtend, ssaTrialExtendMutate} = useOutletContext<any>();
+	const {ssaTrialExtend, ssaTrialExtendMutate} = useSSADashboardOutlet();
 	const {
 		data,
 		error,
 		isLoading,
-		isValidating,
 		mutate: mutatePlacedOrder,
 	} = useGetProductByOrderId(orderId as string);
 
@@ -38,16 +43,25 @@ const TrialDetails = () => {
 	const placedOrderItems = placedOrder?.placedOrderItems ?? [];
 	const productCreatorAccountName = data?.product?.catalogName || '';
 
-	const placedOrderCustomFields =
-		placedOrder?.customFields &&
-		JSON.parse(placedOrder?.customFields[OrderCustomFields.TRIAL_SETTINGS]);
-	const projectId = placedOrderCustomFields?.projectId || '';
+	const {projectId} = safeJSONParse(
+		placedOrder?.customFields[OrderCustomFields.TRIAL_SETTINGS],
+		{
+			projectId: '',
+		}
+	);
+
+	const extensionStatus =
+		placedOrder?.orderStatusInfo?.code === OrderWorkflowStatusCode.COMPLETED
+			? 'extension-expired'
+			: ssaTrialExtend?.items?.find(
+					(trialExtend) => trialExtend.projectId === projectId
+				)?.dueStatus?.key;
 
 	return (
 		<PageRenderer
 			className="app-details-header d-flex flex-column w-100"
 			error={error}
-			isLoading={isLoading && isValidating}
+			isLoading={isLoading}
 		>
 			<Link
 				className="align-items-center d-flex text-dark"
@@ -73,7 +87,7 @@ const TrialDetails = () => {
 				<DropDown
 					className="align-items-center cursor-pointer d-flex h-100"
 					trigger={
-						<ClayButton size="sm">
+						<ClayButton displayType="secondary" size="sm">
 							{i18n.translate('manage-trial')}
 
 							<ClayIcon
@@ -105,6 +119,7 @@ const TrialDetails = () => {
 								<span className="h4 mt-4 text-black-50">
 									{i18n.translate('general-info')}
 								</span>
+
 								<hr className="my-0" />
 
 								<QATable
@@ -129,9 +144,7 @@ const TrialDetails = () => {
 											),
 										},
 										{
-											title: i18n.translate(
-												'license-type'
-											),
+											title: i18n.translate('type'),
 											value: (
 												<div className="mb-3">
 													{placedOrder?.orderType}
@@ -187,6 +200,7 @@ const TrialDetails = () => {
 								<span className="h4 mt-4 text-black-50">
 									{i18n.translate('trial-info')}
 								</span>
+
 								<hr className="my-0" />
 
 								<QATable
@@ -245,32 +259,14 @@ const TrialDetails = () => {
 											title: i18n.translate(
 												'extension-status'
 											),
-											value: (() => {
-												return (
-													<div className="my-3">
-														<ExtensionStatus
-															extensionStatus={
-																placedOrder
-																	?.orderStatusInfo
-																	?.label ===
-																OrderStatus.COMPLETED
-																	? 'extension-expired'
-																	: ssaTrialExtend?.items?.find(
-																			({
-																				projectId,
-																			}: {
-																				projectId: string;
-																			}) =>
-																				projectId ===
-																				placedOrderCustomFields?.projectId
-																		)
-																			?.dueStatus
-																			?.key
-															}
-														/>
-													</div>
-												);
-											})(),
+											value: (
+												<ExtensionStatus
+													className="my-3"
+													extensionStatus={
+														extensionStatus as keyof typeof EXTEND_TRIAL_STATUS_LABEL
+													}
+												/>
+											),
 										},
 									]}
 									orientation={Orientation.VERTICAL}

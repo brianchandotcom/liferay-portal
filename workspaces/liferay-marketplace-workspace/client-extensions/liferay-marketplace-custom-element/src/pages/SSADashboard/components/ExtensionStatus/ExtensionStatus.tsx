@@ -11,28 +11,34 @@ import {ExtendRequestStatus} from '../../enums/SSATrials';
 import './ExtensionStatus.scss';
 
 type ExtensionStatusProps = {
+	className?: string;
 	extensionStatus?: keyof typeof EXTEND_TRIAL_STATUS_LABEL;
 };
 
-const ExtensionStatus = ({extensionStatus}: ExtensionStatusProps) => (
-	<span
-		className={classNames('extension-status', {
-			'extension-status-approved': [
-				ExtendRequestStatus.APPROVED,
-				ExtendRequestStatus.AUTO_APPROVED,
-			].includes(extensionStatus as ExtendRequestStatus),
-			'extension-status-expired': [
-				ExtendRequestStatus.EXTENSION_EXPIRED,
-				ExtendRequestStatus.REJECTED,
-			].includes(extensionStatus as ExtendRequestStatus),
-			'extension-status-not-requested':
-				!extensionStatus ||
-				extensionStatus === ExtendRequestStatus.NOT_REQUESTED,
-			'extension-status-pending':
-				extensionStatus === ExtendRequestStatus.PENDING,
-		})}
-	>
-		{EXTEND_TRIAL_STATUS_LABEL[extensionStatus ?? 'not-requested']}
-	</span>
+const ExtensionStatus = ({
+	className,
+	extensionStatus,
+}: ExtensionStatusProps) => (
+	<div className={className}>
+		<span
+			className={classNames('extension-status', {
+				'extension-status-approved': [
+					ExtendRequestStatus.APPROVED,
+					ExtendRequestStatus.AUTO_APPROVED,
+				].includes(extensionStatus as ExtendRequestStatus),
+				'extension-status-expired': [
+					ExtendRequestStatus.EXTENSION_EXPIRED,
+					ExtendRequestStatus.REJECTED,
+				].includes(extensionStatus as ExtendRequestStatus),
+				'extension-status-not-requested':
+					extensionStatus === ExtendRequestStatus.NOT_REQUESTED ||
+					!extensionStatus,
+				'extension-status-pending':
+					extensionStatus === ExtendRequestStatus.PENDING,
+			})}
+		>
+			{EXTEND_TRIAL_STATUS_LABEL[extensionStatus ?? 'not-requested']}
+		</span>
+	</div>
 );
 export default ExtensionStatus;

@@ -736,8 +736,20 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		String variableTypeName = getVariableTypeName(
 			content, null, fileContent, fileName, variable.trim(), true, false);
 
-		if ((variableTypeName != null) &&
-			variableTypeName.startsWith(className)) {
+		if (variableTypeName == null) {
+			return false;
+		}
+
+		variableTypeName = variableTypeName.replaceAll(
+			"<[^>]+>", ""
+		).trim();
+
+		String typeAsVariableName = StringUtil.lowerCaseFirstLetter(
+			variableTypeName);
+
+		if (StringUtil.equalsIgnoreCase(className, variableTypeName) ||
+			className.startsWith(typeAsVariableName) ||
+			className.startsWith("_" + typeAsVariableName)) {
 
 			return true;
 		}

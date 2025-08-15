@@ -68,8 +68,7 @@ resource "aws_iam_policy" "s3" {
 				}
 			]
 			Version="2012-10-17"
-		}
-	)
+		})
 }
 resource "aws_iam_role" "liferay" {
 	assume_role_policy=jsonencode(
@@ -89,8 +88,7 @@ resource "aws_iam_role" "liferay" {
 				}
 			]
 			Version="2012-10-17"
-		}
-	)
+		})
 	name="${var.deployment_name}-irsa"
 }
 resource "aws_iam_role_policy_attachment" "s3" {

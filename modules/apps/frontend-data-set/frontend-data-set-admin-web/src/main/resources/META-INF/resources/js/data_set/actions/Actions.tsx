@@ -183,7 +183,12 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 
 		const responseJSON = await response.json();
 
-		const storedActions: IAction[] = responseJSON.items;
+		// Temporarily filtering by `action.type` since the `filter` parameter
+		// in the resource url isn't implemented yet. See LPD-62317.
+
+		const storedActions: IAction[] = (responseJSON.items || []).filter(
+			(action: IAction) => action.type === type
+		);
 
 		const actionTypeOrder =
 			activeTab === 0 ? 'itemActionsOrder' : 'creationActionsOrder';

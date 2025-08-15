@@ -1,3 +1,11 @@
+provider "aws" {
+	default_tags {
+		tags={
+			DeploymentName=var.deployment_name
+		}
+	}
+	region=var.region
+}
 terraform {
 	required_providers {
 		aws={

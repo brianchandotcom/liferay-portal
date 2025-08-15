@@ -33,3 +33,6 @@ variable "backup_vault_name" {
 variable "deployment_name" {
 	default="liferay-self-hosted"
 }
+variable "region" {
+	type=string
+}

@@ -12,9 +12,6 @@ resource "aws_backup_plan" "this" {
 		for_each=var.backup_rules
 	}
 	name=var.backup_plan_name
-	tags={
-		DeploymentName=var.deployment_name
-	}
 }
 resource "aws_backup_selection" "this" {
 	iam_role_arn=var.backup_service_assumed_role_arn

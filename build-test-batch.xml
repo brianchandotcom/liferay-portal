@@ -3197,15 +3197,13 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								return;
 							}
 
-							Set testClassNameSet = new HashSet();
+							Set testClassNamesSet = new HashSet();
 
 							Pattern pattern = Pattern.compile("(TEST_CLASS_GROUP_\\d+=)(.*)");
 
 							Matcher matcher = pattern.matcher(fileContent);
 
 							if (matcher.find()) {
-								String testClassGroupIndex = matcher.group(1);
-
 								String testClassNames = matcher.group(2);
 
 								String[] testClassNamesList = testClassNames.split(",");
@@ -3213,26 +3211,26 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								for (int i=0; i < testClassNamesList.length; i++) {
 									String testClassName = testClassNamesList[i];
 
-									int hashIndex = testClassName.indexOf('#');
+									int index = testClassName.indexOf('#');
 
-									if (hashIndex != -1) {
-										testClassNameSet.add(testClassName.substring(0, hashIndex));
+									if (index != -1) {
+										testClassNamesSet.add(testClassName.substring(0, index));
 									}
 									else{
-										testClassNameSet.add(testClassName);
+										testClassNamesSet.add(testClassName);
 									}
 								}
 
 								StringBuilder sb = new StringBuilder();
 
-								sb.append(testClassGroupIndex);
+								sb.append(matcher.group(1));
 
-								for (String testClassName : testClassNameSet) {
+								for (String testClassName : testClassNamesSet) {
 									sb.append(testClassName);
 									sb.append(",");
 								}
 
-								if (testClassNameSet.size() > 0) {
+								if (testClassNamesSet.size() > 0) {
 									sb.deleteCharAt(sb.length() - 1);
 								}
 

@@ -110,7 +110,8 @@ public class ObjectLayoutLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Arrays.asList(_createObjectLayoutTab(), _createObjectLayoutTab())));
+				Arrays.asList(
+					_createObjectLayoutTab(), _createObjectLayoutTab())));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
@@ -271,8 +272,8 @@ public class ObjectLayoutLocalServiceTest {
 
 				ObjectLayoutRow objectLayoutRow = _createObjectLayoutRow();
 
-				ObjectLayoutColumn objectLayoutColumn = _createObjectLayoutColumn(
-					false);
+				ObjectLayoutColumn objectLayoutColumn =
+					_createObjectLayoutColumn(false);
 
 				objectLayoutColumn.setObjectFieldId(
 					_objectRelationshipA_AA.getObjectFieldId2());
@@ -310,7 +311,8 @@ public class ObjectLayoutLocalServiceTest {
 				objectLayoutTab.setPriority(0);
 				objectLayoutTab.setObjectLayoutBoxes(
 					Arrays.asList(
-						_createObjectLayoutBox(), _createObjectLayoutBox(null)));
+						_createObjectLayoutBox(),
+						_createObjectLayoutBox(null)));
 
 				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
@@ -545,8 +547,8 @@ public class ObjectLayoutLocalServiceTest {
 
 				ObjectLayoutRow objectLayoutRow = _createObjectLayoutRow();
 
-				ObjectLayoutColumn objectLayoutColumn = _createObjectLayoutColumn(
-					false);
+				ObjectLayoutColumn objectLayoutColumn =
+					_createObjectLayoutColumn(false);
 
 				ObjectField objectField =
 					_objectFieldLocalService.getObjectField(
@@ -671,11 +673,45 @@ public class ObjectLayoutLocalServiceTest {
 			Collections.singletonList(_createObjectLayoutTab()));
 	}
 
+	private void _assertObjectLayout(ObjectLayout objectLayout) {
+		List<ObjectLayoutTab> objectLayoutTabs =
+			objectLayout.getObjectLayoutTabs();
+
+		Assert.assertEquals(
+			objectLayoutTabs.toString(), 1, objectLayoutTabs.size());
+
+		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
+
+		List<ObjectLayoutBox> objectLayoutBoxes =
+			objectLayoutTab.getObjectLayoutBoxes();
+
+		Assert.assertEquals(
+			objectLayoutBoxes.toString(), 2, objectLayoutBoxes.size());
+
+		ObjectLayoutBox objectLayoutBox = objectLayoutBoxes.get(0);
+
+		List<ObjectLayoutRow> objectLayoutRows =
+			objectLayoutBox.getObjectLayoutRows();
+
+		Assert.assertEquals(
+			objectLayoutRows.toString(), 3, objectLayoutRows.size());
+
+		ObjectLayoutRow objectLayoutRow = objectLayoutRows.get(0);
+
+		List<ObjectLayoutColumn> objectLayoutColumns =
+			objectLayoutRow.getObjectLayoutColumns();
+
+		Assert.assertEquals(
+			objectLayoutColumns.toString(), 4, objectLayoutColumns.size());
+	}
+
 	private ObjectLayoutBox _createObjectLayoutBox() throws Exception {
 		return _createObjectLayoutBox(ObjectLayoutBoxConstants.TYPE_REGULAR);
 	}
 
-	private ObjectLayoutBox _createObjectLayoutBox(String type) throws Exception {
+	private ObjectLayoutBox _createObjectLayoutBox(String type)
+		throws Exception {
+
 		ObjectLayoutBox objectLayoutBox = _objectLayoutBoxPersistence.create(0);
 
 		objectLayoutBox.setCollapsable(false);
@@ -724,8 +760,10 @@ public class ObjectLayoutLocalServiceTest {
 		objectLayoutRow.setPriority(0);
 		objectLayoutRow.setObjectLayoutColumns(
 			Arrays.asList(
-				_createObjectLayoutColumn(false), _createObjectLayoutColumn(false),
-				_createObjectLayoutColumn(true), _createObjectLayoutColumn(true)));
+				_createObjectLayoutColumn(false),
+				_createObjectLayoutColumn(false),
+				_createObjectLayoutColumn(true),
+				_createObjectLayoutColumn(true)));
 
 		return objectLayoutRow;
 	}
@@ -738,38 +776,6 @@ public class ObjectLayoutLocalServiceTest {
 			Arrays.asList(_createObjectLayoutBox(), _createObjectLayoutBox()));
 
 		return objectLayoutTab;
-	}
-
-	private void _assertObjectLayout(ObjectLayout objectLayout) {
-		List<ObjectLayoutTab> objectLayoutTabs =
-			objectLayout.getObjectLayoutTabs();
-
-		Assert.assertEquals(
-			objectLayoutTabs.toString(), 1, objectLayoutTabs.size());
-
-		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
-
-		List<ObjectLayoutBox> objectLayoutBoxes =
-			objectLayoutTab.getObjectLayoutBoxes();
-
-		Assert.assertEquals(
-			objectLayoutBoxes.toString(), 2, objectLayoutBoxes.size());
-
-		ObjectLayoutBox objectLayoutBox = objectLayoutBoxes.get(0);
-
-		List<ObjectLayoutRow> objectLayoutRows =
-			objectLayoutBox.getObjectLayoutRows();
-
-		Assert.assertEquals(
-			objectLayoutRows.toString(), 3, objectLayoutRows.size());
-
-		ObjectLayoutRow objectLayoutRow = objectLayoutRows.get(0);
-
-		List<ObjectLayoutColumn> objectLayoutColumns =
-			objectLayoutRow.getObjectLayoutColumns();
-
-		Assert.assertEquals(
-			objectLayoutColumns.toString(), 4, objectLayoutColumns.size());
 	}
 
 	private void _deleteObjectFields() throws Exception {

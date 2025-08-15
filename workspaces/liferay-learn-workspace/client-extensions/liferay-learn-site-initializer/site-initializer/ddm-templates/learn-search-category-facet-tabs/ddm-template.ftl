@@ -139,9 +139,7 @@
 			urlSearchParams.append('resource-type', dataTermId);
 		}
 
-		const newUrl = window.location.pathname + '?' + urlSearchParams.toString();
-
-		window.location.href = newUrl;
+		window.location.href = window.location.pathname + '?' + urlSearchParams.toString();
 	}
 </@liferay_aui.script>
 

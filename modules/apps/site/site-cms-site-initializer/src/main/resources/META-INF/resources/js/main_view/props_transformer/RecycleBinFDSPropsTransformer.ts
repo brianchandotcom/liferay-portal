@@ -8,6 +8,7 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/genericOpenModalUtil';
+import {restoreItemAction} from './actions/restoreItemAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 
@@ -21,9 +22,10 @@ interface ItemData {
 		expire: Action;
 		get: Action;
 		replace: Action;
+		restore: Action;
 		update: Action;
 	};
-	embedded: {content: string; title: string};
+	embedded: {content: string; objectEntryFolderId: number; title: string};
 }
 
 export default function RecycleBinFDSPropsTransformer({
@@ -47,7 +49,7 @@ export default function RecycleBinFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		onActionDropdownItemClick({
+		async onActionDropdownItemClick({
 			action,
 			itemData,
 			loadData,
@@ -83,6 +85,17 @@ export default function RecycleBinFDSPropsTransformer({
 					itemData.embedded.title,
 					loadData,
 					displayDeleteItemSuccessToast
+				);
+			}
+
+			if (action.data.id === 'restore') {
+				const formattedItemLabel = `<strong>${Liferay.Util.escapeHTML(itemData.embedded.title)}</strong>`;
+
+				await restoreItemAction(
+					formattedItemLabel,
+					loadData,
+					itemData.actions?.restore.method,
+					itemData.actions?.restore.href
 				);
 			}
 		},

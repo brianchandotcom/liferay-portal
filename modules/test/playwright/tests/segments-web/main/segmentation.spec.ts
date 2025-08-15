@@ -8,14 +8,14 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
-import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
-import {goToSegmentsAdmin } from '../../change-tracking-web/main/utils/segments';
-import { segmentsPageTest } from './fixtures/segmentsPageTest';
-import { pageEditorPagesTest } from '../../../fixtures/pageEditorPagesTest';
-import { waitForAlert } from '../../../utils/waitForAlert';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {goToSegmentsAdmin} from '../../change-tracking-web/main/utils/segments';
+import {segmentsPageTest} from './fixtures/segmentsPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -54,16 +54,25 @@ test(
 		tag: '@LPS-130281',
 	},
 
-	async ({apiHelpers, editOrganizationPage, page, pageEditorPage, segmentsPage, usersAndOrganizationsPage}) => {
+	async ({
+		apiHelpers,
+		editOrganizationPage,
+		page,
+		pageEditorPage,
+		segmentsPage,
+		usersAndOrganizationsPage,
+	}) => {
 		const segmentName = 'AddSegmentByOrganizationCountry Test';
 
 		await test.step('Given a user and an organization were created and the user was assigned to the organization', async () => {
-			const orgName = await apiHelpers.headlessAdminUser.postOrganization({
-				name: 'Organization1',
-			});
+			const orgName = await apiHelpers.headlessAdminUser.postOrganization(
+				{
+					name: 'Organization1',
+				}
+			);
 
 			const user = await apiHelpers.headlessAdminUser.postUserAccount({
-				emailAddress: 'userea@liferay.com'
+				emailAddress: 'userea@liferay.com',
 			});
 
 			await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
@@ -78,12 +87,8 @@ test(
 				)
 			).click();
 			await usersAndOrganizationsPage.editOrganizationMenuItem.click();
-			await editOrganizationPage.countrySelect.selectOption(
-				'Spain'
-			);
-			await editOrganizationPage.regionSelect.selectOption(
-				'Madrid'
-			);
+			await editOrganizationPage.countrySelect.selectOption('Spain');
+			await editOrganizationPage.regionSelect.selectOption('Madrid');
 			await editOrganizationPage.saveButton.click();
 		});
 
@@ -93,7 +98,7 @@ test(
 			await segmentsPage.clickAddNewSegmentButton();
 
 			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
-				"user-organization": ['Country'],
+				'user-organization': ['Country'],
 			});
 
 			await segmentsPage.editSegmentsEntry(segmentName);
@@ -104,10 +109,10 @@ test(
 
 			await segmentsPage.viewMembers('userea@liferay.com');
 		});
-		
+
 		await test.step('Then can assert the segment is correctly created', async () => {
 			await goToSegmentsAdmin(page);
-			
+
 			const linkLocator = page.locator(`a:has-text('${segmentName}')`);
 			await linkLocator.click();
 
@@ -129,12 +134,14 @@ test(
 		const segmentName = 'AddSegmentByOrganizationName Test';
 
 		await test.step('Given a user and an organization were created and the user was assigned to the organization', async () => {
-			const orgName = await apiHelpers.headlessAdminUser.postOrganization({
-				name: 'Organization Name',
-			});
+			const orgName = await apiHelpers.headlessAdminUser.postOrganization(
+				{
+					name: 'Organization Name',
+				}
+			);
 
 			const user = await apiHelpers.headlessAdminUser.postUserAccount({
-				emailAddress: 'userea@liferay.com'
+				emailAddress: 'userea@liferay.com',
 			});
 
 			await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
@@ -149,7 +156,7 @@ test(
 			await segmentsPage.clickAddNewSegmentButton();
 
 			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
-				"user-organization": ['Name'],
+				'user-organization': ['Name'],
 			});
 
 			await segmentsPage.editSegmentsEntry(segmentName);
@@ -162,10 +169,10 @@ test(
 
 			await segmentsPage.viewMembers('userea@liferay.com');
 		});
-		
+
 		await test.step('Then can assert the segment is correctly created', async () => {
 			await goToSegmentsAdmin(page);
-			
+
 			await segmentsPage.clickLinkByText(segmentName);
 
 			await page.waitForLoadState('networkidle');
@@ -186,12 +193,14 @@ test(
 		const segmentName = 'AddSegmentByOrganizationType Test';
 
 		await test.step('Given a user and an organization were created and the user was assigned to the organization', async () => {
-			const orgName = await apiHelpers.headlessAdminUser.postOrganization({
-				name: 'Organization Name',
-			});
+			const orgName = await apiHelpers.headlessAdminUser.postOrganization(
+				{
+					name: 'Organization Name',
+				}
+			);
 
 			const user = await apiHelpers.headlessAdminUser.postUserAccount({
-				emailAddress: 'userea@liferay.com'
+				emailAddress: 'userea@liferay.com',
 			});
 
 			await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
@@ -206,7 +215,7 @@ test(
 			await segmentsPage.clickAddNewSegmentButton();
 
 			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
-				"user-organization": ['Type'],
+				'user-organization': ['Type'],
 			});
 
 			await segmentsPage.fillField('organization');
@@ -217,10 +226,10 @@ test(
 
 			await segmentsPage.viewMembers('userea@liferay.com');
 		});
-		
+
 		await test.step('Then can assert the segment is correctly created', async () => {
 			await goToSegmentsAdmin(page);
-			
+
 			await segmentsPage.clickLinkByText(segmentName);
 
 			await page.waitForLoadState('networkidle');
@@ -251,7 +260,7 @@ test(
 
 			await expect(segmentsPage.plusButton).not.toBeVisible();
 		});
-		
+
 		await test.step(`Then asserts that segment creation is disabled within the segment selector`, async () => {
 			await segmentsPage.selectButton.click();
 
@@ -281,7 +290,7 @@ test(
 
 			const user2 = await apiHelpers.headlessAdminUser.postUserAccount({
 				emailAddress: `userea2@liferay.com`,
-			});			
+			});
 		});
 
 		await test.step('When a segment designer adds 2 segments', async () => {
@@ -306,7 +315,6 @@ test(
 			await segmentsPage.fillField('userea2@liferay.com');
 
 			await segmentsPage.saveButton.click();
-
 		});
 
 		await test.step('And verifies a new segment correctly includes users from other segments', async () => {
@@ -322,7 +330,7 @@ test(
 
 			await segmentsPage.clickDuplicateButton();
 
-			await page.getByRole('button', { name: 'Select' }).nth(1).click();
+			await page.getByRole('button', {name: 'Select'}).nth(1).click();
 
 			await segmentsPage.selectSegment('Segment With User2');
 
@@ -334,19 +342,21 @@ test(
 		await test.step('And deletes one of the segments', async () => {
 			await segmentsPage.deleteSegment('Segment With User1');
 		});
-		
-		await test.step('Then asserts that a warning is shown', async () => {			
+
+		await test.step('Then asserts that a warning is shown', async () => {
 			await goToSegmentsAdmin(page);
 
 			await segmentsPage.editSegmentsEntry(segmentName3);
 
 			await page.waitForLoadState('networkidle');
 
-    		const expectedMessage = 'Delete this condition. It was created from an element that no longer exists.';
+			const expectedMessage =
+				'Delete this condition. It was created from an element that no longer exists.';
 
 			await segmentsPage.assertErrorMessageIsVisible(expectedMessage);
 		});
-});
+	}
+);
 
 test(
 	`Can validate a segment can be created using the "Session > Browser" criterion`,
@@ -363,16 +373,16 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await segmentsPage.addSessionSegment('Browser',segmentName)
+			await segmentsPage.addSessionSegment('Browser', segmentName);
 
 			await segmentsPage.fillField('Chrome');
 
 			await segmentsPage.saveButton.click();
 
-			await waitForAlert(page);		
+			await waitForAlert(page);
 		});
-		
-		await test.step('Then asserts that the segment is correctly created', async () => {			
+
+		await test.step('Then asserts that the segment is correctly created', async () => {
 			await segmentsPage.clickLinkByText(segmentName);
 
 			await page.waitForLoadState('networkidle');
@@ -397,14 +407,14 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await segmentsPage.addSessionSegment('Language',segmentName)
+			await segmentsPage.addSessionSegment('Language', segmentName);
 
 			await segmentsPage.selectOption('Spanish (Spain)');
 
-			await waitForAlert(page);		
+			await waitForAlert(page);
 		});
-		
-		await test.step('Then asserts that the segment is correctly created', async () => {			
+
+		await test.step('Then asserts that the segment is correctly created', async () => {
 			await segmentsPage.clickLinkByText(segmentName);
 
 			await page.waitForLoadState('networkidle');
@@ -429,7 +439,7 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await segmentsPage.addSessionSegment('URL',segmentName)
+			await segmentsPage.addSessionSegment('URL', segmentName);
 
 			await segmentsPage.fillField('http://localhost:8080');
 
@@ -437,8 +447,8 @@ test(
 
 			await waitForAlert(page);
 		});
-		
-		await test.step('Then asserts that the segment is correctly created', async () => {			
+
+		await test.step('Then asserts that the segment is correctly created', async () => {
 			await segmentsPage.clickLinkByText(segmentName);
 
 			await page.waitForLoadState('networkidle');
@@ -455,11 +465,17 @@ test(
 		tag: '@LPS-146550',
 	},
 
-	async ({editUserPage, page, pageEditorPage, segmentsPage, usersAndOrganizationsPage}) => {
+	async ({
+		editUserPage,
+		page,
+		pageEditorPage,
+		segmentsPage,
+		usersAndOrganizationsPage,
+	}) => {
 		const segmentName = 'Segment with Apostrophe';
 
 		await test.step('Given a user is created', async () => {
-			await usersAndOrganizationsPage.goToUsers();	
+			await usersAndOrganizationsPage.goToUsers();
 			await usersAndOrganizationsPage.addUserButton.click();
 
 			await editUserPage.emailAddressInput.fill('shaquille@liferay.com');
@@ -483,11 +499,11 @@ test(
 
 			await segmentsPage.saveButton.click();
 		});
-		
+
 		await test.step('Then asserts that the segment is correctly created including the user', async () => {
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers(undefined,`Shaquille O'Neal`);
+			await segmentsPage.viewMembers(undefined, `Shaquille O'Neal`);
 		});
 	}
 );

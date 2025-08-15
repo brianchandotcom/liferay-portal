@@ -3,22 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Label from '@clayui/label';
 import {useNavigate} from 'react-router-dom';
 import useSWR from 'swr';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {AccountType} from '../../../enums/Account';
-import {MarketplaceCategory} from '../../../enums/Categories';
-import {orderTypeLabel} from '../../../enums/Order';
-import {ProductType} from '../../../enums/Product';
+import {ProductType, ProductWorkflowStatusCode} from '../../../enums/Product';
 import useListTypeDefinition from '../../../hooks/useListTypeDefinition';
 import useModalContext from '../../../hooks/useModalContext';
 import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
 import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
+import ProjectsUsingMarketplaceModalBody from '../components/ProjectsUsingMarketplace';
 
 const baseSearchBuilder = new SearchBuilder()
+	.in('statusCode', [ProductWorkflowStatusCode.APPROVED])
+	.and();
+
+const baseSearchBuilderWithQuarterly = baseSearchBuilder
+	.clone()
 	.group('OPEN')
 	.lambdaContains('specificationValues', '2025 Q')
 	.or()
@@ -27,21 +30,21 @@ const baseSearchBuilder = new SearchBuilder()
 	.lambdaContains('specificationValues', '2023 Q')
 	.group('CLOSE');
 
-const connectorQuartelyReleaseFilter = baseSearchBuilder
+const appsAndConnectorSupportingQReleaseFilter = baseSearchBuilderWithQuarterly
 	.clone()
 	.and()
-	.lambda('categoryNames', MarketplaceCategory.PAYMENT_METHODS)
-	.build();
-
-const lowCodeConfigurationsPublishedFilter = new SearchBuilder()
+	.not()
 	.lambda('specificationValues', ProductType.LOW_CODE_CONFIGURATION)
 	.build();
 
-const partnershipIntegrationFilter = new SearchBuilder()
-	.lambda('specificationValues', AccountType.TECHNOLOGY_PARTNER)
+const lowCodeConfigurationsPublishedFilter = baseSearchBuilder
+	.clone()
+	.lambda('specificationValues', ProductType.LOW_CODE_CONFIGURATION)
 	.build();
 
-const supportingQuartelyReleaseFilter = baseSearchBuilder.clone().build();
+const technologyPartnershipIntegrationFilter = new SearchBuilder()
+	.lambda('specificationValues', AccountType.TECHNOLOGY_PARTNER)
+	.build();
 
 const getAnnualTargetValues = (kpiTarget: string, value: number) => {
 	if (kpiTarget.includes('/')) {
@@ -59,120 +62,22 @@ const getAnnualTargetValues = (kpiTarget: string, value: number) => {
 	};
 };
 
-type ProjectsUsingMarketplaceModalBodyProps = {
-	projectsUsingMarkeplaceApps: [
-		string,
-		{
-			accountName: string;
-			orders: {
-				creatorEmailAddress: string;
-				id: number;
-				orderTypeExternalReferenceCode: string;
-				projects: {
-					key: string;
-					name: string;
-				}[];
-			}[];
-		},
-	][];
-};
-
-function ProjectsUsingMarketplaceModalBody({
-	projectsUsingMarkeplaceApps,
-}: ProjectsUsingMarketplaceModalBodyProps) {
-	return (
-		<ul className="list-group list-group-flush">
-			{projectsUsingMarkeplaceApps.map(([key, project], index) => (
-				<li className="list-group-item" key={index}>
-					<div className="mb-1">
-						<strong className="text-dark">
-							[{index + 1}] {key}
-						</strong>{' '}
-						–{' '}
-						<span className="text-dark">{project.accountName}</span>
-					</div>
-
-					{project.orders?.map((order, index) => {
-						const exactMatch =
-							order.orderTypeExternalReferenceCode.startsWith(
-								'KOR-'
-							) || order.projects.length === 1;
-
-						return (
-							<details
-								className="border-0 list-group-item py-1"
-								key={index}
-							>
-								<summary>
-									<span className="fw-semibold">
-										<Label
-											displayType={
-												exactMatch
-													? 'success'
-													: 'warning'
-											}
-										>
-											{exactMatch
-												? 'Exact Match'
-												: 'Multiple projects'}
-										</Label>{' '}
-										Order #{order.id}
-									</span>{' '}
-									–{' '}
-									<span className="text-muted">
-										{
-											orderTypeLabel[
-												order.orderTypeExternalReferenceCode as keyof typeof orderTypeLabel
-											]
-										}
-									</span>
-								</summary>
-
-								<p>Created by: {order.creatorEmailAddress}</p>
-
-								{!exactMatch && (
-									<p>
-										Projects:{' '}
-										{order.projects.map(
-											(customerProject, index) => (
-												<Label key={index}>
-													{customerProject.name}
-												</Label>
-											)
-										)}
-									</p>
-								)}
-							</details>
-						);
-					})}
-				</li>
-			))}
-		</ul>
-	);
-}
-
 const useKPI = () => {
 	const {data: liferayVersionsPicklist} =
 		useListTypeDefinition('LIFERAY-VERSIONS');
+
+	const modal = useModalContext();
+	const navigate = useNavigate();
 
 	const liferayQuarterlyVersionEntries =
 		liferayVersionsPicklist?.listTypeEntries.filter((entry) =>
 			entry.externalReferenceCode.includes('Q')
 		);
 
-	const liferayQuarterlyVersions = JSON.stringify({
-		'specificationValues|liferayVersion':
-			liferayQuarterlyVersionEntries?.map((entry) => entry.name),
-	});
-
 	const liferayQuarterlyVersionsAndConnectors = JSON.stringify({
-		'categoryNames': MarketplaceCategory.PAYMENT_METHODS,
 		'specificationValues|liferayVersion':
 			liferayQuarterlyVersionEntries?.map((entry) => entry.name),
 	});
-
-	const modal = useModalContext();
-	const navigate = useNavigate();
 
 	const {
 		properties: {kpi: anualTargetKPIs},
@@ -186,33 +91,66 @@ const useKPI = () => {
 		kpiQuartelyReleaseApps,
 	} = anualTargetKPIs;
 
-	const {data, ...swr} = useSWR('metrics/kpi', async () => {
+	return useSWR('metrics/kpi', async () => {
 		const [
 			{
 				data: {
 					metrics: {
-						connectorQuartelyRelease,
+						appsAndConnectorSupportingQRelease,
 						lowCodeConfigurationsPublished,
 						partnershipIntegration,
-						supportingQuartelyRelease,
 					},
 				},
 			},
+			catalogsResponse,
 			projectsKPI,
 		] = await Promise.all([
-			HeadlessCommerceAdminCatalog.getProductsDashboardKPI({
-				connectorQuartelyRelease: connectorQuartelyReleaseFilter,
-				lowCodeConfigurationsPublished:
-					lowCodeConfigurationsPublishedFilter,
-				partnershipIntegration: partnershipIntegrationFilter,
-				supportingQuartelyRelease: supportingQuartelyReleaseFilter,
-			}),
+			HeadlessCommerceAdminCatalog.getProductsDashboardKPI(
+				{
+					appsAndConnectorSupportingQRelease:
+						appsAndConnectorSupportingQReleaseFilter,
+					lowCodeConfigurationsPublished:
+						lowCodeConfigurationsPublishedFilter,
+					partnershipIntegration:
+						technologyPartnershipIntegrationFilter,
+				},
+				{
+					appsAndConnectorSupportingQRelease: {
+						body: ` items { catalogExternalReferenceCode, id, name, thumbnail } `,
+						pageSize: -1,
+					},
+				}
+			),
+			HeadlessCommerceAdminCatalog.getCatalogs(
+				new URLSearchParams({
+					fields: 'externalReferenceCode,name',
+					pageSize: '-1',
+				})
+			),
 			marketplaceOAuth2.getMarketplaceProjectsKPI(),
 		]);
 
 		const projectsUsingMarkeplaceApps = Object.entries(
 			projectsKPI?.projectsUsingMarketplace ?? {}
 		);
+
+		const catalogs = Object.groupBy(
+			appsAndConnectorSupportingQRelease.items.map((product) => ({
+				...product,
+				catalogName:
+					catalogsResponse.items.find(
+						(catalog) =>
+							catalog.externalReferenceCode ===
+							product.catalogExternalReferenceCode
+					)?.name ?? product.externalReferenceCode,
+			})),
+			({catalogName}) => catalogName
+		);
+
+		const supportingQuartelyRelease = {
+			...appsAndConnectorSupportingQRelease,
+			totalCount: Object.keys(catalogs).length,
+		};
 
 		return {
 			kpis: [
@@ -248,13 +186,44 @@ const useKPI = () => {
 						partnershipIntegration.totalCount
 					),
 					colors: ['#FFB46E', '#FFE9D4'],
+					externalPage: true,
 					title: 'Technology Partnership With Integrations',
 				},
 				{
 					onClick: () =>
-						navigate(
-							`/apps?filter=${liferayQuarterlyVersions}&filterSchema=administratorApps`
-						),
+						modal.onOpenModal({
+							body: (
+								<ol>
+									{Object.entries(catalogs).map(
+										([catalog, products = []], index) => (
+											<li key={index}>
+												<span className="font-weight-bold">
+													{catalog}
+												</span>
+
+												<ol>
+													{products.map(
+														(
+															{name},
+															productIndex
+														) => (
+															<li
+																key={
+																	productIndex
+																}
+															>
+																{name.en_US}
+															</li>
+														)
+													)}
+												</ol>
+											</li>
+										)
+									)}
+								</ol>
+							),
+							header: `Publisher With Apps Supporting Quarterly Release (${supportingQuartelyRelease.totalCount})`,
+						}),
 					...getAnnualTargetValues(
 						kpiQuartelyReleaseApps,
 						supportingQuartelyRelease.totalCount
@@ -265,9 +234,10 @@ const useKPI = () => {
 				{
 					...getAnnualTargetValues(
 						kpiConnectorQuartelyRelease,
-						connectorQuartelyRelease.totalCount
+						appsAndConnectorSupportingQRelease.totalCount
 					),
 					colors: ['#FF73C3', '#FFE1F0'],
+					externalPage: true,
 					onClick: () =>
 						navigate(
 							`/apps?filter=${liferayQuarterlyVersionsAndConnectors}&filterSchema=administratorApps`
@@ -280,6 +250,7 @@ const useKPI = () => {
 						lowCodeConfigurationsPublished.totalCount
 					),
 					colors: ['#FFD76E', '#FFF3D4'],
+					externalPage: true,
 					onClick: () =>
 						navigate(
 							`/apps?filter={"specificationValues|appType":"${ProductType.LOW_CODE_CONFIGURATION}"}&filterSchema=administratorApps`
@@ -290,8 +261,6 @@ const useKPI = () => {
 			projectsKPI,
 		};
 	});
-
-	return {data, ...swr};
 };
 
 export default useKPI;

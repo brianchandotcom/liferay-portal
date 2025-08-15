@@ -25,9 +25,6 @@ resource "random_password" "s3_bucket_suffix" {
 	special=false
 	upper=false
 }
-variable "cluster_endpoint" {
-	type=string
-}
 variable "cluster_name" {
 	type=string
 }
@@ -40,19 +37,7 @@ variable "deployment_name" {
 variable "deployment_namespace" {
 	default="liferay-system"
 }
-variable "node_instance_type" {
-	type=string
-}
-variable "node_role_arn" {
-	type=string
-}
-variable "node_security_group_id" {
-	type=string
-}
 variable "private_subnet_ids" {
-	type=list(string)
-}
-variable "public_subnet_ids" {
 	type=list(string)
 }
 variable "region" {

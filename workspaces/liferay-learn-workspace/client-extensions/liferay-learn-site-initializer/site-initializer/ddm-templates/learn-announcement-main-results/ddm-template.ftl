@@ -40,11 +40,11 @@
 
 <#assign searchResults = searchContainer.getResults() />
 
-<#list searchResults as search>	
+<#list searchResults as search>
 	<#assign
 		contentString = search.objectEntryContent?string
 
-		announcementImageTypeId = getValue(contentString, ", title:" , "r_p2S3AnnouncementImageType_c_p2s3AnnouncementImageTypeId:"?trim)
+		announcementImageTypeId = getValue(contentString, ", title:", "r_p2S3AnnouncementImageType_c_p2s3AnnouncementImageTypeId:"?trim)
 	/>
 
 	<div class="announcement-main-container">

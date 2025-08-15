@@ -52,7 +52,7 @@ public class EntriesCheckerTest {
 	}
 
 	@Test
-	public void testGetRowCheckBoxForNoJournalArticlePermissions() {
+	public void testGetRowCheckBox() {
 		String journalArticleId = String.valueOf(RandomTestUtil.randomLong());
 
 		EntriesChecker entriesChecker = new EntriesChecker(

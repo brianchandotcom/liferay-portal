@@ -61,9 +61,10 @@
 			</li>
 		</#list>
 
-		<#assign selectedResourceTypeIds = paramUtil.getParameterValues(request, "resource-type")![] />
-
-		<#assign knowledgeBaseSelected = false />
+		<#assign
+			knowledgeBaseSelected = false
+			selectedResourceTypeIds = paramUtil.getParameterValues(request, "resource-type")![]
+		/>
 
 		<#list selectedResourceTypeIds as selectedResourceTypeId>
 			<#if knowledgeBaseIds?seq_contains(selectedResourceTypeId)>

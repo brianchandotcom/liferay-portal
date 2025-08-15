@@ -4,6 +4,7 @@
  */
 
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
+import {WeightFont} from '@clayui/core/lib/typography/Heading';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -19,6 +20,17 @@ type TableData = {
 const initialTableValues = {
 	delta: 10,
 	page: 1,
+};
+
+const viewSpecs = {
+	chart: {
+		expandable: 'volume',
+		textWeight: 'semi-bold',
+	},
+	table: {
+		expandable: 'title',
+		textWeight: 'normal',
+	},
 };
 
 const VolumeChart = ({
@@ -44,7 +56,10 @@ const VolumeChart = ({
 	);
 };
 
-const mapData = (data: InventoryAnalysisDataType): TableData[] => {
+const mapData = (
+	data: InventoryAnalysisDataType,
+	viewType: 'chart' | 'table'
+): TableData[] => {
 	return data.inventoryAnalysisItems.map(({count, title}) => {
 		const percentage = (count / data.totalCount) * 100;
 
@@ -53,7 +68,14 @@ const mapData = (data: InventoryAnalysisDataType): TableData[] => {
 		return {
 			percentage,
 			title,
-			volume: <VolumeChart percentage={percentage} volume={count} />,
+			volume:
+				viewType === 'chart' ? (
+					<VolumeChart percentage={percentage} volume={count} />
+				) : (
+					<Text size={3} weight="normal">
+						{count}
+					</Text>
+				),
 		};
 	});
 };
@@ -61,11 +83,13 @@ const mapData = (data: InventoryAnalysisDataType): TableData[] => {
 interface IPaginatedTable {
 	currentStructureTypeLabel: string;
 	inventoryAnalysisData: InventoryAnalysisDataType | undefined;
+	viewType: 'chart' | 'table';
 }
 
 const PaginatedTable: React.FC<IPaginatedTable> = ({
 	currentStructureTypeLabel,
 	inventoryAnalysisData,
+	viewType,
 }) => {
 	const [delta, setDelta] = useState(initialTableValues.delta);
 	const [page, setPage] = useState(initialTableValues.page);
@@ -80,11 +104,11 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 
 	useEffect(() => {
 		if (inventoryAnalysisData) {
-			setTableData(mapData(inventoryAnalysisData));
+			setTableData(mapData(inventoryAnalysisData, viewType));
 			setPage(initialTableValues.page);
 			setDelta(initialTableValues.delta);
 		}
-	}, [inventoryAnalysisData]);
+	}, [inventoryAnalysisData, viewType]);
 
 	const handlePageChange = (newPage: number) => {
 		setPage(newPage);
@@ -96,9 +120,9 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 	};
 
 	return (
-		<div>
+		<div className="px-3">
 			<Table
-				borderless
+				borderless={viewType === 'chart'}
 				columnsVisibility={false}
 				hover={false}
 				striped={false}
@@ -125,11 +149,7 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 					]}
 				>
 					{(column) => (
-						<Cell
-							expanded={column.id === 'volume'}
-							key={column.id}
-							width={column.width}
-						>
+						<Cell key={column.id} width={column.width}>
 							{column.name}
 						</Cell>
 					)}
@@ -138,7 +158,15 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 				<Body items={displayedItems}>
 					{(row) => (
 						<Row>
-							<Cell width="10%">
+							<Cell
+								className={
+									viewType === 'chart' ? 'borderless' : ''
+								}
+								expanded={
+									viewSpecs[viewType].expandable === 'volume'
+								}
+								width="10%"
+							>
 								<Text size={3} weight="semi-bold">
 									{row['title'] ||
 										sub(
@@ -148,12 +176,33 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 								</Text>
 							</Cell>
 
-							<Cell expanded width="80%">
+							<Cell
+								align="right"
+								className={
+									viewType === 'chart' ? 'borderless' : ''
+								}
+								expanded={
+									viewSpecs[viewType].expandable === 'volume'
+								}
+								width="80%"
+							>
 								{row['volume']}
 							</Cell>
 
-							<Cell align="left" width="10%">
-								<Text size={3} weight="semi-bold">
+							<Cell
+								align="right"
+								className={
+									viewType === 'chart' ? 'borderless' : ''
+								}
+								width="10%"
+							>
+								<Text
+									size={3}
+									weight={
+										viewSpecs[viewType]
+											.textWeight as WeightFont
+									}
+								>
 									{`${row['percentage'].toFixed(2)}%`}
 								</Text>
 							</Cell>

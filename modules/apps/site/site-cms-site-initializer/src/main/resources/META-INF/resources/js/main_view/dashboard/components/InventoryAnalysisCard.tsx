@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
+import ClayDropdown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -116,6 +119,25 @@ export function filterBySpaces(
 	});
 }
 
+type DropdownItem = {
+	icon: string;
+	name: string;
+	value: 'chart' | 'table';
+};
+
+const dropdownItems: DropdownItem[] = [
+	{
+		icon: 'analytics',
+		name: Liferay.Language.get('chart'),
+		value: 'chart',
+	},
+	{
+		icon: 'table',
+		name: Liferay.Language.get('table'),
+		value: 'table',
+	},
+];
+
 export function InventoryAnalysisCard() {
 	const {
 		filters: {language, space},
@@ -131,6 +153,10 @@ export function InventoryAnalysisCard() {
 
 	const [inventoryAnalysisData, setInventoryAnalysisData] =
 		useState<InventoryAnalysisDataType>();
+	const [dropdownActive, setDropdownActive] = useState(false);
+	const [selectedItem, setSelectedItem] = useState<DropdownItem>(
+		dropdownItems[0]
+	);
 
 	useEffect(() => {
 		setFilters(initialFilters);
@@ -151,6 +177,71 @@ export function InventoryAnalysisCard() {
 	return (
 		<div className="cms-dashboard__inventory-analysis">
 			<BaseCard
+				Preferences={
+					<ClayDropdown
+						active={dropdownActive}
+						closeOnClickOutside={true}
+						onActiveChange={setDropdownActive}
+						trigger={
+							<ClayButton
+								aria-label={selectedItem.name}
+								borderless={true}
+								displayType="secondary"
+								onClick={() => {
+									setDropdownActive(!dropdownActive);
+								}}
+								size="sm"
+							>
+								{selectedItem.icon && (
+									<ClayIcon
+										className="mr-2"
+										symbol={selectedItem.icon}
+									/>
+								)}
+
+								<Text weight="semi-bold">
+									{Liferay.Language.get(selectedItem.name)}
+								</Text>
+
+								<ClayIcon
+									className="mx-2"
+									symbol="caret-bottom"
+								/>
+							</ClayButton>
+						}
+					>
+						{dropdownItems.map((item) => (
+							<ClayDropdown.Item
+								active={item.value === selectedItem.value}
+								key={item.value}
+								onClick={() => {
+									setSelectedItem(item);
+									setDropdownActive(false);
+								}}
+							>
+								<div className="align-items-center d-flex">
+									{item.value === selectedItem.value ? (
+										<ClayIcon
+											className="mr-2"
+											symbol="check"
+										/>
+									) : (
+										<ClayIcon className="mr-2" symbol="" />
+									)}
+
+									{item.icon && (
+										<ClayIcon
+											className="mr-2"
+											symbol={item.icon}
+										/>
+									)}
+
+									{item.name}
+								</div>
+							</ClayDropdown.Item>
+						))}
+					</ClayDropdown>
+				}
 				description={Liferay.Language.get(
 					'this-report-provides-a-breakdown-of-total-assets-by-categorization,-structure-type,-or-space'
 				)}
@@ -236,6 +327,7 @@ export function InventoryAnalysisCard() {
 				<PaginatedTable
 					currentStructureTypeLabel={filters.structureType.label}
 					inventoryAnalysisData={inventoryAnalysisData}
+					viewType={selectedItem.value}
 				/>
 			</BaseCard>
 		</div>

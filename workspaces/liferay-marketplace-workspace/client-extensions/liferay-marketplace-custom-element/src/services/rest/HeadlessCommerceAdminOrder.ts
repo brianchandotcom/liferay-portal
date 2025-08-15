@@ -17,4 +17,10 @@ export default class HeadlessCommerceAdminOrder {
 			`o/headless-commerce-admin-order/v1.0/orders?${searchParams.toString()}`
 		);
 	}
+
+	static getOrdersGQL(searchParams = new URLSearchParams()) {
+		return fetcher<APIResponse>(
+			`o/headless-commerce-admin-order/v1.0/orders?${searchParams.toString()}`
+		);
+	}
 }

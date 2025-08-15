@@ -65,8 +65,8 @@
 
 		<#assign knowledgeBaseSelected = false />
 
-		<#list selectedResourceTypeIds as selectedId>
-			<#if knowledgeBaseIds?seq_contains(selectedId)>
+		<#list selectedResourceTypeIds as selectedResourceTypeId>
+			<#if knowledgeBaseIds?seq_contains(selectedResourceTypeId)>
 				<#assign knowledgeBaseSelected = true />
 			</#if>
 		</#list>

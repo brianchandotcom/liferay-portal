@@ -88,13 +88,18 @@ public class RenderResponseImplTest {
 
 		PortletConfig portletConfig = Mockito.mock(PortletConfig.class);
 
+		String portletId = RandomTestUtil.randomString();
+
 		Mockito.when(
-			portletConfigFactory.get(_portletId)
+			portletConfigFactory.get(portletId)
 		).thenReturn(
 			portletConfig
 		);
 
-		ResourceBundle testResourceBundle = new TestResourceBundle();
+		String portletTitle = RandomTestUtil.randomString();
+
+		ResourceBundle testResourceBundle = new TestResourceBundle(
+			portletTitle);
 
 		Mockito.when(
 			portletConfig.getResourceBundle(Mockito.any(Locale.class))
@@ -105,7 +110,7 @@ public class RenderResponseImplTest {
 		Mockito.when(
 			portletDisplay.getId()
 		).thenReturn(
-			_portletId
+			portletId
 		);
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
@@ -138,14 +143,14 @@ public class RenderResponseImplTest {
 
 		Map<String, PortletConfig> portletConfigs =
 			HashMapBuilder.<String, PortletConfig>put(
-				_portletId, portletConfig
+				portletId, portletConfig
 			).build();
 
 		Map<String, Map<String, PortletConfig>> pool =
 			ConcurrentHashMapBuilder.<String, Map<String, PortletConfig>>put(
 				StringBundler.concat(
 					JavaConstants.JAKARTA_PORTLET_TITLE, StringPool.PERIOD,
-					_portletId),
+					portletId),
 				portletConfigs
 			).build();
 
@@ -161,13 +166,13 @@ public class RenderResponseImplTest {
 
 		renderResponseImpl.setTitle("");
 
-		Assert.assertEquals(_portletTitle, renderResponseImpl.getTitle());
+		Assert.assertEquals(portletTitle, renderResponseImpl.getTitle());
 	}
 
 	public class TestResourceBundle extends ResourceBundle {
 
-		public TestResourceBundle() {
-			_data.put(JavaConstants.JAKARTA_PORTLET_TITLE, _portletTitle);
+		public TestResourceBundle(String portletTitle) {
+			_data.put(JavaConstants.JAKARTA_PORTLET_TITLE, portletTitle);
 		}
 
 		@Override
@@ -185,9 +190,6 @@ public class RenderResponseImplTest {
 		private Map<String, Object> _data = new HashMap<>();
 
 	}
-
-	private String _portletId = RandomTestUtil.randomString();
-	private String _portletTitle = RandomTestUtil.randomString();
 
 
 }

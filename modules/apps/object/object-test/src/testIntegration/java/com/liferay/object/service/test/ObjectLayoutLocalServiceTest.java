@@ -539,27 +539,27 @@ public class ObjectLayoutLocalServiceTest {
 			"Edge object relationship object fields cannot be associated " +
 				"with object layouts",
 			() -> {
+				ObjectLayoutTab objectLayoutTab = _addObjectLayoutTab();
+
+				ObjectLayoutBox objectLayoutBox = _addObjectLayoutBox();
+
+				ObjectLayoutRow objectLayoutRow = _addObjectLayoutRow();
+
+				ObjectLayoutColumn objectLayoutColumn = _addObjectLayoutColumn(
+					false);
+
 				ObjectField objectField =
 					_objectFieldLocalService.getObjectField(
 						_objectDefinitionAA.getObjectDefinitionId(),
 						"externalReferenceCode");
 
-				ObjectLayoutColumn objectLayoutColumn = _addObjectLayoutColumn(
-					false);
-
 				objectLayoutColumn.setObjectFieldId(
 					objectField.getObjectFieldId());
-
-				ObjectLayoutRow objectLayoutRow = _addObjectLayoutRow();
 
 				objectLayoutRow.setObjectLayoutColumns(
 					List.of(objectLayoutColumn));
 
-				ObjectLayoutBox objectLayoutBox = _addObjectLayoutBox();
-
 				objectLayoutBox.setObjectLayoutRows(List.of(objectLayoutRow));
-
-				ObjectLayoutTab objectLayoutTab = _addObjectLayoutTab();
 
 				objectLayoutTab.setObjectLayoutBoxes(List.of(objectLayoutBox));
 

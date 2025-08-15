@@ -141,7 +141,6 @@ public class RenderResponseImplTest {
 			portletDisplay
 		);
 
-
 		ReflectionTestUtil.setFieldValue(
 			new PortletConfigFactoryUtil(), "_portletConfigFactory",
 			portletConfigFactory);

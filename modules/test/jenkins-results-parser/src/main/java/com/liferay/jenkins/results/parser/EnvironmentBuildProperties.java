@@ -79,7 +79,7 @@ public class EnvironmentBuildProperties extends Properties {
 		try {
 			String content = _toString(
 				JenkinsResultsParserUtil.combine(
-					matcher.group(1), "-", environment.getName(),
+					matcher.group(1), "-", environment.getExtension(),
 					matcher.group(2)),
 				checkCache);
 
@@ -134,17 +134,23 @@ public class EnvironmentBuildProperties extends Properties {
 
 	public enum Environment {
 
-		AWS("aws"), DB("db");
+		AWS("aws-master", "aws"), DB("master", "db");
 
-		public String getName() {
-			return _name;
+		public String getBranchName() {
+			return _branchName;
 		}
 
-		private Environment(String name) {
-			_name = name;
+		public String getExtension() {
+			return _extension;
 		}
 
-		private final String _name;
+		private Environment(String branchName, String extension) {
+			_branchName = branchName;
+			_extension = extension;
+		}
+
+		private final String _branchName;
+		private final String _extension;
 
 	}
 

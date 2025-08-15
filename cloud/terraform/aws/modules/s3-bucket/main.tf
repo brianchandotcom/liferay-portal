@@ -1,14 +1,11 @@
-resource "random_password" "s3_bucket_suffix" {
-	length=4
-	special=false
-	upper=false
-}
 module "s3_bucket" {
 	block_public_acls=true
 	block_public_policy=true
-	bucket="${var.deployment_name}-s3-bucket-${random_password.s3_bucket_suffix}"
+	bucket_prefix="${var.deployment_name}-s3-bucket-"
+	control_object_ownership=true
 	force_destroy=true
 	ignore_public_acls=true
+	object_ownership="BucketOwnerPreferred"
 	restrict_public_buckets=true
 	server_side_encryption_configuration={
 		rule={
@@ -23,4 +20,7 @@ module "s3_bucket" {
 		Backup="true"
 	}
 	version="~> 4.1.1"
+	versioning={
+		enabled=true
+	}
 }

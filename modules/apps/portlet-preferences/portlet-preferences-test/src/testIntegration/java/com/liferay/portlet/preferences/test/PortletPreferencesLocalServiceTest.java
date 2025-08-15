@@ -1355,7 +1355,8 @@ public class PortletPreferencesLocalServiceTest
 			String propertyKey = RandomTestUtil.randomString();
 			String propertyValue = RandomTestUtil.randomString();
 
-			typeSettingsUnicodeProperties.setProperty(propertyKey, propertyValue);
+			typeSettingsUnicodeProperties.setProperty(
+				propertyKey, propertyValue);
 
 			_layoutLocalService.updateLayout(
 				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),

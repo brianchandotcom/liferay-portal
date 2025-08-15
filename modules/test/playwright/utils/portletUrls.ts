@@ -23,6 +23,7 @@ export const PORTLET_URLS = {
 	cmsNewCategory: 'web/cms/categorization/new-category',
 	cmsNewVocabulary: 'web/cms/categorization/new-vocabulary',
 	cmsPicklistBuilder: 'web/cms/picklist-builder',
+	cmsRecycleBin: 'web/cms/recycle-bin',
 	cmsStructureBuilder: 'web/cms/structure-builder',
 	cmsStructures: 'web/cms/structures',
 	cmsTags: 'web/cms/categorization/view-tags',

@@ -10,6 +10,7 @@
 </#if>
 
 <#assign entriesMap = {} />
+
 <#list entries as entry>
 	<#assign entriesMap = entriesMap + {(entry.classPK) : entry.getViewURL()} />
 </#list>

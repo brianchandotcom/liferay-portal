@@ -6942,7 +6942,8 @@ public class ServiceBuilder {
 
 			if (GetterUtil.get(
 					finderElement.attributeValue("skip-optimize-db-index"),
-					false)) {
+					false) &&
+				entityName.equals("ResourcePermission")) {
 
 				indexOnlyEntityFinders.add(entityFinder);
 			}

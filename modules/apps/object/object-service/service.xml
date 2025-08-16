@@ -402,7 +402,7 @@
 		<finder name="ObjectEntryId" return-type="Collection">
 			<finder-column name="objectEntryId" />
 		</finder>
-		<finder name="C_CD" return-type="Collection" skip-optimize-db-index="true">
+		<finder name="C_CD" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="createDate" />
 		</finder>

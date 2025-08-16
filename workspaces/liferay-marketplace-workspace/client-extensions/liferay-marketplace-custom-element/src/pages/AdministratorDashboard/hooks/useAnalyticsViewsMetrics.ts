@@ -9,7 +9,7 @@ import analyticsOAuth2 from '../../../services/oauth/Analytics';
 
 const useAnalyticsViewsMetrics = () => {
 	const {data: viewsMetricResult, ...swr} = useSWR(
-		'administrator-dashboard/metrics/analytics',
+		'administrator-dashboard/analytics',
 		() =>
 			analyticsOAuth2.getPages(
 				new URLSearchParams({

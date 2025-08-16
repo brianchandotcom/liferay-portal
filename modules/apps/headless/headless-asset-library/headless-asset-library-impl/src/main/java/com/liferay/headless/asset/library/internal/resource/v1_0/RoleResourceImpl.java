@@ -7,6 +7,7 @@ package com.liferay.headless.asset.library.internal.resource.v1_0;
 
 import com.liferay.headless.asset.library.dto.v1_0.Role;
 import com.liferay.headless.asset.library.resource.v1_0.RoleResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,7 +61,9 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 		if (!_groupService.hasUserGroup(userId, assetLibraryId)) {
 			throw new NoSuchUserException(
-				"No user exists with user group ID " + userId);
+				StringBundler.concat(
+					"No user exists in group ", assetLibraryId, " with id ",
+					userId));
 		}
 
 		return Page.of(
@@ -95,7 +98,9 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 		if (!_groupService.hasUserGroup(userId, assetLibraryId)) {
 			throw new NoSuchUserException(
-				"No user exists with user group ID " + userId);
+				StringBundler.concat(
+					"User with id ", userId, " is not associated to group ",
+					assetLibraryId));
 		}
 
 		long[] roleIdsArray = ListUtil.toLongArray(

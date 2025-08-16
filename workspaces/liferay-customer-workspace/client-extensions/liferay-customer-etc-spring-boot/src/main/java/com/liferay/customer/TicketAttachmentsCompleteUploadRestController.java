@@ -269,16 +269,16 @@ public class TicketAttachmentsCompleteUploadRestController
 	}
 
 	private JSONArray _getCommentBodyJSONArray(String commentBody) {
-		Matcher matcher = _pattern.matcher(commentBody);
-
 		JSONArray jsonArray = new JSONArray();
 
-		for (String commentBodyPart : commentBody.split(_URL_REGEX)) {
-			if (Validator.isNotNull(commentBodyPart)) {
+		Matcher matcher = _pattern.matcher(commentBody);
+
+		for (String part : commentBody.split(_URL_REGEX)) {
+			if (Validator.isNotNull(part)) {
 				jsonArray.put(
 					new JSONObject(
 					).put(
-						"text", commentBodyPart
+						"text", part
 					).put(
 						"type", "text"
 					));

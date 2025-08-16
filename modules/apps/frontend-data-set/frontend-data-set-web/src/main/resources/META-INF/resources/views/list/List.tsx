@@ -58,11 +58,13 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 		{
 			className,
 			item,
+			items,
 			onItemSelectionChange,
 			schema,
 		}: {
 			className: string;
 			item: any;
+			items: any[];
 			onItemSelectionChange: Function;
 			schema: IListSchema;
 		},
@@ -181,6 +183,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 							actions={itemsActions || item.actionDropdownItems}
 							itemData={item}
 							itemId={itemId}
+							items={items}
 							onItemSelectionChange={onItemSelectionChange}
 						/>
 					)}
@@ -192,10 +195,12 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 
 const ListItemOptionalDropTarget = ({
 	item,
+	items,
 	onItemSelectionChange,
 	schema,
 }: {
 	item: any;
+	items: any[];
 	onItemSelectionChange: Function;
 	schema: IListSchema;
 }) => {
@@ -205,6 +210,7 @@ const ListItemOptionalDropTarget = ({
 		<ListItem
 			className={className}
 			item={item}
+			items={items}
 			onItemSelectionChange={onItemSelectionChange}
 			ref={dropRef}
 			schema={schema}
@@ -246,6 +252,7 @@ const List = ({
 					{items.map((item: any, index: number) => (
 						<ListItemOptionalDropTarget
 							item={item}
+							items={items}
 							key={
 								selectedItemsKey
 									? getSelectedItemValue({

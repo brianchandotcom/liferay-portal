@@ -20,6 +20,7 @@ function Email({
 	date,
 	frontendDataSetContext,
 	href,
+	items,
 	status,
 	subject,
 	summary,
@@ -103,7 +104,7 @@ function Email({
 
 				{actionDropdownItems.length ? (
 					<div className="col-auto d-flex flex-column justify-content-center">
-						<Actions actions={actionDropdownItems} />
+						<Actions actions={actionDropdownItems} items={items} />
 					</div>
 				) : null}
 			</div>
@@ -157,6 +158,7 @@ function EmailsList({dataLoading, frontendDataSetContext, items}) {
 					{...item}
 					borderBottom={i !== items.length - 1}
 					frontendDataSetContext={frontendDataSetContext}
+					items={items}
 				/>
 			))}
 		</ClayList>

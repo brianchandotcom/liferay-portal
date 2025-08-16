@@ -157,6 +157,7 @@ const Row = ({
 	columns,
 	item,
 	itemInlineChanges,
+	items,
 	itemsActions,
 	onItemSelectionChange,
 	selectionType,
@@ -166,6 +167,7 @@ const Row = ({
 	columns: Array<Field>;
 	item: any;
 	itemInlineChanges?: {[key: string]: any};
+	items: any[];
 	itemsActions: Array<IItemsActions>;
 	onItemSelectionChange: Function;
 	selectionType?: string;
@@ -211,6 +213,7 @@ const Row = ({
 											}
 											itemData={item}
 											itemId={id}
+											items={items}
 											onItemSelectionChange={
 												onItemSelectionChange
 											}
@@ -388,6 +391,7 @@ const Body = ({
 							columns={columns}
 							item={item}
 							itemInlineChanges={itemInlineChanges}
+							items={items}
 							itemsActions={itemsActions}
 							onItemSelectionChange={onItemSelectionChange}
 							selectionType={selectionType}

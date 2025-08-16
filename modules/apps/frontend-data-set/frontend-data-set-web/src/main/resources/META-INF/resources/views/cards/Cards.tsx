@@ -34,9 +34,15 @@ const Card = forwardRef<HTMLDivElement, any>(
 	(
 		{
 			item,
+			items,
 			onItemSelectionChange,
 			schema,
-		}: {item: any; onItemSelectionChange: Function; schema: ICardSchema},
+		}: {
+			item: any;
+			items: any[];
+			onItemSelectionChange: Function;
+			schema: ICardSchema;
+		},
 		ref
 	) => {
 		const {
@@ -145,6 +151,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 						highlightItems,
 						itemData: item,
 						itemId: selectedItemKey,
+						items,
 						loadData,
 						onActionDropdownItemClick,
 						onInfoPanelToggleButtonClick,
@@ -212,6 +219,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 
 function ClayCardOptionalDropTarget({
 	item,
+	items,
 	onItemSelectionChange,
 	schema,
 }: React.ComponentProps<typeof Card>) {
@@ -230,6 +238,7 @@ function ClayCardOptionalDropTarget({
 		<div className="col-md-3">
 			<Card
 				item={item}
+				items={items}
 				onItemSelectionChange={onItemSelectionChange}
 				ref={cardRef}
 				schema={schema}
@@ -268,6 +277,7 @@ const Cards = ({
 						return (
 							<ClayCardOptionalDropTarget
 								item={item}
+								items={items}
 								key={
 									selectedItemsKey
 										? getSelectedItemValue({

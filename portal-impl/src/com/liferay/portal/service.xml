@@ -2166,7 +2166,7 @@
 			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="roleId" />
 			<finder-column name="viewActionId" />
 		</finder>
-		<finder db-index="only" name="C_N_S_P_R_V" return-type="Collection">
+		<finder name="C_N_S_P_R_V" return-type="Collection" skip-optimize-db-index="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="scope" />

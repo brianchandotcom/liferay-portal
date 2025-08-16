@@ -6882,14 +6882,6 @@ public class ServiceBuilder {
 				}
 			}
 
-			String dbIndex = finderElement.attributeValue("db-index");
-
-			boolean finderDBIndex = GetterUtil.getBoolean(dbIndex, true);
-
-			if (Objects.equals(dbIndex, "only")) {
-				finderDBIndex = true;
-			}
-
 			List<EntityColumn> finderEntityColumns = new ArrayList<>();
 
 			List<Element> finderColumnElements = finderElement.elements(
@@ -6940,12 +6932,18 @@ public class ServiceBuilder {
 						"company"));
 			}
 
+			boolean finderDBIndex = GetterUtil.getBoolean(
+				finderElement.attributeValue("db-index"), true);
+
 			EntityFinder entityFinder = new EntityFinder(
 				this, finderName, finderPluralName, finderPretouch,
 				finderReturn, finderUnique, finderWhere, finderDBWhere,
 				finderDBIndex, finderEntityColumns);
 
-			if (Objects.equals(dbIndex, "only")) {
+			if (GetterUtil.get(
+					finderElement.attributeValue("skip-optimize-db-index"),
+					false)) {
+
 				indexOnlyEntityFinders.add(entityFinder);
 			}
 			else {

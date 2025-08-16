@@ -15,6 +15,14 @@ development of services.
 service-builder-import*)>
 
 <!--
+The api-package-path value specifies the package of the generated API code.
+-->
+
+<!ATTLIST service-builder
+	api-package-path CDATA #IMPLIED
+>
+
+<!--
 The package-path value specifies the package of the generated code.
 -->
 <!ATTLIST service-builder
@@ -827,6 +835,16 @@ specified, one will be generated from the finder name.
 -->
 <!ATTLIST finder
 	plural-name CDATA #IMPLIED
+>
+
+<!--
+The pretouch value specifies if the finder path is marked as "touched" when
+initialized. A "touched" finder path means that its corresponding finder cache
+is allowed to be populated. The default value is false.
+-->
+
+<!ATTLIST finder
+	pretouch CDATA #IMPLIED
 >
 
 <!--

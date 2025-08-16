@@ -23,6 +23,7 @@ const handleActionClick = ({
 	infoPanelOpen,
 	itemData,
 	itemId,
+	items,
 	loadData,
 	onActionDropdownItemClick,
 	onInfoPanelToggleButtonClick,
@@ -40,6 +41,7 @@ const handleActionClick = ({
 	infoPanelOpen?: boolean;
 	itemData: any;
 	itemId: string | number;
+	items: any[];
 	loadData: Function;
 	onActionDropdownItemClick: Function;
 	onInfoPanelToggleButtonClick?: Function;
@@ -129,6 +131,7 @@ const handleActionClick = ({
 			action,
 			event,
 			itemData,
+			items,
 			loadData,
 			openSidePanel,
 		};

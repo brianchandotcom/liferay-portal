@@ -21,11 +21,13 @@ function Actions({
 	actions,
 	itemData,
 	itemId,
+	items,
 	onItemSelectionChange,
 }: {
 	actions: Array<IItemsActions>;
 	itemData: any;
 	itemId: string | number;
+	items: any[];
 	onItemSelectionChange?: Function;
 }) {
 	const {
@@ -102,6 +104,7 @@ function Actions({
 			infoPanelOpen,
 			itemData,
 			itemId,
+			items,
 			loadData,
 			onActionDropdownItemClick,
 			onInfoPanelToggleButtonClick,

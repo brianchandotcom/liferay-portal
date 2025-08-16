@@ -9,13 +9,13 @@
 	<#list entries as entry>
 		<#assign label = entry.bucketText?upper_case />
 
-		<#if stringUtil.equals(label, "OFFICIAL DOCUMENTATION")>
-			<#assign sortedTaxonomyCategories = [entry] + sortedTaxonomyCategories />
-		<#elseif stringUtil.equals(label, "HOW TO") || stringUtil.equals(label, "TROUBLESHOOTING") || stringUtil.equals(label, "REFERENCE")>
+		<#if stringUtil.equals(label, "HOW TO") || stringUtil.equals(label, "TROUBLESHOOTING") || stringUtil.equals(label, "REFERENCE")>
 			<#assign
 				knowledgeBaseFrequency += entry.getFrequency()
 				knowledgeBaseIds += [entry.getFilterValue()]
 			/>
+		<#elseif stringUtil.equals(label, "OFFICIAL DOCUMENTATION")>
+			<#assign sortedTaxonomyCategories = [entry] + sortedTaxonomyCategories />
 		</#if>
 	</#list>
 

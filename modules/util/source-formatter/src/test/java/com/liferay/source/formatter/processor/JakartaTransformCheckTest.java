@@ -17,6 +17,11 @@ import org.junit.Test;
 public class JakartaTransformCheckTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testBNDJakartaTransform() throws Exception {
+		test("jakartatransform/BNDJakartaTransform.testbnd");
+	}
+
+	@Test
 	public void testFTLJakartaTransform() throws Exception {
 		test("jakartatransform/FTLJakartaTransform.testftl");
 	}

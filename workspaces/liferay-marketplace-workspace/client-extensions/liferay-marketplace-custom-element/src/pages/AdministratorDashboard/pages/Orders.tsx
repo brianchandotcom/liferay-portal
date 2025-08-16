@@ -135,7 +135,11 @@ export function AdministratorOrdersListView({
 					{
 						id: 'orderItems',
 						name: i18n.translate('app-name'),
-						render: (orderItems) => orderItems[0]?.name?.en_US,
+						render: (orderItems) => (
+							<span className="text-wrap">
+								{orderItems[0]?.name?.en_US}
+							</span>
+						),
 					},
 					{
 						id: 'account',
@@ -211,7 +215,7 @@ export function AdministratorOrdersListView({
 										title={projects
 											.map(
 												({name}, index) =>
-													`(${index + 1}) ${name}`
+													`${projects.length > 1 ? `(${index + 1})` : ''} ${name}`
 											)
 											.join('\n')}
 									>

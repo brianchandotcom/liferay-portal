@@ -8,6 +8,7 @@ package com.liferay.headless.asset.library.internal.resource.v1_0;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.UserAccount;
 import com.liferay.headless.asset.library.resource.v1_0.UserAccountResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -130,7 +131,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		if (!_groupService.hasUserGroup(userId, assetLibraryId)) {
 			throw new NoSuchUserException(
-				"No user exists with user group ID " + userId);
+				StringBundler.concat(
+					"User with id ", userId, " is not associated to group ",
+					assetLibraryId));
 		}
 
 		return _toUserAccount(assetLibraryId, _userService.getUserById(userId));

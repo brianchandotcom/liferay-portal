@@ -74,8 +74,7 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 							}
 						).build())) {
 
-			Page<Channel> channelsPage =
-				channelResource.getChannelsPage(null);
+			Page<Channel> channelsPage = channelResource.getChannelsPage(null);
 
 			Assert.assertEquals(1, channelsPage.getTotalCount());
 

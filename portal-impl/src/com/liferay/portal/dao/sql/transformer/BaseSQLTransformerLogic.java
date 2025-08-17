@@ -53,16 +53,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return Pattern.compile("BITAND\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)");
 	}
 
-	protected Function<String, String> getBitwiseOrFunction() {
-		Pattern pattern = getBitwiseOrPattern();
-
-		return (String sql) -> replaceBitwiseOr(pattern.matcher(sql));
-	}
-
-	protected Pattern getBitwiseOrPattern() {
-		return Pattern.compile("BITOR\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)");
-	}
-
 	protected Function<String, String> getBooleanFunction() {
 		return (String sql) -> StringUtil.replace(
 			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
@@ -243,10 +233,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected String replaceBitwiseCheck(Matcher matcher) {
 		return matcher.replaceAll("($1 & $2)");
-	}
-
-	protected String replaceBitwiseOr(Matcher matcher) {
-		return matcher.replaceAll("($1 | $2)");
 	}
 
 	protected String replaceCastClobText(Matcher matcher) {

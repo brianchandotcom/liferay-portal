@@ -389,13 +389,13 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class,
-			externalReferenceCode1, null,
+			null, externalReferenceCode1,
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class,
-			externalReferenceCode2, null,
+			null, externalReferenceCode2,
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(1));
 	}
@@ -572,13 +572,13 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class,
-			externalReferenceCode1, null,
+			null, externalReferenceCode1,
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
 				class,
-			externalReferenceCode2, errorMessage,
+			errorMessage, externalReferenceCode2,
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntries.get(1));
 	}
@@ -614,8 +614,8 @@ public class BatchTestEntityExportImportTest {
 	}
 
 	private void _assertEquals(
-		Class<?> expectedClass, String expectedExternalReferenceCode,
-		String expectedErrorMessage, int expectedType,
+		Class<?> expectedClass, String expectedErrorMessage,
+		String expectedExternalReferenceCode, int expectedType,
 		ExportImportReportEntry exportImportReportEntry) {
 
 		Assert.assertEquals(

@@ -82,7 +82,6 @@ public class SiteNavigationMenuItemExternalReferenceCodeUpgradeProcessTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
-
 		_siteNavigationMenu = SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			_group);
 	}

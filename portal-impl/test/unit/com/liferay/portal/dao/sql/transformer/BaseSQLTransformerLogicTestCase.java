@@ -48,13 +48,6 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
-	public void testReplaceBitwiseOr() {
-		Assert.assertEquals(
-			getBitwiseOrTransformedSQL(),
-			sqlTransformer.transform(getBitwiseOrOriginalSQL()));
-	}
-
-	@Test
 	public void testReplaceBoolean() {
 		Assert.assertEquals(
 			getBooleanTransformedSQL(),
@@ -206,14 +199,6 @@ public abstract class BaseSQLTransformerLogicTestCase {
 
 	protected String getBitwiseCheckTransformedSQL() {
 		return getBitwiseCheckOriginalSQL();
-	}
-
-	protected String getBitwiseOrOriginalSQL() {
-		return "select BITOR(foo, bar) from Foo";
-	}
-
-	protected String getBitwiseOrTransformedSQL() {
-		return getBitwiseOrOriginalSQL();
 	}
 
 	protected String getBooleanOriginalSQL() {

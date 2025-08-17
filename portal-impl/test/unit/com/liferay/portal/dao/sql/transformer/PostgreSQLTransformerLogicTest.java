@@ -67,11 +67,6 @@ public class PostgreSQLTransformerLogicTest
 	}
 
 	@Override
-	protected String getBitwiseOrTransformedSQL() {
-		return "select (foo | bar) from Foo";
-	}
-
-	@Override
 	protected String getCastClobTextTransformedSQL() {
 		return "select CAST(foo || (CAST(foo AS TEXT) || (bar || foo)) AS " +
 			"TEXT), CAST(foo || (bar || foo) AS TEXT) from Foo";

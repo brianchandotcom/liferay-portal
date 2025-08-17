@@ -65,8 +65,6 @@ public class SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				String type = resultSet.getString("type_");
-
 				PersistedModel persistedModel = null;
 
 				UnicodeProperties typeSettingsUnicodeProperties =
@@ -76,6 +74,8 @@ public class SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess
 
 				String className = typeSettingsUnicodeProperties.getProperty(
 					"className");
+
+				String type = resultSet.getString("type_");
 
 				if (Objects.equals(
 						type,

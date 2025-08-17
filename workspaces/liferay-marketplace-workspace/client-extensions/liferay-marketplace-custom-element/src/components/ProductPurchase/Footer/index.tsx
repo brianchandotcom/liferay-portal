@@ -8,6 +8,7 @@ import {ComponentProps} from 'react';
 
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
+import {useProductPurchaseOutletContext} from '../../../pages/ProductPurchase/ProductPurchaseOutlet';
 import {getSiteURL} from '../../../utils/site';
 
 type ProductPurchaseFooterProps = {
@@ -21,12 +22,21 @@ const ProductPurchaseFooter: React.FC<ProductPurchaseFooterProps> = ({
 	cancelButtonProps,
 	continueButtonProps,
 }) => {
+	const {productPurchaseCart} = useProductPurchaseOutletContext();
+
 	return (
 		<div className="align-items-center d-flex justify-content-between mt-6 w-100">
 			<ClayButton
 				className="font-weight-bold"
 				displayType="unstyled"
-				onClick={() => Liferay.Util.navigate(getSiteURL())}
+				onClick={() => {
+					if (productPurchaseCart.cart.id) {
+						productPurchaseCart.removeCart(
+							productPurchaseCart.cart.id
+						);
+					}
+					Liferay.Util.navigate(getSiteURL() || '/');
+				}}
 				{...cancelButtonProps}
 			>
 				{cancelButtonProps?.children || i18n.translate('cancel')}

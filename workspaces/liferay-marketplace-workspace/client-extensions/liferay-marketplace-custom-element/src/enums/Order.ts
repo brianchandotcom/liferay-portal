@@ -50,6 +50,7 @@ export enum PaymentStatus {
 	PAID = 0,
 	PENDING = 1,
 	PAYMENT_PENDING = 2,
+	FAILED = 4,
 }
 
 export const orderTypeLabel = {

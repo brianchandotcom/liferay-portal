@@ -79,6 +79,8 @@ const License = () => {
 		}
 	}, [navigate, selectedAccount]);
 
+	const {productPurchaseCart} = useProductPurchaseOutletContext();
+
 	return (
 		<ProductPurchase.Shell
 			className="d-flex flex-column license-selector-timeline"
@@ -101,12 +103,20 @@ const License = () => {
 							</span>
 						}
 						key={index}
-						onClick={() =>
+						onClick={() => {
+							if (
+								licenseType !== type &&
+								productPurchaseCart?.cart?.id
+							) {
+								productPurchaseCart.removeCart(
+									productPurchaseCart.cart.id
+								);
+							}
 							productPurchaseStore.send({
 								licenseType: type as LicenseType,
 								type: 'setLicenseType',
-							})
-						}
+							});
+						}}
 						selected={licenseType === type}
 					/>
 				))}

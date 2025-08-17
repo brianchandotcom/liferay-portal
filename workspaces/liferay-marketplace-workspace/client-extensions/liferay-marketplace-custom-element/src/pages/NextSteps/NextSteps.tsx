@@ -55,6 +55,29 @@ export function NextSteps() {
 	const {isPaidApp} = getProductPriceModel(product as DeliveryProduct);
 
 	const nextStepBody = {
+		[PaymentStatus.FAILED]: (
+			<Header
+				description={
+					<>
+						<p>
+							We were unable to process the payment for{' '}
+							<strong>{appName}</strong>.
+						</p>
+
+						<p>
+							If you need help or believe this is an error,
+							contact our support team.
+						</p>
+
+						<p>
+							Your Order ID is: <strong>{orderId}</strong>
+						</p>
+					</>
+				}
+				title="Payment Failed"
+			/>
+		),
+
 		[PaymentStatus.PAID]: (
 			<Header
 				description={
@@ -223,6 +246,14 @@ export function NextSteps() {
 					}}
 					showContinueButton={true}
 				/>
+
+				{paymentStatus === PaymentStatus.FAILED && (
+					<div className="d-flex justify-content-end">
+						<a href="#">
+							<ins>Contact Support</ins>
+						</a>
+					</div>
+				)}
 
 				{(paymentStatus === PaymentStatus.PAID || isTrial) && (
 					<div className="d-flex justify-content-end">

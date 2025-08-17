@@ -42,5 +42,5 @@
 		"test": "USE_REACT_16=true node-scripts test",
 		"test:watch": "USE_REACT_16=true node-scripts test --watch"
 	},
-	"version": "3.0.144"
+	"version": "3.0.145"
 }

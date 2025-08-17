@@ -242,7 +242,7 @@ public class BNDJakartaTransformCheck extends BaseJakartaTransformCheck {
 			String parametersString = _formatParameters(
 				parameters, propertyName);
 
-			if (parametersString.indexOf("\n") == -1) {
+			if (!parametersString.contains("\n")) {
 				parametersString = parametersString.trim();
 				sb.append(": ");
 			}

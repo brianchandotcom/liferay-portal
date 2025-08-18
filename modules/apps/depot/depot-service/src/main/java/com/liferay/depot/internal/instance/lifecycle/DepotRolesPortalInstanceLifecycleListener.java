@@ -5,19 +5,26 @@
 
 package com.liferay.depot.internal.instance.lifecycle;
 
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.internal.util.DepotRoleUtil;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +46,16 @@ public class DepotRolesPortalInstanceLifecycleListener
 			_resourceLocalService.addResources(
 				company.getCompanyId(), 0, 0, Role.class.getName(),
 				role.getRoleId(), false, false, false);
+
+			if (Objects.equals(
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER, role.getName())) {
+
+				_resourcePermissionLocalService.addResourcePermission(
+					company.getCompanyId(), DepotEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(company.getCompanyId()), role.getRoleId(),
+					ActionKeys.VIEW);
+			}
 		}
 	}
 
@@ -74,6 +91,9 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

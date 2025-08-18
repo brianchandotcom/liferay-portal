@@ -16,15 +16,13 @@ import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormat
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * @author Cesar Polanco
@@ -377,36 +375,24 @@ public class SourceFormatBuild
 		}
 
 		try {
-			JSONArray commitsJSONArray = JenkinsResultsParserUtil.toJSONArray(
-				JenkinsResultsParserUtil.combine(
-					"https://api.github.com/repos/", _GITHUB_USER_NAME, "/",
-					_GITHUB_REPOSITORY_NAME, "/commits/", _GITHUB_BRANCH_NAME,
-					"?path=", _SOURCE_FORMATTER_PATH, "&per_page=1"));
+			GitWorkingDirectory gitWorkingDirectory =
+				portalWorkspaceGitRepository.getGitWorkingDirectory();
 
-			if ((commitsJSONArray == null) || commitsJSONArray.isEmpty()) {
+			File sourceFormatterFile = new File(
+				gitWorkingDirectory.getWorkingDirectory(),
+				_SOURCE_FORMATTER_PATH);
+
+			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
+				1, sourceFormatterFile);
+
+			if (localGitCommits.isEmpty()) {
 				return false;
 			}
 
-			JSONObject commitJSONObject = commitsJSONArray.getJSONObject(0);
+			LocalGitCommit localGitCommit = localGitCommits.get(0);
 
-			JSONArray filesJSONArray = commitJSONObject.optJSONArray("files");
-
-			if ((filesJSONArray == null) || filesJSONArray.isEmpty()) {
-				return false;
-			}
-
-			for (int i = 0; i < filesJSONArray.length(); i++) {
-				JSONObject fileJSONObject = filesJSONArray.getJSONObject(i);
-
-				if (Objects.equals(
-						_SOURCE_FORMATTER_PATH + "/bnd.bnd",
-						fileJSONObject.getString("filename"))) {
-
-					return true;
-				}
-			}
-
-			return false;
+			return localGitCommit.isFileChanged(
+				new File(sourceFormatterFile, "bnd.bnd"));
 		}
 		catch (Exception exception) {
 			return false;

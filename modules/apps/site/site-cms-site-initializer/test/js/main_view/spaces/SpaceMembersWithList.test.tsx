@@ -113,16 +113,15 @@ describe('SpaceMembersWithList', () => {
 	const {ResizeObserver: ResizeObserverOriginal} = window;
 
 	let consoleErrorSpy: jest.SpyInstance;
-	let getSpaceSpy: jest.SpyInstance;
 	let getSpaceUserGroupsSpy: jest.SpyInstance;
 	let getSpaceUsersSpy: jest.SpyInstance;
 	let intersectionObserverMock: jest.Mock;
 	const mockedOpenToast = openToast as jest.Mock;
 
 	beforeEach(() => {
-		getSpaceSpy = jest
-			.spyOn(SpaceService, 'getSpace')
-			.mockResolvedValue(testSpace as unknown as Space);
+		jest.spyOn(SpaceService, 'getSpace').mockResolvedValue(
+			testSpace as unknown as Space
+		);
 		getSpaceUsersSpy = jest
 			.spyOn(SpaceService, 'getSpaceUsers')
 			.mockResolvedValue(testUsersResponse);

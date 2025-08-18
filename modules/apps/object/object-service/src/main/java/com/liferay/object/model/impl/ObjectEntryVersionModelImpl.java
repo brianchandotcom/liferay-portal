@@ -130,32 +130,38 @@ public class ObjectEntryVersionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 2L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTENTRYID_COLUMN_BITMASK = 4L;
+	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long OBJECTENTRYID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTENTRYVERSIONID_COLUMN_BITMASK = 32L;
+	public static final long OBJECTENTRYVERSIONID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement

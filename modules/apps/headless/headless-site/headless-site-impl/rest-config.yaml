@@ -8,7 +8,7 @@ author: Rubén Pulido
 clientDir: ../headless-site-client/src/main/java
 compatibilityVersion: 11
 forcePredictableOperationId: true
-generateBatch: false
+generateBatch: true
 generateGraphQL: false
 javaEEPackage: jakarta
 testDir: ../headless-site-test/src/testIntegration/java

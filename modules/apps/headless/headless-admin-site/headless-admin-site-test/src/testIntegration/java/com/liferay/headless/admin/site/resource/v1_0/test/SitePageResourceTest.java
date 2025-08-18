@@ -1120,7 +1120,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
-		_testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 		_testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
@@ -1137,6 +1136,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 		_testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithCustomFields();
+		_testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 	}
 
 	private void
@@ -1329,7 +1329,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPostByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
-		_testPostSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
@@ -1340,6 +1339,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
 		_testPostByExternalReferenceCodeSitePageWithPageSpecificationsWithCustomFields();
+		_testPostSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 
 		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
 
@@ -1494,7 +1494,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
-		_testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 		_testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
@@ -1511,6 +1510,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 		_testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithCustomFields();
+		_testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 	}
 
 	private void

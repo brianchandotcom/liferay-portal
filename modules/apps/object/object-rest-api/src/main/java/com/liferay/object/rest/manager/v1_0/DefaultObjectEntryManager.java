@@ -81,7 +81,7 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 
 	public void deleteRelatedObjectEntry(
 			String externalReferenceCode, ObjectRelationship objectRelationship,
-			String parentExternalReferenceCode)
+			String parentExternalReferenceCode, String scopeKey)
 		throws Exception;
 
 	public void disassociateRelatedModels(
@@ -171,7 +171,7 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 	public Page<ObjectEntry> getRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectRelationship objectRelationship,
-			Pagination pagination)
+			Pagination pagination, String scopeKey)
 		throws Exception;
 
 	public ObjectEntry getRelatedObjectEntry(

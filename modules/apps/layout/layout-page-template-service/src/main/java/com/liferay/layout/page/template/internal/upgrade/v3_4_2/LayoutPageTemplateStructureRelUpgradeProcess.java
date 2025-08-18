@@ -248,7 +248,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 				_replaceBottomSpacing(
 					_fragmentEntryConfigurationParser.
 						getConfigurationDefaultValuesJSONObject(
-							fragmentEntryLink.getConfiguration()),
+							fragmentEntryLink.getConfigurationJSONObject()),
 					fragmentConfigValuesJSONObject, stylesJSONObject);
 
 				if (_isEmpty(fragmentConfigValuesJSONObject)) {

@@ -12,6 +12,7 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -53,7 +54,8 @@ public class FragmentCollectionFilterTagsDisplayContext {
 
 		JSONObject defaultValuesJSONObject =
 			_fragmentEntryConfigurationParser.
-				getConfigurationDefaultValuesJSONObject(_configuration);
+				getConfigurationDefaultValuesJSONObject(
+					JSONFactoryUtil.toJSONObject(_configuration));
 
 		return defaultValuesJSONObject.getString("helpText", StringPool.BLANK);
 	}

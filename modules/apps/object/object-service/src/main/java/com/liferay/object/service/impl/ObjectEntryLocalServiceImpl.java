@@ -346,8 +346,6 @@ public class ObjectEntryLocalServiceImpl
 
 		_validateGroupId(groupId, objectDefinition);
 
-		_validateObjectEntryFolderId(groupId, objectEntryFolderId);
-
 		int workflowAction = serviceContext.getWorkflowAction();
 
 		_validateWorkflowAction(
@@ -396,11 +394,11 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setUserName(user.getFullName());
 		objectEntry.setCreateDate(new Date());
 		objectEntry.setObjectDefinitionId(objectDefinitionId);
-		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
 		objectEntry.setDefaultLanguageId(defaultLanguageId);
 		objectEntry.setTreePath(objectEntry.buildTreePath());
 
 		_setExternalReferenceCode(objectEntry, values);
+		_setObjectEntryFolderId(objectEntryFolderId, objectEntry);
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
 		_setExpirationDate(
@@ -589,8 +587,8 @@ public class ObjectEntryLocalServiceImpl
 
 			if (objectEntry != null) {
 				return objectEntryLocalService.updateObjectEntry(
-					userId, objectEntry.getObjectEntryId(), values,
-					serviceContext);
+					userId, objectEntryFolderId, objectEntry.getObjectEntryId(),
+					values, serviceContext);
 			}
 		}
 
@@ -1743,12 +1741,13 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry partialUpdateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryId, long userId, long objectEntryFolderId,
+			ServiceContext serviceContext, Map<String, Serializable> values)
 		throws PortalException {
 
 		return _updateObjectEntry(
-			objectEntryId, true, serviceContext, userId, values);
+			objectEntryId, userId, objectEntryFolderId, true, serviceContext,
+			values);
 	}
 
 	@Override
@@ -1928,12 +1927,13 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryId, long userId, long objectEntryFolderId,
+			ServiceContext serviceContext, Map<String, Serializable> values)
 		throws PortalException {
 
 		return _updateObjectEntry(
-			objectEntryId, false, serviceContext, userId, values);
+			objectEntryId, userId, objectEntryFolderId, false, serviceContext,
+			values);
 	}
 
 	@Override
@@ -5700,6 +5700,31 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _setObjectEntryFolderId(
+			long objectEntryFolderId, ObjectEntry objectEntry)
+		throws PortalException {
+
+		if (objectEntryFolderId ==
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			return;
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderPersistence.findByPrimaryKey(objectEntryFolderId);
+
+		if (objectEntryFolder.getGroupId() != objectEntry.getGroupId()) {
+			throw new ObjectEntryFolderScopeException(
+				StringBundler.concat(
+					"Group ID ", objectEntry.getGroupId(),
+					" does not match parent object entry folder group ID ",
+					objectEntryFolder.getGroupId()));
+		}
+
+		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
+	}
+
 	private void _setReviewDate(
 		long companyId, ObjectEntry objectEntry,
 		Map<String, Serializable> values) {
@@ -5972,8 +5997,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private ObjectEntry _updateObjectEntry(
-			long objectEntryId, boolean partialUpdate,
-			ServiceContext serviceContext, long userId,
+			long objectEntryId, long userId, long objectEntryFolderId,
+			boolean partialUpdate, ServiceContext serviceContext,
 			Map<String, Serializable> values)
 		throws PortalException {
 
@@ -6042,6 +6067,7 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 
+		_setObjectEntryFolderId(objectEntryFolderId, objectEntry);
 		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
 		_setExpirationDate(
 			objectDefinition.getCompanyId(), objectEntry, values);
@@ -6533,29 +6559,6 @@ public class ObjectEntryLocalServiceImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(noSuchListTypeEntryException);
 			}
-		}
-	}
-
-	private void _validateObjectEntryFolderId(
-			long groupId, long objectEntryFolderId)
-		throws PortalException {
-
-		if (objectEntryFolderId ==
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
-
-			return;
-		}
-
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderPersistence.findByPrimaryKey(objectEntryFolderId);
-
-		if (objectEntryFolder.getGroupId() != groupId) {
-			throw new ObjectEntryFolderScopeException(
-				StringBundler.concat(
-					"Group ID ", groupId,
-					" does not match parent object entry folder group ID ",
-					objectEntryFolder.getGroupId()));
 		}
 	}
 

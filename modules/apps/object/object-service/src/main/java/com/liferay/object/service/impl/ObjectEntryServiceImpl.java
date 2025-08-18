@@ -446,8 +446,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry partialUpdateObjectEntry(
-			long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryId, long objectEntryFolderId,
+			ServiceContext serviceContext, Map<String, Serializable> values)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
@@ -460,7 +460,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		return objectEntryLocalService.partialUpdateObjectEntry(
-			getUserId(), objectEntryId, values, serviceContext);
+			objectEntryId, getUserId(), objectEntryFolderId, serviceContext,
+			values);
 	}
 
 	@Override
@@ -508,8 +509,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry updateObjectEntry(
-			long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryId, long objectEntryFolderId,
+			ServiceContext serviceContext, Map<String, Serializable> values)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
@@ -522,7 +523,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		return objectEntryLocalService.updateObjectEntry(
-			getUserId(), objectEntryId, values, serviceContext);
+			objectEntryId, getUserId(), objectEntryFolderId, serviceContext,
+			values);
 	}
 
 	@Override

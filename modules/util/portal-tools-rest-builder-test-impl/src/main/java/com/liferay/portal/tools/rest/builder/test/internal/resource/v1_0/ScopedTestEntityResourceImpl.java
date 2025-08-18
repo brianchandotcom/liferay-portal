@@ -41,14 +41,6 @@ public class ScopedTestEntityResourceImpl
 	}
 
 	@Override
-	public void deleteScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
-
-		_deleteScopedTestEntity(null, externalReferenceCode, 0L);
-	}
-
-	@Override
 	public void deleteSiteScopedTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
@@ -95,48 +87,6 @@ public class ScopedTestEntityResourceImpl
 		ScopedTestEntity scopedTestEntity =
 			_fetchScopedTestEntityByExternalReferenceCode(
 				String.valueOf(assetLibraryId), externalReferenceCode, 0L);
-
-		if (scopedTestEntity == null) {
-			throw new NoSuchModelException();
-		}
-
-		return scopedTestEntity;
-	}
-
-	@Override
-	public Page<ScopedTestEntity> getScopedTestEntitiesPage() throws Exception {
-		List<ScopedTestEntity> scopedTestEntities = new ArrayList<>();
-
-		for (ScopedTestEntity scopedTestEntity : _scopedTestEntities) {
-			if ((scopedTestEntity.getAssetLibraryKey() == null) &&
-				(scopedTestEntity.getSiteId() == 0L)) {
-
-				scopedTestEntities.add(scopedTestEntity);
-			}
-		}
-
-		return Page.of(
-			HashMapBuilder.<String, Map<String, String>>put(
-				"createBatch",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/test/v1.0/scoped-test-" +
-						"entities/batch"
-				).put(
-					"method", "POST"
-				).build()
-			).build(),
-			scopedTestEntities);
-	}
-
-	@Override
-	public ScopedTestEntity getScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
-
-		ScopedTestEntity scopedTestEntity =
-			_fetchScopedTestEntityByExternalReferenceCode(
-				null, externalReferenceCode, 0L);
 
 		if (scopedTestEntity == null) {
 			throw new NoSuchModelException();
@@ -209,24 +159,6 @@ public class ScopedTestEntityResourceImpl
 	}
 
 	@Override
-	public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-		throws Exception {
-
-		ScopedTestEntity existingScopedTestEntity =
-			getScopedTestEntityByExternalReferenceCode(externalReferenceCode);
-
-		_patchProperties(scopedTestEntity, existingScopedTestEntity);
-
-		externalReferenceCode = scopedTestEntity.getExternalReferenceCode();
-
-		preparePatch(scopedTestEntity, existingScopedTestEntity);
-
-		return putScopedTestEntityByExternalReferenceCode(
-			externalReferenceCode, existingScopedTestEntity);
-	}
-
-	@Override
 	public ScopedTestEntity patchSiteScopedTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode,
 			ScopedTestEntity scopedTestEntity)
@@ -247,15 +179,14 @@ public class ScopedTestEntityResourceImpl
 	}
 
 	@Override
-	public ScopedTestEntity
-			postAssetLibraryScopedTestEntityByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode,
-				ScopedTestEntity scopedTestEntity)
+	public ScopedTestEntity postAssetLibraryScopedTestEntity(
+			Long assetLibraryId, ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
 		ScopedTestEntity existingScopedTestEntity =
 			_fetchScopedTestEntityByExternalReferenceCode(
-				String.valueOf(assetLibraryId), externalReferenceCode, 0L);
+				String.valueOf(assetLibraryId),
+				scopedTestEntity.getExternalReferenceCode(), 0L);
 
 		if (existingScopedTestEntity != null) {
 			throw new DuplicateExternalReferenceCodeException();
@@ -270,35 +201,13 @@ public class ScopedTestEntityResourceImpl
 	}
 
 	@Override
-	public ScopedTestEntity postScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
+	public ScopedTestEntity postSiteScopedTestEntity(
+			Long siteId, ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
 		ScopedTestEntity existingScopedTestEntity =
 			_fetchScopedTestEntityByExternalReferenceCode(
-				null, externalReferenceCode, 0L);
-
-		if (existingScopedTestEntity != null) {
-			throw new DuplicateExternalReferenceCodeException();
-		}
-
-		scopedTestEntity.setAssetLibraryKey((String)null);
-		scopedTestEntity.setSiteId(0L);
-
-		_scopedTestEntities.add(scopedTestEntity);
-
-		return scopedTestEntity;
-	}
-
-	@Override
-	public ScopedTestEntity postSiteScopedTestEntityByExternalReferenceCode(
-			Long siteId, String externalReferenceCode,
-			ScopedTestEntity scopedTestEntity)
-		throws Exception {
-
-		ScopedTestEntity existingScopedTestEntity =
-			_fetchScopedTestEntityByExternalReferenceCode(
-				null, externalReferenceCode, siteId);
+				null, scopedTestEntity.getExternalReferenceCode(), siteId);
 
 		if (existingScopedTestEntity != null) {
 			throw new DuplicateExternalReferenceCodeException();
@@ -324,35 +233,11 @@ public class ScopedTestEntityResourceImpl
 				String.valueOf(assetLibraryId), externalReferenceCode, 0L);
 
 		if (existingScopedTestEntity == null) {
-			return postAssetLibraryScopedTestEntityByExternalReferenceCode(
-				assetLibraryId, externalReferenceCode, scopedTestEntity);
+			return postAssetLibraryScopedTestEntity(
+				assetLibraryId, scopedTestEntity);
 		}
 
 		scopedTestEntity.setAssetLibraryKey(String.valueOf(assetLibraryId));
-		scopedTestEntity.setSiteId(0L);
-
-		_putScopedTestEntity(
-			scopedTestEntity,
-			existingScopedTestEntity.getExternalReferenceCode());
-
-		return scopedTestEntity;
-	}
-
-	@Override
-	public ScopedTestEntity putScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-		throws Exception {
-
-		ScopedTestEntity existingScopedTestEntity =
-			_fetchScopedTestEntityByExternalReferenceCode(
-				null, externalReferenceCode, 0L);
-
-		if (existingScopedTestEntity == null) {
-			return postScopedTestEntityByExternalReferenceCode(
-				null, scopedTestEntity);
-		}
-
-		scopedTestEntity.setAssetLibraryKey((String)null);
 		scopedTestEntity.setSiteId(0L);
 
 		_putScopedTestEntity(
@@ -373,8 +258,7 @@ public class ScopedTestEntityResourceImpl
 				null, externalReferenceCode, siteId);
 
 		if (existingScopedTestEntity == null) {
-			return postSiteScopedTestEntityByExternalReferenceCode(
-				siteId, externalReferenceCode, scopedTestEntity);
+			return postSiteScopedTestEntity(siteId, scopedTestEntity);
 		}
 
 		scopedTestEntity.setAssetLibraryKey((String)null);

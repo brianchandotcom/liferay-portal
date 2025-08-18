@@ -17,5 +17,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:segments:segments-api")
 	testIntegrationImplementation project(":apps:sharing:sharing-api")
 	testIntegrationImplementation project(":apps:site:site-api")
+	testIntegrationImplementation project(":apps:site:site-cms-site-initializer-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

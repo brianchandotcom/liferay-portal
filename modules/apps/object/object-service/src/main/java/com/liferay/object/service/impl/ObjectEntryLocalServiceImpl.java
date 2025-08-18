@@ -589,8 +589,8 @@ public class ObjectEntryLocalServiceImpl
 
 			if (objectEntry != null) {
 				return objectEntryLocalService.updateObjectEntry(
-					userId, objectEntry.getObjectEntryId(), values,
-					serviceContext);
+					userId, objectEntry.getObjectEntryId(), objectEntryFolderId,
+					values, serviceContext);
 			}
 		}
 
@@ -1683,12 +1683,13 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry partialUpdateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		return _updateObjectEntry(
-			objectEntryId, true, serviceContext, userId, values);
+			objectEntryFolderId, objectEntryId, true, serviceContext, userId,
+			values);
 	}
 
 	@Override
@@ -1868,12 +1869,13 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		return _updateObjectEntry(
-			objectEntryId, false, serviceContext, userId, values);
+			objectEntryFolderId, objectEntryId, false, serviceContext, userId,
+			values);
 	}
 
 	@Override
@@ -5972,7 +5974,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private ObjectEntry _updateObjectEntry(
-			long objectEntryId, boolean partialUpdate,
+			long objectEntryFolderId, long objectEntryId, boolean partialUpdate,
 			ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
 		throws PortalException {
@@ -5981,6 +5983,9 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
 			objectEntryId);
+
+		_validateObjectEntryFolderId(
+			objectEntry.getGroupId(), objectEntryFolderId);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
@@ -6041,6 +6046,7 @@ public class ObjectEntryLocalServiceImpl
 		_setExternalReferenceCode(objectEntry, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
+		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
 
 		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
 		_setExpirationDate(

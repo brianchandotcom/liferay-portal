@@ -357,6 +357,38 @@ public class JSONFactoryImpl implements JSONFactory {
 		return jsonObject.toString();
 	}
 
+	@Override
+	public JSONObject toJSONObject(String json) {
+		return toJSONObject(json, false);
+	}
+
+	@Override
+	public JSONObject toJSONObject(String json, boolean strict) {
+		if (strict && Validator.isNull(json)) {
+			return null;
+		}
+
+		try {
+			return createJSONObject(json);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return null;
+		}
+	}
+
+	@Override
+	public String toString(JSONObject jsonObject) {
+		if (jsonObject == null) {
+			return null;
+		}
+
+		return jsonObject.toString();
+	}
+
 	private static final String _NULL_JSON = "{}";
 
 	private static final Log _log = LogFactoryUtil.getLog(

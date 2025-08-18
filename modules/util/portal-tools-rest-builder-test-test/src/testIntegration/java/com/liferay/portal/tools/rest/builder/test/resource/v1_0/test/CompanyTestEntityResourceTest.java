@@ -116,15 +116,6 @@ public class CompanyTestEntityResourceTest
 
 	@Override
 	protected CompanyTestEntity
-			testGraphQLCompanyTestEntity_addCompanyTestEntity()
-		throws Exception {
-
-		return companyTestEntityResource.postCompanyTestEntity(
-			randomCompanyTestEntity());
-	}
-
-	@Override
-	protected CompanyTestEntity
 			testPatchCompanyTestEntity_addCompanyTestEntity()
 		throws Exception {
 

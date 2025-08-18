@@ -30,51 +30,6 @@ public class ScopedTestEntityResourceTest
 	}
 
 	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		super.
-			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		super.
-			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCodeNotFound();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetScopedTestEntitiesPage() throws Exception {
-		super.testGraphQLGetScopedTestEntitiesPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		super.testGraphQLGetScopedTestEntityByExternalReferenceCode();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetScopedTestEntityByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		super.testGraphQLGetScopedTestEntityByExternalReferenceCodeNotFound();
-	}
-
-	@Ignore
 	@Test
 	public void testPatchScopedTestEntity() throws Exception {
 		super.testPatchScopedTestEntity();
@@ -117,15 +72,6 @@ public class ScopedTestEntityResourceTest
 				Long.valueOf(scopedTestEntity.getAssetLibraryKey()),
 				scopedTestEntity.getExternalReferenceCode(), scopedTestEntity);
 	}
-
-	@Override
-	protected Long
-			testDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
 	@Override
 	protected ScopedTestEntity
 			testDeleteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
@@ -169,14 +115,6 @@ public class ScopedTestEntityResourceTest
 		throws Exception {
 
 		return testDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
-	}
-
-	@Override
-	protected Long
-			testGetAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -295,14 +233,6 @@ public class ScopedTestEntityResourceTest
 		throws Exception {
 
 		return testDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
-	}
-
-	@Override
-	protected Long
-			testPutAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override

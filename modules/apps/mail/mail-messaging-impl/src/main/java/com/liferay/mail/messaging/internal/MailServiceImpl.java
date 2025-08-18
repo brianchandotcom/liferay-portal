@@ -316,6 +316,13 @@ public class MailServiceImpl
 	}
 
 	@Override
+	public boolean isPOPServerNotificationsEnabled(long companyId) {
+		return PrefsPropsUtil.getBoolean(
+			companyId, PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
+			PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED);
+	}
+
+	@Override
 	public void sendEmail(MailMessage mailMessage) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {

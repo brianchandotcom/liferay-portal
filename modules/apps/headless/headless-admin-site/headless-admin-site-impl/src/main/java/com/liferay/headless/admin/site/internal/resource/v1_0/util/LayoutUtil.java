@@ -23,11 +23,13 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
+import com.liferay.layout.importer.util.PortletPermissionsImporterUtil;
 import com.liferay.layout.importer.util.PortletPreferencesPortletConfigurationImporterUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -48,6 +50,7 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -63,6 +66,7 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryServiceUtil;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1069,6 +1073,18 @@ public class LayoutUtil {
 					importPortletConfiguration(
 						layout.getPlid(), portletId,
 						widgetPageWidgetInstance.getWidgetConfig());
+
+				PortletPermissionsImporterUtil.importPortletPermissions(
+					layout.getPlid(), portletId, new HashSet<>(),
+					TransformUtil.transform(
+						ListUtil.fromArray(
+							widgetPageWidgetInstance.getWidgetPermissions()),
+						widgetPermission -> HashMapBuilder.<String, Object>put(
+							"actionKeys",
+							ListUtil.fromArray(widgetPermission.getActionIds())
+						).put(
+							"roleKey", widgetPermission.getRoleName()
+						).build()));
 
 				portletIds.remove(portletId);
 			}

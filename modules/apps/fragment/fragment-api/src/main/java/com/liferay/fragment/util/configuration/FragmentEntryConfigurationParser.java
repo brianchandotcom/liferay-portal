@@ -26,7 +26,7 @@ public interface FragmentEntryConfigurationParser {
 		JSONObject configurationJSONObject);
 
 	public Object getConfigurationFieldValue(
-		String editableValues, String fieldName,
+		JSONObject editableValuesJSONObject, String fieldName,
 		FragmentConfigurationFieldDataType fragmentConfigurationFieldDataType);
 
 	public JSONObject getConfigurationJSONObject(

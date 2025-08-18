@@ -187,8 +187,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		String inputLabel = _getInputLabel(
-			defaultInputLabel, fragmentEntryLink.getEditableValues(), infoField,
-			locale);
+			defaultInputLabel, fragmentEntryLink.getEditableValuesJSONObject(),
+			infoField, locale);
 
 		boolean localizable = false;
 		String name = "name";
@@ -790,15 +790,15 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 	}
 
 	private String _getInputLabel(
-		String defaultInputLabel, String editableValues, InfoField<?> infoField,
-		Locale locale) {
+		String defaultInputLabel, JSONObject editableValuesJSONObject,
+		InfoField<?> infoField, Locale locale) {
 
 		String inputLabel = null;
 
 		JSONObject inputLabelJSONObject =
 			(JSONObject)
 				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-					editableValues, "inputLabel",
+					editableValuesJSONObject, "inputLabel",
 					FragmentConfigurationFieldDataType.OBJECT);
 
 		if (inputLabelJSONObject != null) {

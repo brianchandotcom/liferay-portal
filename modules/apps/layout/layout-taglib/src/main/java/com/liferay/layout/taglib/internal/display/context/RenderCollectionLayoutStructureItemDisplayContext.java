@@ -529,7 +529,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			JSONArray targetCollectionsJSONArray =
 				(JSONArray)
 					fragmentEntryConfigurationParser.getConfigurationFieldValue(
-						fragmentEntryLink.getEditableValues(),
+						fragmentEntryLink.getEditableValuesJSONObject(),
 						"targetCollections",
 						FragmentConfigurationFieldDataType.ARRAY);
 

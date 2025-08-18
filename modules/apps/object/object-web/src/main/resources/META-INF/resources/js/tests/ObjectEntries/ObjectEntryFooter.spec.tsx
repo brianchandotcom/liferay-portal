@@ -39,6 +39,18 @@ describe('ObjectEntryFooter component', () => {
 		).toBeInTheDocument();
 	});
 
+	it('renders publish button with caret-bottom symbol', async () => {
+		renderObjectEntryFooter();
+
+		const publishButton = screen.getByRole('button', {name: 'publish'});
+
+		const caretBottomIcon = publishButton.querySelector(
+			'.lfr-object__entries-schedule-panel-publish-icon'
+		);
+
+		expect(caretBottomIcon).toBeInTheDocument();
+	});
+
 	it('renders publishing options dropdown after clicking on publish button', async () => {
 		renderObjectEntryFooter();
 

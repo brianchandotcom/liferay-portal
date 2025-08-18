@@ -59,8 +59,8 @@ public class DepotEntryURLUtil {
 		Group group = depotEntry.getGroup();
 
 		return PermissionsURLTag.doTag(
-			StringPool.BLANK, DepotEntry.class.getName(), group.getName(), null,
-			String.valueOf(depotEntry.getDepotEntryId()),
+			StringPool.BLANK, DepotEntry.class.getName(), group.getName(),
+			group.getGroupId(), String.valueOf(depotEntry.getDepotEntryId()),
 			LiferayWindowState.POP_UP.toString(), null,
 			liferayPortletRequest.getHttpServletRequest());
 	}

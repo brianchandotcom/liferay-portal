@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Autocomplete from '@clayui/autocomplete';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayModal from '@clayui/modal';
@@ -10,7 +11,6 @@ import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
 import React, {useEffect, useId, useState} from 'react';
 
-import {FieldPicker} from '../../common/components/forms';
 import SiteService from '../../common/services/SiteService';
 import {Site} from '../../common/types/Site';
 
@@ -109,14 +109,15 @@ const SitesSelector = ({
 	groupId: string;
 	onSiteConnected: (site: Site) => void;
 }) => {
+	const [value, setValue] = useState('');
 	const [sites, setSites] = useState<Site[]>([]);
-	const [siteSelected, setSiteSelected] = useState<string>();
+	const [siteSelected, setSiteSelected] = useState<Site>();
 
 	const connectSiteToSpace = async () => {
 		if (siteSelected) {
 			const {data, error} = await SiteService.connectSiteToSpace(
 				groupId,
-				siteSelected
+				siteSelected.id
 			);
 
 			if (data) {
@@ -144,21 +145,32 @@ const SitesSelector = ({
 	}, []);
 
 	return (
-		<div className="pt-4 px-4">
-			<div className="align-items-center autofit-row c-gap-3">
+		<div className="p-4">
+			<div className="align-items-end autofit-row c-gap-3">
 				<div className="autofit-col autofit-col-expand">
-					<FieldPicker
-						items={sites.map((site) => {
-							return {label: site.name, value: site.id};
-						})}
-						label={Liferay.Language.get('site')}
-						name="siteSelector"
-						onSelectionChange={(value: string) => {
-							setSiteSelected(value);
-						}}
-						selectedKey={siteSelected}
-						title={Liferay.Language.get('select-a-site')}
-					/>
+					<label htmlFor="siteSelector">
+						{Liferay.Language.get('site')}
+					</label>
+
+					<Autocomplete
+						allowsCustomValue
+						id="siteSelector"
+						menuTrigger="focus"
+						onChange={setValue}
+						placeholder={Liferay.Language.get('select-a-site')}
+						value={value}
+					>
+						{sites.map((site) => (
+							<Autocomplete.Item
+								key={site.id}
+								onClick={() => {
+									setSiteSelected(site);
+								}}
+							>
+								{site.name}
+							</Autocomplete.Item>
+						))}
+					</Autocomplete>
 				</div>
 
 				<div className="autofit-col">

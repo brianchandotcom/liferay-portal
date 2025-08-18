@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.internal.importer.helper;
+package com.liferay.layout.internal.importer;
 
-import com.liferay.layout.importer.helper.PortletPermissionsImporterHelper;
+import com.liferay.layout.importer.PortletPermissionsImporter;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -42,9 +42,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = PortletPermissionsImporterHelper.class)
-public class PortletPermissionsImporterHelperImpl
-	implements PortletPermissionsImporterHelper {
+@Component(service = PortletPermissionsImporter.class)
+public class PortletPermissionsImporterImpl
+	implements PortletPermissionsImporter {
 
 	@Override
 	public void importPortletPermissions(

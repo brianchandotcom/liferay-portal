@@ -424,7 +424,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 			testGraphQLGetSiteSiteTestEntitiesPage_addSiteTestEntity()
 		throws Exception {
 
-		return testGraphQLSiteTestEntity_addSiteTestEntity();
+		return testGraphQLSiteSiteTestEntity_addSiteTestEntity();
 	}
 
 	@Test
@@ -587,7 +587,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 			testGraphQLGetSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity()
 		throws Exception {
 
-		return testGraphQLSiteTestEntity_addSiteTestEntity();
+		return testGraphQLSiteSiteTestEntity_addSiteTestEntity();
 	}
 
 	@Test
@@ -1013,7 +1013,8 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		SiteTestEntity randomSiteTestEntity = randomSiteTestEntity();
 
 		SiteTestEntity siteTestEntity =
-			testGraphQLSiteTestEntity_addSiteTestEntity(randomSiteTestEntity);
+			testGraphQLSiteSiteTestEntity_addSiteTestEntity(
+				testGroup.getGroupId(), randomSiteTestEntity);
 
 		Assert.assertTrue(equals(randomSiteTestEntity, siteTestEntity));
 	}
@@ -1204,6 +1205,116 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	protected SiteTestEntity testGraphQLSiteSiteTestEntity_addSiteTestEntity()
+		throws Exception {
+
+		return testGraphQLSiteSiteTestEntity_addSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	protected SiteTestEntity testGraphQLSiteSiteTestEntity_addSiteTestEntity(
+			Long siteId, SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		JSONDeserializer<SiteTestEntity> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(SiteTestEntity.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(siteTestEntity));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteSiteTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("siteTestEntity", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteSiteTestEntity"),
+			SiteTestEntity.class);
+	}
+
+	protected SiteTestEntity testGraphQLSiteTestEntity_addSiteTestEntity()
+		throws Exception {
+
+		return testGraphQLSiteTestEntity_addSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	protected SiteTestEntity testGraphQLSiteTestEntity_addSiteTestEntity(
+			Long siteId, SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		JSONDeserializer<SiteTestEntity> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(SiteTestEntity.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(siteTestEntity));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteSiteTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("siteTestEntity", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteSiteTestEntity"),
+			SiteTestEntity.class);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -1247,63 +1358,6 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected SiteTestEntity testGraphQLSiteTestEntity_addSiteTestEntity()
-		throws Exception {
-
-		return testGraphQLSiteTestEntity_addSiteTestEntity(
-			randomSiteTestEntity());
-	}
-
-	protected SiteTestEntity testGraphQLSiteTestEntity_addSiteTestEntity(
-			SiteTestEntity siteTestEntity)
-		throws Exception {
-
-		JSONDeserializer<SiteTestEntity> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(SiteTestEntity.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(siteTestEntity));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteSiteTestEntity",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("siteTestEntity", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteSiteTestEntity"),
-			SiteTestEntity.class);
 	}
 
 	protected void assertContains(

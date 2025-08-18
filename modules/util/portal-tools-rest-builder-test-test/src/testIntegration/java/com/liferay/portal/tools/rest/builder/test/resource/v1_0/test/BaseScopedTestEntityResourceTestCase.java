@@ -596,7 +596,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		return testGraphQLScopedTestEntity_addScopedTestEntity();
+		return testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity();
 	}
 
 	@Test
@@ -1082,7 +1082,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testGraphQLGetSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		return testGraphQLScopedTestEntity_addScopedTestEntity();
+		return testGraphQLSiteScopedTestEntity_addScopedTestEntity();
 	}
 
 	@Test
@@ -1538,7 +1538,23 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		}
 	}
 
+	protected ScopedTestEntity
+			testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected ScopedTestEntity testGraphQLScopedTestEntity_addScopedTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ScopedTestEntity
+			testGraphQLSiteScopedTestEntity_addScopedTestEntity()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

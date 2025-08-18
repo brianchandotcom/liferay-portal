@@ -22,6 +22,7 @@ import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -684,6 +685,22 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostAssetLibraryERCAssetLibraryTestEntity()
+		throws Exception {
+
+		ERCAssetLibraryTestEntity randomERCAssetLibraryTestEntity =
+			randomERCAssetLibraryTestEntity();
+
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity =
+			testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity(
+				testDepotEntryGroup.getExternalReferenceCode(),
+				randomERCAssetLibraryTestEntity);
+
+		Assert.assertTrue(
+			equals(randomERCAssetLibraryTestEntity, ercAssetLibraryTestEntity));
+	}
+
+	@Test
 	public void testPutAssetLibraryERCAssetLibraryTestEntity()
 		throws Exception {
 
@@ -875,6 +892,114 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity(
+			testDepotEntryGroup.getExternalReferenceCode(),
+			randomERCAssetLibraryTestEntity());
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity(
+				String assetLibraryExternalReferenceCode,
+				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
+		throws Exception {
+
+		JSONDeserializer<ERCAssetLibraryTestEntity> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(ERCAssetLibraryTestEntity.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(ercAssetLibraryTestEntity));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAssetLibraryERCAssetLibraryTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryExternalReferenceCode",
+									"\"" + assetLibraryExternalReferenceCode +
+										"\"");
+								put("ercAssetLibraryTestEntity", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createAssetLibraryERCAssetLibraryTestEntity"),
+			ERCAssetLibraryTestEntity.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

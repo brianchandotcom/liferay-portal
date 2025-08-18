@@ -6,7 +6,6 @@
 import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
-import dateFormat from '../../common/utils/dateFormat';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import {EVENTS} from '../info_panel/util/constants';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
@@ -20,6 +19,7 @@ import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer'
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
+import transformViewsItemsProps from './utils/transformViewsItemProps';
 
 const ACTIONS = {
 	createAsset: createAssetAction,
@@ -158,17 +158,6 @@ export default function FilesFDSPropsTransformer({
 		onSelectedItemsChange: (selectedItems: any[]) => {
 			Liferay.fire(EVENTS.ASSET_DATA, {items: selectedItems});
 		},
-		views: views.map((view) => {
-			if (view.name === 'cards') {
-				view.setItemComponentProps = ({item, props}) => {
-					return {
-						...props,
-						description: dateFormat(item.dateModified),
-					};
-				};
-			}
-
-			return view;
-		}),
+		views: transformViewsItemsProps(views),
 	};
 }

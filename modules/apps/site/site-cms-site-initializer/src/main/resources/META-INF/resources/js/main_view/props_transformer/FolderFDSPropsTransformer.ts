@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import {EVENTS} from '../info_panel/util/constants';
@@ -15,6 +15,7 @@ import NameRenderer from './cell_renderers/NameRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
+import transformViewsItemsProps from './utils/transformViewsItemProps';
 
 const ACTIONS = {
 	createAsset: createAssetAction,
@@ -28,11 +29,13 @@ const OBJECT_ENTRY_FOLDER_CLASSNAME =
 export default function FolderFDSPropsTransformer({
 	creationMenu,
 	itemsActions = [],
+	views,
 	...otherProps
 }: {
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;
+	views: IView[];
 }) {
 	return {
 		...otherProps,
@@ -103,5 +106,6 @@ export default function FolderFDSPropsTransformer({
 		onSelectedItemsChange: (selectedItems: any[]) => {
 			Liferay.fire(EVENTS.ASSET_DATA, {items: selectedItems});
 		},
+		views: transformViewsItemsProps(views),
 	};
 }

@@ -304,6 +304,14 @@ public class ObjectEntryVersionLocalServiceWrapper
 			objectEntryVersionId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryVersion fetchObjectEntryVersion(
+		long objectEntryId, int version) {
+
+		return _objectEntryVersionLocalService.fetchObjectEntryVersion(
+			objectEntryId, version);
+	}
+
 	/**
 	 * Returns the object entry version with the matching UUID and company.
 	 *

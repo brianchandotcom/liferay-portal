@@ -267,6 +267,12 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().fetchObjectEntryVersion(objectEntryVersionId);
 	}
 
+	public static ObjectEntryVersion fetchObjectEntryVersion(
+		long objectEntryId, int version) {
+
+		return getService().fetchObjectEntryVersion(objectEntryId, version);
+	}
+
 	/**
 	 * Returns the object entry version with the matching UUID and company.
 	 *

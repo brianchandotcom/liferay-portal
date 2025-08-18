@@ -82,19 +82,38 @@ const WrappedComponent = ({
 }: {
 	currentStructureTypeLabel: string;
 	inventoryAnalysisData: InventoryAnalysisDataType;
+	viewType: 'chart' | 'table';
 }) => (
 	<PaginatedTable
 		currentStructureTypeLabel={currentStructureTypeLabel}
 		inventoryAnalysisData={inventoryAnalysisData}
+		viewType="chart"
 	/>
 );
 
 describe('[CMS Dashboard] Components: PaginatedTable', () => {
-	it('renders its data correctly', async () => {
+	it('renders its data correctly in charts view', async () => {
 		render(
 			<WrappedComponent
 				currentStructureTypeLabel="Category"
 				inventoryAnalysisData={mockData}
+				viewType="chart"
+			/>
+		);
+
+		const table = screen.getByRole('table');
+		expect(table).toBeInTheDocument();
+
+		const tableRows = table.querySelectorAll('tr');
+		expect(tableRows.length).toBe(11);
+	});
+
+	it('renders its data correctly in table view', async () => {
+		render(
+			<WrappedComponent
+				currentStructureTypeLabel="Category"
+				inventoryAnalysisData={mockData}
+				viewType="table"
 			/>
 		);
 
@@ -110,6 +129,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 			<WrappedComponent
 				currentStructureTypeLabel="Category"
 				inventoryAnalysisData={mockData}
+				viewType="chart"
 			/>
 		);
 
@@ -134,6 +154,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 			<WrappedComponent
 				currentStructureTypeLabel="Category"
 				inventoryAnalysisData={mockData}
+				viewType="chart"
 			/>
 		);
 
@@ -155,6 +176,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 			<WrappedComponent
 				currentStructureTypeLabel="Category"
 				inventoryAnalysisData={mockData}
+				viewType="chart"
 			/>
 		);
 
@@ -178,6 +200,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 			<WrappedComponent
 				currentStructureTypeLabel="Category"
 				inventoryAnalysisData={mockData}
+				viewType="chart"
 			/>
 		);
 
@@ -191,6 +214,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 			<WrappedComponent
 				currentStructureTypeLabel="Category"
 				inventoryAnalysisData={mockData}
+				viewType="chart"
 			/>
 		);
 
@@ -210,6 +234,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 			<WrappedComponent
 				currentStructureTypeLabel="Category"
 				inventoryAnalysisData={mockData}
+				viewType="chart"
 			/>
 		);
 

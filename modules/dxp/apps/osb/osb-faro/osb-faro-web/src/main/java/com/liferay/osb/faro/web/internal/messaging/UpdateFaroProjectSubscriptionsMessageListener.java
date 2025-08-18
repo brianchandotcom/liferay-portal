@@ -10,6 +10,7 @@ import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.model.ProjectUsageMetric;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.model.FaroProjectUsage;
 import com.liferay.osb.faro.provisioning.client.ProvisioningClient;
 import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
@@ -129,7 +130,8 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
 			try {
-				_addFaroProjectUsage(date, faroProject, projectUsageMetricsMap);
+				_addOrUpdateFaroProjectUsage(
+					date, faroProject, projectUsageMetricsMap);
 			}
 			catch (Exception exception) {
 				_log.error(
@@ -192,9 +194,10 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 		}
 	}
 
-	private void _addFaroProjectUsage(
-		Date date, FaroProject faroProject,
-		Map<String, Map<String, ProjectUsageMetric>> projectUsageMetricsMap) {
+	private void _addOrUpdateFaroProjectUsage(
+			Date date, FaroProject faroProject,
+			Map<String, Map<String, ProjectUsageMetric>> projectUsageMetricsMap)
+		throws Exception {
 
 		Map<String, ProjectUsageMetric> projectUsageMetrics =
 			projectUsageMetricsMap.get(faroProject.getServerLocation());
@@ -221,11 +224,23 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 			return;
 		}
 
-		_faroProjectUsageLocalService.addFaroProjectUsage(
-			faroProject.getCompanyId(), 0, faroProject.getFaroProjectId(),
-			projectUsageMetric.getKnownIndividualsCount(),
-			_getMonthDateKey(date), projectUsageMetric.getPageViewsCount(),
-			date);
+		FaroProjectUsage faroProjectUsage =
+			_faroProjectUsageLocalService.fetchFaroProjectUsage(
+				faroProject.getFaroProjectId(), date);
+
+		if (faroProjectUsage == null) {
+			_faroProjectUsageLocalService.addFaroProjectUsage(
+				faroProject.getCompanyId(), 0, faroProject.getFaroProjectId(),
+				projectUsageMetric.getKnownIndividualsCount(),
+				_getMonthDateKey(date), projectUsageMetric.getPageViewsCount(),
+				date);
+		}
+		else {
+			_faroProjectUsageLocalService.updateFaroProjectUsage(
+				faroProjectUsage.getFaroProjectUsageId(),
+				projectUsageMetric.getKnownIndividualsCount(),
+				projectUsageMetric.getPageViewsCount());
+		}
 	}
 
 	private String _getMonthDateKey(Date date) {

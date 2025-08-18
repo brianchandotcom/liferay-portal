@@ -54,4 +54,11 @@ public class FaroProjectUsageLocalServiceImpl
 		faroProjectUsagePersistence.removeAll();
 	}
 
+	public FaroProjectUsage fetchFaroProjectUsage(
+		long faroProjectId, Date usageDate) {
+
+		return faroProjectUsagePersistence.fetchByF_U(
+			faroProjectId, usageDate.getTime());
+	}
+
 }

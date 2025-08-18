@@ -7,12 +7,15 @@ package com.liferay.batch.engine.internal.exportimport.data.handler;
 
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -73,10 +76,20 @@ public class BatchEnginePortletDataHandlerRegistry {
 	@Reference
 	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
+	@Reference
+	private BatchEngineTaskItemDelegateRegistry
+		_batchEngineTaskItemDelegateRegistry;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	private ServiceRegistration<FeatureFlagListener> _serviceRegistration;
 	private ServiceTracker
 		<VulcanBatchEngineTaskItemDelegate,
 		 ServiceRegistration<PortletDataHandler>> _serviceTracker;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	private class VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -118,16 +131,19 @@ public class BatchEnginePortletDataHandlerRegistry {
 					_batchEngineExportTaskService,
 					_batchEngineImportTaskExecutor,
 					_batchEngineImportTaskService,
+					_batchEngineTaskItemDelegateRegistry,
 					GetterUtil.getObject(
 						(String)serviceReference.getProperty(
 							"batch.engine.task.item.delegate.class.name"),
 						() -> (String)serviceReference.getProperty(
 							"batch.engine.entity.class.name")),
+					_companyLocalService,
 					exportImportVulcanBatchEngineTaskItemDelegate,
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.item.class.name"),
 					(String)serviceReference.getProperty(
-						"batch.engine.task.item.delegate.name"));
+						"batch.engine.task.item.delegate.name"),
+					_userLocalService);
 
 			return _bundleContext.registerService(
 				PortletDataHandler.class, batchEnginePortletDataHandler,

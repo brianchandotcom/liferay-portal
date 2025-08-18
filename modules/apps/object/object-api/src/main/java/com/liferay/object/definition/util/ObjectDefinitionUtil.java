@@ -150,6 +150,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"DataSetTableSection", "/data-set-admin/data-sets/table-sections"
 		).put(
+			"DefaultPermission", "/cms/default-permissions"
+		).put(
 			"ExternalVideo", "/cms/external-videos"
 		).put(
 			"FDSAction", "/data-set-manager/actions"

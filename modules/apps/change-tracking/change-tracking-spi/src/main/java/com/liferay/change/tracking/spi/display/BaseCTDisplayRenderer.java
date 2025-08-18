@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -25,6 +26,8 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -364,12 +367,9 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 
 		LocalizedValue label = ddmFormField.getLabel();
 
-		Value value = ddmFormFieldValue.getValue();
-
-		String valueString =
-			(value == null) ? StringPool.BLANK : value.getString(locale);
-
-		displayBuilder.display(label.getString(locale), valueString);
+		displayBuilder.display(
+			label.getString(locale),
+			_getOptionValue(ddmFormFieldValue, locale));
 	}
 
 	private void _buildTableContent(
@@ -402,6 +402,65 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private String _getOptionValue(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		Value value = ddmFormFieldValue.getValue();
+
+		if (value != null) {
+			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+			DDMFormFieldOptions ddmFormFieldOptions =
+				ddmFormField.getDDMFormFieldOptions();
+
+			String valueString = value.getString(locale);
+
+			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
+				valueString);
+
+			if (optionLabel != null) {
+				return optionLabel.getString(locale);
+			}
+
+			if (StringUtil.startsWith(valueString, StringPool.OPEN_BRACKET) &&
+				StringUtil.endsWith(valueString, StringPool.CLOSE_BRACKET)) {
+
+				try {
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+						valueString);
+
+					if (jsonArray.length() > 0) {
+						StringBundler sb = new StringBundler(
+							jsonArray.length());
+
+						for (int i = 0; i < jsonArray.length(); i++) {
+							if (i > 0) {
+								sb.append(StringPool.COMMA_AND_SPACE);
+							}
+
+							LocalizedValue localizedValue =
+								ddmFormFieldOptions.getOptionLabels(
+									jsonArray.getString(i));
+
+							sb.append(localizedValue.getString(locale));
+						}
+
+						return sb.toString();
+					}
+				}
+				catch (JSONException jsonException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(jsonException);
+					}
+				}
+			}
+
+			return valueString;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

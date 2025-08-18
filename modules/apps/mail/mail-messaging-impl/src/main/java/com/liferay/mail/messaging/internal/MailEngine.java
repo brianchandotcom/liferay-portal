@@ -9,7 +9,7 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.FileAttachment;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.model.SMTPAccount;
-import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,12 +71,12 @@ import java.util.concurrent.atomic.AtomicLong;
 public class MailEngine {
 
 	public static void send(
-			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
-			InternetAddress[] bcc, InternetAddress[] bulkAddresses,
-			String subject, String body, boolean htmlFormat,
-			InternetAddress[] replyTo, String messageId, String inReplyTo,
-			List<FileAttachment> fileAttachments, SMTPAccount smtpAccount,
-			InternetHeaders internetHeaders)
+			MailService mailService, InternetAddress from, InternetAddress[] to,
+			InternetAddress[] cc, InternetAddress[] bcc,
+			InternetAddress[] bulkAddresses, String subject, String body,
+			boolean htmlFormat, InternetAddress[] replyTo, String messageId,
+			String inReplyTo, List<FileAttachment> fileAttachments,
+			SMTPAccount smtpAccount, InternetHeaders internetHeaders)
 		throws PortalException {
 
 		long startTime = System.currentTimeMillis();
@@ -140,10 +140,10 @@ public class MailEngine {
 			Session session = null;
 
 			if (smtpAccount == null) {
-				session = MailServiceUtil.getSession();
+				session = mailService.getSession();
 			}
 			else {
-				session = MailServiceUtil.getSession(smtpAccount);
+				session = mailService.getSession(smtpAccount);
 			}
 
 			Message message = new LiferayMimeMessage(session);
@@ -293,15 +293,17 @@ public class MailEngine {
 		}
 	}
 
-	public static void send(MailMessage mailMessage) throws PortalException {
+	public static void send(MailService mailService, MailMessage mailMessage)
+		throws PortalException {
+
 		send(
-			mailMessage.getFrom(), mailMessage.getTo(), mailMessage.getCC(),
-			mailMessage.getBCC(), mailMessage.getBulkAddresses(),
-			mailMessage.getSubject(), mailMessage.getBody(),
-			mailMessage.isHTMLFormat(), mailMessage.getReplyTo(),
-			mailMessage.getMessageId(), mailMessage.getInReplyTo(),
-			mailMessage.getFileAttachments(), mailMessage.getSMTPAccount(),
-			mailMessage.getInternetHeaders());
+			mailService, mailMessage.getFrom(), mailMessage.getTo(),
+			mailMessage.getCC(), mailMessage.getBCC(),
+			mailMessage.getBulkAddresses(), mailMessage.getSubject(),
+			mailMessage.getBody(), mailMessage.isHTMLFormat(),
+			mailMessage.getReplyTo(), mailMessage.getMessageId(),
+			mailMessage.getInReplyTo(), mailMessage.getFileAttachments(),
+			mailMessage.getSMTPAccount(), mailMessage.getInternetHeaders());
 	}
 
 	private static Address[] _getBatchAddresses(

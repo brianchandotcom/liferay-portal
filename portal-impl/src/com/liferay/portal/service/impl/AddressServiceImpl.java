@@ -129,6 +129,36 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 	}
 
 	@Override
+	public Address getOrAddEmptyAddress(
+			String externalReferenceCode, String className, long classPK)
+		throws Exception {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		Address address = fetchAddressByExternalReferenceCode(
+			externalReferenceCode, permissionChecker.getCompanyId());
+
+		if (address != null) {
+			return address;
+		}
+
+		String actionId = ActionKeys.UPDATE;
+
+		if (Objects.equals(
+				className, "com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
+
+		CommonPermissionUtil.check(
+			permissionChecker, className, classPK, actionId);
+
+		return addressLocalService.getOrAddEmptyAddress(
+			externalReferenceCode, permissionChecker.getCompanyId(),
+			permissionChecker.getUserId(), className, classPK);
+	}
+
+	@Override
 	public Address updateAddress(
 			String externalReferenceCode, long addressId, long countryId,
 			long listTypeId, long regionId, String city, String description,

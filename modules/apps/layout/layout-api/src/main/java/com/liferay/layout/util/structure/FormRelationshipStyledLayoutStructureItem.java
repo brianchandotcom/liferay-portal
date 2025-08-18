@@ -52,6 +52,10 @@ public class FormRelationshipStyledLayoutStructureItem
 		return super.equals(object);
 	}
 
+	public JSONObject getButtonLabelJSONObject() {
+		return _buttonLabelJSONObject;
+	}
+
 	public String getContentType() {
 		return _contentType;
 	}
@@ -61,6 +65,8 @@ public class FormRelationshipStyledLayoutStructureItem
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
 		return jsonObject.put(
+			"buttonLabelJSONObject", _buttonLabelJSONObject
+		).put(
 			"contentType",
 			() -> {
 				if (Validator.isBlank(_contentType)) {
@@ -68,7 +74,8 @@ public class FormRelationshipStyledLayoutStructureItem
 				}
 
 				return _contentType;
-			});
+			}
+		);
 	}
 
 	@Override
@@ -81,6 +88,10 @@ public class FormRelationshipStyledLayoutStructureItem
 		return HashUtil.hash(0, getItemId());
 	}
 
+	public void setButtonLabelJSONObject(JSONObject buttonLabelJSONObject) {
+		_buttonLabelJSONObject = buttonLabelJSONObject;
+	}
+
 	public void setContentType(String contentType) {
 		_contentType = contentType;
 	}
@@ -89,11 +100,17 @@ public class FormRelationshipStyledLayoutStructureItem
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		super.updateItemConfig(itemConfigJSONObject);
 
+		if (itemConfigJSONObject.has("buttonLabelJSONObject")) {
+			setButtonLabelJSONObject(
+				itemConfigJSONObject.getJSONObject("buttonLabelJSONObject"));
+		}
+
 		if (itemConfigJSONObject.has("contentType")) {
 			setContentType(itemConfigJSONObject.getString("contentType"));
 		}
 	}
 
+	private JSONObject _buttonLabelJSONObject;
 	private String _contentType = "";
 
 }

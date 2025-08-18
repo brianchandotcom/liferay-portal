@@ -194,28 +194,32 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 					ddmForm.getDDMFormFields(),
 					ddmFormValues.getDDMFormFieldValuesMap(true)));
 
-			List<DDMFormFieldValue> ddmFormFieldValues =
-				ddmFormValues.getDDMFormFieldValues();
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValues =
+				ddmFormValues.getDDMFormFieldValuesMap(true);
 
 			List<DDMFormFieldValue> imageDDMFormFieldValues = new ArrayList<>();
 			List<DDMFormFieldValue> nonimageDDMFormFieldValues =
 				new ArrayList<>();
 
 			ddmFormFieldValues.forEach(
-				ddmFormFieldValue -> {
-					DDMFormField ddmFormField =
-						ddmFormFieldValue.getDDMFormField();
+				(key, value) -> value.forEach(
+					ddmFormFieldValue -> {
+						DDMFormField ddmFormField =
+							ddmFormFieldValue.getDDMFormField();
 
-					if (StringUtil.equals(
-							ddmFormField.getType(),
-							DDMFormFieldTypeConstants.IMAGE)) {
+						if (StringUtil.equals(
+								ddmFormField.getType(),
+								DDMFormFieldTypeConstants.IMAGE)) {
 
-						imageDDMFormFieldValues.add(ddmFormFieldValue);
-					}
-					else {
-						nonimageDDMFormFieldValues.add(ddmFormFieldValue);
-					}
-				});
+							imageDDMFormFieldValues.add(ddmFormFieldValue);
+						}
+						else if (!StringUtil.equals(
+									ddmFormField.getType(),
+									DDMFormFieldTypeConstants.FIELDSET)) {
+
+							nonimageDDMFormFieldValues.add(ddmFormFieldValue);
+						}
+					}));
 
 			Locale locale = displayBuilder.getLocale();
 
@@ -223,75 +227,14 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				displayBuilder.displaySectionHeader("fields");
 
 				nonimageDDMFormFieldValues.forEach(
-					ddmFormFieldValue -> {
-						DDMFormField ddmFormField =
-							ddmFormFieldValue.getDDMFormField();
-
-						Value value = ddmFormFieldValue.getValue();
-
-						displayBuilder.display(
-							ddmFormField.getName(),
-							value.getString(displayBuilder.getLocale()));
-					});
+					ddmFormFieldValue -> _buildStructureNonimageDisplay(
+						ddmFormFieldValue, displayBuilder, locale));
 			}
 
 			ListUtil.isNotEmptyForEach(
 				imageDDMFormFieldValues,
-				ddmFormFieldValue -> {
-					try {
-						Value value = ddmFormFieldValue.getValue();
-
-						JSONObject jsonObject =
-							JSONFactoryUtil.createJSONObject(
-								value.getString(locale));
-
-						DDMFormField ddmFormField =
-							ddmFormFieldValue.getDDMFormField();
-
-						LocalizedValue label = ddmFormField.getLabel();
-
-						displayBuilder.displaySectionHeader(
-							StringBundler.concat(
-								LanguageUtil.get(locale, "image"),
-								StringPool.COLON, StringPool.SPACE,
-								label.getString(locale)));
-
-						DLFileEntry dlFileEntry =
-							DLFileEntryLocalServiceUtil.fetchDLFileEntry(
-								jsonObject.getLong("fileEntryId"));
-
-						displayBuilder.display(
-							"mime-type",
-							(dlFileEntry != null) ? dlFileEntry.getMimeType() :
-								StringPool.BLANK
-						).display(
-							"version",
-							(dlFileEntry != null) ? dlFileEntry.getVersion() :
-								StringPool.BLANK
-						).display(
-							"size",
-							(dlFileEntry != null) ? dlFileEntry.getSize() :
-								StringPool.BLANK
-						).display(
-							"download",
-							() -> {
-								if (dlFileEntry != null) {
-									return getDownloadLink(
-										displayBuilder.getDisplayContext(),
-										dlFileEntry.getVersion(),
-										dlFileEntry.getSize(),
-										dlFileEntry.getFileName());
-								}
-
-								return StringPool.BLANK;
-							},
-							false
-						);
-					}
-					catch (Exception exception) {
-						ReflectionUtil.throwException(exception);
-					}
-				});
+				ddmFormFieldValue -> _buildStructureImageDisplay(
+					ddmFormFieldValue, displayBuilder, locale));
 		}
 	}
 
@@ -357,6 +300,76 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 
 		public T getModel();
 
+	}
+
+	private void _buildStructureImageDisplay(
+		DDMFormFieldValue ddmFormFieldValue, DisplayBuilder<T> displayBuilder,
+		Locale locale) {
+
+		try {
+			Value value = ddmFormFieldValue.getValue();
+
+			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+			LocalizedValue label = ddmFormField.getLabel();
+
+			displayBuilder.displaySectionHeader(
+				StringBundler.concat(
+					LanguageUtil.get(locale, "image"), StringPool.COLON,
+					StringPool.SPACE, label.getString(locale)));
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				value.getString(locale));
+
+			DLFileEntry dlFileEntry =
+				DLFileEntryLocalServiceUtil.fetchDLFileEntry(
+					jsonObject.getLong("fileEntryId"));
+
+			displayBuilder.display(
+				"mime-type",
+				(dlFileEntry != null) ? dlFileEntry.getMimeType() :
+					StringPool.BLANK
+			).display(
+				"version",
+				(dlFileEntry != null) ? dlFileEntry.getVersion() :
+					StringPool.BLANK
+			).display(
+				"size",
+				(dlFileEntry != null) ? dlFileEntry.getSize() : StringPool.BLANK
+			).display(
+				"download",
+				() -> {
+					if (dlFileEntry != null) {
+						return getDownloadLink(
+							displayBuilder.getDisplayContext(),
+							dlFileEntry.getVersion(), dlFileEntry.getSize(),
+							dlFileEntry.getFileName());
+					}
+
+					return StringPool.BLANK;
+				},
+				false
+			);
+		}
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
+		}
+	}
+
+	private void _buildStructureNonimageDisplay(
+		DDMFormFieldValue ddmFormFieldValue, DisplayBuilder<T> displayBuilder,
+		Locale locale) {
+
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		LocalizedValue label = ddmFormField.getLabel();
+
+		Value value = ddmFormFieldValue.getValue();
+
+		String valueString =
+			(value == null) ? StringPool.BLANK : value.getString(locale);
+
+		displayBuilder.display(label.getString(locale), valueString);
 	}
 
 	private void _buildTableContent(

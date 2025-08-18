@@ -10,7 +10,6 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.portal.deploy.hot.ServiceBag;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,22 +20,18 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -45,14 +40,13 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
-import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
+import com.liferay.staging.internal.service.util.StagingAdviceUtil;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -420,26 +414,9 @@ public class LayoutLocalServiceStagingAdvice {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		AopInvocationHandler aopInvocationHandler =
-			ProxyUtil.fetchInvocationHandler(
-				_layoutLocalService, AopInvocationHandler.class);
-
-		ServiceBag<?> serviceBag = new ServiceBag(
-			aopInvocationHandler, LayoutLocalService.class,
-			(ServiceWrapper<?>)ProxyUtil.newProxyInstance(
-				AggregateClassLoader.getAggregateClassLoader(
-					PortalClassLoaderUtil.getClassLoader(),
-					LayoutLocalServiceStagingAdvice.class.getClassLoader()),
-				new Class<?>[] {
-					IdentifiableOSGiService.class, LayoutLocalService.class,
-					BaseLocalService.class, ServiceWrapper.class
-				},
-				new LayoutLocalServiceStagingInvocationHandler(
-					aopInvocationHandler.getTarget())),
-			bundleContext,
-			bundleContext.getServiceReference(LayoutLocalService.class));
-
-		_closeable = serviceBag::replace;
+		_closeable = StagingAdviceUtil.register(
+			bundleContext, LayoutLocalServiceStagingInvocationHandler::new,
+			_layoutLocalService, LayoutLocalService.class);
 	}
 
 	@Deactivate

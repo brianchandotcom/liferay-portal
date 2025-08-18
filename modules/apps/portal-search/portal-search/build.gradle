@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:analytics:analytics-settings-rest-api")
 	compileOnly project(":apps:change-tracking:change-tracking-api")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")

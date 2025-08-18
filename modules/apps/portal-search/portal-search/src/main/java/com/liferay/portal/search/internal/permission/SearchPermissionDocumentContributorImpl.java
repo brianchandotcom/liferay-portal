@@ -117,7 +117,8 @@ public class SearchPermissionDocumentContributorImpl
 			List<String> groupRoleIds = new ArrayList<>();
 
 			for (Role role : roles) {
-				if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
+				if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
+					(role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 					(role.getType() == RoleConstants.TYPE_SITE)) {
 
 					groupRoleIds.add(

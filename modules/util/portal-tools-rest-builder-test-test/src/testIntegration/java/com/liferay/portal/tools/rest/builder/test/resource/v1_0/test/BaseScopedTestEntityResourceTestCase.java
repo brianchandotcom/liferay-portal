@@ -16,12 +16,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
-import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
-import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
-import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -139,16 +137,6 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
-
-		importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			_testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
 	}
 
 	@After
@@ -255,8 +243,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postAssetLibraryScopedTestEntity(
+			testDepotEntry.getDepotEntryId(), randomScopedTestEntity());
 	}
 
 	protected Long
@@ -264,39 +252,6 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Test
-	public void testDeleteScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ScopedTestEntity scopedTestEntity =
-			testDeleteScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
-
-		assertHttpResponseStatusCode(
-			204,
-			scopedTestEntityResource.
-				deleteScopedTestEntityByExternalReferenceCodeHttpResponse(
-					scopedTestEntity.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			scopedTestEntityResource.
-				getScopedTestEntityByExternalReferenceCodeHttpResponse(
-					scopedTestEntity.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			scopedTestEntityResource.
-				getScopedTestEntityByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected ScopedTestEntity
-			testDeleteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -331,8 +286,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testDeleteSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postSiteScopedTestEntity(
+			testGroup.getGroupId(), randomScopedTestEntity());
 	}
 
 	@Test
@@ -399,6 +354,15 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/batch".
+				replace("{assetLibraryId}", String.valueOf(assetLibraryId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
 		return expectedActions;
 	}
 
@@ -407,8 +371,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 				Long assetLibraryId, ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postAssetLibraryScopedTestEntity(
+			assetLibraryId, scopedTestEntity);
 	}
 
 	protected Long testGetAssetLibraryScopedTestEntitiesPage_getAssetLibraryId()
@@ -445,8 +409,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testGetAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postAssetLibraryScopedTestEntity(
+			testDepotEntry.getDepotEntryId(), randomScopedTestEntity());
 	}
 
 	protected Long
@@ -597,257 +561,6 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 	}
 
 	@Test
-	public void testGetScopedTestEntitiesPage() throws Exception {
-		Page<ScopedTestEntity> page =
-			scopedTestEntityResource.getScopedTestEntitiesPage();
-
-		long totalCount = page.getTotalCount();
-
-		ScopedTestEntity scopedTestEntity1 =
-			testGetScopedTestEntitiesPage_addScopedTestEntity(
-				randomScopedTestEntity());
-
-		ScopedTestEntity scopedTestEntity2 =
-			testGetScopedTestEntitiesPage_addScopedTestEntity(
-				randomScopedTestEntity());
-
-		page = scopedTestEntityResource.getScopedTestEntitiesPage();
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(
-			scopedTestEntity1, (List<ScopedTestEntity>)page.getItems());
-		assertContains(
-			scopedTestEntity2, (List<ScopedTestEntity>)page.getItems());
-		assertValid(page, testGetScopedTestEntitiesPage_getExpectedActions());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetScopedTestEntitiesPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	protected ScopedTestEntity
-			testGetScopedTestEntitiesPage_addScopedTestEntity(
-				ScopedTestEntity scopedTestEntity)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetScopedTestEntitiesPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"scopedTestEntities",
-			new HashMap<String, Object>() {
-				{
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/scopedTestEntities");
-
-		long totalCount = scopedTestEntitiesJSONObject.getLong("totalCount");
-
-		ScopedTestEntity scopedTestEntity1 =
-			testGraphQLGetScopedTestEntitiesPage_addScopedTestEntity();
-		ScopedTestEntity scopedTestEntity2 =
-			testGraphQLGetScopedTestEntitiesPage_addScopedTestEntity();
-
-		scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/scopedTestEntities");
-
-		Assert.assertEquals(
-			totalCount + 2, scopedTestEntitiesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			scopedTestEntity1,
-			Arrays.asList(
-				ScopedTestEntitySerDes.toDTOs(
-					scopedTestEntitiesJSONObject.getString("items"))));
-		assertContains(
-			scopedTestEntity2,
-			Arrays.asList(
-				ScopedTestEntitySerDes.toDTOs(
-					scopedTestEntitiesJSONObject.getString("items"))));
-
-		// Using the namespace test_v1_0
-
-		scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/test_v1_0",
-			"JSONObject/scopedTestEntities");
-
-		Assert.assertEquals(
-			totalCount + 2, scopedTestEntitiesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			scopedTestEntity1,
-			Arrays.asList(
-				ScopedTestEntitySerDes.toDTOs(
-					scopedTestEntitiesJSONObject.getString("items"))));
-		assertContains(
-			scopedTestEntity2,
-			Arrays.asList(
-				ScopedTestEntitySerDes.toDTOs(
-					scopedTestEntitiesJSONObject.getString("items"))));
-	}
-
-	protected ScopedTestEntity
-			testGraphQLGetScopedTestEntitiesPage_addScopedTestEntity()
-		throws Exception {
-
-		return testGraphQLScopedTestEntity_addScopedTestEntity();
-	}
-
-	@Test
-	public void testGetScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		ScopedTestEntity postScopedTestEntity =
-			testGetScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
-
-		ScopedTestEntity getScopedTestEntity =
-			scopedTestEntityResource.getScopedTestEntityByExternalReferenceCode(
-				postScopedTestEntity.getExternalReferenceCode());
-
-		assertEquals(postScopedTestEntity, getScopedTestEntity);
-		assertValid(getScopedTestEntity);
-	}
-
-	protected ScopedTestEntity
-			testGetScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		ScopedTestEntity scopedTestEntity =
-			testGraphQLGetScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				scopedTestEntity,
-				ScopedTestEntitySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"scopedTestEntityByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												scopedTestEntity.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/scopedTestEntityByExternalReferenceCode"))));
-
-		// Using the namespace test_v1_0
-
-		Assert.assertTrue(
-			equals(
-				scopedTestEntity,
-				ScopedTestEntitySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"test_v1_0",
-								new GraphQLField(
-									"scopedTestEntityByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													scopedTestEntity.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/test_v1_0",
-						"Object/scopedTestEntityByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetScopedTestEntityByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"scopedTestEntityByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace test_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"test_v1_0",
-						new GraphQLField(
-							"scopedTestEntityByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ScopedTestEntity
-			testGraphQLGetScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
-		throws Exception {
-
-		return testGraphQLScopedTestEntity_addScopedTestEntity();
-	}
-
-	@Test
 	public void testGetSiteScopedTestEntitiesPage() throws Exception {
 		Long siteId = testGetSiteScopedTestEntitiesPage_getSiteId();
 		Long irrelevantSiteId =
@@ -903,6 +616,15 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/test/v1.0/sites/{siteId}/scoped-test-entities/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
 		return expectedActions;
 	}
 
@@ -911,8 +633,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 				Long siteId, ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postSiteScopedTestEntity(
+			siteId, scopedTestEntity);
 	}
 
 	protected Long testGetSiteScopedTestEntitiesPage_getSiteId()
@@ -925,6 +647,80 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteScopedTestEntitiesPage() throws Exception {
+		Long siteId = testGetSiteScopedTestEntitiesPage_getSiteId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"scopedTestEntities",
+			new HashMap<String, Object>() {
+				{
+					put("siteKey", "\"" + siteId + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/scopedTestEntities");
+
+		long totalCount = scopedTestEntitiesJSONObject.getLong("totalCount");
+
+		ScopedTestEntity scopedTestEntity1 =
+			testGraphQLGetSiteScopedTestEntitiesPage_addScopedTestEntity();
+		ScopedTestEntity scopedTestEntity2 =
+			testGraphQLGetSiteScopedTestEntitiesPage_addScopedTestEntity();
+
+		scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/scopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2, scopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			scopedTestEntity1,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					scopedTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			scopedTestEntity2,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					scopedTestEntitiesJSONObject.getString("items"))));
+
+		// Using the namespace test_v1_0
+
+		scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/test_v1_0",
+			"JSONObject/scopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2, scopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			scopedTestEntity1,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					scopedTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			scopedTestEntity2,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					scopedTestEntitiesJSONObject.getString("items"))));
+	}
+
+	protected ScopedTestEntity
+			testGraphQLGetSiteScopedTestEntitiesPage_addScopedTestEntity()
+		throws Exception {
+
+		return testGraphQLSiteScopedTestEntity_addScopedTestEntity();
 	}
 
 	@Test
@@ -948,8 +744,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testGetSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postSiteScopedTestEntity(
+			testGroup.getGroupId(), randomScopedTestEntity());
 	}
 
 	@Test
@@ -968,7 +764,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"siteScopedTestEntityByExternalReferenceCode",
+								"scopedTestEntityByExternalReferenceCode",
 								new HashMap<String, Object>() {
 									{
 										put(
@@ -986,7 +782,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/siteScopedTestEntityByExternalReferenceCode"))));
+						"Object/scopedTestEntityByExternalReferenceCode"))));
 
 		// Using the namespace test_v1_0
 
@@ -999,7 +795,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 							new GraphQLField(
 								"test_v1_0",
 								new GraphQLField(
-									"siteScopedTestEntityByExternalReferenceCode",
+									"scopedTestEntityByExternalReferenceCode",
 									new HashMap<String, Object>() {
 										{
 											put(
@@ -1017,7 +813,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 									},
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/test_v1_0",
-						"Object/siteScopedTestEntityByExternalReferenceCode"))));
+						"Object/scopedTestEntityByExternalReferenceCode"))));
 	}
 
 	@Test
@@ -1034,7 +830,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"siteScopedTestEntityByExternalReferenceCode",
+						"scopedTestEntityByExternalReferenceCode",
 						new HashMap<String, Object>() {
 							{
 								put(
@@ -1058,7 +854,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 					new GraphQLField(
 						"test_v1_0",
 						new GraphQLField(
-							"siteScopedTestEntityByExternalReferenceCode",
+							"scopedTestEntityByExternalReferenceCode",
 							new HashMap<String, Object>() {
 								{
 									put(
@@ -1120,52 +916,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testPatchAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPatchScopedTestEntity() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPatchScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		ScopedTestEntity postScopedTestEntity =
-			testPatchScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
-
-		ScopedTestEntity randomPatchScopedTestEntity =
-			randomPatchScopedTestEntity();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ScopedTestEntity patchScopedTestEntity =
-			scopedTestEntityResource.
-				patchScopedTestEntityByExternalReferenceCode(
-					postScopedTestEntity.getExternalReferenceCode(),
-					randomPatchScopedTestEntity);
-
-		ScopedTestEntity expectedPatchScopedTestEntity =
-			postScopedTestEntity.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchScopedTestEntity, expectedPatchScopedTestEntity);
-
-		ScopedTestEntity getScopedTestEntity =
-			scopedTestEntityResource.getScopedTestEntityByExternalReferenceCode(
-				patchScopedTestEntity.getExternalReferenceCode());
-
-		assertEquals(expectedPatchScopedTestEntity, getScopedTestEntity);
-		assertValid(getScopedTestEntity);
-	}
-
-	protected ScopedTestEntity
-			testPatchScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postAssetLibraryScopedTestEntity(
+			testDepotEntry.getDepotEntryId(), randomScopedTestEntity());
 	}
 
 	@Test
@@ -1206,18 +958,16 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testPatchSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postSiteScopedTestEntity(
+			testGroup.getGroupId(), randomScopedTestEntity());
 	}
 
 	@Test
-	public void testPostAssetLibraryScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
+	public void testPostAssetLibraryScopedTestEntity() throws Exception {
 		ScopedTestEntity randomScopedTestEntity = randomScopedTestEntity();
 
 		ScopedTestEntity postScopedTestEntity =
-			testPostAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity(
+			testPostAssetLibraryScopedTestEntity_addScopedTestEntity(
 				randomScopedTestEntity);
 
 		assertEquals(randomScopedTestEntity, postScopedTestEntity);
@@ -1225,58 +975,55 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 	}
 
 	protected ScopedTestEntity
-			testPostAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity(
+			testPostAssetLibraryScopedTestEntity_addScopedTestEntity(
 				ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postAssetLibraryScopedTestEntity(
+			testGetAssetLibraryScopedTestEntitiesPage_getAssetLibraryId(),
+			scopedTestEntity);
 	}
 
 	@Test
-	public void testPostScopedTestEntityByExternalReferenceCode()
-		throws Exception {
+	public void testGraphQLPostAssetLibraryScopedTestEntity() throws Exception {
+		ScopedTestEntity randomScopedTestEntity = randomScopedTestEntity();
 
+		ScopedTestEntity scopedTestEntity =
+			testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity(
+				testDepotEntry.getDepotEntryId(), randomScopedTestEntity);
+
+		Assert.assertTrue(equals(randomScopedTestEntity, scopedTestEntity));
+	}
+
+	@Test
+	public void testPostSiteScopedTestEntity() throws Exception {
 		ScopedTestEntity randomScopedTestEntity = randomScopedTestEntity();
 
 		ScopedTestEntity postScopedTestEntity =
-			testPostScopedTestEntityByExternalReferenceCode_addScopedTestEntity(
+			testPostSiteScopedTestEntity_addScopedTestEntity(
 				randomScopedTestEntity);
 
 		assertEquals(randomScopedTestEntity, postScopedTestEntity);
 		assertValid(postScopedTestEntity);
 	}
 
-	protected ScopedTestEntity
-			testPostScopedTestEntityByExternalReferenceCode_addScopedTestEntity(
-				ScopedTestEntity scopedTestEntity)
+	protected ScopedTestEntity testPostSiteScopedTestEntity_addScopedTestEntity(
+			ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postSiteScopedTestEntity(
+			testGetSiteScopedTestEntitiesPage_getSiteId(), scopedTestEntity);
 	}
 
 	@Test
-	public void testPostSiteScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
+	public void testGraphQLPostSiteScopedTestEntity() throws Exception {
 		ScopedTestEntity randomScopedTestEntity = randomScopedTestEntity();
 
-		ScopedTestEntity postScopedTestEntity =
-			testPostSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity(
-				randomScopedTestEntity);
+		ScopedTestEntity scopedTestEntity =
+			testGraphQLSiteScopedTestEntity_addScopedTestEntity(
+				testGroup.getGroupId(), randomScopedTestEntity);
 
-		assertEquals(randomScopedTestEntity, postScopedTestEntity);
-		assertValid(postScopedTestEntity);
-	}
-
-	protected ScopedTestEntity
-			testPostSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity(
-				ScopedTestEntity scopedTestEntity)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(equals(randomScopedTestEntity, scopedTestEntity));
 	}
 
 	@Test
@@ -1337,8 +1084,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testPutAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postAssetLibraryScopedTestEntity(
+			testDepotEntry.getDepotEntryId(), randomScopedTestEntity());
 	}
 
 	protected Long
@@ -1350,67 +1097,6 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 	protected ScopedTestEntity
 			testPutAssetLibraryScopedTestEntityByExternalReferenceCode_createScopedTestEntity()
-		throws Exception {
-
-		return randomScopedTestEntity();
-	}
-
-	@Test
-	public void testPutScopedTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		ScopedTestEntity postScopedTestEntity =
-			testPutScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
-
-		ScopedTestEntity randomScopedTestEntity = randomScopedTestEntity();
-
-		ScopedTestEntity putScopedTestEntity =
-			scopedTestEntityResource.putScopedTestEntityByExternalReferenceCode(
-				postScopedTestEntity.getExternalReferenceCode(),
-				randomScopedTestEntity);
-
-		assertEquals(randomScopedTestEntity, putScopedTestEntity);
-		assertValid(putScopedTestEntity);
-
-		ScopedTestEntity getScopedTestEntity =
-			scopedTestEntityResource.getScopedTestEntityByExternalReferenceCode(
-				putScopedTestEntity.getExternalReferenceCode());
-
-		assertEquals(randomScopedTestEntity, getScopedTestEntity);
-		assertValid(getScopedTestEntity);
-
-		ScopedTestEntity newScopedTestEntity =
-			testPutScopedTestEntityByExternalReferenceCode_createScopedTestEntity();
-
-		putScopedTestEntity =
-			scopedTestEntityResource.putScopedTestEntityByExternalReferenceCode(
-				newScopedTestEntity.getExternalReferenceCode(),
-				newScopedTestEntity);
-
-		assertEquals(newScopedTestEntity, putScopedTestEntity);
-		assertValid(putScopedTestEntity);
-
-		getScopedTestEntity =
-			scopedTestEntityResource.getScopedTestEntityByExternalReferenceCode(
-				putScopedTestEntity.getExternalReferenceCode());
-
-		assertEquals(newScopedTestEntity, getScopedTestEntity);
-
-		Assert.assertEquals(
-			newScopedTestEntity.getExternalReferenceCode(),
-			putScopedTestEntity.getExternalReferenceCode());
-	}
-
-	protected ScopedTestEntity
-			testPutScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected ScopedTestEntity
-			testPutScopedTestEntityByExternalReferenceCode_createScopedTestEntity()
 		throws Exception {
 
 		return randomScopedTestEntity();
@@ -1474,8 +1160,8 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testPutSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return scopedTestEntityResource.postSiteScopedTestEntity(
+			testGroup.getGroupId(), randomScopedTestEntity());
 	}
 
 	protected ScopedTestEntity
@@ -1487,74 +1173,169 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		ScopedTestEntity scopedTestEntity1 =
-			testBatchEngineDeleteImportTask_addScopedTestEntity();
-
-		testBatchEngineDeleteImportTask_deleteScopedTestEntity(
-			200, scopedTestEntity1.getExternalReferenceCode());
-	}
-
-	protected ScopedTestEntity
-			testBatchEngineDeleteImportTask_addScopedTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void testBatchEngineDeleteImportTask_deleteScopedTestEntity(
-			int expectedStatusCode, String externalReferenceCode,
-			String... parameters)
-		throws Exception {
-
-		ImportTaskResource importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			_testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).parameters(
-			parameters
-		).build();
-
-		HttpResponse httpResponse =
-			importTaskResource.deleteImportTaskHttpResponse(
-				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.ScopedTestEntity",
-				null, null, null, null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode)));
-
-		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
-
-		if (expectedStatusCode == 200) {
-			waitForFinish(
-				"COMPLETED",
-				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-		}
+		Assert.assertTrue(true);
 	}
 
 	protected ScopedTestEntity
 			testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity(
+			testDepotEntry.getDepotEntryId(), randomScopedTestEntity());
 	}
 
-	protected ScopedTestEntity testGraphQLScopedTestEntity_addScopedTestEntity()
+	protected ScopedTestEntity
+			testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity(
+				Long assetLibraryId, ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		JSONDeserializer<ScopedTestEntity> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(ScopedTestEntity.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(scopedTestEntity));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAssetLibraryScopedTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" + assetLibraryId + "\"");
+								put("scopedTestEntity", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createAssetLibraryScopedTestEntity"),
+			ScopedTestEntity.class);
 	}
 
 	protected ScopedTestEntity
 			testGraphQLSiteScopedTestEntity_addScopedTestEntity()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLSiteScopedTestEntity_addScopedTestEntity(
+			testGroup.getGroupId(), randomScopedTestEntity());
+	}
+
+	protected ScopedTestEntity
+			testGraphQLSiteScopedTestEntity_addScopedTestEntity(
+				Long siteId, ScopedTestEntity scopedTestEntity)
+		throws Exception {
+
+		JSONDeserializer<ScopedTestEntity> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(ScopedTestEntity.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(scopedTestEntity));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteScopedTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("scopedTestEntity", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteScopedTestEntity"),
+			ScopedTestEntity.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(
@@ -2286,30 +2067,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		return randomScopedTestEntity();
 	}
 
-	protected final JSONObject waitForFinish(
-			String expectedExecuteStatus, JSONObject jsonObject)
-		throws Exception {
-
-		while (true) {
-			ImportTask importTask = importTaskResource.getImportTask(
-				jsonObject.getLong("id"));
-
-			ImportTask.ExecuteStatus executeStatus =
-				importTask.getExecuteStatus();
-
-			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
-				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
-
-				Assert.assertEquals(
-					expectedExecuteStatus, executeStatus.getValue());
-
-				return jsonObject;
-			}
-		}
-	}
-
 	protected ScopedTestEntityResource scopedTestEntityResource;
-	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry irrelevantDepotEntry;

@@ -338,7 +338,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			testGraphQLDeleteSiteERCSiteTestEntity_addERCSiteTestEntity()
 		throws Exception {
 
-		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity();
+		return testGraphQLSiteERCSiteTestEntity_addERCSiteTestEntity();
 	}
 
 	@Test
@@ -613,7 +613,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			testGraphQLGetSiteERCSiteTestEntity_addERCSiteTestEntity()
 		throws Exception {
 
-		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity();
+		return testGraphQLSiteERCSiteTestEntity_addERCSiteTestEntity();
 	}
 
 	@Test
@@ -859,66 +859,6 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 				"COMPLETED",
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
-	}
-
-	protected ERCSiteTestEntity
-			testGraphQLERCSiteTestEntity_addERCSiteTestEntity()
-		throws Exception {
-
-		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity(
-			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
-	}
-
-	protected ERCSiteTestEntity
-			testGraphQLERCSiteTestEntity_addERCSiteTestEntity(
-				String siteExternalReferenceCode,
-				ERCSiteTestEntity ercSiteTestEntity)
-		throws Exception {
-
-		JSONDeserializer<ERCSiteTestEntity> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(ERCSiteTestEntity.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(ercSiteTestEntity));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteERCSiteTestEntity",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteExternalReferenceCode",
-									"\"" + siteExternalReferenceCode + "\"");
-								put("ercSiteTestEntity", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteERCSiteTestEntity"),
-			ERCSiteTestEntity.class);
 	}
 
 	protected ERCSiteTestEntity

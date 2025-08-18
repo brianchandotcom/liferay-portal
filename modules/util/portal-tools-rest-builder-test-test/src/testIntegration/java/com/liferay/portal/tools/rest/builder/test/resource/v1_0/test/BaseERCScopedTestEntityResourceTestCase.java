@@ -390,7 +390,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			testGraphQLDeleteSiteERCScopedTestEntity_addERCScopedTestEntity()
 		throws Exception {
 
-		return testGraphQLERCScopedTestEntity_addERCScopedTestEntity();
+		return testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity();
 	}
 
 	@Test
@@ -657,7 +657,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			testGraphQLGetAssetLibraryERCScopedTestEntity_addERCScopedTestEntity()
 		throws Exception {
 
-		return testGraphQLERCScopedTestEntity_addERCScopedTestEntity();
+		return testGraphQLAssetLibraryERCScopedTestEntity_addERCScopedTestEntity();
 	}
 
 	@Test
@@ -913,7 +913,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			testGraphQLGetSiteERCScopedTestEntity_addERCScopedTestEntity()
 		throws Exception {
 
-		return testGraphQLERCScopedTestEntity_addERCScopedTestEntity();
+		return testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity();
 	}
 
 	@Test
@@ -1137,15 +1137,15 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 	}
 
 	protected ERCScopedTestEntity
-			testGraphQLERCScopedTestEntity_addERCScopedTestEntity()
+			testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity()
 		throws Exception {
 
-		return testGraphQLERCScopedTestEntity_addERCScopedTestEntity(
+		return testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity(
 			testGroup.getExternalReferenceCode(), randomERCScopedTestEntity());
 	}
 
 	protected ERCScopedTestEntity
-			testGraphQLERCScopedTestEntity_addERCScopedTestEntity(
+			testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity(
 				String siteExternalReferenceCode,
 				ERCScopedTestEntity ercScopedTestEntity)
 		throws Exception {
@@ -1256,66 +1256,6 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 						graphQLFields)),
 				"JSONObject/data",
 				"JSONObject/createAssetLibraryERCScopedTestEntity"),
-			ERCScopedTestEntity.class);
-	}
-
-	protected ERCScopedTestEntity
-			testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity()
-		throws Exception {
-
-		return testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity(
-			testGroup.getExternalReferenceCode(), randomERCScopedTestEntity());
-	}
-
-	protected ERCScopedTestEntity
-			testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity(
-				String siteExternalReferenceCode,
-				ERCScopedTestEntity ercScopedTestEntity)
-		throws Exception {
-
-		JSONDeserializer<ERCScopedTestEntity> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(ERCScopedTestEntity.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(ercScopedTestEntity));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteERCScopedTestEntity",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteExternalReferenceCode",
-									"\"" + siteExternalReferenceCode + "\"");
-								put("ercScopedTestEntity", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteERCScopedTestEntity"),
 			ERCScopedTestEntity.class);
 	}
 

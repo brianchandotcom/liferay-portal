@@ -597,7 +597,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			testGraphQLGetAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
 		throws Exception {
 
-		return testGraphQLERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+		return testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 	}
 
 	@Test
@@ -884,14 +884,6 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				"COMPLETED",
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
-	}
-
-	protected ERCAssetLibraryTestEntity
-			testGraphQLERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected ERCAssetLibraryTestEntity

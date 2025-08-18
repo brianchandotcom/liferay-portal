@@ -5,6 +5,7 @@
 
 package com.liferay.layout.internal.importer.helper;
 
+import com.liferay.layout.importer.helper.PortletPermissionsImporterHelper;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -42,8 +43,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(service = PortletPermissionsImporterHelper.class)
-public class PortletPermissionsImporterHelper {
+public class PortletPermissionsImporterHelperImpl
+	implements PortletPermissionsImporterHelper {
 
+	@Override
 	public void importPortletPermissions(
 			long plid, String portletId, Set<String> warningMessages,
 			List<Map<String, Object>> widgetPermissionsMaps)

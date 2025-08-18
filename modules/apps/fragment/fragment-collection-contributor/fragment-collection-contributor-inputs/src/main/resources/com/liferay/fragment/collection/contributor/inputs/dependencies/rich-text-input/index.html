@@ -15,7 +15,7 @@
 [/@]
 
 <div class="rich-text-input [#if !input.showLabel || !input.label?has_content]rich-text-input--hidden-label[/#if]">
-	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0" data-localizable="${input.localizable?string('true', 'false')}" data-readonly-label="${readonlyLabel}" id="${fragmentEntryLinkNamespace}-rich-text-input">
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0" data-readonly-label="${readonlyLabel}" id="${fragmentEntryLinkNamespace}-rich-text-input">
 		<div class="d-flex">
 			<div class="flex-grow-1" id="${fragmentEntryLinkNamespace + '-wrapper'}">
 				[@liferay_layout["render-editor"] content=input.value name=fragmentEntryLinkNamespace + "-" + input.name label=inputLabel layoutMode=layoutMode required=input.required /]

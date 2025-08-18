@@ -7,7 +7,7 @@
 	[#assign localFileUploaded = true]
 [/#if]
 
-<div aria-label="${input.label}" class="drag-and-drop-upload d-flex flex-column" data-lfr-styles role="group" data-localizable="${input.localizable?string('true', 'false')}">
+<div aria-label="${input.label}" class="drag-and-drop-upload d-flex flex-column" data-lfr-styles role="group">
 	<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if] mb-0 flex-grow-0" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-label">
 		${htmlUtil.escape(input.label)}
 

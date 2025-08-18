@@ -1,0 +1,11 @@
+[#assign knowledgeArticle = configuration.articleSelector /]
+
+<a class="article-entry" href="${themeDisplay.getCDNBaseURL()}/l/${knowledgeArticle.objectEntryId!}">
+	<div class="article-entry_title">
+		${knowledgeArticle.title!}
+	</div>
+
+	<div class="article-entry_description">
+		${knowledgeArticle.description!}
+	</div>
+</a>

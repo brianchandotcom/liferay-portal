@@ -1,0 +1,106 @@
+.article-entry {
+	align-items: stretch;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	justify-content: start;
+	overflow: hidden;
+	padding: 1rem;
+}
+
+.article-entry:hover {
+  background-color: var(--color-action-primary-hover-10, #edf3fe);
+}
+
+.article-entry_description {
+	color: var(--color-neutral-10, #282934);
+	font-weight: 400;
+}
+
+.article-entry_title {
+	color: var(--color-brand-primary, #0B5FFF);
+	font-weight: 600;
+}
+
+.search-card_cta {
+	p {
+		align-items: center; 
+		gap: 0.5rem;
+
+		&::after {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='lexicon-icon lexicon-icon-order-arrow-right' role='presentation' viewBox='0 0 512 512' fill='%230B5FFF'%3E%3Cpath class='lexicon-icon-outline' d='M367.9,350.3l71.6-71.6c10.8-11.9,11.2-32.9,0-45.8l-71.6-71.6c-33.6-29.8-74.9,15.8-45.8,45.8l16.7,16.7H96c-42.5,0-42.5,64,0,64h242.8l-16.7,16.7C292.2,336.3,337,380,367.9,350.3z'%3E%3C/path%3E%3C/svg%3E");
+			content: '';
+			display: inline-block;
+			height: 1rem;
+			width: 1rem;
+		}
+	}
+}
+
+.search-card_image {
+	align-items: center;
+	background: radial-gradient(14.55% 34.6% at 100% 34.6%, rgba(55, 124, 255, 0.68) 0%, rgba(55, 124, 255, 0) 100%), radial-gradient(26.56% 43.82% at 0% 0%, #00256B 20.83%, rgba(0, 37, 107, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, linear-gradient(91.07deg, #001742 0%, #0011A8 24.6%, #0B5FFF 49%, #0B5FFF 74.5%, #0B5FFF 100%);
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	justify-content: center;
+	padding: 0.5rem;
+}
+
+.article-entry_collection {
+	align-items: stretch;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	padding: 1rem;
+}
+
+.article-entry_collection:hover {
+  background-color: var(--color-action-primary-hover-10, #edf3fe);
+}
+
+.knowledge-base_search-card {
+	align-items: stretch;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	height: 100%;
+	justify-content: center;
+	padding: 1.5rem;
+	width: 100%;
+}
+
+.knowledge-base_search-card:hover {
+  background-color: var(--color-action-primary-hover-10, #EDF3FE)  !important;
+  border-color: #0053F0  !important;
+}
+
+.knowledge-base_row {
+	display: flex;
+	flex-direction: row;
+  gap: 3rem;
+	width: 100%;
+  
+  > * {
+    flex: 0 1 100%;
+  }
+}
+
+.knowledge-base__container {
+	align-items: stretch;
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+	justify-content: space-between;
+	max-width: var(--container-max-xl);
+	padding: 0 1.5rem;
+}
+
+@media screen and (max-width: 849px) {
+  .knowledge-base_row {
+      flex-direction: column;
+  }
+}

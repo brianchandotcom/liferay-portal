@@ -1,0 +1,41 @@
+.article-section_banner {
+	background: radial-gradient(14.55% 34.6% at 100% 34.6%, rgba(55, 124, 255, 0.68) 0%, rgba(55, 124, 255, 0) 100%), 
+		radial-gradient(26.56% 43.82% at 0% 0%, #00256B 20.83%, rgba(0, 37, 107, 0) 100%), 
+		linear-gradient(91.07deg, #001742 0%, #0011A8 24.6%, #0B5FFF 49%, #0B5FFF 74.5%, #0B5FFF 100%);
+	border-radius: 10px;
+	display: flex;
+	flex-direction: row;
+	height: 5rem;
+	justify-content: space-between;
+	position: relative;
+}
+
+.article-section_banner-image {
+	overflow: hidden;
+	position: sticky;
+}
+
+.article-section_banner-title {
+	align-items: center;
+	color: var(--color-neutral-0, #FFFFFF);
+	display: flex;
+	font-size: 1.75rem;
+	font-weight: 600;
+	justify-content: start;
+	padding-left: 1.5rem !important;
+	position: relative;
+	width: 100%;
+}
+
+.article-section_container {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	height: 100%;
+}
+
+@media screen and (max-width: 426px) {
+	.article-section_banner-image {
+		display: none;
+	}
+}

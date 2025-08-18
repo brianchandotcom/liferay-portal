@@ -38,10 +38,6 @@ public interface FragmentEntryConfigurationParser {
 		Object displayObject, long[] segmentsEntryIds);
 
 	public Object getFieldValue(
-		FragmentConfigurationField fragmentConfigurationField, Locale locale,
-		String value);
-
-	public Object getFieldValue(
 		String editableValues,
 		FragmentConfigurationField fragmentConfigurationField, Locale locale);
 

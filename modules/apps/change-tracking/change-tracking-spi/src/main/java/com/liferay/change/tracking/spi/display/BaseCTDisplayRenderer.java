@@ -175,14 +175,18 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			Function<T, Object> ddmStructureIdGetterFunction =
 				attributeGetterFunctions.get("DDMStructureId");
 
+			Function<T, Object> idGetterFunction = attributeGetterFunctions.get(
+				"id");
+
+			if (idGetterFunction == null) {
+				return;
+			}
+
 			DDMStructure ddmStructure =
 				DDMStructureLocalServiceUtil.getStructure(
 					(Long)ddmStructureIdGetterFunction.apply(model));
 
 			DDMForm ddmForm = ddmStructure.getDDMForm();
-
-			Function<T, Object> idGetterFunction = attributeGetterFunctions.get(
-				"id");
 
 			DDMFormValues ddmFormValues =
 				DDMFieldLocalServiceUtil.getDDMFormValues(

@@ -758,6 +758,19 @@ public class DLFileEntryLocalServiceImpl
 		actionableDynamicQuery.performActions();
 	}
 
+	@Override
+	public void deleteFileEntries(
+			long companyId, long classNameId, long classPK)
+		throws PortalException {
+
+		for (DLFileEntry dlFileEntry :
+				dlFileEntryPersistence.findByC_C_C(
+					companyId, classNameId, classPK)) {
+
+			dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+		}
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(

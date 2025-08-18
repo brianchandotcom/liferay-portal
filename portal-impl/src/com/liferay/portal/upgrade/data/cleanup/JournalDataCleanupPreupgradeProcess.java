@@ -7,6 +7,8 @@ package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
@@ -85,15 +87,59 @@ public class JournalDataCleanupPreupgradeProcess
 				@Override
 				protected void doUpgrade() throws Exception {
 					DBInspector dbInspector = new DBInspector(connection);
+					String targetTableName = "Layout";
+
+					if (!dbInspector.hasTable(targetTableName)) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Table " + targetTableName + " does not exist");
+						}
+
+						return;
+					}
+
+					String sourceColumnName = "classPK";
+
+					if (!dbInspector.hasColumn(
+							targetTableName, sourceColumnName)) {
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								com.liferay.portal.kernel.util.StringBundler.
+									concat(
+										"Table ", targetTableName,
+										" does not have column ",
+										sourceColumnName));
+						}
+
+						return;
+					}
+
+					String targetColumnName = "plid";
+
+					if (!dbInspector.hasColumn(
+							targetTableName, targetColumnName)) {
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								com.liferay.portal.kernel.util.StringBundler.
+									concat(
+										"Table ", targetTableName,
+										" does not have column ",
+										targetColumnName));
+						}
+
+						return;
+					}
 
 					OrphanReferencesDataCleanupUtil.cleanUpSameTable(
 						StringBundler.concat(
 							"classNameId = (select classNameId from ",
 							"ClassName_ where value = '",
 							Layout.class.getName(), "')"),
-						connection, dbInspector.normalizeName("classPK"),
-						dbInspector.normalizeName("Layout"),
-						dbInspector.normalizeName("plid"));
+						connection, dbInspector.normalizeName(sourceColumnName),
+						dbInspector.normalizeName(targetTableName),
+						dbInspector.normalizeName(targetColumnName));
 				}
 
 			});
@@ -148,5 +194,8 @@ public class JournalDataCleanupPreupgradeProcess
 				null, "structureVersionId", "DDMStructureLayout",
 				"structureVersionId", "DDMStructureVersion"));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalDataCleanupPreupgradeProcess.class);
 
 }

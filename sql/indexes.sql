@@ -89,7 +89,7 @@ create index IX_B59A9078 on Country (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_E22A5911 on CountryLocalization (countryId, languageId[$COLUMN_LENGTH:75$], ctCollectionId);
 
-create index IX_4CB1B2B4 on DLFileEntry (companyId);
+create index IX_65686609 on DLFileEntry (companyId, classNameId, classPK);
 create index IX_B8526DBE on DLFileEntry (custom1ImageId);
 create index IX_AC9BDEDD on DLFileEntry (custom2ImageId);
 create index IX_772ECDE7 on DLFileEntry (fileEntryTypeId);

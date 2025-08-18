@@ -90,7 +90,8 @@ public class ViewVersionHistoryDisplayContextTest
 		Assert.assertEquals(
 			StringBundler.concat(
 				"/o", _objectDefinition.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry.getObjectEntryId(), "/versions"),
+				_objectEntry.getObjectEntryId(),
+				"/versions?nestedFields=file.thumbnailURL"),
 			ReflectionTestUtil.invoke(
 				_getViewVersionHistoryDisplayContext(
 					_getMockHttpServletRequest(_objectEntry)),

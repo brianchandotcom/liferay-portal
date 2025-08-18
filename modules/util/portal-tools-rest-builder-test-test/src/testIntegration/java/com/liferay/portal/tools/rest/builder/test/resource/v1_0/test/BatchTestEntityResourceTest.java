@@ -8,8 +8,6 @@ package com.liferay.portal.tools.rest.builder.test.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.BatchTestEntity;
 
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -18,45 +16,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class BatchTestEntityResourceTest
 	extends BaseBatchTestEntityResourceTestCase {
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetBatchTestEntitiesPage() throws Exception {
-		super.testGraphQLGetBatchTestEntitiesPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetBatchTestEntity() throws Exception {
-		super.testGraphQLGetBatchTestEntity();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetBatchTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		super.testGraphQLGetBatchTestEntityByExternalReferenceCode();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetBatchTestEntityByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		super.testGraphQLGetBatchTestEntityByExternalReferenceCodeNotFound();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetBatchTestEntityNotFound() throws Exception {
-		super.testGraphQLGetBatchTestEntityNotFound();
-	}
 
 	@Override
 	protected BatchTestEntity
@@ -96,14 +55,6 @@ public class BatchTestEntityResourceTest
 	@Override
 	protected BatchTestEntity
 			testGetBatchTestEntityByExternalReferenceCode_addBatchTestEntity()
-		throws Exception {
-
-		return batchTestEntityResource.postBatchTestEntity(
-			randomBatchTestEntity());
-	}
-
-	@Override
-	protected BatchTestEntity testGraphQLBatchTestEntity_addBatchTestEntity()
 		throws Exception {
 
 		return batchTestEntityResource.postBatchTestEntity(

@@ -51,7 +51,8 @@ public class ViewVersionHistoryDisplayContext {
 	public String getAPIURL() throws PortalException {
 		return StringBundler.concat(
 			"/o", _objectDefinition.getRESTContextPath(), StringPool.SLASH,
-			_objectEntry.getObjectEntryId(), "/versions");
+			_objectEntry.getObjectEntryId(),
+			"/versions?nestedFields=file.thumbnailURL");
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {

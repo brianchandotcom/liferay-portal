@@ -9,6 +9,7 @@ import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidd
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
+import {DataSetPage} from './DataSetPage';
 
 type SidePanelName = 'General' | 'Comments' | 'Schedule';
 
@@ -33,12 +34,14 @@ type Field =
 
 export class ContentsPage {
 	readonly page: Page;
+	readonly dataSetFragmentPage: DataSetPage;
 
 	readonly newButton: Locator;
 	readonly publishButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
+		this.dataSetFragmentPage = new DataSetPage(page);
 
 		this.newButton = page.getByLabel('New');
 		this.publishButton = page.getByText('Publish', {exact: true});
@@ -105,6 +108,13 @@ export class ContentsPage {
 		await this.openSidePanel('General');
 
 		await this.closeSidePanel();
+	}
+
+	async execItemAction({action, filter}: {action: string; filter: string}) {
+		await this.dataSetFragmentPage.execItemAction({
+			action,
+			filter,
+		});
 	}
 
 	async fillData(fields: Field[]) {

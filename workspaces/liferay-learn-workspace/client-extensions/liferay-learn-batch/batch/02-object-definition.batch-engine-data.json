@@ -3686,78 +3686,6 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Aggregation",
-					"externalReferenceCode": "LESSON_DURATION_MINUTES",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Lesson Duration Minutes"
-					},
-					"localized": false,
-					"name": "lessonDurationMinutes",
-					"objectFieldSettings": [
-						{
-							"name": "objectRelationshipName",
-							"value": "lesson"
-						},
-						{
-							"name": "function",
-							"value": "SUM"
-						},
-						{
-							"name": "objectFieldName",
-							"value": "durationMinutes"
-						},
-						{
-							"name": "filters",
-							"value": [
-							]
-						}
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Aggregation",
-					"externalReferenceCode": "LESSONS",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Lessons"
-					},
-					"localized": false,
-					"name": "lessons",
-					"objectFieldSettings": [
-						{
-							"name": "function",
-							"value": "COUNT"
-						},
-						{
-							"name": "objectRelationshipName",
-							"value": "lesson"
-						},
-						{
-							"name": "filters",
-							"value": [
-							]
-						}
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "NAME",
 					"indexed": true,
@@ -3789,78 +3717,6 @@
 					"required": true,
 					"state": false,
 					"type": "Integer",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Aggregation",
-					"externalReferenceCode": "QUIZ_DURATION_MINUTES",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Quiz Duration Minutes"
-					},
-					"localized": false,
-					"name": "quizDurationMinutes",
-					"objectFieldSettings": [
-						{
-							"name": "objectRelationshipName",
-							"value": "quiz"
-						},
-						{
-							"name": "function",
-							"value": "SUM"
-						},
-						{
-							"name": "objectFieldName",
-							"value": "durationMinutes"
-						},
-						{
-							"name": "filters",
-							"value": [
-							]
-						}
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Aggregation",
-					"externalReferenceCode": "QUIZZES",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Quizzes"
-					},
-					"localized": false,
-					"name": "quizzes",
-					"objectFieldSettings": [
-						{
-							"name": "function",
-							"value": "COUNT"
-						},
-						{
-							"name": "objectRelationshipName",
-							"value": "Quiz"
-						},
-						{
-							"name": "filters",
-							"value": [
-							]
-						}
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"type": "String",
 					"unique": false
 				},
 				{
@@ -4464,38 +4320,6 @@
 			"modifiable": true,
 			"name": "P2S3QuizQuestion",
 			"objectFields": [
-				{
-					"businessType": "Aggregation",
-					"externalReferenceCode": "ANSWERS",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Answers"
-					},
-					"localized": false,
-					"name": "answers",
-					"objectFieldSettings": [
-						{
-							"name": "function",
-							"value": "COUNT"
-						},
-						{
-							"name": "objectRelationshipName",
-							"value": "quizAnswers"
-						},
-						{
-							"name": "filters",
-							"value": [
-							]
-						}
-					],
-					"readOnly": "true",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
 				{
 					"DBType": "String",
 					"businessType": "Text",

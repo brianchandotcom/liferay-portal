@@ -7,21 +7,14 @@ package com.liferay.staging.internal.service;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.deploy.hot.ServiceBag;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
-import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
+import com.liferay.staging.internal.service.util.StagingAdviceUtil;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -48,26 +41,9 @@ public class LayoutSetLocalServiceStagingAdvice {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		AopInvocationHandler aopInvocationHandler =
-			ProxyUtil.fetchInvocationHandler(
-				_layoutSetLocalService, AopInvocationHandler.class);
-
-		ServiceBag<?> serviceBag = new ServiceBag<>(
-			aopInvocationHandler, LayoutSetLocalService.class,
-			(ServiceWrapper)ProxyUtil.newProxyInstance(
-				AggregateClassLoader.getAggregateClassLoader(
-					PortalClassLoaderUtil.getClassLoader(),
-					LayoutSetLocalServiceStagingAdvice.class.getClassLoader()),
-				new Class<?>[] {
-					IdentifiableOSGiService.class, LayoutSetLocalService.class,
-					BaseLocalService.class, ServiceWrapper.class
-				},
-				new LayoutSetLocalServiceStagingInvocationHandler(
-					aopInvocationHandler.getTarget())),
-			bundleContext,
-			bundleContext.getServiceReference(LayoutSetLocalService.class));
-
-		_closeable = serviceBag::replace;
+		_closeable = StagingAdviceUtil.register(
+			bundleContext, LayoutSetLocalServiceStagingInvocationHandler::new,
+			_layoutSetLocalService, LayoutSetLocalService.class);
 	}
 
 	@Deactivate

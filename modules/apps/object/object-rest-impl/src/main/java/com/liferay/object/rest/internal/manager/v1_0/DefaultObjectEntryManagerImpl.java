@@ -1239,8 +1239,9 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.addOrUpdateObjectEntry(
 				externalReferenceCode, groupId,
 				objectDefinition.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				_getObjectEntryFolderId(
+					objectDefinition.getCompanyId(), groupId, objectEntry,
+					serviceContext),
 				_toObjectValues(
 					0L, dtoConverterContext.getLocale(), objectDefinition,
 					objectEntry, scopeKey, serviceContext),
@@ -2089,8 +2090,7 @@ public class DefaultObjectEntryManagerImpl
 			objectEntry.getObjectEntryFolderExternalReferenceCode();
 
 		if (Validator.isNull(objectEntryFolderExternalReferenceCode)) {
-			return ObjectEntryFolderConstants.
-				PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT;
+			return GetterUtil.getLong(objectEntry.getObjectEntryFolderId());
 		}
 
 		try {
@@ -3180,10 +3180,18 @@ public class DefaultObjectEntryManagerImpl
 		if (partialUpdate) {
 			serviceBuilderObjectEntry =
 				_objectEntryService.partialUpdateObjectEntry(
+					_getObjectEntryFolderId(
+						serviceBuilderObjectEntry.getCompanyId(),
+						serviceBuilderObjectEntry.getGroupId(), objectEntry,
+						serviceContext),
 					objectEntryId, values, serviceContext);
 		}
 		else {
 			serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
+				_getObjectEntryFolderId(
+					serviceBuilderObjectEntry.getCompanyId(),
+					serviceBuilderObjectEntry.getGroupId(), objectEntry,
+					serviceContext),
 				objectEntryId, values, serviceContext);
 		}
 

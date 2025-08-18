@@ -117,7 +117,7 @@ public class DB2SQLTransformerLogicTest
 
 	@Override
 	protected String getTruncateTableTransformedSQL() {
-		return getTruncateTableOriginalSQL() + " IMMEDIATE";
+		return super.getTruncateTableTransformedSQL() + " IMMEDIATE";
 	}
 
 	private void _testReplaceQuestionMark(String sql) {

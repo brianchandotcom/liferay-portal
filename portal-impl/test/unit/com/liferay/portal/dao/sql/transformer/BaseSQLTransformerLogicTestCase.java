@@ -326,7 +326,7 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	protected String getTruncateTableTransformedSQL() {
-		return getTruncateTableOriginalSQL();
+		return "TRUNCATE TABLE Foo";
 	}
 
 	protected SQLTransformer sqlTransformer;

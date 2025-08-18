@@ -16,12 +16,14 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSe
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -487,6 +489,24 @@ public class BatchEnginePortletDataHandlerTest {
 				file, group.getGroupId()
 			).toString(),
 			JSONCompareMode.STRICT);
+	}
+
+	@Test
+	public void testGetExportModelCount() throws Exception {
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(
+				objectDefinition.getPortletId());
+
+		Assert.assertEquals(0, portletDataHandler.getExportModelCount(null));
+
+		ObjectEntry[] objectEntries = _addObjectEntries(
+			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition);
+
+		Assert.assertEquals(
+			objectEntries.length, portletDataHandler.getExportModelCount(null));
 	}
 
 	@Test
@@ -1174,6 +1194,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 	@Inject
 	private SAXReader _saxReader;

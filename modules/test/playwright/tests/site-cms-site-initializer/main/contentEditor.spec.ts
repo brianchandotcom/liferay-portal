@@ -577,3 +577,40 @@ test.describe('Schedule Panel', () => {
 		}
 	);
 });
+
+test.describe('Categorization Panel', () => {
+	test(
+		'Add tags to content',
+		{tag: '@LPD-62047'},
+		async ({contentsPage, page, tagsPage}) => {
+
+			// Create a content
+
+			await contentsPage.goto();
+
+			await contentsPage.createContent('Basic Web Content');
+
+			await contentsPage.openSidePanel('Categorization');
+
+			// Add a new tag
+
+			const tagsAutocomplete = page.getByPlaceholder('Add tag');
+
+			const tagName = getRandomString();
+
+			await tagsAutocomplete.fill(tagName);
+
+			await page.getByRole('option', {name: 'Create New Tag:'}).click();
+
+			await expect(
+				page.locator('.label-item', {hasText: tagName})
+			).toBeAttached();
+
+			// Delete tag
+
+			await tagsPage.goto();
+
+			await tagsPage.deleteTag(tagName);
+		}
+	);
+});

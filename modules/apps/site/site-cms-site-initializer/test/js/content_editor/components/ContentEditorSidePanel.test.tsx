@@ -48,9 +48,9 @@ describe('ContentEditorSidePanel', () => {
 	it('renders ContentEditorSidePanel', () => {
 		renderComponent();
 
-		expect(screen.getByLabelText('general')).toBeInTheDocument();
-
-		expect(screen.getByLabelText('comments')).toBeInTheDocument();
+		['general', 'comments', 'schedule', 'categorization'].forEach((name) =>
+			expect(screen.getByLabelText(name)).toBeInTheDocument()
+		);
 	});
 
 	it('closes the panel pressing the Close button', async () => {

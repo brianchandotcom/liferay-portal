@@ -33,7 +33,19 @@ const FiltersDropdown = () => {
 
 	useEffect(() => {
 		setFilters(initialFilters);
-	}, [initialFilters]);
+
+		setActiveFilter((currentActiveFilter) => {
+			if (!currentActiveFilter) {
+				return currentActiveFilter;
+			}
+
+			return (
+				initialFilters.find(
+					(filter) => filter.id === currentActiveFilter.id
+				) || null
+			);
+		});
+	}, [initialFilters, setActiveFilter, setFilters]);
 
 	return (
 		<ClayDropDown

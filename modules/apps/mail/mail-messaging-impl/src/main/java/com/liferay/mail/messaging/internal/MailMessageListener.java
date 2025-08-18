@@ -6,6 +6,7 @@
 package com.liferay.mail.messaging.internal;
 
 import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -93,7 +95,7 @@ public class MailMessageListener extends BaseMessageListener {
 		if (ArrayUtil.isNotEmpty(to) || ArrayUtil.isNotEmpty(cc) ||
 			ArrayUtil.isNotEmpty(bcc) || ArrayUtil.isNotEmpty(bulkAddresses)) {
 
-			MailEngine.send(mailMessage);
+			MailEngine.send(_mailService, mailMessage);
 		}
 	}
 
@@ -159,5 +161,8 @@ public class MailMessageListener extends BaseMessageListener {
 
 	private static final Set<String> _mailSendBlacklist = new HashSet<>(
 		Arrays.asList(PropsValues.MAIL_SEND_BLACKLIST));
+
+	@Reference
+	private MailService _mailService;
 
 }

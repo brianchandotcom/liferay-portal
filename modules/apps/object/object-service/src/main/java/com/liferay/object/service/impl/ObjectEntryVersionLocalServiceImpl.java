@@ -216,6 +216,14 @@ public class ObjectEntryVersionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntryVersion fetchObjectEntryVersion(
+		long objectEntryId, int version) {
+
+		return objectEntryVersionPersistence.fetchByOEI_V(
+			objectEntryId, version);
+	}
+
+	@Override
 	public ObjectEntryVersion getObjectEntryVersion(
 			long objectEntryId, int version)
 		throws PortalException {

@@ -53,10 +53,6 @@ public interface ScopedTestEntityResource {
 			Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
-	public void deleteScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
 	public void deleteSiteScopedTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception;
@@ -68,12 +64,6 @@ public interface ScopedTestEntityResource {
 	public ScopedTestEntity
 			getAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode)
-		throws Exception;
-
-	public Page<ScopedTestEntity> getScopedTestEntitiesPage() throws Exception;
-
-	public ScopedTestEntity getScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode)
 		throws Exception;
 
 	public Page<ScopedTestEntity> getSiteScopedTestEntitiesPage(Long siteId)
@@ -89,14 +79,6 @@ public interface ScopedTestEntityResource {
 				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public ScopedTestEntity patchScopedTestEntity(
-			Long scopedTestEntityId, ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
-	public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
 	public ScopedTestEntity patchSiteScopedTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode,
 			ScopedTestEntity scopedTestEntity)
@@ -107,18 +89,12 @@ public interface ScopedTestEntityResource {
 			String fieldNames)
 		throws Exception;
 
-	public ScopedTestEntity
-			postAssetLibraryScopedTestEntityByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode,
-				ScopedTestEntity scopedTestEntity)
+	public ScopedTestEntity postAssetLibraryScopedTestEntity(
+			Long assetLibraryId, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public Response postScopedTestEntitiesPageExportBatch(
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public ScopedTestEntity postScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
+	public Response postAssetLibraryScopedTestEntityBatch(
+			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
 	public Response postSiteScopedTestEntitiesPageExportBatch(
@@ -126,19 +102,18 @@ public interface ScopedTestEntityResource {
 			String fieldNames)
 		throws Exception;
 
-	public ScopedTestEntity postSiteScopedTestEntityByExternalReferenceCode(
-			Long siteId, String externalReferenceCode,
-			ScopedTestEntity scopedTestEntity)
+	public ScopedTestEntity postSiteScopedTestEntity(
+			Long siteId, ScopedTestEntity scopedTestEntity)
+		throws Exception;
+
+	public Response postSiteScopedTestEntityBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public ScopedTestEntity
 			putAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode,
 				ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
-	public ScopedTestEntity putScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public ScopedTestEntity putSiteScopedTestEntityByExternalReferenceCode(

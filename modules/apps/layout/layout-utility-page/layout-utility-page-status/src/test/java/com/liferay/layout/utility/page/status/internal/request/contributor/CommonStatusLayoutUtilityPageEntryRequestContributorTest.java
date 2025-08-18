@@ -665,9 +665,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			languageId,
 			dynamicServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
 
-		_portalInstancesMockedStatic.verify(
-			() -> PortalInstances.getCompanyId(dynamicServletRequest));
-
 		_permissionThreadLocalMockedStatic.verify(
 			() -> PermissionThreadLocal.setPermissionChecker(
 				_permissionChecker),
@@ -677,6 +674,9 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			() -> PermissionThreadLocal.setPermissionChecker(
 				_originalPermissionChecker),
 			Mockito.times(wantedNumberOfInvocations));
+
+		_portalInstancesMockedStatic.verify(
+			() -> PortalInstances.getCompanyId(dynamicServletRequest));
 	}
 
 	private static final String _PATH_CONTEXT = "/context";

@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
+import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -15,6 +16,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -53,6 +55,11 @@ public class WidgetPageWidgetInstanceDTOConverter
 				setParentSectionId(
 					() -> LayoutUtil.getParentSectionId(layout, portletId));
 				setPosition(() -> LayoutUtil.getPosition(layout, portletId));
+				setWidgetConfig(
+					() ->
+						_portletPreferencesPortletConfigurationExporter.
+							getPortletConfiguration(
+								layout.getPlid(), portletId));
 				setWidgetInstanceId(
 					() -> PortletIdCodec.decodeInstanceId(portletId));
 				setWidgetName(
@@ -65,5 +72,9 @@ public class WidgetPageWidgetInstanceDTOConverter
 	public WidgetPageWidgetInstance toDTO(Layout layout) {
 		return null;
 	}
+
+	@Reference
+	private PortletPreferencesPortletConfigurationExporter
+		_portletPreferencesPortletConfigurationExporter;
 
 }

@@ -299,7 +299,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -699,9 +698,11 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectEntryId());
 		}
 
-		_deleteFileEntries(
-			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
-			objectEntry::getValues);
+		_dlFileEntryLocalService.deleteFileEntries(
+			objectDefinition.getCompanyId(),
+			_classNameLocalService.getClassNameId(
+				objectDefinition.getClassName()),
+			objectEntry.getObjectEntryId());
 
 		if (!ObjectDefinitionThreadLocal.isDeleteObjectDefinitionId(
 				objectDefinition.getObjectDefinitionId())) {
@@ -2874,18 +2875,9 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
 
-		_deleteFileEntries(newValues, objectDefinitionId, () -> oldValues);
-	}
-
-	private void _deleteFileEntries(
-		Map<String, Serializable> newValues, long objectDefinitionId,
-		Supplier<Map<String, Serializable>> oldValuesSupplier) {
-
 		List<ObjectField> objectFields =
 			_objectFieldPersistence.findByObjectDefinitionId(
 				objectDefinitionId);
-
-		Map<String, Serializable> oldValues = null;
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isSystem() ||
@@ -2894,10 +2886,6 @@ public class ObjectEntryLocalServiceImpl
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 				continue;
-			}
-
-			if (oldValues == null) {
-				oldValues = oldValuesSupplier.get();
 			}
 
 			ObjectFieldSetting objectFieldSetting =

@@ -4,249 +4,30 @@
  */
 
 import ClayPanel from '@clayui/panel';
-import {
-	Input,
-	MultiSelectItem,
-	MultipleSelect,
-	SingleSelect,
-} from '@liferay/object-js-components-web';
-import {
-	ILearnResourceContext,
-	LearnMessage,
-	LearnResourcesContext,
-} from 'frontend-js-components-web';
-import React, {useEffect, useState} from 'react';
+import {ILearnResourceContext} from 'frontend-js-components-web';
+import React from 'react';
 
-import {
-	getCheckedChildren,
-	handleMultiSelectItemsChange,
-	uncheckMultiSelectItemChildrens,
-} from './multiSelectUtil';
-
-type RecipientItemChangeOptions = {
-	items: MultiSelectItem[];
-	recipientKey: 'cc' | 'bcc';
-	setItemList: (value: MultiSelectItem[]) => void;
-	type: EmailNotificationRecipientTypeOptions;
-};
-
-type RecipientTypeChangeOptions = {
-	newRecipientTypeValue: string;
-	recipientKey: 'cc' | 'bcc';
-	recipientTypeKey: 'ccType' | 'bccType';
-	roleList: MultiSelectItem[];
-	setRoleList: (value: MultiSelectItem[]) => void;
-	setUserGroupList: (value: MultiSelectItem[]) => void;
-	userGroupList: MultiSelectItem[];
-};
+import {useRecipient} from '../../hooks/useRecipient';
+import {Recipient} from './Recipient';
 
 interface SecondaryRecipientsProps {
-	emailNotificationRoles: MultiSelectItem[];
-	emailNotificationUserGroups: MultiSelectItem[];
+	baseResourceURL: string;
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
+	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
 }
 
-export function resetRecipientTypeValue(newRecipientTypeValue: string) {
-	if (newRecipientTypeValue === 'email') {
-		return '';
-	}
-
-	return [];
-}
-
 export function SecondaryRecipient({
-	emailNotificationRoles,
-	emailNotificationUserGroups,
+	baseResourceURL,
 	learnResources,
 	recipientOptions,
+	selectedLocale,
 	setValues,
 	values,
 }: SecondaryRecipientsProps) {
-	const [bccRolesList, setBCCRolesList] = useState<MultiSelectItem[]>([]);
-	const [bccUserGroupsList, setBCCUserGroupsList] = useState<
-		MultiSelectItem[]
-	>([]);
-	const [ccRolesList, setCCRolesList] = useState<MultiSelectItem[]>([]);
-	const [ccUserGroupsList, setCCUserGroupsList] = useState<MultiSelectItem[]>(
-		[]
-	);
-	const [recipient] = values.recipients as EmailRecipients[];
-
-	const handleRecipientItemChange = ({
-		items,
-		recipientKey,
-		setItemList,
-		type,
-	}: RecipientItemChangeOptions) => {
-		const newRecipients = handleMultiSelectItemsChange(items, type);
-
-		setValues({
-			...values,
-			recipients: [
-				{
-					...(values.recipients[0] as EmailRecipients),
-					[recipientKey]: newRecipients,
-				},
-			],
-		});
-
-		setItemList(items);
-	};
-
-	const handleRecipientTypeChange = ({
-		newRecipientTypeValue,
-		recipientKey,
-		recipientTypeKey,
-		roleList,
-		setRoleList,
-		setUserGroupList,
-		userGroupList,
-	}: RecipientTypeChangeOptions) => {
-		if (newRecipientTypeValue !== 'role') {
-			const newRoleList = uncheckMultiSelectItemChildrens(roleList);
-			setRoleList(newRoleList);
-		}
-		if (newRecipientTypeValue !== 'user-group') {
-			const newUserGroupList =
-				uncheckMultiSelectItemChildrens(userGroupList);
-			setUserGroupList(newUserGroupList);
-		}
-		setValues({
-			...values,
-			recipients: [
-				{
-					...recipient,
-					[recipientKey]: resetRecipientTypeValue(
-						newRecipientTypeValue
-					),
-					[recipientTypeKey]: newRecipientTypeValue as string,
-				},
-			],
-		});
-	};
-
-	useEffect(() => {
-		if (emailNotificationRoles.length && !ccRolesList.length) {
-			setCCRolesList(emailNotificationRoles);
-		}
-
-		if (emailNotificationUserGroups.length && !ccUserGroupsList.length) {
-			setCCUserGroupsList(emailNotificationUserGroups);
-		}
-
-		if (Array.isArray(recipient.cc) && !!recipient.cc.length) {
-			if (
-				recipient.ccType === 'role' &&
-				(!!ccRolesList.length || !!emailNotificationRoles.length)
-			) {
-				const baseRoleList = ccRolesList.length
-					? ccRolesList
-					: emailNotificationRoles;
-
-				setCCRolesList(
-					baseRoleList.map((baseRoleElement) => {
-						return {
-							...baseRoleElement,
-							children: getCheckedChildren(
-								recipient.cc as EmailNotificationRecipients[],
-								baseRoleElement.children,
-								'roleName'
-							),
-						};
-					})
-				);
-			}
-			else if (
-				recipient.ccType === 'user-group' &&
-				(!!ccUserGroupsList.length ||
-					!!emailNotificationUserGroups.length)
-			) {
-				const baseUserGroupList = ccUserGroupsList.length
-					? ccUserGroupsList
-					: emailNotificationUserGroups;
-
-				setCCUserGroupsList(
-					baseUserGroupList.map((baseUserGroupElement) => {
-						return {
-							...baseUserGroupElement,
-							children: getCheckedChildren(
-								recipient.cc as EmailNotificationRecipients[],
-								baseUserGroupElement.children,
-								'userGroupName'
-							),
-						};
-					})
-				);
-			}
-
-			return;
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [emailNotificationRoles, emailNotificationUserGroups, recipient.cc]);
-
-	useEffect(() => {
-		if (emailNotificationRoles.length && !bccRolesList.length) {
-			setBCCRolesList(emailNotificationRoles);
-		}
-
-		if (emailNotificationUserGroups.length && !bccUserGroupsList.length) {
-			setBCCUserGroupsList(emailNotificationUserGroups);
-		}
-
-		if (Array.isArray(recipient.bcc) && !!recipient.bcc.length) {
-			if (
-				recipient.bccType === 'role' &&
-				(!!bccRolesList.length || !!emailNotificationRoles.length)
-			) {
-				const baseRoleList = bccRolesList.length
-					? bccRolesList
-					: emailNotificationRoles;
-
-				setBCCRolesList(
-					baseRoleList.map((baseRoleElement) => {
-						return {
-							...baseRoleElement,
-							children: getCheckedChildren(
-								recipient.bcc as EmailNotificationRecipients[],
-								baseRoleElement.children,
-								'roleName'
-							),
-						};
-					})
-				);
-			}
-			else if (
-				recipient.bccType === 'user-group' &&
-				(!!bccUserGroupsList.length ||
-					!!emailNotificationUserGroups.length)
-			) {
-				const baseUserGroupList = bccUserGroupsList.length
-					? bccUserGroupsList
-					: emailNotificationUserGroups;
-
-				setBCCUserGroupsList(
-					baseUserGroupList.map((baseUserGroupElement) => {
-						return {
-							...baseUserGroupElement,
-							children: getCheckedChildren(
-								recipient.bcc as EmailNotificationRecipients[],
-								baseUserGroupElement.children,
-								'userGroupName'
-							),
-						};
-					})
-				);
-			}
-
-			return;
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [emailNotificationRoles, emailNotificationUserGroups, recipient.bcc]);
+	const {handleChange, handleTypeChange} = useRecipient(setValues, values);
 
 	return (
 		<>
@@ -255,138 +36,19 @@ export function SecondaryRecipient({
 				displayType="unstyled"
 			>
 				<ClayPanel.Body>
-					<div className="row">
-						<div className="col-lg-6">
-							<SingleSelect<LabelValueObject>
-								disabled={values.system}
-								id="secondaryRecipientTypeCC"
-								items={recipientOptions}
-								label={Liferay.Language.get('type')}
-								onSelectionChange={(value) => {
-									handleRecipientTypeChange({
-										newRecipientTypeValue: value,
-										recipientKey: 'cc',
-										recipientTypeKey: 'ccType',
-										roleList: ccRolesList,
-										setRoleList: setCCRolesList,
-										setUserGroupList: setCCUserGroupsList,
-										userGroupList: ccUserGroupsList,
-									} as RecipientTypeChangeOptions);
-								}}
-								selectedKey={recipient.ccType}
-							/>
-						</div>
-
-						<div className="col-lg-6">
-							{recipient.ccType === 'email' && (
-								<Input
-									disabled={values.system}
-									feedbackMessage={Liferay.Language.get(
-										'you-can-use-a-comma-to-enter-multiple-users'
-									)}
-									id="secondaryRecipientsCC"
-									label={Liferay.Language.get('recipients')}
-									name="secondaryRecipientsCC"
-									onChange={({target}) =>
-										setValues({
-											...values,
-											recipients: [
-												{
-													...values.recipients[0],
-													cc: target.value,
-												},
-											],
-										})
-									}
-									placeholder={Liferay.Language.get(
-										'type-email-address'
-									)}
-									value={
-										(
-											values
-												.recipients[0] as EmailRecipients
-										).cc as string
-									}
-								/>
-							)}
-
-							{recipient.ccType === 'role' && (
-								<div className="lfr__notification-template-email-notification-settings-multiple-select">
-									<MultipleSelect
-										disabled={values.system}
-										id="secondaryRecipientRolesCC"
-										label={Liferay.Language.get('role')}
-										options={ccRolesList}
-										placeholder={Liferay.Language.get(
-											'select-role'
-										)}
-										search
-										searchPlaceholder={Liferay.Language.get(
-											'search-for-a-role'
-										)}
-										selectAllOption
-										setOptions={(items) => {
-											handleRecipientItemChange({
-												items,
-												recipientKey: 'cc',
-												setItemList: setCCRolesList,
-												type: 'roleName',
-											} as RecipientItemChangeOptions);
-										}}
-									/>
-
-									<LearnResourcesContext.Provider
-										value={learnResources}
-									>
-										<div className="lfr__notification-template-email-notification-settings-multiple-select-help-text">
-											<span>
-												{Liferay.Language.get(
-													'account-roles-are-subject-to-account-restrictions'
-												)}
-											</span>
-											&nbsp;
-											<LearnMessage
-												className="alert-link"
-												resource="notification-web"
-												resourceKey="general"
-											/>
-										</div>
-									</LearnResourcesContext.Provider>
-								</div>
-							)}
-
-							{recipient.ccType === 'user-group' &&
-								Liferay.FeatureFlags['LPD-50091'] && (
-									<div className="lfr__notification-template-email-notification-settings-multiple-select">
-										<MultipleSelect
-											disabled={values.system}
-											id="secondaryRecipientUserGroupsCC"
-											label={Liferay.Language.get(
-												'user-group'
-											)}
-											options={ccUserGroupsList}
-											placeholder={Liferay.Language.get(
-												'select-user-group'
-											)}
-											search
-											searchPlaceholder={Liferay.Language.get(
-												'search-for-a-user-group'
-											)}
-											selectAllOption
-											setOptions={(items) => {
-												handleRecipientItemChange({
-													items,
-													recipientKey: 'cc',
-													setItemList:
-														setCCUserGroupsList,
-													type: 'userGroupName',
-												} as RecipientItemChangeOptions);
-											}}
-										/>
-									</div>
-								)}
-						</div>
-					</div>
+					<Recipient
+						baseResourceURL={baseResourceURL}
+						disabled={values.system}
+						displayType="row"
+						id="cc"
+						label={Liferay.Language.get('recipients')}
+						learnResources={learnResources}
+						onChange={handleChange}
+						onTypeChange={handleTypeChange}
+						recipientOptions={recipientOptions}
+						selectedLocale={selectedLocale}
+						values={values}
+					/>
 				</ClayPanel.Body>
 			</ClayPanel>
 
@@ -395,138 +57,19 @@ export function SecondaryRecipient({
 				displayType="unstyled"
 			>
 				<ClayPanel.Body>
-					<div className="row">
-						<div className="col-lg-6">
-							<SingleSelect<LabelValueObject>
-								disabled={values.system}
-								id="secondaryRecipientTypeBCC"
-								items={recipientOptions}
-								label={Liferay.Language.get('type')}
-								onSelectionChange={(value) => {
-									handleRecipientTypeChange({
-										newRecipientTypeValue: value,
-										recipientKey: 'bcc',
-										recipientTypeKey: 'bccType',
-										roleList: bccRolesList,
-										setRoleList: setBCCRolesList,
-										setUserGroupList: setBCCUserGroupsList,
-										userGroupList: bccUserGroupsList,
-									} as RecipientTypeChangeOptions);
-								}}
-								selectedKey={recipient.bccType}
-							/>
-						</div>
-
-						<div className="col-lg-6">
-							{recipient.bccType === 'email' && (
-								<Input
-									disabled={values.system}
-									feedbackMessage={Liferay.Language.get(
-										'you-can-use-a-comma-to-enter-multiple-users'
-									)}
-									id="secondaryRecipientsBCC"
-									label={Liferay.Language.get('recipients')}
-									name="secondaryRecipientsBCC"
-									onChange={({target}) =>
-										setValues({
-											...values,
-											recipients: [
-												{
-													...values.recipients[0],
-													bcc: target.value,
-												},
-											],
-										})
-									}
-									placeholder={Liferay.Language.get(
-										'type-email-address'
-									)}
-									value={
-										(
-											values
-												.recipients[0] as EmailRecipients
-										).bcc as string
-									}
-								/>
-							)}
-
-							{recipient.bccType === 'role' && (
-								<div className="lfr__notification-template-email-notification-settings-multiple-select">
-									<MultipleSelect
-										disabled={values.system}
-										id="secondaryRecipientRolesBCC"
-										label={Liferay.Language.get('role')}
-										options={bccRolesList}
-										placeholder={Liferay.Language.get(
-											'select-role'
-										)}
-										search
-										searchPlaceholder={Liferay.Language.get(
-											'search-for-a-role'
-										)}
-										selectAllOption
-										setOptions={(items) => {
-											handleRecipientItemChange({
-												items,
-												recipientKey: 'bcc',
-												setItemList: setBCCRolesList,
-												type: 'roleName',
-											} as RecipientItemChangeOptions);
-										}}
-									/>
-
-									<LearnResourcesContext.Provider
-										value={learnResources}
-									>
-										<div className="lfr__notification-template-email-notification-settings-multiple-select-help-text">
-											<span>
-												{Liferay.Language.get(
-													'account-roles-are-subject-to-account-restrictions'
-												)}
-											</span>
-											&nbsp;
-											<LearnMessage
-												className="alert-link"
-												resource="notification-web"
-												resourceKey="general"
-											/>
-										</div>
-									</LearnResourcesContext.Provider>
-								</div>
-							)}
-
-							{recipient.bccType === 'user-group' &&
-								Liferay.FeatureFlags['LPD-50091'] && (
-									<div className="lfr__notification-template-email-notification-settings-multiple-select">
-										<MultipleSelect
-											disabled={values.system}
-											id="secondaryRecipientUserGroupsBCC"
-											label={Liferay.Language.get(
-												'user-group'
-											)}
-											options={bccUserGroupsList}
-											placeholder={Liferay.Language.get(
-												'select-user-group'
-											)}
-											search
-											searchPlaceholder={Liferay.Language.get(
-												'search-for-a-user-group'
-											)}
-											selectAllOption
-											setOptions={(items) => {
-												handleRecipientItemChange({
-													items,
-													recipientKey: 'bcc',
-													setItemList:
-														setBCCUserGroupsList,
-													type: 'userGroupName',
-												} as RecipientItemChangeOptions);
-											}}
-										/>
-									</div>
-								)}
-						</div>
-					</div>
+					<Recipient
+						baseResourceURL={baseResourceURL}
+						disabled={values.system}
+						displayType="row"
+						id="bcc"
+						label={Liferay.Language.get('recipients')}
+						learnResources={learnResources}
+						onChange={handleChange}
+						onTypeChange={handleTypeChange}
+						recipientOptions={recipientOptions}
+						selectedLocale={selectedLocale}
+						values={values}
+					/>
 				</ClayPanel.Body>
 			</ClayPanel>
 		</>

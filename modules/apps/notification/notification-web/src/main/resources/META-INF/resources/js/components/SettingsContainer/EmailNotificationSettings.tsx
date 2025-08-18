@@ -4,7 +4,7 @@
  */
 
 import ClayPanel from '@clayui/panel';
-import {FormError, MultiSelectItem} from '@liferay/object-js-components-web';
+import {FormError} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -16,8 +16,7 @@ import {Sender} from './Sender';
 import './EmailNotificationSettings.scss';
 
 interface EmailNotificationSettingsProps {
-	emailNotificationRoles: MultiSelectItem[];
-	emailNotificationUserGroups: MultiSelectItem[];
+	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	selectedLocale: Locale;
@@ -49,8 +48,7 @@ const SUBSCRIBERS_OPTION = {
 } as LabelValueObject;
 
 export function EmailNotificationSettings({
-	emailNotificationRoles,
-	emailNotificationUserGroups,
+	baseResourceURL,
 	errors,
 	learnResources,
 	selectedLocale,
@@ -79,10 +77,7 @@ export function EmailNotificationSettings({
 			>
 				<ClayPanel.Body>
 					<PrimaryRecipient
-						emailNotificationRoles={emailNotificationRoles}
-						emailNotificationUserGroups={
-							emailNotificationUserGroups
-						}
+						baseResourceURL={baseResourceURL}
 						errors={errors}
 						learnResources={learnResources}
 						recipientOptions={
@@ -103,12 +98,10 @@ export function EmailNotificationSettings({
 			>
 				<ClayPanel.Body>
 					<SecondaryRecipient
-						emailNotificationRoles={emailNotificationRoles}
-						emailNotificationUserGroups={
-							emailNotificationUserGroups
-						}
+						baseResourceURL={baseResourceURL}
 						learnResources={learnResources}
 						recipientOptions={RECIPIENT_OPTIONS}
+						selectedLocale={selectedLocale}
 						setValues={setValues}
 						values={values}
 					/>

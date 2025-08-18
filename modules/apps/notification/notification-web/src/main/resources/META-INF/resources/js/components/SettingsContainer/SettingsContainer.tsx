@@ -4,11 +4,7 @@
  */
 
 import {Text} from '@clayui/core';
-import {
-	Card,
-	FormError,
-	MultiSelectItem,
-} from '@liferay/object-js-components-web';
+import {Card, FormError} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -17,8 +13,7 @@ import {EmailNotificationSettings} from './EmailNotificationSettings';
 import {UserNotificationSettings} from './UserNotificationSettings';
 
 interface SettingsContainerProps {
-	emailNotificationRoles: MultiSelectItem[];
-	emailNotificationUserGroups: MultiSelectItem[];
+	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	selectedLocale: Locale;
@@ -27,8 +22,7 @@ interface SettingsContainerProps {
 }
 
 export function SettingsContainer({
-	emailNotificationRoles,
-	emailNotificationUserGroups,
+	baseResourceURL,
 	errors,
 	learnResources,
 	selectedLocale,
@@ -50,8 +44,7 @@ export function SettingsContainer({
 				/>
 			) : (
 				<EmailNotificationSettings
-					emailNotificationRoles={emailNotificationRoles}
-					emailNotificationUserGroups={emailNotificationUserGroups}
+					baseResourceURL={baseResourceURL}
 					errors={errors}
 					learnResources={learnResources}
 					selectedLocale={selectedLocale}

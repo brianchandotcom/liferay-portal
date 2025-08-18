@@ -100,6 +100,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
@@ -3971,6 +3972,70 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteObjectEntryWithAttachmentObjectFieldAndEnableObjectEntryVersioning()
+		throws Exception {
+
+		_enableObjectEntryVersioning();
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"attachment",
+				() -> {
+					FileEntry tempFileEntry = _addTempFileEntry(
+						StringUtil.randomString());
+
+					return tempFileEntry.getFileEntryId();
+				}
+			).put(
+				"emailAddressRequired", "test@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		long fileEntryId1 = MapUtil.getLong(
+			objectEntry.getValues(), "attachment");
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"attachment",
+				() -> {
+					FileEntry tempFileEntry = _addTempFileEntry(
+						StringUtil.randomString());
+
+					return tempFileEntry.getFileEntryId();
+				}
+			).put(
+				"emailAddressRequired", "test@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		long fileEntryId2 = MapUtil.getLong(
+			objectEntry.getValues(), "attachment");
+
+		Assert.assertNotNull(_dlAppLocalService.getFileEntry(fileEntryId1));
+		Assert.assertNotNull(_dlAppLocalService.getFileEntry(fileEntryId2));
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=", fileEntryId1,
+				"}"),
+			() -> _dlAppLocalService.getFileEntry(fileEntryId1));
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=", fileEntryId2,
+				"}"),
+			() -> _dlAppLocalService.getFileEntry(fileEntryId2));
+	}
+
+	@Test
 	public void testDeleteObjectEntryWithLongExternalReferenceCode()
 		throws Exception {
 
@@ -6128,9 +6193,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertNull(
 			_dlFileEntryLocalService.fetchDLFileEntry(fileEntryId1));
 
-		_objectDefinition.setEnableObjectEntryVersioning(true);
-
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+		_enableObjectEntryVersioning();
 
 		values = HashMapBuilder.<String, Serializable>put(
 			"attachment",
@@ -7237,6 +7300,14 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		return listTypeEntries;
+	}
+
+	private void _enableObjectEntryVersioning() {
+		_objectDefinition.setEnableObjectEntryVersioning(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 	}
 
 	private BigDecimal _getBigDecimal(long value) {
@@ -8934,6 +9005,9 @@ public class ObjectEntryLocalServiceTest {
 		filter = "component.name=com.liferay.object.internal.model.listener.ObjectEntryModelListener"
 	)
 	private ModelListener<ObjectEntry> _objectEntryModelListener;
+
+	@Inject
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

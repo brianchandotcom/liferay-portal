@@ -75,6 +75,13 @@ public class EditContentItemStrutsAction implements StrutsAction {
 				editURL, "p_p_state", windowState);
 		}
 
+		int version = ParamUtil.getInteger(httpServletRequest, "version");
+
+		if (version > 0) {
+			editURL = HttpComponentsUtil.addParameter(
+				editURL, "version", version);
+		}
+
 		httpServletResponse.sendRedirect(editURL);
 
 		return null;

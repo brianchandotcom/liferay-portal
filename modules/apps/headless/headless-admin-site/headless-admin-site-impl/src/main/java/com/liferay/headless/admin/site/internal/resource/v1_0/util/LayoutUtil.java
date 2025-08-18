@@ -23,6 +23,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
+import com.liferay.layout.importer.util.PortletPreferencesPortletConfigurationImporterUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -1063,6 +1064,11 @@ public class LayoutUtil {
 						widgetPageWidgetInstance.getParentSectionId(),
 						widgetPageWidgetInstance.getPosition());
 				}
+
+				PortletPreferencesPortletConfigurationImporterUtil.
+					importPortletConfiguration(
+						layout.getPlid(), portletId,
+						widgetPageWidgetInstance.getWidgetConfig());
 
 				portletIds.remove(portletId);
 			}

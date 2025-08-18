@@ -76,6 +76,9 @@ else {
 					changeTextDirection: false,
 					customLocaleChangeHandler: true,
 					defaultLanguageId,
+					inputName: input.name,
+					localizationInputsContainer: fieldSet,
+					namespace: fragmentNamespace,
 					onLocaleChange: ({languageId}) => {
 						currentLanguageId = languageId;
 
@@ -115,6 +118,52 @@ else {
 									);
 								}
 							}
+						});
+					},
+					onMarkAsTranslated: () => {
+						allInputs.forEach((input) => {
+							const defaultLanguageInput = getTranslationInput({
+								inputId: input.id,
+								inputName: input.name,
+								languageId: defaultLanguageId,
+								localizationInputsContainer: input.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							const translationInput = getTranslationInput({
+								inputId: input.id,
+								inputName: input.name,
+								languageId: currentLanguageId,
+								localizationInputsContainer: input.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							input.checked = Boolean(defaultLanguageInput.value);
+
+							translationInput.value = defaultLanguageInput.value;
+						});
+					},
+					onResetTranslation: () => {
+						allInputs.forEach((input) => {
+							const defaultLanguageInput = getTranslationInput({
+								inputId: input.id,
+								inputName: input.name,
+								languageId: defaultLanguageId,
+								localizationInputsContainer: input.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							const translationInput = getTranslationInput({
+								inputId: input.id,
+								inputName: input.name,
+								languageId: currentLanguageId,
+								localizationInputsContainer: input.parentNode,
+								namespace: fragmentNamespace,
+							});
+
+							input.checked = Boolean(defaultLanguageInput.value);
+
+							translationInput.value = '';
 						});
 					},
 				});

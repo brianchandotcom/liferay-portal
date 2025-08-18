@@ -396,7 +396,7 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public void deleteRelatedObjectEntry(
 			String externalReferenceCode, ObjectRelationship objectRelationship,
-			String parentExternalReferenceCode)
+			String parentExternalReferenceCode, String scopeKey)
 		throws Exception {
 
 		ObjectDefinition objectDefinition1 =
@@ -406,7 +406,7 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(
 				parentExternalReferenceCode,
-				getGroupId(objectDefinition1, null),
+				getGroupId(objectDefinition1, scopeKey),
 				objectDefinition1.getObjectDefinitionId());
 
 		ObjectDefinition objectDefinition2 =
@@ -416,7 +416,7 @@ public class DefaultObjectEntryManagerImpl
 		_deleteRelateObjectEntry(
 			objectDefinition2,
 			_objectEntryService.getObjectEntry(
-				externalReferenceCode, getGroupId(objectDefinition2, null),
+				externalReferenceCode, getGroupId(objectDefinition2, scopeKey),
 				objectDefinition2.getObjectDefinitionId()),
 			objectRelationship, serviceBuilderObjectEntry.getObjectEntryId());
 	}
@@ -885,7 +885,7 @@ public class DefaultObjectEntryManagerImpl
 	public Page<ObjectEntry> getRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectRelationship objectRelationship,
-			Pagination pagination)
+			Pagination pagination, String scopeKey)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -897,7 +897,7 @@ public class DefaultObjectEntryManagerImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
 			_objectEntryService.getObjectEntry(
-				externalReferenceCode, getGroupId(objectDefinition, null),
+				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId()),
 			objectRelationship, pagination, objectDefinition);
 	}

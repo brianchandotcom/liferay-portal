@@ -111,6 +111,10 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 
 		ObjectEntry objectEntry = (ObjectEntry)displayObject;
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -170,6 +174,12 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				return jsonArray;
 			}
 		).put(
+			"contentAPIURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), "/o",
+				objectDefinition.getRESTContextPath(), StringPool.SLASH,
+				objectEntry.getObjectEntryId())
+		).put(
 			"deleteCommentURL",
 			StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
@@ -212,6 +222,8 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 					themeDisplay.getLocale());
 			}
 		).put(
+			"groupId", themeDisplay.getScopeGroupId()
+		).put(
 			"id", String.valueOf(objectEntry.getObjectEntryId())
 		).put(
 			"isSubscribed",
@@ -241,14 +253,7 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				"&classPK=", objectEntry.getObjectEntryId(),
 				"&objectDefinitionId=", objectEntry.getObjectDefinitionId())
 		).put(
-			"type",
-			() -> {
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				return objectDefinition.getLabel(themeDisplay.getLocale());
-			}
+			"type", objectDefinition.getLabel(themeDisplay.getLocale())
 		).put(
 			"version", () -> String.valueOf(objectEntry.getVersion())
 		).build();

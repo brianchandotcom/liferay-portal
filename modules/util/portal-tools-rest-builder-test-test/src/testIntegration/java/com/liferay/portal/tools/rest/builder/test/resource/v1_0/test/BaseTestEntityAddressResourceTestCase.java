@@ -314,11 +314,11 @@ public abstract class BaseTestEntityAddressResourceTestCase {
 			testGraphQLGetTestEntityTestEntityAddress_addTestEntityAddress()
 		throws Exception {
 
-		return testGraphQLTestEntityAddress_addTestEntityAddress();
+		return testGraphQLTestEntityTestEntityAddress_addTestEntityAddress();
 	}
 
 	protected TestEntityAddress
-			testGraphQLTestEntityAddress_addTestEntityAddress()
+			testGraphQLTestEntityTestEntityAddress_addTestEntityAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

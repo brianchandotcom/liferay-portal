@@ -435,7 +435,7 @@ public class LayoutLocalServiceStagingAdvice {
 					BaseLocalService.class, ServiceWrapper.class
 				},
 				new LayoutLocalServiceStagingInvocationHandler(
-					this, aopInvocationHandler.getTarget())),
+					aopInvocationHandler.getTarget())),
 			bundleContext,
 			bundleContext.getServiceReference(LayoutLocalService.class));
 
@@ -893,7 +893,7 @@ public class LayoutLocalServiceStagingAdvice {
 						new Object[] {_targetObject}, arguments);
 
 					returnValue = layoutLocalServiceStagingAdviceMethod.invoke(
-						_layoutLocalServiceStagingAdvice, arguments);
+						LayoutLocalServiceStagingAdvice.this, arguments);
 				}
 				catch (InvocationTargetException invocationTargetException) {
 					throw invocationTargetException.getTargetException();
@@ -911,10 +911,8 @@ public class LayoutLocalServiceStagingAdvice {
 		}
 
 		private LayoutLocalServiceStagingInvocationHandler(
-			LayoutLocalServiceStagingAdvice layoutLocalServiceStagingAdvice,
 			Object targetObject) {
 
-			_layoutLocalServiceStagingAdvice = layoutLocalServiceStagingAdvice;
 			_targetObject = targetObject;
 		}
 
@@ -929,8 +927,6 @@ public class LayoutLocalServiceStagingAdvice {
 			}
 		}
 
-		private final LayoutLocalServiceStagingAdvice
-			_layoutLocalServiceStagingAdvice;
 		private volatile Object _targetObject;
 
 	}

@@ -74,4 +74,10 @@ public interface JSONFactory {
 
 	public String serializeThrowable(Throwable throwable);
 
+	public JSONObject toJSONObject(String json);
+
+	public JSONObject toJSONObject(String json, boolean strict);
+
+	public String toString(JSONObject jsonObject);
+
 }

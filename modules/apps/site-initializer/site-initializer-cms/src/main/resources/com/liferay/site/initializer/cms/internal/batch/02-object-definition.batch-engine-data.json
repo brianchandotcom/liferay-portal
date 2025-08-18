@@ -648,6 +648,108 @@
 			"titleObjectFieldName": "id"
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#S5M4",
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": false,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "L_DEFAULT_PERMISSION",
+			"label": {
+				"en_US": "Default Permission"
+			},
+			"modifiable": false,
+			"name": "DefaultPermission",
+			"objectActions": [
+			],
+			"objectDefinitionSettings": [
+				{
+					"name": "acceptAllGroups",
+					"value": "true"
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "null",
+					"externalReferenceCode": "CLASS_EXTERNAL_REFERENCE_CODE",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Class External Reference Code"
+					},
+					"localized": false,
+					"name": "classExternalReferenceCode",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "null",
+					"externalReferenceCode": "CLASS_NAME",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Class Name"
+					},
+					"localized": false,
+					"name": "className",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"defaultValue": "null",
+					"externalReferenceCode": "PERMISSIONS",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Permissions"
+					},
+					"localized": false,
+					"name": "permissions",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "Clob",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "L_CMS_CONTENT_SETTINGS",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Default Permissions"
+			},
+			"portlet": false,
+			"scope": "depot",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
 			"className": "com.liferay.object.model.ObjectDefinition#S1T1",
 			"enableCategorization": true,
 			"enableComments": true,

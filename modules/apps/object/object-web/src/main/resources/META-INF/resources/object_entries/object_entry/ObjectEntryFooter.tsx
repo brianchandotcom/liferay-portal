@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
@@ -31,6 +32,13 @@ export default function ObjectEntryFooter({
 						trigger={
 							<ClayButton displayType="primary" type="button">
 								{Liferay.Language.get('publish')}
+
+								<span className="inline-item inline-item-after">
+									<ClayIcon
+										className="lfr-object__entries-schedule-panel-publish-icon"
+										symbol="caret-bottom"
+									/>
+								</span>
 							</ClayButton>
 						}
 					>

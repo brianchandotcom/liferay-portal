@@ -10,12 +10,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
+import com.liferay.notification.exception.NoSuchNotificationTemplateException;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -26,7 +30,12 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +49,36 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 @RunWith(Arquillian.class)
 public class NotificationTemplateResourceTest
 	extends BaseNotificationTemplateResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_notificationTemplates = new ArrayList<>();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		for (NotificationTemplate notificationTemplate :
+				_notificationTemplates) {
+
+			try {
+				_notificationTemplateLocalService.deleteNotificationTemplate(
+					notificationTemplate.getId());
+			}
+			catch (NoSuchNotificationTemplateException
+						noSuchNotificationTemplateException) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchNotificationTemplateException);
+				}
+			}
+		}
+	}
 
 	@Override
 	@Test
@@ -273,8 +312,13 @@ public class NotificationTemplateResourceTest
 			NotificationTemplate notificationTemplate)
 		throws Exception {
 
-		return notificationTemplateResource.postNotificationTemplate(
-			notificationTemplate);
+		notificationTemplate =
+			notificationTemplateResource.postNotificationTemplate(
+				notificationTemplate);
+
+		_notificationTemplates.add(notificationTemplate);
+
+		return notificationTemplate;
 	}
 
 	private void _testPostNotificationTemplate(JSONObject recipientJSONObject)
@@ -326,11 +370,19 @@ public class NotificationTemplateResourceTest
 					toDTO(notificationTemplateJSONObject.toString())));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		NotificationTemplateResourceTest.class);
+
 	@Inject
 	private JSONFactory _jsonFactory;
 
 	@Inject
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
+
+	@Inject
 	private NotificationTemplateResource.Factory
 		_notificationTemplateResourceFactory;
+
+	private List<NotificationTemplate> _notificationTemplates;
 
 }

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -320,33 +319,45 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
+				portletDataContext.getCompanyId(), _className,
+				_taskItemDelegateName);
+
+		batchEngineTaskItemDelegate.setContextCompany(
+			_companyLocalService.getCompany(portletDataContext.getCompanyId()));
+
+		User user = _userLocalService.getUser(_getUserId());
+
+		batchEngineTaskItemDelegate.setContextUser(user);
+		batchEngineTaskItemDelegate.setLanguageId(user.getLanguageId());
+
+		Page<?> page = batchEngineTaskItemDelegate.read(
+			null, Pagination.of(0, 0), null,
+			HashMapBuilder.<String, Serializable>put(
+				"siteId", String.valueOf(portletDataContext.getGroupId())
+			).build(),
+			null);
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		manifestSummary.addModelAdditionCount(
+			new StagedModelType(_itemClassName), page.getTotalCount());
+	}
+
+	@Override
 	protected long getExportModelCount(
 		ManifestSummary manifestSummary,
 		PortletDataHandlerControl[] portletDataHandlerControls) {
 
-		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
-			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
-				CompanyThreadLocal.getCompanyId(), _className,
-				_taskItemDelegateName);
-
-		try {
-			batchEngineTaskItemDelegate.setContextCompany(
-				_companyLocalService.getCompany(
-					CompanyThreadLocal.getCompanyId()));
-
-			User user = _userLocalService.getUser(_getUserId());
-
-			batchEngineTaskItemDelegate.setContextUser(user);
-			batchEngineTaskItemDelegate.setLanguageId(user.getLanguageId());
-
-			Page<?> page = batchEngineTaskItemDelegate.read(
-				null, Pagination.of(0, 0), null, null, null);
-
-			return page.getTotalCount();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		return manifestSummary.getModelAdditionCount(
+			new StagedModelType(_itemClassName));
 	}
 
 	protected static final TransactionConfig transactionConfig =

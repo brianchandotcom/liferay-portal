@@ -979,22 +979,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteScopedTestEntityByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_scopedTestEntityResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			scopedTestEntityResource ->
-				scopedTestEntityResource.
-					deleteScopedTestEntityByExternalReferenceCode(
-						externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField
 	public boolean deleteSiteScopedTestEntityByExternalReferenceCode(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
@@ -1029,35 +1013,6 @@ public class Mutation {
 					patchAssetLibraryScopedTestEntityByExternalReferenceCode(
 						Long.valueOf(assetLibraryId), externalReferenceCode,
 						scopedTestEntity));
-	}
-
-	@GraphQLField
-	public ScopedTestEntity patchScopedTestEntity(
-			@GraphQLName("scopedTestEntityId") Long scopedTestEntityId,
-			@GraphQLName("scopedTestEntity") ScopedTestEntity scopedTestEntity)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_scopedTestEntityResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			scopedTestEntityResource ->
-				scopedTestEntityResource.patchScopedTestEntity(
-					scopedTestEntityId, scopedTestEntity));
-	}
-
-	@GraphQLField
-	public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("scopedTestEntity") ScopedTestEntity scopedTestEntity)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_scopedTestEntityResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			scopedTestEntityResource ->
-				scopedTestEntityResource.
-					patchScopedTestEntityByExternalReferenceCode(
-						externalReferenceCode, scopedTestEntity));
 	}
 
 	@GraphQLField
@@ -1096,43 +1051,8 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public ScopedTestEntity
-			createAssetLibraryScopedTestEntityByExternalReferenceCode(
-				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("scopedTestEntity") ScopedTestEntity
-					scopedTestEntity)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_scopedTestEntityResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			scopedTestEntityResource ->
-				scopedTestEntityResource.
-					postAssetLibraryScopedTestEntityByExternalReferenceCode(
-						Long.valueOf(assetLibraryId), externalReferenceCode,
-						scopedTestEntity));
-	}
-
-	@GraphQLField
-	public Response createScopedTestEntitiesPageExportBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_scopedTestEntityResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			scopedTestEntityResource ->
-				scopedTestEntityResource.postScopedTestEntitiesPageExportBatch(
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public ScopedTestEntity createScopedTestEntityByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+	public ScopedTestEntity createAssetLibraryScopedTestEntity(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("scopedTestEntity") ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
@@ -1140,9 +1060,23 @@ public class Mutation {
 			_scopedTestEntityResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			scopedTestEntityResource ->
-				scopedTestEntityResource.
-					postScopedTestEntityByExternalReferenceCode(
-						externalReferenceCode, scopedTestEntity));
+				scopedTestEntityResource.postAssetLibraryScopedTestEntity(
+					Long.valueOf(assetLibraryId), scopedTestEntity));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryScopedTestEntityBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_scopedTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			scopedTestEntityResource ->
+				scopedTestEntityResource.postAssetLibraryScopedTestEntityBatch(
+					Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
 	@GraphQLField
@@ -1164,9 +1098,8 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public ScopedTestEntity createSiteScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity createSiteScopedTestEntity(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("scopedTestEntity") ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
@@ -1174,10 +1107,23 @@ public class Mutation {
 			_scopedTestEntityResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			scopedTestEntityResource ->
-				scopedTestEntityResource.
-					postSiteScopedTestEntityByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode,
-						scopedTestEntity));
+				scopedTestEntityResource.postSiteScopedTestEntity(
+					Long.valueOf(siteKey), scopedTestEntity));
+	}
+
+	@GraphQLField
+	public Response createSiteScopedTestEntityBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_scopedTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			scopedTestEntityResource ->
+				scopedTestEntityResource.postSiteScopedTestEntityBatch(
+					Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField
@@ -1198,21 +1144,6 @@ public class Mutation {
 					putAssetLibraryScopedTestEntityByExternalReferenceCode(
 						Long.valueOf(assetLibraryId), externalReferenceCode,
 						scopedTestEntity));
-	}
-
-	@GraphQLField
-	public ScopedTestEntity updateScopedTestEntityByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("scopedTestEntity") ScopedTestEntity scopedTestEntity)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_scopedTestEntityResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			scopedTestEntityResource ->
-				scopedTestEntityResource.
-					putScopedTestEntityByExternalReferenceCode(
-						externalReferenceCode, scopedTestEntity));
 	}
 
 	@GraphQLField

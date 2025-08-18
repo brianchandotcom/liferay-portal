@@ -686,43 +686,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopedTestEntities{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopedTestEntities(siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public ScopedTestEntityPage scopedTestEntities() throws Exception {
-		return _applyComponentServiceObjects(
-			_scopedTestEntityResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			scopedTestEntityResource -> new ScopedTestEntityPage(
-				scopedTestEntityResource.getScopedTestEntitiesPage()));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopedTestEntityByExternalReferenceCode(externalReferenceCode: ___){assetLibraryKey, dateCreated, dateModified, description, externalReferenceCode, id, permissions, siteId}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ScopedTestEntity scopedTestEntityByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_scopedTestEntityResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			scopedTestEntityResource ->
-				scopedTestEntityResource.
-					getScopedTestEntityByExternalReferenceCode(
-						externalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteScopedTestEntities(siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ScopedTestEntityPage siteScopedTestEntities(
+	public ScopedTestEntityPage scopedTestEntities(
 			@GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
@@ -737,10 +704,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteScopedTestEntityByExternalReferenceCode(externalReferenceCode: ___, siteKey: ___){assetLibraryKey, dateCreated, dateModified, description, externalReferenceCode, id, permissions, siteId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopedTestEntityByExternalReferenceCode(externalReferenceCode: ___, siteKey: ___){assetLibraryKey, dateCreated, dateModified, description, externalReferenceCode, id, permissions, siteId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public ScopedTestEntity siteScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity scopedTestEntityByExternalReferenceCode(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -953,32 +920,6 @@ public class Query {
 		}
 
 		private TestEntity _testEntity;
-
-	}
-
-	@GraphQLTypeExtension(BatchTestEntity.class)
-	public class GetScopedTestEntityByExternalReferenceCodeTypeExtension {
-
-		public GetScopedTestEntityByExternalReferenceCodeTypeExtension(
-			BatchTestEntity batchTestEntity) {
-
-			_batchTestEntity = batchTestEntity;
-		}
-
-		@GraphQLField
-		public ScopedTestEntity scopedTestEntityByExternalReferenceCode()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_scopedTestEntityResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				scopedTestEntityResource ->
-					scopedTestEntityResource.
-						getScopedTestEntityByExternalReferenceCode(
-							_batchTestEntity.getExternalReferenceCode()));
-		}
-
-		private BatchTestEntity _batchTestEntity;
 
 	}
 

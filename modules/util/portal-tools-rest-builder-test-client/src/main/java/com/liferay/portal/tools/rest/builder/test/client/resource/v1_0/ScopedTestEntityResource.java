@@ -42,15 +42,6 @@ public interface ScopedTestEntityResource {
 				Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
-	public void deleteScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			deleteScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode)
-		throws Exception;
-
 	public void deleteSiteScopedTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception;
@@ -77,20 +68,6 @@ public interface ScopedTestEntityResource {
 	public HttpInvoker.HttpResponse
 			getAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long assetLibraryId, String externalReferenceCode)
-		throws Exception;
-
-	public Page<ScopedTestEntity> getScopedTestEntitiesPage() throws Exception;
-
-	public HttpInvoker.HttpResponse getScopedTestEntitiesPageHttpResponse()
-		throws Exception;
-
-	public ScopedTestEntity getScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode)
 		throws Exception;
 
 	public Page<ScopedTestEntity> getSiteScopedTestEntitiesPage(Long siteId)
@@ -121,23 +98,6 @@ public interface ScopedTestEntityResource {
 				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public ScopedTestEntity patchScopedTestEntity(
-			Long scopedTestEntityId, ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse patchScopedTestEntityHttpResponse(
-			Long scopedTestEntityId, ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
-	public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			patchScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
 	public ScopedTestEntity patchSiteScopedTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode,
 			ScopedTestEntity scopedTestEntity)
@@ -160,34 +120,22 @@ public interface ScopedTestEntityResource {
 				String fieldNames)
 		throws Exception;
 
-	public ScopedTestEntity
-			postAssetLibraryScopedTestEntityByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode,
-				ScopedTestEntity scopedTestEntity)
+	public ScopedTestEntity postAssetLibraryScopedTestEntity(
+			Long assetLibraryId, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
-				Long assetLibraryId, String externalReferenceCode,
-				ScopedTestEntity scopedTestEntity)
+			postAssetLibraryScopedTestEntityHttpResponse(
+				Long assetLibraryId, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public void postScopedTestEntitiesPageExportBatch(
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postScopedTestEntitiesPageExportBatchHttpResponse(
-				String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public ScopedTestEntity postScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
+	public void postAssetLibraryScopedTestEntityBatch(
+			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
+			postAssetLibraryScopedTestEntityBatchHttpResponse(
+				Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
 	public void postSiteScopedTestEntitiesPageExportBatch(
@@ -201,15 +149,20 @@ public interface ScopedTestEntityResource {
 				String fieldNames)
 		throws Exception;
 
-	public ScopedTestEntity postSiteScopedTestEntityByExternalReferenceCode(
-			Long siteId, String externalReferenceCode,
-			ScopedTestEntity scopedTestEntity)
+	public ScopedTestEntity postSiteScopedTestEntity(
+			Long siteId, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			postSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
-				Long siteId, String externalReferenceCode,
-				ScopedTestEntity scopedTestEntity)
+	public HttpInvoker.HttpResponse postSiteScopedTestEntityHttpResponse(
+			Long siteId, ScopedTestEntity scopedTestEntity)
+		throws Exception;
+
+	public void postSiteScopedTestEntityBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postSiteScopedTestEntityBatchHttpResponse(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public ScopedTestEntity
@@ -222,15 +175,6 @@ public interface ScopedTestEntityResource {
 			putAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long assetLibraryId, String externalReferenceCode,
 				ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
-	public ScopedTestEntity putScopedTestEntityByExternalReferenceCode(
-			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public ScopedTestEntity putSiteScopedTestEntityByExternalReferenceCode(
@@ -452,114 +396,6 @@ public interface ScopedTestEntityResource {
 						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteScopedTestEntityByExternalReferenceCodeHttpResponse(
-					externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteScopedTestEntityByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
-
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
@@ -887,216 +723,6 @@ public interface ScopedTestEntityResource {
 						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<ScopedTestEntity> getScopedTestEntitiesPage()
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getScopedTestEntitiesPageHttpResponse();
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, ScopedTestEntitySerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getScopedTestEntitiesPageHttpResponse()
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/scoped-test-entities");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public ScopedTestEntity getScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getScopedTestEntityByExternalReferenceCodeHttpResponse(
-					externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ScopedTestEntitySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getScopedTestEntityByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
-
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
@@ -1435,226 +1061,6 @@ public interface ScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public ScopedTestEntity patchScopedTestEntity(
-				Long scopedTestEntityId, ScopedTestEntity scopedTestEntity)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				patchScopedTestEntityHttpResponse(
-					scopedTestEntityId, scopedTestEntity);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ScopedTestEntitySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse patchScopedTestEntityHttpResponse(
-				Long scopedTestEntityId, ScopedTestEntity scopedTestEntity)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(scopedTestEntity.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/scoped-test-entities/{scopedTestEntityId}");
-
-			httpInvoker.path("scopedTestEntityId", scopedTestEntityId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				patchScopedTestEntityByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, scopedTestEntity);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ScopedTestEntitySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				patchScopedTestEntityByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode,
-					ScopedTestEntity scopedTestEntity)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(scopedTestEntity.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public ScopedTestEntity
 				patchSiteScopedTestEntityByExternalReferenceCode(
 					Long siteId, String externalReferenceCode,
@@ -1884,15 +1290,13 @@ public interface ScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public ScopedTestEntity
-				postAssetLibraryScopedTestEntityByExternalReferenceCode(
-					Long assetLibraryId, String externalReferenceCode,
-					ScopedTestEntity scopedTestEntity)
+		public ScopedTestEntity postAssetLibraryScopedTestEntity(
+				Long assetLibraryId, ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
-					assetLibraryId, externalReferenceCode, scopedTestEntity);
+				postAssetLibraryScopedTestEntityHttpResponse(
+					assetLibraryId, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -1954,9 +1358,8 @@ public interface ScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
-					Long assetLibraryId, String externalReferenceCode,
-					ScopedTestEntity scopedTestEntity)
+				postAssetLibraryScopedTestEntityHttpResponse(
+					Long assetLibraryId, ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1985,10 +1388,9 @@ public interface ScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1998,13 +1400,13 @@ public interface ScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postScopedTestEntitiesPageExportBatch(
-				String callbackURL, String contentType, String fieldNames)
+		public void postAssetLibraryScopedTestEntityBatch(
+				Long assetLibraryId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postScopedTestEntitiesPageExportBatchHttpResponse(
-					callbackURL, contentType, fieldNames);
+				postAssetLibraryScopedTestEntityBatchHttpResponse(
+					assetLibraryId, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -2055,13 +1457,13 @@ public interface ScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postScopedTestEntitiesPageExportBatchHttpResponse(
-					String callbackURL, String contentType, String fieldNames)
+				postAssetLibraryScopedTestEntityBatchHttpResponse(
+					Long assetLibraryId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			httpInvoker.body(object.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2087,130 +1489,12 @@ public interface ScopedTestEntityResource {
 					"callbackURL", String.valueOf(callbackURL));
 			}
 
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
-
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/scoped-test-entities/export-batch");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/batch");
 
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public ScopedTestEntity postScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postScopedTestEntityByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, scopedTestEntity);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ScopedTestEntitySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postScopedTestEntityByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode,
-					ScopedTestEntity scopedTestEntity)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(scopedTestEntity.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("assetLibraryId", assetLibraryId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -2335,14 +1619,12 @@ public interface ScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public ScopedTestEntity postSiteScopedTestEntityByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
-				ScopedTestEntity scopedTestEntity)
+		public ScopedTestEntity postSiteScopedTestEntity(
+				Long siteId, ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
-					siteId, externalReferenceCode, scopedTestEntity);
+				postSiteScopedTestEntityHttpResponse(siteId, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -2403,10 +1685,8 @@ public interface ScopedTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				postSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
-					Long siteId, String externalReferenceCode,
-					ScopedTestEntity scopedTestEntity)
+		public HttpInvoker.HttpResponse postSiteScopedTestEntityHttpResponse(
+				Long siteId, ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -2435,10 +1715,113 @@ public interface ScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities");
 
 			httpInvoker.path("siteId", siteId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void postSiteScopedTestEntityBatch(
+				Long siteId, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postSiteScopedTestEntityBatchHttpResponse(
+					siteId, callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postSiteScopedTestEntityBatchHttpResponse(
+					Long siteId, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities/batch");
+
+			httpInvoker.path("siteId", siteId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -2552,117 +1935,6 @@ public interface ScopedTestEntityResource {
 						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public ScopedTestEntity putScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putScopedTestEntityByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, scopedTestEntity);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ScopedTestEntitySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				putScopedTestEntityByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode,
-					ScopedTestEntity scopedTestEntity)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(scopedTestEntity.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
-
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {

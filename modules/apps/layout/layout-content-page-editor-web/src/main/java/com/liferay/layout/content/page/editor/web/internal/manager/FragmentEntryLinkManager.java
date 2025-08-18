@@ -266,11 +266,9 @@ public class FragmentEntryLinkManager {
 
 			defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
 
-			String configuration = _fragmentRendererController.getConfiguration(
-				defaultFragmentRendererContext);
-
 			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
-				configuration);
+				_fragmentRendererController.getConfiguration(
+					defaultFragmentRendererContext));
 
 			FragmentEntryLinkItemSelectorUtil.
 				addFragmentEntryLinkFieldsSelectorURL(
@@ -308,7 +306,8 @@ public class FragmentEntryLinkManager {
 			).put(
 				"defaultConfigurationValues",
 				_fragmentEntryConfigurationParser.
-					getConfigurationDefaultValuesJSONObject(configuration)
+					getConfigurationDefaultValuesJSONObject(
+						configurationJSONObject)
 			).put(
 				"editableTypes",
 				EditableFragmentEntryProcessorUtil.getEditableTypes(content)

@@ -1484,6 +1484,31 @@ public class LayoutStructureRenderer {
 		}
 	}
 
+	private void _renderReactComponent(String module, Map<String, Object> props)
+		throws Exception {
+
+		JspWriter jspWriter = _pageContext.getOut();
+
+		jspWriter.write("<div><span aria-hidden=\"true\" class=\"");
+		jspWriter.write("loading-animation\"></span>");
+
+		com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag
+			componentTag =
+				new com.liferay.frontend.taglib.react.servlet.taglib.
+					ComponentTag();
+
+		componentTag.setModule(module);
+		componentTag.setPageContext(_pageContext);
+		componentTag.setProps(props);
+		componentTag.setServletContext(ServletContextUtil.getServletContext());
+
+		componentTag.doStartTag();
+
+		componentTag.doEndTag();
+
+		jspWriter.write("</div>");
+	}
+
 	private void _renderRowStyledLayoutStructureItem(
 			InfoForm infoForm,
 			RowStyledLayoutStructureItem rowStyledLayoutStructureItem)

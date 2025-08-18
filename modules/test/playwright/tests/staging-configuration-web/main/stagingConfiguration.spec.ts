@@ -22,6 +22,7 @@ import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {enableLocalStaging} from '../../../utils/staging';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {stagingPageTest} from '../../export-import-web/main/fixtures/stagingPageTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
@@ -177,11 +178,7 @@ test(
 			'Include Thumbnails And Previews During Staging'
 		);
 
-		await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
-			groupId: site.id,
-		});
-
-		await page.waitForTimeout(2000);
+		await enableLocalStaging(apiHelpers, page, site);
 
 		const stagingSite =
 			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
@@ -333,9 +330,7 @@ testFlagsEnabled(
 			webContentName,
 		});
 
-		await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
-			groupId: site.id,
-		});
+		await enableLocalStaging(apiHelpers, page, site);
 
 		await webContentDisplayPage.gotoWebContentAdmin(layout.plid);
 		await page

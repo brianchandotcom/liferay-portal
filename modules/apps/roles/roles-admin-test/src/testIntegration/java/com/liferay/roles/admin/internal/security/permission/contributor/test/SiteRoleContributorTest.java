@@ -84,7 +84,7 @@ public class SiteRoleContributorTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			Collections.emptyMap(), DepotConstants.TYPE_ASSET_LIBRARY,
+			Collections.emptyMap(), DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
 
 		_userLocalService.addGroupUsers(

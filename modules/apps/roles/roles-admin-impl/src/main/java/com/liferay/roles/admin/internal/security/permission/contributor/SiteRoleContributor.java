@@ -5,7 +5,12 @@
 
 package com.liferay.roles.admin.internal.security.permission.contributor;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.petra.function.UnsafePredicate;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -48,7 +53,7 @@ public class SiteRoleContributor implements RoleContributor {
 			Group group = _groupLocalService.getGroup(
 				roleCollection.getGroupId());
 
-			if (group.isCMS() && _isDepotMember(group, roleCollection)) {
+			if (group.isCMS() && _isSpaceDepotEntryMember(group, roleCollection)) {
 				Role role = _roleLocalService.getRole(
 					roleCollection.getCompanyId(), RoleConstants.SITE_MEMBER);
 
@@ -60,7 +65,21 @@ public class SiteRoleContributor implements RoleContributor {
 		}
 	}
 
-	private boolean _isDepotMember(Group group, RoleCollection roleCollection)
+	private boolean _isGroupDepotEntrySpace(Group group)
+		throws PortalException {
+
+		if (!group.isDepot()) {
+			return false;
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+			group.getGroupId());
+
+		return depotEntry.getType() == DepotConstants.TYPE_SPACE;
+	}
+
+	private boolean _isSpaceDepotEntryMember(
+			Group group, RoleCollection roleCollection)
 		throws PortalException {
 
 		User user = roleCollection.getUser();
@@ -69,7 +88,7 @@ public class SiteRoleContributor implements RoleContributor {
 			return false;
 		}
 
-		if (ListUtil.exists(user.getGroups(), Group::isDepot)) {
+		if (_exists(user.getGroups(), this::_isGroupDepotEntrySpace)) {
 			return true;
 		}
 
@@ -85,16 +104,33 @@ public class SiteRoleContributor implements RoleContributor {
 				group.getCompanyId(), roleName);
 
 			if (roles.contains(role) ||
-				ListUtil.exists(
+				_exists(
 					userGroupRoles,
 					userGroupRole ->
-						userGroupRole.getRoleId() == role.getRoleId())) {
+						(userGroupRole.getRoleId() == role.getRoleId()) &&
+							_isGroupDepotEntrySpace(
+								userGroupRole.getGroup()))) {
 
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	private <T, E extends Exception> boolean _exists(
+		List<T> list, UnsafePredicate<T, E> unsafePredicate) {
+
+		return ListUtil.exists(
+			list,
+			object -> {
+				try {
+					return unsafePredicate.test(object);
+				}
+				catch (Exception exception) {
+					return ReflectionUtil.throwException(exception);
+				}
+			});
 	}
 
 	private static final String[] _ASSET_LIBRARY_ROLES = {
@@ -113,5 +149,8 @@ public class SiteRoleContributor implements RoleContributor {
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 }

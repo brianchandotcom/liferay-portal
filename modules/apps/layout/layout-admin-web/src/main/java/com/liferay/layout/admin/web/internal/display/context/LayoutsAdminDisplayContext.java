@@ -1153,6 +1153,17 @@ public class LayoutsAdminDisplayContext {
 				"selPlid", selPlid
 			).buildPortletURL();
 
+		if (selPlid != LayoutConstants.DEFAULT_PLID) {
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(selPlid);
+
+			if (layout.isTypeEmpty()) {
+				selectLayoutPageTemplateEntryURL.setParameter(
+					"initialType", LayoutConstants.TYPE_EMPTY);
+				selectLayoutPageTemplateEntryURL.setParameter(
+					"externalReferenceCode", layout.getExternalReferenceCode());
+			}
+		}
+
 		if (layoutPageTemplateCollectionId > 0) {
 			selectLayoutPageTemplateEntryURL.setParameter(
 				"layoutPageTemplateCollectionId",

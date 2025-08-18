@@ -13,6 +13,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -270,6 +271,13 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				LayoutTypeController layoutTypeController =
 					LayoutTypeControllerTracker.getLayoutTypeController(type);
 
+				if (isEmptyPage()) {
+					return layoutTypeController.isInstanceable() &&
+						   !layoutTypeController.isPrimaryType() &&
+						   !type.equals(LayoutConstants.TYPE_URL) &&
+						   !type.equals(LayoutConstants.TYPE_EMBEDDED);
+				}
+
 				return layoutTypeController.isInstanceable() &&
 					   !layoutTypeController.isPrimaryType();
 			});
@@ -299,6 +307,13 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isEmptyPage() {
+		String initialType = ParamUtil.getString(
+			_httpServletRequest, "initialType");
+
+		return Objects.equals(initialType, LayoutConstants.TYPE_EMPTY);
 	}
 
 	public boolean isGlobalTemplates() {

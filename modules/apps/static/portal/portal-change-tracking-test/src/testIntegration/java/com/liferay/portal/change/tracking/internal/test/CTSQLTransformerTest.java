@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.test.performance.PerformanceTimer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -237,6 +239,13 @@ public class CTSQLTransformerTest {
 	}
 
 	@Test
+	public void testJoinCountPerformance() throws Exception {
+		_assertPerformance("join_count_in.sql", 0, 10);
+
+		_assertPerformance("join_count_in.sql", _getCTCollectionId(6), 10);
+	}
+
+	@Test
 	public void testJoinCountRemove() throws Exception {
 		long ctCollectionId = _getCTCollectionId(4);
 
@@ -339,6 +348,13 @@ public class CTSQLTransformerTest {
 	}
 
 	@Test
+	public void testJoinSelectPerformance() throws Exception {
+		_assertPerformance("join_select_in.sql", 0, 10);
+
+		_assertPerformance("join_select_in.sql", _getCTCollectionId(6), 10);
+	}
+
+	@Test
 	public void testJoinSelectRemove() throws Exception {
 		long ctCollectionId = _getCTCollectionId(4);
 
@@ -392,6 +408,13 @@ public class CTSQLTransformerTest {
 	}
 
 	@Test
+	public void testLeftJoinPerformance() throws Exception {
+		_assertPerformance("left_join_in.sql", 0, 10);
+
+		_assertPerformance("left_join_in.sql", _getCTCollectionId(6), 10);
+	}
+
+	@Test
 	public void testLeftJoinRemove() throws Exception {
 		_assertQuery(
 			"left_join_in.sql", "left_join_out_ct.sql", _getCTCollectionId(4),
@@ -438,6 +461,13 @@ public class CTSQLTransformerTest {
 				Assert.assertEquals(5, rs.getLong("mainTableId"));
 				Assert.assertEquals(0, rs.getLong("ctCollectionId"));
 			});
+	}
+
+	@Test
+	public void testSelfJoinPerformance() throws Exception {
+		_assertPerformance("self_join_in.sql", 0, 10);
+
+		_assertPerformance("self_join_in.sql", _getCTCollectionId(6), 10);
 	}
 
 	@Test
@@ -496,6 +526,13 @@ public class CTSQLTransformerTest {
 			ps -> {
 			},
 			rs -> Assert.assertEquals(5, rs.getLong(1)));
+	}
+
+	@Test
+	public void testSimpleCountPerformance() throws Exception {
+		_assertPerformance("simple_count_in.sql", 0, 10);
+
+		_assertPerformance("simple_count_in.sql", _getCTCollectionId(6), 10);
 	}
 
 	@Test
@@ -669,6 +706,13 @@ public class CTSQLTransformerTest {
 	}
 
 	@Test
+	public void testSimpleSelectPerformance() throws Exception {
+		_assertPerformance("simple_select_in.sql", 0, 10);
+
+		_assertPerformance("simple_select_in.sql", _getCTCollectionId(6), 10);
+	}
+
+	@Test
 	public void testSimpleSelectRemove() throws Exception {
 		long groupId = 3;
 
@@ -751,6 +795,13 @@ public class CTSQLTransformerTest {
 			"subquery_count_in.sql", "subquery_count_out_ct.sql",
 			ctCollectionId, ps -> ps.setString(1, "rt1 moved"),
 			rs -> Assert.assertEquals(1, rs.getLong(1)));
+	}
+
+	@Test
+	public void testSubqueryCountPerformance() throws Exception {
+		_assertPerformance("subquery_count_in.sql", 0, 10);
+
+		_assertPerformance("subquery_count_in.sql", _getCTCollectionId(6), 10);
 	}
 
 	@Test
@@ -856,6 +907,13 @@ public class CTSQLTransformerTest {
 	}
 
 	@Test
+	public void testSubquerySelectPerformance() throws Exception {
+		_assertPerformance("subquery_select_in.sql", 0, 10);
+
+		_assertPerformance("subquery_select_in.sql", _getCTCollectionId(6), 10);
+	}
+
+	@Test
 	public void testSubquerySelectRemove() throws Exception {
 		long ctCollectionId = _getCTCollectionId(4);
 
@@ -926,6 +984,14 @@ public class CTSQLTransformerTest {
 	}
 
 	@Test
+	public void testUnionCountPerformance() throws Exception {
+		_assertPerformance("union_select_count_in.sql", 0, 10);
+
+		_assertPerformance(
+			"union_select_count_in.sql", _getCTCollectionId(6), 10);
+	}
+
+	@Test
 	public void testUnionCountRemove() throws Exception {
 		_assertQuery(
 			"union_select_count_in.sql", "union_select_count_out_ct.sql",
@@ -990,6 +1056,17 @@ public class CTSQLTransformerTest {
 			"select * from MainTable where mainTableId = 1 and " +
 				"ctCollectionId = " + ctCollectionId8,
 			rs -> Assert.assertFalse(rs.next()));
+	}
+
+	@Test
+	public void testUpdateAndDeletePerformance() throws Exception {
+		_assertPerformance("update_in.sql", 0, 10);
+
+		_assertPerformance("update_in.sql", _getCTCollectionId(6), 10);
+
+		_assertPerformance("delete_in.sql", 0, 10);
+
+		_assertPerformance("delete_in.sql", _getCTCollectionId(6), 10);
 	}
 
 	private static long _createCTEntries(
@@ -1066,6 +1143,27 @@ public class CTSQLTransformerTest {
 
 				throw new UnsupportedOperationException(method.toString());
 			});
+	}
+
+	private void _assertPerformance(
+			String inputSQLFile, long ctCollectionId, int maxTime)
+		throws Exception {
+
+		String inputSQL = StreamUtil.toString(
+			CTSQLTransformerTest.class.getResourceAsStream(
+				"dependencies/" + inputSQLFile));
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.change.tracking.internal." +
+					"CTSQLTransformerImpl",
+				LoggerTestUtil.WARN);
+			PerformanceTimer performanceTimer = new PerformanceTimer(maxTime);
+			SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			_ctSQLTransformer.transform(inputSQL);
+		}
 	}
 
 	@SafeVarargs

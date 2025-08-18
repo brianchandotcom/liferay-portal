@@ -84,7 +84,7 @@ public class FragmentEntryConfigurationParserImpl
 
 			defaultValuesJSONObject.put(
 				fragmentConfigurationField.getName(),
-				getFieldValue(
+				_getFieldValue(
 					fragmentConfigurationField,
 					LocaleUtil.getMostRelevantLocale(), null));
 		}
@@ -165,7 +165,7 @@ public class FragmentEntryConfigurationParserImpl
 
 			configurationDefaultValuesJSONObject.put(
 				name,
-				getFieldValue(
+				_getFieldValue(
 					fragmentConfigurationField, locale,
 					configurationValuesJSONObject.getString(name)));
 		}
@@ -240,14 +240,6 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Override
 	public Object getFieldValue(
-		FragmentConfigurationField fragmentConfigurationField, Locale locale,
-		String value) {
-
-		return _getFieldValue(fragmentConfigurationField, locale, value);
-	}
-
-	@Override
-	public Object getFieldValue(
 		String editableValues,
 		FragmentConfigurationField fragmentConfigurationField, Locale locale) {
 
@@ -264,7 +256,7 @@ public class FragmentEntryConfigurationParserImpl
 				return fragmentConfigurationField.getDefaultValue();
 			}
 
-			return getFieldValue(
+			return _getFieldValue(
 				fragmentConfigurationField, locale,
 				configurationValuesJSONObject.getString(
 					fragmentConfigurationField.getName(), null));
@@ -316,7 +308,7 @@ public class FragmentEntryConfigurationParserImpl
 				continue;
 			}
 
-			return getFieldValue(
+			return _getFieldValue(
 				fragmentConfigurationField, locale,
 				configurationValuesJSONObject.getString(name));
 		}

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Site CMS Site Initializer API
+Bundle-SymbolicName: com.liferay.site.cms.site.initializer.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.site.cms.site.initializer.util

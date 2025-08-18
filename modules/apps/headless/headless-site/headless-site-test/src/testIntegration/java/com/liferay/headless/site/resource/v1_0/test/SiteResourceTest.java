@@ -9,12 +9,18 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.exportimport.test.rule.LazyReferencing;
+import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
 import com.liferay.headless.site.client.dto.v1_0.Site;
 import com.liferay.headless.site.client.pagination.Page;
 import com.liferay.headless.site.client.pagination.Pagination;
 import com.liferay.headless.site.client.problem.Problem;
 import com.liferay.headless.site.client.resource.v1_0.SiteResource;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -25,23 +31,27 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +60,9 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -64,6 +76,11 @@ import org.osgi.framework.ServiceRegistration;
  */
 @RunWith(Arquillian.class)
 public class SiteResourceTest extends BaseSiteResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LazyReferencingTestRule lazyReferencingTestRule =
+		LazyReferencingTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -83,10 +100,12 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Collections.reverse(_sites);
 
 		for (Site site : _sites) {
-			Group group = _groupLocalService.fetchGroup(site.getId());
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				site.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
 
 			if (group != null) {
-				_groupLocalService.deleteGroup(site.getId());
+				_groupLocalService.deleteGroup(group);
 			}
 		}
 
@@ -153,31 +172,28 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		throws Exception {
 	}
 
-	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testGetSitesPage() throws Exception {
 		super.testGetSitesPage();
 
+		_testGetSitesPageWithActiveAndInactiveSites();
 		_testGetSitesPageWithActiveOrSiteGroups(false, true);
 		_testGetSitesPageWithActiveOrSiteGroups(true, false);
 		_testGetSitesPageWithDepotEntry();
+		_testGetSitesPageWithInactiveSites();
 		_testGetSitesPageWithSearch();
 		_testGetSitesPageWithoutAuthentication();
 	}
 
-	@FeatureFlag("LPD-17564")
-	@Override
-	@Test
-	public void testGetSitesPageWithPagination() throws Exception {
-		super.testGetSitesPageWithPagination();
-	}
-
+	@LazyReferencing
 	@Override
 	@Test
 	public void testPostSite() throws Exception {
 		super.testPostSite();
 
+		_testPostSiteBatch();
+		_testPostSiteDuplicateFriendlyURL();
 		_testPostSiteFailureDuplicateName();
 		_testPostSiteFailureInvalidKey();
 		_testPostSiteFailureNoName();
@@ -192,6 +208,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteSuccessMembershipTypePrivate();
 		_testPostSiteSuccessSiteInitializer();
 		_testPostSiteSuccessSiteTemplate();
+		_testPostSiteWithNondefaultLocales();
 		_testPostSiteWithoutAuthentication();
 	}
 
@@ -212,9 +229,21 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	protected Site randomSite() throws Exception {
 		return new Site() {
 			{
+				active = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				friendlyUrlPath =
+					CharPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString());
+				manualMembership = RandomTestUtil.randomBoolean();
+				membershipRestriction =
+					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
+				membershipType = MembershipType.create(
+					GroupConstants.getTypeLabel(GroupConstants.TYPE_SITE_OPEN));
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				typeSettings = LinkedHashMapBuilder.put(
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				).build();
 			}
 		};
 	}
@@ -248,11 +277,8 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
-	protected Site testPostFormDataSite_addSite(
-			Site site, Map<String, File> multipartFiles)
-		throws Exception {
-
-		Site postSite = siteResource.postFormDataSite(site, multipartFiles);
+	protected Site testPostSite_addSite(Site site) throws Exception {
+		Site postSite = siteResource.postSite(site);
 
 		_sites.add(postSite);
 
@@ -260,11 +286,16 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
-	protected Site testPostSite_addSite(
+	protected Site testPostSiteSiteInitializer_addSite(
 			Site site, Map<String, File> multipartFiles)
 		throws Exception {
 
-		return testPostFormDataSite_addSite(site, multipartFiles);
+		Site postSite = siteResource.postSiteSiteInitializer(
+			site, multipartFiles);
+
+		_sites.add(postSite);
+
+		return postSite;
 	}
 
 	@Override
@@ -289,12 +320,31 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		assertValid(getSite);
 	}
 
+	private void _testGetSitesPageWithActiveAndInactiveSites()
+		throws Exception {
+
+		Page<Site> page = siteResource.getSitesPage(
+			null, null, Pagination.of(1, 100));
+
+		long totalCount = page.getTotalCount();
+
+		Site site = randomSite();
+
+		site.setActive(false);
+
+		testGetSitesPage_addSite(site);
+
+		page = siteResource.getSitesPage(null, null, Pagination.of(1, 100));
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+	}
+
 	private void _testGetSitesPageWithActiveOrSiteGroups(
 			boolean active, boolean site)
 		throws Exception {
 
 		Page<Site> sitesPage = siteResource.getSitesPage(
-			null, Pagination.of(1, 100));
+			true, null, Pagination.of(1, 100));
 
 		List<Site> originalItems = (List<Site>)sitesPage.getItems();
 
@@ -307,7 +357,8 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		_groupLocalService.updateGroup(group);
 
-		sitesPage = siteResource.getSitesPage(null, Pagination.of(1, 100));
+		sitesPage = siteResource.getSitesPage(
+			true, null, Pagination.of(1, 100));
 
 		List<Site> existingItems = (List<Site>)sitesPage.getItems();
 
@@ -316,7 +367,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 	private void _testGetSitesPageWithDepotEntry() throws Exception {
 		Page<Site> sitesPage = siteResource.getSitesPage(
-			null, Pagination.of(1, 100));
+			true, null, Pagination.of(1, 100));
 
 		List<Site> originalItems = (List<Site>)sitesPage.getItems();
 
@@ -326,11 +377,35 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			null, DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
-		sitesPage = siteResource.getSitesPage(null, Pagination.of(1, 100));
+		sitesPage = siteResource.getSitesPage(
+			true, null, Pagination.of(1, 100));
 
 		List<Site> existingItems = (List<Site>)sitesPage.getItems();
 
 		Assert.assertEquals(originalItems, existingItems);
+	}
+
+	private void _testGetSitesPageWithInactiveSites() throws Exception {
+		Page<Site> page = siteResource.getSitesPage(
+			false, null, Pagination.of(1, 100));
+
+		long totalCount = page.getTotalCount();
+
+		Site site1 = randomSite();
+
+		site1.setActive(false);
+
+		testGetSitesPage_addSite(site1);
+
+		page = siteResource.getSitesPage(false, null, Pagination.of(1, 100));
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		Collection<Site> sites = page.getItems();
+
+		for (Site site2 : sites) {
+			Assert.assertEquals(site2.getActive(), false);
+		}
 	}
 
 	private void _testGetSitesPageWithoutAuthentication() throws Exception {
@@ -339,7 +414,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		SiteResource siteResource = builder.build();
 
 		try {
-			siteResource.getSitesPage(null, Pagination.of(1, 1));
+			siteResource.getSitesPage(true, null, Pagination.of(1, 1));
 
 			Assert.fail();
 		}
@@ -360,7 +435,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Site postSite = _testPostSite_addSite(randomSite);
 
 		Page<Site> sitesPage = siteResource.getSitesPage(
-			name, Pagination.of(1, 10));
+			true, name, Pagination.of(1, 10));
 
 		List<Site> items = (List<Site>)sitesPage.getItems();
 
@@ -375,6 +450,53 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_sites.add(postSite);
 
 		return postSite;
+	}
+
+	private void _testPostSiteBatch() throws Exception {
+		Site site = randomSite();
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_jsonFactory.createJSONObject(site.toString())
+				).toString(),
+				"headless-site/v1.0/sites/batch", Http.Method.POST));
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(site.getActive(), group.isActive());
+		Assert.assertEquals(site.getFriendlyUrlPath(), group.getFriendlyURL());
+		Assert.assertEquals(
+			site.getManualMembership(), group.isManualMembership());
+		Assert.assertEquals(
+			site.getMembershipRestriction(),
+			Integer.valueOf(group.getMembershipRestriction()));
+		Assert.assertEquals(
+			site.getMembershipType(),
+			Site.MembershipType.create(
+				GroupConstants.getTypeLabel(group.getType())));
+		Assert.assertEquals(
+			site.getName(), group.getName(LocaleUtil.getDefault()));
+
+		_sites.add(
+			siteResource.getSiteByExternalReferenceCode(
+				site.getExternalReferenceCode()));
+	}
+
+	private void _testPostSiteDuplicateFriendlyURL() throws Exception {
+		Site site1 = _testPostSite_addSite(randomSite());
+
+		Site site2 = randomSite();
+
+		site2.setFriendlyUrlPath(site1.getFriendlyUrlPath());
+
+		site2 = _testPostSite_addSite(site2);
+
+		Assert.assertEquals(
+			StringBundler.concat(site1.getFriendlyUrlPath(), CharPool.DASH, 1),
+			site2.getFriendlyUrlPath());
 	}
 
 	private void _testPostSiteFailureDuplicateName() throws Exception {
@@ -646,7 +768,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Site postSite = _testPostSiteSuccess(randomSite);
 
-		Group group = _groupLocalService.fetchGroup(postSite.getId());
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			postSite.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
 
 		Group parentGroup = group.getParentGroup();
 
@@ -660,7 +784,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Site postSite = _testPostSiteSuccess(randomSite);
 
-		Group group = _groupLocalService.fetchGroup(postSite.getId());
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			postSite.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(GroupConstants.TYPE_SITE_PRIVATE, group.getType());
 	}
@@ -693,13 +819,38 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Site postSite = _testPostSiteSuccess(randomSite);
 
-		Group group = _groupLocalService.fetchGroup(postSite.getId());
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			postSite.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
 
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
 		Assert.assertEquals(
 			layoutSetPrototype.getLayoutSetPrototypeId(),
 			publicLayoutSet.getLayoutSetPrototypeId());
+	}
+
+	private void _testPostSiteWithNondefaultLocales() throws Exception {
+		Site site = randomSite();
+
+		String locales = StringBundler.concat(
+			LocaleUtil.BRAZIL, StringPool.COMMA, LocaleUtil.SPAIN);
+
+		site.setTypeSettings(
+			LinkedHashMapBuilder.put(
+				PropsKeys.LOCALES, locales
+			).put(
+				"languageId", String.valueOf(LocaleUtil.BRAZIL)
+			).build());
+
+		Site postSite = _testPostSite_addSite(site);
+
+		Assert.assertEquals(
+			postSite.getTypeSettings(
+			).get(
+				PropsKeys.LOCALES
+			),
+			locales);
 	}
 
 	private void _testPostSiteWithoutAuthentication() throws Exception {
@@ -731,6 +882,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

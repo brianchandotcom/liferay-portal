@@ -60,13 +60,6 @@ public class EnvironmentBuildProperties extends Properties {
 
 		urlString = JenkinsResultsParserUtil.getLocalURL(urlString);
 
-		Matcher matcher = _propertiesURLPattern.matcher(urlString);
-
-		if (!matcher.matches()) {
-			throw new RuntimeException(
-				"Unrecognized properties file name detected");
-		}
-
 		try {
 			String contents = _toString(urlString, checkCache);
 
@@ -75,6 +68,12 @@ public class EnvironmentBuildProperties extends Properties {
 			return;
 		}
 		catch (IOException ioException) {
+		}
+
+		Matcher matcher = _propertiesURLPattern.matcher(urlString);
+
+		if (!matcher.matches()) {
+			return;
 		}
 
 		try {

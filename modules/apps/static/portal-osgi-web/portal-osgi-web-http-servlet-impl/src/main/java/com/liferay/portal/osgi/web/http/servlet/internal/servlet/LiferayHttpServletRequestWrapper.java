@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
-import org.eclipse.equinox.http.servlet.internal.servlet.RequestDispatcherAdaptor;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 
 /**

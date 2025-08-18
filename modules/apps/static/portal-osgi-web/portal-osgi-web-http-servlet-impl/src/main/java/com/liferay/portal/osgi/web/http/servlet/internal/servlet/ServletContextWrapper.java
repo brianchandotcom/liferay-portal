@@ -37,7 +37,6 @@ import java.util.function.BiConsumer;
 
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
-import org.eclipse.equinox.http.servlet.internal.servlet.RequestDispatcherAdaptor;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 
 import org.osgi.framework.Bundle;

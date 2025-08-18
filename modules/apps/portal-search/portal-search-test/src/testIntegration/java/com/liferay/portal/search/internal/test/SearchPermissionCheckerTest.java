@@ -103,14 +103,14 @@ public class SearchPermissionCheckerTest {
 			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
+		_group = GroupTestUtil.addGroup();
+
+		_organization = OrganizationTestUtil.addOrganization();
+
 		_serviceReference = _bundleContext.getServiceReference(
 			SearchPermissionChecker.class);
 
 		_searchPermissionChecker = _bundleContext.getService(_serviceReference);
-
-		_group = GroupTestUtil.addGroup();
-
-		_organization = OrganizationTestUtil.addOrganization();
 	}
 
 	@After

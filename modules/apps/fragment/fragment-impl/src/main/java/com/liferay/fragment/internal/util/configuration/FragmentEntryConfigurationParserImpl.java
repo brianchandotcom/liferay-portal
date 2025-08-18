@@ -95,35 +95,25 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Override
 	public Object getConfigurationFieldValue(
-		String editableValues, String fieldName,
+		JSONObject editableValuesJSONObject, String fieldName,
 		FragmentConfigurationFieldDataType fragmentConfigurationFieldDataType) {
 
-		try {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				editableValues);
-
-			JSONObject configurationValuesJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-			if (configurationValuesJSONObject == null) {
-				return null;
-			}
-
-			return _getFieldValue(
-				fragmentConfigurationFieldDataType,
-				configurationValuesJSONObject.getString(fieldName));
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to parse configuration JSON: " + editableValues,
-					jsonException);
-			}
+		if (editableValuesJSONObject == null) {
+			return null;
 		}
 
-		return null;
+		JSONObject configurationValuesJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (configurationValuesJSONObject == null) {
+			return null;
+		}
+
+		return _getFieldValue(
+			fragmentConfigurationFieldDataType,
+			configurationValuesJSONObject.getString(fieldName));
 	}
 
 	@Override

@@ -73,8 +73,8 @@ describe('SpaceMembersModal', () => {
 			items: [],
 			lastPage: 1,
 			page: 1,
-			totalCount: 0,
 			pageSize: 1,
+			totalCount: 0,
 		});
 
 		getSpaceUsersSpy = jest

@@ -42,7 +42,7 @@ const DEFAULT_PROPS = {
 			actionIds: 'VIEW',
 			share: false,
 			type: 'User',
-			user: {id: '2', name: 'Test2 Test2'},
+			user: {id: '2', name: 'Test2 Test2', roles: []},
 		},
 	],
 	itemId: 20,

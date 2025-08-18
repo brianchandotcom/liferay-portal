@@ -23,7 +23,7 @@ public abstract class BaseViewActionResourcePermissionUpgradeProcess
 				"update ResourcePermission set actionIds = BITOR(",
 				_getBitwiseValue(), ", actionIds) where name = '",
 				getClassName(),
-				"' and primKeyId != 0 and viewActionId = true"));
+				"' and primKeyId != 0 and viewActionId = [$TRUE$]"));
 	}
 
 	protected abstract String getActionId();

@@ -8,12 +8,17 @@ package com.liferay.headless.admin.list.type.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -236,8 +241,14 @@ public class ListTypeDefinitionResourceTest
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
-		return listTypeDefinitionResource.postListTypeDefinition(
+		listTypeDefinition = listTypeDefinitionResource.postListTypeDefinition(
 			listTypeDefinition);
+
+		_listTypeDefinitions.add(
+			_listTypeDefinitionLocalService.fetchListTypeDefinition(
+				listTypeDefinition.getId()));
+
+		return listTypeDefinition;
 	}
 
 	private void _assertListTypeDefinitionNameLocalizedMap(
@@ -250,5 +261,12 @@ public class ListTypeDefinitionResourceTest
 			listTypeDefinition.getName(),
 			nameLocalizedMap.get(LocaleUtil.getSiteDefault()));
 	}
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private List<com.liferay.list.type.model.ListTypeDefinition>
+		_listTypeDefinitions = new ArrayList<>();
 
 }

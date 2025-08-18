@@ -1073,7 +1073,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getUuid()));
 	}
 
-	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification()
+	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification()
 		throws Exception {
 
 		SitePageResource sitePageResource = _getSitePageResource(
@@ -1120,7 +1120,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
-		_testPatchSiteSiteByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification();
+		_testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 		_testPatchSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
@@ -1305,7 +1305,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			postSitePage);
 	}
 
-	private void _testPostByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification()
+	private void _testPostSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification()
 		throws Exception {
 
 		SitePageResource sitePageResource = _getSitePageResource(
@@ -1329,7 +1329,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPostByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
-		_testPostByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification();
+		_testPostSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
@@ -1456,7 +1456,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getUuid()));
 	}
 
-	private void _testPutSiteSiteByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification()
+	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification()
 		throws Exception {
 
 		SitePageResource sitePageResource = _getSitePageResource(
@@ -1494,7 +1494,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 
-		_testPutSiteSiteByExternalReferenceCodeSitePageWidgetSitePageWithPageSpecification();
+		_testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 		_testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,

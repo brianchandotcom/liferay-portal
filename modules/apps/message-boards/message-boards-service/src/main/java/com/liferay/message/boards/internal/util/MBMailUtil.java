@@ -110,14 +110,6 @@ public class MBMailUtil {
 		return GetterUtil.getLong(parts[1]);
 	}
 
-	public static int getMessageIdStringOffset() {
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
-			return 1;
-		}
-
-		return 0;
-	}
-
 	public static long getParentMessageId(Message message) throws Exception {
 		long parentMessageId = -1;
 

@@ -266,9 +266,7 @@ public class MessageListenerImpl implements MessageListener {
 
 		for (String recipient : recipients) {
 			if ((recipient != null) &&
-				recipient.startsWith(
-					MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
-					MBMailUtil.getMessageIdStringOffset())) {
+				recipient.startsWith(MBMailUtil.MESSAGE_POP_PORTLET_PREFIX)) {
 
 				return recipient;
 			}

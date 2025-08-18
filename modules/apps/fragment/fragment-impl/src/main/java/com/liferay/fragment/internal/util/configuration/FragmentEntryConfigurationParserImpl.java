@@ -72,10 +72,11 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Override
 	public JSONObject getConfigurationDefaultValuesJSONObject(
-		String configuration) {
+		JSONObject configurationJSONObject) {
 
 		List<FragmentConfigurationField> fragmentConfigurationFields =
-			getFragmentConfigurationFields(configuration);
+			getFragmentConfigurationFields(
+				_jsonFactory.toString(configurationJSONObject));
 
 		JSONObject defaultValuesJSONObject = _jsonFactory.createJSONObject();
 
@@ -131,7 +132,8 @@ public class FragmentEntryConfigurationParserImpl
 		throws JSONException {
 
 		JSONObject configurationDefaultValuesJSONObject =
-			getConfigurationDefaultValuesJSONObject(configuration);
+			getConfigurationDefaultValuesJSONObject(
+				_jsonFactory.toJSONObject(configuration));
 
 		if (configurationDefaultValuesJSONObject == null) {
 			return _jsonFactory.createJSONObject();

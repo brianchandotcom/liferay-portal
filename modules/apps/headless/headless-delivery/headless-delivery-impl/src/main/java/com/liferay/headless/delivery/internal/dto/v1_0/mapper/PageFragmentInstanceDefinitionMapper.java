@@ -231,7 +231,7 @@ public class PageFragmentInstanceDefinitionMapper {
 				configJSONObject =
 					_fragmentEntryConfigurationParser.
 						getConfigurationDefaultValuesJSONObject(
-							fragmentEntryLink.getConfiguration());
+							fragmentEntryLink.getConfigurationJSONObject());
 
 				if (configJSONObject == null) {
 					return Collections.emptyMap();

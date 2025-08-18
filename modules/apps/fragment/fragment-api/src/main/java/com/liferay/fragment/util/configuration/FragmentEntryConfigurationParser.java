@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FragmentEntryConfigurationParser {
 
 	public JSONObject getConfigurationDefaultValuesJSONObject(
-		String configuration);
+		JSONObject configurationJSONObject);
 
 	public Object getConfigurationFieldValue(
 		String editableValues, String fieldName,

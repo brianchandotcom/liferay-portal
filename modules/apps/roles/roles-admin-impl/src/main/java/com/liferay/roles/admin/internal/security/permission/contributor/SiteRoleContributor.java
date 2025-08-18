@@ -53,7 +53,9 @@ public class SiteRoleContributor implements RoleContributor {
 			Group group = _groupLocalService.getGroup(
 				roleCollection.getGroupId());
 
-			if (group.isCMS() && _isSpaceDepotEntryMember(group, roleCollection)) {
+			if (group.isCMS() &&
+				_isSpaceDepotEntryMember(group, roleCollection)) {
+
 				Role role = _roleLocalService.getRole(
 					roleCollection.getCompanyId(), RoleConstants.SITE_MEMBER);
 
@@ -63,6 +65,21 @@ public class SiteRoleContributor implements RoleContributor {
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
+	}
+
+	private <T, E extends Exception> boolean _exists(
+		List<T> list, UnsafePredicate<T, E> unsafePredicate) {
+
+		return ListUtil.exists(
+			list,
+			object -> {
+				try {
+					return unsafePredicate.test(object);
+				}
+				catch (Exception exception) {
+					return ReflectionUtil.throwException(exception);
+				}
+			});
 	}
 
 	private boolean _isGroupDepotEntrySpace(Group group)
@@ -75,7 +92,11 @@ public class SiteRoleContributor implements RoleContributor {
 		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
 			group.getGroupId());
 
-		return depotEntry.getType() == DepotConstants.TYPE_SPACE;
+		if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isSpaceDepotEntryMember(
@@ -110,29 +131,13 @@ public class SiteRoleContributor implements RoleContributor {
 					userGroupRoles,
 					userGroupRole ->
 						(userGroupRole.getRoleId() == role.getRoleId()) &&
-							_isGroupDepotEntrySpace(
-								userGroupRole.getGroup()))) {
+						_isGroupDepotEntrySpace(userGroupRole.getGroup()))) {
 
 				return true;
 			}
 		}
 
 		return false;
-	}
-
-	private <T, E extends Exception> boolean _exists(
-		List<T> list, UnsafePredicate<T, E> unsafePredicate) {
-
-		return ListUtil.exists(
-			list,
-			object -> {
-				try {
-					return unsafePredicate.test(object);
-				}
-				catch (Exception exception) {
-					return ReflectionUtil.throwException(exception);
-				}
-			});
 	}
 
 	private static final String[] _ASSET_LIBRARY_ROLES = {
@@ -144,6 +149,9 @@ public class SiteRoleContributor implements RoleContributor {
 		SiteRoleContributor.class);
 
 	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -151,8 +159,5 @@ public class SiteRoleContributor implements RoleContributor {
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 }

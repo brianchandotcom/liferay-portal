@@ -23,32 +23,45 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select fileEntryId, name from DLFileEntry where name is " +
-					"null or name = ''");
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"delete from DLFileEntry where name is null or name = ''");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+		upgrade(
+			new DataCleanupPreupgradeProcess() {
 
-			preparedStatement2.execute();
+				@Override
+				protected void doUpgrade() throws Exception {
+					try (PreparedStatement preparedStatement1 =
+							connection.prepareStatement(
+								"select fileEntryId, name from DLFileEntry " +
+									"where name is null or name = ''");
+						PreparedStatement preparedStatement2 =
+							connection.prepareStatement(
+								"delete from DLFileEntry where name is null " +
+									"or name = ''");
+						ResultSet resultSet =
+							preparedStatement1.executeQuery()) {
 
-			if (!_log.isInfoEnabled()) {
-				return;
-			}
+						preparedStatement2.execute();
 
-			DBInspector dbInspector = new DBInspector(connection);
+						if (!_log.isInfoEnabled()) {
+							return;
+						}
 
-			while (resultSet.next()) {
-				long fileEntryId = resultSet.getLong("fileEntryId");
-				String name = resultSet.getString("name");
+						DBInspector dbInspector = new DBInspector(connection);
 
-				DataCleanupLoggingUtil.logDelete(
-					_log, 1, dbInspector.normalizeName("DLFileEntry"),
-					StringBundler.concat(
-						"fileEntryId ", fileEntryId, " name was ",
-						(name == null) ? "null" : "empty"));
-			}
-		}
+						while (resultSet.next()) {
+							long fileEntryId = resultSet.getLong("fileEntryId");
+							String name = resultSet.getString("name");
+
+							DataCleanupLoggingUtil.logDelete(
+								_log, 1,
+								dbInspector.normalizeName("DLFileEntry"),
+								StringBundler.concat(
+									"fileEntryId ", fileEntryId, " name was ",
+									(name == null) ? "null" : "empty"));
+						}
+					}
+				}
+
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

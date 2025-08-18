@@ -73,6 +73,14 @@ public class AddressServiceUtil {
 			className, classPK, listTypeIds);
 	}
 
+	public static Address getOrAddEmptyAddress(
+			String externalReferenceCode, String className, long classPK)
+		throws Exception {
+
+		return getService().getOrAddEmptyAddress(
+			externalReferenceCode, className, classPK);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

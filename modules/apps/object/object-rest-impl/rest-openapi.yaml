@@ -699,6 +699,10 @@ paths:
                     schema:
                         type: string
                 -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
                     name: page
                     schema:
                         type: integer
@@ -1327,6 +1331,10 @@ paths:
                     schema:
                         type: string
                 -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
                     name: page
                     schema:
                         type: integer
@@ -1925,6 +1933,10 @@ paths:
                     schema:
                         format: int64
                         type: integer
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
                 -   in: query
                     name: page
                     schema:

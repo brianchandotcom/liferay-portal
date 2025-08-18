@@ -14,7 +14,9 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -92,6 +94,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -500,13 +503,55 @@ public class BatchEnginePortletDataHandlerTest {
 			_portletDataHandlerProvider.provide(
 				objectDefinition.getPortletId());
 
-		Assert.assertEquals(0, portletDataHandler.getExportModelCount(null));
+		Assert.assertEquals(
+			0,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					objectDefinition.getCompanyId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					portletDataHandler)));
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
 			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition);
 
 		Assert.assertEquals(
-			objectEntries.length, portletDataHandler.getExportModelCount(null));
+			objectEntries.length,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					objectDefinition.getCompanyId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					portletDataHandler)));
+	}
+
+	@Test
+	public void testGetExportModelCountWithSiteScopedObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(
+				objectDefinition.getPortletId());
+
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertEquals(
+			0,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					objectDefinition.getCompanyId(), group.getGroupId(),
+					portletDataHandler)));
+
+		ObjectEntry[] siteScopedObjectEntries = _addObjectEntries(
+			3, group.getGroupId(), objectDefinition);
+
+		Assert.assertEquals(
+			siteScopedObjectEntries.length,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					objectDefinition.getCompanyId(), group.getGroupId(),
+					portletDataHandler)));
 	}
 
 	@Test
@@ -973,6 +1018,21 @@ public class BatchEnginePortletDataHandlerTest {
 
 			return jsonArray1.toString();
 		}
+	}
+
+	private ManifestSummary _getManifestSummary(
+			long companyId, long groupId, PortletDataHandler portletDataHandler)
+		throws Exception {
+
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createExportPortletDataContext(
+				companyId, groupId, new HashMap<>(), null, null, null);
+
+		portletDataContext.setManifestSummary(new ManifestSummary());
+
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		return portletDataContext.getManifestSummary();
 	}
 
 	private long _getObjectEntryGroupId(long groupId, String scope) {

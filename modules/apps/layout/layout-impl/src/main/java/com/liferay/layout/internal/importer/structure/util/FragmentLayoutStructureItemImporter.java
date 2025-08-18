@@ -28,9 +28,9 @@ import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.ActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.importer.PortletPermissionsImporter;
 import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.internal.importer.helper.PortletConfigurationImporterHelper;
-import com.liferay.layout.internal.importer.helper.PortletPermissionsImporterHelper;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -100,7 +100,7 @@ public class FragmentLayoutStructureItemImporter
 		PortletConfigurationImporterHelper portletConfigurationImporterHelper,
 		PortletFileRepository portletFileRepository,
 		PortletLocalService portletLocalService,
-		PortletPermissionsImporterHelper portletPermissionsImporterHelper,
+		PortletPermissionsImporter portletPermissionsImporter,
 		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		_companyLocalService = companyLocalService;
@@ -116,7 +116,7 @@ public class FragmentLayoutStructureItemImporter
 			portletConfigurationImporterHelper;
 		_portletFileRepository = portletFileRepository;
 		_portletLocalService = portletLocalService;
-		_portletPermissionsImporterHelper = portletPermissionsImporterHelper;
+		_portletPermissionsImporter = portletPermissionsImporter;
 		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 	}
 
@@ -1126,7 +1126,7 @@ public class FragmentLayoutStructureItemImporter
 				(List<Map<String, Object>>)widgetInstanceMap.get(
 					"widgetPermissions");
 
-			_portletPermissionsImporterHelper.importPortletPermissions(
+			_portletPermissionsImporter.importPortletPermissions(
 				layout.getPlid(),
 				PortletIdCodec.encode(widgetName, widgetInstanceId),
 				warningMessages, widgetPermissionsMaps);
@@ -1416,8 +1416,7 @@ public class FragmentLayoutStructureItemImporter
 		_portletConfigurationImporterHelper;
 	private final PortletFileRepository _portletFileRepository;
 	private final PortletLocalService _portletLocalService;
-	private final PortletPermissionsImporterHelper
-		_portletPermissionsImporterHelper;
+	private final PortletPermissionsImporter _portletPermissionsImporter;
 	private final SegmentsExperienceLocalService
 		_segmentsExperienceLocalService;
 

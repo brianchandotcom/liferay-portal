@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
@@ -82,7 +81,7 @@ public class JournalDataCleanupPreupgradeProcess
 		// Then delete Layout related data
 
 		upgrade(
-			new UpgradeProcess() {
+			new DataCleanupPreupgradeProcess() {
 
 				@Override
 				protected void doUpgrade() throws Exception {

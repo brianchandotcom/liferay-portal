@@ -10,6 +10,8 @@ import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngin
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.CompanyTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.BatchTestEntityResource;
@@ -131,6 +133,10 @@ public class BatchTestEntityResourceImpl
 		throws Exception {
 
 		long batchTestEntityId = _counter.increment();
+
+		if (Validator.isNull(batchTestEntity.getExternalReferenceCode())) {
+			batchTestEntity.setExternalReferenceCode(StringUtil.randomString());
+		}
 
 		batchTestEntity.setId(batchTestEntityId);
 

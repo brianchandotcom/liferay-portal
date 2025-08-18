@@ -3308,6 +3308,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		<#if properties?keys?seq_contains("externalReferenceCode")>
+			graphQLFields.add(new GraphQLField("externalReferenceCode"));
+		</#if>
+
+		<#if properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")>
+			graphQLFields.add(new GraphQLField("${idParameterName}"));
+		</#if>
+
 		<#if properties?keys?seq_contains("siteId")>
 			graphQLFields.add(new GraphQLField("siteId"));
 		</#if>

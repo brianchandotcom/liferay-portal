@@ -1030,7 +1030,7 @@
 										{
 											"objectLayoutColumns": [
 												{
-													"objectFieldName": "level",
+													"objectFieldName": "expertiseLevel",
 													"priority": 0,
 													"size": 6
 												},
@@ -2670,7 +2670,7 @@
 										{
 											"objectLayoutColumns": [
 												{
-													"objectFieldName": "level",
+													"objectFieldName": "expertiseLevel",
 													"priority": 0,
 													"size": 6
 												},
@@ -2975,24 +2975,6 @@
 							],
 							"objectRelationshipId": 0,
 							"priority": 0
-						},
-						{
-							"name": {
-								"en_US": "Courses"
-							},
-							"objectLayoutBoxes": [
-							],
-							"objectRelationshipExternalReferenceCode": "P2S3_COURSE_TO_P2S3_LEARNING_PATH_STEP",
-							"priority": 1
-						},
-						{
-							"name": {
-								"en_US": "External Media"
-							},
-							"objectLayoutBoxes": [
-							],
-							"objectRelationshipExternalReferenceCode": "P2S3_EXTERNAL_MEDIA_TO_P2S3_LEARNING_PATH_STEP",
-							"priority": 4
 						}
 					]
 				}

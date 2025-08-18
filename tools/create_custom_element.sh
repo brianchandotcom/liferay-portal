@@ -1,4 +1,5 @@
 #!/bin/bash
+export LC_ALL=C
 
 function check_usage {
 	if [ ! "${#}" -eq 2 ]
@@ -20,10 +21,10 @@ function check_usage {
 		exit 1
 	fi
 
-	if [[ ${1} == *[A-Z]* ]]
+	if [[ "$1" == *[A-Z]* ]]
 	then
 		echo "Custom element name must not contain upper case letters."
-
+                echo ${1}
 		exit 1
 	fi
 
@@ -179,7 +180,53 @@ EOF
 
 	mkdir -p common/services/liferay common/styles
 
+	write_liferay_integration_files
+
 	write_react_app_files
+
+	cd ..
+}
+
+function create_vite_react_app {
+	check_utils yarn
+
+	npm create vite@latest ${CUSTOM_ELEMENT_NAME} -- --template react
+
+	cd ${CUSTOM_ELEMENT_NAME}
+
+	yarn add sass
+	#yarn remove @testing-library/jest-dom @testing-library/react @testing-library/user-event web-vitals
+
+	mv README.md README.markdown
+
+	cat << EOF > .env
+DISABLE_ESLINT_PLUGIN=true
+SKIP_PREFLIGHT_CHECK=true
+EOF
+
+	rm -f yarn.lock eslint.config.js
+
+	write_react_client_extension
+
+	cd src
+
+    mkdir -p common/services/liferay
+
+	touch common/services/liferay/api.js
+
+	touch common/services/liferay/liferay.js
+
+	mkdir -p common/styles
+
+	touch common/styles/custom.scss
+
+	touch common/styles/index.scss
+
+	touch common/styles/variables.scss
+
+	write_liferay_integration_files
+
+	write_react_app_vite_files
 
 	cd ..
 }
@@ -234,6 +281,9 @@ function main {
 	elif [ "${2}" == "react" ]
 	then
 		create_react_app
+	elif [ "${2}" == "react-vite" ]
+	then
+		create_vite_react_app
 	elif [ "${2}" == "vue2" ]
 	then
 		create_vue_2_app
@@ -267,7 +317,7 @@ function write_angular_client_extension {
 	echo -n "    useESM: true" >> client-extension.yaml
 }
 
-function write_react_app_files {
+function write_liferay_integration_files {
 	#
 	# common/services/liferay/api.js
 	#
@@ -333,6 +383,9 @@ export const Liferay = window.Liferay || {
 	authToken: '',
 };
 EOF
+}
+
+function write_react_app_files {
 
 	#
 	# common/styles/hello-world.scss
@@ -500,6 +553,183 @@ const HelloWorld = () => (
 );
 
 export default HelloWorld;
+EOF
+}
+
+function write_react_app_vite_files {
+
+	#
+	# /src/main.jsx
+	#
+
+	cat << EOF > main.jsx
+import React, { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import App from './App.jsx'
+import './index.css'
+
+class WebComponent extends HTMLElement {
+
+	connectedCallback() {
+		this.root = createRoot(this);
+
+		this.root.render(
+			<StrictMode>
+				<App />
+			</StrictMode>,
+			this
+		);
+	}
+
+	disconnectedCallback() {
+		this.root.unmount();
+
+		delete this.root;
+	}
+}
+
+const ELEMENT_ID = '${CUSTOM_ELEMENT_NAME}';
+
+if (!customElements.get(ELEMENT_ID)) {
+	customElements.define(ELEMENT_ID, WebComponent);
+}
+EOF
+
+	#
+	# /src/App.css
+	#
+
+	cat << EOF > App.css
+${CUSTOM_ELEMENT_NAME} {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
+
+	.logo {
+		height: 6em;
+		padding: 1.5em;
+		will-change: filter;
+		transition: filter 300ms;
+
+		&:hover {
+			filter: drop-shadow(0 0 2em #646cffaa);
+		}
+
+		&.react:hover {
+			filter: drop-shadow(0 0 2em #61dafbaa);
+		}
+	}
+}
+
+@keyframes logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	a:nth-of-type(2) .logo {
+		animation: logo-spin infinite 20s linear;
+	}
+}
+
+.card {
+	padding: 2em;
+}
+
+.read-the-docs {
+	color: #888;
+}
+EOF
+
+	#
+	# /vite.config.js
+	#
+
+	cat << EOF > ../vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+	base: '/o/${CUSTOM_ELEMENT_NAME}',
+	plugins: [react()],
+	build: {
+		outDir: 'build/vite',
+		rollupOptions: {
+			external: [
+				'react',
+				'react-dom',
+			],
+		}
+	}
+})
+EOF
+
+	#
+	# /package.json
+	#
+
+	cat << EOF > ../package.json
+{
+	"dependencies": {
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.3.1",
+		"@types/react-dom": "^18.3.1",
+		"@vitejs/plugin-react": "^4.2.1",
+		"vite": "^4.4.5"
+	},
+	"name": "@liferay/liferay-coefrontend-custom-element-react-vite",
+	"private": true,
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite",
+		"preview": "vite preview"
+	},
+	"type": "module",
+	"version": "0.0.0"
+}
+EOF
+
+	#
+	# common/styles/custom.scss
+	#
+
+	cat << EOF > common/styles/custom.scss
+.${CUSTOM_ELEMENT_NAME} {
+	h1 {
+		color: \$primary-color;
+		font-weight: bold;
+	}
+}
+EOF
+
+	#
+	# common/styles/index.scss
+	#
+
+	cat << EOF > common/styles/index.scss
+${CUSTOM_ELEMENT_NAME} {
+	@import 'variables';
+
+	@import 'custom';
+}
+EOF
+
+	#
+	# common/styles/variables.scss
+	#
+
+	cat << EOF > common/styles/variables.scss
+\$primary-color: #295ccc;
 EOF
 }
 

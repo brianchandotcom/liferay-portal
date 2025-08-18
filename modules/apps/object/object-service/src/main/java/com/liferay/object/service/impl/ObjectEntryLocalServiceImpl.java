@@ -587,8 +587,8 @@ public class ObjectEntryLocalServiceImpl
 
 			if (objectEntry != null) {
 				return objectEntryLocalService.updateObjectEntry(
-					userId, objectEntryFolderId, objectEntry.getObjectEntryId(),
-					values, serviceContext);
+					objectEntry.getObjectEntryId(), userId, objectEntryFolderId,
+					serviceContext, values);
 			}
 		}
 

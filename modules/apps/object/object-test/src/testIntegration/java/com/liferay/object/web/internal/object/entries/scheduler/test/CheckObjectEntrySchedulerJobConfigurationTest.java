@@ -289,20 +289,22 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 		_updateLatestObjectEntryVersion(_getPastDate(3), objectEntry);
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectFieldName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		_updateLatestObjectEntryVersion(_getPastDate(2), objectEntry);
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectFieldName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		_updateLatestObjectEntryVersion(_getPastDate(2), objectEntry);
 

@@ -8848,7 +8848,9 @@ public class DefaultObjectEntryManagerImplTest
 		Node node = tree.getRootNode();
 
 		_objectEntryLocalService.updateObjectEntry(
-			adminUser.getUserId(), node.getPrimaryKey(),
+			node.getPrimaryKey(), adminUser.getUserId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					ObjectField objectField =
@@ -8859,8 +8861,7 @@ public class DefaultObjectEntryManagerImplTest
 					return objectField.getName();
 				},
 				accountEntry.getAccountEntryId()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		return tree;
 	}

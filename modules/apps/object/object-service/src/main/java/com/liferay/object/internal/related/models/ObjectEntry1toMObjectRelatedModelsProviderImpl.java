@@ -83,10 +83,10 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			for (ObjectEntry objectEntry : relatedModels) {
 				_objectEntryService.partialUpdateObjectEntry(
 					objectEntry.getObjectEntryId(),
+					objectEntry.getObjectEntryFolderId(), new ServiceContext(),
 					HashMapBuilder.<String, Serializable>put(
 						objectField.getName(), 0
-					).build(),
-					new ServiceContext());
+					).build());
 			}
 		}
 		else if (Objects.equals(
@@ -103,8 +103,12 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			long primaryKey2)
 		throws PortalException {
 
+		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
+			primaryKey2);
+
 		_objectEntryService.partialUpdateObjectEntry(
-			primaryKey2,
+			objectEntry.getPrimaryKey(), objectEntry.getObjectEntryFolderId(),
+			new ServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					ObjectRelationship objectRelationship =
@@ -118,8 +122,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 					return objectField.getName();
 				},
 				0
-			).build(),
-			new ServiceContext());
+			).build());
 	}
 
 	@Override

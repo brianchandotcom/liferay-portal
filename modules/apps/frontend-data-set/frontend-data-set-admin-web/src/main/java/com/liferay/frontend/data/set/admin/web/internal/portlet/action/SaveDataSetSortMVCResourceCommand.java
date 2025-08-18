@@ -105,8 +105,9 @@ public class SaveDataSetSortMVCResourceCommand
 					values.put("default", false);
 
 					_objectEntryService.updateObjectEntry(
-						dataSetSortObjectEntry.getId(), values,
-						new ServiceContext());
+						dataSetSortObjectEntry.getId(),
+						dataSetSortObjectEntry.getObjectEntryFolderId(),
+						new ServiceContext(), values);
 				}
 			}
 		}

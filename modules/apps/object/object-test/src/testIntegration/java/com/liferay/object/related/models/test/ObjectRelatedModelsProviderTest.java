@@ -1265,8 +1265,9 @@ public class ObjectRelatedModelsProviderTest {
 		throws Exception {
 
 		return _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntryId, values,
-			ServiceContextTestUtil.getServiceContext());
+			objectEntryId, TestPropsValues.getUserId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			ServiceContextTestUtil.getServiceContext(), values);
 	}
 
 	private static PermissionChecker _originalPermissionChecker;

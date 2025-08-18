@@ -36,13 +36,14 @@ public class SharingEntryObjectEntryLocalServiceWrapper
 
 	@Override
 	public ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryId, long userId, long objectEntryFolderId,
+			ServiceContext serviceContext, Map<String, Serializable> values)
 		throws PortalException {
 
 		return _reindexSharingEntries(
 			super.updateObjectEntry(
-				userId, objectEntryId, values, serviceContext));
+				objectEntryId, userId, objectEntryFolderId, serviceContext,
+				values));
 	}
 
 	@Override

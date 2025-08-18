@@ -177,7 +177,9 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
 		_objectEntryLocalService.updateObjectEntry(
-			_objectEntry.getUserId(), _objectEntry.getObjectEntryId(),
+			_objectEntry.getObjectEntryId(), _objectEntry.getUserId(),
+			_objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"r_accountToCommerceReturns_accountEntryId",
 				accountEntry.getAccountEntryId()
@@ -186,8 +188,7 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 				commerceOrder.getCommerceOrderId()
 			).put(
 				"returnStatus", CommerceReturnConstants.RETURN_STATUS_PENDING
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 	}
 
 	@Test
@@ -306,7 +307,9 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
 		_objectEntryLocalService.updateObjectEntry(
-			_objectEntry.getUserId(), _objectEntry.getObjectEntryId(),
+			_objectEntry.getObjectEntryId(), _objectEntry.getUserId(),
+			_objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"r_accountToCommerceReturns_accountEntryId",
 				accountEntry.getAccountEntryId()
@@ -315,8 +318,7 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 				commerceOrder.getCommerceOrderId()
 			).put(
 				"returnStatus", CommerceReturnConstants.RETURN_STATUS_PENDING
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
@@ -434,7 +436,9 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
 		_objectEntryLocalService.updateObjectEntry(
-			_objectEntry.getUserId(), _objectEntry.getObjectEntryId(),
+			_objectEntry.getObjectEntryId(), _objectEntry.getUserId(),
+			_objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"r_accountToCommerceReturns_accountEntryId",
 				accountEntry.getAccountEntryId()
@@ -443,8 +447,7 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 				commerceOrder.getCommerceOrderId()
 			).put(
 				"returnStatus", CommerceReturnConstants.RETURN_STATUS_PENDING
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(

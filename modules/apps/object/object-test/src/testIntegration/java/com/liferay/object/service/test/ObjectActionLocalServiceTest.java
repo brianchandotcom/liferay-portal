@@ -737,13 +737,14 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertEquals(0, _argumentsList.size());
 
 			objectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+				objectEntry.getObjectEntryFolderId(),
+				ServiceContextTestUtil.getServiceContext(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", "João"
 				).put(
 					"lastName", "o Discípulo Amado"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+				).build());
 
 			// On after update
 
@@ -795,11 +796,12 @@ public class ObjectActionLocalServiceTest {
 			// entry
 
 			objectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+				objectEntry.getObjectEntryFolderId(),
+				ServiceContextTestUtil.getServiceContext(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", RandomTestUtil.randomString()
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+				).build());
 
 			_addModelResourcePermissions(
 				systemObjectAction.getName(), objectEntry.getObjectEntryId(),
@@ -862,11 +864,11 @@ public class ObjectActionLocalServiceTest {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+				objectEntry.getObjectEntryFolderId(), serviceContext,
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", "Peter"
-				).build(),
-				serviceContext);
+				).build());
 
 			_assertWebhookObjectAction(
 				null, "Peter", StringPool.BLANK,
@@ -2122,11 +2124,12 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		Assert.assertEquals(
 			"John",
@@ -2174,11 +2177,12 @@ public class ObjectActionLocalServiceTest {
 			0, _objectDefinition.getObjectDefinitionId());
 
 		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "Paulo"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		Assert.assertEquals(
 			objectEntriesCount,
@@ -2186,11 +2190,12 @@ public class ObjectActionLocalServiceTest {
 				0, _objectDefinition.getObjectDefinitionId()));
 
 		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		Assert.assertEquals(
 			objectEntriesCount + 1,
@@ -2841,11 +2846,12 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry.getObjectEntryId());
@@ -3799,13 +3805,14 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		objectEntry5 = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry5.getObjectEntryId(),
+			objectEntry5.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry5.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "John"
 			).put(
 				"lastName", "Smith"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		_assertWebhookObjectAction(
 			null, "John", "Smith",
@@ -3813,13 +3820,14 @@ public class ObjectActionLocalServiceTest {
 			"Peter", "White", WorkflowConstants.STATUS_APPROVED);
 
 		objectEntry6 = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
+			objectEntry6.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry6.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "João"
 			).put(
 				"lastName", "o Discípulo Amado"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		_assertWebhookObjectAction(
 			null, "João", "o Discípulo Amado",

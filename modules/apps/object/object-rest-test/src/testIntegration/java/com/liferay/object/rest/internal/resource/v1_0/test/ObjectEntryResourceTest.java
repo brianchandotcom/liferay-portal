@@ -5821,11 +5821,12 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 
 		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		ObjectEntryResource objectEntryResource1 = _getObjectEntryResource(
 			_objectDefinition1, TestPropsValues.getUser());
@@ -7018,7 +7019,9 @@ public class ObjectEntryResourceTest {
 			long objectEntryId = serviceBuilderObjectEntry.getObjectEntryId();
 
 			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntryId,
+				objectEntryId, TestPropsValues.getUserId(),
+				serviceBuilderObjectEntry.getObjectEntryFolderId(),
+				ServiceContextTestUtil.getServiceContext(),
 				HashMapBuilder.<String, Serializable>put(
 					"authorOfGospel", false
 				).put(
@@ -7036,8 +7039,7 @@ public class ObjectEntryResourceTest {
 
 						return fileEntry.getFileEntryId();
 					}
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+				).build());
 
 			User user = UserTestUtil.addUser();
 

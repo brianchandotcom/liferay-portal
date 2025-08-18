@@ -151,8 +151,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		try {
 			_objectEntryLocalService.updateObjectEntry(
-				objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-				objectEntry.getValues(), new ServiceContext());
+				objectEntry.getObjectEntryId(), objectEntry.getUserId(),
+				objectEntry.getObjectEntryFolderId(), new ServiceContext(),
+				objectEntry.getValues());
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

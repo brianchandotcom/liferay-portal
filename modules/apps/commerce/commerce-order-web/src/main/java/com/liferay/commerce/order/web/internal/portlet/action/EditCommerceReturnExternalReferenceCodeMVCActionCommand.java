@@ -84,9 +84,11 @@ public class EditCommerceReturnExternalReferenceCodeMVCActionCommand
 				objectEntry.getObjectDefinitionId());
 
 		_objectEntryService.updateObjectEntry(
-			objectEntry.getObjectEntryId(), values,
+			objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
 			ServiceContextFactory.getInstance(
-				objectDefinition.getClassName(), actionRequest));
+				objectDefinition.getClassName(), actionRequest),
+			values);
 	}
 
 	@Reference

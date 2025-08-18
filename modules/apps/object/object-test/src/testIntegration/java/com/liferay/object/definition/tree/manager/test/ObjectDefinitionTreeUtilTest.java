@@ -770,12 +770,13 @@ public class ObjectDefinitionTreeUtilTest {
 
 		objectDefinitionAAAObjectEntry1 =
 			_objectEntryLocalService.updateObjectEntry(
-				objectDefinitionAAAObjectEntry1.getUserId(),
 				objectDefinitionAAAObjectEntry1.getObjectEntryId(),
+				objectDefinitionAAAObjectEntry1.getUserId(),
+				objectDefinitionAAAObjectEntry1.getObjectEntryFolderId(),
+				ServiceContextTestUtil.getServiceContext(),
 				Collections.singletonMap(
 					objectField1.getName(),
-					objectDefinitionAAObjectEntry1.getObjectEntryId()),
-				ServiceContextTestUtil.getServiceContext());
+					objectDefinitionAAObjectEntry1.getObjectEntryId()));
 
 		Assert.assertEquals(
 			0, objectDefinitionAAObjectEntry1.getRootObjectEntryId());
@@ -824,12 +825,13 @@ public class ObjectDefinitionTreeUtilTest {
 				Collections.emptyMap());
 
 		_objectEntryLocalService.updateObjectEntry(
-			objectDefinitionAAObjectEntry1.getUserId(),
 			objectDefinitionAAObjectEntry1.getObjectEntryId(),
+			objectDefinitionAAObjectEntry1.getUserId(),
+			objectDefinitionAAObjectEntry1.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			Collections.singletonMap(
 				objectField2.getName(),
-				objectDefinitionAObjectEntry1.getObjectEntryId()),
-			ServiceContextTestUtil.getServiceContext());
+				objectDefinitionAObjectEntry1.getObjectEntryId()));
 
 		Assert.assertEquals(
 			0, objectDefinitionAObjectEntry1.getRootObjectEntryId());

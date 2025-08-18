@@ -3180,19 +3180,21 @@ public class DefaultObjectEntryManagerImpl
 		if (partialUpdate) {
 			serviceBuilderObjectEntry =
 				_objectEntryService.partialUpdateObjectEntry(
+					objectEntryId,
 					_getObjectEntryFolderId(
 						serviceBuilderObjectEntry.getCompanyId(),
 						serviceBuilderObjectEntry.getGroupId(), objectEntry,
 						serviceContext),
-					objectEntryId, values, serviceContext);
+					serviceContext, values);
 		}
 		else {
 			serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
+				objectEntryId,
 				_getObjectEntryFolderId(
 					serviceBuilderObjectEntry.getCompanyId(),
 					serviceBuilderObjectEntry.getGroupId(), objectEntry,
 					serviceContext),
-				objectEntryId, values, serviceContext);
+				serviceContext, values);
 		}
 
 		return _toObjectEntry(

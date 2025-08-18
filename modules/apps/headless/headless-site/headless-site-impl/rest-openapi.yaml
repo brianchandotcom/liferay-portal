@@ -121,15 +121,6 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/Site"
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                file:
-                                    format: binary
-                                    type: string
-                                site:
-                                    $ref: "#/components/schemas/Site"
-                            type: object
             responses:
                 200:
                     content:
@@ -228,4 +219,33 @@ paths:
                             schema:
                                 format: binary
                                 type: string
+            tags: ["Site"]
+    /sites/site-initializer:
+        post:
+            description:
+                Adds a new site based on a multipart/form-data
+            operationId: postSiteInitializer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                site:
+                                    $ref: "#/components/schemas/Site"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                    description:
+                        default response
+            # @review
             tags: ["Site"]

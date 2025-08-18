@@ -79,6 +79,15 @@ public class AddressServiceWrapper
 			className, classPK, listTypeIds);
 	}
 
+	@Override
+	public Address getOrAddEmptyAddress(
+			String externalReferenceCode, String className, long classPK)
+		throws Exception {
+
+		return _addressService.getOrAddEmptyAddress(
+			externalReferenceCode, className, classPK);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

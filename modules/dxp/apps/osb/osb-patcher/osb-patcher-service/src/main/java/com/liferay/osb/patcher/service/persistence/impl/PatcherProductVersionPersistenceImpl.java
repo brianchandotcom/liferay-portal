@@ -589,6 +589,15 @@ public class PatcherProductVersionPersistenceImpl
 				fixDeliveryMethod, start, end, orderByComparator);
 		}
 
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			isPermissionsInMemoryFilterEnabled()) {
+
+			return InlineSQLHelperUtil.filter(
+				findByFixDeliveryMethod(
+					fixDeliveryMethod, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					orderByComparator));
+		}
+
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
@@ -953,6 +962,16 @@ public class PatcherProductVersionPersistenceImpl
 	public int filterCountByFixDeliveryMethod(int fixDeliveryMethod) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByFixDeliveryMethod(fixDeliveryMethod);
+		}
+
+		if (isPermissionsInMemoryFilterEnabled()) {
+			List<PatcherProductVersion> patcherProductVersions =
+				findByFixDeliveryMethod(fixDeliveryMethod);
+
+			patcherProductVersions = InlineSQLHelperUtil.filter(
+				patcherProductVersions);
+
+			return patcherProductVersions.size();
 		}
 
 		StringBundler sb = new StringBundler(2);

@@ -8,6 +8,7 @@ package com.liferay.osb.faro.service.impl;
 import com.liferay.osb.faro.model.FaroProjectUsage;
 import com.liferay.osb.faro.service.base.FaroProjectUsageLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Date;
 
@@ -59,6 +60,24 @@ public class FaroProjectUsageLocalServiceImpl
 
 		return faroProjectUsagePersistence.fetchByF_U(
 			faroProjectId, usageDate.getTime());
+	}
+
+	public FaroProjectUsage updateFaroProjectUsage(
+			long faroProjectUsageId, long knownIndividualsCount,
+			long pageViewsCount)
+		throws PortalException {
+
+		FaroProjectUsage faroProjectUsage = getFaroProjectUsage(
+			faroProjectUsageId);
+
+		long now = System.currentTimeMillis();
+
+		faroProjectUsage.setModifiedTime(now);
+
+		faroProjectUsage.setKnownIndividualsCount(knownIndividualsCount);
+		faroProjectUsage.setPageViewsCount(pageViewsCount);
+
+		return faroProjectUsagePersistence.update(faroProjectUsage);
 	}
 
 }

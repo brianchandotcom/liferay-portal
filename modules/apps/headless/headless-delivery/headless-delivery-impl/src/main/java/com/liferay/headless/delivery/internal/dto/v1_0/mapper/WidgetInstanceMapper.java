@@ -10,6 +10,7 @@ import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
 import com.liferay.layout.exporter.PortletPermissionsExporter;
 import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -18,8 +19,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -116,19 +115,15 @@ public class WidgetInstanceMapper {
 			return null;
 		}
 
-		List<WidgetPermission> widgetPermissions = new ArrayList<>();
-
-		for (Map.Entry<String, String[]> entry : permissionsMap.entrySet()) {
-			widgetPermissions.add(
-				new WidgetPermission() {
-					{
-						setActionKeys(entry::getValue);
-						setRoleKey(entry::getKey);
-					}
-				});
-		}
-
-		return widgetPermissions.toArray(new WidgetPermission[0]);
+		return TransformUtil.transformToArray(
+			permissionsMap.entrySet(),
+			entry -> new WidgetPermission() {
+				{
+					setActionKeys(entry::getValue);
+					setRoleKey(entry::getKey);
+				}
+			},
+			WidgetPermission.class);
 	}
 
 	private final LayoutLocalService _layoutLocalService;

@@ -8,11 +8,15 @@ package com.liferay.batch.engine.internal.exportimport.data.handler;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.engine.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.pagination.Page;
+import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
@@ -32,8 +36,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -66,20 +74,26 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskService batchEngineExportTaskService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
 		BatchEngineImportTaskService batchEngineImportTaskService,
-		String className,
+		BatchEngineTaskItemDelegateRegistry batchEngineTaskItemDelegateRegistry,
+		String className, CompanyLocalService companyLocalService,
 		ExportImportVulcanBatchEngineTaskItemDelegate
 			exportImportVulcanBatchEngineTaskItemDelegate,
-		String itemClassName, String taskItemDelegateName) {
+		String itemClassName, String taskItemDelegateName,
+		UserLocalService userLocalService) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
 		_batchEngineExportTaskService = batchEngineExportTaskService;
 		_batchEngineImportTaskExecutor = batchEngineImportTaskExecutor;
 		_batchEngineImportTaskService = batchEngineImportTaskService;
+		_batchEngineTaskItemDelegateRegistry =
+			batchEngineTaskItemDelegateRegistry;
 		_className = className;
+		_companyLocalService = companyLocalService;
 		_exportImportVulcanBatchEngineTaskItemDelegate =
 			exportImportVulcanBatchEngineTaskItemDelegate;
 		_itemClassName = itemClassName;
 		_taskItemDelegateName = taskItemDelegateName;
+		_userLocalService = userLocalService;
 
 		String fileNamePrefix = GetterUtil.getString(
 			taskItemDelegateName, className);
@@ -143,11 +157,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public boolean isBatch() {
 		return true;
-	}
-
-	@Override
-	public boolean isModelCountSupported() {
-		return false;
 	}
 
 	@Override
@@ -315,9 +324,29 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		ManifestSummary manifestSummary,
 		PortletDataHandlerControl[] portletDataHandlerControls) {
 
-		// TODO LPD-45048
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
+				CompanyThreadLocal.getCompanyId(), _className,
+				_taskItemDelegateName);
 
-		return 0;
+		try {
+			batchEngineTaskItemDelegate.setContextCompany(
+				_companyLocalService.getCompany(
+					CompanyThreadLocal.getCompanyId()));
+
+			User user = _userLocalService.getUser(_getUserId());
+
+			batchEngineTaskItemDelegate.setContextUser(user);
+			batchEngineTaskItemDelegate.setLanguageId(user.getLanguageId());
+
+			Page<?> page = batchEngineTaskItemDelegate.read(
+				null, Pagination.of(0, 0), null, null, null);
+
+			return page.getTotalCount();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	protected static final TransactionConfig transactionConfig =
@@ -361,12 +390,16 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final BatchEngineExportTaskService _batchEngineExportTaskService;
 	private final BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
+	private final BatchEngineTaskItemDelegateRegistry
+		_batchEngineTaskItemDelegateRegistry;
 	private final String _className;
+	private final CompanyLocalService _companyLocalService;
 	private final String _deletionsFileName;
 	private final ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		_exportImportVulcanBatchEngineTaskItemDelegate;
 	private final String _fileName;
 	private final String _itemClassName;
 	private final String _taskItemDelegateName;
+	private final UserLocalService _userLocalService;
 
 }

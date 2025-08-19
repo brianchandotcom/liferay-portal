@@ -291,7 +291,12 @@ function get_absolute_dir {
 }
 
 function get_app_server_dir {
-	find "${1}" -maxdepth 2 -type d -name "${APP_SERVER_TYPE}*[0-9]"
+	if [[ "${APP_SERVER_TYPE}" == "tomcat" ]]
+	then
+		find "${1}" -maxdepth 2 -type d -name "${APP_SERVER_TYPE}*"
+	else
+		find "${1}" -maxdepth 2 -type d -name "${APP_SERVER_TYPE}*[0-9]]"
+	fi
 }
 
 function get_client_extension_dir {

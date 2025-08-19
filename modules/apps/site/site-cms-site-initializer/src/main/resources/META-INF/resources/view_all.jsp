@@ -25,6 +25,7 @@ ViewAllSectionDisplayContext viewAllSectionDisplayContext = (ViewAllSectionDispl
 		propsTransformer="{AllFDSPropsTransformer} from site-cms-site-initializer"
 		selectedItemsKey="embedded.id"
 		selectionType="multiple"
+		showSelectAll="<%= true %>"
 		style="fluid"
 	/>
 </div>

@@ -349,15 +349,15 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "ASSET_EXTERNAL_REFERENCE_CODE",
+					"externalReferenceCode": "CLASS_EXTERNAL_REFERENCE_CODE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Asset External Reference Code"
+						"en_US": "Class External Reference Code"
 					},
 					"localized": false,
-					"name": "assetExternalReferenceCode",
+					"name": "classExternalReferenceCode",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -366,14 +366,14 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "ASSET_ID",
+					"externalReferenceCode": "CLASS_PK",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Asset ID"
+						"en_US": "Class PK"
 					},
 					"localized": false,
-					"name": "assetID",
+					"name": "classPK",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -591,7 +591,7 @@
 					"edge": false,
 					"externalReferenceCode": "L_BULK_ACTION_TASK_TO_L_BULK_ACTION_TASK_ITEM",
 					"label": {
-						"en_US": "Bulk Action Task To Bulk Action Task Item"
+						"en_US": "Bulk Action Task to Bulk Action Task Item"
 					},
 					"name": "bulkActionTaskToBulkActionTaskItem",
 					"objectDefinitionExternalReferenceCode1": "L_BULK_ACTION_TASK",
@@ -607,7 +607,7 @@
 						"indexed": true,
 						"indexedAsKeyword": false,
 						"label": {
-							"en_US": "Bulk Action Task To Bulk Action Task Items"
+							"en_US": "Bulk Action Task to Bulk Action Task Items"
 						},
 						"localized": false,
 						"name": "r_bulkActionTaskToBulkActionTaskItem_c_bulkActionTaskId",

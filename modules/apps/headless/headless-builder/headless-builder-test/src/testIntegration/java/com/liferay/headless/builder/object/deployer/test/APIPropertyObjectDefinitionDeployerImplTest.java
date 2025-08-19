@@ -45,7 +45,7 @@ import org.osgi.framework.ServiceReference;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlag("LPS-178642")
 @RunWith(Arquillian.class)
-public class APIPropertyObjectDefinitionDeployerTest {
+public class APIPropertyObjectDefinitionDeployerImplTest {
 
 	@ClassRule
 	@Rule

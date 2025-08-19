@@ -3015,6 +3015,15 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext.getUriInfo(),
 				dtoConverterContext.getUser());
 
+		ObjectEntryVersion objectEntryVersion =
+			(ObjectEntryVersion)dtoConverterContext.getAttribute(
+				"objectEntryVersion");
+
+		if (objectEntryVersion != null) {
+			defaultDTOConverterContext.setAttribute(
+				"objectEntryVersion", objectEntryVersion);
+		}
+
 		defaultDTOConverterContext.setAttribute(
 			"objectDefinition", objectDefinition);
 

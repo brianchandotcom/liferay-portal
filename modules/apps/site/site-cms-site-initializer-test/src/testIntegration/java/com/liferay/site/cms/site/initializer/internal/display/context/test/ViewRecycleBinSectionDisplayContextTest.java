@@ -55,12 +55,15 @@ public class ViewRecycleBinSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 1,
+			fdsActionDropdownItems.toString(), 2,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0), "trash", "delete", "delete",
 			"delete", "item");
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(1), "restore", "restore", "restore",
+			"restore", "item");
 	}
 
 	@Override

@@ -219,16 +219,16 @@ public class FragmentEntryProcessorRegistryImpl
 			return;
 		}
 
-		String configuration = _jsonFactory.toString(configurationJSONObject);
-
 		for (FragmentEntryValidator fragmentEntryValidator :
 				_fragmentEntryValidators) {
 
 			fragmentEntryValidator.validateFragmentEntryHTML(
-				html, configuration, LocaleUtil.getDefault());
+				html, configurationJSONObject, LocaleUtil.getDefault());
 		}
 
 		Document document = _getDocument(html);
+
+		String configuration = _jsonFactory.toString(configurationJSONObject);
 
 		for (DocumentFragmentEntryValidator documentFragmentEntryValidator :
 				_documentFragmentEntryValidators) {

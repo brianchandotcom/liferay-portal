@@ -134,35 +134,9 @@ testWithExportImportAtInstanceLevelFF(
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
-			await objectActionAPIClient.postObjectDefinition({
-				active: true,
-				externalReferenceCode: 'test',
-				label: {
-					en_US: 'Test',
-				},
-				name: 'Test',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						indexed: true,
-						indexedAsKeyword: true,
-						label: {
-							en_US: 'Name',
-						},
-						name: 'name',
-						required: true,
-					},
-				],
-				pluralLabel: {
-					en_US: 'Tests',
-				},
-				portlet: true,
-				scope: 'site',
-				status: {
-					code: 0,
-				},
-			});
+			await objectActionAPIClient.postObjectDefinition(
+				objectDefitionRequestData({scope: 'site'})
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -178,7 +152,7 @@ testWithExportImportAtInstanceLevelFF(
 
 		const exportName = 'MyExport-' + getRandomString();
 
-		await exportImportPage.export(exportName, 'Tests');
+		await exportImportPage.export(exportName, 'Tests 1 Items');
 
 		await expect(
 			exportImportPage.page
@@ -243,9 +217,14 @@ testWithExportImportAtInstanceLevelFF(
 			type: 'objectDefinition',
 		});
 
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', name: 'test'},
+			'c/tests'
+		);
+
 		const homePage = new HomePage(page);
 
-		const exportFilePath = await companyExportImportPage.export('Tests');
+		const exportFilePath = await companyExportImportPage.export('Tests 1 Items');
 
 		await homePage.goto();
 
@@ -600,7 +579,12 @@ testWithDeprecationFF(
 
 		const exportName = 'MyExport-' + getRandomString();
 
-		await exportImportPage.export(exportName, 'Tests');
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', name: 'test'},
+			'c/tests/scopes/Guest'
+		);
+		
+		await exportImportPage.export(exportName, 'Tests 1 Items');
 
 		await expect(
 			page.getByText(exportName).locator('../..').getByText('Successful')
@@ -777,8 +761,13 @@ testWithDeprecationFFDisabled(
 		await exportImportPage.goToExport();
 
 		const exportName = 'MyExport-' + getRandomString();
-
-		await exportImportPage.export(exportName, 'Tests');
+		
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', name: 'test'},
+			'c/tests/scopes/Guest'
+		);
+		
+		await exportImportPage.export(exportName, 'Tests 1 Items');
 
 		await expect(
 			page.getByText(exportName).locator('../..').getByText('Successful')

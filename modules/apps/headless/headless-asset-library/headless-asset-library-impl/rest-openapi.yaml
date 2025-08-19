@@ -287,7 +287,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.asset.library.client', and version '1.0.7'."
+        'com.liferay.headless.asset.library.client', and version '1.0.8'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -1409,7 +1409,7 @@ paths:
             tags: ["UserAccount"]
     "/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}/roles":
         get:
-            operationId: getAssetLibraryUserAccountUserRolesPage
+            operationId: getAssetLibraryUserAccountRolesPage
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -1438,7 +1438,7 @@ paths:
                                 type: array
             tags: ["Role"]
         put:
-            operationId: putAssetLibraryUserAccountUserRolesPage
+            operationId: putAssetLibraryUserAccountRolesPage
             parameters:
                 -   in: path
                     name: assetLibraryId

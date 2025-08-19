@@ -47,18 +47,19 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface UserAccountResource {
 
 	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public void deleteAssetLibraryUserAccount(Long assetLibraryId, Long userId)
+	public void deleteAssetLibraryUserAccount(
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public UserAccount
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public Page<UserAccount>
@@ -69,7 +70,7 @@ public interface UserAccountResource {
 		throws Exception;
 
 	public UserAccount getAssetLibraryUserAccount(
-			Long assetLibraryId, Long userId)
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public Page<UserAccount> getAssetLibraryUserAccountsPage(
@@ -85,13 +86,13 @@ public interface UserAccountResource {
 		throws Exception;
 
 	public UserAccount
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public UserAccount putAssetLibraryUserAccount(
-			Long assetLibraryId, Long userId)
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

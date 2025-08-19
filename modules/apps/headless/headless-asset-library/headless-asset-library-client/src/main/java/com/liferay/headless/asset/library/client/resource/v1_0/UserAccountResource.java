@@ -35,34 +35,35 @@ public interface UserAccountResource {
 	}
 
 	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public void deleteAssetLibraryUserAccount(Long assetLibraryId, Long userId)
+	public void deleteAssetLibraryUserAccount(
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteAssetLibraryUserAccountHttpResponse(
-			Long assetLibraryId, Long userId)
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public UserAccount
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public Page<UserAccount>
@@ -78,11 +79,11 @@ public interface UserAccountResource {
 		throws Exception;
 
 	public UserAccount getAssetLibraryUserAccount(
-			Long assetLibraryId, Long userId)
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAssetLibraryUserAccountHttpResponse(
-			Long assetLibraryId, Long userId)
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public Page<UserAccount> getAssetLibraryUserAccountsPage(
@@ -109,23 +110,23 @@ public interface UserAccountResource {
 		throws Exception;
 
 	public UserAccount
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public UserAccount putAssetLibraryUserAccount(
-			Long assetLibraryId, Long userId)
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putAssetLibraryUserAccountHttpResponse(
-			Long assetLibraryId, Long userId)
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public static class Builder {
@@ -237,15 +238,15 @@ public interface UserAccountResource {
 	public static class UserAccountResourceImpl implements UserAccountResource {
 
 		public void
-				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 					String assetLibraryExternalReferenceCode,
-					String userExternalReferenceCode)
+					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 					assetLibraryExternalReferenceCode,
-					userExternalReferenceCode);
+					userAccountExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -307,9 +308,9 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					String userExternalReferenceCode)
+					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -336,13 +337,14 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}");
+						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
 				assetLibraryExternalReferenceCode);
 			httpInvoker.path(
-				"userExternalReferenceCode", userExternalReferenceCode);
+				"userAccountExternalReferenceCode",
+				userAccountExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -353,12 +355,12 @@ public interface UserAccountResource {
 		}
 
 		public void deleteAssetLibraryUserAccount(
-				Long assetLibraryId, Long userId)
+				Long assetLibraryId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				deleteAssetLibraryUserAccountHttpResponse(
-					assetLibraryId, userId);
+					assetLibraryId, userAccountId);
 
 			String content = httpResponse.getContent();
 
@@ -421,7 +423,7 @@ public interface UserAccountResource {
 
 		public HttpInvoker.HttpResponse
 				deleteAssetLibraryUserAccountHttpResponse(
-					Long assetLibraryId, Long userId)
+					Long assetLibraryId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -448,10 +450,10 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userId}");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("userId", userId);
+			httpInvoker.path("userAccountId", userAccountId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -462,15 +464,15 @@ public interface UserAccountResource {
 		}
 
 		public UserAccount
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 					String assetLibraryExternalReferenceCode,
-					String userExternalReferenceCode)
+					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 					assetLibraryExternalReferenceCode,
-					userExternalReferenceCode);
+					userAccountExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -532,9 +534,9 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					String userExternalReferenceCode)
+					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -561,13 +563,14 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}");
+						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
 				assetLibraryExternalReferenceCode);
 			httpInvoker.path(
-				"userExternalReferenceCode", userExternalReferenceCode);
+				"userAccountExternalReferenceCode",
+				userAccountExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -709,11 +712,12 @@ public interface UserAccountResource {
 		}
 
 		public UserAccount getAssetLibraryUserAccount(
-				Long assetLibraryId, Long userId)
+				Long assetLibraryId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryUserAccountHttpResponse(assetLibraryId, userId);
+				getAssetLibraryUserAccountHttpResponse(
+					assetLibraryId, userAccountId);
 
 			String content = httpResponse.getContent();
 
@@ -775,7 +779,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse getAssetLibraryUserAccountHttpResponse(
-				Long assetLibraryId, Long userId)
+				Long assetLibraryId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -802,10 +806,10 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userId}");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("userId", userId);
+			httpInvoker.path("userAccountId", userAccountId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1075,15 +1079,15 @@ public interface UserAccountResource {
 		}
 
 		public UserAccount
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 					String assetLibraryExternalReferenceCode,
-					String userExternalReferenceCode)
+					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 					assetLibraryExternalReferenceCode,
-					userExternalReferenceCode);
+					userAccountExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -1145,9 +1149,9 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeHttpResponse(
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					String userExternalReferenceCode)
+					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1176,13 +1180,14 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}");
+						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
 				assetLibraryExternalReferenceCode);
 			httpInvoker.path(
-				"userExternalReferenceCode", userExternalReferenceCode);
+				"userAccountExternalReferenceCode",
+				userAccountExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1193,11 +1198,12 @@ public interface UserAccountResource {
 		}
 
 		public UserAccount putAssetLibraryUserAccount(
-				Long assetLibraryId, Long userId)
+				Long assetLibraryId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryUserAccountHttpResponse(assetLibraryId, userId);
+				putAssetLibraryUserAccountHttpResponse(
+					assetLibraryId, userAccountId);
 
 			String content = httpResponse.getContent();
 
@@ -1259,7 +1265,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse putAssetLibraryUserAccountHttpResponse(
-				Long assetLibraryId, Long userId)
+				Long assetLibraryId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1288,10 +1294,10 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userId}");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("userId", userId);
+			httpInvoker.path("userAccountId", userAccountId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

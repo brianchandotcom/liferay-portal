@@ -70,10 +70,10 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Removes the user from the asset library using the provided external reference codes."
+		description = "Removes the user account from the asset library using the provided external reference codes."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -83,7 +83,7 @@ public abstract class BaseUserAccountResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userExternalReferenceCode"
+				name = "userAccountExternalReferenceCode"
 			)
 		}
 	)
@@ -92,30 +92,30 @@ public abstract class BaseUserAccountResourceImpl
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}"
+		"/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
 				String assetLibraryExternalReferenceCode,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("userExternalReferenceCode")
-				String userExternalReferenceCode)
+				@jakarta.ws.rs.PathParam("userAccountExternalReferenceCode")
+				String userAccountExternalReferenceCode)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Removes the user from the asset library."
+		description = "Removes the user account from the asset library."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -125,7 +125,7 @@ public abstract class BaseUserAccountResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userId"
+				name = "userAccountId"
 			)
 		}
 	)
@@ -134,7 +134,7 @@ public abstract class BaseUserAccountResourceImpl
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/user-accounts/{userId}"
+		"/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -145,18 +145,18 @@ public abstract class BaseUserAccountResourceImpl
 			Long assetLibraryId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("userId")
-			Long userId)
+			@jakarta.ws.rs.PathParam("userAccountId")
+			Long userAccountId)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Gets a user connected to the asset library using the provided external reference codes."
+		description = "Gets a user account connected to the asset library using the provided external reference codes."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -166,7 +166,7 @@ public abstract class BaseUserAccountResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userExternalReferenceCode"
+				name = "userAccountExternalReferenceCode"
 			)
 		}
 	)
@@ -175,20 +175,20 @@ public abstract class BaseUserAccountResourceImpl
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}"
+		"/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public UserAccount
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
 				String assetLibraryExternalReferenceCode,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("userExternalReferenceCode")
-				String userExternalReferenceCode)
+				@jakarta.ws.rs.PathParam("userAccountExternalReferenceCode")
+				String userAccountExternalReferenceCode)
 		throws Exception {
 
 		return new UserAccount();
@@ -200,7 +200,7 @@ public abstract class BaseUserAccountResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}/user-accounts'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Get the asset library with the provided external reference code associated users. Results can be paginated, filtered, searched, and sorted."
+		description = "Get the asset library with the provided external reference code associated user accounts. Results can be paginated, filtered, searched, and sorted."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -266,10 +266,10 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Gets a user connected to the asset library."
+		description = "Gets a user account connected to the asset library."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -279,7 +279,7 @@ public abstract class BaseUserAccountResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userId"
+				name = "userAccountId"
 			)
 		}
 	)
@@ -288,7 +288,7 @@ public abstract class BaseUserAccountResourceImpl
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/user-accounts/{userId}"
+		"/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -299,8 +299,8 @@ public abstract class BaseUserAccountResourceImpl
 			Long assetLibraryId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("userId")
-			Long userId)
+			@jakarta.ws.rs.PathParam("userAccountId")
+			Long userAccountId)
 		throws Exception {
 
 		return new UserAccount();
@@ -312,7 +312,7 @@ public abstract class BaseUserAccountResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Get the asset library associated users. Results can be paginated, filtered, searched, and sorted."
+		description = "Get the asset library associated user accounts. Results can be paginated, filtered, searched, and sorted."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -466,10 +466,10 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Adds the user to the asset library using the provided external reference codes."
+		description = "Adds the user account to the asset library using the provided external reference codes."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -479,7 +479,7 @@ public abstract class BaseUserAccountResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userExternalReferenceCode"
+				name = "userAccountExternalReferenceCode"
 			)
 		}
 	)
@@ -487,21 +487,21 @@ public abstract class BaseUserAccountResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserAccount")}
 	)
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}"
+		"/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
 	public UserAccount
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
 				String assetLibraryExternalReferenceCode,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("userExternalReferenceCode")
-				String userExternalReferenceCode)
+				@jakarta.ws.rs.PathParam("userAccountExternalReferenceCode")
+				String userAccountExternalReferenceCode)
 		throws Exception {
 
 		return new UserAccount();
@@ -510,7 +510,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userId}'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Adds the user to the asset library."
@@ -523,7 +523,7 @@ public abstract class BaseUserAccountResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userId"
+				name = "userAccountId"
 			)
 		}
 	)
@@ -531,7 +531,7 @@ public abstract class BaseUserAccountResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserAccount")}
 	)
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/user-accounts/{userId}"
+		"/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
@@ -543,8 +543,8 @@ public abstract class BaseUserAccountResourceImpl
 			Long assetLibraryId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("userId")
-			Long userId)
+			@jakarta.ws.rs.PathParam("userAccountId")
+			Long userAccountId)
 		throws Exception {
 
 		return new UserAccount();
@@ -574,7 +574,7 @@ public abstract class BaseUserAccountResourceImpl
 
 					deleteAssetLibraryUserAccount(
 						(Long)parameters.get("assetLibraryId"),
-						_parseLong((String)parameters.get("userId")));
+						_parseLong((String)parameters.get("userAccountId")));
 
 					return userAccount;
 				}

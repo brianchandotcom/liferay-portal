@@ -93,6 +93,15 @@ components:
                     items:
                         $ref: "#/components/schemas/Metric"
                     type: array
+        ObjectEntryTopPages:
+            properties:
+                topPages:
+                    items:
+                        $ref: "#/components/schemas/TopPage"
+                    type: array
+                totalCount:
+                    format: int64
+                    type: integer
         Overview:
             properties:
                 categoriesCount:
@@ -109,6 +118,16 @@ components:
                 vocabulariesCount:
                     format: int64
                     type: integer
+        TopPage:
+            properties:
+                canonicalUrl:
+                    type: string
+                defaultMetric:
+                    $ref: "#/components/schemas/Metric"
+                pageTitle:
+                    type: string
+                siteName:
+                    type: string
         Trend:
             properties:
                 classification:
@@ -404,3 +423,31 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntryMetric"
             tags: ["ObjectEntryMetric"]
+    "/object-entry-top-pages":
+        get:
+            operationId: getObjectEntryTopPages
+            parameters:
+                -   in: query
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: groupId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryTopPages"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryTopPages"
+            tags: ["ObjectEntryTopPages"]

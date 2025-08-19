@@ -81,7 +81,7 @@ public class MarketplaceCommandLineRunner
 				}
 			}
 
-			if (i > page.getLastPage()) {
+			if (i == page.getLastPage()) {
 				break;
 			}
 		}
@@ -252,13 +252,14 @@ public class MarketplaceCommandLineRunner
 		).build();
 	}
 
-	private void _postKPI(String data) {
-		post(
+	private void _patchReport(String data, String externalReferenceCode) {
+		patch(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes),
 			data,
-			UriComponentsBuilder.fromUriString(
-				_liferayMarketplaceEtcSpringBootURL + "/marketplace/kpi"
+			UriComponentsBuilder.fromPath(
+				"/o/c/reports/by-external-reference-code/" +
+					externalReferenceCode
 			).build(
 			).toUri());
 	}
@@ -439,11 +440,15 @@ public class MarketplaceCommandLineRunner
 			_log.info("Orders total amount " + _totalAmount);
 		}
 
-		_postKPI(
+		_patchReport(
 			new JSONObject(
 			).put(
-				"totalAmount", _totalAmount
-			).toString());
+				"value",
+				new JSONObject(
+					_totalAmount
+				).toString()
+			).toString(),
+			"TOTAL-AMOUNT");
 	}
 
 	private void _processPendingOrders() throws Exception {
@@ -567,11 +572,12 @@ public class MarketplaceCommandLineRunner
 				);
 			});
 
-		_postKPI(
+		_patchReport(
 			new JSONObject(
 			).put(
-				"projectsUsingMarketplace", projectsUsingMarketplace
-			).toString());
+				"value", projectsUsingMarketplace.toString()
+			).toString(),
+			"PROJECTS-USING-MARKETPLACE");
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

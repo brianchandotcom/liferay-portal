@@ -13,190 +13,192 @@
 [#assign displayObject = (request.getAttribute("LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER").getDisplayObject())!{} /]
 
 [#if displayObject?has_content]
-	[#assign
-		articleId = displayObject.articleId!""
-		baseURL = themeDisplay.getURLCurrent()?replace('/[wv]/.*', '', 'r')
-		categoryId = displayObject.categoryId!""
-		currentCategoryId = ""
-		folderId = displayObject.folderId!""
-		navItems = []
-		parentCategoryId = ""
-		parentCategory = {}
-		vocabularyId = ""
-	/]
+	[#escape x as x?html]
+		[#assign
+			articleId = displayObject.articleId!""
+			baseURL = themeDisplay.getURLCurrent()?replace('/[wv]/.*', '', 'r')
+			categoryId = displayObject.categoryId!""
+			currentCategoryId = ""
+			folderId = displayObject.folderId!""
+			navItems = []
+			parentCategoryId = ""
+			parentCategory = {}
+			vocabularyId = ""
+		/]
 
-	[#if articleId?has_content]
-		[#assign restArticle = (restClient.get("/headless-delivery/v1.0/structured-contents/${displayObject.resourcePrimKey}?nestedFields=embeddedTaxonomyCategory"))!{} /]
+		[#if articleId?has_content]
+			[#assign restArticle = (restClient.get("/headless-delivery/v1.0/structured-contents/${displayObject.resourcePrimKey}?nestedFields=embeddedTaxonomyCategory"))!{} /]
 
-		[#if restArticle.taxonomyCategoryBriefs?has_content]
-			[#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief]
-				[#if taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name == "Article Categories"]
-					[#assign currentCategoryId = taxonomyCategoryBrief.embeddedTaxonomyCategory.id!"" /]
-					[#break /]
-				[/#if]
-			[/#list]
-		[/#if]
-	[#else]
-		[#assign currentCategoryId = categoryId /]
-	[/#if]
-
-	[#if currentCategoryId?has_content]
-		[#attempt]
-			[#assign currentCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + currentCategoryId) /]
-
-			[#if currentCategory.parentTaxonomyCategory??]
-				[#assign parentCategoryId = currentCategory.parentTaxonomyCategory.id!"" /]
-
-				[#if parentCategoryId?has_content]
-					[#assign parentCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentCategoryId) /]
-				[/#if]
-			[/#if]
-
-			[#assign vocabularyId = currentCategory.parentTaxonomyVocabulary.id!"" /]
-		[#recover]
-		[/#attempt]
-	[/#if]
-
-	[#if configuration.showCategories && parentCategoryId?has_content]
-		[#attempt]
-			[#assign siblingCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentCategoryId + "/taxonomy-categories") /]
-			[#if siblingCategories.items?has_content]
-				[#list siblingCategories.items as siblingCategory]
-					[#assign navItems = navItems + [{"data": siblingCategory, "name": siblingCategory.name, "type": "category", "url": "${baseURL}/v/${siblingCategory.id}"}] /]
+			[#if restArticle.taxonomyCategoryBriefs?has_content]
+				[#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief]
+					[#if taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name == "Article Categories"]
+						[#assign currentCategoryId = taxonomyCategoryBrief.embeddedTaxonomyCategory.id!"" /]
+						[#break /]
+					[/#if]
 				[/#list]
-			[/#if]
-		[#recover]
-		[/#attempt]
-	[#elseif configuration.showCategories && currentCategoryId?has_content]
-		[#attempt]
-			[#assign siblingCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories") /]
-			[#if siblingCategories.items?has_content]
-				[#list siblingCategories.items as siblingCategory]
-					[#assign navItems = navItems + [{"data": siblingCategory, "name": siblingCategory.name, "type": "category", "url": "${baseURL}/v/${siblingCategory.id}"}] /]
-				[/#list]
-			[/#if]
-		[#recover]
-		[/#attempt]
-	[/#if]
-
-	[#if configuration.showArticles]
-		[#assign articleFetchCategoryId = "" /]
-
-		[#if configuration.showCategories]
-			[#if parentCategoryId?has_content]
-				[#assign articleFetchCategoryId = parentCategoryId /]
 			[/#if]
 		[#else]
-			[#if currentCategoryId?has_content]
-				[#assign articleFetchCategoryId = currentCategoryId /]
-			[/#if]
+			[#assign currentCategoryId = categoryId /]
 		[/#if]
 
-		[#if articleFetchCategoryId?has_content]
+		[#if currentCategoryId?has_content]
 			[#attempt]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${articleFetchCategoryId})&flatten=true") /]
-				[#if articles.items?has_content]
-					[#list articles.items as article]
-						[#assign navItems = navItems + [{"data": article, "name": article.title, "type": "article", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
+				[#assign currentCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + currentCategoryId) /]
+
+				[#if currentCategory.parentTaxonomyCategory??]
+					[#assign parentCategoryId = currentCategory.parentTaxonomyCategory.id!"" /]
+
+					[#if parentCategoryId?has_content]
+						[#assign parentCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentCategoryId) /]
+					[/#if]
+				[/#if]
+
+				[#assign vocabularyId = currentCategory.parentTaxonomyVocabulary.id!"" /]
+			[#recover]
+			[/#attempt]
+		[/#if]
+
+		[#if configuration.showCategories && parentCategoryId?has_content]
+			[#attempt]
+				[#assign siblingCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentCategoryId + "/taxonomy-categories") /]
+				[#if siblingCategories.items?has_content]
+					[#list siblingCategories.items as siblingCategory]
+						[#assign navItems = navItems + [{"data": siblingCategory, "name": siblingCategory.name, "type": "category", "url": "${baseURL}/v/${siblingCategory.id}"}] /]
+					[/#list]
+				[/#if]
+			[#recover]
+			[/#attempt]
+		[#elseif configuration.showCategories && currentCategoryId?has_content]
+			[#attempt]
+				[#assign siblingCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories") /]
+				[#if siblingCategories.items?has_content]
+					[#list siblingCategories.items as siblingCategory]
+						[#assign navItems = navItems + [{"data": siblingCategory, "name": siblingCategory.name, "type": "category", "url": "${baseURL}/v/${siblingCategory.id}"}] /]
 					[/#list]
 				[/#if]
 			[#recover]
 			[/#attempt]
 		[/#if]
-	[/#if]
 
-	<div class="cp-article-side-panel">
-		[#if configuration.showParentCategory && parentCategory?has_content]
-			<a class="border border-neutral-3 border-radius-lg cp-article-side-panel-back-link cp-article-side-panel-item cp-article-side-panel-link mb-0 p-3" href="${baseURL}/v/${parentCategory.id}">
-				[@clay["icon"] symbol="angle-left-small" /]
-				<span>${parentCategory.name}</span>
-			</a>
+		[#if configuration.showArticles]
+			[#assign articleFetchCategoryId = "" /]
+
+			[#if configuration.showCategories]
+				[#if parentCategoryId?has_content]
+					[#assign articleFetchCategoryId = parentCategoryId /]
+				[/#if]
+			[#else]
+				[#if currentCategoryId?has_content]
+					[#assign articleFetchCategoryId = currentCategoryId /]
+				[/#if]
+			[/#if]
+
+			[#if articleFetchCategoryId?has_content]
+				[#attempt]
+					[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${articleFetchCategoryId})&flatten=true") /]
+					[#if articles.items?has_content]
+						[#list articles.items as article]
+							[#assign navItems = navItems + [{"data": article, "name": article.title, "type": "article", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
+						[/#list]
+					[/#if]
+				[#recover]
+				[/#attempt]
+			[/#if]
 		[/#if]
 
-		<div class="p-2">
-			[@liferay_ui["panel-container"]]
-				[#if navItems?has_content]
-					[#list navItems?sort_by("name") as sibling]
-						[#if sibling.type == "category"]
-							[#assign siblingCategory = sibling.data /]
+		<div class="cp-article-side-panel">
+			[#if configuration.showParentCategory && parentCategory?has_content]
+				<a class="border border-neutral-3 border-radius-lg cp-article-side-panel-back-link cp-article-side-panel-item cp-article-side-panel-link mb-0 p-3" href="${baseURL}/v/${parentCategory.id}">
+					[@clay["icon"] symbol="angle-left-small" /]
+					<span>${parentCategory.name}</span>
+				</a>
+			[/#if]
 
-							[#if !isCategoryVisible(siblingCategory)]
-								[#continue]
-							[/#if]
+			<div class="p-2">
+				[@liferay_ui["panel-container"]]
+					[#if navItems?has_content]
+						[#list navItems?sort_by("name") as sibling]
+							[#if sibling.type == "category"]
+								[#assign siblingCategory = sibling.data /]
 
-							[#assign childNavItems = [] /]
+								[#if !isCategoryVisible(siblingCategory)]
+									[#continue]
+								[/#if]
 
-							[#if configuration.showCategories]
-								[#attempt]
-									[#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + siblingCategory.id + "/taxonomy-categories") /]
+								[#assign childNavItems = [] /]
 
-									[#if childCategories.items?has_content]
-										[#list childCategories.items as childCategory]
-											[#if !isCategoryVisible(childCategory)]
-												[#continue]
-											[/#if]
+								[#if configuration.showCategories]
+									[#attempt]
+										[#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + siblingCategory.id + "/taxonomy-categories") /]
 
-											[#assign isCurrentChildActive = (!articleId?has_content && childCategory.id?number == currentCategoryId?number) /]
+										[#if childCategories.items?has_content]
+											[#list childCategories.items as childCategory]
+												[#if !isCategoryVisible(childCategory)]
+													[#continue]
+												[/#if]
 
-											[#assign childNavItems = childNavItems + [{"active": isCurrentChildActive, "id": childCategory.id, "name": childCategory.name, "type": "category", "url": "${baseURL}/v/${childCategory.id}"}] /]
-										[/#list]
-									[/#if]
-								[#recover]
-								[/#attempt]
-							[/#if]
+												[#assign isCurrentChildActive = (!articleId?has_content && childCategory.id?number == currentCategoryId?number) /]
 
-							[#if configuration.showArticles]
-								[#attempt]
-									[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${siblingCategory.id})&flatten=true") /]
+												[#assign childNavItems = childNavItems + [{"active": isCurrentChildActive, "id": childCategory.id, "name": childCategory.name, "type": "category", "url": "${baseURL}/v/${childCategory.id}"}] /]
+											[/#list]
+										[/#if]
+									[#recover]
+									[/#attempt]
+								[/#if]
 
-									[#if articles?has_content && articles.items?has_content]
-										[#list articles.items as article]
-											[#assign isCurrentArticleActive = (articleId?has_content && article.id?number == displayObject.resourcePrimKey?number) /]
+								[#if configuration.showArticles]
+									[#attempt]
+										[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${siblingCategory.id})&flatten=true") /]
 
-											[#assign childNavItems = childNavItems + [{"active": isCurrentArticleActive, "name": article.title, "type": "article", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
-										[/#list]
-									[/#if]
-								[#recover]
-								[/#attempt]
-							[/#if]
+										[#if articles?has_content && articles.items?has_content]
+											[#list articles.items as article]
+												[#assign isCurrentArticleActive = (articleId?has_content && article.id?number == displayObject.resourcePrimKey?number) /]
 
-							[#assign isCategoryOfCurrentItem = (siblingCategory.id?number == currentCategoryId?number) /]
-							[#assign isCurrentActive = (categoryId?has_content && isCategoryOfCurrentItem) || (articleId?has_content && isCategoryOfCurrentItem && !configuration.showArticles) /]
-							[#assign isCurrentParent = isCategoryOfCurrentItem /]
+												[#assign childNavItems = childNavItems + [{"active": isCurrentArticleActive, "name": article.title, "type": "article", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
+											[/#list]
+										[/#if]
+									[#recover]
+									[/#attempt]
+								[/#if]
 
-							[#if childNavItems?has_content]
-								[@liferay_ui.panel
-									collapsible=true
-									cssClass="bg-transparent ${isCurrentActive?then('active', '')}"
-									extended=isCurrentParent
-									title=siblingCategory.name
-								]
-									<ul class="cp-article-side-panel-list list-unstyled m-0">
-										[#list childNavItems?sort_by("name") as item]
-											<li>
-												<a class="cp-article-side-panel-${item.type} cp-article-side-panel-item cp-article-side-panel-link ${item.active?then('active', '')}" href="${item.url}">
-													${item.name}
-												</a>
-											</li>
-										[/#list]
-									</ul>
-								[/@]
-							[#else]
-								<a class="cp-article-side-panel-item cp-article-side-panel-link ${isCurrentActive?then('active', '')}" href="${sibling.url}">
+								[#assign isCategoryOfCurrentItem = (siblingCategory.id?number == currentCategoryId?number) /]
+								[#assign isCurrentActive = (categoryId?has_content && isCategoryOfCurrentItem) || (articleId?has_content && isCategoryOfCurrentItem && !configuration.showArticles) /]
+								[#assign isCurrentParent = isCategoryOfCurrentItem /]
+
+								[#if childNavItems?has_content]
+									[@liferay_ui.panel
+										collapsible=true
+										cssClass="bg-transparent ${isCurrentActive?then('active', '')}"
+										extended=isCurrentParent
+										title=siblingCategory.name
+									]
+										<ul class="cp-article-side-panel-list list-unstyled m-0">
+											[#list childNavItems?sort_by("name") as item]
+												<li>
+													<a class="cp-article-side-panel-${item.type} cp-article-side-panel-item cp-article-side-panel-link ${item.active?then('active', '')}" href="${item.url}">
+														${item.name}
+													</a>
+												</li>
+											[/#list]
+										</ul>
+									[/@]
+								[#else]
+									<a class="cp-article-side-panel-item cp-article-side-panel-link ${isCurrentActive?then('active', '')}" href="${sibling.url}">
+										${sibling.name}
+									</a>
+								[/#if]
+							[#elseif sibling.type == "article"]
+								[#assign article = sibling.data /]
+								[#assign isCurrentArticleActive = (articleId?has_content && article.id?number == displayObject.resourcePrimKey?number) /]
+
+								<a class="cp-article-side-panel-article cp-article-side-panel-item cp-article-side-panel-link ${isCurrentArticleActive?then('active', '')}" href="${sibling.url}">
 									${sibling.name}
 								</a>
 							[/#if]
-						[#elseif sibling.type == "article"]
-							[#assign article = sibling.data /]
-							[#assign isCurrentArticleActive = (articleId?has_content && article.id?number == displayObject.resourcePrimKey?number) /]
-
-							<a class="cp-article-side-panel-article cp-article-side-panel-item cp-article-side-panel-link ${isCurrentArticleActive?then('active', '')}" href="${sibling.url}">
-								${sibling.name}
-							</a>
-						[/#if]
-					[/#list]
-				[/#if]
-			[/@]
+						[/#list]
+					[/#if]
+				[/@]
+			</div>
 		</div>
-	</div>
+	[/#escape]
 [/#if]

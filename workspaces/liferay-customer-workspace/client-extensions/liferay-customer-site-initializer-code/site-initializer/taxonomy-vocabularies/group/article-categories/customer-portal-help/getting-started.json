@@ -1,4 +1,21 @@
 {
+	"description_i18n": {
+		"en_US": "<p>Whether you are part of a brand new project which is just starting or you are now joining an already existing project, this article is for you! Follow along to learn how to access, activate and make the most of your Liferay Support resources.</p>"
+	},
 	"name": "Getting Started",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "section",
+			"value": "getting-started"
+		},
+		{
+			"key": "subtitle",
+			"value": "first-steps-and-essential-guidance-for-administrators-new-users-and-partners"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/getting_started.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

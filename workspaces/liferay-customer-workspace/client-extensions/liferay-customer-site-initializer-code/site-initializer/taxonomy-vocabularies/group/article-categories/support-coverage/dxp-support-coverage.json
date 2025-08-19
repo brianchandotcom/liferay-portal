@@ -1,4 +1,14 @@
 {
 	"name": "DXP Support Coverage",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "display-layout",
+			"value": "list"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/dxp_support_coverage.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

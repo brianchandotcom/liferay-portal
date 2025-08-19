@@ -1,4 +1,14 @@
 {
 	"name": "Service Levels",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "benefits-included-with-each-subscription-service-level"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/service_levels.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

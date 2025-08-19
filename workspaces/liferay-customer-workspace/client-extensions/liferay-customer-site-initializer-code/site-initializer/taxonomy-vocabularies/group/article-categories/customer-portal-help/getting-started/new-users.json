@@ -1,4 +1,14 @@
 {
 	"name": "New Users",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "customer-portal-first-steps-for-non-admin-and-non-partner-users"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/new_users.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

@@ -1,4 +1,14 @@
 {
 	"name": "Support FAQ",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "quick-answers-and-resources-to-common-support-questions"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/support_faq.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

@@ -1,4 +1,18 @@
 {
 	"name": "Overview",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "section",
+			"value": "help-resources"
+		},
+		{
+			"key": "subtitle",
+			"value": "the-essential-guide-to-liferay-customer-portal"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/overview.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

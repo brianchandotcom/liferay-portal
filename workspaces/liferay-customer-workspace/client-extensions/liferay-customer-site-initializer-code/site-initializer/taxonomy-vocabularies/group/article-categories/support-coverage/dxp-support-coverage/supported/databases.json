@@ -1,4 +1,10 @@
 {
 	"name": "Databases",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "visible",
+			"value": "false"
+		}
+	],
 	"viewableBy": "Anyone"
 }

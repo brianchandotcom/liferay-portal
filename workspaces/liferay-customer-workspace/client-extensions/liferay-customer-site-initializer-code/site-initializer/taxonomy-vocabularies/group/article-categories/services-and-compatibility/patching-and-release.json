@@ -1,4 +1,10 @@
 {
 	"name": "Patching and Release",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "visible",
+			"value": "false"
+		}
+	],
 	"viewableBy": "Anyone"
 }

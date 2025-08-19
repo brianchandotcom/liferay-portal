@@ -1,4 +1,14 @@
 {
 	"name": "Support Language Matrix",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "designated-languages-and-channels-for-liferay-support"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/support_language_matrix.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

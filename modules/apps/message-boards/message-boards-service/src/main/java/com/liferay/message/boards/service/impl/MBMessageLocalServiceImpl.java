@@ -2584,7 +2584,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				company.getCompanyId())) {
 
 			replyToAddress = MBMailUtil.getReplyToAddress(
-				message.getCategoryId(), message.getMessageId(),
+				_mailService, message.getCategoryId(), message.getMessageId(),
 				company.getMx(), fromAddress);
 		}
 

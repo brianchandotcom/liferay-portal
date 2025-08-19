@@ -3433,40 +3433,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getMailId(String mx, String popPortletPrefix, Object... ids) {
-		StringBundler sb = new StringBundler((ids.length * 2) + 7);
-
-		sb.append(StringPool.LESS_THAN);
-		sb.append(popPortletPrefix);
-
-		if (!popPortletPrefix.endsWith(StringPool.PERIOD)) {
-			sb.append(StringPool.PERIOD);
-		}
-
-		for (int i = 0; i < ids.length; i++) {
-			Object id = ids[i];
-
-			if (i != 0) {
-				sb.append(StringPool.PERIOD);
-			}
-
-			sb.append(id);
-		}
-
-		sb.append(StringPool.AT);
-
-		if (Validator.isNotNull(PropsValues.POP_SERVER_SUBDOMAIN)) {
-			sb.append(PropsValues.POP_SERVER_SUBDOMAIN);
-			sb.append(StringPool.PERIOD);
-		}
-
-		sb.append(mx);
-		sb.append(StringPool.GREATER_THAN);
-
-		return sb.toString();
-	}
-
-	@Override
 	public String getNetvibesURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException {
 

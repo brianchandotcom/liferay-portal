@@ -23,6 +23,8 @@ public interface MailService {
 
 	public void clearSession(long companyId);
 
+	public String getMailId(String mx, String popPortletPrefix, Object... ids);
+
 	public Session getSession();
 
 	public Session getSession(Account account);

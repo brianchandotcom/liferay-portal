@@ -707,8 +707,6 @@ public interface Portal {
 
 	public Locale getLocale(PortletRequest portletRequest);
 
-	public String getMailId(String mx, String popPortletPrefix, Object... ids);
-
 	public String getNetvibesURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException;
 

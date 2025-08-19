@@ -1037,12 +1037,6 @@ public class PortalUtil {
 		return _portal.getLocale(portletRequest);
 	}
 
-	public static String getMailId(
-		String mx, String popPortletPrefix, Object... ids) {
-
-		return _portal.getMailId(mx, popPortletPrefix, ids);
-	}
-
 	public static String getNetvibesURL(
 			Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException {

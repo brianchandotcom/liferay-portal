@@ -318,11 +318,15 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		int status = WorkflowConstants.STATUS_APPROVED;
 		String errorMessage = null;
 
+		JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
+			configuration, true);
+
 		try {
 			_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
-				html, _jsonFactory.toJSONObject(configuration, true));
+				html, configurationJSONObject);
 
-			_fragmentEntryValidator.validateConfiguration(configuration);
+			_fragmentEntryValidator.validateConfiguration(
+				configurationJSONObject);
 			_fragmentEntryValidator.validateTypeOptions(type, typeOptions);
 		}
 		catch (PortalException portalException) {

@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -371,15 +372,17 @@ public class FragmentCollectionContributorRegistryImpl
 	}
 
 	private boolean _validateFragmentEntry(FragmentEntry fragmentEntry) {
+		JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
+			fragmentEntry.getConfiguration(), true);
+
 		try {
 			fragmentEntryValidator.validateConfiguration(
-				fragmentEntry.getConfiguration());
+				configurationJSONObject);
 			fragmentEntryValidator.validateTypeOptions(
 				fragmentEntry.getType(), fragmentEntry.getTypeOptions());
 
 			fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
-				fragmentEntry.getHtml(),
-				_jsonFactory.toJSONObject(fragmentEntry.getConfiguration()));
+				fragmentEntry.getHtml(), configurationJSONObject);
 
 			return true;
 		}

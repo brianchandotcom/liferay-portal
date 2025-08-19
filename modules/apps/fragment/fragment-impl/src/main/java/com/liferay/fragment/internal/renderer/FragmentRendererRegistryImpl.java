@@ -17,6 +17,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -95,6 +96,9 @@ public class FragmentRendererRegistryImpl implements FragmentRendererRegistry {
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;
 
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private ServiceTrackerMap<String, FragmentRenderer> _serviceTrackerMap;
 
 	private class FragmentRendererRegistryServiceTrackerCustomizer
@@ -125,8 +129,10 @@ public class FragmentRendererRegistryImpl implements FragmentRendererRegistry {
 					_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 				_fragmentEntryValidator.validateConfiguration(
-					fragmentRenderer.getConfiguration(
-						new DefaultFragmentRendererContext(fragmentEntryLink)));
+					_jsonFactory.toJSONObject(
+						fragmentRenderer.getConfiguration(
+							new DefaultFragmentRendererContext(
+								fragmentEntryLink))));
 
 				return fragmentRenderer;
 			}

@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 public class FaroProjectUsageLocalServiceImpl
 	extends FaroProjectUsageLocalServiceBaseImpl {
 
+	@Override
 	public FaroProjectUsage addFaroProjectUsage(
 		long companyId, long userId, long faroProjectId,
 		long knownIndividualsCount, String monthDateKey, long pageViewsCount,
@@ -51,10 +52,12 @@ public class FaroProjectUsageLocalServiceImpl
 		return faroProjectUsagePersistence.update(faroProjectUsage);
 	}
 
+	@Override
 	public void deleteFaroProjectUsage() {
 		faroProjectUsagePersistence.removeAll();
 	}
 
+	@Override
 	public FaroProjectUsage fetchFaroProjectUsage(
 		long faroProjectId, Date usageDate) {
 
@@ -62,6 +65,7 @@ public class FaroProjectUsageLocalServiceImpl
 			faroProjectId, usageDate.getTime());
 	}
 
+	@Override
 	public FaroProjectUsage updateFaroProjectUsage(
 			long faroProjectUsageId, long knownIndividualsCount,
 			long pageViewsCount)

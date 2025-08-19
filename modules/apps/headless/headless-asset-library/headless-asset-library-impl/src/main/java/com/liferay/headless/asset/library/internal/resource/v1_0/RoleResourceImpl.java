@@ -37,78 +37,78 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
 	public Page<Role>
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception {
 
 		Group group = _getGroup(assetLibraryExternalReferenceCode);
 		User user = _userService.getUserByExternalReferenceCode(
-			userExternalReferenceCode, contextCompany.getCompanyId());
+			userAccountExternalReferenceCode, contextCompany.getCompanyId());
 
-		return getAssetLibraryUserAccountUserRolesPage(
+		return getAssetLibraryUserAccountRolesPage(
 			group.getGroupId(), user.getUserId());
 	}
 
 	@Override
-	public Page<Role> getAssetLibraryUserAccountUserRolesPage(
-			Long assetLibraryId, Long userId)
+	public Page<Role> getAssetLibraryUserAccountRolesPage(
+			Long assetLibraryId, Long userAccountId)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
-		if (!_groupService.hasUserGroup(userId, assetLibraryId)) {
+		if (!_groupService.hasUserGroup(userAccountId, assetLibraryId)) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
-					"No user exists in group ", assetLibraryId, " with id ",
-					userId));
+					"No user exists in group ", assetLibraryId, " with ID ",
+					userAccountId));
 		}
 
 		return Page.of(
 			transform(
-				_roleService.getUserGroupRoles(userId, assetLibraryId),
+				_roleService.getUserGroupRoles(userAccountId, assetLibraryId),
 				this::_toRole));
 	}
 
 	@Override
 	public Page<Role>
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode, Role[] roles)
+				String userAccountExternalReferenceCode, Role[] roles)
 		throws Exception {
 
 		Group group = _getGroup(assetLibraryExternalReferenceCode);
 		User user = _userService.getUserByExternalReferenceCode(
-			userExternalReferenceCode, contextCompany.getCompanyId());
+			userAccountExternalReferenceCode, contextCompany.getCompanyId());
 
-		return putAssetLibraryUserAccountUserRolesPage(
+		return putAssetLibraryUserAccountRolesPage(
 			group.getGroupId(), user.getUserId(), roles);
 	}
 
 	@Override
-	public Page<Role> putAssetLibraryUserAccountUserRolesPage(
-			Long assetLibraryId, Long userId, Role[] roles)
+	public Page<Role> putAssetLibraryUserAccountRolesPage(
+			Long assetLibraryId, Long userAccountId, Role[] roles)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
-		if (!_groupService.hasUserGroup(userId, assetLibraryId)) {
+		if (!_groupService.hasUserGroup(userAccountId, assetLibraryId)) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
-					"User with id ", userId, " is not associated to group ",
-					assetLibraryId));
+					"User with id ", userAccountId,
+					" is not associated to group ", assetLibraryId));
 		}
 
 		long[] roleIdsArray = ListUtil.toLongArray(
-			_roleService.getUserGroupRoles(userId, assetLibraryId),
+			_roleService.getUserGroupRoles(userAccountId, assetLibraryId),
 			com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR);
 
 		_userGroupRoleService.deleteUserGroupRoles(
-			userId, assetLibraryId, roleIdsArray);
+			userAccountId, assetLibraryId, roleIdsArray);
 
 		long[] roleIds = new long[0];
 
@@ -121,11 +121,11 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		}
 
 		_userGroupRoleService.addUserGroupRoles(
-			userId, assetLibraryId, roleIds);
+			userAccountId, assetLibraryId, roleIds);
 
 		return Page.of(
 			transform(
-				_roleService.getUserGroupRoles(userId, assetLibraryId),
+				_roleService.getUserGroupRoles(userAccountId, assetLibraryId),
 				this::_toRole));
 	}
 

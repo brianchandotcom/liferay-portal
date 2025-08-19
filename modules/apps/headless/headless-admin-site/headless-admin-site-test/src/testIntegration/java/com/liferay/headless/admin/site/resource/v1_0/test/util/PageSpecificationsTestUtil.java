@@ -22,7 +22,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.problem.Problem;
-import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -46,6 +45,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 
 import java.io.Serializable;
 
@@ -805,7 +805,7 @@ public class PageSpecificationsTestUtil {
 			String widgetName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
 
 			if (RandomTestUtil.randomBoolean()) {
-				widgetName = JournalContentPortletKeys.JOURNAL_CONTENT;
+				widgetName = SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU;
 			}
 
 			String widgetInstanceId = RandomTestUtil.randomString();

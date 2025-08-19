@@ -103,8 +103,8 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 				configurationJSONObject =
 					_fragmentEntryConfigurationParser.
 						getConfigurationJSONObject(
-							fragmentEntryLink.getConfiguration(),
-							fragmentEntryLink.getEditableValues(),
+							fragmentEntryLink.getConfigurationJSONObject(),
+							fragmentEntryLink.getEditableValuesJSONObject(),
 							LocaleUtil.getMostRelevantLocale());
 			}
 

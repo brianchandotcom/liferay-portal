@@ -35,8 +35,9 @@ public interface FragmentEntryConfigurationParser {
 		throws JSONException;
 
 	public Map<String, Object> getContextObjects(
-		JSONObject configurationValuesJSONObject, String configuration,
-		Object displayObject, long[] segmentsEntryIds);
+		JSONObject configurationValuesJSONObject,
+		JSONObject configurationJSONObject, Object displayObject,
+		long[] segmentsEntryIds);
 
 	public Object getFieldValue(
 		String editableValues,

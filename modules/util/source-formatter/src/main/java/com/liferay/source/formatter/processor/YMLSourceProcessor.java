@@ -74,7 +74,8 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 			String replacement =
 				firstLine + secondLine.substring(firstLine.length());
 
-			matcher.appendReplacement(sb, "\n" + replacement);
+			matcher.appendReplacement(
+				sb, "\n" + Matcher.quoteReplacement(replacement));
 		}
 
 		if (sb.length() > 0) {

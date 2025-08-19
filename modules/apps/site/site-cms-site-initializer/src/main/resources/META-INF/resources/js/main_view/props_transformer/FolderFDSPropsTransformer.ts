@@ -4,9 +4,11 @@
  */
 
 import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import {EVENTS} from '../info_panel/util/constants';
+import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
@@ -118,6 +120,16 @@ export default function FolderFDSPropsTransformer({
 					creator: itemData.embedded.creator,
 					itemId: itemData.embedded.id,
 					title: itemData.embedded?.title,
+				});
+			}
+			else if (action?.data?.id === 'view-file') {
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: () =>
+						FilePreviewerModalContent(itemData.embedded.file),
+					size: 'full-screen',
 				});
 			}
 		},

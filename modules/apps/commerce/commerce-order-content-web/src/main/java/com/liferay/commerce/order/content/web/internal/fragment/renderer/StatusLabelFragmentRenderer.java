@@ -148,8 +148,9 @@ public class StatusLabelFragmentRenderer implements FragmentRenderer {
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfiguration(fragmentRendererContext),
-				fragmentEntryLink.getEditableValues(),
+				_jsonFactory.toJSONObject(
+					getConfiguration(fragmentRendererContext)),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), "selectedStatus"));
 	}
 

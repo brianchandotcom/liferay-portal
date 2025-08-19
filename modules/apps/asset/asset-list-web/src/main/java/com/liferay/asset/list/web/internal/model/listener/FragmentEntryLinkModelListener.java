@@ -113,8 +113,8 @@ public class FragmentEntryLinkModelListener
 				fragmentConfigurationFields) {
 
 			Object fieldValue = _fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getConfiguration(),
-				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getConfigurationJSONObject(),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				LocaleUtil.getMostRelevantLocale(),
 				fragmentConfigurationField.getName());
 

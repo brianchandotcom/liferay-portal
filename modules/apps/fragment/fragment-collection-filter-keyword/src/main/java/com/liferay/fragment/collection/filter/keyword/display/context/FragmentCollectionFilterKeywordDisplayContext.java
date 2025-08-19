@@ -9,6 +9,7 @@ import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -65,7 +66,8 @@ public class FragmentCollectionFilterKeywordDisplayContext {
 
 	private Object _getFieldValue(String fieldName) {
 		return _fragmentEntryConfigurationParser.getFieldValue(
-			_configuration, _fragmentEntryLink.getEditableValues(),
+			JSONFactoryUtil.toJSONObject(_configuration),
+			_fragmentEntryLink.getEditableValuesJSONObject(),
 			_fragmentRendererContext.getLocale(), fieldName);
 	}
 

@@ -142,8 +142,8 @@ public class AddToCartFragmentRenderer implements FragmentRenderer {
 				"liferay-commerce:add-to-cart:inline",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						fragmentEntryLink.getConfiguration(),
-						fragmentEntryLink.getEditableValues(),
+						fragmentEntryLink.getConfigurationJSONObject(),
+						fragmentEntryLink.getEditableValuesJSONObject(),
 						LocaleUtil.getMostRelevantLocale(), "inline")));
 
 			String namespace = (String)httpServletRequest.getAttribute(
@@ -183,8 +183,8 @@ public class AddToCartFragmentRenderer implements FragmentRenderer {
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getConfiguration(),
-				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getConfigurationJSONObject(),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				LocaleUtil.getMostRelevantLocale(), name));
 	}
 

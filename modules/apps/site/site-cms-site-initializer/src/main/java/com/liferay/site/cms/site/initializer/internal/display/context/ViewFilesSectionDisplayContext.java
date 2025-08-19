@@ -7,7 +7,6 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -46,25 +45,6 @@ public class ViewFilesSectionDisplayContext
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
-	}
-
-	@Override
-	public List<DropdownItem> getBulkActionDropdownItems() {
-		List<DropdownItem> fdsBulkActionDropdownItems =
-			super.getBulkActionDropdownItems();
-
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				"#", "download", "download",
-				LanguageUtil.get(httpServletRequest, "download"), null, null,
-				null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				"#", "password-policies", "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
-				null));
-
-		return fdsBulkActionDropdownItems;
 	}
 
 	@Override

@@ -126,6 +126,11 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 				"#", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), null, null,
 				null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				null, "pencil", "edit-tags",
+				LanguageUtil.get(httpServletRequest, "edit-tags"), "get",
+				"edit-tags", null));
 
 		return fdsBulkActionDropdownItems;
 	}

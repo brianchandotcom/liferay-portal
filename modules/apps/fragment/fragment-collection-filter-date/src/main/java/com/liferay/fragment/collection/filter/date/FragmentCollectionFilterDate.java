@@ -9,9 +9,9 @@ import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.date.display.context.FragmentCollectionFilterDateDisplayContext;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 
 	@Override
-	public String getConfiguration() {
+	public JSONObject getConfiguration() {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 
@@ -47,16 +47,15 @@ public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 				"/com/liferay/fragment/collection/filter/date/dependencies" +
 					"/configuration.json");
 
-			return _jsonFactory.toString(
-				_fragmentEntryConfigurationParser.translateConfiguration(
-					_jsonFactory.createJSONObject(json), resourceBundle));
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				_jsonFactory.createJSONObject(json), resourceBundle);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return StringPool.BLANK;
+			return null;
 		}
 	}
 

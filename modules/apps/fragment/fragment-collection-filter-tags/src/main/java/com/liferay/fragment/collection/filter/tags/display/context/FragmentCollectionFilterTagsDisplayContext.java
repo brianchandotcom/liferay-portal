@@ -12,7 +12,6 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -31,12 +30,12 @@ import java.util.Map;
 public class FragmentCollectionFilterTagsDisplayContext {
 
 	public FragmentCollectionFilterTagsDisplayContext(
-		String configuration,
+		JSONObject configurationJSONObject,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		_configuration = configuration;
+		_configurationJSONObject = configurationJSONObject;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_fragmentRendererContext = fragmentRendererContext;
 
@@ -55,7 +54,7 @@ public class FragmentCollectionFilterTagsDisplayContext {
 		JSONObject defaultValuesJSONObject =
 			_fragmentEntryConfigurationParser.
 				getConfigurationDefaultValuesJSONObject(
-					JSONFactoryUtil.toJSONObject(_configuration));
+					_configurationJSONObject);
 
 		return defaultValuesJSONObject.getString("helpText", StringPool.BLANK);
 	}
@@ -123,12 +122,12 @@ public class FragmentCollectionFilterTagsDisplayContext {
 
 	private Object _getFieldValue(String fieldName) {
 		return _fragmentEntryConfigurationParser.getFieldValue(
-			JSONFactoryUtil.toJSONObject(_configuration),
+			_configurationJSONObject,
 			_fragmentEntryLink.getEditableValuesJSONObject(),
 			_fragmentRendererContext.getLocale(), fieldName);
 	}
 
-	private final String _configuration;
+	private final JSONObject _configurationJSONObject;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;

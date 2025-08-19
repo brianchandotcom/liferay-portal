@@ -217,6 +217,8 @@ test(
 				'Duplicate'
 			);
 
+			await page.locator('#banner.page-editor__disabled-area').click();
+
 			await pageEditorPage.editTextEditable(
 				dptSubmitButtonId,
 				'submit-button-text',

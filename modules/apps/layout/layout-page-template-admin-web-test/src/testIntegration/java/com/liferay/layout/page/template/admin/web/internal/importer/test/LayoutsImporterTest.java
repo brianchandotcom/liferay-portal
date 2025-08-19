@@ -1695,8 +1695,7 @@ public class LayoutsImporterTest {
 			fragmentEntryLink.getConfiguration(),
 			JSONUtil.equals(
 				configurationJSONObject,
-				_jsonFactory.createJSONObject(
-					fragmentEntryLink.getConfiguration())));
+				fragmentEntryLink.getConfigurationJSONObject()));
 		Assert.assertTrue(
 			fragmentEntryLink.getEditableValues(),
 			JSONUtil.equals(

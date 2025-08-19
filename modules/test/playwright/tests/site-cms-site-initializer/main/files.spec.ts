@@ -47,7 +47,7 @@ test(
 				type: 'document',
 			});
 
-			await assetsPage.goto();
+			await assetsPage.gotoFiles();
 			await assetsPage.changeVisualizationMode('Table');
 
 			const downloadPromise = page.waitForEvent('download');
@@ -86,7 +86,7 @@ test(
 		});
 
 		await test.step('Create a Basic Document', async () => {
-			await assetsPage.goto();
+			await assetsPage.gotoFiles();
 
 			await assetsPage.createContent('Basic Document');
 		});
@@ -133,7 +133,7 @@ test(
 		});
 
 		await test.step('Create a Basic Document', async () => {
-			await assetsPage.goto();
+			await assetsPage.gotoFiles();
 
 			await assetsPage.createContent('Basic Document');
 		});
@@ -255,7 +255,7 @@ test(
 				type: 'document',
 			});
 
-			await assetsPage.goto();
+			await assetsPage.gotoFiles();
 
 			await assetsPage.execItemAction({
 				action: 'View',

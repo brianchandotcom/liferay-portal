@@ -35,7 +35,7 @@ test(
 				title: folderTitle,
 			});
 
-		await assetsPage.goto();
+		await assetsPage.gotoFiles();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -74,7 +74,7 @@ test(
 				title: folderTitle,
 			});
 
-		await assetsPage.goto();
+		await assetsPage.gotoFiles();
 
 		await page
 			.getByRole('row', {name: folderTitle})

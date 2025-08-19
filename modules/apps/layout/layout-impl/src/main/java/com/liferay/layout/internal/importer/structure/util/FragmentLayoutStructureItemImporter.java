@@ -352,7 +352,7 @@ public class FragmentLayoutStructureItemImporter
 			configuration = fragmentEntry.getConfiguration();
 
 			configurationJSONObject = JSONFactoryUtil.toJSONObject(
-				configuration);
+				configuration, true);
 
 			html = fragmentEntry.getHtml();
 			type = fragmentEntry.getType();
@@ -372,11 +372,11 @@ public class FragmentLayoutStructureItemImporter
 
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			_toFreeMarkerFragmentEntryProcessorJSONObject(
-				_getConfigurationTypes(configuration),
+				_getConfigurationTypes(configurationJSONObject),
 				(Map<String, Object>)definitionMap.get("fragmentConfig"));
 
 		_fragmentEntryValidator.validateConfigurationValues(
-			configuration, fragmentEntryProcessorValuesJSONObject);
+			configurationJSONObject, fragmentEntryProcessorValuesJSONObject);
 
 		if (freeMarkerFragmentEntryProcessorJSONObject.length() > 0) {
 			fragmentEntryProcessorValuesJSONObject.put(
@@ -776,14 +776,18 @@ public class FragmentLayoutStructureItemImporter
 		return jsonObject3;
 	}
 
-	private Map<String, String> _getConfigurationTypes(String configuration)
+	private Map<String, String> _getConfigurationTypes(
+			JSONObject configurationJSONObject)
 		throws Exception {
 
 		Map<String, String> configurationTypes = new HashMap<>();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(configuration);
+		if (configurationJSONObject == null) {
+			return configurationTypes;
+		}
 
-		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
+		JSONArray fieldSetsJSONArray = configurationJSONObject.getJSONArray(
+			"fieldSets");
 
 		if (fieldSetsJSONArray == null) {
 			return configurationTypes;

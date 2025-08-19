@@ -79,8 +79,9 @@ public class OrderReturnsDataSetFragmentRenderer implements FragmentRenderer {
 					getClass(),
 					"order_returns_data_set/dependencies/configuration.json"));
 
-			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle);
+			return _jsonFactory.toString(
+				_fragmentEntryConfigurationParser.translateConfiguration(
+					jsonObject, resourceBundle));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

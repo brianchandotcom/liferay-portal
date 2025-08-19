@@ -210,8 +210,9 @@ public class FragmentRendererControllerImpl
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
 
-		return _fragmentEntryConfigurationParser.translateConfiguration(
-			jsonObject, resourceBundle);
+		return _jsonFactory.toString(
+			_fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject, resourceBundle));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

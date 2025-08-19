@@ -50,7 +50,7 @@ public interface FragmentEntryConfigurationParser {
 	public List<FragmentConfigurationField> getFragmentConfigurationFields(
 		JSONObject configurationJSONObject);
 
-	public String translateConfiguration(
+	public JSONObject translateConfiguration(
 		JSONObject jsonObject, ResourceBundle resourceBundle);
 
 }

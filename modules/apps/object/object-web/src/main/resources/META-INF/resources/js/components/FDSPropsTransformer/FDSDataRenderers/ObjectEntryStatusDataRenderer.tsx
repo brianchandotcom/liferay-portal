@@ -33,11 +33,12 @@ function getDisplayType(status: string) {
 	switch (status) {
 		case 'approved':
 			return 'success';
+		case 'empty':
+		case 'expired':
+			return 'warning';
 		case 'pending':
 		case 'scheduled':
 			return 'info';
-		case 'expired':
-			return 'warning';
 		default:
 			return 'secondary';
 	}

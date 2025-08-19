@@ -176,7 +176,7 @@ public class MBMailUtil {
 		long categoryId, long messageId, String mx,
 		String defaultMailingListAddress) {
 
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() <= 0) {
+		if (!hasSubdomain()) {
 			return defaultMailingListAddress;
 		}
 
@@ -220,19 +220,21 @@ public class MBMailUtil {
 	public static boolean hasMailIdHeader(Message message) throws Exception {
 		String[] messageIds = message.getHeader("Message-ID");
 
-		if (messageIds == null) {
+		if ((messageIds == null) || !hasSubdomain()) {
 			return false;
 		}
 
 		for (String messageId : messageIds) {
-			if (Validator.isNotNull(PropsValues.POP_SERVER_SUBDOMAIN) &&
-				messageId.contains(PropsValues.POP_SERVER_SUBDOMAIN)) {
-
+			if (messageId.contains(PropsValues.POP_SERVER_SUBDOMAIN)) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public static boolean hasSubdomain() {
+		return Validator.isNotNull(PropsValues.POP_SERVER_SUBDOMAIN);
 	}
 
 	private static String[] _getMessageIdStringParts(String messageIdString) {

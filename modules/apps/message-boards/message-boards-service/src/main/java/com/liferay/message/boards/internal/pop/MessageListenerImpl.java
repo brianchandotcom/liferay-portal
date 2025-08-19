@@ -260,7 +260,7 @@ public class MessageListenerImpl implements MessageListener {
 	private String _getMessageIdString(List<String> recipients, Message message)
 		throws Exception {
 
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
+		if (!MBMailUtil.hasSubdomain()) {
 			return MBMailUtil.getParentMessageIdString(message);
 		}
 

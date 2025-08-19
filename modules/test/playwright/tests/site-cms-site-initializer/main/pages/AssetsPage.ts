@@ -24,7 +24,12 @@ export class AssetsPage {
 		this.newButton = page.getByLabel('New');
 	}
 
-	async goto() {
+	async gotoAll() {
+		await this.page.goto(PORTLET_URLS.cmsAll);
+		await this.page.getByRole('heading', {name: 'All'}).waitFor();
+	}
+
+	async gotoFiles() {
 		await this.page.goto(PORTLET_URLS.cmsFiles);
 		await this.page.getByRole('heading', {name: 'Files'}).waitFor();
 	}

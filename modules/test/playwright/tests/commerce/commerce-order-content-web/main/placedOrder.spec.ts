@@ -58,20 +58,15 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 	page,
 	placedOrdersPage,
 	site,
+	widgetPagePage,
 }) => {
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet',
-			}),
-		]),
-		siteId: site.id,
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
 		title: getRandomString(),
 	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -122,10 +117,11 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 		shippingAddressId: address.id,
 	});
 
-	await page.goto(
-		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`,
-		{waitUntil: 'networkidle'}
-	);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`, {
+		waitUntil: 'networkidle',
+	});
+
+	await widgetPagePage.addPortlet('Placed Orders');
 
 	await placedOrdersPage.viewButton.click();
 
@@ -151,6 +147,8 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 	await page.goto(`/web/${site.name}`);
 
 	await placedOrdersPage.optionsButton.click();
+
+	await expect(placedOrdersPage.configurationMenuItem).toBeVisible();
 
 	await placedOrdersPage.configurationMenuItem.click();
 	await placedOrdersPage.configurationIFrameShowFullAddressToggle.check();

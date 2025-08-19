@@ -87,9 +87,9 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private String _preProcess(String content) {
-		content = content.replaceAll("\\n +\\n", "\n\n");
-
 		StringBundler sb = new StringBundler();
+
+		content = content.replaceAll("\\n +\\n", "\n\n");
 
 		String[] lines = content.split("\n");
 

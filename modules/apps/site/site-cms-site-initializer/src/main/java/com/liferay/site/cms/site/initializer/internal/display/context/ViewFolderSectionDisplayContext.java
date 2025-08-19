@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -119,11 +118,16 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return ListUtil.fromArray(
+		List<DropdownItem> fdsBulkActionDropdownItems =
+			super.getBulkActionDropdownItems();
+
+		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
-				"#", "trash", "remove",
-				LanguageUtil.get(httpServletRequest, "remove"), null, null,
+				"#", "download", "download",
+				LanguageUtil.get(httpServletRequest, "download"), null, null,
 				null));
+
+		return fdsBulkActionDropdownItems;
 	}
 
 	@Override

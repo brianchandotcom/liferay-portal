@@ -2809,17 +2809,6 @@
 			"objectActions": [
 				{
 					"active": true,
-					"label": {
-						"en_US": "Cascade Permissions"
-					},
-					"name": "setCourseStudentsRole",
-					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
-					"objectActionTriggerKey": "onAfterAdd",
-					"parameters": {
-					}
-				},
-				{
-					"active": true,
 					"errorMessage": {
 						"en_US": "Error while create course students role"
 					},
@@ -2829,6 +2818,17 @@
 					"name": "fixCourseStudentsRole",
 					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
 					"objectActionTriggerKey": "standalone",
+					"parameters": {
+					}
+				},
+				{
+					"active": true,
+					"label": {
+						"en_US": "Cascade Permissions"
+					},
+					"name": "setCourseStudentsRole",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
+					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 					}
 				}

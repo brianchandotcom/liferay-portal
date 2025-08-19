@@ -266,9 +266,9 @@ public class FragmentEntryLinkManager {
 
 			defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
 
-			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
+			JSONObject configurationJSONObject =
 				_fragmentRendererController.getConfiguration(
-					defaultFragmentRendererContext));
+					defaultFragmentRendererContext);
 
 			FragmentEntryLinkItemSelectorUtil.
 				addFragmentEntryLinkFieldsSelectorURL(

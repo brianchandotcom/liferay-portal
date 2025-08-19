@@ -4,4 +4,7 @@
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files=".*" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="JavaFeatureFlagManagerUtilCheck" files="search-experiences-service/src/main/java/com/liferay/search/experiences/internal/upgrade/v3_2_0/SXPBlueprintCollectionProviderUpgradeProcess\.java" />
+	</source-check>
 </suppressions>

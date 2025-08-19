@@ -141,7 +141,7 @@ export default function ContentFDSPropsTransformer({
 					title: itemData.embedded?.title,
 				});
 			}
-			else if (action?.data?.id === 'viewContent') {
+			else if (action?.data?.id === 'view-content') {
 				event?.preventDefault();
 
 				openModal({

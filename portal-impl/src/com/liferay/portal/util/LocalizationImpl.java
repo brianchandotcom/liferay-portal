@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -212,6 +213,25 @@ public class LocalizationImpl implements Localization {
 	public String getLocalization(
 		String xml, String requestedLanguageId, boolean useDefault,
 		String defaultValue) {
+
+		if ((xml == null) && useDefault) {
+			return null;
+		}
+
+		String openTag = "language-id=\"" + requestedLanguageId + "\">";
+
+		int startIndex = xml.indexOf(openTag);
+
+		if (startIndex != -1) {
+			startIndex += openTag.length();
+
+			int endIndex = xml.indexOf("</", startIndex);
+
+			if (endIndex != -1) {
+				return StringUtil.stripCDATA(
+					HtmlUtil.unescape(xml.substring(startIndex, endIndex)));
+			}
+		}
 
 		if (!Validator.isXml(xml)) {
 			if (useDefault ||

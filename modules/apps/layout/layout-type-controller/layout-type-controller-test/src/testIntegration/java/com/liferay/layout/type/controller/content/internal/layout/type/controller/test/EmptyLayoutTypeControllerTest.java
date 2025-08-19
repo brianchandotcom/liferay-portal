@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -38,7 +37,6 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -82,14 +80,6 @@ public class EmptyLayoutTypeControllerTest {
 		_layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
 				LayoutConstants.TYPE_EMPTY);
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

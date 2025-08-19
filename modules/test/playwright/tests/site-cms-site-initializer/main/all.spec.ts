@@ -9,7 +9,6 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -25,7 +24,7 @@ const test = mergeTests(
 test(
 	'Can view Share modal for added content',
 	{tag: '@LPD-62554'},
-	async ({apiHelpers, contentsPage, page}) => {
+	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/knowledge-bases';
 		const spaceName = 'Default';
 
@@ -40,9 +39,9 @@ test(
 			spaceName
 		);
 
-		await page.goto(PORTLET_URLS.cmsAll);
+		await assetsPage.gotoAll();
 
-		await contentsPage.execItemAction({
+		await assetsPage.execItemAction({
 			action: 'Share',
 			filter: file1Title,
 		});

@@ -6,6 +6,9 @@
 package com.liferay.fragment.internal.exportimport.content.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -15,9 +18,12 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -35,6 +41,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -75,6 +82,102 @@ public class EditableValuesExportImportContentProcessorTest {
 		_layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
 		_draftLayout = _layout.fetchDraftLayout();
+	}
+
+	@Test
+	@TestInfo("LPD-63158")
+	public void testEditableValuesWithItemSelectorWithTemplateWithoutTemplateKey()
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_stagingGroup.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			"BASIC-WEB-CONTENT", true);
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(), 0,
+			RandomTestUtil.randomLocaleStringMap(), null,
+			DDMStructureTestUtil.getSampleStructuredContent(),
+			ddmStructure.getStructureId(), "BASIC-WEB-CONTENT",
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		FragmentEntryLink draftFragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"itemSelector",
+						JSONUtil.put(
+							"className", JournalArticle.class.getName()
+						).put(
+							"classNameId",
+							_portal.getClassNameId(JournalArticle.class)
+						).put(
+							"classPK",
+							String.valueOf(journalArticle.getResourcePrimKey())
+						).put(
+							"classTypeId",
+							String.valueOf(journalArticle.getDDMStructureId())
+						).put(
+							"externalReferenceCode",
+							journalArticle.getExternalReferenceCode()
+						).put(
+							"template",
+							JSONUtil.put(
+								"infoItemRendererKey",
+								"com.liferay.template.internal.info.item." +
+									"renderer." +
+										"TemplateInfoItemTemplatedRenderer")
+						))
+				).toString(),
+				_fragmentRendererRegistry.getFragmentRenderer(
+					"com.liferay.fragment.internal.renderer." +
+						"ContentObjectFragmentRenderer"),
+				draftLayout, null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+
+		_assertItemSelectorClassPK(
+			journalArticle.getResourcePrimKey(), draftFragmentEntryLink);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				layout.getGroupId(),
+				draftFragmentEntryLink.getFragmentEntryLinkId(),
+				layout.getPlid());
+
+		_assertItemSelectorClassPK(
+			journalArticle.getResourcePrimKey(), fragmentEntryLink);
+
+		_publishLayouts();
+
+		JournalArticle importedJournalArticle =
+			_journalArticleLocalService.getJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), _liveGroup.getGroupId());
+
+		FragmentEntryLink importedDraftFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId());
+
+		_assertItemSelectorClassPK(
+			importedJournalArticle.getResourcePrimKey(),
+			importedDraftFragmentEntryLink);
+
+		FragmentEntryLink importedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId());
+
+		_assertItemSelectorClassPK(
+			importedJournalArticle.getResourcePrimKey(),
+			importedFragmentEntryLink);
 	}
 
 	@Test
@@ -331,6 +434,21 @@ public class EditableValuesExportImportContentProcessorTest {
 		Assert.assertFalse(layoutJSONObject.has("layoutId"));
 	}
 
+	private void _assertItemSelectorClassPK(
+		long classPK, FragmentEntryLink fragmentEntryLink) {
+
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject freeMarkerJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject itemSelectorJSONObject = freeMarkerJSONObject.getJSONObject(
+			"itemSelector");
+
+		Assert.assertEquals(classPK, itemSelectorJSONObject.getLong("classPK"));
+	}
+
 	private void _assertLayoutJSONObject(JSONObject jsonObject, Layout layout) {
 		Assert.assertEquals(layout.getGroupId(), jsonObject.getLong("groupId"));
 		Assert.assertEquals(
@@ -394,6 +512,9 @@ public class EditableValuesExportImportContentProcessorTest {
 			_liveGroup.getGroupId(), false, parameterMap);
 	}
 
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
 	private Layout _draftLayout;
 
 	@Inject
@@ -410,6 +531,12 @@ public class EditableValuesExportImportContentProcessorTest {
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
+	private FragmentRendererRegistry _fragmentRendererRegistry;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
 	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
@@ -419,6 +546,9 @@ public class EditableValuesExportImportContentProcessorTest {
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

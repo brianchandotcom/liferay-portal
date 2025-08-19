@@ -25,6 +25,8 @@ public interface MailService {
 
 	public String getMailId(String mx, String popPortletPrefix, Object... ids);
 
+	public String getPOPServerSubdomain();
+
 	public Session getSession();
 
 	public Session getSession(Account account);

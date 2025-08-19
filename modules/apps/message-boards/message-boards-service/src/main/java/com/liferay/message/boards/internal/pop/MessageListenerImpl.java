@@ -67,7 +67,8 @@ public class MessageListenerImpl implements MessageListener {
 				return false;
 			}
 
-			String messageIdString = _getMessageIdString(recipients, message);
+			String messageIdString = _getMessageIdString(
+				_mailService, recipients, message);
 
 			if (Validator.isNull(messageIdString)) {
 				return false;
@@ -114,7 +115,8 @@ public class MessageListenerImpl implements MessageListener {
 
 			stopWatch.start();
 
-			String messageIdString = _getMessageIdString(recipients, message);
+			String messageIdString = _getMessageIdString(
+				_mailService, recipients, message);
 
 			if (Validator.isNull(messageIdString)) {
 				if (_log.isDebugEnabled()) {
@@ -257,10 +259,11 @@ public class MessageListenerImpl implements MessageListener {
 		return MessageListenerImpl.class.getName();
 	}
 
-	private String _getMessageIdString(List<String> recipients, Message message)
+	private String _getMessageIdString(
+			MailService mailService, List<String> recipients, Message message)
 		throws Exception {
 
-		if (!MBMailUtil.hasSubdomain()) {
+		if (!MBMailUtil.hasSubdomain(mailService)) {
 			return MBMailUtil.getParentMessageIdString(message);
 		}
 

@@ -12,6 +12,7 @@ import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
+import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
@@ -77,7 +78,10 @@ export default function AllFDSPropsTransformer({
 			],
 		},
 		infoPanelComponent: (items: {items: ISearchAssetObjectEntry[]}) => (
-			<AssetTypeInfoPanel {...(otherProps as any)} {...items} />
+			<AssetTypeInfoPanel
+				additionalProps={additionalProps as any}
+				{...items}
+			/>
 		),
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'download') {
@@ -142,6 +146,20 @@ export default function AllFDSPropsTransformer({
 					creator: itemData.embedded.creator,
 					itemId: itemData.embedded.id,
 					title: itemData.embedded?.title,
+				});
+			}
+		},
+		onBulkActionItemClick: ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			if (action?.data?.id === 'delete') {
+				deleteAssetEntriesBulkAction({
+					actionId: action.data.id,
+					selectedData,
 				});
 			}
 		},

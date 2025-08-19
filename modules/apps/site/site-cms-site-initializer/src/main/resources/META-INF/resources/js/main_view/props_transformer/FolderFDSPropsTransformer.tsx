@@ -7,12 +7,14 @@ import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
-import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
+import {START_TASK} from '../../common/utils/events';
 import formatActionURL from '../../common/utils/formatActionURL';
+import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
+import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
@@ -165,6 +167,26 @@ export default function FolderFDSPropsTransformer({
 							headerName: itemData.embedded.title,
 						}),
 					size: 'full-screen',
+				});
+			}
+		},
+		onBulkActionItemClick: ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			if (action?.data?.id === 'delete') {
+				deleteAssetEntriesBulkAction({
+					actionId: action.data.id,
+					selectedData,
+				});
+			}
+			else if (action?.data?.id === 'download') {
+				Liferay.fire(START_TASK, {
+					actionId: action.data.id,
+					selectedData,
 				});
 			}
 		},

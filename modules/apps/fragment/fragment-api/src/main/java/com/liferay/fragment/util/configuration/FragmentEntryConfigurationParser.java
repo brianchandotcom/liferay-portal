@@ -48,7 +48,7 @@ public interface FragmentEntryConfigurationParser {
 		Locale locale, String name);
 
 	public List<FragmentConfigurationField> getFragmentConfigurationFields(
-		String configuration);
+		JSONObject configurationJSONObject);
 
 	public String translateConfiguration(
 		JSONObject jsonObject, ResourceBundle resourceBundle);

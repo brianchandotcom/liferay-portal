@@ -7,6 +7,8 @@ package com.liferay.ratings.taglib.servlet.taglib;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -42,6 +44,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.PageContext;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Ambrín Chaudhary
@@ -262,9 +265,15 @@ public class RatingsTag extends IncludeTag {
 			return _externalReferenceCode;
 		}
 
+		String className = _className;
+
+		if (Objects.equals(className, MBDiscussion.class.getName())) {
+			className = MBMessage.class.getName();
+		}
+
 		PersistedModelLocalService persistedModelLocalService =
 			PersistedModelLocalServiceRegistryUtil.
-				getPersistedModelLocalService(_className);
+				getPersistedModelLocalService(className);
 
 		PersistedModel persistedModel = null;
 

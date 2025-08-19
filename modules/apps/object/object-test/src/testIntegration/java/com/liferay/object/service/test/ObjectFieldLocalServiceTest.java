@@ -71,6 +71,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -103,6 +107,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -134,6 +139,23 @@ public class ObjectFieldLocalServiceTest {
 				false,
 				Collections.singletonList(
 					ListTypeEntryUtil.createListTypeEntry(_listTypeEntryKey)));
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@FeatureFlag("LPD-32050")
@@ -2890,6 +2912,8 @@ public class ObjectFieldLocalServiceTest {
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private final Map<String, String> _readOnlyObjectFieldDBTypes =
 		HashMapBuilder.put(
 			"createDate", ObjectFieldConstants.DB_TYPE_DATE

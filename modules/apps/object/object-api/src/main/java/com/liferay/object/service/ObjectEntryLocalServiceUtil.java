@@ -528,23 +528,39 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectEntryFolderId);
 	}
 
-	public static List<ObjectEntry> getOneToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
+	public static Map<Object, Long> getOneToManyAggregationCounts(
+			long groupId, long objectDefinitionId, long objectEntryId,
+			long objectRelationshipId, String aggregationTerm,
+			com.liferay.petra.sql.dsl.expression.Predicate predicate,
 			boolean related, String search, int start, int end)
 		throws PortalException {
 
+		return getService().getOneToManyAggregationCounts(
+			groupId, objectDefinitionId, objectEntryId, objectRelationshipId,
+			aggregationTerm, predicate, related, search, start, end);
+	}
+
+	public static List<ObjectEntry> getOneToManyObjectEntries(
+			long groupId, long objectRelationshipId,
+			com.liferay.petra.sql.dsl.expression.Predicate predicate,
+			long primaryKey, boolean related, String search, int start, int end,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws PortalException {
+
 		return getService().getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, related, search, start,
-			end);
+			groupId, objectRelationshipId, predicate, primaryKey, related,
+			search, start, end, sorts);
 	}
 
 	public static int getOneToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, String search)
+			long groupId, long objectRelationshipId,
+			com.liferay.petra.sql.dsl.expression.Predicate predicate,
+			long primaryKey, boolean related, String search)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related, search);
+			groupId, objectRelationshipId, predicate, primaryKey, related,
+			search);
 	}
 
 	public static ObjectEntry getOrAddEmptyObjectEntry(

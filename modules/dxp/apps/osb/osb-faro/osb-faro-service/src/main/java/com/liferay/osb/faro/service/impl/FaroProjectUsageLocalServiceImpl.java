@@ -74,9 +74,7 @@ public class FaroProjectUsageLocalServiceImpl
 		FaroProjectUsage faroProjectUsage = getFaroProjectUsage(
 			faroProjectUsageId);
 
-		long now = System.currentTimeMillis();
-
-		faroProjectUsage.setModifiedTime(now);
+		faroProjectUsage.setModifiedTime(System.currentTimeMillis());
 
 		faroProjectUsage.setKnownIndividualsCount(knownIndividualsCount);
 		faroProjectUsage.setPageViewsCount(pageViewsCount);

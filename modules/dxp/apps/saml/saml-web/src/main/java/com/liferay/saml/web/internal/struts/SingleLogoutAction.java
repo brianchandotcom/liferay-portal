@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SingleLogoutAction extends BaseSamlStrutsAction {
 
 	@Override
-	public boolean isEnabled() {
+	public boolean isEnabled(HttpServletRequest httpServletRequest) {
 		return _samlProviderConfigurationHelper.isEnabled();
 	}
 

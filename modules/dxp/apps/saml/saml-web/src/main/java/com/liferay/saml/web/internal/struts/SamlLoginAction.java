@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SamlLoginAction extends BaseSamlStrutsAction {
 
 	@Override
-	public boolean isEnabled() {
+	public boolean isEnabled(HttpServletRequest httpServletRequest) {
 		if (!_samlProviderConfigurationHelper.isRoleIdp()) {
 			return _samlProviderConfigurationHelper.isEnabled();
 		}

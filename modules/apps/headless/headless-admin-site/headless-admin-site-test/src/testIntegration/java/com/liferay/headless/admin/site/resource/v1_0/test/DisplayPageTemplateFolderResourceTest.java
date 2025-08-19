@@ -41,8 +41,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -99,18 +97,15 @@ public class DisplayPageTemplateFolderResourceTest
 
 	@Override
 	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
+	public void testDeleteSiteDisplayPageTemplateFolder() throws Exception {
 		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
+			testGetSiteDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				randomDisplayPageTemplateFolder());
 
-		displayPageTemplateFolderResource.
-			deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				testGroup.getExternalReferenceCode(),
-				postDisplayPageTemplateFolder.getExternalReferenceCode());
+		displayPageTemplateFolderResource.deleteSiteDisplayPageTemplateFolder(
+			testGroup.getExternalReferenceCode(),
+			postDisplayPageTemplateFolder.getExternalReferenceCode());
 
 		Assert.assertNull(
 			_layoutPageTemplateCollectionService.
@@ -119,7 +114,7 @@ public class DisplayPageTemplateFolderResourceTest
 					testGroup.getGroupId()));
 
 		DisplayPageTemplateFolder liveGroupDisplayPageTemplateFolder =
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
+			testGetSiteDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				randomDisplayPageTemplateFolder());
 
@@ -129,7 +124,7 @@ public class DisplayPageTemplateFolderResourceTest
 			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateFolderResource.
-					deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					deleteSiteDisplayPageTemplateFolder(
 						testGroup.getExternalReferenceCode(),
 						liveGroupDisplayPageTemplateFolder.
 							getExternalReferenceCode()));
@@ -138,37 +133,16 @@ public class DisplayPageTemplateFolderResourceTest
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteDisplayPageTemplateFolderPermissionsPage()
-		throws Exception {
-
-		super.testGetSiteDisplayPageTemplateFolderPermissionsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLDeleteSiteDisplayPageTemplateFolder()
-		throws Exception {
-
-		super.testGraphQLDeleteSiteDisplayPageTemplateFolder();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
+	public void testGetSiteDisplayPageTemplateFolder() throws Exception {
 		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
+			testGetSiteDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				randomDisplayPageTemplateFolder());
 
 		DisplayPageTemplateFolder getDisplayPageTemplateFolder =
-			displayPageTemplateFolderResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					postDisplayPageTemplateFolder.getExternalReferenceCode());
+			displayPageTemplateFolderResource.getSiteDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				postDisplayPageTemplateFolder.getExternalReferenceCode());
 
 		assertEquals(
 			postDisplayPageTemplateFolder, getDisplayPageTemplateFolder);
@@ -196,20 +170,34 @@ public class DisplayPageTemplateFolderResourceTest
 
 		assertEquals(
 			postDisplayPageTemplateFolder,
-			displayPageTemplateFolderResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					postDisplayPageTemplateFolder.getExternalReferenceCode()));
+			displayPageTemplateFolderResource.getSiteDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				postDisplayPageTemplateFolder.getExternalReferenceCode()));
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
+	public void testGetSiteDisplayPageTemplateFolderPermissionsPage()
 		throws Exception {
 
-		super.
-			testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder();
+		super.testGetSiteDisplayPageTemplateFolderPermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteSiteDisplayPageTemplateFolder()
+		throws Exception {
+
+		super.testGraphQLDeleteSiteDisplayPageTemplateFolder();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDisplayPageTemplateFolder() throws Exception {
+		super.testGraphQLGetSiteDisplayPageTemplateFolder();
 	}
 
 	@Ignore
@@ -232,28 +220,26 @@ public class DisplayPageTemplateFolderResourceTest
 
 	@Override
 	@Test
-	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
+	public void testPatchSiteDisplayPageTemplateFolder() throws Exception {
 		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+			testPostSiteDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder());
 
 		DisplayPageTemplateFolder displayPageTemplateFolder =
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+			testPostSiteDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder());
 
 		Assert.assertNull(
 			displayPageTemplateFolder.
 				getParentDisplayPageTemplateFolderExternalReferenceCode());
 
-		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+		_testPatchSiteDisplayPageTemplateFolder(
 			displayPageTemplateFolder.getExternalReferenceCode(),
 			parentDisplayPageTemplateFolder.getExternalReferenceCode());
 
-		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+		_testPatchSiteDisplayPageTemplateFolder(
 			displayPageTemplateFolder.getExternalReferenceCode(), null);
-		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+		_testPatchSiteDisplayPageTemplateFolder(
 			displayPageTemplateFolder.getExternalReferenceCode(),
 			StringPool.BLANK);
 
@@ -261,7 +247,7 @@ public class DisplayPageTemplateFolderResourceTest
 			"NOT_FOUND", null,
 			() ->
 				displayPageTemplateFolderResource.
-					patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					patchSiteDisplayPageTemplateFolder(
 						testGroup.getExternalReferenceCode(),
 						RandomTestUtil.randomString(),
 						randomDisplayPageTemplateFolder()));
@@ -272,7 +258,7 @@ public class DisplayPageTemplateFolderResourceTest
 			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateFolderResource.
-					patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					patchSiteDisplayPageTemplateFolder(
 						testGroup.getExternalReferenceCode(),
 						displayPageTemplateFolder.getExternalReferenceCode(),
 						displayPageTemplateFolder));
@@ -280,19 +266,16 @@ public class DisplayPageTemplateFolderResourceTest
 
 	@Override
 	@Test
-	public void testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
+	public void testPostSiteDisplayPageTemplateFolder() throws Exception {
+		super.testPostSiteDisplayPageTemplateFolder();
 
-		super.
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder();
-
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode();
+		_testPostSiteDisplayPageTemplateFolderWithExistingParentExternalReferenceCode();
 
 		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+			testPostSiteDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder());
 
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithInvalidKey(
+		_testPostSiteDisplayPageTemplateFolderWithInvalidKey(
 			postDisplayPageTemplateFolder.getKey(),
 			StringBundler.concat(
 				"Duplicate display page template folder for group ",
@@ -303,7 +286,7 @@ public class DisplayPageTemplateFolderResourceTest
 			RandomTestUtil.randomString() + StringPool.AMPERSAND +
 				RandomTestUtil.randomString();
 
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithInvalidKey(
+		_testPostSiteDisplayPageTemplateFolderWithInvalidKey(
 			key,
 			StringBundler.concat(
 				"Key ", key,
@@ -312,7 +295,7 @@ public class DisplayPageTemplateFolderResourceTest
 
 		key = RandomTestUtil.randomString(80);
 
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithInvalidKey(
+		_testPostSiteDisplayPageTemplateFolderWithInvalidKey(
 			key,
 			StringBundler.concat(
 				"Key ", key, " must have fewer than 75 characters"));
@@ -323,35 +306,24 @@ public class DisplayPageTemplateFolderResourceTest
 			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateFolderResource.
-					postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					postSiteDisplayPageTemplateFolder(
 						testGroup.getExternalReferenceCode(),
 						randomDisplayPageTemplateFolder()));
 	}
 
-	@Ignore
 	@Override
 	@Test
-	public void testPutSiteDisplayPageTemplateFolderPermissionsPage()
-		throws Exception {
-
-		super.testPutSiteDisplayPageTemplateFolderPermissionsPage();
-	}
-
-	@Override
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
+	public void testPutSiteDisplayPageTemplateFolder() throws Exception {
 		DisplayPageTemplateFolder displayPageTemplateFolder =
-			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+			_testPutSiteDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder(), null);
 
 		_assertNoParentDisplayPageTemplateFolder(displayPageTemplateFolder);
 
-		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithParentDisplayPageTemplateFolder();
+		_testPutSiteDisplayPageTemplateFolderWithParentDisplayPageTemplateFolder();
 
 		DisplayPageTemplateFolder liveGroupDisplayPageTemplateFolder =
-			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+			_testPutSiteDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder(),
 				displayPageTemplateFolder.getExternalReferenceCode());
 
@@ -364,11 +336,20 @@ public class DisplayPageTemplateFolderResourceTest
 			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateFolderResource.
-					putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					putSiteDisplayPageTemplateFolder(
 						testGroup.getExternalReferenceCode(),
 						liveGroupDisplayPageTemplateFolder.
 							getExternalReferenceCode(),
 						liveGroupDisplayPageTemplateFolder));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteDisplayPageTemplateFolderPermissionsPage()
+		throws Exception {
+
+		super.testPutSiteDisplayPageTemplateFolderPermissionsPage();
 	}
 
 	@Override
@@ -411,7 +392,7 @@ public class DisplayPageTemplateFolderResourceTest
 
 	@Override
 	protected DisplayPageTemplateFolder
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
+			testGetSiteDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
 				String siteExternalReferenceCode,
 				DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
@@ -419,14 +400,14 @@ public class DisplayPageTemplateFolderResourceTest
 		if (LazyReferencingThreadLocal.isEnabled()) {
 			return _toDisplayPageTemplateFolder(
 				_displayPageTemplateFolderResource.
-					postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					postSiteDisplayPageTemplateFolder(
 						siteExternalReferenceCode,
 						_toDisplayPageTemplateFolder(
 							displayPageTemplateFolder)));
 		}
 
 		return displayPageTemplateFolderResource.
-			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+			postSiteDisplayPageTemplateFolder(
 				siteExternalReferenceCode, displayPageTemplateFolder);
 	}
 
@@ -449,11 +430,11 @@ public class DisplayPageTemplateFolderResourceTest
 
 	@Override
 	protected DisplayPageTemplateFolder
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+			testPostSiteDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 				DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
-		return testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
+		return testGetSiteDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
 			testGroup.getExternalReferenceCode(), displayPageTemplateFolder);
 	}
 
@@ -531,10 +512,9 @@ public class DisplayPageTemplateFolderResourceTest
 		throws Exception {
 
 		DisplayPageTemplateFolder displayPageTemplateFolder =
-			displayPageTemplateFolderResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					layoutPageTemplateCollection.getExternalReferenceCode());
+			displayPageTemplateFolderResource.getSiteDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				layoutPageTemplateCollection.getExternalReferenceCode());
 
 		if (parentLayoutPageTemplateCollections.isEmpty()) {
 			Assert.assertNull(
@@ -559,7 +539,7 @@ public class DisplayPageTemplateFolderResourceTest
 
 			assertEquals(
 				displayPageTemplateFolderResource.
-					getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					getSiteDisplayPageTemplateFolder(
 						testGroup.getExternalReferenceCode(),
 						parentLayoutPageTemplateCollection.
 							getExternalReferenceCode()),
@@ -659,17 +639,15 @@ public class DisplayPageTemplateFolderResourceTest
 		return parentLayoutPageTemplateCollectionId;
 	}
 
-	private void
-			_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				String displayPageTemplateFolderExternalReferenceCode,
-				String parentDisplayPageTemplateFolderExternalReferenceCode)
+	private void _testPatchSiteDisplayPageTemplateFolder(
+			String displayPageTemplateFolderExternalReferenceCode,
+			String parentDisplayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
 
 		DisplayPageTemplateFolder getDisplayPageTemplateFolder =
-			displayPageTemplateFolderResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					displayPageTemplateFolderExternalReferenceCode);
+			displayPageTemplateFolderResource.getSiteDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				displayPageTemplateFolderExternalReferenceCode);
 
 		DisplayPageTemplateFolder randomDisplayPageTemplateFolder =
 			randomDisplayPageTemplateFolder();
@@ -682,7 +660,7 @@ public class DisplayPageTemplateFolderResourceTest
 
 		DisplayPageTemplateFolder patchDisplayPageTemplateFolder =
 			displayPageTemplateFolderResource.
-				patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				patchSiteDisplayPageTemplateFolder(
 					testGroup.getExternalReferenceCode(),
 					displayPageTemplateFolderExternalReferenceCode,
 					randomDisplayPageTemplateFolder);
@@ -718,7 +696,7 @@ public class DisplayPageTemplateFolderResourceTest
 		}
 	}
 
-	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode()
+	private void _testPostSiteDisplayPageTemplateFolderWithExistingParentExternalReferenceCode()
 		throws Exception {
 
 		DisplayPageTemplateFolder displayPageTemplateFolder =
@@ -727,7 +705,7 @@ public class DisplayPageTemplateFolderResourceTest
 		displayPageTemplateFolder.setKey(StringPool.BLANK);
 
 		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+			testPostSiteDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 				displayPageTemplateFolder);
 
 		Assert.assertNotNull(
@@ -741,7 +719,7 @@ public class DisplayPageTemplateFolderResourceTest
 				parentDisplayPageTemplateFolder.getExternalReferenceCode());
 
 		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+			testPostSiteDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder);
 
 		assertEquals(
@@ -759,9 +737,8 @@ public class DisplayPageTemplateFolderResourceTest
 			postDisplayPageTemplateFolder, parentDisplayPageTemplateFolder);
 	}
 
-	private void
-			_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithInvalidKey(
-				String key, String title)
+	private void _testPostSiteDisplayPageTemplateFolderWithInvalidKey(
+			String key, String title)
 		throws Exception {
 
 		DisplayPageTemplateFolder displayPageTemplateFolder =
@@ -773,15 +750,14 @@ public class DisplayPageTemplateFolderResourceTest
 			"CONFLICT", title,
 			() ->
 				displayPageTemplateFolderResource.
-					postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					postSiteDisplayPageTemplateFolder(
 						testGroup.getExternalReferenceCode(),
 						displayPageTemplateFolder));
 	}
 
-	private DisplayPageTemplateFolder
-			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				DisplayPageTemplateFolder displayPageTemplateFolder,
-				String parentDisplayPageTemplateFolderExternalReferenceCode)
+	private DisplayPageTemplateFolder _testPutSiteDisplayPageTemplateFolder(
+			DisplayPageTemplateFolder displayPageTemplateFolder,
+			String parentDisplayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
 
 		displayPageTemplateFolder.
@@ -796,11 +772,10 @@ public class DisplayPageTemplateFolderResourceTest
 		}
 
 		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
-			displayPageTemplateFolderResource.
-				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					displayPageTemplateFolder.getExternalReferenceCode(),
-					displayPageTemplateFolder);
+			displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				displayPageTemplateFolder.getExternalReferenceCode(),
+				displayPageTemplateFolder);
 
 		assertEquals(displayPageTemplateFolder, putDisplayPageTemplateFolder);
 		assertValid(putDisplayPageTemplateFolder);
@@ -808,22 +783,21 @@ public class DisplayPageTemplateFolderResourceTest
 		return putDisplayPageTemplateFolder;
 	}
 
-	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithParentDisplayPageTemplateFolder()
+	private void _testPutSiteDisplayPageTemplateFolderWithParentDisplayPageTemplateFolder()
 		throws Exception {
 
 		_assertProblemException(
 			"BAD_REQUEST", null,
-			() ->
-				_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					randomDisplayPageTemplateFolder(),
-					RandomTestUtil.randomString()));
+			() -> _testPutSiteDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder(),
+				RandomTestUtil.randomString()));
 
 		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+			testPostSiteDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder());
 
 		DisplayPageTemplateFolder displayPageTemplateFolder =
-			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+			_testPutSiteDisplayPageTemplateFolder(
 				randomDisplayPageTemplateFolder(),
 				parentDisplayPageTemplateFolder.getExternalReferenceCode());
 
@@ -831,7 +805,7 @@ public class DisplayPageTemplateFolderResourceTest
 			displayPageTemplateFolder, parentDisplayPageTemplateFolder);
 
 		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
-			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+			_testPutSiteDisplayPageTemplateFolder(
 				displayPageTemplateFolder, StringPool.BLANK);
 
 		_assertNoParentDisplayPageTemplateFolder(putDisplayPageTemplateFolder);
@@ -846,11 +820,10 @@ public class DisplayPageTemplateFolderResourceTest
 				parentDisplayPageTemplateFolder.getExternalReferenceCode());
 
 		try {
-			_displayPageTemplateFolderResource.
-				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					putDisplayPageTemplateFolder.getExternalReferenceCode(),
-					_toDisplayPageTemplateFolder(putDisplayPageTemplateFolder));
+			_displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				putDisplayPageTemplateFolder.getExternalReferenceCode(),
+				_toDisplayPageTemplateFolder(putDisplayPageTemplateFolder));
 
 			Assert.fail();
 		}
@@ -863,11 +836,10 @@ public class DisplayPageTemplateFolderResourceTest
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			_displayPageTemplateFolderResource.
-				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					putDisplayPageTemplateFolder.getExternalReferenceCode(),
-					_toDisplayPageTemplateFolder(putDisplayPageTemplateFolder));
+			_displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				putDisplayPageTemplateFolder.getExternalReferenceCode(),
+				_toDisplayPageTemplateFolder(putDisplayPageTemplateFolder));
 
 			List<LayoutPageTemplateCollection>
 				parentLayoutPageTemplateCollections = new ArrayList<>();

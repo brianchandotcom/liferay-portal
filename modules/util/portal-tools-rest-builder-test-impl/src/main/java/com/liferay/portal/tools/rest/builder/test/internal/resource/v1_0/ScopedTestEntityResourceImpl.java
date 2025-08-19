@@ -10,6 +10,8 @@ import com.liferay.depot.service.DepotEntryService;
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ScopedTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ScopedTestEntityResource;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -200,6 +202,12 @@ public class ScopedTestEntityResourceImpl
 		}
 
 		scopedTestEntity.setAssetLibraryKey(String.valueOf(assetLibraryId));
+
+		if (Validator.isNull(scopedTestEntity.getExternalReferenceCode())) {
+			scopedTestEntity.setExternalReferenceCode(
+				StringUtil.randomString());
+		}
+
 		scopedTestEntity.setSiteId(0L);
 
 		_scopedTestEntities.add(scopedTestEntity);
@@ -221,6 +229,12 @@ public class ScopedTestEntityResourceImpl
 		}
 
 		scopedTestEntity.setAssetLibraryKey((String)null);
+
+		if (Validator.isNull(scopedTestEntity.getExternalReferenceCode())) {
+			scopedTestEntity.setExternalReferenceCode(
+				StringUtil.randomString());
+		}
+
 		scopedTestEntity.setSiteId(siteId);
 
 		_scopedTestEntities.add(scopedTestEntity);

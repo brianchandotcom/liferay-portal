@@ -116,6 +116,13 @@ public class IndexUpdaterUtil {
 		DependencyManagerSyncUtil.registerSyncFutureTask(
 			new FutureTask<>(
 				() -> {
+					try {
+						PrimaryKeyUpdaterUtil.updateAllPrimaryKeys();
+					}
+					catch (Exception exception) {
+						_log.error(exception);
+					}
+
 					bundleTracker.open();
 
 					DependencyManagerSyncUtil.registerSyncCallable(

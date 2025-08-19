@@ -56,19 +56,19 @@ public class CPDefinitionInventoryUpgradeProcess extends UpgradeProcess {
 						allowedOrderQuantities, CharPool.PERIOD,
 						CharPool.SPACE);
 
-					String[] allowedOrderQuantitiesItems =
+					String[] allowedOrderQuantitiesParts =
 						allowedOrderQuantities.split(StringPool.SPACE);
 
 					StringBundler sb = new StringBundler(
-						allowedOrderQuantitiesItems.length * 2);
+						allowedOrderQuantitiesParts.length * 2);
 
-					for (String allowedOrderQuantitiesItem :
-							allowedOrderQuantitiesItems) {
+					for (String allowedOrderQuantitiesPart :
+							allowedOrderQuantitiesParts) {
 
 						sb.append(
 							decimalFormat.format(
 								GetterUtil.getDouble(
-									allowedOrderQuantitiesItem)));
+									allowedOrderQuantitiesPart)));
 						sb.append(StringPool.SPACE);
 					}
 

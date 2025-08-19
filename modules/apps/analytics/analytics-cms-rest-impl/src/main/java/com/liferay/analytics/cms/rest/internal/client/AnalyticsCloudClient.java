@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryAcquisitionChannel;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryHistogramMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryMetric;
+import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryTopPages;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -229,6 +230,69 @@ public class AnalyticsCloudClient {
 
 			throw new PortalException(
 				"Unable to get object entry metric", exception);
+		}
+	}
+
+	public ObjectEntryTopPages getObjectEntryTopPages(
+			AnalyticsConfiguration analyticsConfiguration,
+			String externalReferenceCode, Long groupId, Integer rangeKey)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			List<Long> groupIds = new ArrayList<>();
+
+			if (groupId != null) {
+				groupIds.add(groupId);
+			}
+
+			options.setLocation(
+				_getUrl(
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					externalReferenceCode, groupIds,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					"/appears-on", rangeKey, null));
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				ObjectEntryTopPages objectEntryTopPages = null;
+
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
+
+				if (jsonNode != null) {
+					_renameKey(jsonNode, "topPages", "pages");
+
+					TypeFactory typeFactory = TypeFactory.defaultInstance();
+
+					ObjectReader objectReader =
+						ObjectMapperHolder._objectMapper.readerFor(
+							typeFactory.constructType(
+								ObjectEntryTopPages.class));
+
+					objectEntryTopPages = objectReader.readValue(jsonNode);
+				}
+
+				return objectEntryTopPages;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + response.getResponseCode());
+			}
+
+			throw new PortalException("Unable to get object entry top pages");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get object entry top pages", exception);
 		}
 	}
 

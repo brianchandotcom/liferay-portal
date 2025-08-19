@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public abstract class BaseGroupItemSelectorProviderTestCase {
+public abstract class BaseDepotGroupItemSelectorProviderTestCase {
 
 	@Before
 	public void setUp() throws Exception {

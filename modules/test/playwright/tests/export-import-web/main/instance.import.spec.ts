@@ -100,7 +100,7 @@ test('can export and import custom object entries at instance level', async ({
 		'c/tests'
 	);
 
-	const exportFilePath = await companyExportImportPage.export('Tests');
+	const exportFilePath = await companyExportImportPage.export('Tests 1 Items');
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 
@@ -166,7 +166,7 @@ test('can only import custom object entries when their definitions are already i
 		'c/tests'
 	);
 
-	const exportFilePath = await companyExportImportPage.export('Tests');
+	const exportFilePath = await companyExportImportPage.export('Tests 1 Items');
 
 	objectActionAPIClient.deleteObjectDefinition(objectDefinition.id);
 
@@ -227,7 +227,7 @@ test('can import custom object entries at instance level with or without permiss
 
 	// Export with permissions
 
-	const exportFilePath = await companyExportImportPage.export('Tests', true);
+	const exportFilePath = await companyExportImportPage.export('Tests 1 Items', true);
 
 	// Import with permissions
 
@@ -304,7 +304,12 @@ test('can see corresponding elements at instance level', async ({
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
-	const exportFilePath = await companyExportImportPage.export('Tests');
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+		{externalReferenceCode: '', name: 'test'},
+		'c/tests'
+	);
+
+	const exportFilePath = await companyExportImportPage.export('Tests 1 Items');
 
 	await companyExportImportPage.page.goto('/');
 
@@ -465,6 +470,11 @@ test(
 			type: 'objectDefinition',
 		});
 
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', name: 'test'},
+			`c/${objectDefinition.name.toLowerCase()}s`
+		);
+
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		userData[user.alternateName] = {
@@ -501,7 +511,7 @@ test(
 		await page.getByRole('button', {name: 'Save'}).click();
 		await page.waitForTimeout(2000);
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
-		await page.getByText('Add ' + objectDefinition.name).click();
+		await page.locator('[data-testid="fdsCreationActionButton"]').click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
 		await waitForAlert(
@@ -516,7 +526,7 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			objectDefinition.name
+			`${objectDefinition.name} 2 Items`
 		);
 
 		const applicationName =
@@ -564,6 +574,11 @@ test(
 			type: 'objectDefinition',
 		});
 
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', name: 'test'},
+			`c/${objectDefinition.name.toLowerCase()}s`
+		);
+
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		userData[user.alternateName] = {
@@ -600,7 +615,7 @@ test(
 		await page.getByRole('button', {name: 'Save'}).click();
 		await page.waitForTimeout(2000);
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
-		await page.getByText('Add ' + objectDefinition.name).click();
+		await page.locator('[data-testid="fdsCreationActionButton"]').click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
 		await waitForAlert(
@@ -615,7 +630,7 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			objectDefinition.name
+			`${objectDefinition.name} 2 Items`
 		);
 
 		const applicationName =
@@ -659,6 +674,11 @@ test(
 			type: 'objectDefinition',
 		});
 
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: 'testERC', textField: 'test'},
+			`c/${objectDefinition.name.toLowerCase()}s`
+		);
+
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		userData[user.alternateName] = {
@@ -695,7 +715,7 @@ test(
 		await page.getByRole('button', {name: 'Save'}).click();
 		await page.waitForTimeout(2000);
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
-		await page.getByText('Add ' + objectDefinition.name).click();
+		await page.locator('[data-testid="fdsCreationActionButton"]').click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
 		await waitForAlert(
@@ -710,7 +730,7 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			objectDefinition.name
+			`${objectDefinition.name} 2 Items`
 		);
 
 		const applicationName =

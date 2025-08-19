@@ -19,7 +19,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -55,7 +54,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public String getConfiguration(
+	public JSONObject getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
 		return JSONUtil.put(
@@ -72,8 +71,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 							"type", "itemSelector"
 						).put(
 							"typeOptions", JSONUtil.put("itemType", "FDSView")
-						))))
-		).toString();
+						)))));
 	}
 
 	@Override
@@ -109,8 +107,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 			JSONObject jsonObject =
 				(JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
-					_jsonFactory.toJSONObject(
-						getConfiguration(fragmentRendererContext)),
+					getConfiguration(fragmentRendererContext),
 					fragmentEntryLink.getEditableValuesJSONObject(),
 					fragmentRendererContext.getLocale(), "itemSelector");
 
@@ -201,9 +198,6 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

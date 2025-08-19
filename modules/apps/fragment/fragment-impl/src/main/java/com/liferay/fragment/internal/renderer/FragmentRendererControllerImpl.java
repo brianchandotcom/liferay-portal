@@ -18,8 +18,6 @@ import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -58,20 +56,9 @@ public class FragmentRendererControllerImpl
 		FragmentRenderer fragmentRenderer = _getFragmentRenderer(
 			fragmentRendererContext.getFragmentEntryLink());
 
-		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				fragmentRenderer.getConfiguration(fragmentRendererContext));
-
-			return _translateConfigurationFields(
-				jsonObject, fragmentRendererContext.getLocale());
-		}
-		catch (JSONException jsonException) {
-			_log.error(
-				"Unable to parse fragment entry link configuration",
-				jsonException);
-		}
-
-		return null;
+		return _translateConfigurationFields(
+			fragmentRenderer.getConfiguration(fragmentRendererContext),
+			fragmentRendererContext.getLocale());
 	}
 
 	@Override
@@ -226,9 +213,6 @@ public class FragmentRendererControllerImpl
 
 	@Reference
 	private FragmentRendererRegistry _fragmentRendererRegistry;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

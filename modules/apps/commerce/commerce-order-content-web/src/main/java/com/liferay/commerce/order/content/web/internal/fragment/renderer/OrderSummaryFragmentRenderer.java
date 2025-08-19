@@ -54,7 +54,7 @@ public class OrderSummaryFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public String getConfiguration(
+	public JSONObject getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -66,16 +66,15 @@ public class OrderSummaryFragmentRenderer implements FragmentRenderer {
 					getClass(),
 					"order_summary/dependencies/configuration.json"));
 
-			return _jsonFactory.toString(
-				_fragmentEntryConfigurationParser.translateConfiguration(
-					jsonObject, resourceBundle));
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject, resourceBundle);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return StringPool.BLANK;
+			return null;
 		}
 	}
 
@@ -164,8 +163,7 @@ public class OrderSummaryFragmentRenderer implements FragmentRenderer {
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				_jsonFactory.toJSONObject(
-					getConfiguration(fragmentRendererContext)),
+				getConfiguration(fragmentRendererContext),
 				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), name));
 	}

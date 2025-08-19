@@ -12,7 +12,6 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.fragment.util.configuration.FragmentEntryMenuDisplayConfiguration;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -57,7 +56,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public String getConfiguration(
+	public JSONObject getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -70,16 +69,15 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 					"/com/liferay/fragment/renderer/menu/display/internal" +
 						"/dependencies/configuration.json"));
 
-			return _jsonFactory.toString(
-				_fragmentEntryConfigurationParser.translateConfiguration(
-					jsonObject, resourceBundle));
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject, resourceBundle);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return StringPool.BLANK;
+			return null;
 		}
 	}
 
@@ -110,8 +108,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 			printWriter.write("<div id=\"" + fragmentElementId + "\">");
 
-			JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
-				getConfiguration(fragmentRendererContext));
+			JSONObject configurationJSONObject = getConfiguration(
+				fragmentRendererContext);
 
 			_writeCss(
 				configurationJSONObject,

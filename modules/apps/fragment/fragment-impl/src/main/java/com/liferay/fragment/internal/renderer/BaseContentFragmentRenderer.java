@@ -16,7 +16,6 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,8 +46,7 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 
 		JSONObject jsonObject =
 			(JSONObject)fragmentEntryConfigurationParser.getFieldValue(
-				JSONFactoryUtil.toJSONObject(
-					getConfiguration(fragmentRendererContext)),
+				getConfiguration(fragmentRendererContext),
 				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), "itemSelector");
 

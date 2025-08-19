@@ -23,6 +23,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -140,8 +141,9 @@ public abstract class BaseInputFragmentRendererTestCase {
 
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			StringPool.BLANK, StringPool.BLANK,
-			fragmentRenderer.getConfiguration(
-				new DefaultFragmentRendererContext(null)),
+			JSONFactoryUtil.toString(
+				fragmentRenderer.getConfiguration(
+					new DefaultFragmentRendererContext(null))),
 			0, StringPool.BLANK, StringPool.BLANK, draftLayout, getRenderKey(),
 			fragmentRenderer.getType(), jsonObject.getString("addedItemId"), 0,
 			segmentsExperienceId);

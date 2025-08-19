@@ -302,6 +302,18 @@ public class JournalSubscriptionLocalizedContentTest
 			}
 
 			@Override
+			public String getMailId(
+				String mx, String popPortletPrefix, Object... ids) {
+
+				return _mailService.getMailId(mx, popPortletPrefix, ids);
+			}
+
+			@Override
+			public String getPOPServerSubdomain() {
+				return _mailService.getPOPServerSubdomain();
+			}
+
+			@Override
 			public Session getSession() {
 				return _mailService.getSession();
 			}
@@ -314,6 +326,16 @@ public class JournalSubscriptionLocalizedContentTest
 			@Override
 			public Session getSession(long companyId) {
 				return _mailService.getSession(companyId);
+			}
+
+			@Override
+			public boolean isPOPServerNotificationsEnabled(long companyId) {
+				return _mailService.isPOPServerNotificationsEnabled(companyId);
+			}
+
+			@Override
+			public boolean isPOPServerUser(String emailAddress) {
+				return _mailService.isPOPServerUser(emailAddress);
 			}
 
 			@Override

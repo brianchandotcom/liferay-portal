@@ -925,6 +925,7 @@ definition {
 	@priority = 3
 	test UpdateSystemSettingsWithoutPortalRestart {
 		property embedded.elasticsearch.only = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

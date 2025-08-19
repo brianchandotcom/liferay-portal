@@ -59,7 +59,7 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	private String _postProcess(String content) {
 		StringBuffer sb = new StringBuffer();
 
-		Matcher matcher = _dashPattern1.matcher(content);
+		Matcher matcher = _dashPattern2.matcher(content);
 
 		while (matcher.find()) {
 			String firstLine = matcher.group(1);
@@ -102,7 +102,7 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			Matcher matcher = _dashPattern.matcher(line);
+			Matcher matcher = _dashPattern1.matcher(line);
 
 			if (matcher.matches()) {
 				String indent = matcher.group(1);
@@ -132,8 +132,8 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 		"**/templates/*.tpl", "**/*.yaml", "**/*.yml"
 	};
 
-	private static final Pattern _dashPattern = Pattern.compile("( +- +)(.+)");
-	private static final Pattern _dashPattern1 = Pattern.compile(
+	private static final Pattern _dashPattern1 = Pattern.compile("( +- +)(.+)");
+	private static final Pattern _dashPattern2 = Pattern.compile(
 		"\n( *-)\n( +)(.+)");
 
 }

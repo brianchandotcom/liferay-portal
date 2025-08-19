@@ -229,6 +229,15 @@ public class ObjectEntryServiceUtil {
 			objectEntryId, values, serviceContext);
 	}
 
+	public static ObjectEntry restoreObjectEntryFromTrash(
+			long userId, ObjectEntry objectEntry,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().restoreObjectEntryFromTrash(
+			userId, objectEntry, serviceContext);
+	}
+
 	public static void subscribeObjectEntry(
 			long userId, long groupId, long objectEntryId)
 		throws PortalException {

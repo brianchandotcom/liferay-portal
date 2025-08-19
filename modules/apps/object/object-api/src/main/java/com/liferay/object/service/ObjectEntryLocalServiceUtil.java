@@ -679,6 +679,15 @@ public class ObjectEntryLocalServiceUtil {
 			userId, objectEntryId, values, serviceContext);
 	}
 
+	public static ObjectEntry restoreObjectEntryFromTrash(
+			long userId, ObjectEntry objectEntry,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().restoreObjectEntryFromTrash(
+			userId, objectEntry, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<ObjectEntry> searchObjectEntries(
 				long groupId, long objectDefinitionId, String keywords, int cur,

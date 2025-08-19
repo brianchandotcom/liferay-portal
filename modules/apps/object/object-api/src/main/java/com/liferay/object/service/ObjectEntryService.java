@@ -166,6 +166,10 @@ public interface ObjectEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public ObjectEntry restoreObjectEntryFromTrash(
+			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void subscribeObjectEntry(
 			long userId, long groupId, long objectEntryId)
 		throws PortalException;

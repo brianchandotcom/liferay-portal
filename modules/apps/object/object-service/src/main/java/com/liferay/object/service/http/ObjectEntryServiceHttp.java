@@ -962,6 +962,49 @@ public class ObjectEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectEntry
+			restoreObjectEntryFromTrash(
+				HttpPrincipal httpPrincipal, long userId,
+				com.liferay.object.model.ObjectEntry objectEntry,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryServiceUtil.class, "restoreObjectEntryFromTrash",
+				_restoreObjectEntryFromTrashParameterTypes22);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, objectEntry, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void subscribeObjectEntry(
 			HttpPrincipal httpPrincipal, long userId, long groupId,
 			long objectEntryId)
@@ -970,7 +1013,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "subscribeObjectEntry",
-				_subscribeObjectEntryParameterTypes22);
+				_subscribeObjectEntryParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, objectEntryId);
@@ -1006,7 +1049,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "unsubscribeObjectEntry",
-				_unsubscribeObjectEntryParameterTypes23);
+				_unsubscribeObjectEntryParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, objectEntryId);
@@ -1044,7 +1087,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "updateObjectEntry",
-				_updateObjectEntryParameterTypes24);
+				_updateObjectEntryParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId, values, serviceContext);
@@ -1087,7 +1130,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "validate",
-				_validateParameterTypes25);
+				_validateParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, objectEntry,
@@ -1202,16 +1245,21 @@ public class ObjectEntryServiceHttp {
 			long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _subscribeObjectEntryParameterTypes22 =
+	private static final Class<?>[]
+		_restoreObjectEntryFromTrashParameterTypes22 = new Class[] {
+			long.class, com.liferay.object.model.ObjectEntry.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _subscribeObjectEntryParameterTypes23 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _unsubscribeObjectEntryParameterTypes23 =
+	private static final Class<?>[] _unsubscribeObjectEntryParameterTypes24 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateObjectEntryParameterTypes24 =
+	private static final Class<?>[] _updateObjectEntryParameterTypes25 =
 		new Class[] {
 			long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _validateParameterTypes25 = new Class[] {
+	private static final Class<?>[] _validateParameterTypes26 = new Class[] {
 		long.class, com.liferay.object.model.ObjectEntry.class,
 		java.util.List.class,
 		com.liferay.portal.kernel.service.ServiceContext.class

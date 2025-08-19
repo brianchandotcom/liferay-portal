@@ -455,11 +455,11 @@ paths:
                     description:
                         default response
             tags: ["Site"]
-    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}":
+    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}":
         delete:
             description:
-                Removes the user from the asset library using the provided external reference codes.
-            operationId: deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode
+                Removes the user account from the asset library using the provided external reference codes.
+            operationId: deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -467,7 +467,7 @@ paths:
                     schema:
                         type: string
                 -   in: path
-                    name: userExternalReferenceCode
+                    name: userAccountExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -481,8 +481,8 @@ paths:
             tags: ["UserAccount"]
         get:
             description:
-                Gets a user connected to the asset library using the provided external reference codes.
-            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode
+                Gets a user account connected to the asset library using the provided external reference codes.
+            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -490,7 +490,7 @@ paths:
                     schema:
                         type: string
                 -   in: path
-                    name: userExternalReferenceCode
+                    name: userAccountExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -508,8 +508,8 @@ paths:
             tags: ["UserAccount"]
         put:
             description:
-                Adds the user to the asset library using the provided external reference codes.
-            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode
+                Adds the user account to the asset library using the provided external reference codes.
+            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -517,7 +517,7 @@ paths:
                     schema:
                         type: string
                 -   in: path
-                    name: userExternalReferenceCode
+                    name: userAccountExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -533,9 +533,9 @@ paths:
                     description:
                         default response
             tags: ["UserAccount"]
-    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userExternalReferenceCode}/roles":
+    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/roles":
         get:
-            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage
+            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -543,7 +543,7 @@ paths:
                     schema:
                         type: string
                 -   in: path
-                    name: userExternalReferenceCode
+                    name: userAccountExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -562,7 +562,7 @@ paths:
                                 type: array
             tags: ["Role"]
         put:
-            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage
+            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -570,7 +570,7 @@ paths:
                     schema:
                         type: string
                 -   in: path
-                    name: userExternalReferenceCode
+                    name: userAccountExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -877,7 +877,7 @@ paths:
     "/asset-libraries/by-external-reference-code/{externalReferenceCode}/user-accounts":
         get:
             description:
-                Get the asset library with the provided external reference code associated users. Results can be
+                Get the asset library with the provided external reference code associated user accounts. Results can be
                 paginated, filtered, searched, and sorted.
             operationId: getAssetLibraryByExternalReferenceCodeUserAccountsPage
             parameters:
@@ -1273,7 +1273,8 @@ paths:
     "/asset-libraries/{assetLibraryId}/user-accounts":
         get:
             description:
-                Get the asset library associated users. Results can be paginated, filtered, searched, and sorted.
+                Get the asset library associated user accounts. Results can be paginated, filtered, searched, and
+                sorted.
             operationId: getAssetLibraryUserAccountsPage
             parameters:
                 -   in: path
@@ -1322,10 +1323,10 @@ paths:
                     description:
                         default response
             tags: ["UserAccount"]
-    "/asset-libraries/{assetLibraryId}/user-accounts/{userId}":
+    "/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}":
         delete:
             description:
-                Removes the user from the asset library.
+                Removes the user account from the asset library.
             operationId: deleteAssetLibraryUserAccount
             parameters:
                 -   in: path
@@ -1335,7 +1336,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: userId
+                    name: userAccountId
                     required: true
                     schema:
                         format: int64
@@ -1350,7 +1351,7 @@ paths:
             tags: ["UserAccount"]
         get:
             description:
-                Gets a user connected to the asset library.
+                Gets a user account connected to the asset library.
             operationId: getAssetLibraryUserAccount
             parameters:
                 -   in: path
@@ -1360,7 +1361,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: userId
+                    name: userAccountId
                     required: true
                     schema:
                         format: int64
@@ -1389,7 +1390,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: userId
+                    name: userAccountId
                     required: true
                     schema:
                         format: int64
@@ -1406,7 +1407,7 @@ paths:
                     description:
                         default response
             tags: ["UserAccount"]
-    "/asset-libraries/{assetLibraryId}/user-accounts/{userId}/roles":
+    "/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}/roles":
         get:
             operationId: getAssetLibraryUserAccountUserRolesPage
             parameters:
@@ -1417,7 +1418,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: userId
+                    name: userAccountId
                     required: true
                     schema:
                         format: int64
@@ -1446,7 +1447,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: userId
+                    name: userAccountId
                     required: true
                     schema:
                         format: int64

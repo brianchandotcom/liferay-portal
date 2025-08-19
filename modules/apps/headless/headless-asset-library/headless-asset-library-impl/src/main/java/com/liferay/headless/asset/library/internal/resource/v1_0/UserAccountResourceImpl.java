@@ -130,15 +130,16 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		if (!_groupService.hasUserGroup(userAccountId, assetLibraryId)) {
+		User user = _userService.getUserById(userAccountId);
+
+		if (!_groupService.hasUserGroup(user.getUserId(), assetLibraryId)) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
 					"User ", userAccountId, " is not associated to group ",
 					assetLibraryId));
 		}
 
-		return _toUserAccount(
-			assetLibraryId, _userService.getUserById(userAccountId));
+		return _toUserAccount(assetLibraryId, user);
 	}
 
 	@NestedField(parentClass = AssetLibrary.class, value = "userAccounts")

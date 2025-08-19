@@ -450,3 +450,31 @@ test('View widget template based on script file applied and with corrupt script 
 		page.getByText('Unexpected end of file reached.')
 	).toBeVisible();
 });
+
+test(
+	'View widget template with wrong comment and script tag',
+	{tag: '@LPD-62889'},
+	async ({page, site, templatesPage}) => {
+
+		// Go to widget templates administration
+
+		await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
+
+		// Create widget template
+
+		const name = getRandomString();
+		const content = '<!-- WRONG COMMENT LINE-- > <script ></script>';
+
+		await templatesPage.createWidgetTemplate(
+			name,
+			'Asset Publisher Template',
+			content
+		);
+
+		// Edit it again and check it's shown properly
+
+		await templatesPage.editTemplate(name);
+
+		await expect(page.getByText(content)).toBeVisible();
+	}
+);

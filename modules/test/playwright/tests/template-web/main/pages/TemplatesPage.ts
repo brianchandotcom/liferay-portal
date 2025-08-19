@@ -87,7 +87,7 @@ export class TemplatesPage {
 		await waitForAlert(this.page);
 	}
 
-	async createWidgetTemplate(name: string, type: string) {
+	async createWidgetTemplate(name: string, type: string, content?: string) {
 		const typeOption = this.page.getByRole('menuitem', {
 			name: type,
 		});
@@ -119,6 +119,16 @@ export class TemplatesPage {
 			this.page.getByPlaceholder('Untitled Template'),
 			name
 		);
+
+		if (content) {
+			const codeMirror = this.page.locator('.CodeMirror-scroll').last();
+			await codeMirror.click();
+
+			await this.page.keyboard.press('Control+KeyA');
+			await this.page.keyboard.press('Backspace');
+
+			await this.page.keyboard.type(content);
+		}
 
 		await this.saveTemplate(name);
 	}

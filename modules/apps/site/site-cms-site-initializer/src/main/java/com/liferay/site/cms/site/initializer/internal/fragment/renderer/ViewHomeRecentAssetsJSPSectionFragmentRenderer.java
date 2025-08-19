@@ -12,7 +12,7 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeRecentAssetsDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeRecentAssetsSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentRenderer.class)
 public class ViewHomeRecentAssetsJSPSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewHomeRecentAssetsDisplayContext> {
+	extends BaseJSPSectionFragmentRenderer
+		<ViewHomeRecentAssetsSectionDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
@@ -32,10 +33,10 @@ public class ViewHomeRecentAssetsJSPSectionFragmentRenderer
 	}
 
 	@Override
-	protected ViewHomeRecentAssetsDisplayContext getDisplayContext(
+	protected ViewHomeRecentAssetsSectionDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewHomeRecentAssetsDisplayContext(
+		return new ViewHomeRecentAssetsSectionDisplayContext(
 			_depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, _objectDefinitionService,
 			_objectDefinitionSettingLocalService,

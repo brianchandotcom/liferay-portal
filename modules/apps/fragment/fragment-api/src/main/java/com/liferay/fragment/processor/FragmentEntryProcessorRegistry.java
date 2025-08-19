@@ -42,7 +42,8 @@ public interface FragmentEntryProcessorRegistry {
 		return fragmentEntryLink.getHtml();
 	}
 
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, JSONObject configurationJSONObject)
 		throws PortalException;
 
 }

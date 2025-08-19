@@ -208,8 +208,120 @@ const Sites = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 	);
 };
 
+const Spaces = ({spaces}) => {
+	return (
+		<>
+			{spaces?.length > 0 &&
+				spaces.map(({active, id, logoColor, name, url}) => (
+					<Space
+						current={active}
+						key={id}
+						logoColor={logoColor}
+						name={name}
+						url={url}
+					/>
+				))}
+		</>
+	);
+};
+
+const Space = ({current, logoColor, name, url}) => {
+	return (
+		<li className="c-mt-3">
+			<a
+				aria-current={current}
+				className="applications-menu-nav-link d-inline-flex"
+				href={url}
+			>
+				<ClayLayout.ContentRow
+					containerElement="span"
+					verticalAlign="center"
+				>
+					<ClayLayout.ContentCol
+						className="align-items-center d-flex"
+						containerElement="span"
+					>
+						<ClaySticker displayType={logoColor} size="sm">
+							{name.charAt(0).toUpperCase()}
+						</ClaySticker>
+					</ClayLayout.ContentCol>
+
+					<ClayLayout.ContentCol
+						className="applications-menu-shrink c-ml-2"
+						containerElement="span"
+					>
+						<span className="text-truncate">{name}</span>
+					</ClayLayout.ContentCol>
+
+					{current && (
+						<ClayLayout.ContentCol
+							className="c-ml-2"
+							containerElement="span"
+						>
+							<ClayLabel displayType="info">
+								{Liferay.Language.get('current')}
+							</ClayLabel>
+						</ClayLayout.ContentCol>
+					)}
+				</ClayLayout.ContentRow>
+			</a>
+		</li>
+	);
+};
+
+const SpacesPanel = ({cms}) => {
+	return (
+		<div className="applications-menu-spaces c-p-3 c-px-md-4">
+			<div className="c-mt-2">
+				{cms && (
+					<a
+						className="applications-menu-cms applications-menu-nav-link d-inline-flex"
+						href={cms.url}
+					>
+						<ClayLayout.ContentRow
+							containerElement="span"
+							verticalAlign="center"
+						>
+							<ClayLayout.ContentCol containerElement="span">
+								<ClaySticker>
+									<img
+										alt=""
+										height="32px"
+										src={cms.logoURL}
+									/>
+								</ClaySticker>
+							</ClayLayout.ContentCol>
+
+							<ClayLayout.ContentCol
+								className="applications-menu-shrink c-ml-2"
+								containerElement="span"
+							>
+								<span className="text-truncate">
+									{Liferay.Language.get('cms')}
+								</span>
+							</ClayLayout.ContentCol>
+						</ClayLayout.ContentRow>
+					</a>
+				)}
+			</div>
+
+			<div className="applications-menu-nav-divider c-my-2"></div>
+
+			<div className="applications-menu-spaces c-my-2">
+				<ul
+					aria-label={Liferay.Language.get('spaces')}
+					className="list-unstyled"
+				>
+					{cms.spaces && <Spaces spaces={cms.spaces} />}
+				</ul>
+			</div>
+		</div>
+	);
+};
+
 const AppsPanel = ({
 	categories = [],
+	cms = {},
 	handleCloseButtonClick = () => {},
 	liferayLogoURL,
 	liferayName,
@@ -286,7 +398,7 @@ const AppsPanel = ({
 			<div className="applications-menu-bg applications-menu-border-top applications-menu-content">
 				<ClayLayout.ContainerFluid size={false}>
 					<ClayLayout.Row>
-						<ClayLayout.Col className="pr-0" md="9" xl="8">
+						<ClayLayout.Col className="pr-0" md="8" xl="8">
 							<ClayTabs.Content activeIndex={activeTab}>
 								{categories.map(({childCategories}, index) => (
 									<ClayTabs.TabPane
@@ -316,12 +428,16 @@ const AppsPanel = ({
 							</ClayTabs.Content>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col className="px-0" md="3" xl="4">
+						<ClayLayout.Col className="px-0" md="2" xl="2">
 							<SitesPanel
 								portletNamespace={portletNamespace}
 								sites={sites}
 								virtualInstance={virtualInstance}
 							/>
+						</ClayLayout.Col>
+
+						<ClayLayout.Col className="px-0" md="2" xl="2">
+							<SpacesPanel cms={cms} />
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>
@@ -445,9 +561,10 @@ const ApplicationsMenu = ({
 		if (!fetchCategoriesPromiseRef.current) {
 			fetchCategoriesPromiseRef.current = fetch(panelAppsURL)
 				.then((response) => response.json())
-				.then(({items, portletNamespace, sites}) => {
+				.then(({cms, items, portletNamespace, sites}) => {
 					setAppsPanelData({
 						categories: items,
+						cms,
 						portletNamespace,
 						selectedPortletId,
 						sites,

@@ -53,7 +53,7 @@ public class FaroProjectUsageLocalServiceImpl
 	}
 
 	@Override
-	public void deleteFaroProjectUsage() {
+	public void deleteFaroProjectUsages() {
 		faroProjectUsagePersistence.removeAll();
 	}
 

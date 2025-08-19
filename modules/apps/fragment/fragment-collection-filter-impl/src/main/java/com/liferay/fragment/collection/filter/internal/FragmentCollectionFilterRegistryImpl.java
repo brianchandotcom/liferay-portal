@@ -11,6 +11,7 @@ import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -68,6 +69,9 @@ public class FragmentCollectionFilterRegistryImpl
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;
 
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private ServiceTrackerMap<String, FragmentCollectionFilter>
 		_serviceTrackerMap;
 
@@ -90,7 +94,8 @@ public class FragmentCollectionFilterRegistryImpl
 
 			try {
 				_fragmentEntryValidator.validateConfiguration(
-					fragmentCollectionFilter.getConfiguration());
+					_jsonFactory.toString(
+						fragmentCollectionFilter.getConfiguration()));
 
 				return fragmentCollectionFilter;
 			}

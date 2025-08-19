@@ -38,11 +38,11 @@ import java.util.Objects;
 public class FragmentCollectionFilterCategoryDisplayContext {
 
 	public FragmentCollectionFilterCategoryDisplayContext(
-		String configuration,
+		JSONObject configurationJSONObject,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererContext fragmentRendererContext) {
 
-		_configuration = configuration;
+		_configurationJSONObject = configurationJSONObject;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_fragmentRendererContext = fragmentRendererContext;
 
@@ -210,7 +210,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 
 	private Object _getFieldValue(String fieldName) {
 		return _fragmentEntryConfigurationParser.getFieldValue(
-			JSONFactoryUtil.toJSONObject(_configuration),
+			_configurationJSONObject,
 			_fragmentEntryLink.getEditableValuesJSONObject(),
 			_fragmentRendererContext.getLocale(), fieldName);
 	}
@@ -257,7 +257,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	private List<AssetCategory> _assetCategories;
 	private Long _assetCategoryTreeNodeId;
 	private String _assetCategoryTreeNodeType;
-	private final String _configuration;
+	private final JSONObject _configurationJSONObject;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;

@@ -21,6 +21,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -31,7 +32,9 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -687,6 +691,34 @@ public class PageSpecificationsTestUtil {
 		}
 	}
 
+	private static String[] _getActionKeys(String roleKey) {
+		if (Objects.equals(RoleConstants.GUEST, roleKey)) {
+			if (RandomTestUtil.randomBoolean()) {
+				return null;
+			}
+
+			return new String[] {ActionKeys.VIEW};
+		}
+
+		int random = RandomTestUtil.randomInt(0, 3);
+
+		if (random == 0) {
+			return null;
+		}
+
+		if (random == 1) {
+			return new String[] {ActionKeys.VIEW};
+		}
+
+		if (random == 2) {
+			return new String[] {ActionKeys.CONFIGURATION, ActionKeys.VIEW};
+		}
+
+		return new String[] {
+			ActionKeys.ADD_TO_PAGE, ActionKeys.CONFIGURATION, ActionKeys.VIEW
+		};
+	}
+
 	private static ContentPageSpecification[] _getContentPageSpecifications(
 		CustomField[] draftPageSpecificationCustomFields,
 		String draftPageSpecificationExternalReferenceCode,
@@ -818,12 +850,42 @@ public class PageSpecificationsTestUtil {
 			widgetPageWidgetInstance.setWidgetConfig(() -> _getWidgetConfig());
 			widgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
 			widgetPageWidgetInstance.setWidgetName(widgetName);
+			widgetPageWidgetInstance.setWidgetPermissions(
+				() -> _getWidgetPermissions());
 
 			widgetPageWidgetInstances.add(widgetPageWidgetInstance);
 		}
 
 		return widgetPageWidgetInstances.toArray(
 			new WidgetPageWidgetInstance[0]);
+	}
+
+	private static WidgetPermission[] _getWidgetPermissions() {
+		WidgetPermission[] widgetPermissions = TransformUtil.transformToArray(
+			ListUtil.fromArray(
+				RoleConstants.GUEST, RoleConstants.SITE_CONTENT_REVIEWER,
+				RoleConstants.SITE_MEMBER),
+			roleKey -> {
+				String[] actionKeys = _getActionKeys(roleKey);
+
+				if (actionKeys == null) {
+					return null;
+				}
+
+				return new WidgetPermission() {
+					{
+						setActionIds(() -> actionKeys);
+						setRoleName(() -> roleKey);
+					}
+				};
+			},
+			WidgetPermission.class);
+
+		if (ArrayUtil.isEmpty(widgetPermissions)) {
+			return null;
+		}
+
+		return widgetPermissions;
 	}
 
 	private static boolean _isPublished(Layout draftLayout) {

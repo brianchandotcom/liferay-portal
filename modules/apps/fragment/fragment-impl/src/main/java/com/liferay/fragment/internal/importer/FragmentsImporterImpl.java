@@ -320,7 +320,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 		try {
 			_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
-				html, configuration);
+				html, _jsonFactory.toJSONObject(configuration, true));
 
 			_fragmentEntryValidator.validateConfiguration(configuration);
 			_fragmentEntryValidator.validateTypeOptions(type, typeOptions);

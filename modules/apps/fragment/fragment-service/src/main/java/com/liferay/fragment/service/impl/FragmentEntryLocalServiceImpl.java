@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1046,7 +1047,7 @@ public class FragmentEntryLocalServiceImpl
 		throws PortalException {
 
 		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
-			html, configuration);
+			html, _jsonFactory.toJSONObject(configuration));
 	}
 
 	private void _validateFragmentEntryKey(
@@ -1092,6 +1093,9 @@ public class FragmentEntryLocalServiceImpl
 
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

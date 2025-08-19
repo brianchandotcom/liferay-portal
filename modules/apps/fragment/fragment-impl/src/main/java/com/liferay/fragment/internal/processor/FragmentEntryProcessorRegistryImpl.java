@@ -205,7 +205,8 @@ public class FragmentEntryProcessorRegistryImpl
 	}
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, JSONObject configurationJSONObject)
 		throws PortalException {
 
 		if (CompanyThreadLocal.isInitializingPortalInstance()) {
@@ -217,6 +218,8 @@ public class FragmentEntryProcessorRegistryImpl
 		if (validHTMLs.contains(html)) {
 			return;
 		}
+
+		String configuration = _jsonFactory.toString(configurationJSONObject);
 
 		for (FragmentEntryValidator fragmentEntryValidator :
 				_fragmentEntryValidators) {

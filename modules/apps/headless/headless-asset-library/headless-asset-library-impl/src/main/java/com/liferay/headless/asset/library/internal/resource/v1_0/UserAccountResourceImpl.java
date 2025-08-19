@@ -133,8 +133,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		if (!_groupService.hasUserGroup(userAccountId, assetLibraryId)) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
-					"User with id ", userAccountId,
-					" is not associated to group ", assetLibraryId));
+					"User ", userAccountId, " is not associated to group ",
+					assetLibraryId));
 		}
 
 		return _toUserAccount(

@@ -62,8 +62,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		if (!_groupService.hasUserGroup(userAccountId, assetLibraryId)) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
-					"No user exists in group ", assetLibraryId, " with ID ",
-					userAccountId));
+					"User ", userAccountId, " is not associated to group ",
+					assetLibraryId));
 		}
 
 		return Page.of(
@@ -99,8 +99,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		if (!_groupService.hasUserGroup(userAccountId, assetLibraryId)) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
-					"User with id ", userAccountId,
-					" is not associated to group ", assetLibraryId));
+					"User ", userAccountId, " is not associated to group ",
+					assetLibraryId));
 		}
 
 		long[] roleIdsArray = ListUtil.toLongArray(

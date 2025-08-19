@@ -40,10 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 	@Override
-	public void validateConfiguration(String configuration)
+	public void validateConfiguration(JSONObject configurationJSONObject)
 		throws FragmentEntryConfigurationException {
 
-		validateConfigurationValues(configuration, null);
+		validateConfigurationValues(
+			_jsonFactory.toString(configurationJSONObject), null);
 	}
 
 	@Override

@@ -3843,9 +3843,10 @@ public class DefaultObjectEntryManagerImplTest
 	public void testDeleteRelatedObjectEntry() throws Exception {
 		_testDeleteRelatedObjectEntry(
 			_companyObjectDefinitionAA, _companyObjectEntryA,
-			_companyObjectEntryB, _companyObjectRelationshipA_AAObjectField2,
+			_companyObjectEntryB, _companyObjectRelationshipA_AA,
+			_companyObjectRelationshipB_AA,
+			_companyObjectRelationshipA_AAObjectField2,
 			_companyObjectRelationshipB_AAObjectField2,
-			_companyObjectRelationshipA_AA, _companyObjectRelationshipB_AA,
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			(objectEntry1, objectEntry2, objectRelationship) ->
 				_defaultObjectEntryManager.deleteRelatedObjectEntry(
@@ -3853,9 +3854,10 @@ public class DefaultObjectEntryManagerImplTest
 					objectEntry1.getId()));
 		_testDeleteRelatedObjectEntry(
 			_companyObjectDefinitionAA, _companyObjectEntryA,
-			_companyObjectEntryB, _companyObjectRelationshipA_AAObjectField2,
+			_companyObjectEntryB, _companyObjectRelationshipA_AA,
+			_companyObjectRelationshipB_AA,
+			_companyObjectRelationshipA_AAObjectField2,
 			_companyObjectRelationshipB_AAObjectField2,
-			_companyObjectRelationshipA_AA, _companyObjectRelationshipB_AA,
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			(objectEntry1, objectEntry2, objectRelationship) ->
 				_defaultObjectEntryManager.deleteRelatedObjectEntry(
@@ -3863,10 +3865,9 @@ public class DefaultObjectEntryManagerImplTest
 					objectEntry1.getExternalReferenceCode(), null));
 		_testDeleteRelatedObjectEntry(
 			_siteObjectDefinitionAA, _siteObjectEntryA, _siteObjectEntryB,
-			_siteObjectRelationshipA_AAObjectField2,
-			_siteObjectRelationshipB_AAObjectField2,
 			_siteObjectRelationshipA_AA, _siteObjectRelationshipB_AA,
-			_group.getGroupKey(),
+			_siteObjectRelationshipA_AAObjectField2,
+			_siteObjectRelationshipB_AAObjectField2, _group.getGroupKey(),
 			(objectEntry1, objectEntry2, objectRelationship) ->
 				_defaultObjectEntryManager.deleteRelatedObjectEntry(
 					objectEntry2.getExternalReferenceCode(), objectRelationship,
@@ -9462,11 +9463,10 @@ public class DefaultObjectEntryManagerImplTest
 
 	private void _testDeleteRelatedObjectEntry(
 			ObjectDefinition objectDefinitionAA, ObjectEntry objectEntryA,
-			ObjectEntry objectEntryB,
+			ObjectEntry objectEntryB, ObjectRelationship objectRelationshipA_AA,
+			ObjectRelationship objectRelationshipB_AA,
 			ObjectField objectRelationshipA_AAObjectField2,
-			ObjectField objectRelationshipB_AAObjectField2,
-			ObjectRelationship objectRelationshipA_AA,
-			ObjectRelationship objectRelationshipB_AA, String scopeKey,
+			ObjectField objectRelationshipB_AAObjectField2, String scopeKey,
 			UnsafeTriConsumer
 				<ObjectEntry, ObjectEntry, ObjectRelationship, Exception>
 					unsafeTriConsumer)

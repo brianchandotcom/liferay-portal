@@ -21,6 +21,7 @@ import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 import transformViewsItemsProps from './utils/transformViewsItemProps';
+import FilePreviewerModalContent from "../modal/FilePreviewerModalContent";
 
 const ACTIONS = {
 	createAsset: createAssetAction,
@@ -115,7 +116,7 @@ export default function ContentFDSPropsTransformer({
 			else if (action?.data?.id === 'view-file') {
 				return {
 					...action,
-					isVisible: () => false,
+					isVisible: (item: any) => Boolean(item?.embedded?.file),
 				};
 			}
 

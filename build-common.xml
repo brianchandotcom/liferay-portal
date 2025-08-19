@@ -1266,7 +1266,14 @@ information.
 
 			<prepare-portal-artifact-pom snapshot.version.suffix="${snapshot.version.suffix}" />
 
-			<delete dir="${build.repository.local.actual.dir}/com/liferay/portal/com.liferay.${processed.artifact.name}" />
+			<if>
+				<not>
+					<isset property="env.JENKINS_HOME" />
+				</not>
+				<then>
+					<delete dir="${build.repository.local.actual.dir}/com/liferay/portal/com.liferay.${processed.artifact.name}" />
+				</then>
+			</if>
 
 			<artifact:install file="${artifact.name}.@{packaging}">
 				<attach-files />

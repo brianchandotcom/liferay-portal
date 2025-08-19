@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -19,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -64,13 +67,17 @@ public class ScopedTestEntityResourceImpl
 			}
 		}
 
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
+			assetLibraryId);
+
 		return Page.of(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"createBatch",
 				HashMapBuilder.put(
 					"href",
 					"http://localhost:8080/o/test/v1.0/asset-libraries/" +
-						assetLibraryId + "/scoped-test-entities/batch"
+						depotEntry.getDepotEntryId() +
+							"/scoped-test-entities/batch"
 				).put(
 					"method", "POST"
 				).build()
@@ -364,5 +371,8 @@ public class ScopedTestEntityResourceImpl
 
 	private static final List<ScopedTestEntity> _scopedTestEntities =
 		new ArrayList<>();
+
+	@Reference
+	private DepotEntryService _depotEntryService;
 
 }

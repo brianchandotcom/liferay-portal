@@ -131,26 +131,6 @@ public class MarketplaceRestController extends BaseRestController {
 		);
 	}
 
-	@GetMapping("kpi")
-	public String getProjectsKPI() {
-		return _marketplaceKPIJSONObject.toString();
-	}
-
-	@PostMapping("kpi")
-	public void postKPI(
-		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST projects KPI " + json);
-		}
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		for (String key : jsonObject.keySet()) {
-			_marketplaceKPIJSONObject.put(key, jsonObject.get(key));
-		}
-	}
-
 	@PostMapping("product/purchase")
 	public void postProductPurchase(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
@@ -365,8 +345,6 @@ public class MarketplaceRestController extends BaseRestController {
 
 	@Autowired
 	private KoroneikiService _koroneikiService;
-
-	private final JSONObject _marketplaceKPIJSONObject = new JSONObject();
 
 	@Autowired
 	private MarketplaceService _marketplaceService;

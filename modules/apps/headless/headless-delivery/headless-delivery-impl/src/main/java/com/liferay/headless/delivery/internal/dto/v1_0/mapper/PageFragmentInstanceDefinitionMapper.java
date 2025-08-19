@@ -252,7 +252,7 @@ public class PageFragmentInstanceDefinitionMapper {
 		for (FragmentConfigurationField fragmentConfigurationField :
 				_fragmentEntryConfigurationParser.
 					getFragmentConfigurationFields(
-						fragmentEntryLink.getConfiguration())) {
+						fragmentEntryLink.getConfigurationJSONObject())) {
 
 			if (ArrayUtil.contains(
 					_EXCLUDED_FRAGMENT_CONFIGURATION_FIELD_TYPES,

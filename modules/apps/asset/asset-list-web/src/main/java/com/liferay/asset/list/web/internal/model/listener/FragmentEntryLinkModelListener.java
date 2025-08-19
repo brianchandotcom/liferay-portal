@@ -92,7 +92,7 @@ public class FragmentEntryLinkModelListener
 
 		return ListUtil.filter(
 			_fragmentEntryConfigurationParser.getFragmentConfigurationFields(
-				fragmentEntryLink.getConfiguration()),
+				fragmentEntryLink.getConfigurationJSONObject()),
 			fragmentConfigurationField -> Objects.equals(
 				fragmentConfigurationField.getType(), "collectionSelector"));
 	}

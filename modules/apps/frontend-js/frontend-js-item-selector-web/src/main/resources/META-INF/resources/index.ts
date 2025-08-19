@@ -4,4 +4,4 @@
  */
 
 export {default as ItemSelector} from './item_selector/ItemSelector';
-export {default as ItemSelectorModal} from './item_selector/itemSelectorModal';
+export {default as ItemSelectorModal} from './item_selector/ItemSelectorModal';

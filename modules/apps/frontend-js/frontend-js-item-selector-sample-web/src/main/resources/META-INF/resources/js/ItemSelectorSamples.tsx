@@ -115,9 +115,11 @@ export default function ItemSelectorSamples() {
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [space, setSpace] = useState<Space>();
 
-	const [space2, setSpace2] = useState<Space | null>();
-	const [document, setDocument] = useState<Document | null>();
-	const [user, setUser] = useState<User | null>();
+	const [documentsItemSelectorModal, setDocumentsItemSelectorModal] =
+		useState<Document[]>([]);
+	const [spaceItemSelectorModal, setSpaceItemSelectorModal] =
+		useState<Space>();
+	const [userItemSelectorModal, setUserItemSelectorModal] = useState<User>();
 
 	const {
 		observer: fileItemSelectorObserver,
@@ -310,6 +312,7 @@ export default function ItemSelectorSamples() {
 							...FDS_DEFAULT_PROPS,
 							apiURL: documentsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-documents-${getRandomId()}`,
+							selectionType: 'multiple',
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
 									EItemSelectorModalViewsConfig.DOCUMENTS,
@@ -322,6 +325,7 @@ export default function ItemSelectorSamples() {
 							setDocument(items[0]);
 						},
 						onOpenChange: fileItemSelectorOpenChange,
+						onSelection: setDocumentsItemSelectorModal,
 						open: fileItemSelectorOpen,
 						type: documentsItemSelectorConfig.type,
 					}}
@@ -345,6 +349,7 @@ export default function ItemSelectorSamples() {
 							setSpace2(items[0]);
 						},
 						onOpenChange: spaceItemSelectorOpenChange,
+						onSelection: setSpaceItemSelectorModal,
 						open: spaceItemSelectorOpen,
 						type: assetLibrariesItemSelectorConfig.type,
 					}}
@@ -368,6 +373,7 @@ export default function ItemSelectorSamples() {
 							setUser(items[0]);
 						},
 						onOpenChange: userItemSelectorOpenChange,
+						onSelection: setUserItemSelectorModal,
 						open: userItemSelectorOpen,
 						type: userAccountsItemSelectorConfig.type,
 					}}
@@ -380,7 +386,7 @@ export default function ItemSelectorSamples() {
 							fileItemSelectorOpenChange(true);
 						}}
 					>
-						Select Document
+						Select Multiple Documents
 					</ClayButton>
 
 					<ClayButton
@@ -402,27 +408,29 @@ export default function ItemSelectorSamples() {
 					</ClayButton>
 				</ClayButton.Group>
 
-				{space2 && (
+				{!!documentsItemSelectorModal.length &&
+					documentsItemSelectorModal.map((document) => (
+						<ClayAlert
+							displayType="info"
+							key={document.id}
+							symbol="document"
+							title={document.fileName}
+						/>
+					))}
+
+				{spaceItemSelectorModal && (
 					<ClayAlert
 						displayType="info"
 						symbol="nodes"
-						title={space2.name}
+						title={spaceItemSelectorModal.name}
 					/>
 				)}
 
-				{document && (
-					<ClayAlert
-						displayType="info"
-						symbol="document"
-						title={document.fileName}
-					/>
-				)}
-
-				{user && (
+				{userItemSelectorModal && (
 					<ClayAlert
 						displayType="info"
 						symbol="user"
-						title={user.name}
+						title={userItemSelectorModal.name}
 					/>
 				)}
 			</SampleContainer>

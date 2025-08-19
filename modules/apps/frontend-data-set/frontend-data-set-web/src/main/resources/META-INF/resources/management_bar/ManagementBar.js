@@ -51,9 +51,12 @@ function ManagementBar({
 		return selectItems(itemKeys);
 	}
 
+	const showBulkActionsBar =
+		!!bulkActions.length && selectionType === 'multiple';
+
 	return (
 		<>
-			{selectionType === 'multiple' && (
+			{showBulkActionsBar ? (
 				<BulkActions
 					bulkActions={bulkActions}
 					deselectItems={deselectItems}
@@ -70,13 +73,12 @@ function ManagementBar({
 					showSelectAll={showSelectAll}
 					total={total}
 				/>
-			)}
-
-			{(!selectedItemsValue.length || selectionType === 'single') && (
+			) : (
 				<NavBar
 					creationMenu={creationMenu}
 					handleCheckboxClick={handleCheckboxClick}
 					items={items}
+					pageSelectedItemsValue={pageSelectedItemsValue}
 					showSearch={showSearch}
 				/>
 			)}

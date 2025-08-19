@@ -15,12 +15,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -60,14 +60,18 @@ public class ViewRecycleBinSectionDisplayContext
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return Collections.singletonList(
+		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				language.get(
 					httpServletRequest,
 					"are-you-sure-you-want-to-delete-this-entry"),
 				null, "trash", "delete",
 				language.get(httpServletRequest, "delete"), "delete", "delete",
-				"headless"));
+				"headless"),
+			new FDSActionDropdownItem(
+				null, "restore", "restore",
+				language.get(httpServletRequest, "restore"), "restore",
+				"restore", "headless"));
 	}
 
 	@Override

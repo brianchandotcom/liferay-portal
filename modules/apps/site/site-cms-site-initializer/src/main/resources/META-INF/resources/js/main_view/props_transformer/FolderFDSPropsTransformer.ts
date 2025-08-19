@@ -98,6 +98,24 @@ export default function FolderFDSPropsTransformer({
 						),
 				};
 			}
+			else if (action?.data?.id === 'view-content') {
+				return {
+					...action,
+					data: {
+						...action.data,
+						disableHeader: false,
+						size: 'full-screen',
+						title: 'View',
+					},
+					isVisible: (item: any) => Boolean(!item?.embedded?.file),
+				};
+			}
+			else if (action?.data?.id === 'view-file') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.embedded?.file),
+				};
+			}
 
 			return action;
 		}),

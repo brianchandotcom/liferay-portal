@@ -52,7 +52,7 @@ public class FragmentRendererControllerImpl
 	implements FragmentRendererController {
 
 	@Override
-	public String getConfiguration(
+	public JSONObject getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
 		FragmentRenderer fragmentRenderer = _getFragmentRenderer(
@@ -71,7 +71,7 @@ public class FragmentRendererControllerImpl
 				jsonException);
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	@Override
@@ -198,7 +198,7 @@ public class FragmentRendererControllerImpl
 		return fragmentRenderer;
 	}
 
-	private String _translateConfigurationFields(
+	private JSONObject _translateConfigurationFields(
 		JSONObject jsonObject, Locale locale) {
 
 		ResourceBundleLoader resourceBundleLoader =
@@ -210,9 +210,8 @@ public class FragmentRendererControllerImpl
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
 
-		return _jsonFactory.toString(
-			_fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle));
+		return _fragmentEntryConfigurationParser.translateConfiguration(
+			jsonObject, resourceBundle);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

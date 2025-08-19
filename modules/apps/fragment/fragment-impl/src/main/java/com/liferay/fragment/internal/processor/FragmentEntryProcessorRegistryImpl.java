@@ -228,13 +228,11 @@ public class FragmentEntryProcessorRegistryImpl
 
 		Document document = _getDocument(html);
 
-		String configuration = _jsonFactory.toString(configurationJSONObject);
-
 		for (DocumentFragmentEntryValidator documentFragmentEntryValidator :
 				_documentFragmentEntryValidators) {
 
 			documentFragmentEntryValidator.validateFragmentEntryHTML(
-				document, configuration, LocaleUtil.getDefault());
+				document, configurationJSONObject, LocaleUtil.getDefault());
 		}
 
 		validHTMLs.add(html);

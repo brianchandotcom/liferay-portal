@@ -24,7 +24,8 @@ function check_usage {
 	if [[ "$1" == *[A-Z]* ]]
 	then
 		echo "Custom element name must not contain upper case letters."
-                echo ${1}
+		echo ${1}
+
 		exit 1
 	fi
 
@@ -210,7 +211,7 @@ EOF
 
 	cd src
 
-    mkdir -p common/services/liferay
+	mkdir -p common/services/liferay
 
 	touch common/services/liferay/api.js
 
@@ -231,17 +232,6 @@ EOF
 	cd ..
 }
 
-function create_vue_2_app {
-	check_utils npm
-
-	npm i -g @vue/cli
-
-	vue create ${CUSTOM_ELEMENT_NAME} --default
-
-	sed -i -e "s|#app|${CUSTOM_ELEMENT_NAME}|g" ${CUSTOM_ELEMENT_NAME}/src/main.js
-	sed -i -e "s|<div id=\"app\"></div>|<${CUSTOM_ELEMENT_NAME}></${CUSTOM_ELEMENT_NAME}>|g" ${CUSTOM_ELEMENT_NAME}/public/index.html
-}
-
 function create_vite_vue_3_app {
 	check_utils yarn
 
@@ -259,6 +249,17 @@ function create_vite_vue_3_app {
 	rm -f index.html-e src/App.vue-e src/main.js-e src/style.css-e
 
 	yarn
+}
+
+function create_vue_2_app {
+	check_utils npm
+
+	npm i -g @vue/cli
+
+	vue create ${CUSTOM_ELEMENT_NAME} --default
+
+	sed -i -e "s|#app|${CUSTOM_ELEMENT_NAME}|g" ${CUSTOM_ELEMENT_NAME}/src/main.js
+	sed -i -e "s|<div id=\"app\"></div>|<${CUSTOM_ELEMENT_NAME}></${CUSTOM_ELEMENT_NAME}>|g" ${CUSTOM_ELEMENT_NAME}/public/index.html
 }
 
 function main {

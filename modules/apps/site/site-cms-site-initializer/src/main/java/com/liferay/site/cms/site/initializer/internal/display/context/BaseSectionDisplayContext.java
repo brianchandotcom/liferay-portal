@@ -57,7 +57,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -170,7 +169,11 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return Collections.emptyList();
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				"#", "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), null, null,
+				null));
 	}
 
 	public CreationMenu getCreationMenu() {

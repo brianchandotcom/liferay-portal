@@ -57,9 +57,33 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private String _postProcess(String content) {
-		content = content.replaceAll("(?m)^( *-)\n +(.*)", "$1   $2");
+		StringBuffer sb = new StringBuffer();
 
-		return content.replaceAll("\\n +\\n", "\n\n");
+		Matcher matcher = _dashPattern1.matcher(content);
+
+		while (matcher.find()) {
+			String firstLine = matcher.group(1);
+			String indent = matcher.group(2);
+
+			if (indent.length() <= firstLine.length()) {
+				continue;
+			}
+
+			String secondLine = matcher.group(2) + matcher.group(3);
+
+			String replacement =
+				firstLine + secondLine.substring(firstLine.length());
+
+			matcher.appendReplacement(sb, "\n" + replacement);
+		}
+
+		if (sb.length() > 0) {
+			matcher.appendTail(sb);
+
+			return sb.toString();
+		}
+
+		return content;
 	}
 
 	private String _preProcess(String content) {
@@ -109,5 +133,7 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	};
 
 	private static final Pattern _dashPattern = Pattern.compile("( +- +)(.+)");
+	private static final Pattern _dashPattern1 = Pattern.compile(
+		"\n( *-)\n( +)(.+)");
 
 }

@@ -49,4 +49,9 @@ public class FaroProjectUsageLocalServiceImpl
 
 		return faroProjectUsagePersistence.update(faroProjectUsage);
 	}
+
+	public void deleteFaroProjectUsage() {
+		faroProjectUsagePersistence.removeAll();
+	}
+
 }

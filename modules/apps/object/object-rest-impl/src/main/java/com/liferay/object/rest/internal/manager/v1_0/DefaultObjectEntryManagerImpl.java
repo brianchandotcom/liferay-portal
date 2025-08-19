@@ -54,6 +54,8 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParserRegistry;
 import com.liferay.object.rest.manager.v1_0.util.ObjectEntryManagerUtil;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
@@ -1318,6 +1320,43 @@ public class DefaultObjectEntryManagerImpl
 			actionName, methodName, serviceBuilderObjectEntry, null, uriInfo);
 	}
 
+	private Map<String, String> _addAction(
+			String actionName, String[] methodNames,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			Map<String, String> templateParameterMap, UriInfo uriInfo)
+		throws Exception {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (!objectScopeProvider.isGroupAware()) {
+			return _addAction(
+				actionName, methodNames[0], serviceBuilderObjectEntry,
+				HashMapBuilder.put(
+					"externalReferenceCode",
+					serviceBuilderObjectEntry.getExternalReferenceCode()
+				).putAll(
+					templateParameterMap
+				).build(),
+				uriInfo);
+		}
+
+		return _addAction(
+			actionName, methodNames[1], serviceBuilderObjectEntry,
+			HashMapBuilder.put(
+				"externalReferenceCode",
+				serviceBuilderObjectEntry.getExternalReferenceCode()
+			).put(
+				"scopeKey",
+				String.valueOf(serviceBuilderObjectEntry.getGroupId())
+			).putAll(
+				templateParameterMap
+			).build(),
+			uriInfo);
+	}
+
 	private ObjectEntry _addObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
@@ -2287,19 +2326,6 @@ public class DefaultObjectEntryManagerImpl
 			return Collections.emptyMap();
 		}
 
-		String subscribeMethodName = "postByExternalReferenceCodeSubscribe";
-		String unsubscribeMethodName = "postByExternalReferenceCodeUnsubscribe";
-
-		if (Objects.equals(
-				objectDefinition.getScope(),
-				ObjectDefinitionConstants.SCOPE_SITE)) {
-
-			subscribeMethodName =
-				"postScopeScopeKeyByExternalReferenceCodeSubscribe";
-			unsubscribeMethodName =
-				"postScopeScopeKeyByExternalReferenceCodeUnsubscribe";
-		}
-
 		if (!_subscriptionLocalService.isSubscribed(
 				serviceBuilderObjectEntry.getCompanyId(),
 				dtoConverterContext.getUserId(),
@@ -2309,22 +2335,24 @@ public class DefaultObjectEntryManagerImpl
 			return Collections.singletonMap(
 				"subscribe",
 				_addAction(
-					ActionKeys.SUBSCRIBE, subscribeMethodName,
-					serviceBuilderObjectEntry,
-					Collections.singletonMap(
-						"externalReferenceCode",
-						serviceBuilderObjectEntry.getExternalReferenceCode()),
+					ActionKeys.SUBSCRIBE,
+					new String[] {
+						"postByExternalReferenceCodeSubscribe",
+						"postScopeScopeKeyByExternalReferenceCodeSubscribe"
+					},
+					objectDefinition, serviceBuilderObjectEntry, null,
 					dtoConverterContext.getUriInfo()));
 		}
 
 		return Collections.singletonMap(
 			"unsubscribe",
 			_addAction(
-				ActionKeys.SUBSCRIBE, unsubscribeMethodName,
-				serviceBuilderObjectEntry,
-				Collections.singletonMap(
-					"externalReferenceCode",
-					serviceBuilderObjectEntry.getExternalReferenceCode()),
+				ActionKeys.SUBSCRIBE,
+				new String[] {
+					"postByExternalReferenceCodeUnsubscribe",
+					"postScopeScopeKeyByExternalReferenceCodeUnsubscribe"
+				},
+				objectDefinition, serviceBuilderObjectEntry, null,
 				dtoConverterContext.getUriInfo()));
 	}
 
@@ -2821,6 +2849,24 @@ public class DefaultObjectEntryManagerImpl
 					ActionKeys.UPDATE, "putObjectEntry",
 					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).put(
+				"restore",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
+						!serviceBuilderObjectEntry.isInTrash()) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.DELETE,
+						new String[] {
+							"putByExternalReferenceCodeRestore",
+							"putScopeScopeKeyByExternalReferenceCodeRestore"
+						},
+						objectDefinition, serviceBuilderObjectEntry, null,
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
 				"update",
 				_addAction(
 					ActionKeys.UPDATE, "patchObjectEntry",
@@ -2836,22 +2882,6 @@ public class DefaultObjectEntryManagerImpl
 					serviceBuilderObjectEntry)
 			).build();
 
-			String methodName = null;
-
-			boolean scopeSite = Objects.equals(
-				objectDefinition.getScope(),
-				ObjectDefinitionConstants.SCOPE_SITE);
-
-			if (scopeSite) {
-				methodName =
-					"putScopeScopeKeyByExternalReferenceCodeObjectAction" +
-						"ObjectActionName";
-			}
-			else {
-				methodName =
-					"putByExternalReferenceCodeObjectActionObjectActionName";
-			}
-
 			for (ObjectAction objectAction :
 					_objectActionLocalService.getObjectActions(
 						objectDefinition.getObjectDefinitionId(),
@@ -2860,30 +2890,16 @@ public class DefaultObjectEntryManagerImpl
 				actions.put(
 					objectAction.getName(),
 					_addAction(
-						objectAction.getName(), methodName,
-						serviceBuilderObjectEntry,
-						HashMapBuilder.put(
-							() -> {
-								if (scopeSite) {
-									return "scopeKey";
-								}
-
-								return null;
-							},
-							() -> {
-								if (!scopeSite) {
-									return null;
-								}
-
-								return String.valueOf(
-									serviceBuilderObjectEntry.getGroupId());
-							}
-						).put(
-							"externalReferenceCode",
-							serviceBuilderObjectEntry.getExternalReferenceCode()
-						).put(
-							"objectActionName", objectAction.getName()
-						).build(),
+						objectAction.getName(),
+						new String[] {
+							"putByExternalReferenceCodeObjectActionObject" +
+								"ActionName",
+							"putScopeScopeKeyByExternalReferenceCodeObject" +
+								"ActionObjectActionName"
+						},
+						objectDefinition, serviceBuilderObjectEntry,
+						Collections.singletonMap(
+							"objectActionName", objectAction.getName()),
 						dtoConverterContext.getUriInfo()));
 			}
 		}
@@ -3156,6 +3172,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private Portal _portal;

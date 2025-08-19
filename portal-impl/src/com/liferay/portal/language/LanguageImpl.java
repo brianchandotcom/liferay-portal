@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -1001,6 +1002,13 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		return defaultValue;
+	}
+
+	@Override
+	public Map<String, Locale> getAvailableLocaleMap() {
+		CompanyLocalesBag companyLocalesBag = _getCompanyLocalesBag();
+
+		return companyLocalesBag.getAvailableLocaleMap();
 	}
 
 	/**
@@ -2068,6 +2076,10 @@ public class LanguageImpl implements Language, Serializable {
 			return _languageIdLocalesMap.containsKey(languageId);
 		}
 
+		public Map<String, Locale> getAvailableLocaleMap() {
+			return _languageIdLocalesMap;
+		}
+
 		public Set<Locale> getAvailableLocales() {
 			return _availableLocales;
 		}
@@ -2129,7 +2141,9 @@ public class LanguageImpl implements Language, Serializable {
 			_languageCodeLocalesMap.put(
 				defaultLocale.getLanguage(), defaultLocale);
 
-			_languageIdLocalesMap.put(defaultLanguageId, defaultLocale);
+			LinkedHashMapBuilder.LinkedHashMapWrapper<String, Locale>
+				linkedHashMapWrapper = LinkedHashMapBuilder.put(
+					defaultLanguageId, defaultLocale);
 
 			languageIds = ArrayUtil.remove(languageIds, defaultLanguageId);
 
@@ -2153,7 +2167,7 @@ public class LanguageImpl implements Language, Serializable {
 					_languageCodeLocalesMap.put(languageCode, locale);
 				}
 
-				_languageIdLocalesMap.put(languageId, locale);
+				linkedHashMapWrapper.put(languageId, locale);
 			}
 
 			if (duplicateLanguageCodes.isEmpty()) {
@@ -2168,11 +2182,17 @@ public class LanguageImpl implements Language, Serializable {
 					LocaleUtil.fromLanguageId(languageId, false));
 			}
 
+			Map<String, Locale> languageIdLocalesMap =
+				linkedHashMapWrapper.build();
+
 			_availableLocales = Collections.unmodifiableSet(
-				new LinkedHashSet<>(_languageIdLocalesMap.values()));
+				new LinkedHashSet<>(languageIdLocalesMap.values()));
 
 			Set<Locale> supportedLocalesSet = new HashSet<>(
-				_languageIdLocalesMap.values());
+				languageIdLocalesMap.values());
+
+			_languageIdLocalesMap = Collections.unmodifiableMap(
+				languageIdLocalesMap);
 
 			supportedLocalesSet.removeAll(_localesBetaSet);
 
@@ -2184,8 +2204,7 @@ public class LanguageImpl implements Language, Serializable {
 		private final Set<String> _duplicateLanguageCodes;
 		private final Map<String, Locale> _languageCodeLocalesMap =
 			new HashMap<>();
-		private final Map<String, Locale> _languageIdLocalesMap =
-			new LinkedHashMap<>();
+		private final Map<String, Locale> _languageIdLocalesMap;
 		private final Set<Locale> _localesBetaSet = new HashSet<>();
 		private final Set<Locale> _supportedLocalesSet;
 

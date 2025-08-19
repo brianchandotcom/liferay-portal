@@ -48,6 +48,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Function;
@@ -500,8 +501,28 @@ public class LocalizationImpl implements Localization {
 
 		Map<Locale, String> map = new HashMap<>();
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			String languageId = LocaleUtil.toLanguageId(locale);
+		if (Validator.isNull(xml)) {
+			return map;
+		}
+
+		Map<String, Locale> availableLocaleMap =
+			LanguageUtil.getAvailableLocaleMap();
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		for (Map.Entry<String, Locale> entry : availableLocaleMap.entrySet()) {
+			String languageId = entry.getKey();
+			Locale locale = entry.getValue();
+
+			if (!useDefault && !xml.contains(languageId)) {
+				if (!Validator.isXml(xml) &&
+					Objects.equals(locale, siteDefaultLocale)) {
+
+					map.put(entry.getValue(), xml);
+				}
+
+				continue;
+			}
 
 			String value = getLocalization(xml, languageId, useDefault);
 

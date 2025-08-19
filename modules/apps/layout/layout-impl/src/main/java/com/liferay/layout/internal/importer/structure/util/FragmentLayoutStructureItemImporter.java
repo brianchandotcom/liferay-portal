@@ -339,6 +339,7 @@ public class FragmentLayoutStructureItemImporter
 		String js = StringPool.BLANK;
 		String css = StringPool.BLANK;
 		String configuration = StringPool.BLANK;
+		JSONObject configurationJSONObject = null;
 		int type = FragmentConstants.TYPE_COMPONENT;
 
 		JSONObject defaultEditableValuesJSONObject =
@@ -347,13 +348,22 @@ public class FragmentLayoutStructureItemImporter
 		if (fragmentEntry != null) {
 			js = fragmentEntry.getJs();
 			css = fragmentEntry.getCss();
+
 			configuration = fragmentEntry.getConfiguration();
+
+			configurationJSONObject = JSONFactoryUtil.toJSONObject(
+				configuration);
+
 			html = fragmentEntry.getHtml();
 			type = fragmentEntry.getType();
 		}
 		else {
 			configuration = fragmentRenderer.getConfiguration(
 				new DefaultFragmentRendererContext(null));
+
+			configurationJSONObject = JSONFactoryUtil.toJSONObject(
+				configuration);
+
 			type = fragmentRenderer.getType();
 		}
 
@@ -388,7 +398,7 @@ public class FragmentLayoutStructureItemImporter
 							fragmentEntryProcessorValuesJSONObject.toString(),
 							fragmentCollection, fragmentEntry.getHtml(),
 							fragmentKey, type),
-						configuration);
+						configurationJSONObject);
 		}
 
 		Map<String, String> editableTypes =

@@ -693,7 +693,7 @@ public class FormItemManager {
 				_fragmentEntryProcessorRegistry.
 					getDefaultEditableValuesJSONObject(
 						processedHTML,
-						stepperFragmentEntryLink.getConfiguration()),
+						stepperFragmentEntryLink.getConfigurationJSONObject()),
 				editableValuesJSONObject);
 
 		stepperFragmentEntryLink =
@@ -856,7 +856,8 @@ public class FormItemManager {
 			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
 				_fragmentEntryProcessorRegistry.
 					getDefaultEditableValuesJSONObject(
-						processedHTML, fragmentEntryLink.getConfiguration()),
+						processedHTML,
+						fragmentEntryLink.getConfigurationJSONObject()),
 				editableValuesJSONObject);
 
 		fragmentEntryLink = _fragmentEntryLinkService.updateFragmentEntryLink(

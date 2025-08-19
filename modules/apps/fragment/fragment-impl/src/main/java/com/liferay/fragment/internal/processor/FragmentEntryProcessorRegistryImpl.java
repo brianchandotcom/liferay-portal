@@ -107,9 +107,11 @@ public class FragmentEntryProcessorRegistryImpl
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
-		String html, String configuration) {
+		String html, JSONObject configurationJSONObject) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		String configuration = _jsonFactory.toString(configurationJSONObject);
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_fragmentEntryProcessors) {

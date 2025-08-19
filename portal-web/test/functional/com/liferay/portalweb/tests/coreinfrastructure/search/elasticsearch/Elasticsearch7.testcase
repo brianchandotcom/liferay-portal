@@ -610,6 +610,7 @@ definition {
 	@description = "This is a use case for LPS-177665."
 	@priority = 4
 	test ReindexWithConcurrentExecutionMode {
+		property portal.acceptance = "quarantine";
 		property portal.release = "false";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";

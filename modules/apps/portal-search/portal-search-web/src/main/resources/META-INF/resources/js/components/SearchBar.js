@@ -21,6 +21,7 @@ export default function SearchBar({
 	destinationFriendlyURL,
 	emptySearchEnabled,
 	initialKeywords = '',
+	inputPlaceholder = '',
 	isDXP = true,
 	isSearchExperiencesSupported = true,
 	keywordsParameterName = 'q',
@@ -237,7 +238,7 @@ export default function SearchBar({
 					onChange={_handleValueChange}
 					onFocus={_handleFocus}
 					onKeyDown={_handleKeyDown}
-					placeholder={Liferay.Language.get('search-...')}
+					placeholder={inputPlaceholder}
 					title={Liferay.Language.get('search')}
 					type="text"
 					value={inputValue}
@@ -275,7 +276,7 @@ export default function SearchBar({
 							onChange={_handleValueChange}
 							onFocus={_handleFocus}
 							onKeyDown={_handleKeyDown}
-							placeholder={Liferay.Language.get('search-...')}
+							placeholder={inputPlaceholder}
 							type="text"
 							value={inputValue}
 						/>

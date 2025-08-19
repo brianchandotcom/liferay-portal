@@ -15,7 +15,7 @@ describe('TopPagesMetrics', () => {
 		render(
 			<TopPagesMetricsTable
 				data={{
-					pages: [
+					topPages: [
 						{
 							canonicalUrl: 'http://example.com/page1',
 							defaultMetric: {
@@ -75,7 +75,7 @@ describe('TopPagesMetrics', () => {
 		render(
 			<TopPagesMetricsTable
 				data={{
-					pages: [],
+					topPages: [],
 					totalCount: 0,
 				}}
 			/>

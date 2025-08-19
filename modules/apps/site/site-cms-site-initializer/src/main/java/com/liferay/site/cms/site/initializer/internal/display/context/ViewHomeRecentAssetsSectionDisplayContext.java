@@ -29,10 +29,10 @@ import java.util.Map;
 /**
  * @author Christian Dorado
  */
-public class ViewHomeRecentAssetsDisplayContext
+public class ViewHomeRecentAssetsSectionDisplayContext
 	extends BaseSectionDisplayContext {
 
-	public ViewHomeRecentAssetsDisplayContext(
+	public ViewHomeRecentAssetsSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,

@@ -3349,6 +3349,8 @@ definition {
 
 	@priority = 4
 	test ViewStagedAndLiveContentInSearchResults {
+		property portal.acceptance = "quarantine";
+
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");

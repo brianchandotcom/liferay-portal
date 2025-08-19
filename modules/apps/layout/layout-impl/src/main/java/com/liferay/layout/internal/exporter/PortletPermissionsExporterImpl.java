@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,7 +79,7 @@ public class PortletPermissionsExporterImpl
 			return null;
 		}
 
-		Map<String, String[]> permissionsMap = new HashMap<>();
+		Map<String, String[]> permissionsMap = new TreeMap<>();
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			Role role = _roleLocalService.fetchRole(
@@ -98,7 +98,7 @@ public class PortletPermissionsExporterImpl
 				continue;
 			}
 
-			Set<String> actionIdsSet = new HashSet<>();
+			Set<String> actionIdsSet = new TreeSet<>();
 
 			long actionIds = resourcePermission.getActionIds();
 

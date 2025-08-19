@@ -50,7 +50,7 @@ export class AssetsPage {
 		action,
 		filter,
 	}: {
-		action: 'Download' | 'View';
+		action: 'Download' | 'Share' | 'View';
 		filter: string;
 	}) {
 		await this.dataSetFragmentPage.execItemAction({

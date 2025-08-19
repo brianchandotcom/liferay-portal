@@ -311,8 +311,8 @@ public class DisplayPagesImporterTest {
 			Assert.assertEquals(
 				"small",
 				_fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getConfiguration(),
-					fragmentEntryLink.getEditableValues(),
+					fragmentEntryLink.getConfigurationJSONObject(),
+					fragmentEntryLink.getEditableValuesJSONObject(),
 					LocaleUtil.getDefault(), "size"));
 		}
 		finally {

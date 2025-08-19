@@ -210,7 +210,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 
 	private Object _getFieldValue(String fieldName) {
 		return _fragmentEntryConfigurationParser.getFieldValue(
-			_configuration, _fragmentEntryLink.getEditableValues(),
+			JSONFactoryUtil.toJSONObject(_configuration),
+			_fragmentEntryLink.getEditableValuesJSONObject(),
 			_fragmentRendererContext.getLocale(), fieldName);
 	}
 

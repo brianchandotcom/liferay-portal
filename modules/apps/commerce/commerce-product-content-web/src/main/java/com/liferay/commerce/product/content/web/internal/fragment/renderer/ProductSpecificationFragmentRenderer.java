@@ -225,8 +225,8 @@ public class ProductSpecificationFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink, String name) {
 
 		return _fragmentEntryConfigurationParser.getFieldValue(
-			fragmentEntryLink.getConfiguration(),
-			fragmentEntryLink.getEditableValues(),
+			fragmentEntryLink.getConfigurationJSONObject(),
+			fragmentEntryLink.getEditableValuesJSONObject(),
 			LocaleUtil.getMostRelevantLocale(), name);
 	}
 

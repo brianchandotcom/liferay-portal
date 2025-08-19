@@ -40,12 +40,12 @@ public interface FragmentEntryConfigurationParser {
 		long[] segmentsEntryIds);
 
 	public Object getFieldValue(
-		String editableValues,
+		JSONObject editableValuesJSONObject,
 		FragmentConfigurationField fragmentConfigurationField, Locale locale);
 
 	public Object getFieldValue(
-		String configuration, String editableValues, Locale locale,
-		String name);
+		JSONObject configurationJSONObject, JSONObject editableValuesJSONObject,
+		Locale locale, String name);
 
 	public List<FragmentConfigurationField> getFragmentConfigurationFields(
 		String configuration);

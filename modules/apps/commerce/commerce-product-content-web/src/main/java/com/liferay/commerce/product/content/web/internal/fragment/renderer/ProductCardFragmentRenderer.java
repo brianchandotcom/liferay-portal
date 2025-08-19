@@ -194,8 +194,10 @@ public class ProductCardFragmentRenderer implements FragmentRenderer {
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
 
-			String configuration = fragmentEntryLink.getConfiguration();
-			String editableValues = fragmentEntryLink.getEditableValues();
+			JSONObject configurationJSONObject =
+				fragmentEntryLink.getConfigurationJSONObject();
+			JSONObject editableValuesJSONObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
 
 			Locale locale = fragmentRendererContext.getLocale();
 
@@ -203,52 +205,56 @@ public class ProductCardFragmentRenderer implements FragmentRenderer {
 				"liferay-commerce:product-card:showAddToCartButton",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale,
-						"showAddToCartButton")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showAddToCartButton")));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showAddToWishListButton",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale,
-						"showAddToWishListButton")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showAddToWishListButton")));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showAvailabilityLabel",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale,
-						"showAvailabilityLabel")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showAvailabilityLabel")));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showCompareCheckbox",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale,
-						"showCompareCheckbox")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showCompareCheckbox")));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showDiscontinuedLabel",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale,
-						"showDiscontinuedLabel")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showDiscontinuedLabel")));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showImage",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale, "showImage")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showImage")));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showName",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale, "showName")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showName")));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showPrice",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale, "showPrice")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showPrice")));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:product-card:showSku",
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
-						configuration, editableValues, locale, "showSku")));
+						configurationJSONObject, editableValuesJSONObject,
+						locale, "showSku")));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

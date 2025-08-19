@@ -232,52 +232,34 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Override
 	public Object getFieldValue(
-		String editableValues,
+		JSONObject editableValuesJSONObject,
 		FragmentConfigurationField fragmentConfigurationField, Locale locale) {
 
-		try {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				editableValues);
-
-			JSONObject configurationValuesJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-			if (configurationValuesJSONObject == null) {
-				return fragmentConfigurationField.getDefaultValue();
-			}
-
-			return _getFieldValue(
-				fragmentConfigurationField, locale,
-				configurationValuesJSONObject.getString(
-					fragmentConfigurationField.getName(), null));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
+		if (editableValuesJSONObject == null) {
 			return fragmentConfigurationField.getDefaultValue();
 		}
+
+		JSONObject configurationValuesJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (configurationValuesJSONObject == null) {
+			return fragmentConfigurationField.getDefaultValue();
+		}
+
+		return _getFieldValue(
+			fragmentConfigurationField, locale,
+			configurationValuesJSONObject.getString(
+				fragmentConfigurationField.getName(), null));
 	}
 
 	@Override
 	public Object getFieldValue(
-		String configuration, String editableValues, Locale locale,
-		String name) {
+		JSONObject configurationJSONObject, JSONObject editableValuesJSONObject,
+		Locale locale, String name) {
 
-		JSONObject editableValuesJSONObject = null;
-
-		try {
-			editableValuesJSONObject = _jsonFactory.createJSONObject(
-				editableValues);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
+		if (editableValuesJSONObject == null) {
 			return null;
 		}
 
@@ -291,7 +273,8 @@ public class FragmentEntryConfigurationParserImpl
 		}
 
 		List<FragmentConfigurationField> fragmentConfigurationFields =
-			getFragmentConfigurationFields(configuration);
+			getFragmentConfigurationFields(
+				_jsonFactory.toString(configurationJSONObject));
 
 		for (FragmentConfigurationField fragmentConfigurationField :
 				fragmentConfigurationFields) {

@@ -110,7 +110,7 @@ public class UpdateFormItemConfigMVCActionCommand
 
 			String inputFieldId = GetterUtil.getString(
 				_fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getEditableValues(),
+					fragmentEntryLink.getEditableValuesJSONObject(),
 					new FragmentConfigurationField(
 						"inputFieldId", "string", "", false, "text"),
 					themeDisplay.getLocale()));

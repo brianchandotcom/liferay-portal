@@ -161,7 +161,8 @@ public class FragmentEntryLinkLocalServiceImpl
 			editableValues = String.valueOf(
 				_fragmentEntryProcessorRegistry.
 					getDefaultEditableValuesJSONObject(
-						processedHTML, configuration));
+						processedHTML,
+						_jsonFactory.toJSONObject(configuration)));
 		}
 
 		fragmentEntryLink.setEditableValues(editableValues);
@@ -807,7 +808,7 @@ public class FragmentEntryLinkLocalServiceImpl
 						_getProcessedHTML(
 							fragmentEntryLink,
 							ServiceContextThreadLocal.getServiceContext()),
-						fragmentEntryLink.getConfiguration()));
+						fragmentEntryLink.getConfigurationJSONObject()));
 
 			fragmentEntryLink.setEditableValues(
 				_mergeEditableValues(defaultEditableValues, editableValues));

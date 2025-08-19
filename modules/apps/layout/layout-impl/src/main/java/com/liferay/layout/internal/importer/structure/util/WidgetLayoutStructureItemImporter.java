@@ -194,7 +194,7 @@ public class WidgetLayoutStructureItemImporter
 
 		JSONObject editableValueJSONObject =
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				StringPool.BLANK, StringPool.BLANK);
+				StringPool.BLANK, null);
 
 		if (Validator.isNull(widgetInstanceId)) {
 			widgetInstanceId = StringUtil.randomId();

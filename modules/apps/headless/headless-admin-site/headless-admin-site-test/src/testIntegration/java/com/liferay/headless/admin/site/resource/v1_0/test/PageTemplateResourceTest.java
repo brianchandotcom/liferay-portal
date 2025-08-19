@@ -1338,9 +1338,10 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				layoutPageTemplateEntry.getExternalReferenceCode());
 
-		String layoutTemplateId = "1_column";
 		WidgetPageTemplateSettings widgetPageTemplateSettings =
 			(WidgetPageTemplateSettings)pageTemplate.getPageTemplateSettings();
+
+		String layoutTemplateId = "1_column";
 
 		if (Objects.equals(
 				layoutTemplateId,

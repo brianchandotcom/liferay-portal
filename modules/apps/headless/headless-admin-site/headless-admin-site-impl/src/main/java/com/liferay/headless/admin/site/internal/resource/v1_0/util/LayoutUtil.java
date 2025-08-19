@@ -395,15 +395,13 @@ public class LayoutUtil {
 	}
 
 	public static Integer getPosition(Layout layout, String portletId) {
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		List<String> columns = layoutTypePortlet.getColumns();
-
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		for (String columnId : columns) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		for (String columnId : layoutTypePortlet.getColumns()) {
 			String columnValue = typeSettingsUnicodeProperties.getProperty(
 				columnId, StringPool.BLANK);
 

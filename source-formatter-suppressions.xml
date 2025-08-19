@@ -106,6 +106,9 @@
 		<suppress checks="JavaModuleClassGetResourceCallCheck" files="modules/core/portal-bootstrap/src/main/java/com/liferay/portal/bootstrap/ModuleFrameworkImpl\.java" />
 		<suppress checks="JavaServiceUtilCheck" files="portal-impl/src/com/liferay/portal/service/impl/CompanyLocalServiceImpl\.java" />
 		<suppress checks="JavaServiceUtilCheck" files="portal-impl/src/com/liferay/portal/service/impl/GroupLocalServiceImpl\.java" />
+		<suppress checks="JavaServiceUtilCheck" files="portal-impl/src/com/liferay/portal/service/impl/MembershipRequestLocalServiceImpl\.java" />
+		<suppress checks="JavaServiceUtilCheck" files="portal-impl/src/com/liferay/portal/service/impl/UserLocalServiceImpl\.java" />
+		<suppress checks="JavaServiceUtilCheck" files="portal-impl/src/com/liferay/portlet/announcements/service/impl/AnnouncementsEntryLocalServiceImpl\.java" />
 		<suppress checks="JavaStaticMethodCheck" files="portal-impl/src/com/liferay/portal/struts/FindStrutsAction\.java" />
 		<suppress checks="JavaStringBundlerConcatCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="JavaStringBundlerInitialCapacityCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />

@@ -7,4 +7,5 @@ liferay-marketplace-etc-cron-oauth-application-headless-server:
     scopes:
         -   Liferay.Headless.Admin.User.everything
         -   Liferay.Headless.Commerce.Admin.Order.everything
+        -   c_report.everything
     type: oAuthApplicationHeadlessServer

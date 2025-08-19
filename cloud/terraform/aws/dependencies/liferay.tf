@@ -2,6 +2,14 @@ locals {
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
 }
+module "postgres_blue" {
+	db_subnet_group_name=aws_db_subnet_group.rds.name
+	identifier="${var.deployment_name}-postgres-db-blue"
+	password=random_password.postgres_password.result
+	source="../modules/db-instance"
+	username=random_password.postgres_username.result
+	vpc_security_group_ids=[var.cluster_security_group_id]
+}
 module "s3_bucket_blue" {
 	deployment_name=var.deployment_name
 	source="../modules/s3-bucket"
@@ -9,26 +17,6 @@ module "s3_bucket_blue" {
 module "s3_bucket_green" {
 	deployment_name=var.deployment_name
 	source="../modules/s3-bucket"
-}
-resource "aws_db_instance" "postgres" {
-	allocated_storage=20
-	backup_retention_period=7
-	db_name="lportal"
-	db_subnet_group_name=aws_db_subnet_group.rds.name
-	engine="postgres"
-	engine_version="14"
-	identifier="${var.deployment_name}-postgres-db"
-	instance_class="db.t3.medium"
-	multi_az=false
-	password=random_password.postgres_password.result
-	skip_final_snapshot=true
-	storage_type="gp2"
-	tags={
-		Backup="true",
-		Name="${var.deployment_name}-postgres-db"
-	}
-	username=random_password.postgres_username.result
-	vpc_security_group_ids=[var.cluster_security_group_id]
 }
 resource "aws_db_subnet_group" "rds" {
 	name="${var.deployment_name}-rds-sub-grp"
@@ -179,9 +167,9 @@ resource "kubernetes_namespace" "liferay" {
 }
 resource "kubernetes_secret" "managed_service_details" {
 	data={
-		"DATABASE_ENDPOINT"=aws_db_instance.postgres.address
+		"DATABASE_ENDPOINT"=module.postgres_blue.address
 		"DATABASE_PASSWORD"=random_password.postgres_password.result
-		"DATABASE_PORT"=aws_db_instance.postgres.port
+		"DATABASE_PORT"=module.postgres_blue.port
 		"DATABASE_USERNAME"=random_password.postgres_username.result
 		"OPENSEARCH_ENDPOINT"=aws_opensearch_domain.os.endpoint
 		"OPENSEARCH_PASSWORD"=random_password.opensearch_password.result

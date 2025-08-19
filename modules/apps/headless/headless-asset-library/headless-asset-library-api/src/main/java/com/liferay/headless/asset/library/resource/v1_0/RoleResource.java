@@ -45,23 +45,23 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface RoleResource {
 
 	public Page<Role>
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public Page<Role> getAssetLibraryUserAccountUserRolesPage(
-			Long assetLibraryId, Long userId)
+	public Page<Role> getAssetLibraryUserAccountRolesPage(
+			Long assetLibraryId, Long userAccountId)
 		throws Exception;
 
 	public Page<Role>
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode, Role[] roles)
+				String userAccountExternalReferenceCode, Role[] roles)
 		throws Exception;
 
-	public Page<Role> putAssetLibraryUserAccountUserRolesPage(
-			Long assetLibraryId, Long userId, Role[] roles)
+	public Page<Role> putAssetLibraryUserAccountRolesPage(
+			Long assetLibraryId, Long userAccountId, Role[] roles)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

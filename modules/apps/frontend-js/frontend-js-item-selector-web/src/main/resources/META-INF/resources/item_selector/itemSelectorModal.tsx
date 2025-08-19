@@ -84,14 +84,14 @@ function ItemSelectorModal<T extends Record<string, any>>({
 		}
 	}, [externalItems, open]);
 
-	const hasSelectedItems = !!selectedItems.length;
-
 	const getSelectedItemLabel = function (selectedItem: T) {
 		return getObjectValueFromPath({
 			object: selectedItem,
 			path: locator.label,
 		});
 	};
+
+	const hasSelectedItems = !!selectedItems.length;
 
 	return open ? (
 		<ClayModal observer={observer} size="full-screen">
@@ -102,28 +102,8 @@ function ItemSelectorModal<T extends Record<string, any>>({
 			<ClayModal.Body className="p-0">
 				<FrontendDataSet
 					{...fdsProps}
-					onSelect={({
-						selectedItems: newSelectedItems,
-					}: {
-						selectedItems: T[];
-					}) => {
-						if (
-							fdsProps.selectionType === 'single' &&
-							newSelectedItems.length > 1
-						) {
-							setSelectedItems(newSelectedItems.slice(0, 1));
-						}
-						else {
-							setSelectedItems(newSelectedItems);
-						}
-					}}
-					selectedItems={selectedItems.map((item) =>
-						getObjectValueFromPath({
-							object: item,
-							path: locator.value,
-						})
-					)}
-					selectedItemsKey={locator.id}
+					onSelectedItemsChange={setSelectedItems}
+					selectedItems={selectedItems}
 					style="fluid"
 				/>
 			</ClayModal.Body>
@@ -134,14 +114,33 @@ function ItemSelectorModal<T extends Record<string, any>>({
 				})}
 				first={
 					hasSelectedItems ? (
-						<>
-							{sub(
-								Liferay.Language.get('x-selected'),
-								<strong>
-									{getSelectedItemLabel(selectedItems[0])}
-								</strong>
-							)}
-						</>
+						<div className="align-items-center d-flex">
+							{selectedItems.length > 1
+								? sub(
+										Liferay.Language.get(
+											'x-items-selected'
+										),
+										selectedItems.length
+									)
+								: sub(
+										Liferay.Language.get('x-selected'),
+										<strong>
+											{getSelectedItemLabel(
+												selectedItems[0]
+											)}
+										</strong>
+									)}
+
+							<ClayButton
+								className="ml-3 text-secondary"
+								displayType="link"
+								onClick={() => {
+									setSelectedItems([]);
+								}}
+							>
+								<strong>{Liferay.Language.get('clear')}</strong>
+							</ClayButton>
+						</div>
 					) : undefined
 				}
 				last={
@@ -150,6 +149,8 @@ function ItemSelectorModal<T extends Record<string, any>>({
 							className="btn-cancel"
 							displayType="secondary"
 							onClick={() => {
+								setSelectedItems([]);
+
 								onOpenChange(false);
 							}}
 						>

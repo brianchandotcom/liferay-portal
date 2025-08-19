@@ -33,6 +33,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
@@ -107,6 +108,11 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				ObjectEntryInfoItemFieldValuesProvider.class.getName());
 
 		String key = String.valueOf(objectEntry.getObjectEntryId());
+
+		if (objectEntry.getVersion() > 0) {
+			key = StringBundler.concat(
+				key, StringPool.POUND, objectEntry.getVersion());
+		}
 
 		InfoItemFieldValues infoItemFieldValues = threadLocalCache.get(key);
 

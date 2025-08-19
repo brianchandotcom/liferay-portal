@@ -165,13 +165,15 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Override
 	public Map<String, Object> getContextObjects(
-		JSONObject configurationValuesJSONObject, String configuration,
-		Object displayObject, long[] segmentsEntryIds) {
+		JSONObject configurationValuesJSONObject,
+		JSONObject configurationJSONObject, Object displayObject,
+		long[] segmentsEntryIds) {
 
 		HashMap<String, Object> contextObjects = new HashMap<>();
 
 		List<FragmentConfigurationField> fragmentConfigurationFields =
-			getFragmentConfigurationFields(configuration);
+			getFragmentConfigurationFields(
+				_jsonFactory.toString(configurationJSONObject));
 
 		for (FragmentConfigurationField fragmentConfigurationField :
 				fragmentConfigurationFields) {

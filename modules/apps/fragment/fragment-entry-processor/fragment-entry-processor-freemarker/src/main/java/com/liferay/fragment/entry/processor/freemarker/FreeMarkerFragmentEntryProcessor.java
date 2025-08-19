@@ -142,7 +142,7 @@ public class FreeMarkerFragmentEntryProcessor
 			).putAll(
 				_fragmentEntryConfigurationParser.getContextObjects(
 					configurationValuesJSONObject,
-					fragmentEntryLink.getConfiguration(),
+					fragmentEntryLink.getConfigurationJSONObject(),
 					_getInfoItem(
 						fragmentEntryProcessorContext.
 							getContextInfoItemReference()),

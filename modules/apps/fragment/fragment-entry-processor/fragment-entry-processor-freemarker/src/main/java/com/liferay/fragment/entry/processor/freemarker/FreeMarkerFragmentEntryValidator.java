@@ -96,10 +96,13 @@ public class FreeMarkerFragmentEntryValidator
 			httpServletRequest.setAttribute(
 				WebKeys.AUI_SCRIPT_DATA, new ScriptData());
 
+			JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
+				configuration);
+
 			JSONObject configurationDefaultValuesJSONObject =
 				_fragmentEntryConfigurationParser.
 					getConfigurationDefaultValuesJSONObject(
-						_jsonFactory.toJSONObject(configuration));
+						configurationJSONObject);
 
 			Template template = TemplateManagerUtil.getTemplate(
 				TemplateConstants.LANG_TYPE_FTL,
@@ -125,8 +128,8 @@ public class FreeMarkerFragmentEntryValidator
 					"layoutMode", Constants.VIEW
 				).putAll(
 					_fragmentEntryConfigurationParser.getContextObjects(
-						configurationDefaultValuesJSONObject, configuration,
-						null, new long[0])
+						configurationDefaultValuesJSONObject,
+						configurationJSONObject, null, new long[0])
 				).build());
 
 			template.prepareTaglib(httpServletRequest, httpServletResponse);

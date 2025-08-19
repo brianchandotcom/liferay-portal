@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -159,6 +160,23 @@ public class IndexUpdaterUtilTest {
 
 		Assert.assertTrue(
 			_dbInspector.hasIndex(_portalTableIndexName, _portalIndexName));
+	}
+
+	@Test
+	public void testUpdateAllIndexesUpdatesPrimaryKeys() throws Exception {
+		_db.removePrimaryKey(_connection, _moduleTableIndexName);
+		_db.removePrimaryKey(_connection, _portalTableIndexName);
+
+		IndexUpdaterUtil.updateAllIndexes();
+
+		Assert.assertTrue(
+			ArrayUtil.isNotEmpty(
+				_db.getPrimaryKeyColumnNames(
+					_connection, _moduleTableIndexName)));
+		Assert.assertTrue(
+			ArrayUtil.isNotEmpty(
+				_db.getPrimaryKeyColumnNames(
+					_connection, _portalTableIndexName)));
 	}
 
 	@Test

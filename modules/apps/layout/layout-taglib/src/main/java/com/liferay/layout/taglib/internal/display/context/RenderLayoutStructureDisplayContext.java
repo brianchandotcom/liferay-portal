@@ -915,7 +915,7 @@ public class RenderLayoutStructureDisplayContext {
 
 			String inputFieldId = GetterUtil.getString(
 				fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getEditableValues(),
+					fragmentEntryLink.getEditableValuesJSONObject(),
 					new FragmentConfigurationField(
 						"inputFieldId", "string", StringPool.BLANK, false,
 						"text"),
@@ -927,7 +927,7 @@ public class RenderLayoutStructureDisplayContext {
 
 			return GetterUtil.getString(
 				fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getEditableValues(),
+					fragmentEntryLink.getEditableValuesJSONObject(),
 					new FragmentConfigurationField(
 						"inputLabel", "string", StringPool.BLANK, true, "text"),
 					_themeDisplay.getLocale()));

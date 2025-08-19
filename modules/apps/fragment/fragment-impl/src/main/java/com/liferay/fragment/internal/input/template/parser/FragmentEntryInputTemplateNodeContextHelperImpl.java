@@ -120,7 +120,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		if (infoForm != null) {
 			String fieldName = GetterUtil.getString(
 				_fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getEditableValues(),
+					fragmentEntryLink.getEditableValuesJSONObject(),
 					new FragmentConfigurationField(
 						"inputFieldId", "string", "", false, "text"),
 					locale));
@@ -175,7 +175,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		String inputHelpText = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				new FragmentConfigurationField(
 					"inputHelpText", "string",
 					_language.get(locale, "add-your-help-text-here"), true,
@@ -212,7 +212,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		if (((infoField != null) && infoField.isRequired()) ||
 			GetterUtil.getBoolean(
 				_fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getEditableValues(),
+					fragmentEntryLink.getEditableValuesJSONObject(),
 					new FragmentConfigurationField(
 						"inputRequired", "boolean", "false", false, "checkbox"),
 					locale))) {
@@ -222,14 +222,14 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		boolean inputShowHelpText = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				new FragmentConfigurationField(
 					"inputShowHelpText", "boolean", "false", false, "checkbox"),
 				locale));
 
 		boolean inputShowLabel = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				new FragmentConfigurationField(
 					"inputShowLabel", "boolean", "true", false, "checkbox"),
 				locale));

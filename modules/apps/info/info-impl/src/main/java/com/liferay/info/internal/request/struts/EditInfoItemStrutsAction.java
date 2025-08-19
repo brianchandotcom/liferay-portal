@@ -646,7 +646,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 		if ((fragmentEntryLink == null) ||
 			!GetterUtil.getBoolean(
 				_fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getEditableValues(),
+					fragmentEntryLink.getEditableValuesJSONObject(),
 					new FragmentConfigurationField(
 						"inputRequired", "boolean", "false", false, "checkbox"),
 					LocaleUtil.getMostRelevantLocale()))) {
@@ -656,7 +656,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 		String inputFieldId = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				new FragmentConfigurationField(
 					"inputFieldId", "string", "", false, "text"),
 				LocaleUtil.getMostRelevantLocale()));

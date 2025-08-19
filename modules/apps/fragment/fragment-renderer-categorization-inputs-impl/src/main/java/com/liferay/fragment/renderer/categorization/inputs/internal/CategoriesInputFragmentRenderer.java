@@ -180,8 +180,8 @@ public class CategoriesInputFragmentRenderer extends BaseInputFragmentRenderer {
 	private int[] _getVisibilityTypes(FragmentEntryLink fragmentEntryLink) {
 		String vocabularyType = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				fragmentEntryLink.getConfiguration(),
-				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getConfigurationJSONObject(),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				LocaleUtil.getMostRelevantLocale(), "vocabularyType"));
 
 		if (Objects.equals(vocabularyType, "all")) {

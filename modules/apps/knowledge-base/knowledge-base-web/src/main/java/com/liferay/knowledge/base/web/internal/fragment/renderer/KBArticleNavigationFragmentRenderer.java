@@ -22,6 +22,7 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.web.internal.display.context.KBArticleNavigationFragmentDisplayContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -207,8 +208,9 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 
 			JSONObject jsonObject =
 				(JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
-					getConfiguration(fragmentRendererContext),
-					fragmentEntryLink.getEditableValues(),
+					_jsonFactory.toJSONObject(
+						getConfiguration(fragmentRendererContext)),
+					fragmentEntryLink.getEditableValuesJSONObject(),
 					fragmentRendererContext.getLocale(), "itemSelector");
 
 			if ((jsonObject != null) && jsonObject.has("className") &&
@@ -255,8 +257,9 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 
 		return GetterUtil.getInteger(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfiguration(fragmentRendererContext),
-				fragmentEntryLink.getEditableValues(),
+				_jsonFactory.toJSONObject(
+					getConfiguration(fragmentRendererContext)),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), "maxNestingLevel"),
 			_MAX_NESTING_LEVEL);
 	}
@@ -308,6 +311,9 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private KBArticleService _kbArticleService;

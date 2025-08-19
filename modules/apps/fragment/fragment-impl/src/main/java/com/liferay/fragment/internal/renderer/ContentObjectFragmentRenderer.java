@@ -31,6 +31,7 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -412,8 +413,9 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext.getFragmentEntryLink();
 
 		return (JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
-			getConfiguration(fragmentRendererContext),
-			fragmentEntryLink.getEditableValues(),
+			_jsonFactory.toJSONObject(
+				getConfiguration(fragmentRendererContext)),
+			fragmentEntryLink.getEditableValuesJSONObject(),
 			fragmentRendererContext.getLocale(), "itemSelector");
 	}
 
@@ -584,6 +586,9 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

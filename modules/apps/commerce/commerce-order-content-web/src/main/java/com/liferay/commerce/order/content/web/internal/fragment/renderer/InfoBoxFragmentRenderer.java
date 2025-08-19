@@ -148,8 +148,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 		boolean readOnly = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfiguration(fragmentRendererContext),
-				fragmentEntryLink.getEditableValues(),
+				_jsonFactory.toJSONObject(
+					getConfiguration(fragmentRendererContext)),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), "readOnly"));
 
 		if (!readOnly && ArrayUtil.contains(_READ_ONLY_FIELDS, field)) {
@@ -460,8 +461,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfiguration(fragmentRendererContext),
-				fragmentEntryLink.getEditableValues(),
+				_jsonFactory.toJSONObject(
+					getConfiguration(fragmentRendererContext)),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), name));
 	}
 

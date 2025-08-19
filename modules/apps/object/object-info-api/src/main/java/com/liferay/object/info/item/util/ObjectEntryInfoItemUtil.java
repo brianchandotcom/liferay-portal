@@ -6,12 +6,14 @@
 package com.liferay.object.info.item.util;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectEntryVersionLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 /**
@@ -57,12 +60,24 @@ public class ObjectEntryInfoItemUtil {
 			objectEntryManagerRegistry.getObjectEntryManager(
 				objectDefinition.getStorageType());
 
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				false, null, null, null, null, themeDisplay.getLocale(), null,
+				themeDisplay.getUser());
+
+		ObjectEntryVersion objectEntryVersion =
+			ObjectEntryVersionLocalServiceUtil.fetchObjectEntryVersion(
+				serviceBuilderObjectEntry.getObjectEntryId(),
+				serviceBuilderObjectEntry.getVersion());
+
+		if (objectEntryVersion != null) {
+			dtoConverterContext.setAttribute(
+				"objectEntryVersion", objectEntryVersion);
+		}
+
 		try {
 			return objectEntryManager.getObjectEntry(
-				themeDisplay.getCompanyId(),
-				new DefaultDTOConverterContext(
-					false, null, null, null, null, themeDisplay.getLocale(),
-					null, themeDisplay.getUser()),
+				themeDisplay.getCompanyId(), dtoConverterContext,
 				serviceBuilderObjectEntry.getExternalReferenceCode(),
 				objectDefinition,
 				getScopeKey(

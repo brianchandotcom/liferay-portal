@@ -653,7 +653,7 @@ describe('SpaceMembersWithList', () => {
 			});
 
 			expect(mockedOpenToast).toHaveBeenCalledWith({
-				message: `<strong>${testUsers[1].name}</strong>-role-as-successfully-updated`,
+				message: `<strong>${testUsers[1].name}</strong>-role-was-successfully-updated`,
 				type: 'success',
 			});
 
@@ -744,7 +744,7 @@ describe('SpaceMembersWithList', () => {
 			});
 
 			expect(mockedOpenToast).toHaveBeenCalledWith({
-				message: `<strong>${testUserGroups[0].name}</strong>-role-as-successfully-updated`,
+				message: `<strong>${testUserGroups[0].name}</strong>-role-was-successfully-updated`,
 				type: 'success',
 			});
 

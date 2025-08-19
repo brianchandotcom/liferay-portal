@@ -414,7 +414,7 @@ export function SpaceMembersWithList({
 			else {
 				openToast({
 					message: sub(
-						Liferay.Language.get('x-role-as-successfully-updated'),
+						Liferay.Language.get('x-role-was-successfully-updated'),
 						[`<strong>${itemToUpdate.name}</strong>`]
 					),
 					type: 'success',

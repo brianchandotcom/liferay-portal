@@ -14,27 +14,27 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(service = GroupItemSelectorProvider.class)
-public class AssetLibraryGroupItemSelectorProvider
-	extends BaseGroupItemSelectorProvider {
+public class SpaceDepotGroupItemSelectorProvider
+	extends BaseDepotGroupItemSelectorProvider {
 
 	@Override
 	public String getGroupType() {
-		return "asset-library";
+		return "space-depot";
 	}
 
 	@Override
-	protected int getDepotType() {
-		return DepotConstants.TYPE_ASSET_LIBRARY;
+	protected int getDepotEntryType() {
+		return DepotConstants.TYPE_SPACE;
 	}
 
 	@Override
 	protected String getEmptyResultsMessageKey() {
-		return "no-asset-libraries-were-found";
+		return "no-spaces-were-found";
 	}
 
 	@Override
 	protected String getLabelKey() {
-		return "asset-library";
+		return "spaces";
 	}
 
 }

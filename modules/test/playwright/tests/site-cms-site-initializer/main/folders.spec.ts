@@ -26,7 +26,7 @@ const test = mergeTests(
 test(
 	'Can edit a folder',
 	{tag: '@LPD-42841'},
-	async ({apiHelpers, filesPage, page}) => {
+	async ({apiHelpers, assetsPage, page}) => {
 		const folderTitle = getRandomString();
 
 		const folderData =
@@ -35,7 +35,7 @@ test(
 				title: folderTitle,
 			});
 
-		await filesPage.goto();
+		await assetsPage.goto();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -65,7 +65,7 @@ test(
 test(
 	'Folders have View Folder action, but not View',
 	{tag: '@LPD-58720'},
-	async ({apiHelpers, filesPage, page}) => {
+	async ({apiHelpers, assetsPage, page}) => {
 		const folderTitle = getRandomString();
 
 		const folderData =
@@ -74,7 +74,7 @@ test(
 				title: folderTitle,
 			});
 
-		await filesPage.goto();
+		await assetsPage.goto();
 
 		await page
 			.getByRole('row', {name: folderTitle})

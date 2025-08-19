@@ -33,6 +33,8 @@ public interface MailService {
 
 	public boolean isPOPServerNotificationsEnabled(long companyId);
 
+	public boolean isPOPServerUser(String emailAddress);
+
 	public void sendEmail(MailMessage mailMessage);
 
 }

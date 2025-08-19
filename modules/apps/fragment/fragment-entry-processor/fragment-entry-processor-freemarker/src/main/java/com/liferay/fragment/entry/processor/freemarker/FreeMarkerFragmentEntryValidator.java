@@ -14,7 +14,6 @@ import com.liferay.petra.io.DummyWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -53,7 +52,7 @@ public class FreeMarkerFragmentEntryValidator
 
 	@Override
 	public void validateFragmentEntryHTML(
-			String html, String configuration, Locale locale)
+			String html, JSONObject configurationJSONObject, Locale locale)
 		throws PortalException {
 
 		FreeMarkerFragmentEntryProcessorConfiguration
@@ -95,9 +94,6 @@ public class FreeMarkerFragmentEntryValidator
 		try {
 			httpServletRequest.setAttribute(
 				WebKeys.AUI_SCRIPT_DATA, new ScriptData());
-
-			JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
-				configuration);
 
 			JSONObject configurationDefaultValuesJSONObject =
 				_fragmentEntryConfigurationParser.
@@ -177,9 +173,6 @@ public class FreeMarkerFragmentEntryValidator
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

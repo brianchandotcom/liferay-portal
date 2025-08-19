@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CategoriesInputFragmentRenderer extends BaseInputFragmentRenderer {
 
 	@Override
-	public String getConfiguration(
+	public JSONObject getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -62,16 +62,15 @@ public class CategoriesInputFragmentRenderer extends BaseInputFragmentRenderer {
 					"/com/liferay/fragment/renderer/categorization/inputs" +
 						"/internal/dependencies/configuration.json"));
 
-			return _jsonFactory.toString(
-				_fragmentEntryConfigurationParser.translateConfiguration(
-					jsonObject, resourceBundle));
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject, resourceBundle);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return StringPool.BLANK;
+			return null;
 		}
 	}
 

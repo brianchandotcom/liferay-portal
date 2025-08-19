@@ -15,7 +15,6 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -60,7 +59,7 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public String getConfiguration(
+	public JSONObject getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -73,16 +72,15 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 						getResourceAsStream(
 							"dependencies/configuration.json")));
 
-			return _jsonFactory.toString(
-				_fragmentEntryConfigurationParser.translateConfiguration(
-					jsonObject, resourceBundle));
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject, resourceBundle);
 		}
 		catch (IOException | JSONException exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			return StringPool.BLANK;
+			return null;
 		}
 	}
 

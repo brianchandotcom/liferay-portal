@@ -358,11 +358,10 @@ public class FragmentLayoutStructureItemImporter
 			type = fragmentEntry.getType();
 		}
 		else {
-			configuration = fragmentRenderer.getConfiguration(
+			configurationJSONObject = fragmentRenderer.getConfiguration(
 				new DefaultFragmentRendererContext(null));
 
-			configurationJSONObject = JSONFactoryUtil.toJSONObject(
-				configuration);
+			configuration = JSONFactoryUtil.toString(configurationJSONObject);
 
 			type = fragmentRenderer.getType();
 		}

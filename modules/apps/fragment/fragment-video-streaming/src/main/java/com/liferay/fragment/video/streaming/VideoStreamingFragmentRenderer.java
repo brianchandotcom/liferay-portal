@@ -11,7 +11,6 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.fragment.video.streaming.constants.VideoStreamingWebKeys;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -41,7 +40,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public String getConfiguration(
+	public JSONObject getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
 		return JSONUtil.put(
@@ -63,8 +62,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 					_language.format(
 						fragmentRendererContext.getLocale(), "x-options",
 						"video-streaming", true)
-				))
-		).toString();
+				)));
 	}
 
 	@Override
@@ -103,8 +101,8 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
 
-			JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
-				getConfiguration(fragmentRendererContext));
+			JSONObject configurationJSONObject = getConfiguration(
+				fragmentRendererContext);
 
 			httpServletRequest.setAttribute(
 				VideoStreamingWebKeys.VIDEO_STREAMING_AUTOPLAY,
@@ -180,9 +178,6 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

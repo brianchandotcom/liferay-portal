@@ -114,7 +114,9 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			null, serviceContext.getScopeGroupId(), 0, 0, segmentsExperienceId,
 			serviceContext.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK,
-			fragmentRenderer.getConfiguration(defaultFragmentRendererContext),
+			_jsonFactory.toString(
+				fragmentRenderer.getConfiguration(
+					defaultFragmentRendererContext)),
 			StringPool.BLANK, StringPool.BLANK, 0, fragmentEntryKey,
 			fragmentRenderer.getType(), serviceContext);
 	}

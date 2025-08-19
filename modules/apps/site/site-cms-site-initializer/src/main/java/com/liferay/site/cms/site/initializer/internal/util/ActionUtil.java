@@ -416,7 +416,9 @@ public class ActionUtil {
 			null, layout.getGroupId(), 0, 0, segmentsExperienceId,
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK,
-			fragmentRenderer.getConfiguration(defaultFragmentRendererContext),
+			JSONFactoryUtil.toString(
+				fragmentRenderer.getConfiguration(
+					defaultFragmentRendererContext)),
 			editableValues, StringPool.BLANK, 0, fragmentEntryKey,
 			fragmentRenderer.getType(), serviceContext);
 	}

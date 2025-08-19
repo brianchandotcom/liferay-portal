@@ -73,8 +73,9 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 						getResourceAsStream(
 							"dependencies/configuration.json")));
 
-			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle);
+			return _jsonFactory.toString(
+				_fragmentEntryConfigurationParser.translateConfiguration(
+					jsonObject, resourceBundle));
 		}
 		catch (IOException | JSONException exception) {
 			if (_log.isDebugEnabled()) {

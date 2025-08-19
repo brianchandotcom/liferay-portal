@@ -47,8 +47,9 @@ public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 				"/com/liferay/fragment/collection/filter/date/dependencies" +
 					"/configuration.json");
 
-			return _fragmentEntryConfigurationParser.translateConfiguration(
-				_jsonFactory.createJSONObject(json), resourceBundle);
+			return _jsonFactory.toString(
+				_fragmentEntryConfigurationParser.translateConfiguration(
+					_jsonFactory.createJSONObject(json), resourceBundle));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

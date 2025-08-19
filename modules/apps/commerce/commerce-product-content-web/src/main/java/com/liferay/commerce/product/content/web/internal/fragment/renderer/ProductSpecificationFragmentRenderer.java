@@ -74,8 +74,9 @@ public class ProductSpecificationFragmentRenderer implements FragmentRenderer {
 						"/fragment/renderer/product_specification" +
 							"/dependencies/configuration.json"));
 
-			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle);
+			return _jsonFactory.toString(
+				_fragmentEntryConfigurationParser.translateConfiguration(
+					jsonObject, resourceBundle));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

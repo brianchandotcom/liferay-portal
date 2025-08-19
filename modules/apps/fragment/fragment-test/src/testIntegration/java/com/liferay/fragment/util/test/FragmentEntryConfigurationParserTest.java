@@ -86,8 +86,9 @@ public class FragmentEntryConfigurationParserTest {
 
 		Assert.assertEquals(
 			expectedConfigurationTranslatedJSONObject.toString(),
-			_fragmentEntryConfigurationParser.translateConfiguration(
-				configurationJSONObject, _getResourceBundle(language)));
+			String.valueOf(
+				_fragmentEntryConfigurationParser.translateConfiguration(
+					configurationJSONObject, _getResourceBundle(language))));
 	}
 
 	@Inject

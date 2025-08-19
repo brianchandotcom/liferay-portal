@@ -14,10 +14,12 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.GeneralConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetLookAndFeelConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
@@ -44,7 +46,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -809,6 +813,26 @@ public class PageSpecificationsTestUtil {
 		return expectedCustomFields;
 	}
 
+	private static GeneralConfig.ApplicationDecorator
+		_getRandomApplicationDecorator() {
+
+		int random = RandomTestUtil.randomInt(0, 3);
+
+		if (random == 0) {
+			return null;
+		}
+
+		if (random == 1) {
+			return GeneralConfig.ApplicationDecorator.BAREBONE;
+		}
+
+		if (random == 2) {
+			return GeneralConfig.ApplicationDecorator.BORDERLESS;
+		}
+
+		return GeneralConfig.ApplicationDecorator.DECORATE;
+	}
+
 	private static Map<String, Object> _getWidgetConfig() {
 		Map<String, Object> map = new TreeMap<>();
 
@@ -822,6 +846,35 @@ public class PageSpecificationsTestUtil {
 		}
 
 		return map;
+	}
+
+	private static WidgetLookAndFeelConfig _getWidgetLookAndFeelConfig() {
+		WidgetLookAndFeelConfig widgetLookAndFeelConfig =
+			new WidgetLookAndFeelConfig();
+
+		GeneralConfig generalConfig = new GeneralConfig();
+
+		generalConfig.setUseCustomTitle(RandomTestUtil.randomBoolean());
+
+		if (generalConfig.getUseCustomTitle() &&
+			RandomTestUtil.randomBoolean()) {
+
+			generalConfig.setCustomTitle_i18n(
+				() -> HashMapBuilder.put(
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+					RandomTestUtil.randomString()
+				).put(
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+					RandomTestUtil.randomString()
+				).build());
+		}
+
+		generalConfig.setApplicationDecorator(
+			() -> _getRandomApplicationDecorator());
+
+		widgetLookAndFeelConfig.setGeneralConfig(generalConfig);
+
+		return widgetLookAndFeelConfig;
 	}
 
 	private static WidgetPageWidgetInstance[] _getWidgetPageWidgetInstances(
@@ -849,6 +902,8 @@ public class PageSpecificationsTestUtil {
 			widgetPageWidgetInstance.setPosition(i);
 			widgetPageWidgetInstance.setWidgetConfig(() -> _getWidgetConfig());
 			widgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
+			widgetPageWidgetInstance.setWidgetLookAndFeelConfig(
+				() -> _getWidgetLookAndFeelConfig());
 			widgetPageWidgetInstance.setWidgetName(widgetName);
 			widgetPageWidgetInstance.setWidgetPermissions(
 				() -> _getWidgetPermissions());

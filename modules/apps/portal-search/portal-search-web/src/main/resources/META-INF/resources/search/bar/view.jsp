@@ -22,7 +22,6 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.ReleaseInfo" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortlet" %><%@
@@ -81,45 +80,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 						<div id="<portlet:namespace />reactSearchBar">
 							<react:component
 								module="{ReactSearchBar} from portal-search-web/search-bar"
-								props='<%=
-									HashMapBuilder.<String, Object>put(
-										"destinationFriendlyURL", searchBarPortletDisplayContext.getDestinationFriendlyURL()
-									).put(
-										"emptySearchEnabled", searchBarPortletDisplayContext.isEmptySearchEnabled()
-									).put(
-										"initialKeywords", searchBarPortletDisplayContext.getKeywords()
-									).put(
-										"inputPlaceholder", searchBarPortletDisplayContext.getInputPlaceholder()
-									).put(
-										"isDXP", ReleaseInfo.isDXP()
-									).put(
-										"isSearchExperiencesSupported", searchBarPortletDisplayContext.isSearchExperiencesSupported()
-									).put(
-										"keywordsParameterName", searchBarPortletDisplayContext.getKeywordsParameterName()
-									).put(
-										"letUserChooseScope", searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()
-									).put(
-										"paginationStartParameterName", searchBarPortletDisplayContext.getPaginationStartParameterName()
-									).put(
-										"retainFacetSelections", searchBarPortletDisplayContext.isRetainFacetSelections()
-									).put(
-										"scopeParameterName", searchBarPortletDisplayContext.getScopeParameterName()
-									).put(
-										"scopeParameterStringCurrentSite", searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString()
-									).put(
-										"scopeParameterStringEverything", searchBarPortletDisplayContext.getEverythingSearchScopeParameterString()
-									).put(
-										"searchURL", searchBarPortletDisplayContext.getSearchURL()
-									).put(
-										"selectedEverythingSearchScope", searchBarPortletDisplayContext.isSelectedEverythingSearchScope()
-									).put(
-										"suggestionsContributorConfiguration", searchBarPortletDisplayContext.getSuggestionsContributorConfiguration()
-									).put(
-										"suggestionsDisplayThreshold", searchBarPortletDisplayContext.getSuggestionsDisplayThreshold()
-									).put(
-										"suggestionsURL", searchBarPortletDisplayContext.getSuggestionsURL()
-									).build()
-								%>'
+								props="<%= searchBarPortletDisplayContext.getReactData() %>"
 							/>
 						</div>
 					</c:when>

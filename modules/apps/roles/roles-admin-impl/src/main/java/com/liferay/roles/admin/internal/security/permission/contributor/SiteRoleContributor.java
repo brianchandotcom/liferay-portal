@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -94,7 +94,9 @@ public class SiteRoleContributor implements RoleContributor {
 
 		UserBag userBag = roleCollection.getUserBag();
 
-		Collection<Role> roles = userBag.getRoles();
+		long[] roleIds = userBag.getRoleIds();
+
+		Arrays.sort(roleIds);
 
 		List<UserGroupRole> userGroupRoles =
 			_userGroupRoleLocalService.getUserGroupRoles(user.getUserId());
@@ -103,7 +105,7 @@ public class SiteRoleContributor implements RoleContributor {
 			Role role = _roleLocalService.fetchRole(
 				group.getCompanyId(), roleName);
 
-			if (roles.contains(role) ||
+			if ((Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) ||
 				_exists(
 					userGroupRoles,
 					userGroupRole ->

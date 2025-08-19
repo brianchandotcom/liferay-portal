@@ -267,6 +267,7 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 			status: {
 				code: 0,
 			},
+			titleObjectFieldName: objectFields[0].name,
 		});
 
 	apiHelpers.data.push({
@@ -283,7 +284,7 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 			name: {en_US: getRandomString()},
 			objectViewColumns: [
 				{
-					objectFieldName: objectFields[0].label['en_US'],
+					objectFieldName: objectFields[0].name,
 					priority: 0,
 				},
 				{

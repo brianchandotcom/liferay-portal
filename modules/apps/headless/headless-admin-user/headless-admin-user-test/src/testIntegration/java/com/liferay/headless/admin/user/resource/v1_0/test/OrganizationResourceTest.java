@@ -945,8 +945,19 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		long totalCount = page.getTotalCount();
 
+		// Sleep for 1 second to ensure that organization 1 and existing
+		// organizations are created 1 second apart
+
+		Thread.sleep(1000);
+
 		Organization organization1 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
+
+		// Sleep for 1 second to ensure that organization 1 and organization 2
+		// are created 1 second apart
+
+		Thread.sleep(1000);
+
 		Organization organization2 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
 
@@ -968,6 +979,11 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
+
+		// Sleep for 1 second to ensure that organization 1 and organization 2
+		// are modified 1 second apart
+
+		Thread.sleep(1000);
 
 		organization1.setName(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));

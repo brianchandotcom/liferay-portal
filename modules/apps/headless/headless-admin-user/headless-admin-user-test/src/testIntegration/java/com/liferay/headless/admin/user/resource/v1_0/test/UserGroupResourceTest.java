@@ -321,8 +321,19 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 		long totalCount = page.getTotalCount();
 
+		// Sleep for 1 second to ensure that user group 1 and existing user
+		// groups are created 1 second apart
+
+		Thread.sleep(1000);
+
 		UserGroup userGroup1 = testGetUserGroupsPage_addUserGroup(
 			randomUserGroup());
+
+		// Sleep for 1 second to ensure that user group 1 and user group 2 are
+		// created 1 second apart
+
+		Thread.sleep(1000);
+
 		UserGroup userGroup2 = testGetUserGroupsPage_addUserGroup(
 			randomUserGroup());
 
@@ -342,6 +353,11 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
+
+		// Sleep for 1 second to ensure that user group 1 and user group 2 are
+		// modified 1 second apart
+
+		Thread.sleep(1000);
 
 		userGroup1.setDescription(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));

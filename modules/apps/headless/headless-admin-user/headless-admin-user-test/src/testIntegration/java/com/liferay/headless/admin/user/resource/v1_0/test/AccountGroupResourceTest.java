@@ -425,8 +425,19 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 		long totalCount = page.getTotalCount();
 
+		// Sleep for 1 second to ensure that account group 1 and existing
+		// account groups are created 1 second apart
+
+		Thread.sleep(1000);
+
 		AccountGroup accountGroup1 = testGetAccountGroupsPage_addAccountGroup(
 			randomAccountGroup());
+
+		// Sleep for 1 second to ensure that account group 1 and account
+		// group 2 are created 1 second apart
+
+		Thread.sleep(1000);
+
 		AccountGroup accountGroup2 = testGetAccountGroupsPage_addAccountGroup(
 			randomAccountGroup());
 
@@ -446,6 +457,11 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
+
+		// Sleep for 1 second to ensure that account group 1 and account
+		// group 2 are modified 1 second apart
+
+		Thread.sleep(1000);
 
 		accountGroup1.setDescription(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));

@@ -20,8 +20,3 @@ resource "random_password" "postgres_username" {
 	length=16
 	special=false
 }
-resource "random_password" "s3_bucket_suffix" {
-	length=4
-	special=false
-	upper=false
-}

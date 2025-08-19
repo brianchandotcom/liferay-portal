@@ -2,26 +2,13 @@ locals {
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
 }
-module "s3_bucket" {
-	block_public_acls=true
-	block_public_policy=true
-	bucket="${var.deployment_name}-s3-bucket-${random_password.s3_bucket_suffix.result}"
-	force_destroy=true
-	ignore_public_acls=true
-	restrict_public_buckets=true
-	server_side_encryption_configuration={
-		rule={
-			apply_server_side_encryption_by_default={
-				sse_algorithm="aws:kms"
-			}
-			bucket_key_enabled=true
-		}
-	}
-	source="terraform-aws-modules/s3-bucket/aws"
-	tags={
-		Backup="true",
-	}
-	version="~> 4.1.1"
+module "s3_bucket_blue" {
+	deployment_name=var.deployment_name
+	source="../modules/s3-bucket"
+}
+module "s3_bucket_green" {
+	deployment_name=var.deployment_name
+	source="../modules/s3-bucket"
 }
 resource "aws_db_instance" "postgres" {
 	allocated_storage=20
@@ -61,8 +48,10 @@ resource "aws_iam_policy" "s3" {
 					]
 					Effect="Allow"
 					Resource=[
-						module.s3_bucket.s3_bucket_arn,
-						"${module.s3_bucket.s3_bucket_arn}/*"
+						module.s3_bucket_blue.s3_bucket_arn,
+						"${module.s3_bucket_blue.s3_bucket_arn}/*",
+						module.s3_bucket_green.s3_bucket_arn,
+						"${module.s3_bucket_green.s3_bucket_arn}/*"
 					]
 					Sid="AllowObjectOperations"
 				}
@@ -197,8 +186,8 @@ resource "kubernetes_secret" "managed_service_details" {
 		"OPENSEARCH_ENDPOINT"=aws_opensearch_domain.os.endpoint
 		"OPENSEARCH_PASSWORD"=random_password.opensearch_password.result
 		"OPENSEARCH_USERNAME"=random_password.opensearch_username.result
-		"S3_BUCKET_ID"=module.s3_bucket.s3_bucket_id
-		"S3_BUCKET_REGION"=module.s3_bucket.s3_bucket_region
+		"S3_BUCKET_ID"=module.s3_bucket_blue.s3_bucket_id
+		"S3_BUCKET_REGION"=var.region
 	}
 	metadata {
 		name="managed-service-details"

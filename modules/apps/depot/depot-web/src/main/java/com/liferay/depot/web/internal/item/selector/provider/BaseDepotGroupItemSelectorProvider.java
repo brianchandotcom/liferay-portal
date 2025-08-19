@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  * @author Roberto Díaz
  */
-public abstract class BaseGroupItemSelectorProvider
+public abstract class BaseDepotGroupItemSelectorProvider
 	implements GroupItemSelectorProvider {
 
 	/**
@@ -59,7 +59,8 @@ public abstract class BaseGroupItemSelectorProvider
 
 			for (DepotEntry depotEntry :
 					depotEntryService.getCurrentAndGroupConnectedDepotEntries(
-						_getGroupId(groupId), getDepotType(), start, end)) {
+						_getGroupId(groupId), getDepotEntryType(), start,
+						end)) {
 
 				groups.add(depotEntry.getGroup());
 			}
@@ -77,7 +78,7 @@ public abstract class BaseGroupItemSelectorProvider
 	public int getGroupsCount(long companyId, long groupId, String keywords) {
 		try {
 			return depotEntryService.getGroupConnectedDepotEntriesCount(
-				_getGroupId(groupId), getDepotType());
+				_getGroupId(groupId), getDepotEntryType());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -96,7 +97,7 @@ public abstract class BaseGroupItemSelectorProvider
 		return language.get(locale, getLabelKey());
 	}
 
-	protected abstract int getDepotType();
+	protected abstract int getDepotEntryType();
 
 	protected abstract String getEmptyResultsMessageKey();
 
@@ -142,6 +143,6 @@ public abstract class BaseGroupItemSelectorProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseGroupItemSelectorProvider.class);
+		BaseDepotGroupItemSelectorProvider.class);
 
 }

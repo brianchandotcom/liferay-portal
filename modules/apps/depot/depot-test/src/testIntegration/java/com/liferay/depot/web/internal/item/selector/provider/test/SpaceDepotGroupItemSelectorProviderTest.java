@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -18,11 +19,12 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Cristina González
+ * @author Roberto Díaz
  */
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
-public class AssetLibraryGroupItemSelectorProviderTest
-	extends BaseGroupItemSelectorProviderTestCase {
+public class SpaceDepotGroupItemSelectorProviderTest
+	extends BaseDepotGroupItemSelectorProviderTestCase {
 
 	@ClassRule
 	@Rule
@@ -38,16 +40,16 @@ public class AssetLibraryGroupItemSelectorProviderTest
 
 	@Override
 	protected int getDepotType() {
-		return DepotConstants.TYPE_ASSET_LIBRARY;
+		return DepotConstants.TYPE_SPACE;
 	}
 
 	@Override
 	protected String getLabel() {
-		return "Asset Library";
+		return "Spaces";
 	}
 
 	@Inject(
-		filter = "component.name=com.liferay.depot.web.internal.item.selector.provider.AssetLibraryGroupItemSelectorProvider",
+		filter = "component.name=com.liferay.depot.web.internal.item.selector.provider.SpaceDepotGroupItemSelectorProvider",
 		type = GroupItemSelectorProvider.class
 	)
 	private GroupItemSelectorProvider _groupItemSelectorProvider;

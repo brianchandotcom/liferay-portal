@@ -509,8 +509,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		JSONObject jsonObject =
 			_fragmentEntryConfigurationParser.getConfigurationJSONObject(
-				fragmentEntryLink.getConfiguration(),
-				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getConfigurationJSONObject(),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale());
 
 		entry = new AbstractMap.SimpleImmutableEntry<>(

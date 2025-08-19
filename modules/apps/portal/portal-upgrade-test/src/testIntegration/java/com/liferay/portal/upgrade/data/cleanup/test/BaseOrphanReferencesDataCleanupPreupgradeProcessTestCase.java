@@ -5,7 +5,7 @@
 
 package com.liferay.portal.upgrade.data.cleanup.test;
 
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -51,8 +52,12 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId());
-			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				getLoggerClassName(), LoggerTestUtil.INFO)) {
+			LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				getLoggerClassName(), LoggerTestUtil.INFO);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess.class.
+					getName(),
+				LoggerTestUtil.WARN)) {
 
 			UnsafeRunnable<Exception> insertDataUnsafeRunnable =
 				getInsertDataUnsafeRunnable();
@@ -63,10 +68,10 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 
 			upgradeProcess.upgrade();
 
-			UnsafeConsumer<LogCapture, Exception> logAssertionUnsafeConsumer =
-				getLogAssertionUnsafeConsumer();
+			UnsafeBiConsumer<LogCapture, LogCapture, Exception>
+				logAssertionUnsafeConsumer = getLogAssertionUnsafeBiConsumer();
 
-			logAssertionUnsafeConsumer.accept(logCapture);
+			logAssertionUnsafeConsumer.accept(logCapture1, logCapture2);
 		}
 	}
 
@@ -86,8 +91,8 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 
 	protected abstract UnsafeRunnable<Exception> getInsertDataUnsafeRunnable();
 
-	protected abstract UnsafeConsumer<LogCapture, Exception>
-		getLogAssertionUnsafeConsumer();
+	protected abstract UnsafeBiConsumer<LogCapture, LogCapture, Exception>
+		getLogAssertionUnsafeBiConsumer();
 
 	protected abstract String getLoggerClassName();
 

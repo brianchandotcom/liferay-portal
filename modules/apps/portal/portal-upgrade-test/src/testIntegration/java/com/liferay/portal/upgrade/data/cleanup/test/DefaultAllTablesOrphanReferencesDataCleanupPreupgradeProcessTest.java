@@ -6,7 +6,7 @@
 package com.liferay.portal.upgrade.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -60,11 +60,11 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	}
 
 	@Override
-	protected UnsafeConsumer<LogCapture, Exception>
-		getLogAssertionUnsafeConsumer() {
+	protected UnsafeBiConsumer<LogCapture, LogCapture, Exception>
+		getLogAssertionUnsafeBiConsumer() {
 
-		return logCapture -> {
-			List<String> messages = logCapture.getMessages();
+		return (logCapture1, logCapture2) -> {
+			List<String> messages = logCapture1.getMessages();
 
 			Assert.assertTrue(
 				messages.contains(
@@ -82,6 +82,9 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 				messages.contains(
 					getExpectedMessage(
 						1, "Portlet", "companyId", "Company", _companyId2)));
+
+			messages = logCapture2.getMessages();
+
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(

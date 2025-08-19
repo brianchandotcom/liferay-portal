@@ -6,7 +6,7 @@
 package com.liferay.portal.upgrade.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -90,11 +90,11 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	}
 
 	@Override
-	protected UnsafeConsumer<LogCapture, Exception>
-		getLogAssertionUnsafeConsumer() {
+	protected UnsafeBiConsumer<LogCapture, LogCapture, Exception>
+		getLogAssertionUnsafeBiConsumer() {
 
-		return logCapture -> {
-			List<String> messages = logCapture.getMessages();
+		return (logCapture1, logCapture2) -> {
+			List<String> messages = logCapture1.getMessages();
 
 			Assert.assertTrue(
 				messages.contains(
@@ -115,6 +115,9 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						" was not found in the origin table ",
 						dbInspector.normalizeName("User_"), " and column ",
 						dbInspector.normalizeName("userId"))));
+
+			messages = logCapture2.getMessages();
+
 			Assert.assertTrue(
 				messages.contains("No admin user found for company 0"));
 			Assert.assertTrue(

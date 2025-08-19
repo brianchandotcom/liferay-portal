@@ -5911,34 +5911,30 @@ public class DefaultObjectEntryManagerImplTest
 
 		_updateObjectEntryVersion(_objectDefinition1, objectEntry, 2);
 
+		_assertObjectEntryVersions(
+			2, WorkflowConstants.STATUS_APPROVED, objectEntry);
+
 		_defaultObjectEntryManager.deleteObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry.getId());
 
 		objectEntry = _defaultObjectEntryManager.getObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry.getId());
 
-		Status status = objectEntry.getStatus();
-
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_IN_TRASH, status.getCode());
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_IN_TRASH, objectEntry);
 
 		Assert.assertNotNull(objectEntry.getRemovedBy());
-
 		Assert.assertNotNull(objectEntry.getRemovedDate());
 
-		Long objectEntryId = objectEntry.getId();
-
-		ListUtil.isNotEmptyForEach(
-			_objectEntryVersionLocalService.getObjectEntryVersions(
-				objectEntryId),
-			objectEntryVersion -> Assert.assertEquals(
-				WorkflowConstants.STATUS_IN_TRASH,
-				objectEntryVersion.getStatus()));
+		_assertObjectEntryVersions(
+			2, WorkflowConstants.STATUS_IN_TRASH, objectEntry);
 
 		_assertObjectEntriesSize1(_objectDefinition1, 0);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry.getId());
+
+		Long objectEntryId = objectEntry.getId();
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
@@ -6482,6 +6478,38 @@ public class DefaultObjectEntryManagerImplTest
 						});
 				}
 			});
+	}
+
+	@FeatureFlag("LPD-53981")
+	@Test
+	public void testRestoreObjectEntryFromTrash() throws Exception {
+		_enableObjectEntryVersioning();
+
+		ObjectEntry objectEntry = _addObjectEntry(_objectDefinition1, null, 1);
+
+		_updateObjectEntryVersion(_objectDefinition1, objectEntry, 2);
+
+		_defaultObjectEntryManager.deleteObjectEntry(
+			dtoConverterContext, _objectDefinition1, objectEntry.getId());
+
+		_assertActions(
+			ListUtil.fromArray("delete", "restore"), null, _objectDefinition1,
+			objectEntry.getId());
+
+		objectEntry = _defaultObjectEntryManager.restoreObjectEntry(
+			dtoConverterContext, objectEntry.getExternalReferenceCode(),
+			_objectDefinition1, null);
+
+		_assertActions(
+			ListUtil.fromArray("delete"), ListUtil.fromArray("restore"),
+			_objectDefinition1, objectEntry.getId());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntry);
+		_assertObjectEntryVersions(
+			2, WorkflowConstants.STATUS_APPROVED, objectEntry);
+
+		_assertObjectEntriesSize1(_objectDefinition1, 1);
 	}
 
 	@Test
@@ -8523,6 +8551,23 @@ public class DefaultObjectEntryManagerImplTest
 		Status status = objectEntry.getStatus();
 
 		AssertUtils.assertEquals(expectedStatusCode, status.getCode());
+	}
+
+	private void _assertObjectEntryVersions(
+		int expectedSize, int expectedStatus, ObjectEntry objectEntry) {
+
+		List<ObjectEntryVersion> objectEntryVersions =
+			_objectEntryVersionLocalService.getObjectEntryVersions(
+				objectEntry.getId());
+
+		Assert.assertEquals(
+			objectEntryVersions.toString(), expectedSize,
+			objectEntryVersions.size());
+
+		ListUtil.isNotEmptyForEach(
+			objectEntryVersions,
+			objectEntryVersion -> Assert.assertEquals(
+				expectedStatus, objectEntryVersion.getStatus()));
 	}
 
 	private void _assertObjectEntryWithPicklistObjectField(

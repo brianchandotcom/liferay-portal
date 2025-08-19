@@ -3589,6 +3589,41 @@
 				]
 			}
 		},
+		"/by-external-reference-code/{externalReferenceCode}/restore": {
+			"put": {
+				"operationId": "putByExternalReferenceCodeRestore",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object2"
+				]
+			}
+		},
 		"/by-external-reference-code/{externalReferenceCode}/subscribe": {
 			"post": {
 				"operationId": "postByExternalReferenceCodeSubscribe",

@@ -916,6 +916,25 @@ public class ObjectEntryServiceTest {
 	}
 
 	@Test
+	public void testRestoreObjectEntryFromTrash() throws Exception {
+		try {
+			_testRestoreObjectEntryFromTrash(_adminUser, _user);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			Assert.assertTrue(
+				StringUtil.startsWith(
+					principalException.getMessage(),
+					"User " + _user.getUserId() +
+						" must have DELETE permission for"));
+		}
+
+		_testRestoreObjectEntryFromTrash(_adminUser, _adminUser);
+		_testRestoreObjectEntryFromTrash(_user, _user);
+	}
+
+	@Test
 	public void testSearchObjectEntries() throws Exception {
 		_setUser(_adminUser);
 
@@ -1219,6 +1238,24 @@ public class ObjectEntryServiceTest {
 				_objectEntryLocalService.deleteObjectEntry(objectEntry);
 			}
 		}
+	}
+
+	private void _testRestoreObjectEntryFromTrash(User ownerUser, User user)
+		throws Exception {
+
+		_setUser(ownerUser);
+
+		ObjectEntry objectEntry = _addObjectEntry(ownerUser);
+
+		objectEntry = _objectEntryLocalService.moveObjectEntryToTrash(
+			ownerUser.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
+
+		_setUser(user);
+
+		_objectEntryService.restoreObjectEntryFromTrash(
+			user.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Inject

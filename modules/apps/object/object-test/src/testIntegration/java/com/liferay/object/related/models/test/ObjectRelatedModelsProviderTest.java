@@ -655,6 +655,15 @@ public class ObjectRelatedModelsProviderTest {
 				objectRelationship.getObjectRelationshipId(), null));
 	}
 
+	@FeatureFlag("LPD-53981")
+	@Test
+	public void testRestoreObjectEntryFromTrash() throws Exception {
+		_testRestoreObjectEntryFromTrash(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_testRestoreObjectEntryFromTrash(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+	}
+
 	private AccountEntry _addAccountEntry(long userId) throws Exception {
 		return _accountEntryLocalService.addAccountEntry(
 			StringPool.BLANK, userId, 0L, RandomTestUtil.randomString(),
@@ -1210,6 +1219,45 @@ public class ObjectRelatedModelsProviderTest {
 		Assert.assertNull(
 			_objectRelationshipLocalService.fetchObjectRelationship(
 				reverseObjectRelationship.getObjectRelationshipId()));
+	}
+
+	private void _testRestoreObjectEntryFromTrash(String relationshipType)
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		_addObjectRelationship(
+			objectDefinition1, objectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			relationshipType);
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			objectDefinition1, Collections.emptyMap());
+
+		ObjectEntry objectEntry2 = _addRelatedObjectEntry(
+			objectDefinition2, objectEntry1, relationshipType);
+
+		objectEntry1 = _objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), objectEntry1,
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_IN_TRASH, objectEntry1);
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_IN_TRASH, objectEntry2);
+
+		_objectEntryLocalService.restoreObjectEntryFromTrash(
+			TestPropsValues.getUserId(), objectEntry1,
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntry1);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntry2);
 	}
 
 	private ObjectEntry _updateObjectEntry(

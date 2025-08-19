@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import org.junit.Assert;
 
@@ -776,6 +777,21 @@ public class PageSpecificationsTestUtil {
 		return expectedCustomFields;
 	}
 
+	private static Map<String, Object> _getWidgetConfig() {
+		Map<String, Object> map = new TreeMap<>();
+
+		for (int i = 0; i < RandomTestUtil.randomInt(0, 3); i++) {
+			map.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		}
+
+		if (map.isEmpty()) {
+			return null;
+		}
+
+		return map;
+	}
+
 	private static WidgetPageWidgetInstance[] _getWidgetPageWidgetInstances(
 		String column) {
 
@@ -799,6 +815,7 @@ public class PageSpecificationsTestUtil {
 
 			widgetPageWidgetInstance.setParentSectionId(column);
 			widgetPageWidgetInstance.setPosition(i);
+			widgetPageWidgetInstance.setWidgetConfig(() -> _getWidgetConfig());
 			widgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
 			widgetPageWidgetInstance.setWidgetName(widgetName);
 

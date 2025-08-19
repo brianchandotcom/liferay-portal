@@ -21,6 +21,7 @@ import com.liferay.portal.test.log.LogCapture;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -45,9 +46,26 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 		_userId = RandomTestUtil.nextLong();
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		db.runSQL("drop table " + _TABLE_NAME);
+	}
+
 	@Override
 	protected UnsafeRunnable<Exception> getInsertDataUnsafeRunnable() {
 		return () -> {
+			db.runSQL(
+				StringBundler.concat(
+					"create table ", _TABLE_NAME,
+					" (mvccVersion LONG default 0 not null, testId LONG not ",
+					"null, userId VARCHAR(50), companyId LONG not null, ",
+					"primary key(testId, userId))"));
+
+			db.runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME, " (mvccVersion, testId, ",
+					"companyId, userId) values (0, 0, ", _companyId, ", '",
+					_userId, "')"));
 			db.runSQL(
 				connection,
 				StringBundler.concat(
@@ -99,6 +117,14 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						dbInspector.normalizeName("userId"))));
 			Assert.assertTrue(
 				messages.contains("No admin user found for company 0"));
+			Assert.assertTrue(
+				messages.contains(
+					StringBundler.concat(
+						"Table ", dbInspector.normalizeName(_TABLE_NAME),
+						" and column ", dbInspector.normalizeName("userId"),
+						" has an incompatible type with table ",
+						dbInspector.normalizeName("User_"), " and column ",
+						dbInspector.normalizeName("userId"))));
 		};
 	}
 
@@ -112,6 +138,8 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	protected UpgradeProcess getUpgradeProcess() {
 		return new UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess();
 	}
+
+	private static final String _TABLE_NAME = "TestTable";
 
 	private User _adminUser;
 	private long _companyId;

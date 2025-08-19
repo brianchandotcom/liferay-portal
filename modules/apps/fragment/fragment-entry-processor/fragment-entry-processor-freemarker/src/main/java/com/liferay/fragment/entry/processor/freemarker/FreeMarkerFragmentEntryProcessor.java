@@ -21,7 +21,6 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -57,11 +56,10 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
-		String html, String configuration) {
+		String html, JSONObject configurationJSONObject) {
 
 		return _fragmentEntryConfigurationParser.
-			getConfigurationDefaultValuesJSONObject(
-				_jsonFactory.toJSONObject(configuration));
+			getConfigurationDefaultValuesJSONObject(configurationJSONObject);
 	}
 
 	@Override
@@ -249,9 +247,6 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

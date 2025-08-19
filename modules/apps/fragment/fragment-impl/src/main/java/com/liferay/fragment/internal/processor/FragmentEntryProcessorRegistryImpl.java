@@ -111,14 +111,12 @@ public class FragmentEntryProcessorRegistryImpl
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		String configuration = _jsonFactory.toString(configurationJSONObject);
-
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_fragmentEntryProcessors) {
 
 			JSONObject defaultEditableValuesJSONObject =
 				fragmentEntryProcessor.getDefaultEditableValuesJSONObject(
-					html, configuration);
+					html, configurationJSONObject);
 
 			if ((defaultEditableValuesJSONObject != null) &&
 				(defaultEditableValuesJSONObject.length() > 0)) {
@@ -131,6 +129,8 @@ public class FragmentEntryProcessorRegistryImpl
 		}
 
 		Document document = _getDocument(html);
+
+		String configuration = _jsonFactory.toString(configurationJSONObject);
 
 		for (DefaultEditableValuesFragmentEntryProcessor
 				defaultEditableValuesFragmentEntryProcessor :

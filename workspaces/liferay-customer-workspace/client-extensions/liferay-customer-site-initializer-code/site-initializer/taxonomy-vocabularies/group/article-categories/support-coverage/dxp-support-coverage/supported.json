@@ -1,4 +1,14 @@
 {
 	"name": "Supported",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "background-image",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/supported.png$]"
+		},
+		{
+			"key": "icon-name",
+			"value": "check-circle"
+		}
+	],
 	"viewableBy": "Anyone"
 }

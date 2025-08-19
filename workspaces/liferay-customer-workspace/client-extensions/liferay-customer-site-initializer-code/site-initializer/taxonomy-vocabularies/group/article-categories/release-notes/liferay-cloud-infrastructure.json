@@ -1,4 +1,14 @@
 {
 	"name": "Liferay Cloud Infrastructure",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "reference-the-latest-changes-for-liferay-cloud-services-and-the-liferay-cloud-platform"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/liferay_cloud_infrastructure.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

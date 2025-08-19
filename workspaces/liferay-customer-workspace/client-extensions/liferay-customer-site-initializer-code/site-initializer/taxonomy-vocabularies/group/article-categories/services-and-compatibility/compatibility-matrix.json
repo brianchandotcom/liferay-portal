@@ -1,4 +1,14 @@
 {
 	"name": "Compatibility Matrix",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "supported-configurations-for-major-liferay-products-and-releases"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/compatibility_matrix.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

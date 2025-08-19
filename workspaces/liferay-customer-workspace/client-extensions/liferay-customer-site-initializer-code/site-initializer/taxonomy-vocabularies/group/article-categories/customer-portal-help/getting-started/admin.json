@@ -1,4 +1,14 @@
 {
 	"name": "Admin",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "a-setup-guide-to-empower-yourself-and-your-team"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/admin.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

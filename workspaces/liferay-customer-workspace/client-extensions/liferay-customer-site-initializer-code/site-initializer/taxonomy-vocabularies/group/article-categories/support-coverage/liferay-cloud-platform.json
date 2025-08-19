@@ -1,4 +1,10 @@
 {
 	"name": "Liferay Cloud Platform",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "visible",
+			"value": "false"
+		}
+	],
 	"viewableBy": "Anyone"
 }

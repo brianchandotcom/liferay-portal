@@ -1,4 +1,14 @@
 {
 	"name": "Not Supported",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "background-image",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/not_supported.png$]"
+		},
+		{
+			"key": "icon-name",
+			"value": "times-circle"
+		}
+	],
 	"viewableBy": "Anyone"
 }

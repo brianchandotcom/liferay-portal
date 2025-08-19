@@ -1,4 +1,14 @@
 {
 	"name": "Search Compatibility",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "subtitle",
+			"value": "search-engine-compatibility-by-product-and-version"
+		},
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/search_compatibility.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

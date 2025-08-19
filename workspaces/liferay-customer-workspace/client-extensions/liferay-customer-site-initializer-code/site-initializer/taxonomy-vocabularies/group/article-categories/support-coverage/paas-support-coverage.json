@@ -1,4 +1,10 @@
 {
 	"name": "PaaS Support Coverage",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "thumbnail",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/paas_support_coverage.svg$]"
+		}
+	],
 	"viewableBy": "Anyone"
 }

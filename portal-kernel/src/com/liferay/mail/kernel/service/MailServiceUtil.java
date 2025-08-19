@@ -42,6 +42,10 @@ public class MailServiceUtil {
 		return getService().getSession(companyId);
 	}
 
+	public static boolean isPopServerUser(String emailAddress) {
+		return getService().isPOPServerUser(emailAddress);
+	}
+
 	public static void sendEmail(MailMessage mailMessage) {
 		getService().sendEmail(mailMessage);
 	}

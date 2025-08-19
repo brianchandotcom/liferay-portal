@@ -7062,11 +7062,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				emailAddress, emailAddressValidator);
 		}
 
-		String pop3User = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
-			PropsValues.MAIL_SESSION_MAIL_POP3_USER);
-
-		if (StringUtil.equalsIgnoreCase(emailAddress, pop3User)) {
+		if (MailServiceUtil.isPopServerUser(emailAddress)) {
 			throw new UserEmailAddressException.MustNotBePOP3User(emailAddress);
 		}
 

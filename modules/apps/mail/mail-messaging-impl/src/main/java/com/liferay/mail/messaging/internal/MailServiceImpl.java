@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -320,6 +321,15 @@ public class MailServiceImpl
 		return PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
 			PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED);
+	}
+
+	@Override
+	public boolean isPOPServerUser(String emailAddress) {
+		return StringUtil.equalsIgnoreCase(
+			emailAddress,
+			PrefsPropsUtil.getString(
+				PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
+				PropsValues.MAIL_SESSION_MAIL_POP3_USER));
 	}
 
 	@Override

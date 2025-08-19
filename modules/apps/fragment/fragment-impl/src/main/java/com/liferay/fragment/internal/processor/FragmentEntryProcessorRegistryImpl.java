@@ -130,15 +130,14 @@ public class FragmentEntryProcessorRegistryImpl
 
 		Document document = _getDocument(html);
 
-		String configuration = _jsonFactory.toString(configurationJSONObject);
-
 		for (DefaultEditableValuesFragmentEntryProcessor
 				defaultEditableValuesFragmentEntryProcessor :
 					_defaultEditableValuesFragmentEntryProcessors) {
 
 			JSONObject defaultEditableValuesJSONObject =
 				defaultEditableValuesFragmentEntryProcessor.
-					getDefaultEditableValuesJSONObject(configuration, document);
+					getDefaultEditableValuesJSONObject(
+						configurationJSONObject, document);
 
 			if ((defaultEditableValuesJSONObject != null) &&
 				(defaultEditableValuesJSONObject.length() > 0)) {

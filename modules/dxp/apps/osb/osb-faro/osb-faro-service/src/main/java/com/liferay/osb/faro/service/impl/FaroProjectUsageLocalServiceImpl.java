@@ -5,13 +5,16 @@
 
 package com.liferay.osb.faro.service.impl;
 
+import com.liferay.osb.faro.model.FaroProjectUsage;
 import com.liferay.osb.faro.service.base.FaroProjectUsageLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Matthew Kong
+ * @author Marcos Martins
  */
 @Component(
 	property = "model.class.name=com.liferay.osb.faro.model.FaroProjectUsage",
@@ -19,4 +22,31 @@ import org.osgi.service.component.annotations.Component;
 )
 public class FaroProjectUsageLocalServiceImpl
 	extends FaroProjectUsageLocalServiceBaseImpl {
+
+	public FaroProjectUsage addFaroProjectUsage(
+		long companyId, long userId, long faroProjectId,
+		long knownIndividualsCount, String monthDateKey, long pageViewsCount,
+		Date usageDate) {
+
+		long faroProjectUsageId = counterLocalService.increment();
+
+		FaroProjectUsage faroProjectUsage = faroProjectUsagePersistence.create(
+			faroProjectUsageId);
+
+		faroProjectUsage.setCompanyId(companyId);
+		faroProjectUsage.setUserId(userId);
+
+		long now = System.currentTimeMillis();
+
+		faroProjectUsage.setCreateTime(now);
+		faroProjectUsage.setModifiedTime(now);
+
+		faroProjectUsage.setFaroProjectId(faroProjectId);
+		faroProjectUsage.setKnownIndividualsCount(knownIndividualsCount);
+		faroProjectUsage.setMonthDateKey(monthDateKey);
+		faroProjectUsage.setPageViewsCount(pageViewsCount);
+		faroProjectUsage.setUsageTime(usageDate.getTime());
+
+		return faroProjectUsagePersistence.update(faroProjectUsage);
+	}
 }

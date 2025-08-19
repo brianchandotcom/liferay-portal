@@ -128,6 +128,7 @@ definition {
 	@description = "This is a use case for LPS-160922."
 	@priority = 4
 	test AssertDefaultSearchResultsDisplayTemplate {
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

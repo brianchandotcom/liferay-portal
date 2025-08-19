@@ -62,10 +62,18 @@ public class WidgetPageWidgetInstanceDTOConverter
 					() -> LayoutUtil.getParentSectionId(layout, portletId));
 				setPosition(() -> LayoutUtil.getPosition(layout, portletId));
 				setWidgetConfig(
-					() ->
-						_portletPreferencesPortletConfigurationExporter.
-							getPortletConfiguration(
-								layout.getPlid(), portletId));
+					() -> {
+						Map<String, Object> portletConfigurationMap =
+							_portletPreferencesPortletConfigurationExporter.
+								getPortletConfiguration(
+									layout.getPlid(), portletId);
+
+						if (MapUtil.isEmpty(portletConfigurationMap)) {
+							return null;
+						}
+
+						return portletConfigurationMap;
+					});
 				setWidgetInstanceId(
 					() -> PortletIdCodec.decodeInstanceId(portletId));
 				setWidgetName(

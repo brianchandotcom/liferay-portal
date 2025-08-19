@@ -7,8 +7,6 @@ package com.liferay.mail.kernel.service;
 
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import jakarta.mail.Session;
@@ -16,7 +14,7 @@ import jakarta.mail.Session;
 /**
  * @author Brian Wing Shun Chan
  */
-@Transactional(rollbackFor = {PortalException.class, SystemException.class})
+@Transactional(enabled = false)
 public interface MailService {
 
 	public void clearSession();

@@ -12,6 +12,7 @@ import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
+import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
@@ -147,6 +148,20 @@ export default function ContentFDSPropsTransformer({
 					size: 'full-screen',
 					title: itemData.embedded.title,
 					url: formatActionURL(itemData, action.href),
+				});
+			}
+		},
+		onBulkActionItemClick: ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			if (action?.data?.id === 'delete') {
+				deleteAssetEntriesBulkAction({
+					actionId: action.data.id,
+					selectedData,
 				});
 			}
 		},

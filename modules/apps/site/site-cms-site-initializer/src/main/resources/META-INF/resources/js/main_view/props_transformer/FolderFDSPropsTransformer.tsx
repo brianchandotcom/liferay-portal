@@ -6,11 +6,12 @@
 import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
+import {START_TASK} from '../../common/utils/events';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
-import {EVENTS} from '../info_panel/util/constants';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
+import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
@@ -122,6 +123,26 @@ export default function FolderFDSPropsTransformer({
 					creator: itemData.embedded.creator,
 					itemId: itemData.embedded.id,
 					title: itemData.embedded?.title,
+				});
+			}
+		},
+		onBulkActionItemClick: ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			if (action?.data?.id === 'delete') {
+				deleteAssetEntriesBulkAction({
+					actionId: action.data.id,
+					selectedData,
+				});
+			}
+			else if (action?.data?.id === 'download') {
+				Liferay.fire(START_TASK, {
+					actionId: action.data.id,
+					selectedData,
 				});
 			}
 		},

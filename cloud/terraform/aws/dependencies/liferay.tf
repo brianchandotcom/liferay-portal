@@ -1,11 +1,29 @@
 locals {
+	is_active_data_blue=var.active_data=="blue"
+	is_active_data_green=var.active_data=="green"
+
+	active_bucket=local.is_active_data_blue ? module.s3_bucket_blue : module.s3_bucket_green
+	active_db=local.is_active_data_blue ? module.postgres_blue[0] : module.postgres_green[0]
+
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
 }
 module "postgres_blue" {
+	count=local.is_active_data_blue || var.is_restoring ? 1 : 0
 	db_subnet_group_name=aws_db_subnet_group.rds.name
 	identifier="${var.deployment_name}-postgres-db-blue"
 	password=random_password.postgres_password.result
+	snapshot_identifier=var.is_restoring && local.is_active_data_green ? var.db_restore_snapshot_identifier : null
+	source="../modules/db-instance"
+	username=random_password.postgres_username.result
+	vpc_security_group_ids=[var.cluster_security_group_id]
+}
+module "postgres_green" {
+	count=local.is_active_data_green || var.is_restoring ? 1 : 0
+	db_subnet_group_name=aws_db_subnet_group.rds.name
+	identifier="${var.deployment_name}-postgres-db-green"
+	password=random_password.postgres_password.result
+	snapshot_identifier=var.is_restoring && local.is_active_data_blue ? var.db_restore_snapshot_identifier : null
 	source="../modules/db-instance"
 	username=random_password.postgres_username.result
 	vpc_security_group_ids=[var.cluster_security_group_id]
@@ -167,14 +185,14 @@ resource "kubernetes_namespace" "liferay" {
 }
 resource "kubernetes_secret" "managed_service_details" {
 	data={
-		"DATABASE_ENDPOINT"=module.postgres_blue.address
+		"DATABASE_ENDPOINT"=local.active_db.address
 		"DATABASE_PASSWORD"=random_password.postgres_password.result
-		"DATABASE_PORT"=module.postgres_blue.port
+		"DATABASE_PORT"=local.active_db.port
 		"DATABASE_USERNAME"=random_password.postgres_username.result
 		"OPENSEARCH_ENDPOINT"=aws_opensearch_domain.os.endpoint
 		"OPENSEARCH_PASSWORD"=random_password.opensearch_password.result
 		"OPENSEARCH_USERNAME"=random_password.opensearch_username.result
-		"S3_BUCKET_ID"=module.s3_bucket_blue.s3_bucket_id
+		"S3_BUCKET_ID"=local.active_bucket.s3_bucket_id
 		"S3_BUCKET_REGION"=var.region
 	}
 	metadata {

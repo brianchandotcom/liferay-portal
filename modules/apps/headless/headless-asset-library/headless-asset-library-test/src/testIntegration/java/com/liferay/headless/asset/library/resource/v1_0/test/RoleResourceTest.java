@@ -54,7 +54,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	@Test
-	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage()
+	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage()
 		throws Exception {
 
 		User user = TestPropsValues.getUser();
@@ -62,22 +62,21 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		Role randomRole1 = randomRole();
 
 		roleResource.
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
 				testDepotEntryGroup.getExternalReferenceCode(),
 				user.getExternalReferenceCode(), new Role[] {randomRole1});
 
-		_assertGetAssetLibraryUserAccountUserRolesPage(
-			Arrays.asList(randomRole1));
+		_assertGetAssetLibraryUserAccountRolesPage(Arrays.asList(randomRole1));
 
 		Role randomRole2 = randomRole();
 
 		roleResource.
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
 				testDepotEntryGroup.getExternalReferenceCode(),
 				user.getExternalReferenceCode(),
 				new Role[] {randomRole1, randomRole2});
 
-		_assertGetAssetLibraryUserAccountUserRolesPage(
+		_assertGetAssetLibraryUserAccountRolesPage(
 			Arrays.asList(randomRole1, randomRole2));
 
 		Role randomRole3 = new Role() {
@@ -88,7 +87,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		try {
 			roleResource.
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage(
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
 					testDepotEntryGroup.getExternalReferenceCode(),
 					user.getExternalReferenceCode(), new Role[] {randomRole3});
 
@@ -100,29 +99,28 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 		}
 
-		_assertGetAssetLibraryUserAccountUserRolesPage(
+		_assertGetAssetLibraryUserAccountRolesPage(
 			Arrays.asList(randomRole1, randomRole2));
 	}
 
 	@Override
 	@Test
-	public void testPutAssetLibraryUserAccountUserRolesPage() throws Exception {
+	public void testPutAssetLibraryUserAccountRolesPage() throws Exception {
 		Role randomRole1 = randomRole();
 
-		roleResource.putAssetLibraryUserAccountUserRolesPage(
+		roleResource.putAssetLibraryUserAccountRolesPage(
 			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
 			new Role[] {randomRole1});
 
-		_assertGetAssetLibraryUserAccountUserRolesPage(
-			Arrays.asList(randomRole1));
+		_assertGetAssetLibraryUserAccountRolesPage(Arrays.asList(randomRole1));
 
 		Role randomRole2 = randomRole();
 
-		roleResource.putAssetLibraryUserAccountUserRolesPage(
+		roleResource.putAssetLibraryUserAccountRolesPage(
 			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
 			new Role[] {randomRole1, randomRole2});
 
-		_assertGetAssetLibraryUserAccountUserRolesPage(
+		_assertGetAssetLibraryUserAccountRolesPage(
 			Arrays.asList(randomRole1, randomRole2));
 
 		Role randomRole3 = new Role() {
@@ -132,7 +130,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		};
 
 		try {
-			roleResource.putAssetLibraryUserAccountUserRolesPage(
+			roleResource.putAssetLibraryUserAccountRolesPage(
 				testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId(),
 				new Role[] {randomRole3});
 
@@ -144,7 +142,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 		}
 
-		_assertGetAssetLibraryUserAccountUserRolesPage(
+		_assertGetAssetLibraryUserAccountRolesPage(
 			Arrays.asList(randomRole1, randomRole2));
 	}
 
@@ -169,15 +167,15 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	protected Role
-			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage_addRole(
+			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage_addRole(
 				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode, Role role)
+				String userAccountExternalReferenceCode, Role role)
 		throws Exception {
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			assetLibraryExternalReferenceCode, TestPropsValues.getCompanyId());
 		User user = _userLocalService.getUserByExternalReferenceCode(
-			userExternalReferenceCode, TestPropsValues.getCompanyId());
+			userAccountExternalReferenceCode, TestPropsValues.getCompanyId());
 
 		_userGroupRoleService.addUserGroupRoles(
 			user.getUserId(), group.getGroupId(), new long[] {role.getId()});
@@ -187,7 +185,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	protected String
-			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCodeRolesPage_getUserExternalReferenceCode()
+			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage_getUserAccountExternalReferenceCode()
 		throws Exception {
 
 		User user = TestPropsValues.getUser();
@@ -196,33 +194,32 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
-	protected Role testGetAssetLibraryUserAccountUserRolesPage_addRole(
-			Long assetLibraryId, Long userId, Role role)
+	protected Role testGetAssetLibraryUserAccountRolesPage_addRole(
+			Long assetLibraryId, Long userAccountId, Role role)
 		throws Exception {
 
 		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
 			assetLibraryId);
 
 		_userGroupRoleService.addUserGroupRoles(
-			userId, depotEntry.getGroupId(), new long[] {role.getId()});
+			userAccountId, depotEntry.getGroupId(), new long[] {role.getId()});
 
 		return role;
 	}
 
 	@Override
-	protected Long testGetAssetLibraryUserAccountUserRolesPage_getUserId()
+	protected Long testGetAssetLibraryUserAccountRolesPage_getUserAccountId()
 		throws Exception {
 
 		return TestPropsValues.getUserId();
 	}
 
-	private void _assertGetAssetLibraryUserAccountUserRolesPage(
+	private void _assertGetAssetLibraryUserAccountRolesPage(
 			List<Role> expectedRoles)
 		throws Exception {
 
-		Page<Role> rolesPage =
-			roleResource.getAssetLibraryUserAccountUserRolesPage(
-				testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId());
+		Page<Role> rolesPage = roleResource.getAssetLibraryUserAccountRolesPage(
+			testDepotEntry.getDepotEntryId(), TestPropsValues.getUserId());
 
 		Collection<Role> items = rolesPage.getItems();
 

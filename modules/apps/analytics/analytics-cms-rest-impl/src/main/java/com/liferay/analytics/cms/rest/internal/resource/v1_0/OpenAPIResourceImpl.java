@@ -97,6 +97,8 @@ public class OpenAPIResourceImpl {
 
 			add(ObjectEntryMetricResourceImpl.class);
 
+			add(ObjectEntryTopPagesResourceImpl.class);
+
 			add(OverviewResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

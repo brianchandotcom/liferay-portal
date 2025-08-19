@@ -723,7 +723,8 @@ public class FragmentEntryValidatorImplTest {
 		expectedException.expect(FragmentEntryConfigurationException.class);
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read("configuration_field_text_typeoptions_validation_email.json"),
+			_readJSONObject(
+				"configuration_field_text_typeoptions_validation_email.json"),
 			JSONUtil.put("emailField", "test-liferay.com"));
 	}
 
@@ -734,7 +735,7 @@ public class FragmentEntryValidatorImplTest {
 		expectedException.expect(FragmentEntryConfigurationException.class);
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read(
+			_readJSONObject(
 				"configuration_field_text_typeoptions_validation_length.json"),
 			JSONUtil.put("textField", StringUtil.randomString(11)));
 	}
@@ -746,7 +747,7 @@ public class FragmentEntryValidatorImplTest {
 		expectedException.expect(FragmentEntryConfigurationException.class);
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read(
+			_readJSONObject(
 				"configuration_field_text_typeoptions_validation_number.json"),
 			JSONUtil.put("numberField", 1000));
 	}
@@ -758,7 +759,7 @@ public class FragmentEntryValidatorImplTest {
 		expectedException.expect(FragmentEntryConfigurationException.class);
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read(
+			_readJSONObject(
 				"configuration_field_text_typeoptions_validation_number.json"),
 			JSONUtil.put("numberField", StringUtil.randomString()));
 	}
@@ -770,7 +771,7 @@ public class FragmentEntryValidatorImplTest {
 		expectedException.expect(FragmentEntryConfigurationException.class);
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read(
+			_readJSONObject(
 				"configuration_field_text_typeoptions_validation_regexp.json"),
 			JSONUtil.put("regexpField", StringUtil.randomString()));
 	}
@@ -782,7 +783,8 @@ public class FragmentEntryValidatorImplTest {
 		expectedException.expect(FragmentEntryConfigurationException.class);
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read("configuration_field_text_typeoptions_validation_url.json"),
+			_readJSONObject(
+				"configuration_field_text_typeoptions_validation_url.json"),
 			JSONUtil.put("urlField", StringUtil.randomString()));
 	}
 
@@ -791,7 +793,8 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read("configuration_field_text_typeoptions_validation_email.json"),
+			_readJSONObject(
+				"configuration_field_text_typeoptions_validation_email.json"),
 			JSONUtil.put("emailField", "test@liferay.com"));
 	}
 
@@ -800,7 +803,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read(
+			_readJSONObject(
 				"configuration_field_text_typeoptions_validation_length.json"),
 			JSONUtil.put("textField", StringUtil.randomString(9)));
 	}
@@ -810,7 +813,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read(
+			_readJSONObject(
 				"configuration_field_text_typeoptions_validation_number.json"),
 			JSONUtil.put("numberField", 256));
 	}
@@ -820,7 +823,7 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read(
+			_readJSONObject(
 				"configuration_field_text_typeoptions_validation_regexp.json"),
 			JSONUtil.put("regexpField", "test-256"));
 	}
@@ -830,20 +833,18 @@ public class FragmentEntryValidatorImplTest {
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
-			_read("configuration_field_text_typeoptions_validation_url.json"),
+			_readJSONObject(
+				"configuration_field_text_typeoptions_validation_url.json"),
 			JSONUtil.put("urlField", "http://www.liferay.com"));
 	}
 
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
-	}
-
 	private JSONObject _readJSONObject(String fileName) throws Exception {
-		return JSONFactoryUtil.createJSONObject(_read(fileName));
+		return JSONFactoryUtil.createJSONObject(
+			new String(
+				FileUtil.getBytes(getClass(), "dependencies/" + fileName)));
 	}
 
 	private static ClassLoader _classLoader;

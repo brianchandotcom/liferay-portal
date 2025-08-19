@@ -18,7 +18,7 @@ public interface FragmentEntryValidator {
 		throws FragmentEntryConfigurationException;
 
 	public default void validateConfigurationValues(
-			String configuration, JSONObject valuesJSONObject)
+			JSONObject configurationJSONObject, JSONObject valuesJSONObject)
 		throws FragmentEntryConfigurationException {
 	}
 

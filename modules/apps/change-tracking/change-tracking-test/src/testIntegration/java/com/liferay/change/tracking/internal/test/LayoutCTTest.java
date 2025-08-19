@@ -328,6 +328,29 @@ public class LayoutCTTest {
 	}
 
 	@Test
+	public void testDeleteLayoutWithModificationInProduction()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			_layoutLocalService.deleteLayout(layout.getPlid());
+		}
+
+		layout = _layoutLocalService.updateName(
+			layout, RandomTestUtil.randomString(),
+			LocaleUtil.toLanguageId(LocaleUtil.BRAZIL));
+
+		_ctProcessLocalService.addCTProcess(
+			TestPropsValues.getUserId(), _ctCollection.getCtCollectionId());
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+	}
+
+	@Test
 	public void testGetLayoutsWithDeletedLayoutInProduction() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

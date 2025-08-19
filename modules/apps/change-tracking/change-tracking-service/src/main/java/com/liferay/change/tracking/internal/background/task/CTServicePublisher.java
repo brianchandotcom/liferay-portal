@@ -191,7 +191,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				int updatedRowCount = _updateCTCollectionId(
 					connection, tableName, primaryKeyName,
 					_deletionCTEntries.values(), _targetCTCollectionId,
-					_sourceCTCollectionId, true, false);
+					_sourceCTCollectionId, false, false);
 
 				if ((predeletedRowCount + updatedRowCount) !=
 						_deletionCTEntries.size()) {

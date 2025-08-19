@@ -6,12 +6,15 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -19,6 +22,7 @@ import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +46,20 @@ public abstract class BaseContentsSectionDisplayContext
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
+	}
+
+	@Override
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		List<DropdownItem> fdsBulkActionDropdownItems =
+			super.getBulkActionDropdownItems();
+
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				null, "pencil", "edit-tags",
+				LanguageUtil.get(httpServletRequest, "edit-tags"), "get",
+				"edit-tags", null));
+
+		return fdsBulkActionDropdownItems;
 	}
 
 	@Override

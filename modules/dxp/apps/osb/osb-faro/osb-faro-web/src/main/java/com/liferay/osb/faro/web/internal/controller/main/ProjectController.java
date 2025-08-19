@@ -666,7 +666,7 @@ public class ProjectController extends BaseFaroController {
 					Map<String, Map<String, List<ProjectUsageMetric>>>
 						projectUsageMetricsMap = new HashMap<>();
 
-					_faroProjectUsageLocalService.deleteFaroProjectUsage();
+					_faroProjectUsageLocalService.deleteFaroProjectUsages();
 
 					for (FaroProject faroProject :
 							_faroProjectLocalService.getFaroProjects(

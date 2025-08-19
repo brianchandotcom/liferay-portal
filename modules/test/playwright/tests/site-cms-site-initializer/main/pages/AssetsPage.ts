@@ -9,7 +9,9 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {DataSetPage} from './DataSetPage';
 
-export class FilesPage {
+// Page for All, Content and Files page
+
+export class AssetsPage {
 	readonly page: Page;
 
 	readonly dataSetFragmentPage: DataSetPage;

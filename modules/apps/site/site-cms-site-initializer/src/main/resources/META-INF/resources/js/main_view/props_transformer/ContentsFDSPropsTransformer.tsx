@@ -10,6 +10,7 @@ import React from 'react';
 import formatActionURL from '../../common/utils/formatActionURL';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
+import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
@@ -115,7 +116,7 @@ export default function ContentFDSPropsTransformer({
 			else if (action?.data?.id === 'view-file') {
 				return {
 					...action,
-					isVisible: () => false,
+					isVisible: (item: any) => Boolean(item?.embedded?.file),
 				};
 			}
 
@@ -141,7 +142,7 @@ export default function ContentFDSPropsTransformer({
 					title: itemData.embedded?.title,
 				});
 			}
-			else if (action?.data?.id === 'viewContent') {
+			else if (action?.data?.id === 'view-content') {
 				event?.preventDefault();
 
 				openModal({

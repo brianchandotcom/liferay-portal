@@ -56,7 +56,12 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 					RandomTestUtil.nextLong(), ", ", RandomTestUtil.nextLong(),
 					", ", _companyId, ", ", _userId, ", ",
 					RandomTestUtil.nextLong(), ")"));
-
+			db.runSQL(
+				connection,
+				StringBundler.concat(
+					"insert into MBDiscussion (mvccVersion, ctCollectionId, ",
+					"discussionId, companyId, userId) values (", 0, ", ", 0,
+					", ", RandomTestUtil.nextLong(), ", 0, ", _userId, ")"));
 			db.runSQL(
 				connection,
 				StringBundler.concat(
@@ -92,6 +97,8 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						" was not found in the origin table ",
 						dbInspector.normalizeName("User_"), " and column ",
 						dbInspector.normalizeName("userId"))));
+			Assert.assertTrue(
+				messages.contains("No admin user found for company 0"));
 		};
 	}
 

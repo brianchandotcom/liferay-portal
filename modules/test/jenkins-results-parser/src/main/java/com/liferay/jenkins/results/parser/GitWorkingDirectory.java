@@ -2843,8 +2843,8 @@ public class GitWorkingDirectory {
 		commands.add(sb.toString());
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-			GitUtil.MILLIS_TIMEOUT, commands.toArray(new String[0]));
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY, 240 * 1000,
+			commands.toArray(new String[0]));
 
 		if (executionResult.getExitValue() != 0) {
 			throw new GitWorkingDirectoryRuntimeException(

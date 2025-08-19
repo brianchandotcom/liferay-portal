@@ -1018,11 +1018,13 @@ public class BatchEnginePortletDataHandlerTest {
 		throws Exception {
 
 		ObjectDefinition objectDefinition1 = _addObjectDefinition(scope);
-		ObjectDefinition objectDefinition2 = _addObjectDefinition(scope);
 
 		ObjectEntry[] objectEntries1 = _addObjectEntries(
 			3, _getObjectEntryGroupId(group.getGroupId(), scope),
 			objectDefinition1);
+
+		ObjectDefinition objectDefinition2 = _addObjectDefinition(scope);
+
 		ObjectEntry[] objectEntries2 = _addObjectEntries(
 			3, _getObjectEntryGroupId(group.getGroupId(), scope),
 			objectDefinition2);

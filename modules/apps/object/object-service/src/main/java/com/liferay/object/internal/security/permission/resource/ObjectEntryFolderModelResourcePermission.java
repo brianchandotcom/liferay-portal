@@ -101,7 +101,9 @@ public class ObjectEntryFolderModelResourcePermission
 	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
-	@Reference(target = "(resource.name=" + ObjectConstants.RESOURCE_NAME + ")")
+	@Reference(
+		target = "(resource.name=" + ObjectConstants.RESOURCE_NAME_OBJECT_ENTRY_FOLDER + ")"
+	)
 	private PortletResourcePermission _portletResourcePermission;
 
 }

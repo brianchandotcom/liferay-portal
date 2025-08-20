@@ -204,10 +204,12 @@ test(
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
 		for (const option of ['Spain', 'Italy']) {
-			await apiHelpers.listTypeAdmin.postListTypeEntry(
-				listTypeDefinition.externalReferenceCode,
-				option
-			);
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: option,
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: option},
+			});
 		}
 
 		const objectDefinitionAPIClient =
@@ -992,10 +994,12 @@ test(
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
 		for (const option of ['Spain', 'Italy']) {
-			await apiHelpers.listTypeAdmin.postListTypeEntry(
-				listTypeDefinition.externalReferenceCode,
-				option
-			);
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: option,
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: option},
+			});
 		}
 
 		const objectFields: ObjectField[] = [

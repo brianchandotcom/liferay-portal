@@ -1,10 +1,8 @@
 locals {
+	bucket_active=local.is_active_data_blue ? module.s3_bucket_blue : module.s3_bucket_green
+	db_active=local.is_active_data_blue ? module.postgres_blue[0] : module.postgres_green[0]
 	is_active_data_blue=var.active_data=="blue"
 	is_active_data_green=var.active_data=="green"
-
-	active_bucket=local.is_active_data_blue ? module.s3_bucket_blue : module.s3_bucket_green
-	active_db=local.is_active_data_blue ? module.postgres_blue[0] : module.postgres_green[0]
-
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
 }
@@ -185,14 +183,14 @@ resource "kubernetes_namespace" "liferay" {
 }
 resource "kubernetes_secret" "managed_service_details" {
 	data={
-		"DATABASE_ENDPOINT"=local.active_db.address
+		"DATABASE_ENDPOINT"=local.db_active.address
 		"DATABASE_PASSWORD"=random_password.postgres_password.result
-		"DATABASE_PORT"=local.active_db.port
+		"DATABASE_PORT"=local.db_active.port
 		"DATABASE_USERNAME"=random_password.postgres_username.result
 		"OPENSEARCH_ENDPOINT"=aws_opensearch_domain.os.endpoint
 		"OPENSEARCH_PASSWORD"=random_password.opensearch_password.result
 		"OPENSEARCH_USERNAME"=random_password.opensearch_username.result
-		"S3_BUCKET_ID"=local.active_bucket.s3_bucket_id
+		"S3_BUCKET_ID"=local.bucket_active.s3_bucket_id
 		"S3_BUCKET_REGION"=var.region
 	}
 	metadata {

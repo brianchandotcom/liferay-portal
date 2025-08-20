@@ -7,6 +7,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;
@@ -34,7 +35,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.eclipse.equinox.http.servlet.internal.servlet.RequestDispatcherAdaptor;
@@ -274,15 +274,16 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public RequestDispatcher getNamedDispatcher(String servletName) {
-		DispatchTargets dispatchTargets =
+		LiferayDispatchTargets liferayDispatchTargets =
 			_liferayContextController.getDispatchTargets(
 				servletName, null, null, null, null, null, Match.EXACT);
 
-		if (dispatchTargets == null) {
+		if (liferayDispatchTargets == null) {
 			return null;
 		}
 
-		return new RequestDispatcherAdaptor(dispatchTargets, servletName);
+		return new RequestDispatcherAdaptor(
+			liferayDispatchTargets, servletName);
 	}
 
 	@Override
@@ -307,14 +308,14 @@ public class ServletContextWrapper implements ServletContext {
 			path = path.substring(fullContextPath.length());
 		}
 
-		DispatchTargets dispatchTargets =
+		LiferayDispatchTargets liferayDispatchTargets =
 			_liferayContextController.getDispatchTargets(path);
 
-		if (dispatchTargets == null) {
+		if (liferayDispatchTargets == null) {
 			return null;
 		}
 
-		return new RequestDispatcherAdaptor(dispatchTargets, path);
+		return new RequestDispatcherAdaptor(liferayDispatchTargets, path);
 	}
 
 	@Override

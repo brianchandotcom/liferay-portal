@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContextImpl;
 
 import jakarta.servlet.ServletContext;
@@ -30,8 +31,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
-import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
@@ -84,7 +83,7 @@ public class HttpServletEndpointControllerImpl
 			_parentServletContextTempDir = null;
 		}
 
-		_contextControllers = ServiceTrackerListFactory.open(
+		_liferayContextControllers = ServiceTrackerListFactory.open(
 			bundleContext, ServletContextHelper.class, null,
 			new ServletContextHelperServiceTrackerCustomizer());
 
@@ -110,45 +109,48 @@ public class HttpServletEndpointControllerImpl
 	public void destroy() {
 		_serviceRegistration.unregister();
 
-		_contextControllers.close();
+		_liferayContextControllers.close();
 	}
 
 	@Override
-	public DispatchTargets getDispatchTargets(String pathString) {
+	public LiferayDispatchTargets getDispatchTargets(String pathString) {
 		Path path = new Path(pathString);
 
 		String requestURI = path.getRequestURI();
 
-		List<ContextController> contextControllers = _getContextControllers(
-			requestURI);
+		List<LiferayContextController> liferayContextControllers =
+			_getLiferayContextControllers(requestURI);
 
-		if (ListUtil.isEmpty(contextControllers)) {
+		if (ListUtil.isEmpty(liferayContextControllers)) {
 			return null;
 		}
 
 		String queryString = path.getQueryString();
 
-		DispatchTargets dispatchTargets = _getDispatchTargets(
-			contextControllers, requestURI, null, queryString, Match.EXACT);
+		LiferayDispatchTargets liferayDispatchTargets =
+			_getLiferayDispatchTargets(
+				liferayContextControllers, requestURI, null, queryString,
+				Match.EXACT);
 
-		if (dispatchTargets == null) {
-			dispatchTargets = _getDispatchTargets(
-				contextControllers, requestURI, path.getExtension(),
+		if (liferayDispatchTargets == null) {
+			liferayDispatchTargets = _getLiferayDispatchTargets(
+				liferayContextControllers, requestURI, path.getExtension(),
 				queryString, Match.EXTENSION);
 		}
 
-		if (dispatchTargets == null) {
-			dispatchTargets = _getDispatchTargets(
-				contextControllers, requestURI, null, queryString, Match.REGEX);
+		if (liferayDispatchTargets == null) {
+			liferayDispatchTargets = _getLiferayDispatchTargets(
+				liferayContextControllers, requestURI, null, queryString,
+				Match.REGEX);
 		}
 
-		if (dispatchTargets == null) {
-			dispatchTargets = _getDispatchTargets(
-				contextControllers, requestURI, null, queryString,
+		if (liferayDispatchTargets == null) {
+			liferayDispatchTargets = _getLiferayDispatchTargets(
+				liferayContextControllers, requestURI, null, queryString,
 				Match.DEFAULT_SERVLET);
 		}
 
-		return dispatchTargets;
+		return liferayDispatchTargets;
 	}
 
 	@Override
@@ -196,22 +198,28 @@ public class HttpServletEndpointControllerImpl
 		return false;
 	}
 
-	private List<ContextController> _getContextControllers(String requestURI) {
+	private List<LiferayContextController> _getLiferayContextControllers(
+		String requestURI) {
+
 		int index = requestURI.lastIndexOf('/');
 
 		while (true) {
-			List<ContextController> contextControllers = new ArrayList<>();
+			List<LiferayContextController> liferayContextControllers =
+				new ArrayList<>();
 
-			for (ContextController contextController : _contextControllers) {
+			for (LiferayContextController liferayContextController :
+					_liferayContextControllers) {
+
 				if (Objects.equals(
-						contextController.getContextPath(), requestURI)) {
+						liferayContextController.getContextPath(),
+						requestURI)) {
 
-					contextControllers.add(contextController);
+					liferayContextControllers.add(liferayContextController);
 				}
 			}
 
-			if (!contextControllers.isEmpty()) {
-				return contextControllers;
+			if (!liferayContextControllers.isEmpty()) {
+				return liferayContextControllers;
 			}
 
 			if (index == -1) {
@@ -226,13 +234,14 @@ public class HttpServletEndpointControllerImpl
 		return null;
 	}
 
-	private DispatchTargets _getDispatchTargets(
-		List<ContextController> contextControllers, String requestURI,
-		String extension, String queryString, Match match) {
+	private LiferayDispatchTargets _getLiferayDispatchTargets(
+		List<LiferayContextController> liferayContextControllers,
+		String requestURI, String extension, String queryString, Match match) {
 
-		ContextController firstContextController = contextControllers.get(0);
+		LiferayContextController firstLiferayContextController =
+			liferayContextControllers.get(0);
 
-		String contextPath = firstContextController.getContextPath();
+		String contextPath = firstLiferayContextController.getContextPath();
 
 		requestURI = requestURI.substring(contextPath.length());
 
@@ -248,14 +257,16 @@ public class HttpServletEndpointControllerImpl
 		}
 
 		while (true) {
-			for (ContextController contextController : contextControllers) {
-				DispatchTargets dispatchTargets =
-					contextController.getDispatchTargets(
+			for (LiferayContextController liferayContextController :
+					liferayContextControllers) {
+
+				LiferayDispatchTargets liferayDispatchTargets =
+					liferayContextController.getDispatchTargets(
 						null, requestURI, servletPath, pathInfo, extension,
 						queryString, match);
 
-				if (dispatchTargets != null) {
-					return dispatchTargets;
+				if (liferayDispatchTargets != null) {
+					return liferayDispatchTargets;
 				}
 			}
 
@@ -278,7 +289,8 @@ public class HttpServletEndpointControllerImpl
 
 	private final Map<String, Object> _attributesMap;
 	private final BundleContext _bundleContext;
-	private final ServiceTrackerList<ContextController> _contextControllers;
+	private final ServiceTrackerList<LiferayContextController>
+		_liferayContextControllers;
 	private final ServletContext _parentServletContext;
 	private final File _parentServletContextTempDir;
 	private final Set<Object> _registeredObjects = Collections.newSetFromMap(
@@ -309,10 +321,10 @@ public class HttpServletEndpointControllerImpl
 
 	private class ServletContextHelperServiceTrackerCustomizer
 		implements EagerServiceTrackerCustomizer
-			<ServletContextHelper, ContextController> {
+			<ServletContextHelper, LiferayContextController> {
 
 		@Override
-		public ContextController addingService(
+		public LiferayContextController addingService(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
 			if (!matches(serviceReference)) {
@@ -357,15 +369,15 @@ public class HttpServletEndpointControllerImpl
 		@Override
 		public void modifiedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			ContextController contextController) {
+			LiferayContextController liferayContextController) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			ContextController contextController) {
+			LiferayContextController liferayContextController) {
 
-			contextController.destroy();
+			liferayContextController.destroy();
 		}
 
 	}

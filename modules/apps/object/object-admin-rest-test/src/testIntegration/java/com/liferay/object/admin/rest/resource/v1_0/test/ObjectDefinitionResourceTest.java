@@ -40,7 +40,6 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
-import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -55,8 +54,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -92,7 +89,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -121,26 +117,6 @@ public class ObjectDefinitionResourceTest
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString());
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		for (ObjectDefinition objectDefinition : _objectDefinitions) {
-			try {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getId());
-			}
-			catch (NoSuchObjectDefinitionException
-						noSuchObjectDefinitionException) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchObjectDefinitionException);
-				}
-			}
-		}
 	}
 
 	@Override
@@ -1565,7 +1541,9 @@ public class ObjectDefinitionResourceTest
 		objectDefinition = objectDefinitionResource.postObjectDefinition(
 			objectDefinition);
 
-		_objectDefinitions.add(objectDefinition);
+		_objectDefinitions.add(
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectDefinition.getId()));
 
 		return objectDefinition;
 	}
@@ -1971,9 +1949,6 @@ public class ObjectDefinitionResourceTest
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectDefinitionResourceTest.class);
-
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
@@ -1986,7 +1961,9 @@ public class ObjectDefinitionResourceTest
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	private final List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
+	@DeleteAfterTestRun
+	private final List<com.liferay.object.model.ObjectDefinition>
+		_objectDefinitions = new ArrayList<>();
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

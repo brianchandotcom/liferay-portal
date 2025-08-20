@@ -11,7 +11,7 @@
 	border-radius: 8px !important;
 	box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.1);
 	padding: 0px !important;
-	transition: all 0.2s cubic-bezier(.25, .8, .25, 1);
+	transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .card.main-image {
@@ -36,20 +36,20 @@
 .lfr-nav-item.nav-item:hover {
 	background-color: #ffffff !important;
 	font-weight: none !important;
-	transition: all 0.2s cubic-bezier(.25, .8, .25, 1);
+	transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected) .nav-link  {
-	border-bottom: #004AD7 solid 3px !important;
-	color: #0053F0 !important;
+.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected)
+	.nav-link {
+	border-bottom: #004ad7 solid 3px !important;
+	color: #0053f0 !important;
 	font-weight: 600;
 }
 
 .lfr-nav-item.nav-item.selected.active .nav-link {
-	border-bottom: #004AD7 solid 3px !important;
-	color: #0053F0 !important;
+	border-bottom: #004ad7 solid 3px !important;
+	color: #0053f0 !important;
 	font-weight: 600;
-	
 }
 
 .product-gallery .arrow.next {

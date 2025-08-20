@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Marketplace account menu",
+	"name": "Account Selection Dropdown",
 	"type": "component"
 }

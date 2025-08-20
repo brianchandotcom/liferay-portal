@@ -15,7 +15,7 @@ let profileAccountName;
 let searchInput;
 let trigger;
 let accountSelectionDropdown;
-let accountList;
+let accountList = [];
 let lastRenderedAccounts = [];
 
 function initializeElements() {
@@ -35,6 +35,7 @@ function initializeElements() {
 async function setCommerceContextAccount(accountId) {
 	try {
 		const body = new FormData();
+
 		body.append('accountId', accountId);
 
 		await fetch(
@@ -61,7 +62,7 @@ async function getAccount(accountId) {
 			`/o/headless-admin-user/v1.0/accounts/${accountId}`
 		);
 
-		return await response.json();
+		return response.json();
 	}
 	catch (error) {
 		console.error('Failed to get account:', error);
@@ -76,7 +77,7 @@ async function getAccounts(searchParams = new URLSearchParams()) {
 			`/o/headless-admin-user/v1.0/accounts?${searchParams.toString()}`
 		);
 
-		return await response.json();
+		return response.json();
 	}
 	catch (error) {
 		console.error('Failed to get accounts:', error);
@@ -109,8 +110,7 @@ function renderAccounts(accounts, currentAccountId, search) {
 
 	dropdownList.innerHTML = '';
 
-	const shouldShowSearch = accounts.length >= MIN_ACCOUNTS_FOR_SEARCH;
-	showSearchElements(shouldShowSearch || !!search);
+	showSearchElements(accounts.length >= MIN_ACCOUNTS_FOR_SEARCH || !!search);
 
 	if (!accounts.length) {
 		const noResultItem = document.createElement('li');
@@ -185,6 +185,7 @@ async function loadSelectedAccount() {
 		const account = await getAccount(
 			Liferay.CommerceContext.account.accountId
 		);
+
 		if (account) {
 			setAccountImage(account.logoURL);
 			setAccountName(account.name);
@@ -206,16 +207,6 @@ async function fetchAccounts(search) {
 				sort: 'name:asc',
 			})
 		);
-
-		if (!response.items.length) {
-			renderAccounts(
-				[],
-				Liferay.CommerceContext.account.accountId,
-				search
-			);
-
-			return;
-		}
 
 		renderAccounts(
 			response.items,

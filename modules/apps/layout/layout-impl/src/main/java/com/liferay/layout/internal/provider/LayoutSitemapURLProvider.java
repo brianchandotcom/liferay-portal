@@ -8,6 +8,7 @@ package com.liferay.layout.internal.provider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
@@ -126,7 +128,10 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			layout);
 
 		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-			layoutFullURL, themeDisplay, layout, _getAvailableLocales(layout));
+			layoutFullURL, themeDisplay, layout,
+			_getAvailableLocales(
+				layout,
+				_language.getAvailableLocales(themeDisplay.getScopeGroupId())));
 
 		for (String alternateURL : alternateURLs.values()) {
 			_sitemapManager.addURLElement(
@@ -135,10 +140,15 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		}
 	}
 
-	private Set<Locale> _getAvailableLocales(Layout layout)
+	private Set<Locale> _getAvailableLocales(
+			Layout layout, Set<Locale> siteAvailableLocales)
 		throws PortalException {
 
 		Set<Locale> availableLocales = new HashSet<>();
+
+		if (SetUtil.isEmpty(siteAvailableLocales)) {
+			return availableLocales;
+		}
 
 		InfoItemLanguagesProvider<Layout> infoItemLanguagesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -147,8 +157,12 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		for (String availableLanguageId :
 				infoItemLanguagesProvider.getAvailableLanguageIds(layout)) {
 
-			availableLocales.add(
-				LocaleUtil.fromLanguageId(availableLanguageId));
+			Locale locale = LocaleUtil.fromLanguageId(availableLanguageId);
+
+			if (siteAvailableLocales.contains(locale)) {
+				availableLocales.add(
+					LocaleUtil.fromLanguageId(availableLanguageId));
+			}
 		}
 
 		return availableLocales;
@@ -156,6 +170,9 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

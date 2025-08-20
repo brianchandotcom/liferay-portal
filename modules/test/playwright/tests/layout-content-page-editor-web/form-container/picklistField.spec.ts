@@ -73,10 +73,12 @@ test(
 		];
 
 		for (const country of countries) {
-			await apiHelpers.listTypeAdmin.postListTypeEntry(
-				listTypeDefinition.externalReferenceCode,
-				country
-			);
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: country,
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: country},
+			});
 		}
 
 		// Create object definition

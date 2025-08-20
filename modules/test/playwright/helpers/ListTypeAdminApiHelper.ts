@@ -51,7 +51,7 @@ export class ListTypeAdminApiHelper {
 			`${this.apiHelpers.baseUrl}${this.basePath}/list-type-definitions/by-external-reference-code/${listTypeDefinitionExternalReferenceCode}/list-type-entries`,
 			{
 				data: {
-					key,
+					key: key.toLowerCase(),
 					name_i18n,
 				},
 			}

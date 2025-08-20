@@ -4,8 +4,7 @@
 			"fields": [
 				{
 					"defaultValue": false,
-					"description": "Check if this is the most recent article group",
-					"label": "Most Recent Article Group?",
+					"label": "Most Recent Article Group",
 					"name": "mostRecentArticleGroup",
 					"type": "checkbox"
 				}

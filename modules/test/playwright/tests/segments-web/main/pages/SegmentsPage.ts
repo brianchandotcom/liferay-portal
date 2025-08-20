@@ -188,6 +188,18 @@ export class SegmentsPage {
 		}
 	}
 
+	  async selectAndScrollToProperty(tabName: 'User' | 'Organization' | 'Session', propertyName: string) {
+			const tabLocator = this.page.getByRole('button', { name: tabName, exact: true });
+			const propertyLocator = this.page.getByText(propertyName);
+			const isPropertyVisible = await propertyLocator.isVisible();
+			
+			if (!isPropertyVisible) {
+			await tabLocator.click();
+			}
+
+			await propertyLocator.scrollIntoViewIfNeeded();
+		}
+
 	async selectOption(optionName: string) {
 		const optionSelectLocator = this.page.locator(
 			'select[data-testid="options-string"]'

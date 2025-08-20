@@ -583,6 +583,30 @@ test(
 );
 
 test(
+	`Can scroll down in segments editor sidebar.`,
+
+	{
+		tag: '@LPS-150511',
+	},
+
+	async ({page, segmentsPage}) => {
+		await test.step('Given a segment designer goes to the segments editor page', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+		});
+
+		await test.step('Then can scroll down in different properties on the sidebar', async () => {
+			await segmentsPage.selectAndScrollToProperty('Organization', 'Type');
+			
+			await segmentsPage.selectAndScrollToProperty('Session', 'User Agent');
+
+			await segmentsPage.selectAndScrollToProperty('User', 'User Name');
+		});
+	}
+);
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

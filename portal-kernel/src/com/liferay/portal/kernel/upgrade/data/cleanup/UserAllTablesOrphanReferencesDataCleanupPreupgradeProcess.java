@@ -40,14 +40,6 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 			String targetColumnName, String targetTableName)
 		throws Exception {
 
-		List<String> excludedTableNames =
-			OrphanReferencesDataCleanupUtil.getNormalizedExcludedTableNames(
-				connection);
-
-		if (excludedTableNames.contains(sourceTableName)) {
-			return;
-		}
-
 		DBInspector dbInspector = new DBInspector(connection);
 
 		if (!dbInspector.hasColumn(sourceTableName, "companyId")) {

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 
 import java.util.List;
 
@@ -61,8 +62,14 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 
 		tableNames.remove(targetTableName);
 
+		List<String> excludedTableNames =
+			OrphanReferencesDataCleanupUtil.getNormalizedExcludedTableNames(
+				connection);
+
 		for (String sourceTableName : tableNames) {
-			if (!dbInspector.hasColumn(sourceTableName, targetColumnName)) {
+			if (excludedTableNames.contains(sourceTableName) ||
+				!dbInspector.hasColumn(sourceTableName, targetColumnName)) {
+
 				continue;
 			}
 

@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.util.List;
+
 /**
  * @author Luis Ortiz
  */
@@ -34,6 +36,14 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcess
 		DBInspector dbInspector = new DBInspector(connection);
 
 		String sourceTableName = dbInspector.normalizeName(_sourceTableName);
+
+		List<String> excludedTableNames =
+			OrphanReferencesDataCleanupUtil.getNormalizedExcludedTableNames(
+				connection);
+
+		if (excludedTableNames.contains(sourceTableName)) {
+			return;
+		}
 
 		if (!dbInspector.hasTable(sourceTableName)) {
 			if (_log.isDebugEnabled()) {

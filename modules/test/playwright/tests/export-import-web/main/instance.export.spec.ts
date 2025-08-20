@@ -237,7 +237,7 @@ test('can see corresponding elements at instance level', async ({
 
 	await expect(
 		companyExportImportPage.page.getByRole('link', {name: 'Refresh Counts'})
-	).not.toBeVisible();
+	).toBeVisible();
 });
 
 test(

@@ -216,23 +216,25 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				deletionType,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) &&
-			!objectRelationship.isReverse()) {
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) ||
+			objectRelationship.isReverse()) {
 
-			for (ObjectEntry objectEntry :
-					getRelatedModels(
-						groupId, objectRelationshipId, primaryKey, null,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+			return;
+		}
 
-				if (!objectEntry.isInTrash()) {
-					continue;
-				}
+		for (ObjectEntry objectEntry :
+				getRelatedModels(
+					groupId, objectRelationshipId, primaryKey, null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-				_objectEntryService.restoreObjectEntryFromTrash(
-					userId, objectEntry, new ServiceContext());
+			if (!objectEntry.isInTrash()) {
+				continue;
 			}
+
+			_objectEntryService.restoreObjectEntryFromTrash(
+				userId, objectEntry, new ServiceContext());
 		}
 	}
 

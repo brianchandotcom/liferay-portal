@@ -1580,7 +1580,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<propertyregex
 						input="@{patch.file.url}"
 						property="patch.name"
-						regexp=".*liferay-dxp-\d{4}.q\d.\d+-(hotfix-\d+).zip"
+						regexp=".*liferay-dxp-\d{4}.q\d.\d+(?:-lts)?-(hotfix-\d+).zip"
 						replace="\1"
 					/>
 				</then>

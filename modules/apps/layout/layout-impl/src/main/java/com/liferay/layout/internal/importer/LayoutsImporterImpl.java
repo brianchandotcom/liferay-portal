@@ -57,6 +57,7 @@ import com.liferay.layout.internal.importer.structure.util.ColumnLayoutStructure
 import com.liferay.layout.internal.importer.structure.util.ContainerLayoutStructureItemImporter;
 import com.liferay.layout.internal.importer.structure.util.DropZoneLayoutStructureItemImporter;
 import com.liferay.layout.internal.importer.structure.util.FormLayoutStructureItemImporter;
+import com.liferay.layout.internal.importer.structure.util.FormRelationshipLayoutStructureItemImporter;
 import com.liferay.layout.internal.importer.structure.util.FormStepContainerLayoutStructureItemImporter;
 import com.liferay.layout.internal.importer.structure.util.FormStepItemLayoutStructureItemImporter;
 import com.liferay.layout.internal.importer.structure.util.FragmentDropZoneLayoutStructureItemImporter;
@@ -354,6 +355,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				_fragmentCollectionLocalService, _fragmentEntryLocalService,
 				_fragmentRendererRegistry));
 		_addLayoutStructureItemImporter(new FormLayoutStructureItemImporter());
+		_addLayoutStructureItemImporter(
+			new FormRelationshipLayoutStructureItemImporter());
 		_addLayoutStructureItemImporter(
 			new FormStepContainerLayoutStructureItemImporter());
 		_addLayoutStructureItemImporter(

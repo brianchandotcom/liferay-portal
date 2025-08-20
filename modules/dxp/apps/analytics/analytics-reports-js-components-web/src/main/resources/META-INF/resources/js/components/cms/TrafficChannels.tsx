@@ -102,9 +102,11 @@ const TrafficChannelsEntry = ({
 };
 
 export function TrafficChannels() {
-	const {externalReferenceCode} = useContext(Context);
+	const {externalReferenceCode, filters} = useContext(Context);
 	const queryParams = buildQueryString({
 		externalReferenceCode,
+		groupId: filters.channel,
+		rangeKey: filters.rangeSelector.rangeKey
 	});
 
 	const endpoint = `/o/analytics-cms-rest/v1.0/object-entry-acquisition-channels${queryParams}`;

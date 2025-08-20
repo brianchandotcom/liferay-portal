@@ -91,6 +91,7 @@ const AssetMetrics = () => {
 
 	const queryParams = buildQueryString({
 		externalReferenceCode,
+		groupId: filters.channel,
 		rangeKey: filters.rangeSelector.rangeKey,
 		selectedMetrics: metricName[filters.metric] as string,
 	});

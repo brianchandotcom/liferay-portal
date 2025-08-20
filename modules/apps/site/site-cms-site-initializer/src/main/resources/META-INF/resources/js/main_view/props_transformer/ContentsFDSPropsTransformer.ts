@@ -138,7 +138,7 @@ export default function ContentFDSPropsTransformer({
 			else if (action?.data?.id === 'show-details') {
 				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
 			}
-			else if (action?.data?.id === 'viewContent') {
+			else if (action?.data?.id === 'view-content') {
 				event?.preventDefault();
 
 				openModal({

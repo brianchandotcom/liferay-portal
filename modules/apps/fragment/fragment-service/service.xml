@@ -295,7 +295,7 @@
 			<finder-column arrayable-operator="OR" name="rendererKey" />
 		</finder>
 		<finder name="F_D" return-type="Collection">
-			<finder-column arrayable-operator="true" name="fragmentEntryId" />
+			<finder-column name="fragmentEntryId" />
 			<finder-column name="deleted" />
 		</finder>
 		<finder name="G_OFELI_P" return-type="Collection">

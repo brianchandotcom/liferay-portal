@@ -6,6 +6,7 @@
 import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
+import formatActionURL from '../../common/utils/formatActionURL';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import {EVENTS} from '../info_panel/util/constants';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
@@ -86,12 +87,6 @@ export default function AllFDSPropsTransformer({
 			else if (action?.data?.id === 'view-content') {
 				return {
 					...action,
-					data: {
-						...action.data,
-						disableHeader: false,
-						size: 'full-screen',
-						title: 'View',
-					},
 					isVisible: (item: any) => Boolean(!item?.embedded?.file),
 				};
 			}
@@ -106,13 +101,24 @@ export default function AllFDSPropsTransformer({
 		}),
 		onActionDropdownItemClick: ({
 			action,
+			event,
 			itemData,
 		}: {
 			action: any;
+			event: Event;
 			itemData: any;
 		}) => {
 			if (action?.data?.id === 'show-details') {
 				Liferay.fire(EVENTS.ASSET_DATA, {items: [{...itemData}]});
+			}
+			else if (action?.data?.id === 'view-content') {
+				event?.preventDefault();
+
+				openModal({
+					size: 'full-screen',
+					title: itemData.embedded.title,
+					url: formatActionURL(itemData, action.href),
+				});
 			}
 			else if (action?.data?.id === 'view-file') {
 				openModal({

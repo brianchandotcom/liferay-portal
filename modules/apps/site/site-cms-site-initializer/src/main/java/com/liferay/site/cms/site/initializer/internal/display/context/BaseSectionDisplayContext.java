@@ -278,8 +278,7 @@ public abstract class BaseSectionDisplayContext {
 					themeDisplay.getURLCurrent(),
 					"&objectEntryId={embedded.id}"),
 				"view", "view-content",
-				LanguageUtil.get(httpServletRequest, "view"), "get", null,
-				"modal"),
+				LanguageUtil.get(httpServletRequest, "view"), null, null, null),
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "view", "view-file",
 				LanguageUtil.get(httpServletRequest, "view"), null, null, null),

@@ -117,10 +117,12 @@ public class APIPropertyObjectDefinitionDeployerImplTest {
 
 			String objectDefinitionClassName = objectDefinition.getClassName();
 
-			for (ObjectRelatedModelsProvider<?> provider :
+			for (ObjectRelatedModelsProvider<?> objectRelatedModelsProvider :
 					objectRelatedModelsProviders) {
 
-				if (objectDefinitionClassName.equals(provider.getClassName())) {
+				if (objectDefinitionClassName.equals(
+						objectRelatedModelsProvider.getClassName())) {
+
 					aPIPropertyObjectRelatedModelsProviders++;
 				}
 			}

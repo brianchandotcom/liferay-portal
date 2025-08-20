@@ -124,7 +124,7 @@ public class OrphanReferencesDataCleanupUtil {
 		OrphanReferencesDataCleanupUtil.class);
 
 	private static final List<String> _excludedTableNames = new ArrayList<>(
-		Arrays.asList("Audit_AuditEvent"));
+		Arrays.asList("Audit_AuditEvent", "CyrusUser", "CyrusVirtual"));
 	private static final List<String> _normalizedExcludedTableNames =
 		new ArrayList<>();
 

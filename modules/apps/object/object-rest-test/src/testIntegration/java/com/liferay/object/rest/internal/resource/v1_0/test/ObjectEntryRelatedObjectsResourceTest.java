@@ -183,10 +183,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
 				_objectRelationship.getName()));
 
-		_objectRelationship = _addObjectRelationship(
-			_objectDefinition1, _objectDefinition2,
+		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectRelationship, TestPropsValues.getUserId());
 
 		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2(
 			StringBundler.concat(
@@ -199,10 +198,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_objectEntry2.getPrimaryKey(), StringPool.SLASH,
 				_objectRelationship.getName()));
 
-		_objectRelationship = _addObjectRelationship(
-			_objectDefinition1, _objectDefinition2,
+		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectRelationship, TestPropsValues.getUserId());
 
 		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
 			StringBundler.concat(
@@ -220,10 +218,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_objectEntry2.getPrimaryKey(), StringPool.SLASH,
 				_objectRelationship.getName()));
 
-		_objectRelationship = _addObjectRelationship(
-			_objectDefinition1, _objectDefinition2,
+		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectRelationship, TestPropsValues.getUserId());
 
 		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
 			StringBundler.concat(
@@ -257,10 +254,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
 				_objectRelationship.getName()));
 
-		_objectRelationship = _addObjectRelationship(
-			_objectDefinition1, _objectDefinition2,
+		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectRelationship, TestPropsValues.getUserId());
 
 		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
 			StringBundler.concat(
@@ -278,10 +274,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_objectEntry1.getPrimaryKey(), StringPool.SLASH,
 				_objectRelationship.getName()));
 
-		_objectRelationship = _addObjectRelationship(
-			_objectDefinition1, _objectDefinition2,
+		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectRelationship, TestPropsValues.getUserId());
 
 		_testDeleteCustomObjectDefinition1WithCustomObjectDefinition2NotFound(
 			StringBundler.concat(

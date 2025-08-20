@@ -322,16 +322,6 @@ public class JournalArticleUtil {
 			article = journalArticleService.getArticle(
 				groupId, articleId, version);
 
-			int count = journalArticleService.getArticlesCountByArticleId(
-				article.getGroupId(), article.getArticleId());
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPD-11228") || (count > 1) ||
-				!Objects.equals(
-					WorkflowConstants.STATUS_DRAFT, article.getStatus())) {
-
-				serviceContext.setModelPermissions(null);
-			}
-
 			if (article.isDraft() && (version == 1.0)) {
 				Calendar calendar = CalendarFactoryUtil.getCalendar(
 					serviceContext.getTimeZone());
@@ -341,6 +331,16 @@ public class JournalArticleUtil {
 				displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
 				displayDateMonth = calendar.get(Calendar.MONTH);
 				displayDateYear = calendar.get(Calendar.YEAR);
+			}
+
+			int count = journalArticleService.getArticlesCountByArticleId(
+				article.getGroupId(), article.getArticleId());
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-11228") || (count > 1) ||
+				!Objects.equals(
+					WorkflowConstants.STATUS_DRAFT, article.getStatus())) {
+
+				serviceContext.setModelPermissions(null);
 			}
 
 			if (actionName.equals("/journal/update_article")) {

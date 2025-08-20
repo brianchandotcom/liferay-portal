@@ -4,7 +4,7 @@ Bundle-Version: 12.0.12
 Export-Package:\
 	com.liferay.portal.remote.jaxrs.whiteboard.lifecycle,\
 	javax.wsdl.xml;version="1.2"
-Provide-Capability:\
+Require-Capability:\
 	osgi.ee;\
 		filter:="(&(osgi.ee=JavaSE)(version=${ant.build.javac.target}))",\
 	osgi.contract;\

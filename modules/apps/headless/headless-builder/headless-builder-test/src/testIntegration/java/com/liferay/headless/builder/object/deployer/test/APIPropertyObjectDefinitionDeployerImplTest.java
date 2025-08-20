@@ -88,8 +88,6 @@ public class APIPropertyObjectDefinitionDeployerImplTest {
 			List<ObjectRelatedModelsProvider<?>> objectRelatedModelsProviders)
 		throws Exception {
 
-		int count = 0;
-
 		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(companyId)) {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.
@@ -99,6 +97,8 @@ public class APIPropertyObjectDefinitionDeployerImplTest {
 			if (objectDefinition == null) {
 				return 0;
 			}
+
+			int count = 0;
 
 			String objectDefinitionClassName = objectDefinition.getClassName();
 
@@ -111,9 +111,9 @@ public class APIPropertyObjectDefinitionDeployerImplTest {
 					count++;
 				}
 			}
-		}
 
-		return count;
+			return count;
+		}
 	}
 
 	private List<ObjectRelatedModelsProvider<?>>

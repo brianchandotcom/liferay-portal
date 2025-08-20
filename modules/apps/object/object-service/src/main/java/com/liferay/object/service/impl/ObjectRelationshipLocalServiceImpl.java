@@ -1714,6 +1714,27 @@ public class ObjectRelationshipLocalServiceImpl
 							"the-object-relationship-can-be-an-edge-to-a-root-",
 							"context"));
 				}
+
+				List<ObjectField> objectFields =
+					_objectFieldPersistence.findByObjectDefinitionId(
+						objectDefinition2.getObjectDefinitionId());
+
+				Long relatedRootObjectEntriesCount =
+					_objectEntryLocalService.getRootOneToManyObjectEntriesCount(
+						objectDefinition2.getCompanyId(), objectFields,
+						objectDefinition2.getObjectDefinitionId(), null);
+
+				if (relatedRootObjectEntriesCount > 0) {
+					throw new ObjectRelationshipEdgeException(
+						StringBundler.concat(
+							"There must be no root related object entries so ",
+							"that the object relationship can be an edge to a ",
+							"root context"),
+						StringBundler.concat(
+							"there-must-be-no-root-related-object-entries-so-",
+							"that-the-object-relationship-can-be-an-edge-to-a-",
+							"root-context"));
+				}
 			}
 
 			List<Object> arguments = new ArrayList<>();

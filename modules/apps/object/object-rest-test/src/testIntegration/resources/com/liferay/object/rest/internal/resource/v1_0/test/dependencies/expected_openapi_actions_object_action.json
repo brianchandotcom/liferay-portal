@@ -1841,6 +1841,13 @@
 					},
 					{
 						"in": "query",
+						"name": "nestedFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
 						"name": "page",
 						"schema": {
 							"type": "string"
@@ -3275,6 +3282,13 @@
 						"in": "path",
 						"name": "object1Id",
 						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "nestedFields",
 						"schema": {
 							"type": "string"
 						}

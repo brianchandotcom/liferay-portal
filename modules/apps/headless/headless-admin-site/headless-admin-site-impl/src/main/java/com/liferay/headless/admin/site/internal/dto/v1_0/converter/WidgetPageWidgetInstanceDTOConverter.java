@@ -82,11 +82,27 @@ public class WidgetPageWidgetInstanceDTOConverter
 								getPortletConfiguration(
 									layout.getPlid(), portletId);
 
-						if (MapUtil.isEmpty(portletConfigurationMap)) {
+						Map<String, Object> widgetConfig = new HashMap<>();
+
+						for (Map.Entry<String, Object> entry :
+								portletConfigurationMap.entrySet()) {
+
+							String key = entry.getKey();
+
+							if (_excludePreferencesNames.contains(key) ||
+								key.startsWith("portletSetupTitle_")) {
+
+								continue;
+							}
+
+							widgetConfig.put(key, entry.getValue());
+						}
+
+						if (MapUtil.isEmpty(widgetConfig)) {
 							return null;
 						}
 
-						return portletConfigurationMap;
+						return widgetConfig;
 					});
 				setWidgetInstanceId(
 					() -> PortletIdCodec.decodeInstanceId(portletId));
@@ -190,6 +206,11 @@ public class WidgetPageWidgetInstanceDTOConverter
 			}
 		};
 	}
+
+	private static final Collection<String> _excludePreferencesNames =
+		ListUtil.fromArray(
+			"portletSetupUseCustomTitle", "portletSetupPortletDecoratorId",
+			"portletSetupCss");
 
 	@Reference
 	private PortletPermissionsExporter _portletPermissionsExporter;

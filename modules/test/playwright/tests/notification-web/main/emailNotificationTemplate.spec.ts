@@ -165,6 +165,10 @@ test.describe('Email notification template', () => {
 			.getFrontEndDatasetItemLocator(notificationTemplate.name)
 			.click();
 
+		await emailNotificationTemplatePage.page
+			.getByRole('heading', {name: notificationTemplate.name})
+			.waitFor();
+
 		const editedNotificationTemplateInfo = {
 			bcc: getRandomString(),
 			cc: getRandomString(),

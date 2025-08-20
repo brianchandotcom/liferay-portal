@@ -1948,7 +1948,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						jsonObject.getString("name_i18n")),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("description_i18n")),
-					DepotConstants.TYPE_ASSET_LIBRARY, serviceContext);
+					_getDepotEntryType(jsonObject.getString("type")),
+					serviceContext);
 			}
 
 			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
@@ -5462,6 +5463,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return map;
+	}
+
+	private int _getDepotEntryType(String assetLibraryTypeString) {
+		if (Validator.isNull(assetLibraryTypeString) ||
+			StringUtil.equalsIgnoreCase(
+				assetLibraryTypeString, "AssetLibrary")) {
+
+			return DepotConstants.TYPE_ASSET_LIBRARY;
+		}
+		else if (StringUtil.equalsIgnoreCase(assetLibraryTypeString, "Space")) {
+			return DepotConstants.TYPE_SPACE;
+		}
+
+		throw new IllegalArgumentException(
+			"Asset library type " + assetLibraryTypeString +
+				" must be one of: AssetLibrary, Space.");
 	}
 
 	private Serializable _getExpandoAttributeValue(JSONObject jsonObject)

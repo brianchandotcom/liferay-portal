@@ -22,6 +22,7 @@ async function addSpace({
 			description,
 			name,
 			settings,
+			type: 'Space',
 		}
 	);
 }
@@ -133,7 +134,7 @@ async function getSpaceUsers({
 
 async function getSpaces(): Promise<Space[]> {
 	const {data, error} = await ApiHelper.get<{items: Space[]}>(
-		'/o/headless-asset-library/v1.0/asset-libraries'
+		"/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'"
 	);
 
 	if (data) {

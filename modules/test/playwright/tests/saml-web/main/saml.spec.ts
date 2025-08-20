@@ -76,7 +76,7 @@ import {
 	SECONDARY_SP_URL,
 	configureVirtualInstanceForSaml,
 	createCustomField,
-	createIdentityAndServiceProviderVirtualInstance,
+	createIdentityBrokerVirtualInstance,
 	createIdentityProviderVirtualInstance,
 	createServiceProviderVirtualInstance,
 	createUser,
@@ -3367,12 +3367,11 @@ test('LPD-37323 AC1 TC1: Liferay as both IdP and SP handles the SSO flow by trig
 
 	await performLogin(localhostAdminPage, 'test');
 
-	const idpSpAdminPage =
-		await createIdentityAndServiceProviderVirtualInstance(
-			browser,
-			localhostAdminPage,
-			SECONDARY_IDP_NAME
-		);
+	const ibAdminPage = await createIdentityBrokerVirtualInstance(
+		browser,
+		localhostAdminPage,
+		SECONDARY_IDP_NAME
+	);
 
 	const idpAdminPage = await configureVirtualInstanceForSaml(
 		browser,
@@ -3393,7 +3392,7 @@ test('LPD-37323 AC1 TC1: Liferay as both IdP and SP handles the SSO flow by trig
 	await connectSpAndIdp(
 		idpAdminPage,
 		DEFAULT_IDP_NAME,
-		idpSpAdminPage,
+		ibAdminPage,
 		SECONDARY_IDP_NAME
 	);
 
@@ -3412,7 +3411,7 @@ test('LPD-37323 AC1 TC1: Liferay as both IdP and SP handles the SSO flow by trig
 	await identityProviderConnectionsPage.deleteIdentityProviderConnections();
 
 	await connectSpAndIdp(
-		idpSpAdminPage,
+		ibAdminPage,
 		SECONDARY_IDP_NAME,
 		spAdminPage,
 		DEFAULT_SP_NAME
@@ -3458,12 +3457,11 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 
 	resetSystemSettings = true;
 
-	const idpSpAdminPage =
-		await createIdentityAndServiceProviderVirtualInstance(
-			browser,
-			localhostAdminPage,
-			SECONDARY_IDP_NAME
-		);
+	const ibAdminPage = await createIdentityBrokerVirtualInstance(
+		browser,
+		localhostAdminPage,
+		SECONDARY_IDP_NAME
+	);
 
 	const secondarySpAdminPage = await createServiceProviderVirtualInstance(
 		browser,
@@ -3473,7 +3471,7 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 	);
 
 	await connectSpAndIdp(
-		idpSpAdminPage,
+		ibAdminPage,
 		SECONDARY_IDP_NAME,
 		secondarySpAdminPage,
 		SECONDARY_SP_NAME
@@ -3521,7 +3519,7 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 	await connectSpAndIdp(
 		idpAdminPage,
 		DEFAULT_IDP_NAME,
-		idpSpAdminPage,
+		ibAdminPage,
 		SECONDARY_IDP_NAME
 	);
 
@@ -3540,7 +3538,7 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 	await identityProviderConnectionsPage.deleteIdentityProviderConnections();
 
 	await connectSpAndIdp(
-		idpSpAdminPage,
+		ibAdminPage,
 		SECONDARY_IDP_NAME,
 		spAdminPage,
 		DEFAULT_SP_NAME

@@ -60,8 +60,8 @@ public class MetadataManagerUtil {
 				PortalUtil.isSecure(httpServletRequest));
 			String localEntityId = localEntityManager.getLocalEntityId();
 
-			if (samlProviderConfigurationHelper.isMultirole()) {
-				return MetadataGeneratorUtil.buildMultiroleEntityDescriptor(
+			if (samlProviderConfigurationHelper.isRoleIb()) {
+				return MetadataGeneratorUtil.buildIbEntityDescriptor(
 					portalURL, localEntityId,
 					_isSignAuthnRequest(samlProviderConfigurationHelper),
 					_isWantAuthnRequestSigned(samlProviderConfigurationHelper),

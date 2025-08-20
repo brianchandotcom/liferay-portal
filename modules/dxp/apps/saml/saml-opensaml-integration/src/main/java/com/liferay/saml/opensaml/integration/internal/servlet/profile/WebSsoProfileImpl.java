@@ -1401,7 +1401,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private String _getNameIdFormat(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		if (samlProviderConfigurationHelper.isMultirole()) {
+		if (samlProviderConfigurationHelper.isRoleIb()) {
 			String nameIdFormat = _fetchSamlIdpSPNameIdFormat(
 				companyId, entityId);
 

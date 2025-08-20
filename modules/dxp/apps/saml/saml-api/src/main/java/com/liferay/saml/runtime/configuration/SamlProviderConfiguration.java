@@ -101,11 +101,10 @@ public interface SamlProviderConfiguration {
 		deflt = SamlProviderConfigurationKeys.SAML_ROLE_SP, id = "saml.role",
 		name = "saml-role",
 		optionLabels = {
-			"identity-and-service-provider", "identity-provider",
-			"service-provider"
+			"identity-broker", "identity-provider", "service-provider"
 		},
 		optionValues = {
-			SamlProviderConfigurationKeys.SAML_MULTIROLE,
+			SamlProviderConfigurationKeys.SAML_ROLE_IB,
 			SamlProviderConfigurationKeys.SAML_ROLE_IDP,
 			SamlProviderConfigurationKeys.SAML_ROLE_SP
 		},

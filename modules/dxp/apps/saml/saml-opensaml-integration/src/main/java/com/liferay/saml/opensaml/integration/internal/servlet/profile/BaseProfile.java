@@ -180,7 +180,7 @@ public abstract class BaseProfile {
 
 		RoleDescriptor roleDescriptor = null;
 
-		if (samlProviderConfigurationHelper.isMultirole()) {
+		if (samlProviderConfigurationHelper.isRoleIb()) {
 			if (Validator.isNotNull(
 					entityDescriptor.getIDPSSODescriptor(
 						SAMLConstants.SAML20P_NS))) {
@@ -298,7 +298,7 @@ public abstract class BaseProfile {
 
 		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
 
-		if (samlProviderConfigurationHelper.isMultirole()) {
+		if (samlProviderConfigurationHelper.isRoleIb()) {
 			if (Validator.isNotNull(
 					httpServletRequest.getAttribute(
 						SamlWebKeys.SAML_ACS_LOGIN)) ||
@@ -326,7 +326,7 @@ public abstract class BaseProfile {
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
-		if (samlProviderConfigurationHelper.isMultirole()) {
+		if (samlProviderConfigurationHelper.isRoleIb()) {
 			if (Validator.isNotNull(
 					httpServletRequest.getAttribute(
 						SamlWebKeys.SAML_ACS_LOGIN)) ||
@@ -387,7 +387,7 @@ public abstract class BaseProfile {
 
 		RoleDescriptor roleDescriptor = null;
 
-		if (samlProviderConfigurationHelper.isMultirole()) {
+		if (samlProviderConfigurationHelper.isRoleIb()) {
 			long companyId = CompanyThreadLocal.getCompanyId();
 
 			try {

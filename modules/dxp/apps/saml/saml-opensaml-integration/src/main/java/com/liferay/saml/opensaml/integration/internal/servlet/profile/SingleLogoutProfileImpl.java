@@ -977,7 +977,7 @@ public class SingleLogoutProfileImpl
 			MessageContext<?> messageContext)
 		throws Exception {
 
-		if (samlProviderConfigurationHelper.isMultirole()) {
+		if (samlProviderConfigurationHelper.isRoleIb()) {
 			SAMLPeerEntityContext samlPeerEntityContext =
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
@@ -1004,7 +1004,7 @@ public class SingleLogoutProfileImpl
 			MessageContext<?> messageContext)
 		throws Exception {
 
-		if (samlProviderConfigurationHelper.isMultirole()) {
+		if (samlProviderConfigurationHelper.isRoleIb()) {
 			SAMLPeerEntityContext samlPeerEntityContext =
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
 

@@ -6,7 +6,21 @@
 
 #wrapper {
 	&:has(.content-editor__side-panel) {
-		margin-right: $contentEditorSidePanelWidth;
+		margin-right: $contentEditorSidePanelBarWidth;
+	}
+
+	@include media-breakpoint-up(lg) {
+		#content {
+			&:has(.content-editor__side-panel > .sidebar) {
+				padding-right: $contentEditorSidePanelWidth;
+				transition: padding 0.3s ease-in-out;
+			}
+
+			&:has(.content-editor__side-panel > .c-slideout-transition-out) {
+				padding-right: 0;
+				transition: padding 0.2s ease-in;
+			}
+		}
 	}
 
 	.content-editor__side-panel {
@@ -37,7 +51,8 @@
 html#{$cadmin-selector} {
 	.page-editor__wrapper {
 		&:has(.content-editor__side-panel) {
-			margin-right: $pageEditorSidebarWidth + $contentEditorSidePanelWidth;
+			margin-right: $pageEditorSidebarWidth +
+				$contentEditorSidePanelBarWidth;
 		}
 
 		.content-editor__side-panel {

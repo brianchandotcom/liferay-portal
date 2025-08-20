@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
@@ -20,6 +21,7 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useReducer,
 	useRef,
 	useState,
@@ -104,7 +106,7 @@ const FrontendDataSetContent = ({
 	customRenderers,
 	customViews = '{}',
 	customViewsEnabled,
-	emptyState,
+	emptyState: emptyStateProp,
 	filters: initialFilters,
 	formId,
 	formName,
@@ -324,6 +326,120 @@ const FrontendDataSetContent = ({
 		searchParam,
 		sorts,
 	]);
+
+	const onSearch = useCallback(
+		({query}: {query: string}) => {
+			if (apiURL || appURL) {
+				setSearching(true);
+
+				setSearchParam(query);
+			}
+			else {
+				setItems(
+					itemsProp?.length
+						? itemsProp.filter((item) => {
+								return JSON.stringify(
+									Object.values(item)
+								).includes(query);
+							})
+						: []
+				);
+			}
+		},
+		[apiURL, appURL, itemsProp]
+	);
+
+	const onClearFilters = useCallback(() => {
+		setSearching(true);
+
+		viewsDispatch({
+			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+			value: filters.map((filter: any) => ({
+				...filter,
+				active: false,
+				odataFilterString: undefined,
+				selectedData: undefined,
+			})),
+		});
+
+		onSearch({query: ''});
+	}, [filters, onSearch, viewsDispatch]);
+
+	const currentEmptyState = useMemo(() => {
+		const hasActiveFilters = filters.some((filter: any) => filter.active);
+		const hasSearch = !!searchParam;
+
+		const imgSrc = `${Liferay.ThemeDisplay.getPathThemeImages()}${
+			emptyStateProp?.image ?? '/states/search_state.svg'
+		}`;
+
+		if (hasActiveFilters && hasSearch) {
+			return {
+				children: (
+					<ClayButton
+						displayType="secondary"
+						onClick={onClearFilters}
+					>
+						{Liferay.Language.get('clear-search-and-filters')}
+					</ClayButton>
+				),
+				description: Liferay.Language.get(
+					'review-your-filters-or-search-and-try-again'
+				),
+				imgSrc,
+				title: Liferay.Language.get('no-results-found'),
+			};
+		}
+
+		if (hasActiveFilters) {
+			return {
+				children: (
+					<ClayButton
+						displayType="secondary"
+						onClick={onClearFilters}
+					>
+						{Liferay.Language.get('clear-filters')}
+					</ClayButton>
+				),
+				description: Liferay.Language.get(
+					'review-your-filters-and-try-again'
+				),
+				imgSrc,
+				title: Liferay.Language.get('no-results-found'),
+			};
+		}
+
+		if (hasSearch) {
+			return {
+				children: (
+					<ClayButton
+						displayType="secondary"
+						onClick={onClearFilters}
+					>
+						{Liferay.Language.get('clear-search')}
+					</ClayButton>
+				),
+				description: Liferay.Language.get(
+					'review-your-search-and-try-again'
+				),
+				imgSrc,
+				title: Liferay.Language.get('no-results-found'),
+			};
+		}
+
+		return {
+			children: creationMenu && (
+				<CreationMenu {...creationMenu} inEmptyState />
+			),
+			description:
+				emptyStateProp?.description ??
+				Liferay.Language.get('sorry,-no-results-were-found'),
+			imgSrc,
+			title:
+				emptyStateProp?.title ??
+				Liferay.Language.get('no-results-found'),
+		};
+	}, [creationMenu, emptyStateProp, filters, onClearFilters, searchParam]);
 
 	const isMounted = useIsMounted();
 
@@ -875,22 +991,11 @@ const FrontendDataSetContent = ({
 					/>
 				) : (
 					<ClayEmptyState
-						description={
-							emptyState?.description ??
-							Liferay.Language.get('sorry,-no-results-were-found')
-						}
-						imgSrc={
-							Liferay.ThemeDisplay.getPathThemeImages() +
-							(emptyState?.image ?? '/states/search_state.svg')
-						}
-						title={
-							emptyState?.title ??
-							Liferay.Language.get('no-results-found')
-						}
+						description={currentEmptyState.description}
+						imgSrc={currentEmptyState.imgSrc}
+						title={currentEmptyState.title}
 					>
-						{creationMenu && (
-							<CreationMenu {...creationMenu} inEmptyState />
-						)}
+						{currentEmptyState.children}
 					</ClayEmptyState>
 				)}
 			</div>
@@ -1169,25 +1274,6 @@ const FrontendDataSetContent = ({
 				throw error;
 			});
 	}
-
-	const onSearch = ({query}: {query: string}) => {
-		if (apiURL || appURL) {
-			setSearching(true);
-
-			setSearchParam(query);
-		}
-		else {
-			setItems(
-				itemsProp?.length
-					? itemsProp.filter((item) => {
-							return JSON.stringify(Object.values(item)).includes(
-								query
-							);
-						})
-					: []
-			);
-		}
-	};
 
 	const selectable = Boolean(
 		selectedItemsKey && (bulkActions?.length || selectionType === 'single')

@@ -78,10 +78,11 @@
 	content: '';
 	cursor: pointer;
 	display: inline-block;
-	height: 13px;
+	height: 10px;
 	position: absolute;
 	right: 2%;
-	width: 13px;
+	top: 20px;
+	width: 10px;
 	z-index: 20;
 }
 
@@ -102,7 +103,7 @@
 		top: 48px !important;
 	}
 	
-	.announcements-banner-content {		
+	.announcements-banner-content {
 		align-items: center;
 		display: flex;
 		justify-content: center;
@@ -144,13 +145,6 @@
 		margin-right: 0;
 	}
 }
-
-	.icon-x {
-		height: 10px;
-		top: 20px;
-		width: 10px;
-	}
-
 
 @media (min-width: 568px) and (max-width: 1024px) {
 	.announcements-banner {

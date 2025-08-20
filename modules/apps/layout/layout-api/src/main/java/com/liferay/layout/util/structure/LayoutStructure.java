@@ -7,6 +7,7 @@ package com.liferay.layout.util.structure;
 
 import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.layout.responsive.ViewportSize;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
@@ -265,6 +266,32 @@ public class LayoutStructure {
 		_updateLayoutStructure(dropZoneLayoutStructureItem, position);
 
 		return dropZoneLayoutStructureItem;
+	}
+
+	public LayoutStructureItem addFormRelationshipStyledLayoutStructureItem(
+		String itemId, String parentItemId, int position) {
+
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		if (!(parentLayoutStructureItem instanceof
+				FormStyledLayoutStructureItem) &&
+			!LayoutStructureItemUtil.hasAncestor(
+				parentItemId, LayoutDataItemTypeConstants.TYPE_FORM, this)) {
+
+			throw new UnsupportedOperationException(
+				"Form relationship can only be added inside of a form");
+		}
+
+		FormRelationshipStyledLayoutStructureItem
+			formRelationshipStyledLayoutStructureItem =
+				new FormRelationshipStyledLayoutStructureItem(
+					itemId, parentItemId);
+
+		_updateLayoutStructure(
+			formRelationshipStyledLayoutStructureItem, position);
+
+		return formRelationshipStyledLayoutStructureItem;
 	}
 
 	public LayoutStructureItem addFormStepContainerStyledLayoutStructureItem(

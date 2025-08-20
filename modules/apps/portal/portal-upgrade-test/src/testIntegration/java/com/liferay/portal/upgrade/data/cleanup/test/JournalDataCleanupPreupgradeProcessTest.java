@@ -6,6 +6,11 @@
 package com.liferay.portal.upgrade.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
@@ -16,13 +21,16 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -104,9 +112,33 @@ public class JournalDataCleanupPreupgradeProcessTest
 		runSQL(
 			"delete from JournalFeed where feedId = '" +
 				journalFeed.getFeedId() + "'");
-		runSQL("delete from Layout where plid = " + layout.getPlid());
 
 		upgrade();
+
+		_ddmTemplateLocalService.deleteTemplate(
+			journalArticle.getDDMTemplate());
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		DDMStructureVersion ddmStructureVersion =
+			ddmStructure.getStructureVersion();
+
+		_ddmFieldLocalService.deleteDDMFields(
+			ddmStructureVersion.getStructureId());
+
+		_ddmStructureLocalService.deleteStructure(
+			journalArticle.getDDMStructure());
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
+			_layoutLocalService.deleteLayout(layout);
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+		}
 
 		_groupLocalService.deleteGroup(group);
 	}
@@ -118,7 +150,19 @@ public class JournalDataCleanupPreupgradeProcessTest
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
+	private DDMFieldLocalService _ddmFieldLocalService;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -461,11 +461,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
-	public boolean isModelCountSupported() {
-		return true;
-	}
-
-	@Override
 	public boolean isPublishToLiveByDefault() {
 		return _publishToLiveByDefault;
 	}

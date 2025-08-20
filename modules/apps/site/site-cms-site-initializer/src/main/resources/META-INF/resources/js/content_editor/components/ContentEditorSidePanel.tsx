@@ -201,6 +201,7 @@ function SidePanel(props: SidePanelProps) {
 			active={panel}
 			className="content-editor__side-panel"
 			onActiveChange={setPanel}
+			panelWidth={280}
 		>
 			<VerticalBar.Content items={items}>
 				{(item) => {

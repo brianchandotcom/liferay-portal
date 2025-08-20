@@ -14,6 +14,7 @@ import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.engine.internal.lar.PortletDataContextThreadLocal;
+import com.liferay.batch.engine.jaxrs.uri.BatchEngineUriInfo;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
@@ -337,12 +338,21 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		batchEngineTaskItemDelegate.setContextUser(user);
 		batchEngineTaskItemDelegate.setLanguageId(user.getLanguageId());
 
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				Collections.emptyList(), portletDataContext);
+
+		BatchEngineUriInfo.Builder builder = new BatchEngineUriInfo.Builder();
+
+		for (Map.Entry<String, Serializable> entry : parameters.entrySet()) {
+			builder.queryParameter(
+				entry.getKey(), String.valueOf(entry.getValue()));
+		}
+
+		batchEngineTaskItemDelegate.setContextUriInfo(builder.build());
+
 		Page<?> page = batchEngineTaskItemDelegate.read(
-			null, Pagination.of(0, 0), null,
-			HashMapBuilder.<String, Serializable>put(
-				"siteId", String.valueOf(portletDataContext.getGroupId())
-			).build(),
-			null);
+			null, Pagination.of(0, 0), null, parameters, null);
 
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();

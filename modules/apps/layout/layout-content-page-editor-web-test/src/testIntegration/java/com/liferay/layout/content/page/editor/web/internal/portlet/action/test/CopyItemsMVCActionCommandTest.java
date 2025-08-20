@@ -608,10 +608,9 @@ public class CopyItemsMVCActionCommandTest {
 			FragmentEntryLink fragmentEntryLink)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
-		JSONObject copiedJSONObject = _jsonFactory.createJSONObject(
-			copiedFragmentEntryLink.getEditableValues());
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
+		JSONObject copiedJSONObject =
+			copiedFragmentEntryLink.getEditableValuesJSONObject();
 
 		Assert.assertEquals(jsonObject.length(), copiedJSONObject.length());
 

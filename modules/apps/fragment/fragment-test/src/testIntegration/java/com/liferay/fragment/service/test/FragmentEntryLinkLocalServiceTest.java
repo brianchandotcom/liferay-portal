@@ -32,7 +32,6 @@ import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporaryS
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -235,8 +234,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentEntryLink.getFragmentEntryLinkId()));
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			JSONObject jsonObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
 
 			JSONObject editableJSONObject = jsonObject.getJSONObject(
 				FragmentEntryProcessorConstants.
@@ -269,8 +268,8 @@ public class FragmentEntryLinkLocalServiceTest {
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentEntryLink.getFragmentEntryLinkId()));
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			JSONObject jsonObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
 
 			JSONObject editableJSONObject = jsonObject.getJSONObject(
 				FragmentEntryProcessorConstants.
@@ -300,8 +299,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject editableJSONObject = jsonObject.getJSONObject(
 			FragmentEntryProcessorConstants.
@@ -330,8 +328,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject editableJSONObject = jsonObject.getJSONObject(
 			FragmentEntryProcessorConstants.
@@ -748,13 +745,10 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertEquals(
 			newConfiguration, fragmentEntryLink.getConfiguration());
 
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
-
 		Assert.assertEquals(
 			_objectMapper.readTree(
 				_read("expected-editable-values-light-modified.json")),
-			_objectMapper.readTree(editableValuesJSONObject.toString()));
+			_objectMapper.readTree(fragmentEntryLink.getEditableValues()));
 	}
 
 	@Test

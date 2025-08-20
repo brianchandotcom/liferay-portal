@@ -447,8 +447,7 @@ public class LayoutWarningMessageHelperImpl
 			FragmentEntryLink fragmentEntryLink, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
 		for (String fragmentEntryProcessorKey :
 				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {

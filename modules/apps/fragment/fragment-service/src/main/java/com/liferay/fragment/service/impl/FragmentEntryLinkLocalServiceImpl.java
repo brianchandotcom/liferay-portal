@@ -279,8 +279,8 @@ public class FragmentEntryLinkLocalServiceImpl
 
 				if (fragmentEntryLink.isTypePortlet()) {
 					try {
-						JSONObject jsonObject = _jsonFactory.createJSONObject(
-							fragmentEntryLink.getEditableValues());
+						JSONObject jsonObject =
+							fragmentEntryLink.getEditableValuesJSONObject();
 
 						String instanceId = jsonObject.getString("instanceId");
 						String portletId = jsonObject.getString("portletId");

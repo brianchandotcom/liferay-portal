@@ -460,8 +460,7 @@ public class EditableValuesExportImportContentProcessorTest {
 		throws Exception {
 
 		JSONObject configurationValuesJSONObject =
-			_jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject editableValuesJSONObject =
 			configurationValuesJSONObject.getJSONObject(
@@ -481,8 +480,7 @@ public class EditableValuesExportImportContentProcessorTest {
 		throws Exception {
 
 		JSONObject configurationValuesJSONObject =
-			_jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject freeMarkerJSONObject =
 			configurationValuesJSONObject.getJSONObject(

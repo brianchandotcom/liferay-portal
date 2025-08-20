@@ -197,8 +197,8 @@ public class FormManagerImpl implements FormManager {
 				serviceContext);
 
 		if (infoField != null) {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			JSONObject editableValuesJSONObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
 
 			JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.

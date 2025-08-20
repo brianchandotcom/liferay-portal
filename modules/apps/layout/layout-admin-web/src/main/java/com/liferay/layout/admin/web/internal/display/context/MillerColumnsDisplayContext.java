@@ -601,6 +601,15 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
+		if (layout.isTypeEmpty()) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "empty"
+				).put(
+					"label", LanguageUtil.get(_httpServletRequest, "empty")
+				));
+		}
+
 		return jsonArray;
 	}
 

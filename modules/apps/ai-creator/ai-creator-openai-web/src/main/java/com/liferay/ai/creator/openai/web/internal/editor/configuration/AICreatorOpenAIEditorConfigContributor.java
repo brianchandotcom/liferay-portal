@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -47,7 +48,8 @@ public class AICreatorOpenAIEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		if (!_isAICreatorChatGPTGroupEnabled(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) ||
+			!_isShowAICreator(inputEditorTaglibAttributes)) {
 
 			return;
 		}
@@ -111,6 +113,14 @@ public class AICreatorOpenAIEditorConfigContributor
 		}
 
 		return false;
+	}
+
+	private boolean _isShowAICreator(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		return GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:showAICreator"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

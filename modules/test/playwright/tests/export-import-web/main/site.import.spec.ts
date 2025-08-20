@@ -224,7 +224,8 @@ testWithExportImportAtInstanceLevelFF(
 
 		const homePage = new HomePage(page);
 
-		const exportFilePath = await companyExportImportPage.export('Tests 1 Items');
+		const exportFilePath =
+			await companyExportImportPage.export('Tests 1 Items');
 
 		await homePage.goto();
 
@@ -583,7 +584,7 @@ testWithDeprecationFF(
 			{externalReferenceCode: '', name: 'test'},
 			'c/tests/scopes/Guest'
 		);
-		
+
 		await exportImportPage.export(exportName, 'Tests 1 Items');
 
 		await expect(
@@ -761,12 +762,12 @@ testWithDeprecationFFDisabled(
 		await exportImportPage.goToExport();
 
 		const exportName = 'MyExport-' + getRandomString();
-		
+
 		await apiHelpers.objectEntry.postObjectEntry(
 			{externalReferenceCode: '', name: 'test'},
 			'c/tests/scopes/Guest'
 		);
-		
+
 		await exportImportPage.export(exportName, 'Tests 1 Items');
 
 		await expect(

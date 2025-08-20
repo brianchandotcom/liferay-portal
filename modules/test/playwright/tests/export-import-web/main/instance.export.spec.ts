@@ -150,8 +150,9 @@ test('can export new default and custom task name', async ({
 		{externalReferenceCode: '', name: 'test'},
 		'c/tests'
 	);
-	
-	const defaultExportFilePath = await companyExportImportPage.export('Tests 1 Items');
+
+	const defaultExportFilePath =
+		await companyExportImportPage.export('Tests 1 Items');
 
 	expect(defaultExportFilePath).toMatch(
 		new RegExp(`^${getTempDir()}Export-`)
@@ -190,7 +191,10 @@ test('can export custom object entries at instance level with permissions', asyn
 		'c/tests'
 	);
 
-	const exportFilePath = await companyExportImportPage.export('Tests 1 Items', true);
+	const exportFilePath = await companyExportImportPage.export(
+		'Tests 1 Items',
+		true
+	);
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 

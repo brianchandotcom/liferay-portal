@@ -10,11 +10,8 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -31,16 +28,14 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
 	public JSONObject getConfigurationJSONObject() {
+		return getConfigurationJSONObject(false);
+	}
+
+	@Override
+	public JSONObject getConfigurationJSONObject(boolean strict) {
 		if (_configurationJSONObject == null) {
-			try {
-				_configurationJSONObject = JSONFactoryUtil.createJSONObject(
-					getConfiguration());
-			}
-			catch (JSONException jsonException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(jsonException);
-				}
-			}
+			_configurationJSONObject = JSONFactoryUtil.toJSONObject(
+				getConfiguration(), strict);
 
 			configurationJSONObjectUpdateEntityCacheBiConsumer.accept(
 				this, _configurationJSONObject);
@@ -51,16 +46,14 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
 	public JSONObject getEditableValuesJSONObject() {
+		return getEditableValuesJSONObject(false);
+	}
+
+	@Override
+	public JSONObject getEditableValuesJSONObject(boolean strict) {
 		if (_editableValuesJSONObject == null) {
-			try {
-				_editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-					getEditableValues());
-			}
-			catch (JSONException jsonException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(jsonException);
-				}
-			}
+			_editableValuesJSONObject = JSONFactoryUtil.toJSONObject(
+				getEditableValues(), strict);
 
 			editableValuesJSONObjectUpdateEntityCacheBiConsumer.accept(
 				this, _editableValuesJSONObject);
@@ -199,9 +192,6 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 		_editableValuesJSONObject = null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryLinkImpl.class);
 
 	private static final Snapshot<FragmentCollectionContributorRegistry>
 		_fragmentCollectionContributorRegistrySnapshot = new Snapshot<>(

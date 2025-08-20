@@ -26,6 +26,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -100,12 +101,11 @@ public class APIPropertyObjectDefinitionDeployerImplTest {
 
 			int count = 0;
 
-			String objectDefinitionClassName = objectDefinition.getClassName();
-
 			for (ObjectRelatedModelsProvider<?> objectRelatedModelsProvider :
 					objectRelatedModelsProviders) {
 
-				if (objectDefinitionClassName.equals(
+				if (Objects.equals(
+						objectDefinition.getClassName(),
 						objectRelatedModelsProvider.getClassName())) {
 
 					count++;

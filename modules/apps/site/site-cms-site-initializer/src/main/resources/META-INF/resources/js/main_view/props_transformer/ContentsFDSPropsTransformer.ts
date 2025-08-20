@@ -95,8 +95,7 @@ export default function ContentFDSPropsTransformer({
 						),
 				};
 			}
-
-			if (action?.data?.id === 'view-content') {
+			else if (action?.data?.id === 'view-content') {
 				return {
 					...action,
 					isVisible: (item: any) =>

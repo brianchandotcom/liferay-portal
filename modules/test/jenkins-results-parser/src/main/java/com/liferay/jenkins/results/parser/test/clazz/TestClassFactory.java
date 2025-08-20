@@ -54,6 +54,15 @@ public class TestClassFactory {
 		return npmTestClasses;
 	}
 
+	public static List<PlaywrightJUnitTestClass> getPlaywrightTestClasses() {
+		List<PlaywrightJUnitTestClass> playwrightJUnitTestClasses =
+			new ArrayList<>(_playwrightJUnitTestClasses.values());
+
+		Collections.sort(playwrightJUnitTestClasses);
+
+		return playwrightJUnitTestClasses;
+	}
+
 	public static TestClass newTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
@@ -237,13 +246,39 @@ public class TestClassFactory {
 			else if (batchTestClassGroup instanceof
 						PlaywrightBatchTestClassGroup) {
 
-				if (jsonObject != null) {
-					return new PlaywrightJUnitTestClass(
-						batchTestClassGroup, jsonObject);
+				File canonicalFile;
+
+				if (testClassFile != null) {
+					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
+						testClassFile);
+				}
+				else if ((jsonObject != null) && jsonObject.has("file")) {
+					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
+						new File(jsonObject.getString("file")));
+				}
+				else {
+					throw new RuntimeException("Please set a test class file");
 				}
 
-				return new PlaywrightJUnitTestClass(
-					batchTestClassGroup, testClassFile);
+				if (_playwrightJUnitTestClasses.containsKey(canonicalFile)) {
+					return _playwrightJUnitTestClasses.get(canonicalFile);
+				}
+
+				PlaywrightJUnitTestClass playwrightJUnitTestClass = null;
+
+				if (jsonObject != null) {
+					playwrightJUnitTestClass = new PlaywrightJUnitTestClass(
+						batchTestClassGroup, jsonObject);
+				}
+				else {
+					playwrightJUnitTestClass = new PlaywrightJUnitTestClass(
+						batchTestClassGroup, testClassFile);
+				}
+
+				_playwrightJUnitTestClasses.put(
+					canonicalFile, playwrightJUnitTestClass);
+
+				return _playwrightJUnitTestClasses.get(canonicalFile);
 			}
 			else if (batchTestClassGroup instanceof
 						PluginsBatchTestClassGroup) {
@@ -360,5 +395,7 @@ public class TestClassFactory {
 		new HashMap<>();
 	private static final Map<File, NPMTestClass> _npmTestClasses =
 		new HashMap<>();
+	private static final Map<File, PlaywrightJUnitTestClass>
+		_playwrightJUnitTestClasses = new HashMap<>();
 
 }

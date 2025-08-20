@@ -1,0 +1,153 @@
+:root {
+	--color-bg-default: #f7f7f8;
+	--color-bg-light: #EDF3FE;
+	--color-primary: #0053F0;
+	--color-secondary: #6B6C7E;
+	--transition-fast: all 0.2s cubic-bezier(.25, .8, .25, 1);
+	--transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.account-selection-dropdown .account-dropdown {
+	display: inline-block;
+	position: relative;
+}
+
+.account-selection-dropdown .account-list {
+	max-height: 200px;
+	overflow: auto;
+}
+
+.account-selection-dropdown .account-list img {
+	border-radius: 50%;
+	height: 24px;
+	width: 24px;
+}
+
+.account-selection-dropdown .account-list li {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+	padding: 4px 0;
+}
+
+
+.account-selection-dropdown .avatar {
+	border: 1px solid white;
+	border-radius: 50%;
+	height: 32px;
+	object-fit: cover;
+	width: 32px;
+}
+
+.account-selection-dropdown .disabled {
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	background: var(--color-bg-light);
+	border-radius: 8px;
+	cursor: not-allowed !important;
+	filter: saturate(80%);
+	opacity: 0.5;
+	pointer-events: none;
+	transition: var(--transition);
+	user-select: none;
+}
+
+.account-selection-dropdown .drop-down-arow svg {
+	color: var(--color-secondary);
+	transform: rotateX(0deg);
+	transition: var(--transition-fast);
+}
+
+.account-selection-dropdown .dropdown-menu-container {
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	left: 0;
+	min-width: 280px;
+	opacity: 0;
+	pointer-events: none;
+	position: absolute;
+	top: 100%;
+	transform: translateY(-5px);
+	transition: var(--transition);
+	z-index: 988;
+}
+
+.account-selection-dropdown .dropdown-menu-container.active {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(5px);
+}
+
+.account-selection-dropdown .dropdown-menu-inner {
+	padding-bottom: 12px;
+}
+
+.account-selection-dropdown .dropdown-trigger {
+	background: var(--color-bg-default);
+	border-radius: 10px;
+	color: #282934;
+	cursor: pointer;
+	gap: 8px;
+	padding: 6px 12px 6px 6px;
+	transition: var(--transition);
+}
+
+.account-selection-dropdown .dropdown-trigger:hover {
+	background: var(--color-bg-light);
+	color: var(--color-primary);
+}
+
+.account-selection-dropdown .dropdown-trigger:hover .drop-down-arow svg {
+	color: var(--color-primary);
+}
+
+.account-selection-dropdown .form-control {
+	background-color: #fff;
+	border-radius: 8px;
+}
+
+.account-selection-dropdown .item-list {
+	transition: var(--transition);
+}
+
+.account-selection-dropdown .item-list:hover {
+	background: var(--color-bg-light);
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.account-selection-dropdown .no-results {
+	animation: fadeIn 0.3s forwards;
+	color: var(--color-secondary);
+	font-size: 14px;
+	font-style: italic;
+	opacity: 0;
+	padding: 8px;
+	text-align: center;
+}
+
+.account-selection-dropdown .search-input {
+	margin-top: 8px;
+	padding: 6px;
+	width: 100%;
+}
+
+.account-selection-dropdown:has(.active) .drop-down-arow svg {
+	fill: var(--color-primary);
+	transform: rotateX(180deg);
+	transition: var(--transition);
+}
+
+.account-selection-dropdown:has(.active) .dropdown-trigger {
+	background: var(--color-bg-light);
+	color: var(--color-primary);
+	fill: red;
+	transition: var(--transition);
+}
+
+@keyframes fadeIn {
+	to {
+		opacity: 1;
+	}
+}

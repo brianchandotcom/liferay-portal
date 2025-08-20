@@ -18,7 +18,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 String tabs1Names = "general";
 
-if (samlProviderConfigurationHelper.isMultirole()) {
+if (samlProviderConfigurationHelper.isRoleIb()) {
 	tabs1Names += ",identity-provider,service-provider-connections,service-provider,identity-provider-connections";
 }
 else if (samlProviderConfigurationHelper.isRoleIdp()) {

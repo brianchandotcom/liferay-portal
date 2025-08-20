@@ -146,7 +146,7 @@ test('can export new default and custom task name', async ({
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
-	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		{externalReferenceCode: '', name: 'test'},
 		'c/tests'
 	);

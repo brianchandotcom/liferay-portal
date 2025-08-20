@@ -5940,11 +5940,13 @@ public class DefaultObjectEntryManagerImplTest
 		_defaultObjectEntryManager.deleteObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry.getId());
 
+		Long objectEntryId = objectEntry.getId();
+
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
-			"No ObjectEntry exists with the primary key " + objectEntry.getId(),
+			"No ObjectEntry exists with the primary key " + objectEntryId,
 			() -> _defaultObjectEntryManager.getObjectEntry(
-				dtoConverterContext, _objectDefinition1, objectEntry.getId()));
+				dtoConverterContext, _objectDefinition1, objectEntryId));
 	}
 
 	@Test

@@ -740,16 +740,15 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return false;
 		}
 
-		variableTypeName = variableTypeName.replaceAll(
-			"<[^>]+>", ""
-		).trim();
+		variableTypeName = StringUtil.trim(
+			variableTypeName.replaceAll("<[^>]+>", ""));
 
-		String typeAsVariableName = StringUtil.lowerCaseFirstLetter(
+		String variableNameFromType = StringUtil.lowerCaseFirstLetter(
 			variableTypeName);
 
 		if (StringUtil.equalsIgnoreCase(className, variableTypeName) ||
-			className.startsWith(typeAsVariableName) ||
-			className.startsWith("_" + typeAsVariableName)) {
+			className.startsWith(variableNameFromType) ||
+			className.startsWith("_" + variableNameFromType)) {
 
 			return true;
 		}

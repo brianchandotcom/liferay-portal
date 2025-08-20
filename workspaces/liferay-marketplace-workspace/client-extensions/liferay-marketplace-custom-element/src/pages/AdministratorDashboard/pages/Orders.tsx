@@ -258,14 +258,10 @@ export default function Orders() {
 				value: metrics?.totalCount,
 			},
 			{
-				growth: metrics?.growth ?? 0,
-				growthContext: `+${metrics?.lastPeriod ?? 0} this week `,
 				title: 'Monthly Orders',
 				value: metrics?.ordersThisMonth,
 			},
 			{
-				growth: metrics?.growth ?? 0,
-				growthContext: `+${metrics?.lastPeriod ?? 0} this week `,
 				title: 'Current Year Orders',
 				value: metrics?.ordersThisYear,
 			},
@@ -285,9 +281,8 @@ export default function Orders() {
 				<div className="d-flex flex-wrap info-container mb-4">
 					{infoCard.map((card, index) => (
 						<InfoCard
+							{...card}
 							expanded
-							growth={card?.growth ?? 0}
-							growthContext={card?.growthContext ?? 0}
 							key={index}
 							symbol="shopping-cart"
 							title={card.title}

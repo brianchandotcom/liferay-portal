@@ -807,6 +807,44 @@ public class LayoutUtil {
 		return styleBookEntry.getStyleBookEntryId();
 	}
 
+	private static void _importPortletConfiguration(
+			Layout layout, String portletId,
+			WidgetPageWidgetInstance widgetPageWidgetInstance)
+		throws Exception {
+
+		Map<String, Object> configurationMap =
+			widgetPageWidgetInstance.getWidgetConfig();
+
+		if ((configurationMap != null) &&
+			ListUtil.isNotEmpty(
+				TransformUtil.transform(
+					configurationMap.keySet(),
+					key -> {
+						if (_excludePreferencesNames.contains(key) ||
+							key.startsWith("portletSetupTitle_")) {
+
+							return key;
+						}
+
+						return null;
+					}))) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if (configurationMap == null) {
+			configurationMap = new HashMap<>();
+		}
+
+		_addPortletLookAndFeelToConfigurationMap(
+			layout.getGroupId(), configurationMap,
+			widgetPageWidgetInstance.getWidgetLookAndFeelConfig());
+
+		PortletPreferencesPortletConfigurationImporterUtil.
+			importPortletConfiguration(
+				layout.getPlid(), portletId, configurationMap);
+	}
+
 	private static void _setExpandoBridgeAttributes(
 		PageSpecification pageSpecification, ServiceContext serviceContext) {
 
@@ -1121,21 +1159,8 @@ public class LayoutUtil {
 						widgetPageWidgetInstance.getPosition());
 				}
 
-				Map<String, Object> configurationMap =
-					widgetPageWidgetInstance.getWidgetConfig();
-
-
-				if (configurationMap == null) {
-					configurationMap = new HashMap<>();
-				}
-
-				_addPortletLookAndFeelToConfigurationMap(
-					layout.getGroupId(), configurationMap,
-					widgetPageWidgetInstance.getWidgetLookAndFeelConfig());
-
-				PortletPreferencesPortletConfigurationImporterUtil.
-					importPortletConfiguration(
-						layout.getPlid(), portletId, configurationMap);
+				_importPortletConfiguration(
+					layout, portletId, widgetPageWidgetInstance);
 
 				PortletPermissionsImporterUtil.importPortletPermissions(
 					layout.getPlid(), portletId, new HashSet<>(),
@@ -1164,5 +1189,10 @@ public class LayoutUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutUtil.class);
+
+	private static final Collection<String> _excludePreferencesNames =
+		ListUtil.fromArray(
+			"portletSetupUseCustomTitle", "portletSetupPortletDecoratorId",
+			"portletSetupCss");
 
 }

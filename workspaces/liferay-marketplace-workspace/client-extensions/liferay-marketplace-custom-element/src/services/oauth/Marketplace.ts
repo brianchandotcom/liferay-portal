@@ -30,16 +30,6 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 
 		await downloadFile('orders.csv', response);
 	}
-
-	async getMarketplaceProjectsKPI() {
-		return this.get<{
-			projectsUsingMarketplace: any[];
-			totalAmount: {USD: number};
-		}>('/kpi').catch(() => ({
-			projectsUsingMarketplace: [],
-			totalAmount: {USD: 0},
-		}));
-	}
 }
 
 const marketplaceOAuth2 = new MarketplaceOAuth2('/marketplace');

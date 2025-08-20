@@ -135,7 +135,7 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Unable to add Faro Project Usage for " + faroProject,
+					"Unable to add Faro project usage for " + faroProject,
 					exception);
 			}
 
@@ -244,13 +244,13 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 	}
 
 	private String _getMonthDateKey(Date date) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(date);
 
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		return dateFormat.format(calendar.getTime());
 	}

@@ -94,6 +94,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -507,8 +508,11 @@ public class BatchEnginePortletDataHandlerTest {
 			0,
 			portletDataHandler.getExportModelCount(
 				_getManifestSummary(
-					objectDefinition.getCompanyId(),
-					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(),
+							GroupConstants.DEFAULT_PARENT_GROUP_ID,
+							new HashMap<>(), null, null, null),
 					portletDataHandler)));
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
@@ -518,8 +522,24 @@ public class BatchEnginePortletDataHandlerTest {
 			objectEntries.length,
 			portletDataHandler.getExportModelCount(
 				_getManifestSummary(
-					objectDefinition.getCompanyId(),
-					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(),
+							GroupConstants.DEFAULT_PARENT_GROUP_ID,
+							new HashMap<>(), null, null, null),
+					portletDataHandler)));
+
+		Assert.assertEquals(
+			0,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(),
+							GroupConstants.DEFAULT_PARENT_GROUP_ID,
+							new HashMap<>(),
+							new Date(System.currentTimeMillis() - 10000),
+							new Date(System.currentTimeMillis() - 5000), null),
 					portletDataHandler)));
 	}
 
@@ -540,7 +560,10 @@ public class BatchEnginePortletDataHandlerTest {
 			0,
 			portletDataHandler.getExportModelCount(
 				_getManifestSummary(
-					objectDefinition.getCompanyId(), group.getGroupId(),
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(), group.getGroupId(),
+							new HashMap<>(), null, null, null),
 					portletDataHandler)));
 
 		ObjectEntry[] siteScopedObjectEntries = _addObjectEntries(
@@ -550,7 +573,22 @@ public class BatchEnginePortletDataHandlerTest {
 			siteScopedObjectEntries.length,
 			portletDataHandler.getExportModelCount(
 				_getManifestSummary(
-					objectDefinition.getCompanyId(), group.getGroupId(),
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(), group.getGroupId(),
+							new HashMap<>(), null, null, null),
+					portletDataHandler)));
+
+		Assert.assertEquals(
+			0,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(), group.getGroupId(),
+							new HashMap<>(),
+							new Date(System.currentTimeMillis() - 10000),
+							new Date(System.currentTimeMillis() - 5000), null),
 					portletDataHandler)));
 	}
 
@@ -1021,12 +1059,9 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private ManifestSummary _getManifestSummary(
-			long companyId, long groupId, PortletDataHandler portletDataHandler)
+			PortletDataContext portletDataContext,
+			PortletDataHandler portletDataHandler)
 		throws Exception {
-
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				companyId, groupId, new HashMap<>(), null, null, null);
 
 		portletDataContext.setManifestSummary(new ManifestSummary());
 

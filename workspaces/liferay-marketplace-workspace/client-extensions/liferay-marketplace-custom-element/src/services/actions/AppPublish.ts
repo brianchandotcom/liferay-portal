@@ -362,42 +362,39 @@ export default class AppPublish extends BaseAppPublish {
 	async syncSupport(product: Product) {
 		const {support} = this.context;
 
-		await BaseAppPublish.updateSpecifications(product, [
-			{
-				key: ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL,
-				value: support.appUsageTermsURL,
-			},
-
-			{
-				key: ProductSpecificationKey.APP_SUPPORT_DOCUMENTATION_URL,
-				value: support.documentationURL,
-			},
-
-			{
-				key: ProductSpecificationKey.APP_SUPPORT_EMAIL,
-				value: support.email,
-			},
-
-			{
-				key: ProductSpecificationKey.APP_SUPPORT_INSTALLATION_GUIDE_URL,
-				value: support.installationGuideURL,
-			},
-
-			{
-				key: ProductSpecificationKey.APP_SUPPORT_PHONE,
-				value: support.phone,
-			},
-
-			{
-				key: ProductSpecificationKey.APP_SUPPORT_PUBLISHER_WEBSITE_URL,
-				value: support.publisherWebsiteURL,
-			},
-
-			{
-				key: ProductSpecificationKey.APP_SUPPORT_URL,
-				value: support.url,
-			},
-		]);
+		await BaseAppPublish.updateSpecifications(
+			product,
+			[
+				{
+					key: ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL,
+					value: support.appUsageTermsURL,
+				},
+				{
+					key: ProductSpecificationKey.APP_SUPPORT_DOCUMENTATION_URL,
+					value: support.documentationURL,
+				},
+				{
+					key: ProductSpecificationKey.APP_SUPPORT_EMAIL,
+					value: support.email,
+				},
+				{
+					key: ProductSpecificationKey.APP_SUPPORT_INSTALLATION_GUIDE_URL,
+					value: support.installationGuideURL,
+				},
+				{
+					key: ProductSpecificationKey.APP_SUPPORT_PHONE,
+					value: support.phone,
+				},
+				{
+					key: ProductSpecificationKey.APP_SUPPORT_PUBLISHER_WEBSITE_URL,
+					value: support.publisherWebsiteURL,
+				},
+				{
+					key: ProductSpecificationKey.APP_SUPPORT_URL,
+					value: support.url,
+				},
+			].filter((spec) => spec.value)
+		);
 	}
 
 	async syncStorefront(product: Product) {

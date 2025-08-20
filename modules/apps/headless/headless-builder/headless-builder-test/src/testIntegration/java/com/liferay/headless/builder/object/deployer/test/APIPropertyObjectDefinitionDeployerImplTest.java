@@ -64,9 +64,7 @@ public class APIPropertyObjectDefinitionDeployerImplTest {
 
 	@Test
 	@TestInfo("LPD-61326")
-	public void testAPIPropertyObjectRelatedModelProvidersWithDBPartitioningEnabled()
-		throws Exception {
-
+	public void testDeploy() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		BundleContext bundleContext = bundle.getBundleContext();

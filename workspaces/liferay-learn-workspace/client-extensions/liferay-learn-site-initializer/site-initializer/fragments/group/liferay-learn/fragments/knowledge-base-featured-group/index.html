@@ -53,9 +53,9 @@
 
 			[#list queryParams?keys as key]
 				[#assign
-					value = queryParams[key]
+					queryParam = queryParams[key]
 
-					queryParts = queryParts + ["${key?url}=${value?url}"]
+					queryParts = queryParts + ["${key?url}=${queryParam?url}"]
 				/]
 			[/#list]
 

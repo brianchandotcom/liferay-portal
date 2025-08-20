@@ -577,7 +577,9 @@ test(
 
 			await page.waitForLoadState('networkidle');
 
-			await expect(segmentsPage.criterionLabel).not.toContainText('Segment');
+			await expect(segmentsPage.criterionLabel).not.toContainText(
+				'Segment'
+			);
 		});
 	}
 );
@@ -597,11 +599,75 @@ test(
 		});
 
 		await test.step('Then can scroll down in different properties on the sidebar', async () => {
-			await segmentsPage.selectAndScrollToProperty('Organization', 'Type');
-			
-			await segmentsPage.selectAndScrollToProperty('Session', 'User Agent');
+			await segmentsPage.selectAndScrollToProperty(
+				'Organization',
+				'Type'
+			);
+
+			await segmentsPage.selectAndScrollToProperty(
+				'Session',
+				'User Agent'
+			);
 
 			await segmentsPage.selectAndScrollToProperty('User', 'User Name');
+		});
+	}
+);
+
+test(
+	`Can validate a segment can be created using special characters in segment property`,
+
+	{
+		tag: '@LPS-131815',
+	},
+
+	async ({
+		editUserPage,
+		page,
+		pageEditorPage,
+		segmentsPage,
+		usersAndOrganizationsPage,
+	}) => {
+		const segmentName = 'Segment With Special Characters';
+
+		await test.step('Given a user is created', async () => {
+			await usersAndOrganizationsPage.goToUsers();
+			await usersAndOrganizationsPage.addUserButton.click();
+
+			await editUserPage.emailAddressInput.fill('u1@liferay.com');
+			await editUserPage.firstNameInput.fill('User');
+			await editUserPage.lastNameInput.fill(`1 + / ? # &`);
+			await editUserPage.screenNameInput.fill('u1');
+
+			await editUserPage.saveButton.click();
+		});
+
+		await test.step('When a segment designer adds a segment with last name property', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				user: ['Last Name'],
+			});
+
+			await segmentsPage.fillField(`+ / ? # &`);
+
+			await segmentsPage.changeCriterionInput('contains');
+
+			const memberCountLocator = page.getByText('1 Member', {
+				exact: true,
+			});
+
+			await expect(memberCountLocator).toBeVisible();
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('Then asserts that the segment is correctly created including the user', async () => {
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await segmentsPage.viewMembers(undefined, `User 1 + / ? # &`);
 		});
 	}
 );

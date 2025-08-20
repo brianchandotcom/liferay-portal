@@ -88,6 +88,12 @@ export class SegmentsPage {
 		await expect(errorMessageLocator).toBeVisible();
 	}
 
+	async changeCriterionInput(value: string) {
+		const criterionOperator = this.page.locator('.edit-container select');
+
+		await criterionOperator.selectOption(value);
+	}
+
 	async chooseLogic(logicType: 'And' | 'Or') {
 		if (logicType !== 'And' && logicType !== 'Or') {
 			throw new Error("Invalid logic type. Please choose 'And' or 'Or'.");
@@ -138,10 +144,10 @@ export class SegmentsPage {
 		}
 	}
 
-	 async deleteUnavailableProperty() {
-        const deleteButton = this.page.getByText('Delete Segment Property');
-        await deleteButton.click();
-    }
+	async deleteUnavailableProperty() {
+		const deleteButton = this.page.getByText('Delete Segment Property');
+		await deleteButton.click();
+	}
 
 	async deleteSegment(segmentName: string) {
 		const showMoreOptionsButton = this.page.getByLabel(
@@ -188,17 +194,23 @@ export class SegmentsPage {
 		}
 	}
 
-	  async selectAndScrollToProperty(tabName: 'User' | 'Organization' | 'Session', propertyName: string) {
-			const tabLocator = this.page.getByRole('button', { name: tabName, exact: true });
-			const propertyLocator = this.page.getByText(propertyName);
-			const isPropertyVisible = await propertyLocator.isVisible();
-			
-			if (!isPropertyVisible) {
-			await tabLocator.click();
-			}
+	async selectAndScrollToProperty(
+		tabName: 'User' | 'Organization' | 'Session',
+		propertyName: string
+	) {
+		const tabLocator = this.page.getByRole('button', {
+			name: tabName,
+			exact: true,
+		});
+		const propertyLocator = this.page.getByText(propertyName);
+		const isPropertyVisible = await propertyLocator.isVisible();
 
-			await propertyLocator.scrollIntoViewIfNeeded();
+		if (!isPropertyVisible) {
+			await tabLocator.click();
 		}
+
+		await propertyLocator.scrollIntoViewIfNeeded();
+	}
 
 	async selectOption(optionName: string) {
 		const optionSelectLocator = this.page.locator(
@@ -236,22 +248,26 @@ export class SegmentsPage {
 	}
 
 	async viewMembers(expectedEmail?: string, expectedName?: string) {
-        await this.viewMembersButton.click();
+		await this.viewMembersButton.click();
 
-        const memberLocator = this.page
-            .frameLocator('iframe#segment-members-dialog_iframe_')
-            .locator('tr', { hasText: expectedEmail || expectedName });
+		const memberLocator = this.page
+			.frameLocator('iframe#segment-members-dialog_iframe_')
+			.locator('tr', {hasText: expectedEmail || expectedName});
 
-        await expect(memberLocator).toBeVisible();
+		await expect(memberLocator).toBeVisible();
 
-        if (expectedEmail) {
-            await expect(memberLocator.locator('td.lfr-email-address-column')).toContainText(expectedEmail);
-        }
+		if (expectedEmail) {
+			await expect(
+				memberLocator.locator('td.lfr-email-address-column')
+			).toContainText(expectedEmail);
+		}
 
-        if (expectedName) {
-            await expect(memberLocator.locator('td.lfr-name-column')).toContainText(expectedName);
-        }
-        
-        await this.closeButton.click();
-    }
+		if (expectedName) {
+			await expect(
+				memberLocator.locator('td.lfr-name-column')
+			).toContainText(expectedName);
+		}
+
+		await this.closeButton.click();
+	}
 }

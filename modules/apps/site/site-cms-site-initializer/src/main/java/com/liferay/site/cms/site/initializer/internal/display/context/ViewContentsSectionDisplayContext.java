@@ -87,7 +87,7 @@ public class ViewContentsSectionDisplayContext
 			3,
 			new FDSActionDropdownItem(
 				null, "share", "share",
-				LanguageUtil.get(httpServletRequest, "share"), "get", null,
+				LanguageUtil.get(httpServletRequest, "share"), "get", "share",
 				"link"));
 
 		return fdsActionDropdownItems;

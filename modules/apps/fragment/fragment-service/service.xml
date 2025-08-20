@@ -243,8 +243,9 @@
 
 		<!-- Other fields -->
 
-		<column name="originalFragmentEntryLinkId" type="long" />
-		<column name="fragmentEntryId" type="long" />
+		<column name="originalFragmentEntryLinkERC" type="String" />
+		<column name="fragmentEntryERC" type="String" />
+		<column name="fragmentEntryScopeERC" type="String" />
 		<column name="segmentsExperienceId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />

@@ -324,8 +324,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		FragmentEntryLink fragmentEntryLink =
 			(FragmentEntryLink)_getExportImportStagedModel(stagedModel);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject freeMarkerJSONObject = jsonObject.getJSONObject(
 			FragmentEntryProcessorConstants.

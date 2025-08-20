@@ -233,8 +233,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 				}
 
 				JSONObject editableValuesJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getEditableValues());
+					fragmentEntryLink.getEditableValuesJSONObject();
 
 				JSONObject fragmentConfigValuesJSONObject =
 					editableValuesJSONObject.getJSONObject(

@@ -71,7 +71,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -820,20 +819,10 @@ public class ContentManager {
 			FragmentEntryLink fragmentEntryLink,
 			Set<String> uniqueLayoutClassedModelUsageKeys) {
 
-		JSONObject editableValuesJSONObject = null;
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
-		try {
-			editableValuesJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to create JSON object from " +
-						fragmentEntryLink.getEditableValues(),
-					jsonException);
-			}
-
+		if (editableValuesJSONObject == null) {
 			return Collections.emptySet();
 		}
 

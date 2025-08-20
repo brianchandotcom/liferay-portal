@@ -24,7 +24,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ClassName;
@@ -194,8 +193,7 @@ public class FragmentEntryLinkModelListener
 			_portal.getClassNameId(FragmentEntryLink.class.getName()),
 			fragmentEntryLink.getFragmentEntryLinkId());
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
 		Iterator<String> keysIterator = jsonObject.keys();
 
@@ -238,51 +236,45 @@ public class FragmentEntryLinkModelListener
 			_portal.getClassNameId(FragmentEntryLink.class.getName()),
 			fragmentEntryLink.getFragmentEntryLinkId());
 
-		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
-			Iterator<String> keysIterator = jsonObject.keys();
+		Iterator<String> keysIterator = jsonObject.keys();
 
-			while (keysIterator.hasNext()) {
-				String key = keysIterator.next();
+		while (keysIterator.hasNext()) {
+			String key = keysIterator.next();
 
-				JSONObject editableProcessorJSONObject =
-					jsonObject.getJSONObject(key);
+			JSONObject editableProcessorJSONObject = jsonObject.getJSONObject(
+				key);
 
-				if (editableProcessorJSONObject == null) {
+			if (editableProcessorJSONObject == null) {
+				continue;
+			}
+
+			Iterator<String> editableKeysIterator =
+				editableProcessorJSONObject.keys();
+
+			while (editableKeysIterator.hasNext()) {
+				String editableKey = editableKeysIterator.next();
+
+				JSONObject editableJSONObject =
+					editableProcessorJSONObject.getJSONObject(editableKey);
+
+				if (editableJSONObject == null) {
 					continue;
 				}
 
-				Iterator<String> editableKeysIterator =
-					editableProcessorJSONObject.keys();
+				String fieldId = editableJSONObject.getString("fieldId");
 
-				while (editableKeysIterator.hasNext()) {
-					String editableKey = editableKeysIterator.next();
+				String mappedField = editableJSONObject.getString(
+					"mappedField", fieldId);
 
-					JSONObject editableJSONObject =
-						editableProcessorJSONObject.getJSONObject(editableKey);
-
-					if (editableJSONObject == null) {
-						continue;
-					}
-
-					String fieldId = editableJSONObject.getString("fieldId");
-
-					String mappedField = editableJSONObject.getString(
-						"mappedField", fieldId);
-
-					if (Validator.isNull(mappedField)) {
-						continue;
-					}
-
-					_updateDDMTemplateLink(
-						fragmentEntryLink, editableKey, mappedField);
+				if (Validator.isNull(mappedField)) {
+					continue;
 				}
+
+				_updateDDMTemplateLink(
+					fragmentEntryLink, editableKey, mappedField);
 			}
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -392,9 +384,6 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

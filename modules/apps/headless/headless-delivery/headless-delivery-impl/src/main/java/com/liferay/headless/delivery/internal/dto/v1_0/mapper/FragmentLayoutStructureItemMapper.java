@@ -21,11 +21,8 @@ import com.liferay.layout.exporter.PortletPermissionsExporter;
 import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -88,17 +85,10 @@ public class FragmentLayoutStructureItemMapper
 			return null;
 		}
 
-		JSONObject editableValuesJSONObject = null;
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
-		try {
-			editableValuesJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
+		if (editableValuesJSONObject == null) {
 			return null;
 		}
 
@@ -191,9 +181,6 @@ public class FragmentLayoutStructureItemMapper
 			}
 		};
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentLayoutStructureItemMapper.class);
 
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final JSONFactory _jsonFactory;

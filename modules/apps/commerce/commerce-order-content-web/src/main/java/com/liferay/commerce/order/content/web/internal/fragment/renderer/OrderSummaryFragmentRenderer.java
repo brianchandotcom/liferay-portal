@@ -169,25 +169,20 @@ public class OrderSummaryFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getFieldLabel(FragmentEntryLink fragmentEntryLink) {
-		try {
-			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+		JSONObject configurationJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
-			Iterator<String> configurationJSONObjectKeysIterator =
-				configurationJSONObject.keys();
-
-			JSONObject jsonObject = (JSONObject)configurationJSONObject.get(
-				configurationJSONObjectKeysIterator.next());
-
-			return jsonObject.getString("label");
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
+		if (configurationJSONObject == null) {
+			return StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
+		Iterator<String> configurationJSONObjectKeysIterator =
+			configurationJSONObject.keys();
+
+		JSONObject jsonObject = (JSONObject)configurationJSONObject.get(
+			configurationJSONObjectKeysIterator.next());
+
+		return jsonObject.getString("label");
 	}
 
 	private String _getFieldValue(

@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export class LocalizationSelectPage {
 	readonly page: Page;
@@ -20,6 +21,36 @@ export class LocalizationSelectPage {
 		this.actionsDropdownTrigger = page.getByLabel('Localization Actions');
 		this.trigger = page.locator(
 			'.lfr-layout-structure-item-localization-select button.form-control-select'
+		);
+	}
+
+	async autoTranslate(languageId: string) {
+		await this.switchLanguage(languageId);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Auto Translate',
+			}),
+			trigger: this.actionsDropdownTrigger,
+		});
+
+		const confirmButton = this.page
+			.locator('.modal-footer')
+			.getByText('Continue');
+
+		await this.page.waitForTimeout(3000);
+
+		if (await confirmButton.isVisible()) {
+			await clickAndExpectToBeHidden({
+				target: confirmButton,
+				trigger: confirmButton,
+			});
+		}
+
+		await waitForAlert(
+			this.page,
+			'translation has been successfully received'
 		);
 	}
 

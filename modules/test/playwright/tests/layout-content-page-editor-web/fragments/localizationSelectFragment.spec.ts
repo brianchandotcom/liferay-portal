@@ -9,8 +9,10 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from '../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
 import {structureBuilderPagesTest} from '../../site-cms-site-initializer/structure-builder/fixtures/structureBuilderPagesTest';
 import {FieldType} from '../../site-cms-site-initializer/structure-builder/pages/StructureBuilderPage';
@@ -26,7 +28,8 @@ const test = mergeTests(
 	cmsPagesTest,
 	fragmentsPagesTest,
 	pageEditorPagesTest,
-	structureBuilderPagesTest
+	structureBuilderPagesTest,
+	systemSettingsPageTest
 );
 
 let structureIds = [];
@@ -320,5 +323,178 @@ test(
 		await contentsPage.goto();
 
 		await contentsPage.deleteContent(contentTitle);
+	}
+);
+
+test(
+	'Can apply auto translation for a language',
+	{
+		tag: ['@LPD-52077'],
+	},
+	async ({
+		contentsPage,
+		localizationSelectPage,
+		page,
+		pageEditorPage,
+		structureBuilderPage,
+		systemSettingsPage,
+	}) => {
+		const setAutoTranslation = async ({
+			enabled,
+			key,
+		}: {
+			enabled: boolean;
+			key?: string;
+		}) => {
+			await systemSettingsPage.goToSystemSetting(
+				'Translation',
+				'Translator Using Google Cloud'
+			);
+
+			if (enabled) {
+				await page.getByLabel('Enabled').check();
+			}
+			else {
+				await page.getByLabel('Enabled').uncheck();
+			}
+
+			if (key) {
+				await page.getByLabel('Service Account Private Key').fill(key);
+			}
+
+			await expect(async () => {
+				await page
+					.getByRole('button', {name: 'Update'})
+					.or(page.getByRole('button', {name: 'Save'}))
+					.click({timeout: 500});
+
+				await waitForAlert(page, 'completed successfully', {
+					timeout: 2000,
+				});
+			}).toPass();
+		};
+
+		// Create a CMS structure
+
+		const structureERC = getRandomString();
+		const structureLabel = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			erc: structureERC,
+			label: structureLabel,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		// Add a Long Text field
+
+		await structureBuilderPage.addField('Long Text');
+
+		await structureBuilderPage.publishStructure();
+
+		// Go to view mode (create a content) and fill values in default language and save the content
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel);
+
+		const contentTitle = 'Orange';
+
+		await contentsPage.fillData([
+			{label: 'Title', value: contentTitle},
+			{label: 'Long Text', value: 'Papa'},
+		]);
+		await contentsPage.saveContent();
+
+		// Edit the experience for the structure and enable localization management
+
+		await structureBuilderPage.editStructure(structureERC);
+
+		await structureBuilderPage.customizeExperience();
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Allow Localization Management',
+			fragmentId: await pageEditorPage.getFragmentId(
+				'Localization Select'
+			),
+			tab: 'General',
+			value: true,
+		});
+
+		// Also remove Friendly URL input
+
+		await pageEditorPage.deleteFragment(
+			await pageEditorPage.getFragmentId('Friendly URL')
+		);
+
+		await pageEditorPage.publishPage();
+
+		// Edit the content again
+
+		await contentsPage.goto();
+
+		await contentsPage.editContent(contentTitle);
+
+		// Switch to spanish and check option does not appear because no translator is enabled
+
+		await localizationSelectPage.switchLanguage('es-ES');
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('menuitem', {
+				name: 'Mark as Translated',
+			}),
+			trigger: localizationSelectPage.actionsDropdownTrigger,
+		});
+
+		await expect(
+			page.getByRole('menuitem', {
+				name: 'Auto Translate',
+			})
+		).not.toBeVisible();
+
+		// Enable auto translation with Google Cloud with fake key
+
+		await setAutoTranslation({
+			enabled: true,
+			key: '{"type": "service_account"}',
+		});
+
+		// Edit content again
+
+		await contentsPage.goto();
+
+		await contentsPage.editContent(contentTitle);
+
+		// Mock URL and perform auto translate
+
+		await page.route('**/o/translation/auto_translate', async (route) => {
+			await route.fulfill({
+				body: JSON.stringify({
+					fields: {
+						longtext: 'Naranja',
+						title: 'Naranja',
+					},
+				}),
+				contentType: 'application/json',
+				status: 200,
+			});
+		});
+
+		await localizationSelectPage.autoTranslate('es-ES');
+
+		await expect(page.getByLabel('Title')).toHaveValue('Naranja');
+		await expect(page.getByLabel('Long Text')).toHaveValue('Naranja');
+
+		// Delete content
+
+		await contentsPage.goto();
+
+		await contentsPage.deleteContent(contentTitle);
+
+		// Disable auto translation
+
+		await setAutoTranslation({
+			enabled: false,
+		});
 	}
 );

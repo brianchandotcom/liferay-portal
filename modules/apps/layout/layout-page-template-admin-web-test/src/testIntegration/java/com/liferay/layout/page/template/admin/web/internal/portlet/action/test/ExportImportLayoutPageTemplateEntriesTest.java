@@ -560,6 +560,20 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryFormRelationship()
+		throws Exception {
+
+		_addTextFragmentEntry();
+
+		File expectedFile = _generateZipFile(
+			"form/relationship/expected", null, null);
+		File inputFile = _generateZipFile(
+			"form/relationship/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryFormSteps()
 		throws Exception {
 

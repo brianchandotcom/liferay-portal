@@ -528,6 +528,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			_renderMethod(
 				"getLayoutURL", sb, _portal.getLayoutURL(layout, themeDisplay));
 			_renderMethod("getParentLayoutId", sb, layout.getParentLayoutId());
+			_renderMethod(
+				"getPathFriendlyURLPublic", sb,
+				_portal.getPathFriendlyURLPublic());
 			_renderMethod("isControlPanel", sb, layout.isTypeControlPanel());
 			_renderMethod("isPrivateLayout", sb, layout.isPrivateLayout());
 			_renderMethod(

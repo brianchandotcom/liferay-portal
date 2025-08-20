@@ -54,14 +54,20 @@ export function LocalizationSelect({
 	locales,
 	size,
 }: Props) {
-	const [active, setActive] = useState(false);
 	const [autoTranslating, setAutoTranslating] = useState(false);
-	const [relatedLocaleId, setRelatedLocaleId] =
-		useState<Liferay.Language.Locale | null>(null);
-	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
 	const [translations, setTranslations] = useState<Translations>({});
 	const [form, setForm] = useState<HTMLFormElement>();
 
+	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
+
+	const selectedLocaleLabel = useMemo(() => {
+		return locales.find(({id}) => id === selectedLocaleId)?.label;
+	}, [locales, selectedLocaleId]);
+
+	const [relatedLocaleId, setRelatedLocaleId] =
+		useState<Liferay.Language.Locale | null>(null);
+
+	const [dropdownActive, setDropdownActive] = useState(false);
 	const [dropdownTrigger, setDropdownTrigger] =
 		useState<HTMLButtonElement | null>();
 
@@ -69,12 +75,8 @@ export function LocalizationSelect({
 
 	const onSelectedLocaleChange = (localeId: Liferay.Language.Locale) => {
 		setSelectedLocaleId(localeId);
-		setActive(false);
+		setDropdownActive(false);
 	};
-
-	const selectedLocaleLabel = useMemo(() => {
-		return locales.find(({id}) => id === selectedLocaleId)?.label;
-	}, [locales, selectedLocaleId]);
 
 	const autoTranslate = useCallback(async () => {
 
@@ -306,7 +308,7 @@ export function LocalizationSelect({
 	return (
 		<div className="align-items-center c-gap-2 d-flex" ref={containerRef}>
 			<LanguagePicker
-				active={active}
+				active={dropdownActive}
 				defaultLocaleId={defaultLanguageId}
 				hideTriggerText={hideLanguageLabel}
 				locales={locales}
@@ -322,7 +324,7 @@ export function LocalizationSelect({
 				}}
 				onActiveChange={(active: boolean) => {
 					if (!editMode) {
-						setActive(active);
+						setDropdownActive(active);
 					}
 				}}
 				onSelectedLocaleChange={(id: Key) => {

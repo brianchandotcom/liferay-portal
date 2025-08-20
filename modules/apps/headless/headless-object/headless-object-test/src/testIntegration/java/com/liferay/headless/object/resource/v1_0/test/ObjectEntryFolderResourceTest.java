@@ -41,8 +41,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
@@ -55,6 +58,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -107,6 +111,15 @@ public class ObjectEntryFolderResourceTest
 
 		_testDepotEntryGroup = _groupLocalService.getGroup(
 			_testDepotEntry.getGroupId());
+	}
+
+	@Override
+	@Test
+	public void testGetObjectEntryFolder() throws Exception {
+		super.testGetObjectEntryFolder();
+
+		_testGetObjectEntryFolderActions();
+		_testGetObjectEntryFolderActionsWithSharingEnabled();
 	}
 
 	@Override
@@ -562,6 +575,98 @@ public class ObjectEntryFolderResourceTest
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			actionId);
+	}
+
+	private Map<String, Map<String, String>> _getExpectedActions(
+		long objectEntryFolderId, boolean sharingEnabled) {
+
+		String href =
+			"http://localhost:8080/o/headless-object/v1.0" +
+				"/object-entry-folders/" + objectEntryFolderId;
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			HashMapBuilder.put(
+				"href", href
+			).put(
+				"method", "DELETE"
+			).build()
+		).put(
+			"get",
+			HashMapBuilder.put(
+				"href", href
+			).put(
+				"method", "GET"
+			).build()
+		).put(
+			"share",
+			() -> {
+				if (sharingEnabled) {
+					return HashMapBuilder.put(
+						"href", href
+					).put(
+						"method", "GET"
+					).build();
+				}
+
+				return null;
+			}
+		).put(
+			"update",
+			HashMapBuilder.put(
+				"href", href
+			).put(
+				"method", "PATCH"
+			).build()
+		).build();
+	}
+
+	@TestInfo("LPD-62553")
+	private void _testGetObjectEntryFolderActions() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testGetObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				postObjectEntryFolder.getId());
+
+		Assert.assertEquals(
+			getObjectEntryFolder.getActions(),
+			_getExpectedActions(getObjectEntryFolder.getId(), false));
+	}
+
+	@TestInfo("LPD-62553")
+	private void _testGetObjectEntryFolderActionsWithSharingEnabled()
+		throws Exception {
+
+		UnicodeProperties originalUnicodeProperties =
+			_testDepotEntryGroup.getTypeSettingsProperties();
+
+		_groupLocalService.updateGroup(
+			_testDepotEntryGroup.getGroupId(),
+			UnicodePropertiesBuilder.create(
+				originalUnicodeProperties, true
+			).put(
+				"sharingEnabled", true
+			).buildString());
+
+		try {
+			ObjectEntryFolder postObjectEntryFolder =
+				testGetObjectEntryFolder_addObjectEntryFolder();
+
+			ObjectEntryFolder getObjectEntryFolder =
+				objectEntryFolderResource.getObjectEntryFolder(
+					postObjectEntryFolder.getId());
+
+			Assert.assertEquals(
+				getObjectEntryFolder.getActions(),
+				_getExpectedActions(getObjectEntryFolder.getId(), true));
+		}
+		finally {
+			_groupLocalService.updateGroup(
+				_testDepotEntryGroup.getGroupId(),
+				originalUnicodeProperties.toString());
+		}
 	}
 
 	private void _testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithGroupKey()

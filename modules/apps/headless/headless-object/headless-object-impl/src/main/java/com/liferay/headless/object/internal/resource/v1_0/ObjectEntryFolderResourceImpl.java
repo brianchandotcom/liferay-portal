@@ -21,6 +21,7 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
@@ -498,6 +500,29 @@ public class ObjectEntryFolderResourceImpl
 					addAction(
 						ActionKeys.VIEW, serviceBuilderObjectEntryFolder,
 						"getObjectEntryFolder")
+				).put(
+					"share",
+					() -> {
+						Group group = groupLocalService.fetchGroup(
+							serviceBuilderObjectEntryFolder.getGroupId());
+
+						if (group == null) {
+							return null;
+						}
+
+						UnicodeProperties unicodeProperties =
+							group.getTypeSettingsProperties();
+
+						if (!GetterUtil.getBoolean(
+								unicodeProperties.get("sharingEnabled"))) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.VIEW, serviceBuilderObjectEntryFolder,
+							"getObjectEntryFolder");
+					}
 				).put(
 					"update",
 					addAction(

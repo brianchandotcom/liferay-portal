@@ -577,3 +577,39 @@ test.describe('Schedule Panel', () => {
 		}
 	);
 });
+
+test(
+	'Check that the content shifts when the side panel opens',
+	{tag: '@LPD-62067'},
+	async ({contentsPage, page}) => {
+		const getContainerRightPadding = async () =>
+			page
+				.locator('#content')
+				.evaluate(
+					(element: HTMLDivElement) =>
+						window.getComputedStyle(element).paddingRight
+				);
+
+		// Create new Knowledge Base content
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent('Knowledge Base');
+
+		// Compare the container padding when the side panel is closed and opened
+
+		let containerWidth = await getContainerRightPadding();
+
+		await contentsPage.openSidePanel();
+
+		await page
+			.locator(
+				'.content-editor__side-panel .sidebar:not(.c-slideout-transition)'
+			)
+			.waitFor();
+
+		containerWidth = await getContainerRightPadding();
+
+		expect(containerWidth).toBe('280px');
+	}
+);

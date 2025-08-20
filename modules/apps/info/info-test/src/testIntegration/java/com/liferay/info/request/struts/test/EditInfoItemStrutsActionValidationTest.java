@@ -33,7 +33,6 @@ import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporaryS
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -616,8 +615,8 @@ public class EditInfoItemStrutsActionValidationTest {
 
 		Assert.assertNotNull(inputFragmentEntryLink);
 
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			inputFragmentEntryLink.getEditableValues());
+		JSONObject editableValuesJSONObject =
+			inputFragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject freeMarkerEntryProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(

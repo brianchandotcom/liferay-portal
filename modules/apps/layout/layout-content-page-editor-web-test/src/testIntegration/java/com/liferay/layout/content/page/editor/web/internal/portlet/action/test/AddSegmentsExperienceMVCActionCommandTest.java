@@ -315,8 +315,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		Assert.assertEquals(
 			FragmentConstants.TYPE_PORTLET, fragmentEntryLink.getType());
 
-		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
 		return PortletIdCodec.encode(
 			editableValuesJSONObject.getString("portletId"),

@@ -178,8 +178,8 @@ public class FragmentEntryLinkManager {
 		themeDisplay.setIsolated(true);
 
 		try {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			JSONObject editableValuesJSONObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
 
 			String content = _getContent(
 				defaultFragmentRendererContext, editableValuesJSONObject,
@@ -238,8 +238,7 @@ public class FragmentEntryLinkManager {
 					"editableTypes", Collections.emptyMap()
 				).put(
 					"editableValues",
-					_jsonFactory.createJSONObject(
-						fragmentEntryLink.getEditableValues())
+					fragmentEntryLink.getEditableValuesJSONObject()
 				).put(
 					"fragmentEntryId", 0
 				).put(

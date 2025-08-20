@@ -44,7 +44,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -284,8 +283,8 @@ public class PublishLayoutMVCActionCommandTest {
 
 		FragmentEntryLink fragmentEntryLink = _addPortletToLayout();
 
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
 		String encodePortletId = PortletIdCodec.encode(
 			LayoutContentPageEditorWebPortletKeys.

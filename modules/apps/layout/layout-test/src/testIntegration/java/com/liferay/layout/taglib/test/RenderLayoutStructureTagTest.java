@@ -415,8 +415,8 @@ public class RenderLayoutStructureTagTest {
 				"-text-input\" name=\"text\" placeholder=\"\" type=\"text\" ",
 				"value=\"");
 
-			JSONObject editableValueJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			JSONObject editableValueJSONObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
 
 			JSONObject fremarkerFragmentEntryProcessorJSONObject =
 				editableValueJSONObject.getJSONObject(

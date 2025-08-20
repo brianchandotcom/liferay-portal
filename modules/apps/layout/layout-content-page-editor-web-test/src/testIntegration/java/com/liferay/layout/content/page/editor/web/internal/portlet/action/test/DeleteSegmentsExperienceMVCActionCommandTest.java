@@ -119,8 +119,8 @@ public class DeleteSegmentsExperienceMVCActionCommandTest {
 
 		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
 
-		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
 		String segmentsExperiencePortletId = PortletIdCodec.encode(
 			editableValuesJSONObject.getString("portletId"),

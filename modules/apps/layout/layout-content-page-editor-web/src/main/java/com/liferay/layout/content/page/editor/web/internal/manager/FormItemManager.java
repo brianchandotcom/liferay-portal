@@ -666,8 +666,7 @@ public class FormItemManager {
 
 		JSONObject editableValuesJSONObject =
 			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
-				_jsonFactory.createJSONObject(
-					stepperFragmentEntryLink.getEditableValues()),
+				stepperFragmentEntryLink.getEditableValuesJSONObject(),
 				JSONUtil.put(
 					FragmentEntryProcessorConstants.
 						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
@@ -831,8 +830,7 @@ public class FormItemManager {
 
 		JSONObject editableValuesJSONObject =
 			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
-				_jsonFactory.createJSONObject(
-					fragmentEntryLink.getEditableValues()),
+				fragmentEntryLink.getEditableValuesJSONObject(),
 				JSONUtil.put(
 					FragmentEntryProcessorConstants.
 						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,

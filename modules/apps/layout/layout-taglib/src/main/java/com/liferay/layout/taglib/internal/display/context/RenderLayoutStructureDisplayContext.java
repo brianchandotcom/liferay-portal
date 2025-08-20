@@ -48,7 +48,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -696,8 +695,7 @@ public class RenderLayoutStructureDisplayContext {
 			return false;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			editableValues);
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject stylesFragmentEntryEntryProcessorJSONObject =
 			jsonObject.getJSONObject(

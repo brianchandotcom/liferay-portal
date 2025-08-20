@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -686,8 +685,7 @@ public class LayoutsImporterTest {
 		FragmentEntryLink importedFragmentEntryLink = fragmentEntryLinks.get(0);
 
 		JSONObject importedEditableValuesJSONObject =
-			_jsonFactory.createJSONObject(
-				importedFragmentEntryLink.getEditableValues());
+			importedFragmentEntryLink.getEditableValuesJSONObject();
 
 		String importedPortletId = PortletIdCodec.encode(
 			importedEditableValuesJSONObject.getString("portletId"),
@@ -942,8 +940,7 @@ public class LayoutsImporterTest {
 		Assert.assertEquals(
 			FragmentConstants.TYPE_PORTLET, fragmentEntryLink.getType());
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject jsonObject = fragmentEntryLink.getEditableValuesJSONObject();
 
 		Assert.assertEquals(
 			LayoutPageTemplateAdminWebPortletKeys.
@@ -1569,8 +1566,8 @@ public class LayoutsImporterTest {
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
-		JSONObject editablesValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject editablesValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			editablesValuesJSONObject.getJSONObject(
@@ -1740,8 +1737,8 @@ public class LayoutsImporterTest {
 		Assert.assertTrue(
 			Validator.isNotNull(fragmentEntryLink.getEditableValues()));
 
-		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject editableJSONObject = editableValuesJSONObject.getJSONObject(
 			FragmentEntryProcessorConstants.
@@ -2186,15 +2183,10 @@ public class LayoutsImporterTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
 				actualFragmentEntryLinkId);
 
-		String expectedEditableValues =
-			expectedFragmentEntryLink.getEditableValues();
-		String actualEditableValues =
-			actualFragmentEntryLink.getEditableValues();
-
 		JSONObject expectedEditableValuesJSONObject =
-			JSONFactoryUtil.createJSONObject(expectedEditableValues);
+			expectedFragmentEntryLink.getEditableValuesJSONObject();
 		JSONObject actualEditableValuesJSONObject =
-			JSONFactoryUtil.createJSONObject(actualEditableValues);
+			actualFragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject expectedBackgroundImageFragmentEntryProcessorJSONObject =
 			expectedEditableValuesJSONObject.getJSONObject(

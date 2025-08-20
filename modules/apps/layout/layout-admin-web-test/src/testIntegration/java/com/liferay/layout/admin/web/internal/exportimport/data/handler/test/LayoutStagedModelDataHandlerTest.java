@@ -2032,8 +2032,8 @@ public class LayoutStagedModelDataHandlerTest
 
 		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
 
-		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
 
 		JSONObject editableJSONObject = editableValuesJSONObject.getJSONObject(
 			FragmentEntryProcessorConstants.

@@ -333,11 +333,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		batchEngineTaskItemDelegate.setContextCompany(
 			_companyLocalService.getCompany(portletDataContext.getCompanyId()));
 
-		User user = _userLocalService.getUser(_getUserId());
-
-		batchEngineTaskItemDelegate.setContextUser(user);
-		batchEngineTaskItemDelegate.setLanguageId(user.getLanguageId());
-
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				Collections.emptyList(), portletDataContext);
@@ -350,6 +345,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 
 		batchEngineTaskItemDelegate.setContextUriInfo(builder.build());
+
+		User user = _userLocalService.getUser(_getUserId());
+
+		batchEngineTaskItemDelegate.setContextUser(user);
+		batchEngineTaskItemDelegate.setLanguageId(user.getLanguageId());
 
 		Page<?> page = batchEngineTaskItemDelegate.read(
 			null, Pagination.of(0, 0), null, parameters, null);

@@ -25,7 +25,11 @@ async function getCollaborators(collaboratorURL: string, itemId: number) {
 			share: boolean;
 			type: string;
 		}>;
-	}>(collaboratorURL.replace('{objectEntryId}', itemId.toString()).replace('{objectEntryFolderId}',  itemId.toString()));
+	}>(
+		collaboratorURL
+			.replace('{objectEntryId}', itemId.toString())
+			.replace('{objectEntryFolderId}', itemId.toString())
+	);
 
 	if (data) {
 		return data.items;
@@ -46,7 +50,9 @@ async function updateCollaborators(
 	}[]
 ) {
 	return await ApiHelper.post(
-        collaboratorURL.replace('{objectEntryId}', itemId.toString()).replace('{objectEntryFolderId}',  itemId.toString()),
+		collaboratorURL
+			.replace('{objectEntryId}', itemId.toString())
+			.replace('{objectEntryFolderId}', itemId.toString()),
 		collaborators
 	);
 }

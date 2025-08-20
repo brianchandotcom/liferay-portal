@@ -7,6 +7,28 @@ import {IView} from '@liferay/frontend-data-set-web';
 
 import dateFormat from '../../../common/utils/dateFormat';
 
+const OBJECT_ENTRY_FOLDER_CLASSNAME =
+	'com.liferay.object.model.ObjectEntryFolder';
+
+const getThumbnailProps = (item: any) => {
+	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASSNAME) {
+		return {symbol: 'folder'};
+	}
+
+	if (item.embedded.file) {
+		const {thumbnailURL} = item.embedded.file;
+
+		if (thumbnailURL) {
+			return {imgProps: thumbnailURL};
+		}
+		else {
+			return {symbol: 'documents-and-media'};
+		}
+	}
+
+	return {symbol: 'web-content'};
+};
+
 export default function transformViewsItemProps(views: IView[]) {
 	return views.map((view) => {
 		if (view.name === 'cards') {
@@ -14,6 +36,7 @@ export default function transformViewsItemProps(views: IView[]) {
 				return {
 					...props,
 					description: dateFormat(item.dateModified),
+					...getThumbnailProps(item),
 				};
 			};
 		}

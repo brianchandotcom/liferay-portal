@@ -3,7 +3,7 @@
 		{
 			"externalReferenceCode": "TOTAL-AMOUNT",
 			"name": "totalAmount",
-			"value": "{\"USD\":0}"
+			"value": "{\"USD\": 0}"
 		},
 		{
 			"externalReferenceCode": "PROJECTS-USING-MARKETPLACE",

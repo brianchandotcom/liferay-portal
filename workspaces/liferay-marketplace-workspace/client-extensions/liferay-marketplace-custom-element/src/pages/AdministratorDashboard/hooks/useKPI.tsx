@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ComponentProps} from 'react';
 import {useNavigate} from 'react-router-dom';
 import useSWR from 'swr';
-import {ComponentProps} from 'react';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
@@ -14,9 +14,9 @@ import {ProductType, ProductWorkflowStatusCode} from '../../../enums/Product';
 import useListTypeDefinition from '../../../hooks/useListTypeDefinition';
 import useModalContext from '../../../hooks/useModalContext';
 import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
-import ProjectsUsingMarketplaceModalBody from '../components/ProjectsUsingMarketplace';
 import GraphQL from '../../../services/rest/HeadlessGraphQL';
 import {safeJSONParse} from '../../../utils/util';
+import ProjectsUsingMarketplaceModalBody from '../components/ProjectsUsingMarketplace';
 
 const baseSearchBuilder = new SearchBuilder()
 	.in('statusCode', [ProductWorkflowStatusCode.APPROVED])
@@ -93,11 +93,11 @@ const queries = [
 			},
 		},
 		{
-			totalAmount: SearchBuilder.eq('name', 'totalAmount'),
 			projectsUsingMarketplace: SearchBuilder.eq(
 				'name',
 				'projectsUsingMarketplace'
 			),
+			totalAmount: SearchBuilder.eq('name', 'totalAmount'),
 		}
 	),
 ] as const;

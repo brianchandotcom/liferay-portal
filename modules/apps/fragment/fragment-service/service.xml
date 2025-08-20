@@ -276,17 +276,8 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="FEERC_FESERC" return-type="Collection">
-			<finder-column name="fragmentEntryERC" />
-			<finder-column name="fragmentEntryScopeERC" />
-		</finder>
 		<finder name="RendererKey" return-type="Collection">
 			<finder-column name="rendererKey" />
-		</finder>
-		<finder name="G_FEERC_FESERC" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="fragmentEntryERC" />
-			<finder-column name="fragmentEntryScopeERC" />
 		</finder>
 		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
@@ -296,15 +287,39 @@
 			<finder-column name="companyId" />
 			<finder-column arrayable-operator="OR" name="rendererKey" />
 		</finder>
-		<finder name="FEERC_FESERC_D" return-type="Collection">
+		<finder name="FEERC_FESERC" return-type="Collection">
 			<finder-column name="fragmentEntryERC" />
 			<finder-column name="fragmentEntryScopeERC" />
-			<finder-column name="deleted" />
 		</finder>
 		<finder name="G_OFELERC_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="originalFragmentEntryLinkERC" />
 			<finder-column name="plid" />
+		</finder>
+		<finder name="G_FEERC_FESERC" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryERC" />
+			<finder-column name="fragmentEntryScopeERC" />
+		</finder>
+		<finder name="G_S_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="segmentsExperienceId" />
+			<finder-column name="plid" />
+		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_P_D" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="plid" />
+			<finder-column name="deleted" />
+		</finder>
+		<finder name="FEERC_FESERC_D" return-type="Collection">
+			<finder-column name="fragmentEntryERC" />
+			<finder-column name="fragmentEntryScopeERC" />
+			<finder-column name="deleted" />
 		</finder>
 		<finder name="G_FEERC_FESERC_C" return-type="Collection">
 			<finder-column name="groupId" />
@@ -324,28 +339,6 @@
 			<finder-column name="fragmentEntryScopeERC" />
 			<finder-column name="deleted" />
 		</finder>
-		<finder name="G_S_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column arrayable-operator="OR" name="segmentsExperienceId" />
-			<finder-column name="plid" />
-		</finder>
-		<finder name="G_C_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-		<finder name="G_P_D" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="plid" />
-			<finder-column name="deleted" />
-		</finder>
-		<finder name="G_FEERC_FESERC_C_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="fragmentEntryERC" />
-			<finder-column name="fragmentEntryScopeERC" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
 		<finder name="G_S_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsExperienceId" />
@@ -363,6 +356,13 @@
 			<finder-column name="segmentsExperienceId" />
 			<finder-column name="plid" />
 			<finder-column name="rendererKey" />
+		</finder>
+		<finder name="G_FEERC_FESERC_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryERC" />
+			<finder-column name="fragmentEntryScopeERC" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 		</finder>
 	</entity>
 	<exceptions>

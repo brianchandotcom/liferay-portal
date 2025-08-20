@@ -48,7 +48,7 @@ public class BNDJakartaTransformCheck extends BaseJakartaTransformCheck {
 
 		properties.load(new StringReader(content));
 
-		_replaceProvideCapability(properties);
+		_replaceRequireCapability(properties);
 
 		return _toString(properties);
 	}
@@ -145,19 +145,19 @@ public class BNDJakartaTransformCheck extends BaseJakartaTransformCheck {
 		return _jakartaTransformOSGiContractsMap;
 	}
 
-	private void _replaceProvideCapability(Properties properties)
+	private void _replaceRequireCapability(Properties properties)
 		throws IOException {
 
-		String provideCapability = properties.getProperty("Provide-Capability");
+		String requireCapability = properties.getProperty("Require-Capability");
 
-		if (provideCapability == null) {
+		if (requireCapability == null) {
 			return;
 		}
 
 		Map<String, String> jakartaTransformOSGiContractsMap =
 			_getJakartaTransformOSGiContractsMap();
 
-		Parameters parameters = new Parameters(provideCapability);
+		Parameters parameters = new Parameters(requireCapability);
 
 		for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
 			String parameterKey = entry.getKey();
@@ -222,7 +222,7 @@ public class BNDJakartaTransformCheck extends BaseJakartaTransformCheck {
 			attrs.put("filter:", filter);
 		}
 
-		properties.setProperty("Provide-Capability", parameters.toString());
+		properties.setProperty("Require-Capability", parameters.toString());
 	}
 
 	private String _toString(Properties properties) {

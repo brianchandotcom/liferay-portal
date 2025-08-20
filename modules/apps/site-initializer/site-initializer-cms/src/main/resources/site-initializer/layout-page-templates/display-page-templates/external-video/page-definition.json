@@ -5,8 +5,10 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"paddingBottom": "6",
-						"paddingTop": "6"
+						"paddingBottom": "40px",
+						"paddingLeft": "12px",
+						"paddingRight": "12px",
+						"paddingTop": "40px"
 					},
 					"indexed": true,
 					"layout": {

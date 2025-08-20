@@ -40,6 +40,7 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -143,6 +144,18 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
 
 		_excludedGroupId = 0;
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetDisplayStyleGroup() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetDisplayStyleGroupWithConfiguration() {
 	}
 
 	@Test

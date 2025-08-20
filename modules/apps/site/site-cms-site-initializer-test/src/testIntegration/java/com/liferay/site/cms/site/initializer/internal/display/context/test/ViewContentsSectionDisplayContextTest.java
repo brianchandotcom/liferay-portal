@@ -98,8 +98,8 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(12), "password-policies", "permissions",
 			"permissions", "get", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(13), "trash", "delete", "delete",
-			"delete", "item");
+			fdsActionDropdownItems.get(13), "trash", "delete", "delete", null,
+			"item");
 	}
 
 	@Override

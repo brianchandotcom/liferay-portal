@@ -232,7 +232,7 @@ public class SamlProvider implements Cloneable, Serializable {
 
 	public static enum Role {
 
-		IDP("idp"), MULTIROLE("multirole"), SP("sp");
+		IB("ib"), IDP("idp"), SP("sp");
 
 		public static Role create(String value) {
 			for (Role role : values()) {

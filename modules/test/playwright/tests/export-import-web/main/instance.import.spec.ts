@@ -309,7 +309,7 @@ test('can see corresponding elements at instance level', async ({
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
-	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		{externalReferenceCode: '', name: 'test'},
 		'c/tests'
 	);

@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Knowledge Base Landing Page",
+	"name": "Knowledge Article Card",
 	"type": "component"
 }

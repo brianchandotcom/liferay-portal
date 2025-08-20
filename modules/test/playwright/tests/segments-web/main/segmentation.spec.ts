@@ -673,6 +673,26 @@ test(
 );
 
 test(
+	`Can validate the default segments is not displayed.`,
+
+	{
+		tag: '@LPS-136086',
+	},
+
+	async ({page}) => {
+		await test.step('Given a segment designer goes to the segments editor page', async () => {
+			await goToSegmentsAdmin(page);
+		});
+
+		await test.step('Then can assert that the default segment is not displayed', async () => {
+			await expect(
+				page.getByText('There are no segments.')
+			).toBeVisible();
+		});
+	}
+);
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

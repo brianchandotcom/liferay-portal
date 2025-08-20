@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
@@ -230,7 +229,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 	}
 
 	@Override
-	public ContextController getContextController() {
+	public LiferayContextController getContextController() {
 		return _liferayContextController;
 	}
 

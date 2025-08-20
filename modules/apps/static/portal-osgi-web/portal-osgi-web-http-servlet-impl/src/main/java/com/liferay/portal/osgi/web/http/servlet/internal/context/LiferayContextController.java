@@ -46,7 +46,6 @@ import java.util.regex.Pattern;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
-import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
@@ -295,35 +294,36 @@ public class LiferayContextController extends ContextController {
 	}
 
 	@Override
-	public DispatchTargets getDispatchTargets(String pathString) {
+	public LiferayDispatchTargets getDispatchTargets(String pathString) {
 		Path path = new Path(pathString);
 
 		String queryString = path.getQueryString();
 		String requestURI = path.getRequestURI();
 
-		DispatchTargets dispatchTargets = _getDispatchTargets(
-			requestURI, null, queryString, Match.EXACT);
+		LiferayDispatchTargets liferayDispatchTargets =
+			_getLiferayDispatchTargets(
+				requestURI, null, queryString, Match.EXACT);
 
-		if (dispatchTargets == null) {
-			dispatchTargets = _getDispatchTargets(
+		if (liferayDispatchTargets == null) {
+			liferayDispatchTargets = _getLiferayDispatchTargets(
 				requestURI, path.getExtension(), queryString, Match.EXTENSION);
 		}
 
-		if (dispatchTargets == null) {
-			dispatchTargets = _getDispatchTargets(
+		if (liferayDispatchTargets == null) {
+			liferayDispatchTargets = _getLiferayDispatchTargets(
 				requestURI, null, queryString, Match.REGEX);
 		}
 
-		if (dispatchTargets == null) {
-			dispatchTargets = _getDispatchTargets(
+		if (liferayDispatchTargets == null) {
+			liferayDispatchTargets = _getLiferayDispatchTargets(
 				requestURI, null, queryString, Match.DEFAULT_SERVLET);
 		}
 
-		return dispatchTargets;
+		return liferayDispatchTargets;
 	}
 
 	@Override
-	public DispatchTargets getDispatchTargets(
+	public LiferayDispatchTargets getDispatchTargets(
 		String servletName, String requestURI, String servletPath,
 		String pathInfo, String extension, String queryString, Match match) {
 
@@ -536,7 +536,7 @@ public class LiferayContextController extends ContextController {
 		}
 	}
 
-	private DispatchTargets _getDispatchTargets(
+	private LiferayDispatchTargets _getLiferayDispatchTargets(
 		String requestURI, String extension, String queryString, Match match) {
 
 		int index = requestURI.lastIndexOf('/');
@@ -551,12 +551,12 @@ public class LiferayContextController extends ContextController {
 		}
 
 		while (true) {
-			DispatchTargets dispatchTargets = getDispatchTargets(
+			LiferayDispatchTargets liferayDispatchTargets = getDispatchTargets(
 				null, requestURI, servletPath, pathInfo, extension, queryString,
 				match);
 
-			if (dispatchTargets != null) {
-				return dispatchTargets;
+			if (liferayDispatchTargets != null) {
+				return liferayDispatchTargets;
 			}
 
 			if ((match == Match.EXACT) || (index == -1)) {

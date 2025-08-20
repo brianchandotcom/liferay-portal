@@ -1,11 +1,10 @@
 locals {
 	is_active_data_blue=var.active_data=="blue"
 	is_active_data_green=var.active_data=="green"
+	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 
 	active_bucket=local.is_active_data_blue ? module.s3_bucket_blue : module.s3_bucket_green
 	active_db=local.is_active_data_blue ? module.postgres_blue[0] : module.postgres_green[0]
-
-	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
 }
 module "postgres_blue" {

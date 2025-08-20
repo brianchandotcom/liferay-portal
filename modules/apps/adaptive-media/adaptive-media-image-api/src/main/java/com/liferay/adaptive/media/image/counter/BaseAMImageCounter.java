@@ -79,7 +79,7 @@ public abstract class BaseAMImageCounter implements AMImageCounter {
 	@Reference
 	protected DLFileEntryLocalService dlFileEntryLocalService;
 
-	private void _forEachGroup(long companyId, Consumer<Group> groupConsumer)
+	private void _forEachGroup(long companyId, Consumer<Group> consumer)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -89,7 +89,7 @@ public abstract class BaseAMImageCounter implements AMImageCounter {
 		actionableDynamicQuery.setModelClass(Group.class);
 		actionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<Group>)
-				groupConsumer::accept);
+				consumer::accept);
 
 		actionableDynamicQuery.performActions();
 	}
@@ -135,7 +135,7 @@ public abstract class BaseAMImageCounter implements AMImageCounter {
 				).and(
 					DLFileEntryTable.INSTANCE.mimeType.in(_getMimeTypes())
 				).and(
-					_getSizePredicate(previewableGroupProcessorMaxSize)
+					_getPredicate(previewableGroupProcessorMaxSize)
 				).and(
 					TrashEntryTable.INSTANCE.entryId.isNull()
 				)
@@ -153,7 +153,7 @@ public abstract class BaseAMImageCounter implements AMImageCounter {
 			amImageValidator::isProcessingSupported);
 	}
 
-	private Predicate _getSizePredicate(long previewableGroupProcessorMaxSize) {
+	private Predicate _getPredicate(long previewableGroupProcessorMaxSize) {
 		if (previewableGroupProcessorMaxSize > 0) {
 			return DLFileEntryTable.INSTANCE.size.lte(
 				previewableGroupProcessorMaxSize);

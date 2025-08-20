@@ -164,6 +164,14 @@ public class CTCollectionLocalServiceImpl
 
 		ctCollection = ctCollectionPersistence.update(ctCollection);
 
+		CTScore ctScore = _ctScorePersistence.create(
+			counterLocalService.increment(CTScore.class.getName()));
+
+		ctScore.setCompanyId(companyId);
+		ctScore.setCtCollectionId(ctCollectionId);
+
+		_ctScorePersistence.update(ctScore);
+
 		_resourceLocalService.addResources(
 			ctCollection.getCompanyId(), 0, ctCollection.getUserId(),
 			CTCollection.class.getName(), ctCollection.getCtCollectionId(),

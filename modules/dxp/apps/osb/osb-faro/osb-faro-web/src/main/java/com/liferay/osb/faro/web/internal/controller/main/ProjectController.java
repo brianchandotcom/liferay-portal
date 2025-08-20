@@ -570,6 +570,8 @@ public class ProjectController extends BaseFaroController {
 		List<ProjectUsageMetricDisplay> projectUsageMetricDisplays =
 			new ArrayList<>();
 
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		for (FaroProject faroProject :
 				_faroProjectLocalService.getFaroProjects(
 					(page - 1) * pageSize, page * pageSize)) {
@@ -579,7 +581,7 @@ public class ProjectController extends BaseFaroController {
 			Date startDate = null;
 
 			if (startDateString != null) {
-				startDate = _dateFormat.parse(startDateString);
+				startDate = dateFormat.parse(startDateString);
 			}
 
 			if ((startDate == null) ||
@@ -591,7 +593,7 @@ public class ProjectController extends BaseFaroController {
 			Date endDate = null;
 
 			if (endDateString != null) {
-				endDate = _dateFormat.parse(endDateString);
+				endDate = dateFormat.parse(endDateString);
 			}
 
 			projectUsageMetricDisplays.add(
@@ -1102,13 +1104,15 @@ public class ProjectController extends BaseFaroController {
 	}
 
 	private String _getMonthDateKey(Date date) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(date);
 
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-		return _dateFormat.format(calendar.getTime());
+		return dateFormat.format(calendar.getTime());
 	}
 
 	private ProjectDisplay _getProjectDisplay(FaroProject faroProject)
@@ -1196,6 +1200,8 @@ public class ProjectController extends BaseFaroController {
 	private ProjectUsageMetricDisplay _getProjectUsageMetricDisplay(
 			FaroProject faroProject, Date endDate, Date startDate)
 		throws Exception {
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		long knownIndividualsCountSinceLastAnniversary = 0;
 		long pageViewsCountSinceLastAnniversary = 0;
@@ -1292,8 +1298,8 @@ public class ProjectController extends BaseFaroController {
 
 		return new ProjectUsageMetricDisplay(
 			faroProject.getCorpProjectName(), faroProject.getCorpProjectUuid(),
-			_dateFormat.format(new Date(faroProject.getLastAccessTime())),
-			_dateFormat.format(faroProject.getLastAnniversaryDate()), offline,
+			dateFormat.format(new Date(faroProject.getLastAccessTime())),
+			dateFormat.format(faroProject.getLastAnniversaryDate()), offline,
 			usageMetrics, faroProject.getWeDeployKey());
 	}
 
@@ -1539,8 +1545,6 @@ public class ProjectController extends BaseFaroController {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProjectController.class);
 
-	private static final DateFormat _dateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd");
 	private static final CopyOnWriteArraySet<Long> _initializingGroupIds =
 		new CopyOnWriteArraySet<>();
 

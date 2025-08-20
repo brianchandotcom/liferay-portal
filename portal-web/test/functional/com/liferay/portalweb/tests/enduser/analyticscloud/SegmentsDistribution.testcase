@@ -56,7 +56,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8628 | Test Summary: Segment distribution chart can be filtered by text property"
 	@priority = 3
 	test CanDistributionChartFilteredText {
@@ -83,18 +82,15 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add a new static segment") {
+		task ("Add a new Dynamic segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
-		}
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Individual Attributes",
+				segmentField = "email",
+				segments = "Dynamic Segment Test");
 
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Static Segment Test");
-		}
-
-		task ("Add new user as member") {
-			ACSegments.addStaticMember(tableMember = "userfn userln");
+			ACSegments.editTextCriterion(textInput = "userea@liferay.com");
 
 			ACSegments.saveSegment();
 		}
@@ -102,7 +98,7 @@ definition {
 		task ("Go to Segments") {
 			ACNavigation.goToSegments();
 
-			ACSegments.accessSegment(segmentName = "Static Segment Test");
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 		}
 
 		task ("Filter Attribute") {
@@ -160,18 +156,15 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add a new static segment") {
+		task ("Add a new Dynamic segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
-		}
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Individual Attributes",
+				segmentField = "email",
+				segments = "Dynamic Segment Test");
 
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Static Segment Test");
-		}
-
-		task ("Add new user as member") {
-			ACSegments.addStaticMultiMember(tableMember = ${nameList});
+			ACSegments.editTextCriterion(textInput = "@liferay.com");
 
 			ACSegments.saveSegment();
 		}
@@ -179,7 +172,7 @@ definition {
 		task ("Go to Segments") {
 			ACNavigation.goToSegments();
 
-			ACSegments.accessSegment(segmentName = "Static Segment Test");
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 		}
 
 		task ("Filter Attribute") {

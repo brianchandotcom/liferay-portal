@@ -92,21 +92,16 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add a new static segment") {
+		task ("Add a new Dynamic segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
-		}
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Individual Attributes",
+				segmentField = "email",
+				segments = "Dynamic Segment Test");
 
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Static Segment Test");
-		}
+			ACSegments.editTextCriterion(textInput = "@liferay.com");
 
-		task ("Add multiple members") {
-			ACSegments.addStaticMultiMember(tableMember = ${nameList});
-		}
-
-		task ("Create the segment") {
 			ACSegments.saveSegment();
 		}
 
@@ -144,21 +139,16 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add a new static segment") {
+		task ("Add a new Dynamic segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
-		}
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Individual Attributes",
+				segmentField = "email",
+				segments = "Dynamic Segment Test");
 
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Static Segment Test");
-		}
+			ACSegments.editTextCriterion(textInput = "@liferay.com");
 
-		task ("Add multiple members") {
-			ACSegments.addStaticMultiMember(tableMember = ${nameList});
-		}
-
-		task ("Create the segment") {
 			ACSegments.saveSegment();
 		}
 
@@ -200,21 +190,16 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add a new static segment") {
+		task ("Add a new Dynamic segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
-		}
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Individual Attributes",
+				segmentField = "email",
+				segments = "Dynamic Segment Test");
 
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Static Segment Test");
-		}
+			ACSegments.editTextCriterion(textInput = "@liferay.com");
 
-		task ("Add multiple members") {
-			ACSegments.addStaticMultiMember(tableMember = ${nameList});
-		}
-
-		task ("Create the segment") {
 			ACSegments.saveSegment();
 		}
 
@@ -337,18 +322,13 @@ definition {
 		task ("Add a new static segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
-		}
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Individual Attributes",
+				segmentField = "email",
+				segments = "Dynamic Segment Test");
 
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Static Segment Test");
-		}
+			ACSegments.editTextCriterion(textInput = "@liferay.com");
 
-		task ("Add multiple members") {
-			ACSegments.addStaticMultiMember(tableMember = ${nameList});
-		}
-
-		task ("Create the segment") {
 			ACSegments.saveSegment();
 		}
 

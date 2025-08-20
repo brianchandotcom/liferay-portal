@@ -7,6 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import {openModal, openToast} from 'frontend-js-components-web';
 import {fetch, navigate, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -16,6 +17,7 @@ const ACTION_COPY_PAGE = 'copy-page';
 const ACTION_DELETE = 'delete';
 const ACTION_PERMISSIONS = 'permissions';
 const ENTER_KEYCODE = 13;
+const LAYOUT_TYPE_EMPTY = 'empty';
 const ROOT_ITEM_ID = '0';
 
 export default function PagesTree({
@@ -178,6 +180,14 @@ PagesTree.propTypes = {
 	selectedLayoutId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
+function showEmptyLabel() {
+	return (
+		<ClayLabel className="bg-transparent ml-2 mr-2" displayType="warning">
+			{Liferay.Language.get('empty')}
+		</ClayLabel>
+	);
+}
+
 function TreeItem({
 	config,
 	expand,
@@ -254,10 +264,14 @@ function TreeItem({
 							target={item.target}
 						>
 							<span
-								className="icon-tooltip lfr-portal-tooltip text-truncate"
+								className="d-flex flex-wrap icon-tooltip lfr-portal-tooltip text-truncate"
 								data-title={item.name}
 							>
 								{item.name}
+
+								{item.type === LAYOUT_TYPE_EMPTY
+									? showEmptyLabel()
+									: null}
 							</span>
 
 							{!item.hasGuestViewPermission ? (
@@ -280,7 +294,13 @@ function TreeItem({
 							) : null}
 						</a>
 					) : (
-						<span title={item.name}>{item.name}</span>
+						<span className="d-flex flex-wrap" title={item.name}>
+							{item.name}
+
+							{item.type === LAYOUT_TYPE_EMPTY
+								? showEmptyLabel()
+								: null}
+						</span>
 					)}
 				</div>
 			</ClayTreeView.ItemStack>
@@ -353,10 +373,14 @@ function TreeItem({
 									target={item.target}
 								>
 									<span
-										className="icon-tooltip lfr-portal-tooltip text-truncate"
+										className="d-flex flex-wrap icon-tooltip lfr-portal-tooltip text-truncate"
 										data-title={item.name}
 									>
 										{item.name}
+
+										{item.type === LAYOUT_TYPE_EMPTY
+											? showEmptyLabel()
+											: null}
 									</span>
 
 									{!item.hasGuestViewPermission ? (
@@ -379,7 +403,16 @@ function TreeItem({
 									) : null}
 								</a>
 							) : (
-								<span title={item.name}>{item.name}</span>
+								<span
+									className="d-flex flex-wrap"
+									title={item.name}
+								>
+									{item.name}
+
+									{item.type === LAYOUT_TYPE_EMPTY
+										? showEmptyLabel()
+										: null}
+								</span>
 							)}
 						</div>
 					</ClayTreeView.Item>

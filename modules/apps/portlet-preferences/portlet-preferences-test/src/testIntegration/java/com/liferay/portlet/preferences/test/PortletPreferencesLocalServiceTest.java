@@ -1386,20 +1386,19 @@ public class PortletPreferencesLocalServiceTest
 			LayoutRevision layoutRevision =
 				layoutStagingHandler.getLayoutRevision();
 
-			Assert.assertTrue(
-				layoutRevision.getTypeSettings(
-				).contains(
-					propertyKey + "=" + propertyValue
-				));
+			String typeSettings = layoutRevision.getTypeSettings();
 
 			Assert.assertTrue(
-				updatedLayout.getTypeSettings(
-				).contains(
-					propertyKey + "=" + propertyValue
-				));
+				typeSettings.contains(propertyKey + "=" + propertyValue));
+
+			typeSettings = updatedLayout.getTypeSettings();
+
+			Assert.assertTrue(
+				typeSettings.contains(propertyKey + "=" + propertyValue));
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);
+
 			ServiceContextThreadLocal.popServiceContext();
 		}
 	}

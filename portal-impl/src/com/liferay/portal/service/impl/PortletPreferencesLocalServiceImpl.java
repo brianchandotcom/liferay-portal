@@ -933,23 +933,13 @@ public class PortletPreferencesLocalServiceImpl
 			return plid;
 		}
 
-		if (!MergeLayoutPrototypesThreadLocal.isInProgress()) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
 		try {
-			boolean hasWorkflowTask = StagingUtil.hasWorkflowTask(
-				serviceContext.getUserId(), layoutRevision);
-
-			serviceContext.setAttribute("revisionInProgress", hasWorkflowTask);
+			String typeSettings = null;
 
 			Layout layout = _layoutLocalService.getLayout(
 				layoutRevision.getPlid());
 
 			Layout draftLayout = layout.fetchDraftLayout();
-
-			String typeSettings = null;
 
 			if (draftLayout != null) {
 				typeSettings = draftLayout.getTypeSettings();
@@ -957,6 +947,16 @@ public class PortletPreferencesLocalServiceImpl
 			else {
 				typeSettings = layoutRevision.getTypeSettings();
 			}
+
+			if (!MergeLayoutPrototypesThreadLocal.isInProgress()) {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+			}
+
+			boolean hasWorkflowTask = StagingUtil.hasWorkflowTask(
+				serviceContext.getUserId(), layoutRevision);
+
+			serviceContext.setAttribute("revisionInProgress", hasWorkflowTask);
 
 			layoutRevision = _layoutRevisionLocalService.updateLayoutRevision(
 				serviceContext.getUserId(),

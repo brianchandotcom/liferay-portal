@@ -3,15 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-let menu;
-let trigger;
+function main() {
+	const menu = fragmentElement.querySelector('.dropdown-menu-container');
+	const trigger = fragmentElement.querySelector('.dropdown-trigger');
 
-function initializeElements() {
-	menu = fragmentElement.querySelector('.dropdown-menu-container');
-	trigger = fragmentElement.querySelector('.dropdown-trigger');
-}
-
-function setupEventListeners() {
 	trigger?.addEventListener('click', () => {
 		menu.classList.toggle('active');
 	});
@@ -21,12 +16,6 @@ function setupEventListeners() {
 			menu.classList.remove('active');
 		}
 	});
-}
-
-async function main() {
-	initializeElements();
-
-	setupEventListeners();
 }
 
 main();

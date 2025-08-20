@@ -252,7 +252,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "marketplace-account-menu",
+														"key": "account-menu",
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
@@ -550,7 +550,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "select-account-dropdown",
+														"key": "account-selection-dropdown",
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {

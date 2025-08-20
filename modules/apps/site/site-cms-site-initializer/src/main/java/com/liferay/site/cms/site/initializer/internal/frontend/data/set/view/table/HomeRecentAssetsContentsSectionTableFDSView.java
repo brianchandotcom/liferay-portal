@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.HOME_RECENT_ASSETS_SECTION,
 	service = FDSView.class
 )
-public class HomeRecentAssetsSectionTableFDSView
+public class HomeRecentAssetsContentsSectionTableFDSView
 	extends BaseContentsSectionTableFDSView {
 
 	@Override

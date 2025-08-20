@@ -7,6 +7,7 @@ package com.liferay.headless.site.internal.resource.v1_0;
 
 import com.liferay.headless.site.dto.v1_0.Site;
 import com.liferay.headless.site.resource.v1_0.SiteResource;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
@@ -324,12 +325,26 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		_initThemeDisplay();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			contextHttpServletRequest);
+		ServiceContext serviceContext = null;
+
+		if (contextHttpServletRequest != null) {
+			serviceContext = ServiceContextFactory.getInstance(
+				contextHttpServletRequest);
+		}
+		else {
+			serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(contextCompany.getCompanyId());
+			serviceContext.setRequest(contextHttpServletRequest);
+			serviceContext.setUserId(contextUser.getUserId());
+		}
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		try {
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					contextCompany, contextUser)) {
+
 			return _addGroup(externalReferenceCode, site, serviceContext);
 		}
 		catch (Exception exception) {
@@ -425,6 +440,10 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	private void _initThemeDisplay() throws Exception {
+		if (contextHttpServletRequest == null) {
+			return;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)contextHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -467,6 +486,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

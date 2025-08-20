@@ -90,9 +90,24 @@
 
 .search-card_image {
 	align-items: center;
-	background: radial-gradient(14.55% 34.6% at 100% 34.6%, rgba(55, 124, 255, 0.68) 0%, rgba(55, 124, 255, 0) 100%), 
-		radial-gradient(26.56% 43.82% at 0% 0%, #00256B 20.83%, rgba(0, 37, 107, 0) 100%), 
-		linear-gradient(91.07deg, #001742 0%, #0011A8 24.6%, #0B5FFF 49%, #0B5FFF 74.5%, #0B5FFF 100%);
+	background: radial-gradient(
+				14.55% 34.6% at 100% 34.6%,
+				rgba(55, 124, 255, 0.68) 0%,
+				rgba(55, 124, 255, 0) 100%
+			),
+			radial-gradient(
+				26.56% 43.82% at 0% 0%,
+				#00256b 20.83%,
+				rgba(0, 37, 107, 0) 100%
+			),
+			linear-gradient(
+				91.07deg,
+				#001742 0%,
+				#0011a8 24.6%,
+				#0b5fff 49%,
+				#0b5fff 74.5%,
+				#0b5fff 100%
+			);
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;

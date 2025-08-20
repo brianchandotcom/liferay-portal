@@ -1968,11 +1968,21 @@ public class JenkinsResultsParserUtil {
 
 			if (!isNullOrEmpty(output)) {
 				for (String line : output.split("\n")) {
-					return new File(baseDir, line);
+					if (isNullOrEmpty(line)) {
+						continue;
+					}
+
+					File file = new File(baseDir, line);
+
+					if (!file.exists()) {
+						continue;
+					}
+
+					return file;
 				}
 			}
 		}
-		catch (IOException | TimeoutException exception) {
+		catch (Exception exception) {
 			System.out.println(exception.getMessage());
 		}
 
@@ -1991,7 +2001,10 @@ public class JenkinsResultsParserUtil {
 
 						String filePathString = filePath.toString();
 
-						if (filePathString.contains(pathSnippet)) {
+						if (filePathString.contains(pathSnippet) ||
+							filePathString.contains(
+								pathSnippet.replaceAll("\\.", "/"))) {
+
 							matchingFiles.add(filePath.toFile());
 						}
 

@@ -58,6 +58,8 @@ export class SegmentsPage {
 				? this.page.locator('.empty-drop-zone')
 				: dropzone.last();
 
+		await this.page.getByRole('button', {name: 'User'}).click();
+
 		await this.page.getByRole('button', {name: 'Session'}).click();
 
 		await this.page.getByLabel(`Drag ${property}`).press('Enter');

@@ -497,99 +497,12 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Test
 	public void testGetExportModelCount() throws Exception {
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		PortletDataHandler portletDataHandler =
-			_portletDataHandlerProvider.provide(
-				objectDefinition.getPortletId());
-
-		Assert.assertEquals(
-			0,
-			portletDataHandler.getExportModelCount(
-				_getManifestSummary(
-					PortletDataContextFactoryUtil.
-						createExportPortletDataContext(
-							objectDefinition.getCompanyId(),
-							GroupConstants.DEFAULT_PARENT_GROUP_ID,
-							new HashMap<>(), null, null, null),
-					portletDataHandler)));
-
-		ObjectEntry[] objectEntries = _addObjectEntries(
-			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition);
-
-		Assert.assertEquals(
-			objectEntries.length,
-			portletDataHandler.getExportModelCount(
-				_getManifestSummary(
-					PortletDataContextFactoryUtil.
-						createExportPortletDataContext(
-							objectDefinition.getCompanyId(),
-							GroupConstants.DEFAULT_PARENT_GROUP_ID,
-							new HashMap<>(), null, null, null),
-					portletDataHandler)));
-
-		Assert.assertEquals(
-			0,
-			portletDataHandler.getExportModelCount(
-				_getManifestSummary(
-					PortletDataContextFactoryUtil.
-						createExportPortletDataContext(
-							objectDefinition.getCompanyId(),
-							GroupConstants.DEFAULT_PARENT_GROUP_ID,
-							new HashMap<>(),
-							new Date(System.currentTimeMillis() - 10000),
-							new Date(System.currentTimeMillis() - 5000), null),
-					portletDataHandler)));
-	}
-
-	@Test
-	public void testGetExportModelCountWithSiteScopedObjectDefinition()
-		throws Exception {
-
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_SITE);
-
-		PortletDataHandler portletDataHandler =
-			_portletDataHandlerProvider.provide(
-				objectDefinition.getPortletId());
-
-		Group group = GroupTestUtil.addGroup();
-
-		Assert.assertEquals(
-			0,
-			portletDataHandler.getExportModelCount(
-				_getManifestSummary(
-					PortletDataContextFactoryUtil.
-						createExportPortletDataContext(
-							objectDefinition.getCompanyId(), group.getGroupId(),
-							new HashMap<>(), null, null, null),
-					portletDataHandler)));
-
-		ObjectEntry[] siteScopedObjectEntries = _addObjectEntries(
-			3, group.getGroupId(), objectDefinition);
-
-		Assert.assertEquals(
-			siteScopedObjectEntries.length,
-			portletDataHandler.getExportModelCount(
-				_getManifestSummary(
-					PortletDataContextFactoryUtil.
-						createExportPortletDataContext(
-							objectDefinition.getCompanyId(), group.getGroupId(),
-							new HashMap<>(), null, null, null),
-					portletDataHandler)));
-
-		Assert.assertEquals(
-			0,
-			portletDataHandler.getExportModelCount(
-				_getManifestSummary(
-					PortletDataContextFactoryUtil.
-						createExportPortletDataContext(
-							objectDefinition.getCompanyId(), group.getGroupId(),
-							new HashMap<>(),
-							new Date(System.currentTimeMillis() - 10000),
-							new Date(System.currentTimeMillis() - 5000), null),
-					portletDataHandler)));
+		_testGetExportModelCount(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			_addObjectDefinition(ObjectDefinitionConstants.SCOPE_COMPANY));
+		_testGetExportModelCount(
+			TestPropsValues.getGroupId(),
+			_addObjectDefinition(ObjectDefinitionConstants.SCOPE_SITE));
 	}
 
 	@Test
@@ -1239,6 +1152,50 @@ public class BatchEnginePortletDataHandlerTest {
 			false, group, scope, type);
 		_testExportImportObjectEntriesWithRelatedObjectEntries(
 			true, group, scope, type);
+	}
+
+	private void _testGetExportModelCount(
+			long groupId, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(
+				objectDefinition.getPortletId());
+
+		Assert.assertEquals(
+			0,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(), groupId,
+							new HashMap<>(), null, null, null),
+					portletDataHandler)));
+
+		ObjectEntry[] siteScopedObjectEntries = _addObjectEntries(
+			3, groupId, objectDefinition);
+
+		Assert.assertEquals(
+			siteScopedObjectEntries.length,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(), groupId,
+							new HashMap<>(), null, null, null),
+					portletDataHandler)));
+
+		Assert.assertEquals(
+			0,
+			portletDataHandler.getExportModelCount(
+				_getManifestSummary(
+					PortletDataContextFactoryUtil.
+						createExportPortletDataContext(
+							objectDefinition.getCompanyId(), groupId,
+							new HashMap<>(),
+							new Date(System.currentTimeMillis() - 10000),
+							new Date(System.currentTimeMillis() - 5000), null),
+					portletDataHandler)));
 	}
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA =

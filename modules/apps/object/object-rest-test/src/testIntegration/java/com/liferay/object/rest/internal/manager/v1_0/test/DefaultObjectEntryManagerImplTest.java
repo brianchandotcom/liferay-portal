@@ -324,6 +324,8 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
+					).indexed(
+						true
 					).labelMap(
 						RandomTestUtil.randomLocaleStringMap()
 					).name(
@@ -334,6 +336,8 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
+					).indexed(
+						true
 					).labelMap(
 						RandomTestUtil.randomLocaleStringMap()
 					).name(
@@ -5234,7 +5238,12 @@ public class DefaultObjectEntryManagerImplTest
 			Collections.singletonMap("textObjectFieldName", StringPool.BLANK),
 			_objectDefinition1);
 
-		_assertAggregationFacetValue(2, textObjectFieldValue, page);
+		assertFacets(
+			List.of(
+				new Facet(
+					"textObjectFieldName",
+					List.of(new Facet.FacetValue(2, textObjectFieldValue)))),
+			page.getFacets());
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(adminUser));
@@ -5265,10 +5274,16 @@ public class DefaultObjectEntryManagerImplTest
 				_objectRelationshipFieldName, StringPool.BLANK),
 			_objectDefinition2);
 
-		_assertAggregationFacetValue(
-			1, String.valueOf(parentObjectEntry1.getId()), page);
-		_assertAggregationFacetValue(
-			2, String.valueOf(parentObjectEntry2.getId()), page);
+		assertFacets(
+			List.of(
+				new Facet(
+					_objectRelationshipFieldName,
+					List.of(
+						new Facet.FacetValue(
+							1, String.valueOf(parentObjectEntry1.getId())),
+						new Facet.FacetValue(
+							2, String.valueOf(parentObjectEntry2.getId()))))),
+			page.getFacets());
 
 		_defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition2,
@@ -5286,10 +5301,16 @@ public class DefaultObjectEntryManagerImplTest
 				_objectRelationshipFieldName, StringPool.BLANK),
 			_objectDefinition2);
 
-		_assertAggregationFacetValue(
-			2, String.valueOf(parentObjectEntry1.getId()), page);
-		_assertAggregationFacetValue(
-			1, String.valueOf(parentObjectEntry2.getId()), page);
+		assertFacets(
+			List.of(
+				new Facet(
+					_objectRelationshipFieldName,
+					List.of(
+						new Facet.FacetValue(
+							2, String.valueOf(parentObjectEntry1.getId())),
+						new Facet.FacetValue(
+							1, String.valueOf(parentObjectEntry2.getId()))))),
+			page.getFacets());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition2,
@@ -5300,10 +5321,16 @@ public class DefaultObjectEntryManagerImplTest
 				_objectRelationshipFieldName, StringPool.BLANK),
 			_objectDefinition2);
 
-		_assertAggregationFacetValue(
-			1, String.valueOf(parentObjectEntry1.getId()), page);
-		_assertAggregationFacetValue(
-			1, String.valueOf(parentObjectEntry2.getId()), page);
+		assertFacets(
+			List.of(
+				new Facet(
+					_objectRelationshipFieldName,
+					List.of(
+						new Facet.FacetValue(
+							1, String.valueOf(parentObjectEntry1.getId())),
+						new Facet.FacetValue(
+							1, String.valueOf(parentObjectEntry2.getId()))))),
+			page.getFacets());
 	}
 
 	@Test
@@ -5619,6 +5646,26 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testGetRelatedObjectEntries() throws Exception {
+		_testGetRelatedObjectEntries(
+			_companyObjectEntryA, _companyObjectRelationshipA_AA, null,
+			(filter, search, sorts) ->
+				_defaultObjectEntryManager.getRelatedObjectEntries(
+					null, _createDTOConverterContext(),
+					_companyObjectEntryA.getExternalReferenceCode(), filter,
+					_companyObjectRelationshipA_AA, null, null, search, sorts));
+		_testGetRelatedObjectEntries(
+			_siteObjectEntryA, _siteObjectRelationshipA_AA,
+			_group.getGroupKey(),
+			(filter, search, sorts) ->
+				_defaultObjectEntryManager.getRelatedObjectEntries(
+					null, _createDTOConverterContext(),
+					_siteObjectEntryA.getExternalReferenceCode(), filter,
+					_siteObjectRelationshipA_AA, null, _group.getGroupKey(),
+					search, sorts));
+	}
+
+	@Test
 	public void testGetRelatedObjectEntriesWithAccountEntryRestricted()
 		throws Exception {
 
@@ -5869,6 +5916,59 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testGetRelatedObjectEntriesWithAggregationFacets()
+		throws Exception {
+
+		String textObjectFieldValue = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntryAA1 =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", textObjectFieldValue
+						).build();
+					}
+				},
+				_companyObjectEntryA.getId(), _companyObjectRelationshipA_AA);
+		ObjectEntry objectEntryAA2 =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", textObjectFieldValue
+						).build();
+					}
+				},
+				_companyObjectEntryA.getId(), _companyObjectRelationshipA_AA);
+
+		Page<ObjectEntry> page =
+			_defaultObjectEntryManager.getRelatedObjectEntries(
+				new Aggregation() {
+					{
+						setAggregationTerms(
+							Collections.singletonMap(
+								"textObjectFieldName", StringPool.BLANK));
+					}
+				},
+				_createDTOConverterContext(),
+				_companyObjectEntryA.getExternalReferenceCode(), null,
+				_companyObjectRelationshipA_AA, null, null, null, null);
+
+		assertFacets(
+			page.getFacets(),
+			List.of(
+				new Facet(
+					"textObjectFieldName",
+					List.of(new Facet.FacetValue(2, textObjectFieldValue)))));
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA1.getId());
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA2.getId());
+	}
+
+	@Test
 	public void testGetRelatedObjectEntriesWithRootObjectEntryId()
 		throws Exception {
 
@@ -5880,9 +5980,9 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			(objectEntry, objectRelationship) ->
 				_defaultObjectEntryManager.getRelatedObjectEntries(
-					_createDTOConverterContext(),
-					objectEntry.getExternalReferenceCode(), objectRelationship,
-					null, null));
+					null, _createDTOConverterContext(),
+					objectEntry.getExternalReferenceCode(), null,
+					objectRelationship, null, null, null, null));
 		_testGetRelatedObjectEntriesWithRootObjectEntryId(
 			_companyObjectDefinitionA, _companyObjectDefinitionAA,
 			_companyObjectDefinitionB, _companyObjectEntryA,
@@ -5900,9 +6000,10 @@ public class DefaultObjectEntryManagerImplTest
 			_group.getGroupKey(),
 			(objectEntry, objectRelationship) ->
 				_defaultObjectEntryManager.getRelatedObjectEntries(
-					_createDTOConverterContext(),
-					objectEntry.getExternalReferenceCode(), objectRelationship,
-					null, _group.getGroupKey()));
+					null, _createDTOConverterContext(),
+					objectEntry.getExternalReferenceCode(), null,
+					objectRelationship, null, _group.getGroupKey(), null,
+					null));
 	}
 
 	@Test
@@ -8079,9 +8180,10 @@ public class DefaultObjectEntryManagerImplTest
 		return _addObjectDefinition(
 			List.of(
 				new TextObjectFieldBuilder(
+				).indexed(
+					true
 				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
+					RandomTestUtil.randomLocaleStringMap()
 				).name(
 					"textObjectFieldName"
 				).build()),
@@ -8490,28 +8592,6 @@ public class DefaultObjectEntryManagerImplTest
 			actions2,
 			action2 -> Assert.assertFalse(
 				objectEntryActions.containsKey(action2)));
-	}
-
-	private void _assertAggregationFacetValue(
-		Integer expectedNumberOfOccurrences, String facetValueTerm,
-		Page<ObjectEntry> page) {
-
-		List<Facet> facets = page.getFacets();
-
-		Assert.assertFalse(ListUtil.isEmpty(facets));
-
-		Facet facet = facets.get(0);
-
-		List<Facet.FacetValue> facetValues = ListUtil.filter(
-			facet.getFacetValues(),
-			facetValue -> Objects.equals(facetValue.getTerm(), facetValueTerm));
-
-		Assert.assertFalse(ListUtil.isEmpty(facetValues));
-
-		Facet.FacetValue facetValue = facetValues.get(0);
-
-		Assert.assertEquals(
-			expectedNumberOfOccurrences, facetValue.getNumberOfOccurrences());
 	}
 
 	private void _assertCountAggregationObjectFieldValue(
@@ -9574,6 +9654,78 @@ public class DefaultObjectEntryManagerImplTest
 					relatedObjectEntriesSize, objectEntryPage.getTotalCount());
 			}
 		}
+	}
+
+	private void _testGetRelatedObjectEntries(
+			ObjectEntry objectEntryA, ObjectRelationship objectRelationshipA_AA,
+			String scopeKey,
+			UnsafeTriFunction
+				<String, String, Sort[], Page<ObjectEntry>, Exception>
+					unsafeTriFunction)
+		throws Exception {
+
+		// Equals expression
+
+		ObjectEntry objectEntryAA1 =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				objectEntryA.getExternalReferenceCode(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", "textObjectFieldValue1"
+						).build();
+					}
+				},
+				objectRelationshipA_AA, scopeKey);
+		ObjectEntry objectEntryAA2 =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				objectEntryA.getExternalReferenceCode(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", "textObjectFieldValue2"
+						).build();
+					}
+				},
+				objectRelationshipA_AA, scopeKey);
+
+		assertEquals(
+			unsafeTriFunction.apply(
+				buildEqualsExpressionFilterString(
+					"textObjectFieldName", "textObjectFieldValue1"),
+				null, null),
+			Page.of(List.of(objectEntryAA1)));
+		assertEquals(
+			unsafeTriFunction.apply(
+				buildEqualsExpressionFilterString(
+					"textObjectFieldName", "textObjectFieldValue2"),
+				null, null),
+			Page.of(List.of(objectEntryAA2)));
+
+		// Search
+
+		assertEquals(
+			unsafeTriFunction.apply(null, "textObjectFieldValue", null),
+			Page.of(List.of(objectEntryAA1, objectEntryAA2)));
+		assertEquals(
+			unsafeTriFunction.apply(null, "textObjectFieldValue1", null),
+			Page.of(List.of(objectEntryAA1)));
+
+		// Sort
+
+		assertEquals(
+			unsafeTriFunction.apply(
+				null, null, getSorts("textObjectFieldName:asc")),
+			Page.of(List.of(objectEntryAA1, objectEntryAA2)));
+		assertEquals(
+			unsafeTriFunction.apply(
+				null, null, getSorts("textObjectFieldName:desc")),
+			Page.of(List.of(objectEntryAA2, objectEntryAA1)));
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA1.getId());
+		_objectEntryLocalService.deleteObjectEntry(objectEntryAA2.getId());
 	}
 
 	private void _testGetRelatedObjectEntriesWithRootObjectEntryId(

@@ -509,6 +509,80 @@ test(
 );
 
 test(
+	`Can delete unavailable segment criterion.`,
+
+	{
+		tag: '@LPS-152077',
+	},
+
+	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
+		const segmentName1 = 'First Segment';
+		const segmentName2 = 'Second Segment';
+
+		page.on('dialog', async (dialog) => await dialog.accept());
+
+		await test.step('Given a user is created', async () => {
+			await apiHelpers.headlessAdminUser.postUserAccount({
+				emailAddress: `userea@liferay.com`,
+			});
+		});
+
+		await test.step('And a segment designer adds the first segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('userea@liferay.com');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('And adds the second segment with 2 criterion', async () => {
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName2, {
+				segments: ['Segments'],
+				user: ['First Name'],
+			});
+
+			await segmentsPage.fillField('userea');
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectSegment('First Segment');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('When deletes one of the segments', async () => {
+			await segmentsPage.deleteSegment('First Segment');
+		});
+
+		await test.step('And removes from second segment the criterion related to the first segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.editSegmentsEntry(segmentName2);
+
+			await segmentsPage.deleteUnavailableProperty();
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('Then asserts that the deleted criterion will not shown', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName2);
+
+			await page.waitForLoadState('networkidle');
+
+			await expect(segmentsPage.criterionLabel).not.toContainText('Segment');
+		});
+	}
+);
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

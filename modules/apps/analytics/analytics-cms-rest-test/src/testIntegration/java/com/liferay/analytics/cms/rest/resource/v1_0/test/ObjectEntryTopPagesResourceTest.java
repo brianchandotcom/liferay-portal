@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
 public class ObjectEntryTopPagesResourceTest
 	extends BaseObjectEntryTopPagesResourceTestCase {
 
+	@Override
 	@Test
 	public void testGetObjectEntryTopPages() throws Exception {
 		try (CompanyConfigurationTemporarySwapper

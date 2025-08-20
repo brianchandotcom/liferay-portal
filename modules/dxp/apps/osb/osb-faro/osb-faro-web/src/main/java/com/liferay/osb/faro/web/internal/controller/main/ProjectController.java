@@ -711,8 +711,8 @@ public class ProjectController extends BaseFaroController {
 
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Usage reset finished successfully for all the " +
-								"faro projects");
+							"Usage reset finished successfully for all Faro " +
+								"projects");
 					}
 
 					return null;

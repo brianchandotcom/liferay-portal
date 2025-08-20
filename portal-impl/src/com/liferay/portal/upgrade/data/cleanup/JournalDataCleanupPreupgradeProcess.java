@@ -36,8 +36,8 @@ public class JournalDataCleanupPreupgradeProcess
 
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "articleId", "JournalArticleResource", "articleId",
-				"JournalArticle"));
+				null, "resourcePrimKey", "JournalArticleResource",
+				"resourcePrimKey", "JournalArticle"));
 
 		// Upgrade from 7.4
 

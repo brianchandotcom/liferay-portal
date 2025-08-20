@@ -11,6 +11,7 @@ export class SegmentsPage {
 	readonly page: Page;
 
 	readonly closeButton: Locator;
+	readonly criterionLabel: Locator;
 	readonly deleteButton: Locator;
 	readonly editButton: Locator;
 	readonly newSegmentButton: Locator;
@@ -25,6 +26,7 @@ export class SegmentsPage {
 		this.page = page;
 
 		this.closeButton = page.getByLabel('close', {exact: true});
+		this.criterionLabel = page.locator('span.criterion-string');
 		this.deleteButton = page.getByRole('menuitem', {name: 'Delete'});
 		this.editButton = page.getByRole('menuitem', {name: 'Edit'});
 		this.newSegmentButton = page.getByRole('button', {
@@ -136,6 +138,11 @@ export class SegmentsPage {
 		}
 	}
 
+	 async deleteUnavailableProperty() {
+        const deleteButton = this.page.getByText('Delete Segment Property');
+        await deleteButton.click();
+    }
+
 	async deleteSegment(segmentName: string) {
 		const showMoreOptionsButton = this.page.getByLabel(
 			`Show More Options for ${segmentName}`
@@ -217,26 +224,22 @@ export class SegmentsPage {
 	}
 
 	async viewMembers(expectedEmail?: string, expectedName?: string) {
-		await this.viewMembersButton.click();
+        await this.viewMembersButton.click();
 
-		await this.page.waitForLoadState('networkidle');
-		await this.page.waitForTimeout(5000);
+        const memberLocator = this.page
+            .frameLocator('iframe#segment-members-dialog_iframe_')
+            .locator('tr', { hasText: expectedEmail || expectedName });
 
-		const iframe = this.page.frameLocator(
-			'iframe#segment-members-dialog_iframe_'
-		);
+        await expect(memberLocator).toBeVisible();
 
-		const emailElement = iframe.locator('td.lfr-email-address-column');
-		const nameElement = iframe.locator('td.lfr-name-column');
+        if (expectedEmail) {
+            await expect(memberLocator.locator('td.lfr-email-address-column')).toContainText(expectedEmail);
+        }
 
-		if (expectedEmail) {
-			await expect(emailElement).toHaveText(expectedEmail);
-		}
-
-		if (expectedName) {
-			await expect(nameElement).toHaveText(expectedName);
-		}
-
-		await this.closeButton.click();
-	}
+        if (expectedName) {
+            await expect(memberLocator.locator('td.lfr-name-column')).toContainText(expectedName);
+        }
+        
+        await this.closeButton.click();
+    }
 }

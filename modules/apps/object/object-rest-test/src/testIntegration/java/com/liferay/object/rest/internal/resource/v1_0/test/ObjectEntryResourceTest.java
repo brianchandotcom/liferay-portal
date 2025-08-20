@@ -169,6 +169,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -5886,6 +5887,59 @@ public class ObjectEntryResourceTest {
 			_NEW_OBJECT_FIELD_VALUE_1);
 
 		_assertPagination(11, _objectDefinition1);
+	}
+
+	@Test
+	@TestInfo("LPD-62553")
+	public void testGetObjectEntryActions() throws Exception {
+		JSONObject jsonObject = _postObjectEntry(_siteScopedObjectDefinition1);
+
+		jsonObject = _getObjectEntryJSONObject(
+			_siteScopedObjectDefinition1, jsonObject.getString("id"));
+
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+
+		Assert.assertEquals(
+			actionsJSONObject.toMap(),
+			_getExpectedActions(
+				_siteScopedObjectDefinition1, jsonObject.getString("id"),
+				false));
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-62553")
+	public void testGetObjectEntryActionsWithSharingEnabled() throws Exception {
+		UnicodeProperties originalUnicodeProperties =
+			_group.getTypeSettingsProperties();
+
+		_groupLocalService.updateGroup(
+			_group.getGroupId(),
+			UnicodePropertiesBuilder.create(
+				originalUnicodeProperties, true
+			).put(
+				"sharingEnabled", true
+			).buildString());
+
+		try {
+			JSONObject jsonObject = _postObjectEntry(
+				_siteScopedObjectDefinition1);
+
+			jsonObject = _getObjectEntryJSONObject(
+				_siteScopedObjectDefinition1, jsonObject.getString("id"));
+
+			JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+
+			Assert.assertEquals(
+				actionsJSONObject.toMap(),
+				_getExpectedActions(
+					_siteScopedObjectDefinition1, jsonObject.getString("id"),
+					true));
+		}
+		finally {
+			_groupLocalService.updateGroup(
+				_group.getGroupId(), originalUnicodeProperties.toString());
+		}
 	}
 
 	@Test
@@ -14664,6 +14718,79 @@ public class ObjectEntryResourceTest {
 		return objectDefinition.getRESTContextPath();
 	}
 
+	private Map<String, Map<String, String>> _getExpectedActions(
+		ObjectDefinition objectDefinition, String objectEntryId,
+		boolean sharingEnabled) {
+
+		String href = StringBundler.concat(
+			"http://localhost:8080/o", objectDefinition.getRESTContextPath(),
+			StringPool.SLASH, objectEntryId);
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			HashMapBuilder.put(
+				"href", href
+			).put(
+				"method", "DELETE"
+			).build()
+		).put(
+			"expire",
+			HashMapBuilder.put(
+				"href", href + "/expire"
+			).put(
+				"method", "POST"
+			).build()
+		).put(
+			"get",
+			HashMapBuilder.put(
+				"href", href
+			).put(
+				"method", "GET"
+			).build()
+		).put(
+			"permissions",
+			HashMapBuilder.put(
+				"href", href + "/permissions"
+			).put(
+				"method", "GET"
+			).build()
+		).put(
+			"replace",
+			HashMapBuilder.put(
+				"href", href
+			).put(
+				"method", "PUT"
+			).build()
+		).put(
+			"share",
+			() -> {
+				if (sharingEnabled) {
+					return HashMapBuilder.<String, Map<String, String>>put(
+						"href", href
+					).put(
+						"method", "GET"
+					).build();
+				}
+
+				return null;
+			}
+		).put(
+			"update",
+			HashMapBuilder.put(
+				"href", href
+			).put(
+				"method", "PATCH"
+			).build()
+		).put(
+			"versions",
+			HashMapBuilder.put(
+				"href", href + "/versions"
+			).put(
+				"method", "GET"
+			).build()
+		).build();
+	}
+
 	private JSONObject _getFileEntryJSONObject(
 			DLFolder dlFolder,
 			com.liferay.object.rest.dto.v1_0.FileEntry fileEntry,
@@ -14846,6 +14973,17 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(1, itemsJSONArray.length());
 
 		return itemsJSONArray.getJSONObject(0);
+	}
+
+	private JSONObject _getObjectEntryJSONObject(
+			ObjectDefinition objectDefinition, String objectEntryId)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			null,
+			objectDefinition.getRESTContextPath() + StringPool.SLASH +
+				objectEntryId,
+			Http.Method.GET);
 	}
 
 	private ObjectEntryResource _getObjectEntryResource(
@@ -15054,6 +15192,17 @@ public class ObjectEntryResourceTest {
 				"permissions", permissionsJSONArray
 			).toString(),
 			endpoint, Http.Method.POST);
+	}
+
+	private JSONObject _postObjectEntry(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).toString(),
+			_getEndpoint(objectDefinition, _group.getGroupId()),
+			Http.Method.POST);
 	}
 
 	private void _postObjectEntryWithKeywords(String... keywords)

@@ -212,6 +212,22 @@ export class SegmentsPage {
 		await propertyLocator.scrollIntoViewIfNeeded();
 	}
 
+	async selectCheckboxItem(itemName: string) {
+		const iframe = this.page.frameLocator('iframe#selectEntity_iframe_');
+
+		const rowLocator = iframe.locator('tr', {hasText: itemName});
+
+		const checkbox = rowLocator.locator('input[type="checkbox"]');
+
+		await checkbox.click();
+
+		const modalSelectButton = this.page.locator('.btn-primary', {
+			hasText: 'Select',
+		});
+
+		await modalSelectButton.click();
+	}
+
 	async selectOption(optionName: string) {
 		const optionSelectLocator = this.page.locator(
 			'select[data-testid="options-string"]'

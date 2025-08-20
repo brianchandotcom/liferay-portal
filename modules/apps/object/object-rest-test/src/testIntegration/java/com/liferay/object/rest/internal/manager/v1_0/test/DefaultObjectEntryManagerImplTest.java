@@ -3032,8 +3032,9 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			(objectEntry1, objectEntry2, objectRelationship) ->
 				_defaultObjectEntryManager.addRelatedObjectEntry(
-					_createDTOConverterContext(), objectEntry2,
-					objectEntry1.getId(), objectRelationship));
+					_createDTOConverterContext(),
+					objectEntry1.getExternalReferenceCode(), objectEntry2,
+					objectRelationship, null));
 		_testAddRelatedObjectEntry(
 			_companyObjectDefinitionAA, _companyObjectEntryA,
 			_companyObjectRelationshipA_AA,
@@ -3042,9 +3043,8 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			(objectEntry1, objectEntry2, objectRelationship) ->
 				_defaultObjectEntryManager.addRelatedObjectEntry(
-					_createDTOConverterContext(),
-					objectEntry1.getExternalReferenceCode(), objectEntry2,
-					objectRelationship, null));
+					_createDTOConverterContext(), objectEntry2,
+					objectEntry1.getId(), objectRelationship));
 		_testAddRelatedObjectEntry(
 			_siteObjectDefinitionAA, _siteObjectEntryA,
 			_siteObjectRelationshipA_AA,

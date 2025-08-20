@@ -59,17 +59,17 @@
 				/]
 			[/#list]
 
-			[#assign recentArticles = restClient.get("/c/p2s3knowledgearticles/?" + queryParts?join('&')) /]
+			[#assign knowledgeArticles = restClient.get("/c/p2s3knowledgearticles/?" + queryParts?join('&')) /]
 
-			[#if (recentArticles.totalCount)?has_content]
-				[#list recentArticles.items as recentArticle]
-					<a class="article-entry" href="${themeDisplay.getCDNBaseURL()}/l/${recentArticle.id}/">
+			[#if (knowledgeArticles.totalCount)?has_content]
+				[#list knowledgeArticles.items as knowledgeArticle]
+					<a class="article-entry" href="${themeDisplay.getCDNBaseURL()}/l/${knowledgeArticle.id}/">
 						<div class="article-entry_title">
-							${recentArticle.title}
+							${knowledgeArticle.title}
 						</div>
 
 						<div class="article-entry_description">
-							${recentArticle.description}
+							${knowledgeArticle.description}
 						</div>
 					</a>
 				[/#list]

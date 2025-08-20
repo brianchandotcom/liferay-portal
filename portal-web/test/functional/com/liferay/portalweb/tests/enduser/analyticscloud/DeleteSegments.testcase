@@ -234,7 +234,6 @@ definition {
 	@description = "Bug: LRAC-8239 | Automation ID: LRAC-11536 | Test Summary: Delete a segment in edit mode"
 	@priority = 2
 	test DeleteSegmentInEditMode {
-		var staticSegmentName = "New Static Segment";
 		var dynamicSegmentName = "New Dynamic Segment";
 
 		task ("Create a blog and add to a page and then connect AC and DXP") {
@@ -257,33 +256,9 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Go to segments and create a static segment") {
-			ACNavigation.goToSegments();
-
-			ACSegments.createStaticSegment();
-
-			ACUtils.setItemName(itemName = ${staticSegmentName});
-
-			ACSegments.addStaticMember(tableMember = "Test Test");
-
-			ACSegments.saveSegment();
-		}
-
-		task ("Edit the static segment, don't save the changes and then delete it, assert that the segment is not in the list") {
-			ACNavigation.goToSegments();
-
-			ACSegments.editSegment(segmentName = ${staticSegmentName});
-
-			ACSegments.removeStaticMember(tableMember = "Test Test");
-
-			ACUtils.clickAnyButton(button = "Delete Segment");
-
-			ACUtils.clickAnyButton(button = "Delete");
-
-			ACSegments.viewDeletedSegmentName(searchTerm = ${staticSegmentName});
-		}
-
 		task ("Create a dynamic segment") {
+			ACNavigation.goToSegments();
+
 			ACSegments.createDynamicSegment();
 
 			ACUtils.setItemName(itemName = ${dynamicSegmentName});

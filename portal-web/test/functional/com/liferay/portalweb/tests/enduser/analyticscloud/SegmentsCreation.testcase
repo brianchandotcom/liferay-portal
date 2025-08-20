@@ -1240,16 +1240,13 @@ definition {
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entry.");
 		}
 
-		task ("Add a new static segment") {
-			ACSegments.createStaticSegment();
-		}
+		task ("Add a new Dynamic segment") {
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Individual Attributes",
+				segmentField = "email",
+				segments = "Segment Name Already Exists 2");
 
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Segment Name Already Exists 2");
-		}
-
-		task ("Add the new user as member") {
-			ACSegments.addStaticMember(tableMember = "userfn userln");
+			ACSegments.editTextCriterion(textInput = "test@liferay.com");
 		}
 
 		task ("Save the Segment") {
@@ -1392,39 +1389,9 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add a new static segment") {
+		task ("Add a new dynamic segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
-		}
-
-		task ("View the Create button is disabled when the Name field is empty") {
-			AssertVisible(
-				key_text = "Create",
-				locator1 = "Button#ANY_DISABLED");
-		}
-
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Static Segment Test");
-		}
-
-		task ("View the Create button is still disabled when there are no individuals") {
-			AssertTextEquals(
-				locator1 = "ACSegments#NO_MEMBER_TITLE",
-				value1 = "There are no Individuals found.");
-
-			AssertVisible(
-				key_text = "Create",
-				locator1 = "Button#ANY_DISABLED");
-		}
-
-		task ("Cancel the creation") {
-			ACSegments.cancelSegment();
-
-			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
-		}
-
-		task ("Add a new dynamic segment") {
 			ACSegments.createDynamicSegment();
 		}
 

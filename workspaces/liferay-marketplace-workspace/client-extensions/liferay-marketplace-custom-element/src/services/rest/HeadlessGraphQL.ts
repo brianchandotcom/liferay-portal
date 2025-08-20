@@ -12,6 +12,7 @@ export default class GraphQL {
 		query: {
 			group: string;
 			name: string;
+			options?: Record<string, string>;
 		},
 		filters: Record<string, string>,
 		options?: Record<string, any>
@@ -20,10 +21,12 @@ export default class GraphQL {
 			.map(([alias, filter]) => {
 				const option = options?.[alias];
 
-				const body = option?.body ?? '';
-				const pageSize = option?.pageSize ?? 1;
+				const body = (option?.body || query.options?.body) ?? '';
+				const sort = (options?.sort || query?.options?.sort) ?? '';
+				const pageSize =
+					(option?.pageSize || query.options?.pageSize) ?? 1;
 
-				return `${alias}: ${query.name}(filter: "${filter}", pageSize: ${pageSize}) {
+				return `${alias}: ${query.name}(filter: "${filter}", pageSize: ${pageSize}, sort: "${sort}") {
 					totalCount
 
 					${body}

@@ -44,6 +44,8 @@ type Translations = {
 	[key: string]: {total: number; translated: number};
 };
 
+type TranslationStatus = 'not-translated' | 'translating' | 'translated';
+
 export function LocalizationSelect({
 	allowLocalizationManagement,
 	autoTranslateURL,
@@ -63,6 +65,26 @@ export function LocalizationSelect({
 	const selectedLocaleLabel = useMemo(() => {
 		return locales.find(({id}) => id === selectedLocaleId)?.label;
 	}, [locales, selectedLocaleId]);
+
+	const selectedLocaleStatus: TranslationStatus = useMemo(() => {
+		if (!selectedLocaleLabel) {
+			return 'not-translated';
+		}
+
+		const translation = translations[selectedLocaleLabel];
+
+		if (!translation) {
+			return 'not-translated';
+		}
+
+		const {total, translated} = translation;
+
+		if (total === translated) {
+			return 'translated';
+		}
+
+		return 'translating';
+	}, [selectedLocaleLabel, translations]);
 
 	const [relatedLocaleId, setRelatedLocaleId] =
 		useState<Liferay.Language.Locale | null>(null);
@@ -381,6 +403,7 @@ export function LocalizationSelect({
 						) : null}
 
 						<ClayDropDown.Item
+							disabled={selectedLocaleStatus === 'translated'}
 							onClick={async () => {
 								if (
 									await openConfirmModal({
@@ -420,6 +443,7 @@ export function LocalizationSelect({
 						</ClayDropDown.Item>
 
 						<ClayDropDown.Item
+							disabled={selectedLocaleStatus === 'not-translated'}
 							onClick={async () => {
 								if (
 									await openConfirmModal({

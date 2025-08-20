@@ -41,6 +41,10 @@ const renderApp = ({initialScript = ''} = {}) => {
 };
 
 describe('', () => {
+	beforeAll(() => {
+		Liferay.Util.unescape = (str) => str;
+	});
+
 	beforeEach(() => {
 		cleanup();
 

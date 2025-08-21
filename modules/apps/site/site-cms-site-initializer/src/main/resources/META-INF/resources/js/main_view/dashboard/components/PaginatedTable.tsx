@@ -26,10 +26,15 @@ const viewSpecs = {
 	chart: {
 		expandable: 'volume',
 		textWeight: 'semi-bold',
+		titleWidth: '200px',
+		volumeWidth: 'calc(100% - 340px)',
 	},
 	table: {
 		expandable: 'title',
+		percentageWidth: '140px',
 		textWeight: 'normal',
+		titleWidth: 'calc(100% - 340px',
+		volumeWidth: '200px',
 	},
 };
 
@@ -130,26 +135,33 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 				<Head
 					items={[
 						{
+							align: 'left',
 							id: 'title',
 							name: Liferay.Language.get(
 								currentStructureTypeLabel
 							),
-							width: '200px',
+							width: viewSpecs[viewType].titleWidth,
 						},
 						{
+							align: viewType === 'chart' ? 'left' : 'right',
 							id: 'volume',
 							name: Liferay.Language.get('assets-volume'),
-							width: 'calc(100% - 310px)',
+							width: viewSpecs[viewType].volumeWidth,
 						},
 						{
+							align: 'right',
 							id: 'percentage',
 							name: Liferay.Language.get('%-of-assets'),
-							width: '110px',
+							width: '140px',
 						},
 					]}
 				>
 					{(column) => (
-						<Cell key={column.id} width={column.width}>
+						<Cell
+							align={column.align as 'left' | 'right'}
+							key={column.id}
+							width={column.width}
+						>
 							{column.name}
 						</Cell>
 					)}

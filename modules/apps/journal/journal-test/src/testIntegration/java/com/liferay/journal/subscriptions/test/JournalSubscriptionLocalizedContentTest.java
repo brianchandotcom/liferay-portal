@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -64,6 +66,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -72,6 +75,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -102,15 +110,33 @@ public class JournalSubscriptionLocalizedContentTest
 
 		_mailService = MailServiceUtil.getService();
 
-		ReflectionTestUtil.setFieldValue(
-			MailServiceUtil.class, "_mailService", _geMailService());
+		Bundle bundle = FrameworkUtil.getBundle(
+			JournalSubscriptionLocalizedContentTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		MailService newMailService = _geMailService();
+
+		_serviceRegistration = bundleContext.registerService(
+			MailService.class, newMailService,
+			HashMapDictionaryBuilder.<String, Object>put(
+				org.osgi.framework.Constants.SERVICE_RANKING, 100
+			).build());
+
+		_snapshot = ReflectionTestUtil.getFieldValue(
+			MailServiceUtil.class, "_mailServiceSnapshot");
+
+		_serviceSupplier = ReflectionTestUtil.getAndSetFieldValue(
+			_snapshot, "_serviceSupplier", () -> newMailService);
 	}
 
 	@After
 	@Override
 	public void tearDown() throws Exception {
 		ReflectionTestUtil.setFieldValue(
-			MailServiceUtil.class, "_mailService", _mailService);
+			_snapshot, "_serviceSupplier", _serviceSupplier);
+
+		_serviceRegistration.unregister();
 
 		super.tearDown();
 	}
@@ -484,6 +510,10 @@ public class JournalSubscriptionLocalizedContentTest
 
 	@Inject
 	private Portal _portal;
+
+	private ServiceRegistration<?> _serviceRegistration;
+	private Supplier<MailService> _serviceSupplier;
+	private Snapshot<MailService> _snapshot;
 
 	@Inject
 	private UserLocalService _userLocalService;

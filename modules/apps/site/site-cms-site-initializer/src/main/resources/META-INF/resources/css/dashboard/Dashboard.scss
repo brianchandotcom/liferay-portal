@@ -55,4 +55,15 @@
 			border-width: 0;
 		}
 	}
+
+	&__expired-assets {
+		.table-responsive {
+			margin: 0 -16px;
+			width: calc(100% + 32px);
+		}
+
+		.table td.borderless {
+			border-width: 0;
+		}
+	}
 }

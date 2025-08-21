@@ -9,6 +9,7 @@ import React from 'react';
 
 import {ViewDashboardContextProvider} from './ViewDashboardContext';
 import {ContentCard} from './components/ContentCard';
+import {ExpiredAssetsCard} from './components/ExpiredAssetsCard';
 import {FilesCard} from './components/FilesCard';
 import {InventoryAnalysisCard} from './components/InventoryAnalysisCard';
 import {LanguagesDropdown} from './components/LanguagesDropdown';
@@ -73,9 +74,24 @@ const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				<ClayLayout.Row>
+				<ClayLayout.Row className="mb-4">
 					<ClayLayout.Col size={12}>
 						<InventoryAnalysisCard />
+					</ClayLayout.Col>
+				</ClayLayout.Row>
+
+				<ClayLayout.Row className="mb-2">
+					<ClayLayout.Col size={12}>
+						<SectionHeader
+							icon="order-form-pencil"
+							title="Health and Usage"
+						/>
+					</ClayLayout.Col>
+				</ClayLayout.Row>
+
+				<ClayLayout.Row>
+					<ClayLayout.Col size={12}>
+						<ExpiredAssetsCard />
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 			</ClayLayout.Container>

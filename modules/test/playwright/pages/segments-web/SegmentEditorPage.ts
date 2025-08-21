@@ -19,6 +19,7 @@ type SegmentProperty =
 	| 'Last Name'
 	| 'Name'
 	| 'Organization'
+	| 'Parent Organization'
 	| 'Segments'
 	| 'Type';
 
@@ -103,6 +104,11 @@ export class SegmentEditorPage {
 		}
 		else if (property === 'Organization') {
 			await this.page.getByLabel('Drag Organization').press('Enter');
+		}
+		else if (property === 'Parent Organization') {
+			await this.page
+				.getByLabel('Drag Parent Organization')
+				.press('Enter');
 		}
 		else {
 			await this.page.locator('li', {hasText: property}).press('Enter');

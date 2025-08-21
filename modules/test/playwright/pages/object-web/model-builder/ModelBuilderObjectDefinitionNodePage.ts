@@ -16,13 +16,14 @@ export class ModelBuilderObjectDefinitionNodePage {
 	readonly addObjectRelationshipButton: Locator;
 	readonly deleteObjectDefinitionOption: Locator;
 	readonly editObjectDefinitionExternalReferenceCodeButton: Locator;
+	readonly modalAddObjectField: Locator;
+	readonly modalAddObjectFieldLabelInput: Locator;
 	readonly modalDeleteObjectDefinitionConfirmationButton: Locator;
 	readonly modalDeleteObjectDefinitionTextField: Locator;
 	readonly modalEditObjectDefinitionExternalReferenceCodeInput: Locator;
 	readonly newObjectFieldSaveButton: Locator;
 	readonly newObjectRelationshipSaveButton: Locator;
 	readonly objectFieldBusinessTypeSelect: Locator;
-	readonly objectFieldLabelInput: Locator;
 	readonly objectFieldPicklistSelect: Locator;
 	readonly objectRelationshipLabelInput: Locator;
 	readonly objectRelationshipManyRecordsOf: Locator;
@@ -51,6 +52,11 @@ export class ModelBuilderObjectDefinitionNodePage {
 		this.editObjectDefinitionExternalReferenceCodeButton = page
 			.getByText('Edit ERC')
 			.last();
+		this.modalAddObjectField = page.getByLabel('New Field');
+		this.modalAddObjectFieldLabelInput = this.modalAddObjectField.getByRole(
+			'textbox',
+			{name: 'Label'}
+		);
 		this.modalDeleteObjectDefinitionConfirmationButton = page
 			.getByRole('dialog')
 			.getByRole('button', {exact: true, name: 'Delete'});
@@ -73,10 +79,6 @@ export class ModelBuilderObjectDefinitionNodePage {
 			.locator('div.form-group')
 			.filter({hasText: /^TypeMandatorySelect an Option$/})
 			.getByRole('combobox');
-		this.objectFieldLabelInput = page
-			.locator('div.form-group')
-			.filter({hasText: /^LabelMandatory$/})
-			.getByRole('textbox');
 		this.objectFieldPicklistSelect = page
 			.locator('div.form-group')
 			.filter({hasText: /^PicklistSelect an Option$/})
@@ -204,7 +206,7 @@ export class ModelBuilderObjectDefinitionNodePage {
 	}
 
 	async fillObjectFieldLabelInput(objectFieldLabel: string) {
-		await this.objectFieldLabelInput.fill(objectFieldLabel);
+		await this.modalAddObjectFieldLabelInput.fill(objectFieldLabel);
 	}
 
 	getLinkedObjectDefinitionIconLocator(

@@ -26,10 +26,15 @@ type File = {
 	thumbnailURL: string;
 };
 
-export default function FilePreviewerModalContent(
-	file: File,
-	headerName?: string
-) {
+interface FilePreviewerModalContentProps {
+	file: File;
+	headerName?: string;
+}
+
+export default function FilePreviewerModalContent({
+	file,
+	headerName,
+}: FilePreviewerModalContentProps) {
 	const {link, name, thumbnailURL} = file;
 	const params = new URLSearchParams(thumbnailURL);
 	const hasImagePreview = params.has('imageThumbnail');

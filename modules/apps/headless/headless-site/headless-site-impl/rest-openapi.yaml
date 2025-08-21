@@ -5,12 +5,13 @@ components:
             description:
                 Represents the site being created.
             properties:
+                active:
+                    type: boolean
                 externalReferenceCode:
                     description:
                         The site's external reference code.
                     type: string
                 friendlyUrlPath:
-                    readOnly: true
                     type: string
                 id:
                     format: int64
@@ -19,6 +20,11 @@ components:
                 key:
                     readOnly: true
                     type: string
+                manualMembership:
+                    type: boolean
+                membershipRestriction:
+                    format: int32
+                    type: integer
                 membershipType:
                     description:
                         The default value is open.
@@ -27,7 +33,6 @@ components:
                         -   private
                         -   restricted
                     type: string
-                    writeOnly: true
                 name:
                     type: string
                 parentSiteKey:
@@ -42,6 +47,10 @@ components:
                         -   site-template
                     type: string
                     writeOnly: true
+                typeSettings:
+                    additionalProperties:
+                        type: string
+                    type: object
             required:
                 -   name
             type: object
@@ -81,6 +90,10 @@ paths:
                 Retrieves the sites. Results can be paginated, filtered, searched, and sorted.
             operationId: getSitesPage
             parameters:
+                -   in: query
+                    name: active
+                    schema:
+                        type: boolean
                 -   in: query
                     name: page
                     schema:

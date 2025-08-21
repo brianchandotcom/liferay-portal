@@ -55,16 +55,14 @@ public class ServletContextWrapper implements ServletContext {
 		ServletContextHelperDataContext servletContextHelperDataContext) {
 
 		_bundle = bundle;
+		_liferayContextController = liferayContextController;
+		_servletContext = servletContextHelperDataContext.getServletContext();
+		_servletContextHelper = servletContextHelper;
+		_servletContextHelperDataContext = servletContextHelperDataContext;
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		_classLoader = bundleWiring.getClassLoader();
-
-		_liferayContextController = liferayContextController;
-		_servletContextHelper = servletContextHelper;
-		_servletContextHelperDataContext = servletContextHelperDataContext;
-
-		_servletContext = servletContextHelperDataContext.getServletContext();
 	}
 
 	@Override
@@ -96,7 +94,7 @@ public class ServletContextWrapper implements ServletContext {
 	}
 
 	@Override
-	public void addListener(Class<? extends EventListener> listenerClass) {
+	public void addListener(Class<? extends EventListener> eventListenerClass) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -106,7 +104,7 @@ public class ServletContextWrapper implements ServletContext {
 	}
 
 	@Override
-	public <T extends EventListener> void addListener(T t) {
+	public <T extends EventListener> void addListener(T eventListener) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -137,7 +135,7 @@ public class ServletContextWrapper implements ServletContext {
 	}
 
 	@Override
-	public <T extends EventListener> T createListener(Class<T> listenerClass) {
+	public <T extends EventListener> T createListener(Class<T> eventListenerClass) {
 		throw new UnsupportedOperationException();
 	}
 

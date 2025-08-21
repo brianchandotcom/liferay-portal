@@ -247,7 +247,7 @@ public class PortalWorkspace extends BaseWorkspace {
 
 	private void _configureBladeSamplesWorkspaceGitRepository() {
 		_updateWorkspaceGitRepository(
-			"git-commit-blade-samples", "liferay-blade-samples");
+			"git-commit/blade-samples", "liferay-blade-samples");
 	}
 
 	private void _configureLiferayFacesAlloyWorkspaceGitRepository() {

@@ -404,6 +404,15 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			</then>
 		</if>
 
+		<replace
+			file="${project.dir}/test.properties"
+		>
+			<replacetoken><![CDATA[test.batch.dist.app.servers[portal-release-acceptance]=tomcat]]></replacetoken>
+			<replacevalue><![CDATA[test.batch.class.names.includes[modules-integration-*][portal-release-acceptance]=\
+
+    test.batch.dist.app.servers[portal-release-acceptance]=tomcat]]></replacevalue>
+		</replace>
+
 		<for delimiter="${line.separator}" list="${custom.suite.testcases}" param="custom.suite.testcase">
 			<sequential>
 				<echo>Working on: @{custom.suite.testcase}, </echo>
@@ -523,18 +532,19 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 								select="\1"
 							/>
 
-							<replaceregexp
-								file="${project.dir}/test.properties"
-								flags="g"
-								match="(test\.batch\.class\.names\.includes=\\\n)"
-								replace="\1        **/testIntegration/**/${testcase.file.name}.java,\\\\${line.separator}"
+							<propertyregex
+								input="@{custom.suite.testcase}"
+								override="true"
+								property="testcase.test.name"
+								regexp="(.*?)\.(.*)"
+								select="\2"
 							/>
 
 							<replaceregexp
 								file="${project.dir}/test.properties"
 								flags="g"
-								match="(test\.batch\.class\.names\.includes\.modules\[modules-integration-\*\]=\\\n)"
-								replace="\1        **/testIntegration/**/${testcase.file.name}.java,\\\\${line.separator}"
+								match="(test\.batch\.class\.names\.includes\[modules-integration-\*\]\[portal-release-acceptance\]=\\\n)"
+								replace="\1        **/testIntegration/**/${testcase.file.name}.java#${testcase.test.name},\\\\${line.separator}"
 							/>
 						</then>
 					</elseif>

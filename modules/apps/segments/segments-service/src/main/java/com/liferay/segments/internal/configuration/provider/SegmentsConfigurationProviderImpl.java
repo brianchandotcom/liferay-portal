@@ -66,8 +66,11 @@ public class SegmentsConfigurationProviderImpl
 			String pid = factoryPid;
 
 			SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-				_segmentsCompanyConfigurations.get(
-					_portal.getCompanyId(httpServletRequest));
+				_segmentsCompanyConfigurations.getOrDefault(
+					_portal.getCompanyId(httpServletRequest),
+					_configurationProvider.getCompanyConfiguration(
+						SegmentsCompanyConfiguration.class,
+						_portal.getCompanyId(httpServletRequest)));
 
 			if (segmentsCompanyConfiguration != null) {
 				pid = _pids.get(_portal.getCompanyId(httpServletRequest));
@@ -133,7 +136,10 @@ public class SegmentsConfigurationProviderImpl
 		}
 
 		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-			_segmentsCompanyConfigurations.get(companyId);
+			_segmentsCompanyConfigurations.getOrDefault(
+				companyId,
+				_configurationProvider.getCompanyConfiguration(
+					SegmentsCompanyConfiguration.class, companyId));
 
 		if (segmentsCompanyConfiguration == null) {
 			return _segmentsConfiguration.roleSegmentationEnabled();
@@ -156,7 +162,10 @@ public class SegmentsConfigurationProviderImpl
 		}
 
 		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-			_segmentsCompanyConfigurations.get(companyId);
+			_segmentsCompanyConfigurations.getOrDefault(
+				companyId,
+				_configurationProvider.getCompanyConfiguration(
+					SegmentsCompanyConfiguration.class, companyId));
 
 		if (segmentsCompanyConfiguration == null) {
 			return _segmentsConfiguration.segmentationEnabled();
@@ -170,7 +179,10 @@ public class SegmentsConfigurationProviderImpl
 		throws ConfigurationException {
 
 		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-			_segmentsCompanyConfigurations.get(companyId);
+			_segmentsCompanyConfigurations.getOrDefault(
+				companyId,
+				_configurationProvider.getCompanyConfiguration(
+					SegmentsCompanyConfiguration.class, companyId));
 
 		if (segmentsCompanyConfiguration != null) {
 			return true;

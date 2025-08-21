@@ -691,18 +691,17 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 			if (!annotationsJSONArray.isEmpty()) {
 				for (int i = 0; i < annotationsJSONArray.length(); i++) {
-					Object annotationsObject = annotationsJSONArray.get(i);
+					JSONObject annotationsJSONObject =
+						annotationsJSONArray.optJSONObject(i);
 
-					if (annotationsObject instanceof JSONObject) {
-						JSONObject annotationsJSONObject =
-							(JSONObject)annotationsObject;
+					if (annotationsJSONObject == null) {
+						continue;
+					}
 
-						String testType = annotationsJSONObject.optString(
-							"type");
+					String testType = annotationsJSONObject.optString("type");
 
-						if (testType.equals("skip")) {
-							specIgnoredList.add(title);
-						}
+					if (testType.equals("skip")) {
+						specIgnoredList.add(title);
 					}
 				}
 			}

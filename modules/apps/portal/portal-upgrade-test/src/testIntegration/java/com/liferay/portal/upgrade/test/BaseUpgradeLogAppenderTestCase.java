@@ -15,6 +15,7 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -1407,7 +1408,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		protected void doUpgrade() throws Exception {
 			LogEvent logEvent = Log4jLogEvent.newBuilder(
 			).setLoggerName(
-				DeleteDuplicateUniqueFinderRowsUpgradeProcess.class.getName()
+				DuplicateUniqueFinderRowsCleaner.class.getName()
 			).setLevel(
 				Level.WARN
 			).setMessage(

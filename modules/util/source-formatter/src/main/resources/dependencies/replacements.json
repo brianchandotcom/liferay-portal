@@ -5201,9 +5201,9 @@
 		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#7#, param#8#, null, null, null, param#9#)"
 	},
 	{
-		"from": "regex:ServiceTrackerList<[^<,>]+(?:<[^<>]+>)?,\\s*(?<variableName>[^<,>]+(?:<[^<>]+>)?)>",
+		"from": "regex:ServiceTrackerList<\\w+(?:<[^<>]+>)?,\\s*(?<TypeName>\\w+(?:<[^<>]+>)?)>",
 		"issueKey": "LPS-195079",
-		"to": "ServiceTrackerList<${variableName}>"
+		"to": "ServiceTrackerList<${TypeName}>"
 	},
 	{
 		"classNames": [

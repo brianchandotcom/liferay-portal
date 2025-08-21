@@ -8,10 +8,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.getAutoSiteNavigationMenus();
 boolean copyPermissions = ParamUtil.getBoolean(request, "copyPermissions");
 long sourcePlid = ParamUtil.getLong(request, "sourcePlid");
-
-List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.getAutoSiteNavigationMenus();
 %>
 
 <clay:container-fluid>

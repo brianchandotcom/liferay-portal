@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -187,10 +188,8 @@ public class LayoutActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_layoutsAdminDisplayContext.
-									getSelectLayoutPageTemplateEntryURL(
-										0, layout.getPlid(),
-										layout.isPrivateLayout()));
+								_getEmptySelectLayoutPageTemplateEntryURL(
+									layout));
 							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
@@ -571,6 +570,32 @@ public class LayoutActionDropdownItemsProvider {
 
 			dropdownItem.setLabel(label);
 		};
+	}
+
+	private String _getEmptySelectLayoutPageTemplateEntryURL(Layout layout)
+		throws PortalException {
+
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_admin/select_layout_page_template_entry"
+		).setRedirect(
+			_layoutsAdminDisplayContext.getRedirect()
+		).setBackURL(
+			_getBackURL()
+		).setParameter(
+			"editAction", Boolean.TRUE
+		).setParameter(
+			"externalReferenceCode", layout.getExternalReferenceCode()
+		).setParameter(
+			"groupId", layout.getGroupId()
+		).setParameter(
+			"initialType", LayoutConstants.TYPE_EMPTY
+		).setParameter(
+			"privateLayout", layout.isPrivateLayout()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

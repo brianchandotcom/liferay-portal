@@ -1835,7 +1835,21 @@
 					},
 					{
 						"in": "query",
+						"name": "aggregationTerms",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
 						"name": "fields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
 						"schema": {
 							"type": "string"
 						}
@@ -1864,6 +1878,20 @@
 					{
 						"in": "query",
 						"name": "restrictFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
 						"schema": {
 							"type": "string"
 						}
@@ -2126,7 +2154,21 @@
 					},
 					{
 						"in": "query",
+						"name": "aggregationTerms",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
 						"name": "fields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
 						"schema": {
 							"type": "string"
 						}
@@ -2155,6 +2197,20 @@
 					{
 						"in": "query",
 						"name": "restrictFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
 						"schema": {
 							"type": "string"
 						}
@@ -3046,7 +3102,21 @@
 					},
 					{
 						"in": "query",
+						"name": "aggregationTerms",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
 						"name": "fields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
 						"schema": {
 							"type": "string"
 						}
@@ -3075,6 +3145,20 @@
 					{
 						"in": "query",
 						"name": "restrictFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
 						"schema": {
 							"type": "string"
 						}
@@ -3391,7 +3475,21 @@
 					},
 					{
 						"in": "query",
+						"name": "aggregationTerms",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
 						"name": "fields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
 						"schema": {
 							"type": "string"
 						}
@@ -3420,6 +3518,20 @@
 					{
 						"in": "query",
 						"name": "restrictFields",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort",
 						"schema": {
 							"type": "string"
 						}

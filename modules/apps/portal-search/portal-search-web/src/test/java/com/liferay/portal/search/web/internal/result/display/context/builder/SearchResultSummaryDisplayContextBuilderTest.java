@@ -359,7 +359,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		String className = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();
 
-		_whenClassNameLocalServiceGetClassName(className, classNameId);
+		_whenClassNameLocalServiceGetClassName(classNameId, className);
 
 		String entryClassName = RandomTestUtil.randomString();
 
@@ -393,7 +393,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long classNameId = RandomTestUtil.randomLong();
 
-		_whenClassNameLocalServiceGetClassName(className, classNameId);
+		_whenClassNameLocalServiceGetClassName(classNameId, className);
 
 		long classPK = RandomTestUtil.randomLong();
 
@@ -773,7 +773,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _whenClassNameLocalServiceGetClassName(
-			String value, long classNameId)
+			long classNameId, String value)
 		throws Exception {
 
 		ClassName className = Mockito.mock(ClassName.class);

@@ -9,6 +9,8 @@ import com.liferay.exportimport.report.constants.ExportImportReportEntryConstant
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.base.ExportImportReportEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 public class ExportImportReportEntryLocalServiceImpl
 	extends ExportImportReportEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ExportImportReportEntry addEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId, String modelName,
@@ -54,6 +57,7 @@ public class ExportImportReportEntryLocalServiceImpl
 			exportImportReportEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long classPK, long exportImportConfigurationId,

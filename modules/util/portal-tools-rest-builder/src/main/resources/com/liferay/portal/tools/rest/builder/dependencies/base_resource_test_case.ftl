@@ -382,7 +382,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = schemaVarName + "1"
@@ -399,7 +399,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = schemaVarName + "1"
@@ -417,7 +417,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = schemaVarName + "1"
@@ -425,7 +425,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							200,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = schemaVarName + "2"
@@ -438,7 +438,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = schemaVarName + "2"
@@ -493,10 +493,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertHttpResponseStatusCode(
 						204,
 						${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
-							<@getGetParameters
-								allowBodyParameters = true
-								allowQueryParameter = false
+							<@getMethodParameters
 								javaMethodSignature = javaMethodSignature
+								setNullQueryParameters = true
 								testJavaMethodName = javaMethodSignature.methodName
 								varName = schemaVarName
 							/>));
@@ -507,7 +506,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = schemaVarName
@@ -515,7 +514,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									defaultParameter = true
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = javaMethodSignature.methodName
@@ -1255,8 +1254,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
-						<@getGetParameters
-							allowQueryParameter = false
+						<@getMethodParameters
 							javaMethodSignature = javaMethodSignature
 							testJavaMethodName = javaMethodSignature.methodName
 							varName = "post" + schemaName
@@ -1269,8 +1267,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						Assert.assertNull(get${schemaName}.getPermissions());
 
 						get${schemaName} = permissions${schemaName}Resource.${javaMethodSignature.methodName}(
-							<@getGetParameters
-								allowQueryParameter = false
+							<@getMethodParameters
 								javaMethodSignature = javaMethodSignature
 								testJavaMethodName = javaMethodSignature.methodName
 								varName = "post" + schemaName
@@ -1795,8 +1792,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)>
 							${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
-								<@getGetParameters
-									allowQueryParameter = false
+								<@getMethodParameters
 									javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = "put" + schemaName
@@ -1805,9 +1801,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#assign addResourceGetterMethod = true />
 
 							test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
-								<@getGetParameters
+								<@getMethodParameters
+									ignoreBodyParameters = true
+									ignoreQueryParameters = true
 									javaMethodSignature = javaMethodSignature
-									skipQueryParameter = true
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = "put" + schemaName
 								/>);
@@ -1870,8 +1867,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)>
 							${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
-								<@getGetParameters
-									allowQueryParameter = false
+								<@getMethodParameters
 									javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = "put" + schemaName
@@ -1880,9 +1876,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#assign addResourceGetterMethod = true />
 
 							test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
-								<@getGetParameters
+								<@getMethodParameters
+									ignoreBodyParameters = true
+									ignoreQueryParameters = true
 									javaMethodSignature = javaMethodSignature
-									skipQueryParameter = true
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = "put" + schemaName
 								/>);
@@ -2546,7 +2543,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getAssetLibraryJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getAssetLibraryJavaMethodSignature
 									testJavaMethodName = "batchEngineDeleteImportTask"
 									varName = schemaVarName + "1"
@@ -2563,7 +2560,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = "batchEngineDeleteImportTask"
 									varName = schemaVarName + "1"
@@ -2580,7 +2577,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = "batchEngineDeleteImportTask"
 									varName = schemaVarName + "1"
@@ -2597,7 +2594,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getSiteJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getSiteJavaMethodSignature
 									testJavaMethodName = "batchEngineDeleteImportTask"
 									varName = schemaVarName + "1"
@@ -2616,7 +2613,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							assertHttpResponseStatusCode(
 								404,
 								${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-									<@getGetParameters
+									<@getMethodParameters
 										javaMethodSignature = getJavaMethodSignature
 										testJavaMethodName = "batchEngineDeleteImportTask"
 										varName = schemaVarName + "1"
@@ -2624,7 +2621,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							assertHttpResponseStatusCode(
 								200,
 								${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-									<@getGetParameters
+									<@getMethodParameters
 										javaMethodSignature = getJavaMethodSignature
 										testJavaMethodName = "batchEngineDeleteImportTask"
 										varName = schemaVarName + "2"
@@ -2637,7 +2634,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							assertHttpResponseStatusCode(
 								404,
 								${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-									<@getGetParameters
+									<@getMethodParameters
 										javaMethodSignature = getJavaMethodSignature
 										testJavaMethodName = "batchEngineDeleteImportTask"
 										varName = schemaVarName + "2"
@@ -2655,7 +2652,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							assertHttpResponseStatusCode(
 								404,
 								${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-									<@getGetParameters
+									<@getMethodParameters
 										javaMethodSignature = getJavaMethodSignature
 										testJavaMethodName = "batchEngineDeleteImportTask"
 										varName = schemaVarName + "1"
@@ -2663,7 +2660,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							assertHttpResponseStatusCode(
 								200,
 								${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-									<@getGetParameters
+									<@getMethodParameters
 										javaMethodSignature = getJavaMethodSignature
 										testJavaMethodName = "batchEngineDeleteImportTask"
 										varName = schemaVarName + "2"
@@ -2676,7 +2673,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							assertHttpResponseStatusCode(
 								404,
 								${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-									<@getGetParameters
+									<@getMethodParameters
 										javaMethodSignature = getJavaMethodSignature
 										testJavaMethodName = "batchEngineDeleteImportTask"
 										varName = schemaVarName + "2"
@@ -2693,7 +2690,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							assertHttpResponseStatusCode(
 								200,
 								${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-									<@getGetParameters
+									<@getMethodParameters
 										javaMethodSignature = getJavaMethodSignature
 										testJavaMethodName = "batchEngineDeleteImportTask"
 										varName = schemaVarName + "1"
@@ -2712,7 +2709,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = "batchEngineDeleteImportTask"
 									varName = schemaVarName + "1"
@@ -2720,7 +2717,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							200,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = "batchEngineDeleteImportTask"
 									varName = schemaVarName + "2"
@@ -2733,7 +2730,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-								<@getGetParameters
+								<@getMethodParameters
 									javaMethodSignature = getJavaMethodSignature
 									testJavaMethodName = "batchEngineDeleteImportTask"
 									varName = schemaVarName + "2"
@@ -4078,64 +4075,57 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#if>
 </#macro>
 
-<#macro getGetParameters
+<#macro getMethodParameters
 	javaMethodSignature
 	testJavaMethodName
 	varName
-	allowBodyParameters = false
-	allowQueryParameter = true
 	defaultParameter = false
-	skipQueryParameter = false
+	ignoreBodyParameters = false
+	ignoreQueryParameters = false
+	setNullQueryParameters = false
 >
-	<#assign printed = false />
+	<#assign parameterNames = [] />
 
 	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 		<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-			<#if printed>,</#if>
-
-			<#assign printed = true />
-
-			Pagination.of(1, 2)
-		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) || (freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation) && !skipQueryParameter)>
-			<#if printed>,</#if>
-
-			<#assign printed = true />
-
-			<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) || (freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation) && allowQueryParameter)>
-				<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) && properties?keys?seq_contains("externalReferenceCode")>
-					<#if defaultParameter>
-						<@getDefaultParameter javaMethodParameter = javaMethodParameter />
-					<#else>
-						${varName}.getExternalReferenceCode()
-					</#if>
-				<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
-					<#if defaultParameter>
-						<@getDefaultParameter javaMethodParameter = javaMethodParameter />
-					<#else>
-						${varName}.${getIdMethodName}()
-					</#if>
-				<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
-					${varName}.get${javaMethodParameter.parameterName?cap_first}()
-				<#else>
-					<#assign getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
-
-					test${testJavaMethodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(
-						<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-							${varName}
-						</#if>
-					)
-				</#if>
-			<#else>
-				null
+			<#assign parameterNames = parameterNames + ["Pagination.of(1, 2)"] />
+		<#elseif freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation) && (ignoreQueryParameters || setNullQueryParameters)>
+			<#if setNullQueryParameters>
+				<#assign parameterNames = parameterNames + ["null"] />
 			</#if>
-		<#elseif !freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation) && allowBodyParameters>
-			<#if printed>,</#if>
-
-			<#assign printed = true />
-
-			null
+		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) || freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation)>
+			<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) && properties?keys?seq_contains("externalReferenceCode")>
+				<#if defaultParameter>
+					<#assign parameterName>
+						<@getDefaultParameter javaMethodParameter = javaMethodParameter />
+					</#assign>
+					<#assign parameterNames = parameterNames + [parameterName] />
+				<#else>
+					<#assign parameterNames = parameterNames + ["${varName}.getExternalReferenceCode()"] />
+				</#if>
+			<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
+				<#if defaultParameter>
+					<#assign parameterName>
+						<@getDefaultParameter javaMethodParameter = javaMethodParameter />
+					</#assign>
+					<#assign parameterNames = parameterNames + [parameterName] />
+				<#else>
+					<#assign parameterNames = parameterNames + ["${varName}.${getIdMethodName}()"] />
+				</#if>
+			<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
+				<#assign parameterNames = parameterNames + ["${varName}.get${javaMethodParameter.parameterName?cap_first}()"] />
+			<#else>
+				<#assign
+					getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
+					parameterNames = parameterNames + ["test${testJavaMethodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${properties?keys?seq_contains(javaMethodParameter.parameterName)?then(varName, '')})"]
+				/>
+			</#if>
+		<#elseif !ignoreBodyParameters>
+			<#assign parameterNames = parameterNames + ["null"] />
 		</#if>
 	</#list>
+
+	${parameterNames?join(", ")}
 </#macro>
 
 <#macro getPermissionParameter

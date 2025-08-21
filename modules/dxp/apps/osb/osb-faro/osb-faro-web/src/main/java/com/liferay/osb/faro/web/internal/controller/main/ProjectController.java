@@ -32,6 +32,7 @@ import com.liferay.osb.faro.service.FaroProjectEmailDomainLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.service.FaroProjectUsageLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
+import com.liferay.osb.faro.util.DateUtil;
 import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.web.internal.annotations.Unauthenticated;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
@@ -90,9 +91,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -570,8 +568,6 @@ public class ProjectController extends BaseFaroController {
 		List<ProjectUsageMetricDisplay> projectUsageMetricDisplays =
 			new ArrayList<>();
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
 		for (FaroProject faroProject :
 				_faroProjectLocalService.getFaroProjects(
 					(page - 1) * pageSize, page * pageSize)) {
@@ -581,7 +577,8 @@ public class ProjectController extends BaseFaroController {
 			Date startDate = null;
 
 			if (startDateString != null) {
-				startDate = dateFormat.parse(startDateString);
+				startDate = DateUtil.parseDate(
+					startDateString, _ISO_8601_DATE_FORMAT);
 			}
 
 			if ((startDate == null) ||
@@ -593,7 +590,8 @@ public class ProjectController extends BaseFaroController {
 			Date endDate = null;
 
 			if (endDateString != null) {
-				endDate = dateFormat.parse(endDateString);
+				endDate = DateUtil.parseDate(
+					endDateString, _ISO_8601_DATE_FORMAT);
 			}
 
 			projectUsageMetricDisplays.add(
@@ -1104,15 +1102,13 @@ public class ProjectController extends BaseFaroController {
 	}
 
 	private String _getMonthDateKey(Date date) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(date);
 
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-		return dateFormat.format(calendar.getTime());
+		return DateUtil.formatDate(calendar.getTime(), _ISO_8601_DATE_FORMAT);
 	}
 
 	private ProjectDisplay _getProjectDisplay(FaroProject faroProject)
@@ -1200,8 +1196,6 @@ public class ProjectController extends BaseFaroController {
 	private ProjectUsageMetricDisplay _getProjectUsageMetricDisplay(
 			FaroProject faroProject, Date endDate, Date startDate)
 		throws Exception {
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		long knownIndividualsCountSinceLastAnniversary = 0;
 		long pageViewsCountSinceLastAnniversary = 0;
@@ -1298,9 +1292,12 @@ public class ProjectController extends BaseFaroController {
 
 		return new ProjectUsageMetricDisplay(
 			faroProject.getCorpProjectName(), faroProject.getCorpProjectUuid(),
-			dateFormat.format(new Date(faroProject.getLastAccessTime())),
-			dateFormat.format(faroProject.getLastAnniversaryDate()), offline,
-			usageMetrics, faroProject.getWeDeployKey());
+			DateUtil.formatDate(
+				new Date(faroProject.getLastAccessTime()),
+				_ISO_8601_DATE_FORMAT),
+			DateUtil.formatDate(
+				faroProject.getLastAnniversaryDate(), _ISO_8601_DATE_FORMAT),
+			offline, usageMetrics, faroProject.getWeDeployKey());
 	}
 
 	private List<ProjectUsageMetric> _getProjectUsageMetrics(
@@ -1541,6 +1538,8 @@ public class ProjectController extends BaseFaroController {
 				"timeZoneId", _getTimeZoneIdErrorMessage(getUser()));
 		}
 	}
+
+	private static final String _ISO_8601_DATE_FORMAT = "yyyy-MM-dd";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProjectController.class);

@@ -58,24 +58,11 @@ LowLevelSearchOptionsPortletPreferences lowLevelSearchOptionsPortletPreferences 
 			%>
 
 			<c:if test="<%= !Validator.isBlank(selectedConnectionId) && !connectionIds.contains(selectedConnectionId) %>">
-				<div class="alert alert-inline alert-warning">
-					<div class="autofit-row">
-						<div class="autofit-col">
-							<div class="autofit-section c-mr-2">
-								<clay:icon
-									class="text-warning"
-									symbol="warning-full"
-								/>
-							</div>
-						</div>
-
-						<div class="autofit-col autofit-col-expand">
-							<div class="autofit-section">
-								<liferay-ui:message arguments="<%= selectedConnectionId %>" key="the-previously-selected-connection-id-x-is-no-longer-available" translateArguments="<%= false %>" />
-							</div>
-						</div>
-					</div>
-				</div>
+				<clay:alert
+					displayType="warning"
+				>
+					<liferay-ui:message arguments="<%= selectedConnectionId %>" key="the-previously-selected-connection-id-x-is-no-longer-available" translateArguments="<%= false %>" />
+				</clay:alert>
 			</c:if>
 
 			<aui:select helpMessage="connection-id-help[web]" label="connection-id" name="<%= PortletPreferencesJspUtil.getInputName(LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_CONNECTION_ID) %>">

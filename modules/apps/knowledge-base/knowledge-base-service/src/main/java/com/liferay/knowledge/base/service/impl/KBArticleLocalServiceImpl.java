@@ -658,6 +658,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
+	public KBArticle fetchKBArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode, int version) {
+
+		return kbArticlePersistence.fetchByG_ERC_V(
+			groupId, externalReferenceCode, version);
+	}
+
+	@Override
 	public KBArticle fetchKBArticleByUrlTitle(
 		long groupId, long kbFolderId, String urlTitle) {
 
@@ -716,6 +724,26 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		long groupId, String externalReferenceCode) {
 
 		return kbArticlePersistence.fetchByG_ERC_Last(
+			groupId, externalReferenceCode,
+			KBArticleVersionComparator.getInstance(false));
+	}
+
+	@Override
+	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode, int status) {
+
+		KBArticle latestKBArticle = kbArticlePersistence.fetchByG_ERC_Last(
+			groupId, externalReferenceCode,
+			KBArticleVersionComparator.getInstance(false));
+
+		if ((latestKBArticle == null) ||
+			(status == WorkflowConstants.STATUS_ANY) ||
+			(latestKBArticle.getStatus() == status)) {
+
+			return latestKBArticle;
+		}
+
+		return kbArticlePersistence.fetchByG_ERC_ST_First(
 			groupId, externalReferenceCode,
 			KBArticleVersionComparator.getInstance(false));
 	}

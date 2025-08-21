@@ -133,6 +133,26 @@ public class TestClassFactory {
 		return new TestClassMethod(jsonObject, testClass);
 	}
 
+	private static File _getCanonicalFile(
+		File testClassFile, JSONObject jsonObject) {
+
+		File canonicalFile;
+
+		if (testClassFile != null) {
+			canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
+				testClassFile);
+		}
+		else if ((jsonObject != null) && jsonObject.has("file")) {
+			canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
+				new File(jsonObject.getString("file")));
+		}
+		else {
+			throw new RuntimeException("Please set a test class file");
+		}
+
+		return canonicalFile;
+	}
+
 	private static TestClass _newTestClass(
 		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject,
 		File testClassFile, String testClassMethodName) {
@@ -174,19 +194,8 @@ public class TestClassFactory {
 					batchTestClassGroup, testClassFile);
 			}
 			else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
-				File canonicalFile;
-
-				if (testClassFile != null) {
-					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-						testClassFile);
-				}
-				else if ((jsonObject != null) && jsonObject.has("file")) {
-					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-						new File(jsonObject.getString("file")));
-				}
-				else {
-					throw new RuntimeException("Please set a test class file");
-				}
+				File canonicalFile = _getCanonicalFile(
+					testClassFile, jsonObject);
 
 				if (_jUnitTestClasses.containsKey(canonicalFile)) {
 					return _jUnitTestClasses.get(canonicalFile);
@@ -210,19 +219,8 @@ public class TestClassFactory {
 			else if (batchTestClassGroup instanceof
 						NPMTestBatchTestClassGroup) {
 
-				File canonicalFile;
-
-				if (testClassFile != null) {
-					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-						testClassFile);
-				}
-				else if ((jsonObject != null) && jsonObject.has("file")) {
-					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-						new File(jsonObject.getString("file")));
-				}
-				else {
-					throw new RuntimeException("Please set a test class file");
-				}
+				File canonicalFile = _getCanonicalFile(
+					testClassFile, jsonObject);
 
 				if (_npmTestClasses.containsKey(canonicalFile)) {
 					return _npmTestClasses.get(canonicalFile);
@@ -246,19 +244,8 @@ public class TestClassFactory {
 			else if (batchTestClassGroup instanceof
 						PlaywrightBatchTestClassGroup) {
 
-				File canonicalFile;
-
-				if (testClassFile != null) {
-					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-						testClassFile);
-				}
-				else if ((jsonObject != null) && jsonObject.has("file")) {
-					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-						new File(jsonObject.getString("file")));
-				}
-				else {
-					throw new RuntimeException("Please set a test class file");
-				}
+				File canonicalFile = _getCanonicalFile(
+					testClassFile, jsonObject);
 
 				if (_playwrightJUnitTestClasses.containsKey(canonicalFile)) {
 					return _playwrightJUnitTestClasses.get(canonicalFile);

@@ -739,6 +739,59 @@ test(
 );
 
 test(
+	`Can validate the value input persist in a segment created with Parent Organization criterion in view mode`,
+
+	{
+		tag: '@LPS-135880',
+	},
+
+	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
+		const segmentName = 'Validate Parent Organization Segment';
+
+		await test.step('Given 2 organizations are created, the first as the parent of the second', async () => {
+			const organization1 =
+				await apiHelpers.headlessAdminUser.postOrganization({
+					name: 'Parent Organization Name',
+				});
+			const organization2 =
+				await apiHelpers.headlessAdminUser.postOrganization({
+					name: 'Organization Name',
+					parentOrganization: {
+						externalReferenceCode:
+							organization1.externalReferenceCode,
+					},
+				});
+		});
+
+		await test.step('When a segment designer adds a segment with Parent Organization criterion', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				'user-organization': ['Parent Organization'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectCheckboxItem('Parent Organization Name');
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+		});
+
+		await test.step('Then can assert in the view mode the segment is correctly created', async () => {
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('Parent Organization Name');
+		});
+	}
+);
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

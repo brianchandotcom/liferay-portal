@@ -215,10 +215,15 @@ export class SegmentsPage {
 	async selectCheckboxItem(itemName: string) {
 		const iframe = this.page.frameLocator('iframe#selectEntity_iframe_');
 
-		const rowLocator = iframe.locator('tr', {hasText: itemName});
+		const rowLocator = iframe.locator('tr').filter({
+			has: iframe.locator('td.lfr-name-column').filter({
+				hasText: new RegExp(`^\\s*${itemName}\\s*$`),
+			}),
+		});
 
 		const checkbox = rowLocator.locator('input[type="checkbox"]');
 
+		await checkbox.waitFor({state: 'visible'});
 		await checkbox.click();
 
 		const modalSelectButton = this.page.locator('.btn-primary', {

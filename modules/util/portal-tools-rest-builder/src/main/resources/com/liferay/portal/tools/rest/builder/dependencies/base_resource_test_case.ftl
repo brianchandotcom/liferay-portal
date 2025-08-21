@@ -2033,60 +2033,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 							"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
 							new HashMap<String, Object>() {
 								{
-									<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-										<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-											<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-												put("${javaMethodParameter.parameterName}",
-													<#if stringUtil.equals(properties["externalReferenceCode"], "String")>
-														<@getQuotedString unquotedString = "${schemaVarName}1.getExternalReferenceCode()" />
-													<#else>
-														${schemaVarName}1.getExternalReferenceCode()
-													</#if>
-												);
-											<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-												put("${javaMethodParameter.parameterName}",
-													<#if stringUtil.equals(properties[idParameterName], "String")>
-														<@getQuotedString unquotedString = "${schemaVarName}1.${getIdMethodName}()" />
-													<#else>
-														${schemaVarName}1.${getIdMethodName}()
-													</#if>
-												);
-											<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
-												<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-													put("siteKey", <@getQuotedString unquotedString="${schemaVarName}1.get${javaMethodParameter.parameterName?cap_first}()" />);
-												<#else>
-													put("${javaMethodParameter.parameterName}",
-														<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-															<@getQuotedString unquotedString = "${schemaVarName}1.get${javaMethodParameter.parameterName?cap_first}()" />
-														<#else>
-															${schemaVarName}1.get${javaMethodParameter.parameterName?cap_first}()
-														</#if>
-													);
-												</#if>
-											<#else>
-												<#assign
-													getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-													getterMethodArgument = ""
-												/>
-
-												<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-													<#assign getterMethodArgument = "${schemaVarName}1" />
-												</#if>
-
-												<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-													put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />);
-												<#else>
-													put("${javaMethodParameter.parameterName}",
-													<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-														<@getQuotedString unquotedString = "testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
-													<#else>
-														testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
-													</#if>
-													);
-												</#if>
-											</#if>
-										</#if>
-									</#list>
+									<@getGraphQLMethodParameters
+										javaMethodSignature = javaMethodSignature
+										testJavaMethodName = javaMethodSignature.methodName
+										varName = schemaVarName + "1"
+									/>
 								}
 							}));
 
@@ -2099,60 +2050,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 									"${freeMarkerTool.getGraphQLPropertyName(getJavaMethodSignature, javaMethodSignatures)}",
 									new HashMap<String, Object>() {
 										{
-											<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-												<#if freeMarkerTool.isPathParameter(javaMethodParameter, getJavaMethodSignature.operation)>
-													<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, getJavaMethodSignature.path, schemaName)>
-														put("${javaMethodParameter.parameterName}",
-															<#if stringUtil.equals(properties["externalReferenceCode"], "String")>
-																<@getQuotedString unquotedString = "${schemaVarName}1.getExternalReferenceCode()" />
-															<#else>
-																${schemaVarName}1.getExternalReferenceCode()
-															</#if>
-														);
-													<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, getJavaMethodSignature.path, schemaName)>
-														put("${javaMethodParameter.parameterName}",
-															<#if stringUtil.equals(properties[idParameterName], "String")>
-																<@getQuotedString unquotedString = "${schemaVarName}1.${getIdMethodName}()" />
-															<#else>
-																${schemaVarName}1.${getIdMethodName}()
-															</#if>
-														);
-													<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, getJavaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
-														<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-															put("siteKey", <@getQuotedString unquotedString="${schemaVarName}1.get${javaMethodParameter.parameterName?cap_first}()" />);
-														<#else>
-															put("${javaMethodParameter.parameterName}",
-																<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																	<@getQuotedString unquotedString = "${schemaVarName}1.get${javaMethodParameter.parameterName?cap_first}()" />
-																<#else>
-																	${schemaVarName}1.get${javaMethodParameter.parameterName?cap_first}()
-																</#if>
-															);
-														</#if>
-													<#else>
-														<#assign
-															getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-															getterMethodArgument = ""
-														/>
-
-														<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-															<#assign getterMethodArgument = "${schemaVarName}1" />
-														</#if>
-
-														<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-															put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />);
-														<#else>
-															put("${javaMethodParameter.parameterName}",
-															<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																<@getQuotedString unquotedString = "testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
-															<#else>
-																testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
-															</#if>
-															);
-														</#if>
-													</#if>
-												</#if>
-											</#list>
+											<@getGraphQLMethodParameters
+												javaMethodSignature = getJavaMethodSignature
+												testJavaMethodName = javaMethodSignature.methodName
+												varName = schemaVarName + "1"
+											/>
 										}
 									},
 									getGraphQLFields())),
@@ -2174,60 +2076,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 									"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
 									new HashMap<String, Object>() {
 										{
-											<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-												<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-													<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-														put("${javaMethodParameter.parameterName}",
-															<#if stringUtil.equals(properties["externalReferenceCode"], "String")>
-																<@getQuotedString unquotedString = "${schemaVarName}2.getExternalReferenceCode()" />
-															<#else>
-																${schemaVarName}2.getExternalReferenceCode()
-															</#if>
-														);
-													<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-														put("${javaMethodParameter.parameterName}",
-															<#if stringUtil.equals(properties[idParameterName], "String")>
-																<@getQuotedString unquotedString = "${schemaVarName}2.${getIdMethodName}()" />
-															<#else>
-																${schemaVarName}2.${getIdMethodName}()
-															</#if>
-														);
-													<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
-														<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-															put("siteKey", <@getQuotedString unquotedString="${schemaVarName}2.get${javaMethodParameter.parameterName?cap_first}()" />);
-														<#else>
-															put("${javaMethodParameter.parameterName}",
-																<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																	<@getQuotedString unquotedString = "${schemaVarName}2.get${javaMethodParameter.parameterName?cap_first}()" />
-																<#else>
-																	${schemaVarName}2.get${javaMethodParameter.parameterName?cap_first}()
-																</#if>
-															);
-														</#if>
-													<#else>
-														<#assign
-															getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-															getterMethodArgument = ""
-														/>
-
-														<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-															<#assign getterMethodArgument = "${schemaVarName}2" />
-														</#if>
-
-														<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-															put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />);
-														<#else>
-															put("${javaMethodParameter.parameterName}",
-															<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																<@getQuotedString unquotedString = "testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
-															<#else>
-																testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
-															</#if>
-															);
-														</#if>
-													</#if>
-												</#if>
-											</#list>
+											<@getGraphQLMethodParameters
+												javaMethodSignature = javaMethodSignature
+												testJavaMethodName = javaMethodSignature.methodName
+												varName = schemaVarName + "2"
+											/>
 										}
 									})));
 
@@ -2240,60 +2093,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 											"${freeMarkerTool.getGraphQLPropertyName(getJavaMethodSignature, javaMethodSignatures)}",
 											new HashMap<String, Object>() {
 												{
-													<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-														<#if freeMarkerTool.isPathParameter(javaMethodParameter, getJavaMethodSignature.operation)>
-															<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, getJavaMethodSignature.path, schemaName)>
-																put("${javaMethodParameter.parameterName}",
-																	<#if stringUtil.equals(properties["externalReferenceCode"], "String")>
-																		<@getQuotedString unquotedString = "${schemaVarName}2.getExternalReferenceCode()" />
-																	<#else>
-																		${schemaVarName}2.getExternalReferenceCode()
-																	</#if>
-																);
-															<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, getJavaMethodSignature.path, schemaName)>
-																put("${javaMethodParameter.parameterName}",
-																	<#if stringUtil.equals(properties[idParameterName], "String")>
-																		<@getQuotedString unquotedString = "${schemaVarName}2.${getIdMethodName}()" />
-																	<#else>
-																		${schemaVarName}2.${getIdMethodName}()
-																	</#if>
-																);
-															<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, getJavaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
-																<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-																	put("siteKey", <@getQuotedString unquotedString="${schemaVarName}2.get${javaMethodParameter.parameterName?cap_first}()" />);
-																<#else>
-																	put("${javaMethodParameter.parameterName}",
-																		<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																			<@getQuotedString unquotedString = "${schemaVarName}2.get${javaMethodParameter.parameterName?cap_first}()" />
-																		<#else>
-																			${schemaVarName}2.get${javaMethodParameter.parameterName?cap_first}()
-																		</#if>
-																	);
-																</#if>
-															<#else>
-																<#assign
-																	getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-																	getterMethodArgument = ""
-																/>
-
-																<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-																	<#assign getterMethodArgument = "${schemaVarName}2" />
-																</#if>
-
-																<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-																	put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />);
-																<#else>
-																	put("${javaMethodParameter.parameterName}",
-																	<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																		<@getQuotedString unquotedString = "testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
-																	<#else>
-																		testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
-																	</#if>
-																	);
-																</#if>
-															</#if>
-														</#if>
-													</#list>
+													<@getGraphQLMethodParameters
+														javaMethodSignature = getJavaMethodSignature
+														testJavaMethodName = javaMethodSignature.methodName
+														varName = schemaVarName + "2"
+													/>
 												}
 											},
 											getGraphQLFields()))),
@@ -2413,60 +2217,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 										"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
 										new HashMap<String, Object>() {
 											{
-												<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-													<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-														<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-															put("${javaMethodParameter.parameterName}",
-																<#if stringUtil.equals(properties["externalReferenceCode"], "String")>
-																	<@getQuotedString unquotedString = "${schemaVarName}.getExternalReferenceCode()" />
-																<#else>
-																	${schemaVarName}.getExternalReferenceCode()
-																</#if>
-															);
-														<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-															put("${javaMethodParameter.parameterName}",
-																<#if stringUtil.equals(properties[idParameterName], "String")>
-																	<@getQuotedString unquotedString = "${schemaVarName}.${getIdMethodName}()" />
-																<#else>
-																	${schemaVarName}.${getIdMethodName}()
-																</#if>
-															);
-														<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
-															<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-																put("siteKey", <@getQuotedString unquotedString="${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />);
-															<#else>
-																put("${javaMethodParameter.parameterName}",
-																	<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																		<@getQuotedString unquotedString = "${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />
-																	<#else>
-																		${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-																	</#if>
-																);
-															</#if>
-														<#else>
-															<#assign
-																getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-																getterMethodArgument = ""
-															/>
-
-															<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-																<#assign getterMethodArgument = "${schemaVarName}" />
-															</#if>
-
-															<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-																put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />);
-															<#else>
-																put("${javaMethodParameter.parameterName}",
-																<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																	<@getQuotedString unquotedString = "testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
-																<#else>
-																	testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
-																</#if>
-																);
-															</#if>
-														</#if>
-													</#if>
-												</#list>
+												<@getGraphQLMethodParameters
+													javaMethodSignature = javaMethodSignature
+													testJavaMethodName = javaMethodSignature.methodName
+													varName = schemaVarName
+												/>
 											}
 										},
 										getGraphQLFields())),
@@ -2488,59 +2243,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 												"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
 												new HashMap<String, Object>() {
 													{
-														<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-															<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-																<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-																	put("${javaMethodParameter.parameterName}",
-																		<#if stringUtil.equals(properties["externalReferenceCode"], "String")>
-																			<@getQuotedString unquotedString = "${schemaVarName}.getExternalReferenceCode()" />
-																		<#else>
-																			${schemaVarName}.getExternalReferenceCode()
-																		</#if>
-																	);
-																<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-																	put("${javaMethodParameter.parameterName}",
-																		<#if stringUtil.equals(properties[idParameterName], "String")>
-																			<@getQuotedString unquotedString = "${schemaVarName}.${getIdMethodName}()" />
-																		<#else>
-																			${schemaVarName}.${getIdMethodName}()
-																		</#if>
-																	);
-																<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
-																	<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-																		put("siteKey", <@getQuotedString unquotedString="${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />);
-																	<#else>
-																		put("${javaMethodParameter.parameterName}",
-																			<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																				<@getQuotedString unquotedString = "${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />
-																			<#else>
-																				${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-																			</#if>
-																		);
-																	</#if>
-																<#else>
-																	<#assign getterMethodArgument = "" />
-
-																	<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-																		<#assign getterMethodArgument = "${schemaVarName}" />
-																	</#if>
-
-																	<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-																		put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />);
-																	<#else>
-																		<#assign getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
-
-																		put("${javaMethodParameter.parameterName}",
-																			<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																				<@getQuotedString unquotedString = "testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
-																			<#else>
-																				testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
-																			</#if>
-																		);
-																	</#if>
-																</#if>
-															</#if>
-														</#list>
+														<@getGraphQLMethodParameters
+															javaMethodSignature = javaMethodSignature
+															testJavaMethodName = javaMethodSignature.methodName
+															varName = schemaVarName
+														/>
 													}
 												},
 												getGraphQLFields()))),
@@ -4309,6 +4016,67 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#else>
 		null
 	</#if>
+</#macro>
+
+<#macro getGraphQLMethodParameters
+	javaMethodSignature
+	testJavaMethodName
+	varName
+>
+	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+			<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) && properties?keys?seq_contains("externalReferenceCode")>
+				put("${javaMethodParameter.parameterName}",
+					<#if stringUtil.equals(properties["externalReferenceCode"], "String")>
+						<@getQuotedString unquotedString = "${varName}.getExternalReferenceCode()" />
+					<#else>
+						${varName}.getExternalReferenceCode()
+					</#if>
+				);
+			<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
+				put("${javaMethodParameter.parameterName}",
+					<#if stringUtil.equals(properties[idParameterName], "String")>
+						<@getQuotedString unquotedString = "${varName}.${getIdMethodName}()" />
+					<#else>
+						${varName}.${getIdMethodName}()
+					</#if>
+				);
+			<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && (freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName) || freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName))>
+				<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+					put("siteKey", <@getQuotedString unquotedString="${varName}.get${javaMethodParameter.parameterName?cap_first}()" />);
+				<#else>
+					put("${javaMethodParameter.parameterName}",
+						<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+							<@getQuotedString unquotedString = "${varName}.get${javaMethodParameter.parameterName?cap_first}()" />
+						<#else>
+							${varName}.get${javaMethodParameter.parameterName?cap_first}()
+						</#if>
+					);
+				</#if>
+			<#else>
+				<#assign
+					getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
+					getterMethodArgument = ""
+				/>
+
+				<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
+					<#assign getterMethodArgument = "${varName}" />
+				</#if>
+
+				<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+					put("siteKey", <@getQuotedString unquotedString="testGraphQL${testJavaMethodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />);
+				<#else>
+					put("${javaMethodParameter.parameterName}",
+					<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+						<@getQuotedString unquotedString = "testGraphQL${testJavaMethodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
+					<#else>
+						testGraphQL${testJavaMethodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
+					</#if>
+					);
+				</#if>
+			</#if>
+		</#if>
+	</#list>
 </#macro>
 
 <#macro getPermissionParameter

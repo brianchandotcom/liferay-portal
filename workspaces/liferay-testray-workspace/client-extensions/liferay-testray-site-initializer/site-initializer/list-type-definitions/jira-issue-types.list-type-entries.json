@@ -54,5 +54,13 @@
 			"en-US": "Technical Task"
 		},
 		"type": "string"
+	},
+	{
+		"key": "UNDEFINED",
+		"name": "Undefined",
+		"name_i18n": {
+			"en-US": "Undefined"
+		},
+		"type": "string"
 	}
 ]

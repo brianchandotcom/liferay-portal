@@ -97,6 +97,7 @@ describe('buildObjectDefinition', () => {
 			status: {
 				code: 2,
 			},
+			titleObjectFieldName: 'title',
 		});
 	});
 
@@ -141,6 +142,7 @@ describe('buildObjectDefinition', () => {
 			status: {
 				code: 0,
 			},
+			titleObjectFieldName: 'title',
 		});
 	});
 
@@ -191,6 +193,7 @@ describe('buildObjectDefinition', () => {
 			status: {
 				code: 0,
 			},
+			titleObjectFieldName: 'title',
 		});
 	});
 });

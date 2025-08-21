@@ -268,31 +268,6 @@ public class FragmentEntryProcessorHelperImpl
 			InfoItemIdentifier infoItemIdentifier = null;
 			InfoItemObjectProvider<Object> infoItemObjectProvider = null;
 
-			long classPK = editableValueJSONObject.getLong("classPK");
-
-			if (classPK > 0) {
-				infoItemIdentifier = new ClassPKInfoItemIdentifier(
-					editableValueJSONObject.getLong("classPK"));
-				infoItemObjectProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, className,
-						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-			}
-
-			String externalReferenceCode = editableValueJSONObject.getString(
-				"externalReferenceCode");
-
-			if ((infoItemObjectProvider == null) &&
-				Validator.isNotNull(externalReferenceCode)) {
-
-				infoItemIdentifier = new ERCInfoItemIdentifier(
-					externalReferenceCode);
-				infoItemObjectProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, className,
-						ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-			}
-
 			if ((fragmentEntryProcessorContext.getPreviewClassPK() > 0) &&
 				(fragmentEntryProcessorContext.getPreviewClassPK() ==
 					editableValueJSONObject.getLong("classPK"))) {
@@ -311,6 +286,31 @@ public class FragmentEntryProcessorHelperImpl
 					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemObjectProvider.class, className,
 						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+			}
+			else {
+				long classPK = editableValueJSONObject.getLong("classPK");
+
+				if (classPK > 0) {
+					infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
+					infoItemObjectProvider =
+						_infoItemServiceRegistry.getFirstInfoItemService(
+							InfoItemObjectProvider.class, className,
+							ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+				}
+
+				String externalReferenceCode =
+					editableValueJSONObject.getString("externalReferenceCode");
+
+				if ((infoItemObjectProvider == null) &&
+					Validator.isNotNull(externalReferenceCode)) {
+
+					infoItemIdentifier = new ERCInfoItemIdentifier(
+						externalReferenceCode);
+					infoItemObjectProvider =
+						_infoItemServiceRegistry.getFirstInfoItemService(
+							InfoItemObjectProvider.class, className,
+							ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+				}
 			}
 
 			infoItemReference = new InfoItemReference(

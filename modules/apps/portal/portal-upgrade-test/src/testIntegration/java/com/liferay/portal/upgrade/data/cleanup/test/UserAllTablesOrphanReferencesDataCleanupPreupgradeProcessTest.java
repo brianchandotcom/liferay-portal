@@ -58,8 +58,8 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 				StringBundler.concat(
 					"create table ", _TABLE_NAME,
 					" (mvccVersion LONG default 0 not null, testId LONG not ",
-					"null, userId VARCHAR(50), companyId LONG not null, ",
-					"primary key(testId, userId))"));
+					"null, userId VARCHAR(50) not null, companyId LONG not ",
+					"null, primary key(testId, userId))"));
 
 			db.runSQL(
 				StringBundler.concat(

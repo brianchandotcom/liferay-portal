@@ -107,11 +107,7 @@ public class UpgradeRecorder {
 		Map<String, Integer> messages = _dataCleanUpMessages.computeIfAbsent(
 			loggerName, key -> new ConcurrentSkipListMap<>());
 
-		int occurrences = messages.computeIfAbsent(message, key -> 0);
-
-		occurrences++;
-
-		messages.put(message, occurrences);
+		messages.put(message, messages.getOrDefault(message, 0) + 1);
 	}
 
 	public void recordErrorMessage(

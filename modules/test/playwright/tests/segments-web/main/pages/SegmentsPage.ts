@@ -214,26 +214,26 @@ export class SegmentsPage {
 
 	async selectCheckboxItem(itemName: string) {
 		const iframeSelector = 'iframe#selectEntity_iframe_';
- 		await this.page.waitForSelector(iframeSelector);
+		await this.page.waitForSelector(iframeSelector);
 
-  		const iframe = this.page.frameLocator(iframeSelector);
+		const iframe = this.page.frameLocator(iframeSelector);
 
 		let rowLocator = iframe.locator('tr').filter({
 			has: iframe.locator('td.lfr-name-column').filter({
-			hasText: new RegExp(`^\\s*${itemName}\\s*$`)
+				hasText: new RegExp(`^\\s*${itemName}\\s*$`),
 			}),
 		});
 
-		if (await rowLocator.count() === 0) {
+		if ((await rowLocator.count()) === 0) {
 			rowLocator = iframe.locator('tr').filter({
-			has: iframe.locator('td.lfr-title-column').filter({
-				hasText: new RegExp(`^\\s*${itemName}\\s*$`)
-			}),
+				has: iframe.locator('td.lfr-title-column').filter({
+					hasText: new RegExp(`^\\s*${itemName}\\s*$`),
+				}),
 			});
 		}
 
 		const checkbox = rowLocator.locator('input[type="checkbox"]');
-		await checkbox.waitFor({ state: 'visible' });
+		await checkbox.waitFor({state: 'visible'});
 		await checkbox.click();
 
 		const modalSelectButton = this.page.locator('.btn-primary', {
@@ -267,6 +267,31 @@ export class SegmentsPage {
 		await segmentElement.waitFor({state: 'visible'});
 		await segmentElement.click();
 	}
+
+	async selectCardItem(itemName: string) {
+		const iframeSelector = 'iframe#selectEntity_iframe_';
+		await this.page.waitForSelector(iframeSelector);
+
+		const iframe = this.page.frameLocator(iframeSelector);
+
+		const candidateLocators = [
+			iframe.locator('a.selector-button', {
+				hasText: new RegExp(`^\\s*${itemName}\\s*$`),
+			}),
+
+			iframe.locator('p.card-title', {
+				hasText: new RegExp(`^\\s*${itemName}\\s*$`),
+			}),
+		];
+
+		for (const locator of candidateLocators) {
+			if (await locator.count() > 0) {
+				await locator.first().click();
+				return;
+			}
+		}
+	}
+
 
 	async viewCriterionValue(value: string) {
 		const criterionElement = this.page.locator(

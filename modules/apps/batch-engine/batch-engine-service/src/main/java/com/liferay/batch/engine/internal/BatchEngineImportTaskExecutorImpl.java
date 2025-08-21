@@ -33,7 +33,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.SafeCloseable;
@@ -128,7 +128,7 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 
 		try (SafeCloseable safeCloseable2 = SearchContext.openBatchMode()) {
-			ExportImportThreadLocal.setBatchImportInProcess(true);
+			BatchEngineThreadLocal.setBatchImportInProcess(true);
 
 			batchEngineImportTask.setExecuteStatus(
 				BatchEngineTaskExecuteStatus.STARTED.toString());
@@ -168,7 +168,7 @@ public class BatchEngineImportTaskExecutorImpl
 				throwable);
 		}
 		finally {
-			ExportImportThreadLocal.setBatchImportInProcess(false);
+			BatchEngineThreadLocal.setBatchImportInProcess(false);
 
 			file.delete();
 

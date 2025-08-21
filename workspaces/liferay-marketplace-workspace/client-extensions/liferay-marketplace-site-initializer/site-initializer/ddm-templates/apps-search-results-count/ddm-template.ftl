@@ -1,5 +1,5 @@
 <style>
- .app-search-count-text {
+.app-search-count-text {
 	color: #282934;
 	}
 </style>

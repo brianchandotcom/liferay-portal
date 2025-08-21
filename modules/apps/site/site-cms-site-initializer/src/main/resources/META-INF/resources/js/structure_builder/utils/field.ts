@@ -190,11 +190,13 @@ export function getDefaultField({
 	label,
 	name,
 	parent,
+	required = false,
 	type,
 }: {
 	label?: string;
 	name?: string;
 	parent: Uuid;
+	required?: boolean;
 	type: FieldType;
 }): Field {
 	const base = {
@@ -211,7 +213,7 @@ export function getDefaultField({
 		localized: Liferay.FeatureFlags['LPD-32050'],
 		name: name ?? normalizeName(type),
 		parent,
-		required: false,
+		required,
 		settings: {},
 		uuid: getUuid(),
 	};

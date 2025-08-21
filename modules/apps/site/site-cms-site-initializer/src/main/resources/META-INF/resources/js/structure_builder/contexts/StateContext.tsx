@@ -763,6 +763,7 @@ function getDefaultChildren(structureUuid: Uuid) {
 		label: Liferay.Language.get('title'),
 		name: 'title',
 		parent: structureUuid,
+		required: true,
 		type: 'text',
 	});
 
@@ -773,6 +774,7 @@ function getDefaultChildren(structureUuid: Uuid) {
 			label: Liferay.Language.get('file'),
 			name: 'file',
 			parent: structureUuid,
+			required: true,
 			type: 'upload',
 		});
 

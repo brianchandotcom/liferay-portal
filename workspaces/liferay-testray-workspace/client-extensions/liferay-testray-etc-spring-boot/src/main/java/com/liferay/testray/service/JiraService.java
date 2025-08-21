@@ -232,6 +232,15 @@ public class JiraService extends BaseService {
 		Map<String, String> map = _getParentIssuesMap(
 			_getNestedKey(jsonObject, "fields", "parent", "key"));
 
+		String issueType = StringUtil.removeSubstring(
+			StringUtil.upperCase(
+				_getNestedKey(jsonObject, "fields", "issuetype", "name")),
+			" ");
+
+		if (!ArrayUtil.contains(_ALLOWEDISSUETYPES, issueType)) {
+			issueType = "UNDEFINED";
+		}
+
 		put(
 			_getLiferayAuthorization(),
 			new JSONObject(
@@ -239,12 +248,7 @@ public class JiraService extends BaseService {
 				"description",
 				_getNestedKey(jsonObject, "renderedFields", "description")
 			).put(
-				"issueType",
-				StringUtil.removeSubstring(
-					StringUtil.upperCase(
-						_getNestedKey(
-							jsonObject, "fields", "issuetype", "name")),
-					" ")
+				"issueType", issueType
 			).put(
 				"r_epic_c_jiraIssueERC", map.get("r_epic_c_jiraIssueERC")
 			).put(
@@ -277,6 +281,11 @@ public class JiraService extends BaseService {
 
 		return map;
 	}
+
+	private static final String[] _ALLOWEDISSUETYPES = {
+		"BUG", "EPIC", "IMPEDIBUG", "INITIATIVE", "STORY", "TASK",
+		"TECHNICALTASK"
+	};
 
 	private static final Log _log = LogFactory.getLog(JiraService.class);
 

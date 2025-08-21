@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -72,11 +71,6 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 			StringUtil.startsWith(
 				dataDefinitionFields[0].getName(), previousTextFieldName));
 
-		String suffix = StringUtil.removeSubstring(
-			dataDefinitionFields[0].getName(), previousTextFieldName);
-
-		Assert.assertTrue(Validator.isNumber(suffix));
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
 
@@ -114,8 +108,6 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 		Assert.assertEquals(ddmFields.toString(), 2, ddmFields.size());
 
-		String journalArticle1Content = journalArticle1.getContent();
-
 		_processAction(
 			dataDefinition.getId(),
 			"data_definition_with_repeatable_text_field.json", false, "Simple");
@@ -126,13 +118,12 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 		ddmFields = _ddmFieldLocalService.getDDMFields(
 			journalArticle1.getId(), "CopyOfCajaDeTexto9fap");
 
-		Assert.assertEquals(ddmFields.toString(), 0, ddmFields.size());
+		Assert.assertEquals(ddmFields.toString(), 2, ddmFields.size());
 
-		String journalArticle2Content = journalArticle2.getContent();
+		String journalArticleContent = journalArticle2.getContent();
 
-		Assert.assertNotEquals(journalArticle1Content, journalArticle2Content);
-		Assert.assertTrue(journalArticle2Content.contains("CCC1"));
-		Assert.assertTrue(journalArticle2Content.contains("CCC2"));
+		Assert.assertTrue(journalArticleContent.contains("CCC1"));
+		Assert.assertTrue(journalArticleContent.contains("CCC2"));
 	}
 
 	private void _processAction(

@@ -92,9 +92,13 @@ public class ActionUtil {
 			JSONUtil.put(
 				"styles",
 				JSONUtil.put(
-					"paddingBottom", "6"
+					"paddingBottom", "40px"
 				).put(
-					"paddingTop", "6"
+					"paddingLeft", "12px"
+				).put(
+					"paddingRight", "12px"
+				).put(
+					"paddingTop", "40px"
 				)));
 
 		ContainerStyledLayoutStructureItem

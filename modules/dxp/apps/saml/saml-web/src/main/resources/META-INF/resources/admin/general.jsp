@@ -23,12 +23,11 @@ if (Validator.isNotNull(entityId)) {
 }
 
 boolean roleSp = StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_SP) || StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_IB);
-
 String samlRole = unicodeProperties.getProperty(PortletPropsKeys.SAML_ROLE, samlProviderConfiguration.role());
 
-boolean samlRoleIdpOptionDisabled = roleSp && !generalTabDefaultViewDisplayContext.isRoleIdPAvailable();
-
 String samlRoleHelpMessage = StringPool.BLANK;
+
+boolean samlRoleIdpOptionDisabled = roleSp && !generalTabDefaultViewDisplayContext.isRoleIdPAvailable();
 
 if (samlRoleIdpOptionDisabled) {
 	samlRoleHelpMessage = "the-identity-provider-role-has-been-disabled-it-can-be-re-enabled-in-system-settings";

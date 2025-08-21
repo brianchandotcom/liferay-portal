@@ -56,9 +56,10 @@ public class ServletContextWrapper implements ServletContext {
 
 		_bundle = bundle;
 		_liferayContextController = liferayContextController;
-		_servletContext = servletContextHelperDataContext.getServletContext();
 		_servletContextHelper = servletContextHelper;
 		_servletContextHelperDataContext = servletContextHelperDataContext;
+
+		_servletContext = servletContextHelperDataContext.getServletContext();
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -81,7 +82,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public FilterRegistration.Dynamic addFilter(
-		String filterName, String className) {
+		String filterName, String filterClassName) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -99,7 +100,7 @@ public class ServletContextWrapper implements ServletContext {
 	}
 
 	@Override
-	public void addListener(String className) {
+	public void addListener(String eventListenerClassName) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -124,7 +125,7 @@ public class ServletContextWrapper implements ServletContext {
 
 	@Override
 	public ServletRegistration.Dynamic addServlet(
-		String servletName, String className) {
+		String servletName, String servletClassName) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -135,7 +136,9 @@ public class ServletContextWrapper implements ServletContext {
 	}
 
 	@Override
-	public <T extends EventListener> T createListener(Class<T> eventListenerClass) {
+	public <T extends EventListener> T createListener(
+		Class<T> eventListenerClass) {
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -168,10 +171,10 @@ public class ServletContextWrapper implements ServletContext {
 			return _bundle.getBundleContext();
 		}
 
-		Dictionary<String, Object> attributes =
+		Dictionary<String, Object> contextAttributes =
 			_servletContextHelperDataContext.getContextAttributes();
 
-		return attributes.get(name);
+		return contextAttributes.get(name);
 	}
 
 	@Override

@@ -232,4 +232,31 @@ describe('SaveButtons', () => {
 			screen.queryByText('please-enter-a-valid-date')
 		).not.toBeInTheDocument();
 	});
+
+	it('does not proceed if required fields validation fails', async () => {
+		global.Liferay.Form = {
+			get: () => ({
+				formValidator: {
+					hasErrors: jest.fn().mockReturnValue(true),
+					validate: jest.fn(),
+				},
+			}),
+		};
+
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: null,
+			saveButtonLabel: 'save',
+		});
+
+		runAllTimersAndExecuteAction(() => {
+			userEvent.click(screen.getByText('save'));
+		});
+
+		expect(
+			screen.queryByText(
+				'confirm-the-web-content-visibility-before-saving-as-draft'
+			)
+		).not.toBeInTheDocument();
+	});
 });

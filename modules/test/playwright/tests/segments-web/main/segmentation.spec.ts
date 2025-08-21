@@ -921,6 +921,44 @@ test(
 );
 
 test(
+	`Can validate the value input persist in a segment created with User criterion in view mode`,
+
+	{
+		tag: '@LPS-135880',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName = 'Validate User Segment';
+
+		await test.step('When a segment designer adds a segment with User criterion', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				user: ['User'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectCheckboxItem('Test Test');
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+		});
+
+		await test.step('Then can assert in view mode the segment is correctly created', async () => {
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('Test Test');
+		});
+	}
+);
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

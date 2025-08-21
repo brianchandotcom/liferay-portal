@@ -274,14 +274,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testDataCleanupMessages() throws Exception {
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader originalclassLoader =
-			ReflectionTestUtil.getAndSetFieldValue(
-				PortalClassLoaderUtil.class, "_classLoader",
-				currentThread.getContextClassLoader());
-
 		long randomCompanyId = RandomTestUtil.nextLong();
 
-		try (Connection connection = DataAccess.getConnection()) {
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PortalClassLoaderUtil.class, "_classLoader",
+					currentThread.getContextClassLoader());
+			Connection connection = DataAccess.getConnection()) {
+
 			_db.runSQL(
 				StringBundler.concat(
 					"insert into Portlet (mvccVersion, id_, companyId, ",
@@ -331,10 +331,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		finally {
 			_db.runSQL(
 				"delete from Portlet where companyId = " + randomCompanyId);
-
-			ReflectionTestUtil.setFieldValue(
-				PortalClassLoaderUtil.class, "_classLoader",
-				originalclassLoader);
 		}
 	}
 

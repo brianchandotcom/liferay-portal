@@ -60,6 +60,10 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 	public void testUpgrade() throws Exception {
 		connection = DataAccess.getConnection();
 
+		_test(0, _getNonexistentCompanyId(), "companyId", "Company");
+
+		connection = DataAccess.getConnection();
+
 		_test(
 			TestPropsValues.getCompanyId(), _getNonexistentCompanyId(),
 			"companyId", "Company");

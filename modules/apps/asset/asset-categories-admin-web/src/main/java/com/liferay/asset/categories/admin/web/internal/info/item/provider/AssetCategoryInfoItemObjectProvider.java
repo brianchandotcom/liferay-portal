@@ -50,7 +50,8 @@ public class AssetCategoryInfoItemObjectProvider
 			long groupId, InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
-		return _getInfoItem(_getCompanyId(), groupId, infoItemIdentifier);
+		return _getInfoItem(
+			_getGroupId(groupId, infoItemIdentifier), infoItemIdentifier);
 	}
 
 	private long _getCompanyId() {
@@ -92,11 +93,17 @@ public class AssetCategoryInfoItemObjectProvider
 	}
 
 	private long _getGroupId(
-			long companyId, ERCInfoItemIdentifier ercInfoItemIdentifier,
-			long groupId)
+			long groupId, InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
 		try {
+			if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+				return groupId;
+			}
+
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
 			if (Validator.isNull(
 					ercInfoItemIdentifier.getScopeExternalReferenceCode())) {
 
@@ -105,7 +112,7 @@ public class AssetCategoryInfoItemObjectProvider
 
 			Group group = _groupLocalService.getGroupByExternalReferenceCode(
 				ercInfoItemIdentifier.getScopeExternalReferenceCode(),
-				companyId);
+				_getCompanyId());
 
 			return group.getGroupId();
 		}
@@ -115,7 +122,7 @@ public class AssetCategoryInfoItemObjectProvider
 	}
 
 	private AssetCategory _getInfoItem(
-			long companyId, long groupId, InfoItemIdentifier infoItemIdentifier)
+			long groupId, InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
 		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
@@ -148,8 +155,7 @@ public class AssetCategoryInfoItemObjectProvider
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
-					ercInfoItemIdentifier.getExternalReferenceCode(),
-					_getGroupId(companyId, ercInfoItemIdentifier, groupId));
+					ercInfoItemIdentifier.getExternalReferenceCode(), groupId);
 
 		if (assetCategory == null) {
 			throw new NoSuchInfoItemException(

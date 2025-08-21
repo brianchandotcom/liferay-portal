@@ -581,6 +581,7 @@ test.describe('Display Page Template tests', () => {
 			);
 		}
 	);
+
 	test('LPD-61747 Preview display page for asset in review change screen', async ({
 		apiHelpers,
 		changeTrackingPage,
@@ -595,14 +596,6 @@ test.describe('Display Page Template tests', () => {
 			headline: blogTitle,
 		});
 
-		const journalArticleTitle = getRandomString();
-
-		await apiHelpers.jsonWebServicesJournal.addWebContent({
-			ddmStructureId: basicWebContentStructureId,
-			groupId: site.id,
-			titleMap: {en_US: journalArticleTitle},
-		});
-
 		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 		await changeTrackingPage.reviewChange(blogTitle);
@@ -612,6 +605,14 @@ test.describe('Display Page Template tests', () => {
 		);
 
 		await expect(displayPageLocator).toBeVisible();
+
+		const journalArticleTitle = getRandomString();
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: journalArticleTitle},
+		});
 
 		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 

@@ -11,14 +11,15 @@ package com.liferay.source.formatter.check;
 public class JakartaTransformFTLCheck extends BaseJakartaTransformCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith(".ftl")) {
-			return content;
-		}
-
 		return replace(content);
+	}
+
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"ftl"};
 	}
 
 }

@@ -22,13 +22,9 @@ import java.util.regex.Pattern;
 public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 			String fileName, String absolutePath, String content)
 		throws IOException {
-
-		if (!fileName.endsWith(".gradle")) {
-			return content;
-		}
 
 		Map<String, String> jakartaTransformDependenciesMap =
 			_getJakartaTransformDependenciesMap();
@@ -80,6 +76,11 @@ public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 		matcher.appendTail(sb);
 
 		return replace(sb.toString());
+	}
+
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"gradle"};
 	}
 
 	private synchronized Map<String, String>

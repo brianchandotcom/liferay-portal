@@ -11,14 +11,15 @@ package com.liferay.source.formatter.check;
 public class JakartaTransformHTMLCheck extends BaseJakartaTransformCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith(".html")) {
-			return content;
-		}
-
 		return replace(content);
+	}
+
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"html"};
 	}
 
 }

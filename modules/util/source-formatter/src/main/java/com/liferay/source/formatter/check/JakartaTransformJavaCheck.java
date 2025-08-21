@@ -13,12 +13,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class JakartaTransformJavaCheck extends BaseJakartaTransformCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 		String fileName, String absolutePath, String content) {
-
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
 
 		content = replace(content);
 		content = replaceTaglibURIs(content);
@@ -33,6 +29,11 @@ public class JakartaTransformJavaCheck extends BaseJakartaTransformCheck {
 				"freemarker.ext.jakarta.jsp.TaglibFactory",
 				"freemarker.ext.jakarta.servlet.", "jakarta.portlet.version=4.0"
 			});
+	}
+
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"java"};
 	}
 
 }

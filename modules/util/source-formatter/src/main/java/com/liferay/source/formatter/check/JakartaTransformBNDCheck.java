@@ -33,18 +33,19 @@ import java.util.regex.Pattern;
 public class JakartaTransformBNDCheck extends BaseJakartaTransformCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 			String fileName, String absolutePath, String content)
 		throws IOException {
-
-		if (!fileName.endsWith(".bnd")) {
-			return content;
-		}
 
 		content = _formatHeaders(content);
 		content = replace(content);
 
 		return replaceTaglibURIs(content);
+	}
+
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"bnd"};
 	}
 
 	private String _formatHeaders(String content) throws IOException {

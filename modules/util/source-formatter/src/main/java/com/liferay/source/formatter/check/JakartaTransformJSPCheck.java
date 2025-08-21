@@ -11,18 +11,17 @@ package com.liferay.source.formatter.check;
 public class JakartaTransformJSPCheck extends BaseJakartaTransformCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 		String fileName, String absolutePath, String content) {
-
-		if (!fileName.endsWith(".jsp") && !fileName.endsWith(".jspf") &&
-			!fileName.endsWith(".jspx")) {
-
-			return content;
-		}
 
 		content = replace(content);
 
 		return replaceTaglibURIs(content);
+	}
+
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"jsp", "jspf", "jspx"};
 	}
 
 }

@@ -13,12 +13,8 @@ import com.liferay.petra.string.StringUtil;
 public class JakartaTransformXMLCheck extends BaseJakartaTransformCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 		String fileName, String absolutePath, String content) {
-
-		if (!fileName.endsWith(".xml")) {
-			return content;
-		}
 
 		content = replace(content);
 		content = replaceTaglibURIs(content);
@@ -46,6 +42,11 @@ public class JakartaTransformXMLCheck extends BaseJakartaTransformCheck {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"xml"};
 	}
 
 	private static String _updateXMLTag(String xmlTag) {

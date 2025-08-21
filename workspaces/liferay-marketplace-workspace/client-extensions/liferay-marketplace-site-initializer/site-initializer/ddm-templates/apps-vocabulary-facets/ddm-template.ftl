@@ -3,6 +3,12 @@
 		border-radius: 10px;
 	}
 
+	.vocab-facet .clear-btn {
+		color: #2B3A4B;
+		font-size: 14px;
+		font-weight: 400;
+	}
+	
 	.vocab-facet .panel a {
 		padding: 1rem;
 	}
@@ -19,10 +25,14 @@
 	.vocab-facet .list-unstyled {
 		margin-bottom: 0;
 	}
+	
+	.vocab-facet .separator {
+		width: 90%;
+	}
 </style>
 
 <@liferay_ui["panel-container"]
-	cssClass="vocab-facet bg-white border-radius-xlarge my-2"
+	cssClass="vocab-facet bg-white border-radius-xlarge my-1"
 	extended=true
 	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
 	markupView="lexicon"
@@ -30,14 +40,21 @@
 >
 	<@liferay_ui.panel
 		collapsible=true
-		cssClass="font-size-paragraph-small font-weight-semi-bold search-facet"
+		cssClass="font-size-paragraph-small font-weight-semi-bold"
 		extended=!browserSniffer.isMobile(request)
 		id="${namespace + 'facetAssetCategoriesPanel'}"
 		markupView="lexicon"
 		persistState=true
 		title="${assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case}"
 	>
-		<ul class="list-unstyled">
+		<button class="btn-unstyled clear-btn mb-4" id="${namespace + 'facetAssetCategoriesSelectAll'}"
+				onClick="${namespace}selectAll(event)">
+		  Select All
+		</button>
+	  	<button class="btn-unstyled clear-btn mb-4 ml-1" onClick="Liferay.Search.FacetUtil.clearSelections(event);">
+		  Clear
+	  	</button>
+		<ul class="list-unstyled">	
 			<#list entries as entry>
 				<li class="color-neutral-2 facet-value py-1">
 					<div class="custom-checkbox custom-control font-weight-normal">
@@ -64,4 +81,32 @@
 			</#list>
 		</ul>
 	</@>
+	<hr class="separator"/>
+</@>
+
+<@liferay_aui.script>
+	function ${namespace}selectAll(event) {
+		event.preventDefault();
+		var url = new URL(window.location.href);
+		
+		if (url.searchParams.size === 0) {
+			url.href += '?';
+		}
+	  
+		var title = `${assetCategoriesSearchFacetDisplayContext.getParameterName()}`;
+    	var divId = event.target.closest('.collapse').id;
+		var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
+		
+		checkboxes.forEach((checkbox) => {
+			if (!checkbox.checked) {
+				if (url.searchParams.size > 0) {
+					url.href += '&';
+				}
+				url.href += title + '=' + checkbox.getAttribute('data-term-id');
+			}
+		});
+	
+		window.location.href = url.href
+	
+	}
 </@>

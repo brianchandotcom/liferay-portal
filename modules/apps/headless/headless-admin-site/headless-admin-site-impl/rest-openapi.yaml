@@ -1207,6 +1207,16 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        configuration:
+                            # @review
+                            description:
+                                The fragment instance's configuration.
+                            type: string
+                        css:
+                            # @review
+                            description:
+                                The fragment instance's CSS.
+                            type: string
                         cssClasses:
                             # @review
                             description:
@@ -1268,6 +1278,13 @@ components:
                             # @review
                             description:
                                 The fragment style of the fragment instance page element.
+                            type: string
+                        fragmentType:
+                            # @review
+                            description:
+                                The fragment instance's type (basic, form).
+                            enum: [Basic, Form]
+                            type: string
                         fragmentViewports:
                             # @review
                             description:
@@ -1275,11 +1292,21 @@ components:
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
+                        html:
+                            # @review
+                            description:
+                                The fragment instance's HTML.
+                            type: string
                         indexed:
                             # @review
                             description:
                                 A flag that indicates whether the fragment instance page element is indexed or not.
                             type: boolean
+                        js:
+                            # @review
+                            description:
+                                The fragment instance's JS.
+                            type: string
                         name:
                             # @review
                             description:

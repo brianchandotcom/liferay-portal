@@ -58,6 +58,7 @@ export default function buildObjectDefinition({
 		status: {
 			code: status === 'published' ? 0 : 2,
 		},
+		titleObjectFieldName: 'title',
 	};
 
 	if (name) {

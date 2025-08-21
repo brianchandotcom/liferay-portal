@@ -177,7 +177,7 @@ const LicensePricePanel: React.FC<LicensePricePanelProps> = ({
 												currency,
 												index,
 												licenseType,
-												price
+												price as LicensePrice
 											)
 										}
 										onDelete={(key, currency) =>

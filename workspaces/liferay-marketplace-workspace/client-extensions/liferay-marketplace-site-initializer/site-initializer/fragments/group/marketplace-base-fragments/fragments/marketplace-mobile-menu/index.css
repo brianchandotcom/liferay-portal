@@ -9,8 +9,8 @@
 
 .mobile-menu-button:hover {
 	background: #edf3fe;
-	border-radius: 8px;
 	border: none;
+	border-radius: 8px;
 	color: #0053f0;
 	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }

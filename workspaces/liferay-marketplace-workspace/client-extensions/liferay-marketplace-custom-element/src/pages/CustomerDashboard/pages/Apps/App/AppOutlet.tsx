@@ -36,12 +36,14 @@ type BaseOutletProps = {
 	routes:
 		| NavbarProps['routes']
 		| ((data: ProductAndOrderPayload) => NavbarProps['routes']);
+	showActions?: boolean;
 };
 
 const BaseOutlet: React.FC<BaseOutletProps> = ({
 	backTitle,
 	backURL = '..',
 	routes,
+	showActions = true,
 }) => {
 	const navigate = useNavigate();
 	const {orderId} = useParams();
@@ -77,23 +79,27 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 					productOwner={productCreatorAccountName}
 				/>
 
-				<DropDown
-					className="align-items-center cursor-pointer d-flex h-100"
-					trigger={
-						<ClayButton displayType="secondary">
-							{i18n.translate('manage-app')}
+				{showActions && (
+					<DropDown
+						className="align-items-center cursor-pointer d-flex h-100"
+						trigger={
+							<ClayButton displayType="secondary">
+								{i18n.translate('manage-app')}
 
-							<ClayIcon
-								className="ml-2"
-								symbol="angle-down-small"
+								<ClayIcon
+									className="ml-2"
+									symbol="angle-down-small"
+								/>
+							</ClayButton>
+						}
+					>
+						{data?.placedOrder && (
+							<AppDropdownActions
+								placedOrder={data.placedOrder}
 							/>
-						</ClayButton>
-					}
-				>
-					{data?.placedOrder && (
-						<AppDropdownActions placedOrder={data.placedOrder} />
-					)}
-				</DropDown>
+						)}
+					</DropDown>
+				)}
 			</div>
 
 			<Navbar

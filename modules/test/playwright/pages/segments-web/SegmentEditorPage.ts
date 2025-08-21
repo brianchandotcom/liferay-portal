@@ -103,6 +103,7 @@ export class SegmentEditorPage {
 			'Parent Organization': 'Drag Parent Organization',
 			'Segments': 'Drag Segment',
 			'Site': 'Drag Site',
+			'Team': 'Drag Team',
 		};
 
 		const label = labelMap[property] ?? `Drag ${property}`;

@@ -868,6 +868,59 @@ test(
 );
 
 test(
+	`Can validate the value input persist in a segment created with Team criterion in view mode`,
+
+	{
+		tag: '@LPS-135880',
+	},
+
+	async ({page, pageEditorPage, productMenuPage, segmentsPage, teamsPage}) => {
+		const segmentName = 'Validate Site Segment';
+		const teamName = "Test Team";		
+
+		await test.step('Given a team is created', async () => {
+			await teamsPage.goTo(site.friendlyUrlPath);
+			
+			await teamsPage.newTeamButton.click();
+
+			await teamsPage.nameInput.fill(teamName);
+
+			await teamsPage.saveButton.click();
+	
+			await waitForAlert(page);
+
+			await expect(teamsPage.teamsTable.cell(teamName)).toBeVisible();
+		});
+
+		await test.step('When a segment designer adds a segment with Team criterion', async () => {
+			await productMenuPage.goToSegments();
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				user: ['Team'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectSegment(teamName);
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+		});
+
+		await test.step('Then can assert in view mode the segment is correctly created', async () => {
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue(teamName);
+		});
+	}
+);
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

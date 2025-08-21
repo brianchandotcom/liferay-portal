@@ -5,8 +5,11 @@
 // View mode
 
 #wrapper {
-	&:has(.content-editor__side-panel) {
+	&:not(.page-editor__wrapper--sidebar--hidden):has(
+			.content-editor__side-panel
+		) {
 		margin-right: $contentEditorSidePanelBarWidth;
+		transition: margin-right 0.5s ease;
 	}
 
 	@include media-breakpoint-up(lg) {
@@ -49,18 +52,28 @@
 html#{$cadmin-selector} {
 	.page-editor__wrapper {
 		&:has(.content-editor__side-panel) {
-			margin-right: $pageEditorSidebarWidth +
-				$contentEditorSidePanelBarWidth;
+			margin-right: $contentEditorSidePanelBarWidth;
+
+			&:not(.page-editor__wrapper--sidebar--hidden) {
+				margin-right: $pageEditorSidebarWidth +
+					$contentEditorSidePanelBarWidth;
+			}
+		}
+
+		&:not(.page-editor__wrapper--sidebar--hidden)
+			.content-editor__side-panel {
+			margin-right: $pageEditorSidebarWidth;
 		}
 
 		.content-editor__side-panel {
-			margin-right: $pageEditorSidebarWidth;
+			margin-right: 0;
 			margin-top: calc(
 				var(--control-menu-container-height) +
 					$contentEditorManagementBarHeight +
 					$pageEditorManagamentBarHeight
 			);
 			opacity: 50%;
+			transition: margin-right 0.5s ease;
 		}
 	}
 

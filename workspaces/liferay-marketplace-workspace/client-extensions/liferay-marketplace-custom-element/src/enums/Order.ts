@@ -11,7 +11,7 @@ export enum OrderCustomFields {
 	START_DATE = 'trial-start-date',
 	TRIAL_ERROR = 'trial-error',
 	TRIAL_SETTINGS = 'trial-settings',
-	VIRTUAL_HOST = 'trial-virtual-host',
+	TRIAL_VIRTUAL_HOST = 'trial-virtual-host',
 }
 
 export enum OrderStatus {

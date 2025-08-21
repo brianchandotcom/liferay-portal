@@ -43,7 +43,8 @@ const getTrialDetails = (placedOrder: PlacedOrder) => {
 			) <= NEXT_TO_EXPIRE_LEFT_DAYS
 		: false;
 
-	const virtualHost = customFields[OrderCustomFields.VIRTUAL_HOST] || '';
+	const virtualHost =
+		customFields[OrderCustomFields.TRIAL_VIRTUAL_HOST] || '';
 
 	return [
 		{

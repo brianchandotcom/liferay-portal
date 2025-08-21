@@ -7,7 +7,7 @@ import {useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
-import {OrderStatus} from '../../enums/Order';
+import {OrderCustomFields, OrderStatus} from '../../enums/Order';
 import useModalContext from '../../hooks/useModalContext';
 import i18n from '../../i18n';
 import {Action} from '../../utils/constants';
@@ -54,7 +54,7 @@ const useSSAActions = () => {
 					window.open(
 						`https://${
 							order?.customFields?.[
-								'trial-virtual-host'
+								OrderCustomFields.TRIAL_VIRTUAL_HOST
 							] as string
 						}`
 					),

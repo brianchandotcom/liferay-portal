@@ -9,7 +9,7 @@ import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {OrderStatus} from '../../../../enums/Order';
+import {OrderCustomFields, OrderStatus} from '../../../../enums/Order';
 import useModalContext from '../../../../hooks/useModalContext';
 import i18n from '../../../../i18n';
 import {ExtendRequestStatus} from '../../enums/SSATrials';
@@ -202,8 +202,8 @@ function TrialActions({
 						window.open(
 							`https://${
 								placedOrder?.customFields?.[
-									'trial-virtual-host'
-								] as string
+									OrderCustomFields.TRIAL_VIRTUAL_HOST
+								]
 							}`
 						);
 					}}

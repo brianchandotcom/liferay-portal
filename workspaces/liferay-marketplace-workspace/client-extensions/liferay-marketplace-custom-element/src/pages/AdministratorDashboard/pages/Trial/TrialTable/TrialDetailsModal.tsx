@@ -60,7 +60,8 @@ const TrialDetails: React.FC<TrialDetailsProps> = ({order}) => {
 				{
 					title: i18n.translate('trial-url'),
 					value:
-						customFields[OrderCustomFields.VIRTUAL_HOST] || 'N/A',
+						customFields[OrderCustomFields.TRIAL_VIRTUAL_HOST] ||
+						'N/A',
 				},
 				{
 					title: i18n.translate('trial-status'),

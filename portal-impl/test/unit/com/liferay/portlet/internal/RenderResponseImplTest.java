@@ -66,13 +66,8 @@ public class RenderResponseImplTest {
 
 	@Test
 	public void testSetTitle() throws Exception {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
-
-		Mockito.when(
-			portletDisplay.getId()
-		).thenReturn(
-			_PORTLET_ID
-		);
+		PortletRequestImpl portletRequestImpl = Mockito.mock(
+			PortletRequestImpl.class);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
@@ -82,14 +77,13 @@ public class RenderResponseImplTest {
 			"en_US"
 		);
 
-		PortletRequestImpl portletRequestImpl = Mockito.mock(
-			PortletRequestImpl.class);
-
 		Mockito.when(
 			portletRequestImpl.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
+
+		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
 
 		Mockito.when(
 			themeDisplay.getPortletDisplay()
@@ -97,27 +91,38 @@ public class RenderResponseImplTest {
 			portletDisplay
 		);
 
+		String portletId = RandomTestUtil.randomString();
+
+		Mockito.when(
+			portletDisplay.getId()
+		).thenReturn(
+			portletId
+		);
+
 		RenderResponseImpl renderResponseImpl = new RenderResponseImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			renderResponseImpl, "portletRequestImpl", portletRequestImpl);
+
+		String portletTitle = RandomTestUtil.randomString();
 
 		_portletConfigurationUtilMockedStatic.when(
 			() -> PortletConfigurationUtil.getPortletTitle(
 				portletDisplay.getId(), portletDisplay.getPortletPreferences(),
 				themeDisplay.getLanguageId())
 		).thenReturn(
-			_PORTLET_TITLE
+			portletTitle
 		);
 
 		renderResponseImpl.setTitle("");
 
-		Assert.assertEquals(_PORTLET_TITLE, renderResponseImpl.getTitle());
+		Assert.assertEquals(portletTitle, renderResponseImpl.getTitle());
+
+		_portletConfigurationUtilMockedStatic.verify(
+			() -> PortletConfigurationUtil.getPortletTitle(
+				portletDisplay.getId(), portletDisplay.getPortletPreferences(),
+				themeDisplay.getLanguageId()));
 	}
-
-	private static final String _PORTLET_ID = RandomTestUtil.randomString();
-
-	private static final String _PORTLET_TITLE = RandomTestUtil.randomString();
 
 	private static final MockedStatic<PortletConfigurationUtil>
 		_portletConfigurationUtilMockedStatic = Mockito.mockStatic(

@@ -5,13 +5,15 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import com.liferay.exportimport.internal.util.BatchEngineDeletionUtil;
+import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.lar.DeletionSystemEventImporter;
+import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -101,9 +103,12 @@ public class DeletionSystemEventImporterImpl
 				continue;
 			}
 
-			if (BatchEngineDeletionUtil.isBatchPortlet(portletId)) {
-				BatchEngineDeletionUtil.importDeletions(
-					portletDataContext, portletId);
+			PortletDataHandler portletDataHandler =
+				_portletDataHandlerProvider.provide(portletId);
+
+			if (portletDataHandler instanceof BatchEnginePortletDataHandler) {
+				portletDataHandler.deleteData(
+					portletDataContext, portletId, null);
 			}
 		}
 	}
@@ -165,6 +170,9 @@ public class DeletionSystemEventImporterImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventImporterImpl.class);
+
+	@Reference
+	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

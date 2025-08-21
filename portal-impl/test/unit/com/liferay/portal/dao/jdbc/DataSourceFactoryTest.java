@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
@@ -29,6 +30,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -189,10 +191,14 @@ public class DataSourceFactoryTest {
 
 			dataSourceFactoryImpl.initDataSource(properties);
 
-			List<String> messages = logCapture.getMessages();
+			List<String> logMessages = new ArrayList<>();
+
+			for (LogEntry logEntry : logCapture.getLogEntries()) {
+				logMessages.add(logEntry.getMessage());
+			}
 
 			Assert.assertTrue(
-				messages.contains(
+				logMessages.contains(
 					StringBundler.concat(
 						"SQL Server may have deadlocks because ",
 						"\"read_committed_snapshot\" is disabled for database ",

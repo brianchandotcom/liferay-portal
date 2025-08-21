@@ -98,7 +98,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					continue;
 				}
 
-				long newUserId;
+				long newUserId = 0;
 
 				try {
 					newUserId = _getAdminUserId(connection, companyId);

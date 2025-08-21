@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 export class DataSetPage {
 	readonly activeViewSelector: Locator;
@@ -29,6 +29,18 @@ export class DataSetPage {
 
 	getRow(filter: string) {
 		return this.table.bodyRows.filter({hasText: filter});
+	}
+
+	async execBulkItemAction({action}) {
+		await this.page.getByLabel('Actions').click();
+
+		const dropdownMenuItemDelete = this.page.getByRole('menuitem', {
+			name: action,
+		});
+
+		await expect(dropdownMenuItemDelete).toBeVisible();
+
+		await dropdownMenuItemDelete.click();
 	}
 
 	async execItemAction({action, filter}: {action: string; filter: string}) {

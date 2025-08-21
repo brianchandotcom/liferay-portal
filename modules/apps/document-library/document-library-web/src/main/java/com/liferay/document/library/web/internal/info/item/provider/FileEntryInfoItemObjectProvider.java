@@ -14,13 +14,12 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -131,16 +130,16 @@ public class FileEntryInfoItemObjectProvider
 				"Unsupported info item identifier " + infoItemIdentifier);
 		}
 
-		long classPK = 0;
+		try {
+			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)infoItemIdentifier;
+				return _dlAppLocalService.fetchFileEntry(
+					classPKInfoItemIdentifier.getClassPK());
+			}
 
-			classPK = classPKInfoItemIdentifier.getClassPK();
-		}
-		else if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
-			try {
+			if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
 				ERCInfoItemIdentifier ercInfoItemIdentifier =
 					(ERCInfoItemIdentifier)infoItemIdentifier;
 
@@ -148,35 +147,13 @@ public class FileEntryInfoItemObjectProvider
 					_getGroupId(companyId, ercInfoItemIdentifier, groupId),
 					ercInfoItemIdentifier.getExternalReferenceCode());
 			}
-			catch (PortalException portalException) {
-				throw new NoSuchInfoItemException(portalException);
-			}
-		}
-		else if (infoItemIdentifier instanceof
-					GroupUrlTitleInfoItemIdentifier) {
 
 			GroupUrlTitleInfoItemIdentifier groupURLTitleInfoItemIdentifier =
 				(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
 
-			classPK = Long.valueOf(
-				groupURLTitleInfoItemIdentifier.getUrlTitle());
-		}
-
-		try {
-			LocalRepository localRepository =
-				_repositoryProvider.fetchFileEntryLocalRepository(classPK);
-
-			if (localRepository == null) {
-				return null;
-			}
-
-			FileEntry fileEntry = localRepository.getFileEntry(classPK);
-
-			if (fileEntry.isInTrash()) {
-				return null;
-			}
-
-			return fileEntry;
+			return _dlAppLocalService.fetchFileEntry(
+				GetterUtil.getLong(
+					groupURLTitleInfoItemIdentifier.getUrlTitle()));
 		}
 		catch (PortalException portalException) {
 			throw new NoSuchInfoItemException(
@@ -191,8 +168,5 @@ public class FileEntryInfoItemObjectProvider
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private RepositoryProvider _repositoryProvider;
 
 }

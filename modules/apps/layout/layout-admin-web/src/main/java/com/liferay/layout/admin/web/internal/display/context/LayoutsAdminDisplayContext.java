@@ -289,6 +289,21 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
+	public String getAddModalTitle() {
+		String title = "add-page";
+
+		String initialType = ParamUtil.getString(
+			httpServletRequest, "initialType");
+		boolean editAction = ParamUtil.getBoolean(
+			httpServletRequest, "editAction");
+
+		if (isConvertEmptyPage(initialType, editAction)) {
+			title = "page-name";
+		}
+
+		return LanguageUtil.get(httpServletRequest, title);
+	}
+
 	public List<SiteNavigationMenu> getAutoSiteNavigationMenus() {
 		return SiteNavigationMenuLocalServiceUtil.getAutoSiteNavigationMenus(
 			themeDisplay.getScopeGroupId());

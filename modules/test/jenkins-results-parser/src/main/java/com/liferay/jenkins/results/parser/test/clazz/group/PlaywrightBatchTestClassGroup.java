@@ -622,18 +622,14 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private List<TestClass> _getTestClasses(String projectName) {
-		List<TestClass> testClasses = new ArrayList<>();
-
 		JSONObject configJSONObject = _playwrightJSONObject.getJSONObject(
 			"config");
 
 		File rootDir = new File(configJSONObject.getString("rootDir"));
 
-		Map<File, Set<String>> specTitlesMap = new HashMap<>();
-
-		Map<String, String> specTitleTagsMap = new HashMap<>();
-
 		List<String> ignoredSpecTitles = new ArrayList<>();
+		Map<File, Set<String>> specTitlesMap = new HashMap<>();
+		Map<String, String> specTitleTagsMap = new HashMap<>();
 
 		for (JSONObject specJSONObject : getSpecJSONObjects()) {
 			JSONArray testsJSONArray = specJSONObject.optJSONArray("tests");
@@ -706,6 +702,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				}
 			}
 		}
+
+		List<TestClass> testClasses = new ArrayList<>();
 
 		if (isRootCauseAnalysis()) {
 			String portalBatchTestSelector = System.getenv(

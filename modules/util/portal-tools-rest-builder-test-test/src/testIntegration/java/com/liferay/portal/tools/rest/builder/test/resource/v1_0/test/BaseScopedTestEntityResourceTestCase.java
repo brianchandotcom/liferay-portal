@@ -263,8 +263,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -454,8 +453,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testGetAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -530,8 +528,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -1348,8 +1345,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			testPutAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected ScopedTestEntity

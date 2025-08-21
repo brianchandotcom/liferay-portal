@@ -121,7 +121,8 @@ public class RenderResponseImplTest {
 		_portletConfigurationUtilMockedStatic.verify(
 			() -> PortletConfigurationUtil.getPortletTitle(
 				portletDisplay.getId(), portletDisplay.getPortletPreferences(),
-				themeDisplay.getLanguageId()));
+				themeDisplay.getLanguageId()),
+			Mockito.times(1));
 	}
 
 	private static final MockedStatic<PortletConfigurationUtil>

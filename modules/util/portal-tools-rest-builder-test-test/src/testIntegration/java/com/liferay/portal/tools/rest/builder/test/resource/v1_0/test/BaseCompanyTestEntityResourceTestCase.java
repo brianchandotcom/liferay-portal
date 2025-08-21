@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -267,6 +268,94 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteCompanyTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		CompanyTestEntity companyTestEntity1 =
+			testGraphQLDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCompanyTestEntityByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" +
+								companyTestEntity1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"companyTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									companyTestEntity1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace test_v1_0
+
+		CompanyTestEntity companyTestEntity2 =
+			testGraphQLDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"test_v1_0",
+				new GraphQLField(
+					"deleteCompanyTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									companyTestEntity2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"test_v1_0",
+					new GraphQLField(
+						"companyTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										companyTestEntity2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected CompanyTestEntity
+			testGraphQLDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity()
+		throws Exception {
+
+		return testGraphQLCompanyTestEntity_addCompanyTestEntity();
 	}
 
 	@Test

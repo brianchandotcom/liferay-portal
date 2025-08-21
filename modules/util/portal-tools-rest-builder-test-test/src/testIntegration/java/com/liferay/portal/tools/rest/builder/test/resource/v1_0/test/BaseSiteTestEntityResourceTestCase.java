@@ -17,6 +17,7 @@ import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -254,6 +255,105 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 		return siteTestEntityResource.postSiteSiteTestEntity(
 			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
+	public void testGraphQLDeleteSiteSiteTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		SiteTestEntity siteTestEntity1 =
+			testGraphQLDeleteSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSiteSiteTestEntityByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + siteTestEntity1.getSiteId() + "\"");
+						put(
+							"externalReferenceCode",
+							"\"" + siteTestEntity1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"siteTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + siteTestEntity1.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									siteTestEntity1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace test_v1_0
+
+		SiteTestEntity siteTestEntity2 =
+			testGraphQLDeleteSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"test_v1_0",
+				new GraphQLField(
+					"deleteSiteSiteTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + siteTestEntity2.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									siteTestEntity2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"test_v1_0",
+					new GraphQLField(
+						"siteTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + siteTestEntity2.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										siteTestEntity2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected SiteTestEntity
+			testGraphQLDeleteSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity()
+		throws Exception {
+
+		return testGraphQLSiteSiteTestEntity_addSiteTestEntity();
 	}
 
 	@Test

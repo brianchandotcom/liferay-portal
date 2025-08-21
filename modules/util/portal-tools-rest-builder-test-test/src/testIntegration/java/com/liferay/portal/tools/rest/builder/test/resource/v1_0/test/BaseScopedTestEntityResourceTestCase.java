@@ -19,6 +19,7 @@ import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -255,6 +256,121 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		ScopedTestEntity scopedTestEntity1 =
+			testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAssetLibraryScopedTestEntityByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"assetLibraryId",
+							"\"" +
+								testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
+									"\"");
+						put(
+							"externalReferenceCode",
+							"\"" +
+								scopedTestEntity1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"assetLibraryScopedTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									scopedTestEntity1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace test_v1_0
+
+		ScopedTestEntity scopedTestEntity2 =
+			testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"test_v1_0",
+				new GraphQLField(
+					"deleteAssetLibraryScopedTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									scopedTestEntity2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"test_v1_0",
+					new GraphQLField(
+						"assetLibraryScopedTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										scopedTestEntity2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long
+			testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected ScopedTestEntity
+			testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
+		throws Exception {
+
+		return testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity();
+	}
+
+	@Test
 	public void testDeleteSiteScopedTestEntityByExternalReferenceCode()
 		throws Exception {
 
@@ -288,6 +404,107 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		return scopedTestEntityResource.postSiteScopedTestEntity(
 			testGroup.getGroupId(), randomScopedTestEntity());
+	}
+
+	@Test
+	public void testGraphQLDeleteSiteScopedTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		ScopedTestEntity scopedTestEntity1 =
+			testGraphQLDeleteSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSiteScopedTestEntityByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + scopedTestEntity1.getSiteId() + "\"");
+						put(
+							"externalReferenceCode",
+							"\"" +
+								scopedTestEntity1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"scopedTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + scopedTestEntity1.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									scopedTestEntity1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace test_v1_0
+
+		ScopedTestEntity scopedTestEntity2 =
+			testGraphQLDeleteSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"test_v1_0",
+				new GraphQLField(
+					"deleteSiteScopedTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + scopedTestEntity2.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									scopedTestEntity2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"test_v1_0",
+					new GraphQLField(
+						"scopedTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + scopedTestEntity2.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										scopedTestEntity2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ScopedTestEntity
+			testGraphQLDeleteSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
+		throws Exception {
+
+		return testGraphQLSiteScopedTestEntity_addScopedTestEntity();
 	}
 
 	@Test

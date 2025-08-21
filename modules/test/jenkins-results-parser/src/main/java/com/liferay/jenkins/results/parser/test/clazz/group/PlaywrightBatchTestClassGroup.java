@@ -631,9 +631,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		Map<File, Set<String>> specTitlesMap = new HashMap<>();
 
-		Map<String, String> specTagsMap = new HashMap<>();
+		Map<String, String> specTitleTagsMap = new HashMap<>();
 
-		List<String> specIgnoredList = new ArrayList<>();
+		List<String> ignoredSpecTitles = new ArrayList<>();
 
 		for (JSONObject specJSONObject : getSpecJSONObjects()) {
 			JSONArray testsJSONArray = specJSONObject.optJSONArray("tests");
@@ -680,7 +680,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					tags.add(tagsJSONArray.optString(i));
 				}
 
-				specTagsMap.put(
+				specTitleTagsMap.put(
 					"tags", JenkinsResultsParserUtil.join(",", tags));
 			}
 
@@ -701,7 +701,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					String testType = annotationsJSONObject.optString("type");
 
 					if (testType.equals("skip")) {
-						specIgnoredList.add(title);
+						ignoredSpecTitles.add(title);
 					}
 				}
 			}
@@ -746,12 +746,12 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				this, entry.getKey());
 
 			for (String specTitle : entry.getValue()) {
-				boolean ignored = specIgnoredList.contains(specTitle);
+				boolean ignored = ignoredSpecTitles.contains(specTitle);
 
-				if (specTagsMap.containsKey(specTitle)) {
+				if (specTitleTagsMap.containsKey(specTitle)) {
 					testClass.addTestClassMethod(
 						TestClassFactory.newTestClassMethod(
-							ignored, specTitle, specTagsMap.get(specTitle),
+							ignored, specTitle, specTitleTagsMap.get(specTitle),
 							testClass));
 				}
 				else {

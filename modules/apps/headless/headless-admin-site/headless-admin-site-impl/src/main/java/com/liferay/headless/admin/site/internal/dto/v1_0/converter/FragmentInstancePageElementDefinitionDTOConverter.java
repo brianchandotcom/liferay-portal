@@ -58,6 +58,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 
 		return new FragmentInstancePageElementDefinition() {
 			{
+				setConfiguration(fragmentEntryLink::getConfiguration);
+				setCss(fragmentEntryLink::getCss);
 				setCssClasses(
 					() -> {
 						if (SetUtil.isEmpty(
@@ -104,7 +106,17 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 							}
 						};
 					});
+				setFragmentType(
+					() -> {
+						if (fragmentEntryLink.isTypeComponent()) {
+							return FragmentType.BASIC;
+						}
+
+						return FragmentType.FORM;
+					});
+				setHtml(fragmentEntryLink::getHtml);
 				setIndexed(fragmentStyledLayoutStructureItem::isIndexed);
+				setJs(fragmentEntryLink::getJs);
 				setName(fragmentStyledLayoutStructureItem::getName);
 				setNamespace(fragmentEntryLink::getNamespace);
 				setType(PageElementDefinition.Type.FRAGMENT);

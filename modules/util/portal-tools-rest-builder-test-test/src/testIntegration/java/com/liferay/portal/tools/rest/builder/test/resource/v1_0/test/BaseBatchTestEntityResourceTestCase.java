@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -250,6 +251,93 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteBatchTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		BatchTestEntity batchTestEntity1 =
+			testGraphQLDeleteBatchTestEntityByExternalReferenceCode_addBatchTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteBatchTestEntityByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + batchTestEntity1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"batchTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									batchTestEntity1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace test_v1_0
+
+		BatchTestEntity batchTestEntity2 =
+			testGraphQLDeleteBatchTestEntityByExternalReferenceCode_addBatchTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"test_v1_0",
+				new GraphQLField(
+					"deleteBatchTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									batchTestEntity2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"test_v1_0",
+					new GraphQLField(
+						"batchTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										batchTestEntity2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected BatchTestEntity
+			testGraphQLDeleteBatchTestEntityByExternalReferenceCode_addBatchTestEntity()
+		throws Exception {
+
+		return testGraphQLBatchTestEntity_addBatchTestEntity();
 	}
 
 	@Test

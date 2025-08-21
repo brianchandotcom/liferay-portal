@@ -22,6 +22,7 @@ import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -292,6 +293,118 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			postAssetLibraryERCAssetLibraryTestEntity(
 				testDepotEntryGroup.getExternalReferenceCode(),
 				randomERCAssetLibraryTestEntity());
+	}
+
+	@Test
+	public void testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity()
+		throws Exception {
+
+		// No namespace
+
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity1 =
+			testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAssetLibraryERCAssetLibraryTestEntity",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"assetLibraryExternalReferenceCode",
+							"\"" +
+								ercAssetLibraryTestEntity1.
+									getAssetLibraryExternalReferenceCode() +
+										"\"");
+						put(
+							"ercAssetLibraryTestEntityExternalReferenceCode",
+							"\"" +
+								ercAssetLibraryTestEntity1.
+									getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"assetLibraryERCAssetLibraryTestEntity",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryExternalReferenceCode",
+								"\"" +
+									ercAssetLibraryTestEntity1.
+										getAssetLibraryExternalReferenceCode() +
+											"\"");
+							put(
+								"ercAssetLibraryTestEntityExternalReferenceCode",
+								"\"" +
+									ercAssetLibraryTestEntity1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					new GraphQLField("ercAssetLibraryTestEntityId"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace test_v1_0
+
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity2 =
+			testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"test_v1_0",
+				new GraphQLField(
+					"deleteAssetLibraryERCAssetLibraryTestEntity",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryExternalReferenceCode",
+								"\"" +
+									ercAssetLibraryTestEntity2.
+										getAssetLibraryExternalReferenceCode() +
+											"\"");
+							put(
+								"ercAssetLibraryTestEntityExternalReferenceCode",
+								"\"" +
+									ercAssetLibraryTestEntity2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"test_v1_0",
+					new GraphQLField(
+						"assetLibraryERCAssetLibraryTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryExternalReferenceCode",
+									"\"" +
+										ercAssetLibraryTestEntity2.
+											getAssetLibraryExternalReferenceCode() +
+												"\"");
+								put(
+									"ercAssetLibraryTestEntityExternalReferenceCode",
+									"\"" +
+										ercAssetLibraryTestEntity2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						new GraphQLField("ercAssetLibraryTestEntityId")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return testGraphQLERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 	}
 
 	@Test

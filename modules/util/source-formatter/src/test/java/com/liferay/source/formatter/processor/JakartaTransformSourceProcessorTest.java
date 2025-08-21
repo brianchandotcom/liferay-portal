@@ -19,32 +19,32 @@ public class JakartaTransformSourceProcessorTest
 
 	@Test
 	public void testBNDJakartaTransform() throws Exception {
-		test("jakartatransform/BNDJakartaTransform.testbnd");
+		test("jakartatransform/JakartaTransform.testbnd");
 	}
 
 	@Test
 	public void testFTLJakartaTransform() throws Exception {
-		test("jakartatransform/FTLJakartaTransform.testftl");
+		test("jakartatransform/JakartaTransform.testftl");
 	}
 
 	@Test
 	public void testGradleJakartaTransform() throws Exception {
-		test("jakartatransform/GradleJakartaTransform.testgradle");
+		test("jakartatransform/JakartaTransform.testgradle");
 	}
 
 	@Test
 	public void testJavaJakartaTransform() throws Exception {
-		test("jakartatransform/JavaJakartaTransform.testjava");
+		test("jakartatransform/JakartaTransform.testjava");
 	}
 
 	@Test
 	public void testJSPJakartaTransform() throws Exception {
-		test("jakartatransform/JSPJakartaTransform.testjsp");
+		test("jakartatransform/JakartaTransform.testjsp");
 	}
 
 	@Test
 	public void testXMLJakartaTransform() throws Exception {
-		test("jakartatransform/XMLJakartaTransform.testxml");
+		test("jakartatransform/JakartaTransform.testxml");
 	}
 
 	@Override

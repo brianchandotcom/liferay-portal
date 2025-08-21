@@ -58,7 +58,7 @@ public class ConfigurationDataCleanupPreupgradeProcess
 
 				String configurationId = resultSet.getString("configurationId");
 
-				if (companyId != -1) {
+				if (companyId > 0) {
 					if (!ArrayUtil.contains(companyIds, companyId)) {
 						_deleteConfiguration(
 							configurationId, "companyId", "Company", companyId,

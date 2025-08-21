@@ -59,61 +59,19 @@ public class GroupSelectorTagTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetDepotGroupsWithDepotGroupTypeWithPagination()
+	public void testGetDepotGroupsWithDepotGroupTypesWithPagination()
 		throws Exception {
 
-		_addDepotEntries(PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA + 1);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, getThemeDisplay());
-		mockHttpServletRequest.addParameter("groupType", "depot");
-
-		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
-			mockHttpServletRequest);
-
-		groupSelectorTag.doEndTag();
-
-		List<Group> groups = (List<Group>)mockHttpServletRequest.getAttribute(
-			"liferay-item-selector:group-selector:groups");
-
-		Assert.assertEquals(
-			groups.toString(), PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA,
-			groups.size());
-
-		Assert.assertEquals(
-			PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA + 1,
-			mockHttpServletRequest.getAttribute(
-				"liferay-item-selector:group-selector:groupsCount"));
+		_testGetDepotGroupsWithDepotGroupType(
+			DepotConstants.TYPE_ASSET_LIBRARY);
+		_testGetDepotGroupsWithDepotGroupType(DepotConstants.TYPE_SPACE);
 	}
 
 	@Test
-	public void testGetGroupsCountWithDepotGroupType() throws Exception {
-		_addDepotEntries(3);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, getThemeDisplay());
-		mockHttpServletRequest.addParameter("groupType", "depot");
-
-		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
-			mockHttpServletRequest);
-
-		groupSelectorTag.doEndTag();
-
-		List<Group> groups = (List<Group>)mockHttpServletRequest.getAttribute(
-			"liferay-item-selector:group-selector:groups");
-
-		Assert.assertEquals(groups.toString(), 3, groups.size());
-
-		Assert.assertEquals(
-			groups.size(),
-			mockHttpServletRequest.getAttribute(
-				"liferay-item-selector:group-selector:groupsCount"));
+	public void testGetGroupsCountWithDepotGroupTypes() throws Exception {
+		_testGetGroupsCountWithDepotGroupType(
+			DepotConstants.TYPE_ASSET_LIBRARY);
+		_testGetGroupsCountWithDepotGroupType(DepotConstants.TYPE_SPACE);
 	}
 
 	@Test
@@ -264,15 +222,16 @@ public class GroupSelectorTagTest {
 		return themeDisplay;
 	}
 
-	private void _addDepotEntries(int count) throws Exception {
+	private void _addDepotEntries(int count, int depotEntryType)
+		throws Exception {
+
 		for (int i = 0; i < count; i++) {
 			DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				DepotConstants.TYPE_ASSET_LIBRARY,
-				ServiceContextTestUtil.getServiceContext());
+				depotEntryType, ServiceContextTestUtil.getServiceContext());
 
 			_depotEntries.add(depotEntry);
 
@@ -290,6 +249,80 @@ public class GroupSelectorTagTest {
 			new MockPageContext(null, httpServletRequest));
 
 		return groupSelectorTag;
+	}
+
+	private void _testGetDepotGroupsWithDepotGroupType(int depotEntryType)
+		throws Exception {
+
+		_addDepotEntries(
+			PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA + 1,
+			depotEntryType);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, getThemeDisplay());
+
+		if (depotEntryType == DepotConstants.TYPE_ASSET_LIBRARY) {
+			mockHttpServletRequest.addParameter(
+				"groupType", "asset-library-depot");
+		}
+		else {
+			mockHttpServletRequest.addParameter("groupType", "space-depot");
+		}
+
+		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
+			mockHttpServletRequest);
+
+		groupSelectorTag.doEndTag();
+
+		List<Group> groups = (List<Group>)mockHttpServletRequest.getAttribute(
+			"liferay-item-selector:group-selector:groups");
+
+		Assert.assertEquals(
+			groups.toString(), PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA,
+			groups.size());
+
+		Assert.assertEquals(
+			PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA + 1,
+			mockHttpServletRequest.getAttribute(
+				"liferay-item-selector:group-selector:groupsCount"));
+	}
+
+	private void _testGetGroupsCountWithDepotGroupType(int depotType)
+		throws Exception {
+
+		_addDepotEntries(3, depotType);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, getThemeDisplay());
+
+		if (depotType == DepotConstants.TYPE_ASSET_LIBRARY) {
+			mockHttpServletRequest.addParameter(
+				"groupType", "asset-library-depot");
+		}
+		else {
+			mockHttpServletRequest.addParameter("groupType", "space-depot");
+		}
+
+		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
+			mockHttpServletRequest);
+
+		groupSelectorTag.doEndTag();
+
+		List<Group> groups = (List<Group>)mockHttpServletRequest.getAttribute(
+			"liferay-item-selector:group-selector:groups");
+
+		Assert.assertEquals(groups.toString(), 3, groups.size());
+
+		Assert.assertEquals(
+			groups.size(),
+			mockHttpServletRequest.getAttribute(
+				"liferay-item-selector:group-selector:groupsCount"));
 	}
 
 	@Inject

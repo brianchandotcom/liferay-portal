@@ -19,13 +19,13 @@
 	.price-model-facet .list-unstyled {
 		margin-bottom: 0;
 	}
-	
+
 	.price-model-facet .options-btn {
 		color: #2B3A4B;
 		font-size: 14px;
 		font-weight: 400;
 	}
-	
+
 	.price-model-facet .separator {
 		width: 90%;
 	}
@@ -46,15 +46,17 @@
 		markupView="lexicon"
 		persistState=true
 		title="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')}">
-		
-		<button class="btn-unstyled options-btn mb-4" id="${namespace + 'facetAssetSelectAll'}"
+
+		<button
+			class="btn-unstyled options-btn mb-4" id="${namespace + 'facetAssetSelectAll'}"
 				onClick="${namespace}selectAll(event, `${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}`)">
 		  Select All
 		</button>
+
 		<button class="btn-unstyled options-btn mb-4 ml-1" onClick="Liferay.Search.FacetUtil.clearSelections(event);">
 			Clear
 		</button>
-		
+
 		<ul class="list-unstyled">
 			<#list entries?sort_by("displayName") as entry>
 				<li class="color-neutral-2 facet-value py-1">
@@ -86,18 +88,18 @@
 			</#list>
 		</ul>
 	</@>
-	<hr class="separator"/>
+	<hr class="separator" />
 </@>
 
 <@liferay_aui.script>
 		function ${namespace}selectAll(event, title) {
 			event.preventDefault();
 			var url = new URL(window.location.href);
-			
+
 			if (url.searchParams.size === 0) {
-				url.href += '?' 
+				url.href += '?'
 			}
-       
+
 			var divId = event.target.closest('.collapse').id;
 			var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
 
@@ -110,6 +112,6 @@
 				}
 			});
 
-	    	window.location.href = url.href;
+			window.location.href = url.href;
 		}
 </@>

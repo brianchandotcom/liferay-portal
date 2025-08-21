@@ -196,14 +196,14 @@
 							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-app-category")![]
 							categoriesListSize = productCategories?size-1
 							productSpecifications = product.productSpecifications![]
-							productTypes=product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-category")![]
+							productTypes = product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-category")![]
 						/>
 					</#if>
-						
+
 					<#if productTypes[0]?has_content>
-						<#assign productType=productTypes[0]/>
+						<#assign productType = productTypes[0] />
 					<#else>
-						<#assign productType=""/>
+						<#assign productType = "" />
 					</#if>
 
 					<#if product.description?has_content>
@@ -221,8 +221,8 @@
 							<div>
 								<span class="d-flex justify-content-end">
 									<div>
-										<#if productType?has_content >
-											<#if productType.name == 'Other'>	
+										<#if productType?has_content>
+											<#if productType.name == 'Other'>
 												<div class="app-type-badge"></div>
 											<#else>
 												<div class="app-type-badge app-type-no-type font-weight-semi-bold
@@ -233,7 +233,7 @@
 													<#if productType.name == 'Workflow action'>	app-type-workflow-action</#if>
 													<#if productType.name == 'Batch'>	app-type-batch</#if>
 													<#if productType.name == 'Checkout'>	app-type-checkout</#if>
-													<#if productType.name == 'Fragments'>	app-type-fragments</#if>				
+													<#if productType.name == 'Fragments'>	app-type-fragments</#if>
 												">
 												 	${productType.name}
 												</div>
@@ -241,6 +241,7 @@
 										</#if>
 									</div>
 								</span>
+
 								<div class="title-container">
 									${productName}
 								</div>

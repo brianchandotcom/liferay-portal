@@ -1,435 +1,507 @@
 {
 	"pageElement": {
-	 "pageElements": [
-	   {
-		 "definition": {
-		   "fragmentStyle": {
-			 "backgroundColor": "whiteColor",
-			 "borderWidth": "0",
-			 "minHeight": "100vh",
-			 "textColor": "#54555F"
-		   },
-		   "indexed": true,
-		   "layout": {}
-		 },
-		 "pageElements": [
-		   {
-			 "definition": {
-			   "fragmentStyle": { "backgroundColor": "#FFFFFF", "borderWidth": "0" },
-			   "fragmentViewports": [
-				 {
-				   "fragmentViewportStyle": {
-					 "paddingLeft": "4",
-					 "paddingRight": "4"
-				   },
-				   "id": "portraitMobile"
-				 }
-			   ],
-			   "indexed": true,
-			   "layout": { "widthType": "Fixed" }
-			 },
-			 "pageElements": [
-			   {
-				 "definition": {
-				   "fragmentStyle": {
-					 "borderColor": "#FFFFFF",
-					 "paddingBottom": "5",
-					 "paddingTop": "5",
-					 "textColor": "#54555F"
-				   },
-				   "gutters": true,
-				   "indexed": true,
-				   "modulesPerRow": 2,
-				   "numberOfColumns": 2,
-				   "reverseOrder": false,
-				   "rowViewports": [
-					 {
-					   "id": "landscapeMobile",
-					   "rowViewportDefinition": { "modulesPerRow": 1 }
-					 },
-					 { "id": "portraitMobile", "rowViewportDefinition": {} },
-					 { "id": "tablet", "rowViewportDefinition": {} }
-				   ],
-				   "verticalAlignment": "top"
-				 },
-				 "pageElements": [
-				   {
-					 "definition": {
-					   "columnViewports": [
-						 {
-						   "columnViewportDefinition": { "size": 12 },
-						   "id": "landscapeMobile"
-						 },
-						 { "columnViewportDefinition": {}, "id": "portraitMobile" },
-						 { "columnViewportDefinition": {}, "id": "tablet" }
-					   ],
-					   "size": 3
-					 },
-					 "pageElements": [
-					   {
-						 "definition": { "indexed": true, "layout": {} },
-						 "pageElements": [
-						   {
-							 "definition": {
-							   "fragmentStyle": {
-								 "backgroundColor": "#FFFFFF",
-								 "borderRadius": "10px",
-								 "marginBottom": "4",
-								 "overflow": "hidden",
-								 "paddingBottom": "1",
-								 "paddingLeft": "4",
-								 "paddingRight": "4",
-								 "paddingTop": "1"
-							   },
-							   "widgetInstance": {
-								 "widgetConfig": {},
-								 "widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   }
-						 ],
-						 "type": "Section"
-					   },
-					   {
-						 "definition": {
-						   "fragmentStyle": {
-							 "borderColor": "#E2E2E4",
-							 "borderRadius": "1rem",
-							 "borderWidth": "1px"
-						   },
-						   "indexed": true,
-						   "layout": { "borderColor": "#E2E2E4" }
-						 },
-						 "pageElements": [
-						   {
-							 "definition": {
-							   "fragmentStyle": { "hidden": true },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "federatedSearchKey": "",
-								   "allowEmptySearches": "true",
-								   "basicFacetSelection": "false"
-								 },
-								 "widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "federatedSearchKey": "",
-								   "occur": "must",
-								   "invisible": "true",
-								   "parameterName": "",
-								   "displayStyleGroupId": "[$GROUP_ID$]",
-								   "filterField": "assetCategoryIds",
-								   "displayStyle": "default",
-								   "immutable": "true",
-								   "filterQueryType": "match",
-								   "filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/marketplace-product-type/app.json$]",
-								   "parentQueryName": "",
-								   "queryName": "",
-								   "disabled": "false",
-								   "customHeading": "",
-								   "boost": ""
-								 },
-								 "widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "fragmentStyle": { "hidden": true },
-							   "widgetInstance": {
-								 "widgetConfig": {},
-								 "widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "fragmentStyle": { "backgroundColor": "whiteColor" },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Version$]",
-								   "displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
-								   "maxTerms": "10",
-								   "displayStyleGroupKey": "Marketplace",
-								   "frequencyThreshold": "1",
-								   "frequenciesVisible": "true",
-								   "parameterName": "Liferay Version",
-								   "groupVocabularyExternalReferenceCodes": "",
-								   "displayStyleGroupId": "[$GROUP_ID$]",
-								   "order": "key:desc"
-								 },
-								 "widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "fragmentStyle": { "backgroundColor": "whiteColor" },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Edition$]",
-								   "displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
-								   "maxTerms": "10",
-								   "displayStyleGroupKey": "Marketplace",
-								   "frequencyThreshold": "1",
-								   "frequenciesVisible": "true",
-								   "parameterName": "Edition",
-								   "groupVocabularyExternalReferenceCodes": "",
-								   "displayStyleGroupId": "[$GROUP_ID$]",
-								   "order": "key:asc"
-								 },
-								 "widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "fragmentStyle": {
-								 "backgroundColor": "whiteColor",
-								 "borderRadius": "10px",
-								 "overflow": "hidden"
-							   },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace App Category$]",
-								   "displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
-								   "maxTerms": "10",
-								   "frequencyThreshold": "1",
-								   "frequenciesVisible": "true",
-								   "parameterName": "Area",
-								   "displayStyleGroupId": "[$GROUP_ID$]",
-								   "order": "key:asc"
-								 },
-								 "widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "fragmentStyle": {
-								 "backgroundColor": "whiteColor",
-								 "borderRadius": "10px",
-								 "overflow": "hidden"
-							   },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Category$]",
-								   "displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
-								   "maxTerms": "10",
-								   "displayStyleGroupKey": "Marketplace",
-								   "frequencyThreshold": "1",
-								   "frequenciesVisible": "true",
-								   "parameterName": "Category",
-								   "groupVocabularyExternalReferenceCodes": "L_GLOBAL&&d5cfb5cd-481c-3631-119c-b3266aa1e42b",
-								   "displayStyleGroupId": "[$GROUP_ID$]",
-								   "order": "key:asc"
-								 },
-								 "widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "fragmentStyle": {
-								 "backgroundColor": "whiteColor",
-								 "borderRadius": "10px",
-								 "overflow": "hidden"
-							   },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Platform Offering$]",
-								   "displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
-								   "maxTerms": "10",
-								   "frequencyThreshold": "1",
-								   "frequenciesVisible": "true",
-								   "parameterName": "Liferay Platform Offering",
-								   "displayStyleGroupId": "[$GROUP_ID$]",
-								   "order": "count:desc"
-								 },
-								 "widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "fragmentStyle": { "borderRadius": "1px" },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "displayStyle": "ddmTemplate_MARKETPLACE-SPECIFICATIONS-FACET",
-								   "maxTerms": "10",
-								   "frequencyThreshold": "1",
-								   "frequenciesVisible": "true",
-								   "displayStyleGroupId": "[$GROUP_ID$]"
-								 },
-								 "widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet",
-								 "widgetPermissions": [
-								   { "actionKeys": ["VIEW"], "roleKey": "Guest" },
-								   {
-									 "actionKeys": ["VIEW"],
-									 "roleKey": "Site Member"
-								   },
-								   {
-									 "actionKeys": [
-									   "ADD_PORTLET_DISPLAY_TEMPLATE",
-									   "PERMISSIONS",
-									   "PREFERENCES",
-									   "CONFIGURATION",
-									   "VIEW",
-									   "ADD_TO_PAGE"
-									 ],
-									 "roleKey": "Owner"
-								   }
-								 ]
-							   }
-							 },
-							 "type": "Widget"
-						   }
-						 ],
-						 "type": "Section"
-					   }
-					 ],
-					 "type": "Column"
-				   },
-				   {
-					 "definition": {
-					   "columnViewports": [
-						 {
-						   "columnViewportDefinition": { "size": 12 },
-						   "id": "landscapeMobile"
-						 },
-						 { "columnViewportDefinition": {}, "id": "portraitMobile" },
-						 { "columnViewportDefinition": {}, "id": "tablet" }
-					   ],
-					   "size": 9
-					 },
-					 "pageElements": [
-					   {
-						 "definition": {
-						   "fragmentStyle": { "marginBottom": "4" },
-						   "indexed": true,
-						   "layout": {
-							 "align": "Center",
-							 "contentDisplay": "FlexRow",
-							 "justify": "End",
-							 "marginBottom": 2
-						   }
-						 },
-						 "pageElements": [
-						   {
-							 "definition": {
-							   "fragmentStyle": { "marginRight": "4" },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "cpContentListRendererKey": "list-default",
-								   "selectionStyle": "adt",
-								   "displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS-COUNT",
-								   "virtual--cpTypeListEntryRendererKey": "list-entry-default",
-								   "grouped--cpTypeListEntryRendererKey": "list-entry-default",
-								   "paginationDelta": "15",
-								   "paginate": "false",
-								   "displayStyleGroupId": "[$GROUP_ID$]",
-								   "simple--cpTypeListEntryRendererKey": "list-entry-default"
-								 },
-								 "widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   },
-						   {
-							 "definition": {
-							   "fragmentStyle": {
-								 "marginRight": "4",
-								 "width": "200px"
-							   },
-							   "widgetInstance": {
-								 "widgetConfig": {
-								   "displayStyle": "ddmTemplate_MARKETPLACE-APPS-SORT",
-								   "fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"createDate-\",\"label\":\"Date Created (Newest First)\"},{\"field\":\"createDate+\",\"label\":\"Date Created (Oldest first)\"}]",
-								   "displayStyleGroupId": "[$GROUP_ID$]"
-								 },
-								 "widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
-							   }
-							 },
-							 "type": "Widget"
-						   }
-						 ],
-						 "type": "Section"
-					   },
-					   {
-						 "definition": {
-						   "widgetInstance": {
-							 "widgetConfig": {
-							   "cpContentListRendererKey": "list-default",
-							   "federatedSearchKey": "",
-							   "fieldsToDisplay": "",
-							   "displayInDocumentForm": "false",
-							   "grouped--cpTypeListEntryRendererKey": "list-entry-default",
-							   "showEmptyResultMessage": "true",
-							   "paginate": "true",
-							   "showPagination": "true",
-							   "displayStyleGroupId": "[$GROUP_ID$]",
-							   "paginationDeltaParameterName": "delta",
-							   "highlightEnabled": "true",
-							   "simple--cpTypeListEntryRendererKey": "list-entry-default",
-							   "displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS",
-							   "selectionStyle": "adt",
-							   "viewInContext": "true",
-							   "virtual--cpTypeListEntryRendererKey": "list-entry-default",
-							   "paginationDelta": "15",
-							   "paginationStartParameterName": "start"
-							 },
-							 "widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
-						   }
-						 },
-						 "type": "Widget"
-					   }
-					 ],
-					 "type": "Column"
-				   }
-				 ],
-				 "type": "Row"
-			   }
-			 ],
-			 "type": "Section"
-		   },
-		   {
-			 "definition": {
-			   "fragment": { "key": "notification-welcome", "siteKey": "[$GROUP_KEY$]" },
-			   "fragmentConfig": {},
-			   "fragmentFields": [],
-			   "fragmentStyle": { "hidden": true },
-			   "indexed": true
-			 },
-			 "type": "Fragment"
-		   }
-		 ],
-		 "type": "Section"
-	   }
-	 ], 
-	 "type": "Root" 
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "whiteColor",
+						"borderWidth": "0",
+						"minHeight": "100vh",
+						"textColor": "#54555F"
+					},
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#FFFFFF",
+								"borderWidth": "0"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "portraitMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderColor": "#FFFFFF",
+										"paddingBottom": "5",
+										"paddingTop": "5",
+										"textColor": "#54555F"
+									},
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 3
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "#FFFFFF",
+																"borderRadius": "10px",
+																"marginBottom": "4",
+																"overflow": "hidden",
+																"paddingBottom": "1",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "1"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "#E2E2E4",
+														"borderRadius": "1rem",
+														"borderWidth": "1px"
+													},
+													"indexed": true,
+													"layout": {
+														"borderColor": "#E2E2E4"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"hidden": true
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"allowEmptySearches": "true",
+																	"basicFacetSelection": "false",
+																	"federatedSearchKey": ""
+																},
+																"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																	"boost": "",
+																	"customHeading": "",
+																	"disabled": "false",
+																	"displayStyle": "default",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"federatedSearchKey": "",
+																	"filterField": "assetCategoryIds",
+																	"filterQueryType": "match",
+																	"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/marketplace-product-type/app.json$]",
+																	"immutable": "true",
+																	"invisible": "true",
+																	"occur": "must",
+																	"parameterName": "",
+																	"parentQueryName": "",
+																	"queryName": ""
+																},
+																"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"hidden": true
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"displayStyleGroupKey": "Marketplace",
+																	"frequenciesVisible": "true",
+																	"frequencyThreshold": "1",
+																	"groupVocabularyExternalReferenceCodes": "",
+																	"maxTerms": "10",
+																	"order": "key:desc",
+																	"parameterName": "Liferay Version",
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Version$]"
+																},
+																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"displayStyleGroupKey": "Marketplace",
+																	"frequenciesVisible": "true",
+																	"frequencyThreshold": "1",
+																	"groupVocabularyExternalReferenceCodes": "",
+																	"maxTerms": "10",
+																	"order": "key:asc",
+																	"parameterName": "Edition",
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Edition$]"
+																},
+																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderRadius": "10px",
+																"overflow": "hidden"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"frequenciesVisible": "true",
+																	"frequencyThreshold": "1",
+																	"maxTerms": "10",
+																	"order": "key:asc",
+																	"parameterName": "Area",
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace App Category$]"
+																},
+																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderRadius": "10px",
+																"overflow": "hidden"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"displayStyleGroupKey": "Marketplace",
+																	"frequenciesVisible": "true",
+																	"frequencyThreshold": "1",
+																	"groupVocabularyExternalReferenceCodes": "L_GLOBAL&&d5cfb5cd-481c-3631-119c-b3266aa1e42b",
+																	"maxTerms": "10",
+																	"order": "key:asc",
+																	"parameterName": "Category",
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Category$]"
+																},
+																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderRadius": "10px",
+																"overflow": "hidden"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"frequenciesVisible": "true",
+																	"frequencyThreshold": "1",
+																	"maxTerms": "10",
+																	"order": "count:desc",
+																	"parameterName": "Liferay Platform Offering",
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Platform Offering$]"
+																},
+																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderRadius": "1px"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_MARKETPLACE-SPECIFICATIONS-FACET",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"frequenciesVisible": "true",
+																	"frequencyThreshold": "1",
+																	"maxTerms": "10"
+																},
+																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet",
+																"widgetPermissions": [
+																	{
+																		"actionKeys": [
+																			"VIEW"
+																		],
+																		"roleKey": "Guest"
+																	},
+																	{
+																		"actionKeys": [
+																			"VIEW"
+																		],
+																		"roleKey": "Site Member"
+																	},
+																	{
+																		"actionKeys": [
+																			"ADD_PORTLET_DISPLAY_TEMPLATE",
+																			"PERMISSIONS",
+																			"PREFERENCES",
+																			"CONFIGURATION",
+																			"VIEW",
+																			"ADD_TO_PAGE"
+																		],
+																		"roleKey": "Owner"
+																	}
+																]
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 9
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginBottom": "4"
+													},
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "End",
+														"marginBottom": 2
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginRight": "4"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"cpContentListRendererKey": "list-default",
+																	"displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS-COUNT",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+																	"paginate": "false",
+																	"paginationDelta": "15",
+																	"selectionStyle": "adt",
+																	"simple--cpTypeListEntryRendererKey": "list-entry-default",
+																	"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+																},
+																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginRight": "4",
+																"width": "200px"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_MARKETPLACE-APPS-SORT",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"fields": "[{\"field\": \"\", \"label\": \"relevance\"}, {\"field\": \"createDate-\", \"label\": \"Date Created (Newest First)\"}, {\"field\": \"createDate+\", \"label\": \"Date Created (Oldest first)\"}]"
+																},
+																"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"cpContentListRendererKey": "list-default",
+															"displayInDocumentForm": "false",
+															"displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"federatedSearchKey": "",
+															"fieldsToDisplay": "",
+															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+															"highlightEnabled": "true",
+															"paginate": "true",
+															"paginationDelta": "15",
+															"paginationDeltaParameterName": "delta",
+															"paginationStartParameterName": "start",
+															"selectionStyle": "adt",
+															"showEmptyResultMessage": "true",
+															"showPagination": "true",
+															"simple--cpTypeListEntryRendererKey": "list-entry-default",
+															"viewInContext": "true",
+															"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "notification-welcome",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"hidden": true
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
 	},
-   "settings": {
-		   "masterPage": {
-			   "key": "marketplace-master"
-		   },
-		   "styleBook": {
-			   "key": "Marketplace",
-			   "name": "Marketplace"
-		   }
-	   },
-	   "version": 1.1
-   }
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		},
+		"styleBook": {
+			"key": "Marketplace",
+			"name": "Marketplace"
+		}
+	},
+	"version": 1.1
+}

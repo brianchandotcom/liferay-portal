@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
-import com.liferay.staging.internal.service.util.StagingAdviceUtil;
 
 import java.io.Closeable;
 import java.io.IOException;

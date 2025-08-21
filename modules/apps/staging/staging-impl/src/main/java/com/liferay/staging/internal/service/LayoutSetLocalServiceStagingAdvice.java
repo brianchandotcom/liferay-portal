@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
-import com.liferay.staging.internal.service.util.StagingAdviceUtil;
 
 import java.io.Closeable;
 import java.io.IOException;

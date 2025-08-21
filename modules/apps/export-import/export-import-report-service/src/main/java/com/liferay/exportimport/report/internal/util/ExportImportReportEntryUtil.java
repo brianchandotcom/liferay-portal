@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.report.internal.util;
 
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -45,7 +45,7 @@ public class ExportImportReportEntryUtil {
 	}
 
 	public static int getOrigin() {
-		if (ExportImportThreadLocal.isBatchImportInProcess()) {
+		if (BatchEngineThreadLocal.isBatchImportInProcess()) {
 			return ExportImportReportEntryConstants.ORIGIN_BATCH;
 		}
 

@@ -4398,7 +4398,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 				${schemaName} ${schemaVarName}
 			</#if>
 		) throws Exception {
-			throw new UnsupportedOperationException("This method needs to be implemented");
+			<#if generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
+				return testDepotEntryGroup.getExternalReferenceCode();
+			<#elseif generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+				return testDepotEntry.getDepotEntryId();
+			<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
+				return testGroup.getExternalReferenceCode();
+			<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+				return testGroup.getGroupId();
+			<#else>
+				throw new UnsupportedOperationException("This method needs to be implemented");
+			</#if>
 		}
 	</#list>
 </#macro>

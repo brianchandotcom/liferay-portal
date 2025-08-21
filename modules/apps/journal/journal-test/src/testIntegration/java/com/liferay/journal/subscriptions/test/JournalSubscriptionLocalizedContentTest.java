@@ -314,72 +314,6 @@ public class JournalSubscriptionLocalizedContentTest
 			LocaleUtil.getDefault(), false, true, serviceContext);
 	}
 
-	private MailService _getMailService() {
-		return new MailService() {
-
-			@Override
-			public void clearSession() {
-				_mailService.clearSession();
-			}
-
-			@Override
-			public void clearSession(long companyId) {
-				_mailService.clearSession(companyId);
-			}
-
-			@Override
-			public String getMailId(
-				String mx, String popPortletPrefix, Object... ids) {
-
-				return _mailService.getMailId(mx, popPortletPrefix, ids);
-			}
-
-			@Override
-			public String getPOPServerSubdomain() {
-				return _mailService.getPOPServerSubdomain();
-			}
-
-			@Override
-			public Session getSession() {
-				return _mailService.getSession();
-			}
-
-			@Override
-			public Session getSession(Account account) {
-				return _mailService.getSession(account);
-			}
-
-			@Override
-			public Session getSession(long companyId) {
-				return _mailService.getSession(companyId);
-			}
-
-			@Override
-			public boolean isPOPServerNotificationsEnabled(long companyId) {
-				return _mailService.isPOPServerNotificationsEnabled(companyId);
-			}
-
-			@Override
-			public boolean isPOPServerUser(String emailAddress) {
-				return _mailService.isPOPServerUser(emailAddress);
-			}
-
-			@Override
-			public void sendEmail(
-				com.liferay.mail.kernel.model.MailMessage mailMessage) {
-
-				InternetHeaders internetHeaders = new InternetHeaders();
-
-				internetHeaders.setHeader("Content-Transfer-Encoding", "8bit");
-
-				mailMessage.setInternetHeaders(internetHeaders);
-
-				_mailService.sendEmail(mailMessage);
-			}
-
-		};
-	}
-
 	private String _getExpectedMailBody(
 			String emailArticleBody, long journalArticlePrimaryKey)
 		throws Exception {
@@ -450,6 +384,72 @@ public class JournalSubscriptionLocalizedContentTest
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return httpServletRequest;
+	}
+
+	private MailService _getMailService() {
+		return new MailService() {
+
+			@Override
+			public void clearSession() {
+				_mailService.clearSession();
+			}
+
+			@Override
+			public void clearSession(long companyId) {
+				_mailService.clearSession(companyId);
+			}
+
+			@Override
+			public String getMailId(
+				String mx, String popPortletPrefix, Object... ids) {
+
+				return _mailService.getMailId(mx, popPortletPrefix, ids);
+			}
+
+			@Override
+			public String getPOPServerSubdomain() {
+				return _mailService.getPOPServerSubdomain();
+			}
+
+			@Override
+			public Session getSession() {
+				return _mailService.getSession();
+			}
+
+			@Override
+			public Session getSession(Account account) {
+				return _mailService.getSession(account);
+			}
+
+			@Override
+			public Session getSession(long companyId) {
+				return _mailService.getSession(companyId);
+			}
+
+			@Override
+			public boolean isPOPServerNotificationsEnabled(long companyId) {
+				return _mailService.isPOPServerNotificationsEnabled(companyId);
+			}
+
+			@Override
+			public boolean isPOPServerUser(String emailAddress) {
+				return _mailService.isPOPServerUser(emailAddress);
+			}
+
+			@Override
+			public void sendEmail(
+				com.liferay.mail.kernel.model.MailMessage mailMessage) {
+
+				InternetHeaders internetHeaders = new InternetHeaders();
+
+				internetHeaders.setHeader("Content-Transfer-Encoding", "8bit");
+
+				mailMessage.setInternetHeaders(internetHeaders);
+
+				_mailService.sendEmail(mailMessage);
+			}
+
+		};
 	}
 
 	private ThemeDisplay _getThemeDisplay(User user) throws Exception {

@@ -20,6 +20,7 @@ type SegmentProperty =
 	| 'Name'
 	| 'Organization'
 	| 'Parent Organization'
+	| 'Regular Role'
 	| 'Segments'
 	| 'Type';
 

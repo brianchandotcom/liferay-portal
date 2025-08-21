@@ -792,6 +792,44 @@ test(
 );
 
 test(
+	`Can validate the value input persist in a segment created with Role criterion in view mode`,
+
+	{
+		tag: '@LPS-135880',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName = 'Validate Role Segment';
+
+		await test.step('When a segment designer adds a segment with Regular Role criterion', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				user: ['Regular Role'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectCheckboxItem('Administrator');
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+		});
+
+		await test.step('Then can assert in view mode the segment is correctly created', async () => {
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('Administrator');
+		});
+	}
+);
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

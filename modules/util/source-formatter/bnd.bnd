@@ -3,8 +3,6 @@ Bundle-SymbolicName: com.liferay.source.formatter
 Bundle-Version: 1.0.1529
 Main-Class: com.liferay.source.formatter.SourceFormatter
 -includeresource:\
-	@biz.aQute.bndlib-[0-9.]*.jar!/aQute/bnd/osgi/Constants.class,\
-	@biz.aQute.bndlib-[0-9.]*.jar!/aQute/bnd/version/Version.class,\
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\

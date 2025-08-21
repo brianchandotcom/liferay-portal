@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -12,7 +13,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,9 +69,9 @@ public class OrphanReferencesDataCleanupUtil {
 
 				_log.info(
 					StringBundler.concat(
-						"Table ", sourceTableName, ", ", String.valueOf(count),
-						(count == 1) ? " entry " : " entries ",
-						"deleted because ", sourceColumnName, StringPool.SPACE,
+						"Deleted ", count, " row", (count > 1) ? "s" : "",
+						" in ", sourceTableName, " because ", sourceColumnName,
+						StringPool.SPACE,
 						String.valueOf(resultSet.getObject(1)),
 						" was not found in ", targetTableName,
 						StringPool.PERIOD, targetColumnName));

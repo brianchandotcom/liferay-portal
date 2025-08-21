@@ -191,8 +191,8 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 		throws Exception {
 
 		return StringBundler.concat(
-			"Table ", _dbInspector.normalizeName(sourceTableName), ", ", count,
-			(count == 1) ? " entry " : " entries ", "deleted because ",
+			"Deleted ", count, " row", (count > 1) ? "s" : "", " in ",
+			_dbInspector.normalizeName(sourceTableName), " because ",
 			_dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
 			targetValue, " was not found in ",
 			_dbInspector.normalizeName(targetTableName), StringPool.PERIOD,

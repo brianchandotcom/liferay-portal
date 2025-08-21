@@ -321,10 +321,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_assertLogContextDiagnostics(
 				"upgrade.report.data.clean.up",
 				StringBundler.concat(
-					"Table ", dbInspector.normalizeName("Portlet"),
-					", 1 entry deleted because ",
-					dbInspector.normalizeName("companyId"), StringPool.SPACE,
-					randomCompanyId, " was not found in ",
+					"Deleted 1 row in ", dbInspector.normalizeName("Portlet"),
+					" because ", dbInspector.normalizeName("companyId"),
+					StringPool.SPACE, randomCompanyId, " was not found in ",
 					dbInspector.normalizeName("Company"), StringPool.PERIOD,
 					dbInspector.normalizeName("companyId")));
 		}

@@ -82,9 +82,10 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
-						"Table ", dbInspector.normalizeName("Layout"), ", 1 ",
-						"entry updated column ",
-						dbInspector.normalizeName("userId"), " to value ",
+						"Updated 1 row in ",
+						dbInspector.normalizeName("Layout"),
+						" changing column value in ",
+						dbInspector.normalizeName("userId"), " to ",
 						_adminUser.getUserId(), " because ",
 						dbInspector.normalizeName("userId"), StringPool.SPACE,
 						_userId, " was not found in ",
@@ -93,8 +94,8 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
-						"Table ", dbInspector.normalizeName("Users_Roles"),
-						", 1 entry deleted because ",
+						"Deleted 1 row in ",
+						dbInspector.normalizeName("Users_Roles"), " because ",
 						dbInspector.normalizeName("userId"), StringPool.SPACE,
 						_userId, " was not found in ",
 						dbInspector.normalizeName("User_"), StringPool.PERIOD,

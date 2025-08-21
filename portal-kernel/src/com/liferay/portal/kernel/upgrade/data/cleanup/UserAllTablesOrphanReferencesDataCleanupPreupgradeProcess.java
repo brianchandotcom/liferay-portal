@@ -89,12 +89,11 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							StringBundler.concat(
-								"Table ", sourceTableName, ", ", count,
-								(count == 1) ? " entry " : " entries ",
-								"deleted because ", sourceColumnName,
-								StringPool.SPACE, userId, " was not found in ",
-								targetTableName, StringPool.PERIOD,
-								targetColumnName));
+								"Deleted ", count, " row",
+								(count > 1) ? "s" : "", " in ", sourceTableName,
+								" because ", sourceColumnName, StringPool.SPACE,
+								userId, " was not found in ", targetTableName,
+								StringPool.PERIOD, targetColumnName));
 					}
 
 					continue;
@@ -123,10 +122,10 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Table ", sourceTableName, ", ", count,
-							(count == 1) ? " entry " : " entries ",
-							"updated column ", sourceColumnName, " to value ",
-							newUserId, " because ", sourceColumnName,
+							"Updated ", count, " row", (count > 1) ? "s" : "",
+							" in ", sourceTableName,
+							" changing column value in ", sourceColumnName,
+							" to ", newUserId, " because ", sourceColumnName,
 							StringPool.SPACE, userId, " was not found in ",
 							targetTableName, StringPool.PERIOD,
 							targetColumnName));

@@ -5,15 +5,24 @@
 
 package com.liferay.document.library.web.internal.info.item.provider;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.GroupUrlTitleInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"info.item.identifier=com.liferay.info.item.ClassPKInfoItemIdentifier",
+		"info.item.identifier=com.liferay.info.item.ERCInfoItemIdentifier",
 		"info.item.identifier=com.liferay.info.item.GroupUrlTitleInfoItemIdentifier",
 		"service.ranking:Integer=100"
 	},
@@ -37,7 +47,84 @@ public class FileEntryInfoItemObjectProvider
 	public FileEntry getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
+		return getInfoItem(_getGroupId(), infoItemIdentifier);
+	}
+
+	@Override
+	public FileEntry getInfoItem(
+			long groupId, InfoItemIdentifier infoItemIdentifier)
+		throws NoSuchInfoItemException {
+
+		return _getInfoItem(_getCompanyId(), _getGroupId(), infoItemIdentifier);
+	}
+
+	private long _getCompanyId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getCompanyId();
+		}
+
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId != null) {
+			return companyId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor company thread local " +
+				"are initialized");
+	}
+
+	private long _getGroupId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getScopeGroupId();
+		}
+
+		Long groupId = GroupThreadLocal.getGroupId();
+
+		if (groupId != null) {
+			return groupId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor group thread local are " +
+				"initialized");
+	}
+
+	private long _getGroupId(
+			long companyId, ERCInfoItemIdentifier ercInfoItemIdentifier,
+			long groupId)
+		throws NoSuchInfoItemException {
+
+		try {
+			if (Validator.isNull(
+					ercInfoItemIdentifier.getScopeExternalReferenceCode())) {
+
+				return groupId;
+			}
+
+			Group group = _groupLocalService.getGroupByExternalReferenceCode(
+				ercInfoItemIdentifier.getScopeExternalReferenceCode(),
+				companyId);
+
+			return group.getGroupId();
+		}
+		catch (PortalException portalException) {
+			throw new NoSuchInfoItemException(portalException);
+		}
+	}
+
+	private FileEntry _getInfoItem(
+			long companyId, long groupId, InfoItemIdentifier infoItemIdentifier)
+		throws NoSuchInfoItemException {
+
 		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof ERCInfoItemIdentifier) &&
 			!(infoItemIdentifier instanceof GroupUrlTitleInfoItemIdentifier)) {
 
 			throw new NoSuchInfoItemException(
@@ -51,6 +138,19 @@ public class FileEntryInfoItemObjectProvider
 				(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 			classPK = classPKInfoItemIdentifier.getClassPK();
+		}
+		else if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
+			try {
+				ERCInfoItemIdentifier ercInfoItemIdentifier =
+					(ERCInfoItemIdentifier)infoItemIdentifier;
+
+				return _dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+					_getGroupId(companyId, ercInfoItemIdentifier, groupId),
+					ercInfoItemIdentifier.getExternalReferenceCode());
+			}
+			catch (PortalException portalException) {
+				throw new NoSuchInfoItemException(portalException);
+			}
 		}
 		else if (infoItemIdentifier instanceof
 					GroupUrlTitleInfoItemIdentifier) {
@@ -85,6 +185,12 @@ public class FileEntryInfoItemObjectProvider
 				portalException);
 		}
 	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private RepositoryProvider _repositoryProvider;

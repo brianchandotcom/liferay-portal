@@ -27,6 +27,12 @@ type ChildrenFunction<T, P> =
 		? (item: T, ...args: P) => React.ReactElement
 		: (item: T, index?: number) => React.ReactElement;
 
+interface HeadlessPage<T = unknown> {
+	items: T[];
+	lastPage: number;
+	page: number;
+}
+
 export interface IItemSelectorProps<T>
 	extends Omit<
 		React.HTMLAttributes<HTMLInputElement>,
@@ -176,18 +182,14 @@ function ItemSelector<T extends Record<string, any>>({
 				return json;
 			}
 
-			const {items, lastPage, page} = json;
+			const {items, lastPage, page} = json as HeadlessPage<T>;
 
-			return {
-				cursor:
-					page < lastPage
-						? getNextPageURL({apiURL, page: page + 1})
-						: null,
-				items,
-			} as {
-				cursor: string | null;
-				items: T[];
-			};
+			const cursor =
+				page < lastPage
+					? getNextPageURL({apiURL, page: page + 1})
+					: null;
+
+			return {cursor, items};
 		},
 		fetchDelay: 500,
 		fetchPolicy: 'cache-first' as FetchPolicy.CacheFirst,

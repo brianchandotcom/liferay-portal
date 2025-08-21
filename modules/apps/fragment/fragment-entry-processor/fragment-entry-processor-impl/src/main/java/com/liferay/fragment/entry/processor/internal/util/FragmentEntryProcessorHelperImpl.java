@@ -262,15 +262,29 @@ public class FragmentEntryProcessorHelperImpl
 			String className = _infoSearchClassMapperRegistry.getClassName(
 				_portal.fetchClassName(
 					editableValueJSONObject.getLong("classNameId")));
-			String externalReferenceCode = editableValueJSONObject.getString(
-				"externalReferenceCode");
 
 			fieldName = editableValueJSONObject.getString("fieldId");
 
 			InfoItemIdentifier infoItemIdentifier = null;
 			InfoItemObjectProvider<Object> infoItemObjectProvider = null;
 
-			if (Validator.isNotNull(externalReferenceCode)) {
+			long classPK = editableValueJSONObject.getLong("classPK");
+
+			if (classPK > 0) {
+				infoItemIdentifier = new ClassPKInfoItemIdentifier(
+					editableValueJSONObject.getLong("classPK"));
+				infoItemObjectProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemObjectProvider.class, className,
+						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+			}
+
+			String externalReferenceCode = editableValueJSONObject.getString(
+				"externalReferenceCode");
+
+			if ((infoItemObjectProvider == null) &&
+				Validator.isNotNull(externalReferenceCode)) {
+
 				infoItemIdentifier = new ERCInfoItemIdentifier(
 					externalReferenceCode);
 				infoItemObjectProvider =
@@ -293,14 +307,6 @@ public class FragmentEntryProcessorHelperImpl
 						fragmentEntryProcessorContext.getPreviewVersion());
 				}
 
-				infoItemObjectProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, className,
-						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-			}
-			else if (infoItemObjectProvider == null) {
-				infoItemIdentifier = new ClassPKInfoItemIdentifier(
-					editableValueJSONObject.getLong("classPK"));
 				infoItemObjectProvider =
 					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemObjectProvider.class, className,
@@ -354,16 +360,13 @@ public class FragmentEntryProcessorHelperImpl
 
 			InfoItemIdentifier infoItemIdentifier = null;
 
-			if (Validator.isNotNull(
-					layoutDisplayPageObjectProvider.
-						getExternalReferenceCode())) {
+			if (layoutDisplayPageObjectProvider.getClassPK() > 0) {
+				infoItemIdentifier = new ClassPKInfoItemIdentifier(
+					layoutDisplayPageObjectProvider.getClassPK());
+			} else {
 
 				infoItemIdentifier = new ERCInfoItemIdentifier(
 					layoutDisplayPageObjectProvider.getExternalReferenceCode());
-			}
-			else {
-				infoItemIdentifier = new ClassPKInfoItemIdentifier(
-					layoutDisplayPageObjectProvider.getClassPK());
 			}
 
 			infoItemReference = new InfoItemReference(

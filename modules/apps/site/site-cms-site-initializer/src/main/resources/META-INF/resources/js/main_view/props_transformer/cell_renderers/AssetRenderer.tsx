@@ -5,6 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {dateUtils, sub} from 'frontend-js-web';
 import React from 'react';
 
 import formatActionURL from '../../../common/utils/formatActionURL';
@@ -13,6 +14,10 @@ interface ActionItem {
 	data: {id: string};
 	href?: string;
 }
+
+const formatDate = (date: string) => {
+	return dateUtils.format(new Date(date), 'P p');
+};
 
 export default function AssetRenderer({
 	actions,
@@ -40,16 +45,28 @@ export default function AssetRenderer({
 	const formattedHref = formatActionURL(itemData, selectedAction.href);
 
 	return (
-		<div className="table-list-title">
-			<ClayIcon className="ml-3 mr-3" symbol="document-default" />
+		<div className="d-flex">
+			<ClayIcon className="m-3" symbol="document-default" />
 
-			<ClayLink
-				className="text-decoration-underline"
-				data-senna-off
-				href={formattedHref}
-			>
-				{value}
-			</ClayLink>
+			<div className="">
+				<div className="table-list-title">
+					<ClayLink
+						className="text-decoration-underline"
+						data-senna-off
+						href={formattedHref}
+					>
+						<div>{value}</div>
+					</ClayLink>
+				</div>
+
+				<div className="text-2 text-muted">
+					{sub(
+						Liferay.Language.get('modified-at-x-by-x'),
+						formatDate(itemData.dateModified),
+						itemData.embedded.creator.name
+					)}
+				</div>
+			</div>
 		</div>
 	);
 }

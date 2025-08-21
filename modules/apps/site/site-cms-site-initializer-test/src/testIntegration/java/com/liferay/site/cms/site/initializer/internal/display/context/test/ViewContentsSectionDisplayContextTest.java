@@ -77,8 +77,8 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(5), "time", "expire", "expire", "post",
 			"item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(6), "view", "view-content", "view",
-			"get", "item");
+			fdsActionDropdownItems.get(6), "view", "view-content", "view", null,
+			"item");
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(7), "view", "view-file", "view", null,
 			"item");

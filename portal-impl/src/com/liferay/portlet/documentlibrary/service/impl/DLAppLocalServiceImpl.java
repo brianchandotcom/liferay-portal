@@ -581,6 +581,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		_dlAppHelperLocalService.deleteFolder(folder);
 	}
 
+	@Override
+	public FileEntry fetchFileEntry(long fileEntryId) throws PortalException {
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
+
+		return localRepository.fetchFileEntry(fileEntryId);
+	}
+
 	/**
 	 * Returns the document library file entry with the matching external
 	 * reference code and group.

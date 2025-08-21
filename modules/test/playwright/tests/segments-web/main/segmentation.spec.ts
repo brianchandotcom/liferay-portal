@@ -959,6 +959,52 @@ test(
 );
 
 test(
+	`Can validate the value input persist in a segment created with User Group criterion in view mode`,
+
+	{
+		tag: '@LPS-135880',
+	},
+
+	async ({apiHelpers, page, pageEditorPage, productMenuPage, segmentsPage}) => {
+		const segmentName = 'Validate User Group Segment';	
+
+		await test.step('Given a User Group is created', async () => {
+			await apiHelpers.headlessAdminUser.postUserGroup(
+				{
+					name: 'User Group Name',
+				}
+			);
+		});
+
+		await test.step('When a segment designer adds a segment with User Group criterion', async () => {
+			await productMenuPage.goToSegments();
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName, {
+				user: ['User Group'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectCardItem('User Group Name');
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+		});
+
+		await test.step('Then can assert in view mode the segment is correctly created', async () => {
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('User Group Name');
+		});
+	}
+);
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

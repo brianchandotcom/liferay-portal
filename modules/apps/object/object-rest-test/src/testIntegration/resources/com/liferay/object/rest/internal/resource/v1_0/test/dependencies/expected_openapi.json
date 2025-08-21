@@ -3150,6 +3150,132 @@
 				"tags": [
 					"Object1"
 				]
+			},
+			"patch": {
+				"operationId": "patchScopeScopeKeyByExternalReferenceCodeObject1Relationship1Object2",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "currentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "relatedExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Object1"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Object1"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			},
+			"put": {
+				"operationId": "putScopeScopeKeyByExternalReferenceCodeObject1Relationship1Object2",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "currentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "relatedExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Object1"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Object1"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
 			}
 		},
 		"/scopes/{scopeKey}/by-external-reference-code/{currentExternalReferenceCode}/relationship2": {
@@ -3241,6 +3367,132 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/PageObject2"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			},
+			"patch": {
+				"operationId": "patchScopeScopeKeyByExternalReferenceCodeObject1Relationship2Object2",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "currentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "relatedExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Object1"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Object1"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			},
+			"put": {
+				"operationId": "putScopeScopeKeyByExternalReferenceCodeObject1Relationship2Object2",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "currentExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "relatedExternalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Object1"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Object1"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object2"
 								}
 							}
 						},

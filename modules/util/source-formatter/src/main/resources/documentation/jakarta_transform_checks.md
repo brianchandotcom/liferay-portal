@@ -2,15 +2,14 @@
 
 Check | File Extensions | Description
 ----- | --------------- | -----------
-BNDJakartaTransformCheck | .bnd | Performs replacements for use of Jakarta. |
-FTLJakartaTransformCheck | .ftl | Performs replacements for use of Jakarta. |
-GradleJakartaTransformCheck | .gradle | Performs replacements for use of Jakarta. |
-HTMLJakartaTransformCheck | .html or .path | Performs replacements for use of Jakarta. |
-JSJakartaTransformCheck | .js or .jsx | Performs replacements for use of Jakarta. |
-JSPJakartaTransformCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Performs replacements for use of Jakarta. |
-JavaJakartaTransformCheck | .java | Performs replacements for use of Jakarta. |
-PoshiJakartaTransformCheck | .function, .jar, .lar, .macro, .path, .testcase, .war, or .zip | Performs replacements for use of Jakarta. |
-PropertiesJakartaTransformCheck | .eslintignore, .prettierignore, or .properties | Performs replacements for use of Jakarta. |
-TLDJakartaTransformCheck | .tld | Performs replacements for use of Jakarta. |
-TSJakartaTransformCheck | .ts or .tsx | Performs replacements for use of Jakarta. |
-XMLJakartaTransformCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Performs replacements for use of Jakarta. |
+JakartaTransformBNDCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformFTLCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformGradleCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformHTMLCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformJSCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformJSPCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformJavaCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformPropertiesCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformTLDCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformTSCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformXMLCheck | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |

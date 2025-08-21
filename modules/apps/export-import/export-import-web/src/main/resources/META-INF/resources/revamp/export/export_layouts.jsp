@@ -47,4 +47,8 @@ portletDisplay.setURLBack(backURL);
 	<div class="sheet">
 		<span aria-hidden="true" class="loading-animation mb-9 mt-8"></span>
 	</div>
+
+	<react:component
+		module="{EditExport} from exportimport-web"
+	/>
 </clay:container-fluid>

@@ -1946,6 +1946,58 @@ plugins.includes=</echo>
 		</xmltask>
 	</target>
 
+	<target name="update-tomcat-version">
+		<fail message="Please set the property ${new.version}." unless="new.version" />
+
+		<property name="old.version" value="${app.server.tomcat.version}" />
+
+		<propertyregex
+			input="${new.version}"
+			property="new.major.version"
+			regexp="(\d+)\.."
+			select="\1"
+		/>
+		<propertyregex
+			input="${old.version}"
+			property="old.major.version"
+			regexp="(\d+)\.."
+			select="\1"
+		/>
+
+		<echo>Updating Tomcat version ${old.version} to ${new.version}</echo>
+
+		<replace
+			dir="${project.dir}"
+			summary="yes"
+		>
+			<exclude name="**/*.class" />
+			<exclude name="**/*.classpath" />
+			<exclude name="**/*.jar" />
+			<exclude name="**/*.war" />
+			<exclude name="**/.github/" />
+			<exclude name="**/.gradle/" />
+			<exclude name="**/.idea" />
+			<exclude name="**/.m2/" />
+			<exclude name="**/.m2-tmp/" />
+			<exclude name="**/.releng/" />
+			<exclude name="**/CHANGELOG.*" />
+			<exclude name="**/node_modules/" />
+			<exclude name="**/node_modules_cache/" />
+			<exclude name="lib/versions.html" />
+			<exclude name="lib/versions-complete.xml" />
+			<replacefilter
+				token="${old.version}"
+				value="${new.version}"
+			/>
+			<replacefilter
+				token="tomcat-${old.major.version}"
+				value="tomcat-${new.major.version}"
+			/>
+		</replace>
+
+		<ant dir="portal-impl" inheritAll="false" target="build-lib-versions" />
+	</target>
+
 	<target name="zip-executable">
 		<delete failonerror="false" file="dist/${zip.executable.file}-${lp.version}.7z" />
 

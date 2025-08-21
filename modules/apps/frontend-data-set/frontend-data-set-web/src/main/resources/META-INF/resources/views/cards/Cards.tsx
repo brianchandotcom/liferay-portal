@@ -174,7 +174,10 @@ const Card = forwardRef<HTMLDivElement, any>(
 							});
 
 							onSelect?.({selectedItems: [item]});
-							event.preventDefault();
+
+							if (event.target.tagName !== 'A') {
+								event.preventDefault();
+							}
 						}
 					}
 				: undefined,

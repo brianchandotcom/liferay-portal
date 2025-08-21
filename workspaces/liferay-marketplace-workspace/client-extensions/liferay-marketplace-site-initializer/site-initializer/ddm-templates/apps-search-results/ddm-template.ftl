@@ -3,13 +3,6 @@
 		color: var(--black);
 	}
 
-	.lfr-layout-structure-item-com-liferay-site-navigation-breadcrumb-web-portlet-sitenavigationbreadcrumbportlet {
-		background: #ffffff;
-		border-radius: 10px;
-		height: 40px;
-		padding: 0px 16px;
-	}
-
 	.adt-apps-search-results .card-image-title-container .image-container {
 		height: 3rem;
 	}
@@ -30,11 +23,85 @@
 	}
 
 	.app-search-results-card {
+		border: solid 1px #E2E2E4;
 		border-radius: 10px;
-		border: 1px solid #E7EFFF;
+		box-sizing: border-box;
+		cursor: point;
 		display: flex;
 		height: 289px;
 		padding: 16px;
+		position: relative;
+		transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+	}
+
+	.app-type-badge {
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		border-top-left-radius: 2px;
+		border-top-right-radius: 2px;
+		display: inline-block;
+		font-size: 11px;
+		height: 20px;
+		line-height: 20px;
+		padding: 0 8px;
+		position: absolute;
+		right: 32px;
+		top: -6px;
+	}
+
+	.app-type-batch,
+	.app-type-checkout,
+	.app-type-fragments,
+	.app-type-no-type,
+	.app-type-object-action,
+	.app-type-other,
+	.app-type-payment-methods,
+	.app-type-site-initializer,
+	.app-type-theme,
+	.app-type-workflow-action {
+		transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+	}
+
+	.app-type-batch {
+		background: #FFE6C6;
+		color: #9D4C00;
+	}
+
+	.app-type-checkout,
+	.app-type-other {
+		background: #DAF4C7;
+		color: #4E7135;
+	}
+
+	.app-type-fragments,
+	.app-type-workflow-action {
+		background: #DCD7E9;
+		color: #503690;
+	}
+
+	.app-type-no-type {
+		background: #cccccc;
+		color: #ffffff;
+	}
+
+	.app-type-object-action {
+		background-color: #D1ECFA;
+		color: #166E9E;
+	}
+
+	.app-type-payment-methods {
+		background: #D2E6FF;
+		color: #2868FF;
+	}
+
+	.app-type-site-initializer {
+		background: #D1EEDC;
+		color: #0E7835;
+	}
+
+	.app-type-theme {
+		background: #FBE0FF;
+		color: #720086;
 	}
 
 	.banner__product-tag {
@@ -45,16 +112,16 @@
 		width: fit-content;
 	}
 
+	.card-image-title-container {
+		height: 48px;
+		margin-bottom: 18px;
+	}
+
 	.cards-container {
 		display: grid;
 		grid-column-gap: 1rem;
 		grid-row-gap: 1.5rem;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-	}
-
-	.card-image-title-container {
-		height: 48px;
-		margin-bottom: 18px;
 	}
 
 	.developer-name {
@@ -64,6 +131,13 @@
 		line-height: 16px;
 	}
 
+	.lfr-layout-structure-item-com-liferay-site-navigation-breadcrumb-web-portlet-sitenavigationbreadcrumbportlet {
+		background: #ffffff;
+		border-radius: 10px;
+		height: 40px;
+		padding: 0px 16px;
+	}
+
 	.title-container {
 		font-size: 18px;
 		font-weight: 600;
@@ -71,19 +145,19 @@
 	}
 
 	@media screen and (max-width: 599px) {
+		.adt-apps-search-results .app-search-results-card {
+			height: 281px;
+		}
+
 		.adt-apps-search-results .cards-container {
 			grid-column-gap: .5rem;
 			grid-row-gap: .5rem;
 			grid-template-columns: 293px;
 			justify-content: center;
 		}
-
-		.adt-apps-search-results .app-search-results-card {
-			height: 281px;
-		}
 	}
 
-	@media screen and (min-width:600px) and (max-width: 899px) {
+	@media screen and (min-width: 600px) and (max-width: 899px) {
 		.adt-apps-search-results .cards-container {
 			grid-column-gap: .5rem;
 			grid-row-gap: 1.5rem;
@@ -91,15 +165,6 @@
 		}
 	}
 </style>
-
-<#if searchContainer?has_content>
-	<div class="color-neutral-3 d-md-block d-none pb-4 pt-2">
-		<strong class="color-black">
-			${searchContainer.getTotal()}
-		</strong>
-		Applications Available
-	</div>
-</#if>
 
 <#if themeDisplay?has_content>
 	<#assign scopeGroupId = themeDisplay.getScopeGroupId() />
@@ -131,7 +196,14 @@
 							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-app-category")![]
 							categoriesListSize = productCategories?size-1
 							productSpecifications = product.productSpecifications![]
+							productTypes=product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-category")![]
 						/>
+					</#if>
+						
+					<#if productTypes[0]?has_content>
+						<#assign productType=productTypes[0]/>
+					<#else>
+						<#assign productType=""/>
 					</#if>
 
 					<#if product.description?has_content>
@@ -147,6 +219,28 @@
 							</div>
 
 							<div>
+								<span class="d-flex justify-content-end">
+									<div>
+										<#if productType?has_content >
+											<#if productType.name == 'Other'>	
+												<div class="app-type-badge"></div>
+											<#else>
+												<div class="app-type-badge app-type-no-type font-weight-semi-bold
+													<#if productType.name == 'Theme'> app-type-theme</#if>
+													<#if productType.name == 'Object action'> app-type-object-action</#if>
+													<#if productType.name == 'Site Initializer'> app-type-site-initializer</#if>
+													<#if productType.name == 'Payment methods'> app-type-payment-methods</#if>
+													<#if productType.name == 'Workflow action'>	app-type-workflow-action</#if>
+													<#if productType.name == 'Batch'>	app-type-batch</#if>
+													<#if productType.name == 'Checkout'>	app-type-checkout</#if>
+													<#if productType.name == 'Fragments'>	app-type-fragments</#if>				
+												">
+												 	${productType.name}
+												</div>
+											</#if>
+										</#if>
+									</div>
+								</span>
 								<div class="title-container">
 									${productName}
 								</div>

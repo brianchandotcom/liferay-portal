@@ -85,24 +85,19 @@ export default function SaveButtons({
 		});
 	}, [portletNamespace]);
 
-	const onClick = (action) => {
-		const titleInputComponent = Liferay.component(
-			`${portletNamespace}titleMapAsXML`
-		);
+	const onClick = async (action) => {
+		if (!(await validateRequiredFields(formId))) {
+			return;
+		}
 
-		if (titleInputComponent?.getValue(defaultLanguageId)) {
-			if (articleId && !showPublishModal) {
-				handleButtonClick(action);
-			}
-			else {
-				setPublishModalState({
-					publishModalAction: action,
-					publishModalVisible: true,
-				});
-			}
+		if (articleId && !showPublishModal) {
+			handleButtonClick(action);
 		}
 		else {
-			validateRequiredFields(formId);
+			setPublishModalState({
+				publishModalAction: action,
+				publishModalVisible: true,
+			});
 		}
 	};
 
@@ -174,16 +169,28 @@ export default function SaveButtons({
 		);
 	};
 
-	const validateRequiredFields = (formId) => {
-		Liferay.Form.get(formId).formValidator.validate();
-		Liferay.componentReady(
-			`${portletNamespace}dataEngineLayoutRenderer`
-		).then((dataEngineLayoutRenderer) => {
-			const dataEngineLayoutRendererRef =
-				dataEngineLayoutRenderer?.reactComponentRef;
+	const validateRequiredFields = async (formId) => {
+		const formValidator = Liferay.Form?.get(formId)?.formValidator;
 
-			return dataEngineLayoutRendererRef.current.validate();
-		});
+		if (!formValidator) {
+			return true;
+		}
+
+		formValidator.validate();
+
+		if (formValidator.hasErrors()) {
+			return false;
+		}
+
+		const renderer = await Liferay.componentReady(
+			`${portletNamespace}dataEngineLayoutRenderer`
+		);
+
+		if (renderer?.reactComponentRef?.current?.validate) {
+			return renderer.reactComponentRef.current.validate();
+		}
+
+		return true;
 	};
 
 	useEffect(() => {

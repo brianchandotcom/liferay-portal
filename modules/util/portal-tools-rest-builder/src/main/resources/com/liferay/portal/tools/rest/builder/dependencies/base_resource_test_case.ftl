@@ -1256,6 +1256,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 						<@getMethodParameters
 							javaMethodSignature = javaMethodSignature
+							setNullQueryParameters = true
 							testJavaMethodName = javaMethodSignature.methodName
 							varName = "post" + schemaName
 						/>);
@@ -1269,6 +1270,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						get${schemaName} = permissions${schemaName}Resource.${javaMethodSignature.methodName}(
 							<@getMethodParameters
 								javaMethodSignature = javaMethodSignature
+								setNullQueryParameters = true
 								testJavaMethodName = javaMethodSignature.methodName
 								varName = "post" + schemaName
 							/>);
@@ -1794,6 +1796,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
 								<@getMethodParameters
 									javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
+									setNullQueryParameters = true
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = "put" + schemaName
 								/>);
@@ -1869,6 +1872,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
 								<@getMethodParameters
 									javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
+									setNullQueryParameters = true
 									testJavaMethodName = javaMethodSignature.methodName
 									varName = "put" + schemaName
 								/>);

@@ -257,17 +257,14 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		TestEntity testEntity1 = testGraphQLDeleteTestEntity_addTestEntity();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteTestEntity",
-						new HashMap<String, Object>() {
-							{
-								put("testEntityId", testEntity1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteTestEntity"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteTestEntity",
+				new HashMap<String, Object>() {
+					{
+						put("testEntityId", testEntity1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -287,20 +284,16 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		TestEntity testEntity2 = testGraphQLDeleteTestEntity_addTestEntity();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"test_v1_0",
-						new GraphQLField(
-							"deleteTestEntity",
-							new HashMap<String, Object>() {
-								{
-									put("testEntityId", testEntity2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/test_v1_0",
-				"Object/deleteTestEntity"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"test_v1_0",
+				new GraphQLField(
+					"deleteTestEntity",
+					new HashMap<String, Object>() {
+						{
+							put("testEntityId", testEntity2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

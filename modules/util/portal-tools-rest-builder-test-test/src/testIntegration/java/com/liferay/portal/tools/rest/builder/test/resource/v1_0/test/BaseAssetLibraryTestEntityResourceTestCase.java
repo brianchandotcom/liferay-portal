@@ -249,6 +249,73 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		AssetLibraryTestEntity assetLibraryTestEntity1 =
+			testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode_addAssetLibraryTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"assetLibraryId",
+							"\"" +
+								testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode_getAssetLibraryId() +
+									"\"");
+						put(
+							"externalReferenceCode",
+							"\"" +
+								assetLibraryTestEntity1.
+									getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		// Using the namespace test_v1_0
+
+		AssetLibraryTestEntity assetLibraryTestEntity2 =
+			testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode_addAssetLibraryTestEntity();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"test_v1_0",
+				new GraphQLField(
+					"deleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									assetLibraryTestEntity2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+	}
+
+	protected Long
+			testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected AssetLibraryTestEntity
+			testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode_addAssetLibraryTestEntity()
+		throws Exception {
+
+		return testGraphQLAssetLibraryAssetLibraryTestEntity_addAssetLibraryTestEntity();
+	}
+
+	@Test
 	public void testGetAssetLibraryAssetLibraryTestEntitiesPage()
 		throws Exception {
 
@@ -348,6 +415,14 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected AssetLibraryTestEntity
+			testGraphQLAssetLibraryAssetLibraryTestEntity_addAssetLibraryTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

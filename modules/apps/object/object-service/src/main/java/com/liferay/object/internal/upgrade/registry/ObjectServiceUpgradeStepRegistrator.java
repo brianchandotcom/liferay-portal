@@ -14,6 +14,7 @@ import com.liferay.object.internal.upgrade.v10_0_1.ObjectDefinitionPortletIdUpgr
 import com.liferay.object.internal.upgrade.v10_1_1.ObjectDefinitionStaleUserIdUpgradeProcess;
 import com.liferay.object.internal.upgrade.v10_1_1.ObjectFieldStaleUserIdUpgradeProcess;
 import com.liferay.object.internal.upgrade.v10_1_1.ObjectRelationshipStaleUserIdUpgradeProcess;
+import com.liferay.object.internal.upgrade.v10_23_0.ObjectEntryFolderPermissionUpgradeProcess;
 import com.liferay.object.internal.upgrade.v10_4_0.util.ObjectEntryFolderTable;
 import com.liferay.object.internal.upgrade.v10_5_0.ObjectEntryDefaultLanguageIdUpgradeProcess;
 import com.liferay.object.internal.upgrade.v10_8_0.util.ObjectDefinitionSettingTable;
@@ -45,6 +46,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -651,6 +653,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.runSQL(
 				"update ObjectEntry set rootObjectEntryId = 0 where " +
 					"rootObjectEntryId is null"));
+
+		registry.register(
+			"10.22.1", "10.23.0",
+			new ObjectEntryFolderPermissionUpgradeProcess(
+				_resourceActionLocalService, _resourcePermissionLocalService));
 	}
 
 	@Reference
@@ -671,6 +678,9 @@ public class ObjectServiceUpgradeStepRegistrator
 
 	@Reference
 	private NotificationTemplateLocalService _notificationTemplateLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

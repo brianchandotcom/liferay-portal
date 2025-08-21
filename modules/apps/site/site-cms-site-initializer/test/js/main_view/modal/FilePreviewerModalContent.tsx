@@ -37,7 +37,7 @@ jest.mock('document-library-preview-image', () => ({
 describe('FilePreviewerModalContent', () => {
 	it('renders the file name and download link', () => {
 		const {getByRole, getByText} = render(
-			<FilePreviewerModalContent {...baseImageFile} />
+			<FilePreviewerModalContent file={baseImageFile} />
 		);
 
 		expect(getByText('Image 1')).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe('FilePreviewerModalContent', () => {
 
 	it('shows ImagePreviewer when imageThumbnail is present in thumbnailURL', () => {
 		const {getByRole} = render(
-			<FilePreviewerModalContent {...baseImageFile} />
+			<FilePreviewerModalContent file={baseImageFile} />
 		);
 
 		const imagePreview = getByRole('img');
@@ -63,7 +63,7 @@ describe('FilePreviewerModalContent', () => {
 		};
 
 		const {getByText} = render(
-			<FilePreviewerModalContent {...noImageThumbFile} />
+			<FilePreviewerModalContent file={noImageThumbFile} />
 		);
 
 		expect(screen.queryByTestId('image-previewer')).not.toBeInTheDocument();
@@ -73,7 +73,7 @@ describe('FilePreviewerModalContent', () => {
 
 	it('checks the accessibility of the multiple file uploader', async () => {
 		const {container} = render(
-			<FilePreviewerModalContent {...baseImageFile} />
+			<FilePreviewerModalContent file={baseImageFile} />
 		);
 
 		await checkAccessibility({bestPractices: true, context: container});

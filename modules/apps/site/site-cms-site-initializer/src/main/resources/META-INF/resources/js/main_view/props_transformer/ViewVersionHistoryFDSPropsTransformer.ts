@@ -187,17 +187,17 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 						className: '',
 					},
 					contentComponent: () =>
-						FilePreviewerModalContent(
-							itemData.file,
-							sub(
+						FilePreviewerModalContent({
+							file: itemData.file,
+							headerName: sub(
 								Liferay.Language.get('x-version-x'),
 								itemData.title,
 								`${sub(
 									Liferay.Language.get('version-x'),
 									itemData.systemProperties.version.number
 								)}`
-							)
-						),
+							),
+						}),
 					size: 'full-screen',
 				});
 			}

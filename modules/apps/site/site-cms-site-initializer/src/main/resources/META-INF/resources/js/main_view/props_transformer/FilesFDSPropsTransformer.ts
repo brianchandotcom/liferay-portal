@@ -139,10 +139,10 @@ export default function FilesFDSPropsTransformer({
 						className: '',
 					},
 					contentComponent: () =>
-						FilePreviewerModalContent(
-							itemData.embedded.file,
-							itemData.embedded.title
-						),
+						FilePreviewerModalContent({
+							file: itemData.embedded.file,
+							headerName: itemData.embedded.title,
+						}),
 					size: 'full-screen',
 				});
 			}

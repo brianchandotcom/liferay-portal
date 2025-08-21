@@ -14657,6 +14657,14 @@ public class ObjectEntryResourceTest {
 		return URLCodec.encodeURL(string);
 	}
 
+	private Map<String, String> _getActionValue(String href, String method) {
+		return HashMapBuilder.put(
+			"href", href
+		).put(
+			"method", method
+		).build();
+	}
+
 	private Node _getChildNode(int index, Node node) {
 		List<Node> childNodes = node.getChildNodes();
 
@@ -14727,67 +14735,28 @@ public class ObjectEntryResourceTest {
 			StringPool.SLASH, objectEntryId);
 
 		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			HashMapBuilder.put(
-				"href", href
-			).put(
-				"method", "DELETE"
-			).build()
+			"delete", _getActionValue(href, "DELETE")
 		).put(
-			"expire",
-			HashMapBuilder.put(
-				"href", href + "/expire"
-			).put(
-				"method", "POST"
-			).build()
+			"expire", _getActionValue(href + "/expire", "POST")
 		).put(
-			"get",
-			HashMapBuilder.put(
-				"href", href
-			).put(
-				"method", "GET"
-			).build()
+			"get", _getActionValue(href, "GET")
 		).put(
-			"permissions",
-			HashMapBuilder.put(
-				"href", href + "/permissions"
-			).put(
-				"method", "GET"
-			).build()
+			"permissions", _getActionValue(href + "/permissions", "GET")
 		).put(
-			"replace",
-			HashMapBuilder.put(
-				"href", href
-			).put(
-				"method", "PUT"
-			).build()
+			"replace", _getActionValue(href, "PUT")
 		).put(
 			"share",
 			() -> {
 				if (sharingEnabled) {
-					return HashMapBuilder.<String, Map<String, String>>put(
-						"href", href
-					).put(
-						"method", "GET"
-					).build();
+					return _getActionValue(href, "GET");
 				}
 
 				return null;
 			}
 		).put(
-			"update",
-			HashMapBuilder.put(
-				"href", href
-			).put(
-				"method", "PATCH"
-			).build()
+			"update", _getActionValue(href, "PATCH")
 		).put(
-			"versions",
-			HashMapBuilder.put(
-				"href", href + "/versions"
-			).put(
-				"method", "GET"
-			).build()
+			"versions", _getActionValue(href + "/versions", "GET")
 		).build();
 	}
 

@@ -577,6 +577,14 @@ public class ObjectEntryFolderResourceTest
 			actionId);
 	}
 
+	private Map<String, String> _getActionValue(String href, String method) {
+		return HashMapBuilder.put(
+			"href", href
+		).put(
+			"method", method
+		).build();
+	}
+
 	private Map<String, Map<String, String>> _getExpectedActions(
 		long objectEntryFolderId, boolean sharingEnabled) {
 
@@ -585,39 +593,20 @@ public class ObjectEntryFolderResourceTest
 				"/object-entry-folders/" + objectEntryFolderId;
 
 		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			HashMapBuilder.put(
-				"href", href
-			).put(
-				"method", "DELETE"
-			).build()
+			"delete", _getActionValue(href, "DELETE")
 		).put(
-			"get",
-			HashMapBuilder.put(
-				"href", href
-			).put(
-				"method", "GET"
-			).build()
+			"get", _getActionValue(href, "GET")
 		).put(
 			"share",
 			() -> {
 				if (sharingEnabled) {
-					return HashMapBuilder.put(
-						"href", href
-					).put(
-						"method", "GET"
-					).build();
+					return _getActionValue(href, "GET");
 				}
 
 				return null;
 			}
 		).put(
-			"update",
-			HashMapBuilder.put(
-				"href", href
-			).put(
-				"method", "PATCH"
-			).build()
+			"update", _getActionValue(href, "PATCH")
 		).build();
 	}
 

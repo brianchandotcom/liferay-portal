@@ -288,7 +288,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 		}
 
 		_assertRolesPage(new Role[] {randomRole1, randomRole2}, unsafeSupplier);

@@ -220,8 +220,6 @@ public class ObjectEntryLayoutDisplayPageProvider
 	}
 
 	private Map<String, Serializable> _getValues(JSONObject jsonObject) {
-		ObjectMapper objectMapper = new ObjectMapper();
-
 		try {
 			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 				"properties");
@@ -229,6 +227,8 @@ public class ObjectEntryLayoutDisplayPageProvider
 			if (JSONUtil.isEmpty(propertiesJSONObject)) {
 				return Collections.emptyMap();
 			}
+
+			ObjectMapper objectMapper = new ObjectMapper();
 
 			return objectMapper.readValue(
 				propertiesJSONObject.toString(),

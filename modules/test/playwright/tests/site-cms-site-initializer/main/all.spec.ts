@@ -54,3 +54,45 @@ test(
 		);
 	}
 );
+
+test(
+	'Can view Delete confirmation modal for added content',
+	{tag: '@LPD-62554'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/knowledge-bases';
+		const spaceName = 'Default';
+		let objectEntry1;
+
+		const file1Title = `title ${getRandomString()}`;
+
+		try {
+			objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: file1Title,
+				},
+				applicationName,
+				spaceName
+			);
+
+			await assetsPage.gotoAll();
+
+			await assetsPage.table.bodyRows
+				.filter({hasText: file1Title})
+				.locator('input[title="Select Item"]')
+				.check();
+
+			await assetsPage.execBulkItemAction('Delete');
+
+			await expect(page.locator('.modal-title')).toContainText(
+				'Delete Entry'
+			);
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry1.id)
+			);
+		}
+	}
+);

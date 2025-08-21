@@ -16,12 +16,19 @@ export class AssetsPage {
 
 	readonly dataSetFragmentPage: DataSetPage;
 	readonly newButton: Locator;
+	readonly table: {
+		bodyRows: Locator;
+		container: Locator;
+		headRow: Locator;
+	};
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.dataSetFragmentPage = new DataSetPage(page);
 		this.newButton = page.getByLabel('New');
+
+		this.table = this.dataSetFragmentPage.table;
 	}
 
 	async gotoAll() {
@@ -44,6 +51,10 @@ export class AssetsPage {
 
 	getItem(filter: string) {
 		return this.dataSetFragmentPage.getRow(filter);
+	}
+
+	async execBulkItemAction(action: string) {
+		await this.dataSetFragmentPage.execBulkItemAction({action});
 	}
 
 	async execItemAction({

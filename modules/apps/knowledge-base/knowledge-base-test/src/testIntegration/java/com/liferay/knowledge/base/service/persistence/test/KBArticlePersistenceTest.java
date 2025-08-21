@@ -585,6 +585,16 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC_ST() throws Exception {
+		_persistence.countByG_ERC_ST(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByG_ERC_ST(0L, "null", 0);
+
+		_persistence.countByG_ERC_ST(0L, (String)null, 0);
+	}
+
+	@Test
 	public void testCountByG_P_L() throws Exception {
 		_persistence.countByG_P_L(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

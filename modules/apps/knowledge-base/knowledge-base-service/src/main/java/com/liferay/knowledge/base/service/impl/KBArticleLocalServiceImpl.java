@@ -744,7 +744,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		return kbArticlePersistence.fetchByG_ERC_ST_First(
-			groupId, externalReferenceCode,
+			groupId, externalReferenceCode, status,
 			KBArticleVersionComparator.getInstance(false));
 	}
 

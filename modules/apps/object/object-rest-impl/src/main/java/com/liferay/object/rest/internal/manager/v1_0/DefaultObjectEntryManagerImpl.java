@@ -3015,6 +3015,9 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext.getUriInfo(),
 				dtoConverterContext.getUser());
 
+		defaultDTOConverterContext.setAttribute(
+			"objectDefinition", objectDefinition);
+
 		ObjectEntryVersion objectEntryVersion =
 			(ObjectEntryVersion)dtoConverterContext.getAttribute(
 				"objectEntryVersion");
@@ -3023,9 +3026,6 @@ public class DefaultObjectEntryManagerImpl
 			defaultDTOConverterContext.setAttribute(
 				"objectEntryVersion", objectEntryVersion);
 		}
-
-		defaultDTOConverterContext.setAttribute(
-			"objectDefinition", objectDefinition);
 
 		return _objectEntryDTOConverter.toDTO(
 			defaultDTOConverterContext, serviceBuilderObjectEntry);

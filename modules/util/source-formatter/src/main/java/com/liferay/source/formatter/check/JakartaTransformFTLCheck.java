@@ -8,13 +8,13 @@ package com.liferay.source.formatter.check;
 /**
  * @author Alan Huang
  */
-public class HTMLJakartaTransformCheck extends BaseJakartaTransformCheck {
+public class JakartaTransformFTLCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith(".html")) {
+		if (!fileName.endsWith(".ftl")) {
 			return content;
 		}
 

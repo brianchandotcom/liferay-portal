@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class BNDJakartaTransformCheck extends BaseJakartaTransformCheck {
+public class JakartaTransformBNDCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(

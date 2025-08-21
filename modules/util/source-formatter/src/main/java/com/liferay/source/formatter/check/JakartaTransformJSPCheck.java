@@ -8,17 +8,21 @@ package com.liferay.source.formatter.check;
 /**
  * @author Alan Huang
  */
-public class PropertiesJakartaTransformCheck extends BaseJakartaTransformCheck {
+public class JakartaTransformJSPCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith(".properties")) {
+		if (!fileName.endsWith(".jsp") && !fileName.endsWith(".jspf") &&
+			!fileName.endsWith(".jspx")) {
+
 			return content;
 		}
 
-		return replace(content);
+		content = replace(content);
+
+		return replaceTaglibURIs(content);
 	}
 
 }

@@ -410,47 +410,47 @@
 		</check>
 	</source-processor>
 	<source-processor name="JakartaTransformSourceProcessor">
-		<check name="BNDJakartaTransformCheck">
+		<check name="JakartaTransformBNDCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="FTLJakartaTransformCheck">
+		<check name="JakartaTransformFTLCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="GradleJakartaTransformCheck">
+		<check name="JakartaTransformGradleCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="HTMLJakartaTransformCheck">
+		<check name="JakartaTransformHTMLCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="JavaJakartaTransformCheck">
+		<check name="JakartaTransformJavaCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="JSJakartaTransformCheck">
+		<check name="JakartaTransformJSCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="JSPJakartaTransformCheck">
+		<check name="JakartaTransformJSPCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="PropertiesJakartaTransformCheck">
+		<check name="JakartaTransformPropertiesCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="TLDJakartaTransformCheck">
+		<check name="JakartaTransformTLDCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="TSJakartaTransformCheck">
+		<check name="JakartaTransformTSCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>
-		<check name="XMLJakartaTransformCheck">
+		<check name="JakartaTransformXMLCheck">
 			<category name="JakartaTransform" />
 			<description name="Performs replacements for use of Jakarta." />
 		</check>

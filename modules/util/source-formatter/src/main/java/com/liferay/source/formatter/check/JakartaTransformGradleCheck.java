@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class GradleJakartaTransformCheck extends BaseJakartaTransformCheck {
+public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(

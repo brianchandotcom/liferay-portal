@@ -8,13 +8,13 @@ package com.liferay.source.formatter.check;
 /**
  * @author Alan Huang
  */
-public class TSJakartaTransformCheck extends BaseJakartaTransformCheck {
+public class JakartaTransformHTMLCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith(".ts") && !fileName.endsWith(".tsx")) {
+		if (!fileName.endsWith(".html")) {
 			return content;
 		}
 

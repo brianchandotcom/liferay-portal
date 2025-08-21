@@ -115,7 +115,7 @@ public class JournalSubscriptionLocalizedContentTest
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		MailService newMailService = _geMailService();
+		MailService newMailService = _getMailService();
 
 		_serviceRegistration = bundleContext.registerService(
 			MailService.class, newMailService,
@@ -314,7 +314,7 @@ public class JournalSubscriptionLocalizedContentTest
 			LocaleUtil.getDefault(), false, true, serviceContext);
 	}
 
-	private MailService _geMailService() {
+	private MailService _getMailService() {
 		return new MailService() {
 
 			@Override

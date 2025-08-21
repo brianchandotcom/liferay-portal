@@ -50,8 +50,18 @@ public interface RoleResource {
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
+	public Page<Role>
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
+				String assetLibraryExternalReferenceCode,
+				String userGroupExternalReferenceCode)
+		throws Exception;
+
 	public Page<Role> getAssetLibraryUserAccountRolesPage(
 			Long assetLibraryId, Long userAccountId)
+		throws Exception;
+
+	public Page<Role> getAssetLibraryUserGroupRolesPage(
+			Long assetLibraryId, Long userGroupId)
 		throws Exception;
 
 	public Page<Role>
@@ -60,8 +70,18 @@ public interface RoleResource {
 				String userAccountExternalReferenceCode, Role[] roles)
 		throws Exception;
 
+	public Page<Role>
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
+				String assetLibraryExternalReferenceCode,
+				String userGroupExternalReferenceCode, Role[] roles)
+		throws Exception;
+
 	public Page<Role> putAssetLibraryUserAccountRolesPage(
 			Long assetLibraryId, Long userAccountId, Role[] roles)
+		throws Exception;
+
+	public Page<Role> putAssetLibraryUserGroupRolesPage(
+			Long assetLibraryId, Long userGroupId, Role[] roles)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

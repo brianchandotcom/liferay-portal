@@ -54,7 +54,8 @@ public class FileEntryInfoItemObjectProvider
 			long groupId, InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
-		return _getInfoItem(_getCompanyId(), _getGroupId(), infoItemIdentifier);
+		return _getInfoItem(
+			_getGroupId(groupId, infoItemIdentifier), infoItemIdentifier);
 	}
 
 	private long _getCompanyId() {
@@ -96,11 +97,17 @@ public class FileEntryInfoItemObjectProvider
 	}
 
 	private long _getGroupId(
-			long companyId, ERCInfoItemIdentifier ercInfoItemIdentifier,
-			long groupId)
+			long groupId, InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
 		try {
+			if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+				return groupId;
+			}
+
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
 			if (Validator.isNull(
 					ercInfoItemIdentifier.getScopeExternalReferenceCode())) {
 
@@ -109,7 +116,7 @@ public class FileEntryInfoItemObjectProvider
 
 			Group group = _groupLocalService.getGroupByExternalReferenceCode(
 				ercInfoItemIdentifier.getScopeExternalReferenceCode(),
-				companyId);
+				_getCompanyId());
 
 			return group.getGroupId();
 		}
@@ -119,7 +126,7 @@ public class FileEntryInfoItemObjectProvider
 	}
 
 	private FileEntry _getInfoItem(
-			long companyId, long groupId, InfoItemIdentifier infoItemIdentifier)
+			long groupId, InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
 		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
@@ -144,8 +151,7 @@ public class FileEntryInfoItemObjectProvider
 					(ERCInfoItemIdentifier)infoItemIdentifier;
 
 				return _dlAppLocalService.fetchFileEntryByExternalReferenceCode(
-					_getGroupId(companyId, ercInfoItemIdentifier, groupId),
-					ercInfoItemIdentifier.getExternalReferenceCode());
+					groupId, ercInfoItemIdentifier.getExternalReferenceCode());
 			}
 
 			GroupUrlTitleInfoItemIdentifier groupURLTitleInfoItemIdentifier =

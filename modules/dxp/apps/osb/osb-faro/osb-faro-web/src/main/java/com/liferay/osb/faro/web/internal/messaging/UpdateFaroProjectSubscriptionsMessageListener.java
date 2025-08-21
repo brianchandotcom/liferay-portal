@@ -17,6 +17,7 @@ import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.service.FaroProjectUsageLocalService;
+import com.liferay.osb.faro.util.DateUtil;
 import com.liferay.osb.faro.web.internal.constants.FaroMessageDestinationNames;
 import com.liferay.osb.faro.web.internal.messaging.destination.creator.DestinationCreator;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisplay;
@@ -34,9 +35,6 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -244,15 +242,13 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 	}
 
 	private String _getMonthDateKey(Date date) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(date);
 
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-		return dateFormat.format(calendar.getTime());
+		return DateUtil.formatDate(calendar.getTime(), "yyyy-MM-dd");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

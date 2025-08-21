@@ -819,6 +819,14 @@ public class ResourcePermissionLocalServiceImpl
 
 	@Override
 	public List<ResourcePermission> getResourcePermissions(
+		long companyId, String name, int scope) {
+
+		return resourcePermissionPersistence.findByC_N_S(
+			companyId, name, scope);
+	}
+
+	@Override
+	public List<ResourcePermission> getResourcePermissions(
 		long companyId, String name, int scope, long roleId,
 		boolean viewActionId) {
 

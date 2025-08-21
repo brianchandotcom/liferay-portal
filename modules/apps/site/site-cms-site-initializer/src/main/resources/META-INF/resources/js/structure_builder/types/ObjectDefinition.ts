@@ -56,6 +56,7 @@ export type ObjectDefinition = {
 	status?: {
 		code: number;
 	};
+	titleObjectFieldName?: string;
 };
 
 export type ObjectDefinitions = Record<

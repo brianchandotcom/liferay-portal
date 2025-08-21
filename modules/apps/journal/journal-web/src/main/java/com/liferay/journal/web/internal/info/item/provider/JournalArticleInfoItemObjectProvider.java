@@ -249,15 +249,14 @@ public class JournalArticleInfoItemObjectProvider
 
 		JournalArticle article = null;
 
-		String version = infoItemIdentifier.getVersion();
-
 		try {
 			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
 				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 					(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 				article = _getArticle(
-					classPKInfoItemIdentifier.getClassPK(), version);
+					classPKInfoItemIdentifier.getClassPK(),
+					infoItemIdentifier.getVersion());
 			}
 			else if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
 				ERCInfoItemIdentifier ercInfoItemIdentifier =
@@ -266,7 +265,7 @@ public class JournalArticleInfoItemObjectProvider
 				article = _getArticle(
 					ercInfoItemIdentifier.getExternalReferenceCode(),
 					_getGroupId(companyId, ercInfoItemIdentifier, groupId),
-					version);
+					infoItemIdentifier.getVersion());
 			}
 			else if (infoItemIdentifier instanceof GroupKeyInfoItemIdentifier) {
 				GroupKeyInfoItemIdentifier groupKeyInfoItemIdentifier =
@@ -274,7 +273,8 @@ public class JournalArticleInfoItemObjectProvider
 
 				article = _getArticle(
 					groupKeyInfoItemIdentifier.getGroupId(),
-					groupKeyInfoItemIdentifier.getKey(), version);
+					groupKeyInfoItemIdentifier.getKey(),
+					infoItemIdentifier.getVersion());
 			}
 			else if (infoItemIdentifier instanceof
 						GroupUrlTitleInfoItemIdentifier) {
@@ -285,12 +285,14 @@ public class JournalArticleInfoItemObjectProvider
 
 				article = _getArticleByUrlTitle(
 					groupURLTitleInfoItemIdentifier.getGroupId(),
-					groupURLTitleInfoItemIdentifier.getUrlTitle(), version);
+					groupURLTitleInfoItemIdentifier.getUrlTitle(),
+					infoItemIdentifier.getVersion());
 			}
 
 			if ((article != null) &&
 				!Objects.equals(
-					version, InfoItemIdentifier.VERSION_LATEST_APPROVED) &&
+					infoItemIdentifier.getVersion(),
+					InfoItemIdentifier.VERSION_LATEST_APPROVED) &&
 				_isSignedIn() && !_hasPermission(article)) {
 
 				article = _getArticle(

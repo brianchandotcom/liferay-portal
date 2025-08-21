@@ -115,11 +115,11 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 						" was not found in the origin table ",
 						dbInspector.normalizeName("User_"), " and column ",
 						dbInspector.normalizeName("userId"))));
+			Assert.assertTrue(
+				messages.contains("No admin user found for company 0"));
 
 			messages = logCapture2.getMessages();
 
-			Assert.assertTrue(
-				messages.contains("No admin user found for company 0"));
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(

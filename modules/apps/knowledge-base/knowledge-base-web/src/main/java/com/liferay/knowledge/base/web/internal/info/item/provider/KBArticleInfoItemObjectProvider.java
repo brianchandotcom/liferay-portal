@@ -137,7 +137,8 @@ public class KBArticleInfoItemObjectProvider
 				(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 			kbArticle = _getKbArticle(
-				infoItemIdentifier.getVersion(), classPKInfoItemIdentifier);
+				classPKInfoItemIdentifier.getClassPK(),
+				classPKInfoItemIdentifier.getVersion());
 		}
 		else {
 			ERCInfoItemIdentifier ercInfoItemIdentifier =
@@ -163,67 +164,49 @@ public class KBArticleInfoItemObjectProvider
 		return kbArticle;
 	}
 
-	private KBArticle _getKbArticle(
-		String version, ClassPKInfoItemIdentifier classPKInfoItemIdentifier) {
-
-		KBArticle kbArticle;
-
+	private KBArticle _getKbArticle(long classPK, String version) {
 		if (Validator.isNull(version) ||
 			Objects.equals(
 				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
 
-			kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
-				classPKInfoItemIdentifier.getClassPK(),
-				WorkflowConstants.STATUS_APPROVED);
-		}
-		else if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
-			kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
-				classPKInfoItemIdentifier.getClassPK(),
-				WorkflowConstants.STATUS_ANY);
-		}
-		else {
-			KBArticle latestKBArticle =
-				_kbArticleLocalService.fetchLatestKBArticle(
-					classPKInfoItemIdentifier.getClassPK(),
-					WorkflowConstants.STATUS_ANY);
-
-			kbArticle = _kbArticleLocalService.fetchKBArticle(
-				classPKInfoItemIdentifier.getClassPK(),
-				latestKBArticle.getGroupId(), GetterUtil.getInteger(version));
+			return _kbArticleLocalService.fetchLatestKBArticle(
+				classPK, WorkflowConstants.STATUS_APPROVED);
 		}
 
-		return kbArticle;
+		if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
+			return _kbArticleLocalService.fetchLatestKBArticle(
+				classPK, WorkflowConstants.STATUS_ANY);
+		}
+
+		KBArticle latestKBArticle = _kbArticleLocalService.fetchLatestKBArticle(
+			classPK, WorkflowConstants.STATUS_ANY);
+
+		return _kbArticleLocalService.fetchKBArticle(
+			classPK, latestKBArticle.getGroupId(),
+			GetterUtil.getInteger(version));
 	}
 
 	private KBArticle _getKbArticle(
 		String externalReferenceCode, long groupId, String version) {
 
-		KBArticle kbArticle;
-
 		if (Validator.isNull(version) ||
 			Objects.equals(
 				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
 
-			kbArticle =
-				_kbArticleLocalService.
-					fetchLatestKBArticleByExternalReferenceCode(
-						groupId, externalReferenceCode,
-						WorkflowConstants.STATUS_APPROVED);
-		}
-		else if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
-			kbArticle =
-				_kbArticleLocalService.
-					fetchLatestKBArticleByExternalReferenceCode(
-						groupId, externalReferenceCode);
-		}
-		else {
-			kbArticle =
-				_kbArticleLocalService.fetchKBArticleByExternalReferenceCode(
+			return _kbArticleLocalService.
+				fetchLatestKBArticleByExternalReferenceCode(
 					groupId, externalReferenceCode,
-					GetterUtil.getInteger(version));
+					WorkflowConstants.STATUS_APPROVED);
 		}
 
-		return kbArticle;
+		if (Objects.equals(version, InfoItemIdentifier.VERSION_LATEST)) {
+			return _kbArticleLocalService.
+				fetchLatestKBArticleByExternalReferenceCode(
+					groupId, externalReferenceCode);
+		}
+
+		return _kbArticleLocalService.fetchKBArticleByExternalReferenceCode(
+			groupId, externalReferenceCode, GetterUtil.getInteger(version));
 	}
 
 	@Reference

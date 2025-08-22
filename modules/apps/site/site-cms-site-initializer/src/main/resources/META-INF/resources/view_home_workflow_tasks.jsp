@@ -12,10 +12,8 @@ ViewHomeWorkflowTasksDisplayContext viewHomeWorkflowTasksDisplayContext = (ViewH
 %>
 
 <div class="cms-section">
-	<div>
-		<react:component
-			module="{ViewWorkflowTasks} from site-cms-site-initializer"
-			props="<%= viewHomeWorkflowTasksDisplayContext.getReactData() %>"
-		/>
-	</div>
+	<react:component
+		module="{ViewWorkflowTasks} from site-cms-site-initializer"
+		props="<%= viewHomeWorkflowTasksDisplayContext.getReactData() %>"
+	/>
 </div>

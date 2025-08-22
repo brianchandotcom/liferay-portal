@@ -10,16 +10,19 @@ import {useFormik} from 'formik';
 import React, {useEffect, useState} from 'react';
 
 import {
+	assignToMe,
 	assignToUser,
 	getAssignableUsers,
 } from '../../../common/services/WorkflowService';
 import {AssignableUser} from '../../../common/types/AssignableUser';
 
 export default function AssignToModalContent({
+	assignable,
 	closeModal,
 	loadData,
 	workflowTaskId,
 }: {
+	assignable: boolean;
 	closeModal: () => void;
 	loadData: () => Promise<void>;
 	workflowTaskId: number;
@@ -32,31 +35,38 @@ export default function AssignToModalContent({
 	);
 
 	useEffect(() => {
-		const fetchAssignableUsers = async () => {
-			const res = await getAssignableUsers(workflowTaskId);
-			if (res.length) {
-				setAssignableUsers(res);
-			}
-			else {
-				setAssignableUsers([]);
-			}
-			setHasAssignableUsers(!!res.length);
-		};
+		if (assignable) {
+			const fetchAssignableUsers = async () => {
+				const res = await getAssignableUsers(workflowTaskId);
+				if (res.length) {
+					setAssignableUsers(res);
+				}
+				else {
+					setAssignableUsers([]);
+				}
+				setHasAssignableUsers(!!res.length);
+			};
 
-		fetchAssignableUsers();
+			fetchAssignableUsers();
+		}
 
 		return () => {
 			setAssignableUsers([]);
 			setHasAssignableUsers(false);
 		};
-	}, [workflowTaskId]);
+	}, [assignable, workflowTaskId]);
 
 	const assignTo = async (values: any) => {
-		const res = await assignToUser({
-			assigneeId: values.assigneeId,
-			comment: values.comment,
-			workflowTaskId,
-		});
+		const res = assignable
+			? await assignToUser({
+					assigneeId: values.assigneeId,
+					comment: values.comment,
+					workflowTaskId,
+				})
+			: await assignToMe({
+					comment: values.comment,
+					workflowTaskId,
+				});
 
 		if (res.error) {
 			Liferay.Util.openToast({
@@ -82,6 +92,7 @@ export default function AssignToModalContent({
 
 	const {handleChange, handleSubmit} = useFormik({
 		initialValues: {
+			assignable: false,
 			assigneeId: 0,
 			comment: '',
 			workflowTaskId,
@@ -99,27 +110,33 @@ export default function AssignToModalContent({
 
 			<ClayModal.Body>
 				<div>
-					<label htmlFor={`assigneeInput-${workflowTaskId}`}>
-						{Liferay.Language.get('assign-to')}
-					</label>
+					{assignable && (
+						<div>
+							<label htmlFor={`assigneeInput-${workflowTaskId}`}>
+								{Liferay.Language.get('assign-to')}
+							</label>
 
-					<ClaySelect
-						disabled={!hasAssignableUsers}
-						id={`assigneeInput-${workflowTaskId}`}
-						name="assigneeId"
-						onChange={(event) => {
-							handleChange(event);
-						}}
-						value=""
-					>
-						{assignableUsers?.map((user) => (
-							<ClaySelect.Option
-								key={user.id}
-								label={hasAssignableUsers ? user.name : ''}
-								value={user.id}
-							/>
-						))}
-					</ClaySelect>
+							<ClaySelect
+								disabled={!hasAssignableUsers}
+								id={`assigneeInput-${workflowTaskId}`}
+								name="assigneeId"
+								onChange={(event) => {
+									handleChange(event);
+								}}
+								value=""
+							>
+								{assignableUsers?.map((user) => (
+									<ClaySelect.Option
+										key={user.id}
+										label={
+											hasAssignableUsers ? user.name : ''
+										}
+										value={user.id}
+									/>
+								))}
+							</ClaySelect>
+						</div>
+					)}
 
 					<label htmlFor={`commentInput-${workflowTaskId}`}>
 						{Liferay.Language.get('comment')}
@@ -127,7 +144,7 @@ export default function AssignToModalContent({
 
 					<ClayInput
 						component="textarea"
-						disabled={!hasAssignableUsers}
+						disabled={assignable && !hasAssignableUsers}
 						id={`commentInput-${workflowTaskId}`}
 						name="comment"
 						onChange={(event) => {

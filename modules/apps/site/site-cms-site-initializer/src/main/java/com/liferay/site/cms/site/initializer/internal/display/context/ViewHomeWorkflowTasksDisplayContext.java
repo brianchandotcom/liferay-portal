@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import jakarta.portlet.ActionRequest;
 
@@ -34,6 +35,8 @@ public class ViewHomeWorkflowTasksDisplayContext {
 
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"id", CMSSiteInitializerFDSNames.HOME_MY_WORKFLOW_TASKS_SECTION
+		).put(
 			"myWorkflowTasksURL",
 			PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(

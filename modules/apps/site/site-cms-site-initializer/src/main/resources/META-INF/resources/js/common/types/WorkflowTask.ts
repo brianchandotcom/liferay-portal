@@ -6,13 +6,17 @@
 import {WorkflowLog} from './WorkflowLog';
 
 export interface WorkflowTask {
+	assignedDate: string;
 	assigneePerson: {
 		id: Number;
 		name: string;
 	};
+	auditUser: string;
+	auditUserImageURL: string;
 	completed: boolean;
 	dateDue: string;
 	id: string;
+	myWorkflowTasksURL: string;
 	name: string;
 	objectReviewed: {
 		assetTitle: string;

@@ -36,6 +36,10 @@ public class CMSSiteInitializerFDSNames {
 	public static final String FILES_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-filesSection";
 
+	public static final String HOME_MY_WORKFLOW_TASKS_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-homeMyWorkflowTasksSection";
+
 	public static final String HOME_RECENT_ASSETS_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
 			"-homeRecentAssetsSection";

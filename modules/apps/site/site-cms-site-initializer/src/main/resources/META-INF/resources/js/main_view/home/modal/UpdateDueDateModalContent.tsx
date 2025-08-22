@@ -4,7 +4,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import DatePicker from '@clayui/date-picker';
 import {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
@@ -64,9 +63,7 @@ export default function UpdateDueDateModalContent({
 	useEffect(() => {
 		const date = dueDate ? new Date(dueDate) : new Date();
 
-		const dateString = `${String(date.getUTCMonth() + 1).padStart(2, '0')}/${String(date.getUTCDate()).padStart(2, '0')}/${date.getUTCFullYear()}`;
-
-		setDate(dateString);
+		setDate(date.toISOString().split('T')[0]);
 		setTime(
 			String(date.getUTCHours()).padStart(2, '0') +
 				':' +
@@ -102,14 +99,13 @@ export default function UpdateDueDateModalContent({
 
 					<div className="row">
 						<div className="col-6">
-							<DatePicker
-								dateFormat="MM/dd/yyyy"
-								onChange={setDate}
+							<input
+								className="form-control"
+								onChange={(event) =>
+									setDate(event.target.value)
+								}
+								type="date"
 								value={date}
-								years={{
-									end: new Date().getFullYear(),
-									start: 1910,
-								}}
 							/>
 						</div>
 

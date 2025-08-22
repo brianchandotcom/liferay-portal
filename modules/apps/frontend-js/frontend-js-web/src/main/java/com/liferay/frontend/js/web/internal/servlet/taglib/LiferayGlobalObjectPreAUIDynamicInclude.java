@@ -96,7 +96,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		printWriter.print(" data-senna-track=\"temporary\"");
 		printWriter.println(" type=\"text/javascript\">");
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		try {
 			_renderLiferayAUI(httpServletRequest, sb);
@@ -211,7 +211,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayAUI(
-		HttpServletRequest httpServletRequest, StringBuilder sb) {
+		HttpServletRequest httpServletRequest, StringBundler sb) {
 
 		sb.append("AUI: {\n");
 
@@ -279,7 +279,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayBrowser(
-		HttpServletRequest httpServletRequest, StringBuilder sb) {
+		HttpServletRequest httpServletRequest, StringBundler sb) {
 
 		sb.append("Browser: {\n");
 
@@ -321,7 +321,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayData(
-			HttpServletRequest httpServletRequest, StringBuilder sb)
+			HttpServletRequest httpServletRequest, StringBundler sb)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -395,7 +395,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayFeatureFlags(
-		HttpServletRequest httpServletRequest, StringBuilder sb) {
+		HttpServletRequest httpServletRequest, StringBundler sb) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -417,9 +417,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append("},\n");
 	}
 
-	private void _renderLiferayLanguage(StringBuilder sb) {
-		StringBuilder availableSB = new StringBuilder();
-		StringBuilder directionSB = new StringBuilder();
+	private void _renderLiferayLanguage(StringBundler sb) {
+		StringBundler availableSB = new StringBundler();
+		StringBundler directionSB = new StringBundler();
 
 		for (Locale locale : _language.getAvailableLocales()) {
 			String languageId = LocaleUtil.toLanguageId(locale);
@@ -446,7 +446,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append(StringPool.NEW_LINE);
 	}
 
-	private void _renderLiferayPortlet(StringBuilder sb) {
+	private void _renderLiferayPortlet(StringBundler sb) {
 		sb.append("Portlet: {\n");
 
 		_renderStub(
@@ -458,7 +458,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append("},\n");
 	}
 
-	private void _renderLiferayPortletKeys(StringBuilder sb) {
+	private void _renderLiferayPortletKeys(StringBundler sb) {
 		sb.append("PortletKeys: {\n");
 
 		_renderValue("DOCUMENT_LIBRARY", sb, PortletKeys.DOCUMENT_LIBRARY);
@@ -475,7 +475,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayPropsValues(
-		HttpServletRequest httpServletRequest, StringBuilder sb) {
+		HttpServletRequest httpServletRequest, StringBundler sb) {
 
 		sb.append("PropsValues: {\n");
 
@@ -498,7 +498,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayThemeDisplay(
-			HttpServletRequest httpServletRequest, StringBuilder sb)
+			HttpServletRequest httpServletRequest, StringBundler sb)
 		throws PortalException {
 
 		sb.append("ThemeDisplay: {\n");
@@ -645,7 +645,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append("},\n");
 	}
 
-	private void _renderLiferayUtil(StringBuilder sb) {
+	private void _renderLiferayUtil(StringBundler sb) {
 		sb.append("Util: {\n");
 		sb.append(_TPL_WINDOW_JS);
 		sb.append(StringPool.NEW_LINE);
@@ -669,7 +669,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderMethod(
-		String methodName, StringBuilder sb, Object value) {
+		String methodName, StringBundler sb, Object value) {
 
 		sb.append(methodName);
 		sb.append(": () => ");
@@ -690,7 +690,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderStub(
-		String contextPath, String methodName, StringBuilder sb,
+		String contextPath, String methodName, StringBundler sb,
 		String symbol) {
 
 		sb.append(methodName);
@@ -702,7 +702,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderValue(
-		String fieldName, StringBuilder sb, Object value) {
+		String fieldName, StringBundler sb, Object value) {
 
 		sb.append(fieldName);
 		sb.append(": ");

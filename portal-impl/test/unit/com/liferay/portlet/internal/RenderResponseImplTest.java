@@ -48,7 +48,7 @@ public class RenderResponseImplTest {
 		Mockito.when(
 			themeDisplay.getLanguageId()
 		).thenReturn(
-			"en_US"
+			"es_ES"
 		);
 
 		Mockito.when(

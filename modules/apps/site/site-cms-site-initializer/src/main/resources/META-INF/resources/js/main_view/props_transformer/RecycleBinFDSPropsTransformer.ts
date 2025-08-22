@@ -10,6 +10,7 @@ import {sub} from 'frontend-js-web';
 import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/genericOpenModalUtil';
 import {restoreItemAction} from './actions/restoreItemAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
+import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 
 type Action = {
@@ -28,9 +29,14 @@ interface ItemData {
 	embedded: {content: string; objectEntryFolderId: number; title: string};
 }
 
+const OBJECT_ENTRY_FOLDER_CLASSNAME =
+	'com.liferay.object.model.ObjectEntryFolder';
+
 export default function RecycleBinFDSPropsTransformer({
+	itemsActions = [],
 	...otherProps
 }: {
+	itemsActions?: any[];
 	otherProps: any;
 }) {
 	return {
@@ -43,12 +49,31 @@ export default function RecycleBinFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
+					component: SimpleActionLinkRenderer,
+					name: 'simpleActionLinkTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
 					component: SpaceRenderer,
 					name: 'spaceTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],
 		},
+		itemsActions: itemsActions.map((action) => {
+			if (action?.data?.id === 'actionLink') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(
+							item?.entryClassName !==
+								OBJECT_ENTRY_FOLDER_CLASSNAME
+						),
+				};
+			}
+
+			return action;
+		}),
 		async onActionDropdownItemClick({
 			action,
 			itemData,

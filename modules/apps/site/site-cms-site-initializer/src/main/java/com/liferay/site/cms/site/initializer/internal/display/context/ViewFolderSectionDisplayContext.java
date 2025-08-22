@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -75,7 +74,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		Group group = groupLocalService.fetchGroup(
 			objectEntryFolder.getGroupId());
 
-		_addBreadcrumbItem(
+		addBreadcrumbItem(
 			jsonArray, false,
 			ActionUtil.getSpaceURL(group.getClassPK(), themeDisplay),
 			group.getName(themeDisplay.getLocale()));
@@ -89,16 +88,16 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 					_objectEntryFolderLocalService.fetchObjectEntryFolder(
 						GetterUtil.getLong(parts[i]));
 
-				_addBreadcrumbItem(
+				addBreadcrumbItem(
 					jsonArray, false,
-					ActionUtil.geViewFolderURL(
+					ActionUtil.getViewFolderURL(
 						objectEntryFolder.getObjectEntryFolderId(),
 						themeDisplay),
 					objectEntryFolder.getName());
 			}
 		}
 
-		_addBreadcrumbItem(jsonArray, true, null, objectEntryFolder.getName());
+		addBreadcrumbItem(jsonArray, true, null, objectEntryFolder.getName());
 
 		return HashMapBuilder.<String, Object>put(
 			"breadcrumbItems", jsonArray
@@ -277,19 +276,6 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 	@Override
 	protected String getCMSSectionFilterString() {
 		return null;
-	}
-
-	private void _addBreadcrumbItem(
-		JSONArray jsonArray, boolean active, String friendlyURL, String label) {
-
-		jsonArray.put(
-			JSONUtil.put(
-				"active", active
-			).put(
-				"href", friendlyURL
-			).put(
-				"label", label
-			));
 	}
 
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;

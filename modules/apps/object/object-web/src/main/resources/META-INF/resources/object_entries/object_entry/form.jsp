@@ -360,6 +360,14 @@ portletDisplay.setURLBack(backURL);
 									? 'PATCH'
 									: 'PUT';
 
+							if (method === 'PATCH') {
+								values = Object.assign(values, {
+									['status']: {
+										code: <%= WorkflowConstants.STATUS_APPROVED %>,
+									},
+								});
+							}
+
 							Liferay.Util.fetch(path, {
 								body: JSON.stringify(values),
 								headers: new Headers({

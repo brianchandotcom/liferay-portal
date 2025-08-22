@@ -65,6 +65,12 @@ export default function SharedWithMeFDSPropsTransformer({
 						),
 				};
 			}
+			else if (action?.data?.id === 'download') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.file?.link?.href),
+				};
+			}
 			else if (action?.data?.id === 'share') {
 				return {
 					...action,

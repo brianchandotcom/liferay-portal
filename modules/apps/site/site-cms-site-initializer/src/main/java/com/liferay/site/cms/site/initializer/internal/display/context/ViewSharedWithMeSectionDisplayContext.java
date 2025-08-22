@@ -158,6 +158,10 @@ public class ViewSharedWithMeSectionDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "edit"), "get", null,
 				null),
 			new FDSActionDropdownItem(
+				"{file.link.href}", "download", "download",
+				LanguageUtil.get(_httpServletRequest, "download"), "get", null,
+				"link"),
+			new FDSActionDropdownItem(
 				ActionUtil.getBaseViewFolderURL(_themeDisplay) + "{classPK}",
 				"view", "actionLinkFolder",
 				LanguageUtil.get(_httpServletRequest, "view-folder"), "get",
@@ -175,8 +179,7 @@ public class ViewSharedWithMeSectionDisplayContext {
 				"link",
 				HashMapBuilder.<String, Object>put(
 					"className", ObjectEntryFolder.class.getName()
-				).build())
-		);
+				).build()));
 	}
 
 	private String[] _getObjectFolderExternalReferenceCodes() {

@@ -83,7 +83,8 @@ public class ViewSharedWithMeSectionDisplayContext {
 
 	public String getAPIURL() {
 		return "/o/headless-admin-user/v1.0/my-user-account/shared-assets" +
-			"/shared-with-me?filter=spaceDepotEntry eq true";
+			"/shared-with-me?filter=(spaceDepotEntry eq true)" +
+				"&nestedFields=file";
 	}
 
 	public Map<String, Object> getEmptyState() {
@@ -131,6 +132,22 @@ public class ViewSharedWithMeSectionDisplayContext {
 				null, "share", "share",
 				LanguageUtil.get(_httpServletRequest, "share"), "get", null,
 				"link"),
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "view", "view-file",
+				LanguageUtil.get(_httpServletRequest, "view"), null, null, null,
+				HashMapBuilder.<String, Object>put(
+					"className", basicDocumentClassName
+				).build()),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/edit_content_item?&p_l_mode=read&p_p_state=",
+					LiferayWindowState.POP_UP, "&redirect=",
+					_themeDisplay.getURLCurrent(), "&objectEntryId={classPK}"),
+				"view", "view-content",
+				LanguageUtil.get(_httpServletRequest, "view"), "get", null,
+				"modal"),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),

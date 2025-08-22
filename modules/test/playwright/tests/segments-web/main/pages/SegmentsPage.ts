@@ -199,8 +199,8 @@ export class SegmentsPage {
 		propertyName: string
 	) {
 		const tabLocator = this.page.getByRole('button', {
-			name: tabName,
 			exact: true,
+			name: tabName,
 		});
 		const propertyLocator = this.page.getByText(propertyName);
 		const isPropertyVisible = await propertyLocator.isVisible();
@@ -285,13 +285,13 @@ export class SegmentsPage {
 		];
 
 		for (const locator of candidateLocators) {
-			if (await locator.count() > 0) {
+			if ((await locator.count()) > 0) {
 				await locator.first().click();
+
 				return;
 			}
 		}
 	}
-
 
 	async viewCriterionValue(value: string) {
 		const criterionElement = this.page.locator(
@@ -303,7 +303,9 @@ export class SegmentsPage {
 	}
 
 	async viewFieldTypes(typeName: string) {
-		const fieldTypeLocator = this.page.locator(`div.panel-unstyled#${typeName}`);
+		const fieldTypeLocator = this.page.locator(
+			`div.panel-unstyled#${typeName}`
+		);
 
 		await expect(fieldTypeLocator).toBeVisible();
 	}

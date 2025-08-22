@@ -5,12 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
-import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
-import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.LayoutStructureItemImporter;
-import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
-import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureItemImporterUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.SegmentsExperienceUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
@@ -18,7 +14,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -204,27 +199,6 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		if (pageExperience.getPageElements() != null) {
 			existingPageExperience.setPageElements(
 				pageExperience::getPageElements);
-		}
-	}
-
-	private void _addLayoutStructureItem(
-			LayoutStructure layoutStructure,
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext,
-			PageElement pageElement)
-		throws Exception {
-
-		LayoutStructureItemImporter layoutStructureItemImporter =
-			LayoutStructureItemImporterUtil.getLayoutStructureItemImporter(
-				pageElement.getPageElementDefinition());
-
-		layoutStructureItemImporter.addLayoutStructureItem(
-			layoutStructure, layoutStructureItemImporterContext, pageElement);
-
-		for (PageElement childPageElement : pageElement.getPageElements()) {
-			_addLayoutStructureItem(
-				layoutStructure, layoutStructureItemImporterContext,
-				childPageElement);
 		}
 	}
 

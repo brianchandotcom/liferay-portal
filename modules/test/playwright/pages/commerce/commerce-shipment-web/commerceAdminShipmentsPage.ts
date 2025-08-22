@@ -75,7 +75,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		this.carrierDetailsSubmitButton = page
 			.locator('.modal-item-last')
 			.getByRole('button', {exact: true, name: 'Submit'});
-		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
+		this.backLink = page.locator('span[title="Back"]');
 		this.editProductCloseButton = page
 			.frameLocator('iframe')
 			.getByRole('button')

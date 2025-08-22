@@ -24,7 +24,7 @@ export class CommerceAdminInventoryPage extends CommerceDNDTablePage {
 			'#p_p_id_com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet_ .fds table'
 		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
+		this.backLink = page.locator('span[title="Back"]');
 		this.changeLogLink = page.getByRole('link', {name: 'Changelog'});
 		this.page = page;
 	}

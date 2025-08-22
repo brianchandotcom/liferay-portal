@@ -903,7 +903,6 @@ test(
 		await commerceAdminProductConfigurationEntriesPage.addDataSetFilter(
 			'Product Type',
 			'Simple',
-			true,
 			true
 		);
 
@@ -915,8 +914,7 @@ test(
 		await commerceAdminProductConfigurationEntriesPage.addDataSetFilter(
 			'Purchasable',
 			'Yes',
-			false,
-			true
+			false
 		);
 
 		await expect(
@@ -948,8 +946,7 @@ test(
 		await commerceAdminProductConfigurationEntriesPage.addDataSetFilter(
 			'Shippable',
 			'Yes',
-			false,
-			true
+			false
 		);
 
 		await expect(

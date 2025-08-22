@@ -118,7 +118,7 @@ export class CommerceLayoutsPage {
 		this.availableThemesFrame = page.frameLocator(
 			'iframe[title="Available Themes"]'
 		);
-		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
+		this.backLink = page.locator('span[title="Back"]');
 		this.cancelButton = page.getByRole('button', {
 			exact: true,
 			name: 'Cancel',

@@ -2671,8 +2671,6 @@ definition {
 
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
-
 		Click(
 			key_categoryFilter = "Catalog",
 			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
@@ -2693,8 +2691,6 @@ definition {
 
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
-
 		Click(
 			key_categoryFilter = "Channel",
 			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
@@ -2713,8 +2709,6 @@ definition {
 
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
-
 		Click(
 			key_categoryFilter = "Product Type",
 			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
@@ -2730,10 +2724,6 @@ definition {
 		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 
 		Button.click(button = "Reset Filters");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
 
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 	}

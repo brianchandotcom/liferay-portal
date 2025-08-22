@@ -4,32 +4,42 @@
  */
 
 import {MultiSelectItem} from '@liferay/object-js-components-web';
-import {createResourceURL, fetch} from 'frontend-js-web';
+import {fetch} from 'frontend-js-web';
 
-const userGroupLabel = Liferay.Language.get('user-groups');
+import {HEADERS} from '../../util/constants';
 
-export async function getEmailNotificationUserGroups(baseResourceURL: string) {
-	const response = await fetch(
-		createResourceURL(baseResourceURL, {
-			p_p_resource_id:
-				'/notification_templates/get_email_notification_user_groups',
-		}).toString()
-	);
+export async function getUserGroups(
+	recipients?: Partial<UserNotificationRecipients>[]
+) {
+	const query =
+		'/o/headless-admin-user/v1.0/user-groups?page=-1&sort=name:asc';
 
-	const userGroupsResponse = await response.json();
-	const userGroups = [] as MultiSelectItem[];
-
-	userGroups.push({
-		children: (Object.values(userGroupsResponse) as string[]).map(
-			(name: string) => ({
-				checked: false,
-				label: name,
-				value: name,
-			})
-		),
-		label: userGroupLabel,
-		value: 'user-groups',
+	const response = await fetch(query, {
+		headers: HEADERS,
+		method: 'GET',
 	});
+
+	const {items} = (await response.json()) as {items: {name: string}[]};
+
+	let selectedUserGroups = new Set();
+
+	if (recipients !== undefined) {
+		selectedUserGroups = new Set(
+			(recipients as Partial<UserNotificationRecipients>[]).map(
+				(recipient) => recipient.userGroupName
+			)
+		);
+	}
+
+	const userGroups = {
+		children: items.map(({name}) => ({
+			checked: selectedUserGroups.has(name),
+			label: name,
+			value: name,
+		})),
+		label: Liferay.Language.get('user-groups'),
+		value: 'user-groups',
+	} as MultiSelectItem;
 
 	return userGroups;
 }

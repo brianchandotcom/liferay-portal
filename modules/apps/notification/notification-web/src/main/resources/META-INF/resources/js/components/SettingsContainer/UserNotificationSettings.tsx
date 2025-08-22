@@ -14,6 +14,7 @@ import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../../util/constants';
 import {getRoles, getUserNotificationRoles} from './rolesUtil';
+import {getUserGroups} from './userGroupsUtil';
 
 interface User {
 	alternateName: string;
@@ -132,36 +133,6 @@ export function UserNotificationSettings({
 		setSelectItems([users]);
 	};
 
-	const getUserGroups = async () => {
-		const apiURL = '/o/headless-admin-user/v1.0/user-groups';
-		const query = `${apiURL}?page=-1&sort=name:asc`;
-
-		const response = await fetch(query, {
-			headers: HEADERS,
-			method: 'GET',
-		});
-
-		const {items} = (await response.json()) as {items: {name: string}[]};
-
-		const selectedUserGroups = new Set(
-			(recipients as Partial<UserNotificationRecipients>[]).map(
-				(recipient) => recipient.userGroupName
-			)
-		);
-
-		const userGroups = {
-			children: items.map(({name}) => ({
-				checked: selectedUserGroups.has(name),
-				label: name,
-				value: name,
-			})),
-			label: '',
-			value: 'userGroupList',
-		} as MultiSelectItem;
-
-		setSelectItems([userGroups]);
-	};
-
 	const handleMultiSelectItemsChange = (items: MultiSelectItem[]) => {
 		const keySet = {
 			'role': 'roleName',
@@ -211,7 +182,11 @@ export function UserNotificationSettings({
 			}
 
 			if (recipientType === 'user-group') {
-				await getUserGroups();
+				await setSelectItems([
+					await getUserGroups(
+						recipients as Partial<UserNotificationRecipients>[]
+					),
+				]);
 
 				return;
 			}
@@ -264,7 +239,11 @@ export function UserNotificationSettings({
 						getUserRoles();
 					}
 					else if (value === 'user-group') {
-						getUserGroups();
+						getUserGroups(
+							recipients as Partial<UserNotificationRecipients>[]
+						).then((userGroups) => {
+							setSelectItems([userGroups]);
+						});
 					}
 				}}
 				selectedKey={recipientType}

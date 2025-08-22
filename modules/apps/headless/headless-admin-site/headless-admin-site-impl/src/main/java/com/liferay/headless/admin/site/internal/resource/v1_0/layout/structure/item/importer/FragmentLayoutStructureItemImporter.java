@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.Objects;
@@ -94,6 +95,25 @@ public class FragmentLayoutStructureItemImporter
 			fragmentInstancePageElementDefinition,
 			layoutStructureItemImporterContext.getGroupId());
 
+		long originalFragmentEntryLinkId = 0;
+
+		if (Validator.isNotNull(
+				fragmentInstancePageElementDefinition.
+					getDraftFragmentInstanceExternalReferenceCode())) {
+
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.
+					fetchFragmentEntryLinkByExternalReferenceCode(
+						fragmentInstancePageElementDefinition.
+							getDraftFragmentInstanceExternalReferenceCode(),
+						layoutStructureItemImporterContext.getGroupId());
+
+			if (fragmentEntryLink != null) {
+				originalFragmentEntryLinkId =
+					fragmentEntryLink.getFragmentEntryLinkId();
+			}
+		}
+
 		int type = FragmentConstants.TYPE_COMPONENT;
 
 		if (Objects.equals(
@@ -119,7 +139,7 @@ public class FragmentLayoutStructureItemImporter
 				fragmentInstancePageElementDefinition.
 					getFragmentInstanceExternalReferenceCode(),
 				layoutStructureItemImporterContext.getUserId(),
-				layout.getGroupId(), 0,
+				layout.getGroupId(), originalFragmentEntryLinkId,
 				fragmentEntry.getFragmentEntryId(),
 				layoutStructureItemImporterContext.getSegmentsExperienceId(),
 				layout.getPlid(),

@@ -298,6 +298,7 @@
 		<field name="companyId" type="long" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="languageId" type="String" />
+		<field name="CProductId" type="long" />
 		<field name="name" type="String">
 			<hint-collection name="TEXTAREA" />
 			<sanitize content-type="text/plain" modes="ALL" />
@@ -322,7 +323,6 @@
 			<hint name="max-length">255</hint>
 			<sanitize content-type="text/html" modes="ALL" />
 		</field>
-		<field name="CProductId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionOptionRel">
 		<field name="mvccVersion" type="long" />

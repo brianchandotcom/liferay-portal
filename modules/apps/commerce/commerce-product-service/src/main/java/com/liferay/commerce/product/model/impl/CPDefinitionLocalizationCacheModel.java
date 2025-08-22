@@ -82,6 +82,8 @@ public class CPDefinitionLocalizationCacheModel
 		sb.append(CPDefinitionId);
 		sb.append(", languageId=");
 		sb.append(languageId);
+		sb.append(", CProductId=");
+		sb.append(CProductId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", shortDescription=");
@@ -94,8 +96,6 @@ public class CPDefinitionLocalizationCacheModel
 		sb.append(metaDescription);
 		sb.append(", metaKeywords=");
 		sb.append(metaKeywords);
-		sb.append(", CProductId=");
-		sb.append(CProductId);
 		sb.append("}");
 
 		return sb.toString();
@@ -119,6 +119,8 @@ public class CPDefinitionLocalizationCacheModel
 		else {
 			cpDefinitionLocalizationImpl.setLanguageId(languageId);
 		}
+
+		cpDefinitionLocalizationImpl.setCProductId(CProductId);
 
 		if (name == null) {
 			cpDefinitionLocalizationImpl.setName("");
@@ -162,8 +164,6 @@ public class CPDefinitionLocalizationCacheModel
 			cpDefinitionLocalizationImpl.setMetaKeywords(metaKeywords);
 		}
 
-		cpDefinitionLocalizationImpl.setCProductId(CProductId);
-
 		cpDefinitionLocalizationImpl.resetOriginalValues();
 
 		return cpDefinitionLocalizationImpl;
@@ -183,14 +183,14 @@ public class CPDefinitionLocalizationCacheModel
 
 		CPDefinitionId = objectInput.readLong();
 		languageId = objectInput.readUTF();
+
+		CProductId = objectInput.readLong();
 		name = objectInput.readUTF();
 		shortDescription = objectInput.readUTF();
 		description = (String)objectInput.readObject();
 		metaTitle = objectInput.readUTF();
 		metaDescription = objectInput.readUTF();
 		metaKeywords = objectInput.readUTF();
-
-		CProductId = objectInput.readLong();
 	}
 
 	@Override
@@ -211,6 +211,8 @@ public class CPDefinitionLocalizationCacheModel
 		else {
 			objectOutput.writeUTF(languageId);
 		}
+
+		objectOutput.writeLong(CProductId);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -253,8 +255,6 @@ public class CPDefinitionLocalizationCacheModel
 		else {
 			objectOutput.writeUTF(metaKeywords);
 		}
-
-		objectOutput.writeLong(CProductId);
 	}
 
 	public long mvccVersion;
@@ -263,12 +263,12 @@ public class CPDefinitionLocalizationCacheModel
 	public long companyId;
 	public long CPDefinitionId;
 	public String languageId;
+	public long CProductId;
 	public String name;
 	public String shortDescription;
 	public String description;
 	public String metaTitle;
 	public String metaDescription;
 	public String metaKeywords;
-	public long CProductId;
 
 }

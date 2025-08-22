@@ -44,13 +44,13 @@ public class CPDefinitionLocalizationWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("languageId", getLanguageId());
+		attributes.put("CProductId", getCProductId());
 		attributes.put("name", getName());
 		attributes.put("shortDescription", getShortDescription());
 		attributes.put("description", getDescription());
 		attributes.put("metaTitle", getMetaTitle());
 		attributes.put("metaDescription", getMetaDescription());
 		attributes.put("metaKeywords", getMetaKeywords());
-		attributes.put("CProductId", getCProductId());
 
 		return attributes;
 	}
@@ -94,6 +94,12 @@ public class CPDefinitionLocalizationWrapper
 			setLanguageId(languageId);
 		}
 
+		Long CProductId = (Long)attributes.get("CProductId");
+
+		if (CProductId != null) {
+			setCProductId(CProductId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -128,12 +134,6 @@ public class CPDefinitionLocalizationWrapper
 
 		if (metaKeywords != null) {
 			setMetaKeywords(metaKeywords);
-		}
-
-		Long CProductId = (Long)attributes.get("CProductId");
-
-		if (CProductId != null) {
-			setCProductId(CProductId);
 		}
 	}
 

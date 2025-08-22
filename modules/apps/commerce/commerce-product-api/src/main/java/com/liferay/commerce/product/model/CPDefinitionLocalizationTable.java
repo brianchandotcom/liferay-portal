@@ -43,6 +43,9 @@ public class CPDefinitionLocalizationTable
 	public final Column<CPDefinitionLocalizationTable, String> languageId =
 		createColumn(
 			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLocalizationTable, Long> CProductId =
+		createColumn(
+			"CProductId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionLocalizationTable, String> name =
 		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionLocalizationTable, String>
@@ -62,9 +65,6 @@ public class CPDefinitionLocalizationTable
 	public final Column<CPDefinitionLocalizationTable, String> metaKeywords =
 		createColumn(
 			"metaKeywords", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionLocalizationTable, Long> CProductId =
-		createColumn(
-			"CProductId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private CPDefinitionLocalizationTable() {
 		super("CPDefinitionLocalization", CPDefinitionLocalizationTable::new);

@@ -1725,13 +1725,13 @@ public class CPDefinitionLocalizationPersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctMergeColumnNames.add("CPDefinitionId");
 		ctMergeColumnNames.add("languageId");
+		ctMergeColumnNames.add("CProductId");
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("shortDescription");
 		ctMergeColumnNames.add("description");
 		ctMergeColumnNames.add("metaTitle");
 		ctMergeColumnNames.add("metaDescription");
 		ctMergeColumnNames.add("metaKeywords");
-		ctMergeColumnNames.add("CProductId");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

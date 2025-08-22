@@ -129,6 +129,8 @@ public class CPDefinitionLocalizationPersistenceTest {
 		newCPDefinitionLocalization.setLanguageId(
 			RandomTestUtil.randomString());
 
+		newCPDefinitionLocalization.setCProductId(RandomTestUtil.nextLong());
+
 		newCPDefinitionLocalization.setName(RandomTestUtil.randomString());
 
 		newCPDefinitionLocalization.setShortDescription(
@@ -144,8 +146,6 @@ public class CPDefinitionLocalizationPersistenceTest {
 
 		newCPDefinitionLocalization.setMetaKeywords(
 			RandomTestUtil.randomString());
-
-		newCPDefinitionLocalization.setCProductId(RandomTestUtil.nextLong());
 
 		_cpDefinitionLocalizations.add(
 			_persistence.update(newCPDefinitionLocalization));
@@ -173,6 +173,9 @@ public class CPDefinitionLocalizationPersistenceTest {
 			existingCPDefinitionLocalization.getLanguageId(),
 			newCPDefinitionLocalization.getLanguageId());
 		Assert.assertEquals(
+			existingCPDefinitionLocalization.getCProductId(),
+			newCPDefinitionLocalization.getCProductId());
+		Assert.assertEquals(
 			existingCPDefinitionLocalization.getName(),
 			newCPDefinitionLocalization.getName());
 		Assert.assertEquals(
@@ -190,9 +193,6 @@ public class CPDefinitionLocalizationPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinitionLocalization.getMetaKeywords(),
 			newCPDefinitionLocalization.getMetaKeywords());
-		Assert.assertEquals(
-			existingCPDefinitionLocalization.getCProductId(),
-			newCPDefinitionLocalization.getCProductId());
 	}
 
 	@Test
@@ -244,9 +244,9 @@ public class CPDefinitionLocalizationPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CPDefinitionLocalization", "mvccVersion", true, "ctCollectionId",
 			true, "cpDefinitionLocalizationId", true, "companyId", true,
-			"CPDefinitionId", true, "languageId", true, "name", true,
-			"shortDescription", true, "metaTitle", true, "metaDescription",
-			true, "metaKeywords", true, "CProductId", true);
+			"CPDefinitionId", true, "languageId", true, "CProductId", true,
+			"name", true, "shortDescription", true, "metaTitle", true,
+			"metaDescription", true, "metaKeywords", true);
 	}
 
 	@Test
@@ -546,6 +546,8 @@ public class CPDefinitionLocalizationPersistenceTest {
 
 		cpDefinitionLocalization.setLanguageId(RandomTestUtil.randomString());
 
+		cpDefinitionLocalization.setCProductId(RandomTestUtil.nextLong());
+
 		cpDefinitionLocalization.setName(RandomTestUtil.randomString());
 
 		cpDefinitionLocalization.setShortDescription(
@@ -559,8 +561,6 @@ public class CPDefinitionLocalizationPersistenceTest {
 			RandomTestUtil.randomString());
 
 		cpDefinitionLocalization.setMetaKeywords(RandomTestUtil.randomString());
-
-		cpDefinitionLocalization.setCProductId(RandomTestUtil.nextLong());
 
 		_cpDefinitionLocalizations.add(
 			_persistence.update(cpDefinitionLocalization));

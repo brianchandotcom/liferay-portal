@@ -6,7 +6,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import {useModal} from '@clayui/modal';
 import {IView} from '@liferay/frontend-data-set-web';
-import {render, within} from '@testing-library/react';
+import {render, waitFor, within} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {fetch, loadClientExtensions, sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -49,7 +50,7 @@ jest.mock('frontend-js-web', () => {
 			});
 		}),
 		loadClientExtensions: jest.fn(() => {
-			Promise.resolve();
+			return Promise.resolve();
 		}),
 		sub: jest.fn((...args) => actualPackage.sub(...args)),
 	};
@@ -61,9 +62,11 @@ const mockedSub = sub as jest.Mock;
 
 const ItemSelectorModalWrapper = ({
 	defaultOpen,
+	onItemsChange,
 	selectedItems,
 }: {
 	defaultOpen: boolean;
+	onItemsChange: (items: TestItem[]) => void;
 	selectedItems: TestItem[];
 }) => {
 	const {observer, onOpenChange, open} = useModal({defaultOpen});
@@ -96,8 +99,8 @@ const ItemSelectorModalWrapper = ({
 				itemValueLocator: 'id',
 				items: selectedItems,
 				observer,
+				onItemsChange,
 				onOpenChange,
-				onSelectedItemsChange: jest.fn(),
 				open,
 				type: 'Space',
 			}}
@@ -127,9 +130,13 @@ describe('ItemSelectorModal component', () => {
 		mockedSub.mockReset();
 	});
 
-	it('renders an open item selector modal, with no selected items', async () => {
+	it('renders an item selector modal, with no selected items', async () => {
 		const {findByRole} = render(
-			<ItemSelectorModalWrapper defaultOpen={true} selectedItems={[]} />
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={jest.fn()}
+				selectedItems={[]}
+			/>
 		);
 
 		const modal = await findByRole('dialog');
@@ -162,10 +169,11 @@ describe('ItemSelectorModal component', () => {
 		expect(select).toBeDisabled();
 	});
 
-	it('renders an open single item selector modal, with one selected items', async () => {
+	it('renders an item selector modal, with one selected items', async () => {
 		const {findByRole} = render(
 			<ItemSelectorModalWrapper
 				defaultOpen={true}
+				onItemsChange={jest.fn()}
 				selectedItems={[mockSecondItem]}
 			/>
 		);
@@ -207,5 +215,45 @@ describe('ItemSelectorModal component', () => {
 		expect(select).toBeInTheDocument();
 
 		expect(select).toBeEnabled();
+	});
+
+	it('must not fire change items callback until click on "Select" button', async () => {
+		const user = userEvent.setup();
+		const mockedOnSelectedItemsChange = jest.fn();
+
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={mockedOnSelectedItemsChange}
+				selectedItems={[]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
+		const [firstItem] =
+			await within(modal).findAllByLabelText(/item name$/gi);
+
+		const footerActions = await within(modal).findByRole('group');
+
+		const [, select] = await within(footerActions).findAllByRole('button');
+
+		expect(select).toBeDisabled();
+
+		await user.click(firstItem);
+
+		await waitFor(() => {
+			expect(select).toBeEnabled();
+		});
+
+		expect(mockedOnSelectedItemsChange).not.toHaveBeenCalled();
+
+		await user.click(select);
+
+		expect(mockedOnSelectedItemsChange).toHaveBeenCalledTimes(1);
+
+		expect(mockedOnSelectedItemsChange).toHaveBeenLastCalledWith([
+			mockFirstItem,
+		]);
 	});
 });

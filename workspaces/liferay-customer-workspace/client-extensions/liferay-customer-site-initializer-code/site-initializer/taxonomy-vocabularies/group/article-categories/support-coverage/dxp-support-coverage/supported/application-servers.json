@@ -1,10 +1,4 @@
 {
 	"name": "Application Servers",
-	"taxonomyCategoryProperties": [
-		{
-			"key": "visible",
-			"value": "false"
-		}
-	],
 	"viewableBy": "Anyone"
 }

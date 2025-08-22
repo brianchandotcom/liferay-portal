@@ -49,7 +49,7 @@ export async function restoreItemAction(
 			const url =
 				Liferay.ThemeDisplay.getPathContext() +
 				'/o/cms/object-entry-folder-context?objectEntryFolderId=' +
-				entry.objectEntryFolderId;
+				(entry.objectEntryFolderId ?? entry.parentObjectEntryFolderId);
 
 			const entryFolderResponse = await fetch(url, {
 				headers,

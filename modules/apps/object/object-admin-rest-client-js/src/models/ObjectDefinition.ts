@@ -12,6 +12,7 @@
 			import {ObjectValidationRule} from './ObjectValidationRule';
 			import {ObjectView} from './ObjectView';
 			import {Status} from './Status';
+			import {WorkflowDefinitionLink} from './WorkflowDefinitionLink';
 
 /**
  * @author Javier Gamarra
@@ -64,6 +65,7 @@
 			"storageType"?: string;
 			"system"?: boolean;
 			"titleObjectFieldName"?: string;
+			"workflowDefinitionLinks"?: Array<WorkflowDefinitionLink>;
 
 		static "discriminator": string | undefined = undefined;
 
@@ -296,6 +298,11 @@
 			baseName: "titleObjectFieldName",
 			name: "titleObjectFieldName",
 			type: "string",
+		},
+		{
+			baseName: "workflowDefinitionLinks",
+			name: "workflowDefinitionLinks",
+			type: "Array<WorkflowDefinitionLink>",
 		},
 		];
 

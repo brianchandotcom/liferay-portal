@@ -1015,6 +1015,31 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected String titleObjectFieldName;
 
+	public WorkflowDefinitionLink[] getWorkflowDefinitionLinks() {
+		return workflowDefinitionLinks;
+	}
+
+	public void setWorkflowDefinitionLinks(
+		WorkflowDefinitionLink[] workflowDefinitionLinks) {
+
+		this.workflowDefinitionLinks = workflowDefinitionLinks;
+	}
+
+	public void setWorkflowDefinitionLinks(
+		UnsafeSupplier<WorkflowDefinitionLink[], Exception>
+			workflowDefinitionLinksUnsafeSupplier) {
+
+		try {
+			workflowDefinitionLinks =
+				workflowDefinitionLinksUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected WorkflowDefinitionLink[] workflowDefinitionLinks;
+
 	@Override
 	public ObjectDefinition clone() throws CloneNotSupportedException {
 		return (ObjectDefinition)super.clone();

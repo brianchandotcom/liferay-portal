@@ -130,7 +130,7 @@ describe('ItemSelectorModal component', () => {
 		mockedSub.mockReset();
 	});
 
-	it('renders an item selector modal, with no selected items', async () => {
+	it('renders an item selector modal with header and footer modal structure', async () => {
 		const {findByRole} = render(
 			<ItemSelectorModalWrapper
 				defaultOpen={true}
@@ -147,6 +147,31 @@ describe('ItemSelectorModal component', () => {
 
 		expect(sub).toHaveBeenNthCalledWith(1, 'select-x', 'Space');
 
+		const footerActions = await within(modal).findByRole('group');
+
+		const [cancel, select] =
+			await within(footerActions).findAllByRole('button');
+
+		expect(cancel).toBeInTheDocument();
+
+		expect(cancel).toBeEnabled();
+
+		expect(select).toBeInTheDocument();
+
+		expect(select).toBeDisabled();
+	});
+
+	it('renders items with radio for single selection type', async () => {
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={jest.fn()}
+				selectedItems={[]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
 		const items = await within(modal).findAllByLabelText(/item name$/gi);
 
 		expect(items).toHaveLength(2);
@@ -157,19 +182,96 @@ describe('ItemSelectorModal component', () => {
 
 		expect(secondItem).toHaveTextContent(mockSecondItem.name);
 
-		const footerActions = await within(modal).findByRole('group');
+		const radios = await within(modal).findAllByRole('radio');
 
-		const [cancel, select] =
-			await within(footerActions).findAllByRole('button');
+		expect(radios).toHaveLength(2);
 
-		expect(cancel).toBeInTheDocument();
+		const [firstItemRadio, secondItemRadio] = radios;
 
-		expect(select).toBeInTheDocument();
+		expect(firstItemRadio).not.toBeChecked();
 
-		expect(select).toBeDisabled();
+		expect(secondItemRadio).not.toBeChecked();
 	});
 
-	it('renders an item selector modal, with one selected items', async () => {
+	it('enables the "Select" button after checking an item', async () => {
+		const user = userEvent.setup();
+
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={jest.fn()}
+				selectedItems={[]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
+		const firstItem =
+			await within(modal).findByLabelText(/first item name$/gi);
+
+		const [firstItemRadio, secondItemRadio] =
+			await within(modal).findAllByRole('radio');
+
+		expect(firstItemRadio).not.toBeChecked();
+
+		expect(secondItemRadio).not.toBeChecked();
+
+		const select = await within(modal).findByRole('button', {
+			name: 'select',
+		});
+
+		expect(select).toBeDisabled();
+
+		await user.click(firstItem);
+
+		expect(firstItemRadio).toBeChecked();
+
+		expect(secondItemRadio).not.toBeChecked();
+
+		expect(select).toBeEnabled();
+	});
+
+	it('shows selected message with item name for single selection type', async () => {
+		const user = userEvent.setup();
+
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={jest.fn()}
+				selectedItems={[]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
+		const firstItem =
+			await within(modal).findByLabelText(/first item name$/gi);
+
+		const [firstItemRadio, secondItemRadio] =
+			await within(modal).findAllByRole('radio');
+
+		await user.click(firstItem);
+
+		expect(firstItemRadio).toBeChecked();
+
+		expect(secondItemRadio).not.toBeChecked();
+
+		const selectedMessage = await within(modal).findByText('x-selected');
+
+		expect(selectedMessage).toBeInTheDocument();
+
+		expect(sub).toHaveBeenCalledWith(
+			'x-selected',
+			expect.objectContaining({
+				props: {
+					children: mockFirstItem.name,
+				},
+				type: 'strong',
+			})
+		);
+	});
+
+	it('shows selected items when they are provided', async () => {
 		const {findByRole} = render(
 			<ItemSelectorModalWrapper
 				defaultOpen={true}
@@ -180,11 +282,8 @@ describe('ItemSelectorModal component', () => {
 
 		const modal = await findByRole('dialog');
 
-		const radios = await within(modal).findAllByRole('radio');
-
-		expect(radios).toHaveLength(2);
-
-		const [firstItemRadio, secondItemRadio] = radios;
+		const [firstItemRadio, secondItemRadio] =
+			await within(modal).findAllByRole('radio');
 
 		expect(firstItemRadio).not.toBeChecked();
 
@@ -205,14 +304,9 @@ describe('ItemSelectorModal component', () => {
 			})
 		);
 
-		const footerActions = await within(modal).findByRole('group');
-
-		const [cancel, select] =
-			await within(footerActions).findAllByRole('button');
-
-		expect(cancel).toBeInTheDocument();
-
-		expect(select).toBeInTheDocument();
+		const select = await within(modal).findByRole('button', {
+			name: 'select',
+		});
 
 		expect(select).toBeEnabled();
 	});
@@ -288,6 +382,80 @@ describe('ItemSelectorModal component', () => {
 		});
 
 		expect(mockedOnSelectedItemsChange).not.toHaveBeenCalled();
+
+		await user.click(cancel);
+
+		expect(mockedOnSelectedItemsChange).not.toHaveBeenCalled();
+	});
+
+	it('must fire change items callback with updated item', async () => {
+		const user = userEvent.setup();
+		const mockedOnSelectedItemsChange = jest.fn();
+
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={mockedOnSelectedItemsChange}
+				selectedItems={[mockFirstItem]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
+		const [, secondItem] =
+			await within(modal).findAllByLabelText(/item name$/gi);
+
+		const [firstItemRadio, secondItemRadio] =
+			await within(modal).findAllByRole('radio');
+
+		const select = await within(modal).findByRole('button', {
+			name: 'select',
+		});
+
+		await user.click(secondItem);
+
+		expect(firstItemRadio).not.toBeChecked();
+
+		expect(secondItemRadio).toBeChecked();
+
+		await user.click(select);
+
+		expect(mockedOnSelectedItemsChange).toHaveBeenCalledTimes(1);
+
+		expect(mockedOnSelectedItemsChange).toHaveBeenLastCalledWith([
+			mockSecondItem,
+		]);
+	});
+
+	it('must not fire change items callback after choosing another item but canceling', async () => {
+		const user = userEvent.setup();
+		const mockedOnSelectedItemsChange = jest.fn();
+
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={mockedOnSelectedItemsChange}
+				selectedItems={[mockFirstItem]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
+		const [, secondItem] =
+			await within(modal).findAllByLabelText(/item name$/gi);
+
+		const [firstItemRadio, secondItemRadio] =
+			await within(modal).findAllByRole('radio');
+
+		const cancel = await within(modal).findByRole('button', {
+			name: 'cancel',
+		});
+
+		await user.click(secondItem);
+
+		expect(firstItemRadio).not.toBeChecked();
+
+		expect(secondItemRadio).toBeChecked();
 
 		await user.click(cancel);
 

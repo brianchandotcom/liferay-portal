@@ -9,17 +9,11 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.provider.BaseInfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -41,92 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = InfoItemObjectProvider.class
 )
 public class KBArticleInfoItemObjectProvider
-	implements InfoItemObjectProvider<KBArticle> {
+	extends BaseInfoItemObjectProvider<KBArticle> {
 
 	@Override
-	public KBArticle getInfoItem(InfoItemIdentifier infoItemIdentifier)
-		throws NoSuchInfoItemException {
-
-		return getInfoItem(_getGroupId(), infoItemIdentifier);
-	}
-
-	@Override
-	public KBArticle getInfoItem(
-			long groupId, InfoItemIdentifier infoItemIdentifier)
-		throws NoSuchInfoItemException {
-
-		return _getInfoItem(
-			_getGroupId(groupId, infoItemIdentifier), infoItemIdentifier);
-	}
-
-	private long _getCompanyId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getCompanyId();
-		}
-
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (companyId != null) {
-			return companyId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor company thread local " +
-				"are initialized");
-	}
-
-	private long _getGroupId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getScopeGroupId();
-		}
-
-		Long groupId = GroupThreadLocal.getGroupId();
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor group thread local are " +
-				"initialized");
-	}
-
-	private long _getGroupId(
-			long groupId, InfoItemIdentifier infoItemIdentifier)
-		throws NoSuchInfoItemException {
-
-		try {
-			if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
-				return groupId;
-			}
-
-			ERCInfoItemIdentifier ercInfoItemIdentifier =
-				(ERCInfoItemIdentifier)infoItemIdentifier;
-
-			if (Validator.isNull(
-					ercInfoItemIdentifier.getScopeExternalReferenceCode())) {
-
-				return groupId;
-			}
-
-			Group group = _groupLocalService.getGroupByExternalReferenceCode(
-				ercInfoItemIdentifier.getScopeExternalReferenceCode(),
-				_getCompanyId());
-
-			return group.getGroupId();
-		}
-		catch (PortalException portalException) {
-			throw new NoSuchInfoItemException(portalException);
-		}
-	}
-
-	private KBArticle _getInfoItem(
+	protected KBArticle doGetInfoItem(
 			long groupId, InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
@@ -214,9 +126,6 @@ public class KBArticleInfoItemObjectProvider
 		return _kbArticleLocalService.fetchKBArticleByExternalReferenceCode(
 			groupId, externalReferenceCode, GetterUtil.getInteger(version));
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;

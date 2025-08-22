@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -89,14 +92,25 @@ public class FragmentLayoutStructureItemImporter
 			fragmentInstancePageElementDefinition,
 			layoutStructureItemImporterContext.getGroupId());
 
+		int type = FragmentConstants.TYPE_COMPONENT;
+
+		if (Objects.equals(
+				FragmentInstancePageElementDefinition.FragmentType.BASIC,
+				fragmentInstancePageElementDefinition.getFragmentType())) {
+
+			type = FragmentConstants.TYPE_INPUT;
+		}
+
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			null, layoutStructureItemImporterContext.getUserId(),
 			layout.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
 			layoutStructureItemImporterContext.getSegmentsExperienceId(),
-			layout.getPlid(), fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			layout.getPlid(), fragmentInstancePageElementDefinition.getCss(),
+			fragmentInstancePageElementDefinition.getHtml(),
+			fragmentInstancePageElementDefinition.getJs(),
+			fragmentInstancePageElementDefinition.getConfiguration(),
 			StringPool.BLANK, StringUtil.randomId(), 0,
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+			fragmentEntry.getFragmentEntryKey(), type,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

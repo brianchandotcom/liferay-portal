@@ -333,11 +333,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		batchEngineTaskItemDelegate.setContextCompany(
 			_companyLocalService.getCompany(portletDataContext.getCompanyId()));
 
+		BatchEngineUriInfo.Builder builder = new BatchEngineUriInfo.Builder();
+
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				Collections.emptyList(), portletDataContext);
-
-		BatchEngineUriInfo.Builder builder = new BatchEngineUriInfo.Builder();
 
 		for (Map.Entry<String, Serializable> entry : parameters.entrySet()) {
 			builder.queryParameter(

@@ -53,6 +53,13 @@ public class SegmentsConfigurationProviderImpl
 	implements SegmentsConfigurationProvider {
 
 	@Override
+	public void clearSegmentsCompanyConfigurations() {
+		_companyIds.clear();
+		_pids.clear();
+		_segmentsCompanyConfigurations.clear();
+	}
+
+	@Override
 	public String getCompanyConfigurationURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {

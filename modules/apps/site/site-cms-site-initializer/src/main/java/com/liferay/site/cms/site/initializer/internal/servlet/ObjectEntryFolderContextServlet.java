@@ -83,7 +83,7 @@ public class ObjectEntryFolderContextServlet extends HttpServlet {
 				}
 			).put(
 				"viewFolderURL",
-				ActionUtil.geViewFolderURL(
+				ActionUtil.getViewFolderURL(
 					objectEntryFolderId,
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY))

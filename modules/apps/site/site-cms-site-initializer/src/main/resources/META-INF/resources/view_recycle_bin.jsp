@@ -12,6 +12,13 @@ ViewRecycleBinSectionDisplayContext viewRecycleBinSectionDisplayContext = (ViewR
 %>
 
 <div class="cms-section custom-empty-state">
+	<div>
+		<react:component
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewRecycleBinSectionDisplayContext.getBreadcrumbProps() %>"
+		/>
+	</div>
+
 	<frontend-data-set:headless-display
 		apiURL="<%= viewRecycleBinSectionDisplayContext.getAPIURL() %>"
 		emptyState="<%= viewRecycleBinSectionDisplayContext.getEmptyState() %>"

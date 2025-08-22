@@ -152,13 +152,25 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&filter=");
 
 		if (objectEntryFolder != null) {
 			sb.append("folderId eq ");
 			sb.append(objectEntryFolder.getObjectEntryFolderId());
+
+			if (objectEntryFolder.getStatus() ==
+					WorkflowConstants.STATUS_IN_TRASH) {
+
+				sb.append(" and status eq ");
+				sb.append(WorkflowConstants.STATUS_IN_TRASH);
+			}
+			else {
+				sb.append(" and status in (");
+				sb.append(StringUtil.merge(_statuses, ", "));
+				sb.append(")");
+			}
 		}
 		else {
 			sb.append(getCMSSectionFilterString());
@@ -346,6 +358,19 @@ public abstract class BaseSectionDisplayContext {
 		).put(
 			"toolbarTitleClassName", "section-toolbar-title"
 		).build();
+	}
+
+	protected void addBreadcrumbItem(
+		JSONArray jsonArray, boolean active, String friendlyURL, String label) {
+
+		jsonArray.put(
+			JSONUtil.put(
+				"active", active
+			).put(
+				"href", friendlyURL
+			).put(
+				"label", label
+			));
 	}
 
 	protected void addStructureContentDropdownItems(CreationMenu creationMenu) {

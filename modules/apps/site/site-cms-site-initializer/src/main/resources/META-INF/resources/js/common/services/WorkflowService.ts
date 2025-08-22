@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import getPaginatedList from '../../main_view/home/util/getPaginatedList';
 import {AssignableUser} from '../types/AssignableUser';
 import {WorkflowTask} from '../types/WorkflowTask';
 import ApiHelper from './ApiHelper';
@@ -17,14 +18,11 @@ export async function getWorkflowTasksAssignedToMe({
 	let fetchUrl =
 		'/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-me?nestedFields=workflowLogs&';
 
-	const pageParam = String(page);
-	const pageSizeParam = String(pageSize);
-
 	fetchUrl =
 		fetchUrl +
 		new URLSearchParams({
-			page: pageParam,
-			pageSize: pageSizeParam,
+			page: String(-1),
+			pageSize: String(-1),
 		}).toString();
 
 	const {data, error} = await ApiHelper.get<{
@@ -33,7 +31,40 @@ export async function getWorkflowTasksAssignedToMe({
 	}>(fetchUrl);
 
 	if (data) {
-		return {items: data.items, totalCount: data.totalCount};
+		const filteredWorkflowTasks = data.items.filter(
+			(item) => !item.completed && item.name === 'review'
+		);
+
+		const transformedWorkflowTasks = filteredWorkflowTasks.map(
+			(workflowTask) => {
+				const workflowLogs = workflowTask.workflowLogs.filter(
+					(item) => item.type === 'TaskAssign'
+				);
+
+				return {
+					...workflowTask,
+					assignedDate: workflowLogs[0].dateCreated,
+					auditUser: workflowLogs[0].auditPerson.name,
+					auditUserImageURL: workflowLogs[0].auditPerson.image,
+				};
+			}
+		);
+
+		transformedWorkflowTasks.sort((a, b) => {
+			const dateA = new Date(a.assignedDate);
+			const dateB = new Date(b.assignedDate);
+
+			return dateB.getTime() - dateA.getTime();
+		});
+
+		return {
+			items: getPaginatedList({
+				delta: pageSize,
+				items: transformedWorkflowTasks,
+				page,
+			}),
+			totalCount: data.totalCount,
+		};
 	}
 
 	throw new Error(error);
@@ -49,14 +80,11 @@ export async function getWorkflowTasksAssignedToMyRoles({
 	let fetchUrl =
 		'/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-my-roles?nestedFields=workflowLogs&';
 
-	const pageParam = String(page);
-	const pageSizeParam = String(pageSize);
-
 	fetchUrl =
 		fetchUrl +
 		new URLSearchParams({
-			page: pageParam,
-			pageSize: pageSizeParam,
+			page: String(-1),
+			pageSize: String(-1),
 		}).toString();
 
 	const {data, error} = await ApiHelper.get<{
@@ -65,7 +93,40 @@ export async function getWorkflowTasksAssignedToMyRoles({
 	}>(fetchUrl);
 
 	if (data) {
-		return {items: data.items, totalCount: data.totalCount};
+		const filteredWorkflowTasks = data.items.filter(
+			(item) => !item.completed && item.name === 'review'
+		);
+
+		const transformedWorkflowTasks = filteredWorkflowTasks.map(
+			(workflowTask) => {
+				const workflowLogs = workflowTask.workflowLogs.filter(
+					(item) => item.type === 'TaskAssign'
+				);
+
+				return {
+					...workflowTask,
+					assignedDate: workflowLogs[0].dateCreated,
+					auditUser: workflowLogs[0].auditPerson.name,
+					auditUserImageURL: workflowLogs[0].auditPerson.image,
+				};
+			}
+		);
+
+		transformedWorkflowTasks.sort((a, b) => {
+			const dateA = new Date(a.assignedDate);
+			const dateB = new Date(b.assignedDate);
+
+			return dateB.getTime() - dateA.getTime();
+		});
+
+		return {
+			items: getPaginatedList({
+				delta: pageSize,
+				items: transformedWorkflowTasks,
+				page,
+			}),
+			totalCount: data.totalCount,
+		};
 	}
 
 	throw new Error(error);
@@ -155,15 +216,5 @@ export async function transitionWorkflowState({
 			transitionName,
 			workflowTaskId,
 		}
-	);
-}
-
-export async function getLatestWorkflowLogByTaskId({
-	workflowTaskId,
-}: {
-	workflowTaskId: number;
-}) {
-	return await ApiHelper.get<WorkflowTask[]>(
-		`/o/headless-admin-workflow/v1.0/workflow-tasks/${workflowTaskId}/workflow-logs`
 	);
 }

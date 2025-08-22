@@ -39,7 +39,7 @@ public class RenderResponseImplTest {
 	}
 
 	@Test
-	public void testSetTitle() throws Exception {
+	public void testSetTitle() {
 		PortletRequestImpl portletRequestImpl = Mockito.mock(
 			PortletRequestImpl.class);
 

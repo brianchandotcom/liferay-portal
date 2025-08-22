@@ -591,8 +591,11 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
+		content = _formatContent(article, content);
+
 		updateDDMFields(
-			article, _formatContent(article, content, groupId, user));
+			article, content,
+			_getContentFormValues(article, content, groupId, user));
 
 		if (_classNameLocalService.getClassNameId(DDMStructure.class) !=
 				classNameId) {
@@ -838,10 +841,12 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		DDMFormValues ddmFormValues = _formatContent(
+		content = _formatContent(article, content);
+
+		DDMFormValues ddmFormValues = _getContentFormValues(
 			article, content, groupId, user);
 
-		updateDDMFields(article, ddmFormValues);
+		updateDDMFields(article, content, ddmFormValues);
 
 		_updateDDMStructurePredefinedValues(
 			userId, article.getDDMStructureId(), ddmFormValues, serviceContext);
@@ -4938,8 +4943,11 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
+		content = _formatContent(article, content);
+
 		updateDDMFields(
-			article, _formatContent(article, content, groupId, user));
+			article, content,
+			_getContentFormValues(article, content, groupId, user));
 
 		if (_classNameLocalService.getClassNameId(DDMStructure.class) !=
 				article.getClassNameId()) {
@@ -5320,10 +5328,12 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		DDMFormValues ddmFormValues = _formatContent(
+		content = _formatContent(article, content);
+
+		DDMFormValues ddmFormValues = _getContentFormValues(
 			article, content, groupId, user);
 
-		updateDDMFields(article, ddmFormValues);
+		updateDDMFields(article, content, ddmFormValues);
 
 		_updateDDMStructurePredefinedValues(
 			userId, article.getDDMStructureId(), ddmFormValues, serviceContext);
@@ -5476,8 +5486,11 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
+		content = _formatContent(article, content);
+
 		updateDDMFields(
-			article, _formatContent(article, content, groupId, user));
+			article, content,
+			_getContentFormValues(article, content, groupId, user));
 
 		if (incrementVersion) {
 			updateDDMLinks(
@@ -7063,7 +7076,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void updateDDMFields(
-			JournalArticle article, DDMFormValues ddmFormValues)
+			JournalArticle article, String content, DDMFormValues ddmFormValues)
 		throws PortalException {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
@@ -7075,11 +7088,13 @@ public class JournalArticleLocalServiceImpl
 		// Document Cache
 
 		try {
-			Fields fields = _ddmFormValuesToFieldsConverter.convert(
-				ddmStructure, ddmFormValues);
+			if (Validator.isNull(content)) {
+				Fields fields = _ddmFormValuesToFieldsConverter.convert(
+					ddmStructure, ddmFormValues);
 
-			String content = _journalConverter.getContent(
-				ddmStructure, fields, article.getGroupId());
+				content = _journalConverter.getContent(
+					ddmStructure, fields, article.getGroupId());
+			}
 
 			article.setDocument(SAXReaderUtil.read(content));
 
@@ -7678,10 +7693,12 @@ public class JournalArticleLocalServiceImpl
 
 		if (newArticle) {
 			updateDDMFields(
-				targetArticle, copyArticleImages(sourceArticle, targetArticle));
+				targetArticle, null,
+				copyArticleImages(sourceArticle, targetArticle));
 		}
 		else {
-			updateDDMFields(targetArticle, sourceArticle.getDDMFormValues());
+			updateDDMFields(
+				targetArticle, null, sourceArticle.getDDMFormValues());
 		}
 
 		updateDDMLinks(
@@ -7855,23 +7872,12 @@ public class JournalArticleLocalServiceImpl
 		return false;
 	}
 
-	private DDMFormValues _formatContent(
-			JournalArticle article, String content, long groupId, User user)
+	private String _formatContent(JournalArticle article, String content)
 		throws PortalException {
 
 		content = _journalContentCompatibilityConverter.convert(content);
 
-		content = _replaceTempImages(article, content);
-
-		DDMStructure ddmStructure = article.getDDMStructure();
-
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-			ddmStructure,
-			_journalConverter.getDDMFields(ddmStructure, content));
-
-		format(user, groupId, article, ddmFormValues.getDDMFormFieldValues());
-
-		return ddmFormValues;
+		return _replaceTempImages(article, content);
 	}
 
 	private String _getArticleContent(JournalArticle article, Locale locale) {
@@ -7989,6 +7995,21 @@ public class JournalArticleLocalServiceImpl
 			article.getArticleId());
 
 		return articleURL;
+	}
+
+	private DDMFormValues _getContentFormValues(
+			JournalArticle article, String content, long groupId, User user)
+		throws PortalException {
+
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure,
+			_journalConverter.getDDMFields(ddmStructure, content));
+
+		format(user, groupId, article, ddmFormValues.getDDMFormFieldValues());
+
+		return ddmFormValues;
 	}
 
 	private Predicate<String> _getEmptyValuePredicate(String fieldType) {

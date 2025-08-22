@@ -11,6 +11,7 @@ import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +20,36 @@ import java.util.Objects;
  * @author Carolina Barbosa
  */
 public class ObjectEntryFolderUtil {
+
+	public static long getObjectEntryFolderId(
+		long currentObjectEntryFolderId, long originalObjectEntryFolderId) {
+
+		if (originalObjectEntryFolderId ==
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			return originalObjectEntryFolderId;
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderLocalServiceUtil.fetchObjectEntryFolder(
+				originalObjectEntryFolderId);
+
+		while ((objectEntryFolder != null) &&
+			   (objectEntryFolder.getStatus() ==
+				   WorkflowConstants.STATUS_IN_TRASH)) {
+
+			objectEntryFolder =
+				ObjectEntryFolderLocalServiceUtil.fetchObjectEntryFolder(
+					objectEntryFolder.getParentObjectEntryFolderId());
+		}
+
+		if (objectEntryFolder == null) {
+			return getRootObjectEntryFolderId(currentObjectEntryFolderId);
+		}
+
+		return objectEntryFolder.getObjectEntryFolderId();
+	}
 
 	public static long getRootObjectEntryFolderId(long objectEntryFolderId) {
 		ObjectEntryFolder objectEntryFolder =

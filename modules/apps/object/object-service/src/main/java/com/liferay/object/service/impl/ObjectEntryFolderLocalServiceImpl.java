@@ -217,6 +217,15 @@ public class ObjectEntryFolderLocalServiceImpl
 					objectEntryFolder.getObjectEntryFolderId()));
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-53981") &&
+			(objectEntryFolder.getStatus() ==
+				WorkflowConstants.STATUS_IN_TRASH)) {
+
+			_trashEntryLocalService.deleteEntry(
+				ObjectEntryFolder.class.getName(),
+				objectEntryFolder.getObjectEntryFolderId());
+		}
+
 		if (FeatureFlagManagerUtil.isEnabled("LPD-42553")) {
 			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 				objectEntryFolder.getCompanyId(),

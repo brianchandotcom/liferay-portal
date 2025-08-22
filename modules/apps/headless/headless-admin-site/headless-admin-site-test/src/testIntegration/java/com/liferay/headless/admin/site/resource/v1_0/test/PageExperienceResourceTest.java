@@ -6,11 +6,9 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -184,36 +182,7 @@ public class PageExperienceResourceTest
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 
 		pageExperience.setPageElements(
-			new PageElement[] {
-				new PageElement() {
-					{
-						setPageElementDefinition(
-							new ContainerPageElementDefinition() {
-								{
-									setIndexed(true);
-									setType(
-										PageElementDefinition.Type.CONTAINER);
-								}
-							});
-						setPageElements(new PageElement[0]);
-						setPosition(0);
-					}
-				},
-				new PageElement() {
-					{
-						setPageElementDefinition(
-							new ContainerPageElementDefinition() {
-								{
-									setIndexed(true);
-									setType(
-										PageElementDefinition.Type.CONTAINER);
-								}
-							});
-						setPageElements(new PageElement[0]);
-						setPosition(1);
-					}
-				}
-			});
+			PageElementsTestUtil.getPageElements(2, null));
 		pageExperience.setPageSpecificationExternalReferenceCode(
 			_draftLayout.getExternalReferenceCode());
 		pageExperience.setSegmentExternalReferenceCode(

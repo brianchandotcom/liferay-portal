@@ -428,7 +428,8 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			availableSB.append(languageId);
 			availableSB.append("': '");
 			availableSB.append(
-				HtmlUtil.escapeJS(locale.getDisplayName(locale)));
+				_displayNames.computeIfAbsent(
+					locale, key -> HtmlUtil.escapeJS(key.getDisplayName(key))));
 			availableSB.append("',\n");
 
 			directionSB.append(StringPool.APOSTROPHE);
@@ -746,6 +747,8 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 	@Reference
 	private AuthToken _authToken;
+
+	private final Map<Locale, String> _displayNames = new ConcurrentHashMap<>();
 
 	@Reference
 	private FastDateFormatFactory _fastDateFormatFactory;

@@ -177,6 +177,10 @@ components:
                     type: boolean
                 titleObjectFieldName:
                     type: string
+                workflowDefinitionLinks:
+                    items:
+                        $ref: "#/components/schemas/WorkflowDefinitionLink"
+                    type: array
             type: object
         ObjectDefinitionSetting:
             properties:
@@ -691,6 +695,13 @@ components:
                 label:
                     type: string
                 label_i18n:
+                    type: string
+            type: object
+        WorkflowDefinitionLink:
+            properties:
+                groupExternalReferenceCode:
+                    type: string
+                workflowDefinitionName:
                     type: string
             type: object
 info:

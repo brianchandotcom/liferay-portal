@@ -196,13 +196,12 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				"No user group exists with user group ID " + userGroupId);
 		}
 
-		long[] roleIdsArray = ListUtil.toLongArray(
-			_userGroupGroupRoleLocalService.getUserGroupGroupRoles(
-				userGroupId, assetLibraryId),
-			UserGroupGroupRole::getRoleId);
-
 		_userGroupGroupRoleService.deleteUserGroupGroupRoles(
-			userGroupId, assetLibraryId, roleIdsArray);
+			userGroupId, assetLibraryId,
+			ListUtil.toLongArray(
+				_userGroupGroupRoleLocalService.getUserGroupGroupRoles(
+					userGroupId, assetLibraryId),
+				UserGroupGroupRole::getRoleId));
 
 		_userGroupGroupRoleService.addUserGroupGroupRoles(
 			userGroupId, assetLibraryId, _getRoleIds(roles));

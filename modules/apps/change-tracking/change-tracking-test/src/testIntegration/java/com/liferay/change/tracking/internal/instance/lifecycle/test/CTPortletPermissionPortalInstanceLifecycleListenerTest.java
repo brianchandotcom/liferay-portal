@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -32,7 +34,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -58,8 +59,6 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 
 	@Test
 	public void testPublicationsRegularRolesPermissions() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			CTPortletPermissionPortalInstanceLifecycleListenerTest.class);
 
@@ -80,14 +79,33 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 		String[] publicationsRegularRoles = ReflectionTestUtil.getFieldValue(
 			clazz, "PUBLICATIONS_REGULAR_ROLES");
 
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
 		for (String publicationsRegularRole : publicationsRegularRoles) {
 			Role role = _roleLocalService.fetchRole(
 				company.getCompanyId(), publicationsRegularRole);
 
-			List<Role> roles = _roleLocalService.getRoles(
-				company.getCompanyId());
+			if (role != null) {
+				role.setName(
+					role.getName() + " " + RandomTestUtil.randomString());
 
-			Assert.assertTrue(roles.contains(role));
+				_roleLocalService.updateRole(role);
+
+				role = _roleLocalService.fetchRole(
+					company.getCompanyId(), publicationsRegularRole);
+			}
+
+			Assert.assertNull(role);
+		}
+
+		_portalInstanceLifecycleListener.portalInstanceRegistered(company);
+
+		for (String publicationsRegularRole : publicationsRegularRoles) {
+			Role role = _roleLocalService.fetchRole(
+				company.getCompanyId(), publicationsRegularRole);
+
+			Assert.assertNotNull(role);
 
 			Method getModelResourceActionsMethod = clazz.getMethod(
 				"getModelResourceActions", String.class);

@@ -11,6 +11,10 @@ variable "password" {
 variable "snapshot_identifier" {
 	default=null
 }
+variable "tags" {
+	default={}
+	type=map(string)
+}
 variable "username" {
 	sensitive=true
 	type=string

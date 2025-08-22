@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -53,9 +52,23 @@ public class FragmentLayoutStructureItemImporter
 			return null;
 		}
 
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			fragmentInstancePageElementDefinition,
-			layoutStructureItemImporterContext);
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.
+				fetchFragmentEntryLinkByExternalReferenceCode(
+					fragmentInstancePageElementDefinition.
+						getFragmentInstanceExternalReferenceCode(),
+					layoutStructureItemImporterContext.getGroupId());
+
+		if (fragmentEntryLink == null) {
+			fragmentEntryLink = _addFragmentEntryLink(
+				fragmentInstancePageElementDefinition,
+				layoutStructureItemImporterContext);
+		}
+		else {
+			fragmentEntryLink = _updateFragmentEntryLink(
+				fragmentEntryLink, fragmentInstancePageElementDefinition,
+				layoutStructureItemImporterContext);
+		}
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -99,34 +112,6 @@ public class FragmentLayoutStructureItemImporter
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();
 
-		long originalFragmentEntryLinkId = 0;
-
-		if (Validator.isNotNull(
-				fragmentInstancePageElementDefinition.
-					getDraftFragmentInstanceExternalReferenceCode())) {
-
-			FragmentEntryLink fragmentEntryLink =
-				FragmentEntryLinkLocalServiceUtil.
-					fetchFragmentEntryLinkByExternalReferenceCode(
-						fragmentInstancePageElementDefinition.
-							getDraftFragmentInstanceExternalReferenceCode(),
-						layoutStructureItemImporterContext.getGroupId());
-
-			if (fragmentEntryLink != null) {
-				originalFragmentEntryLinkId =
-					fragmentEntryLink.getFragmentEntryLinkId();
-			}
-		}
-
-		int type = FragmentConstants.TYPE_COMPONENT;
-
-		if (Objects.equals(
-				FragmentInstancePageElementDefinition.FragmentType.BASIC,
-				fragmentInstancePageElementDefinition.getFragmentType())) {
-
-			type = FragmentConstants.TYPE_INPUT;
-		}
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -143,7 +128,10 @@ public class FragmentLayoutStructureItemImporter
 				fragmentInstancePageElementDefinition.
 					getFragmentInstanceExternalReferenceCode(),
 				layoutStructureItemImporterContext.getUserId(),
-				layout.getGroupId(), originalFragmentEntryLinkId,
+				layout.getGroupId(),
+				_getOriginalFragmentEntryLinkId(
+					fragmentInstancePageElementDefinition,
+					layoutStructureItemImporterContext),
 				fragmentEntry.getFragmentEntryId(),
 				layoutStructureItemImporterContext.getSegmentsExperienceId(),
 				layout.getPlid(),
@@ -153,7 +141,9 @@ public class FragmentLayoutStructureItemImporter
 				fragmentInstancePageElementDefinition.getConfiguration(),
 				StringPool.BLANK,
 				fragmentInstancePageElementDefinition.getNamespace(), 0,
-				fragmentEntry.getFragmentEntryKey(), type, serviceContext);
+				fragmentEntry.getFragmentEntryKey(),
+				_getType(fragmentInstancePageElementDefinition),
+				serviceContext);
 		}
 		finally {
 			serviceContext.setCreateDate(createDate);
@@ -186,6 +176,90 @@ public class FragmentLayoutStructureItemImporter
 
 		return FragmentCollectionContributorRegistryUtil.getFragmentEntry(
 			defaultFragmentReference.getDefaultFragmentKey());
+	}
+
+	private long _getOriginalFragmentEntryLinkId(
+		FragmentInstancePageElementDefinition
+			fragmentInstancePageElementDefinition,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
+
+		if (Validator.isNull(
+				fragmentInstancePageElementDefinition.
+					getDraftFragmentInstanceExternalReferenceCode())) {
+
+			return 0;
+		}
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.
+				fetchFragmentEntryLinkByExternalReferenceCode(
+					fragmentInstancePageElementDefinition.
+						getDraftFragmentInstanceExternalReferenceCode(),
+					layoutStructureItemImporterContext.getGroupId());
+
+		if (fragmentEntryLink == null) {
+			return 0;
+		}
+
+		return fragmentEntryLink.getFragmentEntryLinkId();
+	}
+
+	private int _getType(
+		FragmentInstancePageElementDefinition
+			fragmentInstancePageElementDefinition) {
+
+		int type = FragmentConstants.TYPE_COMPONENT;
+
+		if (Objects.equals(
+				FragmentInstancePageElementDefinition.FragmentType.BASIC,
+				fragmentInstancePageElementDefinition.getFragmentType())) {
+
+			type = FragmentConstants.TYPE_INPUT;
+		}
+
+		return type;
+	}
+
+	private FragmentEntryLink _updateFragmentEntryLink(
+			FragmentEntryLink fragmentEntryLink,
+			FragmentInstancePageElementDefinition
+				fragmentInstancePageElementDefinition,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(
+			fragmentInstancePageElementDefinition,
+			layoutStructureItemImporterContext.getGroupId());
+
+		if (fragmentEntry == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		fragmentEntryLink.setOriginalFragmentEntryLinkId(
+			_getOriginalFragmentEntryLinkId(
+				fragmentInstancePageElementDefinition,
+				layoutStructureItemImporterContext));
+
+		fragmentEntryLink.setFragmentEntryId(
+			fragmentEntry.getFragmentEntryId());
+		fragmentEntryLink.setCss(
+			fragmentInstancePageElementDefinition.getCss());
+		fragmentEntryLink.setHtml(
+			fragmentInstancePageElementDefinition.getHtml());
+		fragmentEntryLink.setJs(fragmentInstancePageElementDefinition.getJs());
+		fragmentEntryLink.setConfiguration(
+			fragmentInstancePageElementDefinition.getConfiguration());
+		fragmentEntryLink.setNamespace(
+			fragmentInstancePageElementDefinition.getNamespace());
+		fragmentEntryLink.setRendererKey(fragmentEntry.getFragmentEntryKey());
+		fragmentEntryLink.setType(
+			_getType(fragmentInstancePageElementDefinition));
+		fragmentEntryLink.setLastPropagationDate(
+			fragmentInstancePageElementDefinition.getDatePropagated());
+
+		return FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
+			fragmentEntryLink);
 	}
 
 }

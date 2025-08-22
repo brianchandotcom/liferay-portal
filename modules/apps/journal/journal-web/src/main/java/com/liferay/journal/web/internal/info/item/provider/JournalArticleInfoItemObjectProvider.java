@@ -11,6 +11,7 @@ import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.GroupKeyInfoItemIdentifier;
 import com.liferay.info.item.GroupUrlTitleInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.provider.BaseInfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.NoSuchArticleResourceException;
@@ -21,17 +22,11 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -55,22 +50,96 @@ import org.osgi.service.component.annotations.Reference;
 	service = InfoItemObjectProvider.class
 )
 public class JournalArticleInfoItemObjectProvider
-	implements InfoItemObjectProvider<JournalArticle> {
+	extends BaseInfoItemObjectProvider<JournalArticle> {
 
 	@Override
-	public JournalArticle getInfoItem(InfoItemIdentifier infoItemIdentifier)
-		throws NoSuchInfoItemException {
-
-		return getInfoItem(_getGroupId(), infoItemIdentifier);
-	}
-
-	@Override
-	public JournalArticle getInfoItem(
+	protected JournalArticle doGetInfoItem(
 			long groupId, InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
-		return _getInfoItem(
-			_getGroupId(groupId, infoItemIdentifier), infoItemIdentifier);
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof ERCInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof GroupKeyInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof GroupUrlTitleInfoItemIdentifier)) {
+
+			throw new NoSuchInfoItemException(
+				"Unsupported info item identifier " + infoItemIdentifier);
+		}
+
+		JournalArticle article = null;
+
+		try {
+			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+				article = _getArticle(
+					classPKInfoItemIdentifier.getClassPK(),
+					infoItemIdentifier.getVersion());
+			}
+			else if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
+				ERCInfoItemIdentifier ercInfoItemIdentifier =
+					(ERCInfoItemIdentifier)infoItemIdentifier;
+
+				article = _getArticle(
+					ercInfoItemIdentifier.getExternalReferenceCode(), groupId,
+					infoItemIdentifier.getVersion());
+			}
+			else if (infoItemIdentifier instanceof GroupKeyInfoItemIdentifier) {
+				GroupKeyInfoItemIdentifier groupKeyInfoItemIdentifier =
+					(GroupKeyInfoItemIdentifier)infoItemIdentifier;
+
+				article = _getArticle(
+					groupKeyInfoItemIdentifier.getGroupId(),
+					groupKeyInfoItemIdentifier.getKey(),
+					infoItemIdentifier.getVersion());
+			}
+			else if (infoItemIdentifier instanceof
+						GroupUrlTitleInfoItemIdentifier) {
+
+				GroupUrlTitleInfoItemIdentifier
+					groupURLTitleInfoItemIdentifier =
+						(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
+
+				article = _getArticleByUrlTitle(
+					groupURLTitleInfoItemIdentifier.getGroupId(),
+					groupURLTitleInfoItemIdentifier.getUrlTitle(),
+					infoItemIdentifier.getVersion());
+			}
+
+			if ((article != null) &&
+				!Objects.equals(
+					infoItemIdentifier.getVersion(),
+					InfoItemIdentifier.VERSION_LATEST_APPROVED) &&
+				_isSignedIn() && !_hasPermission(article)) {
+
+				article = _getArticle(
+					article.getResourcePrimKey(),
+					InfoItemIdentifier.VERSION_LATEST_APPROVED);
+			}
+		}
+		catch (NoSuchArticleException | NoSuchArticleResourceException
+					exception) {
+
+			throw new NoSuchInfoItemException(
+				"Unable to get journal article with identifier " +
+					infoItemIdentifier,
+				exception);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		if (article == null) {
+			throw new NoSuchInfoItemException(
+				"Unable to get journal article " + infoItemIdentifier);
+		}
+
+		if (article.isInTrash()) {
+			return null;
+		}
+
+		return article;
 	}
 
 	private JournalArticle _getArticle(long classPK, String version)
@@ -174,162 +243,6 @@ public class JournalArticleInfoItemObjectProvider
 			GetterUtil.getDouble(version));
 	}
 
-	private long _getCompanyId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getCompanyId();
-		}
-
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (companyId != null) {
-			return companyId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor company thread local " +
-				"are initialized");
-	}
-
-	private long _getGroupId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getScopeGroupId();
-		}
-
-		Long groupId = GroupThreadLocal.getGroupId();
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor group thread local are " +
-				"initialized");
-	}
-
-	private long _getGroupId(
-			long groupId, InfoItemIdentifier infoItemIdentifier)
-		throws NoSuchInfoItemException {
-
-		try {
-			if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
-				return groupId;
-			}
-
-			ERCInfoItemIdentifier ercInfoItemIdentifier =
-				(ERCInfoItemIdentifier)infoItemIdentifier;
-
-			if (Validator.isNull(
-					ercInfoItemIdentifier.getScopeExternalReferenceCode())) {
-
-				return groupId;
-			}
-
-			Group group = _groupLocalService.getGroupByExternalReferenceCode(
-				ercInfoItemIdentifier.getScopeExternalReferenceCode(),
-				_getCompanyId());
-
-			return group.getGroupId();
-		}
-		catch (PortalException portalException) {
-			throw new NoSuchInfoItemException(portalException);
-		}
-	}
-
-	private JournalArticle _getInfoItem(
-			long groupId, InfoItemIdentifier infoItemIdentifier)
-		throws NoSuchInfoItemException {
-
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
-			!(infoItemIdentifier instanceof ERCInfoItemIdentifier) &&
-			!(infoItemIdentifier instanceof GroupKeyInfoItemIdentifier) &&
-			!(infoItemIdentifier instanceof GroupUrlTitleInfoItemIdentifier)) {
-
-			throw new NoSuchInfoItemException(
-				"Unsupported info item identifier " + infoItemIdentifier);
-		}
-
-		JournalArticle article = null;
-
-		try {
-			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)infoItemIdentifier;
-
-				article = _getArticle(
-					classPKInfoItemIdentifier.getClassPK(),
-					infoItemIdentifier.getVersion());
-			}
-			else if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
-				ERCInfoItemIdentifier ercInfoItemIdentifier =
-					(ERCInfoItemIdentifier)infoItemIdentifier;
-
-				article = _getArticle(
-					ercInfoItemIdentifier.getExternalReferenceCode(), groupId,
-					infoItemIdentifier.getVersion());
-			}
-			else if (infoItemIdentifier instanceof GroupKeyInfoItemIdentifier) {
-				GroupKeyInfoItemIdentifier groupKeyInfoItemIdentifier =
-					(GroupKeyInfoItemIdentifier)infoItemIdentifier;
-
-				article = _getArticle(
-					groupKeyInfoItemIdentifier.getGroupId(),
-					groupKeyInfoItemIdentifier.getKey(),
-					infoItemIdentifier.getVersion());
-			}
-			else if (infoItemIdentifier instanceof
-						GroupUrlTitleInfoItemIdentifier) {
-
-				GroupUrlTitleInfoItemIdentifier
-					groupURLTitleInfoItemIdentifier =
-						(GroupUrlTitleInfoItemIdentifier)infoItemIdentifier;
-
-				article = _getArticleByUrlTitle(
-					groupURLTitleInfoItemIdentifier.getGroupId(),
-					groupURLTitleInfoItemIdentifier.getUrlTitle(),
-					infoItemIdentifier.getVersion());
-			}
-
-			if ((article != null) &&
-				!Objects.equals(
-					infoItemIdentifier.getVersion(),
-					InfoItemIdentifier.VERSION_LATEST_APPROVED) &&
-				_isSignedIn() && !_hasPermission(article)) {
-
-				article = _getArticle(
-					article.getResourcePrimKey(),
-					InfoItemIdentifier.VERSION_LATEST_APPROVED);
-			}
-		}
-		catch (NoSuchArticleException | NoSuchArticleResourceException
-					exception) {
-
-			throw new NoSuchInfoItemException(
-				"Unable to get journal article with identifier " +
-					infoItemIdentifier,
-				exception);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-
-		if (article == null) {
-			throw new NoSuchInfoItemException(
-				"Unable to get journal article " + infoItemIdentifier);
-		}
-
-		if (article.isInTrash()) {
-			return null;
-		}
-
-		return article;
-	}
-
 	private boolean _hasPermission(JournalArticle article) {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -366,9 +279,6 @@ public class JournalArticleInfoItemObjectProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleInfoItemObjectProvider.class);
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

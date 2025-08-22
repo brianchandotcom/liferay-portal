@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -39,7 +38,7 @@ public abstract class BaseJakartaTransformCheck extends BaseFileCheck {
 
 	protected boolean isValidExtension(String fileName) {
 		for (String extension : getValidExtensions()) {
-			if (fileName.endsWith(CharPool.PERIOD + extension)) {
+			if (fileName.endsWith(extension)) {
 				return true;
 			}
 		}

@@ -19,7 +19,9 @@ public class JakartaTransformHTMLCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String[] getValidExtensions() {
-		return new String[] {"html"};
+		return _VALID_EXTENSIONS;
 	}
+
+	private static final String[] _VALID_EXTENSIONS = {".html"};
 
 }

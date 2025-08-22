@@ -39,7 +39,7 @@ test('LPD-35678 Guest can directly checkout a new order in B2B channel site', as
 	commerceThemeClassicCatalogPage,
 	page,
 }) => {
-	test.setTimeout(180000);
+	test.setTimeout(90000);
 
 	const {channel, site} = await classicCommerceSetUp(
 		apiHelpers,
@@ -55,7 +55,11 @@ test('LPD-35678 Guest can directly checkout a new order in B2B channel site', as
 	);
 
 	try {
-		await commerceThemeClassicCatalogPage.addToCart('U-Joint');
+		await commerceThemeClassicCatalogPage
+			.productCardAddToCartButton('Wear Sensors')
+			.click();
+
+		await page.waitForLoadState('networkidle');
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -74,10 +78,14 @@ test('LPD-35678 Guest can directly checkout a new order in B2B channel site', as
 		});
 	}
 	finally {
+		await performLoginViaApi({page, screenName: 'test'});
+
 		const orders =
 			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		if (orders.items[0]) {
+			apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		}
 	}
 });
 
@@ -90,7 +98,7 @@ test('LPD-35678 Guest can checkout a new order on sign-in in B2B channel site', 
 	commerceThemeClassicCatalogPage,
 	page,
 }) => {
-	test.setTimeout(180000);
+	test.setTimeout(90000);
 
 	const {channel, site} = await classicCommerceSetUp(
 		apiHelpers,
@@ -111,7 +119,11 @@ test('LPD-35678 Guest can checkout a new order on sign-in in B2B channel site', 
 	);
 
 	try {
-		await commerceThemeClassicCatalogPage.addToCart('U-Joint');
+		await commerceThemeClassicCatalogPage
+			.productCardAddToCartButton('Wear Sensors')
+			.click();
+
+		await page.waitForLoadState('networkidle');
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -143,7 +155,7 @@ test('LPD-35678 Guest can checkout a new order on sign-in in B2B channel site', 
 		await commerceMiniCartPage.miniCartButton.click();
 
 		await expect(
-			commerceMiniCartPage.miniCartItem('U-Joint')
+			commerceMiniCartPage.miniCartItem('Wear Sensors')
 		).toBeVisible();
 
 		await commerceMiniCartPage.miniCartButtonClose.click();
@@ -160,10 +172,15 @@ test('LPD-35678 Guest can checkout a new order on sign-in in B2B channel site', 
 		});
 	}
 	finally {
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
 		const orders =
 			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		if (orders.items[0]) {
+			apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		}
 	}
 });
 
@@ -176,7 +193,7 @@ test('LPD-35678 Guest can checkout a new order on sign-in with multiple accounts
 	commerceThemeClassicCatalogPage,
 	page,
 }) => {
-	test.setTimeout(180000);
+	test.setTimeout(90000);
 
 	const {channel, site} = await classicCommerceSetUp(
 		apiHelpers,
@@ -201,7 +218,11 @@ test('LPD-35678 Guest can checkout a new order on sign-in with multiple accounts
 	);
 
 	try {
-		await commerceThemeClassicCatalogPage.addToCart('U-Joint');
+		await commerceThemeClassicCatalogPage
+			.productCardAddToCartButton('Wear Sensors')
+			.click();
+
+		await page.waitForLoadState('networkidle');
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -245,7 +266,7 @@ test('LPD-35678 Guest can checkout a new order on sign-in with multiple accounts
 		await commerceMiniCartPage.miniCartButton.click();
 
 		await expect(
-			commerceMiniCartPage.miniCartItem('U-Joint')
+			commerceMiniCartPage.miniCartItem('Wear Sensors')
 		).toBeVisible();
 
 		await commerceMiniCartPage.miniCartButtonClose.click();
@@ -262,10 +283,15 @@ test('LPD-35678 Guest can checkout a new order on sign-in with multiple accounts
 		});
 	}
 	finally {
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
 		const orders =
 			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		if (orders.items[0]) {
+			apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		}
 	}
 });
 
@@ -308,7 +334,11 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 			site
 		);
 
-		await commerceThemeClassicCatalogPage.addToCart('U-Joint');
+		await commerceThemeClassicCatalogPage
+			.productCardAddToCartButton('Wear Sensors')
+			.click();
+
+		await page.waitForLoadState('networkidle');
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -377,7 +407,7 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 		await commerceMiniCartPage.miniCartButton.click();
 
 		await expect(
-			commerceMiniCartPage.miniCartItem('U-Joint')
+			commerceMiniCartPage.miniCartItem('Wear Sensors')
 		).toBeVisible();
 
 		await commerceMiniCartPage.miniCartButtonClose.click();
@@ -398,10 +428,9 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await page.goto(
-			'/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.captcha.configuration.CaptchaConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.captcha.configuration.CaptchaConfiguration'
+			'/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.captcha.configuration.CaptchaConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.captcha.configuration.CaptchaConfiguration',
+			{waitUntil: 'networkidle'}
 		);
-
-		await page.waitForLoadState('networkidle');
 
 		await captchaCheckbox.click();
 
@@ -410,6 +439,8 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 		const orders =
 			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		if (orders.items[0]) {
+			apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		}
 	}
 });

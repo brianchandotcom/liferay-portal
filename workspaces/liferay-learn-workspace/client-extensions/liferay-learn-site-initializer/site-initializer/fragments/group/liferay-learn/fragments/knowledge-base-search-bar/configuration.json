@@ -1,0 +1,29 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+                {
+                    "dataType": "string",
+					"defaultValue": "",
+					"label": "How To ID",
+					"name": "howToId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Reference ID",
+					"name": "referenceId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Troubleshooting ID",
+					"name": "troubleshootingId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

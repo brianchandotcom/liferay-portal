@@ -15,6 +15,7 @@ import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -1362,6 +1363,8 @@ baseTest(
 		});
 
 		await openFieldset(page, 'Fields');
+
+		await checkAccessibility({page, selectors: ['.ddm-label']});
 
 		await expect(textBox).toBeDisabled();
 	}

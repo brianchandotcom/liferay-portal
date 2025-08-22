@@ -113,7 +113,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.expression.Expression;
@@ -140,6 +139,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import jakarta.ws.rs.BadRequestException;
@@ -2953,12 +2954,11 @@ public class DefaultObjectEntryManagerImpl
 						return null;
 					}
 
-					UnicodeProperties unicodeProperties =
-						group.getTypeSettingsProperties();
+					SharingConfiguration sharingConfiguration =
+						_sharingConfigurationFactory.
+							getGroupSharingConfiguration(group);
 
-					if (!GetterUtil.getBoolean(
-							unicodeProperties.get("sharingEnabled"))) {
-
+					if (!sharingConfiguration.isEnabled()) {
 						return null;
 					}
 
@@ -3345,6 +3345,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

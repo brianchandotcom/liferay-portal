@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
@@ -46,6 +45,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -510,12 +511,11 @@ public class ObjectEntryFolderResourceImpl
 							return null;
 						}
 
-						UnicodeProperties unicodeProperties =
-							group.getTypeSettingsProperties();
+						SharingConfiguration sharingConfiguration =
+							_sharingConfigurationFactory.
+								getGroupSharingConfiguration(group);
 
-						if (!GetterUtil.getBoolean(
-								unicodeProperties.get("sharingEnabled"))) {
-
+						if (!sharingConfiguration.isEnabled()) {
 							return null;
 						}
 
@@ -615,5 +615,8 @@ public class ObjectEntryFolderResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 }

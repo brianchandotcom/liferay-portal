@@ -4,7 +4,9 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 
+import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SharedItemRenderer from './cell_renderers/SharedItemRenderer';
@@ -69,6 +71,32 @@ export default function SharedWithMeFDSPropsTransformer({
 					isVisible: (item: any) => Boolean(item?.shareable),
 				};
 			}
+			else if (action?.data?.id === 'view-content') {
+				return {
+					...action,
+					data: {
+						...action.data,
+						disableHeader: false,
+						size: 'full-screen',
+						title: 'View',
+					},
+					isVisible: (item: any) =>
+						Boolean(
+							item?.className !== OBJECT_ENTRY_FOLDER_CLASSNAME &&
+								!item?.file
+						),
+				};
+			}
+			else if (action?.data?.id === 'view-file') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(
+							item?.className !== OBJECT_ENTRY_FOLDER_CLASSNAME &&
+								item?.file
+						),
+				};
+			}
 
 			return action;
 		}),
@@ -88,6 +116,19 @@ export default function SharedWithMeFDSPropsTransformer({
 					creator: itemData.creator,
 					itemId: itemData.classPK,
 					title: itemData?.title,
+				});
+			}
+			else if (action?.data?.id === 'view-file') {
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: () =>
+						FilePreviewerModalContent({
+							file: itemData.file,
+							headerName: itemData?.title,
+						}),
+					size: 'full-screen',
 				});
 			}
 		},

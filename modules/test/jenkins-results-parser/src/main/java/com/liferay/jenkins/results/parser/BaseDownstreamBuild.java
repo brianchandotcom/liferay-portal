@@ -194,7 +194,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 	public List<String> getBadBuildURLs() {
 		List<String> badBuildURLs = super.getBadBuildURLs();
 
-		_saveBadBuildURLs(badBuildURLs);
+		_saveBadBuildURLsInBuildDatabase(badBuildURLs);
 
 		return badBuildURLs;
 	}
@@ -1142,7 +1142,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		return sb.toString();
 	}
 
-	private void _saveBadBuildURLs(List<String> badBuildURLs) {
+	private void _saveBadBuildURLsInBuildDatabase(List<String> badBuildURLs) {
 		if (badBuildURLs.isEmpty()) {
 			return;
 		}

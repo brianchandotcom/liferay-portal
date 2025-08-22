@@ -102,6 +102,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -5900,10 +5901,10 @@ public class ObjectEntryResourceTest {
 		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
 
 		Assert.assertEquals(
-			actionsJSONObject.toMap(),
 			_getExpectedActions(
 				_siteScopedObjectDefinition1, jsonObject.getString("id"),
-				false));
+				false),
+			actionsJSONObject.toMap());
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -5931,10 +5932,10 @@ public class ObjectEntryResourceTest {
 			JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
 
 			Assert.assertEquals(
-				actionsJSONObject.toMap(),
 				_getExpectedActions(
 					_siteScopedObjectDefinition1, jsonObject.getString("id"),
-					true));
+					true),
+				actionsJSONObject.toMap());
 		}
 		finally {
 			_groupLocalService.updateGroup(
@@ -14737,7 +14738,14 @@ public class ObjectEntryResourceTest {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete", _getActionValue(href, "DELETE")
 		).put(
-			"expire", _getActionValue(href + "/expire", "POST")
+			"expire",
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+					return _getActionValue(href + "/expire", "POST");
+				}
+
+				return null;
+			}
 		).put(
 			"get", _getActionValue(href, "GET")
 		).put(
@@ -14747,7 +14755,9 @@ public class ObjectEntryResourceTest {
 		).put(
 			"share",
 			() -> {
-				if (sharingEnabled) {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
+					sharingEnabled) {
+
 					return _getActionValue(href, "GET");
 				}
 

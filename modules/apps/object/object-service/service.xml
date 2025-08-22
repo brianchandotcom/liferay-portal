@@ -294,6 +294,11 @@
 			<finder-column name="rootObjectEntryId" />
 			<finder-column comparator="!=" name="status" />
 		</finder>
+		<finder name="G_C_OEFI" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="objectEntryFolderId" />
+		</finder>
 		<finder name="G_ODI_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="objectDefinitionId" />

@@ -7,23 +7,24 @@ package com.liferay.change.tracking.internal.instance.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.module.util.BundleUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -49,8 +50,6 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 
 	@Test
 	public void testPublicationsRegularRolesPermissions() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			CTPortletPermissionPortalInstanceLifecycleListenerTest.class);
 
@@ -71,14 +70,33 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 		String[] publicationsRegularRoles = ReflectionTestUtil.getFieldValue(
 			clazz, "PUBLICATIONS_REGULAR_ROLES");
 
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
 		for (String publicationsRegularRole : publicationsRegularRoles) {
 			Role role = _roleLocalService.fetchRole(
 				company.getCompanyId(), publicationsRegularRole);
 
-			List<Role> roles = _roleLocalService.getRoles(
-				company.getCompanyId());
+			if (role != null) {
+				role.setName(
+					role.getName() + " " + RandomTestUtil.randomString());
 
-			Assert.assertTrue(roles.contains(role));
+				_roleLocalService.updateRole(role);
+
+				role = _roleLocalService.fetchRole(
+					company.getCompanyId(), publicationsRegularRole);
+			}
+
+			Assert.assertNull(role);
+		}
+
+		_portalInstanceLifecycleListener.portalInstanceRegistered(company);
+
+		for (String publicationsRegularRole : publicationsRegularRoles) {
+			Role role = _roleLocalService.fetchRole(
+				company.getCompanyId(), publicationsRegularRole);
+
+			Assert.assertNotNull(role);
 
 			Method getModelResourceActionsMethod = clazz.getMethod(
 				"getModelResourceActions", String.class);
@@ -99,6 +117,14 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 			}
 		}
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.change.tracking.web.internal.instance.lifecycle.CTPortletPermissionPortalInstanceLifecycleListener"
+	)
+	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

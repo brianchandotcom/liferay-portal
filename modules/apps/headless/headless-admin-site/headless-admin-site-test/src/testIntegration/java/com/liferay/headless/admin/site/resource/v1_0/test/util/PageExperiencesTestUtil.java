@@ -5,7 +5,6 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -69,7 +68,7 @@ public class PageExperiencesTestUtil {
 						Collections.singletonMap(
 							"en-US", RandomTestUtil.randomString()));
 					setPageElements(
-						_getPageElements(
+						PageElementsTestUtil.getPageElements(
 							RandomTestUtil.randomInt(1, 3), StringPool.BLANK));
 					setPageSpecificationExternalReferenceCode(
 						contentPageSpecificationExternalReferenceCode);
@@ -99,8 +98,9 @@ public class PageExperiencesTestUtil {
 
 			pageExperience.setPageElements(
 				() -> {
-					PageElement[] pageElements = _getPageElements(
-						RandomTestUtil.randomInt(1, 3), StringPool.BLANK);
+					PageElement[] pageElements =
+						PageElementsTestUtil.getPageElements(
+							RandomTestUtil.randomInt(1, 3), StringPool.BLANK);
 
 					if (ListUtil.isEmpty(dropZonePageElements)) {
 						return pageElements;
@@ -117,46 +117,6 @@ public class PageExperiencesTestUtil {
 						dropZonePageElements.toArray(new PageElement[0]));
 				});
 		}
-	}
-
-	private static PageElement[] _getPageElements(
-		int count, String parentExternalReferenceCode) {
-
-		PageElement[] pageElements = new PageElement[count];
-
-		for (int i = 0; i < count; i++) {
-			String externalReferenceCode = RandomTestUtil.randomString();
-
-			int curPosition = i;
-
-			PageElement pageElement = new PageElement() {
-				{
-					setPageElementDefinition(
-						() -> new ContainerPageElementDefinition() {
-							{
-								setIndexed(() -> Boolean.FALSE);
-								setType(() -> Type.CONTAINER);
-							}
-						});
-					setPosition(() -> curPosition);
-				}
-			};
-
-			pageElement.setExternalReferenceCode(externalReferenceCode);
-
-			if (RandomTestUtil.randomBoolean()) {
-				pageElement.setPageElements(
-					_getPageElements(
-						RandomTestUtil.randomInt(1, 2), externalReferenceCode));
-			}
-
-			pageElement.setParentExternalReferenceCode(
-				parentExternalReferenceCode);
-
-			pageElements[i] = pageElement;
-		}
-
-		return pageElements;
 	}
 
 }

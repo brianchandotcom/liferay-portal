@@ -34,6 +34,10 @@ export class UserNotificationTemplatePage {
 		await this.notificationTemplatesPage.newNotificationTemplateButton.click();
 
 		await this.notificationTemplatesPage.userNotificationDropdownItem.click();
+
+		await this.notificationTemplatesPage.page
+			.getByRole('heading', {exact: true, name: 'Notification Template'})
+			.waitFor();
 	}
 
 	async selectNotificationRecipient(

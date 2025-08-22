@@ -5,8 +5,7 @@
 
 package com.liferay.server.admin.web.internal.scripting.util;
 
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.io.unsync.UnsyncPrintWriter;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.UnsupportedLanguageException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -29,21 +28,15 @@ public class ServerScriptingUtilTest {
 
 	@Test
 	public void testExecuteGroovyScript() throws ScriptingException {
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
-			unsyncByteArrayOutputStream);
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		ServerScriptingUtil.execute(
 			HashMapBuilder.<String, Object>put(
-				"out", unsyncPrintWriter
+				"out", unsyncStringWriter
 			).build(),
 			"groovy", "print 1 + 1");
 
-		unsyncPrintWriter.flush();
-
-		Assert.assertEquals("2", unsyncByteArrayOutputStream.toString());
+		Assert.assertEquals("2", unsyncStringWriter.toString());
 	}
 
 	@Test

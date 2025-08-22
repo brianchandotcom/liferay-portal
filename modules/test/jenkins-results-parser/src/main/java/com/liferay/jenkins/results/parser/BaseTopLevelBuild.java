@@ -1534,9 +1534,6 @@ public abstract class BaseTopLevelBuild
 				JenkinsResultsParserUtil.toDurationString(
 					getQueuingDuration())),
 			Dom4JUtil.getNewElement(
-				"p", null, "Total number of reinvocations: ",
-				String.valueOf(_getTotalReinvocationCount())),
-			Dom4JUtil.getNewElement(
 				"p", null, "Build Time: ",
 				JenkinsResultsParserUtil.toDurationString(getDuration())),
 			Dom4JUtil.getNewElement(
@@ -1545,6 +1542,9 @@ public abstract class BaseTopLevelBuild
 			Dom4JUtil.getNewElement(
 				"p", null, "Total number of Jenkins slaves used: ",
 				String.valueOf(getTotalSlavesUsedCount())),
+			Dom4JUtil.getNewElement(
+				"p", null, "Total number of reinvocations: ",
+				String.valueOf(_getTotalReinvocationCount())),
 			Dom4JUtil.getNewElement(
 				"p", null, "Average delay time for invoked build to start: ",
 				JenkinsResultsParserUtil.toDurationString(

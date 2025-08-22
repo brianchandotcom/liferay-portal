@@ -2,8 +2,8 @@
 	"fieldSets": [
 		{
 			"fields": [
-                {
-                    "dataType": "string",
+				{
+					"dataType": "string",
 					"defaultValue": "",
 					"label": "How To ID",
 					"name": "howToId",

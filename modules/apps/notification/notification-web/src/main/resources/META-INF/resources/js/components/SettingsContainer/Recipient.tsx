@@ -23,7 +23,7 @@ import {
 	uncheckMultiSelectItemChildrens,
 } from './multiSelectUtil';
 import {getEmailNotificationRoles} from './rolesUtil';
-import {getEmailNotificationUserGroups} from './userGroupsUtil';
+import {getUserGroups} from './userGroupsUtil';
 
 interface RecipientProps {
 	baseResourceURL: string;
@@ -108,8 +108,7 @@ export function Recipient({
 				setRolesList(newRolesList);
 			}
 			if (recipientType === 'user-group') {
-				const emailNotificationUserGroups =
-					await getEmailNotificationUserGroups(baseResourceURL);
+				const emailNotificationUserGroups = [await getUserGroups()];
 
 				const newUserGroupsList = emailNotificationUserGroups.map(
 					(userGroup) => ({

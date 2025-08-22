@@ -1949,7 +1949,14 @@ plugins.includes=</echo>
 	<target name="update-tomcat-version">
 		<fail message="Please set the property ${new.version}." unless="new.version" />
 
-		<property name="old.version" value="${app.server.tomcat.version}" />
+		<if>
+			<not>
+				<isset property="old.version" />
+			</not>
+			<then>
+				<property name="old.version" value="${app.server.tomcat.version}" />
+			</then>
+		</if>
 
 		<propertyregex
 			input="${new.version}"

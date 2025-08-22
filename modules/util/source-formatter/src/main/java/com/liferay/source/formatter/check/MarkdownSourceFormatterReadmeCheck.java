@@ -290,13 +290,16 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			}
 
 			if (displayFileExtensions) {
-				String fileExtensionsString = _getFileExtensionsString(
-					checkInfo.getSourceProcessorNames());
+				String fileExtensionsString;
 
-				String category = checkInfo.getCategory();
+				if (StringUtil.equals(
+						checkInfo.getCategory(), "JakartaTransform")) {
 
-				if (category.equals("JakartaTransform")) {
 					fileExtensionsString = _getFileExtensionsString(checkName);
+				}
+				else {
+					fileExtensionsString = _getFileExtensionsString(
+						checkInfo.getSourceProcessorNames());
 				}
 
 				if (Validator.isNotNull(fileExtensionsString)) {

@@ -53,7 +53,9 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.exception.TrashEntryException;
+import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
 
 import java.util.Collections;
@@ -385,6 +387,67 @@ public class ObjectEntryFolderLocalServiceImpl
 			userId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectEntryFolder restoreObjectEntryFolderFromTrash(
+			long userId, ObjectEntryFolder objectEntryFolder,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (objectEntryFolder.getStatus() !=
+				WorkflowConstants.STATUS_IN_TRASH) {
+
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
+			ObjectEntryFolder.class.getName(),
+			objectEntryFolder.getObjectEntryFolderId());
+
+		objectEntryFolder.setParentObjectEntryFolderId(
+			ObjectEntryFolderUtil.getObjectEntryFolderId(
+				objectEntryFolder.getParentObjectEntryFolderId(),
+				GetterUtil.getLong(
+					trashEntry.getTypeSettingsProperty(
+						"parentObjectEntryFolderId"))));
+
+		return _restoreObjectEntryFolderFromTrash(
+			objectEntryFolder, serviceContext, trashEntry, userId);
+	}
+
+	@Override
+	public void restoreObjectEntryFoldersFromTrash(
+			long userId, ObjectEntryFolder parentObjectEntryFolder,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		for (ObjectEntryFolder objectEntryFolder :
+				objectEntryFolderPersistence.findByG_C_P(
+					parentObjectEntryFolder.getGroupId(),
+					parentObjectEntryFolder.getCompanyId(),
+					parentObjectEntryFolder.getObjectEntryFolderId())) {
+
+			if (objectEntryFolder.getStatus() !=
+					WorkflowConstants.STATUS_IN_TRASH) {
+
+				continue;
+			}
+
+			objectEntryFolder = _restoreObjectEntryFolderFromTrash(
+				objectEntryFolder, serviceContext,
+				_trashEntryLocalService.getEntry(
+					ObjectEntryFolder.class.getName(),
+					objectEntryFolder.getObjectEntryFolderId()),
+				userId);
+
+			Indexer<ObjectEntryFolder> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(ObjectEntryFolder.class);
+
+			indexer.reindex(objectEntryFolder);
+		}
+	}
+
 	@Override
 	public void subscribeObjectEntryFolder(
 			long userId, long groupId, long objectEntryFolderId)
@@ -563,6 +626,29 @@ public class ObjectEntryFolderLocalServiceImpl
 			userId, objectEntryFolder, serviceContext);
 
 		moveObjectEntryFoldersToTrash(
+			userId, objectEntryFolder, serviceContext);
+
+		return objectEntryFolder;
+	}
+
+	private ObjectEntryFolder _restoreObjectEntryFolderFromTrash(
+			ObjectEntryFolder objectEntryFolder, ServiceContext serviceContext,
+			TrashEntry trashEntry, long userId)
+		throws PortalException {
+
+		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
+
+		objectEntryFolder = updateStatus(
+			objectEntryFolder, trashEntry.getStatus());
+
+		_trashEntryLocalService.deleteEntry(
+			ObjectEntryFolder.class.getName(),
+			objectEntryFolder.getObjectEntryFolderId());
+
+		_objectEntryLocalService.restoreObjectEntriesFromTrash(
+			userId, objectEntryFolder, serviceContext);
+
+		restoreObjectEntryFoldersFromTrash(
 			userId, objectEntryFolder, serviceContext);
 
 		return objectEntryFolder;

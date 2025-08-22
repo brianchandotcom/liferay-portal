@@ -1124,6 +1124,14 @@ public abstract class BaseSharedAssetResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("file", additionalAssertFieldName)) {
+				if (sharedAsset.getFile() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("fileTypeIcon", additionalAssertFieldName)) {
 				if (sharedAsset.getFileTypeIcon() == null) {
 					valid = false;
@@ -1377,6 +1385,16 @@ public abstract class BaseSharedAssetResourceTestCase {
 				if (!Objects.deepEquals(
 						sharedAsset1.getExternalReferenceCode(),
 						sharedAsset2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("file", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sharedAsset1.getFile(), sharedAsset2.getFile())) {
 
 					return false;
 				}
@@ -1771,6 +1789,11 @@ public abstract class BaseSharedAssetResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("file")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("fileTypeIcon")) {

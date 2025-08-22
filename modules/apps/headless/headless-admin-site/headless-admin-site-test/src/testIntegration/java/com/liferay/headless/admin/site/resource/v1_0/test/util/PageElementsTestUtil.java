@@ -5,6 +5,8 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ColumnPageElementDefinition;
@@ -104,14 +106,35 @@ public class PageElementsTestUtil {
 		if (Objects.equals(type, PageElementDefinition.Type.FRAGMENT)) {
 			return new FragmentInstancePageElementDefinition() {
 				{
+					FragmentEntry fragmentEntry =
+						FragmentCollectionContributorRegistryUtil.
+							getFragmentEntry("BASIC_COMPONENT-heading");
+
+					setConfiguration(fragmentEntry::getConfiguration);
+					setCss(fragmentEntry::getCss);
+
+					setCssClasses(
+						() -> new String[] {RandomTestUtil.randomString()});
+					setCustomCSS(RandomTestUtil::randomString);
+					setDatePropagated(RandomTestUtil::nextDate);
+					setFragmentInstanceExternalReferenceCode(
+						RandomTestUtil::randomString);
+
 					setFragmentReference(
 						new DefaultFragmentReference() {
 							{
 								setDefaultFragmentKey(
-									() -> "BASIC_COMPONENT-heading");
+									fragmentEntry::getFragmentEntryKey);
 							}
 						});
+					setFragmentType(FragmentType.BASIC);
+					setHtml(fragmentEntry::getHtml);
+					setIndexed(RandomTestUtil::randomBoolean);
+					setJs(fragmentEntry::getJs);
+					setName(RandomTestUtil::randomString);
+					setNamespace(RandomTestUtil::randomString);
 					setType(Type.FRAGMENT);
+					setUuid(RandomTestUtil::randomString);
 				}
 			};
 		}

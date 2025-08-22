@@ -246,8 +246,13 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private void _configureBladeSamplesWorkspaceGitRepository() {
-		_updateWorkspaceGitRepository(
+		Boolean updated = _updateWorkspaceGitRepository(
 			"git-commit/blade-samples", "liferay-blade-samples");
+
+			if (!updated) {
+				_updateWorkspaceGitRepository(
+					"git-commit-blade-samples", "liferay-blade-samples");
+			}
 	}
 
 	private void _configureLiferayFacesAlloyWorkspaceGitRepository() {
@@ -400,12 +405,23 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private void _configurePortalsPlutoWorkspaceGitRepository() {
-		_updateWorkspaceGitRepository(
-			"git-commit-portals-pluto", "portals-pluto");
+		Boolean updated = _updateWorkspaceGitRepository(
+			"git-commit/portals-pluto", "portals-pluto");
+
+		if (!updated) {
+			_updateWorkspaceGitRepository(
+				"git-commit-portals-pluto", "portals-pluto");
+		}
 	}
 
 	private void _configurePortletAPIGitRepository() {
-		_updateWorkspaceGitRepository("git-commit-portlet-api", "portlet-api");
+		Boolean updated = _updateWorkspaceGitRepository(
+			"git-commit/portlet-api", "portlet-api");
+
+		if (!updated) {
+			_updateWorkspaceGitRepository(
+				"git-commit-portlet-api", "portlet-api");
+		}
 	}
 
 	private void _configureReleaseToolWorkspaceGitRepository() {

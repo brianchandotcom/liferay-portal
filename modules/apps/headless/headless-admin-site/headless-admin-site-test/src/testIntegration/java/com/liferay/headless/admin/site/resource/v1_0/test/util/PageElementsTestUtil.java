@@ -175,7 +175,10 @@ public class PageElementsTestUtil {
 				getPageElementDefinition(_getRandomType()));
 			pageElement.setPosition(i);
 
-			if (RandomTestUtil.randomBoolean()) {
+			if (_isParentablePageElementDefinitionType(
+					pageElement.getPageElementDefinition()) &&
+				RandomTestUtil.randomBoolean()) {
+
 				pageElement.setPageElements(
 					getPageElements(
 						RandomTestUtil.randomInt(1, 2),
@@ -193,6 +196,14 @@ public class PageElementsTestUtil {
 
 	private static PageElementDefinition.Type _getRandomType() {
 		return _types.get(RandomTestUtil.randomInt(0, _types.size() - 1));
+	}
+
+	private static boolean _isParentablePageElementDefinitionType(
+		PageElementDefinition pageElementDefinition) {
+
+		return Objects.equals(
+			pageElementDefinition.getType(),
+			PageElementDefinition.Type.CONTAINER);
 	}
 
 	private static final List<PageElementDefinition.Type> _types =

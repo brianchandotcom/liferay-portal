@@ -858,11 +858,12 @@ this finder returns at most one entity.
 >
 
 <!--
-The skip-optimize-db-index value specifies whether to skip optimizing database
-index generation for the finder. The default value is false.
+The skip-db-index-optimization-and-finder-generation value specifies whether to
+skip optimizing db index and finder related methods during generation. The
+default value is false.
 -->
 <!ATTLIST finder
-	skip-optimize-db-index #IMPLIED
+	skip-db-index-optimization-and-finder-generation #IMPLIED
 >
 
 <!--

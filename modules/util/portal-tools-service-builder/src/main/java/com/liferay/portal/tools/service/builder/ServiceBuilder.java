@@ -6941,7 +6941,8 @@ public class ServiceBuilder {
 				finderDBIndex, finderEntityColumns);
 
 			if (GetterUtil.get(
-					finderElement.attributeValue("skip-optimize-db-index"),
+					finderElement.attributeValue(
+						"skip-db-index-optimization-and-finder-generation"),
 					false) &&
 				entityName.equals("ResourcePermission")) {
 

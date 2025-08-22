@@ -355,6 +355,10 @@ public class ObjectDefinitionUtil {
 		UnsafeFunction<String, String, Exception> unsafeFunction,
 		String value) {
 
+		if (value == StringPool.BLANK) {
+			return StringPool.BLANK;
+		}
+
 		return StringUtil.merge(
 			TransformUtil.transform(
 				value.split("\\s*,\\s*"), unsafeFunction, String.class));

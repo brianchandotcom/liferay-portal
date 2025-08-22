@@ -608,7 +608,7 @@ export default function FieldBase({
 							<label
 								{...accessiblePropsFields}
 								className={classNames('lfr-ddm-legend', {
-									'text-muted': showDisabledFieldIcon,
+									'text-secondary': showDisabledFieldIcon,
 								})}
 								id={fieldLabelId}
 							>
@@ -640,7 +640,7 @@ export default function FieldBase({
 									'ddm-empty': !showLabel && !required,
 									'ddm-label': showLabel || required,
 									'ddm-repeatable': repeatable,
-									'text-muted': showDisabledFieldIcon,
+									'text-secondary': showDisabledFieldIcon,
 								})}
 								{...((shouldRenderAsGroup ||
 									type === 'select') && {

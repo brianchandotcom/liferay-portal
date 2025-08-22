@@ -6,3 +6,6 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster_auth" {
 	name=var.cluster_name
 }
+data "aws_vpc" "current" {
+	id=local.vpc_config.vpc_id
+}

@@ -5,6 +5,7 @@ locals {
 	is_active_data_green=var.active_data=="green"
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
+	vpc_config=data.aws_eks_cluster.cluster.vpc_config[0]
 }
 module "postgres_blue" {
 	count=local.is_active_data_blue || var.is_restoring ? 1 : 0
@@ -14,7 +15,7 @@ module "postgres_blue" {
 	snapshot_identifier=var.is_restoring && local.is_active_data_green ? var.db_restore_snapshot_identifier : null
 	source="../modules/db-instance"
 	username=random_password.postgres_username.result
-	vpc_security_group_ids=[var.cluster_security_group_id]
+	vpc_security_group_ids=[local.vpc_config.cluster_security_group_id]
 }
 module "postgres_green" {
 	count=local.is_active_data_green || var.is_restoring ? 1 : 0
@@ -24,7 +25,7 @@ module "postgres_green" {
 	snapshot_identifier=var.is_restoring && local.is_active_data_blue ? var.db_restore_snapshot_identifier : null
 	source="../modules/db-instance"
 	username=random_password.postgres_username.result
-	vpc_security_group_ids=[var.cluster_security_group_id]
+	vpc_security_group_ids=[local.vpc_config.cluster_security_group_id]
 }
 module "s3_bucket_blue" {
 	deployment_name=var.deployment_name
@@ -153,24 +154,24 @@ resource "aws_security_group" "os" {
 	tags={
 		Name="${var.deployment_name}-os-sg"
 	}
-	vpc_id=var.vpc_id
+	vpc_id=local.vpc_config.vpc_id
 }
 resource "aws_security_group" "rds" {
 	name="${var.deployment_name}-rds-sg"
 	tags={
 		Name="${var.deployment_name}-rds-sg"
 	}
-	vpc_id=var.vpc_id
+	vpc_id=local.vpc_config.vpc_id
 }
 resource "aws_vpc_security_group_ingress_rule" "os_ingress" {
-	cidr_ipv4=var.vpc_cidr
+	cidr_ipv4=data.aws_vpc.current.cidr_block
 	from_port=443
 	ip_protocol="tcp"
 	security_group_id=aws_security_group.os.id
 	to_port=443
 }
 resource "aws_vpc_security_group_ingress_rule" "rds_ingress" {
-	cidr_ipv4=var.vpc_cidr
+	cidr_ipv4=data.aws_vpc.current.cidr_block
 	from_port=5432
 	ip_protocol="tcp"
 	security_group_id=aws_security_group.rds.id

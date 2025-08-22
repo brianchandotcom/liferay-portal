@@ -7308,6 +7308,32 @@ public class ServiceBuilder {
 		newLocalizedColumnElement.addAttribute("name", "languageId");
 		newLocalizedColumnElement.addAttribute("type", "String");
 
+		// Manual columns
+
+		List<Element> columnElements = localizedEntityElement.elements(
+			"column");
+
+		for (Element columnElement : columnElements) {
+			String localized = columnElement.attributeValue("localized");
+
+			if (localized != null) {
+				throw new IllegalArgumentException(
+					"Unable to have localized columns in localized table for " +
+						"entity " + entity.getName());
+			}
+
+			Element newColumnElement = newLocalizedEntityElement.addElement(
+				"column", columnElement.getStringValue());
+
+			List<Attribute> columnAttributes = columnElement.attributes();
+
+			for (Attribute columnAttribute : columnAttributes) {
+				newColumnElement.addAttribute(
+					columnAttribute.getName(),
+					columnAttribute.getStringValue());
+			}
+		}
+
 		// Localized columns
 
 		List<Element> localizedColumnElements = localizedEntityElement.elements(
@@ -7390,32 +7416,6 @@ public class ServiceBuilder {
 			"finder-column");
 
 		newLocalizedFinderColumnElement.addAttribute("name", "languageId");
-
-		// Manual columns
-
-		List<Element> columnElements = localizedEntityElement.elements(
-			"column");
-
-		for (Element columnElement : columnElements) {
-			String localized = columnElement.attributeValue("localized");
-
-			if (localized != null) {
-				throw new IllegalArgumentException(
-					"Unable to have localized columns in localized table for " +
-						"entity " + entity.getName());
-			}
-
-			Element newColumnElement = newLocalizedEntityElement.addElement(
-				"column", columnElement.getStringValue());
-
-			List<Attribute> columnAttributes = columnElement.attributes();
-
-			for (Attribute columnAttribute : columnAttributes) {
-				newColumnElement.addAttribute(
-					columnAttribute.getName(),
-					columnAttribute.getStringValue());
-			}
-		}
 
 		// Manual Order
 

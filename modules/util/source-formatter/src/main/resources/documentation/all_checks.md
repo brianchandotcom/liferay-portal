@@ -197,17 +197,17 @@ JSPWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | .jsp, .jspf, 
 JSPXSSVulnerabilitiesCheck | [Security](security_checks.md#security-checks) | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds xss vulnerabilities. |
 JSStylingCheck | [Styling](styling_checks.md#styling-checks) | .js or .jsx | Applies rules to enforce consistency in code style. |
 JSWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | .js or .jsx | Finds missing and unnecessary whitespace in `.js` files. |
-JakartaTransformBNDCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformFTLCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformGradleCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformHTMLCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformJSCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformJSPCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformJavaCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformPropertiesCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformTLDCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformTSCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
-JakartaTransformXMLCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml | Performs replacements for use of Jakarta. |
+JakartaTransformBNDCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .bnd | Performs replacements for use of Jakarta. |
+JakartaTransformFTLCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .ftl | Performs replacements for use of Jakarta. |
+JakartaTransformGradleCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .gradle | Performs replacements for use of Jakarta. |
+JakartaTransformHTMLCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .html | Performs replacements for use of Jakarta. |
+JakartaTransformJSCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .js or .jsx | Performs replacements for use of Jakarta. |
+JakartaTransformJSPCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .jsp, .jspf, or .jspx | Performs replacements for use of Jakarta. |
+JakartaTransformJavaCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .java | Performs replacements for use of Jakarta. |
+JakartaTransformPropertiesCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .properties | Performs replacements for use of Jakarta. |
+JakartaTransformTLDCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .tld | Performs replacements for use of Jakarta. |
+JakartaTransformTSCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .ts or .tsx | Performs replacements for use of Jakarta. |
+JakartaTransformXMLCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | .xml | Performs replacements for use of Jakarta. |
 Java2HTMLCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Finds incorrect use of `.java.html` in `.jsp` files. |
 JavaAbstractMethodCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds incorrect `abstract` methods in `interface`. |
 JavaAggregateTestRuleParameterOrderCheck | [Styling](styling_checks.md#styling-checks) | .java | Checks the order of parameters in `new AggregateTestRule` calls. |

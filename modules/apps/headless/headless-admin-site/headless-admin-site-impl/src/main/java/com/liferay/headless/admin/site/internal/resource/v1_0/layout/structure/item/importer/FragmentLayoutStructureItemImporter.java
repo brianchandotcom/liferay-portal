@@ -89,11 +89,15 @@ public class FragmentLayoutStructureItemImporter
 				layoutStructureItemImporterContext)
 		throws Exception {
 
-		Layout layout = layoutStructureItemImporterContext.getLayout();
-
 		FragmentEntry fragmentEntry = _getFragmentEntry(
 			fragmentInstancePageElementDefinition,
 			layoutStructureItemImporterContext.getGroupId());
+
+		if (fragmentEntry == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = layoutStructureItemImporterContext.getLayout();
 
 		long originalFragmentEntryLinkId = 0;
 
@@ -171,15 +175,9 @@ public class FragmentLayoutStructureItemImporter
 					fragmentInstancePageElementDefinition.
 						getFragmentReference();
 
-			FragmentEntry fragmentEntry =
-				FragmentEntryLocalServiceUtil.
-					fetchFragmentEntryByExternalReferenceCode(
-						itemExternalReference.getExternalReferenceCode(),
-						groupId);
-
-			if (fragmentEntry != null) {
-				return fragmentEntry;
-			}
+			return FragmentEntryLocalServiceUtil.
+				fetchFragmentEntryByExternalReferenceCode(
+					itemExternalReference.getExternalReferenceCode(), groupId);
 		}
 
 		DefaultFragmentReference defaultFragmentReference =

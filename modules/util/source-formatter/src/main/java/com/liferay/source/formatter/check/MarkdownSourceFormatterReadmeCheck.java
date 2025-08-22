@@ -647,6 +647,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 				_getFileExtensionsBySourceProcessName(sourceProcessorName));
 		}
 
+		ListUtil.distinct(fileExtensions);
+
 		return _mergeFileExtensions(fileExtensions);
 	}
 

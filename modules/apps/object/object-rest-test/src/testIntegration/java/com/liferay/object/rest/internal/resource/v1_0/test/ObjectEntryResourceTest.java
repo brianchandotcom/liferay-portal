@@ -7181,6 +7181,105 @@ public class ObjectEntryResourceTest {
 			listTypeDefinition);
 	}
 
+	@Test
+	@TestInfo({"LPD-55420", "LPD-60419", "LPD-60423"})
+	public void testGetObjectEntryWithDifferentScopeAndNestedFields()
+		throws Exception {
+
+		// Company scope
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1,
+			RandomTestUtil.randomString());
+
+		Group siteGroup1 = GroupTestUtil.addGroup();
+
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			siteGroup1.getGroupId(), _siteScopedObjectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).build());
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _siteScopedObjectDefinition1,
+			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		Group siteGroup2 = GroupTestUtil.addGroup();
+
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			siteGroup2.getGroupId(), _siteScopedObjectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).build());
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			objectEntry1.getPrimaryKey(), objectEntry3.getPrimaryKey(),
+			_objectRelationship1, TestPropsValues.getUserId());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", objectEntry1.getExternalReferenceCode()
+			).put(
+				_objectRelationship1.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode",
+						objectEntry2.getExternalReferenceCode()),
+					JSONUtil.put(
+						"externalReferenceCode",
+						objectEntry3.getExternalReferenceCode()))
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_getEndpoint(
+					objectEntry1.getObjectEntryId(), _objectRelationship1,
+					_objectDefinition1),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// Site scope
+
+		ObjectEntry objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2, _OBJECT_FIELD_NAME_2,
+			RandomTestUtil.randomString());
+
+		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _objectDefinition2,
+			objectEntry1.getPrimaryKey(), objectEntry4.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", objectEntry2.getExternalReferenceCode()
+			).put(
+				_objectRelationship1.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode",
+						objectEntry1.getExternalReferenceCode()
+					).put(
+						_objectRelationship2.getName(),
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"externalReferenceCode",
+								objectEntry4.getExternalReferenceCode()))
+					))
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_getEndpoint(
+						objectEntry2.getObjectEntryId(), _objectRelationship1,
+						_siteScopedObjectDefinition1),
+					",", _objectRelationship2.getName(),
+					"&nestedFieldsDepth=2"),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
 	@FeatureFlag("LPD-21926")
 	@Test
 	public void testGetObjectEntryWithFriendlyURL() throws Exception {
@@ -14710,6 +14809,15 @@ public class ObjectEntryResourceTest {
 		return _dlFolderLocalService.getFolder(
 			repository.getGroupId(), repository.getDlFolderId(),
 			String.valueOf(TestPropsValues.getUserId()));
+	}
+
+	private String _getEndpoint(
+		long objectEntryId, ObjectRelationship objectRelationship,
+		ObjectDefinition objectDefinition) {
+
+		return StringBundler.concat(
+			objectDefinition.getRESTContextPath(), StringPool.SLASH,
+			objectEntryId, "?nestedFields=", objectRelationship.getName());
 	}
 
 	private String _getEndpoint(

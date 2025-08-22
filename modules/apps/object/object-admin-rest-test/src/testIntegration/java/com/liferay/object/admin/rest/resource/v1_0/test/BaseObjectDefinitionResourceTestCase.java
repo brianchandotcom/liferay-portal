@@ -2032,6 +2032,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"workflowDefinitionLinks", additionalAssertFieldName)) {
+
+				if (objectDefinition.getWorkflowDefinitionLinks() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -2694,6 +2704,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getTitleObjectFieldName(),
 						objectDefinition2.getTitleObjectFieldName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowDefinitionLinks", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getWorkflowDefinitionLinks(),
+						objectDefinition2.getWorkflowDefinitionLinks())) {
 
 					return false;
 				}
@@ -3659,6 +3682,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("workflowDefinitionLinks")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

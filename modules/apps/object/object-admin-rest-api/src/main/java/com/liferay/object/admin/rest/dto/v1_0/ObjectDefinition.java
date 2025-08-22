@@ -1954,6 +1954,51 @@ public class ObjectDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleObjectFieldNameSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public WorkflowDefinitionLink[] getWorkflowDefinitionLinks() {
+		if (_workflowDefinitionLinksSupplier != null) {
+			workflowDefinitionLinks = _workflowDefinitionLinksSupplier.get();
+
+			_workflowDefinitionLinksSupplier = null;
+		}
+
+		return workflowDefinitionLinks;
+	}
+
+	public void setWorkflowDefinitionLinks(
+		WorkflowDefinitionLink[] workflowDefinitionLinks) {
+
+		this.workflowDefinitionLinks = workflowDefinitionLinks;
+
+		_workflowDefinitionLinksSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setWorkflowDefinitionLinks(
+		UnsafeSupplier<WorkflowDefinitionLink[], Exception>
+			workflowDefinitionLinksUnsafeSupplier) {
+
+		_workflowDefinitionLinksSupplier = () -> {
+			try {
+				return workflowDefinitionLinksUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected WorkflowDefinitionLink[] workflowDefinitionLinks;
+
+	@JsonIgnore
+	private Supplier<WorkflowDefinitionLink[]> _workflowDefinitionLinksSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -2663,6 +2708,29 @@ public class ObjectDefinition implements Serializable {
 			sb.append(_escape(titleObjectFieldName));
 
 			sb.append("\"");
+		}
+
+		WorkflowDefinitionLink[] workflowDefinitionLinks =
+			getWorkflowDefinitionLinks();
+
+		if (workflowDefinitionLinks != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowDefinitionLinks\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < workflowDefinitionLinks.length; i++) {
+				sb.append(String.valueOf(workflowDefinitionLinks[i]));
+
+				if ((i + 1) < workflowDefinitionLinks.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

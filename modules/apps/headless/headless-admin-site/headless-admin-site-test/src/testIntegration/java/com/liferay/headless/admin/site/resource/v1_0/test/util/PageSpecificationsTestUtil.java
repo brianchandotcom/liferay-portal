@@ -363,6 +363,9 @@ public class PageSpecificationsTestUtil {
 			pageExperiences = PageExperiencesTestUtil.getPageExperiences(
 				contentPageSpecificationExternalReferenceCode);
 		}
+		else {
+			PageExperiencesTestUtil.modifyPageExperiences(pageExperiences);
+		}
 
 		contentPageSpecification.setPageExperiences(pageExperiences);
 		contentPageSpecification.setStatus(status);

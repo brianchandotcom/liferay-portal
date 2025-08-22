@@ -68,6 +68,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.internal.entry.folder.util.ObjectEntryFolderUtil;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.internal.filter.parser.CurrentUserObjectFilterParser;
@@ -1706,7 +1707,8 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			_moveObjectEntryToTrash(
-				objectEntry, serviceContext, userId);
+				objectEntry, objectEntry.getObjectEntryFolderId(),
+				serviceContext, userId);
 		}
 	}
 
@@ -1720,7 +1722,14 @@ public class ObjectEntryLocalServiceImpl
 			throw new TrashEntryException();
 		}
 
-		return _moveObjectEntryToTrash(objectEntry, serviceContext, userId);
+		long objectEntryFolderId = objectEntry.getObjectEntryFolderId();
+
+		objectEntry.setObjectEntryFolderId(
+			ObjectEntryFolderUtil.getRootObjectEntryFolderId(
+				objectEntryFolderId));
+
+		return _moveObjectEntryToTrash(
+			objectEntry, objectEntryFolderId, serviceContext, userId);
 	}
 
 	@Override
@@ -5103,7 +5112,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private ObjectEntry _moveObjectEntryToTrash(
-			ObjectEntry objectEntry, ServiceContext serviceContext, long userId)
+			ObjectEntry objectEntry, long objectEntryFolderId,
+			ServiceContext serviceContext, long userId)
 		throws PortalException {
 
 		List<ObjectEntryVersion> objectEntryVersions =
@@ -5134,6 +5144,8 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getObjectEntryId(), objectEntry.getUuid(), null,
 			_getStatus(oldStatus), statusOVPs,
 			UnicodePropertiesBuilder.put(
+				"objectEntryFolderId", objectEntryFolderId
+			).put(
 				"title", objectEntry.getObjectEntryId()
 			).build());
 

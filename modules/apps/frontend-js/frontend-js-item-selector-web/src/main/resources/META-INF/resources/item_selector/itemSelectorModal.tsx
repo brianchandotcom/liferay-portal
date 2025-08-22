@@ -5,14 +5,14 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {InternalDispatch, useControlledState} from '@clayui/shared';
+import {InternalDispatch} from '@clayui/shared';
 import {
 	FrontendDataSet,
 	IFrontendDataSetProps,
 } from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
 export interface IItemSelectorModalProps<T> {
 
@@ -32,7 +32,7 @@ export interface IItemSelectorModalProps<T> {
 	itemValueLocator: string | ((item: T) => any);
 
 	/**
-	 * Set the default selected items, always an array (controlled).
+	 * Set the default selected items, always an array.
 	 */
 	items: T[];
 
@@ -42,14 +42,14 @@ export interface IItemSelectorModalProps<T> {
 	observer: any;
 
 	/**
+	 * Callback function called when item selection is confirmed, always an array.
+	 */
+	onItemsChange: InternalDispatch<T[]>;
+
+	/**
 	 * Expects the 'onOpenChange' property from the Clay useModal hook.
 	 */
 	onOpenChange: (value: boolean) => void;
-
-	/**
-	 * Callback function called when item selection is confirmed, always an array (controlled).
-	 */
-	onSelectedItemsChange: InternalDispatch<T[]>;
 
 	/**
 	 * Expects the 'open' property from the Clay useModal hook.
@@ -68,19 +68,12 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	itemValueLocator,
 	items: externalItems,
 	observer,
+	onItemsChange,
 	onOpenChange,
-	onSelectedItemsChange,
 	open,
 	type,
 }: IItemSelectorModalProps<T>) {
-	const [selectedItems, setSelectedItems] = useControlledState({
-		defaultName: 'defaultItems',
-		defaultValue: undefined,
-		handleName: 'onSelectedItemsChange',
-		name: 'items',
-		onChange: onSelectedItemsChange,
-		value: externalItems,
-	});
+	const [selectedItems, setSelectedItems] = useState(() => externalItems);
 
 	const getSelectedItemName = function (selectedItem: T) {
 		if (typeof itemNameLocator === 'string') {
@@ -91,7 +84,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 		}
 	};
 
-	const externalSelectedItems = useMemo(() => {
+	const selectedValues = useMemo(() => {
 		const getSelectedItemValue = function (selectedItem: T) {
 			if (typeof itemValueLocator === 'string') {
 				return selectedItem[itemValueLocator];
@@ -101,12 +94,12 @@ function ItemSelectorModal<T extends Record<string, any>>({
 			}
 		};
 
-		if (Array.isArray(externalItems)) {
-			return externalItems.map(getSelectedItemValue);
+		if (Array.isArray(selectedItems)) {
+			return selectedItems.map(getSelectedItemValue);
 		}
 
-		return [getSelectedItemValue(externalItems)];
-	}, [externalItems, itemValueLocator]);
+		return [getSelectedItemValue(selectedItems)];
+	}, [selectedItems, itemValueLocator]);
 
 	return open ? (
 		<ClayModal observer={observer} size="full-screen">
@@ -132,7 +125,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 							setSelectedItems(newSelectedItems);
 						}
 					}}
-					selectedItems={externalSelectedItems}
+					selectedItems={selectedValues}
 					style="fluid"
 				/>
 			</ClayModal.Body>
@@ -173,7 +166,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 							className="item-preview selector-button"
 							disabled={selectedItems.length < 1}
 							onClick={() => {
-								onSelectedItemsChange(
+								onItemsChange(
 									fdsProps.selectionType === 'single'
 										? selectedItems.slice(0, 1)
 										: selectedItems

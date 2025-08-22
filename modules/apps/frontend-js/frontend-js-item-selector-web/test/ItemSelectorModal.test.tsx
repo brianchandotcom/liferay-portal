@@ -17,8 +17,15 @@ type TestItem = {
 	name: string;
 };
 
-const mockFirstItemName = 'First Item Name';
-const mockSecondItemName = 'Second Item Name';
+const mockFirstItem = {
+	id: 1,
+	name: 'First Item Name',
+};
+
+const mockSecondItem = {
+	id: 2,
+	name: 'Second Item Name',
+};
 
 jest.mock('frontend-js-web', () => {
 	const actualPackage = jest.requireActual('frontend-js-web') as any;
@@ -33,16 +40,7 @@ jest.mock('frontend-js-web', () => {
 				headers,
 				json: () =>
 					Promise.resolve({
-						items: [
-							{
-								id: 1,
-								name: mockFirstItemName,
-							},
-							{
-								id: 2,
-								name: mockSecondItemName,
-							},
-						],
+						items: [mockFirstItem, mockSecondItem],
 						lastPage: 1,
 						page: 1,
 					}),
@@ -61,7 +59,13 @@ const mockedFetch = fetch as jest.Mock;
 const mockedLoadClientExtensions = loadClientExtensions as jest.Mock;
 const mockedSub = sub as jest.Mock;
 
-const ItemSelectorModalWrapper = ({defaultOpen}: {defaultOpen: boolean}) => {
+const ItemSelectorModalWrapper = ({
+	defaultOpen,
+	selectedItems,
+}: {
+	defaultOpen: boolean;
+	selectedItems: TestItem[];
+}) => {
 	const {observer, onOpenChange, open} = useModal({defaultOpen});
 
 	return (
@@ -88,10 +92,12 @@ const ItemSelectorModalWrapper = ({defaultOpen}: {defaultOpen: boolean}) => {
 						} as IView,
 					],
 				},
-				itemNameLocator: 'fileName',
+				itemNameLocator: 'name',
+				itemValueLocator: 'id',
+				items: selectedItems,
 				observer,
+				onItemsChange: jest.fn(),
 				onOpenChange,
-				onSelection: jest.fn(),
 				open,
 				type: 'Space',
 			}}
@@ -121,11 +127,9 @@ describe('ItemSelectorModal component', () => {
 		mockedSub.mockReset();
 	});
 
-	it('renders an open item selector modal', async () => {
-		expect(Liferay.ThemeDisplay.isImpersonated).toBeDefined();
-
+	it('renders an open item selector modal, with no selected items', async () => {
 		const {findByRole} = render(
-			<ItemSelectorModalWrapper defaultOpen={true} />
+			<ItemSelectorModalWrapper defaultOpen={true} selectedItems={[]} />
 		);
 
 		const modal = await findByRole('dialog');
@@ -140,18 +144,68 @@ describe('ItemSelectorModal component', () => {
 
 		expect(items).toHaveLength(2);
 
-		expect(items[0]).toHaveTextContent(mockFirstItemName);
+		const [firstItem, secondItem] = items;
 
-		expect(items[1]).toHaveTextContent(mockSecondItemName);
+		expect(firstItem).toHaveTextContent(mockFirstItem.name);
 
-		const footer = await within(modal).findByRole('group');
+		expect(secondItem).toHaveTextContent(mockSecondItem.name);
 
-		const [cancel, select] = await within(footer).findAllByRole('button');
+		const footerActions = await within(modal).findByRole('group');
+
+		const [cancel, select] =
+			await within(footerActions).findAllByRole('button');
 
 		expect(cancel).toBeInTheDocument();
 
 		expect(select).toBeInTheDocument();
 
 		expect(select).toBeDisabled();
+	});
+
+	it('renders an open single item selector modal, with one selected items', async () => {
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				selectedItems={[mockSecondItem]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
+		const radios = await within(modal).findAllByRole('radio');
+
+		expect(radios).toHaveLength(2);
+
+		const [firstItemRadio, secondItemRadio] = radios;
+
+		expect(firstItemRadio).not.toBeChecked();
+
+		expect(secondItemRadio).toBeChecked();
+
+		const selectedMessage = await within(modal).findByText('x-selected');
+
+		expect(selectedMessage).toBeInTheDocument();
+
+		expect(sub).toHaveBeenNthCalledWith(
+			2,
+			'x-selected',
+			expect.objectContaining({
+				props: {
+					children: mockSecondItem.name,
+				},
+				type: 'strong',
+			})
+		);
+
+		const footerActions = await within(modal).findByRole('group');
+
+		const [cancel, select] =
+			await within(footerActions).findAllByRole('button');
+
+		expect(cancel).toBeInTheDocument();
+
+		expect(select).toBeInTheDocument();
+
+		expect(select).toBeEnabled();
 	});
 });

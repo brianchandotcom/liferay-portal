@@ -19,7 +19,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	property = Constants.SERVICE_RANKING + ":Integer=10",
+	property = {
+		Constants.SERVICE_RANKING + ":Integer=10",
+		"item.class.name=com.liferay.journal.model.JournalArticle"
+	},
 	service = InfoItemDetailsProvider.class
 )
 public class JournalArticleInfoItemDetailsProvider

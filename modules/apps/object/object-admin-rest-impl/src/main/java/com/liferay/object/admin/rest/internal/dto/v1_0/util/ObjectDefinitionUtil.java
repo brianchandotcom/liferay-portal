@@ -16,6 +16,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
+import com.liferay.object.admin.rest.dto.v1_0.WorkflowDefinitionLink;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,6 +50,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -79,7 +82,8 @@ public class ObjectDefinitionUtil {
 			serviceBuilderObjectDefinition,
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry,
-		UserLocalService userLocalService) {
+		UserLocalService userLocalService,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		if (serviceBuilderObjectDefinition == null) {
 			return null;
@@ -346,6 +350,50 @@ public class ObjectDefinitionUtil {
 						}
 
 						return serviceBuilderObjectField.getName();
+					});
+				setWorkflowDefinitionLinks(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+							return null;
+						}
+
+						List
+							<com.liferay.portal.kernel.model.
+								WorkflowDefinitionLink>
+									serviceBuilderWorkflowDefinitionLinks =
+										workflowDefinitionLinkLocalService.
+											getWorkflowDefinitionLinks(
+												serviceBuilderObjectDefinition.
+													getCompanyId(),
+												serviceBuilderObjectDefinition.
+													getClassName());
+
+						return TransformUtil.transformToArray(
+							serviceBuilderWorkflowDefinitionLinks,
+							serviceBuilderWorkflowDefinitionLink ->
+								new WorkflowDefinitionLink() {
+									{
+										setGroupExternalReferenceCode(
+											() -> {
+												Group group =
+													groupLocalService.
+														fetchGroup(
+															serviceBuilderWorkflowDefinitionLink.
+																getGroupId());
+
+												if (group != null) {
+													return group.
+														getExternalReferenceCode();
+												}
+
+												return StringPool.BLANK;
+											});
+										setWorkflowDefinitionName(
+											serviceBuilderWorkflowDefinitionLink::
+												getWorkflowDefinitionName);
+									}
+								},
+							WorkflowDefinitionLink.class);
 					});
 			}
 		};

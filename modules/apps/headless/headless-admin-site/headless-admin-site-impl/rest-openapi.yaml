@@ -1261,6 +1261,11 @@ components:
                             items:
                                 $ref: "#/components/schemas/FragmentField"
                             type: array
+                        fragmentInstanceExternalReferenceCode:
+                            # @review
+                            description:
+                                The fragment instance's external reference code.
+                            type: string
                         fragmentReference:
                             # @review
                             description:

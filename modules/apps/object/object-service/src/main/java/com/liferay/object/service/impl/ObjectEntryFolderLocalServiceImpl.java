@@ -17,6 +17,7 @@ import com.liferay.object.exception.ObjectEntryFolderNameException;
 import com.liferay.object.exception.ObjectEntryFolderParentObjectEntryFolderIdException;
 import com.liferay.object.exception.ObjectEntryFolderScopeException;
 import com.liferay.object.exception.RequiredObjectEntryFolderException;
+import com.liferay.object.internal.entry.folder.util.ObjectEntryFolderUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,9 +49,12 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.trash.exception.TrashEntryException;
+import com.liferay.trash.service.TrashEntryLocalService;
 
 import java.util.Collections;
 import java.util.List;
@@ -316,6 +322,61 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	@Override
+	public void moveObjectEntryFoldersToTrash(
+			long userId, ObjectEntryFolder parentObjectEntryFolder,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		for (ObjectEntryFolder objectEntryFolder :
+				objectEntryFolderPersistence.findByG_C_P(
+					parentObjectEntryFolder.getGroupId(),
+					parentObjectEntryFolder.getCompanyId(),
+					parentObjectEntryFolder.getObjectEntryFolderId())) {
+
+			if (objectEntryFolder.getStatus() ==
+					WorkflowConstants.STATUS_IN_TRASH) {
+
+				continue;
+			}
+
+			objectEntryFolder = _moveObjectEntryFolderToTrash(
+				objectEntryFolder,
+				objectEntryFolder.getParentObjectEntryFolderId(),
+				serviceContext, userId);
+
+			Indexer<ObjectEntryFolder> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(ObjectEntryFolder.class);
+
+			indexer.reindex(objectEntryFolder);
+		}
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectEntryFolder moveObjectEntryFolderToTrash(
+			long userId, ObjectEntryFolder objectEntryFolder,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (objectEntryFolder.getStatus() ==
+				WorkflowConstants.STATUS_IN_TRASH) {
+
+			throw new TrashEntryException();
+		}
+
+		long parentObjectEntryFolderId =
+			objectEntryFolder.getParentObjectEntryFolderId();
+
+		objectEntryFolder.setParentObjectEntryFolderId(
+			ObjectEntryFolderUtil.getRootObjectEntryFolderId(
+				parentObjectEntryFolderId));
+
+		return _moveObjectEntryFolderToTrash(
+			objectEntryFolder, parentObjectEntryFolderId, serviceContext,
+			userId);
+	}
+
+	@Override
 	public void subscribeObjectEntryFolder(
 			long userId, long groupId, long objectEntryFolderId)
 		throws PortalException {
@@ -380,6 +441,20 @@ public class ObjectEntryFolderLocalServiceImpl
 		_updateAsset(objectEntryFolder, serviceContext);
 
 		return objectEntryFolder;
+	}
+
+	@Override
+	public ObjectEntryFolder updateStatus(
+			ObjectEntryFolder objectEntryFolder, int status)
+		throws PortalException {
+
+		if (objectEntryFolder.getStatus() == status) {
+			return objectEntryFolder;
+		}
+
+		objectEntryFolder.setStatus(status);
+
+		return objectEntryFolderPersistence.update(objectEntryFolder);
 	}
 
 	private void _addResourcePermission(
@@ -450,6 +525,38 @@ public class ObjectEntryFolderLocalServiceImpl
 		}
 
 		return labelMap;
+	}
+
+	private ObjectEntryFolder _moveObjectEntryFolderToTrash(
+			ObjectEntryFolder objectEntryFolder, long parentObjectEntryFolderId,
+			ServiceContext serviceContext, long userId)
+		throws PortalException {
+
+		int oldStatus = objectEntryFolder.getStatus();
+
+		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
+
+		objectEntryFolder = updateStatus(
+			objectEntryFolder, WorkflowConstants.STATUS_IN_TRASH);
+
+		_trashEntryLocalService.addTrashEntry(
+			userId, objectEntryFolder.getGroupId(),
+			ObjectEntryFolder.class.getName(),
+			objectEntryFolder.getObjectEntryFolderId(),
+			objectEntryFolder.getUuid(), null, oldStatus, null,
+			UnicodePropertiesBuilder.put(
+				"parentObjectEntryFolderId", parentObjectEntryFolderId
+			).put(
+				"title", objectEntryFolder.getObjectEntryFolderId()
+			).build());
+
+		_objectEntryLocalService.moveObjectEntriesToTrash(
+			userId, objectEntryFolder, serviceContext);
+
+		moveObjectEntryFoldersToTrash(
+			userId, objectEntryFolder, serviceContext);
+
+		return objectEntryFolder;
 	}
 
 	private void _updateAsset(
@@ -579,6 +686,9 @@ public class ObjectEntryFolderLocalServiceImpl
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

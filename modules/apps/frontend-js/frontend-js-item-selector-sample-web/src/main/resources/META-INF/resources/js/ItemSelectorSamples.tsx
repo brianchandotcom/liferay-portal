@@ -317,10 +317,10 @@ export default function ItemSelectorSamples() {
 							documentsItemSelectorConfig.itemValueLocator,
 						items: document ? [document] : [],
 						observer: fileItemSelectorObserver,
-						onItemsChange: (items: Document[]) => {
+						onOpenChange: fileItemSelectorOpenChange,
+						onSelectedItemsChange: (items: Document[]) => {
 							setDocument(items[0]);
 						},
-						onOpenChange: fileItemSelectorOpenChange,
 						open: fileItemSelectorOpen,
 						type: documentsItemSelectorConfig.type,
 					}}
@@ -344,10 +344,10 @@ export default function ItemSelectorSamples() {
 							assetLibrariesItemSelectorConfig.itemValueLocator,
 						items: space2 ? [space2] : [],
 						observer: spaceItemSelectorObserver,
-						onItemsChange: (items: Space[]) => {
+						onOpenChange: spaceItemSelectorOpenChange,
+						onSelectedItemsChange: (items: Space[]) => {
 							setSpace2(items[0]);
 						},
-						onOpenChange: spaceItemSelectorOpenChange,
 						open: spaceItemSelectorOpen,
 						type: assetLibrariesItemSelectorConfig.type,
 					}}
@@ -371,10 +371,10 @@ export default function ItemSelectorSamples() {
 							userAccountsItemSelectorConfig.itemValueLocator,
 						items: user ? [user] : [],
 						observer: userItemSelectorObserver,
-						onItemsChange: (items: User[]) => {
+						onOpenChange: userItemSelectorOpenChange,
+						onSelectedItemsChange: (items: User[]) => {
 							setUser(items[0]);
 						},
-						onOpenChange: userItemSelectorOpenChange,
 						open: userItemSelectorOpen,
 						type: userAccountsItemSelectorConfig.type,
 					}}

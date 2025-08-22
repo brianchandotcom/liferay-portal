@@ -96,8 +96,8 @@ const ItemSelectorModalWrapper = ({
 				itemValueLocator: 'id',
 				items: selectedItems,
 				observer,
-				onItemsChange: jest.fn(),
 				onOpenChange,
+				onSelectedItemsChange: jest.fn(),
 				open,
 				type: 'Space',
 			}}

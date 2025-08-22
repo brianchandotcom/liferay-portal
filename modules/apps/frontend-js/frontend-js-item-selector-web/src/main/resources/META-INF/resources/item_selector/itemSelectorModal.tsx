@@ -42,14 +42,14 @@ export interface IItemSelectorModalProps<T> {
 	observer: any;
 
 	/**
-	 * Callback function called when item selection is confirmed, always an array (controlled).
-	 */
-	onItemsChange: InternalDispatch<T[]>;
-
-	/**
 	 * Expects the 'onOpenChange' property from the Clay useModal hook.
 	 */
 	onOpenChange: (value: boolean) => void;
+
+	/**
+	 * Callback function called when item selection is confirmed, always an array (controlled).
+	 */
+	onSelectedItemsChange: InternalDispatch<T[]>;
 
 	/**
 	 * Expects the 'open' property from the Clay useModal hook.
@@ -68,17 +68,17 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	itemValueLocator,
 	items: externalItems,
 	observer,
-	onItemsChange,
 	onOpenChange,
+	onSelectedItemsChange,
 	open,
 	type,
 }: IItemSelectorModalProps<T>) {
 	const [selectedItems, setSelectedItems] = useControlledState({
 		defaultName: 'defaultItems',
 		defaultValue: undefined,
-		handleName: 'onItemsChange',
+		handleName: 'onSelectedItemsChange',
 		name: 'items',
-		onChange: onItemsChange,
+		onChange: onSelectedItemsChange,
 		value: externalItems,
 	});
 
@@ -173,7 +173,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 							className="item-preview selector-button"
 							disabled={selectedItems.length < 1}
 							onClick={() => {
-								onItemsChange(
+								onSelectedItemsChange(
 									fdsProps.selectionType === 'single'
 										? selectedItems.slice(0, 1)
 										: selectedItems

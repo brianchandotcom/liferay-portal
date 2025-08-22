@@ -243,9 +243,9 @@ public class JournalManagementToolbarDisplayContext
 			).buildString()
 		).put(
 			"changePermissionsURL",
-			() -> PortletURLBuilder.createRenderURL(
+			() -> PortletURLBuilder.createActionURL(
 				liferayPortletResponse
-			).setMVCRenderCommandName(
+			).setActionName(
 				"/journal/change_articles_permissions"
 			).setWindowState(
 				LiferayWindowState.POP_UP

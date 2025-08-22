@@ -130,7 +130,7 @@ public class FilterServiceTrackerCustomizer
 				}
 
 				FilterDTO filterDTO = _createFilterDTO(
-					serviceReference, filter);
+					filter, serviceReference);
 
 				filterRegistration = new FilterRegistration(
 					serviceHolder, filterDTO,
@@ -165,23 +165,23 @@ public class FilterServiceTrackerCustomizer
 	}
 
 	private FilterDTO _createFilterDTO(
-		ServiceReference<Filter> filterServiceReference, Filter filter) {
+		Filter filter, ServiceReference<Filter> serviceReference) {
 
 		String[] filterPatterns = ArrayUtil.toStringArray(
 			StringPlus.asList(
-				filterServiceReference.getProperty(
+				serviceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN)));
 		String[] filterRegexes = ArrayUtil.toStringArray(
 			StringPlus.asList(
-				filterServiceReference.getProperty(
+				serviceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_REGEX)));
-		String[] filterServletNames = ArrayUtil.toStringArray(
+		String[] filterServlets = ArrayUtil.toStringArray(
 			StringPlus.asList(
-				filterServiceReference.getProperty(
+				serviceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET)));
 
 		if ((filterPatterns.length == 0) && (filterRegexes.length == 0) &&
-			(filterServletNames.length == 0)) {
+			(filterServlets.length == 0)) {
 
 			throw new IllegalArgumentException(
 				"Patterns, regex, and servlet names must contain a value");
@@ -193,7 +193,7 @@ public class FilterServiceTrackerCustomizer
 
 		String[] filterDispatcherTypes = ArrayUtil.toStringArray(
 			StringPlus.asList(
-				filterServiceReference.getProperty(
+				serviceReference.getProperty(
 					HttpWhiteboardConstants.
 						HTTP_WHITEBOARD_FILTER_DISPATCHER)));
 
@@ -215,28 +215,28 @@ public class FilterServiceTrackerCustomizer
 		FilterDTO filterDTO = new FilterDTO();
 
 		filterDTO.asyncSupported = ServiceProperties.parseBoolean(
-			filterServiceReference,
+			serviceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED);
 		filterDTO.dispatcher = sort(filterDispatcherTypes);
 		filterDTO.initParams = ServiceProperties.parseInitParams(
-			filterServiceReference,
+			serviceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
 
 		Class<?> filterClass = filter.getClass();
 
 		filterDTO.name = GetterUtil.getString(
 			ServiceProperties.parseName(
-				filterServiceReference.getProperty(
+				serviceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
 				filter),
 			filterClass.getName());
 
 		filterDTO.patterns = sort(filterPatterns);
 		filterDTO.regexs = filterRegexes;
-		filterDTO.serviceId = (long)filterServiceReference.getProperty(
+		filterDTO.serviceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
 		filterDTO.servletContextId = servletContextHelperServiceId;
-		filterDTO.servletNames = sort(filterServletNames);
+		filterDTO.servletNames = sort(filterServlets);
 
 		return filterDTO;
 	}

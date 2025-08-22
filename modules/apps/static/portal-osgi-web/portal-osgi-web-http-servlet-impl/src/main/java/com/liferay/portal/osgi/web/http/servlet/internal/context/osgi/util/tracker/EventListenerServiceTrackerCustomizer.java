@@ -154,7 +154,7 @@ public class EventListenerServiceTrackerCustomizer
 
 			listenerRegistration = new ListenerRegistration(
 				serviceHolder, eventListenerClasses,
-				_createListenerDTO(serviceReference, eventListenerClasses),
+				_createListenerDTO(eventListenerClasses, serviceReference),
 				servletContext, liferayContextController);
 
 			if (eventListenerClasses.contains(ServletContextListener.class)) {
@@ -182,8 +182,8 @@ public class EventListenerServiceTrackerCustomizer
 	}
 
 	private ListenerDTO _createListenerDTO(
-		ServiceReference<EventListener> serviceReference,
-		List<Class<? extends EventListener>> eventListenerClasses) {
+		List<Class<? extends EventListener>> eventListenerClasses,
+		ServiceReference<EventListener> serviceReference) {
 
 		ListenerDTO listenerDTO = new ListenerDTO();
 

@@ -22,7 +22,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Dante Wang
  */
 public abstract class BaseServiceTrackerCustomizer
-	<S, R extends Registration, T extends AtomicReference<R>>
+	<S, R extends Registration<?, ?>, T extends AtomicReference<R>>
 		implements ServiceTrackerCustomizer<S, T> {
 
 	public BaseServiceTrackerCustomizer(
@@ -54,7 +54,7 @@ public abstract class BaseServiceTrackerCustomizer
 	public void removedService(
 		ServiceReference<S> serviceReference, T registrationAtomicReference) {
 
-		Registration registration = registrationAtomicReference.get();
+		Registration<?, ?> registration = registrationAtomicReference.get();
 
 		if (registration != null) {
 			registration.destroy();
@@ -71,10 +71,11 @@ public abstract class BaseServiceTrackerCustomizer
 		return values;
 	}
 
-	protected BundleContext bundleContext;
-	protected HttpServletEndpointController httpServletEndpointController;
-	protected LiferayContextController liferayContextController;
-	protected ServletContextHelperDataContext servletContextHelperDataContext;
-	protected long servletContextHelperServiceId;
+	protected final BundleContext bundleContext;
+	protected final HttpServletEndpointController httpServletEndpointController;
+	protected final LiferayContextController liferayContextController;
+	protected final ServletContextHelperDataContext
+		servletContextHelperDataContext;
+	protected final long servletContextHelperServiceId;
 
 }

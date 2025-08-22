@@ -246,7 +246,7 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private void _configureBladeSamplesWorkspaceGitRepository() {
-		Boolean updated = _updateWorkspaceGitRepository(
+		boolean updated = _updateWorkspaceGitRepository(
 			"git-commit/blade-samples", "liferay-blade-samples");
 
 		if (!updated) {
@@ -405,7 +405,7 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private void _configurePortalsPlutoWorkspaceGitRepository() {
-		Boolean updated = _updateWorkspaceGitRepository(
+		boolean updated = _updateWorkspaceGitRepository(
 			"git-commit/portals-pluto", "portals-pluto");
 
 		if (!updated) {
@@ -415,7 +415,7 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private void _configurePortletAPIGitRepository() {
-		Boolean updated = _updateWorkspaceGitRepository(
+		boolean updated = _updateWorkspaceGitRepository(
 			"git-commit/portlet-api", "portlet-api");
 
 		if (!updated) {

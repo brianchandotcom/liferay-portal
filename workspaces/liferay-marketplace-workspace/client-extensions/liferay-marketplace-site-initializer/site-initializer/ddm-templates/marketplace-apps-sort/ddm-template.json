@@ -1,6 +1,6 @@
 {
-	"className": "com.liferay.portal.search.web.internal.sort.portlet.SortPortlet",
+	"className": "com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext",
 	"ddmTemplateKey": "MARKETPLACE-APPS-SORT",
-	"name": "marketplace_apps_sort",
-	"resourceClassName": "com.liferay.portal.search.web.internal.sort.portlet.SortPortlet"
+	"name": "Marketplace Apps Sort",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
 }

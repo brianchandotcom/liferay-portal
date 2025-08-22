@@ -88,22 +88,22 @@
 <@liferay_aui.script>
 	function ${namespace}selectAll(event) {
 		event.preventDefault();
+		
+		var parameterName = `${assetCategoriesSearchFacetDisplayContext.getParameterName()}`;
+		var divId = event.target.closest('.collapse').id;
+		var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
 		var url = new URL(window.location.href);
 
 		if (url.searchParams.size === 0) {
 			url.href += '?';
 		}
 
-		var title = `${assetCategoriesSearchFacetDisplayContext.getParameterName()}`;
-		var divId = event.target.closest('.collapse').id;
-		var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
-
 		checkboxes.forEach((checkbox) => {
 			if (!checkbox.checked) {
 				if (url.searchParams.size > 0) {
 					url.href += '&';
 				}
-				url.href += title + '=' + checkbox.getAttribute('data-term-id');
+				url.href += parameterName + '=' + checkbox.getAttribute('data-term-id');
 			}
 		});
 

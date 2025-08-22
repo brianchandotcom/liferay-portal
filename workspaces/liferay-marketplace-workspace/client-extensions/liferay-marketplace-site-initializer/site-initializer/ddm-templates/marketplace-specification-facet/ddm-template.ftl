@@ -92,23 +92,23 @@
 </@>
 
 <@liferay_aui.script>
-		function ${namespace}selectAll(event, title) {
+		function ${namespace}selectAll(event, parameterName) {
 			event.preventDefault();
+			
 			var url = new URL(window.location.href);
+			var divId = event.target.closest('.collapse').id;
+			var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
 
 			if (url.searchParams.size === 0) {
 				url.href += '?'
 			}
-
-			var divId = event.target.closest('.collapse').id;
-			var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
 
 			checkboxes.forEach((checkbox) => {
 				if (!checkbox.checked) {
 					if (url.searchParams.size > 0) {
 						url.href += '&';
 					}
-					url.href += title + '=' + checkbox.getAttribute('data-term-id');
+					url.href += parameterName + '=' + checkbox.getAttribute('data-term-id');
 				}
 			});
 

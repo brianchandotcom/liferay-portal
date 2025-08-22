@@ -7,4 +7,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="cms-section"></div>
+<%
+ViewHomeSearchBarDisplayContext viewHomeSearchBarDisplayContext = (ViewHomeSearchBarDisplayContext)request.getAttribute(ViewHomeSearchBarDisplayContext.class.getName());
+%>
+
+<div class="cms-section">
+	<react:component
+		module="{SearchBar} from site-cms-site-initializer"
+		props="<%= viewHomeSearchBarDisplayContext.getProps() %>"
+	/>
+</div>

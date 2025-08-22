@@ -1241,11 +1241,11 @@ components:
                                 The fragment instance's most recent propagation date.
                             format: date-time
                             type: string
-                        draftPageElementExternalReferenceCode:
+                        draftFragmentInstanceExternalReferenceCode:
                             # @review
                             description:
-                                The external reference code of the corresponding page element in the draft of the page.
-                                Available only in the published page specification.
+                                The external reference code of the corresponding fragment instance in the draft of the
+                                page. Available only in the published page specification.
                             type: string
                         fragmentConfig:
                             additionalProperties:

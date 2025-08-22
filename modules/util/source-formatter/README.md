@@ -115,7 +115,7 @@ Checks are configured in the following files:
    - [.function, .jar, .lar, .macro, .path, .testcase, .war, or .zip](src/main/resources/documentation/poshi_source_processor_checks.md#checks-for-function-jar-lar-macro-path-testcase-war-or-zip)
    - [.gitrepo or ci-merge](src/main/resources/documentation/ci_merge_and_git_repo_source_processor_checks.md#checks-for-gitrepo-or-cimerge)
    - [.gradle](src/main/resources/documentation/gradle_source_processor_checks.md#checks-for-gradle)
-   - [.gradle, .gradle, .gradle, .gradle, .json, .json, .properties, .properties, .xml, or .xml](src/main/resources/documentation/library_source_processor_checks.md#checks-for-gradle-gradle-gradle-gradle-json-json-properties-properties-xml-or-xml)
+   - [.gradle, .json, .properties, or .xml](src/main/resources/documentation/library_source_processor_checks.md#checks-for-gradle-json-properties-or-xml)
    - [.groovy](src/main/resources/documentation/groovy_source_processor_checks.md#checks-for-groovy)
    - [.html or .path](src/main/resources/documentation/html_source_processor_checks.md#checks-for-html-or-path)
    - [.ipynb, .json, or .npmbridgerc](src/main/resources/documentation/json_source_processor_checks.md#checks-for-ipynb-json-or-npmbridgerc)

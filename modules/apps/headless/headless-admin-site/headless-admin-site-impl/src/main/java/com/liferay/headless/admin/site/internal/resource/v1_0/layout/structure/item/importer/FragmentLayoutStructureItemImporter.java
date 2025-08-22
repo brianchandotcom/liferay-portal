@@ -231,8 +231,13 @@ public class FragmentLayoutStructureItemImporter
 		FragmentEntry fragmentEntry = _getFragmentEntry(
 			fragmentInstancePageElementDefinition,
 			layoutStructureItemImporterContext.getGroupId());
+		Layout layout = layoutStructureItemImporterContext.getLayout();
 
-		if (fragmentEntry == null) {
+		if ((fragmentEntry == null) ||
+			(fragmentEntryLink.getPlid() != layout.getPlid()) ||
+			(fragmentEntryLink.getSegmentsExperienceId() !=
+				layoutStructureItemImporterContext.getSegmentsExperienceId())) {
+
 			throw new UnsupportedOperationException();
 		}
 

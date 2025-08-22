@@ -1345,7 +1345,7 @@ public class SourceFormatter {
 			String[] parts = commitMessage.split(":", 2);
 
 			if ((parts[1].startsWith("Reapply \"") &&
-				 (parts[1].indexOf("This reverts commit") != -1)) ||
+				 parts[1].contains("This reverts commit")) ||
 				parts[1].startsWith("Revert \"Revert")) {
 
 				throw new Exception(

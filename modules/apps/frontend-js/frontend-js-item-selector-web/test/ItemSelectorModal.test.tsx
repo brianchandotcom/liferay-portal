@@ -256,4 +256,41 @@ describe('ItemSelectorModal component', () => {
 			mockFirstItem,
 		]);
 	});
+
+	it('must not fire change items callback when clicking on "Cancel" button', async () => {
+		const user = userEvent.setup();
+		const mockedOnSelectedItemsChange = jest.fn();
+
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={mockedOnSelectedItemsChange}
+				selectedItems={[]}
+			/>
+		);
+
+		const modal = await findByRole('dialog');
+
+		const [firstItem] =
+			await within(modal).findAllByLabelText(/item name$/gi);
+
+		const footerActions = await within(modal).findByRole('group');
+
+		const [cancel, select] =
+			await within(footerActions).findAllByRole('button');
+
+		expect(cancel).toBeEnabled();
+
+		await user.click(firstItem);
+
+		await waitFor(() => {
+			expect(select).toBeEnabled();
+		});
+
+		expect(mockedOnSelectedItemsChange).not.toHaveBeenCalled();
+
+		await user.click(cancel);
+
+		expect(mockedOnSelectedItemsChange).not.toHaveBeenCalled();
+	});
 });

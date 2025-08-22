@@ -176,6 +176,8 @@ const FrontendDataSetContent = ({
 
 	const {fileDropSettings} = useContext(DnDContext);
 
+	const isMounted = useIsMounted();
+
 	const getInitialViewsState = () => {
 		const customInternalViews =
 			customRenderers?.views?.map((customRenderer: TRenderer) => ({
@@ -460,8 +462,6 @@ const FrontendDataSetContent = ({
 		onClearFilters,
 		searchParam,
 	]);
-
-	const isMounted = useIsMounted();
 
 	function updateDataSetItems(dataSetData: IDataSetData) {
 		const remappedItems = dataSetData.items.map((item) => {

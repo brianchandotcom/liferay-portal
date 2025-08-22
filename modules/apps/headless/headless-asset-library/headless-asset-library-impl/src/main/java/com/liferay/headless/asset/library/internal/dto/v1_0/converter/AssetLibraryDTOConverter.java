@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.sharing.constants.SharingConfigurationConstants;
 
 import jakarta.ws.rs.core.UriInfo;
 
@@ -160,7 +161,8 @@ public class AssetLibraryDTOConverter
 				setMimeTypeLimits(() -> _getMimeTypeLimits(group.getGroupId()));
 				setSharingEnabled(
 					() -> GetterUtil.getBoolean(
-						unicodeProperties.get("sharingEnabled"), true));
+						unicodeProperties.get("sharingEnabled"),
+						SharingConfigurationConstants.SHARING_ENABLED_DEFAULT));
 				setUseCustomLanguages(
 					() -> !GetterUtil.getBoolean(
 						unicodeProperties.get("inheritLocales")));

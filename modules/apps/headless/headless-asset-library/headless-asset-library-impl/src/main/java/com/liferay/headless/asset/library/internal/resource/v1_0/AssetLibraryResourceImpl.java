@@ -48,6 +48,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.sharing.constants.SharingConfigurationConstants;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -580,7 +581,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			GetterUtil.getString(settings.getLogoColor(), "outline-0")
 		).put(
 			"sharingEnabled",
-			GetterUtil.getBoolean(settings.getSharingEnabled(), true)
+			GetterUtil.getBoolean(
+				settings.getSharingEnabled(),
+				SharingConfigurationConstants.SHARING_ENABLED_DEFAULT)
 		).build();
 	}
 

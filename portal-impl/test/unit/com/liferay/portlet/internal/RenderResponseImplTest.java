@@ -64,12 +64,10 @@ public class RenderResponseImplTest {
 			portletDisplay
 		);
 
-		String portletId = RandomTestUtil.randomString();
-
 		Mockito.when(
 			portletDisplay.getId()
 		).thenReturn(
-			portletId
+			RandomTestUtil.randomString()
 		);
 
 		RenderResponseImpl renderResponseImpl = new RenderResponseImpl();

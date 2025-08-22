@@ -21,10 +21,12 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -101,17 +103,38 @@ public class FragmentLayoutStructureItemImporter
 			type = FragmentConstants.TYPE_INPUT;
 		}
 
-		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
-			null, layoutStructureItemImporterContext.getUserId(),
-			layout.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			layoutStructureItemImporterContext.getSegmentsExperienceId(),
-			layout.getPlid(), fragmentInstancePageElementDefinition.getCss(),
-			fragmentInstancePageElementDefinition.getHtml(),
-			fragmentInstancePageElementDefinition.getJs(),
-			fragmentInstancePageElementDefinition.getConfiguration(),
-			StringPool.BLANK, StringUtil.randomId(), 0,
-			fragmentEntry.getFragmentEntryKey(), type,
-			ServiceContextThreadLocal.getServiceContext());
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date createDate = serviceContext.getCreateDate();
+		String uuid = serviceContext.getUuid();
+
+		try {
+			serviceContext.setCreateDate(
+				fragmentInstancePageElementDefinition.getDatePropagated());
+			serviceContext.setUuid(
+				fragmentInstancePageElementDefinition.getUuid());
+
+			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+				fragmentInstancePageElementDefinition.
+					getFragmentInstanceExternalReferenceCode(),
+				layoutStructureItemImporterContext.getUserId(),
+				layout.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				layoutStructureItemImporterContext.getSegmentsExperienceId(),
+				layout.getPlid(),
+				fragmentInstancePageElementDefinition.getCss(),
+				fragmentInstancePageElementDefinition.getHtml(),
+				fragmentInstancePageElementDefinition.getJs(),
+				fragmentInstancePageElementDefinition.getConfiguration(),
+				StringPool.BLANK,
+				fragmentInstancePageElementDefinition.getNamespace(), 0,
+				fragmentEntry.getFragmentEntryKey(), type, serviceContext);
+		}
+		finally {
+			serviceContext.setCreateDate(createDate);
+			serviceContext.setUuid(uuid);
+		}
 	}
 
 	private FragmentEntry _getFragmentEntry(

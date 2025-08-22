@@ -1,0 +1,33 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "Autoplay",
+					"name": "autoplay",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "Lazy",
+					"name": "lazy",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"label": "Loop Video",
+					"name": "loop",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "Muted",
+					"name": "muted",
+					"type": "checkbox"
+				}
+			],
+			"label": "Video Settings"
+		}
+	]
+}

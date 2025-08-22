@@ -1,0 +1,84 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+const autoplay = configuration.autoplay;
+const lazy = configuration.lazy;
+const loop = configuration.loop;
+const muted = configuration.muted;
+
+function loadPlyr() {
+	if (typeof Plyr !== 'undefined') {
+		return initPlayer();
+	}
+	const link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.href = 'https://cdn.plyr.io/3.7.8/plyr.css';
+	document.head.appendChild(link);
+
+	const script = document.createElement('script');
+	script.src = 'https://cdn.plyr.io/3.7.8/plyr.polyfilled.js';
+	script.onload = initPlayer;
+	document.body.appendChild(script);
+}
+
+function extractYouTubeId(url) {
+	const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
+
+	return match ? match[1] : null;
+}
+
+function initPlayer() {
+	const plyrPlaceholder = document.getElementById('plyr-placeholder');
+	if (!plyrPlaceholder) {
+		return;
+	}
+
+	plyrPlaceholder.innerHTML = '';
+
+	const plyrWrapper = document.createElement('div');
+	const plyrPlayer = document.createElement('div');
+
+	plyrPlayer.id = 'plyr-player';
+	plyrWrapper.classList.add('plyr__video-embed');
+	plyrWrapper.appendChild(plyrPlayer);
+
+	const rawVideoUrl = configuration.videoURL?.trim();
+	const videoId = extractYouTubeId(rawVideoUrl);
+
+	if (!videoId) {
+		console.error(rawVideoUrl);
+
+		return;
+	}
+
+	plyrPlayer.setAttribute('data-plyr-provider', 'youtube');
+	plyrPlayer.setAttribute('data-plyr-embed-id', videoId);
+	plyrPlaceholder.appendChild(plyrWrapper);
+
+	new Plyr('#plyr-player', {
+		autoplay,
+		muted,
+		loop: {active: loop},
+		displayDuration: false,
+		youtube: {
+			noCookie: true,
+			rel: 0,
+			modestbranding: 1,
+		},
+	});
+}
+
+if (!lazy) {
+	loadPlyr();
+}
+
+Liferay.on('plyr:play', ({details}) => {
+	const [props = {}] = details;
+
+	if (props.videoURL) {
+		configuration.videoURL = props.videoURL;
+		loadPlyr();
+	}
+});

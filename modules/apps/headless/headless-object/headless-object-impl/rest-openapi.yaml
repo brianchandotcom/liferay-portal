@@ -149,6 +149,13 @@ components:
                     items:
                         type: permission
                     type: array
+                removedBy:
+                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
+                    readOnly: true
+                removedDate:
+                    format: date
+                    readOnly: true
+                    type: string
                 scopeKey:
                     # @review
                     description:

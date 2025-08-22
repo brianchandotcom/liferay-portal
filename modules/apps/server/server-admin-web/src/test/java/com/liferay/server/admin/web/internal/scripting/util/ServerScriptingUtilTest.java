@@ -8,6 +8,7 @@ package com.liferay.server.admin.web.internal.scripting.util;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.scripting.UnsupportedLanguageException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -58,26 +59,29 @@ public class ServerScriptingUtilTest {
 			String message = scriptingException.getMessage();
 
 			Assert.assertTrue(
-				message, message.startsWith("Unable to execute script:"));
-			Assert.assertTrue(
 				message,
-				message.contains(
-					"Line 1: throw new UnsupportedOperationException();"));
+				message.startsWith(
+					"Unable to execute script: \nLine 1: throw new " +
+						"UnsupportedOperationException();\njava.lang." +
+							"UnsupportedOperationException"));
+
+			Assert.assertTrue(
+				scriptingException.getCause() instanceof
+					UnsupportedOperationException);
 		}
 	}
 
 	@Test
-	public void testExecuteWithUnsupportedLanguage() {
+	public void testExecuteWithUnsupportedLanguage() throws Exception {
 		try {
 			ServerScriptingUtil.execute(
 				Collections.emptyMap(), "shell", "return 1 + 1");
 
 			Assert.fail();
 		}
-		catch (ScriptingException scriptingException) {
-			String message = scriptingException.getMessage();
-
-			Assert.assertTrue(message, message.contains("shell"));
+		catch (UnsupportedLanguageException unsupportedLanguageException) {
+			Assert.assertSame(
+				"shell", unsupportedLanguageException.getMessage());
 		}
 	}
 

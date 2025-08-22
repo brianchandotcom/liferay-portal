@@ -2051,6 +2051,17 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 								symbolic="${sync.dir.symbolic}"
 								toDir="${project.dir}/modules/node_modules_cache"
 							/>
+
+							<if>
+								<available file="${project.dir}/${build.binaries.cache.dir}/.yarn/dxp/apps/osb/osb-faro/offline-cache" type="dir" />
+								<then>
+									<sync-dir
+										dir="${project.dir}/${build.binaries.cache.dir}/.yarn/dxp/apps/osb/osb-faro/offline-cache"
+										symbolic="${sync.dir.symbolic}"
+										toDir="${project.dir}/modules/dxp/apps/osb/osb-faro/node_modules_cache"
+									/>
+								</then>
+							</if>
 						</then>
 						<else>
 							<gradle-execute dir="${project.dir}/modules" task="setUpYarnOfflineCache">

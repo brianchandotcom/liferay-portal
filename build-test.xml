@@ -3233,8 +3233,22 @@ tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
 			<local name="patching.tool.version" />
 			<local name="patching.tool.version.url" />
 
+			<var name="quarterly.release.product.version" unset="true" />
+
+			<propertyregex
+				input="@{test.build.fix.pack.zip.url}"
+				property="quarterly.release.product.version"
+				regexp=".*/hotfix/(\d{4}.q\d.\d+(?:-lts)?)/.*.zip"
+				replace="\1"
+			/>
+
 			<if>
-				<matches pattern="https?://" string="@{test.build.fix.pack.zip.url}" />
+				<and>
+					<matches pattern="https?://" string="@{test.build.fix.pack.zip.url}" />
+					<not>
+						<isset property="quarterly.release.product.version" />
+					</not>
+				</and>
 				<then>
 					<get-patch-requirements patch.file.zip.url="@{test.build.fix.pack.zip.url}" />
 				</then>

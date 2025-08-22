@@ -8,6 +8,12 @@
 		height: 120px;
 		justify-content: space-between;
 
+		h1, h3 {
+			color: var(--color-neutral-0, #FFFFFF);
+			font-weight: var(--font-weight-semi-bold);
+			text-align: center;
+		}
+
 		.search-bar {
 			max-width: 100%;
 			width: 320px;
@@ -15,12 +21,6 @@
 
 		.search-bar-keywords-input {
 			text-overflow: ellipsis;
-		}
-
-		h1, h3 {
-			color: var(--color-neutral-0, #FFFFFF);
-			font-weight: var(--font-weight-semi-bold);
-			text-align: center;
 		}
 	}
 
@@ -61,7 +61,7 @@
 				value=searchBarPortletDisplayContext.isEmptySearchEnabled()
 			/>
 
-			<div class="input-group ${searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()?then("search-bar-scope","search-bar-simple")}">
+			<div class='input-group ${searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()?then("search-bar-scope","search-bar-simple")}'>
 				<#if searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()>
 					<div class="input-group-item input-group-item-shrink input-group-prepend">
 						<@clay["button"]
@@ -110,7 +110,7 @@
 						disabled=true
 						label=""
 						name=htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())
-						placeholder="${languageUtil.get(locale, 'search')} ${mainCategory.name}"
+						placeholder='${languageUtil.get(locale, "search")} ${mainCategory.name}'
 						title=languageUtil.get(locale, "search")
 						type="text"
 						useNamespace=false
@@ -126,15 +126,15 @@
 							disabled=true
 							id="${namespace + stringUtil.randomId()}"
 							name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
-							placeholder="${languageUtil.get(locale, 'search')} ${mainCategory.name}"
-							title="${languageUtil.get(locale, "search")}"
+							placeholder='${languageUtil.get(locale, "search")} ${mainCategory.name}'
+							title='${languageUtil.get(locale, "search")}'
 							type="text"
 							value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}"
 						/>
 
 						<div class="input-group-inset-item input-group-inset-item-before">
 							<@clay["button"]
-								aria\-label="${languageUtil.get(locale, 'search')}"
+								aria\-label='${languageUtil.get(locale, "search")}'
 								cssClass="search-bar-submit-button"
 								disabled=true
 								displayType="unstyled"

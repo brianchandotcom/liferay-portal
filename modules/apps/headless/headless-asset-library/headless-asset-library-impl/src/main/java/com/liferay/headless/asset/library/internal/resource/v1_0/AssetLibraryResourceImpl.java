@@ -580,7 +580,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			GetterUtil.getString(settings.getLogoColor(), "outline-0")
 		).put(
 			"sharingEnabled",
-			GetterUtil.getBoolean(settings.getSharingEnabled())
+			GetterUtil.getBoolean(settings.getSharingEnabled(), true)
 		).build();
 	}
 

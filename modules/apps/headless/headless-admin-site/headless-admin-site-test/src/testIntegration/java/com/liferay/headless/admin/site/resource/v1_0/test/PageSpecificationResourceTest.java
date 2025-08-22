@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
@@ -19,6 +18,7 @@ import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -27,7 +27,6 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -649,7 +648,8 @@ public class PageSpecificationResourceTest
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode());
 
-		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
+		PageExperiencesTestUtil.modifyPageExperiences(
+			contentPageSpecification.getPageExperiences());
 
 		_modifySettings(
 			contentPageSpecification, serviceContext, layout.isTypeUtility());
@@ -722,46 +722,6 @@ public class PageSpecificationResourceTest
 		return null;
 	}
 
-	private PageElement[] _getPageElements(
-		int count, String parentExternalReferenceCode) {
-
-		PageElement[] pageElements = new PageElement[count];
-
-		for (int i = 0; i < count; i++) {
-			String externalReferenceCode = RandomTestUtil.randomString();
-
-			int curPosition = i;
-
-			PageElement pageElement = new PageElement() {
-				{
-					setPageElementDefinition(
-						() -> new ContainerPageElementDefinition() {
-							{
-								setIndexed(() -> Boolean.FALSE);
-								setType(() -> Type.CONTAINER);
-							}
-						});
-					setPosition(() -> curPosition);
-				}
-			};
-
-			pageElement.setExternalReferenceCode(externalReferenceCode);
-
-			if (RandomTestUtil.randomBoolean()) {
-				pageElement.setPageElements(
-					_getPageElements(
-						RandomTestUtil.randomInt(1, 2), externalReferenceCode));
-			}
-
-			pageElement.setParentExternalReferenceCode(
-				parentExternalReferenceCode);
-
-			pageElements[i] = pageElement;
-		}
-
-		return pageElements;
-	}
-
 	private PageExperience _getPageExperience(
 		String pageExperienceExternalReferenceCode,
 		PageExperience[] pageExperiences) {
@@ -811,47 +771,6 @@ public class PageSpecificationResourceTest
 
 		return GetterUtil.getBoolean(
 			draftLayout.getTypeSettingsProperty("published"));
-	}
-
-	private void _modifyPageExperiences(PageExperience[] pageExperiences) {
-		for (PageExperience pageExperience : pageExperiences) {
-			List<PageElement> dropZonePageElements =
-				TransformUtil.transformToList(
-					pageExperience.getPageElements(),
-					pageElement -> {
-						PageElementDefinition pageElementDefinition =
-							pageElement.getPageElementDefinition();
-
-						if (Objects.equals(
-								pageElementDefinition.getType(),
-								PageElementDefinition.Type.DROP_ZONE)) {
-
-							return pageElement;
-						}
-
-						return null;
-					});
-
-			pageExperience.setPageElements(
-				() -> {
-					PageElement[] pageElements = _getPageElements(
-						RandomTestUtil.randomInt(1, 3), StringPool.BLANK);
-
-					if (ListUtil.isEmpty(dropZonePageElements)) {
-						return pageElements;
-					}
-
-					for (int i = 0; i < dropZonePageElements.size(); i++) {
-						PageElement pageElement = dropZonePageElements.get(i);
-
-						pageElement.setPosition(pageElements.length + i);
-					}
-
-					return ArrayUtil.append(
-						pageElements,
-						dropZonePageElements.toArray(new PageElement[0]));
-				});
-		}
 	}
 
 	private void _modifySettings(
@@ -1090,7 +1009,8 @@ public class PageSpecificationResourceTest
 					testGroup.getExternalReferenceCode(),
 					draftLayout.getExternalReferenceCode());
 
-		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
+		PageExperiencesTestUtil.modifyPageExperiences(
+			contentPageSpecification.getPageExperiences());
 
 		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 

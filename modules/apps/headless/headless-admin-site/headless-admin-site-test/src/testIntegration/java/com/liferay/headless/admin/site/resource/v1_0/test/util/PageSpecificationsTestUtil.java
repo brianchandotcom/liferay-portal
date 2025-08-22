@@ -15,7 +15,6 @@ import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.GeneralConfig;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
@@ -53,14 +52,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -363,21 +360,8 @@ public class PageSpecificationsTestUtil {
 			contentPageSpecificationExternalReferenceCode);
 
 		if (pageExperiences == null) {
-			pageExperiences = new PageExperience[] {
-				new PageExperience() {
-					{
-						setExternalReferenceCode(RandomTestUtil::randomString);
-						setKey(SegmentsExperienceConstants.KEY_DEFAULT);
-						setName_i18n(
-							Collections.singletonMap(
-								"en-US", RandomTestUtil.randomString()));
-						setPageElements(new PageElement[0]);
-						setPageSpecificationExternalReferenceCode(
-							contentPageSpecification.
-								getExternalReferenceCode());
-					}
-				}
-			};
+			pageExperiences = PageExperiencesTestUtil.getPageExperiences(
+				contentPageSpecificationExternalReferenceCode);
 		}
 
 		contentPageSpecification.setPageExperiences(pageExperiences);

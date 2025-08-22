@@ -5,10 +5,23 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 
@@ -42,6 +55,106 @@ public class PageExperiencesTestUtil {
 		Assert.assertEquals(
 			segmentsExperience.getExternalReferenceCode(),
 			pageExperience.getExternalReferenceCode());
+	}
+
+	public static PageExperience[] getPageExperiences(
+		String contentPageSpecificationExternalReferenceCode) {
+
+		return new PageExperience[] {
+			new PageExperience() {
+				{
+					setExternalReferenceCode(RandomTestUtil::randomString);
+					setKey(SegmentsExperienceConstants.KEY_DEFAULT);
+					setName_i18n(
+						Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString()));
+					setPageElements(new PageElement[0]);
+					setPageSpecificationExternalReferenceCode(
+						contentPageSpecificationExternalReferenceCode);
+				}
+			}
+		};
+	}
+
+	public static void modifyPageExperiences(PageExperience[] pageExperiences) {
+		for (PageExperience pageExperience : pageExperiences) {
+			List<PageElement> dropZonePageElements =
+				TransformUtil.transformToList(
+					pageExperience.getPageElements(),
+					pageElement -> {
+						PageElementDefinition pageElementDefinition =
+							pageElement.getPageElementDefinition();
+
+						if (Objects.equals(
+								pageElementDefinition.getType(),
+								PageElementDefinition.Type.DROP_ZONE)) {
+
+							return pageElement;
+						}
+
+						return null;
+					});
+
+			pageExperience.setPageElements(
+				() -> {
+					PageElement[] pageElements = _getPageElements(
+						RandomTestUtil.randomInt(1, 3), StringPool.BLANK);
+
+					if (ListUtil.isEmpty(dropZonePageElements)) {
+						return pageElements;
+					}
+
+					for (int i = 0; i < dropZonePageElements.size(); i++) {
+						PageElement pageElement = dropZonePageElements.get(i);
+
+						pageElement.setPosition(pageElements.length + i);
+					}
+
+					return ArrayUtil.append(
+						pageElements,
+						dropZonePageElements.toArray(new PageElement[0]));
+				});
+		}
+	}
+
+	private static PageElement[] _getPageElements(
+		int count, String parentExternalReferenceCode) {
+
+		PageElement[] pageElements = new PageElement[count];
+
+		for (int i = 0; i < count; i++) {
+			String externalReferenceCode = RandomTestUtil.randomString();
+
+			int curPosition = i;
+
+			PageElement pageElement = new PageElement() {
+				{
+					setPageElementDefinition(
+						() -> new ContainerPageElementDefinition() {
+							{
+								setIndexed(() -> Boolean.FALSE);
+								setType(() -> Type.CONTAINER);
+							}
+						});
+					setPosition(() -> curPosition);
+				}
+			};
+
+			pageElement.setExternalReferenceCode(externalReferenceCode);
+
+			if (RandomTestUtil.randomBoolean()) {
+				pageElement.setPageElements(
+					_getPageElements(
+						RandomTestUtil.randomInt(1, 2), externalReferenceCode));
+			}
+
+			pageElement.setParentExternalReferenceCode(
+				parentExternalReferenceCode);
+
+			pageElements[i] = pageElement;
+		}
+
+		return pageElements;
 	}
 
 }

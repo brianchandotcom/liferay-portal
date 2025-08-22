@@ -160,7 +160,7 @@ public class AssetLibraryDTOConverter
 				setMimeTypeLimits(() -> _getMimeTypeLimits(group.getGroupId()));
 				setSharingEnabled(
 					() -> GetterUtil.getBoolean(
-						unicodeProperties.get("sharingEnabled")));
+						unicodeProperties.get("sharingEnabled"), true));
 				setUseCustomLanguages(
 					() -> !GetterUtil.getBoolean(
 						unicodeProperties.get("inheritLocales")));

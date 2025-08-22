@@ -16,9 +16,12 @@ module "s3_bucket" {
 		}
 	}
 	source="terraform-aws-modules/s3-bucket/aws"
-	tags={
-		Backup="true"
-	}
+	tags=merge(
+		{
+			Backup="true"
+		},
+		var.tags
+	)
 	version="~> 4.1.1"
 	versioning={
 		enabled=true

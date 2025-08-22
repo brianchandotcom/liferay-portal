@@ -14,17 +14,22 @@ resource "aws_backup_plan" "this" {
 	name=var.backup_plan_name
 }
 resource "aws_backup_selection" "this" {
+	condition {
+		string_equals {
+			key="aws:ResourceTag/Active"
+			value="true"
+		}
+		string_equals {
+			key="aws:ResourceTag/Backup"
+			value="true"
+		}
+		string_equals {
+			key="aws:ResourceTag/DeploymentName"
+			value=var.deployment_name
+		}
+	}
 	iam_role_arn=var.backup_service_assumed_role_arn
 	name=var.backup_selection_name
 	plan_id=aws_backup_plan.this.id
-	selection_tag {
-		key="Backup"
-		type="STRINGEQUALS"
-		value="true"
-	}
-	selection_tag {
-		key="DeploymentName"
-		type="STRINGEQUALS"
-		value=var.deployment_name
-	}
+	resources=["*"]
 }

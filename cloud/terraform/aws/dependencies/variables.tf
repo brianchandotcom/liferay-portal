@@ -1,15 +1,15 @@
-variable "active_data" {
-	default="blue"
-	validation {
-		condition=contains(["blue", "green"], var.active_data)
-		error_message="The active_db_slot must be either 'blue' or 'green'"
-	}
-}
 variable "cluster_name" {
 	type=string
 }
 variable "cluster_security_group_id" {
 	type=string
+}
+variable "data_active" {
+	default="blue"
+	validation {
+		condition=contains(["blue", "green"], var.data_active)
+		error_message="The active_db_slot must be either 'blue' or 'green'"
+	}
 }
 variable "db_restore_snapshot_identifier" {
 	default=null

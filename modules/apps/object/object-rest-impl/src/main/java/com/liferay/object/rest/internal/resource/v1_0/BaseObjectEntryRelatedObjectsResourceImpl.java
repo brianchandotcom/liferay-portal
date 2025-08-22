@@ -448,7 +448,6 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 				String objectRelationshipName)
 		throws Exception;
 
-	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		operationId = "putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode"
 	)
@@ -474,7 +473,6 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 				@NotNull @Parameter(hidden = true)
 				@PathParam("currentExternalReferenceCode")
 				String currentExternalReferenceCode,
-				ObjectEntry objectEntry,
 				@NotNull @Parameter(hidden = true)
 				@PathParam("objectRelationshipName")
 				String objectRelationshipName,
@@ -483,7 +481,6 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 				String relatedExternalReferenceCode)
 		throws Exception;
 
-	@Consumes({"application/json", "application/xml"})
 	@Operation(operationId = "putCurrentObjectEntry")
 	@Parameters(
 		{
@@ -502,7 +499,6 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 			@NotNull @Parameter(hidden = true)
 			@PathParam("currentObjectEntryId")
 			Long currentObjectEntryId,
-			ObjectEntry objectEntry,
 			@NotNull @Parameter(hidden = true)
 			@PathParam("objectRelationshipName")
 			String objectRelationshipName,

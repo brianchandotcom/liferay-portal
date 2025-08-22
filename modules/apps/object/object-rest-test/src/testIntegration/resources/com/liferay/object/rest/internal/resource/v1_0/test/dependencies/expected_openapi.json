@@ -2090,20 +2090,6 @@
 						}
 					}
 				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Object1"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Object1"
-							}
-						}
-					}
-				},
 				"responses": {
 					"default": {
 						"content": {
@@ -2395,20 +2381,6 @@
 						}
 					}
 				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Object1"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Object1"
-							}
-						}
-					}
-				},
 				"responses": {
 					"default": {
 						"content": {
@@ -4809,20 +4781,6 @@
 						}
 					}
 				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Object1"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Object1"
-							}
-						}
-					}
-				},
 				"responses": {
 					"default": {
 						"content": {
@@ -5114,20 +5072,6 @@
 						}
 					}
 				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Object1"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Object1"
-							}
-						}
-					}
-				},
 				"responses": {
 					"default": {
 						"content": {

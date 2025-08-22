@@ -610,7 +610,7 @@
 							"en_US": "Bulk Action Task to Bulk Action Task Items"
 						},
 						"localized": false,
-						"name": "r_bulkActionTaskToBulkActionTaskItem_c_bulkActionTaskId",
+						"name": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskId",
 						"objectFieldSettings": [
 							{
 								"name": "objectDefinition1ShortName",
@@ -618,7 +618,7 @@
 							},
 							{
 								"name": "objectRelationshipERCObjectFieldName",
-								"value": "r_bulkActionTaskToBulkActionTaskItem_c_bulkActionTaskERC"
+								"value": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskERC"
 							}
 						],
 						"relationshipType": "oneToMany",

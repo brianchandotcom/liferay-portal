@@ -35,6 +35,7 @@ const test = mergeTests(
 const testWithCKEditor4 = mergeTests(
 	test,
 	featureFlagsTest({
+		'LPD-11235': {enabled: false},
 		'LPS-178052': {enabled: true},
 	})
 );
@@ -68,7 +69,7 @@ testWithCKEditor4(
 
 		await page
 			.getByLabel('Control Menu')
-			.getByText('Edit', {exact: true})
+			.getByTitle('Edit', {exact: true})
 			.click();
 
 		await page.locator('.page-editor').waitFor();
@@ -110,7 +111,7 @@ testWithCKEditor4(
 
 		const editButton = page
 			.getByLabel('Control Menu')
-			.getByText('Edit', {exact: true});
+			.getByTitle('Edit', {exact: true});
 
 		await editButton.waitFor();
 		await editButton.click();
@@ -146,7 +147,7 @@ test(
 
 		await page
 			.getByLabel('Control Menu')
-			.getByText('Edit', {exact: true})
+			.getByTitle('Edit', {exact: true})
 			.click();
 
 		await page.locator('.page-editor').waitFor();
@@ -194,7 +195,7 @@ test(
 
 		const editButton = page
 			.getByLabel('Control Menu')
-			.getByText('Edit', {exact: true});
+			.getByTitle('Edit', {exact: true});
 
 		await editButton.waitFor();
 		await editButton.click();

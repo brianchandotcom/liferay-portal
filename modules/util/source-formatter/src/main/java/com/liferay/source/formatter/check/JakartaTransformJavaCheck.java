@@ -33,7 +33,9 @@ public class JakartaTransformJavaCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String[] getValidExtensions() {
-		return new String[] {"java"};
+		return _VALID_EXTENSIONS;
 	}
+
+	private static final String[] _VALID_EXTENSIONS = {".java"};
 
 }

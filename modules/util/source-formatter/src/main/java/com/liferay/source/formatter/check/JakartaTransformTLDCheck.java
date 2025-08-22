@@ -19,7 +19,9 @@ public class JakartaTransformTLDCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String[] getValidExtensions() {
-		return new String[] {"tld"};
+		return _VALID_EXTENSIONS;
 	}
+
+	private static final String[] _VALID_EXTENSIONS = {".tld"};
 
 }

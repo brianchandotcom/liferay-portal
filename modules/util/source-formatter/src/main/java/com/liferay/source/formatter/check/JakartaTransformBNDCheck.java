@@ -45,7 +45,7 @@ public class JakartaTransformBNDCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String[] getValidExtensions() {
-		return new String[] {"bnd"};
+		return _VALID_EXTENSIONS;
 	}
 
 	private String _formatHeaders(String content) throws IOException {
@@ -265,6 +265,8 @@ public class JakartaTransformBNDCheck extends BaseJakartaTransformCheck {
 
 		return sb.toString();
 	}
+
+	private static final String[] _VALID_EXTENSIONS = {".bnd"};
 
 	private static final Pattern _osgiContractPattern = Pattern.compile(
 		"\\(osgi\\.contract!?=(\\w+)\\)\\(version[<>]?=([\\d.]+)\\)");

@@ -46,7 +46,7 @@ public class JakartaTransformXMLCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String[] getValidExtensions() {
-		return new String[] {"xml"};
+		return _VALID_EXTENSIONS;
 	}
 
 	private static String _updateXMLTag(String xmlTag) {
@@ -97,5 +97,7 @@ public class JakartaTransformXMLCheck extends BaseJakartaTransformCheck {
 
 		return xmlTag;
 	}
+
+	private static final String[] _VALID_EXTENSIONS = {".xml"};
 
 }

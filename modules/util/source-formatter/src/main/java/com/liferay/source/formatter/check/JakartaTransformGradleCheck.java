@@ -80,7 +80,7 @@ public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String[] getValidExtensions() {
-		return new String[] {"gradle"};
+		return _VALID_EXTENSIONS;
 	}
 
 	private synchronized Map<String, String>
@@ -114,6 +114,8 @@ public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 
 		return _jakartaTransformDependenciesMap;
 	}
+
+	private static final String[] _VALID_EXTENSIONS = {".gradle"};
 
 	private static final Pattern _dependencyPattern = Pattern.compile(
 		"\t\\w+(?:\\s|\\()+group:\\s*['\"](.+)['\"],\\s*" +

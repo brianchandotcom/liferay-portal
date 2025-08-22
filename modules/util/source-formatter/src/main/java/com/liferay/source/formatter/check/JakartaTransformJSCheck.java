@@ -19,7 +19,9 @@ public class JakartaTransformJSCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String[] getValidExtensions() {
-		return new String[] {"js", "jsx"};
+		return _VALID_EXTENSIONS;
 	}
+
+	private static final String[] _VALID_EXTENSIONS = {".js", ".jsx"};
 
 }

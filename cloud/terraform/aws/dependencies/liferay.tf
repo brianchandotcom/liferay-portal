@@ -1,8 +1,10 @@
 locals {
 	bucket_active=local.is_active_data_blue ? module.s3_bucket_blue : module.s3_bucket_green
+	bucket_inactive=local.is_active_data_blue ? module.s3_bucket_green : module.s3_bucket_blue
+	data_inactive=local.is_active_data_blue ? "green" : "blue"
 	db_active=local.is_active_data_blue ? module.postgres_blue[0] : module.postgres_green[0]
-	is_active_data_blue=var.active_data=="blue"
-	is_active_data_green=var.active_data=="green"
+	is_active_data_blue=var.data_active=="blue"
+	is_active_data_green=var.data_active=="green"
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
 	vpc_config=data.aws_eks_cluster.cluster.vpc_config[0]
@@ -13,6 +15,9 @@ module "postgres_blue" {
 	identifier="${var.deployment_name}-postgres-db-blue"
 	password=random_password.postgres_password.result
 	snapshot_identifier=var.is_restoring && local.is_active_data_green ? var.db_restore_snapshot_identifier : null
+	tags={
+		"Active"=tostring(local.is_active_data_blue)
+	}
 	source="../modules/db-instance"
 	username=random_password.postgres_username.result
 	vpc_security_group_ids=[local.vpc_config.cluster_security_group_id]
@@ -23,16 +28,25 @@ module "postgres_green" {
 	identifier="${var.deployment_name}-postgres-db-green"
 	password=random_password.postgres_password.result
 	snapshot_identifier=var.is_restoring && local.is_active_data_blue ? var.db_restore_snapshot_identifier : null
+	tags={
+		"Active"=tostring(local.is_active_data_green)
+	}
 	source="../modules/db-instance"
 	username=random_password.postgres_username.result
 	vpc_security_group_ids=[local.vpc_config.cluster_security_group_id]
 }
 module "s3_bucket_blue" {
 	deployment_name=var.deployment_name
+	tags={
+		"Active"=tostring(local.is_active_data_blue)
+	}
 	source="../modules/s3-bucket"
 }
 module "s3_bucket_green" {
 	deployment_name=var.deployment_name
+	tags={
+		"Active"=tostring(local.is_active_data_green)
+	}
 	source="../modules/s3-bucket"
 }
 resource "aws_db_subnet_group" "rds" {

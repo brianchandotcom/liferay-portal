@@ -12,10 +12,13 @@ resource "aws_db_instance" "this" {
 	skip_final_snapshot=true
 	snapshot_identifier=var.snapshot_identifier
 	storage_type="gp2"
-	tags={
-		Backup="true",
-		Name=var.identifier
-	}
+	tags=merge(
+		{
+			Backup="true"
+			Name=var.identifier
+		},
+		var.tags
+	)
 	username=var.username
 	vpc_security_group_ids=var.vpc_security_group_ids
 }

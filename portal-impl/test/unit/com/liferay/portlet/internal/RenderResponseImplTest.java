@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -85,7 +86,7 @@ public class RenderResponseImplTest {
 			portletTitle
 		);
 
-		renderResponseImpl.setTitle("");
+		renderResponseImpl.setTitle(StringPool.BLANK);
 
 		Assert.assertEquals(portletTitle, renderResponseImpl.getTitle());
 

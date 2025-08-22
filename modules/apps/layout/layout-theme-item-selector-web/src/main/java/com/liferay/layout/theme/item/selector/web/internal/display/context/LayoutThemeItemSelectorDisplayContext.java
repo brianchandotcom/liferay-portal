@@ -88,7 +88,7 @@ public class LayoutThemeItemSelectorDisplayContext {
 			orderByAsc = true;
 		}
 
-		List<Theme> pageThemes = ListUtil.filter(
+		List<Theme> themes = ListUtil.filter(
 			ThemeLocalServiceUtil.getPageThemes(
 				themeDisplay.getCompanyId(),
 				groupDisplayContextHelper.getLiveGroupId(),
@@ -103,7 +103,7 @@ public class LayoutThemeItemSelectorDisplayContext {
 			});
 
 		themesSearchContainer.setResultsAndTotal(
-			ListUtil.sort(pageThemes, new ThemeNameComparator(orderByAsc)));
+			ListUtil.sort(164742, new ThemeNameComparator(orderByAsc)));
 
 		_themesSearchContainer = themesSearchContainer;
 

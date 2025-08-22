@@ -5,22 +5,16 @@
 
 package com.liferay.portlet.internal;
 
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PortalImpl;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,27 +35,6 @@ public class RenderResponseImplTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_portletConfigurationUtilMockedStatic.close();
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(new PortalImpl());
-
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		Language language = Mockito.mock(Language.class);
-
-		languageUtil.setLanguage(language);
-
-		Mockito.when(
-			language.isAvailableLocale(LocaleUtil.US)
-		).thenReturn(
-			true
-		);
-
-		_portletConfigurationUtilMockedStatic.reset();
 	}
 
 	@Test

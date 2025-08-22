@@ -11,6 +11,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -41,6 +42,13 @@ public class DepotRolesPortalInstanceLifecycleListener
 		throws PortalException {
 
 		for (String name : DepotRoleUtil.DEPOT_ROLE_NAMES) {
+			if (name.equals(DepotRolesConstants.CMS_CONSUMER) &&
+				!FeatureFlagManagerUtil.isEnabled(
+					company.getCompanyId(), "LPD-17564")) {
+
+				continue;
+			}
+
 			Role role = _getOrCreateRole(company.getCompanyId(), name);
 
 			_resourceLocalService.addResources(

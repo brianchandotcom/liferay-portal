@@ -1798,6 +1798,28 @@ public class ObjectDefinitionResourceTest
 				}
 			},
 			objectDefinitionAA.getObjectDefinitionSettings());
+
+		TreeTestUtil.unbind(
+			objectDefinitionA.getId(), _objectRelationshipLocalService);
+
+		TreeTestUtil.unbind(
+			objectDefinitionB.getId(), _objectRelationshipLocalService);
+
+		objectDefinitionAA = objectDefinitionResource.getObjectDefinition(
+			objectDefinitionAA.getId());
+
+		Assert.assertEquals(
+			new ObjectDefinitionSetting[] {
+				new ObjectDefinitionSetting() {
+					{
+						setName(
+							ObjectDefinitionSettingConstants.
+								NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES);
+						setValue("");
+					}
+				}
+			},
+			objectDefinitionAA.getObjectDefinitionSettings());
 	}
 
 	private void _testPostObjectDefinitionBatch() throws Exception {

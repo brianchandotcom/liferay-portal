@@ -14,10 +14,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,6 +51,18 @@ public class ObjectEntryFolderDTOConverter
 
 		com.liferay.object.model.ObjectEntryFolder parentObjectEntryFolder =
 			_getParentObjectEntryFolder(objectEntryFolder);
+
+		TrashEntry trashEntry = null;
+
+		if (objectEntryFolder.getStatus() ==
+				WorkflowConstants.STATUS_IN_TRASH) {
+
+			trashEntry = _trashEntryLocalService.fetchEntry(
+				com.liferay.object.model.ObjectEntryFolder.class.getName(),
+				objectEntryFolder.getObjectEntryFolderId());
+		}
+
+		TrashEntry finalTrashEntry = trashEntry;
 
 		return new ObjectEntryFolder() {
 			{
@@ -107,6 +122,25 @@ public class ObjectEntryFolderDTOConverter
 						if (parentObjectEntryFolder != null) {
 							return parentObjectEntryFolder.
 								getObjectEntryFolderId();
+						}
+
+						return null;
+					});
+				setRemovedBy(
+					() -> {
+						if (finalTrashEntry != null) {
+							return CreatorUtil.toCreator(
+								dtoConverterContext, _portal,
+								_userLocalService.fetchUser(
+									finalTrashEntry.getUserId()));
+						}
+
+						return null;
+					});
+				setRemovedDate(
+					() -> {
+						if (finalTrashEntry != null) {
+							return finalTrashEntry.getCreateDate();
 						}
 
 						return null;
@@ -176,6 +210,9 @@ public class ObjectEntryFolderDTOConverter
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

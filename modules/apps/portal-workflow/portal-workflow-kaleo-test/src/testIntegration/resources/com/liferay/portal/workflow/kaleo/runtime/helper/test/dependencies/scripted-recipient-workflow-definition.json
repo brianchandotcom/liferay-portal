@@ -2,7 +2,7 @@
 	"#child-nodes": [
 		{
 			"#tag-name": "name",
-			"#value": "919a7355-98aa-0973-a46a-4d15c0868789"
+			"#value": "Scripted Recipient Workflow Definition"
 		},
 		{
 			"#tag-name": "version",
@@ -12,11 +12,7 @@
 			"#child-nodes": [
 				{
 					"#tag-name": "name",
-					"#value": "StartNode"
-				},
-				{
-					"#tag-name": "description",
-					"#value": "Begin a workflow."
+					"#value": "start"
 				},
 				{
 					"#cdata-value": [
@@ -51,19 +47,19 @@
 									"#child-nodes": [
 										{
 											"#tag-name": "label",
-											"#value": "connector1239",
-											"language-id": "pt_BR"
+											"#value": "Approve",
+											"language-id": "en_US"
 										}
 									],
 									"#tag-name": "labels"
 								},
 								{
 									"#tag-name": "name",
-									"#value": "connector1239"
+									"#value": "approve"
 								},
 								{
 									"#tag-name": "target",
-									"#value": "EndNode"
+									"#value": "end"
 								},
 								{
 									"#tag-name": "default",
@@ -82,11 +78,11 @@
 			"#child-nodes": [
 				{
 					"#tag-name": "name",
-					"#value": "EndNode"
+					"#value": "end"
 				},
 				{
 					"#tag-name": "description",
-					"#value": "Conclude the Workflow."
+					"#value": "Conclude the workflow."
 				},
 				{
 					"#cdata-value": [
@@ -109,12 +105,15 @@
 									"#value": "Approve"
 								},
 								{
-									"#tag-name": "description",
-									"#value": "Approve"
+									"#tag-name": "description"
 								},
 								{
 									"#tag-name": "status",
 									"#value": "0"
+								},
+								{
+									"#tag-name": "priority",
+									"#value": "1"
 								},
 								{
 									"#tag-name": "execution-type",
@@ -127,14 +126,14 @@
 							"#child-nodes": [
 								{
 									"#tag-name": "name",
-									"#value": "Notification Name"
+									"#value": "Notification"
 								},
 								{
 									"#tag-name": "description"
 								},
 								{
 									"#cdata-value": [
-										"Notification Template"
+										"Template"
 									],
 									"#tag-name": "template"
 								},

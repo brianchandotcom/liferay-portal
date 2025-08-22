@@ -438,15 +438,19 @@ components:
                     type: object
             type: object
         DefaultFragmentReference:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentReference"
+                -   properties:
+                        defaultFragmentKey:
+                            # @review
+                            description:
+                                The key of the default fragment.
+                            type: string
             # @review
             description:
                 A reference to a default fragment (provided out-of-the-box).
-            properties:
-                defaultFragmentKey:
-                    # @review
-                    description:
-                        The key of the default fragment.
-                    type: string
+            required:
+                -   defaultFragmentKey
             type: object
         DisplayPageActionExecutionResult:
             # @review
@@ -1267,12 +1271,11 @@ components:
                                 The fragment instance's external reference code.
                             type: string
                         fragmentReference:
+                            $ref: "#/components/schemas/FragmentReference"
                             # @review
                             description:
-                                An external reference to the fragment.
-                            oneOf:
-                                -   $ref: "#/components/schemas/DefaultFragmentReference"
-                                -   $ref: "#/components/schemas/ItemExternalReference"
+                                The fragment reference of the fragment instance.
+                            type: object
                         fragmentStyle:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
@@ -1332,6 +1335,14 @@ components:
             # @review
             description:
                 A page element definition of a fragment instance.
+            type: object
+        FragmentItemExternalReference:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentReference"
+                -   $ref: "#/components/schemas/ItemExternalReference"
+            # @review
+            description:
+                A unique reference to a fragment which remains constant across environments.
             type: object
         FragmentLink:
             # @review
@@ -1436,6 +1447,21 @@ components:
                         The fragment mapped item reference. Can be a context reference value or external reference to an
                         external value.
                     enum: [ContextReference, ItemExternalReference]
+        FragmentReference:
+            # @review
+            description:
+                The reference to the fragment.
+            discriminator:
+                mapping:
+                    DefaultFragmentReference: "#/components/schemas/DefaultFragmentReference"
+                    FragmentItemExternalReference: "#/components/schemas/FragmentItemExternalReference"
+                propertyName: fragmentReferenceType
+            properties:
+                fragmentReferenceType:
+                    # @review
+                    description:
+                        The fragment reference's type (DefaultFragmentReference, FragmentItemExternalReference).
+                    enum: [DefaultFragmentReference, FragmentItemExternalReference]
                     type: string
             type: object
         FragmentSettingsAllowed:

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.journal.internal.provider.test;
+package com.liferay.journal.internal.site.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
@@ -528,7 +528,7 @@ public class JournalArticleSitemapURLProviderTest {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.journal.internal.provider.JournalArticleSitemapURLProvider",
+		filter = "component.name=com.liferay.journal.internal.site.provider.JournalArticleSitemapURLProvider",
 		type = SitemapURLProvider.class
 	)
 	private SitemapURLProvider _journalArticleSitemapURLProvider;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.product.internal.provider.test;
+package com.liferay.commerce.product.internal.site.provider.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -305,7 +305,7 @@ public class CommerceSitemapURLProviderTest {
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.commerce.product.internal.provider.AssetCategorySitemapURLProvider",
+		filter = "component.name=com.liferay.commerce.product.internal.site.provider.AssetCategorySitemapURLProvider",
 		type = SitemapURLProvider.class
 	)
 	private SitemapURLProvider _assetCategorySitemapURLProvider;
@@ -316,7 +316,7 @@ public class CommerceSitemapURLProviderTest {
 	private CommerceCurrency _commerceCurrency;
 
 	@Inject(
-		filter = "component.name=com.liferay.commerce.product.internal.provider.CPDefinitionSitemapURLProvider",
+		filter = "component.name=com.liferay.commerce.product.internal.site.provider.CPDefinitionSitemapURLProvider",
 		type = SitemapURLProvider.class
 	)
 	private SitemapURLProvider _cpDefinitionSitemapURLProvider;

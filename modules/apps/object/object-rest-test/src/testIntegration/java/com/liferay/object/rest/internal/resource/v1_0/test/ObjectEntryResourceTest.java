@@ -99,6 +99,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -234,6 +235,7 @@ import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -5893,24 +5895,37 @@ public class ObjectEntryResourceTest {
 	@Test
 	@TestInfo("LPD-62553")
 	public void testGetObjectEntryActions() throws Exception {
-		JSONObject jsonObject = _postObjectEntry(_siteScopedObjectDefinition1);
+		Assume.assumeFalse(FeatureFlagManagerUtil.isEnabled("LPD-17564"));
 
-		jsonObject = _getObjectEntryJSONObject(
-			_siteScopedObjectDefinition1, jsonObject.getString("id"));
-
-		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
-
-		Assert.assertEquals(
-			_getExpectedActions(
-				_siteScopedObjectDefinition1, jsonObject.getString("id"),
-				false),
-			actionsJSONObject.toMap());
+		_testGetObjectEntryActions(false);
 	}
 
 	@FeatureFlag("LPD-17564")
 	@Test
 	@TestInfo("LPD-62553")
-	public void testGetObjectEntryActionsWithSharingEnabled() throws Exception {
+	public void testGetObjectEntryActionsWithCompanySharingDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_group.getCompanyId(),
+						"com.liferay.sharing.internal.configuration." +
+							"SharingCompanyConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", false
+						).build())) {
+
+			_testGetObjectEntryActions(false);
+		}
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-62553")
+	public void testGetObjectEntryActionsWithGroupSharingDisabled()
+		throws Exception {
+
 		UnicodeProperties originalUnicodeProperties =
 			_group.getTypeSettingsProperties();
 
@@ -5919,27 +5934,40 @@ public class ObjectEntryResourceTest {
 			UnicodePropertiesBuilder.create(
 				originalUnicodeProperties, true
 			).put(
-				"sharingEnabled", true
+				"sharingEnabled", false
 			).buildString());
 
 		try {
-			JSONObject jsonObject = _postObjectEntry(
-				_siteScopedObjectDefinition1);
-
-			jsonObject = _getObjectEntryJSONObject(
-				_siteScopedObjectDefinition1, jsonObject.getString("id"));
-
-			JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
-
-			Assert.assertEquals(
-				_getExpectedActions(
-					_siteScopedObjectDefinition1, jsonObject.getString("id"),
-					true),
-				actionsJSONObject.toMap());
+			_testGetObjectEntryActions(false);
 		}
 		finally {
 			_groupLocalService.updateGroup(
 				_group.getGroupId(), originalUnicodeProperties.toString());
+		}
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-62553")
+	public void testGetObjectEntryActionsWithSharingEnabled() throws Exception {
+		_testGetObjectEntryActions(true);
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-62553")
+	public void testGetObjectEntryActionsWithSystemSharingDisabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.sharing.internal.configuration." +
+						"SharingSystemConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", false
+					).build())) {
+
+			_testGetObjectEntryActions(false);
 		}
 	}
 
@@ -15546,6 +15574,23 @@ public class ObjectEntryResourceTest {
 			URLCodec.encodeURL(fieldName + " ne 2023-09-20T10:00:00Z"),
 			_objectDefinition1);
 		_assertFilteredObjectEntries(2, fieldName + " ne null");
+	}
+
+	private void _testGetObjectEntryActions(boolean sharingEnabled)
+		throws Exception {
+
+		JSONObject jsonObject = _postObjectEntry(_siteScopedObjectDefinition1);
+
+		jsonObject = _getObjectEntryJSONObject(
+			_siteScopedObjectDefinition1, jsonObject.getString("id"));
+
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+
+		Assert.assertEquals(
+			_getExpectedActions(
+				_siteScopedObjectDefinition1, jsonObject.getString("id"),
+				sharingEnabled),
+			actionsJSONObject.toMap());
 	}
 
 	private void _testGetObjectEntryWithObjectActions(

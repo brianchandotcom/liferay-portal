@@ -18,6 +18,8 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -118,8 +121,11 @@ public class ObjectEntryFolderResourceTest
 	public void testGetObjectEntryFolder() throws Exception {
 		super.testGetObjectEntryFolder();
 
-		_testGetObjectEntryFolderActions();
 		_testGetObjectEntryFolderActionsWithSharingEnabled();
+
+		_testGetObjectEntryFolderActionsWithCompanySharingDisabled();
+		_testGetObjectEntryFolderActionsWithGroupSharingDisabled();
+		_testGetObjectEntryFolderActionsWithSystemSharingDisabled();
 	}
 
 	@Override
@@ -610,8 +616,9 @@ public class ObjectEntryFolderResourceTest
 		).build();
 	}
 
-	@TestInfo("LPD-62553")
-	private void _testGetObjectEntryFolderActions() throws Exception {
+	private void _testGetObjectEntryFolderActions(boolean sharingEnabled)
+		throws Exception {
+
 		ObjectEntryFolder postObjectEntryFolder =
 			testGetObjectEntryFolder_addObjectEntryFolder();
 
@@ -620,12 +627,30 @@ public class ObjectEntryFolderResourceTest
 				postObjectEntryFolder.getId());
 
 		Assert.assertEquals(
-			getObjectEntryFolder.getActions(),
-			_getExpectedActions(getObjectEntryFolder.getId(), false));
+			_getExpectedActions(getObjectEntryFolder.getId(), sharingEnabled),
+			getObjectEntryFolder.getActions());
 	}
 
 	@TestInfo("LPD-62553")
-	private void _testGetObjectEntryFolderActionsWithSharingEnabled()
+	private void _testGetObjectEntryFolderActionsWithCompanySharingDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_testDepotEntryGroup.getCompanyId(),
+						"com.liferay.sharing.internal.configuration." +
+							"SharingCompanyConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", false
+						).build())) {
+
+			_testGetObjectEntryFolderActions(false);
+		}
+	}
+
+	@TestInfo("LPD-62553")
+	private void _testGetObjectEntryFolderActionsWithGroupSharingDisabled()
 		throws Exception {
 
 		UnicodeProperties originalUnicodeProperties =
@@ -636,25 +661,39 @@ public class ObjectEntryFolderResourceTest
 			UnicodePropertiesBuilder.create(
 				originalUnicodeProperties, true
 			).put(
-				"sharingEnabled", true
+				"sharingEnabled", false
 			).buildString());
 
 		try {
-			ObjectEntryFolder postObjectEntryFolder =
-				testGetObjectEntryFolder_addObjectEntryFolder();
-
-			ObjectEntryFolder getObjectEntryFolder =
-				objectEntryFolderResource.getObjectEntryFolder(
-					postObjectEntryFolder.getId());
-
-			Assert.assertEquals(
-				getObjectEntryFolder.getActions(),
-				_getExpectedActions(getObjectEntryFolder.getId(), true));
+			_testGetObjectEntryFolderActions(false);
 		}
 		finally {
 			_groupLocalService.updateGroup(
 				_testDepotEntryGroup.getGroupId(),
 				originalUnicodeProperties.toString());
+		}
+	}
+
+	@TestInfo("LPD-62553")
+	private void _testGetObjectEntryFolderActionsWithSharingEnabled()
+		throws Exception {
+
+		_testGetObjectEntryFolderActions(true);
+	}
+
+	@TestInfo("LPD-62553")
+	private void _testGetObjectEntryFolderActionsWithSystemSharingDisabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.sharing.internal.configuration." +
+						"SharingSystemConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", false
+					).build())) {
+
+			_testGetObjectEntryFolderActions(false);
 		}
 	}
 

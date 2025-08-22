@@ -444,10 +444,33 @@ components:
                         The email address's type.
                     type: string
             type: object
+        FileEntry:
+            properties:
+                externalReferenceCode:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                link:
+                    $ref: "#/components/schemas/Link"
+                    readOnly: true
+                name:
+                    type: string
+                thumbnailURL:
+                    readOnly: true
+                    type: string
+            type: object
         Image:
             properties:
                 image:
                     format: binary
+                    type: string
+            type: object
+        Link:
+            properties:
+                href:
+                    type: string
+                label:
                     type: string
             type: object
         Organization:
@@ -1089,6 +1112,11 @@ components:
                         The shared asset external reference code.
                     readOnly: true
                     type: string
+                file:
+                    $ref: "#/components/schemas/FileEntry"
+                    description:
+                        Optional field with the embedded file, can be embedded with nestedFields
+                    readOnly: true
                 fileTypeIcon:
                     description:
                         The shared asset file type icon.
@@ -4130,6 +4158,10 @@ paths:
                     schema:
                         type: string
                 -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
                     name: page
                     schema:
                         type: integer
@@ -4171,6 +4203,10 @@ paths:
                         type: array
                 -   in: query
                     name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
                     schema:
                         type: string
                 -   in: query

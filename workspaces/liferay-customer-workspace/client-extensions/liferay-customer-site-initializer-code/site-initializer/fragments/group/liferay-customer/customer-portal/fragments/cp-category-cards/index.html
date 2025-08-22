@@ -27,11 +27,31 @@
 		[#assign
 			categoryId = displayObject.categoryId!""
 			category = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId)!{}
+			koroneikiAccounts = restClient.get("/c/koroneikiaccounts?pageSize=1&sort=dateCreated:desc")
+			lastCreatedProjectERC = ""
+			lastViewedProjectERC = ""
 			mainCategoryId = displayObject.treePath?split("/")[1]!""
 		/]
 
+		[#list request.getCookies() as cookie]
+			[#if cookie.getName() == "CP_LAST_VIEWED_PROJECT_" + themeDisplay.getUserId()]
+				[#assign lastViewedProjectERC = cookie.getValue()!""]
+
+				[#break]
+			[/#if]
+		[/#list]
+
+		[#if koroneikiAccounts?is_hash && koroneikiAccounts.items?? && koroneikiAccounts.totalCount??]
+			[#assign
+				lastCreatedProjectERC = (koroneikiAccounts.items[0].externalReferenceCode)!""
+			/]
+		[/#if]
+
+		[#assign projectERC = lastViewedProjectERC?has_content?then(lastViewedProjectERC, lastCreatedProjectERC) /]
+
 		[#if category?has_content]
 			[#assign
+				baseURL = themeDisplay.getURLCurrent()?replace('/[v]/.*', '', 'r')
 				categoryProps = category.taxonomyCategoryProperties
 				categoryDisplayLayout = getProperty(categoryProps, "display-layout")
 				childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories").items![]
@@ -48,7 +68,6 @@
 
 						[#assign
 							articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${childCategory.id})&flatten=true").items![]
-							baseURL = themeDisplay.getURLCurrent()?replace('/[v]/.*', '', 'r')
 							grandChildrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + childCategory.id + "/taxonomy-categories").items![]
 							listItems = []
 						/]
@@ -157,7 +176,7 @@
 					[#assign style = backgroundImage?has_content?then("background-image: url(${backgroundImage});", "background-color: var(--color-surface-background, #F1F5FB);") /]
 
 					[#assign
-						card = {"icon": extraItemProps["icon-name"]!"", "name": name, "style": style, "subtitle": subtitle, "thumbnail": extraItemProps.thumbnail!"", "url": extraItemProps.url}
+						card = {"icon": extraItemProps["icon-name"]!"", "name": name, "style": style, "subtitle": subtitle, "thumbnail": extraItemProps.thumbnail!"", "url": (extraItemProps.url == "last-viewed-project-activation-placeholder")?then("${baseURL}/project/#/${projectERC}/activation", extraItemProps.url)}
 						sectionName = section?has_content?then(section, "no-section")
 					/]
 

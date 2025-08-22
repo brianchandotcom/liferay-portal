@@ -15,6 +15,12 @@
 		}
 	},
 	{
+		"key": "activation",
+		"value": {
+			"en-US": "Activation"
+		}
+	},
+	{
 		"key": "activation-keys",
 		"value": {
 			"en-US": "Activation Keys",

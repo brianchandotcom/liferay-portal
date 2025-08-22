@@ -72,39 +72,43 @@ const ItemSelectorModalWrapper = ({
 	const {observer, onOpenChange, open} = useModal({defaultOpen});
 
 	return (
-		<ItemSelectorModal<TestItem>
-			{...{
-				fdsProps: {
-					apiURL: `${location.origin}/o/headless-delivery/v1.0/test-api-url`,
-					id: `itemSelectorModal-test-0001`,
-					pagination: {
-						deltas: [{label: 20}],
-						initialDelta: 20,
+		<>
+			<button onClick={() => onOpenChange(true)}>open modal</button>
+
+			<ItemSelectorModal<TestItem>
+				{...{
+					fdsProps: {
+						apiURL: `${location.origin}/o/headless-delivery/v1.0/test-api-url`,
+						id: `itemSelectorModal-test-0001`,
+						pagination: {
+							deltas: [{label: 20}],
+							initialDelta: 20,
+						},
+						selectionType: 'single',
+						views: [
+							{
+								contentRenderer: 'cards',
+								label: 'Cards',
+								name: 'cards',
+								schema: {
+									description: 'description',
+									title: 'name',
+								},
+								thumbnail: 'cards2',
+							} as IView,
+						],
 					},
-					selectionType: 'single',
-					views: [
-						{
-							contentRenderer: 'cards',
-							label: 'Cards',
-							name: 'cards',
-							schema: {
-								description: 'description',
-								title: 'name',
-							},
-							thumbnail: 'cards2',
-						} as IView,
-					],
-				},
-				itemNameLocator: 'name',
-				itemValueLocator: 'id',
-				items: selectedItems,
-				observer,
-				onItemsChange,
-				onOpenChange,
-				open,
-				type: 'Space',
-			}}
-		/>
+					itemNameLocator: 'name',
+					itemValueLocator: 'id',
+					items: selectedItems,
+					observer,
+					onItemsChange,
+					onOpenChange,
+					open,
+					type: 'Space',
+				}}
+			/>
+		</>
 	);
 };
 
@@ -260,7 +264,7 @@ describe('ItemSelectorModal component', () => {
 
 		expect(selectedMessage).toBeInTheDocument();
 
-		expect(sub).toHaveBeenCalledWith(
+		expect(sub).toHaveBeenLastCalledWith(
 			'x-selected',
 			expect.objectContaining({
 				props: {
@@ -293,8 +297,7 @@ describe('ItemSelectorModal component', () => {
 
 		expect(selectedMessage).toBeInTheDocument();
 
-		expect(sub).toHaveBeenNthCalledWith(
-			2,
+		expect(sub).toHaveBeenLastCalledWith(
 			'x-selected',
 			expect.objectContaining({
 				props: {
@@ -460,5 +463,72 @@ describe('ItemSelectorModal component', () => {
 		await user.click(cancel);
 
 		expect(mockedOnSelectedItemsChange).not.toHaveBeenCalled();
+	});
+
+	it('must reset selected items to provided ones after canceling', async () => {
+		const user = userEvent.setup();
+
+		const {findByRole} = render(
+			<ItemSelectorModalWrapper
+				defaultOpen={true}
+				onItemsChange={jest.fn}
+				selectedItems={[mockFirstItem]}
+			/>
+		);
+
+		let modal = await findByRole('dialog');
+
+		const [, secondItem] =
+			await within(modal).findAllByLabelText(/item name$/gi);
+
+		let [firstItemRadio, secondItemRadio] =
+			await within(modal).findAllByRole('radio');
+
+		expect(firstItemRadio).toBeChecked();
+
+		expect(secondItemRadio).not.toBeChecked();
+
+		const cancel = await within(modal).findByRole('button', {
+			name: 'cancel',
+		});
+
+		await user.click(secondItem);
+
+		expect(firstItemRadio).not.toBeChecked();
+
+		expect(secondItemRadio).toBeChecked();
+
+		await user.click(cancel);
+
+		await waitFor(() => {
+			expect(modal).not.toBeInTheDocument();
+		});
+
+		const openModal = await findByRole('button', {name: 'open modal'});
+
+		await user.click(openModal);
+
+		modal = await findByRole('dialog');
+
+		[firstItemRadio, secondItemRadio] =
+			await within(modal).findAllByRole('radio');
+
+		expect(firstItemRadio).toBeChecked();
+
+		expect(secondItemRadio).not.toBeChecked();
+
+		const selectedMessage = await within(modal).findByText('x-selected');
+
+		expect(selectedMessage).toBeInTheDocument();
+
+		expect(sub).toHaveBeenLastCalledWith(
+			'x-selected',
+			expect.objectContaining({
+				props: {
+					children: mockFirstItem.name,
+				},
+				type: 'strong',
+			})
+		);
 	});
 });

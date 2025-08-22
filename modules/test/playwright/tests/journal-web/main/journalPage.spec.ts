@@ -439,45 +439,53 @@ test(
 );
 
 test(
-    'Permissions dialog is launched with the roles list visible',
-    {
-        tag: '@LPD-63441',
-    },
-    async ({apiHelpers, journalPage, page, site}) => {
-        const basicWebContentStructureId =
-            await getBasicWebContentStructureId(apiHelpers);
+	'Permissions dialog is launched with the roles list visible',
+	{
+		tag: '@LPD-63441',
+	},
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
 
-        for (let i = 1; i <= 2; i++) {
-            await apiHelpers.jsonWebServicesJournal.addWebContent({
-                ddmStructureId: basicWebContentStructureId,
-                groupId: site.id,
-                titleMap: {en_US: `Web Content ${i}`},
-            });
-        }
+		for (let i = 1; i <= 2; i++) {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: `Web Content ${i}`},
+			});
+		}
 
-        await journalPage.goto(site.friendlyUrlPath);
+		await journalPage.goto(site.friendlyUrlPath);
 
-        const checkboxes = page.locator('input[type="checkbox"][name="_com_liferay_journal_web_portlet_JournalPortlet_rowIdsJournalArticle"]');
+		const checkboxes = page.locator(
+			'input[type="checkbox"][name="_com_liferay_journal_web_portlet_JournalPortlet_rowIdsJournalArticle"]'
+		);
 
-        const count = await checkboxes.count();
+		const count = await checkboxes.count();
 
-        for (let i = 0; i < count; i++) {
-            await checkboxes.nth(i).check();
-        }
+		for (let i = 0; i < count; i++) {
+			await checkboxes.nth(i).check();
+		}
 
-        await page.getByTitle('Actions', {exact: true}).click();
+		await page.getByTitle('Actions', {exact: true}).click();
 
-        const permissionsButton = page.locator('button[data-action="changePermissions"]', { hasText: 'Permissions' });
+		const permissionsButton = page.locator(
+			'button[data-action="changePermissions"]',
+			{hasText: 'Permissions'}
+		);
 
-        await permissionsButton.click();
+		await permissionsButton.click();
 
-        const permissionsFrame = page.frameLocator('iframe[title*="Permissions"]');
+		const permissionsFrame = page.frameLocator(
+			'iframe[title*="Permissions"]'
+		);
 
-        const guestTd = permissionsFrame.locator('td.lfr-role-column', { hasText: 'Guest' });
+		const guestTd = permissionsFrame.locator('td.lfr-role-column', {
+			hasText: 'Guest',
+		});
 
-        await guestTd.waitFor({ state: 'attached', timeout: 10000 });
+		await guestTd.waitFor({state: 'attached', timeout: 10000});
 
-        await expect(guestTd).toBeVisible();
-
-    }
+		await expect(guestTd).toBeVisible();
+	}
 );

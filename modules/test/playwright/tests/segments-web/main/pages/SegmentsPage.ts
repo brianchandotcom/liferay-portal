@@ -302,6 +302,12 @@ export class SegmentsPage {
 		expect(criterionElement).toHaveText(value);
 	}
 
+	async viewFieldTypes(typeName: string) {
+		const fieldTypeLocator = this.page.locator(`div.panel-unstyled#${typeName}`);
+
+		await expect(fieldTypeLocator).toBeVisible();
+	}
+
 	async viewMembers(expectedEmail?: string, expectedName?: string) {
 		await this.viewMembersButton.click();
 

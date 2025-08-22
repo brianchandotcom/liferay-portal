@@ -99,6 +99,23 @@ export default function FolderFDSPropsTransformer({
 						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
+			else if (action?.data?.id === 'view-content') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(
+							item?.entryClassName !==
+								OBJECT_ENTRY_FOLDER_CLASSNAME &&
+								!item?.embedded?.file
+						),
+				};
+			}
+			else if (action?.data?.id === 'view-file') {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(item?.embedded?.file),
+				};
+			}
 
 			return action;
 		}),

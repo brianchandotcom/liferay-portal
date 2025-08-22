@@ -107,6 +107,7 @@ const FrontendDataSetContent = ({
 	customViews = '{}',
 	customViewsEnabled,
 	emptyState: emptyStateProp,
+	emptyFilteredState: emptyFilteredStateProp,
 	filters: initialFilters,
 	formId,
 	formName,
@@ -369,11 +370,14 @@ const FrontendDataSetContent = ({
 		const hasActiveFilters = filters.some((filter: any) => filter.active);
 		const hasSearch = !!searchParam;
 
-		const imgSrc = `${Liferay.ThemeDisplay.getPathThemeImages()}${
-			emptyStateProp?.image ?? '/states/search_state.svg'
-		}`;
+		const getImgSrc = (image?: string) =>
+			`${Liferay.ThemeDisplay.getPathThemeImages()}${
+				image ?? '/states/search_state.svg'
+			}`;
 
 		if (hasActiveFilters && hasSearch) {
+			const config = emptyFilteredStateProp?.searchAndFilters;
+
 			return {
 				children: (
 					<ClayButton
@@ -383,15 +387,20 @@ const FrontendDataSetContent = ({
 						{Liferay.Language.get('clear-search-and-filters')}
 					</ClayButton>
 				),
-				description: Liferay.Language.get(
-					'review-your-filters-or-search-and-try-again'
-				),
-				imgSrc,
-				title: Liferay.Language.get('no-results-found'),
+				description:
+					config?.description ??
+					Liferay.Language.get(
+						'review-your-filters-or-search-and-try-again'
+					),
+				imgSrc: getImgSrc(config?.image),
+				title:
+					config?.title ?? Liferay.Language.get('no-results-found'),
 			};
 		}
 
 		if (hasActiveFilters) {
+			const config = emptyFilteredStateProp?.filters;
+
 			return {
 				children: (
 					<ClayButton
@@ -401,15 +410,18 @@ const FrontendDataSetContent = ({
 						{Liferay.Language.get('clear-filters')}
 					</ClayButton>
 				),
-				description: Liferay.Language.get(
-					'review-your-filters-and-try-again'
-				),
-				imgSrc,
-				title: Liferay.Language.get('no-results-found'),
+				description:
+					config?.description ??
+					Liferay.Language.get('review-your-filters-and-try-again'),
+				imgSrc: getImgSrc(config?.image),
+				title:
+					config?.title ?? Liferay.Language.get('no-results-found'),
 			};
 		}
 
 		if (hasSearch) {
+			const config = emptyFilteredStateProp?.search;
+
 			return {
 				children: (
 					<ClayButton
@@ -419,11 +431,12 @@ const FrontendDataSetContent = ({
 						{Liferay.Language.get('clear-search')}
 					</ClayButton>
 				),
-				description: Liferay.Language.get(
-					'review-your-search-and-try-again'
-				),
-				imgSrc,
-				title: Liferay.Language.get('no-results-found'),
+				description:
+					config?.description ??
+					Liferay.Language.get('review-your-search-and-try-again'),
+				imgSrc: getImgSrc(config?.image),
+				title:
+					config?.title ?? Liferay.Language.get('no-results-found'),
 			};
 		}
 
@@ -434,12 +447,19 @@ const FrontendDataSetContent = ({
 			description:
 				emptyStateProp?.description ??
 				Liferay.Language.get('sorry,-no-results-were-found'),
-			imgSrc,
+			imgSrc: getImgSrc(emptyStateProp?.image),
 			title:
 				emptyStateProp?.title ??
 				Liferay.Language.get('no-results-found'),
 		};
-	}, [creationMenu, emptyStateProp, filters, onClearFilters, searchParam]);
+	}, [
+		creationMenu,
+		emptyFilteredStateProp,
+		emptyStateProp,
+		filters,
+		onClearFilters,
+		searchParam,
+	]);
 
 	const isMounted = useIsMounted();
 

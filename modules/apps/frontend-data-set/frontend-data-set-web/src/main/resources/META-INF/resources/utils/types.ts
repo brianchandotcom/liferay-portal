@@ -64,6 +64,12 @@ export enum DisplayType {
 	WARNING = 'warning',
 }
 
+export interface IEmptyState {
+	description?: string;
+	image?: string;
+	title?: string;
+}
+
 export enum ESelectionTrigger {
 	CONTAINER = 'container',
 	INPUT = 'input',
@@ -271,11 +277,12 @@ export interface IFrontendDataSetProps {
 	};
 	customViews?: string;
 	customViewsEnabled?: boolean;
-	emptyState?: {
-		description?: string;
-		image?: string;
-		title?: string;
+	emptyFilteredState?: {
+		filters?: IEmptyState;
+		search?: IEmptyState;
+		searchAndFilters?: IEmptyState;
 	};
+	emptyState?: IEmptyState;
 	enableInlineAddModeSetting?: {
 		defaultBodyContent?: object;
 	};

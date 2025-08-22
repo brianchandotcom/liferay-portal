@@ -477,8 +477,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				ItemSelectorView.class,
 				new ObjectEntryItemSelectorView(
-					infoPermissionProvider, _itemSelectorViewDescriptorRenderer,
-					objectDefinition,
+					_groupLocalService, infoPermissionProvider,
+					_itemSelectorViewDescriptorRenderer, objectDefinition,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()),
 					_objectRelatedModelsProviderRegistry,

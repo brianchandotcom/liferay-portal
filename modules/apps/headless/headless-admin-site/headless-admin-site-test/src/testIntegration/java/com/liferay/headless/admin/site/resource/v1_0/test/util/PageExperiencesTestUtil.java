@@ -68,7 +68,9 @@ public class PageExperiencesTestUtil {
 					setName_i18n(
 						Collections.singletonMap(
 							"en-US", RandomTestUtil.randomString()));
-					setPageElements(new PageElement[0]);
+					setPageElements(
+						_getPageElements(
+							RandomTestUtil.randomInt(1, 3), StringPool.BLANK));
 					setPageSpecificationExternalReferenceCode(
 						contentPageSpecificationExternalReferenceCode);
 				}

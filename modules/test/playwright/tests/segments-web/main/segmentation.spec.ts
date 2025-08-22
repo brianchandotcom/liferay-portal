@@ -1005,6 +1005,34 @@ test(
 );
 
 test(
+	`Can validate the segment field types are displayed.`,
+
+	{
+		tag: '@LPS-103516',
+	},
+
+	async ({page, segmentsPage}) => {
+		await test.step('Given a segment designer goes to the segments editor page', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+		});
+
+		await test.step('Then can assert that the segment field types are displayed', async () => {
+   			const fieldTypes = ['segments', 'user', 'user-organization'];
+			const sessionLocator = page.locator('div#context');
+
+			for (const typeName of fieldTypes) {
+				await segmentsPage.viewFieldTypes(typeName);
+			}
+
+			await expect(sessionLocator).toBeVisible();
+		});
+	}
+);
+
+
+test(
 	'Can understand the actions of keyboard from screen reader.',
 
 	{

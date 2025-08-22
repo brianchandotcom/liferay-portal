@@ -98,14 +98,14 @@ public class APIApplicationProviderTest extends BaseTestCase {
 			"headless-builder/applications", Http.Method.POST);
 
 		HTTPTestUtil.invokeToJSONObject(
-			"{}",
+			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 		HTTPTestUtil.invokeToJSONObject(
-			"{}",
+			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",

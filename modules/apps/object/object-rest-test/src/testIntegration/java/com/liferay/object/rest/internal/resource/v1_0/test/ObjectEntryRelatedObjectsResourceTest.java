@@ -1240,7 +1240,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_assertEquals(
 			_objectEntry2,
 			HTTPTestUtil.invokeToJSONObject(
-				"{}",
+				null,
 				_getEndpoint(
 					objectRelationship1.getName(),
 					_objectEntry2.getPrimaryKey()),
@@ -1262,7 +1262,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_assertEquals(
 			_objectEntry4,
 			HTTPTestUtil.invokeToJSONObject(
-				"{}",
+				null,
 				_getEndpoint(
 					objectRelationship2.getName(),
 					_objectEntry4.getPrimaryKey()),
@@ -1400,7 +1400,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_assertEquals(
 			_objectEntry2,
 			HTTPTestUtil.invokeToJSONObject(
-				"{}",
+				null,
 				_getEndpoint(
 					objectRelationship1.getName(),
 					_objectEntry2.getPrimaryKey()),
@@ -1429,7 +1429,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			"{}",
+			null,
 			String.format(
 				"%s/%d/%s/%d", _objectDefinition1.getRESTContextPath(),
 				objectEntryId1, objectRelationship.getName(), objectEntryId2),
@@ -1476,7 +1476,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_assertEquals(
 			_user1,
 			HTTPTestUtil.invokeToJSONObject(
-				"{}",
+				null,
 				_getEndpoint(objectRelationship.getName(), _user1.getUserId()),
 				Http.Method.PUT));
 

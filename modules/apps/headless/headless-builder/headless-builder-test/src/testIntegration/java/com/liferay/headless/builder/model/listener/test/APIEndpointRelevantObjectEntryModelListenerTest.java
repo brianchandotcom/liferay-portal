@@ -635,7 +635,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"same API application."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
-				"{}",
+				null,
 				StringBundler.concat(
 					"headless-builder/schemas/",
 					apiSchemaJSONObject3.getLong("id"),

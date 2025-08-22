@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -43,6 +44,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -222,6 +224,32 @@ public class ObjectEntryFolderResourceImpl
 				_getParentObjectEntryFolderId(
 					false, groupId, objectEntryFolder)),
 			objectEntryFolder);
+	}
+
+	@Override
+	public ObjectEntryFolder
+			postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore(
+				String scopeKey, String externalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+			throw new UnsupportedOperationException();
+		}
+
+		com.liferay.object.model.ObjectEntryFolder
+			serviceBuilderObjectEntryFolder =
+				_objectEntryFolderService.
+					getObjectEntryFolderByExternalReferenceCode(
+						externalReferenceCode, _getGroupId(scopeKey),
+						contextUser.getCompanyId());
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.restoreObjectEntryFolderFromTrash(
+				contextUser.getUserId(), serviceBuilderObjectEntryFolder,
+				ServiceContextBuilder.create(
+					serviceBuilderObjectEntryFolder.getGroupId(),
+					contextHttpServletRequest, null
+				).build()));
 	}
 
 	@Override
@@ -528,9 +556,39 @@ public class ObjectEntryFolderResourceImpl
 						ActionKeys.VIEW, serviceBuilderObjectEntryFolder,
 						"getObjectEntryFolder")
 				).put(
+					"restore",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
+							(serviceBuilderObjectEntryFolder.getStatus() !=
+								WorkflowConstants.STATUS_IN_TRASH)) {
+
+							return null;
+						}
+
+						return ActionUtil.addAction(
+							ActionKeys.DELETE,
+							ObjectEntryFolderResourceImpl.class,
+							serviceBuilderObjectEntryFolder.
+								getObjectEntryFolderId(),
+							"postScopeScopeKeyObjectEntryFolderByExternal" +
+								"ReferenceCodeRestore",
+							null, _objectEntryFolderModelResourcePermission,
+							HashMapBuilder.put(
+								"externalReferenceCode",
+								serviceBuilderObjectEntryFolder.
+									getExternalReferenceCode()
+							).put(
+								"scopeKey",
+								String.valueOf(
+									serviceBuilderObjectEntryFolder.
+										getGroupId())
+							).build(),
+							contextUriInfo);
+					}
+				).put(
 					"share",
 					() -> {
-						Group group = groupLocalService.fetchGroup(
+						Group group = _groupLocalService.fetchGroup(
 							serviceBuilderObjectEntryFolder.getGroupId());
 
 						if (group == null) {
@@ -635,6 +693,12 @@ public class ObjectEntryFolderResourceImpl
 
 	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
+	)
+	private ModelResourcePermission<com.liferay.object.model.ObjectEntryFolder>
+		_objectEntryFolderModelResourcePermission;
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;

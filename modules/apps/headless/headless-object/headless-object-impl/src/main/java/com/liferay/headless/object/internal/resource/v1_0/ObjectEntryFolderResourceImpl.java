@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -75,7 +76,9 @@ public class ObjectEntryFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		_objectEntryFolderService.deleteObjectEntryFolder(objectEntryFolderId);
+		_deleteObjectEntryFolder(
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				objectEntryFolderId));
 	}
 
 	@Override
@@ -87,10 +90,11 @@ public class ObjectEntryFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		_objectEntryFolderService.
-			deleteObjectEntryFolderByExternalReferenceCode(
-				externalReferenceCode, _getGroupId(scopeKey),
-				contextCompany.getCompanyId());
+		_deleteObjectEntryFolder(
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					externalReferenceCode, _getGroupId(scopeKey),
+					contextCompany.getCompanyId()));
 	}
 
 	@Override
@@ -395,6 +399,28 @@ public class ObjectEntryFolderResourceImpl
 					groupId, contextHttpServletRequest,
 					objectEntryFolder.getViewableByAsString()
 				).build()));
+	}
+
+	private void _deleteObjectEntryFolder(
+			com.liferay.object.model.ObjectEntryFolder
+				serviceBuilderObjectEntryFolder)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
+			(serviceBuilderObjectEntryFolder.getStatus() ==
+				WorkflowConstants.STATUS_IN_TRASH)) {
+
+			_objectEntryFolderService.deleteObjectEntryFolder(
+				serviceBuilderObjectEntryFolder.getObjectEntryFolderId());
+		}
+		else {
+			_objectEntryFolderService.moveObjectEntryFolderToTrash(
+				contextUser.getUserId(), serviceBuilderObjectEntryFolder,
+				ServiceContextBuilder.create(
+					serviceBuilderObjectEntryFolder.getGroupId(),
+					contextHttpServletRequest, null
+				).build());
+		}
 	}
 
 	private long _getGroupId(String scopeKey) throws Exception {

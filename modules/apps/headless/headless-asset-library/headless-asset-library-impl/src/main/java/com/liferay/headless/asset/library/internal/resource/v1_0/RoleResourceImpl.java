@@ -103,12 +103,11 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 					assetLibraryId));
 		}
 
-		long[] roleIdsArray = ListUtil.toLongArray(
-			_roleService.getUserGroupRoles(userAccountId, assetLibraryId),
-			com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR);
-
 		_userGroupRoleService.deleteUserGroupRoles(
-			userAccountId, assetLibraryId, roleIdsArray);
+			userAccountId, assetLibraryId,
+			ListUtil.toLongArray(
+				_roleService.getUserGroupRoles(userAccountId, assetLibraryId),
+				com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR));
 
 		long[] roleIds = new long[0];
 

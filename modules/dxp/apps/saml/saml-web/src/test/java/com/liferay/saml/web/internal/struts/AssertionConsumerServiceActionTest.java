@@ -10,7 +10,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,10 +29,10 @@ public class AssertionConsumerServiceActionTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_assertionConsumerServiceAction = Mockito.spy(
-			new AssertionConsumerServiceAction());
+	@Test
+	public void testExecute() throws Exception {
+		AssertionConsumerServiceAction assertionConsumerServiceAction =
+			Mockito.spy(new AssertionConsumerServiceAction());
 
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper =
 			Mockito.mock(SamlProviderConfigurationHelper.class);
@@ -51,26 +50,21 @@ public class AssertionConsumerServiceActionTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_assertionConsumerServiceAction, "_samlProviderConfigurationHelper",
+			assertionConsumerServiceAction, "_samlProviderConfigurationHelper",
 			samlProviderConfigurationHelper);
-	}
 
-	@Test
-	public void testExecute() throws Exception {
 		Assert.assertEquals(
 			"/common/referer_js.jsp",
-			_assertionConsumerServiceAction.execute(
+			assertionConsumerServiceAction.execute(
 				new MockHttpServletRequest(
 					"GET", "http://localhost:8080/c/portal/saml/acs"),
 				new MockHttpServletResponse()));
 
 		Mockito.verify(
-			_assertionConsumerServiceAction, Mockito.times(0)
+			assertionConsumerServiceAction, Mockito.times(0)
 		).doExecute(
 			Mockito.any(), Mockito.any()
 		);
 	}
-
-	private AssertionConsumerServiceAction _assertionConsumerServiceAction;
 
 }

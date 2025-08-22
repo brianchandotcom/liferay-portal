@@ -1,6 +1,6 @@
-<style>
-.app-search-count-text {
-	color: #282934;
+<style ${nonceAttribute}>
+	.app-search-count-text {
+		color: #282934;
 	}
 </style>
 

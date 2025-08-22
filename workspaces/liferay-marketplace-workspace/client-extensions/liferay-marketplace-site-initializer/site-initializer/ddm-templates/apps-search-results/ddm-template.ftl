@@ -22,19 +22,7 @@
 		display: block;
 	}
 
-	.app-search-results-card {
-		border: solid 1px #E2E2E4;
-		border-radius: 10px;
-		box-sizing: border-box;
-		cursor: point;
-		display: flex;
-		height: 289px;
-		padding: 16px;
-		position: relative;
-		transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-	}
-
-	.app-type-badge {
+	.app-category-badge {
 		border-bottom-left-radius: 10px;
 		border-bottom-right-radius: 10px;
 		border-top-left-radius: 2px;
@@ -49,59 +37,71 @@
 		top: -6px;
 	}
 
-	.app-type-batch,
-	.app-type-checkout,
-	.app-type-fragments,
-	.app-type-no-type,
-	.app-type-object-action,
-	.app-type-other,
-	.app-type-payment-methods,
-	.app-type-site-initializer,
-	.app-type-theme,
-	.app-type-workflow-action {
+	.app-category-batch,
+	.app-category-checkout,
+	.app-category-fragments,
+	.app-category-no-type,
+	.app-category-object-action,
+	.app-category-other,
+	.app-category-payment-methods,
+	.app-category-site-initializer,
+	.app-category-theme,
+	.app-category-workflow-action {
 		transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 	}
 
-	.app-type-batch {
+	.app-category-batch {
 		background: #FFE6C6;
 		color: #9D4C00;
 	}
 
-	.app-type-checkout,
-	.app-type-other {
+	.app-category-checkout,
+	.app-category-other {
 		background: #DAF4C7;
 		color: #4E7135;
 	}
 
-	.app-type-fragments,
-	.app-type-workflow-action {
+	.app-category-fragments,
+	.app-category-workflow-action {
 		background: #DCD7E9;
 		color: #503690;
 	}
 
-	.app-type-no-type {
+	.app-category-no-type {
 		background: #cccccc;
 		color: #ffffff;
 	}
 
-	.app-type-object-action {
+	.app-category-object-action {
 		background-color: #D1ECFA;
 		color: #166E9E;
 	}
 
-	.app-type-payment-methods {
+	.app-category-payment-methods {
 		background: #D2E6FF;
 		color: #2868FF;
 	}
 
-	.app-type-site-initializer {
+	.app-category-site-initializer {
 		background: #D1EEDC;
 		color: #0E7835;
 	}
 
-	.app-type-theme {
+	.app-category-theme {
 		background: #FBE0FF;
 		color: #720086;
+	}
+
+	.app-search-results-card {
+		border: solid 1px #E2E2E4;
+		border-radius: 10px;
+		box-sizing: border-box;
+		cursor: point;
+		display: flex;
+		height: 289px;
+		padding: 16px;
+		position: relative;
+		transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 	}
 
 	.banner__product-tag {
@@ -186,24 +186,24 @@
 						portalURL = portalUtil.getLayoutURL(themeDisplay)
 						productId = entry.getCProductId()
 						productName = entry.getName()
-						remainingCategoriesText = []
+						remainingAreasText = []
 
 						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
 						productImage = cpContentHelper.getDefaultImageFileURL(accountEntryId, entry.getCPDefinitionId())
 					/>
 					<#if product.categories?has_content && product.productSpecifications?has_content>
 						<#assign
-							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-app-category")![]
-							categoriesListSize = productCategories?size-1
+							productAreas = product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-app-category")![]
+							areasListSize = productAreas?size-1
 							productSpecifications = product.productSpecifications![]
-							productTypes = product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-category")![]
+							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-category")![]
 						/>
 					</#if>
 
-					<#if productTypes[0]?has_content>
-						<#assign productType = productTypes[0] />
+					<#if productCategories[0]?has_content>
+						<#assign productCategory = productCategories[0] />
 					<#else>
-						<#assign productType = "" />
+						<#assign productCategory = "" />
 					</#if>
 
 					<#if product.description?has_content>
@@ -221,21 +221,21 @@
 							<div>
 								<span class="d-flex justify-content-end">
 									<div>
-										<#if productType?has_content>
-											<#if productType.name == 'Other'>
-												<div class="app-type-badge"></div>
+										<#if productCategory?has_content>
+											<#if productCategory.name == 'Other'>
+												<div class="app-category-badge"></div>
 											<#else>
-												<div class="app-type-badge app-type-no-type font-weight-semi-bold
-													<#if productType.name == 'Theme'> app-type-theme</#if>
-													<#if productType.name == 'Object action'> app-type-object-action</#if>
-													<#if productType.name == 'Site Initializer'> app-type-site-initializer</#if>
-													<#if productType.name == 'Payment methods'> app-type-payment-methods</#if>
-													<#if productType.name == 'Workflow action'>	app-type-workflow-action</#if>
-													<#if productType.name == 'Batch'>	app-type-batch</#if>
-													<#if productType.name == 'Checkout'>	app-type-checkout</#if>
-													<#if productType.name == 'Fragments'>	app-type-fragments</#if>
+												<div class="app-category-badge app-category-no-type font-weight-semi-bold
+													<#if productCategory.name == 'Theme'> app-category-theme</#if>
+													<#if productCategory.name == 'Object action'> app-category-object-action</#if>
+													<#if productCategory.name == 'Site Initializer'> app-category-site-initializer</#if>
+													<#if productCategory.name == 'Payment methods'> app-category-payment-methods</#if>
+													<#if productCategory.name == 'Workflow action'>	app-category-workflow-action</#if>
+													<#if productCategory.name == 'Batch'>	app-category-batch</#if>
+													<#if productCategory.name == 'Checkout'>	app-category-checkout</#if>
+													<#if productCategory.name == 'Fragments'>	app-category-fragments</#if>
 												">
-												 	${productType.name}
+												 	${productCategory.name}
 												</div>
 											</#if>
 										</#if>
@@ -286,26 +286,26 @@
 									</#list>
 								</#if>
 
-								<#if productCategories?has_content>
+								<#if productAreas?has_content>
 									<#assign
-										principalCategory = productCategories[0]
-										remainingCategories = productCategories?filter(category -> category.name != principalCategory.name)
+										principalArea = productAreas[0]
+										remainingAreas = productAreas?filter(area -> area.name != principalArea.name)
 									/>
 
-									<#list remainingCategories as category>
-										<#assign remainingCategoriesText = remainingCategoriesText + [category.name] />
+									<#list remainingAreas as area>
+										<#assign remainingAreasText = remainingAreasText + [area.name] />
 									</#list>
 								</#if>
 
-								<#if principalCategory?has_content>
+								<#if principalArea?has_content>
 									<div>
-										<span class="banner__product-tag rounded py-1 px-2 mr-2" title="${principalCategory.name}">
-											${principalCategory.name}
+										<span class="banner__product-tag rounded py-1 px-2 mr-2" title="${principalArea.name}">
+											${principalArea.name}
 										</span>
 
-										<#if categoriesListSize?has_content && remainingCategoriesText?has_content>
-											<span class="banner__product-tag rounded py-1 px-2" title="${remainingCategoriesText?join('\n')}">
-												+ ${categoriesListSize}
+										<#if areasListSize?has_content && remainingAreasText?has_content>
+											<span class="banner__product-tag rounded py-1 px-2" title="${remainingAreasText?join('\n')}">
+												+ ${areasListSize}
 											</span>
 										</#if>
 									</div>

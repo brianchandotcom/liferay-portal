@@ -94,7 +94,7 @@
 <@liferay_aui.script>
 		function ${namespace}selectAll(event, parameterName) {
 			event.preventDefault();
-			
+
 			var url = new URL(window.location.href);
 			var divId = event.target.closest('.collapse').id;
 			var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');

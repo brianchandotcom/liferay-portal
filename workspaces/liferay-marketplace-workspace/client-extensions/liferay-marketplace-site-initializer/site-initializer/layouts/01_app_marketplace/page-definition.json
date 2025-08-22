@@ -126,7 +126,7 @@
 												"definition": {
 													"fragmentStyle": {
 														"borderColor": "#E2E2E4",
-														"borderRadius": "1rem",
+														"borderRadius": "0.5rem",
 														"borderWidth": "1px"
 													},
 													"indexed": true,

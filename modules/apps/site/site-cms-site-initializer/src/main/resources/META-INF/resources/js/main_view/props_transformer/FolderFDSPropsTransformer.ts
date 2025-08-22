@@ -79,14 +79,7 @@ export default function FolderFDSPropsTransformer({
 		},
 		infoPanelComponent: () => AssetTypeInfoPanel({additionalProps}),
 		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'download') {
-				return {
-					...action,
-					isVisible: (item: any) =>
-						Boolean(item?.embedded?.file?.link?.href),
-				};
-			}
-			else if (action?.data?.id === 'actionLink') {
+			if (action?.data?.id === 'actionLink') {
 				return {
 					...action,
 					isVisible: (item: any) =>
@@ -94,6 +87,13 @@ export default function FolderFDSPropsTransformer({
 							item?.entryClassName !==
 								OBJECT_ENTRY_FOLDER_CLASSNAME
 						),
+				};
+			}
+			else if (action?.data?.id === 'download') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
 

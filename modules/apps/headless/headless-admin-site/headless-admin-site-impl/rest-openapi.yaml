@@ -1241,11 +1241,6 @@ components:
                                 The fragment instance's most recent propagation date.
                             format: date-time
                             type: string
-                        datePublished:
-                            description:
-                                The fragment instance's most recent publication date.
-                            format: date-time
-                            type: string
                         draftPageElementExternalReferenceCode:
                             # @review
                             description:

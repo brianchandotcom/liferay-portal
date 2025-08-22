@@ -2451,19 +2451,19 @@ public abstract class BaseTopLevelBuild
 		Properties properties = buildDatabase.getProperties(
 			BAD_BUILD_URLS_PROPERTIES_KEY);
 
-		int invocationCount = 0;
+		int totalReinvocationCount = 0;
 
 		for (String propertyName : properties.stringPropertyNames()) {
-			String badBuildURLList = properties.getProperty(propertyName);
+			String badBuildURLsString = properties.getProperty(propertyName);
 
-			if (!badBuildURLList.isEmpty()) {
-				String[] splitString = badBuildURLList.split(",");
+			if (!badBuildURLsString.isEmpty()) {
+				String[] badBuildURLs = badBuildURLsString.split(",");
 
-				invocationCount += splitString.length;
+				totalReinvocationCount += badBuildURLs.length;
 			}
 		}
 
-		return invocationCount;
+		return totalReinvocationCount;
 	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =

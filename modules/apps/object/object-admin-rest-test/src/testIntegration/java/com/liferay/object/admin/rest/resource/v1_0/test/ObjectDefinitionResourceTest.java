@@ -1801,7 +1801,6 @@ public class ObjectDefinitionResourceTest
 
 		TreeTestUtil.unbind(
 			objectDefinitionA.getId(), _objectRelationshipLocalService);
-
 		TreeTestUtil.unbind(
 			objectDefinitionB.getId(), _objectRelationshipLocalService);
 

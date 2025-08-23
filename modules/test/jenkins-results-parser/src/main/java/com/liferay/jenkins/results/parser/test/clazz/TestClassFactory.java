@@ -136,7 +136,7 @@ public class TestClassFactory {
 	private static File _getCanonicalFile(
 		File testClassFile, JSONObject jsonObject) {
 
-		File canonicalFile;
+		File canonicalFile = null;
 
 		if (testClassFile != null) {
 			canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(

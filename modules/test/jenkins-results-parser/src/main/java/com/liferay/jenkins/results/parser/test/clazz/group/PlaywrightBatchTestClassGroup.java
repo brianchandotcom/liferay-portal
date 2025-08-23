@@ -121,15 +121,13 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					testClassFile,
 					portalGitWorkingDirectory.getWorkingDirectory());
 
-			String className = testClassFile.getName();
-
 			List<TestClassMethod> testClassMethods =
 				playwrightJUnitTestClass.getTestClassMethods();
 
 			for (TestClassMethod testClassMethod : testClassMethods) {
 				CSVReport.Row csvReportRow = new CSVReport.Row();
 
-				csvReportRow.add(className);
+				csvReportRow.add(testClassFile.getName());
 				csvReportRow.add(testClassMethod.getName());
 
 				if (testClassMethod.isIgnored()) {

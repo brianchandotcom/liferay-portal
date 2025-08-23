@@ -115,10 +115,10 @@ public class JournalSubscriptionLocalizedContentTest
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		MailService newMailService = _getMailService();
+		MailService mailService = _getMailService();
 
 		_serviceRegistration = bundleContext.registerService(
-			MailService.class, newMailService,
+			MailService.class, mailService,
 			HashMapDictionaryBuilder.<String, Object>put(
 				org.osgi.framework.Constants.SERVICE_RANKING, 100
 			).build());
@@ -127,7 +127,7 @@ public class JournalSubscriptionLocalizedContentTest
 			MailServiceUtil.class, "_mailServiceSnapshot");
 
 		_serviceSupplier = ReflectionTestUtil.getAndSetFieldValue(
-			_snapshot, "_serviceSupplier", () -> newMailService);
+			_snapshot, "_serviceSupplier", () -> mailService);
 	}
 
 	@After

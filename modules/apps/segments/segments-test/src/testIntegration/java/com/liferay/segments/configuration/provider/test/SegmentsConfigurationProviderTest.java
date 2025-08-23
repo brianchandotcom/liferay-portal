@@ -509,7 +509,6 @@ public class SegmentsConfigurationProviderTest {
 					"(service.pid=" +
 						SegmentsCompanyConfiguration.class.getName() + "*)");
 
-			Assert.assertNotNull(configurations);
 			Assert.assertEquals(
 				Arrays.toString(configurations), 1, configurations.length);
 

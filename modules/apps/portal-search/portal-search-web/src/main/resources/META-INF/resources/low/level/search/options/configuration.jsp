@@ -54,14 +54,13 @@ LowLevelSearchOptionsPortletPreferences lowLevelSearchOptionsPortletPreferences 
 
 			<%
 			List<String> connectionIds = configurationDisplayContext.getConnectionIds();
-			String selectedConnectionId = lowLevelSearchOptionsPortletPreferences.getConnectionId();
 			%>
 
-			<c:if test="<%= !Validator.isBlank(selectedConnectionId) && !connectionIds.contains(selectedConnectionId) %>">
+			<c:if test="<%= Validator.isNotNull(lowLevelSearchOptionsPortletPreferences.getConnectionId()) && !connectionIds.contains(lowLevelSearchOptionsPortletPreferences.getConnectionId()) %>">
 				<clay:alert
 					displayType="warning"
 				>
-					<liferay-ui:message arguments="<%= selectedConnectionId %>" key="the-previously-selected-connection-id-x-is-no-longer-available" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= lowLevelSearchOptionsPortletPreferences.getConnectionId() %>" key="the-previously-selected-connection-id-x-is-no-longer-available" translateArguments="<%= false %>" />
 				</clay:alert>
 			</c:if>
 
@@ -72,7 +71,7 @@ LowLevelSearchOptionsPortletPreferences lowLevelSearchOptionsPortletPreferences 
 				for (String connectionId : connectionIds) {
 				%>
 
-					<aui:option label="<%= HtmlUtil.escape(connectionId) %>" selected="<%= connectionId.equals(selectedConnectionId) %>" value="<%= connectionId %>" />
+					<aui:option label="<%= HtmlUtil.escape(connectionId) %>" selected="<%= connectionId.equals(lowLevelSearchOptionsPortletPreferences.getConnectionId()) %>" value="<%= connectionId %>" />
 
 				<%
 				}

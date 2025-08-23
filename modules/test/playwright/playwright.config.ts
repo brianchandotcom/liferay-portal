@@ -90,6 +90,7 @@ import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototyp
 import {config as lockedItemsWebConfig} from './tests/locked-items-web/main/config';
 import {config as loginWebConfig} from './tests/login-web/main/config';
 import {config as loginWebSetupAdminConfig} from './tests/login-web/setup-admin/config';
+import {config as marketplaceAppManagerWebConfig} from './tests/marketplace-app-manager-web/main/config';
 import {config as messageBoardsWebConfig} from './tests/message-boards-web/main/config';
 import {config as multifactorAuthenticationConfig} from './tests/multi-factor-authentication-timebased-otp-web/main/config';
 import {config as multifactorAuthenticationWebConfig} from './tests/multi-factor-authentication-web/main/config';
@@ -257,6 +258,7 @@ export default defineConfig({
 		lockedItemsWebConfig,
 		loginWebConfig,
 		loginWebSetupAdminConfig,
+		marketplaceAppManagerWebConfig,
 		marketplaceConfig,
 		messageBoardsWebConfig,
 		multifactorAuthenticationConfig,

@@ -14,6 +14,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -33,8 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Arrays;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,7 +45,9 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	public void portalInstanceRegistered(Company company)
+		throws PortalException {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Initializing " + _portlet.getPortletId() +
@@ -60,8 +61,18 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 		_checkPublicationsUserRole(company.getCompanyId());
 	}
 
+	private void _addPortletResourcePermission(
+			long companyId, Role role, String resourceAction)
+		throws PortalException {
+
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, CTPortletKeys.PUBLICATIONS,
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), resourceAction);
+	}
+
 	private void _checkPublicationsRegularRoles(Company company)
-		throws Exception {
+		throws PortalException {
 
 		for (String publicationsRegularRole :
 				PublicationsRegularRolesUtil.PUBLICATIONS_REGULAR_ROLES) {
@@ -88,21 +99,29 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 					RoleConstants.TYPE_REGULAR, null, null);
 			}
 
-			for (String actionId :
-					PublicationsRegularRolesUtil.getModelResourceActions(
-						publicationsRegularRole)) {
-
-				_resourcePermissionLocalService.addResourcePermission(
+			ResourcePermission modelResourcePermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
 					company.getCompanyId(), CTCollection.class.getName(),
 					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(company.getCompanyId()), role.getRoleId(),
-					actionId);
+					String.valueOf(company.getCompanyId()), role.getRoleId());
+
+			if (modelResourcePermission == null) {
+				for (String actionId :
+						PublicationsRegularRolesUtil.getModelResourceActions(
+							publicationsRegularRole)) {
+
+					_resourcePermissionLocalService.addResourcePermission(
+						company.getCompanyId(), CTCollection.class.getName(),
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(company.getCompanyId()),
+						role.getRoleId(), actionId);
+				}
 			}
 		}
 	}
 
 	private void _checkPublicationsReviewerRole(Company company)
-		throws Exception {
+		throws PortalException {
 
 		Role role = _roleLocalService.fetchRole(
 			company.getCompanyId(), CTRoleConstants.PUBLICATIONS_REVIEWER);
@@ -121,25 +140,18 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 				RoleConstants.TYPE_PUBLICATIONS, null, null);
 		}
 
-		for (String resourceAction :
-				Arrays.asList(
-					ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW)) {
+		ResourcePermission portletResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				company.getCompanyId(), CTPortletKeys.PUBLICATIONS,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(company.getCompanyId()), role.getRoleId());
 
-			ResourcePermission portletResourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					company.getCompanyId(), CTPortletKeys.PUBLICATIONS,
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(company.getCompanyId()), role.getRoleId());
-
-			if ((portletResourcePermission == null) ||
-				!portletResourcePermission.hasActionId(resourceAction)) {
-
-				_resourcePermissionLocalService.addResourcePermission(
-					company.getCompanyId(), CTPortletKeys.PUBLICATIONS,
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(company.getCompanyId()), role.getRoleId(),
-					resourceAction);
-			}
+		if (portletResourcePermission == null) {
+			_addPortletResourcePermission(
+				company.getCompanyId(), role,
+				ActionKeys.ACCESS_IN_CONTROL_PANEL);
+			_addPortletResourcePermission(
+				company.getCompanyId(), role, ActionKeys.VIEW);
 		}
 
 		ResourcePermission modelResourcePermission =
@@ -149,9 +161,7 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 				role.getRoleId());
 
-		if ((modelResourcePermission == null) ||
-			!modelResourcePermission.hasActionId(ActionKeys.VIEW)) {
-
+		if (modelResourcePermission == null) {
 			_resourcePermissionLocalService.addResourcePermission(
 				company.getCompanyId(), CTCollection.class.getName(),
 				ResourceConstants.SCOPE_GROUP_TEMPLATE,
@@ -160,25 +170,41 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _checkPublicationsUserRole(long companyId) throws Exception {
-		Role role = _roleLocalService.getRole(
+	private void _checkPublicationsUserRole(long companyId)
+		throws PortalException {
+
+		Role role = _roleLocalService.fetchRole(
 			companyId, RoleConstants.PUBLICATIONS_USER);
 
-		_resourcePermissionLocalService.addResourcePermission(
-			role.getCompanyId(),
-			_resourceActions.getPortletRootModelResource(
-				CTPortletKeys.PUBLICATIONS),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(role.getCompanyId()), role.getRoleId(),
-			CTActionKeys.ADD_PUBLICATION);
-		_resourcePermissionLocalService.addResourcePermission(
-			companyId, CTPortletKeys.PUBLICATIONS,
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-			role.getRoleId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
-		_resourcePermissionLocalService.addResourcePermission(
-			companyId, CTPortletKeys.PUBLICATIONS,
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-			role.getRoleId(), ActionKeys.VIEW);
+		ResourcePermission rootModelResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				role.getCompanyId(),
+				_resourceActions.getPortletRootModelResource(
+					CTPortletKeys.PUBLICATIONS),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(role.getCompanyId()), role.getRoleId());
+
+		if (rootModelResourcePermission == null) {
+			_resourcePermissionLocalService.addResourcePermission(
+				role.getCompanyId(),
+				_resourceActions.getPortletRootModelResource(
+					CTPortletKeys.PUBLICATIONS),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(role.getCompanyId()), role.getRoleId(),
+				CTActionKeys.ADD_PUBLICATION);
+		}
+
+		ResourcePermission portletResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				companyId, CTPortletKeys.PUBLICATIONS,
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId());
+
+		if (portletResourcePermission == null) {
+			_addPortletResourcePermission(
+				companyId, role, ActionKeys.ACCESS_IN_CONTROL_PANEL);
+			_addPortletResourcePermission(companyId, role, ActionKeys.VIEW);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

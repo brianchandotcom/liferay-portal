@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -227,18 +226,15 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	}
 
 	private long[] _getRoleIds(Role[] roles) throws Exception {
-		long[] roleIds = new long[0];
+		return transformToLongArray(
+			roles,
+			role -> {
+				com.liferay.portal.kernel.model.Role serviceBuilderRole =
+					_roleService.getRole(
+						contextCompany.getCompanyId(), role.getName());
 
-		for (Role role : roles) {
-			com.liferay.portal.kernel.model.Role serviceBuilderRole =
-				_roleService.getRole(
-					contextCompany.getCompanyId(), role.getName());
-
-			roleIds = ArrayUtil.append(
-				roleIds, serviceBuilderRole.getRoleId());
-		}
-
-		return roleIds;
+				return serviceBuilderRole.getRoleId();
+			});
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)

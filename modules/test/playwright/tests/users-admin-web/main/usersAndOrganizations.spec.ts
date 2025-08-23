@@ -13,6 +13,8 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {createCategories} from '../../../helpers/CreateCategories';
+import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
@@ -21,9 +23,11 @@ import performLogin, {
 	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {assetCategoriesPagesTest} from '../../asset-categories-admin-web/main/fixtures/assetCategoriesAdminPagesTest';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
+	assetCategoriesPagesTest,
 	apiHelpersTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
@@ -1638,5 +1642,85 @@ test(
 		]);
 
 		await expect(usersAndOrganizationsPage.usersTable).toBeVisible();
+	}
+);
+
+test(
+	'Admin can assign memberships when a required vocabulary exists',
+	{tag: ['@LPD-63144']},
+	async ({
+		apiHelpers,
+		assetCategoriesAdminPage,
+		editUserPage,
+		page,
+		usersAndOrganizationsPage,
+		vocabulariesEditPage,
+	}) => {
+		const categoryName = getRandomString();
+		const vocabularyName = getRandomString();
+
+		const categories: Array<any> = await createCategories({
+			apiHelpers,
+			categoryNames: [{name: categoryName}],
+			siteId: await getGlobalSiteId(apiHelpers),
+			vocabularyName,
+		});
+
+		apiHelpers.data.push({
+			id: categories[0].vocabularyId,
+			type: 'taxonomyVocabulary',
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await assetCategoriesAdminPage.goto('/global');
+		await assetCategoriesAdminPage.gotoVocabulary(vocabularyName);
+		await vocabulariesEditPage.goto(vocabularyName);
+
+		await vocabulariesEditPage.toggleRequired();
+
+		await usersAndOrganizationsPage.goToUsers();
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				userAccount.alternateName
+			)
+		).click();
+
+		await editUserPage
+			.categoryInput(vocabularyName + "Required")
+			.click();
+
+		await editUserPage
+			.categoryOption(categoryName)
+			.click({timeout: 1000});
+
+		await editUserPage.saveButton.click();
+
+		await editUserPage.membershipsLink.click();
+		
+		await expect(editUserPage.membershipsNoUserGroupsMessage).toBeVisible();
+
+		await editUserPage.selectUserGroupsButton.click();
+
+		await page.waitForLoadState('domcontentloaded');
+
+		await editUserPage.selectUserGroupTable.changeView('table');
+		await editUserPage.selectUserGroupTable.cell(userGroup.name).click();
+
+		await expect(
+			(
+				await editUserPage.membershipsUserGroupsTableRow(
+					0,
+					userGroup.name,
+					true
+				)
+			).row
+		).toBeVisible();
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
 	}
 );

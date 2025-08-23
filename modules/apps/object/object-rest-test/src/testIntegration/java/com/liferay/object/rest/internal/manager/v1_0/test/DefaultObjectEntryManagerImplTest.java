@@ -3090,7 +3090,7 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2));
 
-		// Status Draft
+		// Status draft
 
 		_objectDefinition4.setEnableObjectEntryDraft(true);
 
@@ -3108,7 +3108,7 @@ public class DefaultObjectEntryManagerImplTest
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, status.getCode());
 
-		// Status Expired
+		// Status expired
 
 		_objectDefinition4.setEnableObjectEntryDraft(false);
 

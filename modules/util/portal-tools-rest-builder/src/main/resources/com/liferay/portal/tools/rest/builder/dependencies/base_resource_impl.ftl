@@ -1658,6 +1658,16 @@ public abstract class Base${schemaName}ResourceImpl
 		return TransformUtil.transform(collection, unsafeFunction);
 	}
 
+	<#if freeMarkerTool.isVersionCompatible(configYAML, 11)>
+		public static <R, E extends Throwable> R[] transform(int[] array, UnsafeFunction<Integer, R, E> unsafeFunction, Class<? extends R> clazz) {
+			return TransformUtil.transform(array, unsafeFunction, clazz);
+		}
+
+		public static <R, E extends Throwable> R[] transform(long[] array, UnsafeFunction<Long, R, E> unsafeFunction, Class<? extends R> clazz) {
+			return TransformUtil.transform(array, unsafeFunction, clazz);
+		}
+	</#if>
+
 	protected <T, R, E extends Throwable> R[] transform(T[] array, UnsafeFunction<T, R, E> unsafeFunction, Class<? extends R> clazz) {
 		return TransformUtil.transform(array, unsafeFunction, clazz);
 	}
@@ -1665,6 +1675,56 @@ public abstract class Base${schemaName}ResourceImpl
 	protected <T, R, E extends Throwable> R[] transformToArray(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction, Class<? extends R> clazz) {
 		return TransformUtil.transformToArray(collection, unsafeFunction, clazz);
 	}
+
+	<#if freeMarkerTool.isVersionCompatible(configYAML, 11)>
+		public static <T, E extends Throwable> boolean[] transformToBooleanArray(Collection<T> collection, UnsafeFunction<T, Boolean, E> unsafeFunction) {
+			return TransformUtil.transformToBooleanArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> boolean[] transformToBooleanArray(T[] array, UnsafeFunction<T, Boolean, E> unsafeFunction) {
+			return TransformUtil.transformToBooleanArray(array, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> byte[] transformToByteArray(Collection<T> collection, UnsafeFunction<T, Byte, E> unsafeFunction) {
+			return TransformUtil.transformToByteArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> byte[] transformToByteArray(T[] array, UnsafeFunction<T, Byte, E> unsafeFunction) {
+			return TransformUtil.transformToByteArray(array, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> double[] transformToDoubleArray(Collection<T> collection, UnsafeFunction<T, Double, E> unsafeFunction) {
+			return TransformUtil.transformToDoubleArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> double[] transformToDoubleArray(T[] array, UnsafeFunction<T, Double, E> unsafeFunction) {
+			return TransformUtil.transformToDoubleArray(array, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> float[] transformToFloatArray(Collection<T> collection, UnsafeFunction<T, Float, E> unsafeFunction) {
+			return TransformUtil.transformToFloatArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> float[] transformToFloatArray(T[] array, UnsafeFunction<T, Float, E> unsafeFunction) {
+			return TransformUtil.transformToFloatArray(array, unsafeFunction);
+		}
+
+		public static <T, R, E extends Throwable> int[] transformToIntArray(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) {
+			return TransformUtil.transformToIntArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> int[] transformToIntArray(T[] array, UnsafeFunction<T, Integer, E> unsafeFunction) {
+			return TransformUtil.transformToIntArray(array, unsafeFunction);
+		}
+
+		public static <R, E extends Throwable> List<R> transformToList(int[] array, UnsafeFunction<Integer, R, E> unsafeFunction) {
+			return TransformUtil.transformToList(array, unsafeFunction);
+		}
+
+		public static <R, E extends Throwable> List<R> transformToList(long[] array, UnsafeFunction<Long, R, E> unsafeFunction) {
+			return TransformUtil.transformToList(array, unsafeFunction);
+		}
+	</#if>
 
 	protected <T, R, E extends Throwable> List<R> transformToList(T[] array, UnsafeFunction<T, R, E> unsafeFunction) {
 		return TransformUtil.transformToList(array, unsafeFunction);
@@ -1683,9 +1743,33 @@ public abstract class Base${schemaName}ResourceImpl
 		</#if>
 	}
 
+	<#if freeMarkerTool.isVersionCompatible(configYAML, 11)>
+		public static <T, E extends Throwable> long[] transformToLongArray(T[] array, UnsafeFunction<T, Long, E> unsafeFunction) {
+			return TransformUtil.transformToLongArray(array, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> short[] transformToShortArray(Collection<T> collection, UnsafeFunction<T, Short, E> unsafeFunction) {
+			return TransformUtil.transformToShortArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> short[] transformToShortArray(T[] array, UnsafeFunction<T, Short, E> unsafeFunction) {
+			return TransformUtil.transformToShortArray(array, unsafeFunction);
+		}
+	</#if>
+
 	protected <T, R, E extends Throwable> List<R> unsafeTransform(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) throws E {
 		return TransformUtil.unsafeTransform(collection, unsafeFunction);
 	}
+
+	<#if freeMarkerTool.isVersionCompatible(configYAML, 11)>
+		public static <R, E extends Throwable> R[] unsafeTransform(int[] array, UnsafeFunction<Integer, R, E> unsafeFunction, Class<? extends R> clazz) throws E {
+			return TransformUtil.unsafeTransform(array, unsafeFunction, clazz);
+		}
+
+		public static <R, E extends Throwable> R[] unsafeTransform(long[] array, UnsafeFunction<Long, R, E> unsafeFunction, Class<? extends R> clazz) throws E {
+			return TransformUtil.unsafeTransform(array, unsafeFunction, clazz);
+		}
+	</#if>
 
 	protected <T, R, E extends Throwable> R[] unsafeTransform(T[] array, UnsafeFunction<T, R, E> unsafeFunction, Class<? extends R> clazz) throws E {
 		return TransformUtil.unsafeTransform(array, unsafeFunction, clazz);
@@ -1694,6 +1778,56 @@ public abstract class Base${schemaName}ResourceImpl
 	protected <T, R, E extends Throwable> R[] unsafeTransformToArray(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction, Class<? extends R> clazz) throws E {
 		return TransformUtil.unsafeTransformToArray(collection, unsafeFunction, clazz);
 	}
+
+	<#if freeMarkerTool.isVersionCompatible(configYAML, 11)>
+		public static <T, E extends Throwable> boolean[] unsafeTransformToBooleanArray(Collection<T> collection, UnsafeFunction<T, Boolean, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToBooleanArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> boolean[] unsafeTransformToBooleanArray(T[] array, UnsafeFunction<T, Boolean, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToBooleanArray(array, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> byte[] unsafeTransformToByteArray(Collection<T> collection, UnsafeFunction<T, Byte, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToByteArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> byte[] unsafeTransformToByteArray(T[] array, UnsafeFunction<T, Byte, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToByteArray(array, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> double[] unsafeTransformToDoubleArray(Collection<T> collection, UnsafeFunction<T, Double, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToDoubleArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> double[] unsafeTransformToDoubleArray(T[] array, UnsafeFunction<T, Double, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToDoubleArray(array, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> float[] unsafeTransformToFloatArray(Collection<T> collection, UnsafeFunction<T, Float, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToFloatArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> float[] unsafeTransformToFloatArray(T[] array, UnsafeFunction<T, Float, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToFloatArray(array, unsafeFunction);
+		}
+
+		public static <T, R, E extends Throwable> int[] unsafeTransformToIntArray(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToIntArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> int[] unsafeTransformToIntArray(T[] array, UnsafeFunction<T, Integer, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToIntArray(array, unsafeFunction);
+		}
+
+		public static <R, E extends Throwable> List<R> unsafeTransformToList(int[] array, UnsafeFunction<Integer, R, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToList(array, unsafeFunction);
+		}
+
+		public static <R, E extends Throwable> List<R> unsafeTransformToList(long[] array, UnsafeFunction<Long, R, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToList(array, unsafeFunction);
+		}
+	</#if>
 
 	protected <T, R, E extends Throwable> List<R> unsafeTransformToList(T[] array, UnsafeFunction<T, R, E> unsafeFunction) throws E {
 		return TransformUtil.unsafeTransformToList(array, unsafeFunction);
@@ -1706,6 +1840,20 @@ public abstract class Base${schemaName}ResourceImpl
 			return (long[])_unsafeTransformToPrimitiveArray(collection, unsafeFunction, long[].class);
 		</#if>
 	}
+
+	<#if freeMarkerTool.isVersionCompatible(configYAML, 11)>
+		public static <T, E extends Throwable> long[] unsafeTransformToLongArray(T[] array, UnsafeFunction<T, Long, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToLongArray(array, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> short[] unsafeTransformToShortArray(Collection<T> collection, UnsafeFunction<T, Short, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToShortArray(collection, unsafeFunction);
+		}
+
+		public static <T, E extends Throwable> short[] unsafeTransformToShortArray(T[] array, UnsafeFunction<T, Short, E> unsafeFunction) throws E {
+			return TransformUtil.unsafeTransformToShortArray(array, unsafeFunction);
+		}
+	</#if>
 
 	protected AcceptLanguage contextAcceptLanguage;
 

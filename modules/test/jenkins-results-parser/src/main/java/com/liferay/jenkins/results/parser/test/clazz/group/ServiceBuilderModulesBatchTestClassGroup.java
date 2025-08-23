@@ -31,9 +31,7 @@ public class ServiceBuilderModulesBatchTestClassGroup
 			return 0;
 		}
 
-		if ((_buildType == BuildType.FULL) ||
-			(!containsTestClasses() && (_buildType == BuildType.CORE))) {
-
+		if (!containsTestClasses() && (_buildType == BuildType.CORE)) {
 			return 1;
 		}
 

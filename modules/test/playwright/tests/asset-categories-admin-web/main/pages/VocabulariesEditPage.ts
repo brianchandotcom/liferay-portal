@@ -16,6 +16,7 @@ export class VocabulariesEditPage {
 	readonly nameInput: Locator;
 	readonly page: Page;
 	readonly removeRowButton: Locator;
+	readonly requiredToggle: Locator;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
@@ -29,6 +30,7 @@ export class VocabulariesEditPage {
 		this.removeRowButton = page.getByRole('button', {
 			name: 'Remove',
 		});
+		this.requiredToggle = page.getByLabel('Required', {exact: true});
 		this.saveButton = page.getByRole('button', {
 			name: 'Save',
 		});
@@ -107,5 +109,11 @@ export class VocabulariesEditPage {
 				.getByRole('heading', {name})
 				.getByLabel('Show Actions'),
 		});
+	}
+
+	async toggleRequired() {
+		await this.requiredToggle.click();
+		await this.saveButton.click();
+		await waitForAlert(this.page);
 	}
 }

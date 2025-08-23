@@ -41,6 +41,9 @@ export class EditUserPage {
 	readonly backLink: Locator;
 	readonly birthdayInput: Locator;
 	readonly cancelButton: Locator;
+	readonly categoryGridCell: (categoryName: string) => Locator;
+	readonly categoryOption: (categoryName: string) => Locator;
+	readonly categoryInput: (vocabularyName: string) => Locator;
 	readonly changeImageButton: Locator;
 	readonly clearImageButton: Locator;
 	readonly confirmButton: Locator;
@@ -305,6 +308,12 @@ export class EditUserPage {
 			exact: true,
 			name: 'Cancel',
 		});
+		this.categoryGridCell = (categoryName: string) =>
+			page.getByRole('gridcell', {exact: true, name: categoryName});
+		this.categoryOption = (categoryName: string) =>
+			page.getByRole('option', {name: categoryName});
+		this.categoryInput = (vocabularyName: string) =>
+			page.getByLabel(vocabularyName, {exact: true});
 		this.changeImageButton = page.getByLabel('Change Image');
 		this.clearImageButton = page.getByLabel('Clear Image');
 		this.contactLink = page.getByRole('link', {

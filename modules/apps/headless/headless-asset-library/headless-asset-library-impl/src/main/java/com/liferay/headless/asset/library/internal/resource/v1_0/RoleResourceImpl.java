@@ -230,11 +230,12 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		long[] roleIds = new long[0];
 
 		for (Role role : roles) {
-			com.liferay.portal.kernel.model.Role persistedRole =
+			com.liferay.portal.kernel.model.Role serviceBuilderRole =
 				_roleService.getRole(
 					contextCompany.getCompanyId(), role.getName());
 
-			roleIds = ArrayUtil.append(roleIds, persistedRole.getRoleId());
+			roleIds = ArrayUtil.append(
+				roleIds, serviceBuilderRole.getRoleId());
 		}
 
 		return roleIds;

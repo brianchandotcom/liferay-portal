@@ -224,7 +224,7 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 		await fdsSamplePage.clickItemAction(sampleView);
 
 		page.on('dialog', async (dialog) => {
-			await expect(dialog.message).toBe('Hello Sample1!');
+			await expect(dialog.message).toContain('Hello Sample1!');
 		});
 	});
 

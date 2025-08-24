@@ -16,7 +16,11 @@ public interface FeatureFlagsBagProvider {
 
 	public FeatureFlagsBag getOrCreateFeatureFlagsBag(long companyId);
 
+	public boolean isSystemKey(String key);
+
 	public void setEnabled(long companyId, String key, boolean enabled);
+
+	public FeatureFlagsBagProvider unwrapProxy();
 
 	public <T> T withFeatureFlagsBag(
 		long companyId, Function<FeatureFlagsBag, T> function);

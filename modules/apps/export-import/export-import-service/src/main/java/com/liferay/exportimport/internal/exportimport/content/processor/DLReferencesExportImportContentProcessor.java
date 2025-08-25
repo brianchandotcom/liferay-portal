@@ -349,6 +349,7 @@ public class DLReferencesExportImportContentProcessor
 
 		int jsonBeginPos = StringUtil.lastIndexOfAny(
 			content, new String[] {"<![CDATA["}, beginPos);
+
 		jsonBeginPos = StringUtil.indexOfAny(
 			content, new char[] {'{'}, jsonBeginPos);
 

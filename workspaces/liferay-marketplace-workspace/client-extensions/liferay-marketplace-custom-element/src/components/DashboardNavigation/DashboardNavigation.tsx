@@ -11,6 +11,7 @@ import './DashboardNavigation.scss';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 
 export type DashboardListItems = {
+	active?: boolean;
 	itemTitle: string;
 	path: string;
 	symbol: string;

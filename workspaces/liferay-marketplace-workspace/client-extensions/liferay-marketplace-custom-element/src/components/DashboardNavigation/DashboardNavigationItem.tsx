@@ -30,33 +30,37 @@ export default function DashboardNavigationItem({
 				}
 				to={path}
 			>
-				{({isActive}) => (
-					<span className="align-items-center d-flex">
-						<ClayIcon
-							className={classNames(
-								'dashboard-navigation-body-list-icon',
-								{
-									'dashboard-navigation-body-list-icon-selected':
-										isActive,
-								}
-							)}
-							fontSize={16}
-							symbol={symbol as string}
-						/>
+				{({isActive}) => {
+					const active = isActive || dashboardNavigation.active;
 
-						<span
-							className={classNames(
-								'dashboard-navigation-body-list-text',
-								{
-									'dashboard-navigation-body-list-text-selected':
-										isActive,
-								}
-							)}
-						>
-							{itemTitle}
+					return (
+						<span className="align-items-center d-flex">
+							<ClayIcon
+								className={classNames(
+									'dashboard-navigation-body-list-icon',
+									{
+										'dashboard-navigation-body-list-icon-selected':
+											active,
+									}
+								)}
+								fontSize={16}
+								symbol={symbol as string}
+							/>
+
+							<span
+								className={classNames(
+									'dashboard-navigation-body-list-text',
+									{
+										'dashboard-navigation-body-list-text-selected':
+											active,
+									}
+								)}
+							>
+								{itemTitle}
+							</span>
 						</span>
-					</span>
-				)}
+					);
+				}}
 			</NavLink>
 		</>
 	);

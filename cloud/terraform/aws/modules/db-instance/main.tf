@@ -17,8 +17,7 @@ resource "aws_db_instance" "this" {
 			Backup="true"
 			Name=var.identifier
 		},
-		var.tags
-	)
+		var.tags)
 	username=var.username
 	vpc_security_group_ids=var.vpc_security_group_ids
 }

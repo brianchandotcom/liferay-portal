@@ -20,8 +20,7 @@ module "s3_bucket" {
 		{
 			Backup="true"
 		},
-		var.tags
-	)
+		var.tags)
 	version="~> 4.1.1"
 	versioning={
 		enabled=true

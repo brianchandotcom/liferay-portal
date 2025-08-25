@@ -17,11 +17,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,6 +34,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sam Ziemer
@@ -156,6 +159,25 @@ public class ViewStructuresDisplayContext {
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", null));
+	}
+
+	public Map<String, Object> getToolbarProps() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"title",
+			() -> {
+				Layout layout = _themeDisplay.getLayout();
+
+				if (layout == null) {
+					return null;
+				}
+
+				return layout.getName(_themeDisplay.getLocale(), true);
+			}
+		).put(
+			"toolbarClassName", "section-toolbar tbar-light"
+		).put(
+			"toolbarTitleClassName", "section-toolbar-title"
+		).build();
 	}
 
 	private String _getHref(String objectFolderExternalReferenceCode) {

@@ -220,12 +220,22 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
 	});
 
-	await test.step('Sample view action opens an alert message', async () => {
+	await test.step('Sample view action opens an alert message and it receives the list of items', async () => {
+		let dialogMessage = '';
+
 		page.on('dialog', async (dialog) => {
-			await expect(dialog.message).toContain('Hello Sample1!');
+			dialogMessage = dialog.message();
+			await dialog.accept();
 		});
 
 		await fdsSamplePage.clickItemAction(sampleView);
+		await expect(dialogMessage).toContain('Hello Sample1!');
+		await expect(dialogMessage).toContain('element #1');
+
+		await fdsSamplePage.clickItemAction(sampleView, 19);
+		await expect(dialogMessage).toContain('Hello Sample32!');
+		await expect(dialogMessage).toContain('element #20');
+
 	});
 
 	await test.step('Async connection refused action opens an unexpected error alert toast', async () => {

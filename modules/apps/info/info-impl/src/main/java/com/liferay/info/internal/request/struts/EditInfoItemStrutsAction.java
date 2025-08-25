@@ -519,7 +519,10 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			return new ClassPKInfoItemIdentifier(classPK);
 		}
 		else if (Validator.isNotNull(externalReferenceCode)) {
-			return new ERCInfoItemIdentifier(externalReferenceCode);
+			return new ERCInfoItemIdentifier(
+				externalReferenceCode,
+				ParamUtil.getString(
+					httpServletRequest, "scopeExternalReferenceCode", null));
 		}
 
 		return null;

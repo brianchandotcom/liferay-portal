@@ -1199,6 +1199,17 @@ public class LayoutStructureRenderer {
 			jspWriter.write(
 				layoutDisplayPageObjectProvider.getExternalReferenceCode());
 
+			String scopeExternalReferenceCode =
+				layoutDisplayPageObjectProvider.getScopeExternalReferenceCode(
+					_themeDisplay.getScopeGroupId());
+
+			if (Validator.isNotNull(scopeExternalReferenceCode)) {
+				jspWriter.write(
+					"\"><input name=\"scopeExternalReferenceCode\"");
+				jspWriter.write(" type=\"hidden\" value=\"");
+				jspWriter.write(scopeExternalReferenceCode);
+			}
+
 			if (!_hasUpdatePermission(layoutDisplayPageObjectProvider)) {
 				readOnly = true;
 			}

@@ -126,9 +126,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			className = jsonObject.getString("className");
 
 			displayObject = _getDisplayObject(
-				className, jsonObject.getLong("classPK"),
-				jsonObject.getString("externalReferenceCode"),
-				httpServletRequest, infoItemReference);
+				httpServletRequest, infoItemReference, jsonObject);
 		}
 		else {
 			displayObject = _getInfoItem(infoItemReference);
@@ -178,16 +176,11 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
-		String className = StringPool.BLANK;
 		Object displayObject = null;
 
 		if (jsonObject != null) {
-			className = jsonObject.getString("className");
-
 			displayObject = _getDisplayObject(
-				className, jsonObject.getLong("classPK"),
-				jsonObject.getString("externalReferenceCode"),
-				httpServletRequest, infoItemReference);
+				httpServletRequest, infoItemReference, jsonObject);
 		}
 		else {
 			displayObject = _getInfoItem(infoItemReference);
@@ -202,6 +195,12 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			}
 
 			return;
+		}
+
+		String className = StringPool.BLANK;
+
+		if (jsonObject != null) {
+			className = jsonObject.getString("className");
 		}
 
 		if (Validator.isNull(className) && (infoItemReference != null)) {
@@ -345,9 +344,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Object _getDisplayObject(
-		String className, long classPK, String externalReferenceCode,
 		HttpServletRequest httpServletRequest,
-		InfoItemReference infoItemReference) {
+		InfoItemReference infoItemReference, JSONObject jsonObject) {
+
+		long classPK = jsonObject.getLong("classPK");
 
 		InfoItemDetails infoItemDetails =
 			(InfoItemDetails)httpServletRequest.getAttribute(
@@ -365,12 +365,16 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			}
 		}
 
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
+
 		if ((classPK <= 0) && Validator.isNull(externalReferenceCode)) {
 			return _getInfoItem(infoItemReference);
 		}
 
 		InfoItemIdentifier infoItemIdentifier = null;
 		InfoItemObjectProvider<?> infoItemObjectProvider = null;
+		String className = jsonObject.getString("className");
 
 		if (classPK > 0) {
 			infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
@@ -381,7 +385,8 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 		else {
 			infoItemIdentifier = new ERCInfoItemIdentifier(
-				externalReferenceCode);
+				externalReferenceCode,
+				jsonObject.getString("scopeExternalReferenceCode", null));
 			infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class, className,

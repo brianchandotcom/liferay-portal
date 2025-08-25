@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -63,7 +64,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Test
 	public void testGetAdditionalProps() throws Exception {
-		Assert.assertEquals(
+		AssertUtils.assertEquals(
 			HashMapBuilder.<String, Object>put(
 				"autocompleteURL",
 				() -> StringBundler.concat(

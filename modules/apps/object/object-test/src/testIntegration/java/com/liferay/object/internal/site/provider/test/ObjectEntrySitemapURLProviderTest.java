@@ -64,7 +64,6 @@ import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -87,6 +86,13 @@ public class ObjectEntrySitemapURLProviderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_layoutSet = _layoutSetLocalService.getLayoutSet(
+			_group.getGroupId(), false);
+
+		_initThemeDisplay();
+
 		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false,
 			Collections.singletonList(
@@ -115,6 +121,8 @@ public class ObjectEntrySitemapURLProviderTest {
 					"companySitemapObjectDefinitionIds",
 					new String[] {objectDefinitionId}
 				).build());
+
+		LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
 	@AfterClass
@@ -122,22 +130,8 @@ public class ObjectEntrySitemapURLProviderTest {
 		_companyConfigurationTemporarySwapper.close();
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_layoutSet = _layoutSetLocalService.getLayoutSet(
-			_group.getGroupId(), false);
-
-		_initThemeDisplay();
-
-		LayoutTestUtil.addTypePortletLayout(_group);
-	}
-
 	@Test
-	public void testObjectsSitemapURLProviderDefaultDisplayPage()
-		throws Exception {
-
+	public void testVisitLayout() throws Exception {
 		Element rootElement = _getRootElement();
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
@@ -159,29 +153,8 @@ public class ObjectEntrySitemapURLProviderTest {
 		_assertRootElement(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
 			_objectDefinition, objectEntry, rootElement);
-	}
 
-	@Test
-	public void testObjectsSitemapURLProviderDefaultDisplayPageCanonicalURLEnabled()
-		throws Exception {
-
-		Element rootElement = _getRootElement();
-
-		_objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectField", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(),
-				_portal.getClassNameId(_objectDefinition.getClassName()), 0,
-				true, WorkflowConstants.STATUS_APPROVED);
+		rootElement = _getRootElement();
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -196,6 +169,30 @@ public class ObjectEntrySitemapURLProviderTest {
 			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
 
 		Assert.assertFalse(rootElement.hasContent());
+	}
+
+	private static void _initThemeDisplay() throws Exception {
+		_themeDisplay = new ThemeDisplay();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			_group.getCompanyId());
+
+		_themeDisplay.setCompany(company);
+
+		_themeDisplay.setLanguageId(_group.getDefaultLanguageId());
+		_themeDisplay.setLayoutSet(_layoutSet);
+		_themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+		_themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+		_themeDisplay.setPortalDomain(company.getVirtualHostname());
+		_themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
+		_themeDisplay.setRequest(new MockHttpServletRequest());
+		_themeDisplay.setScopeGroupId(_group.getGroupId());
+		_themeDisplay.setServerPort(8080);
+		_themeDisplay.setSignedIn(true);
+		_themeDisplay.setSiteGroupId(_group.getGroupId());
+		_themeDisplay.setUser(TestPropsValues.getUser());
 	}
 
 	private void _assertRootElement(
@@ -275,41 +272,23 @@ public class ObjectEntrySitemapURLProviderTest {
 		return rootElement;
 	}
 
-	private void _initThemeDisplay() throws Exception {
-		_themeDisplay = new ThemeDisplay();
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			_group.getCompanyId());
-
-		_themeDisplay.setCompany(company);
-
-		_themeDisplay.setLanguageId(_group.getDefaultLanguageId());
-		_themeDisplay.setLayoutSet(_layoutSet);
-		_themeDisplay.setLocale(
-			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
-		_themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-		_themeDisplay.setPortalDomain(company.getVirtualHostname());
-		_themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
-		_themeDisplay.setRequest(new MockHttpServletRequest());
-		_themeDisplay.setScopeGroupId(_group.getGroupId());
-		_themeDisplay.setServerPort(8080);
-		_themeDisplay.setSignedIn(true);
-		_themeDisplay.setSiteGroupId(_group.getGroupId());
-		_themeDisplay.setUser(TestPropsValues.getUser());
-	}
-
 	private static final String _PID_SITEMAP_COMPANY_CONFIGURATION =
 		"com.liferay.site.internal.configuration.SitemapCompanyConfiguration";
 
 	private static CompanyConfigurationTemporarySwapper
 		_companyConfigurationTemporarySwapper;
+	private static Group _group;
+	private static LayoutSet _layoutSet;
+
+	@Inject
+	private static LayoutSetLocalService _layoutSetLocalService;
+
 	private static ObjectDefinition _objectDefinition;
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	private Group _group;
+	private static ThemeDisplay _themeDisplay;
 
 	@Inject
 	private Language _language;
@@ -319,11 +298,6 @@ public class ObjectEntrySitemapURLProviderTest {
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
-
-	private LayoutSet _layoutSet;
-
-	@Inject
-	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
@@ -339,7 +313,5 @@ public class ObjectEntrySitemapURLProviderTest {
 
 	@Inject
 	private SAXReader _saxReader;
-
-	private ThemeDisplay _themeDisplay;
 
 }

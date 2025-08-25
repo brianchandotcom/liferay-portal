@@ -613,24 +613,27 @@ public class GetCollectionFieldMVCResourceCommand
 		InfoItemIdentifier infoItemIdentifier = null;
 		InfoItemObjectProvider<Object> infoItemObjectProvider = null;
 
-		if (Validator.isNotNull(externalReferenceCode)) {
-			infoItemIdentifier = new ERCInfoItemIdentifier(
-				externalReferenceCode, ParamUtil.getString(
-				httpServletRequest, "externalReferenceCode", null));
-			infoItemObjectProvider =
-				(InfoItemObjectProvider<Object>)
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, className,
-						ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-		}
-
-		if ((infoItemObjectProvider == null) && (classPK > 0)) {
+		if (classPK > 0) {
 			infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
 			infoItemObjectProvider =
 				(InfoItemObjectProvider<Object>)
 					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemObjectProvider.class, className,
 						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+		}
+
+		if ((infoItemObjectProvider == null) &&
+			Validator.isNotNull(externalReferenceCode)) {
+
+			infoItemIdentifier = new ERCInfoItemIdentifier(
+				externalReferenceCode,
+				ParamUtil.getString(
+					httpServletRequest, "scopeExternalReferenceCode", null));
+			infoItemObjectProvider =
+				(InfoItemObjectProvider<Object>)
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemObjectProvider.class, className,
+						ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 		}
 
 		if (infoItemObjectProvider == null) {

@@ -22,10 +22,9 @@ const getNextPageURL = ({apiURL, page}: {apiURL: string; page: number}) => {
 	return url.toString();
 };
 
-type ChildrenFunction<T, P> =
-	P extends Array<unknown>
-		? (item: T, ...args: P) => React.ReactElement
-		: (item: T, index?: number) => React.ReactElement;
+type ChildrenFunction<T, P> = P extends unknown[]
+	? (item: T, ...args: P) => React.ReactElement
+	: (item: T, index?: number) => React.ReactElement;
 
 interface HeadlessPage<T = unknown> {
 	items: T[];
@@ -60,7 +59,7 @@ export interface IItemSelectorProps<T>
 	/**
 	 * Set the default selected items (uncontrolled).
 	 */
-	defaultItems?: Array<T>;
+	defaultItems?: T[];
 
 	/**
 	 * Property to set the default value (uncontrolled).
@@ -77,7 +76,7 @@ export interface IItemSelectorProps<T>
 	/**
 	 * Items that are currently selected (controlled).
 	 */
-	items?: Array<T>;
+	items?: T[];
 
 	/**
 	 * A string key used to locate the id, label, or value within each item.
@@ -102,7 +101,7 @@ export interface IItemSelectorProps<T>
 	/**
 	 * Callback for when items are added or removed (controlled).
 	 */
-	onItemsChange?: InternalDispatch<Array<T>>;
+	onItemsChange?: InternalDispatch<T[]>;
 
 	/**
 	 * The current value of the input (controlled).

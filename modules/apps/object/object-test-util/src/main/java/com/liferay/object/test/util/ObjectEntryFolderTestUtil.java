@@ -37,9 +37,17 @@ public class ObjectEntryFolderTestUtil {
 			long groupId, long parentObjectEntryFolderId)
 		throws Exception {
 
+		return addObjectEntryFolder(
+			groupId, TestPropsValues.getUserId(), parentObjectEntryFolderId);
+	}
+
+	public static ObjectEntryFolder addObjectEntryFolder(
+			long groupId, long userId, long parentObjectEntryFolderId)
+		throws Exception {
+
 		return ObjectEntryFolderLocalServiceUtil.addObjectEntryFolder(
-			null, groupId, TestPropsValues.getUserId(),
-			parentObjectEntryFolderId, RandomTestUtil.randomString(),
+			null, groupId, userId, parentObjectEntryFolderId,
+			RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(StringUtil.randomString()),
 			StringUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());

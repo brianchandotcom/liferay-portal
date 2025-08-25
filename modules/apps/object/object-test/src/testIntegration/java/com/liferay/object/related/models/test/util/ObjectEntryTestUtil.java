@@ -22,6 +22,17 @@ import java.util.Map;
 public class ObjectEntryTestUtil {
 
 	public static ObjectEntry addObjectEntry(
+			long groupId, long objectDefinitionId, long objectEntryFolderId,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		return ObjectEntryLocalServiceUtil.addObjectEntry(
+			groupId, TestPropsValues.getUserId(), objectDefinitionId,
+			objectEntryFolderId, null, values,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static ObjectEntry addObjectEntry(
 			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values)
 		throws Exception {

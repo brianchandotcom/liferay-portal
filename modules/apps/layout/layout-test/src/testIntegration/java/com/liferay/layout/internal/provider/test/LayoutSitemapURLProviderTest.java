@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -167,6 +168,7 @@ public class LayoutSitemapURLProviderTest {
 	}
 
 	@Test
+	@TestInfo("LPD-63344")
 	public void testLayoutSitemapURLProviderContentLayoutTypeWithADisabledLanguageId()
 		throws Exception {
 

@@ -51,13 +51,13 @@ public class RenderResponseImplTest {
 			"es_ES"
 		);
 
-		Mockito.when(
-			portletRequestImpl.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
 		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
+
+		Mockito.when(
+			portletDisplay.getId()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
 
 		Mockito.when(
 			themeDisplay.getPortletDisplay()
@@ -66,9 +66,9 @@ public class RenderResponseImplTest {
 		);
 
 		Mockito.when(
-			portletDisplay.getId()
+			portletRequestImpl.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
-			RandomTestUtil.randomString()
+			themeDisplay
 		);
 
 		RenderResponseImpl renderResponseImpl = new RenderResponseImpl();

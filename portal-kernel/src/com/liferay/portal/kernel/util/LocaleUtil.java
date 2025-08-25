@@ -13,12 +13,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -332,6 +332,12 @@ public class LocaleUtil {
 			locale = _locale;
 		}
 
+		String languageId = _languageIds.get(locale);
+
+		if (languageId != null) {
+			return languageId;
+		}
+
 		String country = locale.getCountry();
 
 		boolean hasCountry = false;
@@ -372,7 +378,11 @@ public class LocaleUtil {
 			sb.append(variant);
 		}
 
-		return sb.toString();
+		languageId = sb.toString();
+
+		_languageIds.put(locale, languageId);
+
+		return languageId;
 	}
 
 	public static String[] toLanguageIds(Collection<Locale> locales) {
@@ -540,7 +550,10 @@ public class LocaleUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
 
+	private static final Map<Locale, String> _languageIds =
+		new ConcurrentHashMap<>();
 	private static Locale _locale = new Locale("en", "US");
-	private static final Map<String, Locale> _locales = new HashMap<>();
+	private static final Map<String, Locale> _locales =
+		new ConcurrentHashMap<>();
 
 }

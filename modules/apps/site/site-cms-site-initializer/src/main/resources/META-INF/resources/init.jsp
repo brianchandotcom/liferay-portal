@@ -39,8 +39,6 @@ page import="com.liferay.site.cms.site.initializer.internal.display.context.View
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewVersionHistoryDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewVocabulariesDisplayContext" %>
 
-<%@ page import="java.util.Map" %>
-
 <liferay-theme:defineObjects />
 
 <liferay-util:html-top>

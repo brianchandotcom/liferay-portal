@@ -8,36 +8,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewHomeQuickActionsDisplayContext viewSpaceMembersSummarySectionDisplayContext = (ViewHomeQuickActionsDisplayContext)request.getAttribute(ViewHomeQuickActionsDisplayContext.class.getName());
+ViewHomeQuickActionsDisplayContext viewHomeQuickActionsDisplayContext = (ViewHomeQuickActionsDisplayContext)request.getAttribute(ViewHomeQuickActionsDisplayContext.class.getName());
 %>
 
 <div class="cms-section">
-	<div class="pb-2 pt-2 row">
-		<div class="col">
-			<span class="font-weight-semi-bold text-4">Quick Actions</span>
-		</div>
-	</div>
-
-	<div class="row">
-
-		<%
-		for (Map<String, String> quickAction : viewSpaceMembersSummarySectionDisplayContext.getQuickActions()) {
-		%>
-
-			<div class="col">
-				<a class="btn btn-secondary text-left w-100" href="<%= quickAction.get("href") %>">
-					<clay:icon
-						cssClass="mr-2"
-						symbol='<%= quickAction.get("icon") %>'
-					/>
-
-					<span><%= quickAction.get("label") %></span>
-				</a>
-			</div>
-
-		<%
-		}
-		%>
-
-	</div>
+	<react:component
+		module="{QuickActions} from site-cms-site-initializer"
+		props="<%= viewHomeQuickActionsDisplayContext.getProps() %>"
+	/>
 </div>

@@ -25,6 +25,31 @@ public class BulkActionItem implements Cloneable, Serializable {
 		return BulkActionItemSerDes.toDTO(json);
 	}
 
+	public String getClassExternalReferenceCode() {
+		return classExternalReferenceCode;
+	}
+
+	public void setClassExternalReferenceCode(
+		String classExternalReferenceCode) {
+
+		this.classExternalReferenceCode = classExternalReferenceCode;
+	}
+
+	public void setClassExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			classExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			classExternalReferenceCode =
+				classExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String classExternalReferenceCode;
+
 	public String getClassName() {
 		return className;
 	}
@@ -66,6 +91,25 @@ public class BulkActionItem implements Cloneable, Serializable {
 	}
 
 	protected Long classPK;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String name;
 
 	@Override
 	public BulkActionItem clone() throws CloneNotSupportedException {

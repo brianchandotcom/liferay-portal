@@ -46,6 +46,20 @@ public class BulkActionItemSerDes {
 
 		sb.append("{");
 
+		if (bulkActionItem.getClassExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"classExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(bulkActionItem.getClassExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (bulkActionItem.getClassName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -70,6 +84,20 @@ public class BulkActionItemSerDes {
 			sb.append(bulkActionItem.getClassPK());
 		}
 
+		if (bulkActionItem.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(bulkActionItem.getName()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -89,6 +117,15 @@ public class BulkActionItemSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (bulkActionItem.getClassExternalReferenceCode() == null) {
+			map.put("classExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"classExternalReferenceCode",
+				String.valueOf(bulkActionItem.getClassExternalReferenceCode()));
+		}
+
 		if (bulkActionItem.getClassName() == null) {
 			map.put("className", null);
 		}
@@ -101,6 +138,13 @@ public class BulkActionItemSerDes {
 		}
 		else {
 			map.put("classPK", String.valueOf(bulkActionItem.getClassPK()));
+		}
+
+		if (bulkActionItem.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(bulkActionItem.getName()));
 		}
 
 		return map;
@@ -121,10 +165,18 @@ public class BulkActionItemSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "className")) {
+			if (Objects.equals(
+					jsonParserFieldName, "classExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "className")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "classPK")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
 
@@ -136,7 +188,15 @@ public class BulkActionItemSerDes {
 			BulkActionItem bulkActionItem, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "className")) {
+			if (Objects.equals(
+					jsonParserFieldName, "classExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					bulkActionItem.setClassExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "className")) {
 				if (jsonParserFieldValue != null) {
 					bulkActionItem.setClassName((String)jsonParserFieldValue);
 				}
@@ -145,6 +205,11 @@ public class BulkActionItemSerDes {
 				if (jsonParserFieldValue != null) {
 					bulkActionItem.setClassPK(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					bulkActionItem.setName((String)jsonParserFieldValue);
 				}
 			}
 		}

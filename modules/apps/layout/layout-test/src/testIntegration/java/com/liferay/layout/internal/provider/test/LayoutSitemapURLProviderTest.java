@@ -7,6 +7,7 @@ package com.liferay.layout.internal.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -189,12 +190,7 @@ public class LayoutSitemapURLProviderTest {
 		Assert.assertTrue(
 			ArrayUtil.contains(draftLayout.getAvailableLanguageIds(), "pt_BR"));
 
-		_layoutLocalService.updateStatus(
-			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getCompanyId(), _group.getGroupId(),
-				TestPropsValues.getUserId()));
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			_group.getTypeSettingsProperties();

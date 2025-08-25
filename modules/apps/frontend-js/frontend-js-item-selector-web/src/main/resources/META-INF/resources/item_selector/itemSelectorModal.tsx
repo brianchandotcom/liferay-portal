@@ -73,7 +73,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	open,
 	type,
 }: IItemSelectorModalProps<T>) {
-	const [selectedItems, setSelectedItems] = useState(() => externalItems);
+	const [selectedItems, setSelectedItems] = useState(externalItems);
 
 	useEffect(() => {
 		if (!open) {

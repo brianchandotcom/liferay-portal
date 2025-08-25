@@ -30,3 +30,7 @@ export {default as getAlloyEditorProcessor} from './processors/getAlloyEditorPro
 // @ts-ignore
 
 export {default as addFragment} from './thunks/addFragment';
+
+// @ts-ignore
+
+export {getResponsiveConfig} from './utils/getResponsiveConfig';

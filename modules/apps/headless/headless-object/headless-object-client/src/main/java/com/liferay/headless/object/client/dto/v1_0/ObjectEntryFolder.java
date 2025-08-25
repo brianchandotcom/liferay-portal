@@ -367,6 +367,48 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 	protected com.liferay.headless.object.client.permission.Permission[]
 		permissions;
 
+	public Creator getRemovedBy() {
+		return removedBy;
+	}
+
+	public void setRemovedBy(Creator removedBy) {
+		this.removedBy = removedBy;
+	}
+
+	public void setRemovedBy(
+		UnsafeSupplier<Creator, Exception> removedByUnsafeSupplier) {
+
+		try {
+			removedBy = removedByUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Creator removedBy;
+
+	public Date getRemovedDate() {
+		return removedDate;
+	}
+
+	public void setRemovedDate(Date removedDate) {
+		this.removedDate = removedDate;
+	}
+
+	public void setRemovedDate(
+		UnsafeSupplier<Date, Exception> removedDateUnsafeSupplier) {
+
+		try {
+			removedDate = removedDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date removedDate;
+
 	public String getScopeKey() {
 		return scopeKey;
 	}

@@ -750,6 +750,89 @@ public class ObjectEntryFolder implements Serializable {
 	private Supplier<com.liferay.portal.vulcan.permission.Permission[]>
 		_permissionsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Creator getRemovedBy() {
+		if (_removedBySupplier != null) {
+			removedBy = _removedBySupplier.get();
+
+			_removedBySupplier = null;
+		}
+
+		return removedBy;
+	}
+
+	public void setRemovedBy(Creator removedBy) {
+		this.removedBy = removedBy;
+
+		_removedBySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRemovedBy(
+		UnsafeSupplier<Creator, Exception> removedByUnsafeSupplier) {
+
+		_removedBySupplier = () -> {
+			try {
+				return removedByUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator removedBy;
+
+	@JsonIgnore
+	private Supplier<Creator> _removedBySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Date getRemovedDate() {
+		if (_removedDateSupplier != null) {
+			removedDate = _removedDateSupplier.get();
+
+			_removedDateSupplier = null;
+		}
+
+		return removedDate;
+	}
+
+	public void setRemovedDate(Date removedDate) {
+		this.removedDate = removedDate;
+
+		_removedDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRemovedDate(
+		UnsafeSupplier<Date, Exception> removedDateUnsafeSupplier) {
+
+		_removedDateSupplier = () -> {
+			try {
+				return removedDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date removedDate;
+
+	@JsonIgnore
+	private Supplier<Date> _removedDateSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The scope key of the object entry folder."
 	)
@@ -1140,6 +1223,34 @@ public class ObjectEntryFolder implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		Creator removedBy = getRemovedBy();
+
+		if (removedBy != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"removedBy\": ");
+
+			sb.append(removedBy);
+		}
+
+		Date removedDate = getRemovedDate();
+
+		if (removedDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"removedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(removedDate));
+
+			sb.append("\"");
 		}
 
 		String scopeKey = getScopeKey();

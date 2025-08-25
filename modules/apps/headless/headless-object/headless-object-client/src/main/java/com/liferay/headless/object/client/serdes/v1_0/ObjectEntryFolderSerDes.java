@@ -249,6 +249,32 @@ public class ObjectEntryFolderSerDes {
 			sb.append("]");
 		}
 
+		if (objectEntryFolder.getRemovedBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"removedBy\": ");
+
+			sb.append(objectEntryFolder.getRemovedBy());
+		}
+
+		if (objectEntryFolder.getRemovedDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"removedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					objectEntryFolder.getRemovedDate()));
+
+			sb.append("\"");
+		}
+
 		if (objectEntryFolder.getScopeKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -451,6 +477,24 @@ public class ObjectEntryFolderSerDes {
 				String.valueOf(objectEntryFolder.getPermissions()));
 		}
 
+		if (objectEntryFolder.getRemovedBy() == null) {
+			map.put("removedBy", null);
+		}
+		else {
+			map.put(
+				"removedBy", String.valueOf(objectEntryFolder.getRemovedBy()));
+		}
+
+		if (objectEntryFolder.getRemovedDate() == null) {
+			map.put("removedDate", null);
+		}
+		else {
+			map.put(
+				"removedDate",
+				liferayToJSONDateFormat.format(
+					objectEntryFolder.getRemovedDate()));
+		}
+
 		if (objectEntryFolder.getScopeKey() == null) {
 			map.put("scopeKey", null);
 		}
@@ -549,6 +593,12 @@ public class ObjectEntryFolderSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "removedBy")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "removedDate")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
@@ -685,6 +735,18 @@ public class ObjectEntryFolderSerDes {
 					}
 
 					objectEntryFolder.setPermissions(permissionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "removedBy")) {
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.setRemovedBy(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "removedDate")) {
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.setRemovedDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {

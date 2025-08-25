@@ -73,6 +73,20 @@ export class ContentsPage {
 		await this.page.getByRole('tab', {name: 'General'}).waitFor();
 	}
 
+	async createFolder(folderName: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Folder'}),
+			trigger: this.newButton,
+		});
+
+		await this.page.getByRole('heading', {name: 'New Folder'}).waitFor();
+
+		await this.page.getByLabel('NameRequired').fill(folderName);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+	}
+
 	async deleteContent(title: string) {
 		const card = this.page
 			.locator('tr', {hasText: title})

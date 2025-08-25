@@ -39,6 +39,7 @@ import com.liferay.object.rest.dto.v1_0.AuditFieldChange;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.dto.v1_0.ObjectDefinitionBrief;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Scope;
 import com.liferay.object.rest.dto.v1_0.Status;
@@ -118,6 +119,7 @@ import java.sql.Timestamp;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -431,10 +433,11 @@ public class ObjectEntryDTOConverter
 					() -> _getAttribute(
 						objectEntryVersion,
 						objectEntryVersion -> _toSystemProperties(
-							objectDefinition, objectEntryVersion.getVersion()),
+							dtoConverterContext.getLocale(), objectDefinition,
+							objectEntryVersion.getVersion()),
 						serviceBuilderObjectEntry,
 						serviceBuilderObjectEntry -> _toSystemProperties(
-							objectDefinition,
+							dtoConverterContext.getLocale(), objectDefinition,
 							serviceBuilderObjectEntry.getVersion())));
 				setTaxonomyCategoryBriefs(
 					() -> {
@@ -1121,6 +1124,20 @@ public class ObjectEntryDTOConverter
 		return false;
 	}
 
+	private boolean _isShowObjectDefinitionBrief() {
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		if (nestedFieldsContext == null) {
+			return false;
+		}
+
+		List<String> nestedFields = new ArrayList<>(
+			nestedFieldsContext.getNestedFields());
+
+		return nestedFields.contains("systemProperties.objectDefinitionBrief");
+	}
+
 	private AuditEvent[] _toAuditEvents(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
@@ -1228,6 +1245,20 @@ public class ObjectEntryDTOConverter
 		}
 
 		return ExtendedEntity.extend(dto, nestedFieldsRelatedProperties, null);
+	}
+
+	private ObjectDefinitionBrief _toObjectDefinitionBrief(
+		Locale locale, ObjectDefinition objectDefinition) {
+
+		return new ObjectDefinitionBrief() {
+			{
+				setExternalReferenceCode(
+					objectDefinition::getExternalReferenceCode);
+				setLabel(() -> objectDefinition.getLabel(locale));
+				setObjectFolderExternalReferenceCode(
+					objectDefinition::getObjectFolderExternalReferenceCode);
+			}
+		};
 	}
 
 	private Permission[] _toPermissions(
@@ -1392,22 +1423,36 @@ public class ObjectEntryDTOConverter
 	}
 
 	private SystemProperties _toSystemProperties(
-		ObjectDefinition objectDefinition, int versionInt) {
+		Locale locale, ObjectDefinition objectDefinition, int versionInt) {
 
-		if (!objectDefinition.isEnableObjectEntryVersioning()) {
+		boolean enableObjectEntryVersioning =
+			objectDefinition.isEnableObjectEntryVersioning();
+		boolean showObjectDefinitionBrief = _isShowObjectDefinitionBrief();
+
+		if (!enableObjectEntryVersioning && !showObjectDefinitionBrief) {
 			return null;
 		}
 
-		return new SystemProperties() {
-			{
-				setVersion(
-					() -> new Version() {
-						{
-							setNumber(() -> versionInt);
-						}
-					});
-			}
-		};
+		SystemProperties systemProperties = new SystemProperties();
+
+		if (showObjectDefinitionBrief) {
+			systemProperties.setObjectDefinitionBrief(
+				() -> NestedFieldsSupplier.supply(
+					"systemProperties.objectDefinitionBrief",
+					nestedField -> _toObjectDefinitionBrief(
+						locale, objectDefinition)));
+		}
+
+		if (enableObjectEntryVersioning) {
+			systemProperties.setVersion(
+				() -> new Version() {
+					{
+						setNumber(() -> versionInt);
+					}
+				});
+		}
+
+		return systemProperties;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -166,7 +166,7 @@ export default function ItemSelectorSamples() {
 							apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 							as={ClayInput}
 							items={space ? [space] : []}
-							onItemsChange={(items: Array<Space>) => {
+							onItemsChange={(items: Space[]) => {
 								if (items.length) {
 									setSpace(items[0]);
 								}
@@ -237,7 +237,7 @@ export default function ItemSelectorSamples() {
 					displaySelectedItems={false}
 					items={documents}
 					multiSelect
-					onItemsChange={(items: Array<Document>) => {
+					onItemsChange={(items: Document[]) => {
 						setDocuments(items);
 					}}
 					placeholder="Select a Document"

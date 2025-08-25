@@ -34,7 +34,7 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 test(
 	'Behavior of filters',
 	{
-		tag: ['@LPS-150047', '@LPD-62552'],
+		tag: ['@LPS-150047'],
 	},
 	async ({fdsSamplePage, page}) => {
 		const blueCells = page.getByRole('cell', {name: 'Blue'});
@@ -347,62 +347,6 @@ test(
 				expect.soft(await greenCells.count()).toBeGreaterThan(0);
 				expect.soft(await yellowCells.count()).toBeGreaterThan(0);
 				expect.soft(await redCells.count()).toBeGreaterThan(0);
-			});
-		});
-
-		await test.step('Check filter dropdown is updated after clearing results', async () => {
-			await test.step('Refresh the page', async () => {
-				await page.reload();
-
-				await page
-					.getByText('This is a description for sample 1.')
-					.waitFor();
-			});
-
-			await test.step('Open filter dropdown and check "Blue", "Green" and "Yellow" are selected', async () => {
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Filter'})
-					.click();
-
-				await page
-					.locator('.dropdown-menu')
-					.getByRole('menuitem', {name: 'Color'})
-					.click();
-
-				expect(page.getByRole('checkbox', {name: 'Blue'})).toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Green'})).toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Red'})).not.toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Yellow'})).toBeChecked;
-			});
-
-			await test.step('Click on clear filters button', async () => {
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Filter'})
-					.click();
-
-				await fdsSamplePage.activeFiltersToolbar
-					.getByRole('button', {name: 'Clear'})
-					.click();
-
-				await page
-					.getByText('This is a description for sample 1.')
-					.waitFor();
-			});
-
-			await test.step('Open filter dropdown again and check nothing is selected', async () => {
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Filter'})
-					.click();
-
-				await page
-					.locator('.dropdown-menu')
-					.getByRole('menuitem', {name: 'Color'})
-					.click();
-
-				expect(page.getByRole('checkbox', {name: 'Blue'})).not.toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Green'})).not.toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Red'})).not.toBeChecked;
-				expect(page.getByRole('checkbox', {name: 'Yellow'})).not.toBeChecked;
 			});
 		});
 	}

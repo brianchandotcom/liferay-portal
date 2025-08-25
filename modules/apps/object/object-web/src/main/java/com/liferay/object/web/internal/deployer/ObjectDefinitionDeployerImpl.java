@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
@@ -489,7 +490,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				LayoutDisplayPageProvider.class,
 				new ObjectEntryLayoutDisplayPageProvider(
-					infoItemFriendlyURLProvider, objectDefinition,
+					_assetHelper, infoItemFriendlyURLProvider, objectDefinition,
 					_objectDefinitionLocalService, _objectEntryLocalService,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()),
@@ -758,6 +759,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

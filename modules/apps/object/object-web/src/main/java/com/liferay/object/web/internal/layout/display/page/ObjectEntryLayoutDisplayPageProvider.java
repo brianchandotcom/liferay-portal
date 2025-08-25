@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.layout.display.page;
 
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
@@ -37,6 +38,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 	extends BaseLayoutDisplayPageProvider<ObjectEntry> {
 
 	public ObjectEntryLayoutDisplayPageProvider(
+		AssetHelper assetHelper,
 		InfoItemFriendlyURLProvider<ObjectEntry> infoItemFriendlyURLProvider,
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -44,6 +46,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 		ObjectEntryManager objectEntryManager,
 		UserLocalService userLocalService) {
 
+		_assetHelper = assetHelper;
 		_infoItemFriendlyURLProvider = infoItemFriendlyURLProvider;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
@@ -93,7 +96,8 @@ public class ObjectEntryLayoutDisplayPageProvider
 					objectEntry.getObjectDefinitionId());
 
 			return new ObjectEntryLayoutDisplayPageObjectProvider(
-				_infoItemFriendlyURLProvider, objectDefinition, objectEntry);
+				_assetHelper, _infoItemFriendlyURLProvider, objectDefinition,
+				objectEntry);
 		}
 
 		ERCInfoItemIdentifier ercInfoItemIdentifier =
@@ -125,7 +129,8 @@ public class ObjectEntryLayoutDisplayPageProvider
 
 			if (objectEntry != null) {
 				return new ObjectEntryLayoutDisplayPageObjectProvider(
-					_infoItemFriendlyURLProvider, _objectDefinition,
+					_assetHelper, _infoItemFriendlyURLProvider,
+					_objectDefinition,
 					ObjectEntryUtil.toObjectEntry(
 						_objectDefinition.getObjectDefinitionId(),
 						objectEntry));
@@ -150,8 +155,8 @@ public class ObjectEntryLayoutDisplayPageProvider
 
 			if (objectEntry != null) {
 				return new ObjectEntryLayoutDisplayPageObjectProvider(
-					_infoItemFriendlyURLProvider, _objectDefinition,
-					objectEntry);
+					_assetHelper, _infoItemFriendlyURLProvider,
+					_objectDefinition, objectEntry);
 			}
 		}
 
@@ -173,12 +178,14 @@ public class ObjectEntryLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(ObjectEntry objectEntry) {
 
 		return new ObjectEntryLayoutDisplayPageObjectProvider(
-			_infoItemFriendlyURLProvider, _objectDefinition, objectEntry);
+			_assetHelper, _infoItemFriendlyURLProvider, _objectDefinition,
+			objectEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLayoutDisplayPageProvider.class);
 
+	private final AssetHelper _assetHelper;
 	private final InfoItemFriendlyURLProvider<ObjectEntry>
 		_infoItemFriendlyURLProvider;
 	private final ObjectDefinition _objectDefinition;

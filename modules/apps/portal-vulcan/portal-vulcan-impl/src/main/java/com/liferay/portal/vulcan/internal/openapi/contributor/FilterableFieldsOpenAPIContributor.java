@@ -298,10 +298,13 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 				continue;
 			}
 			else if (!(entityField instanceof ComplexEntityField)) {
-				String type = String.valueOf(entityField.getType());
-
 				filterableFieldMapping.put(
-					fieldName, StringUtil.toLowerCase(type));
+					fieldName,
+					HashMapBuilder.put(
+						"type",
+						StringUtil.toLowerCase(
+							String.valueOf(entityField.getType()))
+					).build());
 
 				continue;
 			}

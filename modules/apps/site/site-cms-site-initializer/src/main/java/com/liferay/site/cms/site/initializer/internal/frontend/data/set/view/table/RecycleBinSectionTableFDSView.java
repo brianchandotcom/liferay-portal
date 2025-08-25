@@ -41,7 +41,7 @@ public class RecycleBinSectionTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"embedded.objectDefinitionName", "type"
+			"embedded.systemProperties.objectDefinitionBrief.label", "type"
 		).add(
 			"embedded.scopeKey", "space",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

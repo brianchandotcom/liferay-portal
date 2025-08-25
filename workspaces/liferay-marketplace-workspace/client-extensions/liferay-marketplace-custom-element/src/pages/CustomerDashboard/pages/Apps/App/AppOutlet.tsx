@@ -6,14 +6,9 @@
 import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {
-	Link,
-	Outlet,
-	useNavigate,
-	useOutletContext,
-	useParams,
-} from 'react-router-dom';
+import {Outlet, useOutletContext, useParams} from 'react-router-dom';
 
+import BackLink from '../../../../../components/BackLink';
 import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
 import {MarketplaceDeliveryProduct} from '../../../../../entity/MarketplaceDeliveryProduct';
@@ -45,7 +40,6 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 	routes,
 	showActions = true,
 }) => {
-	const navigate = useNavigate();
 	const {orderId} = useParams();
 	const outletContext = useOutletContext();
 	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
@@ -59,15 +53,7 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 			error={error}
 			isLoading={isLoading}
 		>
-			<Link
-				className="align-items-center d-flex text-dark"
-				onClick={() => navigate('..')}
-				to={backURL}
-			>
-				<ClayIcon className="mr-2" symbol="order-arrow-left" />
-
-				<span className="h5 mt-1">{backTitle}</span>
-			</Link>
+			<BackLink path={backURL}>{backTitle}</BackLink>
 
 			<div className="d-flex justify-content-between">
 				<OrderDetailsHeader

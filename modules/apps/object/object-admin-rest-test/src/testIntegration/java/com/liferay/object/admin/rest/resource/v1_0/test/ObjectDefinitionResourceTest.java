@@ -26,6 +26,7 @@ import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRuleSetting;
 import com.liferay.object.admin.rest.client.dto.v1_0.Status;
+import com.liferay.object.admin.rest.client.dto.v1_0.WorkflowDefinitionLink;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.problem.Problem;
@@ -57,9 +58,11 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -74,6 +77,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -81,11 +85,14 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -120,6 +127,7 @@ public class ObjectDefinitionResourceTest
 			RandomTestUtil.randomString());
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testGetObjectDefinition() throws Exception {
@@ -137,6 +145,7 @@ public class ObjectDefinitionResourceTest
 			objectDefinition.getRestContextPath());
 
 		_testGetObjectDefinitionWithRootObjectDefinitionExternalReferenceCodes();
+		_testGetObjectDefinitionWithWorkflowDefinitionLink();
 	}
 
 	@Override
@@ -1821,6 +1830,95 @@ public class ObjectDefinitionResourceTest
 			objectDefinitionAA.getObjectDefinitionSettings());
 	}
 
+	@TestInfo("LPD-63538")
+	private void _testGetObjectDefinitionWithWorkflowDefinitionLink()
+		throws Exception {
+
+		// Company scope
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			randomObjectDefinition());
+		WorkflowDefinition workflowDefinition1 =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				WorkflowDefinitionConstants.
+					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER,
+				TestPropsValues.getCompanyId());
+
+		WorkflowDefinitionLink workflowDefinitionLink1 =
+			new WorkflowDefinitionLink() {
+				{
+					groupExternalReferenceCode = StringPool.BLANK;
+					workflowDefinitionName = workflowDefinition1.getName();
+				}
+			};
+
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			0, objectDefinition.getClassName(), objectDefinition.getId(), 0,
+			workflowDefinitionLink1.getWorkflowDefinitionName(), 0);
+
+		objectDefinition = objectDefinitionResource.getObjectDefinition(
+			objectDefinition.getId());
+
+		Assert.assertEquals(
+			new WorkflowDefinitionLink[] {workflowDefinitionLink1},
+			objectDefinition.getWorkflowDefinitionLinks());
+
+		// Site scope
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		objectDefinition = randomObjectDefinition();
+
+		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		objectDefinition = _addObjectDefinition(objectDefinition);
+
+		workflowDefinitionLink1.setGroupExternalReferenceCode(
+			group1.getExternalReferenceCode());
+
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			group1.getGroupId(), objectDefinition.getClassName(),
+			objectDefinition.getId(), 0,
+			workflowDefinitionLink1.getWorkflowDefinitionName(), 0);
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		String content = workflowDefinition1.getContentAsXML();
+
+		WorkflowDefinition workflowDefinition2 =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), content.getBytes());
+
+		WorkflowDefinitionLink workflowDefinitionLink2 =
+			new WorkflowDefinitionLink() {
+				{
+					groupExternalReferenceCode =
+						group2.getExternalReferenceCode();
+					workflowDefinitionName = workflowDefinition2.getName();
+				}
+			};
+
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			group2.getGroupId(), objectDefinition.getClassName(),
+			objectDefinition.getId(), 0,
+			workflowDefinitionLink2.getWorkflowDefinitionName(), 0);
+
+		objectDefinition = objectDefinitionResource.getObjectDefinition(
+			objectDefinition.getId());
+
+		Assert.assertEquals(
+			new HashSet<>(
+				Arrays.asList(
+					workflowDefinitionLink1, workflowDefinitionLink2)),
+			new HashSet<>(
+				Arrays.asList(objectDefinition.getWorkflowDefinitionLinks())));
+	}
+
 	private void _testPostObjectDefinitionBatch() throws Exception {
 		String externalReferenceCode1 = RandomTestUtil.randomString();
 		String externalReferenceCode2 = RandomTestUtil.randomString();
@@ -2047,5 +2145,12 @@ public class ObjectDefinitionResourceTest
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

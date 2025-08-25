@@ -8,6 +8,7 @@ package com.liferay.object.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -488,6 +489,11 @@ public interface ObjectEntryLocalService
 			Map<String, Serializable> values)
 		throws PortalException;
 
+	public void moveObjectEntriesToTrash(
+			long userId, ObjectEntryFolder objectEntryFolder,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntry moveObjectEntryToTrash(
 			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
@@ -502,6 +508,12 @@ public interface ObjectEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void restoreObjectEntriesFromTrash(
+			long userId, ObjectEntryFolder objectEntryFolder,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntry restoreObjectEntryFromTrash(
 			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
 		throws PortalException;

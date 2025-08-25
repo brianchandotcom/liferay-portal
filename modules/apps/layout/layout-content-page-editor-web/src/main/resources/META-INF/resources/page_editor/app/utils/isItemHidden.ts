@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getResponsiveConfig} from './getResponsiveConfig';
+import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
+import {ViewportSize} from '../config/constants/viewportSizes';
+import {getResponsiveConfig} from '../js-index';
 
 export function isItemHidden(
-	layoutData,
-	itemId,
-	selectedViewportSize,
+	layoutData: LayoutData,
+	itemId: LayoutDataItem['itemId'],
+	selectedViewportSize: ViewportSize,
 	options = {recursive: false}
-) {
+): boolean {
 	const item = layoutData?.items[itemId];
 
 	if (!item) {

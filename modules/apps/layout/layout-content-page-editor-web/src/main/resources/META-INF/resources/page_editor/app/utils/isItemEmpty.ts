@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
+import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
+import {VIEWPORT_SIZES, ViewportSize} from '../config/constants/viewportSizes';
 import {isItemHidden} from './isItemHidden';
 
 export default function isItemEmpty(
-	item,
-	layoutData,
-	selectedViewportSize = VIEWPORT_SIZES.desktop
+	item: LayoutDataItem,
+	layoutData: LayoutData,
+	selectedViewportSize: ViewportSize = VIEWPORT_SIZES.desktop
 ) {
 	return (
 		!item.children.length ||

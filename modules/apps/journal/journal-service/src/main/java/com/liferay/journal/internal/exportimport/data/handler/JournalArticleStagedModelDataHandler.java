@@ -31,6 +31,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
@@ -1079,6 +1080,15 @@ public class JournalArticleStagedModelDataHandler
 			}
 
 			importedArticle.setModifiedDate(article.getModifiedDate());
+
+			if (!StringUtil.equals(
+					PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW,
+					portletDataContext.getDataStrategy())) {
+
+				importedArticle.setExternalReferenceCode(
+					article.getExternalReferenceCode());
+			}
+
 			importedArticle.setStatusByUserId(article.getStatusByUserId());
 			importedArticle.setStatusByUserName(article.getStatusByUserName());
 

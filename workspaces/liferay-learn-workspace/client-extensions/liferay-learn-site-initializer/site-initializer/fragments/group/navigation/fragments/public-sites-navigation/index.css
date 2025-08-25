@@ -929,8 +929,8 @@ nav {
 
 @media (max-width: 1000px) {
 	.btn.btn-nm.dropdown-fragment-toggle {
-		display: flex;
 		color: var(--color-neutral-9, #3F404B);
+		display: flex;
 		justify-content: space-between;
 		width: 100%;
 	}

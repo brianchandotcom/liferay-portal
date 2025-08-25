@@ -16,6 +16,7 @@ type Props = {
 	orderTypeExternalReferenceCodes?: string[];
 	page: number;
 	pageSize: number;
+	shouldFetch?: boolean;
 };
 
 const usePlacedOrder = (orderId: number | string) =>
@@ -29,30 +30,36 @@ const usePlacedOrders = ({
 	orderTypeExternalReferenceCodes,
 	page,
 	pageSize,
+	shouldFetch = true,
 }: Props) =>
-	useSWR(`/placed-orders/${accountId}/${page}/${pageSize}`, async () => {
-		const response = await HeadlessCommerceDeliveryOrder.getPlacedOrders(
-			channelId,
-			accountId,
-			new URLSearchParams({
-				...(filter && {filter}),
-				nestedFields: 'placedOrderItems',
-				page: page.toString(),
-				pageSize: pageSize.toString(),
-				sort: 'createDate:desc',
-			})
-		);
+	useSWR(
+		shouldFetch ? `/placed-orders/${accountId}/${page}/${pageSize}` : null,
+		async () => {
+			const response =
+				await HeadlessCommerceDeliveryOrder.getPlacedOrders(
+					channelId,
+					accountId,
+					new URLSearchParams({
+						...(filter && {filter}),
+						nestedFields: 'placedOrderItems',
+						page: page.toString(),
+						pageSize: pageSize.toString(),
+						sort: 'createDate:desc',
+					})
+				);
 
-		return {
-			...response,
-			items: response.items.filter(({orderTypeExternalReferenceCode}) =>
-				orderTypeExternalReferenceCodes?.length
-					? orderTypeExternalReferenceCodes.includes(
-							orderTypeExternalReferenceCode
-						)
-					: true
-			),
-		};
-	});
+			return {
+				...response,
+				items: response.items.filter(
+					({orderTypeExternalReferenceCode}) =>
+						orderTypeExternalReferenceCodes?.length
+							? orderTypeExternalReferenceCodes.includes(
+									orderTypeExternalReferenceCode
+								)
+							: true
+				),
+			};
+		}
+	);
 
 export {usePlacedOrder, usePlacedOrders};

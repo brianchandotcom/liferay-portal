@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {addDays, format} from 'date-fns';
+import {addDays} from 'date-fns';
 import {ReactElement, useState} from 'react';
 import {KeyedMutator} from 'swr';
 
@@ -15,14 +15,15 @@ import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
+import {formatDate} from '../../../utils/date';
+import {safeJSONParse} from '../../../utils/util';
 import {TRIAL_STATUS_LABEL} from '../constants';
 import {ExtendRequestStatus} from '../enums/SSATrials';
 
 type ExtendSSATrialModalProps = {
-	mutatePlacedOrder?: KeyedMutator<any>;
+	mutatePlacedOrderPage: KeyedMutator<any>;
 	onClose: () => void;
 	order: PlacedOrder;
-	orderMutate?: KeyedMutator<any>;
 	ssaTrialExtendMutate: KeyedMutator<any>;
 	trialExtend: TrialExtend;
 	trialExtendCount: number;
@@ -41,10 +42,9 @@ const Details: React.FC<DetailsProps> = ({children, title}) => (
 );
 
 const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
-	mutatePlacedOrder,
+	mutatePlacedOrderPage,
 	onClose,
 	order,
-	orderMutate,
 	ssaTrialExtendMutate,
 	trialExtend,
 	trialExtendCount,
@@ -53,8 +53,33 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 		null
 	);
 
+	const mutateTrialExtendRequest = (status: ExtendRequestStatus) => {
+		ssaTrialExtendMutate(
+			(data: any) => {
+				const updatedItems = data.items.map((item: TrialExtend) => {
+					if (item.id === trialExtend.id) {
+						return {
+							...item,
+							dueStatus: {
+								key: status,
+							},
+						};
+					}
+
+					return item;
+				});
+
+				return {
+					...data,
+					items: updatedItems,
+				};
+			},
+			{revalidate: true}
+		);
+	};
+
 	return (
-		<div>
+		<>
 			<div className="d-flex flex-column mb-9 provisioning-details">
 				<div className="align-items-center d-flex justify-content-between">
 					<span className="font-weight-bold text-primary">
@@ -75,9 +100,14 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 
 				<div className="d-flex flex-column justify-content-start">
 					<h2 className="m-0 text-weight-bold">
-						{JSON.parse(
-							order.customFields[OrderCustomFields.TRIAL_SETTINGS]
-						).projectId ?? 'N/A'}
+						{
+							safeJSONParse(
+								order.customFields[
+									OrderCustomFields.TRIAL_SETTINGS
+								],
+								{projectId: 'N/A'}
+							).projectId
+						}
 					</h2>
 					<p>{order.orderTypeExternalReferenceCode}</p>
 				</div>
@@ -90,25 +120,18 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 
 						<Details title={i18n.translate('start-date')}>
 							<span className="extend-request-info">
-								{format(
-									new Date(order.createDate),
-									'dd MMM, yyyy'
-								).toString()}
+								{formatDate(order.createDate)}
 							</span>
 						</Details>
 
 						<Details title={i18n.translate('expiration-date')}>
 							<span className="extend-request-info">
-								{order.customFields[OrderCustomFields.END_DATE]
-									? format(
-											new Date(
-												order.customFields[
-													OrderCustomFields.END_DATE
-												]
-											),
-											'dd MMM, yyyy'
-										).toString()
-									: 'DNE'}
+								{formatDate(
+									order.customFields[
+										OrderCustomFields.TRIAL_END_DATE
+									],
+									'DNE'
+								)}
 							</span>
 						</Details>
 
@@ -169,16 +192,12 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 							)}
 						>
 							<span className="extend-request-info">
-								{order.customFields[OrderCustomFields.END_DATE]
-									? format(
-											new Date(
-												order.customFields[
-													OrderCustomFields.END_DATE
-												]
-											),
-											'dd MMM, yyyy'
-										).toString()
-									: 'DNE'}
+								{formatDate(
+									order.customFields[
+										OrderCustomFields.TRIAL_END_DATE
+									],
+									'DNE'
+								)}
 							</span>
 						</Details>
 					</div>
@@ -209,29 +228,8 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 								{dueStatus: {key: ExtendRequestStatus.REJECTED}}
 							);
 
-							ssaTrialExtendMutate(
-								(data: any) => {
-									const updatedItems = data.items.map(
-										(item: TrialExtend) => {
-											if (item.id === trialExtend.id) {
-												return {
-													...item,
-													dueStatus: {
-														key: ExtendRequestStatus.REJECTED,
-													},
-												};
-											}
-
-											return item;
-										}
-									);
-
-									return {
-										...data,
-										items: updatedItems,
-									};
-								},
-								{revalidate: false}
+							mutateTrialExtendRequest(
+								ExtendRequestStatus.REJECTED
 							);
 
 							setSubmitting(null);
@@ -278,88 +276,39 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 								{dueStatus: {key: ExtendRequestStatus.APPROVED}}
 							);
 
-							ssaTrialExtendMutate(
-								(data: any) => ({
-									...data,
-									items: data.items.map(
-										(item: TrialExtend) =>
-											item.id === trialExtend.id
-												? {
-														...item,
-														dueStatus: {
-															key: ExtendRequestStatus.APPROVED,
-														},
-													}
-												: item
-									),
-								}),
-								{
-									revalidate: false,
-								}
+							mutateTrialExtendRequest(
+								ExtendRequestStatus.APPROVED
 							);
 
-							if (mutatePlacedOrder) {
-								mutatePlacedOrder(
-									(apireposne: any) => {
-										return {
-											...apireposne,
-											placedOrder: {
-												...apireposne.placedOrder,
+							mutatePlacedOrderPage(
+								(response: any) => ({
+									...order,
+									items: (
+										response as APIResponse<PlacedOrder>
+									).items.map((item) => {
+										if (item.id === order.id) {
+											return {
+												...item,
 												customFields: {
-													...apireposne.placedOrder
-														.customFields,
-													[OrderCustomFields.END_DATE]:
+													...item.customFields,
+													[OrderCustomFields.TRIAL_END_DATE]:
 														addDays(
 															new Date(
-																apireposne.placedOrder.customFields[
-																	OrderCustomFields.END_DATE
+																order.customFields[
+																	OrderCustomFields.TRIAL_END_DATE
 																]
 															),
 															trialExtend.duration
 														).toISOString(),
 												},
-											},
-										};
-									},
-									{revalidate: false}
-								);
-							}
+											};
+										}
 
-							if (orderMutate) {
-								orderMutate(
-									(orders: any) => {
-										const updatedOrder = {
-											...order,
-											items: orders.items.map(
-												(item: any) => {
-													if (item.id !== order.id) {
-														return item;
-													}
-
-													return {
-														...item,
-														customFields: {
-															...item.customFields,
-															[OrderCustomFields.END_DATE]:
-																addDays(
-																	new Date(
-																		order.customFields[
-																			OrderCustomFields.END_DATE
-																		]
-																	),
-																	trialExtend.duration
-																).toISOString(),
-														},
-													};
-												}
-											),
-										};
-
-										return updatedOrder;
-									},
-									{revalidate: false}
-								);
-							}
+										return item;
+									}),
+								}),
+								{revalidate: true}
+							);
 
 							await trialOAuth2.extendTrial(trialExtend.id);
 
@@ -396,7 +345,7 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 					</div>
 				</ClayButton>
 			</div>
-		</div>
+		</>
 	);
 };
 

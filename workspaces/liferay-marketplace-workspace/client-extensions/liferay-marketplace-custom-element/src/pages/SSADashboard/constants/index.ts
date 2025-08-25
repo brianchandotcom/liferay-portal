@@ -43,3 +43,54 @@ export const TRIAL_STATUS_LABEL = {
 	'pending': 'Not Processed',
 	'processing': 'Processing',
 };
+
+export const trialObjectives = [
+	{
+		days: 1,
+		key: 'quick-demo',
+		name: 'Demo',
+	},
+	{
+		days: 3,
+		key: 'feature-showcase',
+		name: 'Showcase',
+	},
+	{
+		days: 7,
+		key: 'proof-of-concept',
+		name: 'Proof of Concept',
+	},
+	{
+		days: 30,
+		key: 'pilot-project',
+		name: 'Pilot Project',
+	},
+	{
+		days: 90,
+		key: 'extended-evaluation',
+		name: 'Extended Evaluation',
+	},
+];
+
+export const siteInitializers = [
+	{
+		key: 'blank-site-initializer',
+		name: 'Blank Site',
+	},
+	{
+		key: 'com.liferay.site.initializer.masterclass',
+		name: 'Masterclass',
+	},
+	{
+		key: 'com.liferay.site.initializer.welcome',
+		name: 'Welcome',
+	},
+	{
+		key: 'minium-initializer',
+		name: 'Minium',
+	},
+	{
+		key: 'speedwell-initializer',
+		name: 'Speedwell',
+	},
+];

@@ -55,14 +55,17 @@ public class ViewRecycleBinSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 2,
+			fdsActionDropdownItems.toString(), 3,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(0), "trash", "delete", "delete",
+			fdsActionDropdownItems.get(0), "view", "actionLinkFolder",
+			"view-folder", "get", "item");
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(1), "trash", "delete", "delete",
 			"delete", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1), "restore", "restore", "restore",
+			fdsActionDropdownItems.get(2), "restore", "restore", "restore",
 			"restore", "item");
 	}
 

@@ -84,6 +84,7 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFolder;
@@ -99,6 +100,7 @@ import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -110,6 +112,7 @@ import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.test.util.ObjectFieldTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectEntryFolderTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Node;
@@ -4891,6 +4894,38 @@ public class ObjectEntryLocalServiceTest {
 
 	@FeatureFlag("LPD-53981")
 	@Test
+	public void testMoveObjectEntryToTrashWithObjectEntryFolder()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(group.getGroupId());
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			group.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			objectEntryFolder.getObjectEntryFolderId(), Collections.emptyMap());
+
+		objectEntry = _objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			objectEntry.getObjectEntryFolderId());
+
+		TrashEntry trashEntry = _trashEntryLocalService.fetchEntry(
+			_siteObjectDefinition.getClassName(),
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			objectEntryFolder.getObjectEntryFolderId(),
+			GetterUtil.getLong(
+				trashEntry.getTypeSettingsProperty("objectEntryFolderId")));
+	}
+
+	@FeatureFlag("LPD-53981")
+	@Test
 	public void testMoveObjectEntryToTrashWithOngoingWorkflowInstances()
 		throws Exception {
 
@@ -5324,6 +5359,52 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertCount(2);
+	}
+
+	@FeatureFlag("LPD-53981")
+	@Test
+	public void testRestoreObjectEntryFromTrashWithObjectEntryFolder()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(group.getGroupId());
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			group.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			objectEntryFolder.getObjectEntryFolderId(), Collections.emptyMap());
+
+		objectEntry = _objectEntryLocalService.restoreObjectEntryFromTrash(
+			TestPropsValues.getUserId(),
+			_objectEntryLocalService.moveObjectEntryToTrash(
+				TestPropsValues.getUserId(), objectEntry,
+				ServiceContextTestUtil.getServiceContext()),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			objectEntryFolder.getObjectEntryFolderId(),
+			objectEntry.getObjectEntryFolderId());
+
+		objectEntry = _objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
+
+		_objectEntryFolderLocalService.deleteObjectEntryFolder(
+			objectEntryFolder.getObjectEntryFolderId());
+
+		objectEntry = _objectEntryLocalService.restoreObjectEntryFromTrash(
+			TestPropsValues.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			objectEntry.getObjectEntryFolderId());
+
+		Assert.assertNull(
+			_trashEntryLocalService.fetchEntry(
+				_siteObjectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
 	}
 
 	@FeatureFlag("LPD-53981")
@@ -8994,6 +9075,9 @@ public class ObjectEntryLocalServiceTest {
 	@Inject
 	private ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
+
+	@Inject
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

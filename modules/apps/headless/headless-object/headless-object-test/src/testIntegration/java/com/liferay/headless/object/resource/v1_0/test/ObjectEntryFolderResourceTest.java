@@ -194,6 +194,56 @@ public class ObjectEntryFolderResourceTest
 		_testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolderByObjectEntryFolderId();
 	}
 
+	@FeatureFlag("LPD-53981")
+	@Override
+	@Test
+	public void testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore()
+		throws Exception {
+
+		super.
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore();
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore_addObjectEntryFolder(
+				randomObjectEntryFolder());
+
+		objectEntryFolderResource.
+			deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+				String.valueOf(_testDepotEntry.getGroupId()),
+				postObjectEntryFolder.getExternalReferenceCode());
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				postObjectEntryFolder.getId());
+
+		assertEquals(postObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+
+		Map<String, Map<String, String>> actions =
+			getObjectEntryFolder.getActions();
+
+		Assert.assertTrue(actions.containsKey("restore"));
+
+		Assert.assertNotNull(getObjectEntryFolder.getRemovedBy());
+		Assert.assertNotNull(getObjectEntryFolder.getRemovedDate());
+
+		postObjectEntryFolder =
+			objectEntryFolderResource.
+				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore(
+					String.valueOf(_testDepotEntry.getGroupId()),
+					postObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(getObjectEntryFolder, postObjectEntryFolder);
+		assertValid(postObjectEntryFolder);
+
+		actions = postObjectEntryFolder.getActions();
+
+		Assert.assertFalse(actions.containsKey("restore"));
+
+		Assert.assertNull(postObjectEntryFolder.getRemovedBy());
+		Assert.assertNull(postObjectEntryFolder.getRemovedDate());
+	}
+
 	@Override
 	@Test
 	public void testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe()
@@ -471,6 +521,16 @@ public class ObjectEntryFolderResourceTest
 	@Override
 	protected ObjectEntryFolder
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+			String.valueOf(_testDepotEntry.getGroupId()), objectEntryFolder);
+	}
+
+	@Override
+	protected ObjectEntryFolder
+			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore_addObjectEntryFolder(
 				ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 

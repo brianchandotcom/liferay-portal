@@ -10,12 +10,15 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.util.AssetRendererFactoryWrapper;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -107,6 +110,15 @@ public class DepotAssetRendererFactoryWrapper<T>
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						_getGroupId(group.getGroupId())),
 				groupId)) {
+
+			return assetRenderer;
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+			groupId);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
+			(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
 
 			return assetRenderer;
 		}

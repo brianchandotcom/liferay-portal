@@ -221,11 +221,11 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 	});
 
 	await test.step('Sample view action opens an alert message', async () => {
-		await fdsSamplePage.clickItemAction(sampleView);
-
 		page.on('dialog', async (dialog) => {
 			await expect(dialog.message).toContain('Hello Sample1!');
 		});
+
+		await fdsSamplePage.clickItemAction(sampleView);
 	});
 
 	await test.step('Async connection refused action opens an unexpected error alert toast', async () => {

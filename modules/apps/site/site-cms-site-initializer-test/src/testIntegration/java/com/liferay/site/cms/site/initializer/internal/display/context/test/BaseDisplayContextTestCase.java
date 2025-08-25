@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -210,6 +211,8 @@ public abstract class BaseDisplayContextTestCase {
 		themeDisplay.setCompany(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLanguageId(group.getDefaultLanguageId());
+		themeDisplay.setLayout(
+			LayoutTestUtil.addTypeContentLayout(group, "test"));
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRealUser(TestPropsValues.getUser());

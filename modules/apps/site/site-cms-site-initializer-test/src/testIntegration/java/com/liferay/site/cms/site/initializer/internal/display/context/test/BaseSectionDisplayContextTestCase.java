@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -60,6 +61,19 @@ import org.junit.Test;
  */
 public abstract class BaseSectionDisplayContextTestCase
 	extends BaseDisplayContextTestCase {
+
+	@Test
+	public void getToolbarProps() throws Exception {
+		AssertUtils.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				"title", "test"
+			).put(
+				"toolbarClassName", "section-toolbar tbar-light"
+			).put(
+				"toolbarTitleClassName", "section-toolbar-title"
+			).build(),
+			_getToolbarProps());
+	}
 
 	@Test
 	public void testGetAdditionalProps() throws Exception {
@@ -530,6 +544,12 @@ public abstract class BaseSectionDisplayContextTestCase
 		}
 
 		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
+	}
+
+	private HashMap<String, Object> _getToolbarProps() throws Exception {
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(getMockHttpServletRequest()),
+			"getToolbarProps", new Class<?>[0]);
 	}
 
 	private void _testGetCreationMenu(

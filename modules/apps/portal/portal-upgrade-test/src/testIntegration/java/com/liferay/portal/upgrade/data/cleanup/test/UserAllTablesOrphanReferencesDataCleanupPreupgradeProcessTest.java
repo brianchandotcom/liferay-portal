@@ -101,7 +101,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 				messages.contains(
 					StringBundler.concat(
 						"Table ", dbInspector.normalizeName("Layout"), ", 1 ",
-						"entry updated column ",
+						"row updated column ",
 						dbInspector.normalizeName("userId"), " to value ",
 						_adminUser.getUserId(), " because ",
 						dbInspector.normalizeName("userId"), StringPool.SPACE,
@@ -112,7 +112,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 				messages.contains(
 					StringBundler.concat(
 						"Table ", dbInspector.normalizeName("Users_Roles"),
-						", 1 entry deleted because ",
+						", 1 row deleted because ",
 						dbInspector.normalizeName("userId"), StringPool.SPACE,
 						_userId, " was not found in ",
 						dbInspector.normalizeName("User_"), StringPool.PERIOD,

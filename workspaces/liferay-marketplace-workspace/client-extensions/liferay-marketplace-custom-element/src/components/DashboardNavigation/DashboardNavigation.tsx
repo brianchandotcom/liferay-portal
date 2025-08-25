@@ -10,6 +10,7 @@ import DashboardNavigationItem from './DashboardNavigationItem';
 import './DashboardNavigation.scss';
 
 export type DashboardListItems = {
+	active?: boolean;
 	itemTitle: string;
 	path: string;
 	symbol: string;

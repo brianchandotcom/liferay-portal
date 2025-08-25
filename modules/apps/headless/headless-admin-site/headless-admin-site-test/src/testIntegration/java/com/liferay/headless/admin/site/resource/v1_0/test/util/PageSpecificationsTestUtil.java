@@ -695,8 +695,8 @@ public class PageSpecificationsTestUtil {
 		}
 	}
 
-	private static String[] _getActionKeys(String roleKey) {
-		if (Objects.equals(RoleConstants.GUEST, roleKey)) {
+	private static String[] _getActionIds(String roleName) {
+		if (Objects.equals(RoleConstants.GUEST, roleName)) {
 			if (RandomTestUtil.randomBoolean()) {
 				return null;
 			}
@@ -920,19 +920,19 @@ public class PageSpecificationsTestUtil {
 			ListUtil.fromArray(
 				RoleConstants.GUEST, RoleConstants.SITE_CONTENT_REVIEWER,
 				RoleConstants.SITE_MEMBER),
-			roleKey -> {
-				String[] actionKeys = _getActionKeys(roleKey);
+			roleName -> {
+				String[] actionIds = _getActionIds(roleName);
 
-				if (actionKeys == null) {
+				if (actionIds == null) {
 					return null;
 				}
 
-				return new WidgetPermission() {
-					{
-						setActionIds(() -> actionKeys);
-						setRoleName(() -> roleKey);
-					}
-				};
+				WidgetPermission widgetPermission = new WidgetPermission();
+
+				widgetPermission.setActionIds(actionIds);
+				widgetPermission.setRoleName(roleName);
+
+				return widgetPermission;
 			},
 			WidgetPermission.class);
 

@@ -5,6 +5,7 @@
 
 package com.liferay.depot.internal.instance.lifecycle;
 
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.internal.util.DepotRoleUtil;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;

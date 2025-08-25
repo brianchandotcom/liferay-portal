@@ -32,7 +32,7 @@ export interface IItemSelectorModalProps<T> {
 	itemValueLocator: string | ((item: T) => any);
 
 	/**
-	 * Set the default selected items, always an array.
+	 * Items that are currently selected (controlled).
 	 */
 	items: T[];
 
@@ -42,7 +42,7 @@ export interface IItemSelectorModalProps<T> {
 	observer: any;
 
 	/**
-	 * Callback function called when item selection is confirmed, always an array.
+	 * Callback for when items are added or removed. Only called when modal selection is confirmed (controlled).
 	 */
 	onItemsChange: InternalDispatch<T[]>;
 

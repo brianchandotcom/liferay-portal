@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+/* global Plyr */
+
 const autoplay = configuration.autoplay;
 const lazy = configuration.lazy;
 const loop = configuration.loop;
@@ -59,13 +61,13 @@ function initPlayer() {
 
 	new Plyr('#plyr-player', {
 		autoplay,
-		muted,
-		loop: {active: loop},
 		displayDuration: false,
+		loop: {active: loop},
+		muted,
 		youtube: {
+			modestbranding: 1,
 			noCookie: true,
 			rel: 0,
-			modestbranding: 1,
 		},
 	});
 }

@@ -29,10 +29,12 @@
 
 <#assign
 	channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'")
-/>
+>
 
-<#assign channelId = channel.items[0].id />
-<#assign productId = (CPDefinition_cProductId.getData())!"0" />
+<#assign
+	channelId = channel.items[0].id
+	productId = (CPDefinition_cProductId.getData())!"0"
+/>
 
 <#assign
 	product = restClient.get(
@@ -48,7 +50,7 @@
 	productImage = product.images![]
 	productSpecifications = product.productSpecifications![]
 />
-	
+
 <#assign
 	appTypeFiltered = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "type"))
 	cpuSpec = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "cpu"))
@@ -60,7 +62,7 @@
 	solutionHeaderImages = productImage?filter(image -> image.tags?seq_contains("app icon"))
 	supportEmailFiltered = productSpecifications?filter(spec -> stringUtil.equals(spec.specificationKey, "supportemailaddress"))
 	supportPhoneFiltered = productSpecifications?filter(spec -> stringUtil.equals(spec.specificationKey, "supportphone"))
-/>
+>
 
 <#assign
 	appType = (appTypeFiltered[0].value)!""
@@ -138,8 +140,12 @@
 			<p>
 				<#if cpuQuantity?has_content>
 					${cpuQuantity}
-					<#if cpuQuantity?eval > 1>CPUs
-					<#else>CPU
+					<#assign cpuNumber = cpuQuantity?number?default(0) />
+		  			<#if cpuQuantity?eval gt 1>
+						CPUS
+					</#if>
+					<#if cpuQuantity?eval lt 2>
+						CPU
 					</#if>
 				</#if>
 				<#if cpuQuantity?has_content && ramQuantity?has_content>, </#if>
@@ -176,7 +182,11 @@
 		<#if matched><#break></#if>
 	</#list>
 
-	<div class="bg-neutral-8">${standardSku.price.priceFormatted!""}</div>
+<#if standardSku.price.price?eval gt 0>
+		<div class="bg-neutral-8">${standardSku.price.priceFormatted!""}</div>
+	<#else>
+		${languageUtil.get(locale, "free", "Free")?upper_case}
+	</#if>
 </div>
 
 <hr />

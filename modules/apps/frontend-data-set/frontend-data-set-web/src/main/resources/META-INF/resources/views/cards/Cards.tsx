@@ -130,7 +130,10 @@ const Card = forwardRef<HTMLDivElement, any>(
 				return ESelectionTrigger.INPUT;
 			}
 
-			if (target.closest('.dropdown-toggle')) {
+			if (
+				target.closest('.dropdown-toggle') ||
+				target.closest('.dropdown-item')
+			) {
 				return false;
 			}
 
@@ -149,12 +152,14 @@ const Card = forwardRef<HTMLDivElement, any>(
 						event,
 						executeAsyncItemAction,
 						highlightItems,
+						infoPanelOpen,
 						itemData: item,
 						itemId: selectedItemKey,
 						items,
 						loadData,
 						onActionDropdownItemClick,
 						onInfoPanelToggleButtonClick,
+						onItemSelectionChange,
 						openModal,
 						openSidePanel,
 						toggleItemInlineEdit,

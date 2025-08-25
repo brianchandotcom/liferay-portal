@@ -307,6 +307,15 @@ public class ObjectEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_OEFI() throws Exception {
+		_persistence.countByG_C_OEFI(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_C_OEFI(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByG_ODI_S() throws Exception {
 		_persistence.countByG_ODI_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

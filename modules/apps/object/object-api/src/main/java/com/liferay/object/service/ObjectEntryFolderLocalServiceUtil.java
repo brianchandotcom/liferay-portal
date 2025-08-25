@@ -416,6 +416,42 @@ public class ObjectEntryFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void moveObjectEntryFoldersToTrash(
+			long userId, ObjectEntryFolder parentObjectEntryFolder,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().moveObjectEntryFoldersToTrash(
+			userId, parentObjectEntryFolder, serviceContext);
+	}
+
+	public static ObjectEntryFolder moveObjectEntryFolderToTrash(
+			long userId, ObjectEntryFolder objectEntryFolder,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().moveObjectEntryFolderToTrash(
+			userId, objectEntryFolder, serviceContext);
+	}
+
+	public static ObjectEntryFolder restoreObjectEntryFolderFromTrash(
+			long userId, ObjectEntryFolder objectEntryFolder,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().restoreObjectEntryFolderFromTrash(
+			userId, objectEntryFolder, serviceContext);
+	}
+
+	public static void restoreObjectEntryFoldersFromTrash(
+			long userId, ObjectEntryFolder parentObjectEntryFolder,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().restoreObjectEntryFoldersFromTrash(
+			userId, parentObjectEntryFolder, serviceContext);
+	}
+
 	public static void subscribeObjectEntryFolder(
 			long userId, long groupId, long objectEntryFolderId)
 		throws PortalException {
@@ -458,6 +494,13 @@ public class ObjectEntryFolderLocalServiceUtil {
 		ObjectEntryFolder objectEntryFolder) {
 
 		return getService().updateObjectEntryFolder(objectEntryFolder);
+	}
+
+	public static ObjectEntryFolder updateStatus(
+			ObjectEntryFolder objectEntryFolder, int status)
+		throws PortalException {
+
+		return getService().updateStatus(objectEntryFolder, status);
 	}
 
 	public static ObjectEntryFolderLocalService getService() {

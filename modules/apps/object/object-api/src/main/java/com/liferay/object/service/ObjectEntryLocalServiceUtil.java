@@ -653,6 +653,16 @@ public class ObjectEntryLocalServiceUtil {
 			userId, objectDefinitionId, primaryKey, values);
 	}
 
+	public static void moveObjectEntriesToTrash(
+			long userId,
+			com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().moveObjectEntriesToTrash(
+			userId, objectEntryFolder, serviceContext);
+	}
+
 	public static ObjectEntry moveObjectEntryToTrash(
 			long userId, ObjectEntry objectEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -677,6 +687,16 @@ public class ObjectEntryLocalServiceUtil {
 
 		return getService().partialUpdateObjectEntry(
 			userId, objectEntryId, values, serviceContext);
+	}
+
+	public static void restoreObjectEntriesFromTrash(
+			long userId,
+			com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().restoreObjectEntriesFromTrash(
+			userId, objectEntryFolder, serviceContext);
 	}
 
 	public static ObjectEntry restoreObjectEntryFromTrash(

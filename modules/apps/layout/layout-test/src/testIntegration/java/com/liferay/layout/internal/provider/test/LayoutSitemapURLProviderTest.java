@@ -186,7 +186,6 @@ public class LayoutSitemapURLProviderTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		Assert.assertNotNull(draftLayout);
 		Assert.assertTrue(
 			ArrayUtil.contains(draftLayout.getAvailableLanguageIds(), "pt_BR"));
 

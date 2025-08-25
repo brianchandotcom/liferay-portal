@@ -152,7 +152,11 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testEnableLocalStaging() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.exportimport.internal.lifecycle." +
 					"LoggerExportImportLifecycleListener",
 				LoggerTestUtil.ERROR)) {
@@ -162,7 +166,11 @@ public class BatchEnginePortletDataHandlerTest {
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId()));
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+			List<LogEntry> logEntries = logCapture1.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+
+			logEntries = logCapture2.getLogEntries();
 
 			for (LogEntry logEntry : logEntries) {
 				String message = logEntry.getMessage();

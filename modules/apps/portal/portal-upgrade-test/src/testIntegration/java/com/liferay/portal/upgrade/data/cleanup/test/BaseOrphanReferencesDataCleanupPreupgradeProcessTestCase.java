@@ -83,7 +83,7 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 
 		return StringBundler.concat(
 			"Table ", dbInspector.normalizeName(sourceTableName), ", ", count,
-			(count == 1) ? " entry " : " entries ", "deleted because ",
+			(count == 1) ? " row " : " rows ", "deleted because ",
 			dbInspector.normalizeName(sourceColumnName), StringPool.SPACE,
 			targetValue, " was not found in ",
 			dbInspector.normalizeName(targetTableName), StringPool.PERIOD,

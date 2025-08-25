@@ -322,7 +322,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				"upgrade.report.data.clean.up",
 				StringBundler.concat(
 					"Table ", dbInspector.normalizeName("Portlet"),
-					", 1 entry deleted because ",
+					", 1 row deleted because ",
 					dbInspector.normalizeName("companyId"), StringPool.SPACE,
 					randomCompanyId, " was not found in ",
 					dbInspector.normalizeName("Company"), StringPool.PERIOD,

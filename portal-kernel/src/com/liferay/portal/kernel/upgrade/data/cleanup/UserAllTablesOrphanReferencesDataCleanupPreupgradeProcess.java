@@ -82,7 +82,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 						_log.info(
 							StringBundler.concat(
 								"Table ", sourceTableName, ", ", count,
-								(count == 1) ? " entry " : " entries ",
+								(count == 1) ? " row " : " rows ",
 								"deleted because ", sourceColumnName,
 								StringPool.SPACE, userId, " was not found in ",
 								targetTableName, StringPool.PERIOD,
@@ -116,7 +116,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					_log.info(
 						StringBundler.concat(
 							"Table ", sourceTableName, ", ", count,
-							(count == 1) ? " entry " : " entries ",
+							(count == 1) ? " row " : " rows ",
 							"updated column ", sourceColumnName, " to value ",
 							newUserId, " because ", sourceColumnName,
 							StringPool.SPACE, userId, " was not found in ",

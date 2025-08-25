@@ -5,8 +5,9 @@
 
 import React from 'react';
 
-import './OrderDetailsHeader.scss';
 import OrderDetailsStatusDescription from './OrderDetailsStatusDescription';
+
+import './OrderDetailsHeader.scss';
 
 type OrderDetailsProps = {
 	className?: string;

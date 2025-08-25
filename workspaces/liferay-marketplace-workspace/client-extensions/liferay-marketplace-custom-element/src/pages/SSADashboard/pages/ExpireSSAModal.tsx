@@ -72,7 +72,7 @@ const ExpireSSAModal: React.FC<ExpireSSAModalProps> = ({
 
 							setIsSubmitting(false);
 						}
-						catch (error) {
+						catch {
 							Liferay.Util.openToast({
 								message: i18n.translate(
 									'failed-to-expire-trial'

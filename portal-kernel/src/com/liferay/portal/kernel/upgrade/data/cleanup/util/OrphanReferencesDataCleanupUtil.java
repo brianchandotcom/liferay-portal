@@ -70,8 +70,8 @@ public class OrphanReferencesDataCleanupUtil {
 				_log.info(
 					StringBundler.concat(
 						"Table ", sourceTableName, ", ", String.valueOf(count),
-						(count == 1) ? " entry " : " entries ",
-						"deleted because ", sourceColumnName, StringPool.SPACE,
+						(count == 1) ? " row " : " rows ", "deleted because ",
+						sourceColumnName, StringPool.SPACE,
 						String.valueOf(resultSet.getObject(1)),
 						" was not found in ", targetTableName,
 						StringPool.PERIOD, targetColumnName));

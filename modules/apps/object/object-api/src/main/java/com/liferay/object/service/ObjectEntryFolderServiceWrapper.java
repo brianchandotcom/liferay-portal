@@ -132,6 +132,30 @@ public class ObjectEntryFolderServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntryFolder
+			moveObjectEntryFolderToTrash(
+				long userId,
+				com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.moveObjectEntryFolderToTrash(
+			userId, objectEntryFolder, serviceContext);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder
+			restoreObjectEntryFolderFromTrash(
+				long userId,
+				com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.restoreObjectEntryFolderFromTrash(
+			userId, objectEntryFolder, serviceContext);
+	}
+
+	@Override
 	public void subscribeObjectEntryFolder(
 			long userId, long groupId, long objectEntryFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {

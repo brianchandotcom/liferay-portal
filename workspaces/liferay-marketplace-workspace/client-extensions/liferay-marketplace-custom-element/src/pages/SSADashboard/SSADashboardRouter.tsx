@@ -8,7 +8,7 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 import withProviders from '../../hoc/withProviders';
 import SSADashboardOutlet from './SSADashboardOutlet';
 import SaaSTrials from './pages';
-import TrialDetails from './pages/trialDetails/TrialDetails';
+import TrialDetails from './pages/trialDetails';
 
 import './index.scss';
 

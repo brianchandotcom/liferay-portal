@@ -6,12 +6,12 @@
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 
-import Modal from '../../../components/Modal';
 import Page from '../../../components/Page';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {OrderTypes, OrderWorkflowStatusCode} from '../../../enums/Order';
 import {usePlacedOrders} from '../../../hooks/data/usePlacedOrder';
+import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
 import {useSSADashboardOutlet} from '../SSADashboardOutlet';
 import TrialListView from '../components/TrialListView/TrialListView';
@@ -19,10 +19,12 @@ import useSSAActions from '../useSSAActions';
 
 export default function SaaSTrials() {
 	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
+	const {onOpenModal} = useModalContext();
 	const {ssaAccount} = useSSADashboardOutlet();
 	const actions = useSSAActions();
 	const createTrialFormModal = useModal();
-	const modal = useModal();
+
+	const isSSAAdmin = marketplaceUserAccount.isSSAAdmin;
 
 	const {
 		data: SSATrialsInProgress = {items: [], pageSize: 1, totalCount: 0},
@@ -39,9 +41,8 @@ export default function SaaSTrials() {
 			.build(),
 		page: 1,
 		pageSize: -1,
+		shouldFetch: isSSAAdmin,
 	});
-
-	const isSSAAdmin = marketplaceUserAccount.isSSAAdmin;
 
 	const canCreateTrial = isSSAAdmin
 		? true
@@ -58,11 +59,24 @@ export default function SaaSTrials() {
 				pageRendererProps={{className: 'border py-2'}}
 				rightButton={
 					<ClayButton
-						onClick={() =>
-							canCreateTrial
-								? createTrialFormModal.onOpenChange(true)
-								: modal.onOpenChange(true)
-						}
+						onClick={() => {
+							if (canCreateTrial) {
+								return createTrialFormModal.onOpenChange(true);
+							}
+
+							onOpenModal({
+								body: (
+									<span>
+										{i18n.translate(
+											'you-have-reached-the-maximum-number-of-active-trials-allowed-to-start-a-new-trial-please-end-one-of-your-existing-trials-first'
+										)}
+									</span>
+								),
+								header: i18n.translate(
+									'ssa-trials-limit-reached'
+								),
+							});
+						}}
 					>
 						{i18n.translate('add-new-trial')}
 					</ClayButton>
@@ -79,30 +93,6 @@ export default function SaaSTrials() {
 					}}
 				/>
 			</Page>
-
-			{modal.open && (
-				<Modal
-					last={
-						<ClayButton
-							className="btn"
-							displayType="secondary"
-							onClick={() => modal.onClose()}
-						>
-							{i18n.translate('cancel')}
-						</ClayButton>
-					}
-					observer={modal.observer}
-					size={'md' as any}
-					title={i18n.translate('ssa-trials-limit-reached')}
-					visible={modal.open}
-				>
-					<span>
-						{i18n.translate(
-							'you-have-reached-the-maximum-number-of-active-trials-allowed-to-start-a-new-trial-please-end-one-of-your-existing-trials-first'
-						)}
-					</span>
-				</Modal>
-			)}
 		</>
 	);
 }

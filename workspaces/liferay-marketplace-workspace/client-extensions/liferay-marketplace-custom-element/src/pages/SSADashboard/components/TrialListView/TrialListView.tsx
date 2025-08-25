@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {format} from 'date-fns';
-import {useMemo, useState} from 'react';
+import {useMemo} from 'react';
 import {Link} from 'react-router-dom';
 
 import ListView, {ListViewProps} from '../../../../components/ListView';
@@ -19,6 +18,7 @@ import {
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import {Action} from '../../../../utils/constants';
+import {formatDate} from '../../../../utils/date';
 import {safeJSONParse} from '../../../../utils/util';
 import {useSSADashboardOutlet} from '../../SSADashboardOutlet';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
@@ -43,6 +43,10 @@ type TrialsListViewProps = {
 	>;
 };
 
+// Refresh the table every 60 seconds
+
+const refreshInterval = 60 * 1000;
+
 export default function TrialListView({
 	actions,
 	createTrialFormModal,
@@ -51,15 +55,6 @@ export default function TrialListView({
 }: TrialsListViewProps) {
 	const {ssaAccount, ssaTrialExtend} = useSSADashboardOutlet();
 	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
-	const [items, setItems] = useState<PlacedOrder[]>([]);
-
-	const handleDataLoad = ({items}: {items: PlacedOrder[]}) => {
-		setItems(items);
-	};
-
-	const refresh = items.some(
-		(item) => item.orderStatusInfo.label === OrderStatus.PROCESSING
-	);
 
 	const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${ssaAccount.id}/placed-orders?${new URLSearchParams(
 		{
@@ -91,8 +86,7 @@ export default function TrialListView({
 					filterSchema: 'administratorSSATrials',
 					...managementToolbarProps,
 				}}
-				onDataLoad={handleDataLoad}
-				refreshInterval={refresh ? 60 * 1000 : undefined}
+				refreshInterval={refreshInterval}
 				resource={resource}
 				tableProps={{
 					actions,
@@ -118,47 +112,40 @@ export default function TrialListView({
 						{
 							id: 'author',
 							name: 'Created By',
-							render: (author, {createDate}) => {
-								return (
-									<div className="d-flex flex-column">
-										<span className="dashboard-table-row-text">
-											{author}
-										</span>
+							render: (author, {createDate}) => (
+								<div className="d-flex flex-column">
+									<span className="dashboard-table-row-text">
+										{author}
+									</span>
 
-										<span className="dashboard-table-row-purchased-date">
-											{new Date(
-												createDate
-											).toLocaleDateString('en-US', {
-												day: 'numeric',
-												month: 'short',
-												year: 'numeric',
-											})}
-										</span>
-									</div>
-								);
-							},
+									<span className="dashboard-table-row-purchased-date">
+										{formatDate(createDate)}
+									</span>
+								</div>
+							),
 							sortable: true,
 						},
 						{
 							id: 'customFields',
 							name: 'Solution Type',
-							render: () => <span>Blank Site</span>,
+							render: (customFields) =>
+								safeJSONParse(
+									customFields[
+										OrderCustomFields.TRIAL_SETTINGS
+									],
+									{siteInitializerKey: 'Blank Site'}
+								).siteInitializerKey,
 						},
 						{
 							id: 'createDate',
 							name: 'End Date',
-							render: (_, {customFields}) => {
-								return customFields[OrderCustomFields.END_DATE]
-									? format(
-											new Date(
-												customFields[
-													OrderCustomFields.END_DATE
-												]
-											),
-											'dd MMM, yyyy'
-										).toString()
-									: 'DNE';
-							},
+							render: (_, {customFields}) =>
+								formatDate(
+									customFields[
+										OrderCustomFields.TRIAL_END_DATE
+									],
+									'DNE'
+								),
 							sortable: true,
 						},
 						{
@@ -176,6 +163,7 @@ export default function TrialListView({
 							render: (orderId, placedOrder) => {
 								const ssaTrialsExtendRequests =
 									ssaTrialExtend.items;
+
 								const extendRequests =
 									ssaTrialsExtendRequests?.filter(
 										(extend: TrialExtend) => {
@@ -214,7 +202,6 @@ export default function TrialListView({
 			>
 				{(_, {mutate}) => (
 					<CreateTrialModalForm
-						items={items}
 						modal={createTrialFormModal}
 						mutate={mutate}
 					/>

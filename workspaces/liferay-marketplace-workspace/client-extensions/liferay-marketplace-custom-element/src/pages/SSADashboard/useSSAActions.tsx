@@ -28,7 +28,6 @@ const getOrderExtendRequests =
 
 const useSSAActions = () => {
 	const {marketplaceUserAccount} = useMarketplaceContext();
-
 	const modalContext = useModalContext();
 	const navigate = useNavigate();
 
@@ -83,9 +82,9 @@ const useSSAActions = () => {
 					modalContext.onOpenModal({
 						body: (
 							<ExtendRequestModal
+								mutatePlacedOrderPage={orderMutate}
 								onClose={modalContext.onClose}
 								order={order}
-								orderMutate={orderMutate}
 								ssaTrialExtendMutate={ssaTrialExtendMutate}
 								trialExtend={extendRequests[0]}
 								trialExtendCount={

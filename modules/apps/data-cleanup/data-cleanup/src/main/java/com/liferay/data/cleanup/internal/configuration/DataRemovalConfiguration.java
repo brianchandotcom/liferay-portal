@@ -20,16 +20,56 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DataRemovalConfiguration {
 
 	@Meta.AD(
-		deflt = "false", name = "remove-expired-journal-articles",
+		deflt = "false", name = "remove-analytics-message-data",
 		required = false
 	)
-	public boolean removeExpiredJournalArticles();
+	public boolean removeAnalyticsMessageData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-company-orphan-data", required = false
+	)
+	public boolean removeCompanyOrphanData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-configuration-orphan-data",
+		required = false
+	)
+	public boolean removeConfigurationOrphanData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-ddm-structure-orphan-data",
+		required = false
+	)
+	public boolean removeDDMStructureOrphanData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-dl-file-entry-orphan-data",
+		required = false
+	)
+	public boolean removeDLFileEntryOrphanData();
 
 	@Meta.AD(
 		deflt = "false", name = "remove-dl-preview-cts-content-data",
 		required = false
 	)
 	public boolean removeDLPreviewCTSContentData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-expired-journal-articles",
+		required = false
+	)
+	public boolean removeExpiredJournalArticles();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-group-orphan-data", required = false
+	)
+	public boolean removeGroupOrphanData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-null-unicode-content-data",
+		required = false
+	)
+	public boolean removeNullUnicodeContentData();
 
 	@Meta.AD(
 		deflt = "false", name = "remove-publications-older-than-6-months",
@@ -42,6 +82,17 @@ public interface DataRemovalConfiguration {
 		required = false
 	)
 	public boolean removePublishedCTSContentData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-quartz-job-details-data",
+		required = false
+	)
+	public boolean removeQuartzJobDetailsData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-user-orphan-data", required = false
+	)
+	public boolean removeUserOrphanData();
 
 	@Meta.AD(
 		deflt = "false", name = "remove-widget-layout-type-settings",

@@ -4,11 +4,13 @@
 	}
 </style>
 
-<#if entries?has_content>
-	<span class="app-search-count-text">
-		<strong class="app-search-count-text mr-2">
-			${entries?size}
-		</strong>
-		Applications Available
-	</span>
-</#if>
+<#assign
+	cpDataSourceResult = cpSearchResultsDisplayContext.getCPDataSourceResult()
+/>
+
+<span class="app-search-count-text">
+	<strong class="app-search-count-text mr-1">
+		${cpDataSourceResult.length}
+	</strong>
+	Applications Available
+</span>

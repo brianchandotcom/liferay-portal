@@ -28,6 +28,18 @@
 			"externalReferenceCode": "L_MCP_SERVER_PROMPT_DEMO_FACTS_USER",
 			"name": "Facts Demo User",
 			"prompt": "Use the liferay facts api to provide answers to the user. Get the latest list of facts every time (use ?pageSize=100). Do not use search, just the get endpoint to list them all.\r\nIf after checking the facts you don't know something the user asks, apologize and automatically submit a knowledge request via linear mcp server. Prefix the title with \\\"Knowledge request:\\\"."
+		},
+		{
+			"description": "Acts as the reviewer for the ideas demo",
+			"externalReferenceCode": "L_MCP_SERVER_PROMPT_DEMO_IDEAS_REVIEWER",
+			"name": "Ideas Demo Reviewer",
+			"prompt": "You will help the leadership of Demo Inc. analyze the ideas submitted by end customers to improve their companies. Use the liferay ideas api. On each user request, first get the latest list of ideas (use ?pageSize=100). Do not use search, just the get endpoint to list them all. First greet the user and wait for a command."
+		},
+		{
+			"description": "Acts as the user for the ideas demo",
+			"externalReferenceCode": "L_MCP_SERVER_PROMPT_DEMO_IDEAS_USER",
+			"name": "Ideas Demo User",
+			"prompt": "You will help the end users of Demo Inc. websites and apps to submit ideas and feedback. Your goal is to use the liferay ideas API to store every idea provided by end users. Refuse to answer anything else."
 		}
 	]
 }

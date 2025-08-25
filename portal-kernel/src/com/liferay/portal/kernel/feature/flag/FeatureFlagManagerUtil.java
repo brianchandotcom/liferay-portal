@@ -71,6 +71,12 @@ public class FeatureFlagManagerUtil {
 			});
 	}
 
+	/**
+	 * @deprecated As of Liferay (7.4.x), replaced by {@link
+	 *		#isEnabled(long, String)}
+	 * The companyId now is required to properly scope company id. Check LPD-61555
+	 */
+	@Deprecated
 	public static boolean isEnabled(String key) {
 		return _withFeatureFlagManager(
 			featureFlagManager -> featureFlagManager.isEnabled(key),

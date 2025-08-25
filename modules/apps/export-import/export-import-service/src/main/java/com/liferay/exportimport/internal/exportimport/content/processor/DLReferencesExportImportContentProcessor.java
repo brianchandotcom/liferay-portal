@@ -22,6 +22,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -341,6 +342,42 @@ public class DLReferencesExportImportContentProcessor
 		}
 
 		return fileEntry;
+	}
+
+	private FileEntry _getFileEntry(String content, int beginPos)
+		throws PortalException {
+
+		int jsonBeginPos = StringUtil.lastIndexOfAny(
+			content, new String[] {"<![CDATA["}, beginPos);
+		jsonBeginPos = StringUtil.indexOfAny(
+			content, new char[] {'{'}, jsonBeginPos);
+
+		int jsonEndPos = StringUtil.indexOfAny(
+			content, new String[] {"]]>"}, jsonBeginPos);
+
+		jsonEndPos = StringUtil.lastIndexOfAny(
+			content, new char[] {'}'}, jsonEndPos);
+
+		if ((jsonBeginPos == QueryUtil.ALL_POS) &&
+			(jsonEndPos == QueryUtil.ALL_POS)) {
+
+			return null;
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			content.substring(jsonBeginPos, jsonEndPos + 1));
+
+		try {
+			return _dlAppLocalService.getFileEntryByUuidAndGroupId(
+				jsonObject.getString("uuid"), jsonObject.getLong("groupId"));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
 	}
 
 	private Group _getGroup(String name) throws Exception {
@@ -949,53 +986,36 @@ public class DLReferencesExportImportContentProcessor
 
 			FileEntry fileEntry = _getFileEntry(dlReferenceParameters);
 
+			if (fileEntry == null) {
+				fileEntry = _getFileEntry(content, beginPos);
+			}
+
 			if ((fileEntry == null) &&
 				!_isExternalURL(groupId, content, beginPos, endPos)) {
 
-				int jsonBeginPos = StringUtil.lastIndexOfAny(
-					content, new String[] {"<![CDATA["}, beginPos);
-				jsonBeginPos = StringUtil.indexOfAny(
-					content, new char[] {'{'}, jsonBeginPos);
+				ExportImportContentValidationException
+					exportImportContentValidationException =
+						new ExportImportContentValidationException(
+							DLReferencesExportImportContentProcessor.class.
+								getName(),
+							new NoSuchFileEntryException());
 
-				int jsonEndPos = StringUtil.indexOfAny(
-					content, new String[] {"]]>"}, jsonBeginPos);
+				exportImportContentValidationException.setDLReferenceParameters(
+					dlReferenceParameters);
 
-				jsonEndPos = StringUtil.lastIndexOfAny(
-					content, new char[] {'}'}, jsonEndPos);
+				ObjectValuePair<String, Integer>
+					dlReferenceEndPosObjectValuePair =
+						_getDLReferenceEndPosObjectValuePair(
+							content, beginPos, endPos);
 
-				try {
-					JSONObject jsonObject = _jsonFactory.createJSONObject(
-						content.substring(jsonBeginPos, jsonEndPos + 1));
+				exportImportContentValidationException.setDLReference(
+					dlReferenceEndPosObjectValuePair.getKey());
 
-					_dlAppLocalService.getFileEntryByUuidAndGroupId(
-						jsonObject.getString("uuid"),
-						jsonObject.getLong("groupId"));
-				}
-				catch (PortalException portalException) {
-					ExportImportContentValidationException
-						exportImportContentValidationException =
-							new ExportImportContentValidationException(
-								DLReferencesExportImportContentProcessor.class.
-									getName(),
-								portalException);
+				exportImportContentValidationException.setType(
+					ExportImportContentValidationException.
+						FILE_ENTRY_NOT_FOUND);
 
-					exportImportContentValidationException.
-						setDLReferenceParameters(dlReferenceParameters);
-
-					ObjectValuePair<String, Integer>
-						dlReferenceEndPosObjectValuePair =
-							_getDLReferenceEndPosObjectValuePair(
-								content, beginPos, endPos);
-
-					exportImportContentValidationException.setDLReference(
-						dlReferenceEndPosObjectValuePair.getKey());
-
-					exportImportContentValidationException.setType(
-						ExportImportContentValidationException.
-							FILE_ENTRY_NOT_FOUND);
-
-					throw exportImportContentValidationException;
-				}
+				throw exportImportContentValidationException;
 			}
 
 			endPos = beginPos - 1;

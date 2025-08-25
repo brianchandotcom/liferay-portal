@@ -91,7 +91,7 @@ public class ServiceContextUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		if (objectEntry.getTaxonomyCategoryIds() != null) {
+		if (objectEntry.getTaxonomyCategoryIds() == null) {
 			_setObjectEntryTaxonomyCategoryIds(
 				companyId, groupId, userId, objectEntry);
 		}

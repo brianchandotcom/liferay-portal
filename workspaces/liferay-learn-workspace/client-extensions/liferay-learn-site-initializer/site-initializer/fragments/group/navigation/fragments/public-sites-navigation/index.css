@@ -1,5 +1,17 @@
 .cta-menu-hamburguer {
 	display: none;
+	
+	&:hover {
+			cursor: pointer;
+	}
+}
+
+.navigation-item-sm {
+  &:hover {
+		 background-color: #193A7A;
+		 border-radius: 6px;
+		 cursor: pointer;
+	}
 }
 
 .public-site-navigation-container {
@@ -918,6 +930,7 @@ nav {
 @media (max-width: 1000px) {
 	.btn.btn-nm.dropdown-fragment-toggle {
 		display: flex;
+		color: var(--color-neutral-9, #3F404B);
 		justify-content: space-between;
 		width: 100%;
 	}
@@ -1004,5 +1017,12 @@ nav {
 		right: 10px;
 		top: 107px;
 		width: 100vw;
+	}
+	
+	.navigation-item-sm {
+		background: var(--color-neutral-0, #FFFFFF);
+		border-radius: 5px;
+		color: var(--color-neutral-9, #3F404B);
+		width: 100%;
 	}
 }

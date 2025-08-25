@@ -96,6 +96,24 @@ components:
                         type: string
                     readOnly: true
                     type: object
+        ObjectDefinitionBrief:
+            properties:
+                externalReferenceCode:
+                    description:
+                        The object definition's external reference code.
+                    readOnly: true
+                    type: string
+                label:
+                    description:
+                        The object definition's label.
+                    readOnly: true
+                    type: string
+                objectFolderExternalReferenceCode:
+                    description:
+                        The object folder's external reference code.
+                    readOnly: true
+                    type: string
+            type: object
         ObjectEntry:
             properties:
                 actions:
@@ -225,6 +243,8 @@ components:
             type: object
         SystemProperties:
             properties:
+                objectDefinitionBrief:
+                    $ref: "#/components/schemas/ObjectDefinitionBrief"
                 version:
                     $ref: "#/components/schemas/Version"
             type: object

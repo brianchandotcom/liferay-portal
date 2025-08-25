@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -151,6 +153,24 @@ public abstract class BaseSectionDisplayContext {
 						"/{objectEntryFolderId}/collaborators");
 
 				return collaboratorURLs;
+			}
+		).put(
+			"fileMimeTypeCssClasses",
+			() -> {
+				if (_dlConfiguration == null) {
+					return null;
+				}
+
+				return _getFileMimeTypeCssClasses();
+			}
+		).put(
+			"fileMimeTypeIcons",
+			() -> {
+				if (_dlConfiguration == null) {
+					return null;
+				}
+
+				return _getFileMimeTypeIcons();
 			}
 		).build();
 	}
@@ -518,6 +538,102 @@ public abstract class BaseSectionDisplayContext {
 		}
 
 		return _getDepotEntriesJSONArray(acceptedGroupIds);
+	}
+
+	private Map<String, String> _getFileMimeTypeCssClasses() {
+		return HashMapBuilder.put(
+			"default", "file-icon-color-0"
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.codeFileMimeTypes(), "file-icon-color-7")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.compressedFileMimeTypes(), "file-icon-color-1")
+		).putAll(
+			_getFileMimeTypeValues(
+				ArrayUtil.append(
+					_dlConfiguration.multimediaFileMimeTypes(),
+					ContentTypes.
+						APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML),
+				"file-icon-color-3")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.presentationFileMimeTypes(),
+				"file-icon-color-4")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.spreadSheetFileMimeTypes(),
+				"file-icon-color-2")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.textFileMimeTypes(), "file-icon-color-6")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.vectorialFileMimeTypes(), "file-icon-color-5")
+		).build();
+	}
+
+	private Map<String, String> _getFileMimeTypeIcons() {
+		return HashMapBuilder.put(
+			"default", "document-default"
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.codeFileMimeTypes(), "document-code")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.compressedFileMimeTypes(),
+				"document-compressed")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.presentationFileMimeTypes(),
+				"document-presentation")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.spreadSheetFileMimeTypes(), "document-table")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.textFileMimeTypes(), "document-text")
+		).putAll(
+			_getFileMimeTypeValues(
+				_dlConfiguration.vectorialFileMimeTypes(), "document-vector")
+		).putAll(
+			_getFileMimeTypeMultimediaCssClasses(
+				ArrayUtil.append(
+					_dlConfiguration.multimediaFileMimeTypes(),
+					ContentTypes.
+						APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML))
+		).build();
+	}
+
+	private Map<String, String> _getFileMimeTypeMultimediaCssClasses(
+		String[] mimeTypes) {
+
+		Map<String, String> fileMimeTypeMultimediaCssClasses = new HashMap<>();
+
+		for (String mimeType : mimeTypes) {
+			if (mimeType.startsWith("image")) {
+				fileMimeTypeMultimediaCssClasses.put(
+					mimeType, "document-image");
+			}
+			else {
+				fileMimeTypeMultimediaCssClasses.put(
+					mimeType, "document-multimedia");
+			}
+		}
+
+		return fileMimeTypeMultimediaCssClasses;
+	}
+
+	private Map<String, String> _getFileMimeTypeValues(
+		String[] mimeTypes, String value) {
+
+		Map<String, String> fileMimeTypeValues = new HashMap<>();
+
+		for (String mimeType : mimeTypes) {
+			fileMimeTypeValues.put(mimeType, value);
+		}
+
+		return fileMimeTypeValues;
 	}
 
 	private JSONObject _getJSONObject(long groupId) {

@@ -854,6 +854,9 @@ public class PageSpecificationsTestUtil {
 
 		GeneralConfig generalConfig = new GeneralConfig();
 
+		generalConfig.setApplicationDecorator(
+			() -> _getRandomApplicationDecorator());
+
 		generalConfig.setUseCustomTitle(RandomTestUtil.randomBoolean());
 
 		if (generalConfig.getUseCustomTitle() &&
@@ -868,9 +871,6 @@ public class PageSpecificationsTestUtil {
 					RandomTestUtil.randomString()
 				).build());
 		}
-
-		generalConfig.setApplicationDecorator(
-			() -> _getRandomApplicationDecorator());
 
 		widgetLookAndFeelConfig.setGeneralConfig(generalConfig);
 

@@ -46,10 +46,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -369,28 +367,15 @@ public class FragmentEntryProcessorHelperImpl
 					layoutDisplayPageObjectProvider.getClassPK());
 			}
 			else {
-				String scopeExternalReferenceCode = null;
-
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				if ((layoutDisplayPageObjectProvider.getGroupId() > 0) &&
-					(themeDisplay.getScopeGroupId() !=
-						layoutDisplayPageObjectProvider.getGroupId())) {
-
-					Group group = _groupLocalService.fetchGroup(
-						layoutDisplayPageObjectProvider.getGroupId());
-
-					if (group != null) {
-						scopeExternalReferenceCode =
-							group.getExternalReferenceCode();
-					}
-				}
-
 				infoItemIdentifier = new ERCInfoItemIdentifier(
 					layoutDisplayPageObjectProvider.getExternalReferenceCode(),
-					scopeExternalReferenceCode);
+					layoutDisplayPageObjectProvider.
+						getScopeExternalReferenceCode(
+							themeDisplay.getScopeGroupId()));
 			}
 
 			infoItemReference = new InfoItemReference(
@@ -992,9 +977,6 @@ public class FragmentEntryProcessorHelperImpl
 	private static final Map<Locale, String> _defaultPatterns = new HashMap<>();
 	private static final Map<Locale, String> _shortTimeStylePatterns =
 		new HashMap<>();
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

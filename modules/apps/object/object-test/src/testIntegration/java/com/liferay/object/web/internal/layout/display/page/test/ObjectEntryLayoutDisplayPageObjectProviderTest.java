@@ -18,8 +18,10 @@ import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -84,8 +86,15 @@ public class ObjectEntryLayoutDisplayPageObjectProviderTest {
 			"pt_BR", RandomTestUtil.randomString()
 		).build();
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		String[] assetTagNames = {"tag1", "tag2"};
+
+		serviceContext.setAssetTagNames(assetTagNames);
+
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			0, objectDefinition.getObjectDefinitionId(),
+			0, objectDefinition.getObjectDefinitionId(), serviceContext,
 			HashMapBuilder.<String, Serializable>put(
 				objectField.getI18nObjectFieldName(),
 				(Serializable)localizedValues
@@ -109,6 +118,10 @@ public class ObjectEntryLayoutDisplayPageObjectProviderTest {
 		Assert.assertEquals(
 			localizedValues.get("pt_BR"),
 			layoutDisplayPageObjectProvider.getTitle(LocaleUtil.BRAZIL));
+
+		Assert.assertEquals(
+			StringUtil.merge(assetTagNames),
+			layoutDisplayPageObjectProvider.getKeywords(LocaleUtil.US));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

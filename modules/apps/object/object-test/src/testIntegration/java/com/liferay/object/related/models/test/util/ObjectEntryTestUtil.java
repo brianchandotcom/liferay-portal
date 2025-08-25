@@ -8,6 +8,7 @@ package com.liferay.object.related.models.test.util;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
@@ -25,10 +26,20 @@ public class ObjectEntryTestUtil {
 			Map<String, Serializable> values)
 		throws Exception {
 
+		return addObjectEntry(
+			groupId, objectDefinitionId,
+			ServiceContextTestUtil.getServiceContext(), values);
+	}
+
+	public static ObjectEntry addObjectEntry(
+			long groupId, long objectDefinitionId,
+			ServiceContext serviceContext, Map<String, Serializable> values)
+		throws Exception {
+
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
 			groupId, TestPropsValues.getUserId(), objectDefinitionId,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null, values, ServiceContextTestUtil.getServiceContext());
+			null, values, serviceContext);
 	}
 
 }

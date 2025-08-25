@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -31,7 +32,8 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 	extends BaseFilesSectionDisplayContext {
 
 	public ViewSpaceFilesSummarySectionDisplayContext(
-		DepotEntryLocalService depotEntryLocalService, long groupId,
+		DepotEntryLocalService depotEntryLocalService,
+		DLConfiguration dlConfiguration, long groupId,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService,
@@ -42,8 +44,8 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 		Portal portal) {
 
 		super(
-			depotEntryLocalService, groupLocalService, httpServletRequest,
-			language, objectDefinitionService,
+			depotEntryLocalService, dlConfiguration, groupLocalService,
+			httpServletRequest, language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
 

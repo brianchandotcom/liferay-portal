@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -70,7 +71,7 @@ public abstract class BaseSectionDisplayContext {
 
 	public BaseSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService,
-		GroupLocalService groupLocalService,
+		DLConfiguration dlConfiguration, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService,
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
@@ -79,6 +80,9 @@ public abstract class BaseSectionDisplayContext {
 		Portal portal) {
 
 		this.depotEntryLocalService = depotEntryLocalService;
+
+		_dlConfiguration = dlConfiguration;
+
 		this.groupLocalService = groupLocalService;
 		this.httpServletRequest = httpServletRequest;
 		this.language = language;
@@ -638,6 +642,7 @@ public abstract class BaseSectionDisplayContext {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,
 		WorkflowConstants.STATUS_EXPIRED);
 
+	private final DLConfiguration _dlConfiguration;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;

@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -35,7 +36,7 @@ public abstract class BaseFilesSectionDisplayContext
 
 	public BaseFilesSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService,
-		GroupLocalService groupLocalService,
+		DLConfiguration dlConfiguration, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService,
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
@@ -44,8 +45,8 @@ public abstract class BaseFilesSectionDisplayContext
 		Portal portal) {
 
 		super(
-			depotEntryLocalService, groupLocalService, httpServletRequest,
-			language, objectDefinitionService,
+			depotEntryLocalService, dlConfiguration, groupLocalService,
+			httpServletRequest, language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
 	}

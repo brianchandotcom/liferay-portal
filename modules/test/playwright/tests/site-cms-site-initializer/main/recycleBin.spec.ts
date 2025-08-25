@@ -144,3 +144,118 @@ test(
 		});
 	}
 );
+
+test(
+	'Can restore a folder and its contents from Recycle Bin',
+	{tag: '@LPD-59716'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		test.slow();
+
+		const folderName = getRandomString();
+		const nestedFolderName = `nested-${getRandomString()}`;
+		const contentName = getRandomString();
+
+		const folderData =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: 'Default',
+				title: folderName,
+			});
+
+		const nestedFolderData =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode:
+					folderData.externalReferenceCode,
+				scopeKey: 'Default',
+				title: nestedFolderName,
+			});
+
+		const applicationName = 'cms/basic-web-contents';
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode:
+					nestedFolderData.externalReferenceCode,
+				title: contentName,
+			},
+			applicationName,
+			'Default'
+		);
+
+		await test.step('Move the folder to Recycle Bin', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(folderName);
+		});
+
+		await test.step('Assert navigation within Recycle Bin', async () => {
+			await recycleBinPage.goto();
+
+			await recycleBinPage.navigateTo(folderName);
+
+			await recycleBinPage.navigateTo(nestedFolderName);
+
+			await recycleBinPage
+				.getItem(contentName)
+				.waitFor({state: 'visible'});
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+		});
+
+		await test.step('Restore the folder from Recycle Bin', async () => {
+			await recycleBinPage.goto();
+
+			await recycleBinPage.execItemAction({
+				action: 'Restore',
+				filter: folderName,
+			});
+
+			await waitForAlert(
+				page,
+				`Success:${folderName} was restored to Contents.`,
+				{autoClose: false}
+			);
+		});
+
+		await test.step('Assert folder and its contents are restored', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.navigateTo(folderName);
+
+			await contentsPage.navigateTo(nestedFolderName);
+
+			await recycleBinPage
+				.getItem(contentName)
+				.waitFor({state: 'visible'});
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+		});
+
+		await test.step('Clean up', async () => {
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				folderData.id
+			);
+
+			await recycleBinPage.goto();
+
+			await recycleBinPage.execItemAction({
+				action: 'Delete',
+				filter: folderName,
+			});
+
+			await expect(
+				recycleBinPage.deleteItemConfirmationText
+			).toBeVisible();
+
+			await recycleBinPage.deleteButton.last().click();
+
+			await waitForAlert(
+				page,
+				`Success:${folderName} has been permanently deleted.`
+			);
+		});
+	}
+);

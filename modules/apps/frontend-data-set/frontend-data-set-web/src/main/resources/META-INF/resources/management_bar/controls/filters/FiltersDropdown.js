@@ -42,7 +42,7 @@ const FiltersDropdown = () => {
 			onActiveChange={(active) => {
 				setActive(active);
 
-				if (active) {
+				if(active) {					
 					setActiveFilter(null);
 				}
 			}}

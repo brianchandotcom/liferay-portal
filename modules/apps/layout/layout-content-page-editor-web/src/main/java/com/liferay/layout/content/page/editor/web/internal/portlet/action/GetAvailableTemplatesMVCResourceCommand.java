@@ -66,7 +66,9 @@ public class GetAvailableTemplatesMVCResourceCommand
 			resourceRequest, "externalReferenceCode");
 
 		Object infoItemObject = _getInfoItemObject(
-			className, classPK, externalReferenceCode);
+			className, classPK, externalReferenceCode,
+			ParamUtil.getString(
+				resourceRequest, "scopeExternalReferenceCode", null));
 
 		for (InfoItemRenderer<?> infoItemRenderer :
 				_infoItemRendererRegistry.getInfoItemRenderers(className)) {
@@ -137,7 +139,8 @@ public class GetAvailableTemplatesMVCResourceCommand
 	}
 
 	private Object _getInfoItemObject(
-		String className, long classPK, String externalReferenceCode) {
+		String className, long classPK, String externalReferenceCode,
+		String scopeExternalReferenceCode) {
 
 		InfoItemIdentifier infoItemIdentifier = null;
 
@@ -146,7 +149,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 		}
 		else if (Validator.isNotNull(externalReferenceCode)) {
 			infoItemIdentifier = new ERCInfoItemIdentifier(
-				externalReferenceCode);
+				externalReferenceCode, scopeExternalReferenceCode);
 		}
 		else {
 			return null;

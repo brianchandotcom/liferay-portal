@@ -615,7 +615,8 @@ public class GetCollectionFieldMVCResourceCommand
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			infoItemIdentifier = new ERCInfoItemIdentifier(
-				externalReferenceCode);
+				externalReferenceCode, ParamUtil.getString(
+				httpServletRequest, "externalReferenceCode", null));
 			infoItemObjectProvider =
 				(InfoItemObjectProvider<Object>)
 					_infoItemServiceRegistry.getFirstInfoItemService(

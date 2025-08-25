@@ -11,15 +11,16 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 	year: 'numeric',
 };
 
-export function formatDate(date: string) {
-	if (!date) {
-		return 'N/A';
+export function formatDate(date: string, fallback = 'N/A') {
+	try {
+		return new Intl.DateTimeFormat(
+			Liferay.ThemeDisplay.getBCP47LanguageId(),
+			dateOptions
+		).format(new Date(date));
 	}
-
-	return new Intl.DateTimeFormat(
-		Liferay.ThemeDisplay.getBCP47LanguageId(),
-		dateOptions
-	).format(new Date(date));
+	catch {
+		return fallback;
+	}
 }
 
 export function getLastDayOfMonth(month: number, year: number) {

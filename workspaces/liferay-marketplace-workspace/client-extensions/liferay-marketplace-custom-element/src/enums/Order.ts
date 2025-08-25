@@ -6,11 +6,11 @@
 export enum OrderCustomFields {
 	ANALYTICS_GROUP_ID = 'analytics-group-id',
 	CLOUD_PROVISIONING = 'cloud-provisioning',
-	END_DATE = 'trial-end-date',
 	PROJECT_NAME = 'project-name',
-	START_DATE = 'trial-start-date',
+	TRIAL_END_DATE = 'trial-end-date',
 	TRIAL_ERROR = 'trial-error',
 	TRIAL_SETTINGS = 'trial-settings',
+	TRIAL_START_DATE = 'trial-start-date',
 	TRIAL_VIRTUAL_HOST = 'trial-virtual-host',
 }
 

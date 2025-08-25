@@ -28,11 +28,15 @@ components:
                     type: string
         BulkActionItem:
             properties:
+                classExternalReferenceCode:
+                    type: string
                 className:
                     type: string
                 classPK:
                     format: int64
                     type: integer
+                name:
+                    type: string
         BulkActionTask:
             properties:
                 actionName:

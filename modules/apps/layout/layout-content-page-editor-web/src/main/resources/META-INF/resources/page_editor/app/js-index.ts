@@ -9,6 +9,14 @@ export {default as useKeyboardNavigation} from '../../page_editor/plugins/fragme
 
 // @ts-ignore
 
+export {default as Container} from './components/layout_data_items/Container';
+
+// @ts-ignore
+
+export {default as ContainerWithControls} from './components/layout_data_items/ContainerWithControls';
+
+// @ts-ignore
+
 export {useActivationOrigin} from './contexts/ControlsContext';
 
 // @ts-ignore

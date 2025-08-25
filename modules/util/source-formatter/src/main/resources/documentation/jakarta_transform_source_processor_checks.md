@@ -1,4 +1,4 @@
-# Checks for .bnd, .ftl, .gradle, .html, .java, .js, .jsp, .jspf, .jspx, .jsx, .properties, .tld, .ts, .tsx, or .xml
+# Checks for 
 
 Check | Category | Description
 ----- | -------- | -----------

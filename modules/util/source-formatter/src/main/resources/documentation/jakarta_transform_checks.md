@@ -2,14 +2,14 @@
 
 Check | File Extensions | Description
 ----- | --------------- | -----------
-JakartaTransformBNDCheck | .bnd | Performs replacements for use of Jakarta. |
-JakartaTransformFTLCheck | .ftl | Performs replacements for use of Jakarta. |
-JakartaTransformGradleCheck | .gradle | Performs replacements for use of Jakarta. |
-JakartaTransformHTMLCheck | .html | Performs replacements for use of Jakarta. |
-JakartaTransformJSCheck | .js or .jsx | Performs replacements for use of Jakarta. |
-JakartaTransformJSPCheck | .jsp, .jspf, or .jspx | Performs replacements for use of Jakarta. |
-JakartaTransformJavaCheck | .java | Performs replacements for use of Jakarta. |
-JakartaTransformPropertiesCheck | .properties | Performs replacements for use of Jakarta. |
-JakartaTransformTLDCheck | .tld | Performs replacements for use of Jakarta. |
-JakartaTransformTSCheck | .ts or .tsx | Performs replacements for use of Jakarta. |
-JakartaTransformXMLCheck | .xml | Performs replacements for use of Jakarta. |
+JakartaTransformBNDCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformFTLCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformGradleCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformHTMLCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformJSCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformJSPCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformJavaCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformPropertiesCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformTLDCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformTSCheck | | Performs replacements for use of Jakarta. |
+JakartaTransformXMLCheck | | Performs replacements for use of Jakarta. |

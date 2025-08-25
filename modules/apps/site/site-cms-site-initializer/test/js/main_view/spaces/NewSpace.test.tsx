@@ -119,6 +119,7 @@ describe('NewSpace', () => {
 					settings: {
 						logoColor: 'outline-0',
 					},
+					type: 'Space',
 				}
 			);
 		});

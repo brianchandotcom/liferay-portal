@@ -209,7 +209,7 @@ public class ViewSpacesSectionDisplayContextTest
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_ASSET_LIBRARY,
+			null, DepotConstants.TYPE_SPACE,
 			new ServiceContext() {
 				{
 					setCompanyId(group.getCompanyId());
@@ -236,7 +236,7 @@ public class ViewSpacesSectionDisplayContextTest
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_ASSET_LIBRARY,
+			null, DepotConstants.TYPE_SPACE,
 			new ServiceContext() {
 				{
 					setCompanyId(group.getCompanyId());

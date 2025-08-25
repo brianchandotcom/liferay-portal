@@ -67,9 +67,9 @@ public class NullUnicodeContentDataCleanupPreupgradeProcess
 			if (_log.isInfoEnabled() && (rowCount > 0)) {
 				_log.info(
 					StringBundler.concat(
-						"Updated ", rowCount, " row", (rowCount > 1) ? "s" : "",
-						" in ", dbInspector.normalizeName(tableName),
-						" because ", dbInspector.normalizeName(columnName),
+						"Table ", dbInspector.normalizeName(tableName), ", ",
+						rowCount, " entries updated because ",
+						dbInspector.normalizeName(columnName),
 						" had invalid characters"));
 			}
 		}

@@ -379,7 +379,7 @@ function setInputValue({
 	if (input.type === 'checkbox') {
 		input.checked = value === 'true';
 	}
-	else if (value) {
+	else if (value !== null) {
 		input.value = value;
 	}
 	else {

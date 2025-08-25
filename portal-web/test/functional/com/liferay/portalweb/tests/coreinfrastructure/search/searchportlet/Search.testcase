@@ -3075,6 +3075,8 @@ definition {
 	@description = "This is a use case for LPS-193198."
 	@priority = 3
 	test ViewSearchBarVisibility {
+		property test.run.type = "single";
+
 		task ("Configure the embedded search bar to be invisible") {
 			SearchPage.openSearchPage();
 

@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.layout.display.page;
 
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.object.model.ObjectDefinition;
@@ -26,9 +27,11 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<ObjectEntry> {
 
 	public ObjectEntryLayoutDisplayPageObjectProvider(
+		AssetHelper assetHelper,
 		InfoItemFriendlyURLProvider<ObjectEntry> infoItemFriendlyURLProvider,
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
 
+		_assetHelper = assetHelper;
 		_infoItemFriendlyURLProvider = infoItemFriendlyURLProvider;
 		_objectDefinition = objectDefinition;
 		_objectEntry = objectEntry;
@@ -80,7 +83,9 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getKeywords(Locale locale) {
-		return StringPool.BLANK;
+		return _assetHelper.getAssetKeywords(
+			_objectDefinition.getClassName(), _objectEntry.getObjectEntryId(),
+			locale);
 	}
 
 	@Override
@@ -111,6 +116,7 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLayoutDisplayPageObjectProvider.class);
 
+	private final AssetHelper _assetHelper;
 	private final InfoItemFriendlyURLProvider<ObjectEntry>
 		_infoItemFriendlyURLProvider;
 	private final ObjectDefinition _objectDefinition;

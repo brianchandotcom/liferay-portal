@@ -87,7 +87,7 @@ public class ObjectEntryTableInfoListRenderer
 		InfoListRendererContext infoListRendererContext) {
 
 		InfoListBasicTableTag infoListBasicTableTag =
-			new InfoListBasicTableTag();
+			getInfoListBasicTableTag();
 
 		if ((objectEntries != null) && !objectEntries.isEmpty()) {
 			List<ObjectField> objectFields =
@@ -132,6 +132,10 @@ public class ObjectEntryTableInfoListRenderer
 		catch (Exception exception) {
 			_log.error("Unable to render object entries list", exception);
 		}
+	}
+
+	protected InfoListBasicTableTag getInfoListBasicTableTag() {
+		return new InfoListBasicTableTag();
 	}
 
 	private String _getCompanyScopedKey(String className) {

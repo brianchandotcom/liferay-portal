@@ -120,7 +120,7 @@ function FilterFormComponent({
 		let url;
 
 		if (filter) {
-			method = 'PUT';
+			method = 'PATCH';
 
 			url = getDataSetResourceURL({
 				dataSetERC: dataSet.externalReferenceCode,

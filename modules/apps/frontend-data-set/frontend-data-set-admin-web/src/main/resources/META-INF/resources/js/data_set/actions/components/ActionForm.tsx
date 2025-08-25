@@ -258,7 +258,7 @@ const ActionForm = ({
 				relationship: OBJECT_RELATIONSHIP.DATA_SET_ACTIONS,
 			});
 
-			fetchMethod = 'PUT';
+			fetchMethod = 'PATCH';
 		}
 		else {
 			apiURL = getDataSetResourceURL({

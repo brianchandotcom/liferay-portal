@@ -196,10 +196,9 @@ public class LayoutSitemapURLProviderTest {
 			_group.getTypeSettingsProperties();
 
 		typeSettingsUnicodeProperties.setProperty(
-			"inheritLocales", Boolean.FALSE.toString());
-
-		typeSettingsUnicodeProperties.setProperty(
 			PropsKeys.LOCALES, "en_US,es_ES");
+		typeSettingsUnicodeProperties.setProperty(
+			"inheritLocales", Boolean.FALSE.toString());
 
 		_groupLocalService.updateGroup(
 			_group.getGroupId(), typeSettingsUnicodeProperties.toString());

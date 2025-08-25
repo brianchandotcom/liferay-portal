@@ -14,6 +14,10 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -45,80 +49,72 @@ public class ViewHomeQuickActionsDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public List<Map<String, String>> getQuickActions() throws Exception {
-		List<Map<String, String>> quickActions = new ArrayList<>();
-
-		Group group = _getDepotEntryGroup();
-
-		List<ObjectDefinition> objectDefinitions =
-			_objectDefinitionService.getCMSObjectDefinitions(
-				_themeDisplay.getCompanyId(),
-				new String[] {
-					ObjectFolderConstants.
-						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
-				});
-
-		for (int i = 0; i < objectDefinitions.size(); i++) {
-			ObjectDefinition objectDefinition = objectDefinitions.get(i);
-
-			quickActions.add(
-				_createQuickAction(_ICONS[i], group, objectDefinition));
-		}
-
-		quickActions.add(
-			_createQuickAction(
-				_ICONS[_ICONS.length - 2], group,
-				_objectDefinitionService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_BASIC_DOCUMENT", _themeDisplay.getCompanyId())));
-		quickActions.add(
-			HashMapBuilder.put(
-				"href",
-				PortalUtil.getLayoutFullURL(
-					LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-						_themeDisplay.getScopeGroupId(), false,
-						"/categorization/new-vocabulary"),
-					_themeDisplay)
-			).put(
-				"icon", _ICONS[_ICONS.length - 1]
-			).put(
-				"label",
-				LanguageUtil.get(_themeDisplay.getLocale(), "vocabulary")
-			).build());
-
-		return quickActions;
+	public Map<String, Object> getProps() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"quickActions", _getQuickActions()
+		).build();
 	}
 
-	private Map<String, String> _createQuickAction(
-		String icon, Group group, ObjectDefinition objectDefinition) {
+	private Map<String, Object> _createQuickAction(
+		JSONArray depotEntriesJSONArray, String icon,
+		ObjectDefinition objectDefinition) {
 
-		return HashMapBuilder.put(
-			"href",
+		return HashMapBuilder.<String, Object>put(
+			"action", "createAsset"
+		).put(
+			"assetLibraries", depotEntriesJSONArray
+		).put(
+			"icon", icon
+		).put(
+			"redirect",
 			StringBundler.concat(
 				_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
 				GroupConstants.CMS_FRIENDLY_URL,
-				"/add_structured_content_item?groupId=", group.getGroupId(),
-				"&name=", group.getName(_themeDisplay.getLocale()),
-				"&objectDefinitionId=",
+				"/add_structured_content_item?objectDefinitionId=",
 				objectDefinition.getObjectDefinitionId(),
 				"&objectEntryFolderExternalReferenceCode=",
 				_getObjectEntryFolderExternalReferenceCode(objectDefinition),
 				"&plid=", _themeDisplay.getPlid(), "&redirect=",
 				_themeDisplay.getURLCurrent())
 		).put(
-			"icon", icon
-		).put(
-			"label", objectDefinition.getLabel(_themeDisplay.getLocale())
+			"title", objectDefinition.getLabel(_themeDisplay.getLocale())
 		).build();
 	}
 
-	private Group _getDepotEntryGroup() {
-		List<Long> groupIds = TransformUtil.transform(
-			_depotEntryLocalService.getDepotEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			DepotEntry::getGroupId);
+	private JSONArray _getDepotEntriesJSONArray() {
+		return _getDepotEntriesJSONArray(
+			TransformUtil.transform(
+				_depotEntryLocalService.getDepotEntries(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				DepotEntry::getGroupId));
+	}
 
-		return _groupLocalService.fetchGroup(groupIds.get(0));
+	private JSONArray _getDepotEntriesJSONArray(List<Long> groupIds) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Long groupId : groupIds) {
+			JSONObject jsonObject = _getJSONObject(groupId);
+
+			if (jsonObject != null) {
+				jsonArray.put(jsonObject);
+			}
+		}
+
+		return jsonArray;
+	}
+
+	private JSONObject _getJSONObject(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"groupId", group.getGroupId()
+		).put(
+			"name", group.getName(_themeDisplay.getLocale())
+		);
 	}
 
 	private String _getObjectEntryFolderExternalReferenceCode(
@@ -140,6 +136,53 @@ public class ViewHomeQuickActionsDisplayContext {
 		}
 
 		return null;
+	}
+
+	private List<Map<String, Object>> _getQuickActions() throws Exception {
+		List<Map<String, Object>> quickActions = new ArrayList<>();
+
+		JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray();
+
+		List<ObjectDefinition> objectDefinitions =
+			_objectDefinitionService.getCMSObjectDefinitions(
+				_themeDisplay.getCompanyId(),
+				new String[] {
+					ObjectFolderConstants.
+						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
+				});
+
+		for (int i = 0; i < objectDefinitions.size(); i++) {
+			ObjectDefinition objectDefinition = objectDefinitions.get(i);
+
+			quickActions.add(
+				_createQuickAction(
+					depotEntriesJSONArray, _ICONS[i], objectDefinition));
+		}
+
+		quickActions.add(
+			_createQuickAction(
+				depotEntriesJSONArray, _ICONS[_ICONS.length - 2],
+				_objectDefinitionService.
+					getObjectDefinitionByExternalReferenceCode(
+						"L_BASIC_DOCUMENT", _themeDisplay.getCompanyId())));
+		quickActions.add(
+			HashMapBuilder.<String, Object>put(
+				"action", "createVocabulary"
+			).put(
+				"icon", _ICONS[_ICONS.length - 1]
+			).put(
+				"redirect",
+				PortalUtil.getLayoutFullURL(
+					LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+						_themeDisplay.getScopeGroupId(), false,
+						"/categorization/new-vocabulary"),
+					_themeDisplay)
+			).put(
+				"title",
+				LanguageUtil.get(_themeDisplay.getLocale(), "vocabulary")
+			).build());
+
+		return quickActions;
 	}
 
 	private static final String[] _ICONS = {

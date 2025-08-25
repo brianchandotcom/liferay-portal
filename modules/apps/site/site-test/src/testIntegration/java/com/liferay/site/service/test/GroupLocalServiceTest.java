@@ -7,20 +7,31 @@ package com.liferay.site.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.DuplicateGroupException;
+import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +51,53 @@ public class GroupLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testAddGroupWithCommaInName() throws Exception {
+		String groupName = RandomTestUtil.randomString() + ",";
+
+		Group group = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, groupName,
+			new ServiceContext());
+
+		Assert.assertNotNull(group);
+		Assert.assertEquals(groupName, group.getName(LocaleUtil.getDefault()));
+	}
+
+	@Test
+	public void testCannotAddGroupWithInvalidCharacters() throws Exception {
+		String[] groupNames = {"null", "*", "test*", "22222"};
+
+		Group group = null;
+
+		for (String groupName : groupNames) {
+			try {
+				group = GroupTestUtil.addGroup(
+					GroupConstants.DEFAULT_PARENT_GROUP_ID, groupName,
+					ServiceContextTestUtil.getServiceContext());
+			}
+			catch (Exception exception) {
+				Assert.assertTrue(exception instanceof GroupKeyException);
+			}
+			finally {
+				Assert.assertNull(group);
+			}
+		}
+	}
+
+	@Test(expected = DuplicateGroupException.class)
+	public void testCannotAddGroupWithSameName() throws Exception {
+		String groupName = RandomTestUtil.randomString();
+
+		GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, groupName,
+			ServiceContextTestUtil.getServiceContext());
+
+		_addGroup(groupName);
+	}
 
 	@Test
 	public void testCheckCompanyGroup() throws Exception {
@@ -106,6 +163,22 @@ public class GroupLocalServiceTest {
 		List<Group> groups = _groupLocalService.getStagedSites();
 
 		Assert.assertTrue(groups.toString(), groups.isEmpty());
+	}
+
+	private Group _addGroup(String name) throws Exception {
+		return GroupServiceUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), name
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			GroupConstants.TYPE_SITE_OPEN, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name), true,
+			true, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _assertDescendantGroups(

@@ -77,7 +77,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Test
 	public void testGetAdditionalProps() throws Exception {
-		Assert.assertEquals(
+		AssertUtils.assertEquals(
 			HashMapBuilder.<String, Object>put(
 				"autocompleteURL",
 				() -> StringBundler.concat(

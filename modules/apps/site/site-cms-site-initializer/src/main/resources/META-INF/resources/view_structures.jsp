@@ -12,17 +12,26 @@ ViewStructuresDisplayContext viewStructuresDisplayContext = (ViewStructuresDispl
 %>
 
 <div class="cms-section">
-	<frontend-data-set:headless-display
-		apiURL="<%= viewStructuresDisplayContext.getAPIURL() %>"
-		bulkActionDropdownItems="<%= viewStructuresDisplayContext.getBulkActionDropdownItems() %>"
-		creationMenu="<%= viewStructuresDisplayContext.getCreationMenu() %>"
-		fdsActionDropdownItems="<%= viewStructuresDisplayContext.getFDSActionDropdownItems() %>"
-		formName="fm"
-		id="<%= CMSSiteInitializerFDSNames.STRUCTURES_SECTION %>"
-		itemsPerPage="<%= 20 %>"
-		propsTransformer="{StructuresFDSPropsTransformer} from site-cms-site-initializer"
-		selectedItemsKey="id"
-		selectionType="multiple"
-		style="fluid"
-	/>
+	<div>
+		<react:component
+			module="{Toolbar} from site-cms-site-initializer"
+			props="<%= viewStructuresDisplayContext.getToolbarProps() %>"
+		/>
+	</div>
+
+	<div>
+		<frontend-data-set:headless-display
+			apiURL="<%= viewStructuresDisplayContext.getAPIURL() %>"
+			bulkActionDropdownItems="<%= viewStructuresDisplayContext.getBulkActionDropdownItems() %>"
+			creationMenu="<%= viewStructuresDisplayContext.getCreationMenu() %>"
+			fdsActionDropdownItems="<%= viewStructuresDisplayContext.getFDSActionDropdownItems() %>"
+			formName="fm"
+			id="<%= CMSSiteInitializerFDSNames.STRUCTURES_SECTION %>"
+			itemsPerPage="<%= 20 %>"
+			propsTransformer="{StructuresFDSPropsTransformer} from site-cms-site-initializer"
+			selectedItemsKey="id"
+			selectionType="multiple"
+			style="fluid"
+		/>
+	</div>
 </div>

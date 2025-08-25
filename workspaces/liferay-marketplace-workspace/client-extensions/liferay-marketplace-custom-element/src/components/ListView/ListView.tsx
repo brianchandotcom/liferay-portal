@@ -78,8 +78,6 @@ export type ListViewProps<T extends Record<string, any>> = {
 		| 'totalItems'
 	>;
 
-	onDataLoad?: (data: {items: T[]}) => void;
-
 	/**
 	 * The options for the pagination.
 	 *
@@ -120,7 +118,6 @@ function getMatchedOption(rawValue: string, field?: RendererFields) {
 }
 
 const ListView = <T extends Record<string, any>>({
-	onDataLoad,
 	children,
 	defaultFilters,
 	emptyStateProps,
@@ -129,10 +126,10 @@ const ListView = <T extends Record<string, any>>({
 		...managementToolbarProps
 	} = {},
 	paginationOptions = {displayType: true},
+	refreshInterval,
 	resource,
 	tableProps,
 	transformData = (item) => item,
-	refreshInterval,
 }: ListViewProps<T>) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 
@@ -261,14 +258,7 @@ const ListView = <T extends Record<string, any>>({
 		refreshInterval
 	);
 
-	useEffect(() => {
-		if (response?.items && onDataLoad) {
-			onDataLoad({items: response.items});
-		}
-	}, [onDataLoad, response?.items]);
-
 	const {
-		actions = {},
 		items = [],
 		page = 1,
 		pageSize,
@@ -311,7 +301,6 @@ const ListView = <T extends Record<string, any>>({
 			{managementToolbarVisible && (
 				<ManagementToolbar
 					{...managementToolbarProps}
-					actions={actions}
 					totalItems={totalCount}
 				/>
 			)}

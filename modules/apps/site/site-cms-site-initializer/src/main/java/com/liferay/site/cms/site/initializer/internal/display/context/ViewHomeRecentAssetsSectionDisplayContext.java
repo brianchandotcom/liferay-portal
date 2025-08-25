@@ -43,7 +43,7 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 		Portal portal) {
 
 		super(
-			depotEntryLocalService, groupLocalService, httpServletRequest,
+			depotEntryLocalService, null, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);

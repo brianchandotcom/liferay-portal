@@ -13,7 +13,7 @@ const SpaceRenderer = ({itemData, value}: {itemData: any; value: string}) => {
 			<SpaceSticker
 				displayType={itemData.settings?.logoColor}
 				name={value}
-				size="sm"
+				size="xs"
 			/>
 		</span>
 	);

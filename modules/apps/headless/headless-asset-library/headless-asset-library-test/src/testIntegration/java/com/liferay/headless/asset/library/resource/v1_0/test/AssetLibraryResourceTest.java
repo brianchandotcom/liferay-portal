@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.sharing.constants.SharingConfigurationConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -522,7 +523,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		_assertSettings(
 			assetLibrary, autoTaggingEnabled, availableLanguageIds,
-			defaultLanguageId, "outline-0", new MimeTypeLimit[0], false, true);
+			defaultLanguageId, "outline-0", new MimeTypeLimit[0],
+			SharingConfigurationConstants.SHARING_ENABLED_DEFAULT, true);
 	}
 
 	@Inject

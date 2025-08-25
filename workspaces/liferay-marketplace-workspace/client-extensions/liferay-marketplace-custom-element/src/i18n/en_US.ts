@@ -621,6 +621,7 @@ export default {
 	'trial': 'Trial',
 	'trial-details': 'Trial Details',
 	'trial-end-date': 'Trial End Date',
+	'trial-error': 'Trial Error',
 	'trial-expired-successfully': 'Trial expired successfully.',
 	'trial-extension-approved-successfully':
 		'Trial extension approved successfully',

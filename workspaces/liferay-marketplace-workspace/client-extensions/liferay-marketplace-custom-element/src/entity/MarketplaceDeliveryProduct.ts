@@ -58,6 +58,10 @@ export class MarketplaceDeliveryProduct {
 		return this.product.createDate;
 	}
 
+	get description() {
+		return this.product.description;
+	}
+
 	get friendlyURL() {
 		return this.product.urls.en_US;
 	}

@@ -30,7 +30,7 @@ export class MarketplaceUserAccount {
 	}
 
 	get isSSAAdmin() {
-		return this.hasAccountRole(AccountRoleType.SSA_ADMIN);
+		return this.hasAccountRole(AccountRoleType.SSA_ADMIN) || this.isAdmin;
 	}
 
 	get isSSAUser() {

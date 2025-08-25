@@ -228,11 +228,18 @@ public class MCPServerServlet extends GenericServlet {
 					"type", "object"
 				).toString()),
 			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> MCPServerHttpUtil.callEndpoint(
-					String.valueOf(arguments.get("method")),
-					baseURL + arguments.get("path"),
-					String.valueOf(arguments.get("payload")),
-					mcpServerTransportProvider.getAccessToken(exchange)))
+				(exchange, arguments) -> {
+					String path = String.valueOf(arguments.get("path"));
+
+					if (!path.startsWith("/")) {
+						path = "/" + path;
+					}
+
+					return MCPServerHttpUtil.callEndpoint(
+						String.valueOf(arguments.get("method")), baseURL + path,
+						String.valueOf(arguments.get("payload")),
+						mcpServerTransportProvider.getAccessToken(exchange));
+				})
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();

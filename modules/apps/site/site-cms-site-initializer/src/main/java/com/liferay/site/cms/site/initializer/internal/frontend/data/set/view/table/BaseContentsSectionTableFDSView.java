@@ -34,9 +34,7 @@ public abstract class BaseContentsSectionTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"embedded.objectDefinitionName", "type",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"typeTableCellRenderer")
+			"embedded.systemProperties.objectDefinitionBrief.label", "type"
 		).add(
 			"embedded.scopeKey", "space",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

@@ -52,7 +52,7 @@ public class NumericDDMFormFieldValueLocalizer
 
 			Number number = null;
 
-			if (value.indexOf(StringPool.PERIOD) != -1) {
+			if (value.contains(StringPool.PERIOD)) {
 				number = GetterUtil.getNumber(
 					defaultDecimalFormat.parse(value));
 			}

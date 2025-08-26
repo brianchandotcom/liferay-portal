@@ -7,12 +7,12 @@ package com.liferay.object.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.entry.folder.subscription.util.ObjectEntryFolderSubscriptionUtil;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryFolderExternalReferenceCodeException;
-import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.exception.ObjectEntryFolderNameException;
 import com.liferay.object.exception.ObjectEntryFolderParentObjectEntryFolderIdException;
 import com.liferay.object.exception.ObjectEntryFolderScopeException;
@@ -23,12 +23,12 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.base.ObjectEntryFolderLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -95,28 +95,10 @@ public class ObjectEntryFolderLocalServiceImpl
 		_validateName(
 			groupId, user.getCompanyId(), 0, parentObjectEntryFolderId, name);
 
-		ObjectEntryFolder objectEntryFolder =
-			objectEntryFolderPersistence.create(
-				counterLocalService.increment());
-
-		objectEntryFolder.setUuid(serviceContext.getUuid());
-		objectEntryFolder.setExternalReferenceCode(externalReferenceCode);
-		objectEntryFolder.setGroupId(groupId);
-		objectEntryFolder.setCompanyId(user.getCompanyId());
-		objectEntryFolder.setUserId(user.getUserId());
-		objectEntryFolder.setUserName(user.getFullName());
-		objectEntryFolder.setParentObjectEntryFolderId(
-			parentObjectEntryFolderId);
-		objectEntryFolder.setDescription(description);
-		objectEntryFolder.setLabelMap(_getLabelMap(labelMap, name));
-		objectEntryFolder.setName(name);
-		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
-		objectEntryFolder.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		objectEntryFolder = objectEntryFolderPersistence.update(
-			objectEntryFolder);
-
-		_addResourcePermission(objectEntryFolder, serviceContext);
+		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+			externalReferenceCode, groupId, parentObjectEntryFolderId,
+			description, labelMap, name, serviceContext,
+			WorkflowConstants.STATUS_APPROVED, user);
 
 		_updateAsset(objectEntryFolder, serviceContext);
 
@@ -299,37 +281,33 @@ public class ObjectEntryFolderLocalServiceImpl
 			long userId, ServiceContext serviceContext)
 		throws PortalException {
 
-		ObjectEntryFolder objectEntryFolder =
-			fetchObjectEntryFolderByExternalReferenceCode(
-				externalReferenceCode, groupId, companyId);
-
-		if (objectEntryFolder != null) {
-			return objectEntryFolder;
+		if (groupId == 0) {
+			return _emptyModelManager.getOrAddEmptyModel(
+				ObjectEntryFolder.class, companyId,
+				() -> _addObjectEntryFolder(
+					externalReferenceCode, groupId,
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+					StringPool.BLANK, null, externalReferenceCode,
+					serviceContext, WorkflowConstants.STATUS_EMPTY,
+					_userLocalService.getUser(userId)),
+				externalReferenceCode,
+				this::fetchObjectEntryFolderByExternalReferenceCode,
+				this::getObjectEntryFolderByExternalReferenceCode);
 		}
 
-		if (!LazyReferencingThreadLocal.isEnabled()) {
-			throw new NoSuchObjectEntryFolderException();
-		}
-
-		objectEntryFolder = objectEntryFolderPersistence.create(
-			counterLocalService.increment());
-
-		objectEntryFolder.setExternalReferenceCode(externalReferenceCode);
-		objectEntryFolder.setGroupId(groupId);
-		objectEntryFolder.setCompanyId(companyId);
-		objectEntryFolder.setUserId(userId);
-		objectEntryFolder.setParentObjectEntryFolderId(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
-		objectEntryFolder.setName(externalReferenceCode);
-		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
-		objectEntryFolder.setStatus(WorkflowConstants.STATUS_EMPTY);
-
-		objectEntryFolder = objectEntryFolderPersistence.update(
-			objectEntryFolder);
-
-		_addResourcePermission(objectEntryFolder, serviceContext);
-
-		return objectEntryFolder;
+		return _emptyModelManager.getOrAddEmptyModel(
+			ObjectEntryFolder.class,
+			() -> _addObjectEntryFolder(
+				externalReferenceCode, groupId,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				StringPool.BLANK, null, externalReferenceCode, serviceContext,
+				WorkflowConstants.STATUS_EMPTY,
+				_userLocalService.getUser(userId)),
+			externalReferenceCode,
+			this::fetchObjectEntryFolderByExternalReferenceCode,
+			this::getObjectEntryFolderByExternalReferenceCode, groupId);
 	}
 
 	@Override
@@ -527,6 +505,39 @@ public class ObjectEntryFolderLocalServiceImpl
 		objectEntryFolder.setStatus(status);
 
 		return objectEntryFolderPersistence.update(objectEntryFolder);
+	}
+	
+	private ObjectEntryFolder _addObjectEntryFolder(
+			String externalReferenceCode, long groupId,
+			long parentObjectEntryFolderId, String description,
+			Map<Locale, String> labelMap, String name,
+			ServiceContext serviceContext, int status, User user)
+		throws PortalException {
+
+		ObjectEntryFolder objectEntryFolder =
+			objectEntryFolderPersistence.create(
+				counterLocalService.increment());
+
+		objectEntryFolder.setUuid(serviceContext.getUuid());
+		objectEntryFolder.setExternalReferenceCode(externalReferenceCode);
+		objectEntryFolder.setGroupId(groupId);
+		objectEntryFolder.setCompanyId(user.getCompanyId());
+		objectEntryFolder.setUserId(user.getUserId());
+		objectEntryFolder.setUserName(user.getFullName());
+		objectEntryFolder.setParentObjectEntryFolderId(
+			parentObjectEntryFolderId);
+		objectEntryFolder.setDescription(description);
+		objectEntryFolder.setLabelMap(_getLabelMap(labelMap, name));
+		objectEntryFolder.setName(name);
+		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
+		objectEntryFolder.setStatus(status);
+
+		objectEntryFolder = objectEntryFolderPersistence.update(
+			objectEntryFolder);
+
+		_addResourcePermission(objectEntryFolder, serviceContext);
+
+		return objectEntryFolder;
 	}
 
 	private void _addResourcePermission(
@@ -772,6 +783,9 @@ public class ObjectEntryFolderLocalServiceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private EmptyModelManager _emptyModelManager;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

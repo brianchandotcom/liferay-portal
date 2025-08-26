@@ -115,7 +115,18 @@ export default function AllFDSPropsTransformer({
 			event: Event;
 			itemData: any;
 		}) => {
-			if (action?.data?.id === 'view-content') {
+			if (action?.data?.id === 'share') {
+				const {autocompleteURL, collaboratorURLs} = additionalProps;
+
+				shareAction({
+					autocompleteURL,
+					collaboratorURL: collaboratorURLs[itemData.entryClassName],
+					creator: itemData.embedded.creator,
+					itemId: itemData.embedded.id,
+					title: itemData.embedded?.title,
+				});
+			}
+			else if (action?.data?.id === 'view-content') {
 				event?.preventDefault();
 
 				openModal({
@@ -135,17 +146,6 @@ export default function AllFDSPropsTransformer({
 							headerName: itemData.embedded.title,
 						}),
 					size: 'full-screen',
-				});
-			}
-			else if (action?.data?.id === 'share') {
-				const {autocompleteURL, collaboratorURLs} = additionalProps;
-
-				shareAction({
-					autocompleteURL,
-					collaboratorURL: collaboratorURLs[itemData.entryClassName],
-					creator: itemData.embedded.creator,
-					itemId: itemData.embedded.id,
-					title: itemData.embedded?.title,
 				});
 			}
 		},

@@ -7,9 +7,10 @@ package com.liferay.frontend.js.web.internal.frontend.resource.handler;
 
 import com.liferay.frontend.js.web.internal.frontend.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.frontend.resource.HashedFileFrontendResource;
-import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.hashed.files.HashedFilesRegistry;
+import com.liferay.portal.kernel.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -79,7 +80,7 @@ public class HashedFileFrontendResourceRequestHandler
 
 		String requestURI = httpServletRequest.getRequestURI();
 
-		String hash = _getHash(requestURI);
+		String hash = HashedFilesUtil.getHash(requestURI);
 
 		if (hash != null) {
 			return _createFrontendResource(
@@ -121,7 +122,8 @@ public class HashedFileFrontendResourceRequestHandler
 		}
 
 		return _createFrontendResource(
-			_getHash(hashedFileURI), false, maxAge, hashedFileURI, sendNoCache);
+			HashedFilesUtil.getHash(hashedFileURI), false, maxAge,
+			hashedFileURI, sendNoCache);
 	}
 
 	private FrontendResource _createFrontendResource(
@@ -153,22 +155,6 @@ public class HashedFileFrontendResourceRequestHandler
 
 		return new HashedFileFrontendResource(
 			_contentType, eTag, immutable, maxAge, sendNoCache, url);
-	}
-
-	private String _getHash(String uri) {
-		int i = uri.lastIndexOf(".(");
-
-		if (i == -1) {
-			return null;
-		}
-
-		int j = uri.lastIndexOf(").");
-
-		if (j == -1) {
-			return null;
-		}
-
-		return uri.substring(i + 2, j);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

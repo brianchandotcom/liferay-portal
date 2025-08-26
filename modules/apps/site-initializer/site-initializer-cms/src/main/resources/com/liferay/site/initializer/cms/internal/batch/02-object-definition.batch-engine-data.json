@@ -339,6 +339,176 @@
 		},
 		{
 			"enableCategorization": true,
+			"externalReferenceCode": "L_BULK_ACTION_TASK",
+			"label": {
+				"en_US": "Bulk Action Task"
+			},
+			"modifiable": true,
+			"name": "BulkActionTask",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ACTION_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Action Name"
+					},
+					"name": "actionName",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "DateTime",
+					"businessType": "DateTime",
+					"externalReferenceCode": "COMPLETION_DATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Completion Date"
+					},
+					"localized": false,
+					"name": "completionDate",
+					"objectFieldSettings": [
+						{
+							"name": "timeStorage",
+							"value": "convertToUTC"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "DateTime"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXECUTION_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Execution Status"
+					},
+					"localized": false,
+					"name": "executionStatus",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "NUMBER_OF_ITEMS",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Number of Items"
+					},
+					"localized": false,
+					"name": "numberOfItems",
+					"objectFieldSettings": [
+						{
+							"name": "objectRelationshipName",
+							"value": "bulkActionTaskToBulkActionTaskItems"
+						},
+						{
+							"name": "function",
+							"value": "COUNT"
+						}
+					],
+					"readOnly": "true",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Type"
+					},
+					"localized": false,
+					"name": "type",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"edge": false,
+					"externalReferenceCode": "L_BULK_ACTION_TASK_TO_L_BULK_ACTION_TASK_ITEMS",
+					"label": {
+						"en_US": "Bulk Action Task to Bulk Action Task Items"
+					},
+					"name": "bulkActionTaskToBulkActionTaskItems",
+					"objectDefinitionExternalReferenceCode1": "L_BULK_ACTION_TASK",
+					"objectDefinitionExternalReferenceCode2": "L_BULK_ACTION_TASK_ITEM",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "BulkActionTaskItem",
+					"objectDefinitionScope2": "company",
+					"objectDefinitionSystem2": true,
+					"objectField": {
+						"DBType": "Long",
+						"businessType": "Relationship",
+						"externalReferenceCode": "BULK_ACTION_TASK_TO_BULK_ACTION_TASK_ITEMS",
+						"indexed": true,
+						"indexedAsKeyword": false,
+						"label": {
+							"en_US": "Bulk Action Task to Bulk Action Task Items"
+						},
+						"localized": false,
+						"name": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskId",
+						"objectFieldSettings": [
+							{
+								"name": "objectDefinition1ShortName",
+								"value": "BulkActionTask"
+							},
+							{
+								"name": "objectRelationshipERCObjectFieldName",
+								"value": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskERC"
+							}
+						],
+						"relationshipType": "oneToMany",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "Long"
+					},
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Bulk Action Tasks"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"enableCategorization": true,
 			"externalReferenceCode": "L_BULK_ACTION_TASK_ITEM",
 			"label": {
 				"en_US": "Bulk Action Task Item"
@@ -468,176 +638,6 @@
 			"parameterRequired": false,
 			"pluralLabel": {
 				"en_US": "Bulk Action Task Items"
-			},
-			"portlet": true,
-			"scope": "company",
-			"status": {
-				"code": 0
-			},
-			"system": true,
-			"titleObjectFieldName": "id"
-		},
-		{
-			"enableCategorization": true,
-			"externalReferenceCode": "L_BULK_ACTION_TASK",
-			"label": {
-				"en_US": "Bulk Action Task"
-			},
-			"modifiable": true,
-			"name": "BulkActionTask",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "ACTION_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Action Name"
-					},
-					"name": "actionName",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "DateTime",
-					"businessType": "DateTime",
-					"externalReferenceCode": "COMPLETION_DATE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Completion Date"
-					},
-					"localized": false,
-					"name": "completionDate",
-					"objectFieldSettings": [
-						{
-							"name": "timeStorage",
-							"value": "convertToUTC"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "DateTime"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "EXECUTION_STATUS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Execution Status"
-					},
-					"localized": false,
-					"name": "executionStatus",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Aggregation",
-					"externalReferenceCode": "NUMBER_OF_ITEMS",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Number of Items"
-					},
-					"localized": false,
-					"name": "numberOfItems",
-					"objectFieldSettings": [
-						{
-							"name": "objectRelationshipName",
-							"value": "bulkActionTaskToBulkActionTaskItem"
-						},
-						{
-							"name": "function",
-							"value": "COUNT"
-						}
-					],
-					"readOnly": "true",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "TYPE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Type"
-					},
-					"localized": false,
-					"name": "type",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				}
-			],
-			"objectRelationships": [
-				{
-					"deletionType": "prevent",
-					"edge": false,
-					"externalReferenceCode": "L_BULK_ACTION_TASK_TO_L_BULK_ACTION_TASK_ITEM",
-					"label": {
-						"en_US": "Bulk Action Task to Bulk Action Task Item"
-					},
-					"name": "bulkActionTaskToBulkActionTaskItem",
-					"objectDefinitionExternalReferenceCode1": "L_BULK_ACTION_TASK",
-					"objectDefinitionExternalReferenceCode2": "L_BULK_ACTION_TASK_ITEM",
-					"objectDefinitionModifiable2": true,
-					"objectDefinitionName2": "BulkActionTaskItem",
-					"objectDefinitionScope2": "company",
-					"objectDefinitionSystem2": false,
-					"objectField": {
-						"DBType": "Long",
-						"businessType": "Relationship",
-						"externalReferenceCode": "BULK_ACTION_TASK_TO_BULK_ACTION_TASK_ITEMS",
-						"indexed": true,
-						"indexedAsKeyword": false,
-						"label": {
-							"en_US": "Bulk Action Task to Bulk Action Task Items"
-						},
-						"localized": false,
-						"name": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskId",
-						"objectFieldSettings": [
-							{
-								"name": "objectDefinition1ShortName",
-								"value": "BulkActionTask"
-							},
-							{
-								"name": "objectRelationshipERCObjectFieldName",
-								"value": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskERC"
-							}
-						],
-						"relationshipType": "oneToMany",
-						"required": false,
-						"state": false,
-						"system": true,
-						"type": "Long"
-					},
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				}
-			],
-			"panelCategoryKey": "",
-			"parameterRequired": false,
-			"pluralLabel": {
-				"en_US": "Bulk Action Tasks"
 			},
 			"portlet": true,
 			"scope": "company",

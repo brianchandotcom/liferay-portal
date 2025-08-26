@@ -80,7 +80,11 @@ test(
 		});
 
 		await test.step('Select checkbox and assert it remains marked', async () => {
-			const firstCheckbox = page.locator('table[data-searchcontainerid*="stringItemSearchContainer"] input[type="checkbox"]').first();
+			const firstCheckbox = page
+				.locator(
+					'table[data-searchcontainerid*="stringItemSearchContainer"] input[type="checkbox"]'
+				)
+				.first();
 
 			await firstCheckbox.check();
 

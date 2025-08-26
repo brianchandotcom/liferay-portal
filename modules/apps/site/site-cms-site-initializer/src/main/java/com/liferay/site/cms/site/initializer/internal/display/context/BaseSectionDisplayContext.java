@@ -306,6 +306,10 @@ public abstract class BaseSectionDisplayContext {
 				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
 				null),
 			new FDSActionDropdownItem(
+				null, "share", "share",
+				LanguageUtil.get(httpServletRequest, "share"), "get", "share",
+				"link"),
+			new FDSActionDropdownItem(
 				"{actions.expire.href}", "time", "expire",
 				LanguageUtil.get(httpServletRequest, "expire"), "post",
 				"expire", "headless"),

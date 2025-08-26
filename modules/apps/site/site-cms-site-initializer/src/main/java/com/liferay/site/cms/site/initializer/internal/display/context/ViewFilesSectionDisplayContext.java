@@ -67,12 +67,6 @@ public class ViewFilesSectionDisplayContext
 			super.getFDSActionDropdownItems();
 
 		fdsActionDropdownItems.add(
-			3,
-			new FDSActionDropdownItem(
-				null, "share", "share",
-				LanguageUtil.get(httpServletRequest, "share"), "get", "share",
-				"link"));
-		fdsActionDropdownItems.add(
 			5,
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "info-circle-open", "show-details",

@@ -1161,6 +1161,13 @@ public interface LayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getNextLayoutId(long groupId, boolean privateLayout);
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout getOrAddEmptyLayout(
+			String externalReferenceCode, long userId, long groupId,
+			ServiceContext serviceContext)
+		throws Exception;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

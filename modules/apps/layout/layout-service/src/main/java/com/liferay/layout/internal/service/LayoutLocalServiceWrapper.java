@@ -433,8 +433,9 @@ public class LayoutLocalServiceWrapper
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
-					targetLayout.getGroupId(), targetLayout.getPlid(),
-					entry.getValue(), dataJSONObject.toString());
+					user.getUserId(), targetLayout.getGroupId(),
+					targetLayout.getPlid(), entry.getValue(),
+					dataJSONObject.toString());
 
 			SegmentsExperience targetSegmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -1107,8 +1108,9 @@ public class LayoutLocalServiceWrapper
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				targetLayout.getGroupId(), targetLayout.getPlid(),
-				targetSegmentsExperienceId, dataJSONObject.toString());
+				user.getUserId(), targetLayout.getGroupId(),
+				targetLayout.getPlid(), targetSegmentsExperienceId,
+				dataJSONObject.toString());
 
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
 			ArrayUtil.toLongArray(targetFragmentEntryLinkIds));

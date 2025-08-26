@@ -171,8 +171,9 @@ public class UpdatePasswordActionTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				group.getGroupId(), layout.getPlid(),
-				defaultSegmentsExperienceId, dataJSONObject.toString());
+				serviceContext.getUserId(), group.getGroupId(),
+				layout.getPlid(), defaultSegmentsExperienceId,
+				dataJSONObject.toString());
 
 		return layoutUtilityPageEntry;
 	}

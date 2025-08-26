@@ -222,8 +222,8 @@ public class DisplayPageTemplateResourceTest
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayoutPageTemplateEntry",
-			new Class<?>[] {Layout.class, Layout.class},
-			layout.fetchDraftLayout(), layout);
+			new Class<?>[] {Layout.class, Layout.class, long.class},
+			layout.fetchDraftLayout(), layout, TestPropsValues.getUserId());
 
 		Assert.assertTrue(_isPublished(layout));
 

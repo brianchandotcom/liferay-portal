@@ -271,8 +271,9 @@ public class LayoutAdaptiveMediaProcessorTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), layout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				layout.getPlid(), defaultSegmentsExperienceId,
+				layoutStructure.toString());
 
 		_themeDisplay.setLayout(layout);
 		_themeDisplay.setLayoutSet(layout.getLayoutSet());

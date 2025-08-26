@@ -866,8 +866,8 @@ public class LayoutsImporterTest {
 
 		try {
 			_layoutsImporter.importPageElement(
-				TestPropsValues.getUserId(), draftLayout, layoutStructure, layoutStructure.getMainItemId(),
-				pageElementJSON, 0, true,
+				TestPropsValues.getUserId(), draftLayout, layoutStructure,
+				layoutStructure.getMainItemId(), pageElementJSON, 0, true,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
 
@@ -914,8 +914,8 @@ public class LayoutsImporterTest {
 
 		try {
 			_layoutsImporter.importPageElement(
-				TestPropsValues.getUserId(), draftLayout, layoutStructure, layoutStructure.getMainItemId(),
-				pageElementJSON, 0, true,
+				TestPropsValues.getUserId(), draftLayout, layoutStructure,
+				layoutStructure.getMainItemId(), pageElementJSON, 0, true,
 				segmentsExperience.getSegmentsExperienceId());
 		}
 		finally {
@@ -954,8 +954,8 @@ public class LayoutsImporterTest {
 
 		try {
 			_layoutsImporter.importPageElement(
-				TestPropsValues.getUserId(), draftLayout, layoutStructure, layoutStructure.getMainItemId(),
-				pageElementJSON, 0, true,
+				TestPropsValues.getUserId(), draftLayout, layoutStructure,
+				layoutStructure.getMainItemId(), pageElementJSON, 0, true,
 				segmentsExperience.getSegmentsExperienceId());
 
 			Assert.fail();
@@ -1515,8 +1515,8 @@ public class LayoutsImporterTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group1.getGroupId(), layoutPageTemplateEntry.getPlid(),
-				defaultSegmentsExperienceId,
+				TestPropsValues.getUserId(), _group1.getGroupId(),
+				layoutPageTemplateEntry.getPlid(), defaultSegmentsExperienceId,
 				StringUtil.replace(
 					_read("export_import_layout_data.json"), "${", "}",
 					HashMapBuilder.put(

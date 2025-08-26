@@ -338,8 +338,8 @@ public class DuplicateItemMVCActionCommandTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_draftLayout.getGroupId(), _draftLayout.getPlid(),
-				layoutStructure.toString());
+				TestPropsValues.getUserId(), _draftLayout.getGroupId(),
+				_draftLayout.getPlid(), layoutStructure.toString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",

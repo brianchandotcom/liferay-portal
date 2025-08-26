@@ -166,7 +166,8 @@ public class ActionUtil {
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
-				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
+				serviceContext.getUserId(), layout.getGroupId(),
+				layout.getPlid(), segmentsExperienceId,
 				layoutStructure.toString());
 
 		for (FragmentEntryLink addedFragmentEntryLink :

@@ -351,7 +351,8 @@ public class DeleteFormStepMVCActionCommandTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), _draftLayout.getPlid(),
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_draftLayout.getPlid(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()),
 				layoutStructure.toString());

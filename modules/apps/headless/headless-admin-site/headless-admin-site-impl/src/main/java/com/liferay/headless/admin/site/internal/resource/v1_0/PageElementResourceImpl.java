@@ -95,7 +95,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				layout.getGroupId(), layout.getPlid(),
+				contextUser.getUserId(), layout.getGroupId(), layout.getPlid(),
 				layoutStructure.toString());
 	}
 
@@ -371,8 +371,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
-					layout.getGroupId(), layout.getPlid(),
-					layoutStructure.toString());
+					contextUser.getUserId(), layout.getGroupId(),
+					layout.getPlid(), layoutStructure.toString());
 		}
 
 		return _pageElementDTOConverter.toDTO(
@@ -394,7 +394,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				layout.getGroupId(), layout.getPlid(),
+				contextUser.getUserId(), layout.getGroupId(), layout.getPlid(),
 				layoutStructure.toString());
 
 		return _pageElementDTOConverter.toDTO(

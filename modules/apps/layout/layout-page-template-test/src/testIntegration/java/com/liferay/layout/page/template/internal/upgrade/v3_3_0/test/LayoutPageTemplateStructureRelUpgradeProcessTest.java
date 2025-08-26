@@ -218,8 +218,8 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), plid, segmentsExperienceId,
-				layoutStructure.toString());
+				TestPropsValues.getUserId(), _group.getGroupId(), plid,
+				segmentsExperienceId, layoutStructure.toString());
 
 		_assertFragmentStyledLayoutStructureItem(
 			fragmentEntryLinkId, plid, segmentsExperienceId);

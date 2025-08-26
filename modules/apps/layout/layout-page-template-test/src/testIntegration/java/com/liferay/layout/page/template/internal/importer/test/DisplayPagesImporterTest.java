@@ -154,8 +154,8 @@ public class DisplayPagesImporterTest {
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
-					_group.getGroupId(), draftLayout.getPlid(),
-					layoutStructure.toString());
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					draftLayout.getPlid(), layoutStructure.toString());
 
 			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 

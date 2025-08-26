@@ -35,6 +35,7 @@ import com.liferay.fragment.entry.processor.helper.InfoItemFieldMapped;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -561,7 +562,7 @@ public class FragmentEntryProcessorHelperTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
@@ -572,8 +573,8 @@ public class FragmentEntryProcessorHelperTest {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			depotEntry.getGroupId(), TestPropsValues.getUserId(),
+		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
+			depotEntry1.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
@@ -590,9 +591,7 @@ public class FragmentEntryProcessorHelperTest {
 			).put(
 				"classNameId", classNameId
 			).put(
-				"classPK", objectEntry.getObjectEntryId()
-			).put(
-				"externalReferenceCode", externalReferenceCode
+				"classPK", objectEntry1.getObjectEntryId()
 			).put(
 				"fieldId", "myText"
 			),
@@ -601,8 +600,141 @@ public class FragmentEntryProcessorHelperTest {
 				new InfoItemReference(
 					objectDefinition.getClassName(),
 					new ClassPKInfoItemIdentifier(
-						objectEntry.getObjectEntryId())),
-				objectEntry),
+						objectEntry1.getObjectEntryId())),
+				objectEntry1),
+			serviceContext);
+
+		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY, serviceContext);
+
+		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
+			depotEntry2.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"myText", RandomTestUtil.randomString()
+			).build(),
+			serviceContext);
+
+		_testGetInfoItemFieldMapped(
+			JSONUtil.put(
+				"className", objectDefinition.getClassName()
+			).put(
+				"classNameId", classNameId
+			).put(
+				"classPK", objectEntry2.getObjectEntryId()
+			).put(
+				"fieldId", "myText"
+			),
+			new InfoItemFieldMapped(
+				"myText",
+				new InfoItemReference(
+					objectDefinition.getClassName(),
+					new ClassPKInfoItemIdentifier(
+						objectEntry2.getObjectEntryId())),
+				objectEntry2),
+			serviceContext);
+
+		Group group1 = depotEntry1.getGroup();
+
+		_testGetInfoItemFieldMapped(
+			JSONUtil.put(
+				"className", objectDefinition.getClassName()
+			).put(
+				"classNameId", classNameId
+			).put(
+				"classPK", objectEntry1.getObjectEntryId()
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"fieldId", "myText"
+			).put(
+				"scopeExternalReferenceCode", group1.getExternalReferenceCode()
+			),
+			new InfoItemFieldMapped(
+				"myText",
+				new InfoItemReference(
+					objectDefinition.getClassName(),
+					new ClassPKInfoItemIdentifier(
+						objectEntry1.getObjectEntryId())),
+				objectEntry1),
+			serviceContext);
+
+		Group group2 = depotEntry2.getGroup();
+
+		_testGetInfoItemFieldMapped(
+			JSONUtil.put(
+				"className", objectDefinition.getClassName()
+			).put(
+				"classNameId", classNameId
+			).put(
+				"classPK", objectEntry1.getObjectEntryId()
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"fieldId", "myText"
+			).put(
+				"scopeExternalReferenceCode", group2.getExternalReferenceCode()
+			),
+			new InfoItemFieldMapped(
+				"myText",
+				new InfoItemReference(
+					objectDefinition.getClassName(),
+					new ClassPKInfoItemIdentifier(
+						objectEntry1.getObjectEntryId())),
+				objectEntry1),
+			serviceContext);
+
+		_testGetInfoItemFieldMapped(
+			JSONUtil.put(
+				"className", objectDefinition.getClassName()
+			).put(
+				"classNameId", classNameId
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"fieldId", "myText"
+			).put(
+				"scopeExternalReferenceCode", group1.getExternalReferenceCode()
+			),
+			new InfoItemFieldMapped(
+				"myText",
+				new InfoItemReference(
+					objectDefinition.getClassName(),
+					new ERCInfoItemIdentifier(
+						externalReferenceCode,
+						group1.getExternalReferenceCode())),
+				objectEntry1),
+			serviceContext);
+		_testGetInfoItemFieldMapped(
+			JSONUtil.put(
+				"className", objectDefinition.getClassName()
+			).put(
+				"classNameId", classNameId
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"fieldId", "myText"
+			).put(
+				"scopeExternalReferenceCode", group2.getExternalReferenceCode()
+			),
+			new InfoItemFieldMapped(
+				"myText",
+				new InfoItemReference(
+					objectDefinition.getClassName(),
+					new ERCInfoItemIdentifier(
+						externalReferenceCode,
+						group2.getExternalReferenceCode())),
+				objectEntry2),
 			serviceContext);
 	}
 

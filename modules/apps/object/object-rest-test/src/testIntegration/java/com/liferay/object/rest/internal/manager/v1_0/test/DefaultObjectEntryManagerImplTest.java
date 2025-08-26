@@ -6052,7 +6052,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),
-			ListUtil.fromArray(objectEntry1));
+			ListUtil.fromArray(
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry1.getId(), 1)));
 
 		ObjectEntry objectEntry2 = _updateObjectEntryVersion(
 			_objectDefinition1, objectEntry1, 2);
@@ -6066,7 +6068,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),
-			ListUtil.fromArray(objectEntry1, objectEntry2));
+			ListUtil.fromArray(
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry1.getId(), 1),
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry2.getId(), 2)));
 
 		// Site scope
 
@@ -6079,7 +6085,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),
-			ListUtil.fromArray(objectEntry1));
+			ListUtil.fromArray(
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry1.getId(), 1)));
 
 		objectEntry2 = _updateObjectEntryVersion(
 			_objectDefinition4, objectEntry1, 2);
@@ -6093,7 +6101,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),
-			ListUtil.fromArray(objectEntry1, objectEntry2));
+			ListUtil.fromArray(
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry1.getId(), 1),
+				_defaultObjectEntryManager.getObjectEntryByVersion(
+					dtoConverterContext, objectEntry2.getId(), 2)));
 	}
 
 	@FeatureFlag("LPD-53981")

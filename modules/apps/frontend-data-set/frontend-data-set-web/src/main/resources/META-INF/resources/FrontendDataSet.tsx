@@ -101,8 +101,7 @@ const FrontendDataSetContent = ({
 	customRenderers,
 	customViews = '{}',
 	customViewsEnabled,
-	emptyState: emptyStateProp,
-	emptyFilteredState: emptyFilteredStateProp,
+	emptyState,
 	filters: initialFilters,
 	formId,
 	formName,
@@ -912,8 +911,7 @@ const FrontendDataSetContent = ({
 				) : (
 					<EmptyState
 						creationMenu={creationMenu}
-						emptyFilteredState={emptyFilteredStateProp}
-						emptyState={emptyStateProp}
+						emptyStateConfiguration={emptyState}
 						filters={filters}
 						onClearFilters={onClearFilters}
 						searchParam={searchParam}

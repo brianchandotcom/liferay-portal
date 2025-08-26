@@ -12,8 +12,7 @@ import {IFrontendDataSetProps} from '../utils/types';
 
 interface IEmptyStateProps {
 	creationMenu?: IFrontendDataSetProps['creationMenu'];
-	emptyFilteredState?: IFrontendDataSetProps['emptyFilteredState'];
-	emptyState?: IFrontendDataSetProps['emptyState'];
+	emptyStateConfiguration?: IFrontendDataSetProps['emptyState'];
 	filters: any[];
 	onClearFilters: () => void;
 	searchParam: string;
@@ -26,8 +25,7 @@ const getImgSrc = (image?: string) =>
 
 const EmptyState = ({
 	creationMenu,
-	emptyFilteredState,
-	emptyState,
+	emptyStateConfiguration,
 	filters,
 	onClearFilters,
 	searchParam,
@@ -36,7 +34,7 @@ const EmptyState = ({
 	const hasSearch = !!searchParam;
 
 	if (hasActiveFilters && hasSearch) {
-		const config = emptyFilteredState?.searchAndFilters;
+		const config = emptyStateConfiguration?.filtered?.searchAndFilters;
 
 		return (
 			<ClayEmptyState
@@ -58,7 +56,7 @@ const EmptyState = ({
 		);
 	}
 	else if (hasActiveFilters) {
-		const config = emptyFilteredState?.filters;
+		const config = emptyStateConfiguration?.filtered?.filters;
 
 		return (
 			<ClayEmptyState
@@ -78,7 +76,7 @@ const EmptyState = ({
 		);
 	}
 	else if (hasSearch) {
-		const config = emptyFilteredState?.search;
+		const config = emptyStateConfiguration?.filtered?.search;
 
 		return (
 			<ClayEmptyState
@@ -101,12 +99,13 @@ const EmptyState = ({
 	return (
 		<ClayEmptyState
 			description={
-				emptyState?.description ??
+				emptyStateConfiguration?.description ??
 				Liferay.Language.get('sorry,-no-results-were-found')
 			}
-			imgSrc={getImgSrc(emptyState?.image)}
+			imgSrc={getImgSrc(emptyStateConfiguration?.image)}
 			title={
-				emptyState?.title ?? Liferay.Language.get('no-results-found')
+				emptyStateConfiguration?.title ??
+				Liferay.Language.get('no-results-found')
 			}
 		>
 			{creationMenu && <CreationMenu {...creationMenu} inEmptyState />}

@@ -7,9 +7,10 @@ provider "aws" {
 	region=var.region
 }
 provider "kubernetes" {
-	cluster_ca_certificate=base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-	host=data.aws_eks_cluster.cluster.endpoint
-	token=data.aws_eks_cluster_auth.cluster_auth.token
+	config_paths=[
+		var.kube_config_path,
+		"/tmp/this-kubeconfig-file-does-not-exist",
+	]
 }
 terraform {
 	required_providers {

@@ -20,6 +20,9 @@ variable "deployment_namespace" {
 variable "is_restoring" {
 	default=false
 }
+variable "kube_config_path" {
+	default="~/.kube/config"
+}
 variable "private_subnet_ids" {
 	type=list(string)
 }

@@ -595,14 +595,14 @@ public class FragmentEntryProcessorHelperTest {
 			).put(
 				"fieldId", "myText"
 			),
+			depotEntry1.getGroupId(),
 			new InfoItemFieldMapped(
 				"myText",
 				new InfoItemReference(
 					objectDefinition.getClassName(),
 					new ClassPKInfoItemIdentifier(
 						objectEntry1.getObjectEntryId())),
-				objectEntry1),
-			serviceContext);
+				objectEntry1));
 
 		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -635,14 +635,14 @@ public class FragmentEntryProcessorHelperTest {
 			).put(
 				"fieldId", "myText"
 			),
+			depotEntry2.getGroupId(),
 			new InfoItemFieldMapped(
 				"myText",
 				new InfoItemReference(
 					objectDefinition.getClassName(),
 					new ClassPKInfoItemIdentifier(
 						objectEntry2.getObjectEntryId())),
-				objectEntry2),
-			serviceContext);
+				objectEntry2));
 
 		Group group1 = depotEntry1.getGroup();
 
@@ -660,14 +660,14 @@ public class FragmentEntryProcessorHelperTest {
 			).put(
 				"scopeExternalReferenceCode", group1.getExternalReferenceCode()
 			),
+			depotEntry1.getGroupId(),
 			new InfoItemFieldMapped(
 				"myText",
 				new InfoItemReference(
 					objectDefinition.getClassName(),
 					new ClassPKInfoItemIdentifier(
 						objectEntry1.getObjectEntryId())),
-				objectEntry1),
-			serviceContext);
+				objectEntry1));
 
 		Group group2 = depotEntry2.getGroup();
 
@@ -685,14 +685,14 @@ public class FragmentEntryProcessorHelperTest {
 			).put(
 				"scopeExternalReferenceCode", group2.getExternalReferenceCode()
 			),
+			depotEntry2.getGroupId(),
 			new InfoItemFieldMapped(
 				"myText",
 				new InfoItemReference(
 					objectDefinition.getClassName(),
 					new ClassPKInfoItemIdentifier(
 						objectEntry1.getObjectEntryId())),
-				objectEntry1),
-			serviceContext);
+				objectEntry1));
 
 		_testGetInfoItemFieldMapped(
 			JSONUtil.put(
@@ -706,6 +706,7 @@ public class FragmentEntryProcessorHelperTest {
 			).put(
 				"scopeExternalReferenceCode", group1.getExternalReferenceCode()
 			),
+			depotEntry1.getGroupId(),
 			new InfoItemFieldMapped(
 				"myText",
 				new InfoItemReference(
@@ -713,8 +714,7 @@ public class FragmentEntryProcessorHelperTest {
 					new ERCInfoItemIdentifier(
 						externalReferenceCode,
 						group1.getExternalReferenceCode())),
-				objectEntry1),
-			serviceContext);
+				objectEntry1));
 		_testGetInfoItemFieldMapped(
 			JSONUtil.put(
 				"className", objectDefinition.getClassName()
@@ -727,6 +727,7 @@ public class FragmentEntryProcessorHelperTest {
 			).put(
 				"scopeExternalReferenceCode", group2.getExternalReferenceCode()
 			),
+			depotEntry2.getGroupId(),
 			new InfoItemFieldMapped(
 				"myText",
 				new InfoItemReference(
@@ -734,8 +735,7 @@ public class FragmentEntryProcessorHelperTest {
 					new ERCInfoItemIdentifier(
 						externalReferenceCode,
 						group2.getExternalReferenceCode())),
-				objectEntry2),
-			serviceContext);
+				objectEntry2));
 	}
 
 	@Test
@@ -1139,20 +1139,27 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	private void _testGetInfoItemFieldMapped(
-		JSONObject editableValuesJSONObject,
-		InfoItemFieldMapped infoItemFieldMapped,
-		ServiceContext serviceContext) {
+			JSONObject editableValuesJSONObject, long groupId,
+			InfoItemFieldMapped infoItemFieldMapped)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+
+		_themeDisplay.setScopeGroupId(groupId);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+
+		serviceContext.setRequest(mockHttpServletRequest);
 
 		try {
-			MockHttpServletRequest mockHttpServletRequest =
-				new MockHttpServletRequest();
-
-			mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
-			mockHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, _themeDisplay);
-
-			serviceContext.setRequest(mockHttpServletRequest);
-
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			FragmentEntryProcessorContext fragmentEntryProcessorContext =

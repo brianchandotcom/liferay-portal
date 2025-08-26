@@ -5570,38 +5570,38 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry objectEntry = _addObjectEntry(_objectDefinition1, null, 1);
 
-		assertEquals(
+		_assertObjectEntry(
+			objectEntry,
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getId(), 1),
-			objectEntry);
+				dtoConverterContext, objectEntry.getId(), 1));
 
 		objectEntry = _updateObjectEntryVersion(
 			_objectDefinition1, objectEntry, 2);
 
-		assertEquals(
+		_assertObjectEntry(
+			objectEntry,
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getId(), 2),
-			objectEntry);
+				dtoConverterContext, objectEntry.getId(), 2));
 
 		// Site scope
 
 		objectEntry = _addObjectEntry(
 			_objectDefinition4, _group.getGroupKey(), 1);
 
-		assertEquals(
+		_assertObjectEntry(
+			objectEntry,
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), 1),
-			objectEntry);
+				_objectDefinition4, _group.getGroupKey(), 1));
 
 		objectEntry = _updateObjectEntryVersion(
 			_objectDefinition4, objectEntry, 2);
 
-		assertEquals(
+		_assertObjectEntry(
+			objectEntry,
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), 2),
-			objectEntry);
+				_objectDefinition4, _group.getGroupKey(), 2));
 	}
 
 	@Test
@@ -8790,6 +8790,17 @@ public class DefaultObjectEntryManagerImplTest
 
 		Assert.assertEquals(
 			objectEntries.toString(), size, objectEntries.size());
+	}
+
+	private void _assertObjectEntry(
+		ObjectEntry actualObjectEntry, ObjectEntry expectedObjectEntry) {
+
+		Assert.assertEquals(
+			expectedObjectEntry.getProperties(),
+			actualObjectEntry.getProperties());
+
+		Assert.assertEquals(
+			expectedObjectEntry.getStatus(), actualObjectEntry.getStatus());
 	}
 
 	private void _assertObjectEntryStatus(

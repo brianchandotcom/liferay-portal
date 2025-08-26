@@ -14,17 +14,17 @@ import React from 'react';
 import {ItemSelectorModal} from '../src/main/resources/META-INF/resources';
 
 type TestItem = {
-	id: number;
+	itemId: number;
 	name: string;
 };
 
 const mockFirstItem = {
-	id: 1,
+	itemId: 1,
 	name: 'First Item Name',
 };
 
 const mockSecondItem = {
-	id: 2,
+	itemId: 2,
 	name: 'Second Item Name',
 };
 
@@ -84,6 +84,7 @@ const ItemSelectorModalWrapper = ({
 							deltas: [{label: 20}],
 							initialDelta: 20,
 						},
+						selectedItemsKey: 'itemId',
 						selectionType: 'single',
 						views: [
 							{
@@ -99,7 +100,7 @@ const ItemSelectorModalWrapper = ({
 						],
 					},
 					itemNameLocator: 'name',
-					itemValueLocator: 'id',
+					itemValueLocator: 'itemId',
 					items: selectedItems,
 					observer,
 					onItemsChange,

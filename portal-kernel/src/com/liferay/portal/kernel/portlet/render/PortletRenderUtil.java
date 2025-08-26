@@ -5,13 +5,13 @@
 
 package com.liferay.portal.kernel.portlet.render;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
+import com.liferay.portal.kernel.hashed.files.HashedFilesRegistryUtil;
+import com.liferay.portal.kernel.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -39,7 +39,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 
 /**
  * @author Iván Zaera Avellón
@@ -189,110 +188,6 @@ public class PortletRenderUtil {
 		return allPortlets;
 	}
 
-	private static List<String> _getComboServletURLs(
-		Collection<PortletResourceAccessor> portletResourceAccessors,
-		Collection<Portlet> portlets, Predicate<String> predicate,
-		long timestamp, String urlPrefix, Set<String> visitedURLs) {
-
-		if (predicate == null) {
-			predicate = s -> true;
-		}
-
-		List<String> urls = new ArrayList<>();
-
-		StringBundler comboServletSB = new StringBundler();
-
-		for (Portlet portlet : portlets) {
-			for (PortletResourceAccessor portletResourceAccessor :
-					portletResourceAccessors) {
-
-				String contextPath = null;
-
-				if (portletResourceAccessor.isPortalResource()) {
-					contextPath = PortalUtil.getPathContext();
-				}
-				else {
-					contextPath =
-						PortalUtil.getPathProxy() + portlet.getContextPath();
-				}
-
-				Collection<String> portletResources =
-					portletResourceAccessor.get(portlet);
-
-				for (String portletResource : portletResources) {
-					if (!predicate.test(portletResource)) {
-						continue;
-					}
-
-					String prefix = null;
-
-					for (String specialPrefix : _specialPrefixes) {
-						if (portletResource.startsWith(specialPrefix)) {
-							portletResource = portletResource.substring(
-								specialPrefix.length());
-
-							prefix = specialPrefix;
-
-							break;
-						}
-					}
-
-					boolean absolute = HttpComponentsUtil.hasProtocol(
-						portletResource);
-
-					if (!absolute) {
-						portletResource = contextPath + portletResource;
-					}
-
-					if (Validator.isNotNull(prefix)) {
-						portletResource = prefix + portletResource;
-					}
-
-					if (visitedURLs.contains(portletResource)) {
-						continue;
-					}
-
-					visitedURLs.add(portletResource);
-
-					if (absolute || Validator.isNotNull(prefix)) {
-						urls.add(portletResource);
-					}
-					else {
-						comboServletSB.append(StringPool.AMPERSAND);
-
-						if (!portletResourceAccessor.isPortalResource()) {
-							comboServletSB.append(portlet.getPortletId());
-							comboServletSB.append(StringPool.COLON);
-						}
-
-						comboServletSB.append(
-							HtmlUtil.escapeURL(portletResource));
-
-						timestamp = Math.max(timestamp, portlet.getTimestamp());
-					}
-				}
-			}
-		}
-
-		if (comboServletSB.length() > 0) {
-			String url = urlPrefix + comboServletSB;
-
-			url = HttpComponentsUtil.addParameter(url, "t", timestamp);
-
-			urls.add(url);
-		}
-
-		return urls;
-	}
-
-	private static String _getMinifierType(URLType urlType) {
-		if (urlType == URLType.CSS) {
-			return "css";
-		}
-
-		return "js";
-	}
-
 	private static PortletRenderParts _getPortletRenderParts(
 		HttpServletRequest httpServletRequest, String portletHTML,
 		Portlet portlet, boolean portletOnLayout) {
@@ -306,19 +201,19 @@ public class PortletRenderUtil {
 			footerCssPaths = _getURLs(
 				httpServletRequest,
 				Arrays.asList(_FOOTER_PORTLET_CSS, _FOOTER_PORTAL_CSS),
-				Arrays.asList(portlet), URLType.CSS);
+				List.of(portlet), URLType.CSS);
 			footerJavaScriptPaths = _getURLs(
 				httpServletRequest,
 				Arrays.asList(_FOOTER_PORTLET_JS, _FOOTER_PORTAL_JS),
-				Arrays.asList(portlet), URLType.JAVASCRIPT);
+				List.of(portlet), URLType.JAVASCRIPT);
 			headerCssPaths = _getURLs(
 				httpServletRequest,
 				Arrays.asList(_HEADER_PORTLET_CSS, _HEADER_PORTAL_CSS),
-				Arrays.asList(portlet), URLType.CSS);
+				List.of(portlet), URLType.CSS);
 			headerJavaScriptPaths = _getURLs(
 				httpServletRequest,
 				Arrays.asList(_HEADER_PORTLET_JS, _HEADER_PORTAL_JS),
-				Arrays.asList(portlet), URLType.JAVASCRIPT);
+				List.of(portlet), URLType.JAVASCRIPT);
 		}
 
 		return new PortletRenderParts(
@@ -336,10 +231,47 @@ public class PortletRenderUtil {
 		return rootPortlet.getPortletId();
 	}
 
+	private static String _getStaticResourceURL(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
+		String unhashedFileURI, URLType urlType) {
+
+		String staticResourceURL = unhashedFileURI;
+
+		String hashedFileURI = HashedFilesRegistryUtil.get(unhashedFileURI);
+
+		if (hashedFileURI == null) {
+			if (PortalUtil.isRightToLeft(httpServletRequest)) {
+				int i = unhashedFileURI.lastIndexOf(StringPool.PERIOD);
+
+				if (i != -1) {
+					staticResourceURL =
+						unhashedFileURI.substring(0, i) + "_rtl" +
+							unhashedFileURI.substring(i);
+				}
+			}
+		}
+		else {
+			if (PortalUtil.isRightToLeft(httpServletRequest)) {
+				staticResourceURL = HashedFilesUtil.addNameSuffix(
+					hashedFileURI, "_rtl");
+			}
+			else {
+				staticResourceURL = hashedFileURI;
+			}
+		}
+
+		if (urlType == URLType.CSS) {
+			staticResourceURL += "?themeId=" + themeDisplay.getThemeId();
+		}
+
+		return staticResourceURL;
+	}
+
 	private static List<String> _getStaticURLs(
 		HttpServletRequest httpServletRequest,
 		Collection<PortletResourceAccessor> portletResourceAccessors,
-		Collection<Portlet> portlets, Set<String> visitedURLs) {
+		Collection<Portlet> portlets, URLType urlType,
+		Set<String> visitedURLs) {
 
 		List<String> urls = new ArrayList<>();
 
@@ -348,8 +280,6 @@ public class PortletRenderUtil {
 				WebKeys.THEME_DISPLAY);
 
 		for (Portlet portlet : portlets) {
-			Portlet rootPortlet = portlet.getRootPortlet();
-
 			for (PortletResourceAccessor portletResourceAccessor :
 					portletResourceAccessors) {
 
@@ -381,9 +311,9 @@ public class PortletRenderUtil {
 					}
 
 					if (!HttpComponentsUtil.hasProtocol(portletResource)) {
-						portletResource = PortalUtil.getStaticResourceURL(
-							httpServletRequest, contextPath + portletResource,
-							rootPortlet.getTimestamp());
+						portletResource = _getStaticResourceURL(
+							httpServletRequest, themeDisplay,
+							contextPath + portletResource, urlType);
 					}
 
 					if (!portletResource.contains(Http.PROTOCOL_DELIMITER)) {
@@ -415,26 +345,6 @@ public class PortletRenderUtil {
 		Collection<PortletResourceAccessor> portletResourceAccessors,
 		Collection<Portlet> portlets, URLType urlType) {
 
-		boolean fastLoad;
-		Predicate<String> predicate = null;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (urlType == URLType.CSS) {
-			fastLoad = themeDisplay.isThemeCssFastLoad();
-		}
-		else if (urlType == URLType.JAVASCRIPT) {
-			fastLoad = themeDisplay.isThemeJsFastLoad();
-
-			predicate = resource -> !themeDisplay.isIncludedJs(resource);
-		}
-		else {
-			throw new UnsupportedOperationException(
-				"Unsupported URL type " + urlType);
-		}
-
 		Set<String> visitedURLs = (Set<String>)httpServletRequest.getAttribute(
 			WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 
@@ -445,29 +355,9 @@ public class PortletRenderUtil {
 				WebKeys.PORTLET_RESOURCE_STATIC_URLS, visitedURLs);
 		}
 
-		List<String> urls = null;
-
-		if (fastLoad) {
-			Theme theme = themeDisplay.getTheme();
-
-			urls = _getComboServletURLs(
-				portletResourceAccessors, portlets, predicate,
-				theme.getTimestamp(),
-				PortalUtil.getStaticResourceURL(
-					httpServletRequest,
-					themeDisplay.getCDNDynamicResourcesHost() +
-						themeDisplay.getPathContext() + "/combo",
-					StringBundler.concat(
-						"minifierType=", _getMinifierType(urlType), "&themeId=",
-						themeDisplay.getThemeId()),
-					-1),
-				visitedURLs);
-		}
-		else {
-			urls = _getStaticURLs(
-				httpServletRequest, portletResourceAccessors, portlets,
-				visitedURLs);
-		}
+		List<String> urls = _getStaticURLs(
+			httpServletRequest, portletResourceAccessors, portlets, urlType,
+			visitedURLs);
 
 		for (int i = 0; i < urls.size(); i++) {
 			String url = urls.get(i);

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -182,6 +183,25 @@ public class ViewSharedWithMeSectionDisplayContext {
 				HashMapBuilder.<String, Object>put(
 					"className", ObjectEntryFolder.class.getName()
 				).build()));
+	}
+
+	public Map<String, Object> getToolbarProps() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"title",
+			() -> {
+				Layout layout = _themeDisplay.getLayout();
+
+				if (layout == null) {
+					return null;
+				}
+
+				return layout.getName(_themeDisplay.getLocale(), true);
+			}
+		).put(
+			"toolbarClassName", "section-toolbar tbar-light"
+		).put(
+			"toolbarTitleClassName", "section-toolbar-title"
+		).build();
 	}
 
 	private String _getBasicDocumentClassName() {

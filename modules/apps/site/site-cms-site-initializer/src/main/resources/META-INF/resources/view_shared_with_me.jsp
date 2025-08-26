@@ -11,18 +11,27 @@
 ViewSharedWithMeSectionDisplayContext viewSharedWithMeSectionDisplayContext = (ViewSharedWithMeSectionDisplayContext)request.getAttribute(ViewSharedWithMeSectionDisplayContext.class.getName());
 %>
 
-<div class="cms-section custom-empty-state">
-	<frontend-data-set:headless-display
-		additionalProps="<%= viewSharedWithMeSectionDisplayContext.getAdditionalProps() %>"
-		apiURL="<%= viewSharedWithMeSectionDisplayContext.getAPIURL() %>"
-		emptyState="<%= viewSharedWithMeSectionDisplayContext.getEmptyState() %>"
-		fdsActionDropdownItems="<%= viewSharedWithMeSectionDisplayContext.getFDSActionDropdownItems() %>"
-		formName="fm"
-		id="<%= CMSSiteInitializerFDSNames.SHARED_WITH_ME %>"
-		itemsPerPage="<%= 20 %>"
-		propsTransformer="{SharedWithMeFDSPropsTransformer} from site-cms-site-initializer"
-		selectedItemsKey="id"
-		selectionType="multiple"
-		style="fluid"
-	/>
+<div>
+	<div>
+		<react:component
+			module="{Toolbar} from site-cms-site-initializer"
+			props="<%= viewSharedWithMeSectionDisplayContext.getToolbarProps() %>"
+		/>
+	</div>
+
+	<div class="cms-section custom-empty-state">
+		<frontend-data-set:headless-display
+			additionalProps="<%= viewSharedWithMeSectionDisplayContext.getAdditionalProps() %>"
+			apiURL="<%= viewSharedWithMeSectionDisplayContext.getAPIURL() %>"
+			emptyState="<%= viewSharedWithMeSectionDisplayContext.getEmptyState() %>"
+			fdsActionDropdownItems="<%= viewSharedWithMeSectionDisplayContext.getFDSActionDropdownItems() %>"
+			formName="fm"
+			id="<%= CMSSiteInitializerFDSNames.SHARED_WITH_ME %>"
+			itemsPerPage="<%= 20 %>"
+			propsTransformer="{SharedWithMeFDSPropsTransformer} from site-cms-site-initializer"
+			selectedItemsKey="id"
+			selectionType="multiple"
+			style="fluid"
+		/>
+	</div>
 </div>

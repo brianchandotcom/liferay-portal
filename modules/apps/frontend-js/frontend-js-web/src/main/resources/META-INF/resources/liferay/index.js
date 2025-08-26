@@ -207,6 +207,13 @@ Liferay.Util.checkAll = (...args) => {
 		})
 		.catch(() => {});
 };
+Liferay.Util.checkAllBox = (...args) => {
+	import('frontend-js-web/legacy')
+		.then(({checkAllBox}) => {
+			checkAllBox(...args);
+		})
+		.catch(() => {});
+};
 Liferay.Util.runScriptsInElement = runScriptsInElement;
 
 /**
@@ -367,6 +374,14 @@ Liferay.Util.checkAll = (...args) => {
 			'/o/frontend-js-web/__liferay__/legacy.js'
 	).then(({checkAll}) => {
 		checkAll(...args);
+	});
+};
+Liferay.Util.checkAllBox = (...args) => {
+	import(
+		themeDisplay.getPathContext() +
+			'/o/frontend-js-web/__liferay__/legacy.js'
+	).then(({checkAllBox}) => {
+		checkAllBox(...args);
 	});
 };
 Liferay.Util.Cookie = Cookie;

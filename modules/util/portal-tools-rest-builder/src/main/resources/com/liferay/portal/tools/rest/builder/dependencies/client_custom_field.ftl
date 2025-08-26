@@ -36,6 +36,10 @@ public class CustomField {
 		return Objects.equals(toString(), customField.toString());
 	}
 
+	public Integer getAttributeType() {
+		return attributeType;
+	}
+
 	public CustomValue getCustomValue() {
 		return customValue;
 	}
@@ -53,6 +57,21 @@ public class CustomField {
 		String string = toString();
 
 		return string.hashCode();
+	}
+
+	public void setAttributeType(Integer attributeType) {
+		this.attributeType = attributeType;
+	}
+
+	public void setAttributeType(
+		UnsafeSupplier<Integer, Exception> attributeTypeUnsafeSupplier) {
+
+		try {
+			attributeType = attributeTypeUnsafeSupplier.get();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	public void setCustomValue(CustomValue customValue) {
@@ -102,6 +121,7 @@ public class CustomField {
 		return CustomFieldJSONParser.toJSON(this);
 	}
 
+	protected Integer attributeType;
 	protected CustomValue customValue;
 	protected String dataType;
 	protected String name;
@@ -117,6 +137,16 @@ public class CustomField {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("{");
+
+			if (customField.getAttributeType() != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append("\"attributeType\": ");
+
+				sb.append(String.valueOf(customField.getAttributeType()));
+			}
 
 			if (customField.getCustomValue() != null) {
 				if (sb.length() > 1) {
@@ -173,6 +203,9 @@ public class CustomField {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "attributeType")) {
+				return false;
+			}
 			if (Objects.equals(jsonParserFieldName, "customValue")) {
 				return false;
 			}
@@ -191,7 +224,12 @@ public class CustomField {
 			CustomField customField, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "customValue")) {
+			if (Objects.equals(jsonParserFieldName, "attributeType")) {
+				if (jsonParserFieldValue != null) {
+					customField.setAttributeType((Integer)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customValue")) {
 				if (jsonParserFieldValue != null) {
 					customField.setCustomValue(
 						CustomValue.toDTO((String)jsonParserFieldValue));

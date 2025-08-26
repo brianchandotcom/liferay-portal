@@ -43,6 +43,17 @@ public class CustomField implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(CustomField.class, json);
 	}
 
+	@Schema(description = "The field attribute type.")
+	public int getAttributeType() {
+		if (_dataTypeSupplier != null) {
+			attributeType = _attributeTypeSupplier.get();
+
+			_attributeTypeSupplier = null;
+		}
+
+		return attributeType;
+	}
+
 	@Schema(description = "The field's value.")
 	@Valid
 	public CustomValue getCustomValue() {
@@ -77,6 +88,29 @@ public class CustomField implements Serializable {
 		}
 
 		return name;
+	}
+
+	public void setAttributeType(int attributeType) {
+		this.attributeType = attributeType;
+
+		_attributeTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAttributeType(
+		UnsafeSupplier<Integer, Exception> attributeTypeUnsafeSupplier) {
+
+		_attributeTypeSupplier = () -> {
+			try {
+				return attributeTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
 	}
 
 	public void setCustomValue(CustomValue customValue) {
@@ -153,6 +187,10 @@ public class CustomField implements Serializable {
 	)
 	public String xClassName;
 
+	@GraphQLField(description = "The field attribute type.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected int attributeType;
+
 	@GraphQLField(description = "The field's value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomValue customValue;
@@ -166,6 +204,9 @@ public class CustomField implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	@JsonIgnore
+	private Supplier<Integer> _attributeTypeSupplier;
 
 	@JsonIgnore
 	private Supplier<CustomValue> _customValueSupplier;

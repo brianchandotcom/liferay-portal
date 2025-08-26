@@ -21,8 +21,10 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.internal.constants.CompanyGroupConstants;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -34,7 +36,7 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) {
-		_bundleContext.registerService(
+		_serviceRegistration = _bundleContext.registerService(
 			FeatureFlagListener.class,
 			(companyId, featureFlagKey, enabled) -> {
 				try {
@@ -72,6 +74,13 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		_bundleContext = bundleContext;
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddCompanyGroupPortalInstanceLifecycleListener.class);
 
@@ -82,6 +91,8 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	private ServiceRegistration<FeatureFlagListener> _serviceRegistration;
 
 	@Reference
 	private UserLocalService _userLocalService;

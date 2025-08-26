@@ -49,8 +49,8 @@ public class BundleScriptAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
-			mockHttpServletRequest());
+			mockCacheHelper(), mockHashedFilesRegistry(),
+			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
 
 		_bundleScriptAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forBundleScript(mockBundle(), "index.js");

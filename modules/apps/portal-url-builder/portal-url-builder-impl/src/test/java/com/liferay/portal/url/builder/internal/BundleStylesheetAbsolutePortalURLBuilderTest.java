@@ -49,8 +49,8 @@ public class BundleStylesheetAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
-			mockHttpServletRequest());
+			mockCacheHelper(), mockHashedFilesRegistry(),
+			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
 
 		_bundleStylesheetAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forBundleStylesheet(

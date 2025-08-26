@@ -357,8 +357,8 @@ public class LiferayContextController extends ContextController {
 
 		if (_filterRegistrations.isEmpty()) {
 			return new LiferayDispatchTargets(
-				this, endpointRegistration, servletName, requestURI,
-				servletPath, pathInfo, queryString);
+				endpointRegistration, this, pathInfo, queryString, requestURI,
+				servletName, servletPath);
 		}
 
 		if (requestURI != null) {
@@ -386,8 +386,8 @@ public class LiferayContextController extends ContextController {
 		}
 
 		return new LiferayDispatchTargets(
-			this, endpointRegistration, matchingFilterRegistrations,
-			servletName, requestURI, servletPath, pathInfo, queryString);
+			endpointRegistration, this, matchingFilterRegistrations, pathInfo,
+			queryString, requestURI, servletName, servletPath);
 	}
 
 	@Override

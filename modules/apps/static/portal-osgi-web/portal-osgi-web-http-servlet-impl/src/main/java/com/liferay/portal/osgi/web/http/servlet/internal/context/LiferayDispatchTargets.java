@@ -49,39 +49,39 @@ import org.eclipse.equinox.http.servlet.internal.util.Params;
 public class LiferayDispatchTargets extends DispatchTargets {
 
 	public LiferayDispatchTargets(
-		LiferayContextController liferayContextController,
 		EndpointRegistration<?> endpointRegistration,
-		List<FilterRegistration> matchingFilterRegistrations,
-		String servletName, String requestURI, String servletPath,
-		String pathInfo, String queryString) {
+		LiferayContextController liferayContextController,
+		List<FilterRegistration> matchingFilterRegistrations, String pathInfo,
+		String queryString, String requestURI, String servletName,
+		String servletPath) {
 
 		super(
 			liferayContextController, endpointRegistration,
 			matchingFilterRegistrations, servletName, requestURI, servletPath,
 			pathInfo, queryString);
 
-		_liferayContextController = liferayContextController;
 		_endpointRegistration = endpointRegistration;
+		_liferayContextController = liferayContextController;
 		_matchingFilterRegistrations = matchingFilterRegistrations;
-		_servletName = servletName;
-		_requestURI = requestURI;
-		_servletPath = GetterUtil.getString(servletPath);
 		_pathInfo = pathInfo;
 		_queryString = queryString;
+		_requestURI = requestURI;
+		_servletName = servletName;
+		_servletPath = GetterUtil.getString(servletPath);
 
-		_specialOverides = new ConcurrentHashMap();
+		_specialOverrides = new ConcurrentHashMap<>();
 	}
 
 	public LiferayDispatchTargets(
-		LiferayContextController liferayContextController,
-		EndpointRegistration<?> endpointRegistration, String servletName,
-		String requestURI, String servletPath, String pathInfo,
-		String queryString) {
+		EndpointRegistration<?> endpointRegistration,
+		LiferayContextController liferayContextController, String pathInfo,
+		String queryString, String requestURI, String servletName,
+		String servletPath) {
 
 		this(
-			liferayContextController, endpointRegistration,
-			Collections.emptyList(), servletName, requestURI, servletPath,
-			pathInfo, queryString);
+			endpointRegistration, liferayContextController,
+			Collections.emptyList(), pathInfo, queryString, requestURI,
+			servletName, servletPath);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 
 	@Override
 	public boolean doDispatch(
-			HttpServletRequest originalHttpServletRequest,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String path,
 			DispatcherType requestedDispatcherType)
 		throws IOException, ServletException {
@@ -121,7 +121,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		setDispatcherType(requestedDispatcherType);
 
 		RequestAttributeSetter requestAttributeSetter =
-			new RequestAttributeSetter(originalHttpServletRequest);
+			new RequestAttributeSetter(httpServletRequest);
 
 		if (_dispatcherType == DispatcherType.INCLUDE) {
 			requestAttributeSetter.setAttribute(
@@ -140,7 +140,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 				getServletPath());
 		}
 		else if (_dispatcherType == DispatcherType.FORWARD) {
-			if (!originalHttpServletRequest.isAsyncStarted() &&
+			if (!httpServletRequest.isAsyncStarted() &&
 				!httpServletResponse.isCommitted()) {
 
 				httpServletResponse.resetBuffer();
@@ -148,50 +148,49 @@ public class LiferayDispatchTargets extends DispatchTargets {
 
 			requestAttributeSetter.setAttribute(
 				JavaConstants.JAKARTA_SERVLET_FORWARD_CONTEXT_PATH,
-				originalHttpServletRequest.getContextPath());
+				httpServletRequest.getContextPath());
 			requestAttributeSetter.setAttribute(
 				JavaConstants.JAKARTA_SERVLET_FORWARD_PATH_INFO,
-				originalHttpServletRequest.getPathInfo());
+				httpServletRequest.getPathInfo());
 			requestAttributeSetter.setAttribute(
 				JavaConstants.JAKARTA_SERVLET_FORWARD_QUERY_STRING,
-				originalHttpServletRequest.getQueryString());
+				httpServletRequest.getQueryString());
 			requestAttributeSetter.setAttribute(
 				JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI,
-				originalHttpServletRequest.getRequestURI());
+				httpServletRequest.getRequestURI());
 			requestAttributeSetter.setAttribute(
 				JavaConstants.JAKARTA_SERVLET_FORWARD_SERVLET_PATH,
-				originalHttpServletRequest.getServletPath());
+				httpServletRequest.getServletPath());
 		}
 
-		HttpServletRequest httpServletRequest = originalHttpServletRequest;
+		HttpServletRequest newHttpServletRequest = httpServletRequest;
 
 		HttpServletRequestWrapperImpl httpServletRequestWrapperImpl =
 			HttpServletRequestWrapperImpl.findHttpRuntimeRequest(
-				originalHttpServletRequest);
+				httpServletRequest);
+
+		if (httpServletRequestWrapperImpl == null) {
+			httpServletRequestWrapperImpl = new HttpServletRequestWrapperImpl(
+				httpServletRequest);
+
+			newHttpServletRequest = httpServletRequestWrapperImpl;
+
+			httpServletResponse = new HttpServletResponseWrapperImpl(
+				httpServletResponse);
+		}
 
 		try {
-			if (httpServletRequestWrapperImpl == null) {
-				httpServletRequestWrapperImpl =
-					new HttpServletRequestWrapperImpl(
-						originalHttpServletRequest);
-
-				httpServletRequest = httpServletRequestWrapperImpl;
-
-				httpServletResponse = new HttpServletResponseWrapperImpl(
-					httpServletResponse);
-			}
-
 			httpServletRequestWrapperImpl.push(this);
 
 			ResponseStateHandler responseStateHandler =
 				new ResponseStateHandler(
-					httpServletRequest, httpServletResponse, this);
+					newHttpServletRequest, httpServletResponse, this);
 
 			responseStateHandler.processRequest();
 
 			if ((_dispatcherType == DispatcherType.FORWARD) &&
 				!httpServletResponse.isCommitted() &&
-				!httpServletRequest.isAsyncStarted()) {
+				!newHttpServletRequest.isAsyncStarted()) {
 
 				try {
 					httpServletResponse.flushBuffer();
@@ -284,7 +283,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 
 	@Override
 	public Map<String, Object> getSpecialOverides() {
-		return _specialOverides;
+		return _specialOverrides;
 	}
 
 	@Override
@@ -316,7 +315,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 	}
 
 	private Map<String, String[]> _parseParameterMap(String queryString) {
-		if ((queryString == null) || (queryString.length() == 0)) {
+		if ((queryString == null) || queryString.isEmpty()) {
 			return new HashMap<>();
 		}
 
@@ -377,7 +376,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 	private final String _requestURI;
 	private final String _servletName;
 	private final String _servletPath;
-	private final Map<String, Object> _specialOverides;
+	private final Map<String, Object> _specialOverrides;
 	private String _string;
 
 	private static class RequestAttributeSetter implements Closeable {

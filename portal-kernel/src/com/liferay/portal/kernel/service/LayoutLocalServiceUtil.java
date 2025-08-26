@@ -1391,6 +1391,15 @@ public class LayoutLocalServiceUtil {
 		return getService().getNextLayoutId(groupId, privateLayout);
 	}
 
+	public static Layout getOrAddEmptyLayout(
+			String externalReferenceCode, long userId, long groupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return getService().getOrAddEmptyLayout(
+			externalReferenceCode, userId, groupId, serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

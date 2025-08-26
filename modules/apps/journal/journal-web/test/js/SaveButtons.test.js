@@ -60,6 +60,19 @@ describe('SaveButtons', () => {
 			})
 		);
 
+		global.Liferay.componentReady = jest.fn().mockResolvedValue({
+			reactComponentRef: {current: {validate: () => true}},
+		});
+
+		global.Liferay.Form = {
+			get: () => ({
+				formValidator: {
+					hasErrors: jest.fn().mockReturnValue(false),
+					validate: jest.fn().mockReturnValue(true),
+				},
+			}),
+		};
+
 		global.Liferay.Workflow = {ACTION_PUBLISH: null};
 	});
 

@@ -183,10 +183,6 @@ export default function SaveButtons({
 	const validateRequiredFields = async (formId) => {
 		const formValidator = Liferay.Form?.get(formId)?.formValidator;
 
-		if (!formValidator) {
-			return true;
-		}
-
 		formValidator.validate();
 
 		if (formValidator.hasErrors()) {
@@ -197,11 +193,7 @@ export default function SaveButtons({
 			`${portletNamespace}dataEngineLayoutRenderer`
 		);
 
-		if (renderer?.reactComponentRef?.current?.validate) {
-			return renderer.reactComponentRef.current.validate();
-		}
-
-		return true;
+		return renderer.reactComponentRef.current.validate();
 	};
 
 	useEffect(() => {

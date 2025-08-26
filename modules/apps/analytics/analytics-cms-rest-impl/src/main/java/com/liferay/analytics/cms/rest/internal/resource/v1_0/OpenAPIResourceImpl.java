@@ -89,6 +89,8 @@ public class OpenAPIResourceImpl {
 
 			add(ConnectionInfoResourceImpl.class);
 
+			add(ExpiredAssetResourceImpl.class);
+
 			add(InventoryAnalysisResourceImpl.class);
 
 			add(ObjectEntryAcquisitionChannelResourceImpl.class);

@@ -110,7 +110,8 @@ public class MailMessageListener extends BaseMessageListener {
 
 			MailEngine.send(
 				_mailService, mailMessage,
-				_mailSettingSystemConfiguration.batchSize());
+				_mailSettingSystemConfiguration.batchSize(),
+				_mailSettingSystemConfiguration.throwsExceptionOnFailure());
 		}
 	}
 

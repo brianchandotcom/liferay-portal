@@ -284,6 +284,8 @@ public interface PortletDataHandler {
 
 	public boolean isDataSiteLevel();
 
+	public boolean isDataDepotLevel();
+
 	public boolean isDisplayPortlet();
 
 	public boolean isEmptyControlsAllowed();

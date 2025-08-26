@@ -8,11 +8,11 @@ package com.liferay.frontend.js.web.internal.servlet.filter;
 import com.liferay.frontend.js.web.internal.frontend.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.frontend.resource.handler.FrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.frontend.resource.handler.HashedFileFrontendResourceRequestHandler;
-import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
@@ -69,10 +69,6 @@ public class FrontendResourceFilter extends BasePortalFilter {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_hashedFilesRegistry = new HashedFilesRegistry(bundleContext);
-
-		HashedFilesRegistry.setHashedFilesRegistry(_hashedFilesRegistry);
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ServletContext.class, null,
 			(serviceReference, emitter) -> {
@@ -107,12 +103,6 @@ public class FrontendResourceFilter extends BasePortalFilter {
 	@Deactivate
 	protected void deactivate() {
 		_frontendResourceRequestHandlers.clear();
-
-		HashedFilesRegistry.setHashedFilesRegistry(null);
-
-		_hashedFilesRegistry.close();
-
-		_hashedFilesRegistry = null;
 
 		_serviceTrackerMap.close();
 
@@ -208,6 +198,8 @@ public class FrontendResourceFilter extends BasePortalFilter {
 
 	private final List<FrontendResourceRequestHandler>
 		_frontendResourceRequestHandlers = new ArrayList<>();
+
+	@Reference
 	private HashedFilesRegistry _hashedFilesRegistry;
 
 	@Reference

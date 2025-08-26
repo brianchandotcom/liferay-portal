@@ -48,6 +48,8 @@ export default async function main() {
 
 	const endConfig = Date.now();
 
+	await Promise.all([processCSSFiles(), processSassFiles()]);
+
 	await Promise.all([
 
 		// JavaScript exports bundling
@@ -96,14 +98,6 @@ export default async function main() {
 			projectEntryPoints,
 			projectExports
 		),
-
-		// CSS processing
-
-		processCSSFiles(),
-		processSassFiles(),
-
-		// Rest of legacy build
-
 	]);
 
 	await writeTimings(start, endConfig);

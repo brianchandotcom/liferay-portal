@@ -14,7 +14,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -42,7 +41,7 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		HttpServletRequest httpServletRequest, Language language,
 		UserGroupLocalService userGroupLocalService,
 		UserLocalService userLocalService,
-		ModelResourcePermission<User> userModelResourcePermission) {
+		ModelResourcePermission<Group> groupModelResourcePermission) {
 
 		_depotEntryLocalService = depotEntryLocalService;
 		_groupId = groupId;
@@ -51,7 +50,7 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		_language = language;
 		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
-		_userModelResourcePermission = userModelResourcePermission;
+		_groupModelResourcePermission = groupModelResourcePermission;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -156,7 +155,7 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 	}
 
 	private boolean _hasAssignMembersPermission() throws Exception {
-		return _userModelResourcePermission.contains(
+		return _groupModelResourcePermission.contains(
 			_themeDisplay.getPermissionChecker(), _groupId,
 			ActionKeys.ASSIGN_MEMBERS);
 	}
@@ -164,11 +163,11 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private final long _groupId;
 	private final GroupLocalService _groupLocalService;
+	private final ModelResourcePermission<Group> _groupModelResourcePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final ThemeDisplay _themeDisplay;
 	private final UserGroupLocalService _userGroupLocalService;
 	private final UserLocalService _userLocalService;
-	private final ModelResourcePermission<User> _userModelResourcePermission;
 
 }

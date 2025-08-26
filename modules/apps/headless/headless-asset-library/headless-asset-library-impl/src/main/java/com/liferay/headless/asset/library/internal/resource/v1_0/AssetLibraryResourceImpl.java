@@ -24,7 +24,6 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -596,7 +595,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				HashMapBuilder.put(
 					"assign-members",
 					() -> {
-						if (!_userModelResourcePermission.contains(
+						if (!_groupModelResourcePermission.contains(
 								PermissionThreadLocal.getPermissionChecker(),
 								depotEntry.getGroupId(),
 								ActionKeys.ASSIGN_MEMBERS)) {
@@ -652,7 +651,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				).put(
 					"view-members",
 					() -> {
-						if (_userModelResourcePermission.contains(
+						if (_groupModelResourcePermission.contains(
 								PermissionThreadLocal.getPermissionChecker(),
 								depotEntry.getGroupId(),
 								ActionKeys.ASSIGN_MEMBERS)) {
@@ -750,8 +749,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	private GroupLocalService _groupLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+		target = "(model.class.name=com.liferay.portal.kernel.model.Group)"
 	)
-	private ModelResourcePermission<User> _userModelResourcePermission;
+	private ModelResourcePermission<Group> _groupModelResourcePermission;
 
 }

@@ -1,18 +1,4 @@
 {
 	"name": "Administration",
-	"taxonomyCategoryProperties": [
-		{
-			"key": "section",
-			"value": "getting-started"
-		},
-		{
-			"key": "subtitle",
-			"value": "learn-more-about-project-administration-within-the-customer-portal"
-		},
-		{
-			"key": "thumbnail",
-			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/service_levels.svg$]"
-		}
-	],
 	"viewableBy": "Anyone"
 }

@@ -9,7 +9,6 @@ import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
-import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -17,7 +16,6 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -106,21 +104,13 @@ public class FeatureFlagsBagTest {
 				_featureFlagsBag.isEnabled(expectedFeatureFlag.getKey()));
 		}
 
-		String randomKey = _createKey();
-
-		Assert.assertFalse(_featureFlagsBag.isEnabled(randomKey));
-
-		PropsUtil.set(
-			FeatureFlagConstants.getKey(randomKey), Boolean.TRUE.toString());
-
-		Assert.assertTrue(_featureFlagsBag.isEnabled(randomKey));
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				FeatureFlagsBag.class.getName(), LoggerTestUtil.INFO)) {
 
 			String key = "LPS-9099";
 
-			_featureFlagsBag.isEnabled(key);
+			Assert.assertThrows(
+				RuntimeException.class, () -> _featureFlagsBag.isEnabled(key));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

@@ -15,7 +15,7 @@ resource "aws_iam_role" "this" {
 			]
 			Version="2012-10-17"
 		})
-	name=var.backup_service_assumed_role_name
+	name=var.aws_backup_service_assumed_iam_role_name
 }
 resource "aws_iam_role_policy_attachment" "this" {
 	for_each=toset(

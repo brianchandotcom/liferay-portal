@@ -1,4 +1,4 @@
-output "backup_service_assumed_role_arn" {
+output "aws_backup_service_assumed_iam_role_arn" {
 	value=aws_iam_role.this.arn
 }
 output "backup_vault_arn" {

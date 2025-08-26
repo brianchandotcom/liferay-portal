@@ -28,7 +28,7 @@ resource "aws_backup_selection" "this" {
 			value=var.deployment_name
 		}
 	}
-	iam_role_arn=var.backup_service_assumed_role_arn
+	iam_role_arn=var.aws_backup_service_assumed_iam_role_arn
 	name=var.backup_selection_name
 	plan_id=aws_backup_plan.this.id
 	resources=["*"]

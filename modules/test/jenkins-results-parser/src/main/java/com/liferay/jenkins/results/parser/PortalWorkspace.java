@@ -247,7 +247,7 @@ public class PortalWorkspace extends BaseWorkspace {
 
 	private void _configureBladeSamplesWorkspaceGitRepository() {
 		Boolean updated = _updateWorkspaceGitRepository(
-			"git-commit/blade-samples", "liferay-blade-samples");
+			"git-commit/liferay-blade-samples", "liferay-blade-samples");
 
 		if (!updated) {
 			_updateWorkspaceGitRepository(

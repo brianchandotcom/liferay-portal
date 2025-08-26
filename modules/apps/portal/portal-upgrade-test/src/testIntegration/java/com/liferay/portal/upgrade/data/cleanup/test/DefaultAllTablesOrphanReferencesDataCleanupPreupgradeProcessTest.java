@@ -53,9 +53,9 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 				StringBundler.concat(
 					"insert into ", _TABLE_NAME, " (mvccVersion, testId, ",
 					"companyId ) values (0, 0, '", _companyId1, "')"));
-			_insert(_companyId1);
-			_insert(_companyId1);
-			_insert(_companyId2);
+			_insertData(_companyId1);
+			_insertData(_companyId1);
+			_insertData(_companyId2);
 		};
 	}
 
@@ -111,7 +111,7 @@ public class DefaultAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			"companyId", "Company");
 	}
 
-	private void _insert(long companyId) throws Exception {
+	private void _insertData(long companyId) throws Exception {
 		db.runSQL(
 			connection,
 			StringBundler.concat(

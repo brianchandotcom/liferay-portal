@@ -55,8 +55,8 @@ public class ComboRequestAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
-			mockHttpServletRequest());
+			mockCacheHelper(), mockHashedFilesRegistry(),
+			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
 
 		Bundle bundle = Mockito.mock(Bundle.class);
 

@@ -51,7 +51,8 @@ public interface AbsolutePortalURLBuilder {
 		Bundle bundle, String relativeURL);
 
 	/**
-	 * Returns a URL builder for bundle stylesheets.
+	 * Returns a URL builder for a CSS stylesheet that doesn't target the
+	 * ECMAScript architecture.
 	 *
 	 * @param  bundle the bundle that contains the resource
 	 * @param  relativeURL the stylesheets relative URL
@@ -78,6 +79,18 @@ public interface AbsolutePortalURLBuilder {
 	 */
 	public ESModuleAbsolutePortalURLBuilder forESModule(
 		String webContextPath, String esModulePath);
+
+	/**
+	 * Returns a URL builder for a CSS stylesheet that has been created
+	 * targeting the ECMAScript architecture.
+	 *
+	 * @param  webContextPath the context path where the stylesheet lives
+	 * @param  stylesheetPath the module path (e.g. /clay_admin.css)
+	 * @return a URL builder
+	 * @review
+	 */
+	public ESStylesheetAbsolutePortalURLBuilder forESStylesheet(
+		String webContextPath, String esStylesheetPath);
 
 	/**
 	 * Returns a URL builder for portal images. Image resources live in {@code

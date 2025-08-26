@@ -7,6 +7,7 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
@@ -18,6 +19,7 @@ import com.liferay.portal.url.builder.BundleScriptAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.BundleStylesheetAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ComboRequestAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ESModuleAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.ESStylesheetAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortalImageAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortalMainResourceAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortletDependencyAbsolutePortalURLBuilder;
@@ -34,10 +36,11 @@ import org.osgi.framework.Bundle;
 public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 	public AbsolutePortalURLBuilderImpl(
-		CacheHelper cacheHelper, Portal portal,
-		HttpServletRequest httpServletRequest) {
+		CacheHelper cacheHelper, HashedFilesRegistry hashedFilesRegistry,
+		Portal portal, HttpServletRequest httpServletRequest) {
 
 		_cacheHelper = cacheHelper;
+		_hashedFilesRegistry = hashedFilesRegistry;
 		_portal = portal;
 		_httpServletRequest = httpServletRequest;
 
@@ -92,8 +95,30 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		String webContextPath, String esModulePath) {
 
 		return new ESModuleAbsolutePortalURLBuilderImpl(
-			esModulePath, _getCDNHost(_httpServletRequest), _httpServletRequest,
-			_pathModule, _pathProxy, webContextPath);
+			esModulePath, _getCDNHost(_httpServletRequest), _pathModule,
+			_pathProxy, webContextPath);
+	}
+
+	@Override
+	public ESStylesheetAbsolutePortalURLBuilder forESStylesheet(
+		String webContextPath, String esStylesheetPath) {
+
+		if (_portal.isRightToLeft(_httpServletRequest)) {
+			int i = esStylesheetPath.lastIndexOf(StringPool.PERIOD);
+
+			if (i == -1) {
+				esStylesheetPath += "_rtl";
+			}
+			else {
+				esStylesheetPath =
+					esStylesheetPath.substring(0, i) + "_rtl" +
+						esStylesheetPath.substring(i);
+			}
+		}
+
+		return new ESStylesheetAbsolutePortalURLBuilderImpl(
+			_getCDNHost(_httpServletRequest), esStylesheetPath,
+			_hashedFilesRegistry, _pathModule, _pathProxy, webContextPath);
 	}
 
 	@Override
@@ -172,6 +197,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		AbsolutePortalURLBuilderImpl.class);
 
 	private final CacheHelper _cacheHelper;
+	private final HashedFilesRegistry _hashedFilesRegistry;
 	private final HttpServletRequest _httpServletRequest;
 
 	/**

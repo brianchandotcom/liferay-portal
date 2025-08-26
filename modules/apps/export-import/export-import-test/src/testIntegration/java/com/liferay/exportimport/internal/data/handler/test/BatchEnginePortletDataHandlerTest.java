@@ -148,7 +148,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
-	@TestInfo("LPD-51604")
+	@TestInfo({"LPD-51604", "LPD-61995"})
 	public void testEnableLocalStaging() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 

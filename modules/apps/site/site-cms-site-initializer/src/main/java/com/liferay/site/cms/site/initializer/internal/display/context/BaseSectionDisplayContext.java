@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
+import com.liferay.translation.constants.TranslationPortletKeys;
 
 import jakarta.portlet.ActionRequest;
 
@@ -335,6 +336,44 @@ public abstract class BaseSectionDisplayContext {
 				"date-time", "version-history",
 				LanguageUtil.get(httpServletRequest, "view-history"), "get",
 				"versions", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					portal.getControlPanelPortletURL(
+						httpServletRequest, TranslationPortletKeys.TRANSLATION,
+						ActionRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/translation/import_translation"
+				).setParameter(
+					"className", "{entryClassName}"
+				).setParameter(
+					"classPK", "{embedded.id}"
+				).setParameter(
+					"groupId", "{embedded.scopeId}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"upload", "export-for-translation",
+				LanguageUtil.get(httpServletRequest, "export-for-translation"),
+				null, null, null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					portal.getControlPanelPortletURL(
+						httpServletRequest, TranslationPortletKeys.TRANSLATION,
+						ActionRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/translation/import_translation"
+				).setParameter(
+					"className", "{entryClassName}"
+				).setParameter(
+					"classPK", "{embedded.id}"
+				).setParameter(
+					"groupId", "{embedded.scopeId}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"download", "import-translation",
+				LanguageUtil.get(httpServletRequest, "import-translation"),
+				null, null, null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					portal.getControlPanelPortletURL(

@@ -866,7 +866,7 @@ public class LayoutsImporterTest {
 
 		try {
 			_layoutsImporter.importPageElement(
-				draftLayout, layoutStructure, layoutStructure.getMainItemId(),
+				TestPropsValues.getUserId(), draftLayout, layoutStructure, layoutStructure.getMainItemId(),
 				pageElementJSON, 0, true,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
@@ -914,7 +914,7 @@ public class LayoutsImporterTest {
 
 		try {
 			_layoutsImporter.importPageElement(
-				draftLayout, layoutStructure, layoutStructure.getMainItemId(),
+				TestPropsValues.getUserId(), draftLayout, layoutStructure, layoutStructure.getMainItemId(),
 				pageElementJSON, 0, true,
 				segmentsExperience.getSegmentsExperienceId());
 		}
@@ -954,7 +954,7 @@ public class LayoutsImporterTest {
 
 		try {
 			_layoutsImporter.importPageElement(
-				draftLayout, layoutStructure, layoutStructure.getMainItemId(),
+				TestPropsValues.getUserId(), draftLayout, layoutStructure, layoutStructure.getMainItemId(),
 				pageElementJSON, 0, true,
 				segmentsExperience.getSegmentsExperienceId());
 

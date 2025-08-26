@@ -2864,9 +2864,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				for (int i = 0; i < jsonArray.length(); i++) {
 					_layoutsImporter.importPageElement(
-						draftLayout, layoutStructure,
-						layoutStructure.getMainItemId(), jsonArray.getString(i),
-						i, true, segmentsExperienceId);
+						serviceContext.getUserId(), draftLayout,
+						layoutStructure, layoutStructure.getMainItemId(),
+						jsonArray.getString(i), i, true, segmentsExperienceId);
 				}
 			}
 		}

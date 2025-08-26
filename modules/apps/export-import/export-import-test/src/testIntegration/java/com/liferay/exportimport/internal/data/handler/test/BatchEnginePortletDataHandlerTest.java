@@ -148,15 +148,11 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
-	@TestInfo({"LPD-51604", "LPD-61995"})
+	@TestInfo("LPD-51604")
 	public void testEnableLocalStaging() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.background.task.internal.messaging." +
-					"BackgroundTaskMessageListener",
-				LoggerTestUtil.ERROR);
-			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.exportimport.internal.lifecycle." +
 					"LoggerExportImportLifecycleListener",
 				LoggerTestUtil.ERROR)) {
@@ -166,11 +162,7 @@ public class BatchEnginePortletDataHandlerTest {
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId()));
 
-			List<LogEntry> logEntries = logCapture1.getLogEntries();
-
-			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
-
-			logEntries = logCapture2.getLogEntries();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			for (LogEntry logEntry : logEntries) {
 				String message = logEntry.getMessage();
@@ -182,6 +174,31 @@ public class BatchEnginePortletDataHandlerTest {
 							"_web_internal_object_definitions_portlet" +
 								"_ObjectDefinitionsPortlet"));
 			}
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-61995")
+	public void testEnableLocalStagingWithSiteScopedObjectDefinition()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		_addObjectDefinition(ObjectDefinitionConstants.SCOPE_SITE);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.exportimport.internal.lifecycle." +
+					"ExportImportProcessCallbackLifecycleListener",
+				LoggerTestUtil.ERROR)) {
+
+			_stagingLocalService.enableLocalStaging(
+				TestPropsValues.getUserId(), group, false, false,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 		}

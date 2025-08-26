@@ -77,7 +77,7 @@ public class MailEngine {
 			boolean htmlFormat, InternetAddress[] replyTo, String messageId,
 			String inReplyTo, List<FileAttachment> fileAttachments,
 			SMTPAccount smtpAccount, InternetHeaders internetHeaders,
-			String mailBatchSize)
+			String mailBatchSize, boolean mailThrowsExceptionOnFailure)
 		throws PortalException {
 
 		long startTime = System.currentTimeMillis();
@@ -268,12 +268,14 @@ public class MailEngine {
 
 			int batchSize = GetterUtil.getInteger(mailBatchSize, _BATCH_SIZE);
 
-			_send(session, message, bulkAddresses, batchSize);
+			_send(
+				session, message, bulkAddresses, batchSize,
+				mailThrowsExceptionOnFailure);
 		}
 		catch (SendFailedException sendFailedException) {
 			_log.error(sendFailedException);
 
-			if (_isThrowsExceptionOnFailure()) {
+			if (mailThrowsExceptionOnFailure) {
 				throw new PortalException(sendFailedException);
 			}
 		}
@@ -295,7 +297,7 @@ public class MailEngine {
 
 	public static void send(
 			MailService mailService, MailMessage mailMessage,
-			String mailBatchSize)
+			String mailBatchSize, boolean mailThrowsExceptionOnFailure)
 		throws PortalException {
 
 		send(
@@ -306,7 +308,7 @@ public class MailEngine {
 			mailMessage.getReplyTo(), mailMessage.getMessageId(),
 			mailMessage.getInReplyTo(), mailMessage.getFileAttachments(),
 			mailMessage.getSMTPAccount(), mailMessage.getInternetHeaders(),
-			mailBatchSize);
+			mailBatchSize, mailThrowsExceptionOnFailure);
 	}
 
 	private static Address[] _getBatchAddresses(
@@ -345,11 +347,6 @@ public class MailEngine {
 		return session.getProperty("mail.smtp." + suffix);
 	}
 
-	private static boolean _isThrowsExceptionOnFailure() {
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.MAIL_THROWS_EXCEPTION_ON_FAILURE));
-	}
-
 	private static String _sanitizeCRLF(String text) {
 		return StringUtil.replace(
 			text, new char[] {CharPool.NEW_LINE, CharPool.RETURN},
@@ -358,7 +355,7 @@ public class MailEngine {
 
 	private static void _send(
 			Session session, Message message, InternetAddress[] bulkAddresses,
-			int batchSize)
+			int batchSize, boolean mailThrowsExceptionOnFailure)
 		throws PortalException {
 
 		if ((_DATA_LIMIT_MAIL_MESSAGE_MAX_PERIOD > 0) &&
@@ -466,7 +463,7 @@ public class MailEngine {
 						messagingException.getMessage());
 			}
 
-			if (_isThrowsExceptionOnFailure()) {
+			if (mailThrowsExceptionOnFailure) {
 				throw new PortalException(messagingException);
 			}
 		}

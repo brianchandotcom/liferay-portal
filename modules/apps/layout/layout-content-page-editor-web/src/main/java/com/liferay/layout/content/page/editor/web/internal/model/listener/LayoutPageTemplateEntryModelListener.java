@@ -387,7 +387,8 @@ public class LayoutPageTemplateEntryModelListener
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
-					layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
+					layoutPageTemplateEntry.getUserId(), layout.getGroupId(),
+					layout.getPlid(), segmentsExperienceId,
 					layoutStructure.toString());
 		}
 		catch (PortalException portalException) {

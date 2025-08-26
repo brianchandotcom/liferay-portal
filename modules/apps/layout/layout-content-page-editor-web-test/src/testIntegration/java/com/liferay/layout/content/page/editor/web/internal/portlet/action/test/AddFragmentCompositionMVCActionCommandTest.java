@@ -342,8 +342,9 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), _layout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_layout.getPlid(), defaultSegmentsExperienceId,
+				layoutStructure.toString());
 
 		FragmentComposition fragmentComposition = _testAddFragmentComposition(
 			fragmentCollection, containerStyledLayoutStructureItem.getItemId(),

@@ -197,7 +197,7 @@ public class SegmentsExperienceUtil {
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
-				groupId, layout.getPlid(),
+				userId, groupId, layout.getPlid(),
 				targetSegmentsExperience.getSegmentsExperienceId(),
 				dataJSONObject.toString());
 	}

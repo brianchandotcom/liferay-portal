@@ -203,8 +203,9 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), draftLayout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				draftLayout.getPlid(), defaultSegmentsExperienceId,
+				layoutStructure.toString());
 
 		mockHttpServletRequest.setParameter(
 			"formItemId", formStyledLayoutStructureItem.getItemId());

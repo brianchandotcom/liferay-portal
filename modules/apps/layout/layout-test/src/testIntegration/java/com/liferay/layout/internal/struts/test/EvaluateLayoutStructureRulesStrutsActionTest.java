@@ -400,8 +400,9 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), _draftLayout.getPlid(),
-				segmentsExperienceId, layoutStructure.toString());
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_draftLayout.getPlid(), segmentsExperienceId,
+				layoutStructure.toString());
 
 		return layoutStructureRule.getId();
 	}

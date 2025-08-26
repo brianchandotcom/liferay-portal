@@ -385,6 +385,7 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
+				TestPropsValues.getUserId(),
 				layoutPageTemplateStructure.getGroupId(),
 				layoutPageTemplateStructure.getPlid(),
 				defaultSegmentsExperienceId, layoutStructure.toString());
@@ -523,6 +524,7 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
+				TestPropsValues.getUserId(),
 				layoutPageTemplateStructure.getGroupId(),
 				layoutPageTemplateStructure.getPlid(),
 				defaultSegmentsExperienceId, layoutStructure.toString());

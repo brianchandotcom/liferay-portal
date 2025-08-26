@@ -804,8 +804,9 @@ public class EditInfoItemStrutsActionTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), layout.getPlid(),
-				_defaultSegmentsExperienceId, layoutStructure.toString());
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				layout.getPlid(), _defaultSegmentsExperienceId,
+				layoutStructure.toString());
 
 		return layout;
 	}

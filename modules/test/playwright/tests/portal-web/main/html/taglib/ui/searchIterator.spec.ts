@@ -24,6 +24,8 @@ export const test = mergeTests(
 	samplePageTest
 );
 
+const linkName = 'Search Iterator';
+
 test(
 	'Search Iterator overlaps fixed header on scrolling',
 	{tag: '@LPD-40036'},
@@ -59,6 +61,30 @@ test(
 				.evaluate((element) => element.getBoundingClientRect().width);
 
 			expect(mainHeaderWidth).toBe(fixedHeaderWidth);
+		});
+	}
+);
+
+test(
+	'Checkboxes can be selected when using RowChecker',
+	{tag: '@LPD-63803'},
+	async ({page, samplePage, site}) => {
+		await test.step('Create a content site and the frontend taglib sample widget', async () => {
+			await samplePage.setupSampleWidget({
+				site,
+			});
+		});
+
+		await test.step('Select Panel link', async () => {
+			await samplePage.selectLink(linkName);
+		});
+
+		await test.step('Select checkbox and assert it remains marked', async () => {
+			const firstCheckbox = page.locator('table[data-searchcontainerid*="stringItemSearchContainer"] input[type="checkbox"]').first();
+
+			await firstCheckbox.check();
+
+			expect(firstCheckbox).toBeChecked();
 		});
 	}
 );

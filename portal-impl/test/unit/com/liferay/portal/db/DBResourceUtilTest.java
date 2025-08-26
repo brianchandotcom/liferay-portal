@@ -94,7 +94,7 @@ public class DBResourceUtilTest {
 		String moduleIndexesSQL = DBResourceUtil.getModuleIndexesSQL(bundle);
 
 		Assert.assertTrue(
-			moduleIndexesSQL.indexOf(StringPool.RETURN_NEW_LINE) == -1);
+			!moduleIndexesSQL.contains(StringPool.RETURN_NEW_LINE));
 	}
 
 }

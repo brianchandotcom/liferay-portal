@@ -86,14 +86,25 @@ export default function SaveButtons({
 	}, [portletNamespace]);
 
 	const onClick = async (action) => {
-		if (!(await validateRequiredFields(formId))) {
+		const titleInputComponent = Liferay.component(
+			`${portletNamespace}titleMapAsXML`
+		);
+
+		if (!titleInputComponent?.getValue(defaultLanguageId)) {
+			await validateRequiredFields(formId);
+
 			return;
 		}
 
 		if (articleId && !showPublishModal) {
 			handleButtonClick(action);
+
+			await validateRequiredFields(formId);
+
+			return;
 		}
-		else {
+
+		if (await validateRequiredFields(formId)) {
 			setPublishModalState({
 				publishModalAction: action,
 				publishModalVisible: true,

@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../utils/getRandomString';
+import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
@@ -28,9 +29,7 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 
 	await fdsSamplePage.selectTab('Advanced');
 
-	await expect(
-		page.getByText('This is a description for sample 1.')
-	).toBeVisible();
+	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 });
 
 test('Check Search clear button', async ({fdsSamplePage}) => {
@@ -62,7 +61,7 @@ test('Check Search clear button', async ({fdsSamplePage}) => {
 test(
 	'Check behavior of search',
 	{
-		tag: ['@LPD-56876'],
+		tag: ['@LPD-56876', '@LPD-63092'],
 	},
 	async ({fdsSamplePage, page}) => {
 		await test.step('The total results label and search resume are displayed when a search is made', async () => {
@@ -126,6 +125,47 @@ test(
 				await expect(
 					fdsSamplePage.activeFiltersToolbar.locator('.search-resume')
 				).not.toBeVisible();
+			});
+		});
+
+		await test.step('Applying the same search twice does not show "Requesting Results for:" indefinitely', async () => {
+			await test.step('Reset the tab', async () => {
+				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
+			});
+
+			await test.step('Search for "Sample" and wait for the search to finish', async () => {
+				await fdsSamplePage.managementToolbar.searchInput.fill(
+					'Sample'
+				);
+
+				await fdsSamplePage.managementToolbar.container
+					.getByRole('button', {name: 'Search'})
+					.click();
+
+				await expect(
+					page.getByText('75 Results Found for:')
+				).toBeVisible();
+			});
+
+			await test.step('Click search again', async () => {
+				await fdsSamplePage.managementToolbar.container
+					.getByRole('button', {name: 'Search'})
+					.click();
+			});
+
+			await test.step('Check that "Requesting Results for:" is not displayed', async () => {
+				await expect(
+					page.getByText('Requesting Results for:')
+				).not.toBeVisible();
+
+				await expect(
+					page.getByText('75 Results Found for:')
+				).toBeVisible();
 			});
 		});
 	}

@@ -17,6 +17,14 @@ components:
                     type: boolean
                 siteSyncedToAnalyticsCloud:
                     type: boolean
+        ExpiredAsset:
+            properties:
+                href:
+                    type: string
+                title:
+                    type: string
+                usages:
+                    type: number
         Histogram:
             properties:
                 metricName:
@@ -221,6 +229,41 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Overview"
             tags: ["Overview"]
+    "/expired-assets":
+        get:
+            operationId: getExpiredAssetsPage
+            parameters:
+                -   in: query
+                    name: depotEntryId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: languageId
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExpiredAsset"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExpiredAsset"
+                                type: array
+            tags: ["ExpiredAsset"]
     "/file-overview":
         get:
             operationId: getFileOverview

@@ -107,15 +107,15 @@ public class UpgradeJavaGetFDSTableSchemaParameterCheck
 		sb.append(StringPool.TAB);
 		sb.append(matcher.group(3));
 
-		String field = attributeName + " -> " + methodCallMatcher.group(1);
-
 		newContent = StringUtil.removeSubstring(
 			newContent, methodCallMatcher.group());
 
 		sb.append(StringPool.COMMA);
 		sb.append(newLineAndIndent);
 		sb.append(StringPool.TAB);
-		sb.append(field);
+		sb.append(attributeName);
+		sb.append(" -> ");
+		sb.append(methodCallMatcher.group(1));
 
 		while (methodCallMatcher.find()) {
 			sb.append(newLineAndIndent);

@@ -1,18 +1,4 @@
 {
 	"name": "Team Members",
-	"taxonomyCategoryProperties": [
-		{
-			"key": "section",
-			"value": "help-resources"
-		},
-		{
-			"key": "subtitle",
-			"value": "learn-more-about-roles-support-seats-and-incident-contacts"
-		},
-		{
-			"key": "thumbnail",
-			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/team_members.svg$]"
-		}
-	],
 	"viewableBy": "Anyone"
 }

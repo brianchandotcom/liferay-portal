@@ -15,6 +15,12 @@
 		}
 	},
 	{
+		"key": "activate-your-liferay-saas-liferay-paas-or-liferay-self-hosted-instance",
+		"value": {
+			"en-US": "Activate your Liferay SaaS, Liferay PaaS, or Liferay Self-hosted Instance."
+		}
+	},
+	{
 		"key": "activation",
 		"value": {
 			"en-US": "Activation"
@@ -108,12 +114,6 @@
 		}
 	},
 	{
-		"key": "details-about-liferay-dxp-activation-key-usage-and-types",
-		"value": {
-			"en-US": "Details about Liferay DXP activation key usage and types."
-		}
-	},
-	{
 		"key": "ended-on",
 		"value": {
 			"en-US": "Ended on",
@@ -141,12 +141,6 @@
 		}
 	},
 	{
-		"key": "first-steps-and-essential-guidance-for-administrators-new-users-and-partners",
-		"value": {
-			"en-US": "First steps and essential guidance for administrators, new users, and partners."
-		}
-	},
-	{
 		"key": "for-more-information-please-click-x",
 		"value": {
 			"en-US": "For more information, please click {0}.",
@@ -165,21 +159,9 @@
 		}
 	},
 	{
-		"key": "getting-started",
-		"value": {
-			"en-US": "Getting Started"
-		}
-	},
-	{
 		"key": "help-center",
 		"value": {
 			"en-US": "Help Center"
-		}
-	},
-	{
-		"key": "help-resources",
-		"value": {
-			"en-US": "Help Resources"
 		}
 	},
 	{
@@ -216,24 +198,6 @@
 			"es-ES": "Más información sobre los estados de disponibilidad de las funciones.",
 			"ja-JP": "機能の利用可能状況について確認する。",
 			"pt-BR": "Saiba mais sobre os status de disponibilidade dos recursos."
-		}
-	},
-	{
-		"key": "learn-more-about-project-administration-within-the-customer-portal",
-		"value": {
-			"en-US": "Learn more about project administration within the Customer Portal."
-		}
-	},
-	{
-		"key": "learn-more-about-roles-support-seats-and-incident-contacts",
-		"value": {
-			"en-US": "Learn more about roles, support seats and Incident Contacts."
-		}
-	},
-	{
-		"key": "liferay-dxp",
-		"value": {
-			"en-US": "Liferay DXP"
 		}
 	},
 	{
@@ -297,24 +261,6 @@
 		"key": "quick-answers-and-resources-to-common-support-questions",
 		"value": {
 			"en-US": "Quick answers and resources to common support questions."
-		}
-	},
-	{
-		"key": "reference-detailed-changes-between-two-liferay-dxp-versions",
-		"value": {
-			"en-US": "Reference detailed changes between two Liferay DXP versions."
-		}
-	},
-	{
-		"key": "reference-the-latest-changes-for-liferay-cloud-services-and-the-liferay-cloud-platform",
-		"value": {
-			"en-US": "Reference the latest changes for Liferay Cloud Services and the Liferay Cloud Platform."
-		}
-	},
-	{
-		"key": "reference-the-latest-changes-for-liferay-dxp",
-		"value": {
-			"en-US": "Reference the latest changes for Liferay DXP."
 		}
 	},
 	{
@@ -414,24 +360,12 @@
 		}
 	},
 	{
-		"key": "the-essential-guide-to-liferay-customer-portal",
-		"value": {
-			"en-US": "The essential guide to Liferay Customer Portal."
-		}
-	},
-	{
 		"key": "there-are-no-breaking-changes-in-out-of-the-box-features-and-capabilities-for-this-quarterly-release",
 		"value": {
 			"en-US": "There are no breaking changes in out-of-the-box features and capabilities for this quarterly release.",
 			"es-ES": "No hay cambios rupturistas (breaking changes) en funcionalidades o capacidades listas para su uso en esta versión trimestral (Quarterly Release).",
 			"ja-JP": "この四半期ごとのリリースでは、基本機能および性能に重大な変更点はありません。",
 			"pt-BR": "Não há alterações significativas nos recursos e capacidades prontos para uso nesta versão trimestral (Quarterly Release)."
-		}
-	},
-	{
-		"key": "version-comparison-tool",
-		"value": {
-			"en-US": "Version Comparison Tool"
 		}
 	},
 	{

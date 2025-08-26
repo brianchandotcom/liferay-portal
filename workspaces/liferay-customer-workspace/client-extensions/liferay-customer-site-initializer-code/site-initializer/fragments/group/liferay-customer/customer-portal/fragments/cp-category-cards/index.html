@@ -1,15 +1,3 @@
-[#function getExtraItems props]
-	[#assign items = [] /]
-
-	[#list props as prop]
-		[#if prop.key?starts_with("extra-item")]
-			[#assign items = items + [prop.value] /]
-		[/#if]
-	[/#list]
-
-	[#return items /]
-[/#function]
-
 [#function getProperty props key]
 	[#list props as prop]
 		[#if prop.key == key]
@@ -27,37 +15,19 @@
 		[#assign
 			categoryId = displayObject.categoryId!""
 			category = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId)!{}
-			koroneikiAccounts = restClient.get("/c/koroneikiaccounts?pageSize=1&sort=dateCreated:desc")
-			lastCreatedProjectERC = ""
-			lastViewedProjectERC = ""
 			mainCategoryId = displayObject.treePath?split("/")[1]!""
 		/]
-
-		[#list request.getCookies() as cookie]
-			[#if cookie.getName() == "CP_LAST_VIEWED_PROJECT_" + themeDisplay.getUserId()]
-				[#assign lastViewedProjectERC = cookie.getValue()!""]
-
-				[#break]
-			[/#if]
-		[/#list]
-
-		[#if koroneikiAccounts?is_hash && koroneikiAccounts.items?? && koroneikiAccounts.totalCount??]
-			[#assign
-				lastCreatedProjectERC = (koroneikiAccounts.items[0].externalReferenceCode)!""
-			/]
-		[/#if]
-
-		[#assign projectERC = lastViewedProjectERC?has_content?then(lastViewedProjectERC, lastCreatedProjectERC) /]
 
 		[#if category?has_content]
 			[#assign
 				baseURL = themeDisplay.getURLCurrent()?replace('/[v]/.*', '', 'r')
 				categoryProps = category.taxonomyCategoryProperties
 				categoryDisplayLayout = getProperty(categoryProps, "display-layout")
-				childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories").items![]
 			/]
 
 			[#if categoryDisplayLayout == "list"]
+				[#assign childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories").items![] /]
+
 				<div class="cp-category-card-container d-flex flex-wrap mb-4">
 					[#list childrenCategories as childCategory]
 						[#assign isChildCategoryVisible = getProperty(childCategory.taxonomyCategoryProperties, "visible") /]
@@ -66,22 +36,26 @@
 							[#continue /]
 						[/#if]
 
-						[#assign
-							articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${childCategory.id})&flatten=true").items![]
-							grandChildrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + childCategory.id + "/taxonomy-categories").items![]
-							listItems = []
-						/]
+						[#assign listItems = [] /]
 
-						[#if articles?has_content]
-							[#list articles as article]
-								[#assign listItems = listItems + [{"isVisible": "true", "name": article.title, "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
-							[/#list]
+						[#if configuration.showArticles]
+							[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${childCategory.id})&flatten=true").items![] /]
+
+							[#if articles?has_content]
+								[#list articles as article]
+									[#assign listItems = listItems + [{"isVisible": "true", "name": article.title, "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
+								[/#list]
+							[/#if]
 						[/#if]
 
-						[#if grandChildrenCategories?has_content]
-							[#list grandChildrenCategories as grandChildCategory]
-								[#assign listItems = listItems + [{"isVisible": getProperty(grandChildCategory.taxonomyCategoryProperties, "visible"), "name": grandChildCategory.name, "url": grandChildCategory.id}] /]
-							[/#list]
+						[#if configuration.showCategories]
+							[#assign grandChildrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + childCategory.id + "/taxonomy-categories").items![] /]
+
+							[#if grandChildrenCategories?has_content]
+								[#list grandChildrenCategories as grandChildCategory]
+									[#assign listItems = listItems + [{"isVisible": getProperty(grandChildCategory.taxonomyCategoryProperties, "visible"), "name": grandChildCategory.name, "url": grandChildCategory.id}] /]
+								[/#list]
+							[/#if]
 						[/#if]
 
 						[#if listItems?has_content]
@@ -128,96 +102,70 @@
 				</div>
 			[#else]
 				[#assign
-					extraItems = getExtraItems(categoryProps)
-					sections = {"no-section": []}
+					defaultStyle = "background-color: var(--color-surface-background, #F1F5FB);"
+					listItems = []
 				/]
 
-				[#list childrenCategories as childCategory]
-					[#assign isChildCategoryVisible = getProperty(childCategory.taxonomyCategoryProperties, "visible") /]
+				[#if configuration.showArticles]
+					[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${categoryId})&flatten=true").items![] /]
 
-					[#if isChildCategoryVisible == "false"]
-						[#continue /]
+					[#if articles?has_content]
+						[#list articles as article]
+							[#assign listItems = listItems + [{"icon": "", "name": article.title, "style": defaultStyle, "subtitle": "", "thumbnail": "", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
+						[/#list]
 					[/#if]
+				[/#if]
 
-					[#assign
-						childCategoryBackgroundImage = getProperty(childCategory.taxonomyCategoryProperties, "background-image")
-						childCategoryIconName = getProperty(childCategory.taxonomyCategoryProperties, "icon-name")
-						childCategorySection = getProperty(childCategory.taxonomyCategoryProperties, "section")
-						childCategorySubtitle = getProperty(childCategory.taxonomyCategoryProperties, "subtitle")
-						childCategoryThumbnail = getProperty(childCategory.taxonomyCategoryProperties, "thumbnail")
-					/]
+				[#if configuration.showCategories]
+					[#assign childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories").items![] /]
 
-					[#assign childCategoryStyle = childCategoryBackgroundImage?has_content?then("background-image: url(${childCategoryBackgroundImage});", "background-color: var(--color-surface-background, #F1F5FB);") /]
+					[#list childrenCategories as childCategory]
+						[#assign isChildCategoryVisible = getProperty(childCategory.taxonomyCategoryProperties, "visible") /]
 
-					[#assign
-						card = {"icon": childCategoryIconName, "name": childCategory.name, "style": childCategoryStyle, "subtitle": childCategorySubtitle, "thumbnail": childCategoryThumbnail, "url": childCategory.id}
-						sectionName = childCategorySection?has_content?then(childCategorySection, "no-section")
-					/]
-
-					[#assign sections = sections + {"${sectionName}": sections["${sectionName}"]?has_content?then(sections["${sectionName}"], []) + [card]} /]
-				[/#list]
-
-				[#list extraItems as extraItem]
-					[#assign extraItemProps = {} /]
-
-					[#list categoryProps as categoryProp]
-						[#if categoryProp.key?starts_with(extraItem)]
-							[#assign extraItemProps = extraItemProps + {categoryProp.key?keep_after("${extraItem}-"): categoryProp.value} /]
+						[#if isChildCategoryVisible == "false"]
+							[#continue /]
 						[/#if]
+
+						[#assign
+							childCategoryBackgroundImage = getProperty(childCategory.taxonomyCategoryProperties, "background-image")
+							childCategoryIconName = getProperty(childCategory.taxonomyCategoryProperties, "icon-name")
+							childCategorySubtitle = getProperty(childCategory.taxonomyCategoryProperties, "subtitle")
+							childCategoryThumbnail = getProperty(childCategory.taxonomyCategoryProperties, "thumbnail")
+						/]
+
+						[#assign childCategoryStyle = childCategoryBackgroundImage?has_content?then("background-image: url(${childCategoryBackgroundImage});", defaultStyle) /]
+
+						[#assign listItems = listItems + [{"icon": childCategoryIconName, "name": childCategory.name, "style": childCategoryStyle, "subtitle": childCategorySubtitle, "thumbnail": childCategoryThumbnail, "url": childCategory.id}] /]
 					[/#list]
+				[/#if]
 
-					[#assign
-						backgroundImage = extraItemProps["background-image"]!""
-						name = "${languageUtil.get(locale, extraItemProps.title)}"
-						section = extraItemProps.section!""
-						subtitle = "${languageUtil.get(locale, extraItemProps.subtitle)}"
-					/]
+				<div class="cp-category-card-container d-flex flex-wrap justify-content-center mb-4">
+					[#list listItems?sort_by("name") as listItem]
+						<a class="cp-category-tile" href="${listItem.url}">
+							<div class="align-items-center card card-flat d-flex flex-column justify-content-center p-4" style="${listItem.style}">
+								[#if listItem.thumbnail?has_content]
+									<img class="mb-3" src="${listItem.thumbnail}" />
+								[/#if]
 
-					[#assign style = backgroundImage?has_content?then("background-image: url(${backgroundImage});", "background-color: var(--color-surface-background, #F1F5FB);") /]
+								<div class="align-items-center d-flex mb-3 tile-title">
+									[#if listItem.icon?has_content]
+										[@clay["icon"] symbol="${listItem.icon}" /]
+									[/#if]
 
-					[#assign
-						card = {"icon": extraItemProps["icon-name"]!"", "name": name, "style": style, "subtitle": subtitle, "thumbnail": extraItemProps.thumbnail!"", "url": (extraItemProps.url == "last-viewed-project-activation-placeholder")?then("${baseURL}/project/#/${projectERC}/activation", extraItemProps.url)}
-						sectionName = section?has_content?then(section, "no-section")
-					/]
+									<h5 class="m-0">
+										${listItem.name}
+									</h5>
+								</div>
 
-					[#assign sections = sections + {"${sectionName}": sections["${sectionName}"]?has_content?then(sections["${sectionName}"], []) + [card]} /]
-				[/#list]
-
-				[#list sections as section, cards]
-					[#if section != "no-section"]
-						<h3 class="mb-4">${languageUtil.get(locale, section)}</h3>
-					[/#if]
-
-					[#if cards?has_content]
-						<div class="cp-category-card-container d-flex flex-wrap justify-content-center mb-4">
-							[#list cards as card]
-								<a class="cp-category-tile" href="${card.url}">
-									<div class="align-items-center card card-flat d-flex flex-column justify-content-center p-4" style="${card.style}">
-										[#if card.thumbnail?has_content]
-											<img class="mb-3" src="${card.thumbnail}" />
-										[/#if]
-
-										<div class="align-items-center d-flex mb-3 tile-title">
-											[#if card.icon?has_content]
-												[@clay["icon"] symbol="${card.icon}" /]
-											[/#if]
-
-											<h5 class="m-0">
-												${card.name}
-											</h5>
-										</div>
-
-										[#if card.subtitle?has_content]
-											<p class="text-paragraph">
-												${languageUtil.get(locale, card.subtitle)}
-											</p>
-										[/#if]
-									</div>
-								</a>
-							[/#list]
-						</div>
-					[/#if]
-				[/#list]
+								[#if listItem.subtitle?has_content]
+									<p class="text-paragraph">
+										${languageUtil.get(locale, listItem.subtitle)}
+									</p>
+								[/#if]
+							</div>
+						</a>
+					[/#list]
+				</div>
 			[/#if]
 		[/#if]
 	[/#escape]

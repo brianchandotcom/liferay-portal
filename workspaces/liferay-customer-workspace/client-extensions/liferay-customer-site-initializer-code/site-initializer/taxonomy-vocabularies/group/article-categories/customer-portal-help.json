@@ -1,30 +1,4 @@
 {
 	"name": "Customer Portal Help",
-	"taxonomyCategoryProperties": [
-		{
-			"key": "activation-section",
-			"value": "getting-started"
-		},
-		{
-			"key": "activation-subtitle",
-			"value": "activate-your-liferay-saas-liferay-paas-or-liferay-self-hosted-instance"
-		},
-		{
-			"key": "activation-thumbnail",
-			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/support_faq.svg$]"
-		},
-		{
-			"key": "activation-title",
-			"value": "activation"
-		},
-		{
-			"key": "activation-url",
-			"value": "last-viewed-project-activation-placeholder"
-		},
-		{
-			"key": "extra-item-activation",
-			"value": "activation"
-		}
-	],
 	"viewableBy": "Anyone"
 }

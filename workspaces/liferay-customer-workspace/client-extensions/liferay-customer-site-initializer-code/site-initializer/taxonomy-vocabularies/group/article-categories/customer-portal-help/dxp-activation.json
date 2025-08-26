@@ -1,18 +1,4 @@
 {
 	"name": "DXP Activation",
-	"taxonomyCategoryProperties": [
-		{
-			"key": "section",
-			"value": "help-resources"
-		},
-		{
-			"key": "subtitle",
-			"value": "details-about-liferay-dxp-activation-key-usage-and-types"
-		},
-		{
-			"key": "thumbnail",
-			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/dxp_activation.svg$]"
-		}
-	],
 	"viewableBy": "Anyone"
 }

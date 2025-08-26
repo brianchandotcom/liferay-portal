@@ -1,46 +1,4 @@
 {
 	"name": "Release Notes",
-	"taxonomyCategoryProperties": [
-		{
-			"key": "extra-item-liferay-dxp",
-			"value": "liferay-dxp"
-		},
-		{
-			"key": "extra-item-version-comparison-tool",
-			"value": "version-comparison-tool"
-		},
-		{
-			"key": "liferay-dxp-subtitle",
-			"value": "reference-the-latest-changes-for-liferay-dxp"
-		},
-		{
-			"key": "liferay-dxp-thumbnail",
-			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/dxp_support_coverage.svg$]"
-		},
-		{
-			"key": "liferay-dxp-title",
-			"value": "liferay-dxp"
-		},
-		{
-			"key": "liferay-dxp-url",
-			"value": "/release-notes"
-		},
-		{
-			"key": "version-comparison-tool-subtitle",
-			"value": "reference-detailed-changes-between-two-liferay-dxp-versions"
-		},
-		{
-			"key": "version-comparison-tool-thumbnail",
-			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/assets/version_comparison_tool.svg$]"
-		},
-		{
-			"key": "version-comparison-tool-title",
-			"value": "version-comparison-tool"
-		},
-		{
-			"key": "version-comparison-tool-url",
-			"value": "https://customer.liferay.com/en/dxp-release-notes"
-		}
-	],
 	"viewableBy": "Anyone"
 }

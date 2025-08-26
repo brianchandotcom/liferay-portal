@@ -5,7 +5,7 @@
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
 
-export default async function getGlobalSiteId(apiHelpers: ApiHelpers) {
+export default async function getGlobalSite(apiHelpers: ApiHelpers) {
 	const company =
 		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
 			'liferay.com'
@@ -15,5 +15,5 @@ export default async function getGlobalSiteId(apiHelpers: ApiHelpers) {
 		company.companyId
 	);
 
-	return globalGroup.groupId;
+	return globalGroup;
 }

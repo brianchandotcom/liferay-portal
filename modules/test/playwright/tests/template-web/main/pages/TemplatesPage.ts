@@ -16,12 +16,14 @@ export class TemplatesPage {
 
 	readonly newButton: Locator;
 	readonly saveButton: Locator;
+	readonly searchBar: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.newButton = page.getByRole('button', {name: 'Add'});
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.searchBar = page.getByLabel('Search for:');
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -143,6 +145,23 @@ export class TemplatesPage {
 
 	async editTemplate(name: string) {
 		await this.page.getByRole('link', {exact: true, name}).click();
+	}
+
+	async editWidgetTemplate(name: string) {
+		const link = this.page.getByRole('link', {exact: true, name});
+
+		await expect(async () => {
+			await this.searchBar.fill(name, {timeout: 1000});
+
+			await this.searchBar.press('Enter', {timeout: 1000});
+
+			await expect(link).toBeVisible({timeout: 1000});
+		}).toPass();
+
+		await clickAndExpectToBeVisible({
+			target: this.page.getByPlaceholder('Untitled Template'),
+			trigger: link,
+		});
 	}
 
 	async getTemplateKey() {

@@ -7,6 +7,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -2257,6 +2258,23 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return nextLayoutId;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Layout getOrAddEmptyLayout(
+			String externalReferenceCode, long userId, long groupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return EmptyModelManagerUtil.getOrAddEmptyModel(
+			Layout.class,
+			() -> layoutLocalService.addLayout(
+				externalReferenceCode, userId, groupId, false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, externalReferenceCode,
+				StringPool.BLANK, null, LayoutConstants.TYPE_EMPTY, true, false,
+				null, serviceContext),
+			externalReferenceCode, this::fetchLayoutByExternalReferenceCode,
+			this::getLayoutByExternalReferenceCode, groupId);
 	}
 
 	@Override

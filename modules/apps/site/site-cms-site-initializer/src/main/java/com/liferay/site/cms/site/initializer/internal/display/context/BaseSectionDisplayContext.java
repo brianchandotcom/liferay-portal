@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -326,6 +327,25 @@ public abstract class BaseSectionDisplayContext {
 				null, "trash", "delete",
 				language.get(httpServletRequest, "delete"), "delete", "delete",
 				"headless"));
+	}
+
+	public Map<String, Object> getToolbarProps() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"title",
+			() -> {
+				Layout layout = themeDisplay.getLayout();
+
+				if (layout == null) {
+					return null;
+				}
+
+				return layout.getName(themeDisplay.getLocale(), true);
+			}
+		).put(
+			"toolbarClassName", "section-toolbar tbar-light"
+		).put(
+			"toolbarTitleClassName", "section-toolbar-title"
+		).build();
 	}
 
 	protected void addStructureContentDropdownItems(CreationMenu creationMenu) {

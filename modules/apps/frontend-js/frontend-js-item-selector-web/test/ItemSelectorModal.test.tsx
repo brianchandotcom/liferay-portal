@@ -84,7 +84,6 @@ const ItemSelectorModalWrapper = ({
 							deltas: [{label: 20}],
 							initialDelta: 20,
 						},
-						selectedItemsKey: 'itemId',
 						selectionType: 'single',
 						views: [
 							{
@@ -99,9 +98,12 @@ const ItemSelectorModalWrapper = ({
 							} as IView,
 						],
 					},
-					itemNameLocator: 'name',
-					itemValueLocator: 'itemId',
 					items: selectedItems,
+					locator: {
+						id: 'itemId',
+						label: 'name',
+						value: 'itemId',
+					},
 					observer,
 					onItemsChange,
 					onOpenChange,

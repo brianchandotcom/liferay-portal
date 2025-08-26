@@ -7,7 +7,7 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import {FetchPolicy, useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
-import {InternalDispatch, useControlledState} from '@clayui/shared';
+import {InternalDispatch, Locator, useControlledState} from '@clayui/shared';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -79,12 +79,13 @@ export interface IItemSelectorProps<T>
 	items?: T[];
 
 	/**
-	 * A string key used to locate the id, label, or value within each item.
+	 * Sets how to get fields values for id, label, and value within each item.
+	 * String values can be used as a dotted path (e.g.: 'embedded.id').
 	 */
 	locator?: {
 		id: string;
-		label: string;
-		value: string;
+		label: Locator;
+		value: Locator;
 	};
 
 	/**

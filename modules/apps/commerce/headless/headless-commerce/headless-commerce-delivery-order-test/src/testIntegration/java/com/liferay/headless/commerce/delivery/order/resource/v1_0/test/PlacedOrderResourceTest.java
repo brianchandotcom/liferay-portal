@@ -490,7 +490,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 
 		page = placedOrderResource.getChannelPlacedOrdersPage(
 			_commerceChannel.getCommerceChannelId(), null,
-			String.format("(authorId eq '%s')", filterUser.getUserId()),
+			String.format("(authorId eq %s)", filterUser.getUserId()),
 			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());

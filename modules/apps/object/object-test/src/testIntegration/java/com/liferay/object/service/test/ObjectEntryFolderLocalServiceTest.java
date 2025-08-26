@@ -7,6 +7,10 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -48,6 +52,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -62,6 +67,8 @@ import com.liferay.trash.service.TrashEntryLocalService;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.After;
@@ -336,7 +343,11 @@ public class ObjectEntryFolderLocalServiceTest {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		AssertUtils.assertFailure(
-			NoSuchObjectEntryFolderException.class, null,
+			NoSuchObjectEntryFolderException.class,
+			String.format(
+				"No ObjectEntryFolder exists with the key {externalReference" +
+					"Code=%s, groupId=%s}",
+				externalReferenceCode, TestPropsValues.getGroupId()),
 			() -> _objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
 				externalReferenceCode, TestPropsValues.getGroupId(),
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -347,6 +358,11 @@ public class ObjectEntryFolderLocalServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
+			long exportImportConfigurationId = RandomTestUtil.randomLong();
+
+			ExportImportThreadLocal.setExportImportConfigurationId(
+				exportImportConfigurationId);
+
 			ObjectEntryFolder objectEntryFolder =
 				_objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
 					externalReferenceCode, TestPropsValues.getGroupId(),
@@ -355,6 +371,27 @@ public class ObjectEntryFolderLocalServiceTest {
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, objectEntryFolder.getStatus());
+
+			List<ExportImportReportEntry> exportImportReportEntries =
+				_exportImportReportEntryLocalService.
+					getExportImportReportEntries(
+						TestPropsValues.getCompanyId(),
+						exportImportConfigurationId);
+
+			Assert.assertEquals(
+				exportImportReportEntries.toString(), 1,
+				exportImportReportEntries.size());
+
+			Assert.assertTrue(
+				ListUtil.exists(
+					exportImportReportEntries,
+					exportImportReportEntry ->
+						Objects.equals(
+							exportImportReportEntry.
+								getClassExternalReferenceCode(),
+							externalReferenceCode) &&
+						(exportImportReportEntry.getType() ==
+							ExportImportReportEntryConstants.TYPE_EMPTY)));
 
 			objectEntryFolder =
 				_objectEntryFolderLocalService.updateObjectEntryFolder(
@@ -712,6 +749,10 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		Assert.assertEquals(expectedStatus, objectEntry.getStatus());
 	}
+	
+	@Inject
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

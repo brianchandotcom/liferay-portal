@@ -203,6 +203,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				excludeDataAlwaysStaged);
 		}
 
+		if (stagingGroupHelper.isDepotGroup(groupId)) {
+			return _getPortlets(
+				companyId, new DataLevel[] {DataLevel.DEPOT},
+				excludeDataAlwaysStaged);
+		}
+
 		return _getPortlets(
 			companyId, new DataLevel[] {DataLevel.SITE},
 			excludeDataAlwaysStaged);

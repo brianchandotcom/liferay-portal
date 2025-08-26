@@ -47,9 +47,9 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 	@Override
 	protected UnsafeRunnable<Exception> getInsertDataUnsafeRunnable() {
 		return () -> {
-			_insert(_companyId1, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-			_insert(_companyId1, PortletKeys.PREFS_OWNER_TYPE_GROUP);
-			_insert(_companyId2, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+			_insertData(_companyId1, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+			_insertData(_companyId1, PortletKeys.PREFS_OWNER_TYPE_GROUP);
+			_insertData(_companyId2, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 		};
 	}
 
@@ -89,7 +89,7 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 			"PortletPreferences", "companyId", "Company");
 	}
 
-	private void _insert(long companyId, int ownerType) throws Exception {
+	private void _insertData(long companyId, int ownerType) throws Exception {
 		db.runSQL(
 			connection,
 			StringBundler.concat(

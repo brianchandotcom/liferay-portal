@@ -301,20 +301,12 @@ export default function SaveButtons({
 					</ClayDropDown.Item>
 
 					<ClayDropDown.Item
-						onClick={() => {
-							const titleInputComponent = Liferay.component(
-								`${portletNamespace}titleMapAsXML`
-							);
-							if (
-								titleInputComponent?.getValue(defaultLanguageId)
-							) {
+						onClick={async () => {
+							if (await validateRequiredFields(formId)) {
 								setPublishModalState({
 									publishModalAction: ACTION_SCHEDULE,
 									publishModalVisible: true,
 								});
-							}
-							else {
-								validateRequiredFields(formId);
 							}
 						}}
 						symbolLeft="date-time"

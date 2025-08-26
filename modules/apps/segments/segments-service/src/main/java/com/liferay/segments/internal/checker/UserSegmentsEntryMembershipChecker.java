@@ -65,6 +65,8 @@ public class UserSegmentsEntryMembershipChecker {
 
 		Binding binding = new Binding();
 
+		binding.setVariable(
+			"CLASS_PK", String.valueOf(userAttributes.get("classPK")));
 		binding.setVariable("user", _getFilteredUserAttributes(userAttributes));
 
 		script.setBinding(binding);
@@ -286,7 +288,7 @@ public class UserSegmentsEntryMembershipChecker {
 	private static final Pattern _operationPattern = Pattern.compile(
 		StringBundler.concat(
 			"((?:customField/)?\\w*)\\s+(eq|ge|gt|in|le|lt)\\s+",
-			"('([^')]*)'|\\('([^')]*)'\\)|false|true|",
+			"('([^')]*)'|\\('([^')]*)'\\)|false|true|CLASS_PK|",
 			"\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}.\\d{3}){0,1}((Z)|",
 			"((\\+|\\-)(\\d*))){0,1})"));
 	private static final Map<String, String> _operators = HashMapBuilder.put(
@@ -307,7 +309,7 @@ public class UserSegmentsEntryMembershipChecker {
 		"or", "||"
 	).build();
 	private static final Pattern _valuePattern = Pattern.compile(
-		"'([^')]*)'|false|true|" +
+		"'([^')]*)'|false|true|CLASS_PK|" +
 			"'{0,1}\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}.\\d{3})" +
 				"{0,1}((Z)|((\\+|-)(\\d*))){0,1}'{0,1}");
 

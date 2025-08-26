@@ -293,8 +293,7 @@ public abstract class BaseSegmentsEntryProvider
 			try {
 				matchesModel = UserSegmentsEntryMembershipChecker.isMember(
 					StringBundler.concat(
-						"(", modelFilterString, ") and (classPK eq '", classPK,
-						"')"),
+						"(", modelFilterString, ") and (classPK eq CLASS_PK)"),
 					userAttributes);
 			}
 			catch (Exception exception) {

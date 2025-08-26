@@ -253,7 +253,7 @@ public class UserSegmentsEntryMembershipCheckerTest {
 					StringPool.BLANK,
 					"(((lastName eq 'test' or (not (dateModified eq ",
 					"2025-01-08T00:00:00.000Z)) or jobTitle eq 'Test')) and ",
-					"((userId eq '0'))) and (classPK eq '1')"),
+					"((userId eq '0'))) and (classPK eq CLASS_PK)"),
 				_userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
@@ -272,7 +272,8 @@ public class UserSegmentsEntryMembershipCheckerTest {
 				String.join(
 					StringPool.BLANK, "(((lastName eq 'test' or (not ",
 					"(dateModified eq 2025-01-08T00:00:00.000Z)) or jobTitle ",
-					"eq 'Test')) and ((userId eq '1'))) and (classPK eq '1')"),
+					"eq 'Test')) and ((userId eq '1'))) and (classPK eq ",
+					"CLASS_PK)"),
 				_userAttributes));
 	}
 

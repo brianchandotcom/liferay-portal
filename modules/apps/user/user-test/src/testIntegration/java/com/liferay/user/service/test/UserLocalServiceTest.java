@@ -7,6 +7,10 @@ package com.liferay.user.service.test;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
@@ -308,6 +312,56 @@ public class UserLocalServiceTest {
 
 			_assertUserHasPasswordPolicy(false, _addUser(false, "Liferay123"));
 		}
+	}
+
+	@Test
+	public void testAssignMembershipWithRequiredAssetVocabulary()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group globalGroup = company.getGroup();
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			globalGroup.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			globalGroup.getGroupId(), assetVocabulary.getVocabularyId());
+
+		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+
+		_assetEntryLocalService.updateEntry(
+			user.getUserId(), globalGroup.getGroupId(), user.getCreateDate(),
+			user.getModifiedDate(), User.class.getName(), user.getUserId(),
+			user.getUuid(), 0, assetCategoryIds, null, true, false, null, null,
+			null, null, null, user.getFullName(), null, null, null, null, 0, 0,
+			null);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				globalGroup.getGroupId(), user.getUserId());
+
+		serviceContext.setAssetCategoryIds(null);
+
+		Group group = GroupTestUtil.addGroup();
+
+		long[] groupIds = {globalGroup.getGroupId(), group.getGroupId()};
+
+		user = _userLocalService.updateUser(
+			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, false, StringPool.BLANK, StringPool.BLANK,
+			user.getScreenName(), user.getEmailAddress(), false, null,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, user.getFirstName(), user.getMiddleName(),
+			user.getLastName(), 0, 0, user.isMale(), Calendar.JANUARY, 12, 1980,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, groupIds,
+			null, null, null, null, serviceContext);
+
+		Assert.assertArrayEquals(groupIds, user.getGroupIds());
 	}
 
 	@Test
@@ -1909,6 +1963,9 @@ public class UserLocalServiceTest {
 	@Inject
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	private AuditMessageProcessor _auditMessageProcessor;
 	private BundleActivator _bundleActivator;

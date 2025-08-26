@@ -20,9 +20,8 @@ public interface FeatureFlagManager {
 
 	public boolean isEnabled(long companyId, String key);
 
-
 	/**
-	 * @deprecated As of Liferay (7.4.x), replaced by {@link
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *		#isEnabled(long, String)}
 	 * The companyId now is required to properly scope company id. Check LPD-61555
 	 */

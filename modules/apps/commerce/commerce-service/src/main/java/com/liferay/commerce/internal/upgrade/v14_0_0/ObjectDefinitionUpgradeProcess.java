@@ -136,7 +136,7 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 			ObjectDefinition objectDefinition, String oldDBColumnName)
 		throws Exception {
 
-		if (!hasTable(dbTableName) ||
+		if ((dbTableName == null) || !hasTable(dbTableName) ||
 			!hasColumn(dbTableName, oldDBColumnName)) {
 
 			return;

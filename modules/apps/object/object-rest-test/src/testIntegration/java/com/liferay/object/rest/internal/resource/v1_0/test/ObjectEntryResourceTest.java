@@ -5803,6 +5803,57 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(1, itemsJSONArray.length());
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testGetObjectEntriesSystemProperties() throws Exception {
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, _objectDefinition1.getRESTContextPath(), Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			itemsJSONArray.toString(), 1, itemsJSONArray.length());
+
+		JSONObject objectEntryJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertNull(
+			objectEntryJSONObject.getJSONObject("systemProperties"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			_objectDefinition1.getRESTContextPath() +
+				"?nestedFields=systemProperties.objectDefinitionBrief",
+			Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			itemsJSONArray.toString(), 1, itemsJSONArray.length());
+
+		objectEntryJSONObject = itemsJSONArray.getJSONObject(0);
+
+		JSONObject systemPropertiesJSONObject =
+			objectEntryJSONObject.getJSONObject("systemProperties");
+
+		JSONObject objectDefinitionBriefJSONObject =
+			systemPropertiesJSONObject.getJSONObject("objectDefinitionBrief");
+
+		Assert.assertEquals(
+			_objectDefinition1.getExternalReferenceCode(),
+			objectDefinitionBriefJSONObject.getString("externalReferenceCode"));
+		Assert.assertEquals(
+			_objectDefinition1.getLabel(LocaleUtil.getDefault()),
+			objectDefinitionBriefJSONObject.getString("label"));
+		Assert.assertEquals(
+			_objectDefinition1.getObjectFolderExternalReferenceCode(),
+			objectDefinitionBriefJSONObject.getString(
+				"objectFolderExternalReferenceCode"));
+	}
+
 	@Test
 	public void testGetObjectEntriesVersionsPage() throws Exception {
 		_objectDefinition1.setEnableObjectEntryVersioning(true);

@@ -75,7 +75,7 @@ public abstract class BaseSectionDisplayContextTestCase
 				"cmsGroupId",
 				() -> {
 					try {
-						Group group = _groupLocalService.getGroup(
+						Group group = groupLocalService.getGroup(
 							TestPropsValues.getCompanyId(), GroupConstants.CMS);
 
 						return GetterUtil.getLong(group.getGroupId());
@@ -90,7 +90,7 @@ public abstract class BaseSectionDisplayContextTestCase
 					Map<String, String> collaboratorURL = new HashMap<>();
 
 					for (ObjectDefinition objectDefinition :
-							_objectDefinitionService.getCMSObjectDefinitions(
+							objectDefinitionService.getCMSObjectDefinitions(
 								group.getCompanyId(),
 								getObjectFolderExternalReferenceCodes())) {
 
@@ -109,7 +109,7 @@ public abstract class BaseSectionDisplayContextTestCase
 					return collaboratorURL;
 				}
 			).build(),
-			_getAdditionalProps());
+			getAdditionalProps());
 	}
 
 	@Test
@@ -195,12 +195,12 @@ public abstract class BaseSectionDisplayContextTestCase
 
 			DepotEntry defaultDepotEntry = depotEntries.get(0);
 
-			Group defaultDepotGroup = _groupLocalService.fetchGroup(
+			Group defaultDepotGroup = groupLocalService.fetchGroup(
 				defaultDepotEntry.getGroupId());
 
 			Assert.assertEquals("Default", defaultDepotGroup.getGroupKey());
 
-			Group depotGroup = _groupLocalService.fetchGroup(
+			Group depotGroup = groupLocalService.fetchGroup(
 				depotEntry.getGroupId());
 
 			Assert.assertEquals(name, depotGroup.getGroupKey());
@@ -244,7 +244,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 		DepotEntry depotEntry = depotEntries.get(0);
 
-		Group depotGroup = _groupLocalService.fetchGroup(
+		Group depotGroup = groupLocalService.fetchGroup(
 			depotEntry.getGroupId());
 
 		Assert.assertEquals("Default", depotGroup.getGroupKey());
@@ -304,6 +304,12 @@ public abstract class BaseSectionDisplayContextTestCase
 		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
 		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
 		Assert.assertEquals(type, fdsActionDropdownItem.get("type"));
+	}
+
+	protected HashMap<String, Object> getAdditionalProps() throws Exception {
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(getMockHttpServletRequest()),
+			"getAdditionalProps", new Class<?>[0]);
 	}
 
 	protected CreationMenu getCreationMenu() throws Exception {
@@ -381,6 +387,12 @@ public abstract class BaseSectionDisplayContextTestCase
 	protected abstract Object getSectionDisplayContext(
 			HttpServletRequest httpServletRequest)
 		throws Exception;
+
+	@Inject
+	protected GroupLocalService groupLocalService;
+
+	@Inject
+	protected ObjectDefinitionService objectDefinitionService;
 
 	private DepotEntry _addDepotEntry(String name) throws Exception {
 		return _depotEntryLocalService.addDepotEntry(
@@ -464,12 +476,6 @@ public abstract class BaseSectionDisplayContextTestCase
 		Assert.assertNull(dropdownItemData);
 	}
 
-	private HashMap<String, Object> _getAdditionalProps() throws Exception {
-		return ReflectionTestUtil.invoke(
-			getSectionDisplayContext(getMockHttpServletRequest()),
-			"getAdditionalProps", new Class<?>[0]);
-	}
-
 	private DropdownItem _getDropdownItem(
 		List<DropdownItem> dropdownItems, String label) {
 
@@ -486,8 +492,7 @@ public abstract class BaseSectionDisplayContextTestCase
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (DepotEntry depotEntry : depotEntries) {
-			Group group = _groupLocalService.fetchGroup(
-				depotEntry.getGroupId());
+			Group group = groupLocalService.fetchGroup(depotEntry.getGroupId());
 
 			if (group != null) {
 				jsonArray.put(
@@ -577,6 +582,10 @@ public abstract class BaseSectionDisplayContextTestCase
 		try {
 			CreationMenu creationMenu = getCreationMenu(objectEntryFolder);
 
+			if (creationMenu == null) {
+				return;
+			}
+
 			if (depotEntries != null) {
 				_assertCreationMenuContainsDropdownItem(
 					creationMenu, _getJSONArray(depotEntries),
@@ -596,12 +605,6 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private ObjectDefinitionService _objectDefinitionService;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

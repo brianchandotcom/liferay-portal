@@ -5,13 +5,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {InternalDispatch} from '@clayui/shared';
+import {InternalDispatch, Locator} from '@clayui/shared';
 import {
 	FrontendDataSet,
 	IFrontendDataSetProps,
 } from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
+import {getObjectValueFromPath, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 export interface IItemSelectorModalProps<T> {
@@ -19,22 +19,22 @@ export interface IItemSelectorModalProps<T> {
 	/**
 	 * Configuration properties of the Frontend Data Set used to display data.
 	 */
-	fdsProps: Omit<IFrontendDataSetProps, 'selectedItems'>;
-
-	/**
-	 * Fieldname from apiURL response used to display selection value in the modal.
-	 */
-	itemNameLocator: string | ((item: T) => any);
-
-	/**
-	 * Fieldname from item selector to pass item's value into the FDS.
-	 */
-	itemValueLocator: string | ((item: T) => any);
+	fdsProps: Omit<IFrontendDataSetProps, 'selectedItems' | 'selectedItemsKey'>;
 
 	/**
 	 * Items that are currently selected (controlled).
 	 */
 	items: T[];
+
+	/**
+	 * Sets how to get fields values for id, label, and value within each item.
+	 * String values can be used as a dotted path (e.g.: 'embedded.id').
+	 */
+	locator?: {
+		id: string;
+		label: Locator;
+		value: Locator;
+	};
 
 	/**
 	 * Expects the 'observer' property from the Clay useModal hook.
@@ -64,9 +64,12 @@ export interface IItemSelectorModalProps<T> {
 
 function ItemSelectorModal<T extends Record<string, any>>({
 	fdsProps,
-	itemNameLocator,
-	itemValueLocator,
 	items: externalItems,
+	locator = {
+		id: 'id',
+		label: 'title',
+		value: 'id',
+	},
 	observer,
 	onItemsChange,
 	onOpenChange,
@@ -81,31 +84,36 @@ function ItemSelectorModal<T extends Record<string, any>>({
 		}
 	}, [externalItems, open]);
 
-	const getSelectedItemName = function (selectedItem: T) {
-		if (typeof itemNameLocator === 'string') {
-			return selectedItem[itemNameLocator];
-		}
-		else {
-			return itemNameLocator(selectedItem);
-		}
-	};
+	const selectedData = useMemo(() => {
+		const getValueFromItem = (item: T, itemLocator: Locator) => {
+			if (typeof itemLocator === 'string') {
+				return getObjectValueFromPath({
+					object: item,
+					path: itemLocator,
+				});
+			}
 
-	const selectedValues = useMemo(() => {
-		const getSelectedItemValue = function (selectedItem: T) {
-			if (typeof itemValueLocator === 'string') {
-				return selectedItem[itemValueLocator];
-			}
-			else {
-				return itemValueLocator(selectedItem);
-			}
+			return itemLocator(item);
 		};
 
-		if (Array.isArray(selectedItems)) {
-			return selectedItems.map(getSelectedItemValue);
+		if (fdsProps.selectionType === 'single') {
+			if (!selectedItems.length) {
+				return {label: '', values: []};
+			}
+
+			return {
+				label: getValueFromItem(selectedItems[0], locator.label),
+				values: [getValueFromItem(selectedItems[0], locator.value)],
+			};
 		}
 
-		return [getSelectedItemValue(selectedItems)];
-	}, [selectedItems, itemValueLocator]);
+		return {
+			label: selectedItems.length.toString(),
+			values: selectedItems.map((item) => {
+				return getValueFromItem(item, locator.value);
+			}),
+		};
+	}, [fdsProps.selectionType, selectedItems, locator]);
 
 	return open ? (
 		<ClayModal observer={observer} size="full-screen">
@@ -131,7 +139,8 @@ function ItemSelectorModal<T extends Record<string, any>>({
 							setSelectedItems(newSelectedItems);
 						}
 					}}
-					selectedItems={selectedValues}
+					selectedItems={selectedData.values}
+					selectedItemsKey={locator.id}
 					style="fluid"
 				/>
 			</ClayModal.Body>
@@ -139,18 +148,14 @@ function ItemSelectorModal<T extends Record<string, any>>({
 			<ClayModal.Footer
 				className={classNames({
 					'bg-primary-l3 border-primary border-top':
-						!!selectedItems.length,
+						!!selectedData.values.length,
 				})}
 				first={
-					selectedItems.length ? (
+					selectedData.values.length ? (
 						<>
 							{sub(
 								Liferay.Language.get('x-selected'),
-								<strong>
-									{fdsProps.selectionType === 'single'
-										? getSelectedItemName(selectedItems[0])
-										: selectedItems.length}
-								</strong>
+								<strong>{selectedData.label}</strong>
 							)}
 						</>
 					) : undefined
@@ -169,7 +174,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 
 						<ClayButton
 							className="item-preview selector-button"
-							disabled={selectedItems.length < 1}
+							disabled={selectedData.values.length < 1}
 							onClick={() => {
 								onItemsChange(
 									fdsProps.selectionType === 'single'

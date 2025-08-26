@@ -76,28 +76,37 @@ const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 
 const assetLibrariesItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
-	itemNameLocator: 'name',
-	itemValueLocator: 'id',
+	locator: {
+		id: 'id',
+		label: 'name',
+		value: 'id',
+	},
 	type: Liferay.Language.get('space'),
 	views: assetLibraryViews,
 };
 
 const documentsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`,
-	itemNameLocator: 'fileName',
-	itemValueLocator: 'id',
+	locator: {
+		id: 'id',
+		label: 'fileName',
+		value: 'id',
+	},
 	type: Liferay.Language.get('document'),
 	views: documentViews,
 };
 
 const userAccountsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
-	itemNameLocator: (item: User) =>
-		item.givenName +
-		' (' +
-		item.roleBriefs?.map((role) => role.name).join(', ') +
-		')',
-	itemValueLocator: 'id',
+	locator: {
+		id: 'id',
+		label: (item: User) =>
+			item.givenName +
+			' (' +
+			item.roleBriefs?.map((role) => role.name).join(', ') +
+			')',
+		value: 'id',
+	},
 	type: Liferay.Language.get('user'),
 	views: userViews,
 };
@@ -305,17 +314,13 @@ export default function ItemSelectorSamples() {
 							...FDS_DEFAULT_PROPS,
 							apiURL: documentsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-documents-${getRandomId()}`,
-							selectedItemsKey: 'id',
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
 									EItemSelectorModalViewsConfig.DOCUMENTS,
 							}),
 						},
-						itemNameLocator:
-							documentsItemSelectorConfig.itemNameLocator,
-						itemValueLocator:
-							documentsItemSelectorConfig.itemValueLocator,
 						items: document ? [document] : [],
+						locator: documentsItemSelectorConfig.locator,
 						observer: fileItemSelectorObserver,
 						onItemsChange: (items: Document[]) => {
 							setDocument(items[0]);
@@ -332,17 +337,13 @@ export default function ItemSelectorSamples() {
 							...FDS_DEFAULT_PROPS,
 							apiURL: assetLibrariesItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-assets-${getRandomId()}`,
-							selectedItemsKey: 'id',
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
 									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
 							}),
 						},
-						itemNameLocator:
-							assetLibrariesItemSelectorConfig.itemNameLocator,
-						itemValueLocator:
-							assetLibrariesItemSelectorConfig.itemValueLocator,
 						items: space2 ? [space2] : [],
+						locator: assetLibrariesItemSelectorConfig.locator,
 						observer: spaceItemSelectorObserver,
 						onItemsChange: (items: Space[]) => {
 							setSpace2(items[0]);
@@ -359,17 +360,13 @@ export default function ItemSelectorSamples() {
 							...FDS_DEFAULT_PROPS,
 							apiURL: userAccountsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-users-${getRandomId()}`,
-							selectedItemsKey: 'id',
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
 									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
 							}),
 						},
-						itemNameLocator:
-							userAccountsItemSelectorConfig.itemNameLocator,
-						itemValueLocator:
-							userAccountsItemSelectorConfig.itemValueLocator,
 						items: user ? [user] : [],
+						locator: userAccountsItemSelectorConfig.locator,
 						observer: userItemSelectorObserver,
 						onItemsChange: (items: User[]) => {
 							setUser(items[0]);

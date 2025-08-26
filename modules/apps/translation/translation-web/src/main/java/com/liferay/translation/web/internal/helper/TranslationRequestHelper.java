@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
@@ -99,7 +100,12 @@ public class TranslationRequestHelper {
 			return _classNameId;
 		}
 
-		_classNameId = ParamUtil.getLong(_httpServletRequest, "classNameId");
+		_classNameId = PortalUtil.getClassNameId(getModelClassName());
+
+		if (_classNameId == 0) {
+			_classNameId = ParamUtil.getLong(
+				_httpServletRequest, "classNameId");
+		}
 
 		return _classNameId;
 	}
@@ -163,7 +169,11 @@ public class TranslationRequestHelper {
 			return _modelClassName;
 		}
 
-		_modelClassName = PortalUtil.getClassName(getClassNameId());
+		_modelClassName = ParamUtil.getString(_httpServletRequest, "className");
+
+		if (Validator.isNull(_modelClassName)) {
+			_modelClassName = PortalUtil.getClassName(getClassNameId());
+		}
 
 		return _modelClassName;
 	}

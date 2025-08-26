@@ -7617,6 +7617,8 @@ public class ObjectEntryResourceTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetObjectEntryWithTaxonomyCategories() throws Exception {
+		_addCMSGroup();
+
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -14173,6 +14175,36 @@ public class ObjectEntryResourceTest {
 		_testSortByUnsupportedObjectField(
 			"Unable to sort by property: siteId", _siteScopedObjectDefinition1,
 			"siteId");
+	}
+
+	private void _addCMSGroup() throws Exception {
+
+		// These tests require the instance to be created with the feature
+		// flag LPD-17564 enabled. On CI, feature flags are enabled on
+		// demand for each test, but not during instance initialization.
+		// Until the feature flag LPD-17564 is removed, we need an explicit CMS
+		// group creation.
+
+		Group group = _groupLocalService.fetchGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CMS);
+
+		if (group != null) {
+			return;
+		}
+
+		Role role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		if (role == null) {
+			_roleLocalService.addRole(
+				null, TestPropsValues.getUserId(), null, 0,
+				RoleConstants.SITE_MEMBER, null, null,
+				RoleConstants.TYPE_REGULAR, null, null);
+		}
+
+		GroupTestUtil.addGroup(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
 	}
 
 	private DLFileEntry _addDLFileEntry(String content, long folderId)

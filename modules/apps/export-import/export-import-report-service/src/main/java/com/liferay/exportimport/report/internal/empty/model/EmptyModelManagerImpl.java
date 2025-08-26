@@ -81,6 +81,24 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 			long groupId)
 		throws E {
 
+		return getOrAddEmptyModel(
+			ExportImportReportEntryUtil.getModelName(clazz), clazz.getName(),
+			null, emptyModelUnsafeSupplier, externalReferenceCode,
+			fetchByExternalReferenceCodeBiFunction,
+			getByExternalReferenceCodeUnsafeBiFunction, groupId);
+	}
+
+	@Override
+	public <T, E extends Exception> T getOrAddEmptyModel(
+			String classModelName, String className, Long companyId,
+			UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
+			String externalReferenceCode,
+			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
+			UnsafeBiFunction<String, Long, T, E>
+				getByExternalReferenceCodeUnsafeBiFunction,
+			long groupId)
+		throws E {
+
 		if (!LazyReferencingThreadLocal.isEnabled()) {
 			return getByExternalReferenceCodeUnsafeBiFunction.apply(
 				externalReferenceCode, groupId);
@@ -95,18 +113,21 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
+		if (group != null) {
+			companyId = group.getCompanyId();
+		}
+
 		try (SafeCloseable safeCloseable =
 				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
 			_exportImportReportEntryLocalService.
 				addEmptyExportImportReportEntry(
-					groupId, group.getCompanyId(), externalReferenceCode,
-					_classNameLocalService.getClassNameId(clazz.getName()),
+					groupId, companyId, externalReferenceCode,
+					_classNameLocalService.getClassNameId(className),
 					GetterUtil.getLong(
 						ExportImportThreadLocal.
 							getExportImportConfigurationId()),
-					ExportImportReportEntryUtil.getModelName(clazz),
-					ExportImportReportEntryUtil.getOrigin(),
+					classModelName, ExportImportReportEntryUtil.getOrigin(),
 					ExportImportReportEntryUtil.getScope(group),
 					ExportImportReportEntryUtil.getScopeKey(group));
 

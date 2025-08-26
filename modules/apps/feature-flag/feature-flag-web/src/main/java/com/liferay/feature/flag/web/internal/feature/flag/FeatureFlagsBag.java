@@ -81,12 +81,13 @@ public class FeatureFlagsBag {
 		FeatureFlag featureFlag = _featureFlagsMap.get(key);
 
 		if (featureFlag == null) {
-			_log.error(
-				StringBundler.concat(
-					"Feature flag ", key, " is not available for company ",
-					_companyId));
+			String message = StringBundler.concat(
+				"Feature flag ", key, " is not available for company ",
+				_companyId);
 
-			throw new RuntimeException();
+			_log.error(message);
+
+			throw new RuntimeException(message);
 		}
 
 		return featureFlag.isEnabled();

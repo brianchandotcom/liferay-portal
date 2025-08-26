@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataC
 /**
  * @author Luis Ortiz
  */
-public class DDMStructureDataCleanupPreupgradeProcess
+public class DDMDataCleanupPreupgradeProcess
 	extends DataCleanupPreupgradeProcess {
 
 	@Override

@@ -37,7 +37,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.upgrade.data.cleanup.DDMStructureDataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.data.cleanup.DDMDataCleanupPreupgradeProcess;
 
 import java.sql.Connection;
 
@@ -58,8 +58,8 @@ import org.junit.runner.RunWith;
  */
 @DataGuard(autoDelete = false, scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
-public class DDMStructureDataCleanupPreupgradeProcessTest
-	extends DDMStructureDataCleanupPreupgradeProcess {
+public class DDMDataCleanupPreupgradeProcessTest
+	extends DDMDataCleanupPreupgradeProcess {
 
 	@ClassRule
 	@Rule

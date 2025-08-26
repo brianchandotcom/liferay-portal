@@ -65,10 +65,10 @@ public class ViewVersionHistoryDisplayContext {
 				StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
 					GroupConstants.CMS_FRIENDLY_URL,
-					"/edit_content_item?objectEntryId={id}&version=",
-					"{systemProperties.version.number}",
+					"/edit_content_item?objectEntryId={id}",
 					"&p_l_mode=read&p_p_state=", LiferayWindowState.POP_UP,
-					"&redirect=", _themeDisplay.getURLCurrent()),
+					"&redirect=", _themeDisplay.getURLCurrent(),
+					"&version={systemProperties.version.number}"),
 				"view", "view-content",
 				LanguageUtil.get(_httpServletRequest, "view"), null, null,
 				null),

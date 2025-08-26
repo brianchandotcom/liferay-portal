@@ -1689,11 +1689,8 @@ test(
 		).click();
 
 		await editUserPage.categoryInput(vocabularyName + 'Required').click();
-
 		await editUserPage.categoryOption(categoryName).click({timeout: 1000});
-
 		await editUserPage.saveButton.click();
-
 		await editUserPage.membershipsLink.click();
 
 		await expect(editUserPage.membershipsNoUserGroupsMessage).toBeVisible();

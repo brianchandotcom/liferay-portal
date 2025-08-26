@@ -114,6 +114,7 @@ export class VocabulariesEditPage {
 	async toggleRequired() {
 		await this.requiredToggle.click();
 		await this.saveButton.click();
+
 		await waitForAlert(this.page);
 	}
 }

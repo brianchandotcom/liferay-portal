@@ -4520,16 +4520,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Group companyGroup = company.getGroup();
 
 		if (assetCategoryIds == null) {
-			long classNameId = _classNameLocalService.getClassNameId(
-				User.class.getName());
-
 			for (AssetVocabulary assetVocabulary :
 					_assetVocabularyLocalService.getGroupVocabularies(
 						companyGroup.getGroupId())) {
 
 				if (assetVocabulary.isRequired(
-						classNameId, user.getUserId(),
-						companyGroup.getGroupId())) {
+						_classNameLocalService.getClassNameId(
+							User.class.getName()),
+						user.getUserId(), companyGroup.getGroupId())) {
 
 					AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 						companyGroup.getGroupId(), user.getUuid());

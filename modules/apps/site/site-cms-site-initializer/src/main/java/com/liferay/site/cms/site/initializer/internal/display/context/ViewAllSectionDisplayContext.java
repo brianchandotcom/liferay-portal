@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,6 +44,19 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
+
+		_httpServletRequest = httpServletRequest;
+	}
+
+	@Override
+	public String getAPIURL() {
+		if (_httpServletRequest.getParameter("q") != null) {
+			return HttpComponentsUtil.addParameters(
+				super.getAPIURL(), "search",
+				_httpServletRequest.getParameter("q"));
+		}
+
+		return super.getAPIURL();
 	}
 
 	@Override
@@ -91,5 +105,7 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 			"cmsKind eq 'object' and (cmsSection eq 'contents' or cmsSection " +
 				"eq 'files')");
 	}
+
+	private final HttpServletRequest _httpServletRequest;
 
 }

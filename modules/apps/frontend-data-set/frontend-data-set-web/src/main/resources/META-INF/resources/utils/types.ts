@@ -70,6 +70,14 @@ export interface IEmptyState {
 	title?: string;
 }
 
+export interface IEmptyStateConfiguration extends IEmptyState {
+	filtered?: {
+		filters?: IEmptyState;
+		search?: IEmptyState;
+		searchAndFilters?: IEmptyState;
+	};
+}
+
 export enum ESelectionTrigger {
 	CONTAINER = 'container',
 	INPUT = 'input',
@@ -277,12 +285,7 @@ export interface IFrontendDataSetProps {
 	};
 	customViews?: string;
 	customViewsEnabled?: boolean;
-	emptyFilteredState?: {
-		filters?: IEmptyState;
-		search?: IEmptyState;
-		searchAndFilters?: IEmptyState;
-	};
-	emptyState?: IEmptyState;
+	emptyState?: IEmptyStateConfiguration;
 	enableInlineAddModeSetting?: {
 		defaultBodyContent?: object;
 	};

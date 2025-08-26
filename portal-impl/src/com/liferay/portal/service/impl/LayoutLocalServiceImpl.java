@@ -382,7 +382,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
-		else if (type.equals(LayoutConstants.TYPE_EMPTY)) {
+		else if (EmptyModelManagerUtil.isEmptyModel() ||
+				 type.equals(LayoutConstants.TYPE_EMPTY)) {
+
 			layout.setStatus(WorkflowConstants.STATUS_EMPTY);
 		}
 		else {

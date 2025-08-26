@@ -8,29 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		'.search-bar-keywords-input'
 	);
 	const searchButton = document.querySelector('.search-button');
-	const taxonomyCategorieIds = [
-		configuration.howToId,
-		configuration.referenceId,
-		configuration.troubleshootingId,
-	];
-
-	function buildSearchURL(searchBarKeywordsInputValue, taxonomyCategorieIds) {
-		let searchURL =
-			'/search?q=' +
-			encodeURIComponent(searchBarKeywordsInputValue.trim());
-
-		taxonomyCategorieIds.forEach((taxonomyCategorieId) => {
-			searchURL += '&resource-type=' + taxonomyCategorieId;
-		});
-
-		return searchURL;
-	}
 
 	function redirectToSearchResults() {
-		window.location.href = buildSearchURL(
-			searchBarKeywordsInput.value,
-			taxonomyCategorieIds
-		);
+		window.location.href =
+			'/search?q=' +
+			encodeURIComponent(searchBarKeywordsInput.value.trim()) +
+			'&' +
+			configuration.customParameter.trim();
 	}
 
 	searchBarKeywordsInput.addEventListener('keydown', (event) => {

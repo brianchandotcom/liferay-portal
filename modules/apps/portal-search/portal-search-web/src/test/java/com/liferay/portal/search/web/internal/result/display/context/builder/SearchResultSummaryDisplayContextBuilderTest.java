@@ -117,38 +117,38 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			portletURLFactory
 		).getPortletURL();
 
-		String entryClassName = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
 
-		long entryClassPK = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			entryClassName);
+			className);
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			build(_createDocument(entryClassName, entryClassPK));
+			build(_createDocument(className, classPK));
 
 		Assert.assertEquals(
-			entryClassName, searchResultSummaryDisplayContext.getClassName());
+			className, searchResultSummaryDisplayContext.getClassName());
 		Assert.assertEquals(
-			entryClassPK, searchResultSummaryDisplayContext.getClassPK());
+			classPK, searchResultSummaryDisplayContext.getClassPK());
 		Assert.assertEquals(
 			portletURL, searchResultSummaryDisplayContext.getPortletURL());
 	}
 
 	@Test
 	public void testCreationDate() throws Exception {
-		String entryClassName = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
 
-		long entryClassPK = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			entryClassName);
+			className);
 
-		Document document = _createDocument(entryClassName, entryClassPK);
+		Document document = _createDocument(className, classPK);
 
 		_assertCreationDateMissing(document);
 
@@ -170,19 +170,19 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@Test
 	public void testNoStagingLabel() throws Exception {
-		String entryClassName = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
 
-		long entryClassPK = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			entryClassName);
+			className);
 
 		_whenGroupLocalServiceGetGroup(false);
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			build(_createDocument(entryClassName, entryClassPK));
+			build(_createDocument(className, classPK));
 
 		Assert.assertEquals(
 			_SUMMARY_TITLE,
@@ -202,20 +202,20 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@Test
 	public void testStagingLabel() throws Exception {
-		String entryClassName = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
 
-		long entryClassPK = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			entryClassName);
+			className);
 
 		_whenGroupLocalServiceGetGroup(true);
 		_whenLanguageGet("staged");
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			build(_createDocument(entryClassName, entryClassPK));
+			build(_createDocument(className, classPK));
 
 		Assert.assertEquals(
 			_SUMMARY_TITLE + " (staged)",
@@ -231,12 +231,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId);
 
 		String className = RandomTestUtil.randomString();
-		long entryClassPK = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetEntryLocalServiceFetchEntry(
-			className, entryClassPK, assetEntry);
+		_whenAssetEntryLocalServiceFetchEntry(className, classPK, assetEntry);
 
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
 
 		_whenAssetRendererFactoryHasPermission(true);
 
@@ -250,12 +249,12 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_whenIndexerRegistryGetIndexer(className, _createIndexer());
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			build(_createDocument(className, entryClassPK));
+			build(_createDocument(className, classPK));
 
 		_assertAssetRendererURLDownloadVisible(
 			urlDownload, searchResultSummaryDisplayContext);
 
-		_assertTagsVisible(entryClassPK, searchResultSummaryDisplayContext);
+		_assertTagsVisible(classPK, searchResultSummaryDisplayContext);
 
 		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
 	}
@@ -267,12 +266,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId);
 
 		String className = RandomTestUtil.randomString();
-		long entryClassPK = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetEntryLocalServiceFetchEntry(
-			className, entryClassPK, assetEntry);
+		_whenAssetEntryLocalServiceFetchEntry(className, classPK, assetEntry);
 
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
 
 		_whenAssetRendererFactoryHasPermission(false);
 
@@ -286,7 +284,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_whenIndexerRegistryGetIndexer(className, _createIndexer());
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			build(_createDocument(className, entryClassPK));
+			build(_createDocument(className, classPK));
 
 		Assert.assertEquals(
 			urlDownload,
@@ -311,22 +309,21 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		String className = RandomTestUtil.randomString();
 
-		long entryClassPK = RandomTestUtil.randomInt(2, Integer.MAX_VALUE);
+		long classPK = RandomTestUtil.randomInt(2, Integer.MAX_VALUE);
 
-		long rootEntryClassPK = entryClassPK - 1;
+		long rootClassPK = classPK - 1;
+
+		_whenAssetEntryLocalServiceFetchEntry(className, classPK, assetEntry);
 
 		_whenAssetEntryLocalServiceFetchEntry(
-			className, entryClassPK, assetEntry);
+			className, rootClassPK, rootAssetEntry);
 
-		_whenAssetEntryLocalServiceFetchEntry(
-			className, rootEntryClassPK, rootAssetEntry);
-
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
 
 		AssetRenderer<?> rootAssetRenderer = Mockito.mock(AssetRenderer.class);
 
 		_whenAssetRendererFactoryGetAssetRenderer(
-			rootEntryClassPK, rootAssetRenderer);
+			rootClassPK, rootAssetRenderer);
 
 		_whenAssetRendererFactoryHasPermission(true);
 
@@ -339,9 +336,9 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenIndexerRegistryGetIndexer(className, _createIndexer());
 
-		Document document = _createDocument(className, entryClassPK);
+		Document document = _createDocument(className, classPK);
 
-		document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, rootEntryClassPK);
+		document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, rootClassPK);
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(document);
@@ -349,29 +346,29 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_assertAssetRendererURLDownloadVisible(
 			rootURLDownload, searchResultSummaryDisplayContext);
 
-		_assertTagsVisible(rootEntryClassPK, searchResultSummaryDisplayContext);
+		_assertTagsVisible(rootClassPK, searchResultSummaryDisplayContext);
 
 		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
 	}
 
 	@Test
 	public void testViewURL1() throws Exception {
-		String className = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();
 
-		_whenClassNameLocalServiceGetClassName(classNameId, className);
+		_whenClassNameLocalServiceGetClassName(
+			classNameId, RandomTestUtil.randomString());
 
-		String entryClassName = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			entryClassName);
+			className);
 
-		long entryClassPK = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
 
-		_whenSearchUtilGetSearchResultViewURL(entryClassName, entryClassPK);
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenSearchUtilGetSearchResultViewURL(className, classPK);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
 
-		Document document = _createDocument(entryClassName, entryClassPK);
+		Document document = _createDocument(className, classPK);
 
 		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
 		document.addKeyword(Field.CLASS_PK, RandomTestUtil.randomLong());
@@ -380,44 +377,44 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			build(document);
 
 		Assert.assertEquals(
-			entryClassName + entryClassPK,
+			className + classPK,
 			searchResultSummaryDisplayContext.getViewURL());
 	}
 
 	@Test
 	public void testViewURL2() throws Exception {
-		String className = RandomTestUtil.randomString();
+		String className1 = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			className);
+			className1);
 
 		long classNameId = RandomTestUtil.randomLong();
 
-		_whenClassNameLocalServiceGetClassName(classNameId, className);
+		_whenClassNameLocalServiceGetClassName(classNameId, className1);
 
-		long classPK = RandomTestUtil.randomLong();
+		long classPK1 = RandomTestUtil.randomLong();
 
-		_whenSearchUtilGetSearchResultViewURL(className, classPK);
+		_whenSearchUtilGetSearchResultViewURL(className1, classPK1);
 
-		String entryClassName = RandomTestUtil.randomString();
+		String className2 = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			entryClassName);
+			className2);
 
-		long entryClassPK = RandomTestUtil.randomLong();
+		long classPK2 = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(classPK2, assetRenderer);
 
-		Document document = _createDocument(entryClassName, entryClassPK);
+		Document document = _createDocument(className2, classPK2);
 
 		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
-		document.addKeyword(Field.CLASS_PK, classPK);
+		document.addKeyword(Field.CLASS_PK, classPK1);
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(document);
 
 		Assert.assertEquals(
-			className + classPK,
+			className1 + classPK1,
 			searchResultSummaryDisplayContext.getViewURL());
 	}
 
@@ -533,14 +530,14 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _assertTagsVisible(
-		long entryClassPK,
+		long classPK,
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isAssetCategoriesOrTagsVisible());
 
 		Assert.assertEquals(
-			entryClassPK, searchResultSummaryDisplayContext.getClassPK());
+			classPK, searchResultSummaryDisplayContext.getClassPK());
 	}
 
 	private void _assertUserPortraitVisible(
@@ -578,24 +575,24 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		return assetEntry;
 	}
 
-	private AssetEntry _createAssetEntryWithTagsPresent(long rootUserId) {
-		AssetEntry rootAssetEntry = _createAssetEntry(rootUserId);
+	private AssetEntry _createAssetEntryWithTagsPresent(long userId) {
+		AssetEntry assetEntry = _createAssetEntry(userId);
 
 		Mockito.doReturn(
 			new String[] {RandomTestUtil.randomString()}
 		).when(
-			rootAssetEntry
+			assetEntry
 		).getTagNames();
 
-		return rootAssetEntry;
+		return assetEntry;
 	}
 
-	private Document _createDocument(String entryClassName, long entryClassPK) {
+	private Document _createDocument(String className, long classPK) {
 		Document document = new DocumentImpl();
 
 		DocumentHelper documentHelper = new DocumentHelper(document);
 
-		documentHelper.setEntryKey(entryClassName, entryClassPK);
+		documentHelper.setEntryKey(className, classPK);
 
 		return document;
 	}
@@ -723,7 +720,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _whenAssetRendererFactoryGetAssetRenderer(
-			long entryClassPK, AssetRenderer<?> assetRenderer)
+			long classPK, AssetRenderer<?> assetRenderer)
 		throws Exception {
 
 		Mockito.doReturn(
@@ -731,7 +728,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		).when(
 			assetRendererFactory
 		).getAssetRenderer(
-			entryClassPK
+			classPK
 		);
 	}
 

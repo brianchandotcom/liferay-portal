@@ -76,7 +76,8 @@ public class MailEngine {
 			InternetAddress[] bulkAddresses, String subject, String body,
 			boolean htmlFormat, InternetAddress[] replyTo, String messageId,
 			String inReplyTo, List<FileAttachment> fileAttachments,
-			SMTPAccount smtpAccount, InternetHeaders internetHeaders)
+			SMTPAccount smtpAccount, InternetHeaders internetHeaders,
+			String batchSize)
 		throws PortalException {
 
 		long startTime = System.currentTimeMillis();
@@ -265,10 +266,9 @@ public class MailEngine {
 				}
 			}
 
-			int batchSize = GetterUtil.getInteger(
-				PropsUtil.get(PropsKeys.MAIL_BATCH_SIZE), _BATCH_SIZE);
-
-			_send(session, message, bulkAddresses, batchSize);
+			_send(
+				session, message, bulkAddresses,
+				GetterUtil.getInteger(batchSize, _BATCH_SIZE));
 		}
 		catch (SendFailedException sendFailedException) {
 			_log.error(sendFailedException);
@@ -293,7 +293,8 @@ public class MailEngine {
 		}
 	}
 
-	public static void send(MailService mailService, MailMessage mailMessage)
+	public static void send(
+			MailService mailService, MailMessage mailMessage, String batchSize)
 		throws PortalException {
 
 		send(
@@ -303,7 +304,8 @@ public class MailEngine {
 			mailMessage.getBody(), mailMessage.isHTMLFormat(),
 			mailMessage.getReplyTo(), mailMessage.getMessageId(),
 			mailMessage.getInReplyTo(), mailMessage.getFileAttachments(),
-			mailMessage.getSMTPAccount(), mailMessage.getInternetHeaders());
+			mailMessage.getSMTPAccount(), mailMessage.getInternetHeaders(),
+			batchSize);
 	}
 
 	private static Address[] _getBatchAddresses(

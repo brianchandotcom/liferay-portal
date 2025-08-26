@@ -26,13 +26,7 @@ public class PlacedOrderEntityModel implements EntityModel {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new CollectionEntityField(
 				new IntegerEntityField(
-					"accountId",
-					locale -> Field.getSortableFieldName("commerceAccountId"))),
-			new CollectionEntityField(
-				new IntegerEntityField(
-					"authorId",
-					locale -> Field.getSortableFieldName(
-						"orderCreatorUserId"))),
+					"accountId", locale -> "commerceAccountId")),
 			new CollectionEntityField(
 				new IntegerEntityField("orderStatus", locale -> "orderStatus")),
 			new ComplexEntityField(
@@ -54,9 +48,8 @@ public class PlacedOrderEntityModel implements EntityModel {
 				"requestedDeliveryDate",
 				locale -> Field.getSortableFieldName("requestedDeliveryDate"),
 				locale -> "requestedDeliveryDate"),
-			new IntegerEntityField(
-				"id",
-				locale -> Field.getSortableFieldName(Field.ENTRY_CLASS_PK)),
+			new IntegerEntityField("authorId", locale -> "orderCreatorUserId"),
+			new IntegerEntityField("id", locale -> Field.ENTRY_CLASS_PK),
 			new StringEntityField(
 				"account", locale -> Field.getSortableFieldName("accountName")),
 			new StringEntityField(

@@ -80,16 +80,16 @@ public class FeatureFlagsBag {
 	public boolean isEnabled(String key) {
 		FeatureFlag featureFlag = _featureFlagsMap.get(key);
 
-		if (featureFlag != null) {
-			return featureFlag.isEnabled();
+		if (featureFlag == null) {
+			_log.error(
+				StringBundler.concat(
+					"Feature flag ", key, " is not available for company ",
+					_companyId));
+
+			throw new RuntimeException();
 		}
 
-		_log.error(
-			StringBundler.concat(
-				"Feature flag ", key, " is not available for company ",
-				_companyId));
-
-		throw new RuntimeException();
+		return featureFlag.isEnabled();
 	}
 
 	public void setEnabled(String key, boolean enabled) {

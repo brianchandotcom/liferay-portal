@@ -8,25 +8,23 @@
  * Splits the path if there is any '.' into an array of keys you can use to drill down
  * the object hierarchy
  *
- * @param item : object
+ * @param object : object
  * @param path : string ('id', 'embedded.id'). Defaults to 'id'
- * @returns value of the selected property
+ * @returns value of the selected property or null
  */
 
-const getSelectedItemValue = function ({
-	item,
+export const getObjectValueFromPath = function ({
+	object,
 	path = 'id',
 }: {
-	item: any;
+	object: object;
 	path?: string | null;
 }): any {
 	if (!path) {
 		path = 'id';
 	}
 
-	return path.split('.').reduce((acc: any, currentPath: string) => {
-		return acc?.[currentPath] ?? null;
-	}, item);
+	return path.split('.').reduce((acc, currentPath) => {
+		return acc?.[currentPath as keyof typeof acc] ?? null;
+	}, object);
 };
-
-export default getSelectedItemValue;

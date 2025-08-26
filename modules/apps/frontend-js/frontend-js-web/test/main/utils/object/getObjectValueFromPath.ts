@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import getSelectedItemValue from '../../src/main/resources/META-INF/resources/utils/getSelectedItemValue';
+import {getObjectValueFromPath} from '../../../../src/main/resources/META-INF/resources/main/utils/object/getObjectValueFromPath';
 
-const item = {
+const object = {
 	embedded: {
 		author: {
 			givenName: 'User',
@@ -17,40 +17,42 @@ const item = {
 	name: 'Test',
 };
 
-describe('getItemValueFromPath', () => {
+describe('getObjectValueFromPath', () => {
 	it('is defined', () => {
-		expect(getSelectedItemValue).toBeDefined();
+		expect(getObjectValueFromPath).toBeDefined();
 	});
 
 	it('retrieves an item value when the selectedItemsKey is simple', () => {
-		expect(getSelectedItemValue({item, path: 'id'})).toEqual(123);
+		expect(getObjectValueFromPath({object, path: 'id'})).toEqual(123);
 	});
 
 	it('retrieves an item value using "id" if selectedItemsKey is not provided', () => {
-		expect(getSelectedItemValue({item})).toEqual(123);
+		expect(getObjectValueFromPath({object})).toEqual(123);
 	});
 
 	it('retrieves an item value using "id" if selectedItemsKey is undefined', () => {
-		expect(getSelectedItemValue({item, path: undefined})).toEqual(123);
+		expect(getObjectValueFromPath({object, path: undefined})).toEqual(123);
 	});
 
 	it('retrieves an item value using "id" if selectedItemsKey is null', () => {
-		expect(getSelectedItemValue({item, path: null})).toEqual(123);
+		expect(getObjectValueFromPath({object, path: null})).toEqual(123);
 	});
 
 	it('retrieves an item value when the selectedItemsKey is a path to a nested object property (2 levels)', () => {
-		expect(getSelectedItemValue({item, path: 'embedded.id'})).toEqual(456);
+		expect(getObjectValueFromPath({object, path: 'embedded.id'})).toEqual(
+			456
+		);
 	});
 
 	it('retrieves an item value when the selectedItemsKey is a path to a nested object property (3 levels)', () => {
 		expect(
-			getSelectedItemValue({item, path: 'embedded.author.name'})
+			getObjectValueFromPath({object, path: 'embedded.author.name'})
 		).toEqual('User');
 	});
 
 	it('returns null if the path does not match any property', () => {
 		expect(
-			getSelectedItemValue({item, path: 'embedded.author.id'})
+			getObjectValueFromPath({object, path: 'embedded.author.id'})
 		).toBeNull();
 	});
 });

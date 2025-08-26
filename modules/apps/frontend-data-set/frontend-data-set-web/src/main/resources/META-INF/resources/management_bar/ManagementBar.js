@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {getObjectValueFromPath} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import getSelectedItemValue from '../utils/getSelectedItemValue';
 import BulkActions from './controls/BulkActions';
 import NavBar from './controls/NavBar';
 import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
@@ -32,13 +32,16 @@ function ManagementBar({
 	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
 		items.some(
 			(item) =>
-				getSelectedItemValue({item, path: selectedItemsKey}) === id
+				getObjectValueFromPath({
+					object: item,
+					path: selectedItemsKey,
+				}) === id
 		)
 	);
 
 	function handleCheckboxClick() {
 		const itemKeys = items.map((item) =>
-			getSelectedItemValue({item, path: selectedItemsKey})
+			getObjectValueFromPath({object: item, path: selectedItemsKey})
 		);
 
 		if (pageSelectedItemsValue.length === items.length) {

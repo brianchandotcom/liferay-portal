@@ -5,6 +5,7 @@
 
 import {ClayCardWithInfo} from '@clayui/card';
 import classNames from 'classnames';
+import {getObjectValueFromPath} from 'frontend-js-web';
 import React, {forwardRef, useContext, useRef} from 'react';
 
 import FrontendDataSetContext, {
@@ -17,7 +18,6 @@ import formatActionURL from '../../utils/actionItems/formatActionURL';
 import handleActionClick from '../../utils/actionItems/handleActionClick';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';
-import getSelectedItemValue from '../../utils/getSelectedItemValue';
 import isLink from '../../utils/isLink';
 import {
 	DisplayType,
@@ -77,7 +77,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 
 		const selectedItemKey =
 			selectedItemsKey &&
-			getSelectedItemValue({item, path: selectedItemsKey});
+			getObjectValueFromPath({object: item, path: selectedItemsKey});
 
 		const getLabels = (
 			item: any
@@ -189,7 +189,10 @@ const Card = forwardRef<HTMLDivElement, any>(
 					(element) =>
 						selectedItemsKey &&
 						element ===
-							getSelectedItemValue({item, path: selectedItemsKey})
+							getObjectValueFromPath({
+								object: item,
+								path: selectedItemsKey,
+							})
 				),
 			stickerProps: (schema.sticker && item[schema.sticker]) || null,
 			symbol: schema.symbol && item[schema.symbol],
@@ -270,8 +273,8 @@ const Cards = ({
 								item={item}
 								key={
 									selectedItemsKey
-										? getSelectedItemValue({
-												item,
+										? getObjectValueFromPath({
+												object: item,
 												path: selectedItemsKey,
 											})
 										: getRandomId()

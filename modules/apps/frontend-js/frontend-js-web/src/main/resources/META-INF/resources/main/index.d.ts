@@ -871,3 +871,4 @@ export {loadModule} from './utils/client_extensions/loadModule';
  * Utils
  */
 export {default as dateUtils} from './utils/dateUtils';
+export {getObjectValueFromPath} from './utils/object/getObjectValueFromPath';

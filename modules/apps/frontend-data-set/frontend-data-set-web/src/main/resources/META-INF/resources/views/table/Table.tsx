@@ -17,7 +17,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {FDSTableCellHTMLElementBuilderArgs} from '@liferay/js-api/data-set';
 import classNames from 'classnames';
 import {ClientExtension} from 'frontend-js-components-web';
-import {throttle} from 'frontend-js-web';
+import {getObjectValueFromPath, throttle} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import FrontendDataSetContext, {
@@ -35,7 +35,6 @@ import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
-import getSelectedItemValue from '../../utils/getSelectedItemValue';
 import {getInputRendererById} from '../../utils/renderer';
 import {
 	ESelectionTrigger,
@@ -177,7 +176,7 @@ const Row = ({
 	const SelectionComponent =
 		selectionType === 'multiple' ? ClayCheckbox : ClayRadio;
 
-	const id = getSelectedItemValue({item, path: selectedItemsKey});
+	const id = getObjectValueFromPath({object: item, path: selectedItemsKey});
 
 	return (
 		<ClayTableRowOptionalDropTarget
@@ -378,8 +377,8 @@ const Body = ({
 									(element: any) =>
 										String(element) ===
 										String(
-											getSelectedItemValue({
-												item,
+											getObjectValueFromPath({
+												object: item,
 												path: selectedItemsKey,
 											})
 										)

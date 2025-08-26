@@ -12,6 +12,7 @@ import {
 	ClientExtensionDefinition,
 	ClientExtensionResolution,
 	fetch,
+	getObjectValueFromPath,
 	loadClientExtensions,
 	loadModule,
 } from 'frontend-js-web';
@@ -58,7 +59,6 @@ import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
 import EVENTS from './utils/eventsDefinitions';
 import getRandomId from './utils/getRandomId';
-import getSelectedItemValue from './utils/getSelectedItemValue';
 
 // @ts-ignore
 
@@ -580,8 +580,8 @@ const FrontendDataSetContent = ({
 
 						const itemKeys = new Set(
 							data.items.map((item: any) =>
-								getSelectedItemValue({
-									item,
+								getObjectValueFromPath({
+									object: item,
 									path: selectedItemsKey,
 								})
 							)
@@ -616,15 +616,17 @@ const FrontendDataSetContent = ({
 			selectedItemsValue.forEach((value) => {
 				let selectedItem = items.find(
 					(item) =>
-						getSelectedItemValue({item, path: selectedItemsKey}) ===
-						value
+						getObjectValueFromPath({
+							object: item,
+							path: selectedItemsKey,
+						}) === value
 				);
 
 				if (!selectedItem) {
 					selectedItem = selectedItems.find(
 						(item) =>
-							getSelectedItemValue({
-								item,
+							getObjectValueFromPath({
+								object: item,
 								path: selectedItemsKey,
 							}) === value
 					);
@@ -841,18 +843,18 @@ const FrontendDataSetContent = ({
 									items
 										.filter(
 											(item) =>
-												getSelectedItemValue({
-													item,
+												getObjectValueFromPath({
+													object: item,
 													path: selectedItemsKey,
 												}) !==
-												getSelectedItemValue({
-													item: selectedItem,
+												getObjectValueFromPath({
+													object: selectedItem,
 													path: selectedItemsKey,
 												})
 										)
 										.map((item) =>
-											getSelectedItemValue({
-												item,
+											getObjectValueFromPath({
+												object: item,
 												path: selectedItemsKey,
 											})
 										)
@@ -863,8 +865,8 @@ const FrontendDataSetContent = ({
 							else {
 								selectItems({
 									trigger,
-									value: getSelectedItemValue({
-										item: selectedItem,
+									value: getObjectValueFromPath({
+										object: selectedItem,
 										path: selectedItemsKey,
 									}),
 								});
@@ -1121,7 +1123,10 @@ const FrontendDataSetContent = ({
 	function applyItemInlineUpdates(itemKey: any) {
 		const itemToBeUpdated = items.find(
 			(item) =>
-				getSelectedItemValue({item, path: selectedItemsKey}) === itemKey
+				getObjectValueFromPath({
+					object: item,
+					path: selectedItemsKey,
+				}) === itemKey
 		);
 
 		const defaultBody = inlineEditingSettings?.defaultBodyContent || {};

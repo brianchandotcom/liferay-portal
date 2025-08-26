@@ -4,10 +4,10 @@
  */
 
 import {openModal} from 'frontend-js-components-web';
+import {getObjectValueFromPath} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {TOnFileDrop} from '../DnDContext';
-import getSelectedItemValue from '../utils/getSelectedItemValue';
 import isFileDropEnabled from '../utils/isFileDropEnabled';
 import {IFileDropSettings} from '../utils/types';
 
@@ -63,8 +63,8 @@ const useFileUploader = ({
 						<span>
 							Dropped on item{' '}
 
-							{getSelectedItemValue({
-								item: dropTarget,
+							{getObjectValueFromPath({
+								object: dropTarget,
 								path: selectedItemsKey,
 							})}
 						</span>

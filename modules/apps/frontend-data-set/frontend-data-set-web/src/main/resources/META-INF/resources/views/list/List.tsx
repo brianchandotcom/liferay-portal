@@ -9,6 +9,7 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
+import {getObjectValueFromPath} from 'frontend-js-web';
 import React, {forwardRef, useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
@@ -17,7 +18,6 @@ import ImageRenderer from '../../cell_renderers/ImageRenderer';
 import FDSDndProvider from '../../dnd/FDSDndProvider';
 import useFDSDrop from '../../dnd/useFDSDrop';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
-import getSelectedItemValue from '../../utils/getSelectedItemValue';
 import {
 	ESelectionTrigger,
 	IHeader,
@@ -87,7 +87,10 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 		const SelectionInput =
 			selectionType === 'single' ? ClayRadio : ClayCheckbox;
 
-		const itemId = getSelectedItemValue({item, path: selectedItemsKey});
+		const itemId = getObjectValueFromPath({
+			object: item,
+			path: selectedItemsKey,
+		});
 
 		const props = {
 			className: classNames(className, {
@@ -248,8 +251,8 @@ const List = ({
 							item={item}
 							key={
 								selectedItemsKey
-									? getSelectedItemValue({
-											item,
+									? getObjectValueFromPath({
+											object: item,
 											path: selectedItemsKey,
 										})
 									: index

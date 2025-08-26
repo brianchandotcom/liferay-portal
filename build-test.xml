@@ -12952,9 +12952,9 @@ storeProtocol="pop3s"
 ]]>
 				</echo>
 
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-pop.server.subdomain=
-				</echo>
+				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"><![CDATA[
+popServerSubdomain=""
+]]></echo>
 			</then>
 		</if>
 

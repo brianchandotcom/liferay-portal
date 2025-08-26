@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -112,8 +111,8 @@ public class MailServiceImpl
 
 		sb.append(StringPool.AT);
 
-		if (Validator.isNotNull(PropsValues.POP_SERVER_SUBDOMAIN)) {
-			sb.append(PropsValues.POP_SERVER_SUBDOMAIN);
+		if (Validator.isNotNull(getPOPServerSubdomain())) {
+			sb.append(getPOPServerSubdomain());
 			sb.append(StringPool.PERIOD);
 		}
 
@@ -130,7 +129,7 @@ public class MailServiceImpl
 
 	@Override
 	public String getPOPServerSubdomain() {
-		return PropsValues.POP_SERVER_SUBDOMAIN;
+		return _mailSettingSystemConfiguration.popServerSubdomain();
 	}
 
 	@Override

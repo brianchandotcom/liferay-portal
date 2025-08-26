@@ -121,7 +121,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
@@ -143,7 +143,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
@@ -154,18 +154,18 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		document.addKeyword(Field.CREATE_DATE, "20180425171442");
 
-		_assertCreationDate("Apr 25, 18, 5:14 PM", document);
+		_assertCreationDate(document, "Apr 25, 18, 5:14 PM");
 
 		_assertCreationDate(
-			LocaleUtil.BRAZIL, "25 de abr. de 18 17:14", document);
-		_assertCreationDate(LocaleUtil.CHINA, "18年4月25日 下午5:14", document);
-		_assertCreationDate(LocaleUtil.GERMANY, "25.04.18, 17:14", document);
-		_assertCreationDate(LocaleUtil.HUNGARY, "18. ápr. 25. 17:14", document);
-		_assertCreationDate(LocaleUtil.ITALY, "25 apr 18, 17:14", document);
-		_assertCreationDate(LocaleUtil.JAPAN, "18/04/25 17:14", document);
+			document, "25 de abr. de 18 17:14", LocaleUtil.BRAZIL);
+		_assertCreationDate(document, "18年4月25日 下午5:14", LocaleUtil.CHINA);
+		_assertCreationDate(document, "25.04.18, 17:14", LocaleUtil.GERMANY);
+		_assertCreationDate(document, "18. ápr. 25. 17:14", LocaleUtil.HUNGARY);
+		_assertCreationDate(document, "25 apr 18, 17:14", LocaleUtil.ITALY);
+		_assertCreationDate(document, "18/04/25 17:14", LocaleUtil.JAPAN);
 		_assertCreationDate(
-			LocaleUtil.NETHERLANDS, "25 apr. 18 17:14", document);
-		_assertCreationDate(LocaleUtil.SPAIN, "25 abr 18 17:14", document);
+			document, "25 apr. 18 17:14", LocaleUtil.NETHERLANDS);
+		_assertCreationDate(document, "25 abr 18 17:14", LocaleUtil.SPAIN);
 	}
 
 	@Test
@@ -174,7 +174,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
@@ -206,7 +206,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
@@ -233,9 +233,9 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		String className = RandomTestUtil.randomString();
 		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetEntryLocalServiceFetchEntry(className, classPK, assetEntry);
+		_whenAssetEntryLocalServiceFetchEntry(assetEntry, className, classPK);
 
-		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		_whenAssetRendererFactoryHasPermission(true);
 
@@ -252,11 +252,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			build(_createDocument(className, classPK));
 
 		_assertAssetRendererURLDownloadVisible(
-			urlDownload, searchResultSummaryDisplayContext);
+			searchResultSummaryDisplayContext, urlDownload);
 
 		_assertTagsVisible(classPK, searchResultSummaryDisplayContext);
 
-		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
+		_assertUserPortraitVisible(searchResultSummaryDisplayContext, userId);
 	}
 
 	@Test
@@ -268,9 +268,9 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		String className = RandomTestUtil.randomString();
 		long classPK = RandomTestUtil.randomLong();
 
-		_whenAssetEntryLocalServiceFetchEntry(className, classPK, assetEntry);
+		_whenAssetEntryLocalServiceFetchEntry(assetEntry, className, classPK);
 
-		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		_whenAssetRendererFactoryHasPermission(false);
 
@@ -313,17 +313,17 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long rootClassPK = classPK - 1;
 
-		_whenAssetEntryLocalServiceFetchEntry(className, classPK, assetEntry);
+		_whenAssetEntryLocalServiceFetchEntry(assetEntry, className, classPK);
 
 		_whenAssetEntryLocalServiceFetchEntry(
-			className, rootClassPK, rootAssetEntry);
+			rootAssetEntry, className, rootClassPK);
 
-		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		AssetRenderer<?> rootAssetRenderer = Mockito.mock(AssetRenderer.class);
 
 		_whenAssetRendererFactoryGetAssetRenderer(
-			rootClassPK, rootAssetRenderer);
+			rootAssetRenderer, rootClassPK);
 
 		_whenAssetRendererFactoryHasPermission(true);
 
@@ -344,11 +344,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			build(document);
 
 		_assertAssetRendererURLDownloadVisible(
-			rootURLDownload, searchResultSummaryDisplayContext);
+			searchResultSummaryDisplayContext, rootURLDownload);
 
 		_assertTagsVisible(rootClassPK, searchResultSummaryDisplayContext);
 
-		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
+		_assertUserPortraitVisible(searchResultSummaryDisplayContext, userId);
 	}
 
 	@Test
@@ -366,7 +366,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		long classPK = RandomTestUtil.randomLong();
 
 		_whenSearchUtilGetSearchResultViewURL(className, classPK);
-		_whenAssetRendererFactoryGetAssetRenderer(classPK, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		Document document = _createDocument(className, classPK);
 
@@ -403,7 +403,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long classPK2 = RandomTestUtil.randomLong();
 
-		_whenAssetRendererFactoryGetAssetRenderer(classPK2, assetRenderer);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK2);
 
 		Document document = _createDocument(className2, classPK2);
 
@@ -479,8 +479,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		UserLocalService.class);
 
 	private void _assertAssetRendererURLDownloadVisible(
-		String urlDownload,
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+		String urlDownload) {
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.
@@ -492,17 +492,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _assertCreationDate(
-			Locale locale1, String expectedCreationDateString,
-			Document document)
-		throws Exception {
-
-		locale = locale1;
-
-		_assertCreationDate(expectedCreationDateString, document);
-	}
-
-	private void _assertCreationDate(
-			String expectedCreationDateString, Document document)
+			Document document, String expectedCreationDateString)
 		throws Exception {
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
@@ -514,6 +504,16 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isCreationDateVisible());
+	}
+
+	private void _assertCreationDate(
+			Document document, String expectedCreationDateString,
+			Locale locale1)
+		throws Exception {
+
+		locale = locale1;
+
+		_assertCreationDate(document, expectedCreationDateString);
 	}
 
 	private void _assertCreationDateMissing(Document document)
@@ -541,8 +541,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _assertUserPortraitVisible(
-		long userId,
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+		long userId) {
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isUserPortraitVisible());
@@ -708,7 +708,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _whenAssetEntryLocalServiceFetchEntry(
-		String className, long classPK, AssetEntry assetEntry) {
+		AssetEntry assetEntry, String className, long classPK) {
 
 		Mockito.doReturn(
 			assetEntry
@@ -720,7 +720,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _whenAssetRendererFactoryGetAssetRenderer(
-			long classPK, AssetRenderer<?> assetRenderer)
+			AssetRenderer<?> assetRenderer, long classPK)
 		throws Exception {
 
 		Mockito.doReturn(

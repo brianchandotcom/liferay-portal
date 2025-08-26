@@ -114,12 +114,16 @@ public class DepotAssetRendererFactoryWrapper<T>
 			return assetRenderer;
 		}
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564")) {
+
+			return null;
+		}
+
 		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
 			groupId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
-			(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
-
+		if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
 			return assetRenderer;
 		}
 

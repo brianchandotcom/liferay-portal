@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
@@ -22,7 +21,6 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
-	useMemo,
 	useReducer,
 	useRef,
 	useState,
@@ -33,9 +31,6 @@ import FDSDndProvider from './dnd/FDSDndProvider';
 import isFileDropEnabled from './utils/isFileDropEnabled';
 
 import './styles/main.scss';
-
-import ClayEmptyState from '@clayui/empty-state';
-
 import DnDContext from './DnDContext';
 import FrontendDataSetContext, {
 	IDataSetData,
@@ -43,12 +38,12 @@ import FrontendDataSetContext, {
 } from './FrontendDataSetContext';
 import useFDSDrop from './dnd/useFDSDrop';
 import useFileUploader from './dnd/useFileUploader';
+import EmptyState from './empty_state/EmptyState';
 import {InfoPanel} from './info_panel/InfoPanel';
 
 // @ts-ignore
 
 import ManagementBar from './management_bar/ManagementBar';
-import CreationMenu from './management_bar/controls/CreationMenu';
 import {FILTER_IMPLEMENTATIONS} from './management_bar/controls/filters/Filter';
 
 // @ts-ignore
@@ -367,101 +362,6 @@ const FrontendDataSetContent = ({
 
 		onSearch({query: ''});
 	}, [filters, onSearch, viewsDispatch]);
-
-	const currentEmptyState = useMemo(() => {
-		const hasActiveFilters = filters.some((filter: any) => filter.active);
-		const hasSearch = !!searchParam;
-
-		const getImgSrc = (image?: string) =>
-			`${Liferay.ThemeDisplay.getPathThemeImages()}${
-				image ?? '/states/search_state.svg'
-			}`;
-
-		if (hasActiveFilters && hasSearch) {
-			const config = emptyFilteredStateProp?.searchAndFilters;
-
-			return {
-				children: (
-					<ClayButton
-						displayType="secondary"
-						onClick={onClearFilters}
-					>
-						{Liferay.Language.get('clear-search-and-filters')}
-					</ClayButton>
-				),
-				description:
-					config?.description ??
-					Liferay.Language.get(
-						'review-your-filters-or-search-and-try-again'
-					),
-				imgSrc: getImgSrc(config?.image),
-				title:
-					config?.title ?? Liferay.Language.get('no-results-found'),
-			};
-		}
-
-		if (hasActiveFilters) {
-			const config = emptyFilteredStateProp?.filters;
-
-			return {
-				children: (
-					<ClayButton
-						displayType="secondary"
-						onClick={onClearFilters}
-					>
-						{Liferay.Language.get('clear-filters')}
-					</ClayButton>
-				),
-				description:
-					config?.description ??
-					Liferay.Language.get('review-your-filters-and-try-again'),
-				imgSrc: getImgSrc(config?.image),
-				title:
-					config?.title ?? Liferay.Language.get('no-results-found'),
-			};
-		}
-
-		if (hasSearch) {
-			const config = emptyFilteredStateProp?.search;
-
-			return {
-				children: (
-					<ClayButton
-						displayType="secondary"
-						onClick={onClearFilters}
-					>
-						{Liferay.Language.get('clear-search')}
-					</ClayButton>
-				),
-				description:
-					config?.description ??
-					Liferay.Language.get('review-your-search-and-try-again'),
-				imgSrc: getImgSrc(config?.image),
-				title:
-					config?.title ?? Liferay.Language.get('no-results-found'),
-			};
-		}
-
-		return {
-			children: creationMenu && (
-				<CreationMenu {...creationMenu} inEmptyState />
-			),
-			description:
-				emptyStateProp?.description ??
-				Liferay.Language.get('sorry,-no-results-were-found'),
-			imgSrc: getImgSrc(emptyStateProp?.image),
-			title:
-				emptyStateProp?.title ??
-				Liferay.Language.get('no-results-found'),
-		};
-	}, [
-		creationMenu,
-		emptyFilteredStateProp,
-		emptyStateProp,
-		filters,
-		onClearFilters,
-		searchParam,
-	]);
 
 	function updateDataSetItems(dataSetData: IDataSetData) {
 		const remappedItems = dataSetData.items.map((item) => {
@@ -1012,13 +912,14 @@ const FrontendDataSetContent = ({
 						{...currentViewProps}
 					/>
 				) : (
-					<ClayEmptyState
-						description={currentEmptyState.description}
-						imgSrc={currentEmptyState.imgSrc}
-						title={currentEmptyState.title}
-					>
-						{currentEmptyState.children}
-					</ClayEmptyState>
+					<EmptyState
+						creationMenu={creationMenu}
+						emptyFilteredState={emptyFilteredStateProp}
+						emptyState={emptyStateProp}
+						filters={filters}
+						onClearFilters={onClearFilters}
+						searchParam={searchParam}
+					/>
 				)}
 			</div>
 		) : (

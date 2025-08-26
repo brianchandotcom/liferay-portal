@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -89,7 +88,6 @@ public class ListTypeEntryLocalServiceTest {
 			_listTypeDefinition);
 	}
 
-	@FeatureFlag("LPD-24055")
 	@Test
 	public void testAddListTypeEntry() throws Exception {
 		String externalReferenceCode =
@@ -250,7 +248,6 @@ public class ListTypeEntryLocalServiceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-24055")
 	@Test
 	public void testUpdateListTypeEntry() throws Exception {
 		String externalReferenceCode = "externalReferenceCode";

@@ -41,6 +41,8 @@ public interface StagingGroupHelper {
 
 	public boolean isCompanyGroup(long companyId, long groupId);
 
+	public boolean isDepotGroup(long groupId);
+
 	public boolean isCompanyGroupFriendlyURL(String friendlyURL);
 
 	public boolean isLiveGroup(Group group);

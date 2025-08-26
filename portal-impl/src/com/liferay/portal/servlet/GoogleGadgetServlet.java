@@ -87,8 +87,6 @@ public class GoogleGadgetServlet extends HttpServlet {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			PortalUtil.getCompanyId(httpServletRequest), portletId);
 
-		String title = portlet.getDisplayName();
-
 		String widgetURL = String.valueOf(httpServletRequest.getRequestURL());
 
 		widgetURL = widgetURL.replaceFirst(
@@ -100,7 +98,7 @@ public class GoogleGadgetServlet extends HttpServlet {
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		sb.append("<Module>");
 		sb.append("<ModulePrefs title=\"");
-		sb.append(HtmlUtil.escapeAttribute(title));
+		sb.append(HtmlUtil.escapeAttribute(portlet.getDisplayName()));
 		sb.append("\"/>");
 		sb.append("<Content type=\"html\">");
 		sb.append("<![CDATA[");

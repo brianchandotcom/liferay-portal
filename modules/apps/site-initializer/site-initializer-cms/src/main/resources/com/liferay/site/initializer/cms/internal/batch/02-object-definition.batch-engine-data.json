@@ -589,9 +589,9 @@
 				{
 					"deletionType": "prevent",
 					"edge": false,
-					"externalReferenceCode": "L_BULK_ACTION_TASK_TO_L_BULK_ACTION_TASK_ITEM",
+					"externalReferenceCode": "L_BULK_ACTION_TASK_TO_L_BULK_ACTION_TASK_ITEMS",
 					"label": {
-						"en_US": "Bulk Action Task to Bulk Action Task Item"
+						"en_US": "Bulk Action Task to Bulk Action Task Items"
 					},
 					"name": "bulkActionTaskToBulkActionTaskItem",
 					"objectDefinitionExternalReferenceCode1": "L_BULK_ACTION_TASK",

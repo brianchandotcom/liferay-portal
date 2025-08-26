@@ -42,7 +42,7 @@ public class DatabaseUtil {
 	}
 
 	public static boolean isPostgreSQL(String jdbcURL) {
-		if (jdbcURL.indexOf("postgresql") != -1) {
+		if (jdbcURL.contains("postgresql")) {
 			return true;
 		}
 

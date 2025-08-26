@@ -256,7 +256,7 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 	}
 
 	private boolean _containsDateFieldType(String content) {
-		if (content.indexOf(_TYPE_ATTRIBUTE_DDM_DATE) != -1) {
+		if (content.contains(_TYPE_ATTRIBUTE_DDM_DATE)) {
 			return true;
 		}
 

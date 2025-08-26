@@ -14,6 +14,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -105,18 +107,6 @@ public class ViewSharedWithMeSectionDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws PortalException {
 
-		ObjectDefinition basicDocumentObjectDefinition =
-			_objectDefinitionService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_DOCUMENT", _themeDisplay.getCompanyId());
-
-		String basicDocumentClassName = StringPool.BLANK;
-
-		if (basicDocumentObjectDefinition != null) {
-			basicDocumentClassName =
-				basicDocumentObjectDefinition.getClassName();
-		}
-
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				StringBundler.concat(
@@ -136,7 +126,7 @@ public class ViewSharedWithMeSectionDisplayContext {
 				StringPool.BLANK, "view", "view-file",
 				LanguageUtil.get(_httpServletRequest, "view"), null, null, null,
 				HashMapBuilder.<String, Object>put(
-					"className", basicDocumentClassName
+					"className", _getBasicDocumentClassName()
 				).build()),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
@@ -182,12 +172,35 @@ public class ViewSharedWithMeSectionDisplayContext {
 				).build()));
 	}
 
+	private String _getBasicDocumentClassName() {
+		try {
+			ObjectDefinition basicDocumentObjectDefinition =
+				_objectDefinitionService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						"L_BASIC_DOCUMENT", _themeDisplay.getCompanyId());
+
+			if (basicDocumentObjectDefinition != null) {
+				return basicDocumentObjectDefinition.getClassName();
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String[] _getObjectFolderExternalReferenceCodes() {
 		return new String[] {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewSharedWithMeSectionDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final ObjectDefinitionService _objectDefinitionService;

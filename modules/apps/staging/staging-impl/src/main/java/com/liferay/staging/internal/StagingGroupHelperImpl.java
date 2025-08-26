@@ -190,6 +190,12 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 	}
 
 	@Override
+	public boolean isDepotGroup(long groupId){
+		Group group = _groupLocalService.fetchGroup(groupId);
+		return group.isDepot();
+	}
+
+	@Override
 	public boolean isCompanyGroupFriendlyURL(String friendlyURL) {
 		return Objects.equals(friendlyURL, CompanyGroupConstants.FRIENDLY_URL);
 	}

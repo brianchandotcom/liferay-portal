@@ -20,6 +20,7 @@ import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import getRandomString from '../../../utils/getRandomString';
+import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {exportImportConfig} from './export_import.config';
@@ -301,11 +302,12 @@ test(
 		);
 		await journalEditArticlePage.publishArticle(true);
 
-		expect(
-			await page.getByText(
+		await reloadUntilVisible({
+			myLocator: page.getByText(
 				'Close Error: Unable to validate referenced document because it cannot be found with the following parameters'
-			)
-		).toBeVisible();
+			),
+			page,
+		});
 	}
 );
 

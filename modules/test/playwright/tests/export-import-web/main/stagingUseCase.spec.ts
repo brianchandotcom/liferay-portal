@@ -51,7 +51,7 @@ export const test = mergeTests(
 );
 
 test(
-	'exporting a page with a manual collection that contains a link to the page',
+	'Exporting a page with a manual collection that contains a link to the page',
 	{tag: '@LPD-57344'},
 	async ({
 		apiHelpers,
@@ -177,7 +177,7 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontntStructureId}`,
 );
 
 test(
-	'non modified referred content cannot publish to live when enable include if modified option',
+	'Non modified referred content cannot publish to live when enable include if modified option',
 	{tag: '@LPS-167777'},
 	async ({apiHelpers, stagingConfigurationPage, stagingPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({
@@ -311,7 +311,7 @@ test(
 	}
 );
 
-test('staging publish template with smoke', async ({
+test('Staging publish template with smoke', async ({
 	apiHelpers,
 	page,
 	stagingPage,

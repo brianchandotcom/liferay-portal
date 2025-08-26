@@ -253,9 +253,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_assertAssetRendererURLDownloadVisible(
 			searchResultSummaryDisplayContext, urlDownload);
-
 		_assertTagsVisible(classPK, searchResultSummaryDisplayContext);
-
 		_assertUserPortraitVisible(searchResultSummaryDisplayContext, userId);
 	}
 
@@ -300,39 +298,33 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long userId = RandomTestUtil.randomInt(2, Integer.MAX_VALUE);
 
-		AssetEntry assetEntry = _createAssetEntry(userId);
-
-		long rootUserId = userId - 1;
-
-		AssetEntry rootAssetEntry = _createAssetEntryWithTagsPresent(
-			rootUserId);
+		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId - 1);
 
 		String className = RandomTestUtil.randomString();
-
 		long classPK = RandomTestUtil.randomInt(2, Integer.MAX_VALUE);
+
+		_whenAssetEntryLocalServiceFetchEntry(
+			_createAssetEntry(userId), className, classPK);
 
 		long rootClassPK = classPK - 1;
 
-		_whenAssetEntryLocalServiceFetchEntry(assetEntry, className, classPK);
-
 		_whenAssetEntryLocalServiceFetchEntry(
-			rootAssetEntry, className, rootClassPK);
+			assetEntry, className, rootClassPK);
 
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
-		AssetRenderer<?> rootAssetRenderer = Mockito.mock(AssetRenderer.class);
+		AssetRenderer<?> assetRenderer = Mockito.mock(AssetRenderer.class);
 
-		_whenAssetRendererFactoryGetAssetRenderer(
-			rootAssetRenderer, rootClassPK);
+		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, rootClassPK);
 
 		_whenAssetRendererFactoryHasPermission(true);
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 
-		String rootURLDownload = RandomTestUtil.randomString();
+		String urlDownload = RandomTestUtil.randomString();
 
-		_whenAssetRendererGetURLDownload(rootAssetRenderer, rootURLDownload);
+		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
 		_whenIndexerRegistryGetIndexer(className, _createIndexer());
 
@@ -344,10 +336,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			build(document);
 
 		_assertAssetRendererURLDownloadVisible(
-			searchResultSummaryDisplayContext, rootURLDownload);
-
+			searchResultSummaryDisplayContext, urlDownload);
 		_assertTagsVisible(rootClassPK, searchResultSummaryDisplayContext);
-
 		_assertUserPortraitVisible(searchResultSummaryDisplayContext, userId);
 	}
 
@@ -485,7 +475,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.
 				isAssetRendererURLDownloadVisible());
-
 		Assert.assertEquals(
 			urlDownload,
 			searchResultSummaryDisplayContext.getAssetRendererURLDownload());
@@ -501,7 +490,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		Assert.assertEquals(
 			expectedCreationDateString,
 			searchResultSummaryDisplayContext.getCreationDateString());
-
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isCreationDateVisible());
 	}
@@ -524,7 +512,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		Assert.assertNull(
 			searchResultSummaryDisplayContext.getCreationDateString());
-
 		Assert.assertFalse(
 			searchResultSummaryDisplayContext.isCreationDateVisible());
 	}
@@ -535,7 +522,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isAssetCategoriesOrTagsVisible());
-
 		Assert.assertEquals(
 			classPK, searchResultSummaryDisplayContext.getClassPK());
 	}
@@ -546,7 +532,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isUserPortraitVisible());
-
 		Assert.assertEquals(
 			userId, searchResultSummaryDisplayContext.getAssetEntryUserId());
 	}

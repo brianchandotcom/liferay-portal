@@ -42,13 +42,15 @@ public class UserSegmentsEntryMembershipChecker {
 
 		String template = _buildGroovyTemplate(filterString);
 
-		Class<?> clazz = null;
+		Class<?> clazz = _cachedScriptClasses.get(template);
 
-		Object lock = _locks.computeIfAbsent(template, o -> new Object());
+		if (clazz == null) {
+			Object lock = _locks.computeIfAbsent(template, o -> new Object());
 
-		synchronized (lock) {
-			clazz = _cachedScriptClasses.computeIfAbsent(
-				template, _groovyShell.getClassLoader()::parseClass);
+			synchronized (lock) {
+				clazz = _cachedScriptClasses.computeIfAbsent(
+					template, _groovyShell.getClassLoader()::parseClass);
+			}
 		}
 
 		Script script = null;

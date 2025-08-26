@@ -190,8 +190,13 @@ public class ThemeDisplay
 			return _clayCSSURL;
 		}
 
-		_clayCSSURL = PortalUtil.getStaticResourceURL(
-			getRequest(), getPathThemeCss() + "/clay.css");
+		if (Validator.isNotNull(_defaultClayCSSURL)) {
+			_clayCSSURL = _defaultClayCSSURL;
+		}
+		else {
+			_clayCSSURL = PortalUtil.getStaticResourceURL(
+				getRequest(), getPathThemeCss() + "/clay.css");
+		}
 
 		return _clayCSSURL;
 	}
@@ -559,8 +564,13 @@ public class ThemeDisplay
 			return _mainCSSURL;
 		}
 
-		_mainCSSURL = PortalUtil.getStaticResourceURL(
-			getRequest(), getPathThemeCss() + "/main.css");
+		if (Validator.isNotNull(_defaultMainCSSURL)) {
+			_mainCSSURL = _defaultMainCSSURL;
+		}
+		else {
+			_mainCSSURL = PortalUtil.getStaticResourceURL(
+				getRequest(), getPathThemeCss() + "/main.css");
+		}
 
 		return _mainCSSURL;
 	}
@@ -570,8 +580,13 @@ public class ThemeDisplay
 			return _mainJSURL;
 		}
 
-		_mainJSURL = PortalUtil.getStaticResourceURL(
-			getRequest(), getPathThemeJavaScript() + "/main.js");
+		if (Validator.isNotNull(_defaultMainJSURL)) {
+			_mainJSURL = _defaultMainJSURL;
+		}
+		else {
+			_mainJSURL = PortalUtil.getStaticResourceURL(
+				getRequest(), getPathThemeJavaScript() + "/main.js");
+		}
 
 		return _mainJSURL;
 	}
@@ -1370,6 +1385,18 @@ public class ThemeDisplay
 		_contact = contact;
 	}
 
+	public void setDefaultClayCSSURL(String defaultClayCSSURL) {
+		_defaultClayCSSURL = defaultClayCSSURL;
+	}
+
+	public void setDefaultMainCSSURL(String defaultMainCSSURL) {
+		_defaultMainCSSURL = defaultMainCSSURL;
+	}
+
+	public void setDefaultMainJSURL(String defaultMainJSURL) {
+		_defaultMainJSURL = defaultMainJSURL;
+	}
+
 	public void setDevice(Device device) {
 		_device = device;
 	}
@@ -2002,6 +2029,9 @@ public class ThemeDisplay
 	private Contact _contact;
 	private Group _controlPanelGroup;
 	private Layout _controlPanelLayout;
+	private String _defaultClayCSSURL;
+	private String _defaultMainCSSURL;
+	private String _defaultMainJSURL;
 	private Device _device;
 	private long _doAsGroupId;
 	private String _doAsUserId = StringPool.BLANK;

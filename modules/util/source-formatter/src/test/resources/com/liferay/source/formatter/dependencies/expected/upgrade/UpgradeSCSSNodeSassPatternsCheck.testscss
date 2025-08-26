@@ -26,3 +26,16 @@ $multiplier: math.div(nth($value, 1), $spacer);
 (#{$prop}: var(#{'--btn-' + $key + '-' + $prefix + $prop}))
 
 (#{$prop}: var(#{'--btn-' + $key + '-' + $prefix + '--btn-'}))
+
+.test-class {
+	color: rgb(0 0 0 / 40%);
+}
+
+.another-element {
+	background-color: rgba(255 0 0 / 0.75);
+}
+
+.my-div {
+	background-color: hsl(0, 100%, 50% / 0.5);
+	color: hsla(240 100% 50% / 0.5);
+}

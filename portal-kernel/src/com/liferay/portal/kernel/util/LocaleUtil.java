@@ -327,6 +327,57 @@ public class LocaleUtil {
 		return displayNames;
 	}
 
+	public static String toJSONString(Locale locale) {
+		Set<Character> extensionKeys = locale.getExtensionKeys();
+		Set<String> unicodeLocaleAttributes =
+			locale.getUnicodeLocaleAttributes();
+		Set<String> unicodeLocaleKeys = locale.getUnicodeLocaleKeys();
+
+		StringBundler sb = new StringBundler(
+			29 + (extensionKeys.size() * 3) +
+				(unicodeLocaleAttributes.size() * 3) +
+					(unicodeLocaleKeys.size() * 3));
+
+		sb.append("{\"country\":\"");
+		sb.append(locale.getCountry());
+		sb.append("\",\"displayCountry\":\"");
+		sb.append(locale.getDisplayCountry());
+		sb.append("\",\"displayLanguage\":\"");
+		sb.append(locale.getDisplayLanguage());
+		sb.append("\",\"displayName\":\"");
+		sb.append(locale.getDisplayName());
+		sb.append("\",\"displayScript\":\"");
+		sb.append(locale.getDisplayScript());
+		sb.append("\",\"displayVariant\":\"");
+		sb.append(locale.getDisplayVariant());
+		sb.append("\",\"extensionKeys\":");
+
+		_putValues(sb, extensionKeys);
+
+		sb.append(",\"ISO3Country\":\"");
+		sb.append(locale.getISO3Country());
+		sb.append("\",\"ISO3Language\":\"");
+		sb.append(locale.getISO3Language());
+		sb.append("\",\"language\":\"");
+		sb.append(locale.getLanguage());
+		sb.append("\",\"script\":\"");
+		sb.append(locale.getScript());
+		sb.append("\",\"unicodeLocaleAttributes\":");
+
+		_putValues(sb, unicodeLocaleAttributes);
+
+		sb.append(",\"unicodeLocaleKeys\":");
+
+		_putValues(sb, unicodeLocaleKeys);
+
+		sb.append(",\"variant\":\"");
+		sb.append(locale.getVariant());
+
+		sb.append("\"}");
+
+		return sb.toString();
+	}
+
 	public static String toLanguageId(Locale locale) {
 		if (locale == null) {
 			locale = _locale;
@@ -544,6 +595,26 @@ public class LocaleUtil {
 		}
 
 		return displayName;
+	}
+
+	private static void _putValues(StringBundler sb, Collection<?> values) {
+		if (values.isEmpty()) {
+			sb.append("[]");
+
+			return;
+		}
+
+		sb.append("[");
+
+		for (Object value : values) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\",");
+		}
+
+		sb.setIndex(sb.length() - 1);
+
+		sb.append("\"]");
 	}
 
 	private static final String _BETA_SUFFIX = " [Beta]";

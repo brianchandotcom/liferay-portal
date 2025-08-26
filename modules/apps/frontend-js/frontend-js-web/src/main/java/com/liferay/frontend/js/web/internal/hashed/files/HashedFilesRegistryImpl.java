@@ -6,8 +6,15 @@
 package com.liferay.frontend.js.web.internal.hashed.files;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.hashed.files.HashedFilesRegistry;
+import com.liferay.portal.kernel.hashed.files.HashedFilesUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import jakarta.servlet.ServletContext;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,37 +26,17 @@ import java.util.function.BiConsumer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera Avellón
  */
-public class HashedFilesRegistry {
-
-	public static HashedFilesRegistry getHashedFilesRegistry() {
-		return _hashedFilesRegistry;
-	}
-
-	public static void setHashedFilesRegistry(
-		HashedFilesRegistry hashedFilesRegistry) {
-
-		_hashedFilesRegistry = hashedFilesRegistry;
-	}
-
-	public HashedFilesRegistry(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
-	public void close() {
-		_map.clear();
-
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-
-			_serviceTracker = null;
-		}
-	}
+@Component(service = HashedFilesRegistry.class)
+public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 
 	public void forEach(BiConsumer<String, String> biConsumer) {
 		_openServiceTracker();
@@ -65,6 +52,22 @@ public class HashedFilesRegistry {
 		return _map.get(unhashedFileURI);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_map.clear();
+
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+
+			_serviceTracker = null;
+		}
+	}
+
 	private ServiceTrackerCustomizer<ServletContext, Map<String, String>>
 		_createServiceTrackerCustomizer() {
 
@@ -78,33 +81,52 @@ public class HashedFilesRegistry {
 					serviceReference);
 
 				try {
-					String contextPath = servletContext.getContextPath();
+					Set<String> hashedResourcePaths;
 
-					Set<String> hashedResourcePaths = _getHashedResourcePaths(
-						servletContext, "/META-INF/resources/__liferay__/");
+					URL url = servletContext.getResource(
+						"/WEB-INF/liferay-look-and-feel.xml");
+
+					if (url != null) {
+						hashedResourcePaths = _getHashedResourcePaths(
+							servletContext, "/css/");
+
+						hashedResourcePaths.addAll(
+							_getHashedResourcePaths(servletContext, "/js/"));
+					}
+					else {
+						Set<String> completeHashedResourcePaths =
+							_getHashedResourcePaths(
+								servletContext, "/META-INF/resources/");
+
+						hashedResourcePaths = new HashSet<>();
+
+						for (String completeHashedResourcePath :
+								completeHashedResourcePaths) {
+
+							hashedResourcePaths.add(
+								completeHashedResourcePath.substring(19));
+						}
+					}
 
 					Map<String, String> map = new HashMap<>();
 
+					String contextPath = servletContext.getContextPath();
+
 					for (String hashedResourcePath : hashedResourcePaths) {
-
-						// Remove "/META-INF/resources" from path
-
-						hashedResourcePath = hashedResourcePath.substring(19);
-
-						String baseName = hashedResourcePath.substring(
-							0, hashedResourcePath.lastIndexOf(".("));
-
-						String extension = hashedResourcePath.substring(
-							hashedResourcePath.lastIndexOf(").") + 1);
-
 						map.put(
-							contextPath + baseName + extension,
+							contextPath +
+								HashedFilesUtil.removeHash(hashedResourcePath),
 							contextPath + hashedResourcePath);
 					}
 
 					_map.putAll(map);
 
 					return map;
+				}
+				catch (MalformedURLException malformedURLException) {
+					_log.error(malformedURLException);
+
+					return Collections.emptyMap();
 				}
 				finally {
 					_bundleContext.ungetService(serviceReference);
@@ -150,9 +172,7 @@ public class HashedFilesRegistry {
 				hashedResourcePaths.addAll(
 					_getHashedResourcePaths(servletContext, resourcePath));
 			}
-			else if (resourcePath.contains(".(") &&
-					 resourcePath.contains(").")) {
-
+			else if (HashedFilesUtil.containsHash(resourcePath)) {
 				hashedResourcePaths.add(resourcePath);
 			}
 		}
@@ -178,9 +198,10 @@ public class HashedFilesRegistry {
 		}
 	}
 
-	private static volatile HashedFilesRegistry _hashedFilesRegistry;
+	private static final Log _log = LogFactoryUtil.getLog(
+		HashedFilesRegistryImpl.class);
 
-	private final BundleContext _bundleContext;
+	private BundleContext _bundleContext;
 	private final Map<String, String> _map = new ConcurrentHashMap<>();
 	private volatile ServiceTracker<ServletContext, Map<String, String>>
 		_serviceTracker;

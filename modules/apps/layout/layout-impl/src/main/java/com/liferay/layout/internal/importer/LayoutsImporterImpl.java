@@ -255,16 +255,16 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Override
 	public List<FragmentEntryLink> importPageElement(
-			Layout layout, LayoutStructure layoutStructure, String parentItemId,
-			String pageElementJSON, int position, boolean preserveItemIds,
-			long segmentsExperienceId)
+			long userId, Layout layout, LayoutStructure layoutStructure,
+			String parentItemId, String pageElementJSON, int position,
+			boolean preserveItemIds, long segmentsExperienceId)
 		throws Exception {
 
 		Consumer<LayoutStructure> consumer = processedLayoutStructure -> {
 			try {
 				_layoutPageTemplateStructureLocalService.
 					updateLayoutPageTemplateStructureData(
-						layout.getGroupId(), layout.getPlid(),
+						userId, layout.getGroupId(), layout.getPlid(),
 						segmentsExperienceId,
 						processedLayoutStructure.toString());
 			}

@@ -190,21 +190,20 @@ public class ObjectEntryInfoItemFormProviderUtil {
 							objectDefinitionId,
 							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-					ObjectDefinition relatedObjectDefinition = null;
-
 					if (Objects.equals(
 							objectDefinitionId,
 							objectRelationship.getObjectDefinitionId1()) &&
 						FeatureFlagManagerUtil.isEnabled("LPD-50377")) {
 
-						relatedObjectDefinition =
-							objectDefinitionLocalService.fetchObjectDefinition(
-								objectRelationship.getObjectDefinitionId2());
+						return;
 					}
-					else if (FeatureFlagManagerUtil.isEnabled("LPD-60546") &&
-							 !Objects.equals(
-								 objectDefinitionId,
-								 objectRelationship.getObjectDefinitionId1())) {
+
+					ObjectDefinition relatedObjectDefinition = null;
+
+					if (FeatureFlagManagerUtil.isEnabled("LPD-60546") &&
+						!Objects.equals(
+							objectDefinitionId,
+							objectRelationship.getObjectDefinitionId1())) {
 
 						relatedObjectDefinition =
 							objectDefinitionLocalService.fetchObjectDefinition(

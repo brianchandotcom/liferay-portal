@@ -112,10 +112,19 @@ export default function FilesFDSPropsTransformer({
 						),
 				};
 			}
+			else if (
+				action?.data?.id === 'export-for-translation' ||
+				action?.data?.id === 'import-translation'
+			) {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(!item?.embedded?.file),
+				};
+			}
 			else if (action?.data?.id === 'view-content') {
 				return {
 					...action,
-					isVisible: () => false,
+					isVisible: () => Boolean(false),
 				};
 			}
 			else if (action?.data?.id === 'view-file') {

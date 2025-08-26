@@ -43,7 +43,11 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
-			else if (action?.data?.id === 'view-content') {
+			else if (
+				action?.data?.id === 'export-for-translation' ||
+				action?.data?.id === 'import-translation' ||
+				action?.data?.id === 'view-content'
+			) {
 				return {
 					...action,
 					isVisible: (item: any) => Boolean(!item?.embedded?.file),
@@ -67,7 +71,19 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 			event: Event;
 			itemData: any;
 		}) => {
-			if (action?.data?.id === 'view-content') {
+			if (
+				action?.data?.id === 'export-for-translation' ||
+				action?.data?.id === 'import-translation'
+			) {
+				event?.preventDefault();
+
+				openModal({
+					size: 'full-screen',
+					title: action.label,
+					url: formatActionURL(itemData, action.href),
+				});
+			}
+			else if (action?.data?.id === 'view-content') {
 				event?.preventDefault();
 
 				openModal({

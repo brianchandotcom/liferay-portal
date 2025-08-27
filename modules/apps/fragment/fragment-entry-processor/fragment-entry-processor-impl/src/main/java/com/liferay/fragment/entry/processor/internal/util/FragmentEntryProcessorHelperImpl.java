@@ -367,15 +367,22 @@ public class FragmentEntryProcessorHelperImpl
 					layoutDisplayPageObjectProvider.getClassPK());
 			}
 			else {
+				String scopeExternalReferenceCode = null;
+
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
+				if (themeDisplay != null) {
+					scopeExternalReferenceCode =
+						layoutDisplayPageObjectProvider.
+							getScopeExternalReferenceCode(
+								themeDisplay.getScopeGroupId());
+				}
+
 				infoItemIdentifier = new ERCInfoItemIdentifier(
 					layoutDisplayPageObjectProvider.getExternalReferenceCode(),
-					layoutDisplayPageObjectProvider.
-						getScopeExternalReferenceCode(
-							themeDisplay.getScopeGroupId()));
+					scopeExternalReferenceCode);
 			}
 
 			infoItemReference = new InfoItemReference(

@@ -75,7 +75,7 @@ public class AddressServiceUtil {
 
 	public static Address getOrAddEmptyAddress(
 			String externalReferenceCode, String className, long classPK)
-		throws Exception {
+		throws PortalException {
 
 		return getService().getOrAddEmptyAddress(
 			externalReferenceCode, className, classPK);

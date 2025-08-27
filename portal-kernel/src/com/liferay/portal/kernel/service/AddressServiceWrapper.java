@@ -82,7 +82,7 @@ public class AddressServiceWrapper
 	@Override
 	public Address getOrAddEmptyAddress(
 			String externalReferenceCode, String className, long classPK)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressService.getOrAddEmptyAddress(
 			externalReferenceCode, className, classPK);

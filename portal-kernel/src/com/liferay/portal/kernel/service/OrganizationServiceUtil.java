@@ -239,7 +239,7 @@ public class OrganizationServiceUtil {
 
 	public static Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, String name)
-		throws Exception {
+		throws PortalException {
 
 		return getService().getOrAddEmptyOrganization(
 			externalReferenceCode, name);

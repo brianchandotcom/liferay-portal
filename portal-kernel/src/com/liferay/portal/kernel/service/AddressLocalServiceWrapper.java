@@ -423,7 +423,7 @@ public class AddressLocalServiceWrapper
 	public Address getOrAddEmptyAddress(
 			String externalReferenceCode, long companyId, long userId,
 			String className, long classPK)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressLocalService.getOrAddEmptyAddress(
 			externalReferenceCode, companyId, userId, className, classPK);

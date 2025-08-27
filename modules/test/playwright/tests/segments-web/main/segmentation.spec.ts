@@ -13,6 +13,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {goToSegmentsAdmin} from '../../change-tracking-web/main/utils/segments';
 import {segmentsPageTest} from './fixtures/segmentsPageTest';
@@ -1150,6 +1151,142 @@ test(
 
 			expect(categoryFieldBox1).not.toBe(categoryFieldBox2);
 			expect(dateModifiedFieldBox1).not.toBe(dateModifiedFieldBox2);
+		});
+	}
+);
+
+test(
+	'Segment member preview count shows the correct number of users when segments are combined',
+	{
+		tag: '@LPS-130344',
+	},
+
+	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				options: {type: 'content'},
+				title: getRandomString(),
+			});
+		
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user1.alternateName] = {
+			name: user1.givenName,
+			password: 'test',
+			surname: user1.familyName,
+		};
+
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user2.alternateName] = {
+			name: user2.givenName,
+			password: 'test',
+			surname: user2.familyName,
+		};
+
+		await test.step('Create two segments', async () => {
+			await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+				criteria: {
+					criteria: {
+						user: {
+							conjunction: 'and',
+							filterString: `(lastName eq '${user1.familyName}')`,
+							typeValue: 'model',
+						},
+					},
+					filterString: {
+						model: `(lastName eq 'userln1')`,
+					},
+				},
+				groupId: site.id,
+				name: 'Segment With User1',
+			});
+
+			await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+				criteria: {
+					criteria: {
+						user: {
+							conjunction: 'and',
+							filterString: `(lastName eq '${user2.familyName}')`,
+							typeValue: 'model',
+						},
+					},
+					filterString: {
+						model: `(lastName eq 'userln2')`,
+					},
+				},
+				groupId: site.id,
+				name: 'Segment With User2',
+			});
+		});
+
+		await test.step('Combine the two segments', async () => {
+			await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment("Segment Title", {
+				segments: ['Segments'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectSegment('Segment With User1');
+
+			await segmentsPage.clickDuplicateButton();
+
+			await page.getByRole('button', {name: 'Select'}).nth(1).click();
+
+			await segmentsPage.selectSegment('Segment With User2');
+
+			await segmentsPage.chooseLogic('Or');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('Create a segmented experience', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			const headingId = await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.createExperience('Experience Content Page');
+
+			await expect(page.getByLabel('Experience: Experience Content Page')).toBeVisible();
+
+			await pageEditorPage.editExperienceSegment('Experience Content Page', 'Segment Title');
+
+			await pageEditorPage.editTextEditable(headingId, 'element-text', 'User1 and User2');
+		});
+
+		await test.step('Prioritize experience and publish', async () => {
+			await pageEditorPage.openExperienceSelector();
+
+			const experience = page.locator('.dropdown-menu__experience', {
+				hasText: 'Experience Content Page',
+			});
+
+			await experience
+				.getByLabel('Prioritize Experience', {exact: true})
+				.click();
+
+			await pageEditorPage.publishPage();
+		});
+
+		await test.step('Check experience with both users', async () => {
+			await performUserSwitch(page, user1.alternateName);
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			await expect(page.getByText('User1 and User2')).toBeVisible();
+
+			await performUserSwitch(page, user2.alternateName);
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			await expect(page.getByText('User1 and User2')).toBeVisible();
 		});
 	}
 );

@@ -437,7 +437,7 @@ public class AccountGroupLocalServiceWrapper
 	public com.liferay.account.model.AccountGroup getOrAddEmptyAccountGroup(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountGroupLocalService.getOrAddEmptyAccountGroup(
 			externalReferenceCode, companyId, userId, name);

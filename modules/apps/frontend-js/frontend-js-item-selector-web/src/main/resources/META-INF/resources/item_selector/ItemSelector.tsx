@@ -7,8 +7,8 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import {FetchPolicy, useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
-import {InternalDispatch, Locator, useControlledState} from '@clayui/shared';
-import {fetch} from 'frontend-js-web';
+import {InternalDispatch, useControlledState} from '@clayui/shared';
+import {fetch, getObjectValueFromPath} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 const NETWORK_STATUS_UNUSED = 4;
@@ -79,13 +79,13 @@ export interface IItemSelectorProps<T>
 	items?: T[];
 
 	/**
-	 * Sets how to get fields values for id, label, and value within each item.
-	 * String values can be used as a dotted path (e.g.: 'embedded.id').
+	 * A string key used to locate the id, label, or value within each item.
+	 * Can be used as a period separated path (e.g.: 'embedded.id').
 	 */
 	locator?: {
 		id: string;
-		label: Locator;
-		value: Locator;
+		label: string;
+		value: string;
 	};
 
 	/**
@@ -241,7 +241,26 @@ function ItemSelector<T extends Record<string, any>>({
 			<ClayMultiSelect
 				{...otherProps}
 				items={items}
-				locator={locator ? {...locator} : undefined}
+				locator={{
+					id: (item: T) => {
+						return getObjectValueFromPath({
+							object: item,
+							path: locator.id,
+						});
+					},
+					label: (item: T) => {
+						return getObjectValueFromPath({
+							object: item,
+							path: locator.label,
+						});
+					},
+					value: (item: T) => {
+						return getObjectValueFromPath({
+							object: item,
+							path: locator.value,
+						});
+					},
+				}}
 				onChange={setValue}
 				onItemsChange={setItems}
 				onLoadMore={async () => loadMore()}
@@ -257,7 +276,12 @@ function ItemSelector<T extends Record<string, any>>({
 		<ClayAutocomplete<T>
 			{...otherProps}
 			active={active}
-			filterKey={locator.label}
+			filterKey={(item: T) => {
+				return getObjectValueFromPath({
+					object: item,
+					path: locator.label,
+				});
+			}}
 			items={sourceItems}
 			loadingState={networkStatus}
 			menuTrigger="focus"

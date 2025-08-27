@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {InternalDispatch, Locator} from '@clayui/shared';
+import {InternalDispatch} from '@clayui/shared';
 import {
 	FrontendDataSet,
 	IFrontendDataSetProps,
@@ -27,13 +27,13 @@ export interface IItemSelectorModalProps<T> {
 	items: T[];
 
 	/**
-	 * Sets how to get fields values for id, label, and value within each item.
-	 * String values can be used as a dotted path (e.g.: 'embedded.id').
+	 * A string key used to locate the id, label, or value within each item.
+	 * Can be used as a period separated path (e.g.: 'embedded.id').
 	 */
 	locator?: {
 		id: string;
-		label: Locator;
-		value: Locator;
+		label: string;
+		value: string;
 	};
 
 	/**
@@ -85,32 +85,32 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	}, [externalItems, open]);
 
 	const selectedData = useMemo(() => {
-		const getValueFromItem = (item: T, itemLocator: Locator) => {
-			if (typeof itemLocator === 'string') {
-				return getObjectValueFromPath({
-					object: item,
-					path: itemLocator,
-				});
-			}
-
-			return itemLocator(item);
-		};
-
 		if (fdsProps.selectionType === 'single') {
 			if (!selectedItems.length) {
 				return {label: '', values: []};
 			}
 
 			return {
-				label: getValueFromItem(selectedItems[0], locator.label),
-				values: [getValueFromItem(selectedItems[0], locator.value)],
+				label: getObjectValueFromPath({
+					object: selectedItems[0],
+					path: locator.label,
+				}),
+				values: [
+					getObjectValueFromPath({
+						object: selectedItems[0],
+						path: locator.value,
+					}),
+				],
 			};
 		}
 
 		return {
 			label: selectedItems.length.toString(),
 			values: selectedItems.map((item) => {
-				return getValueFromItem(item, locator.value);
+				return getObjectValueFromPath({
+					object: item,
+					path: locator.value,
+				});
 			}),
 		};
 	}, [fdsProps.selectionType, selectedItems, locator]);

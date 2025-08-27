@@ -100,11 +100,7 @@ const userAccountsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
 	locator: {
 		id: 'id',
-		label: (item: User) =>
-			item.givenName +
-			' (' +
-			item.roleBriefs?.map((role) => role.name).join(', ') +
-			')',
+		label: 'givenName',
 		value: 'id',
 	},
 	type: Liferay.Language.get('user'),

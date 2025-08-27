@@ -36,7 +36,7 @@ const FiltersDropdown = () => {
 
 		setActiveFilter((currentActiveFilter) => {
 			if (!currentActiveFilter) {
-				return currentActiveFilter;
+				return null;
 			}
 
 			return (

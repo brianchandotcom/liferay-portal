@@ -20,6 +20,7 @@ import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -243,6 +244,10 @@ public class PageSpecificationDTOConverter
 									fileEntry::getExternalReferenceCode);
 								setFavIconType(
 									() -> FavIconType.ITEM_EXTERNAL_REFERENCE);
+								setScope(
+									() -> ScopeUtil.getScope(
+										layout.getGroupId(),
+										fileEntry.getGroupId()));
 							}
 						};
 					});

@@ -399,7 +399,7 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 					"dateModified",
 					() -> DateUtil.formatDate(
 						new Date(System.currentTimeMillis() - Time.MONTH),
-						"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+						DateUtil.ISO_8601_DATE_TIME_FORMAT)
 				).put(
 					"individualSegmentJSONObject",
 					HashMapBuilder.<String, Object>put(

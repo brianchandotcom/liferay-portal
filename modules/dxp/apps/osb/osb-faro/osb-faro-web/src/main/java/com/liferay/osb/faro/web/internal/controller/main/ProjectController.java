@@ -578,7 +578,7 @@ public class ProjectController extends BaseFaroController {
 
 			if (startDateString != null) {
 				startDate = DateUtil.parseDate(
-					startDateString, _ISO_8601_DATE_FORMAT);
+					startDateString, DateUtil.DATE_FORMAT);
 			}
 
 			if ((startDate == null) ||
@@ -591,7 +591,7 @@ public class ProjectController extends BaseFaroController {
 
 			if (endDateString != null) {
 				endDate = DateUtil.parseDate(
-					endDateString, _ISO_8601_DATE_FORMAT);
+					endDateString, DateUtil.DATE_FORMAT);
 			}
 
 			projectUsageMetricDisplays.add(
@@ -1108,7 +1108,7 @@ public class ProjectController extends BaseFaroController {
 
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-		return DateUtil.formatDate(calendar.getTime(), _ISO_8601_DATE_FORMAT);
+		return DateUtil.formatDate(calendar.getTime(), DateUtil.DATE_FORMAT);
 	}
 
 	private ProjectDisplay _getProjectDisplay(FaroProject faroProject)
@@ -1294,9 +1294,9 @@ public class ProjectController extends BaseFaroController {
 			faroProject.getCorpProjectName(), faroProject.getCorpProjectUuid(),
 			DateUtil.formatDate(
 				new Date(faroProject.getLastAccessTime()),
-				_ISO_8601_DATE_FORMAT),
+				DateUtil.DATE_FORMAT),
 			DateUtil.formatDate(
-				faroProject.getLastAnniversaryDate(), _ISO_8601_DATE_FORMAT),
+				faroProject.getLastAnniversaryDate(), DateUtil.DATE_FORMAT),
 			offline, usageMetrics, faroProject.getWeDeployKey());
 	}
 
@@ -1538,8 +1538,6 @@ public class ProjectController extends BaseFaroController {
 				"timeZoneId", _getTimeZoneIdErrorMessage(getUser()));
 		}
 	}
-
-	private static final String _ISO_8601_DATE_FORMAT = "yyyy-MM-dd";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProjectController.class);

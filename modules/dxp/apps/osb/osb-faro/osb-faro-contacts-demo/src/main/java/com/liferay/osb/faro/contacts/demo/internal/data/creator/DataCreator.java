@@ -151,7 +151,7 @@ public abstract class DataCreator {
 	}
 
 	protected static String formatDate(Date date) {
-		return DateUtil.formatDate(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		return DateUtil.formatDate(date, DateUtil.DATE_TIME_FORMAT);
 	}
 
 	protected void addData(List<Map<String, Object>> objects) {

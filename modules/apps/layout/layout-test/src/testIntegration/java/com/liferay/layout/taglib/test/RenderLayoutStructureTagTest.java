@@ -144,6 +144,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -195,6 +196,8 @@ import com.liferay.template.test.util.TemplateTestUtil;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
@@ -3178,10 +3181,24 @@ public class RenderLayoutStructureTagTest {
 			ContentLayoutTestUtil.getMVCActionCommand(
 				"/layout_content_page_editor/add_segments_experience");
 
+		Company company = _companyLocalService.getCompany(
+			_group.getCompanyId());
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
-				_companyLocalService.getCompany(_group.getCompanyId()), _group,
-				layout);
+				company, _group, layout);
+
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			ContentLayoutTestUtil.getThemeDisplay(company, _group, layout));
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER_ID, TestPropsValues.getUserId());
+
+		mockLiferayPortletActionRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
 
 		mockLiferayPortletActionRequest.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()));

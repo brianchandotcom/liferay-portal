@@ -69,7 +69,7 @@ export interface IFrontendDataSetContext {
 	selectedItems?: Array<any>;
 	selectedItemsKey: string;
 	selectedItemsValue?: Array<any>;
-	selectionType?: string;
+	selectionType?: string | null;
 	setSearching: (value: boolean) => void;
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;
@@ -139,6 +139,7 @@ const FrontendDataSetContext = React.createContext({
 	openSidePanel: () => {},
 	selectItems: () => {},
 	selectable: false,
+	selectedItems: [],
 	selectedItemsValue: [],
 	setSearching: () => {},
 	toggleItemInlineEdit: () => {},

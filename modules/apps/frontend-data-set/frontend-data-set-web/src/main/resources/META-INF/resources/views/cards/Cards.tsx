@@ -21,7 +21,6 @@ import getRandomId from '../../utils/getRandomId';
 import isLink from '../../utils/isLink';
 import {
 	DisplayType,
-	ESelectionTrigger,
 	ICardLabelSchema,
 	ICardSchema,
 	IItemsActions,
@@ -53,7 +52,6 @@ const Card = forwardRef<HTMLDivElement, any>(
 			loadData,
 			onActionDropdownItemClick,
 			onInfoPanelToggleButtonClick,
-			onSelect,
 			openModal,
 			openSidePanel,
 			selectable,
@@ -123,23 +121,6 @@ const Card = forwardRef<HTMLDivElement, any>(
 			});
 		};
 
-		const getSelectionTrigger = (event: any): string | boolean => {
-			const target = event.nativeEvent?.target;
-
-			if (target.classList.contains('custom-control-input')) {
-				return ESelectionTrigger.INPUT;
-			}
-
-			if (
-				target.closest('.dropdown-toggle') ||
-				target.closest('.dropdown-item')
-			) {
-				return false;
-			}
-
-			return ESelectionTrigger.CONTAINER;
-		};
-
 		const props = {
 			actions: formattedActions?.map((action: IItemsActions) => ({
 				...action,
@@ -175,25 +156,13 @@ const Card = forwardRef<HTMLDivElement, any>(
 					getLocalizedValue(item, schema.image)?.value
 				),
 			labels: getLabels(item),
-			onClick: selectable
-				? (event: any) => {
-						const target = getSelectionTrigger(event);
-
-						if (target) {
-							onItemSelectionChange?.({
-								item,
-								trigger: target,
-							});
-
-							onSelect?.({selectedItems: [item]});
-
-							if (event.target.tagName !== 'A') {
-								event.preventDefault();
-							}
-						}
+			onSelectChange: selectable
+				? () => {
+						onItemSelectionChange?.({
+							item,
+						});
 					}
 				: undefined,
-			onSelectChange: selectable ? () => undefined : undefined,
 			selectableType: selectionType === 'single' ? 'radio' : 'checkbox',
 			selected:
 				selectable &&

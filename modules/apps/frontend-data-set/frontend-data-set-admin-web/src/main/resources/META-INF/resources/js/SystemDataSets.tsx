@@ -31,7 +31,7 @@ import {IDataSet, ISystemDataSet} from './utils/types';
 
 interface IFrontendDataSetContext {
 	onSelect: Function;
-	selectItems: ({trigger, value}: {trigger: string; value: any}) => void;
+	selectItems: ({value}: {value: any}) => void;
 	selectable: boolean;
 	selectedItemsKey: keyof ISystemDataSet;
 	selectedItemsValue: Array<any>;
@@ -70,7 +70,6 @@ const SystemDataSetsView = ({
 						onClick={() => {
 							if (selectable) {
 								selectItems({
-									trigger: 'container',
 									value: item[selectedItemsKey],
 								});
 

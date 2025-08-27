@@ -62,8 +62,8 @@ export async function editSegmentsEntry(
 	await saveSegmentsEntry(page);
 }
 
-export async function goToSegmentsAdmin(page) {
-	await page.goto(`/group/guest${PORTLET_URLS.segments}`);
+export async function goToSegmentsAdmin(page, siteUrl?: Site['friendlyUrlPath']) {
+	await page.goto(`/group${siteUrl || '/guest'}${PORTLET_URLS.segments}`);
 }
 
 export async function saveSegmentsEntry(page) {

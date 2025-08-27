@@ -1362,7 +1362,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		WidgetPageSpecification widgetPageSpecification =
 			(WidgetPageSpecification)patchPageSpecifications[0];
 
-		_assertWidgetPageSpecifications(
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			pageTemplate.getPageSpecifications(), widgetPageSpecification);
 
 		WidgetPageTemplateSettings patchWidgetPageTemplateSettings =
@@ -1407,7 +1407,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
 			widgetPageSpecification.getSettings());
 
-		_assertWidgetPageSpecifications(
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			pageTemplate.getPageSpecifications(), widgetPageSpecification);
 
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
@@ -1618,7 +1618,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				postSiteSiteByExternalReferenceCodePageTemplate(
 					testGroup.getExternalReferenceCode(), pageTemplate);
 
-		_assertWidgetPageSpecifications(
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			postPageTemplate.getPageSpecifications(), widgetPageSpecification);
 
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
@@ -1759,7 +1759,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				pageTemplate.getExternalReferenceCode(), pageTemplate);
 
-		_assertWidgetPageSpecifications(
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			putPageTemplate.getPageSpecifications(), widgetPageSpecification);
 
 		String layoutTemplateId = "1_column";
@@ -1780,7 +1780,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				pageTemplate.getExternalReferenceCode(), pageTemplate);
 
-		_assertWidgetPageSpecifications(
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			putPageTemplate.getPageSpecifications(), widgetPageSpecification);
 
 		WidgetPageTemplateSettings putWidgetPageTemplateSettings =
@@ -1801,7 +1801,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				pageTemplate.getExternalReferenceCode(), pageTemplate);
 
-		_assertWidgetPageSpecifications(
+		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			putPageTemplate.getPageSpecifications(), widgetPageSpecification);
 
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(

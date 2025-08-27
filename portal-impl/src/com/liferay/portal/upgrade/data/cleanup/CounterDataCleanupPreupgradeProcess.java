@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
@@ -113,7 +114,9 @@ public class CounterDataCleanupPreupgradeProcess
 				_checkTableCounter(
 					counterName, counterValue, dbInspector, tableName);
 
-				excludedTableNames.add(tableName);
+				if (!counterName.equals(DLFileEntry.class.getName())) {
+					excludedTableNames.add(tableName);
+				}
 			}
 
 			_checkKernelCounter(kernelCounterValue, excludedTableNames);
@@ -187,6 +190,10 @@ public class CounterDataCleanupPreupgradeProcess
 
 		String primaryKeyColumnName = _getPrimaryKeyColumnName(
 			dbInspector, tableName);
+
+		if (counterName.equals(DLFileEntry.class.getName())) {
+			primaryKeyColumnName = "name";
+		}
 
 		if (primaryKeyColumnName == null) {
 			return;

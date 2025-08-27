@@ -121,23 +121,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		RequestAttributeSetter requestAttributeSetter =
 			new RequestAttributeSetter(httpServletRequest);
 
-		if (_dispatcherType == DispatcherType.INCLUDE) {
-			requestAttributeSetter.setAttribute(
-				JavaConstants.JAKARTA_SERVLET_INCLUDE_CONTEXT_PATH,
-				_liferayContextController.getFullContextPath());
-			requestAttributeSetter.setAttribute(
-				JavaConstants.JAKARTA_SERVLET_INCLUDE_PATH_INFO, getPathInfo());
-			requestAttributeSetter.setAttribute(
-				JavaConstants.JAKARTA_SERVLET_INCLUDE_QUERY_STRING,
-				getQueryString());
-			requestAttributeSetter.setAttribute(
-				JavaConstants.JAKARTA_SERVLET_INCLUDE_REQUEST_URI,
-				getRequestURI());
-			requestAttributeSetter.setAttribute(
-				JavaConstants.JAKARTA_SERVLET_INCLUDE_SERVLET_PATH,
-				getServletPath());
-		}
-		else if (_dispatcherType == DispatcherType.FORWARD) {
+		if (_dispatcherType == DispatcherType.FORWARD) {
 			if (!httpServletRequest.isAsyncStarted() &&
 				!httpServletResponse.isCommitted()) {
 
@@ -159,6 +143,22 @@ public class LiferayDispatchTargets extends DispatchTargets {
 			requestAttributeSetter.setAttribute(
 				JavaConstants.JAKARTA_SERVLET_FORWARD_SERVLET_PATH,
 				httpServletRequest.getServletPath());
+		}
+		else if (_dispatcherType == DispatcherType.INCLUDE) {
+			requestAttributeSetter.setAttribute(
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_CONTEXT_PATH,
+				_liferayContextController.getFullContextPath());
+			requestAttributeSetter.setAttribute(
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_PATH_INFO, getPathInfo());
+			requestAttributeSetter.setAttribute(
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_QUERY_STRING,
+				getQueryString());
+			requestAttributeSetter.setAttribute(
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_REQUEST_URI,
+				getRequestURI());
+			requestAttributeSetter.setAttribute(
+				JavaConstants.JAKARTA_SERVLET_INCLUDE_SERVLET_PATH,
+				getServletPath());
 		}
 
 		HttpServletRequest newHttpServletRequest = httpServletRequest;

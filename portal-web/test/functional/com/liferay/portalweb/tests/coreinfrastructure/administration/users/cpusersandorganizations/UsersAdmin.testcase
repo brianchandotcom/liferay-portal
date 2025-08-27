@@ -133,7 +133,8 @@ definition {
 	@description = "This test changes password through the Password Reset link sent in email."
 	@priority = 4
 	test ChangingPasswordIsSuccessfulViaPasswordResetLink {
-		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property osgi.module.configuration.file.names = "com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config";
+		property osgi.module.configurations = "sendBlacklist=[\"noreply@liferay.com\",\"noreply@domain.invalid\",\"test@domain.invalid\"]";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -307,7 +308,8 @@ definition {
 	@description = "This is a use case for LPS-145025. No redirect and language is changed when change the language in password reset page."
 	@priority = 4
 	test LanguageChangedAndNoRedirectWhenChangeLanguageInPasswordResetPage {
-		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property osgi.module.configuration.file.names = "com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config";
+		property osgi.module.configurations = "sendBlacklist=[\"noreply@liferay.com\",\"noreply@domain.invalid\",\"test@domain.invalid\"]";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -519,7 +521,8 @@ definition {
 	@description = "This is a use case for LPS-60180. This test asserts that the proper error message displays when the passwords entered in the Password Reset link do not match."
 	@priority = 4
 	test SpecificErrorMessageDisplaysWhenPasswordsDoNotMatch {
-		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property osgi.module.configuration.file.names = "com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config";
+		property osgi.module.configurations = "sendBlacklist=[\"noreply@liferay.com\",\"noreply@domain.invalid\",\"test@domain.invalid\"]";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -756,7 +759,9 @@ definition {
 	@description = "This is a use case for LPS-176074. TC-2: Email verification notification template could be set to include user's first name."
 	@priority = 4
 	test ViewEmailVerificationNotificationTemplateUpdated {
-		property custom.properties = "company.security.strangers.verify=true${line.separator}jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property custom.properties = "company.security.strangers.verify=true${line.separator}jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config";
+		property osgi.module.configurations = "sendBlacklist=[\"noreply@liferay.com\",\"noreply@domain.invalid\",\"test@domain.invalid\"]";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
@@ -848,7 +853,9 @@ definition {
 	@description = "This is a use case for LPS-85534 and LPS-176074 TC-1. Account created notification template could be set to include user's first name."
 	@priority = 4
 	test ViewEmailWithPasswordSetupLinkSendToNewUser {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config";
+		property osgi.module.configurations = "sendBlacklist=[\"noreply@liferay.com\",\"noreply@domain.invalid\",\"test@domain.invalid\"]";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
@@ -1127,7 +1134,9 @@ definition {
 	@description = "This is a use case for LPS-111136"
 	@priority = 4
 	test WelcomeEmailContainsVirtualHostSendToNewUser {
-		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property osgi.module.configuration.file.names = "com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config";
+		property osgi.module.configurations = "sendBlacklist=[\"noreply@liferay.com\",\"noreply@domain.invalid\",\"test@domain.invalid\"]";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";

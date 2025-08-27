@@ -161,6 +161,18 @@ public class ViewSharedWithMeSectionDisplayContext {
 				).build()),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
+					_themeDisplay.getPathFriendlyURLPublic(),
+					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-folder/",
+					_portal.getClassNameId(ObjectEntryFolder.class),
+					"/{classPK}?redirect=", _themeDisplay.getURLCurrent()),
+				"pencil", "edit-folder",
+				LanguageUtil.get(_httpServletRequest, "edit"), "get", null,
+				null,
+				HashMapBuilder.<String, Object>put(
+					"className", ObjectEntryFolder.class.getName()
+				).build()),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
 					"/o", GroupConstants.CMS_FRIENDLY_URL, "/download-folder/",
 					_portal.getClassNameId(ObjectEntryFolder.class),
 					"/{classPK}"),

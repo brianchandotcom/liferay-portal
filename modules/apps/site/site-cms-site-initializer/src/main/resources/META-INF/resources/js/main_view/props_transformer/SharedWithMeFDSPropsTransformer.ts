@@ -71,6 +71,13 @@ export default function SharedWithMeFDSPropsTransformer({
 					isVisible: (item: any) => Boolean(item?.file?.link?.href),
 				};
 			}
+			else if (action?.data?.id === 'edit-folder') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(item?.actionIds?.includes('UPDATE')),
+				};
+			}
 			else if (action?.data?.id === 'share') {
 				return {
 					...action,

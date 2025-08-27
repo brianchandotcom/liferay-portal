@@ -114,6 +114,7 @@ public class DataCleanupPreupgradeProcessSuite {
 
 			new AnalyticsMessageDataCleanupPreupgradeProcess(),
 			new ConfigurationDataCleanupPreupgradeProcess(),
+			new CounterDataCleanupPreupgradeProcess(),
 			new DDMStructureDataCleanupPreupgradeProcess(),
 			new DLFileEntryDataCleanupPreupgradeProcess(),
 			new NullUnicodeContentDataCleanupPreupgradeProcess(),

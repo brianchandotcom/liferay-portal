@@ -23,7 +23,7 @@ export class RecycleBinPage {
 		);
 	}
 
-	async execItemAction({action, filter}: {action: 'Delete'; filter: string}) {
+	async execItemAction({action, filter}: {action: string; filter: string}) {
 		await this.dataSetFragmentPage.execItemAction({
 			action,
 			filter,
@@ -40,5 +40,12 @@ export class RecycleBinPage {
 
 	getItem(filter: string) {
 		return this.dataSetFragmentPage.getRow(filter);
+	}
+
+	async navigateTo(folderName: string) {
+		await this.page
+			.getByRole('row', {name: folderName})
+			.getByRole('link')
+			.click();
 	}
 }

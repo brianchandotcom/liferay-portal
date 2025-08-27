@@ -141,6 +141,13 @@ export class ContentsPage {
 		}
 	}
 
+	async navigateTo(folderName: string) {
+		await this.page
+			.getByRole('row', {name: folderName})
+			.getByRole('link')
+			.click();
+	}
+
 	async openSidePanel(panelName: SidePanelName = 'General') {
 		await clickAndExpectToBeVisible({
 			target: this.page.locator('.sidebar-header', {hasText: panelName}),

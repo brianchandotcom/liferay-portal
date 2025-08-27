@@ -28,7 +28,7 @@ const useFDSDrop = ({
 	targetDropRef?: RefObject<HTMLElement>;
 	targetDropRefQuerySelector?: string;
 }) => {
-	const {fileDropSettings, onFileDrop} = useContext(DnDContext);
+	const {fileDropSettings, handleFileDrop} = useContext(DnDContext);
 
 	const targetDropElementRef: MutableRefObject<HTMLElement | null> =
 		useRef<HTMLElement>(null);
@@ -69,7 +69,7 @@ const useFDSDrop = ({
 					);
 				}
 
-				onFileDrop?.(fileItem, item);
+				handleFileDrop?.(fileItem, item);
 			}
 		},
 	});

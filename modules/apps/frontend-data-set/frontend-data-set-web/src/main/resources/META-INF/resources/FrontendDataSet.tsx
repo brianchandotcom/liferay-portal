@@ -1345,7 +1345,7 @@ const FrontendDataSet = ({
 				isDropTarget: () => true,
 			};
 
-	const {onFileDrop} = useFileUploader({
+	const {handleFileDrop} = useFileUploader({
 		fileDropSettings,
 		selectedItemsKey,
 	});
@@ -1354,7 +1354,7 @@ const FrontendDataSet = ({
 		<DnDContext.Provider
 			value={{
 				fileDropSettings,
-				onFileDrop,
+				handleFileDrop,
 			}}
 		>
 			<FDSDndProvider>

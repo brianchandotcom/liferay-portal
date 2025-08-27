@@ -6,6 +6,7 @@
 package com.liferay.feature.flag.web.internal.feature.flag;
 
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.json.JSONException;
@@ -102,8 +103,17 @@ public class FeatureFlagsBagTest {
 
 		String key = "LPS-9099";
 
-		Assert.assertThrows(
-			RuntimeException.class, () -> _featureFlagsBag.isEnabled(key));
+		try {
+			_featureFlagsBag.isEnabled(key);
+			Assert.fail("Nonexistent keys should throw an exception");
+		}
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Feature flag ", key, " is not available for company ",
+					_COMPANY_ID),
+				illegalStateException.getMessage());
+		}
 	}
 
 	private FeatureFlag _createFeatureFlag(FeatureFlagType featureFlagType) {

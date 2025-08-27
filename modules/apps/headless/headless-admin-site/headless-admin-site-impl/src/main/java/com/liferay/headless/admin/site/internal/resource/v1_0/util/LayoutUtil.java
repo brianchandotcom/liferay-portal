@@ -14,6 +14,8 @@ import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.FavIcon;
+import com.liferay.headless.admin.site.dto.v1_0.FavIconClientExtension;
+import com.liferay.headless.admin.site.dto.v1_0.FavIconItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.GeneralConfig;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
@@ -45,7 +47,6 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -705,16 +706,16 @@ public class LayoutUtil {
 
 		FavIcon favIcon = settings.getFavIcon();
 
-		if (!Objects.equals(
-				favIcon.getClassName(), FileEntry.class.getName()) ||
-			Validator.isNull(favIcon.getExternalReferenceCode())) {
-
+		if (!(favIcon instanceof FavIconItemExternalReference)) {
 			return 0;
 		}
 
+		FavIconItemExternalReference favIconItemExternalReference =
+			(FavIconItemExternalReference)favIcon;
+
 		long groupId = serviceContext.getScopeGroupId();
 
-		Scope scope = favIcon.getScope();
+		Scope scope = favIconItemExternalReference.getScope();
 
 		if (scope != null) {
 			groupId = GroupUtil.getGroupId(
@@ -724,7 +725,8 @@ public class LayoutUtil {
 
 		DLFileEntry dlFileEntry =
 			DLFileEntryServiceUtil.fetchFileEntryByExternalReferenceCode(
-				groupId, favIcon.getExternalReferenceCode());
+				groupId,
+				favIconItemExternalReference.getExternalReferenceCode());
 
 		if (dlFileEntry == null) {
 			throw new UnsupportedOperationException();
@@ -942,14 +944,18 @@ public class LayoutUtil {
 
 		FavIcon favIcon = settings.getFavIcon();
 
-		if ((favIcon != null) &&
-			Objects.equals(
-				favIcon.getClassName(), ClientExtension.class.getName())) {
+		if (favIcon instanceof FavIconClientExtension) {
+			FavIconClientExtension favIconClientExtension =
+				(FavIconClientExtension)favIcon;
 
 			clientExtension = new ClientExtension() {
 				{
-					setClientExtensionConfig(favIcon::getClientExtensionConfig);
-					setExternalReferenceCode(favIcon::getExternalReferenceCode);
+					setClientExtensionConfig(
+						() ->
+							favIconClientExtension.getClientExtensionConfig());
+					setExternalReferenceCode(
+						() ->
+							favIconClientExtension.getExternalReferenceCode());
 				}
 			};
 		}

@@ -171,10 +171,9 @@ public class FeatureFlagsBagProviderTest {
 		}
 		finally {
 			PropsUtil.set(FeatureFlagConstants.getKey(key1), null);
-			PropsUtil.set(FeatureFlagConstants.getKey(key1, "system"), null);
-
 			PropsUtil.set(
 				FeatureFlagConstants.getKey(key1, "dependencies"), null);
+			PropsUtil.set(FeatureFlagConstants.getKey(key1, "system"), null);
 
 			PropsUtil.set(FeatureFlagConstants.getKey(key2), null);
 		}

@@ -35,6 +35,7 @@ const ACTIONS = {
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
+const OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE_FILES = 'L_FILES';
 
 export default function FolderFDSPropsTransformer({
 	additionalProps,
@@ -53,6 +54,7 @@ export default function FolderFDSPropsTransformer({
 		objectDefinitionCssClasses: Record<string, string>;
 		objectDefinitionIcons: Record<string, string>;
 		redirect: string;
+		rootObjectEntryFolderExternalReferenceCode: string;
 	} & MultipleFileUploaderData;
 	creationMenu: any;
 	itemsActions?: any[];
@@ -93,10 +95,14 @@ export default function FolderFDSPropsTransformer({
 			],
 		},
 		fileDropSettings: {
-			enabled: true,
+			enabled:
+				additionalProps.rootObjectEntryFolderExternalReferenceCode ===
+				OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE_FILES,
 			isDropTarget: ({item}: {item: any}) => {
-				return item.entryClassName.includes(
-					'com.liferay.object.model.ObjectEntryFolder'
+				return (
+					additionalProps.parentObjectEntryFolderExternalReferenceCode ===
+						OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE_FILES &&
+					item.entryClassName.includes(OBJECT_ENTRY_FOLDER_CLASSNAME)
 				);
 			},
 			onFileDrop: (droppedFiles: any, dropTarget?: any) =>

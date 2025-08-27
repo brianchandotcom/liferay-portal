@@ -1592,7 +1592,7 @@ test(
 
 		const roleName = getRandomString();
 
-		await editAccountRolePage.nameInput.fill(roleName);
+		await editAccountRolePage.titleInput.fill(roleName);
 		await editAccountRolePage.saveButton.click();
 
 		await waitForAlert(page);

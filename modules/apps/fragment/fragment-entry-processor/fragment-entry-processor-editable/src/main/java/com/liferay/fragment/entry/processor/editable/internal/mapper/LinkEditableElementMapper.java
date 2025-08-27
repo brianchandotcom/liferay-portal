@@ -148,16 +148,31 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			linkElement.attr("rel", "nofollow");
 		}
 
-		_replaceLinkContent(
-			element, firstChildElement, linkElement, replaceLink);
+		boolean emptyElement = false;
 
-		if (((linkElement != element) || processEditableTag) &&
-			Validator.isNotNull(element.html())) {
-
-			element.html(linkElement.outerHtml());
+		if (element.childNodeSize() == 0) {
+			emptyElement = true;
 		}
-		else if ((linkElement != element) && Validator.isNull(element.html())) {
-			element.replaceWith(linkElement);
+
+		Element parent = element.parent();
+
+		_replaceLinkContent(
+			element, firstChildElement, linkElement, replaceLink, emptyElement);
+
+		if (((linkElement != element) || processEditableTag) && !emptyElement &&
+			(linkElement.parent() != element)) {
+
+			element.empty();
+
+			element.appendChild(linkElement);
+		}
+		else if ((linkElement != element) && emptyElement) {
+			if (element.parent() == parent) {
+				element.replaceWith(linkElement);
+			}
+			else {
+				parent.appendChild(linkElement);
+			}
 		}
 	}
 
@@ -212,19 +227,35 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 	private void _replaceLinkContent(
 		Element element, Element firstChildElement, Element linkElement,
-		boolean replaceLink) {
+		boolean replaceLink, boolean emptyElement) {
 
-		if (replaceLink && Validator.isNull(firstChildElement.html())) {
-			linkElement.html(firstChildElement.outerHtml());
-		}
-		else if (replaceLink && Validator.isNotNull(firstChildElement.html())) {
-			linkElement.html(firstChildElement.html());
-		}
-		else if (Validator.isNull(element.html())) {
-			linkElement.html(element.outerHtml());
+		if (replaceLink) {
+			if (linkElement == firstChildElement) {
+				return;
+			}
+
+			linkElement.empty();
+
+			if (firstChildElement.childNodeSize() == 0) {
+				linkElement.appendChild(firstChildElement);
+			}
+			else {
+				linkElement.appendChildren(firstChildElement.childNodes());
+			}
 		}
 		else {
-			linkElement.html(element.html());
+			if (linkElement == element) {
+				return;
+			}
+
+			linkElement.empty();
+
+			if (emptyElement) {
+				linkElement.appendChild(element);
+			}
+			else {
+				linkElement.appendChildren(element.childNodes());
+			}
 		}
 	}
 

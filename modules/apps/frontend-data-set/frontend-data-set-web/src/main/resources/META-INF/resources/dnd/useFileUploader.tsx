@@ -9,7 +9,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {THandleFileDrop} from '../DnDContext';
 import getSelectedItemValue from '../utils/getSelectedItemValue';
 import isFileDropEnabled from '../utils/isFileDropEnabled';
-import {IFileDropSettings} from '../utils/types';
+import {IFileDropSettings, TOnFileDrop} from '../utils/types';
 
 /* This hook connects FDS with state about dropped files, allowing integration
 	with a file uploader component in the future. Current implementation
@@ -27,7 +27,7 @@ const useFileUploader = ({
 	const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 	const [dropTarget, setDropTarget] = useState(null);
 
-	const dummyUploader = useCallback(
+	const dummyUploader: TOnFileDrop = useCallback(
 		(droppedFiles: File[], dropTarget: any) => {
 			const ModalBody = () => {
 				const label = (file: File) =>
@@ -82,8 +82,22 @@ const useFileUploader = ({
 			return;
 		}
 
-		dummyUploader(droppedFiles, dropTarget);
-	}, [droppedFiles, dropTarget, fileDropSettings, selectedItemsKey]);
+		if (
+			fileDropSettings.onFileDrop &&
+			typeof fileDropSettings.onFileDrop === 'function'
+		) {
+			fileDropSettings.onFileDrop(droppedFiles, dropTarget);
+		}
+		else {
+			dummyUploader(droppedFiles, dropTarget);
+		}
+	}, [
+		dummyUploader,
+		droppedFiles,
+		dropTarget,
+		fileDropSettings,
+		selectedItemsKey,
+	]);
 
 	return {handleFileDrop};
 };

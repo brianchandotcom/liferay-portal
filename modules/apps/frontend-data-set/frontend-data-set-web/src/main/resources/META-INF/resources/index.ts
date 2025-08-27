@@ -36,6 +36,7 @@ export {
 	IItemsActions,
 	IItemActionsData,
 	IView,
+	TOnFileDrop,
 } from './utils/types';
 
 export {Card} from './views/cards/Cards';

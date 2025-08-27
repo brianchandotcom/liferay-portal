@@ -65,7 +65,7 @@ test('User can add and delete site and child site', async ({
 
 	await expect(page.getByText('No sites were found.')).toBeVisible();
 
-	await page.getByRole('link', {name: 'Go to Sites'}).click();
+	await page.getByTitle('Go to Sites').click();
 
 	await sitesAdminPage.deleteSite(parentSiteName);
 

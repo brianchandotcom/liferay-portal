@@ -602,7 +602,7 @@ test(
 
 		await page.getByText(pageName1).click();
 
-		await page.getByLabel('Use Custom Name When checked').check();
+		await page.getByLabel('Use Custom Name').check();
 
 		const pageName3 = getRandomString();
 

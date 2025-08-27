@@ -119,7 +119,6 @@ import java.sql.Timestamp;
 
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -430,15 +429,18 @@ public class ObjectEntryDTOConverter
 							dtoConverterContext.getLocale(),
 							serviceBuilderObjectEntry.getStatus())));
 				setSystemProperties(
-					() -> _getAttribute(
-						objectEntryVersion,
-						objectEntryVersion -> _toSystemProperties(
+					() -> {
+						if (objectEntryVersion != null) {
+							return _toSystemProperties(
+								dtoConverterContext.getLocale(),
+								objectDefinition,
+								objectEntryVersion.getVersion());
+						}
+
+						return _toSystemProperties(
 							dtoConverterContext.getLocale(), objectDefinition,
-							objectEntryVersion.getVersion()),
-						serviceBuilderObjectEntry,
-						serviceBuilderObjectEntry -> _toSystemProperties(
-							dtoConverterContext.getLocale(), objectDefinition,
-							serviceBuilderObjectEntry.getVersion())));
+							serviceBuilderObjectEntry.getVersion());
+					});
 				setTaxonomyCategoryBriefs(
 					() -> {
 						if (objectEntryVersion != null) {
@@ -1124,20 +1126,6 @@ public class ObjectEntryDTOConverter
 		return false;
 	}
 
-	private boolean _isShowObjectDefinitionBrief() {
-		NestedFieldsContext nestedFieldsContext =
-			NestedFieldsContextThreadLocal.getNestedFieldsContext();
-
-		if (nestedFieldsContext == null) {
-			return false;
-		}
-
-		List<String> nestedFields = new ArrayList<>(
-			nestedFieldsContext.getNestedFields());
-
-		return nestedFields.contains("systemProperties.objectDefinitionBrief");
-	}
-
 	private AuditEvent[] _toAuditEvents(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
@@ -1423,24 +1411,27 @@ public class ObjectEntryDTOConverter
 	}
 
 	private SystemProperties _toSystemProperties(
-		Locale locale, ObjectDefinition objectDefinition, int versionInt) {
+			Locale locale, ObjectDefinition objectDefinition, int versionInt)
+		throws Exception {
 
 		boolean enableObjectEntryVersioning =
 			objectDefinition.isEnableObjectEntryVersioning();
-		boolean showObjectDefinitionBrief = _isShowObjectDefinitionBrief();
 
-		if (!enableObjectEntryVersioning && !showObjectDefinitionBrief) {
+		ObjectDefinitionBrief objectDefinitionBrief =
+			NestedFieldsSupplier.supply(
+				"systemProperties.objectDefinitionBrief",
+				nestedField -> _toObjectDefinitionBrief(
+					locale, objectDefinition));
+
+		if (!enableObjectEntryVersioning && (objectDefinitionBrief == null)) {
 			return null;
 		}
 
 		SystemProperties systemProperties = new SystemProperties();
 
-		if (showObjectDefinitionBrief) {
+		if (objectDefinitionBrief != null) {
 			systemProperties.setObjectDefinitionBrief(
-				() -> NestedFieldsSupplier.supply(
-					"systemProperties.objectDefinitionBrief",
-					nestedField -> _toObjectDefinitionBrief(
-						locale, objectDefinition)));
+				() -> objectDefinitionBrief);
 		}
 
 		if (enableObjectEntryVersioning) {

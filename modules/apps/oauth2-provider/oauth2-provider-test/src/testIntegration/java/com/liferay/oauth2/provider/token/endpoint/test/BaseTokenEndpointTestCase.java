@@ -84,6 +84,10 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 				TEST_CLIENT_ID_5,
 				new ClientPasswordClientAuthentication(
 					TEST_CLIENT_ID_5, _TEST_CLIENT_SECRET));
+			clientAuthentications.put(
+				TEST_CLIENT_ID_6,
+				new ClientPasswordClientAuthentication(
+					TEST_CLIENT_ID_6, _TEST_CLIENT_SECRET));
 
 			createOAuth2ApplicationWithClientSecretPost(
 				user.getCompanyId(), user, TEST_CLIENT_ID_1,
@@ -118,6 +122,14 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 					"everything", "everything.read", "everything.write"));
 			createOAuth2ApplicationWithClientSecretPost(
 				user.getCompanyId(), user, TEST_CLIENT_ID_5,
+				_TEST_CLIENT_SECRET,
+				Arrays.asList(
+					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN,
+					GrantType.JWT_BEARER),
+				Arrays.asList(
+					"everything", "everything.read", "everything.write"));
+			createOAuth2ApplicationWithClientSecretPost(
+				user.getCompanyId(), user, TEST_CLIENT_ID_6,
 				_TEST_CLIENT_SECRET,
 				Arrays.asList(
 					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN,
@@ -178,6 +190,8 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 	protected static final String TEST_CLIENT_ID_4 = "test_client_id_4";
 
 	protected static final String TEST_CLIENT_ID_5 = "test_client_id_5";
+
+	protected static final String TEST_CLIENT_ID_6 = "test_client_id_6";
 
 	protected static final Map<String, ClientAuthentication>
 		clientAuthentications = new HashMap<>();

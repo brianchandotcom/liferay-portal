@@ -72,6 +72,31 @@ public class JWTAssertAuthorizationGrantTest
 	}
 
 	@Test
+	public void testGrantWithCorrectAudience3() throws Exception {
+		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
+
+		JWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
+			new JWTAssertionAuthorizationGrant(
+				TEST_CLIENT_ID_6, null, user.getScreenName(),
+				getTokenWebTarget());
+
+		String accessToken = getAccessToken(
+			jwtAssertionAuthorizationGrant,
+			clientAuthentications.get(TEST_CLIENT_ID_6));
+
+		Assert.assertTrue(Validator.isNotNull(accessToken));
+
+		String[] parts = accessToken.split("\\.");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			new String(Base64.decode(parts[1])));
+
+		Assert.assertEquals(user.getUserId(), jsonObject.getLong("sub"));
+		Assert.assertEquals(
+			user.getScreenName(), jsonObject.getString("username"));
+	}
+
+	@Test
 	public void testGrantWithWrongAudience() throws Exception {
 		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 
@@ -133,6 +158,17 @@ public class JWTAssertAuthorizationGrantTest
 					JWTAssertionUtil.JWKS
 				).put(
 					"oauth2.in.assertion.user.auth.type", "emailAddress"
+				).build());
+			createFactoryConfiguration(
+				"com.liferay.oauth2.provider.rest.internal.configuration." +
+					"OAuth2InAssertionConfiguration",
+				HashMapDictionaryBuilder.<String, Object>put(
+					"oauth2.in.assertion.issuer", TEST_CLIENT_ID_6
+				).put(
+					"oauth2.in.assertion.signature.json.web.key.set",
+					JWTAssertionUtil.JWKS
+				).put(
+					"oauth2.in.assertion.user.auth.type", "screenName"
 				).build());
 
 			super.prepareTest();

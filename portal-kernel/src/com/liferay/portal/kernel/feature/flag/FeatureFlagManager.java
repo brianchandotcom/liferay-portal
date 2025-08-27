@@ -23,7 +23,6 @@ public interface FeatureFlagManager {
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *		#isEnabled(long, String)}
-	 * The companyId now is required to properly scope company id. Check LPD-61555
 	 */
 	@Deprecated
 	public boolean isEnabled(String key);

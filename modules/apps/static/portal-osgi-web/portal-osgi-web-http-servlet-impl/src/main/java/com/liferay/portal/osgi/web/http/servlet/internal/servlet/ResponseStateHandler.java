@@ -115,13 +115,6 @@ public class ResponseStateHandler {
 			}
 		}
 		catch (Exception exception) {
-			if (!(exception instanceof IOException) &&
-				!(exception instanceof RuntimeException) &&
-				!(exception instanceof ServletException)) {
-
-				exception = new ServletException(exception);
-			}
-
 			setException(exception);
 
 			if (_liferayDispatchTargets.getDispatcherType() !=

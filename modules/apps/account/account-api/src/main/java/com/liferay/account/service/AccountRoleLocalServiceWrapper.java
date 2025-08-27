@@ -385,7 +385,7 @@ public class AccountRoleLocalServiceWrapper
 	public com.liferay.account.model.AccountRole getOrAddEmptyAccountRole(
 			String externalReferenceCode, long companyId, long userId,
 			long accountEntryId, String name)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountRoleLocalService.getOrAddEmptyAccountRole(
 			externalReferenceCode, companyId, userId, accountEntryId, name);

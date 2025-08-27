@@ -158,13 +158,8 @@ public class OrganizationSystemObjectDefinitionManager
 			String externalReferenceCode, long companyId, User user)
 		throws PortalException {
 
-		try {
-			return _organizationService.getOrAddEmptyOrganization(
-				externalReferenceCode, StringPool.BLANK);
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
+		return _organizationService.getOrAddEmptyOrganization(
+			externalReferenceCode, StringPool.BLANK);
 	}
 
 	@Override

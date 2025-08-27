@@ -13,6 +13,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -31,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 public class EmptyModelManagerImpl implements EmptyModelManager {
 
 	@Override
-	public <T, E extends Exception> T getOrAddEmptyModel(
+	public <T, E extends PortalException> T getOrAddEmptyModel(
 			Class<T> clazz, long companyId,
 			UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
 			String externalReferenceCode,
@@ -71,7 +72,7 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 	}
 
 	@Override
-	public <T, E extends Exception> T getOrAddEmptyModel(
+	public <T, E extends PortalException> T getOrAddEmptyModel(
 			Class<T> clazz, UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
 			String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,

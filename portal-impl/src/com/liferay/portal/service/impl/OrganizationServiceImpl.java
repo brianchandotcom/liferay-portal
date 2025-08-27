@@ -433,7 +433,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, String name)
-		throws Exception {
+		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 

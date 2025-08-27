@@ -225,7 +225,7 @@ public class AccountRoleLocalServiceImpl
 	public AccountRole getOrAddEmptyAccountRole(
 			String externalReferenceCode, long companyId, long userId,
 			long accountEntryId, String name)
-		throws Exception {
+		throws PortalException {
 
 		return _emptyModelManager.getOrAddEmptyModel(
 			AccountRole.class, companyId,

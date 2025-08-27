@@ -158,14 +158,9 @@ public class AccountEntrySystemObjectDefinitionManager
 			String externalReferenceCode, long companyId, User user)
 		throws PortalException {
 
-		try {
-			return _accountEntryService.getOrAddEmptyAccountEntry(
-				externalReferenceCode, externalReferenceCode,
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
+		return _accountEntryService.getOrAddEmptyAccountEntry(
+			externalReferenceCode, externalReferenceCode,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 	}
 
 	@Override

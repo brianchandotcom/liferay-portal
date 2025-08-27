@@ -331,9 +331,10 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		return ServiceContextUtil.createServiceContext(
 			masterPage.getTaxonomyCategoryItemExternalReferences(),
-			masterPage.getDateCreated(), groupId, contextHttpServletRequest,
-			masterPage.getKeywords(), masterPage.getDateModified(),
-			contextUser.getUserId(), masterPage.getUuid());
+			contextCompany.getCompanyId(), masterPage.getDateCreated(), groupId,
+			contextHttpServletRequest, masterPage.getKeywords(),
+			masterPage.getDateModified(), contextUser.getUserId(),
+			masterPage.getUuid());
 	}
 
 	@Reference

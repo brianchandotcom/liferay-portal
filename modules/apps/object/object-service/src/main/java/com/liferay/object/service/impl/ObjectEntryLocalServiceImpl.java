@@ -2432,47 +2432,22 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, String> urlTitleMap = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : friendlyUrlMap.entrySet()) {
-			if (Validator.isNotNull(entry.getValue())) {
-				urlTitleMap.put(
-					entry.getKey(),
-					_friendlyURLEntryLocalService.getUniqueUrlTitle(
-						groupId, classNameId, objectEntry.getObjectEntryId(),
-						entry.getValue(), entry.getKey()));
-
+			if (Validator.isNull(entry.getValue())) {
 				continue;
 			}
 
 			urlTitleMap.put(
 				entry.getKey(),
-				_getUrlTitle(
-					classNameId, groupId, entry.getKey(), objectEntry,
-					objectField,
-					HashMapBuilder.<String, Object>putAll(
-						values
-					).putAll(
-						objectEntry.getModelAttributes()
-					).build()));
-		}
-
-		Map<String, Object> localizedValues = new HashMap<>();
-
-		if (objectField != null) {
-			localizedValues = (Map<String, Object>)values.getOrDefault(
-				objectField.getI18nObjectFieldName(), new HashMap<>());
-		}
-
-		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
-			urlTitleMap.computeIfAbsent(
-				entry.getKey(),
-				key -> _getUrlTitle(
-					classNameId, groupId, entry.getKey(), objectEntry,
-					objectField, new HashMap<>(values)));
+				_friendlyURLEntryLocalService.getUniqueUrlTitle(
+					groupId, classNameId, objectEntry.getObjectEntryId(),
+					entry.getValue(), entry.getKey()));
 		}
 
 		urlTitleMap.computeIfAbsent(
-			_language.getLanguageId(LocaleUtil.getSiteDefault()),
+			objectEntry.getDefaultLanguageId(),
 			key -> _getUrlTitle(
-				classNameId, groupId, null, objectEntry, objectField,
+				classNameId, groupId, objectEntry.getDefaultLanguageId(),
+				objectEntry, objectField,
 				HashMapBuilder.<String, Object>putAll(
 					values
 				).putAll(

@@ -12,7 +12,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -86,11 +86,15 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 								fragmentEntryLink.getFragmentEntryId());
 
 						if (fragmentEntry != null) {
-							return new ItemExternalReference() {
+							return new FragmentItemExternalReference() {
 								{
 									setExternalReferenceCode(
 										fragmentEntry::
 											getExternalReferenceCode);
+									setFragmentReferenceType(
+										() ->
+											FragmentReferenceType.
+												FRAGMENT_ITEM_EXTERNAL_REFERENCE);
 								}
 							};
 						}
@@ -109,6 +113,10 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 							{
 								setDefaultFragmentKey(
 									fragmentEntryLink::getRendererKey);
+								setFragmentReferenceType(
+									() ->
+										FragmentReferenceType.
+											DEFAULT_FRAGMENT_REFERENCE);
 							}
 						};
 					});

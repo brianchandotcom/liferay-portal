@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
@@ -22,6 +23,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -1318,6 +1320,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostByExternalReferenceCodeSitePageWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
 		_testPostByExternalReferenceCodeSitePageWithPageSpecificationsWithCustomFields();
+		_testPostByExternalReferenceCodeSitePageWithPageSpecificationsWithSettings(
+			SitePage.Type.CONTENT_PAGE);
+		_testPostByExternalReferenceCodeSitePageWithPageSpecificationsWithSettings(
+			SitePage.Type.WIDGET_PAGE);
 		_testPostSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification();
 
 		SitePage sitePage = _getRandomSitePage(SitePage.Type.CONTENT_PAGE);
@@ -1391,6 +1397,50 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				SitePage.Type.CONTENT_PAGE);
 			_postByExternalReferenceCodeSitePageWithPageSpecificationsWithCustomFields(
 				SitePage.Type.WIDGET_PAGE);
+		}
+	}
+
+	private void
+			_testPostByExternalReferenceCodeSitePageWithPageSpecificationsWithSettings(
+				SitePage.Type type)
+		throws Exception {
+
+		SitePage sitePage = _getRandomSitePage(type);
+
+		PageSpecification[] pageSpecifications =
+			PageSpecificationsTestUtil.getPageSpecifications(
+				sitePage.getExternalReferenceCode(), type);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		for (PageSpecification pageSpecification : pageSpecifications) {
+			pageSpecification.setSettings(
+				SettingsTestUtil.getSettings(serviceContext));
+		}
+
+		sitePage.setPageSpecifications(pageSpecifications);
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		SitePage postSitePage =
+			sitePageResource.postByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(), sitePage);
+
+		PageSpecification[] postPageSpecifications =
+			postSitePage.getPageSpecifications();
+
+		if (type == SitePage.Type.CONTENT_PAGE) {
+			_assertPageSpecifications(
+				(ContentPageSpecification)pageSpecifications[1],
+				(ContentPageSpecification)pageSpecifications[0], postSitePage);
+		}
+		else {
+			PageSpecificationsTestUtil.assertWidgetPageSpecifications(
+				postPageSpecifications,
+				(WidgetPageSpecification)pageSpecifications[0]);
 		}
 	}
 

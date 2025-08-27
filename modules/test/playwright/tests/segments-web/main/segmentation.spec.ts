@@ -34,17 +34,26 @@ const siteName = 'My Site ' + randomString;
 
 let site;
 
-test.beforeEach(async ({apiHelpers}) => {
+test.beforeEach(async ({apiHelpers, page}) => {
+	page.on('dialog', async (dialog) => {
+		await dialog.accept();
+	});
+
 	site = await apiHelpers.headlessSite.createSite({
 		name: siteName,
 	});
 });
 
-test.afterEach(async ({apiHelpers, page}) => {
+test.afterEach(async ({apiHelpers, page, segmentsPage}) => {
 	await test.step('Delete site on the DXP side', async () => {
 		await page.goto(liferayConfig.environment.baseUrl);
 
 		await apiHelpers.headlessSite.deleteSite(String(site.id));
+	});
+
+	await test.step('Delete all segments created during test execution', async () => {
+		await goToSegmentsAdmin(page);
+		await segmentsPage.deleteAllSegmentEntries();
 	});
 });
 
@@ -282,8 +291,6 @@ test(
 		const segmentName2 = 'Segment With User2';
 		const segmentName3 = 'AddSegmentByOtherSegmentsWarning Test';
 
-		page.on('dialog', async (dialog) => await dialog.accept());
-
 		await test.step('Given 2 users were created', async () => {
 			await apiHelpers.headlessAdminUser.postUserAccount({
 				emailAddress: `userea1@liferay.com`,
@@ -519,8 +526,6 @@ test(
 	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
 		const segmentName1 = 'First Segment';
 		const segmentName2 = 'Second Segment';
-
-		page.on('dialog', async (dialog) => await dialog.accept());
 
 		await test.step('Given a user is created', async () => {
 			await apiHelpers.headlessAdminUser.postUserAccount({
@@ -987,6 +992,8 @@ test(
 		});
 
 		await test.step('When a segment designer adds a segment with User Group criterion', async () => {
+			await productMenuPage.openProductMenuIfClosed();
+
 			await productMenuPage.goToSegments();
 
 			await segmentsPage.clickAddNewSegmentButton();

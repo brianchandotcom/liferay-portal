@@ -60,8 +60,6 @@ export class SegmentsPage {
 				? this.page.locator('.empty-drop-zone')
 				: dropzone.last();
 
-		await this.page.getByRole('button', {name: 'User'}).click();
-
 		await this.page.getByRole('button', {name: 'Session'}).click();
 
 		await this.page.getByLabel(`Drag ${property}`).press('Enter');
@@ -142,6 +140,20 @@ export class SegmentsPage {
 			await this.clickToggleButton();
 			await expect(this.panelLocator).toBeHidden({timeout: 10000});
 		}
+	}
+
+	async deleteAllSegmentEntries() {
+		const noSegmentsText = await this.page.locator(
+			'text=There are no segments.'
+		);
+		const isNoSegmentsVisible = await noSegmentsText.isVisible();
+
+		if (isNoSegmentsVisible) {
+			return;
+		}
+
+		await this.page.getByLabel('Select All Items on the Page').click();
+		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
 
 	async deleteUnavailableProperty() {

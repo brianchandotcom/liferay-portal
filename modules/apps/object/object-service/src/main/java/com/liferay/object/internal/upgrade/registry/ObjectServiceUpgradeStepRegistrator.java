@@ -645,6 +645,12 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.21.0", "10.22.0",
 			UpgradeProcessFactory.addColumns(
 				"ObjectDefinition", "enableObjectEntrySubscription BOOLEAN"));
+
+		registry.register(
+			"10.22.0", "10.22.1",
+			UpgradeProcessFactory.runSQL(
+				"update ObjectEntry set rootObjectEntryId = 0 where " +
+					"rootObjectEntryId is null"));
 	}
 
 	@Reference

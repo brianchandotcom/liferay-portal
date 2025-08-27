@@ -13,7 +13,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -158,23 +159,25 @@ public class FragmentLayoutStructureItemImporter
 			fragmentInstancePageElementDefinition,
 		long groupId) {
 
-		if (
-				fragmentInstancePageElementDefinition.
-					getFragmentReference() instanceof ItemExternalReference) {
+		FragmentReference fragmentReference =
+			fragmentInstancePageElementDefinition.getFragmentReference();
 
-			ItemExternalReference itemExternalReference =
-				(ItemExternalReference)
-					fragmentInstancePageElementDefinition.
-						getFragmentReference();
+		if (Objects.equals(
+				fragmentReference.getFragmentReferenceType(),
+				FragmentReference.FragmentReferenceType.
+					FRAGMENT_ITEM_EXTERNAL_REFERENCE)) {
+
+			FragmentItemExternalReference fragmentItemExternalReference =
+				(FragmentItemExternalReference)fragmentReference;
 
 			return FragmentEntryLocalServiceUtil.
 				fetchFragmentEntryByExternalReferenceCode(
-					itemExternalReference.getExternalReferenceCode(), groupId);
+					fragmentItemExternalReference.getExternalReferenceCode(),
+					groupId);
 		}
 
 		DefaultFragmentReference defaultFragmentReference =
-			(DefaultFragmentReference)
-				fragmentInstancePageElementDefinition.getFragmentReference();
+			(DefaultFragmentReference)fragmentReference;
 
 		return FragmentCollectionContributorRegistryUtil.getFragmentEntry(
 			defaultFragmentReference.getDefaultFragmentKey());

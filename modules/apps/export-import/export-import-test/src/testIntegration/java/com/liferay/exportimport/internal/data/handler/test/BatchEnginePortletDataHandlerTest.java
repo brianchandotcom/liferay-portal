@@ -390,11 +390,10 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportReadErrorLogOfCompanyScopeObjectEntries()
 		throws Exception {
 
-		Group group2 = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
 		_testExportImportErrorInfoOfObjectEntries(
-			group2, ObjectDefinitionConstants.SCOPE_COMPANY);
+			_stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test
@@ -402,10 +401,8 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportReadErrorLogOfSiteScopeObjectEntries()
 		throws Exception {
 
-		Group group1 = GroupTestUtil.addGroup();
-
 		_testExportImportErrorInfoOfObjectEntries(
-			group1, ObjectDefinitionConstants.SCOPE_SITE);
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@Test

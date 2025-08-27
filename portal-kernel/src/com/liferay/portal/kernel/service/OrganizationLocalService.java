@@ -431,7 +431,7 @@ public interface OrganizationLocalService
 	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
-		throws Exception;
+		throws PortalException;
 
 	/**
 	 * Returns the organization with the primary key.

@@ -586,7 +586,7 @@ public class OrganizationServiceHttp {
 			getOrAddEmptyOrganization(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				String name)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -602,8 +602,11 @@ public class OrganizationServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
-				if (exception instanceof Exception) {
-					throw (Exception)exception;
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(

@@ -201,7 +201,7 @@ public interface OrganizationService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, String name)
-		throws Exception;
+		throws PortalException;
 
 	/**
 	 * Returns the organization with the primary key.

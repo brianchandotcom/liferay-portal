@@ -270,7 +270,7 @@ public class AccountGroupLocalServiceImpl
 	public AccountGroup getOrAddEmptyAccountGroup(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
-		throws Exception {
+		throws PortalException {
 
 		return _emptyModelManager.getOrAddEmptyModel(
 			AccountGroup.class, companyId,

@@ -485,7 +485,7 @@ public class AccountEntryLocalServiceImpl
 	public AccountEntry getOrAddEmptyAccountEntry(
 			String externalReferenceCode, long companyId, long userId,
 			String name, String type)
-		throws Exception {
+		throws PortalException {
 
 		return _emptyModelManager.getOrAddEmptyModel(
 			AccountEntry.class, companyId,

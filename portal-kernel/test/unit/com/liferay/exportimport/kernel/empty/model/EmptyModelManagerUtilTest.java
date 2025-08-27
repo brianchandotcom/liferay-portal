@@ -7,6 +7,7 @@ package com.liferay.exportimport.kernel.empty.model;
 
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -81,10 +82,10 @@ public class EmptyModelManagerUtilTest {
 			User.class);
 		long companyId = RandomTestUtil.randomLong();
 		String externalReferenceCode = RandomTestUtil.randomString();
-		UnsafeBiFunction<String, Long, User, Exception> unsafeBiFunction =
+		UnsafeBiFunction<String, Long, User, PortalException> unsafeBiFunction =
 			(a, b) -> Mockito.mock(User.class);
-		UnsafeSupplier<User, Exception> unsafeSupplier = () -> Mockito.mock(
-			User.class);
+		UnsafeSupplier<User, PortalException> unsafeSupplier =
+			() -> Mockito.mock(User.class);
 
 		Assert.assertSame(
 			user,
@@ -119,10 +120,10 @@ public class EmptyModelManagerUtilTest {
 			User.class);
 		String externalReferenceCode = RandomTestUtil.randomString();
 		long groupId = RandomTestUtil.randomLong();
-		UnsafeBiFunction<String, Long, User, Exception> unsafeBiFunction =
+		UnsafeBiFunction<String, Long, User, PortalException> unsafeBiFunction =
 			(a, b) -> Mockito.mock(User.class);
-		UnsafeSupplier<User, Exception> unsafeSupplier = () -> Mockito.mock(
-			User.class);
+		UnsafeSupplier<User, PortalException> unsafeSupplier =
+			() -> Mockito.mock(User.class);
 
 		Assert.assertSame(
 			user,

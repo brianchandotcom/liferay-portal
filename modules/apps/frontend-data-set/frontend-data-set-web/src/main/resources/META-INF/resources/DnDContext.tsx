@@ -7,11 +7,11 @@ import React from 'react';
 
 import {IFileDropSettings} from './utils/types';
 
-export type TOnFileDrop = (droppedItem: any, dropTarget?: any) => void;
+export type THandleFileDrop = (droppedItem: any, dropTarget?: any) => void;
 
 export interface IFrontendDataSetDropContext {
 	fileDropSettings: IFileDropSettings;
-	onFileDrop: TOnFileDrop;
+	handleFileDrop: THandleFileDrop;
 }
 
 const DnDContext = React.createContext({
@@ -19,7 +19,7 @@ const DnDContext = React.createContext({
 		enabled: false,
 		isDropTarget: () => true,
 	},
-	onFileDrop: () => {},
+	handleFileDrop: () => {},
 } as unknown as IFrontendDataSetDropContext);
 
 export default DnDContext;

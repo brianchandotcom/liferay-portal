@@ -240,6 +240,25 @@ function ItemSelector<T extends Record<string, any>>({
 				{...otherProps}
 				items={items}
 				locator={locator ? {...locator} : undefined}
+				messages={{
+					hotkeys: Liferay.Language.get(
+						'press-backspace-to-delete-the-current-row'
+					),
+					labelAdded: Liferay.Language.get(
+						'label-x-was-added-to-the-list'
+					),
+					labelRemoved: Liferay.Language.get(
+						'label-x-was-removed-from-the-list'
+					),
+					listCount: Liferay.Language.get(
+						'there-is-x-option-available'
+					),
+					listCountPlural: Liferay.Language.get(
+						'there-are-x-options-available'
+					),
+					loading: Liferay.Language.get('loading...'),
+					notFound: Liferay.Language.get('no-results-found'),
+				}}
 				onChange={setValue}
 				onItemsChange={setItems}
 				onLoadMore={async () => loadMore()}
@@ -259,6 +278,12 @@ function ItemSelector<T extends Record<string, any>>({
 			items={sourceItems}
 			loadingState={networkStatus}
 			menuTrigger="focus"
+			messages={{
+				listCount: Liferay.Language.get('x-list-option'),
+				listCountPlural: Liferay.Language.get('x-list-options'),
+				loading: Liferay.Language.get('loading...'),
+				notFound: Liferay.Language.get('no-results-found'),
+			}}
 			onActiveChange={setActive}
 			onChange={(value: string) => {
 				if (!value.length) {

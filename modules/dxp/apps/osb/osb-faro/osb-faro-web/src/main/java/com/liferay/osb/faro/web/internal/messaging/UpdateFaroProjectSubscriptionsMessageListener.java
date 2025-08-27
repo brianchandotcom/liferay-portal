@@ -248,7 +248,7 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-		return DateUtil.formatDate(calendar.getTime(), "yyyy-MM-dd");
+		return DateUtil.formatDate(calendar.getTime(), DateUtil.DATE_FORMAT);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

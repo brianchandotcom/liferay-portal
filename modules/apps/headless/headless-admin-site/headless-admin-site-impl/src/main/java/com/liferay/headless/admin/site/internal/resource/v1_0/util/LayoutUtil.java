@@ -577,34 +577,6 @@ public class LayoutUtil {
 			serviceContext);
 	}
 
-	private static Layout _updateLayout(
-			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
-			PageSpecification pageSpecification, ServiceContext serviceContext)
-		throws Exception {
-
-		Settings settings = null;
-
-		if (pageSpecification != null) {
-			settings = pageSpecification.getSettings();
-		}
-
-		_updateClientExtensions(cetManager, layout, settings, serviceContext);
-
-		layout = _updateLookAndFeel(layout, settings);
-
-		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
-
-		return _updateLayout(
-			layout, nameMap, titleMap, descriptionMap, robotsMap,
-			_getStyleBookEntryId(serviceContext.getScopeGroupId(), settings),
-			_getFaviconFileEntryId(settings, serviceContext),
-			_getMasterLayoutPlid(
-				serviceContext.getScopeGroupId(), layout, settings),
-			friendlyURLMap, serviceContext);
-	}
-
 	public static Layout updatePortletLayout(
 			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> friendlyURLMap,
@@ -976,6 +948,34 @@ public class LayoutUtil {
 			cetManager, classNameId,
 			settings.getThemeSpritemapClientExtension(), layout,
 			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
+	}
+
+	private static Layout _updateLayout(
+			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
+			PageSpecification pageSpecification, ServiceContext serviceContext)
+		throws Exception {
+
+		Settings settings = null;
+
+		if (pageSpecification != null) {
+			settings = pageSpecification.getSettings();
+		}
+
+		_updateClientExtensions(cetManager, layout, settings, serviceContext);
+
+		layout = _updateLookAndFeel(layout, settings);
+
+		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
+
+		return _updateLayout(
+			layout, nameMap, titleMap, descriptionMap, robotsMap,
+			_getStyleBookEntryId(serviceContext.getScopeGroupId(), settings),
+			_getFaviconFileEntryId(settings, serviceContext),
+			_getMasterLayoutPlid(
+				serviceContext.getScopeGroupId(), layout, settings),
+			friendlyURLMap, serviceContext);
 	}
 
 	private static Layout _updateLayout(

@@ -377,7 +377,7 @@ public class AccountGroupLocalServiceUtil {
 	public static AccountGroup getOrAddEmptyAccountGroup(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
-		throws Exception {
+		throws PortalException {
 
 		return getService().getOrAddEmptyAccountGroup(
 			externalReferenceCode, companyId, userId, name);

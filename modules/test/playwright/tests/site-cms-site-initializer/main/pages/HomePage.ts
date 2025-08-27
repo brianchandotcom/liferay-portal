@@ -103,7 +103,7 @@ export class HomePage {
 			.getByRole('menuitem', {name: 'Update Due Date'})
 			.click();
 
-		await this.page.getByRole('textbox').first().fill(date);
+		await this.page.locator('input[type="date"]').fill(date);
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 

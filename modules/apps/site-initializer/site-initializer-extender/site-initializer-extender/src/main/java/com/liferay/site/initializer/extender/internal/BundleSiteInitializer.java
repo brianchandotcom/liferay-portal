@@ -5478,7 +5478,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		throw new IllegalArgumentException(
 			"Asset library type " + assetLibraryTypeString +
-				" must be one of: AssetLibrary, Space.");
+				" must be \"AssetLibrary\" or \"Space\"");
 	}
 
 	private Serializable _getExpandoAttributeValue(JSONObject jsonObject)

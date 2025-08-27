@@ -6,6 +6,9 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.counter.kernel.model.Counter;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
@@ -61,7 +64,8 @@ public class CounterDataCleanupPreupgradeProcess
 					);
 
 					_checkLayoutCounter(
-						counterName, counterValue, groupId, privateLayout);
+						counterName, counterValue, dbInspector, groupId,
+						privateLayout);
 
 					continue;
 				}
@@ -117,8 +121,59 @@ public class CounterDataCleanupPreupgradeProcess
 	}
 
 	private void _checkLayoutCounter(
-		String counterName, long counterValue, long groupId,
-		boolean privateLayout) {
+			String counterName, long counterValue, DBInspector dbInspector,
+			long groupId, boolean privateLayout)
+		throws Exception {
+
+		if (!dbInspector.hasTable("Layout")) {
+			_log.error("Table Layout does not exist");
+
+			return;
+		}
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select max(layoutId) from Layout where groupId = ",
+						groupId, " and privateLayout = ",
+						privateLayout ? "[$TRUE$]" : "[$FALSE$]")));
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			if (resultSet.next()) {
+				long maxValue = resultSet.getLong(1);
+
+				if (resultSet.wasNull()) {
+					try (PreparedStatement preparedStatement2 =
+							connection.prepareStatement(
+								"delete from Counter where name = '" +
+									counterName + "'")) {
+
+						preparedStatement2.executeUpdate();
+
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Deleted counter " + counterName +
+									" because it is unused");
+						}
+					}
+
+					return;
+				}
+
+				if (counterValue >= maxValue) {
+					return;
+				}
+
+				CounterLocalServiceUtil.reset(counterName, maxValue);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Counter ", counterName,
+							" has been reset to value ", maxValue));
+				}
+			}
+		}
 	}
 
 	private void _checkTableCounter(

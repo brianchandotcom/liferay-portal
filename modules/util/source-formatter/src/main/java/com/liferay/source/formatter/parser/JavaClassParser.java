@@ -289,6 +289,8 @@ public class JavaClassParser {
 			startLine, new String[] {"\t", "\n", " synchronized "},
 			new String[] {"", " ", " "});
 
+		startLine = startLine.replaceAll(" +", " ");
+
 		javaTermContent = metadata + javaTermContent;
 
 		if (startLine.startsWith("static {")) {

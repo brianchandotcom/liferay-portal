@@ -120,7 +120,9 @@ public class SharedAssetResourceImpl extends BaseSharedAssetResourceImpl {
 					userGroup -> String.valueOf(userGroup.getUserGroupId()),
 					String.class));
 
-			booleanFilter.add(
+			BooleanFilter userBooleanFilter = new BooleanFilter();
+
+			userBooleanFilter.add(
 				toUserGroupIdTermsFilter, BooleanClauseOccur.SHOULD);
 
 			TermsFilter toUserIdTermsFilter = new TermsFilter("toUserId");
@@ -128,7 +130,10 @@ public class SharedAssetResourceImpl extends BaseSharedAssetResourceImpl {
 			toUserIdTermsFilter.addValue(
 				String.valueOf(contextUser.getUserId()));
 
-			booleanFilter.add(toUserIdTermsFilter, BooleanClauseOccur.SHOULD);
+			userBooleanFilter.add(
+				toUserIdTermsFilter, BooleanClauseOccur.SHOULD);
+
+			booleanFilter.add(userBooleanFilter, BooleanClauseOccur.MUST);
 		};
 	}
 

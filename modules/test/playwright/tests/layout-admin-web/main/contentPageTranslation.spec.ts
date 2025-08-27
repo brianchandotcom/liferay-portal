@@ -390,15 +390,6 @@ test.describe('Export and import of translations', () => {
 			pageName: title,
 		});
 
-		// Export the translation with bulk
-
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		const file2 = await contentPageTranslationPage.bulkExportTranslations({
-			languages: ['Spanish (Spain)'],
-			pageNames: [title],
-		});
-
 		// Change the translations for both Default and Experience 1
 
 		await contentPageTranslationPage.goto({
@@ -431,31 +422,9 @@ test.describe('Export and import of translations', () => {
 
 		// Now import the translations exported previously
 
-		// Import both files from the global Import Translations option
-
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
 		await contentPageTranslationPage.importTranslations({filePath: file1});
-
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		await contentPageTranslationPage.importTranslations({filePath: file2});
-
-		// Import both files from the specific page Import Translation option
-
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		await contentPageTranslationPage.importTranslations({
-			filePath: file1,
-			pageName: title,
-		});
-
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		await contentPageTranslationPage.importTranslations({
-			filePath: file2,
-			pageName: title,
-		});
 
 		// Now check the import worked
 

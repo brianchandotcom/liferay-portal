@@ -1036,8 +1036,7 @@ public class LayoutUtil {
 		if ((settings != null) &&
 			MapUtil.isNotEmpty(settings.getThemeSettings())) {
 
-			unicodeProperties.putAll(
-				(Map<String, ? extends String>)settings.getThemeSettings());
+			unicodeProperties.putAll(settings.getThemeSettings());
 		}
 
 		layout = LayoutServiceUtil.updateLayout(

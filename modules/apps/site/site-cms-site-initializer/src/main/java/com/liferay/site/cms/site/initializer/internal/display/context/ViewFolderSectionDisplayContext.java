@@ -66,6 +66,16 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 	}
 
+	@Override
+	public Map<String, Object> getAdditionalProps() {
+		return new HashMapBuilder<>().putAll(
+			super.getAdditionalProps()
+		).put(
+			"rootObjectEntryFolderExternalReferenceCode",
+			getRootObjectEntryFolderExternalReferenceCode()
+		).build();
+	}
+
 	public Map<String, Object> getBreadcrumbProps() {
 		if (objectEntryFolder == null) {
 			return Collections.emptyMap();

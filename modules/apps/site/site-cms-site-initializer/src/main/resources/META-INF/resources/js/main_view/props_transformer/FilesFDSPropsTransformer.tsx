@@ -101,7 +101,7 @@ export default function FilesFDSPropsTransformer({
 			enabled: true,
 			isDropTarget: ({item}: {item: any}) => {
 				return item.entryClassName.includes(
-					'com.liferay.object.model.ObjectEntryFolder'
+					OBJECT_ENTRY_FOLDER_CLASSNAME
 				);
 			},
 			onFileDrop: (droppedFiles: any, dropTarget?: any) =>

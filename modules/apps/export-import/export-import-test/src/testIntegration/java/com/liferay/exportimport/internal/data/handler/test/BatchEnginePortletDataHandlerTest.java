@@ -41,7 +41,6 @@ import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -96,7 +95,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -381,26 +379,6 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
-	@TestInfo("LPD-54863")
-	public void testExportImportReadErrorLogOfCompanyScopeObjectEntries()
-		throws Exception {
-
-		_testExportImportErrorInfoOfObjectEntries(
-			_stagingGroupHelper.fetchCompanyGroup(
-				TestPropsValues.getCompanyId()),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-	}
-
-	@Test
-	@TestInfo("LPD-54863")
-	public void testExportImportReadErrorLogOfSiteScopeObjectEntries()
-		throws Exception {
-
-		_testExportImportErrorInfoOfObjectEntries(
-			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
-	}
-
-	@Test
 	public void testExportImportSiteObjectEntriesToOtherSite()
 		throws Exception {
 
@@ -546,6 +524,18 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
+	@TestInfo("LPD-54863")
+	public void testFailingObjectImportGeneratesErrorReport() throws Exception {
+		_testExportImportErrorInfoOfObjectEntries(
+			_stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_testExportImportErrorInfoOfObjectEntries(
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
+	}
+
+	@Test
 	public void testGetExportModelCount() throws Exception {
 		_testGetExportModelCount(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
@@ -631,16 +621,10 @@ public class BatchEnginePortletDataHandlerTest {
 	private ObjectDefinition _addObjectDefinition(String scope)
 		throws Exception {
 
-		return _addObjectDefinition(scope, false);
-	}
-
-	private ObjectDefinition _addObjectDefinition(
-			String scope, boolean addRequiredField)
-		throws Exception {
-
 		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
-		List<ObjectField> objectFields = new ArrayList<>(
+		return ObjectDefinitionTestUtil.publishObjectDefinition(
+			objectDefinitionName,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
@@ -745,47 +729,19 @@ public class BatchEnginePortletDataHandlerTest {
 						).value(
 							Boolean.TRUE.toString()
 						).build()),
-					false)));
-
-		if (addRequiredField) {
-			objectFields.add(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					RandomTestUtil.randomString(),
-					_OBJECT_REQUIRED_FIELD_NAME_TEXT,
-					Arrays.asList(
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-						).value(
-							Boolean.TRUE.toString()
-						).build()),
-					true));
-		}
-
-		return ObjectDefinitionTestUtil.publishObjectDefinition(
-			objectDefinitionName, objectFields, scope);
+					false)),
+			scope);
 	}
 
 	private ObjectEntry[] _addObjectEntries(
 			int count, long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		return _addObjectEntries(count, groupId, objectDefinition, false);
-	}
-
-	private ObjectEntry[] _addObjectEntries(
-			int count, long groupId, ObjectDefinition objectDefinition,
-			boolean useRequiredField)
-		throws Exception {
-
 		ObjectEntry[] objectEntries = new ObjectEntry[count];
 
 		for (int i = 0; i < count; i++) {
 			objectEntries[i] = _addObjectEntry(
-				groupId, objectDefinition, RandomTestUtil.randomString(),
-				useRequiredField);
+				groupId, objectDefinition, RandomTestUtil.randomString());
 		}
 
 		return objectEntries;
@@ -794,15 +750,6 @@ public class BatchEnginePortletDataHandlerTest {
 	private ObjectEntry _addObjectEntry(
 			long groupId, ObjectDefinition objectDefinition,
 			Serializable objectFieldValue)
-		throws Exception {
-
-		return _addObjectEntry(
-			groupId, objectDefinition, objectFieldValue, false);
-	}
-
-	private ObjectEntry _addObjectEntry(
-			long groupId, ObjectDefinition objectDefinition,
-			Serializable objectFieldValue, boolean requiredFieldName)
 		throws Exception {
 
 		Company company = _companyLocalService.getCompany(
@@ -834,15 +781,6 @@ public class BatchEnginePortletDataHandlerTest {
 				tempFileEntry2.getFileEntryId()
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
-			).put(
-				_OBJECT_REQUIRED_FIELD_NAME_TEXT,
-				() -> {
-					if (requiredFieldName) {
-						return RandomTestUtil.randomString();
-					}
-
-					return null;
-				}
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -1367,9 +1305,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
 		RandomTestUtil.randomString();
-
-	private static final String _OBJECT_REQUIRED_FIELD_NAME_TEXT =
-		"x" + RandomTestUtil.randomString();
 
 	@Inject
 	private BatchEngineImportTaskLocalService

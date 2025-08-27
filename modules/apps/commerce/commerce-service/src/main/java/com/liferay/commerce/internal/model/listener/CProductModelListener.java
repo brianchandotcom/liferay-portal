@@ -48,7 +48,7 @@ public class CProductModelListener extends BaseModelListener<CProduct> {
 	}
 
 	private void _updateSiteNavigationMenuItem(
-		String newExternalReferenceCode, String originalExternalReferenceCode) {
+		String externalReferenceCode, String originalExternalReferenceCode) {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
@@ -73,7 +73,7 @@ public class CProductModelListener extends BaseModelListener<CProduct> {
 			}
 
 			unicodeProperties.setProperty(
-				"externalReferenceCode", newExternalReferenceCode);
+				"externalReferenceCode", externalReferenceCode);
 
 			siteNavigationMenuItem.setTypeSettings(
 				unicodeProperties.toString());

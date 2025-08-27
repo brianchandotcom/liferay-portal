@@ -581,6 +581,10 @@ public class LayoutUtil {
 				serviceContext);
 		}
 
+		if (status == layout.getStatus()) {
+			return layout;
+		}
+
 		return LayoutLocalServiceUtil.updateStatus(
 			serviceContext.getUserId(), layout.getPlid(), status,
 			serviceContext);

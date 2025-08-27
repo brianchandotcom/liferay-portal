@@ -11,12 +11,10 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.NoSuchAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -146,8 +144,7 @@ public class AddressSystemObjectDefinitionManagerTest {
 		AssertUtils.assertFailure(
 			PortalException.class,
 			StringBundler.concat(
-				NoSuchAddressException.class.getName(),
-				": No Address exists with the key {externalReferenceCode=",
+				"No Address exists with the key {externalReferenceCode=",
 				externalReferenceCode, ", companyId=",
 				TestPropsValues.getCompanyId(), "}"),
 			() -> _systemObjectDefinitionManager.getOrAddEmptyBaseModel(
@@ -179,8 +176,7 @@ public class AddressSystemObjectDefinitionManagerTest {
 			AssertUtils.assertFailure(
 				PortalException.class,
 				StringBundler.concat(
-					PrincipalException.MustHavePermission.class.getName(),
-					": User ", user2.getUserId(),
+					"User ", user2.getUserId(),
 					" must have UPDATE permission for ", User.class.getName(),
 					" ", user1.getUserId()),
 				() ->
@@ -194,8 +190,7 @@ public class AddressSystemObjectDefinitionManagerTest {
 			AssertUtils.assertFailure(
 				PortalException.class,
 				StringBundler.concat(
-					PrincipalException.MustHavePermission.class.getName(),
-					": User ", user2.getUserId(),
+					"User ", user2.getUserId(),
 					" must have VIEW permission for ", User.class.getName(),
 					" ", user1.getUserId()),
 				() ->

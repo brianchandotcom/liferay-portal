@@ -717,7 +717,7 @@ public class OrganizationLocalServiceImpl
 	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
-		throws Exception {
+		throws PortalException {
 
 		return EmptyModelManagerUtil.getOrAddEmptyModel(
 			Organization.class, companyId, externalReferenceCode,

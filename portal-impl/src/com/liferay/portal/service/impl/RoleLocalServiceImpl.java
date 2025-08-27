@@ -851,7 +851,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public Role getOrAddEmptyRole(
 			String externalReferenceCode, long companyId, long userId,
 			String className, long classPK, String name, int type)
-		throws Exception {
+		throws PortalException {
 
 		return EmptyModelManagerUtil.getOrAddEmptyModel(
 			Role.class, companyId, externalReferenceCode,

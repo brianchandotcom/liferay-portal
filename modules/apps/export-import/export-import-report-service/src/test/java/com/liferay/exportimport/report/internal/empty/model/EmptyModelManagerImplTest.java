@@ -14,6 +14,7 @@ import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -501,8 +502,9 @@ public class EmptyModelManagerImplTest {
 		return (externalReferenceCode, companyId) -> supplier.get();
 	}
 
-	private UnsafeBiFunction<String, Long, User, Exception> _toUnsafeBiFunction(
-		UnsafeSupplier<User, Exception> unsafeSupplier) {
+	private UnsafeBiFunction<String, Long, User, PortalException>
+		_toUnsafeBiFunction(
+			UnsafeSupplier<User, PortalException> unsafeSupplier) {
 
 		return (externalReferenceCode, companyId) -> unsafeSupplier.get();
 	}

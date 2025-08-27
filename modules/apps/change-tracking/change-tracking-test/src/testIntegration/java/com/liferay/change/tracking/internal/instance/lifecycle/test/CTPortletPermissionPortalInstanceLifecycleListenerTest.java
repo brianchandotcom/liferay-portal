@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -58,7 +57,7 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testPublicationsRegularRolesPermissions() throws Exception {
+	public void testPortalInstanceRegistered1() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			CTPortletPermissionPortalInstanceLifecycleListenerTest.class);
 
@@ -128,106 +127,113 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 	}
 
 	@Test
-	public void testPublicationsUserResourcePermissions() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+	public void testPortalInstanceRegistered2() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
 		long companyId = company.getCompanyId();
 
-		try {
-			Role role = _roleLocalService.fetchRole(
-				companyId, RoleConstants.PUBLICATIONS_USER);
+		Role role = _roleLocalService.fetchRole(
+			companyId, RoleConstants.PUBLICATIONS_USER);
 
-			Assert.assertNotNull(role);
+		Assert.assertNotNull(role);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				companyId,
+				_resourceActions.getPortletRootModelResource(
+					CTPortletKeys.PUBLICATIONS),
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId(), CTActionKeys.ADD_PUBLICATION));
+
+		for (String actionId :
+				Arrays.asList(
+					ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW)) {
 
 			Assert.assertTrue(
 				_resourcePermissionLocalService.hasResourcePermission(
-					companyId,
-					_resourceActions.getPortletRootModelResource(
-						CTPortletKeys.PUBLICATIONS),
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId(), CTActionKeys.ADD_PUBLICATION));
-
-			for (String actionId :
-					Arrays.asList(
-						ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW)) {
-
-				Assert.assertTrue(
-					_resourcePermissionLocalService.hasResourcePermission(
-						companyId, CTPortletKeys.PUBLICATIONS,
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(companyId), role.getRoleId(), actionId));
-			}
-
-			ResourcePermission rootModelResourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					companyId,
-					_resourceActions.getPortletRootModelResource(
-						CTPortletKeys.PUBLICATIONS),
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId());
-
-			rootModelResourcePermission.removeResourceAction(
-				CTActionKeys.ADD_PUBLICATION);
-
-			rootModelResourcePermission =
-				_resourcePermissionLocalService.updateResourcePermission(
-					rootModelResourcePermission);
-
-			Assert.assertFalse(
-				rootModelResourcePermission.hasActionId(
-					CTActionKeys.ADD_PUBLICATION));
-
-			ResourcePermission portletResourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
 					companyId, CTPortletKeys.PUBLICATIONS,
 					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId());
-
-			portletResourcePermission.removeResourceAction(
-				ActionKeys.ACCESS_IN_CONTROL_PANEL);
-			portletResourcePermission.removeResourceAction(ActionKeys.VIEW);
-
-			portletResourcePermission =
-				_resourcePermissionLocalService.updateResourcePermission(
-					portletResourcePermission);
-
-			Assert.assertFalse(
-				portletResourcePermission.hasActionId(
-					ActionKeys.ACCESS_IN_CONTROL_PANEL));
-			Assert.assertFalse(
-				portletResourcePermission.hasActionId(ActionKeys.VIEW));
-
-			_portalInstanceLifecycleListener.portalInstanceRegistered(company);
-
-			rootModelResourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					companyId,
-					_resourceActions.getPortletRootModelResource(
-						CTPortletKeys.PUBLICATIONS),
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId());
-
-			Assert.assertFalse(
-				rootModelResourcePermission.hasActionId(
-					CTActionKeys.ADD_PUBLICATION));
-
-			portletResourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					companyId, CTPortletKeys.PUBLICATIONS,
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId());
-
-			Assert.assertFalse(
-				portletResourcePermission.hasActionId(
-					ActionKeys.ACCESS_IN_CONTROL_PANEL));
-			Assert.assertFalse(
-				portletResourcePermission.hasActionId(ActionKeys.VIEW));
+					role.getRoleId(), actionId));
 		}
-		finally {
-			if (company != null) {
-				_companyLocalService.deleteCompany(companyId);
-			}
-		}
+
+		ResourcePermission rootModelResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				companyId,
+				_resourceActions.getPortletRootModelResource(
+					CTPortletKeys.PUBLICATIONS),
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId());
+
+		ResourcePermission portletResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				companyId, CTPortletKeys.PUBLICATIONS,
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId());
+
+		rootModelResourcePermission.removeResourceAction(
+			CTActionKeys.ADD_PUBLICATION);
+
+		rootModelResourcePermission =
+			_resourcePermissionLocalService.updateResourcePermission(
+				rootModelResourcePermission);
+
+		Assert.assertFalse(
+			rootModelResourcePermission.hasActionId(
+				CTActionKeys.ADD_PUBLICATION));
+
+		portletResourcePermission.removeResourceAction(
+			ActionKeys.ACCESS_IN_CONTROL_PANEL);
+		portletResourcePermission.removeResourceAction(ActionKeys.VIEW);
+
+		portletResourcePermission =
+			_resourcePermissionLocalService.updateResourcePermission(
+				portletResourcePermission);
+
+		Assert.assertFalse(
+			portletResourcePermission.hasActionId(
+				ActionKeys.ACCESS_IN_CONTROL_PANEL));
+		Assert.assertFalse(
+			portletResourcePermission.hasActionId(ActionKeys.VIEW));
+
+		_portalInstanceLifecycleListener.portalInstanceRegistered(company);
+
+		rootModelResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				companyId,
+				_resourceActions.getPortletRootModelResource(
+					CTPortletKeys.PUBLICATIONS),
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId());
+
+		Assert.assertFalse(
+			rootModelResourcePermission.hasActionId(
+				CTActionKeys.ADD_PUBLICATION));
+
+		portletResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				companyId, CTPortletKeys.PUBLICATIONS,
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId());
+
+		Assert.assertFalse(
+			portletResourcePermission.hasActionId(
+				ActionKeys.ACCESS_IN_CONTROL_PANEL));
+		Assert.assertFalse(
+			portletResourcePermission.hasActionId(ActionKeys.VIEW));
+
+		rootModelResourcePermission.addResourceAction(
+			CTActionKeys.ADD_PUBLICATION);
+
+		_resourcePermissionLocalService.updateResourcePermission(
+			rootModelResourcePermission);
+
+		portletResourcePermission.addResourceAction(
+			ActionKeys.ACCESS_IN_CONTROL_PANEL);
+		portletResourcePermission.addResourceAction(ActionKeys.VIEW);
+
+		_resourcePermissionLocalService.updateResourcePermission(
+			portletResourcePermission);
 	}
 
 	@Inject

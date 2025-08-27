@@ -66,22 +66,52 @@ public class SettingsTestUtil {
 			Assert.assertEquals(layout.getCss(), settings.getCss());
 		}
 
-		ClientExtension clientExtension = null;
+		FavIconClientExtension favIconClientExtension = null;
+		FavIconItemExternalReference favIconItemExternalReference = null;
 
 		FavIcon favIcon = settings.getFavIcon();
 
-		if ((favIcon != null) &&
-			Objects.equals(
-				favIcon.getClassName(),
-				com.liferay.headless.admin.site.dto.v1_0.ClientExtension.class.
-					getName())) {
+		if (favIcon == null) {
+			Assert.assertEquals(0, layout.getFaviconFileEntryId());
+		}
+		else if (favIcon instanceof FavIconClientExtension) {
+			favIconClientExtension = (FavIconClientExtension)favIcon;
+		}
+		else if (favIcon instanceof FavIconItemExternalReference) {
+			favIconItemExternalReference =
+				(FavIconItemExternalReference)favIcon;
+		}
+		else {
+			Assert.fail("Unexpected FavIcon class: " + favIcon.getClass());
+		}
 
-			clientExtension = new ClientExtension() {
-				{
-					setClientExtensionConfig(favIcon::getClientExtensionConfig);
-					setExternalReferenceCode(favIcon::getExternalReferenceCode);
-				}
-			};
+		if (layout.getFaviconFileEntryId() == 0) {
+			Assert.assertNull(favIconItemExternalReference);
+		}
+		else {
+			DLFileEntry dlFileEntry =
+				DLFileEntryLocalServiceUtil.fetchDLFileEntry(
+					layout.getFaviconFileEntryId());
+
+			Assert.assertEquals(
+				dlFileEntry.getExternalReferenceCode(),
+				favIconItemExternalReference.getExternalReferenceCode());
+
+			Scope scope = favIconItemExternalReference.getScope();
+
+			if (scope == null) {
+				Assert.assertEquals(
+					dlFileEntry.getGroupId(), layout.getGroupId());
+			}
+			else {
+				Group group =
+					GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+						scope.getExternalReferenceCode(),
+						layout.getCompanyId());
+
+				Assert.assertEquals(
+					dlFileEntry.getGroupId(), group.getGroupId());
+			}
 		}
 
 		_assertClientExtensions(
@@ -90,9 +120,7 @@ public class SettingsTestUtil {
 		_assertClientExtensions(
 			settings.getGlobalJSClientExtensions(), layout,
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
-		_assertClientExtension(
-			clientExtension, layout,
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		_assertFavIconClientExtension(favIconClientExtension, layout);
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -500,6 +528,30 @@ public class SettingsTestUtil {
 			Assert.assertEquals(
 				map.get(clientExtensionEntryRel.getCETExternalReferenceCode()),
 				clientExtensionEntryRel.getTypeSettings());
+		}
+	}
+
+	private static void _assertFavIconClientExtension(
+		FavIconClientExtension favIconClientExtension, Layout layout) {
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		if (clientExtensionEntryRel == null) {
+			Assert.assertNull(favIconClientExtension);
+		}
+		else {
+			Assert.assertEquals(
+				clientExtensionEntryRel.getCETExternalReferenceCode(),
+				favIconClientExtension.getExternalReferenceCode());
+			Assert.assertEquals(
+				clientExtensionEntryRel.getTypeSettings(),
+				UnicodePropertiesBuilder.create(
+					favIconClientExtension.getClientExtensionConfig(), true
+				).buildString());
 		}
 	}
 

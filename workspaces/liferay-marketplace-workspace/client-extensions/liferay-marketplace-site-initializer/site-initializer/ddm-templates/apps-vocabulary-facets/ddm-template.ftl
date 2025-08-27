@@ -10,7 +10,8 @@
 	}
 
 	.vocab-facet .panel a {
-		padding: 1rem;
+		padding: 1.5rem;
+		padding-bottom: 0;
 	}
 
 	.vocab-facet .collapse-icon .collapse-icon-closed .lexicon-icon,
@@ -19,7 +20,7 @@
 	}
 
 	.vocab-facet .panel-body {
-		padding: 0.5rem 1rem 1rem;
+		padding: 0 1.5rem;
 	}
 
 	.vocab-facet .list-unstyled {
@@ -27,12 +28,13 @@
 	}
 
 	.vocab-facet .separator {
+		margin: 1rem auto 0;
 		width: 90%;
 	}
 </style>
 
 <@liferay_ui["panel-container"]
-	cssClass="vocab-facet bg-white border-radius-xlarge my-1"
+	cssClass="vocab-facet bg-white border-radius-xlarge"	
 	extended=true
 	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
 	markupView="lexicon"

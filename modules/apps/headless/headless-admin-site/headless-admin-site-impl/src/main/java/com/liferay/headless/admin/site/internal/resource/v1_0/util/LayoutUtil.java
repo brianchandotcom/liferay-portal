@@ -590,7 +590,7 @@ public class LayoutUtil {
 			serviceContext);
 	}
 
-	public static Layout updateLayout(
+	private static Layout _updateLayout(
 			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,

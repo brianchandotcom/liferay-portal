@@ -615,7 +615,7 @@ public class OrganizationLocalServiceWrapper
 	public Organization getOrAddEmptyOrganization(
 			String externalReferenceCode, long companyId, long userId,
 			String name)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _organizationLocalService.getOrAddEmptyOrganization(
 			externalReferenceCode, companyId, userId, name);

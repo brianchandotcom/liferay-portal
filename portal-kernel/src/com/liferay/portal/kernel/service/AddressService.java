@@ -73,7 +73,7 @@ public interface AddressService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Address getOrAddEmptyAddress(
 			String externalReferenceCode, String className, long classPK)
-		throws Exception;
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

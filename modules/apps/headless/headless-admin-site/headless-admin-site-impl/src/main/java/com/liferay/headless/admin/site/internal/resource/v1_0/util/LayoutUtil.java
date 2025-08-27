@@ -560,11 +560,11 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateLayout(
-			CETManager cetManager, PageSpecification pageSpecification,
-			Layout layout, Map<Locale, String> nameMap,
+			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
-			int status, ServiceContext serviceContext)
+			PageSpecification pageSpecification, int status,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		updateLayout(

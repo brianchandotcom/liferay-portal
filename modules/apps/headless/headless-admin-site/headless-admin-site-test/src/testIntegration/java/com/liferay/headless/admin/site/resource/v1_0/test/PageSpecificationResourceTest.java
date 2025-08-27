@@ -890,7 +890,8 @@ public class PageSpecificationResourceTest
 
 		if (!typeUtility) {
 			SettingsTestUtil.modifySettings(
-				serviceContext, pageSpecification.getSettings());
+				SettingsTestUtil.FavIconType.CLIENT_EXTENSION, serviceContext,
+				pageSpecification.getSettings());
 
 			return;
 		}
@@ -1084,6 +1085,7 @@ public class PageSpecificationResourceTest
 						layout.getExternalReferenceCode());
 
 		SettingsTestUtil.modifySettings(
+			SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
 			serviceContext, widgetPageSpecification.getSettings());
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(

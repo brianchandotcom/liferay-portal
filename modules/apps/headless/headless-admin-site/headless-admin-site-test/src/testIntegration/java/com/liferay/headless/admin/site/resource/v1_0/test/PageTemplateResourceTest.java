@@ -1373,6 +1373,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			patchWidgetPageTemplateSettings.getLayoutTemplateId());
 
 		SettingsTestUtil.modifySettings(
+			SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
 			serviceContext, widgetPageSpecification.getSettings());
 
 		pageTemplate =
@@ -1610,6 +1611,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		widgetPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
+				SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 
@@ -1745,6 +1747,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			PageSpecificationsTestUtil.getWidgetPageSpecification(
 				null, pageTemplate.getExternalReferenceCode(),
 				SettingsTestUtil.getSettings(
+					SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
 					ServiceContextTestUtil.getServiceContext(
 						testGroup.getGroupId(), TestPropsValues.getUserId())),
 				PageSpecification.Status.APPROVED,
@@ -1793,6 +1796,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		widgetPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
+				SettingsTestUtil.FavIconType.CLIENT_EXTENSION,
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 

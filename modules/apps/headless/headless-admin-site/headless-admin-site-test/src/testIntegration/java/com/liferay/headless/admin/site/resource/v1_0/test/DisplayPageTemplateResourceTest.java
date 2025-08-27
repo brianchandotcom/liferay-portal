@@ -1380,10 +1380,13 @@ public class DisplayPageTemplateResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		draftContentPageSpecification.setSettings(
-			SettingsTestUtil.getSettings(serviceContext));
+			SettingsTestUtil.getSettings(
+				SettingsTestUtil.FavIconType.CLIENT_EXTENSION, serviceContext));
 
 		publishedContentPageSpecification.setSettings(
-			SettingsTestUtil.getSettings(serviceContext));
+			SettingsTestUtil.getSettings(
+				SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
+				serviceContext));
 
 		displayPageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {

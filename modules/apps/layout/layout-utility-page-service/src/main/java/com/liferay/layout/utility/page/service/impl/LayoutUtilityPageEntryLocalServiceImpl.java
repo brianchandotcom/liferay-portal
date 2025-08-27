@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -66,6 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutUtilityPageEntryLocalServiceImpl
 	extends LayoutUtilityPageEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long userId, long groupId, long plid,
@@ -178,6 +181,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		return targetLayoutUtilityPageEntry;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
@@ -383,6 +387,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, String name)

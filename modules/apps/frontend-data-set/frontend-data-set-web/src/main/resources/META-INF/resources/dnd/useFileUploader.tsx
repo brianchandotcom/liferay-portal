@@ -24,15 +24,12 @@ const useFileUploader = ({
 }): {
 	onFileDrop: TOnFileDrop;
 } => {
-	const [droppedFiles, setDroppedFiles] = useState([]);
+	const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 	const [dropTarget, setDropTarget] = useState(null);
 
 	const onFileDrop: TOnFileDrop = (droppedItem: any, dropTarget?: any) => {
 		if (droppedItem) {
-
-			// @ts-ignore
-
-			const files = droppedItem.files;
+			const files: File[] = droppedItem.files;
 			setDroppedFiles(files);
 			setDropTarget(dropTarget ? dropTarget : null);
 		}
@@ -44,18 +41,12 @@ const useFileUploader = ({
 		}
 
 		const ModalBody = () => {
-
-			// @ts-ignore
-
-			const label = (file) =>
+			const label = (file: File) =>
 				`'${file.name}' of size '${file.size}' and type '${file.type}'`;
 
 			return (
 				<div>
-					{droppedFiles.map((file) => (
-
-						// @ts-ignore
-
+					{droppedFiles.map((file: File) => (
 						<li key={file.name}>{label(file)}</li>
 					))}
 

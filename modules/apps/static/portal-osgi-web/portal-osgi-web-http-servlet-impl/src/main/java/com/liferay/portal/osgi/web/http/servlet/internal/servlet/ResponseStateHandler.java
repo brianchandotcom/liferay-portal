@@ -169,7 +169,7 @@ public class ResponseStateHandler {
 
 	private void _handleException() throws IOException, ServletException {
 		if (!(_httpServletResponse instanceof
-				HttpServletResponseWrapper httpServletResponseWrapper1)) {
+				HttpServletResponseWrapper httpServletResponseWrapper)) {
 
 			throw new IllegalStateException(
 				"Response is not a HttpServletResponseWrapper");
@@ -178,24 +178,24 @@ public class ResponseStateHandler {
 		HttpServletResponseWrapperImpl httpServletResponseWrapperImpl = null;
 
 		while (true) {
-			if (httpServletResponseWrapper1 instanceof
+			if (httpServletResponseWrapper instanceof
 					HttpServletResponseWrapperImpl) {
 
 				httpServletResponseWrapperImpl =
-					(HttpServletResponseWrapperImpl)httpServletResponseWrapper1;
+					(HttpServletResponseWrapperImpl)httpServletResponseWrapper;
 
 				break;
 			}
 
-			if (!(httpServletResponseWrapper1.getResponse() instanceof
+			if (!(httpServletResponseWrapper.getResponse() instanceof
 					HttpServletResponseWrapper)) {
 
 				break;
 			}
 
-			httpServletResponseWrapper1 =
+			httpServletResponseWrapper =
 				(HttpServletResponseWrapper)
-					httpServletResponseWrapper1.getResponse();
+					httpServletResponseWrapper.getResponse();
 		}
 
 		if (httpServletResponseWrapperImpl == null) {
@@ -238,44 +238,48 @@ public class ResponseStateHandler {
 				new HttpServletRequestWrapper(_httpServletRequest) {
 
 					public Object getAttribute(String attributeName) {
-						if (getDispatcherType() == DispatcherType.ERROR) {
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_EXCEPTION)) {
+						if (getDispatcherType() != DispatcherType.ERROR) {
+							return super.getAttribute(attributeName);
+						}
 
-								return _exception;
-							}
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_EXCEPTION)) {
 
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_EXCEPTION_TYPE)) {
+							return _exception;
+						}
 
-								return className;
-							}
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_EXCEPTION_TYPE)) {
 
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_MESSAGE)) {
+							return className;
+						}
 
-								return _exception.getMessage();
-							}
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_MESSAGE)) {
 
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_REQUEST_URI)) {
+							return _exception.getMessage();
+						}
 
-								return _httpServletRequest.getRequestURI();
-							}
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_REQUEST_URI)) {
 
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_SERVLET_NAME)) {
+							return _httpServletRequest.getRequestURI();
+						}
 
-								return _liferayDispatchTargets.
-									getServletRegistration(
-									).getName();
-							}
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_SERVLET_NAME)) {
 
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_STATUS_CODE)) {
+							EndpointRegistration<?> endpointRegistration =
+								_liferayDispatchTargets.
+									getServletRegistration();
 
-								return 500;
-							}
+							return endpointRegistration.getName();
+						}
+
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_STATUS_CODE)) {
+
+							return 500;
 						}
 
 						return super.getAttribute(attributeName);
@@ -287,12 +291,12 @@ public class ResponseStateHandler {
 
 				};
 
-			HttpServletResponseWrapper httpServletResponseWrapper2 =
+			HttpServletResponse httpServletResponse =
 				new HttpServletResponseWrapperImpl(wrappedHttpServletResponse);
 
 			ResponseStateHandler responseStateHandler =
 				new ResponseStateHandler(
-					httpServletRequest, httpServletResponseWrapper2,
+					httpServletRequest, httpServletResponse,
 					errorLiferayDispatchTargets);
 
 			responseStateHandler.processRequest();
@@ -319,7 +323,7 @@ public class ResponseStateHandler {
 				"Can not locate HttpServletResponseWrapperImpl");
 		}
 
-		final int status = httpServletResponseWrapperImpl.getInternalStatus();
+		int status = httpServletResponseWrapperImpl.getInternalStatus();
 
 		if ((status < 400) || (status == -1)) {
 			return;
@@ -360,33 +364,36 @@ public class ResponseStateHandler {
 				new HttpServletRequestWrapper(_httpServletRequest) {
 
 					public Object getAttribute(String attributeName) {
-						if (getDispatcherType() == DispatcherType.ERROR) {
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_MESSAGE)) {
+						if (getDispatcherType() != DispatcherType.ERROR) {
+							return super.getAttribute(attributeName);
+						}
 
-								return httpServletResponseWrapperImpl.
-									getMessage();
-							}
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_MESSAGE)) {
 
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_REQUEST_URI)) {
+							return httpServletResponseWrapperImpl.getMessage();
+						}
 
-								return _httpServletRequest.getRequestURI();
-							}
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_REQUEST_URI)) {
 
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_SERVLET_NAME)) {
+							return _httpServletRequest.getRequestURI();
+						}
 
-								return _liferayDispatchTargets.
-									getServletRegistration(
-									).getName();
-							}
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_SERVLET_NAME)) {
 
-							if (attributeName.equals(
-									RequestDispatcher.ERROR_STATUS_CODE)) {
+							EndpointRegistration<?> endpointRegistration =
+								_liferayDispatchTargets.
+									getServletRegistration();
 
-								return status;
-							}
+							return endpointRegistration.getName();
+						}
+
+						if (attributeName.equals(
+								RequestDispatcher.ERROR_STATUS_CODE)) {
+
+							return status;
 						}
 
 						return super.getAttribute(attributeName);
@@ -398,12 +405,12 @@ public class ResponseStateHandler {
 
 				};
 
-			HttpServletResponseWrapper httpServletResponseWrapper =
+			HttpServletResponse httpServletResponse =
 				new HttpServletResponseWrapperImpl(wrappedHttpServletResponse);
 
 			ResponseStateHandler responseStateHandler =
 				new ResponseStateHandler(
-					httpServletRequest, httpServletResponseWrapper,
+					httpServletRequest, httpServletResponse,
 					errorLiferayDispatchTargets);
 
 			wrappedHttpServletResponse.setStatus(status);

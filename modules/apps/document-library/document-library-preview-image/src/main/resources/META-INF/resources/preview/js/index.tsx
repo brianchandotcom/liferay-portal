@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,55 +7,47 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useEventListener, useIsMounted} from '@liferay/frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
 import '@liferay/document-library-preview-css';
 
-/**
- * Zoom ratio limit that fire the autocenter
- * @type {number}
- */
 const MIN_ZOOM_RATIO_AUTOCENTER = 3;
-
-/**
- * Available zoom sizes
- * @type {Array<number>}
- */
-const ZOOM_LEVELS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
-
-/**
- * Available reversed zoom sizes
- * @type {Array<number>}
- */
-const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
+const ZOOM_LEVELS: number[] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+const ZOOM_LEVELS_REVERSED: number[] = ZOOM_LEVELS.slice().reverse();
 
 /**
  * Component that create an image preview to allow zoom
- * @review
  */
-const ImagePreviewer = ({alt, imageURL}) => {
-	const [currentZoom, setCurrentZoom] = useState(1);
-	const [imageHeight, setImageHeight] = useState(null);
-	const [imageWidth, setImageWidth] = useState(null);
-	const [imageMargin, setImageMargin] = useState(null);
-	const [zoomInDisabled, setZoomInDisabled] = useState(true);
-	const [zoomOutDisabled, setZoomOutDisabled] = useState(false);
-	const [zoomRatio, setZoomRatio] = useState(false);
+interface ImagePreviewerProps {
+	alt: string;
+	imageURL: string;
+}
 
-	const imageRef = useRef();
-	const imageContainerRef = useRef();
+const ImagePreviewer = ({alt, imageURL}: ImagePreviewerProps) => {
+	const [currentZoom, setCurrentZoom] = useState<number>(1);
+	const [imageHeight, setImageHeight] = useState<number | null>(null);
+	const [imageWidth, setImageWidth] = useState<number | null>(null);
+	const [imageMargin, setImageMargin] = useState<string | null>(null);
+	const [zoomInDisabled, setZoomInDisabled] = useState<boolean>(true);
+	const [zoomOutDisabled, setZoomOutDisabled] = useState<boolean>(false);
+	const [zoomRatio, setZoomRatio] = useState<number | null>(null);
+
+	const imageRef = useRef<HTMLImageElement>(null);
+	const imageContainerRef = useRef<HTMLDivElement>(null);
 
 	const isMounted = useIsMounted();
 
-	const updateToolbar = (zoom) => {
+	const updateToolbar = (zoom: number) => {
 		setCurrentZoom(zoom);
 		setZoomInDisabled(ZOOM_LEVELS_REVERSED[0] === zoom);
 		setZoomOutDisabled(ZOOM_LEVELS[0] >= zoom);
 	};
 
-	const applyZoom = (zoom) => {
+	const applyZoom = (zoom: number) => {
 		const imageElement = imageRef.current;
+		if (!imageElement) {
+			return;
+		}
 
 		setImageHeight(imageElement.naturalHeight * zoom);
 		setImageWidth(imageElement.naturalWidth * zoom);
@@ -64,14 +56,17 @@ const ImagePreviewer = ({alt, imageURL}) => {
 		updateToolbar(zoom);
 	};
 
-	const getFittingZoom = () => {
+	const getFittingZoom = (): number => {
 		const imageElement = imageRef.current;
+		if (!imageElement) {
+			return 1;
+		}
 
 		return imageElement.width / imageElement.naturalWidth;
 	};
 
-	const getImageStyles = () => {
-		const imageStyles = {};
+	const getImageStyles = (): React.CSSProperties => {
+		const imageStyles: React.CSSProperties = {};
 
 		if (imageHeight && imageWidth) {
 			imageStyles.height = imageHeight;
@@ -102,31 +97,43 @@ const ImagePreviewer = ({alt, imageURL}) => {
 	};
 
 	const handleWindowResize = debounce(() => {
-		if (isMounted() && !imageRef.current.style.width) {
+		if (isMounted() && imageRef.current && !imageRef.current.style.width) {
 			updateToolbar(getFittingZoom());
 		}
 	}, 250);
 
-	useEventListener('resize', handleWindowResize, false, window);
+	useEventListener(
+		'resize',
+		handleWindowResize,
+		false,
+
+		// @ts-ignore
+		window
+	);
 
 	useLayoutEffect(() => {
 		const imageContainerElement = imageContainerRef.current;
+		const imageElement = imageRef.current;
+
+		if (!imageContainerElement || !imageElement) {
+			return;
+		}
 
 		setImageMargin(
-			`${imageHeight > imageContainerElement.clientHeight ? 0 : 'auto'} ${
-				imageWidth > imageContainerElement.clientWidth ? 0 : 'auto'
+			`${imageHeight && imageHeight > imageContainerElement.clientHeight ? 0 : 'auto'} ${
+				imageWidth && imageWidth > imageContainerElement.clientWidth
+					? 0
+					: 'auto'
 			}`
 		);
 
 		if (
 			zoomRatio &&
-			(imageContainerElement.clientWidth <
-				imageRef.current.naturalWidth ||
-				imageContainerElement.clientHeight <
-					imageRef.current.naturalHeight)
+			(imageContainerElement.clientWidth < imageElement.naturalWidth ||
+				imageContainerElement.clientHeight < imageElement.naturalHeight)
 		) {
-			let scrollLeft;
-			let scrollTop;
+			let scrollLeft: number;
+			let scrollTop: number;
 
 			if (zoomRatio < MIN_ZOOM_RATIO_AUTOCENTER) {
 				scrollLeft =
@@ -138,9 +145,9 @@ const ImagePreviewer = ({alt, imageURL}) => {
 			}
 			else {
 				scrollTop =
-					(imageHeight - imageContainerElement.clientHeight) / 2;
+					(imageHeight! - imageContainerElement.clientHeight) / 2;
 				scrollLeft =
-					(imageWidth - imageContainerElement.clientWidth) / 2;
+					(imageWidth! - imageContainerElement.clientWidth) / 2;
 			}
 
 			imageContainerElement.scrollLeft = scrollLeft;
@@ -149,7 +156,7 @@ const ImagePreviewer = ({alt, imageURL}) => {
 			setZoomRatio(null);
 		}
 
-		if (!imageRef.current.style.width) {
+		if (!imageElement.style.width) {
 			updateToolbar(getFittingZoom());
 		}
 	}, [imageHeight, imageWidth, zoomRatio, imageMargin]);
@@ -179,11 +186,12 @@ const ImagePreviewer = ({alt, imageURL}) => {
 						displayType={null}
 						monospaced
 						onClick={() => {
-							applyZoom(
-								ZOOM_LEVELS_REVERSED.find(
-									(zoom) => zoom < currentZoom
-								)
+							const nextZoom = ZOOM_LEVELS_REVERSED.find(
+								(zoom) => zoom < currentZoom
 							);
+							if (nextZoom) {
+								applyZoom(nextZoom);
+							}
 						}}
 						title={Liferay.Language.get('zoom-out')}
 					>
@@ -217,9 +225,12 @@ const ImagePreviewer = ({alt, imageURL}) => {
 						displayType={null}
 						monospaced
 						onClick={() => {
-							applyZoom(
-								ZOOM_LEVELS.find((zoom) => zoom > currentZoom)
+							const nextZoom = ZOOM_LEVELS.find(
+								(zoom) => zoom > currentZoom
 							);
+							if (nextZoom) {
+								applyZoom(nextZoom);
+							}
 						}}
 						title={Liferay.Language.get('zoom-in')}
 					>
@@ -229,10 +240,6 @@ const ImagePreviewer = ({alt, imageURL}) => {
 			</div>
 		</div>
 	);
-};
-
-ImagePreviewer.propTypes = {
-	imageURL: PropTypes.string,
 };
 
 export {ImagePreviewer};

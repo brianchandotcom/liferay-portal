@@ -8,7 +8,7 @@
 		"prop-types": "15.7.2",
 		"react": "18.2.0"
 	},
-	"main": "preview/js/index.js",
+	"main": "preview/js/index.tsx",
 	"name": "document-library-preview-image",
 	"private": true,
 	"scripts": {

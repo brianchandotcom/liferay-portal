@@ -1030,7 +1030,7 @@ definition {
 				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment With Test User",
-				text = "Test");
+				text = "test");
 		}
 
 		task ("Create a manual Collection") {

@@ -83,7 +83,7 @@ public class FeatureFlagsBag {
 				"Feature flag ", key, " is not available for company ",
 				_companyId);
 
-			throw new RuntimeException(message);
+			throw new IllegalStateException(message);
 		}
 
 		return featureFlag.isEnabled();

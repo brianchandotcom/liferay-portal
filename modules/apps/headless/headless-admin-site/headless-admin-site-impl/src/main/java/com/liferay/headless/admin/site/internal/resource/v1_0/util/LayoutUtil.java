@@ -560,21 +560,25 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateLayout(
-			CETManager cetManager,
-			ContentPageSpecification contentPageSpecification, Layout layout,
-			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
-			Map<Locale, String> friendlyURLMap, int status,
-			ServiceContext serviceContext)
+			CETManager cetManager, PageSpecification pageSpecification,
+			Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
+			int status, ServiceContext serviceContext)
 		throws Exception {
 
 		updateLayout(
 			cetManager, layout, nameMap, titleMap, descriptionMap, robotsMap,
-			friendlyURLMap, contentPageSpecification, serviceContext);
+			friendlyURLMap, pageSpecification, serviceContext);
 
-		_updatePageExperiences(
-			layout, contentPageSpecification.getPageExperiences(),
-			serviceContext);
+		if (pageSpecification instanceof ContentPageSpecification) {
+			ContentPageSpecification contentPageSpecification =
+				(ContentPageSpecification)pageSpecification;
+
+			_updatePageExperiences(
+				layout, contentPageSpecification.getPageExperiences(),
+				serviceContext);
+		}
 
 		return LayoutLocalServiceUtil.updateStatus(
 			serviceContext.getUserId(), layout.getPlid(), status,

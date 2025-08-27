@@ -10,7 +10,9 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
@@ -22,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -107,7 +110,8 @@ public class CounterDataCleanupPreupgradeProcess
 					continue;
 				}
 
-				_checkTableCounter(counterName, counterValue, tableName);
+				_checkTableCounter(
+					counterName, counterValue, dbInspector, tableName);
 
 				excludedTableNames.add(tableName);
 			}
@@ -177,7 +181,68 @@ public class CounterDataCleanupPreupgradeProcess
 	}
 
 	private void _checkTableCounter(
-		String counterName, long counterValue, String tableName) {
+			String counterName, long counterValue, DBInspector dbInspector,
+			String tableName)
+		throws Exception {
+
+		String primaryKeyColumnName = _getPrimaryKeyColumnName(
+			dbInspector, tableName);
+
+		if (primaryKeyColumnName == null) {
+			return;
+		}
+
+		long maxCounterValue = _getMaxCounterValue(
+			primaryKeyColumnName, tableName);
+
+		if (counterValue >= maxCounterValue) {
+			return;
+		}
+
+		CounterLocalServiceUtil.reset(counterName, maxCounterValue);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Counter ", counterName, " has been reset to value ",
+					maxCounterValue));
+		}
+	}
+
+	private long _getMaxCounterValue(
+			String primaryKeyColumnName, String tableName)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select max(", primaryKeyColumnName, ") from ", tableName));
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getLong(1);
+			}
+		}
+
+		return 0L;
+	}
+
+	private String _getPrimaryKeyColumnName(
+			DBInspector dbInspector, String tableName)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		List<String> primaryKeyColumnNames = new ArrayList<>(
+			Arrays.asList(db.getPrimaryKeyColumnNames(connection, tableName)));
+
+		primaryKeyColumnNames.remove(
+			dbInspector.normalizeName("ctCollectionId"));
+
+		if (primaryKeyColumnNames.size() != 1) {
+			return null;
+		}
+
+		return primaryKeyColumnNames.get(0);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

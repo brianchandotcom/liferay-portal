@@ -9,15 +9,27 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
+import com.liferay.headless.admin.site.client.dto.v1_0.FavIconClientExtension;
+import com.liferay.headless.admin.site.client.dto.v1_0.FavIconItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -583,18 +595,67 @@ public class SettingsTestUtil {
 	}
 
 	private static FavIcon _getFavIcon() throws Exception {
-		ClientExtension clientExtension = _getClientExtension();
 
-		return new FavIcon() {
+		if (RandomTestUtil.randomBoolean()) {
+			return _getFavIconClientExtension();
+		}
+
+		return _getFavIconItemExternalReference();
+	}
+
+	private static FavIconClientExtension _getFavIconClientExtension()
+		throws Exception {
+
+		FavIconClientExtension favIconClientExtension =
+			new FavIconClientExtension() {
+				{
+					setClientExtensionConfig(
+						() -> HashMapBuilder.put(
+							"url", "http://test.com"
+						).build());
+					setExternalReferenceCode(RandomTestUtil::randomString);
+					setFavIconType(FavIcon.FavIconType.CLIENT_EXTENSION);
+				}
+			};
+
+		ClientExtensionEntryLocalServiceUtil.addClientExtensionEntry(
+			favIconClientExtension.getExternalReferenceCode(),
+			TestPropsValues.getUserId(), StringPool.BLANK,
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			StringPool.BLANK, StringPool.BLANK,
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+			UnicodePropertiesBuilder.create(
+				favIconClientExtension.getClientExtensionConfig(), true
+			).buildString());
+
+		return favIconClientExtension;
+	}
+
+	private static FavIconItemExternalReference
+			_getFavIconItemExternalReference()
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(company.getGroupId());
+
+		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		return new FavIconItemExternalReference() {
 			{
-				setClassName(
-					() ->
-						com.liferay.headless.admin.site.dto.v1_0.
-							ClientExtension.class.getName());
-				setClientExtensionConfig(
-					clientExtension::getClientExtensionConfig);
-				setExternalReferenceCode(
-					clientExtension::getExternalReferenceCode);
+				setClassName(FileEntry.class::getName);
+				setExternalReferenceCode(dlFileEntry::getExternalReferenceCode);
+				setFavIconType(FavIconType.ITEM_EXTERNAL_REFERENCE);
+				setScope(
+					() -> new Scope() {
+						{
+							setExternalReferenceCode(() -> "L_GLOBAL");
+							setType(() -> Type.SITE);
+						}
+					});
 			}
 		};
 	}

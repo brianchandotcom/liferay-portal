@@ -67,6 +67,7 @@ export enum DisplayType {
 export interface IEmptyState {
 	description?: string;
 	image?: string;
+	imageReducedMotion?: string;
 	title?: string;
 }
 

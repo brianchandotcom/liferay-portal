@@ -322,7 +322,7 @@ public class PageSpecificationResourceImpl
 					_cetManager, layout, layout.getNameMap(),
 					layout.getTitleMap(), layout.getDescriptionMap(),
 					layout.getRobotsMap(), layout.getFriendlyURLMap(),
-					pageSpecification, serviceContext));
+					pageSpecification, layout.getStatus(), serviceContext));
 		}
 
 		if (!Objects.equals(

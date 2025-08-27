@@ -10,6 +10,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatch
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequestEvent;
 import jakarta.servlet.ServletRequestListener;
@@ -239,31 +240,31 @@ public class ResponseStateHandler {
 					public Object getAttribute(String attributeName) {
 						if (getDispatcherType() == DispatcherType.ERROR) {
 							if (attributeName.equals(
-									"jakarta.servlet.error.exception")) {
+									RequestDispatcher.ERROR_EXCEPTION)) {
 
 								return _exception;
 							}
 
 							if (attributeName.equals(
-									"jakarta.servlet.error.exception_type")) {
+									RequestDispatcher.ERROR_EXCEPTION_TYPE)) {
 
 								return className;
 							}
 
 							if (attributeName.equals(
-									"jakarta.servlet.error.message")) {
+									RequestDispatcher.ERROR_MESSAGE)) {
 
 								return _exception.getMessage();
 							}
 
 							if (attributeName.equals(
-									"jakarta.servlet.error.request_uri")) {
+									RequestDispatcher.ERROR_REQUEST_URI)) {
 
 								return _httpServletRequest.getRequestURI();
 							}
 
 							if (attributeName.equals(
-									"jakarta.servlet.error.servlet_name")) {
+									RequestDispatcher.ERROR_SERVLET_NAME)) {
 
 								return _liferayDispatchTargets.
 									getServletRegistration(
@@ -271,7 +272,7 @@ public class ResponseStateHandler {
 							}
 
 							if (attributeName.equals(
-									"jakarta.servlet.error.status_code")) {
+									RequestDispatcher.ERROR_STATUS_CODE)) {
 
 								return 500;
 							}
@@ -361,20 +362,20 @@ public class ResponseStateHandler {
 					public Object getAttribute(String attributeName) {
 						if (getDispatcherType() == DispatcherType.ERROR) {
 							if (attributeName.equals(
-									"jakarta.servlet.error.message")) {
+									RequestDispatcher.ERROR_MESSAGE)) {
 
 								return httpServletResponseWrapperImpl.
 									getMessage();
 							}
 
 							if (attributeName.equals(
-									"jakarta.servlet.error.request_uri")) {
+									RequestDispatcher.ERROR_REQUEST_URI)) {
 
 								return _httpServletRequest.getRequestURI();
 							}
 
 							if (attributeName.equals(
-									"jakarta.servlet.error.servlet_name")) {
+									RequestDispatcher.ERROR_SERVLET_NAME)) {
 
 								return _liferayDispatchTargets.
 									getServletRegistration(
@@ -382,7 +383,7 @@ public class ResponseStateHandler {
 							}
 
 							if (attributeName.equals(
-									"jakarta.servlet.error.status_code")) {
+									RequestDispatcher.ERROR_STATUS_CODE)) {
 
 								return status;
 							}

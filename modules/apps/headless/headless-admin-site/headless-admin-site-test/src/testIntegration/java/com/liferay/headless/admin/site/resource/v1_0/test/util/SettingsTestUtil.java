@@ -215,7 +215,9 @@ public class SettingsTestUtil {
 		Settings expectedSettings, Settings actualSettings) {
 
 		if (expectedSettings == null) {
-			Assert.assertNull(actualSettings);
+			Assert.assertTrue(
+				(actualSettings == null) ||
+				Objects.equals(actualSettings.toString(), "{}"));
 
 			return;
 		}

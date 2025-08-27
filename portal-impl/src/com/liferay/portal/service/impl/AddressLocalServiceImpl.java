@@ -264,7 +264,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	public Address getOrAddEmptyAddress(
 			String externalReferenceCode, long companyId, long userId,
 			String className, long classPK)
-		throws Exception {
+		throws PortalException {
 
 		return EmptyModelManagerUtil.getOrAddEmptyModel(
 			Address.class, companyId, externalReferenceCode,

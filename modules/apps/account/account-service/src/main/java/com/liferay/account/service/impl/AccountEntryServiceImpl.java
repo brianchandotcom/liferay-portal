@@ -239,7 +239,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 	public AccountEntry getOrAddEmptyAccountEntry(
 			String externalReferenceCode, String name, String type)
-		throws Exception {
+		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 

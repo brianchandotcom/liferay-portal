@@ -258,14 +258,9 @@ public class AddressSystemObjectDefinitionManager
 			String externalReferenceCode, long companyId, User user)
 		throws PortalException {
 
-		try {
-			return _addressService.getOrAddEmptyAddress(
-				externalReferenceCode, Contact.class.getName(),
-				user.getContactId());
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
+		return _addressService.getOrAddEmptyAddress(
+			externalReferenceCode, Contact.class.getName(),
+			user.getContactId());
 	}
 
 	@Override

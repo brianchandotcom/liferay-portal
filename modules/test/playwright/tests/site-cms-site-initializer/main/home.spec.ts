@@ -126,7 +126,7 @@ test(
 
 			const nextYear = now.getFullYear() + 1;
 
-			const dueDate = '01/01/' + nextYear;
+			const dueDate = nextYear + '-01-01';
 
 			await homePage.updateDueDate(dueDate, blogPost3.headline);
 

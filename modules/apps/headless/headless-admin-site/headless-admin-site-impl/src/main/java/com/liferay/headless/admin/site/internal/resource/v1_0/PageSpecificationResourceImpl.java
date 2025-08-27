@@ -338,11 +338,10 @@ public class PageSpecificationResourceImpl
 
 		return _pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.updateLayout(
-				_cetManager, (ContentPageSpecification)pageSpecification,
-				layout, layout.getNameMap(), layout.getTitleMap(),
+				_cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getRobotsMap(),
-				layout.getFriendlyURLMap(), WorkflowConstants.STATUS_DRAFT,
-				serviceContext));
+				layout.getFriendlyURLMap(), pageSpecification,
+				WorkflowConstants.STATUS_DRAFT, serviceContext));
 	}
 
 	@Override

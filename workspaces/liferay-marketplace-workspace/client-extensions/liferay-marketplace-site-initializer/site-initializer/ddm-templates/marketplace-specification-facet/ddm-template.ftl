@@ -4,7 +4,8 @@
 	}
 
 	.price-model-facet .panel a {
-		padding: 1rem;
+		padding: 1.5rem;
+		padding-bottom: 0;
 	}
 
 	.price-model-facet .collapse-icon .collapse-icon-closed .lexicon-icon,
@@ -13,7 +14,7 @@
 	}
 
 	.price-model-facet .panel-body {
-		padding: 0.5rem 1rem 1rem;
+		padding: 0 1.5rem;
 	}
 
 	.price-model-facet .list-unstyled {
@@ -27,69 +28,72 @@
 	}
 
 	.price-model-facet .separator {
+		margin: 1rem auto 0;
 		width: 90%;
 	}
 </style>
 
-<@liferay_ui["panel-container"]
-	cssClass="price-model-facet bg-white border-radius-xlarge my-2"
-	extended=true
-	id="${namespace + 'facetPriceModelPanelContainer'}"
-	markupView="lexicon"
-	persistState=true
->
-	<@liferay_ui.panel
-		collapsible=true
-		cssClass="font-size-paragraph-small font-weight-semi-bold search-facet"
-		extended=!browserSniffer.isMobile(request)
-		id="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}"
+<#if cpSpecificationOptionsSearchFacetDisplayContext.getParameterName() != 'developer-name'>
+	<@liferay_ui["panel-container"]
+		cssClass="price-model-facet bg-white border-radius-xlarge"
+		extended=true
+		id="${namespace + 'facetPriceModelPanelContainer'}"
 		markupView="lexicon"
 		persistState=true
-		title="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')}">
+	>
+		<@liferay_ui.panel
+			collapsible=true
+			cssClass="font-size-paragraph-small font-weight-semi-bold search-facet"
+			extended=!browserSniffer.isMobile(request)
+			id="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}"
+			markupView="lexicon"
+			persistState=true
+			title="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')}">
 
-		<button
-			class="btn-unstyled options-btn mb-4" id="${namespace + 'facetAssetSelectAll'}"
-				onClick="${namespace}selectAll(event, `${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}`)">
-		  Select All
-		</button>
+			<button
+				class="btn-unstyled options-btn mb-4" id="${namespace + 'facetAssetSelectAll'}"
+					onClick="${namespace}selectAll(event, `${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}`)">
+				Select All
+			</button>
 
-		<button class="btn-unstyled options-btn mb-4 ml-1" onClick="Liferay.Search.FacetUtil.clearSelections(event);">
-			Clear
-		</button>
+			<button class="btn-unstyled options-btn mb-4 ml-1" onClick="Liferay.Search.FacetUtil.clearSelections(event);">
+				Clear
+			</button>
 
-		<ul class="list-unstyled">
-			<#list entries?sort_by("displayName") as entry>
-				<li class="color-neutral-2 facet-value py-1">
-					<div class="custom-checkbox custom-control font-weight-normal">
-						<label class="facet-checkbox-label" for="${namespace}_term_${entry.getDisplayName()}">
-							<input
-								${(entry.isSelected())?then("checked","")}
-								class="custom-control-input facet-term"
-								data-term-id="${entry.getDisplayName()}"
-								id="${namespace}_term_${entry.getDisplayName()}"
-								name="${namespace}_term_${entry.getDisplayName()}"
-								onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-								type="checkbox" />
+			<ul class="list-unstyled">
+				<#list entries?sort_by("displayName") as entry>
+					<li class="color-neutral-2 facet-value py-1">
+						<div class="custom-checkbox custom-control font-weight-normal">
+							<label class="facet-checkbox-label" for="${namespace}_term_${entry.getDisplayName()}">
+								<input
+									${(entry.isSelected())?then("checked","")}
+									class="custom-control-input facet-term"
+									data-term-id="${entry.getDisplayName()}"
+									id="${namespace}_term_${entry.getDisplayName()}"
+									name="${namespace}_term_${entry.getDisplayName()}"
+									onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+									type="checkbox" />
 
-							<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
-								<span class="custom-control-label-text">
-									<#assign displayName = entry.getDisplayName()?replace("-", " ") />
+								<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
+									<span class="custom-control-label-text">
+										<#assign displayName = entry.getDisplayName()?replace("-", " ") />
 
-									<#if displayName == 'dxp'>
-										DXP
-									<#else>
-										${htmlUtil.escape(displayName)?capitalize}
-									</#if>
+										<#if displayName == 'dxp'>
+											DXP
+										<#else>
+											${htmlUtil.escape(displayName)?capitalize}
+										</#if>
+									</span>
 								</span>
-							</span>
-						</label>
-					</div>
-				</li>
-			</#list>
-		</ul>
+							</label>
+						</div>
+					</li>
+				</#list>
+			</ul>
+		</@>
+		<hr class="separator" />
 	</@>
-	<hr class="separator" />
-</@>
+</#if>
 
 <@liferay_aui.script>
 		function ${namespace}selectAll(event, parameterName) {

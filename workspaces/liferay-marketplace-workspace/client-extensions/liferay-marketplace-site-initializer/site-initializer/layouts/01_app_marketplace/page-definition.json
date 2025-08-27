@@ -104,7 +104,7 @@
 															"fragmentStyle": {
 																"backgroundColor": "#FFFFFF",
 																"borderRadius": "10px",
-																"marginBottom": "4",
+																"marginBottom": "5",
 																"overflow": "hidden",
 																"paddingBottom": "1",
 																"paddingLeft": "4",
@@ -381,7 +381,7 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"marginBottom": "4"
+														"marginBottom": "5"
 													},
 													"indexed": true,
 													"layout": {

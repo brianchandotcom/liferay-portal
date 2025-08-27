@@ -138,12 +138,18 @@
 		border: solid 1px #E2E2E4;
 		border-radius: 10px;
 		box-sizing: border-box;
-		cursor: point;
+		cursor: pointer;
 		display: flex;
 		height: 289px;
-		padding: 16px;
+		padding: 24px;
 		position: relative;
 		transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+	}
+
+	.app-search-results-card:hover {
+		background: #FBFCFE !important;
+		border: solid 1px #BBD2FF;
+		box-shadow: 0 6px 6px #3C3C3C0F;
 	}
 
 	.banner__product-tag {
@@ -161,7 +167,7 @@
 
 	.cards-container {
 		display: grid;
-		grid-column-gap: 1rem;
+		grid-column-gap: 1.5rem;
 		grid-row-gap: 1.5rem;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}

@@ -12626,7 +12626,6 @@ default.admin.password=${test.portal.default.admin.password}
 browser.launcher.url=
 setup.wizard.enabled=false
 initial.system.check.enabled=true
-mail.send.blacklist=
 memory.scheduler.org.quartz.threadPool.threadCount=1
 persisted.scheduler.org.quartz.threadPool.threadCount=1
 virtual.hosts.default.site.name=
@@ -12646,6 +12645,7 @@ maxChallenges="-1"
 sendPasswordCaptchaEnabled="false"]]></echo>
 
 		<echo file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"><![CDATA[
+mailSendBlacklist=[]
 mailSessionJndiName=""
 ]]></echo>
 
@@ -16430,7 +16430,11 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}
 
-mail.send.blacklist=</echo>
+				</echo>
+
+				<echo file="${liferay.home}/osgi/configs/com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"><![CDATA[
+mailSendBlacklist=[]
+]]></echo>
 
 				<delete failonerror="false" file="${app.server.classes.portal.dir}/system-ext.properties" />
 			</then>

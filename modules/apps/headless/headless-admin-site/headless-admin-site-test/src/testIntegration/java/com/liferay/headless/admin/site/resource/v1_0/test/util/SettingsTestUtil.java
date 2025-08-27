@@ -574,8 +574,7 @@ public class SettingsTestUtil {
 			{
 				setClientExtensionConfig(
 					() -> HashMapBuilder.put(
-						RandomTestUtil::randomString,
-						RandomTestUtil::randomString
+						"url", "http://test.com"
 					).build());
 				setExternalReferenceCode(RandomTestUtil::randomString);
 			}

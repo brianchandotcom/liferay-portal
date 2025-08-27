@@ -135,7 +135,7 @@ public class UserSegmentsEntryMembershipChecker {
 			return null;
 		}
 
-		return value.toString();
+		return StringUtil.lowerCase(value.toString());
 	}
 
 	private static Map<String, Object> _getFilteredUserAttributes(
@@ -172,12 +172,13 @@ public class UserSegmentsEntryMembershipChecker {
 
 		while (matcher.find()) {
 			String fieldName = matcher.group(1);
-			String value = matcher.group(2);
+			String value = StringUtil.lowerCase(matcher.group(2));
 
 			String replacement = StringBundler.concat(
-				"((user['", _getFieldName(fieldName), "']?.indexOf('", value,
-				"') != null ? user['", _getFieldName(fieldName), "'].indexOf('",
-				value, "') : -1) >= 0)");
+				"((user['", _getFieldName(fieldName),
+				"']?.toLowerCase().indexOf('", value, "') != null ? user['",
+				_getFieldName(fieldName), "'].toLowerCase().indexOf('", value,
+				"') : -1) >= 0)");
 
 			matcher.appendReplacement(sb, replacement);
 		}
@@ -242,6 +243,9 @@ public class UserSegmentsEntryMembershipChecker {
 					value = StringBundler.concat(
 						"Date.parse(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\", \"", value,
 						"\")");
+				}
+				else if (!StringUtil.equals(value, "CLASS_PK")) {
+					value = StringUtil.lowerCase(value);
 				}
 			}
 			catch (Exception exception) {

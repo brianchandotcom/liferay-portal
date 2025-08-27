@@ -303,6 +303,7 @@ public class PageSpecificationResourceImpl
 			groupId, contextHttpServletRequest, null
 		).build();
 
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
 		serviceContext.setUserId(contextUser.getUserId());
 
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {

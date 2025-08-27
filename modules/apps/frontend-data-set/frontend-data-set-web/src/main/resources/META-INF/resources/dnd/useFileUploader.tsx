@@ -4,7 +4,7 @@
  */
 
 import {openModal} from 'frontend-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {TOnFileDrop} from '../DnDContext';
 import getSelectedItemValue from '../utils/getSelectedItemValue';
@@ -27,6 +27,45 @@ const useFileUploader = ({
 	const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 	const [dropTarget, setDropTarget] = useState(null);
 
+	const dummyUploader = useCallback(
+		(droppedFiles: File[], dropTarget: any) => {
+			const ModalBody = () => {
+				const label = (file: File) =>
+					`'${file.name}' of size '${file.size}' and type '${file.type}'`;
+
+				return (
+					<div>
+						{droppedFiles.map((file: File) => (
+							<li key={file.name}>{label(file)}</li>
+						))}
+
+						{dropTarget ? (
+							<span>
+								Dropped on item{' '}
+
+								{getSelectedItemValue({
+									item: dropTarget,
+									path: selectedItemsKey,
+								})}
+							</span>
+						) : (
+							<span>
+								Dropped on the FDS, no specific drop target
+							</span>
+						)}
+					</div>
+				);
+			};
+
+			openModal({
+				bodyComponent: ModalBody,
+				size: 'lg',
+				title: Liferay.Language.get('files'),
+			});
+		},
+		[selectedItemsKey]
+	);
+
 	const onFileDrop: TOnFileDrop = (droppedItem: any, dropTarget?: any) => {
 		if (droppedItem) {
 			const files: File[] = droppedItem.files;
@@ -40,37 +79,7 @@ const useFileUploader = ({
 			return;
 		}
 
-		const ModalBody = () => {
-			const label = (file: File) =>
-				`'${file.name}' of size '${file.size}' and type '${file.type}'`;
-
-			return (
-				<div>
-					{droppedFiles.map((file: File) => (
-						<li key={file.name}>{label(file)}</li>
-					))}
-
-					{dropTarget ? (
-						<span>
-							Dropped on item{' '}
-
-							{getSelectedItemValue({
-								item: dropTarget,
-								path: selectedItemsKey,
-							})}
-						</span>
-					) : (
-						<span>Dropped on the FDS, no specific drop target</span>
-					)}
-				</div>
-			);
-		};
-
-		openModal({
-			bodyComponent: ModalBody,
-			size: 'lg',
-			title: Liferay.Language.get('files'),
-		});
+		dummyUploader(droppedFiles, dropTarget);
 	}, [droppedFiles, dropTarget, fileDropSettings, selectedItemsKey]);
 
 	return {onFileDrop};

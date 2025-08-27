@@ -92,11 +92,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -109,8 +106,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -1128,86 +1123,28 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
-	private File _modifyLarToFailObjectEntryImport(
-			File larFile, String objectDefName)
-		throws Exception {
-
-		String tempZipPath = larFile.getParent() + "/temp.zip";
-
-		try (ZipInputStream zipInputStream = new ZipInputStream(
-				new FileInputStream(larFile.getPath()));
-			ZipOutputStream zipOutputStream = new ZipOutputStream(
-				new FileOutputStream(tempZipPath))) {
-
-			ZipEntry entry;
-			byte[] buffer = new byte[1024];
-
-			while ((entry = zipInputStream.getNextEntry()) != null) {
-				ZipEntry newEntry = new ZipEntry(entry.getName());
-
-				zipOutputStream.putNextEntry(newEntry);
-
-				if (entry.getName(
-					).endsWith(
-						objectDefName + ".json"
-					)) {
-
-					ByteArrayOutputStream byteArrayOutputStream =
-						new ByteArrayOutputStream();
-					int len;
-
-					while ((len = zipInputStream.read(buffer)) > 0) {
-						byteArrayOutputStream.write(buffer, 0, len);
-					}
-
-					String originalContent = byteArrayOutputStream.toString(
-						"UTF-8");
-
-					String newContent = originalContent.replaceAll(
-						_OBJECT_REQUIRED_FIELD_NAME_TEXT,
-						RandomTestUtil.randomString());
-
-					zipOutputStream.write(newContent.getBytes());
-				}
-				else {
-					int len;
-
-					while ((len = zipInputStream.read(buffer)) > 0) {
-						zipOutputStream.write(buffer, 0, len);
-					}
-				}
-			}
-
-			zipOutputStream.closeEntry();
-			zipInputStream.closeEntry();
-		}
-		catch (Exception exception) {
-			return larFile;
-		}
-
-		return new File(tempZipPath);
-	}
-
 	private void _testExportImportErrorInfoOfObjectEntries(
-			Group group1, String scope)
+			Group group, String scope)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _addObjectDefinition(scope, true);
+		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
 
-		ObjectEntry[] objectEntries = _addObjectEntries(
-			1, _getObjectEntryGroupId(group1.getGroupId(), scope),
-			objectDefinition, true);
+		ObjectEntry objectEntry = _addObjectEntry(
+			_getObjectEntryGroupId(group.getGroupId(), scope), objectDefinition,
+			StringUtil.randomString());
 
-		File larFile1 = _exportLayouts(
-			false, group1.getGroupId(), false, new long[0], objectDefinition);
+		String originalExternalReferenceCode =
+			objectEntry.getExternalReferenceCode();
 
-		_deleteObjectEntries(objectEntries);
+		File file = _exportLayouts(
+			false, group.getGroupId(), false, new long[0], objectDefinition);
 
-		larFile1 = _modifyLarToFailObjectEntryImport(
-			larFile1, objectDefinition.getName());
+		objectEntry.setExternalReferenceCode(StringUtil.randomString());
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry);
 
 		ExportImportConfiguration exportImportConfiguration = _importLayouts(
-			false, true, larFile1, group1.getGroupId(), objectDefinition);
+			false, true, file, group.getGroupId(), objectDefinition);
 
 		List<ExportImportReportEntry> exportImportReportEntries =
 			_exportImportReportEntryLocalService.getExportImportReportEntries(
@@ -1218,16 +1155,13 @@ public class BatchEnginePortletDataHandlerTest {
 			exportImportReportEntries.toString(), 1,
 			exportImportReportEntries.size());
 
-		String externalReferenceCode =
-			objectEntries[0].getExternalReferenceCode();
-
 		Assert.assertTrue(
 			ListUtil.exists(
 				exportImportReportEntries,
 				exportImportReportEntry ->
 					Objects.equals(
 						exportImportReportEntry.getClassExternalReferenceCode(),
-						externalReferenceCode) &&
+						originalExternalReferenceCode) &&
 					(exportImportReportEntry.getType() ==
 						ExportImportReportEntryConstants.TYPE_ERROR)));
 	}

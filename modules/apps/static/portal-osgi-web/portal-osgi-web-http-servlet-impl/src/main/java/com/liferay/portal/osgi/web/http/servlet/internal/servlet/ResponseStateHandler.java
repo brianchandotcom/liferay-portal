@@ -162,34 +162,31 @@ public class ResponseStateHandler {
 	}
 
 	private void _handleException() throws IOException, ServletException {
-		if (!(_httpServletResponse instanceof
-				HttpServletResponseWrapper httpServletResponseWrapper)) {
-
+		if (!(_httpServletResponse instanceof HttpServletResponseWrapper)) {
 			throw new IllegalStateException(
 				"Response is not a HttpServletResponseWrapper");
 		}
 
 		HttpServletResponseWrapperImpl httpServletResponseWrapperImpl = null;
 
-		while (true) {
-			if (httpServletResponseWrapper instanceof
-					HttpServletResponseWrapperImpl) {
+		HttpServletResponse curHttpServletResponse = _httpServletResponse;
+
+		while (curHttpServletResponse instanceof
+					HttpServletResponseWrapper curHttpServletResponseWrapper) {
+
+			if (curHttpServletResponseWrapper instanceof
+					HttpServletResponseWrapperImpl
+						curHttpServletResponseWrapperImpl) {
 
 				httpServletResponseWrapperImpl =
-					(HttpServletResponseWrapperImpl)httpServletResponseWrapper;
+					curHttpServletResponseWrapperImpl;
 
 				break;
 			}
 
-			if (!(httpServletResponseWrapper.getResponse() instanceof
-					HttpServletResponseWrapper)) {
-
-				break;
-			}
-
-			httpServletResponseWrapper =
-				(HttpServletResponseWrapper)
-					httpServletResponseWrapper.getResponse();
+			curHttpServletResponse =
+				(HttpServletResponse)
+					curHttpServletResponseWrapper.getResponse();
 		}
 
 		if (httpServletResponseWrapperImpl == null) {

@@ -295,7 +295,7 @@ public class AddressServiceHttp {
 	public static com.liferay.portal.kernel.model.Address getOrAddEmptyAddress(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			String className, long classPK)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -311,8 +311,11 @@ public class AddressServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
-				if (exception instanceof Exception) {
-					throw (Exception)exception;
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(

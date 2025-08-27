@@ -330,6 +330,17 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 				userSubject.setId(subject);
 				userSubject.setLogin(user.getScreenName());
 			}
+			else if (userAuthType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+				User user = userLocalService.fetchUserByScreenName(
+					companyId, subject);
+
+				if (user == null) {
+					return null;
+				}
+
+				userSubject.setId(String.valueOf(user.getUserId()));
+				userSubject.setLogin(user.getScreenName());
+			}
 
 			Map<String, String> properties = userSubject.getProperties();
 

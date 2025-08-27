@@ -332,11 +332,16 @@ public class LayoutUtil {
 			null, null, null, null, LayoutConstants.TYPE_PORTLET, typeSettings,
 			hiddenFromNavigation, friendlyURLMap, 0, serviceContext);
 
-		return updateLayout(
+		layout = updateLayout(
 			cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getRobotsMap(),
 			layout.getFriendlyURLMap(), widgetPageSpecification,
 			layout.getStatus(), serviceContext);
+
+		return updatePortletLayout(
+			cetManager, layout, nameMap, layout.getFriendlyURLMap(),
+			typeSettingsUnicodeProperties, serviceContext,
+			widgetPageSpecification);
 	}
 
 	public static Layout getLayoutPrototypeLayout(

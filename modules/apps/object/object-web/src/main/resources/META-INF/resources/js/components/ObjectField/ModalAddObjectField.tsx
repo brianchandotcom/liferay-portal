@@ -172,6 +172,7 @@ export function ModalAddObjectField({
 
 							<Input
 								error={errors.label}
+								id="modal-add-object-field__label-input"
 								label={Liferay.Language.get('label')}
 								name="label"
 								onChange={({target: {value}}) => {

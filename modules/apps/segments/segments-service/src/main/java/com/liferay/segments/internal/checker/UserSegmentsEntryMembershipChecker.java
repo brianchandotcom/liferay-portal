@@ -62,7 +62,7 @@ public class UserSegmentsEntryMembershipChecker {
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(
-				"Failed to evaluate filter: " + filterString, exception);
+				"Unable to evaluate filter: " + filterString, exception);
 		}
 
 		Binding binding = new Binding();

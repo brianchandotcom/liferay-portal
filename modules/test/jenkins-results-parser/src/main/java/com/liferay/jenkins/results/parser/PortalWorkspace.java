@@ -88,7 +88,7 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		portalWorkspaceGitRepository.setUp();
 
-		_configureBladeSamplesWorkspaceGitRepository();
+		_configureLiferayBladeSamplesWorkspaceGitRepository();
 		_configureLiferayFacesAlloyWorkspaceGitRepository();
 		_configureLiferayFacesBridgeImplWorkspaceGitRepository();
 		_configureLiferayFacesPortalWorkspaceGitRepository();
@@ -245,7 +245,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		copyOSBAsahRepositoryToModule();
 	}
 
-	private void _configureBladeSamplesWorkspaceGitRepository() {
+	private void _configureLiferayBladeSamplesWorkspaceGitRepository() {
 		boolean updated = _updateWorkspaceGitRepository(
 			"git-commit/liferay-blade-samples", "liferay-blade-samples");
 

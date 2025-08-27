@@ -377,6 +377,13 @@ public class DisplayPageTemplateResourceImpl
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
+		UnicodeProperties typeSettingsUnicodeProperties = _getUnicodeProperties(
+			displayPageTemplate.getDisplayPageTemplateSettings());
+
+		layout = _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			typeSettingsUnicodeProperties.toString());
+
 		layout = LayoutUtil.updateContentLayout(
 			_cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(),
@@ -384,8 +391,6 @@ public class DisplayPageTemplateResourceImpl
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
 			displayPageTemplate.getPageSpecifications(),
-			_getUnicodeProperties(
-				displayPageTemplate.getDisplayPageTemplateSettings()),
 			_getServiceContext(displayPageTemplate, groupId));
 
 		if (!layoutPageTemplateEntry.isApproved() &&

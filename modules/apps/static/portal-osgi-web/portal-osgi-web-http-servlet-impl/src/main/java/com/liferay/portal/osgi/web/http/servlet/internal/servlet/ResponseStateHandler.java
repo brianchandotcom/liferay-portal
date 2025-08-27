@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 
@@ -120,7 +121,7 @@ public class ResponseStateHandler {
 			if (_liferayDispatchTargets.getDispatcherType() !=
 					DispatcherType.REQUEST) {
 
-				_throwException(exception);
+				ReflectionUtil.throwException(exception);
 			}
 		}
 		finally {
@@ -200,7 +201,7 @@ public class ResponseStateHandler {
 			(HttpServletResponse)httpServletResponseWrapperImpl.getResponse();
 
 		if (wrappedHttpServletResponse.isCommitted()) {
-			_throwException(_exception);
+			ReflectionUtil.throwException(_exception);
 		}
 
 		LiferayContextController liferayContextController =
@@ -215,7 +216,7 @@ public class ResponseStateHandler {
 				className, null, null, null, null, null, Match.EXACT);
 
 		if (errorLiferayDispatchTargets == null) {
-			_throwException(_exception);
+			ReflectionUtil.throwException(_exception);
 		}
 
 		HttpServletRequestWrapperImpl httpServletRequestWrapperImpl =
@@ -412,20 +413,6 @@ public class ResponseStateHandler {
 		}
 		finally {
 			httpServletRequestWrapperImpl.pop();
-		}
-	}
-
-	private void _throwException(Exception exception)
-		throws IOException, ServletException {
-
-		if (exception instanceof RuntimeException) {
-			throw (RuntimeException)exception;
-		}
-		else if (exception instanceof IOException) {
-			throw (IOException)exception;
-		}
-		else if (exception instanceof ServletException) {
-			throw (ServletException)exception;
 		}
 	}
 

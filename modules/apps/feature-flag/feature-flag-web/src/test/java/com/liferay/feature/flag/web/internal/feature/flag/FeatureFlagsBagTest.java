@@ -101,17 +101,17 @@ public class FeatureFlagsBagTest {
 				_featureFlagsBag.isEnabled(expectedFeatureFlag.getKey()));
 		}
 
-		String key = "LPS-9099";
+		String randomKey = _createKey();
 
 		try {
-			_featureFlagsBag.isEnabled(key);
+			_featureFlagsBag.isEnabled(randomKey);
 			Assert.fail("Nonexistent keys should throw an exception");
 		}
 		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Feature flag ", key, " is not available for company ",
-					_COMPANY_ID),
+					"Feature flag ", randomKey,
+					" is not available for company ", _COMPANY_ID),
 				illegalStateException.getMessage());
 		}
 	}

@@ -7,6 +7,7 @@ package com.liferay.exportimport.kernel.empty.model;
 
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.function.BiFunction;
@@ -16,7 +17,7 @@ import java.util.function.BiFunction;
  */
 public class EmptyModelManagerUtil {
 
-	public static <T, E extends Exception> T getOrAddEmptyModel(
+	public static <T, E extends PortalException> T getOrAddEmptyModel(
 			Class<T> clazz, long companyId, String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
 			UnsafeBiFunction<String, Long, T, E>
@@ -32,7 +33,7 @@ public class EmptyModelManagerUtil {
 			getByExternalReferenceCodeUnsafeBiFunction);
 	}
 
-	public static <T, E extends Exception> T getOrAddEmptyModel(
+	public static <T, E extends PortalException> T getOrAddEmptyModel(
 			Class<T> clazz, UnsafeSupplier<T, E> emptyModelUnsafeSupplier,
 			String externalReferenceCode,
 			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,

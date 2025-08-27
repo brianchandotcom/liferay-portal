@@ -334,7 +334,7 @@ public class AccountRoleLocalServiceUtil {
 	public static AccountRole getOrAddEmptyAccountRole(
 			String externalReferenceCode, long companyId, long userId,
 			long accountEntryId, String name)
-		throws Exception {
+		throws PortalException {
 
 		return getService().getOrAddEmptyAccountRole(
 			externalReferenceCode, companyId, userId, accountEntryId, name);

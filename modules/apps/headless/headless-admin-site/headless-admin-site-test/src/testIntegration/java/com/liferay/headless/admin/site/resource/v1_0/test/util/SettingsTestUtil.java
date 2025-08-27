@@ -258,11 +258,17 @@ public class SettingsTestUtil {
 				setFavIcon(() -> _getFavIcon());
 				setGlobalCSSClientExtensions(
 					() -> new ClientExtension[] {
-						_getClientExtension(), _getClientExtension()
+						_getClientExtension(
+							ClientExtensionEntryConstants.TYPE_GLOBAL_CSS),
+						_getClientExtension(
+							ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
 					});
 				setGlobalJSClientExtensions(
 					() -> new ClientExtension[] {
-						_getClientExtension(), _getClientExtension()
+						_getClientExtension(
+							ClientExtensionEntryConstants.TYPE_GLOBAL_JS),
+						_getClientExtension(
+							ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
 					});
 				setJavascript(RandomTestUtil::randomString);
 				setMasterPageItemExternalReference(
@@ -271,7 +277,9 @@ public class SettingsTestUtil {
 				setStyleBookItemExternalReference(
 					() -> SettingsTestUtil.getStyleBookItemExternalReference(
 						serviceContext));
-				setThemeCSSClientExtension(() -> _getClientExtension());
+				setThemeCSSClientExtension(
+					() -> _getClientExtension(
+						ClientExtensionEntryConstants.TYPE_THEME_CSS));
 				setThemeName(() -> "classic_WAR_classictheme");
 				setThemeSettings(
 					() -> TreeMapBuilder.put(
@@ -281,7 +289,9 @@ public class SettingsTestUtil {
 						"lfr-theme:" + RandomTestUtil.randomString(),
 						RandomTestUtil.randomString()
 					).build());
-				setThemeSpritemapClientExtension(() -> _getClientExtension());
+				setThemeSpritemapClientExtension(
+					() -> _getClientExtension(
+						ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
 			}
 		};
 	}
@@ -322,7 +332,10 @@ public class SettingsTestUtil {
 		else {
 			settings.setGlobalCSSClientExtensions(
 				new ClientExtension[] {
-					_getClientExtension(), _getClientExtension()
+					_getClientExtension(
+						ClientExtensionEntryConstants.TYPE_GLOBAL_CSS),
+					_getClientExtension(
+						ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
 				});
 		}
 
@@ -332,7 +345,10 @@ public class SettingsTestUtil {
 		else {
 			settings.setGlobalJSClientExtensions(
 				new ClientExtension[] {
-					_getClientExtension(), _getClientExtension()
+					_getClientExtension(
+						ClientExtensionEntryConstants.TYPE_GLOBAL_JS),
+					_getClientExtension(
+						ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
 				});
 		}
 
@@ -385,7 +401,9 @@ public class SettingsTestUtil {
 			settings.setThemeCSSClientExtension(() -> null);
 		}
 		else {
-			settings.setThemeCSSClientExtension(_getClientExtension());
+			settings.setThemeCSSClientExtension(
+				_getClientExtension(
+					ClientExtensionEntryConstants.TYPE_THEME_CSS));
 		}
 
 		if (Validator.isNotNull(settings.getThemeName())) {
@@ -416,7 +434,9 @@ public class SettingsTestUtil {
 			settings.setThemeSpritemapClientExtension(() -> null);
 		}
 		else {
-			settings.setThemeSpritemapClientExtension(_getClientExtension());
+			settings.setThemeSpritemapClientExtension(
+				_getClientExtension(
+					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
 		}
 	}
 

@@ -322,6 +322,18 @@ public class PageSpecificationsTestUtil {
 			(WidgetPageSpecification)actualPageSpecifications[0]);
 	}
 
+	public static void assertWidgetPageSpecifications(
+		PageSpecification[] pageSpecifications,
+		WidgetPageSpecification widgetPageSpecification) {
+
+		Assert.assertEquals(
+			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
+
+		assertWidgetPageSpecification(
+			widgetPageSpecification,
+			(WidgetPageSpecification)pageSpecifications[0]);
+	}
+
 	public static ContentPageSpecification getContentPageSpecification(
 		String contentPageSpecificationExternalReferenceCode,
 		CustomField[] customFields,

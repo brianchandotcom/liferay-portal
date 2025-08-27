@@ -851,18 +851,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		}
 	}
 
-	private void _assertWidgetPageSpecifications(
-		PageSpecification[] pageSpecifications,
-		WidgetPageSpecification widgetPageSpecification) {
-
-		Assert.assertEquals(
-			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
-
-		PageSpecificationsTestUtil.assertWidgetPageSpecification(
-			widgetPageSpecification,
-			(WidgetPageSpecification)pageSpecifications[0]);
-	}
-
 	private void _enableLocalStaging() throws Exception {
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), testGroup, true, false,

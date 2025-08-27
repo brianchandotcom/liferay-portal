@@ -279,6 +279,9 @@
 		<finder name="RendererKey" return-type="Collection">
 			<finder-column name="rendererKey" />
 		</finder>
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type" />
+		</finder>
 		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="plid" />

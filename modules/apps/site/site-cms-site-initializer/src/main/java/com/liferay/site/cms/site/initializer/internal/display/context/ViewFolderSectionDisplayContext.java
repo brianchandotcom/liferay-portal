@@ -128,6 +128,11 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 				null));
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
+				null, "pencil", "edit-categories",
+				LanguageUtil.get(httpServletRequest, "edit-categories"), "get",
+				"edit-categories", null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
 				null, "pencil", "edit-tags",
 				LanguageUtil.get(httpServletRequest, "edit-tags"), "get",
 				"edit-tags", null));

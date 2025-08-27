@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {useEventListener, useIsMounted} from '@liferay/frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
@@ -34,8 +33,6 @@ const ImagePreviewer = ({alt, imageURL}: ImagePreviewerProps) => {
 
 	const imageRef = useRef<HTMLImageElement>(null);
 	const imageContainerRef = useRef<HTMLDivElement>(null);
-
-	const isMounted = useIsMounted();
 
 	const updateToolbar = (zoom: number) => {
 		setCurrentZoom(zoom);
@@ -96,21 +93,6 @@ const ImagePreviewer = ({alt, imageURL}: ImagePreviewerProps) => {
 		}
 	};
 
-	const handleWindowResize = debounce(() => {
-		if (isMounted() && imageRef.current && !imageRef.current.style.width) {
-			updateToolbar(getFittingZoom());
-		}
-	}, 250);
-
-	useEventListener(
-		'resize',
-		handleWindowResize,
-		false,
-
-		// @ts-ignore
-		window
-	);
-
 	useLayoutEffect(() => {
 		const imageContainerElement = imageContainerRef.current;
 		const imageElement = imageRef.current;
@@ -160,6 +142,18 @@ const ImagePreviewer = ({alt, imageURL}: ImagePreviewerProps) => {
 			updateToolbar(getFittingZoom());
 		}
 	}, [imageHeight, imageWidth, zoomRatio, imageMargin]);
+
+	useLayoutEffect(() => {
+		const handleResize = debounce(() => {
+			if (imageRef.current && !imageRef.current.style.width) {
+				updateToolbar(getFittingZoom());
+			}
+		}, 250);
+
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, [currentZoom, imageHeight, imageWidth]);
 
 	return (
 		<div className="preview-file">

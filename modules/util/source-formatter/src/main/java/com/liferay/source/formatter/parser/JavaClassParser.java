@@ -289,7 +289,7 @@ public class JavaClassParser {
 			startLine, new String[] {"\t", "\n", " synchronized "},
 			new String[] {"", " ", " "});
 
-		startLine = startLine.replaceAll(" +", " ");
+		startLine = startLine.replaceAll(" {2,}", " ");
 
 		javaTermContent = metadata + javaTermContent;
 

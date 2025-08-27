@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -129,43 +128,50 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 
 	@Test
 	public void testPublicationsUserResourcePermissions() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
 		long companyId = company.getCompanyId();
 
-		try {
-			Role role = _roleLocalService.fetchRole(
-				companyId, RoleConstants.PUBLICATIONS_USER);
+		Role role = _roleLocalService.fetchRole(
+			companyId, RoleConstants.PUBLICATIONS_USER);
 
-			Assert.assertNotNull(role);
+		Assert.assertNotNull(role);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				companyId,
+				_resourceActions.getPortletRootModelResource(
+					CTPortletKeys.PUBLICATIONS),
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId(), CTActionKeys.ADD_PUBLICATION));
+
+		for (String actionId :
+				Arrays.asList(
+					ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW)) {
 
 			Assert.assertTrue(
 				_resourcePermissionLocalService.hasResourcePermission(
-					companyId,
-					_resourceActions.getPortletRootModelResource(
-						CTPortletKeys.PUBLICATIONS),
+					companyId, CTPortletKeys.PUBLICATIONS,
 					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId(), CTActionKeys.ADD_PUBLICATION));
+					role.getRoleId(), actionId));
+		}
 
-			for (String actionId :
-					Arrays.asList(
-						ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW)) {
+		ResourcePermission rootModelResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				companyId,
+				_resourceActions.getPortletRootModelResource(
+					CTPortletKeys.PUBLICATIONS),
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId());
 
-				Assert.assertTrue(
-					_resourcePermissionLocalService.hasResourcePermission(
-						companyId, CTPortletKeys.PUBLICATIONS,
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(companyId), role.getRoleId(), actionId));
-			}
+		ResourcePermission portletResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				companyId, CTPortletKeys.PUBLICATIONS,
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId());
 
-			ResourcePermission rootModelResourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					companyId,
-					_resourceActions.getPortletRootModelResource(
-						CTPortletKeys.PUBLICATIONS),
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId());
-
+		try {
 			rootModelResourcePermission.removeResourceAction(
 				CTActionKeys.ADD_PUBLICATION);
 
@@ -176,12 +182,6 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 			Assert.assertFalse(
 				rootModelResourcePermission.hasActionId(
 					CTActionKeys.ADD_PUBLICATION));
-
-			ResourcePermission portletResourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					companyId, CTPortletKeys.PUBLICATIONS,
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId());
 
 			portletResourcePermission.removeResourceAction(
 				ActionKeys.ACCESS_IN_CONTROL_PANEL);
@@ -224,9 +224,18 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 				portletResourcePermission.hasActionId(ActionKeys.VIEW));
 		}
 		finally {
-			if (company != null) {
-				_companyLocalService.deleteCompany(companyId);
-			}
+			rootModelResourcePermission.addResourceAction(
+				CTActionKeys.ADD_PUBLICATION);
+
+			_resourcePermissionLocalService.updateResourcePermission(
+				rootModelResourcePermission);
+
+			portletResourcePermission.addResourceAction(
+				ActionKeys.ACCESS_IN_CONTROL_PANEL);
+			portletResourcePermission.addResourceAction(ActionKeys.VIEW);
+
+			_resourcePermissionLocalService.updateResourcePermission(
+				portletResourcePermission);
 		}
 	}
 

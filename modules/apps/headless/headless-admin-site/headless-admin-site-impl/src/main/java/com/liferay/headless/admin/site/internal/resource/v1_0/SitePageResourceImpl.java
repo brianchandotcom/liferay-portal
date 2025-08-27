@@ -314,7 +314,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 		else {
 			layout = LayoutUtil.addPortletLayout(
-				sitePage.getExternalReferenceCode(), groupId,
+				_cetManager, sitePage.getExternalReferenceCode(), groupId,
 				_getParentLayoutId(
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode()),

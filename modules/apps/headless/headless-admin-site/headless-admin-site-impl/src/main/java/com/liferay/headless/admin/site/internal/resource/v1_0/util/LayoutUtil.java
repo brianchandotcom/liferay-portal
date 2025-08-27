@@ -311,8 +311,8 @@ public class LayoutUtil {
 	}
 
 	public static Layout addPortletLayout(
-			String externalReferenceCode, long groupId, long parentLayoutId,
-			Map<Locale, String> nameMap,
+			CETManager cetManager, String externalReferenceCode, long groupId,
+			long parentLayoutId, Map<Locale, String> nameMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			boolean hiddenFromNavigation, Map<Locale, String> friendlyURLMap,
 			ServiceContext serviceContext,
@@ -327,14 +327,16 @@ public class LayoutUtil {
 
 		_setExpandoBridgeAttributes(widgetPageSpecification, serviceContext);
 
-		return _updatePortletLayout(
-			LayoutServiceUtil.addLayout(
-				externalReferenceCode, groupId, false, parentLayoutId, nameMap,
-				null, null, null, null, LayoutConstants.TYPE_PORTLET,
-				typeSettings, hiddenFromNavigation, friendlyURLMap, 0,
-				serviceContext),
-			serviceContext, typeSettingsUnicodeProperties,
-			widgetPageSpecification);
+		Layout layout = LayoutServiceUtil.addLayout(
+			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
+			null, null, null, null, LayoutConstants.TYPE_PORTLET, typeSettings,
+			hiddenFromNavigation, friendlyURLMap, 0, serviceContext);
+
+		return updateLayout(
+			cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
+			layout.getDescriptionMap(), layout.getRobotsMap(),
+			layout.getFriendlyURLMap(), widgetPageSpecification,
+			layout.getStatus(), serviceContext);
 	}
 
 	public static Layout getLayoutPrototypeLayout(

@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.time.DateUtils;
+
+import org.codehaus.groovy.control.CompilerConfiguration;
+import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
+import org.codehaus.groovy.syntax.Types;
 
 /**
  * @author Marcos Martins
@@ -285,7 +290,37 @@ public class UserSegmentsEntryMembershipChecker {
 	private static final Map<String, String> _fieldNames = HashMapBuilder.put(
 		"dateModified", "modifiedDate"
 	).build();
-	private static final GroovyShell _groovyShell = new GroovyShell();
+	private static final GroovyShell _groovyShell = new GroovyShell(
+		new CompilerConfiguration() {
+			{
+				addCompilationCustomizers(
+					new SecureASTCustomizer() {
+						{
+							setImportsWhitelist(Collections.emptyList());
+							setReceiversWhiteList(
+								List.of(
+									Date.class.getName(),
+									Object.class.getName(),
+									String.class.getName()));
+							setTokensWhitelist(
+								List.of(
+									Types.COMPARE_EQUAL,
+									Types.COMPARE_GREATER_THAN,
+									Types.COMPARE_GREATER_THAN_EQUAL,
+									Types.COMPARE_LESS_THAN,
+									Types.COMPARE_LESS_THAN_EQUAL,
+									Types.COMPARE_NOT_EQUAL, Types.KEYWORD_DEF,
+									Types.KEYWORD_FALSE, Types.KEYWORD_IN,
+									Types.KEYWORD_INSTANCEOF,
+									Types.KEYWORD_TRUE, Types.LEFT_PARENTHESIS,
+									Types.LEFT_SQUARE_BRACKET,
+									Types.LOGICAL_AND, Types.LOGICAL_OR,
+									Types.NOT, Types.RIGHT_PARENTHESIS,
+									Types.RIGHT_SQUARE_BRACKET));
+						}
+					});
+			}
+		});
 	private static final Map<String, Object> _locks = new ConcurrentHashMap<>();
 	private static final Pattern _logicalOperationPattern = Pattern.compile(
 		"\\s+(and|or)\\s+");

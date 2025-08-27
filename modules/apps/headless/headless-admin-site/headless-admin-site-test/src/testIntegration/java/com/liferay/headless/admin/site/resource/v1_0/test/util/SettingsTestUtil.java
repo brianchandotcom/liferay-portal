@@ -483,7 +483,9 @@ public class SettingsTestUtil {
 		}
 	}
 
-	private static ClientExtension _getClientExtension() throws Exception {
+	private static ClientExtension _getClientExtension(String type)
+		throws Exception {
+
 		ClientExtension clientExtension = new ClientExtension() {
 			{
 				setClientExtensionConfig(
@@ -500,8 +502,7 @@ public class SettingsTestUtil {
 			TestPropsValues.getUserId(), StringPool.BLANK,
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			StringPool.BLANK, StringPool.BLANK,
-			ClientExtensionEntryConstants.TYPE_THEME_CSS,
+			StringPool.BLANK, StringPool.BLANK, type,
 			UnicodePropertiesBuilder.create(
 				clientExtension.getClientExtensionConfig(), true
 			).buildString());

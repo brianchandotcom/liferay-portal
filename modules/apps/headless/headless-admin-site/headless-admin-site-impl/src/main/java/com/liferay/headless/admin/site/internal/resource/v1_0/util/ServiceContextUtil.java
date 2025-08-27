@@ -28,7 +28,7 @@ public class ServiceContextUtil {
 
 	public static ServiceContext createServiceContext(
 			ItemExternalReference[] assetCategoriesItemExternalReferences,
-			Date createDate, long groupId,
+			long companyId, Date createDate, long groupId,
 			HttpServletRequest httpServletRequest, String[] keywords,
 			Date modifiedDate, long userId, String uuid)
 		throws Exception {
@@ -41,6 +41,7 @@ public class ServiceContextUtil {
 			_getAssetCategoryIds(
 				groupId, assetCategoriesItemExternalReferences));
 		serviceContext.setAssetTagNames(keywords);
+		serviceContext.setCompanyId(companyId);
 		serviceContext.setCreateDate(createDate);
 		serviceContext.setModifiedDate(modifiedDate);
 		serviceContext.setUserId(userId);

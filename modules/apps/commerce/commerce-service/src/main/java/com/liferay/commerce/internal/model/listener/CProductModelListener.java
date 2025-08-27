@@ -65,19 +65,21 @@ public class CProductModelListener extends BaseModelListener<CProduct> {
 			String productNavigationMenuItemExternalReferenceCode =
 				unicodeProperties.getProperty("externalReferenceCode");
 
-			if (Objects.equals(
+			if (!Objects.equals(
 					originalExternalReferenceCode,
 					productNavigationMenuItemExternalReferenceCode)) {
 
-				unicodeProperties.setProperty(
-					"externalReferenceCode", newExternalReferenceCode);
-
-				siteNavigationMenuItem.setTypeSettings(
-					unicodeProperties.toString());
-
-				_siteNavigationMenuItemLocalService.
-					updateSiteNavigationMenuItem(siteNavigationMenuItem);
+				continue;
 			}
+
+			unicodeProperties.setProperty(
+				"externalReferenceCode", newExternalReferenceCode);
+
+			siteNavigationMenuItem.setTypeSettings(
+				unicodeProperties.toString());
+
+			_siteNavigationMenuItemLocalService.
+				updateSiteNavigationMenuItem(siteNavigationMenuItem);
 		}
 	}
 

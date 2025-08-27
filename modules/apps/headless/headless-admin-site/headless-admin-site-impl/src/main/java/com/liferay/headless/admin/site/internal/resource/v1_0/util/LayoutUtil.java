@@ -186,16 +186,17 @@ public class LayoutUtil {
 					throw new UnsupportedOperationException();
 				}
 
-				Layout masterLayout =
-					LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
-						itemExternalReference.getExternalReferenceCode(),
-						groupId);
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					LayoutPageTemplateEntryLocalServiceUtil.
+						fetchLayoutPageTemplateEntryByExternalReferenceCode(
+							itemExternalReference.getExternalReferenceCode(),
+							groupId);
 
-				if (masterLayout == null) {
+				if (layoutPageTemplateEntry == null) {
 					throw new UnsupportedOperationException();
 				}
 
-				masterLayoutPlid = masterLayout.getPlid();
+				masterLayoutPlid = layoutPageTemplateEntry.getPlid();
 			}
 		}
 

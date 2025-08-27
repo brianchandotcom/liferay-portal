@@ -7,10 +7,17 @@
 }
 
 .navigation-item-sm {
+	font-weight: 600;
+
+	a {
+		width: 100%;
+	}
+
 	&:hover {
-		background-color: #193a7a;
+		background-color: #1a3b7b;
 		border-radius: 6px;
 		cursor: pointer;
+		outline: var(--color-brand-primary-lighten-2, #6399ff) solid 2px;
 	}
 }
 
@@ -1097,5 +1104,9 @@ nav {
 		border-radius: 5px;
 		color: var(--color-neutral-9, #3f404b);
 		width: 100%;
+
+		&:hover {
+			background: var(--color-action-primary-active-lighten, #E6edfb);
+		}
 	}
 }

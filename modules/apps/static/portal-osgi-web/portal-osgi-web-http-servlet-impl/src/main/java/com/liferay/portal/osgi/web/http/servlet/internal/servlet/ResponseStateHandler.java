@@ -167,13 +167,13 @@ public class ResponseStateHandler {
 	}
 
 	private void _handleException() throws IOException, ServletException {
-		if (!(_httpServletResponse instanceof HttpServletResponseWrapper)) {
+		if (!(_httpServletResponse instanceof
+				HttpServletResponseWrapper httpServletResponseWrapper1)) {
+
 			throw new IllegalStateException(
 				"Response is not a HttpServletResponseWrapper");
 		}
 
-		HttpServletResponseWrapper httpServletResponseWrapper1 =
-			(HttpServletResponseWrapper)_httpServletResponse;
 		HttpServletResponseWrapperImpl httpServletResponseWrapperImpl = null;
 
 		while (true) {
@@ -218,8 +218,7 @@ public class ResponseStateHandler {
 
 		LiferayDispatchTargets errorLiferayDispatchTargets =
 			liferayContextController.getDispatchTargets(
-				className, (String)null, (String)null, (String)null,
-				(String)null, (String)null, Match.EXACT);
+				className, null, null, null, null, null, Match.EXACT);
 
 		if (errorLiferayDispatchTargets == null) {
 			_throwException(_exception);
@@ -242,7 +241,7 @@ public class ResponseStateHandler {
 							if (attributeName.equals(
 									"jakarta.servlet.error.exception")) {
 
-								return ResponseStateHandler.this._exception;
+								return _exception;
 							}
 
 							if (attributeName.equals(
@@ -254,24 +253,21 @@ public class ResponseStateHandler {
 							if (attributeName.equals(
 									"jakarta.servlet.error.message")) {
 
-								return ResponseStateHandler.this._exception.
-									getMessage();
+								return _exception.getMessage();
 							}
 
 							if (attributeName.equals(
 									"jakarta.servlet.error.request_uri")) {
 
-								return ResponseStateHandler.this.
-									_httpServletRequest.getRequestURI();
+								return _httpServletRequest.getRequestURI();
 							}
 
 							if (attributeName.equals(
 									"jakarta.servlet.error.servlet_name")) {
 
-								return ResponseStateHandler.this.
-									_liferayDispatchTargets.
-										getServletRegistration(
-										).getName();
+								return _liferayDispatchTargets.
+									getServletRegistration(
+									).getName();
 							}
 
 							if (attributeName.equals(
@@ -296,7 +292,7 @@ public class ResponseStateHandler {
 			ResponseStateHandler responseStateHandler =
 				new ResponseStateHandler(
 					httpServletRequest, httpServletResponseWrapper2,
-					(LiferayDispatchTargets)errorLiferayDispatchTargets);
+					errorLiferayDispatchTargets);
 
 			responseStateHandler.processRequest();
 
@@ -340,8 +336,8 @@ public class ResponseStateHandler {
 
 		LiferayDispatchTargets errorLiferayDispatchTargets =
 			liferayContextController.getDispatchTargets(
-				String.valueOf(status), (String)null, (String)null,
-				(String)null, (String)null, (String)null, Match.EXACT);
+				String.valueOf(status), null, null, null, null, null,
+				Match.EXACT);
 
 		if (errorLiferayDispatchTargets == null) {
 			wrappedHttpServletResponse.sendError(
@@ -374,17 +370,15 @@ public class ResponseStateHandler {
 							if (attributeName.equals(
 									"jakarta.servlet.error.request_uri")) {
 
-								return ResponseStateHandler.this.
-									_httpServletRequest.getRequestURI();
+								return _httpServletRequest.getRequestURI();
 							}
 
 							if (attributeName.equals(
 									"jakarta.servlet.error.servlet_name")) {
 
-								return ResponseStateHandler.this.
-									_liferayDispatchTargets.
-										getServletRegistration(
-										).getName();
+								return _liferayDispatchTargets.
+									getServletRegistration(
+									).getName();
 							}
 
 							if (attributeName.equals(
@@ -409,7 +403,7 @@ public class ResponseStateHandler {
 			ResponseStateHandler responseStateHandler =
 				new ResponseStateHandler(
 					httpServletRequest, httpServletResponseWrapper,
-					(LiferayDispatchTargets)errorLiferayDispatchTargets);
+					errorLiferayDispatchTargets);
 
 			wrappedHttpServletResponse.setStatus(status);
 

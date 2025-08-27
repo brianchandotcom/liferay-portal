@@ -341,9 +341,6 @@ public class DisplayPageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		DisplayPageTemplateSettings displayPageTemplateSettings =
-			displayPageTemplate.getDisplayPageTemplateSettings();
-
 		long classTypeId = _getClassTypeId(contentTypeReference, groupId);
 
 		if (!className.equals(layoutPageTemplateEntry.getClassName()) ||
@@ -383,11 +380,12 @@ public class DisplayPageTemplateResourceImpl
 		layout = LayoutUtil.updateContentLayout(
 			_cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(),
-			_getRobotsMap(displayPageTemplateSettings),
+			_getRobotsMap(displayPageTemplate.getDisplayPageTemplateSettings()),
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
 			displayPageTemplate.getPageSpecifications(),
-			_getUnicodeProperties(displayPageTemplateSettings),
+			_getUnicodeProperties(
+				displayPageTemplate.getDisplayPageTemplateSettings()),
 			_getServiceContext(displayPageTemplate, groupId));
 
 		if (!layoutPageTemplateEntry.isApproved() &&

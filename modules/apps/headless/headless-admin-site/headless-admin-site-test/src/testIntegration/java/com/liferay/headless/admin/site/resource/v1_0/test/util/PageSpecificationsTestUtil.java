@@ -19,6 +19,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
+import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetLookAndFeelConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
@@ -415,6 +416,44 @@ public class PageSpecificationsTestUtil {
 		throws Exception {
 
 		return new ExpandoTableAutocloseable();
+	}
+
+	public static PageSpecification[] getPageSpecifications(
+		String externalReferenceCode, SitePage.Type type) {
+
+		if (type == SitePage.Type.CONTENT_PAGE) {
+			ContentPageSpecification draftContentPageSpecification =
+				getContentPageSpecification(
+					null, PageSpecification.Status.DRAFT);
+
+			ContentPageSpecification publishedContentPageSpecification =
+				getContentPageSpecification(
+					draftContentPageSpecification.getExternalReferenceCode(),
+					PageSpecification.Status.APPROVED);
+
+			publishedContentPageSpecification.setExternalReferenceCode(
+				externalReferenceCode);
+
+			return new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			};
+		}
+
+		return new PageSpecification[] {
+			getWidgetPageSpecification(
+				null, externalReferenceCode, null,
+				PageSpecification.Status.APPROVED,
+				new WidgetPageSection[] {
+					new WidgetPageSection() {
+						{
+							setCustomizable(() -> Boolean.FALSE);
+							setId(() -> "column-1");
+							setWidgetPageWidgetInstances(
+								() -> new WidgetPageWidgetInstance[0]);
+						}
+					}
+				})
+		};
 	}
 
 	public static PageSpecification[] getPatchPageSpecifications(

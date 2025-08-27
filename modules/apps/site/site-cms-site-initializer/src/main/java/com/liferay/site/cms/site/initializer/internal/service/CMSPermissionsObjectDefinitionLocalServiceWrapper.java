@@ -75,6 +75,18 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 					ActionKeys.DELETE, ActionKeys.PERMISSIONS,
 					ActionKeys.UPDATE, ActionKeys.VIEW
 				});
+
+			for (String roleName : _VIEW_PERMISSION_ROLE_NAMES) {
+				role = _roleLocalService.getRole(
+					objectDefinition.getCompanyId(), roleName);
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					objectDefinition.getCompanyId(),
+					ObjectDefinition.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(objectDefinition.getObjectDefinitionId()),
+					role.getRoleId(), new String[] {ActionKeys.VIEW});
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -99,6 +111,10 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 			null, userId, null, 0, name, null, null, RoleConstants.TYPE_REGULAR,
 			null, null);
 	}
+
+	private static final String[] _VIEW_PERMISSION_ROLE_NAMES = {
+		RoleConstants.GUEST, RoleConstants.USER
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CMSPermissionsObjectDefinitionLocalServiceWrapper.class);

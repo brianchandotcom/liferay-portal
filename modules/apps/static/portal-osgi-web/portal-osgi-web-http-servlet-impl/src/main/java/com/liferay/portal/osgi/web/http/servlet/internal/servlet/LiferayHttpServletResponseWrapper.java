@@ -5,8 +5,6 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.WriteListener;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;
 
@@ -82,10 +80,6 @@ public class LiferayHttpServletResponseWrapper
 		return super.isCommitted();
 	}
 
-	public boolean isCompleted() {
-		return _completed;
-	}
-
 	@Override
 	public void sendError(int status) {
 		_status = status;
@@ -97,75 +91,7 @@ public class LiferayHttpServletResponseWrapper
 		_message = message;
 	}
 
-	public void setCompleted(boolean completed) {
-		_completed = completed;
-	}
-
-	private boolean _completed;
 	private String _message;
 	private int _status = -1;
-
-	private class InternalServletOutputStream extends ServletOutputStream {
-
-		public InternalServletOutputStream(
-			ServletOutputStream originalServletOutputStream) {
-
-			_originalServletOutputStream = originalServletOutputStream;
-		}
-
-		@Override
-		public void close() throws IOException {
-			_originalServletOutputStream.close();
-		}
-
-		@Override
-		public void flush() throws IOException {
-			if (getInternalStatus() != -1) {
-				HttpServletResponse httpServletResponse =
-					(HttpServletResponse)getResponse();
-
-				httpServletResponse.sendError(
-					getInternalStatus(), getMessage());
-			}
-
-			_originalServletOutputStream.flush();
-		}
-
-		@Override
-		public boolean isReady() {
-			return _originalServletOutputStream.isReady();
-		}
-
-		@Override
-		public void setWriteListener(WriteListener writeListener) {
-			_originalServletOutputStream.setWriteListener(writeListener);
-		}
-
-		@Override
-		public void write(byte[] bytes) throws IOException {
-			if (!isCompleted()) {
-				_originalServletOutputStream.write(bytes);
-			}
-		}
-
-		@Override
-		public void write(byte[] bytes, int offset, int length)
-			throws IOException {
-
-			if (!isCompleted()) {
-				_originalServletOutputStream.write(bytes, offset, length);
-			}
-		}
-
-		@Override
-		public void write(int b) throws IOException {
-			if (!isCompleted()) {
-				_originalServletOutputStream.write(b);
-			}
-		}
-
-		private final ServletOutputStream _originalServletOutputStream;
-
-	}
 
 }

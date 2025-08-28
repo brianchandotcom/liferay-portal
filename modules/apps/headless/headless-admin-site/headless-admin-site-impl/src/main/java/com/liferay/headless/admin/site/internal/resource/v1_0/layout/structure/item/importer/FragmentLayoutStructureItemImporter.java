@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefin
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -79,7 +80,8 @@ public class FragmentLayoutStructureItemImporter
 				layoutStructure.addFragmentStyledLayoutStructureItem(
 					fragmentEntryLink.getFragmentEntryLinkId(),
 					pageElement.getExternalReferenceCode(),
-					pageElement.getParentExternalReferenceCode(),
+					LayoutStructureUtil.getParentExternalReferenceCode(
+						pageElement, layoutStructure),
 					pageElement.getPosition());
 
 		fragmentStyledLayoutStructureItem.setCssClasses(

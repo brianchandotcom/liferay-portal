@@ -78,14 +78,14 @@ public class FeatureFlagsBag {
 	public boolean isEnabled(String key) {
 		FeatureFlag featureFlag = _featureFlagsMap.get(key);
 
-		if (featureFlag == null) {
-			throw new IllegalStateException(
-				StringBundler.concat(
-					"Feature flag ", key, " is not available for company ",
-					_companyId));
+		if (featureFlag != null) {
+			return featureFlag.isEnabled();
 		}
 
-		return featureFlag.isEnabled();
+		throw new IllegalStateException(
+			StringBundler.concat(
+				"Feature flag ", key, " is not available for company ",
+				_companyId));
 	}
 
 	public void setEnabled(String key, boolean enabled) {

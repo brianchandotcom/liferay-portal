@@ -3188,17 +3188,16 @@ public class RenderLayoutStructureTagTest {
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
 				company, _group, layout);
 
-		HttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			ContentLayoutTestUtil.getThemeDisplay(company, _group, layout));
-		mockHttpServletRequest.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.USER_ID, TestPropsValues.getUserId());
 
 		mockLiferayPortletActionRequest.setAttribute(
-			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+			PortletServlet.PORTLET_SERVLET_REQUEST, httpServletRequest);
 
 		mockLiferayPortletActionRequest.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()));

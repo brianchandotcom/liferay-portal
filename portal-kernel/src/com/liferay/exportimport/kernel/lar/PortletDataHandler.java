@@ -276,6 +276,8 @@ public interface PortletDataHandler {
 
 	public boolean isDataAlwaysStaged();
 
+	public boolean isDataDepotLevel();
+
 	public boolean isDataLocalized();
 
 	public boolean isDataPortalLevel();
@@ -283,8 +285,6 @@ public interface PortletDataHandler {
 	public boolean isDataPortletInstanceLevel();
 
 	public boolean isDataSiteLevel();
-
-	public boolean isDataDepotLevel();
 
 	public boolean isDisplayPortlet();
 

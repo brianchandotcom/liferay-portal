@@ -426,6 +426,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public boolean isDataDepotLevel() {
+		return _dataLevel.equals(DataLevel.DEPOT);
+	}
+
+	@Override
 	public boolean isDataLocalized() {
 		return _dataLocalized;
 	}
@@ -443,11 +448,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	@Override
 	public boolean isDataSiteLevel() {
 		return _dataLevel.equals(DataLevel.SITE);
-	}
-
-	@Override
-	public boolean isDataDepotLevel() {
-		return _dataLevel.equals(DataLevel.DEPOT);
 	}
 
 	@Override

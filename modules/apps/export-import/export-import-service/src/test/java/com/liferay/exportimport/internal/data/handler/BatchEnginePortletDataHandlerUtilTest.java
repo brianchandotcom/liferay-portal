@@ -126,6 +126,22 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
+	public void testBuildExportParametersWithParameters() {
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"param1", "value1"
+				).put(
+					"param2", "value2"
+				).build(),
+				_mockPortletDataContext(null, null, null));
+
+		Assert.assertEquals("value1", parameters.get("param1"));
+		Assert.assertEquals("value2", parameters.get("param2"));
+	}
+
+	@Test
 	public void testBuildExportParametersWithStartDate() {
 		Date startDate = _getDate(-1);
 

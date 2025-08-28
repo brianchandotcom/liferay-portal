@@ -467,7 +467,7 @@ public class ObjectEntryResourceImpl
 		}
 
 		if (StringUtil.equalsIgnoreCase(
-			_objectDefinition.getScope(), "depot")) {
+				_objectDefinition.getScope(), "depot")) {
 
 			return Scope.DEPOT;
 		}

@@ -78,8 +78,8 @@ public class CProductModelListener extends BaseModelListener<CProduct> {
 			siteNavigationMenuItem.setTypeSettings(
 				unicodeProperties.toString());
 
-			_siteNavigationMenuItemLocalService.
-				updateSiteNavigationMenuItem(siteNavigationMenuItem);
+			_siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(
+				siteNavigationMenuItem);
 		}
 	}
 

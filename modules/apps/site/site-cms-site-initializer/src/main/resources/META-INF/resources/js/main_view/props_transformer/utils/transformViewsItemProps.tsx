@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import {IView} from '@liferay/frontend-data-set-web';
+import React from 'react';
 
 import dateFormat from '../../../common/utils/dateFormat';
 import formatActionURL from '../../../common/utils/formatActionURL';
@@ -52,7 +54,56 @@ const getThumbnailProps = (item: any) => {
 	return {symbol: 'web-content'};
 };
 
-export default function transformViewsItemProps(views: IView[]) {
+function isMultimediaMimeType(mimeType: string): boolean {
+	const multimediaTypes = ['audio/', 'image/', 'video/'];
+
+	return multimediaTypes.some((prefix) => mimeType.startsWith(prefix));
+}
+
+const getFileMimeTypeValue = (
+	fileMimeTypeValues: Record<string, string> | undefined,
+	item: any
+) => {
+	if (!fileMimeTypeValues) {
+		return '';
+	}
+
+	if (item.embedded.file) {
+		const mimeType = item.embedded.file.mimeType;
+
+		const cssClass = fileMimeTypeValues[mimeType];
+
+		if (cssClass) {
+			return cssClass;
+		}
+
+		if (isMultimediaMimeType(mimeType)) {
+			const mimeTypeParts = mimeType.split('/');
+
+			const cssClass = fileMimeTypeValues[mimeTypeParts[0]];
+
+			if (cssClass) {
+				return cssClass;
+			}
+		}
+
+		return fileMimeTypeValues['default'];
+	}
+
+	return '';
+};
+
+type ViewsItemsProps = {
+	fileMimeTypeCssClasses?: Record<string, string>;
+	fileMimeTypeIcons?: Record<string, string>;
+	views: IView[];
+};
+
+export default function transformViewsItemProps({
+	fileMimeTypeCssClasses,
+	fileMimeTypeIcons,
+	views,
+}: ViewsItemsProps) {
 	return views.map((view) => {
 		if (view.name === 'cards') {
 			view.setItemComponentProps = ({item, props}) => {
@@ -60,6 +111,20 @@ export default function transformViewsItemProps(views: IView[]) {
 					...props,
 					description: dateFormat(item.dateModified),
 					href: getHrefLink(item, props),
+					stickerProps: {
+						className: getFileMimeTypeValue(
+							fileMimeTypeCssClasses,
+							item
+						),
+						content: (
+							<ClayIcon
+								symbol={getFileMimeTypeValue(
+									fileMimeTypeIcons,
+									item
+								)}
+							/>
+						),
+					},
 					...getThumbnailProps(item),
 				};
 			};

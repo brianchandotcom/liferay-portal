@@ -41,6 +41,8 @@ export default function ContentFDSPropsTransformer({
 		autocompleteURL: string;
 		cmsGroupId?: number;
 		collaboratorURLs: Record<string, string>;
+		fileMimeTypeCssClasses: Record<string, string>;
+		fileMimeTypeIcons: Record<string, string>;
 	};
 	creationMenu: any;
 	itemsActions?: any[];
@@ -172,6 +174,10 @@ export default function ContentFDSPropsTransformer({
 				});
 			}
 		},
-		views: transformViewsItemsProps(views),
+		views: transformViewsItemsProps({
+			fileMimeTypeCssClasses: additionalProps.fileMimeTypeCssClasses,
+			fileMimeTypeIcons: additionalProps.fileMimeTypeIcons,
+			views,
+		}),
 	};
 }

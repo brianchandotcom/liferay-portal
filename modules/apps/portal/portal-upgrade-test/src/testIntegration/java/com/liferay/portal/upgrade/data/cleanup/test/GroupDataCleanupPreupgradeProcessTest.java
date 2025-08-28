@@ -8,16 +8,18 @@ package com.liferay.portal.upgrade.data.cleanup.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -40,7 +42,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Luis Ortiz
  */
-@DataGuard(autoDelete = false, scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class GroupDataCleanupPreupgradeProcessTest
 	extends GroupDataCleanupPreupgradeProcess {
@@ -52,8 +53,6 @@ public class GroupDataCleanupPreupgradeProcessTest
 
 	@Before
 	public void setUp() throws Exception {
-		_classNames = _classNameLocalService.getClassNames(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		_resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -61,29 +60,24 @@ public class GroupDataCleanupPreupgradeProcessTest
 
 	@After
 	public void tearDown() throws Exception {
-		List<ClassName> classNames = ListUtil.remove(
-			_classNameLocalService.getClassNames(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			_classNames);
-
-		for (ClassName className : classNames) {
-			_classNameLocalService.deleteClassName(className);
-		}
-
 		List<ResourcePermission> resourcePermissions = ListUtil.remove(
 			_resourcePermissionLocalService.getResourcePermissions(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			_resourcePermissions);
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			_resourcePermissionLocalService.deleteResourcePermission(
-				resourcePermission);
+			if (resourcePermission.getScope() ==
+					ResourceConstants.SCOPE_INDIVIDUAL) {
+
+				_resourcePermissionLocalService.deleteResourcePermission(
+					resourcePermission);
+			}
 		}
 	}
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Group group = _groupLocalService.addGroup(
+		_group = _groupLocalService.addGroup(
 			TestPropsValues.getUserId(), 0,
 			GroupDataCleanupPreupgradeProcessTest.class.getName(),
 			RandomTestUtil.randomLong(), 0,
@@ -95,26 +89,42 @@ public class GroupDataCleanupPreupgradeProcessTest
 			ServiceContextTestUtil.getServiceContext());
 
 		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-			group.getGroupId(),
+			_group.getGroupId(),
 			_portal.getClassNameId(BlogsEntry.class.getName()), 0, true,
 			WorkflowConstants.STATUS_APPROVED);
 
-		runSQL("delete from Group_ where groupId = " + group.getGroupId());
+		runSQL(
+			"update Group_ set groupId = -1 where groupId = " +
+				_group.getGroupId());
 
-		upgrade();
+		try {
+			upgrade();
+		}
+		finally {
+			CacheRegistryUtil.clear();
+
+			runSQL(
+				"update Group_ set groupId = " + _group.getGroupId() +
+					" where groupId = -1");
+		}
 	}
 
-	private static List<ClassName> _classNames;
 	private static List<ResourcePermission> _resourcePermissions;
 
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
 
 	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ResourceLocalService _resourceLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

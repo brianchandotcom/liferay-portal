@@ -9,7 +9,6 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
-import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
@@ -411,43 +410,13 @@ public class PageSpecificationResourceImpl
 			pageSpecificationExternalReferenceCode, groupId);
 	}
 
-	private PageExperience _getPageExperience(
-		ContentPageSpecification contentPageSpecification,
-		String pageExperienceExternalReferenceCode) {
-
-		for (PageExperience pageExperience :
-				contentPageSpecification.getPageExperiences()) {
-
-			if (!Objects.equals(
-					pageExperience.getExternalReferenceCode(),
-					pageExperienceExternalReferenceCode)) {
-
-				continue;
-			}
-
-			return pageExperience;
-		}
-
-		throw new UnsupportedOperationException();
-	}
-
 	private void _preparePatch(
 		ContentPageSpecification contentPageSpecification,
 		ContentPageSpecification existingContentPageSpecification) {
 
-		if (contentPageSpecification.getPageExperiences() == null) {
-			return;
-		}
-
-		for (PageExperience pageExperience :
-				contentPageSpecification.getPageExperiences()) {
-
-			PageExperience existingPageExperience = _getPageExperience(
-				existingContentPageSpecification,
-				pageExperience.getExternalReferenceCode());
-
-			existingPageExperience.setPageElements(
-				pageExperience::getPageElements);
+		if (contentPageSpecification.getPageExperiences() != null) {
+			existingContentPageSpecification.setPageExperiences(
+				contentPageSpecification::getPageExperiences);
 		}
 	}
 

@@ -337,6 +337,10 @@ public class HttpComponentsUtil {
 		return StringPool.BLANK;
 	}
 
+	public static Map<String, String[]> getParameterMap(String queryString) {
+		return parameterMapFromString(queryString);
+	}
+
 	public static Set<String> getParameterNames(String queryString) {
 		if (Validator.isNull(queryString)) {
 			return Collections.emptySet();
@@ -366,10 +370,6 @@ public class HttpComponentsUtil {
 		}
 
 		return parameterNames;
-	}
-
-	public static Map<String, String[]> getParameterMap(String queryString) {
-		return parameterMapFromString(queryString);
 	}
 
 	public static String getPath(String url) {

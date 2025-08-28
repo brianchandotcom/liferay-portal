@@ -375,6 +375,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		String description = null;
 		Date displayDate = null;
 		Date expirationDate = null;
+		String urlTitle = null;
 
 		if (document != null) {
 			fileName = document.getFileName();
@@ -382,6 +383,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			description = document.getDescription();
 			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
+			urlTitle = document.getFriendlyUrlPath();
 		}
 
 		if (fileName == null) {
@@ -406,8 +408,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _toDocument(
 			_dlAppService.updateFileEntry(
-				documentId, fileName, binaryFile.getContentType(), title, null,
-				description, null, DLVersionNumberIncrease.AUTOMATIC,
+				documentId, fileName, binaryFile.getContentType(), title,
+				urlTitle, description, null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(), displayDate,
 				expirationDate, existingFileEntry.getReviewDate(),
 				_createServiceContext(

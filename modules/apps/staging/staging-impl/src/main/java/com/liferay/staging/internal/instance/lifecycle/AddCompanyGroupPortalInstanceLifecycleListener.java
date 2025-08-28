@@ -8,6 +8,7 @@ package com.liferay.staging.internal.instance.lifecycle;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -41,7 +42,7 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) {
-		_createCompanyGroup(
+		_manageCompanyGroup(
 			company.getCompanyId(),
 			FeatureFlagManagerUtil.isEnabled(
 				company.getCompanyId(), "LPD-35914"));
@@ -51,7 +52,7 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			FeatureFlagListener.class,
-			(companyId, featureFlagKey, enabled) -> _createCompanyGroup(
+			(companyId, featureFlagKey, enabled) -> _manageCompanyGroup(
 				companyId, enabled),
 			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));
 	}
@@ -63,33 +64,30 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _createCompanyGroup(long companyId, boolean enabled) {
-		try {
-			if (companyId == CompanyConstants.SYSTEM) {
-				return;
-			}
+	private void _createCompanyGroup(long companyId) throws PortalException {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			companyId, CompanyGroupConstants.FRIENDLY_URL);
 
-			Group group = _groupLocalService.fetchFriendlyURLGroup(
-				companyId, CompanyGroupConstants.FRIENDLY_URL);
-
-			if ((group != null) && !_isCompanyGroup(group)) {
-				_groupLocalService.deleteGroup(group);
-			}
-			else if ((group != null) || !enabled) {
-				return;
-			}
-
-			_groupLocalService.addGroup(
-				_userLocalService.getGuestUserId(companyId),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				StagingGroupHelper.class.getName(), CompanyConstants.SYSTEM,
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null,
-				GroupConstants.TYPE_SITE_RESTRICTED, true,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-				CompanyGroupConstants.FRIENDLY_URL, false, true, null);
+		if ((group != null) && !_isCompanyGroup(group)) {
+			_groupLocalService.deleteGroup(group);
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+
+		_groupLocalService.addGroup(
+			_userLocalService.getGuestUserId(companyId),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			StagingGroupHelper.class.getName(), CompanyConstants.SYSTEM,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null,
+			GroupConstants.TYPE_SITE_RESTRICTED, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			CompanyGroupConstants.FRIENDLY_URL, false, true, null);
+	}
+
+	private void _deleteCompanyGroup(long companyId) throws PortalException {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			companyId, CompanyGroupConstants.FRIENDLY_URL);
+
+		if (group != null) {
+			_groupLocalService.deleteGroup(group);
 		}
 	}
 
@@ -105,6 +103,24 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		}
 
 		return false;
+	}
+
+	private void _manageCompanyGroup(long companyId, boolean enabled) {
+		try {
+			if (companyId == CompanyConstants.SYSTEM) {
+				return;
+			}
+
+			if (enabled) {
+				_createCompanyGroup(companyId);
+			}
+			else {
+				_deleteCompanyGroup(companyId);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

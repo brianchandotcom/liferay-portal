@@ -45,7 +45,7 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"themeName": "Classic",
+		"themeName": "CMS",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",

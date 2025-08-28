@@ -194,7 +194,8 @@ public class ObjectEntryIndexerReindexTest {
 								).value(
 									Boolean.TRUE.toString()
 								).build())
-						).build()));
+						).build()),
+					Collections.emptyList());
 
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),

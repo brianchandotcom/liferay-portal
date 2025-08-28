@@ -148,7 +148,7 @@ public class ListTypeDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(),
-				Collections.singletonList(objectField));
+				Collections.singletonList(objectField),Collections.emptyList());
 
 		AssertUtils.assertFailure(
 			RequiredListTypeDefinitionException.class, null,

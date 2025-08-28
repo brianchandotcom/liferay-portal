@@ -96,7 +96,8 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Collections.emptyList(), Arrays.asList(objectField));
+			Collections.emptyList(), Arrays.asList(objectField),
+			Collections.emptyList());
 	}
 
 	private void _assertRelatedInfoCollectionProvider(

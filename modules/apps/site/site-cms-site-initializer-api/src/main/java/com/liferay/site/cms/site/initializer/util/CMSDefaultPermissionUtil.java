@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class CMSDefaultPermissionUtil {
 
-	public static ObjectEntry addOrUpdateCMSDefaultsPermission(
+	public static ObjectEntry addOrUpdateCMSDefaultPermission(
 			String externalReferenceCode, long groupId, long userId,
 			String classExternalReferenceCode, String className,
 			JSONObject permissionsJSONObject)
@@ -38,7 +38,7 @@ public class CMSDefaultPermissionUtil {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_DEFAULT_PERMISSION", group.getCompanyId());
+					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
 
 		return ObjectEntryLocalServiceUtil.addOrUpdateObjectEntry(
 			externalReferenceCode, groupId, userId,
@@ -63,7 +63,7 @@ public class CMSDefaultPermissionUtil {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_DEFAULT_PERMISSION", group.getCompanyId());
+					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
 
 		ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.fetchObjectEntry(
 			externalReferenceCode, group.getGroupId(),

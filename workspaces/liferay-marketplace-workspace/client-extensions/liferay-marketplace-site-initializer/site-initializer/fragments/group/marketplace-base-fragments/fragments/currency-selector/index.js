@@ -194,4 +194,6 @@ function main() {
 		});
 }
 
-main();
+if (Liferay.ThemeDisplay.isSignedIn()) {
+	main();
+}

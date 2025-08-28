@@ -103,9 +103,7 @@ public abstract class BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 				boolean numericTargetColumn = dbInspector.isNumeric(
 					targetTableName, targetColumnName);
 
-				if ((numericSourceColumn && !numericTargetColumn) ||
-					(!numericSourceColumn && numericTargetColumn)) {
-
+				if (numericSourceColumn != numericTargetColumn) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(

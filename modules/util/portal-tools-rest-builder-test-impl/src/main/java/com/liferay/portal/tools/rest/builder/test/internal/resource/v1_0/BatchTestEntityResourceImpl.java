@@ -98,19 +98,26 @@ public class BatchTestEntityResourceImpl
 	}
 
 	@Override
-	public List<String> getNestedFields() {
-		return Arrays.asList("nestedField", "relatedCompanyTestEntity");
-	}
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
 
-	@Override
-	public String getPortletId() {
-		return "com_liferay_portal_tools_rest_builder_test_portlet_" +
-			"BatchTestEntityPortlet";
-	}
+			@Override
+			public List<String> getNestedFields() {
+				return Arrays.asList("nestedField", "relatedCompanyTestEntity");
+			}
 
-	@Override
-	public Scope getScope() {
-		return Scope.COMPANY;
+			@Override
+			public String getPortletId() {
+				return "com_liferay_portal_tools_rest_builder_test_portlet_" +
+					"BatchTestEntityPortlet";
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+		};
 	}
 
 	@Override

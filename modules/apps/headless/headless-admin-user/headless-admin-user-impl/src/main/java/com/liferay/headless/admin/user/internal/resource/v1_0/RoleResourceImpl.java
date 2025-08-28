@@ -169,14 +169,26 @@ public class RoleResourceImpl
 	}
 
 	@Override
-	public String getPortletId() {
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-35914")) {
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
 
-			return RolesAdminPortletKeys.ROLES_ADMIN;
-		}
+			@Override
+			public String getPortletId() {
+				if (FeatureFlagManagerUtil.isEnabled(
+						CompanyConstants.SYSTEM, "LPD-35914")) {
 
-		return null;
+					return RolesAdminPortletKeys.ROLES_ADMIN;
+				}
+
+				return null;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+		};
 	}
 
 	@Override
@@ -248,11 +260,6 @@ public class RoleResourceImpl
 						contextUriInfo, contextUser),
 					role);
 			});
-	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.COMPANY;
 	}
 
 	@Override

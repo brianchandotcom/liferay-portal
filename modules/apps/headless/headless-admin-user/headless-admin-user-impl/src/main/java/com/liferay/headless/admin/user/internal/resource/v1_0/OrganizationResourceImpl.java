@@ -296,10 +296,33 @@ public class OrganizationResourceImpl
 	}
 
 	@Override
-	public List<String> getNestedFields() {
-		return List.of(
-			"accountBriefs", "imageBase64", "roleBriefs",
-			"taxonomyCategoryBriefs", "userAccountBriefs");
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of(
+					"accountBriefs", "imageBase64", "roleBriefs",
+					"taxonomyCategoryBriefs", "userAccountBriefs");
+			}
+
+			@Override
+			public String getPortletId() {
+				if (FeatureFlagManagerUtil.isEnabled(
+						CompanyConstants.SYSTEM, "LPD-35914")) {
+
+					return UsersAdminPortletKeys.ORGANIZATIONS_ADMIN;
+				}
+
+				return null;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+		};
 	}
 
 	@Override
@@ -401,22 +424,6 @@ public class OrganizationResourceImpl
 					0L)
 			).build(),
 			null, flatten, filter, search, pagination, sorts);
-	}
-
-	@Override
-	public String getPortletId() {
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-35914")) {
-
-			return UsersAdminPortletKeys.ORGANIZATIONS_ADMIN;
-		}
-
-		return null;
-	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.COMPANY;
 	}
 
 	@Override

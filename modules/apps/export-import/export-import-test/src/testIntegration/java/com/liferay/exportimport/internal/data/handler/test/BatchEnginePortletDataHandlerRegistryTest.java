@@ -188,13 +188,20 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 		}
 
 		@Override
-		public String getPortletId() {
-			return _portletId;
-		}
+		public ExportImportDescriptor getExportImportDescriptor() {
+			return new ExportImportDescriptor() {
 
-		@Override
-		public Scope getScope() {
-			return Scope.COMPANY;
+				@Override
+				public String getPortletId() {
+					return _portletId;
+				}
+
+				@Override
+				public Scope getScope() {
+					return Scope.COMPANY;
+				}
+
+			};
 		}
 
 		@Override

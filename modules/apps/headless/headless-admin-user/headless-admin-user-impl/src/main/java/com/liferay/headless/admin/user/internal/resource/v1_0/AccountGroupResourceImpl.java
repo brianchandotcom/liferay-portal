@@ -29,7 +29,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -213,13 +212,7 @@ public class AccountGroupResourceImpl
 
 			@Override
 			public String getPortletId() {
-				if (FeatureFlagManagerUtil.isEnabled(
-						CompanyConstants.SYSTEM, "LPD-35914")) {
-
-					return AccountPortletKeys.ACCOUNT_GROUPS_ADMIN;
-				}
-
-				return null;
+				return AccountPortletKeys.ACCOUNT_GROUPS_ADMIN;
 			}
 
 			@Override

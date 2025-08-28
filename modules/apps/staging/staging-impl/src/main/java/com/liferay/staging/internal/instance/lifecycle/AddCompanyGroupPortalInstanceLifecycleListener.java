@@ -109,20 +109,10 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 
 	private void _manageCompanyGroups(boolean enabled) {
 		if (enabled) {
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					if (companyId != CompanyConstants.SYSTEM) {
-						_createCompanyGroup(companyId);
-					}
-				});
+			_companyLocalService.forEachCompanyId(this::_createCompanyGroup);
 		}
 		else {
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					if (companyId != CompanyConstants.SYSTEM) {
-						_deleteCompanyGroup(companyId);
-					}
-				});
+			_companyLocalService.forEachCompanyId(this::_deleteCompanyGroup);
 		}
 	}
 

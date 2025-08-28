@@ -38,7 +38,7 @@ import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 public class LiferayHttpServletRequestWrapper
 	extends HttpServletRequestWrapper {
 
-	public static LiferayHttpServletRequestWrapper findHttpRuntimeRequest(
+	public static LiferayHttpServletRequestWrapper find(
 		HttpServletRequest httpServletRequest) {
 
 		while (httpServletRequest instanceof

@@ -134,6 +134,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLinkModel;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
@@ -152,6 +153,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -181,6 +183,8 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -249,7 +253,7 @@ public class ObjectDefinitionLocalServiceImpl
 			name, panelAppOrder, panelCategoryKey, null, null, pluralLabelMap,
 			portlet, scope, storageType, false, null, 0,
 			WorkflowConstants.STATUS_DRAFT, objectDefinitionSettings,
-			objectFields);
+			objectFields, workflowDefinitionLinks);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -342,7 +346,8 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionManager.getTitleObjectFieldName(),
 				systemObjectDefinitionManager.getVersion(),
 				WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),
-				systemObjectDefinitionManager.getObjectFields());
+				systemObjectDefinitionManager.getObjectFields(),
+				Collections.emptyList());
 
 			_addOrUpdateObjectActions(
 				userId, objectDefinition.getObjectDefinitionId(),
@@ -452,7 +457,7 @@ public class ObjectDefinitionLocalServiceImpl
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
 			portlet, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			true, titleObjectFieldName, version, status,
-			objectDefinitionSettings, objectFields);
+			objectDefinitionSettings, objectFields, workflowDefinitionLinks);
 	}
 
 	@Override
@@ -1255,7 +1260,7 @@ public class ObjectDefinitionLocalServiceImpl
 			enableObjectEntrySubscription, enableObjectEntryVersioning,
 			friendlyURLSeparator, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, null, null, pluralLabelMap, scope,
-			status, objectDefinitionSettings);
+			status, objectDefinitionSettings, workflowDefinitionLinks);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1346,6 +1351,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_addOrUpdateObjectDefinitionSettings(
 			objectDefinition, objectDefinitionSettings);
+		_addOrUpdateWorkflowDefinitionLinks(
+			objectDefinition, workflowDefinitionLinks);
 
 		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
 			objectDefinitionId, objectDefinition.getObjectFolderId(),
@@ -1448,7 +1455,8 @@ public class ObjectDefinitionLocalServiceImpl
 			String storageType, boolean system, String titleObjectFieldName,
 			int version, int status,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
-			List<ObjectField> objectFields)
+			List<ObjectField> objectFields,
+			List<WorkflowDefinitionLink> workflowDefinitionLinks)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -1586,6 +1594,8 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition);
 		}
 
+		_addOrUpdateWorkflowDefinitionLinks(
+			objectDefinition, workflowDefinitionLinks);
 		_addSystemObjectFields(
 			dbTableName, objectDefinition, pkObjectFieldName, userId);
 
@@ -1783,6 +1793,82 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setObjectDefinitionSettings(
 			_objectDefinitionSettingLocalService.getObjectDefinitionSettings(
 				objectDefinition.getObjectDefinitionId()));
+	}
+
+	private void _addOrUpdateWorkflowDefinitionLinks(
+			ObjectDefinition objectDefinition,
+			List<WorkflowDefinitionLink> workflowDefinitionLinks)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			return;
+		}
+
+		long groupId = 0;
+		Set<Long> oldWorkflowDefinitionLinkIds = new HashSet<>(
+			TransformUtil.transform(
+				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					objectDefinition.getCompanyId(),
+					objectDefinition.getClassName()),
+				WorkflowDefinitionLinkModel::getWorkflowDefinitionLinkId));
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(objectDefinition.getCompanyId());
+
+		for (WorkflowDefinitionLink workflowDefinitionLink :
+				workflowDefinitionLinks) {
+
+			if (!Objects.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+				groupId = workflowDefinitionLink.getGroupId();
+			}
+
+			WorkflowDefinitionLink existingWorkflowDefinitionLink =
+				_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+					objectDefinition.getCompanyId(), groupId,
+					objectDefinition.getClassName(), 0, 0, true);
+
+			KaleoDefinition kaleoDefinition =
+				_kaleoDefinitionLocalService.getKaleoDefinition(
+					workflowDefinitionLink.getWorkflowDefinitionName(),
+					serviceContext);
+
+			if (existingWorkflowDefinitionLink == null) {
+				_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+					null, workflowDefinitionLink.getUserId(),
+					objectDefinition.getCompanyId(), groupId,
+					objectDefinition.getClassName(), 0, 0,
+					kaleoDefinition.getName(), kaleoDefinition.getVersion());
+
+				continue;
+			}
+
+			if (!Objects.equals(
+					existingWorkflowDefinitionLink.getWorkflowDefinitionName(),
+					workflowDefinitionLink.getWorkflowDefinitionName())) {
+
+				existingWorkflowDefinitionLink.setWorkflowDefinitionName(
+					kaleoDefinition.getName());
+				existingWorkflowDefinitionLink.setWorkflowDefinitionVersion(
+					kaleoDefinition.getVersion());
+
+				existingWorkflowDefinitionLink =
+					_workflowDefinitionLinkLocalService.
+						updateWorkflowDefinitionLink(
+							existingWorkflowDefinitionLink);
+			}
+
+			oldWorkflowDefinitionLinkIds.remove(
+				existingWorkflowDefinitionLink.getWorkflowDefinitionLinkId());
+		}
+
+		for (Long oldWorkflowDefinitionLinkId : oldWorkflowDefinitionLinkIds) {
+			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				oldWorkflowDefinitionLinkId);
+		}
 	}
 
 	private ObjectField _addSystemObjectField(ObjectField objectField)
@@ -2429,7 +2515,8 @@ public class ObjectDefinitionLocalServiceImpl
 			String panelCategoryKey, boolean portlet,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			Map<Locale, String> pluralLabelMap, String scope, int status,
-			List<ObjectDefinitionSetting> objectDefinitionSettings)
+			List<ObjectDefinitionSetting> objectDefinitionSettings,
+			List<WorkflowDefinitionLink> workflowDefinitionLinks)
 		throws PortalException {
 
 		if (!objectDefinition.isApproved()) {
@@ -2576,6 +2663,9 @@ public class ObjectDefinitionLocalServiceImpl
 			_objectActionLocalService.addOrUpdateSubscriptionObjectActions(
 				objectDefinition);
 		}
+
+		_addOrUpdateWorkflowDefinitionLinks(
+			objectDefinition, workflowDefinitionLinks);
 
 		if (objectDefinition.isApproved()) {
 			if (!active && oldActive) {
@@ -3356,6 +3446,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private final Map<String, List<ServiceRegistration<?>>>
 		_inactiveServiceRegistrationsMap = new ConcurrentHashMap<>();
+
+	@Reference
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
 	@Reference
 	private Language _language;

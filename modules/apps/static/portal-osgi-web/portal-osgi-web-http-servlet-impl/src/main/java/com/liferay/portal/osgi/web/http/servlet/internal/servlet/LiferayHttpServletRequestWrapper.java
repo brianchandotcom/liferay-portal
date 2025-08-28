@@ -6,6 +6,8 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.RequestDispatcher;
@@ -26,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
-import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
 import org.eclipse.equinox.http.servlet.internal.servlet.RequestDispatcherAdaptor;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
@@ -79,21 +79,22 @@ public class LiferayHttpServletRequestWrapper
 
 	@Override
 	public Object getAttribute(String attributeName) {
-		DispatchTargets currentDispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets currentLiferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
 		DispatcherType dispatcherType =
-			currentDispatchTargets.getDispatcherType();
+			currentLiferayDispatchTargets.getDispatcherType();
 
 		if ((dispatcherType != DispatcherType.ASYNC) &&
 			(dispatcherType != DispatcherType.REQUEST) &&
 			attributeName.startsWith("jakarta.servlet.")) {
 
 			Map<String, Object> specialOverrides =
-				currentDispatchTargets.getSpecialOverides();
+				currentLiferayDispatchTargets.getSpecialOverides();
 
 			boolean hasServletName = false;
 
-			if (currentDispatchTargets.getServletName() != null) {
+			if (currentLiferayDispatchTargets.getServletName() != null) {
 				hasServletName = true;
 			}
 
@@ -131,32 +132,32 @@ public class LiferayHttpServletRequestWrapper
 				if (attributeName.equals(
 						"jakarta.servlet.include.context_path")) {
 
-					ContextController contextController =
-						currentDispatchTargets.getContextController();
+					LiferayContextController liferayContextController =
+						currentLiferayDispatchTargets.getContextController();
 
-					return contextController.getContextPath();
+					return liferayContextController.getContextPath();
 				}
 
 				if (attributeName.equals("jakarta.servlet.include.path_info")) {
-					return currentDispatchTargets.getPathInfo();
+					return currentLiferayDispatchTargets.getPathInfo();
 				}
 
 				if (attributeName.equals(
 						"jakarta.servlet.include.query_string")) {
 
-					return currentDispatchTargets.getQueryString();
+					return currentLiferayDispatchTargets.getQueryString();
 				}
 
 				if (attributeName.equals(
 						"jakarta.servlet.include.request_uri")) {
 
-					return currentDispatchTargets.getRequestURI();
+					return currentLiferayDispatchTargets.getRequestURI();
 				}
 
 				if (attributeName.equals(
 						"jakarta.servlet.include.servlet_path")) {
 
-					return currentDispatchTargets.getServletPath();
+					return currentLiferayDispatchTargets.getServletPath();
 				}
 
 				if (dispatcherAttribute) {
@@ -181,35 +182,35 @@ public class LiferayHttpServletRequestWrapper
 				if (attributeName.equals(
 						"jakarta.servlet.forward.context_path")) {
 
-					ContextController contextController =
-						currentDispatchTargets.getContextController();
+					LiferayContextController liferayContextController =
+						currentLiferayDispatchTargets.getContextController();
 
-					return contextController.getContextPath();
+					return liferayContextController.getContextPath();
 				}
 
-				DispatchTargets originalDispatchTargets =
-					(DispatchTargets)_dispatchTargetsDeque.getLast();
+				LiferayDispatchTargets originalLiferayDispatchTargets =
+					_liferayDispatchTargetsDeque.getLast();
 
 				if (attributeName.equals("jakarta.servlet.forward.path_info")) {
-					return originalDispatchTargets.getPathInfo();
+					return originalLiferayDispatchTargets.getPathInfo();
 				}
 
 				if (attributeName.equals(
 						"jakarta.servlet.forward.query_string")) {
 
-					return originalDispatchTargets.getQueryString();
+					return originalLiferayDispatchTargets.getQueryString();
 				}
 
 				if (attributeName.equals(
 						"jakarta.servlet.forward.request_uri")) {
 
-					return originalDispatchTargets.getRequestURI();
+					return originalLiferayDispatchTargets.getRequestURI();
 				}
 
 				if (attributeName.equals(
 						"jakarta.servlet.forward.servlet_path")) {
 
-					return originalDispatchTargets.getServletPath();
+					return originalLiferayDispatchTargets.getServletPath();
 				}
 
 				if (dispatcherAttribute) {
@@ -237,19 +238,21 @@ public class LiferayHttpServletRequestWrapper
 
 	@Override
 	public String getContextPath() {
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
-		ContextController contextController =
-			dispatchTargets.getContextController();
+		LiferayContextController liferayContextController =
+			liferayDispatchTargets.getContextController();
 
-		return contextController.getFullContextPath();
+		return liferayContextController.getFullContextPath();
 	}
 
 	@Override
 	public DispatcherType getDispatcherType() {
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
-		return dispatchTargets.getDispatcherType();
+		return liferayDispatchTargets.getDispatcherType();
 	}
 
 	@Override
@@ -265,9 +268,10 @@ public class LiferayHttpServletRequestWrapper
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
-		return dispatchTargets.getParameterMap();
+		return liferayDispatchTargets.getParameterMap();
 	}
 
 	@Override
@@ -286,29 +290,32 @@ public class LiferayHttpServletRequestWrapper
 
 	@Override
 	public String getPathInfo() {
-		DispatchTargets currentDispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets currentLiferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
-		if ((currentDispatchTargets.getServletName() == null) &&
-			(currentDispatchTargets.getDispatcherType() !=
+		if ((currentLiferayDispatchTargets.getServletName() == null) &&
+			(currentLiferayDispatchTargets.getDispatcherType() !=
 				DispatcherType.INCLUDE)) {
 
-			return currentDispatchTargets.getPathInfo();
+			return currentLiferayDispatchTargets.getPathInfo();
 		}
 
-		DispatchTargets originalDispatchTargets =
-			_dispatchTargetsDeque.getLast();
+		LiferayDispatchTargets originalLiferayDispatchTargets =
+			_liferayDispatchTargetsDeque.getLast();
 
-		return originalDispatchTargets.getPathInfo();
+		return originalLiferayDispatchTargets.getPathInfo();
 	}
 
 	@Override
 	public String getQueryString() {
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
-		if ((dispatchTargets.getServletName() == null) &&
-			(dispatchTargets.getDispatcherType() != DispatcherType.INCLUDE)) {
+		if ((liferayDispatchTargets.getServletName() == null) &&
+			(liferayDispatchTargets.getDispatcherType() !=
+				DispatcherType.INCLUDE)) {
 
-			return dispatchTargets.getQueryString();
+			return liferayDispatchTargets.getQueryString();
 		}
 
 		return _httpServletRequest.getQueryString();
@@ -328,40 +335,45 @@ public class LiferayHttpServletRequestWrapper
 
 	@Override
 	public RequestDispatcher getRequestDispatcher(String path) {
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
-		ContextController contextController =
-			dispatchTargets.getContextController();
+		LiferayContextController liferayContextController =
+			liferayDispatchTargets.getContextController();
 
 		if (!path.startsWith("/")) {
-			path = dispatchTargets.getServletPath() + "/" + path;
+			path = liferayDispatchTargets.getServletPath() + "/" + path;
 		}
 		else {
-			String fullContextPath = contextController.getFullContextPath();
+			String fullContextPath =
+				liferayContextController.getFullContextPath();
 
 			if (path.startsWith(fullContextPath)) {
 				path = path.substring(fullContextPath.length());
 			}
 		}
 
-		DispatchTargets requestedDispatchTargets =
-			contextController.getDispatchTargets(path);
+		LiferayDispatchTargets requestedLiferayDispatchTargets =
+			liferayContextController.getDispatchTargets(path);
 
-		if (requestedDispatchTargets == null) {
+		if (requestedLiferayDispatchTargets == null) {
 			return null;
 		}
 
-		return new RequestDispatcherAdaptor(requestedDispatchTargets, path);
+		return new RequestDispatcherAdaptor(
+			requestedLiferayDispatchTargets, path);
 	}
 
 	@Override
 	public String getRequestURI() {
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
-		if ((dispatchTargets.getServletName() == null) &&
-			(dispatchTargets.getDispatcherType() != DispatcherType.INCLUDE)) {
+		if ((liferayDispatchTargets.getServletName() == null) &&
+			(liferayDispatchTargets.getDispatcherType() !=
+				DispatcherType.INCLUDE)) {
 
-			return dispatchTargets.getRequestURI();
+			return liferayDispatchTargets.getRequestURI();
 		}
 
 		return _httpServletRequest.getRequestURI();
@@ -369,23 +381,26 @@ public class LiferayHttpServletRequestWrapper
 
 	@Override
 	public ServletContext getServletContext() {
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
 		ServletRegistration servletRegistration =
-			(ServletRegistration)dispatchTargets.getServletRegistration();
+			(ServletRegistration)
+				liferayDispatchTargets.getServletRegistration();
 
 		return servletRegistration.getServletContext();
 	}
 
 	@Override
 	public String getServletPath() {
-		DispatchTargets currentDispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets currentLiferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
-		if ((currentDispatchTargets.getServletName() == null) &&
-			(currentDispatchTargets.getDispatcherType() !=
+		if ((currentLiferayDispatchTargets.getServletName() == null) &&
+			(currentLiferayDispatchTargets.getDispatcherType() !=
 				DispatcherType.INCLUDE)) {
 
-			String servletPath = currentDispatchTargets.getServletPath();
+			String servletPath = currentLiferayDispatchTargets.getServletPath();
 
 			if (servletPath.equals("/")) {
 				return "";
@@ -394,10 +409,10 @@ public class LiferayHttpServletRequestWrapper
 			return servletPath;
 		}
 
-		DispatchTargets originalDispatchTargets =
-			_dispatchTargetsDeque.getLast();
+		LiferayDispatchTargets originalLiferayDispatchTargets =
+			_liferayDispatchTargetsDeque.getLast();
 
-		return originalDispatchTargets.getServletPath();
+		return originalLiferayDispatchTargets.getServletPath();
 	}
 
 	@Override
@@ -410,19 +425,21 @@ public class LiferayHttpServletRequestWrapper
 		HttpSession httpSession = _httpServletRequest.getSession(create);
 
 		if (httpSession != null) {
-			DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+			LiferayDispatchTargets liferayDispatchTargets =
+				_liferayDispatchTargetsDeque.peek();
 
-			ContextController contextController =
-				dispatchTargets.getContextController();
+			LiferayContextController liferayContextController =
+				liferayDispatchTargets.getContextController();
 
 			ServletRegistration servletRegistration =
-				(ServletRegistration)dispatchTargets.getServletRegistration();
+				(ServletRegistration)
+					liferayDispatchTargets.getServletRegistration();
 
 			Servlet servlet = servletRegistration.getT();
 
 			ServletConfig servletConfig = servlet.getServletConfig();
 
-			return contextController.getSessionAdaptor(
+			return liferayContextController.getSessionAdaptor(
 				httpSession, servletConfig.getServletContext());
 		}
 
@@ -430,41 +447,46 @@ public class LiferayHttpServletRequestWrapper
 	}
 
 	public synchronized void pop() {
-		if (_dispatchTargetsDeque.size() > 1) {
-			_dispatchTargetsDeque.pop();
+		if (_liferayDispatchTargetsDeque.size() > 1) {
+			_liferayDispatchTargetsDeque.pop();
 		}
 	}
 
-	public synchronized void push(DispatchTargets dispatchTargets) {
-		dispatchTargets.addRequestParameters(_httpServletRequest);
+	public synchronized void push(
+		LiferayDispatchTargets liferayDispatchTargets) {
 
-		_dispatchTargetsDeque.push(dispatchTargets);
+		liferayDispatchTargets.addRequestParameters(_httpServletRequest);
+
+		_liferayDispatchTargetsDeque.push(liferayDispatchTargets);
 	}
 
 	@Override
 	public void removeAttribute(String name) {
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
 		if (_dispatcherAttributes.contains(name)) {
 			Map<String, Object> specialOverrides =
-				dispatchTargets.getSpecialOverides();
+				liferayDispatchTargets.getSpecialOverides();
 
 			specialOverrides.remove(name);
 		}
 
 		_httpServletRequest.removeAttribute(name);
 
-		ContextController contextController =
-			dispatchTargets.getContextController();
+		LiferayContextController liferayContextController =
+			liferayDispatchTargets.getContextController();
 
-		EventListeners eventListeners = contextController.getEventListeners();
+		EventListeners eventListeners =
+			liferayContextController.getEventListeners();
 
 		List<ServletRequestAttributeListener> servletRequestAttributeListeners =
 			eventListeners.get(ServletRequestAttributeListener.class);
 
 		if (!servletRequestAttributeListeners.isEmpty()) {
 			ServletRegistration servletRegistration =
-				(ServletRegistration)dispatchTargets.getServletRegistration();
+				(ServletRegistration)
+					liferayDispatchTargets.getServletRegistration();
 
 			ServletRequestAttributeEvent servletRequestAttributeEvent =
 				new ServletRequestAttributeEvent(
@@ -482,34 +504,37 @@ public class LiferayHttpServletRequestWrapper
 
 	@Override
 	public void setAttribute(String name, Object value) {
-		boolean added = false;
+		boolean attributeAdded = false;
 
 		if (_httpServletRequest.getAttribute(name) == null) {
-			added = true;
+			attributeAdded = true;
 		}
 
-		DispatchTargets dispatchTargets = _dispatchTargetsDeque.peek();
+		LiferayDispatchTargets liferayDispatchTargets =
+			_liferayDispatchTargetsDeque.peek();
 
 		if ((value == null) && _dispatcherAttributes.contains(name)) {
 			Map<String, Object> specialOverrides =
-				dispatchTargets.getSpecialOverides();
+				liferayDispatchTargets.getSpecialOverides();
 
 			specialOverrides.put(name, _NULL_PLACEHOLDER);
 		}
 
 		_httpServletRequest.setAttribute(name, value);
 
-		ContextController contextController =
-			dispatchTargets.getContextController();
+		LiferayContextController liferayContextController =
+			liferayDispatchTargets.getContextController();
 
-		EventListeners eventListeners = contextController.getEventListeners();
+		EventListeners eventListeners =
+			liferayContextController.getEventListeners();
 
 		List<ServletRequestAttributeListener> servletRequestAttributeListeners =
 			eventListeners.get(ServletRequestAttributeListener.class);
 
 		if (!servletRequestAttributeListeners.isEmpty()) {
 			ServletRegistration servletRegistration =
-				(ServletRegistration)dispatchTargets.getServletRegistration();
+				(ServletRegistration)
+					liferayDispatchTargets.getServletRegistration();
 
 			ServletRequestAttributeEvent servletRequestAttributeEvent =
 				new ServletRequestAttributeEvent(
@@ -519,7 +544,7 @@ public class LiferayHttpServletRequestWrapper
 					servletRequestAttributeListener :
 						servletRequestAttributeListeners) {
 
-				if (added) {
+				if (attributeAdded) {
 					servletRequestAttributeListener.attributeAdded(
 						servletRequestAttributeEvent);
 				}
@@ -550,8 +575,8 @@ public class LiferayHttpServletRequestWrapper
 		"jakarta.servlet.include.request_uri",
 		"jakarta.servlet.include.servlet_path");
 
-	private final Deque<DispatchTargets> _dispatchTargetsDeque =
-		new LinkedList<>();
 	private final HttpServletRequest _httpServletRequest;
+	private final Deque<LiferayDispatchTargets> _liferayDispatchTargetsDeque =
+		new LinkedList<>();
 
 }

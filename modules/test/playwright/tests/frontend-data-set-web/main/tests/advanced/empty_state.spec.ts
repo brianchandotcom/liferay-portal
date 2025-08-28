@@ -82,6 +82,10 @@ test(
 					page,
 					visualizationMode: EFDSVisualizationMode.TABLE,
 				});
+
+				await expect(
+					fdsSamplePage.activeFiltersToolbar
+				).not.toBeVisible();
 			});
 		});
 
@@ -134,11 +138,6 @@ test(
 
 				await page
 					.locator('.dropdown-menu')
-					.getByRole('menuitem', {name: 'Status'})
-					.click();
-
-				await page
-					.locator('.dropdown-menu')
 					.getByRole('checkbox', {name: 'Pending'})
 					.check();
 
@@ -152,6 +151,7 @@ test(
 				await fdsSamplePage.managementToolbar.searchInput.fill(
 					'no results'
 				);
+
 				await fdsSamplePage.managementToolbar.container
 					.getByRole('button', {name: 'Search'})
 					.click();

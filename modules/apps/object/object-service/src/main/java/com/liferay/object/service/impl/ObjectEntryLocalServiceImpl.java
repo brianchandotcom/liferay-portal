@@ -2456,8 +2456,8 @@ public class ObjectEntryLocalServiceImpl
 				).build()));
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
-			groupId, classNameId, objectEntry.getObjectEntryId(), urlTitleMap,
-			serviceContext);
+			groupId, classNameId, objectEntry.getObjectEntryId(),
+			objectEntry.getDefaultLanguageId(), urlTitleMap, serviceContext);
 	}
 
 	private JoinStep _addInnerJoinON(

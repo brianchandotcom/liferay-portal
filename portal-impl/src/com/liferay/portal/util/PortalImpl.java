@@ -4719,7 +4719,7 @@ public class PortalImpl implements Portal {
 
 		Theme theme = themeDisplay.getTheme();
 
-		Set<String> parameterKeys = HttpComponentsUtil.getParameterKeys(
+		Set<String> parameterNames = HttpComponentsUtil.getParameterNames(
 			queryString);
 
 		StringBundler sb = new StringBundler(15);
@@ -4732,7 +4732,7 @@ public class PortalImpl implements Portal {
 
 		// Browser id
 
-		if (!parameterKeys.contains("browserId")) {
+		if (!parameterNames.contains("browserId")) {
 			sb.append("?browserId=");
 			sb.append(BrowserSnifferUtil.getBrowserId(httpServletRequest));
 
@@ -4742,7 +4742,7 @@ public class PortalImpl implements Portal {
 		// Theme and color scheme
 
 		if ((uri.endsWith(".css") || uri.endsWith(".jsp")) &&
-			!parameterKeys.contains("themeId")) {
+			!parameterNames.contains("themeId")) {
 
 			if (firstParam) {
 				sb.append("?themeId=");
@@ -4756,7 +4756,7 @@ public class PortalImpl implements Portal {
 			sb.append(URLCodec.encodeURL(theme.getThemeId()));
 		}
 
-		if (uri.endsWith(".jsp") && !parameterKeys.contains("colorSchemeId")) {
+		if (uri.endsWith(".jsp") && !parameterNames.contains("colorSchemeId")) {
 			if (firstParam) {
 				sb.append("?colorSchemeId=");
 
@@ -4773,7 +4773,7 @@ public class PortalImpl implements Portal {
 
 		// Minifier
 
-		if (!parameterKeys.contains("minifierType")) {
+		if (!parameterNames.contains("minifierType")) {
 			String minifierType = StringPool.BLANK;
 
 			if (uri.endsWith(".css") || uri.endsWith("css.jsp") ||
@@ -4838,7 +4838,7 @@ public class PortalImpl implements Portal {
 
 		// Timestamp
 
-		if (!parameterKeys.contains("t") && !(timestamp < 0)) {
+		if (!parameterNames.contains("t") && !(timestamp < 0)) {
 			if (timestamp == 0) {
 				String portalURL = getPortalURL(httpServletRequest);
 
@@ -7296,12 +7296,12 @@ public class PortalImpl implements Portal {
 			return url;
 		}
 
-		Set<String> parameterKeys = HttpComponentsUtil.getParameterKeys(
+		Set<String> parameterNames = HttpComponentsUtil.getParameterNames(
 			HttpComponentsUtil.getQueryString(url));
 
-		for (String parameter : parameterKeys) {
-			if (parameter.endsWith("redirect")) {
-				url = HttpComponentsUtil.removeParameter(url, parameter);
+		for (String parameterName : parameterNames) {
+			if (parameterName.endsWith("redirect")) {
+				url = HttpComponentsUtil.removeParameter(url, parameterName);
 			}
 		}
 

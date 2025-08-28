@@ -337,34 +337,35 @@ public class HttpComponentsUtil {
 		return StringPool.BLANK;
 	}
 
-	public static Set<String> getParameterKeys(String queryString) {
+	public static Set<String> getParameterNames(String queryString) {
 		if (Validator.isNull(queryString)) {
 			return Collections.emptySet();
 		}
 
-		Set<String> parameterKeys = new HashSet<>();
+		Set<String> parameterNames = new HashSet<>();
 
-		int startPos = 0;
+		int startIndex = 0;
 
 		while (true) {
-			int equalPos = queryString.indexOf(CharPool.EQUAL, startPos);
+			int equalIndex = queryString.indexOf(CharPool.EQUAL, startIndex);
 
-			if (equalPos <= 0) {
+			if (equalIndex <= 0) {
 				break;
 			}
 
-			parameterKeys.add(queryString.substring(startPos, equalPos));
+			parameterNames.add(queryString.substring(startIndex, equalIndex));
 
-			startPos = queryString.indexOf(CharPool.AMPERSAND, equalPos + 1);
+			startIndex = queryString.indexOf(
+				CharPool.AMPERSAND, equalIndex + 1);
 
-			if (startPos < 0) {
+			if (startIndex < 0) {
 				break;
 			}
 
-			startPos++;
+			startIndex++;
 		}
 
-		return parameterKeys;
+		return parameterNames;
 	}
 
 	public static Map<String, String[]> getParameterMap(String queryString) {

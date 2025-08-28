@@ -35,6 +35,7 @@ export default function SimpleActionLinkRenderer({
 
 	const isFolder =
 		itemData?.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
+
 	const resolvedActionId = isFolder ? `${actionId}Folder` : actionId;
 
 	const selectedAction = actions.find(

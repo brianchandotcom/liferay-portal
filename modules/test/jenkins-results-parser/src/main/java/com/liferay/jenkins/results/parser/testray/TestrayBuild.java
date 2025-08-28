@@ -19,9 +19,11 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -206,7 +208,11 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 				true, "caseResults", TestrayCaseResult.FIELD_NAMES,
 				sb.toString(), null, 0, 1000);
 
-			for (JSONObject entityJSONObject : entityJSONObjects) {
+			Set<JSONObject> entityJSONObjectsSet = new HashSet<>();
+
+			entityJSONObjectsSet.addAll(entityJSONObjects);
+
+			for (JSONObject entityJSONObject : entityJSONObjectsSet) {
 				TestrayCaseResult testrayCaseResult =
 					TestrayFactory.newJSONObjectTestrayCaseResult(
 						this, entityJSONObject);

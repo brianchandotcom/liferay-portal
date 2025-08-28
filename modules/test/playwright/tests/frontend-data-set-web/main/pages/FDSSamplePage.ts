@@ -96,7 +96,7 @@ export class FDSSamplePage {
 		});
 		this.fdsWrapper = page.locator('div.data-set-wrapper').first();
 		this.fileDropModal = page.getByRole('dialog', {
-			name: 'Files',
+			name: 'Custom dummy file uploader',
 		});
 		this.infoPanel = page.locator('.fds-info-panel');
 

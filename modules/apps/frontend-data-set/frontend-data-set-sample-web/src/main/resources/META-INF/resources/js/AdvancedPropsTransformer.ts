@@ -10,6 +10,7 @@ import {fetch} from 'frontend-js-web';
 
 import CustomAuthorTableCell from './CustomAuthorTableCell';
 import SampleInfoPanel from './SampleInfoPanel';
+import dummyUploader from './dummyUploader';
 
 import type {
 	ICardSchema,
@@ -32,6 +33,7 @@ export default function propsTransformer({
 	const fileDropSettings: IFileDropSettings = {
 		enabled: true,
 		isDropTarget: ({item}: {item: any}) => item.color !== 'Green',
+		onFileDrop: dummyUploader,
 	};
 
 	const views: Array<IView> = otherProps.views;

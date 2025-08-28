@@ -217,8 +217,7 @@ public class ResponseStateHandler {
 		}
 
 		LiferayHttpServletRequestWrapper liferayHttpServletRequestWrapper =
-			LiferayHttpServletRequestWrapper.findHttpRuntimeRequest(
-				_httpServletRequest);
+			LiferayHttpServletRequestWrapper.find(_httpServletRequest);
 
 		try {
 			errorLiferayDispatchTargets.setDispatcherType(DispatcherType.ERROR);
@@ -307,8 +306,7 @@ public class ResponseStateHandler {
 		}
 
 		LiferayHttpServletResponseWrapper liferayHttpServletResponseWrapper =
-			LiferayHttpServletResponseWrapper.findHttpRuntimeResponse(
-				_httpServletResponse);
+			LiferayHttpServletResponseWrapper.find(_httpServletResponse);
 
 		if (liferayHttpServletResponseWrapper == null) {
 			throw new IllegalStateException(
@@ -345,8 +343,7 @@ public class ResponseStateHandler {
 		}
 
 		LiferayHttpServletRequestWrapper liferayHttpServletRequestWrapper =
-			LiferayHttpServletRequestWrapper.findHttpRuntimeRequest(
-				_httpServletRequest);
+			LiferayHttpServletRequestWrapper.find(_httpServletRequest);
 
 		try {
 			errorLiferayDispatchTargets.setDispatcherType(DispatcherType.ERROR);

@@ -113,11 +113,11 @@ public class CMSDefaultPermissionUtilTest {
 	}
 
 	@Test
-	public void testAddOrUpdateDefaultsPermission() throws Exception {
+	public void testAddOrUpdateDefaultPermission() throws Exception {
 		Group group = _depotEntry.getGroup();
 
 		ObjectEntry objectEntry1 =
-			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultsPermission(
+			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
 				group.getExternalReferenceCode(), group.getGroupId(),
 				TestPropsValues.getUserId(), group.getExternalReferenceCode(),
 				_depotEntry.getModelClassName(),
@@ -135,7 +135,7 @@ public class CMSDefaultPermissionUtilTest {
 		Assert.assertEquals(ActionKeys.VIEW, jsonArray.getString(0));
 
 		ObjectEntry objectEntry2 =
-			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultsPermission(
+			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
 				group.getExternalReferenceCode(), group.getGroupId(),
 				TestPropsValues.getUserId(), group.getExternalReferenceCode(),
 				_depotEntry.getModelClassName(),
@@ -162,7 +162,7 @@ public class CMSDefaultPermissionUtilTest {
 	public void testGetCMSDefaultPermissionPermissions() throws Exception {
 		Group group = _depotEntry.getGroup();
 
-		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultsPermission(
+		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
 			group.getExternalReferenceCode(), group.getGroupId(),
 			TestPropsValues.getUserId(), group.getExternalReferenceCode(),
 			_depotEntry.getModelClassName(),

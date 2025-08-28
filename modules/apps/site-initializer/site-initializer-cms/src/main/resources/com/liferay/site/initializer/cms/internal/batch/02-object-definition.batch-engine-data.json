@@ -657,12 +657,12 @@
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "L_DEFAULT_PERMISSION",
+			"externalReferenceCode": "L_CMS_DEFAULT_PERMISSION",
 			"label": {
 				"en_US": "Default Permission"
 			},
 			"modifiable": false,
-			"name": "DefaultPermission",
+			"name": "CMSDefaultPermission",
 			"objectActions": [
 			],
 			"objectDefinitionSettings": [

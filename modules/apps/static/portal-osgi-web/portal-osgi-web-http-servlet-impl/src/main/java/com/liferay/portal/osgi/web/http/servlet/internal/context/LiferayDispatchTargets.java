@@ -164,8 +164,7 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		HttpServletRequest newHttpServletRequest = httpServletRequest;
 
 		LiferayHttpServletRequestWrapper liferayHttpServletRequestWrapper =
-			LiferayHttpServletRequestWrapper.findHttpRuntimeRequest(
-				httpServletRequest);
+			LiferayHttpServletRequestWrapper.find(httpServletRequest);
 
 		if (liferayHttpServletRequestWrapper == null) {
 			liferayHttpServletRequestWrapper =

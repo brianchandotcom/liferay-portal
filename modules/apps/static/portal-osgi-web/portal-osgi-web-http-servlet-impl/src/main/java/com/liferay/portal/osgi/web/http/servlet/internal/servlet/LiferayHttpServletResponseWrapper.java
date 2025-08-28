@@ -16,7 +16,7 @@ import java.io.IOException;
 public class LiferayHttpServletResponseWrapper
 	extends HttpServletResponseWrapper {
 
-	public static LiferayHttpServletResponseWrapper findHttpRuntimeResponse(
+	public static LiferayHttpServletResponseWrapper find(
 		HttpServletResponse httpServletResponse) {
 
 		while (httpServletResponse instanceof

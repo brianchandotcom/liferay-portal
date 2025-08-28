@@ -127,8 +127,8 @@ public class SegmentsExperienceUtil {
 
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext =
 			new LayoutStructureItemImporterContext(
-				layout.getGroupId(), layout, segmentsExperienceId,
-				serviceContext.getUserId());
+				serviceContext.getCompanyId(), layout.getGroupId(), layout,
+				segmentsExperienceId, serviceContext.getUserId());
 
 		for (PageElement pageElement : pageExperience.getPageElements()) {
 			LayoutStructureUtil.addLayoutStructureItem(

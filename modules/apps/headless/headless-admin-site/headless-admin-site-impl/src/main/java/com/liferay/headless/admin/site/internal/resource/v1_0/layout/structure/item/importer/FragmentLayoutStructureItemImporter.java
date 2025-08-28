@@ -16,7 +16,9 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefin
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -109,7 +111,7 @@ public class FragmentLayoutStructureItemImporter
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
 			fragmentInstancePageElementDefinition,
-			layoutStructureItemImporterContext.getGroupId());
+			layoutStructureItemImporterContext);
 
 		if (fragmentEntry == null) {
 			throw new UnsupportedOperationException();
@@ -161,9 +163,11 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private FragmentEntry _getFragmentEntry(
-		FragmentInstancePageElementDefinition
-			fragmentInstancePageElementDefinition,
-		long groupId) {
+			FragmentInstancePageElementDefinition
+				fragmentInstancePageElementDefinition,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
+		throws Exception {
 
 		FragmentReference fragmentReference =
 			fragmentInstancePageElementDefinition.getFragmentReference();
@@ -180,12 +184,23 @@ public class FragmentLayoutStructureItemImporter
 			FragmentItemExternalReference fragmentItemExternalReference =
 				(FragmentItemExternalReference)fragmentReference;
 
+			long scopeGroupId = layoutStructureItemImporterContext.getGroupId();
+
+			Scope scope = fragmentItemExternalReference.getScope();
+
+			if (scope != null) {
+				scopeGroupId = GroupUtil.getGroupId(
+					true, true,
+					layoutStructureItemImporterContext.getCompanyId(),
+					GetterUtil.getString(scope.getExternalReferenceCode()));
+			}
+
 			return FragmentEntryLocalServiceUtil.
 				fetchFragmentEntryByExternalReferenceCode(
 					GetterUtil.getString(
 						fragmentItemExternalReference.
 							getExternalReferenceCode()),
-					groupId);
+					scopeGroupId);
 		}
 
 		DefaultFragmentReference defaultFragmentReference =
@@ -248,7 +263,7 @@ public class FragmentLayoutStructureItemImporter
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
 			fragmentInstancePageElementDefinition,
-			layoutStructureItemImporterContext.getGroupId());
+			layoutStructureItemImporterContext);
 		Layout layout = layoutStructureItemImporterContext.getLayout();
 
 		if ((fragmentEntry == null) ||

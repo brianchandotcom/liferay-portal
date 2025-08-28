@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.internal.constants.CompanyGroupConstants;
 
@@ -74,8 +73,8 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 			Group group = _groupLocalService.fetchFriendlyURLGroup(
 				companyId, CompanyGroupConstants.FRIENDLY_URL);
 
-			if ((group != null) && !_isCompanyGroup(group)) {
-				_groupLocalService.deleteGroup(group);
+			if (group != null) {
+				return;
 			}
 
 			_groupLocalService.addGroup(
@@ -104,20 +103,6 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
-	}
-
-	private boolean _isCompanyGroup(Group group) {
-		if (StringUtil.equals(
-				group.getClassName(), StagingGroupHelper.class.getName()) &&
-			(group.getClassPK() == CompanyConstants.SYSTEM) &&
-			(group.getParentGroupId() ==
-				GroupConstants.DEFAULT_PARENT_GROUP_ID) &&
-			!group.isSite()) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _manageCompanyGroup(long companyId, boolean enabled) {

@@ -2,13 +2,13 @@
 	.vocab-facet {
 		border-radius: 10px;
 	}
-	
+
 	.vocab-facet .clear-btn {
 		color: #2B3A4B;
 		font-size: 14px;
 		font-weight: 400;
 	}
-	
+
 	.vocab-facet .panel a {
 		padding: 1.5rem;
 		padding-bottom: 0;
@@ -39,21 +39,21 @@
 	}
 </style>
 
-<#assign appliedFilterCount = 0>
+<#assign appliedFilterCount = 0 />
 <#list entries as entry>
-  <#if entry.isSelected()>
-    <#assign appliedFilterCount++ >
-  </#if>
+<#if entry.isSelected()>
+	<#assign appliedFilterCount++>
+</#if>
 </#list>
-	
+
 <#if appliedFilterCount == 0>
-	<#assign title = "${assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case}">
+	<#assign title = "${assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case}" />
 <#else>
-	<#assign title = "${assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case} (${appliedFilterCount})">
+	<#assign title = "${assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case} (${appliedFilterCount})" />
 </#if>
 
 <@liferay_ui["panel-container"]
-	cssClass="vocab-facet bg-white border-radius-xlarge"	
+	cssClass="vocab-facet bg-white border-radius-xlarge"
 	extended=true
 	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
 	markupView="lexicon"
@@ -93,6 +93,7 @@
 										onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 										type="checkbox"
 									/>
+
 									<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 										<span class="custom-control-label-text">
 											${htmlUtil.escape(entry.getDisplayName())}
@@ -165,10 +166,10 @@
 
 		window.location.href = url.href
 	}
-	
+
 	function ${namespace}viewAll(event, dataTarget) {
 		event.preventDefault();
-	
+
 		const subtreeCategoryTreeElement = document.getElementById(dataTarget);
 
 		if (subtreeCategoryTreeElement) {

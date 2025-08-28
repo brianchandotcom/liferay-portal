@@ -58,8 +58,16 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			FeatureFlagListener.class,
-			(companyId, featureFlagKey, enabled) -> _manageCompanyGroups(
-				enabled),
+			(companyId, featureFlagKey, enabled) -> {
+				if (enabled) {
+					_companyLocalService.forEachCompanyId(
+						this::_createCompanyGroup);
+				}
+				else {
+					_companyLocalService.forEachCompanyId(
+						this::_deleteCompanyGroup);
+				}
+			},
 			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));
 	}
 
@@ -104,15 +112,6 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
-		}
-	}
-
-	private void _manageCompanyGroups(boolean enabled) {
-		if (enabled) {
-			_companyLocalService.forEachCompanyId(this::_createCompanyGroup);
-		}
-		else {
-			_companyLocalService.forEachCompanyId(this::_deleteCompanyGroup);
 		}
 	}
 

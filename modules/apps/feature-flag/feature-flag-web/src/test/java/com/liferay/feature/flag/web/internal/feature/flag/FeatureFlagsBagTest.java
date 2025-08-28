@@ -105,6 +105,7 @@ public class FeatureFlagsBagTest {
 
 		try {
 			_featureFlagsBag.isEnabled(randomKey);
+
 			Assert.fail("Nonexistent keys should throw an exception");
 		}
 		catch (IllegalStateException illegalStateException) {

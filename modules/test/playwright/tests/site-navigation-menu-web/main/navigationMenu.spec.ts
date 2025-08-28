@@ -1332,3 +1332,74 @@ test(
 		);
 	}
 );
+
+test(
+	'Ensure nested submenu with browsable element is displayed',
+	{
+		tag: '@LPD-64079',
+	},
+	async ({
+		apiHelpers,
+		navigationMenuWidgetPage,
+		navigationMenusPage,
+		page,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await navigationMenusPage.goto(site.friendlyUrlPath);
+
+		const navigationMenuName = getRandomString();
+
+		await navigationMenusPage.createNavigationMenu(navigationMenuName);
+
+		const parentSubmenuItemName = getRandomString();
+
+		await navigationMenusPage.addSubmenuItem(parentSubmenuItemName);
+
+		const childSubmenuItemName = getRandomString();
+
+		await navigationMenusPage.addSubmenuItem(
+			childSubmenuItemName,
+			parentSubmenuItemName
+		);
+
+		const urlItemName = getRandomString();
+
+		await navigationMenusPage.addURLItem(urlItemName);
+
+		const source = page.getByRole('button', {name: 'Move ' + urlItemName});
+		const target = page
+			.locator('.site_navigation_menu_editor_MenuItem')
+			.nth(1);
+
+		const targetRect = await target.evaluate((element) =>
+			element.getBoundingClientRect()
+		);
+
+		await source.hover();
+		await page.mouse.down();
+		await page.mouse.move(targetRect.right - 1, targetRect.bottom - 1);
+		await page.mouse.up();
+
+		await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+		await navigationMenuWidgetPage.openConfigurationModal(
+			layout.nameCurrentValue
+		);
+
+		await navigationMenuWidgetPage.selectCustomNavigationMenu(
+			navigationMenuName
+		);
+
+		await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
+
+		await page.getByRole('menuitem', {name: parentSubmenuItemName}).hover();
+
+		await expect(page.getByRole('link', {name: urlItemName})).toBeVisible();
+	}
+);

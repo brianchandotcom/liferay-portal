@@ -220,10 +220,26 @@ export class NavigationMenusPage {
 		await waitForAlert(this.page, 'Success');
 	}
 
-	async addSubmenuItem(submenuName: string) {
-		await this.addMenuItemButton.click();
+	async addSubmenuItem(submenuName: string, submenuItemName?: string) {
+		if (submenuItemName) {
+			await this.page
+				.locator('p.card-title')
+				.filter({hasText: submenuItemName})
+				.hover();
 
-		await (await this.getMenuItem('Submenu')).click();
+			await this.page
+				.getByLabel('View ' + submenuItemName + ' Options')
+				.click();
+
+			await (await this.getMenuItem('Add Child')).hover();
+
+			await this.page.getByText('Submenu', {exact: true}).nth(4).click();
+		}
+		else {
+			await this.addMenuItemButton.click();
+
+			await (await this.getMenuItem('Submenu')).click();
+		}
 
 		// Wait until the modal is fully loaded
 

@@ -93,7 +93,7 @@ test(
 );
 
 test(
-	'Create a picklist from the structure builder by opening other tab',
+	'Can translate a content with a Select field',
 	{tag: '@LPD-62179'},
 	async ({
 		contentsPage,

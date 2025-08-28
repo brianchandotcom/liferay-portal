@@ -5,17 +5,367 @@
 
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.ExpiredAsset;
+import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryRetrieverUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.ExpiredAssetResource;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.object.model.ObjectDefinitionTable;
+import com.liferay.object.model.ObjectEntryFolderTable;
+import com.liferay.object.model.ObjectEntryTable;
+import com.liferay.object.model.ObjectEntryVersionTable;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.sql.Clob;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
- * @author Rachael Koestartyo
+ * @author Thiago Buarque
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/expired-asset.properties",
 	scope = ServiceScope.PROTOTYPE, service = ExpiredAssetResource.class
 )
 public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
+
+	@Override
+	public Page<ExpiredAsset> getExpiredAssetsPage(
+			Long depotEntryId, String languageId, Pagination pagination)
+		throws Exception {
+
+		Long[] groupIds = DepotEntryRetrieverUtil.getGroupIds(
+			DepotEntryRetrieverUtil.getDepotEntries(
+				contextCompany.getCompanyId(), depotEntryId));
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId, true, false);
+
+		if (locale == null) {
+			locale = contextUser.getLocale();
+		}
+
+		return Page.of(
+			_getExpiredAssets(
+				languageId, groupIds, LocaleUtil.toLanguageId(locale),
+				pagination),
+			pagination, _getExpiredObjectsTotalCount(languageId, groupIds));
+	}
+
+	private List<ExpiredAsset> _getExpiredAssets(
+		String filterLanguageId, Long[] groupIds, String languageId,
+		Pagination pagination) {
+
+		List<ExpiredAsset> expiredAssets = new ArrayList<>();
+
+		for (Object[] object :
+				_getExpiredObjects(
+					filterLanguageId, groupIds, languageId, pagination)) {
+
+			long objectEntryId = (Long)object[3];
+
+			ExpiredAsset expiredAsset = new ExpiredAsset();
+
+			expiredAsset.setHref(
+				() -> StringBundler.concat(
+					_portal.getPortalURL(contextHttpServletRequest),
+					_portal.getPathMain(), GroupConstants.CMS_FRIENDLY_URL,
+					"/edit_content_item?&p_l_mode=read&p_p_state=",
+					LiferayWindowState.POP_UP, "&objectEntryId=",
+					objectEntryId));
+
+			expiredAsset.setTitle(
+				() -> {
+					String localizedTitle = String.valueOf(object[1]);
+
+					if (Validator.isNotNull(localizedTitle)) {
+						return localizedTitle;
+					}
+
+					return String.valueOf(object[4]);
+				});
+
+			String className = String.valueOf(object[0]);
+
+			expiredAsset.setUsages(
+				() -> _getUsages(
+					_portal.getClassNameId(className), objectEntryId, className,
+					groupIds, (Long)object[2]));
+
+			expiredAssets.add(expiredAsset);
+		}
+
+		return expiredAssets;
+	}
+
+	private List<Object[]> _getExpiredObjects(
+		String filterLanguageId, Long[] groupIds, String languageId,
+		Pagination pagination) {
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			_objectDefinitionTable.className,
+			DSLFunctionFactoryUtil.castClobText(
+				_getLocalizedTitleExpression(languageId)
+			).as(
+				"localized_title"
+			),
+			_objectEntryTable.objectDefinitionId,
+			_objectEntryTable.objectEntryId,
+			DSLFunctionFactoryUtil.castClobText(
+				_getTitleExpression()
+			).as(
+				"title"
+			)
+		).from(
+			ObjectEntryTable.INSTANCE
+		).innerJoinON(
+			_objectDefinitionTable,
+			_objectDefinitionTable.objectDefinitionId.eq(
+				_objectEntryTable.objectDefinitionId)
+		).innerJoinON(
+			_objectEntryFolderTable,
+			_objectEntryFolderTable.objectEntryFolderId.eq(
+				_objectEntryTable.objectEntryFolderId)
+		).innerJoinON(
+			_objectEntryVersionTable,
+			_objectEntryVersionTable.objectEntryId.eq(
+				_objectEntryTable.objectEntryId
+			).and(
+				_objectEntryVersionTable.version.eq(_objectEntryTable.version)
+			)
+		).where(
+			_getWhereClause(groupIds, filterLanguageId)
+		).orderBy(
+			_objectEntryVersionTable.statusDate.descending()
+		).limit(
+			pagination.getStartPosition(), pagination.getEndPosition()
+		);
+
+		return _objectEntryLocalService.dslQuery(dslQuery);
+	}
+
+	private long _getExpiredObjectsTotalCount(
+		String filterLanguageId, Long[] groupIds) {
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			DSLFunctionFactoryUtil.count(
+				_objectEntryTable.objectEntryId
+			).as(
+				"totalCount"
+			)
+		).from(
+			ObjectEntryTable.INSTANCE
+		).innerJoinON(
+			_objectDefinitionTable,
+			_objectDefinitionTable.objectDefinitionId.eq(
+				_objectEntryTable.objectDefinitionId)
+		).innerJoinON(
+			_objectEntryFolderTable,
+			_objectEntryFolderTable.objectEntryFolderId.eq(
+				_objectEntryTable.objectEntryFolderId)
+		).innerJoinON(
+			_objectEntryVersionTable,
+			_objectEntryVersionTable.objectEntryId.eq(
+				_objectEntryTable.objectEntryId
+			).and(
+				_objectEntryVersionTable.version.eq(_objectEntryTable.version)
+			)
+		).where(
+			_getWhereClause(groupIds, filterLanguageId)
+		);
+
+		List<Object[]> results = _objectEntryLocalService.dslQuery(dslQuery);
+
+		return GetterUtil.getLong(results.get(0));
+	}
+
+	private <T> Expression<T> _getLocalizedTitleExpression(String languageId) {
+		DB db = DBManagerUtil.getDB();
+
+		String localizedTitlePath = "$.properties.title_i18n." + languageId;
+
+		Column<ObjectEntryVersionTable, Clob> contentColumn =
+			ObjectEntryVersionTable.INSTANCE.content;
+
+		if ((db.getDBType() == DBType.MYSQL) ||
+			(db.getDBType() == DBType.MARIADB)) {
+
+			return new DSLFunction<>(
+				new DSLFunctionType("JSON_UNQUOTE(", ")"),
+				new DSLFunction<>(
+					new DSLFunctionType("JSON_EXTRACT(", ")"), contentColumn,
+					new Scalar<>(localizedTitlePath)));
+		}
+
+		if (db.getDBType() == DBType.POSTGRESQL) {
+			return new DSLFunction<>(
+				new DSLFunctionType("json_extract_path_text(", ")"),
+				contentColumn, new Scalar<>("properties"),
+				new Scalar<>("title_i18n"),
+				new Scalar<>(String.valueOf(languageId)));
+		}
+
+		return new DSLFunction<>(
+			new DSLFunctionType("JSON_VALUE(", ")"), contentColumn,
+			new Scalar<>(localizedTitlePath));
+	}
+
+	private <T> Expression<T> _getPropertyValueExpression(
+		Expression<T> expression, String propertyName) {
+
+		DB db = DBManagerUtil.getDB();
+
+		if ((db.getDBType() == DBType.MYSQL) ||
+			(db.getDBType() == DBType.MARIADB)) {
+
+			return new DSLFunction<>(
+				new DSLFunctionType("JSON_EXTRACT(", ")"), expression,
+				new Scalar<>(propertyName));
+		}
+
+		return new DSLFunction<>(
+			new DSLFunctionType("JSON_QUERY(", ")"), expression,
+			new Scalar<>(propertyName));
+	}
+
+	private <T> Expression<T> _getTitleExpression() {
+		DB db = DBManagerUtil.getDB();
+
+		String defaultTitlePath = "$.properties.title";
+
+		Column<ObjectEntryVersionTable, Clob> contentColumn =
+			ObjectEntryVersionTable.INSTANCE.content;
+
+		if ((db.getDBType() == DBType.MYSQL) ||
+			(db.getDBType() == DBType.MARIADB)) {
+
+			return new DSLFunction<>(
+				new DSLFunctionType("JSON_UNQUOTE(", ")"),
+				new DSLFunction<>(
+					new DSLFunctionType("JSON_EXTRACT(", ")"), contentColumn,
+					new Scalar<>(defaultTitlePath)));
+		}
+
+		if (db.getDBType() == DBType.POSTGRESQL) {
+			return new DSLFunction<>(
+				new DSLFunctionType("json_extract_path_text(", ")"),
+				contentColumn, new Scalar<>("properties"),
+				new Scalar<>("title"));
+		}
+
+		return new DSLFunction<>(
+			new DSLFunctionType("JSON_VALUE(", ")"), contentColumn,
+			new Scalar<>(defaultTitlePath));
+	}
+
+	private int _getUsages(
+			long classNameId, long entryClassPK, String entryClassName,
+			Long[] groupIds, long objectDefinitionId)
+		throws PortalException {
+
+		int usages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesCount(classNameId, entryClassPK);
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.
+				getObjectRelationshipsByObjectDefinitionId2(objectDefinitionId);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						entryClassName, contextCompany.getCompanyId(),
+						objectRelationship.getType());
+
+			for (long groupId : groupIds) {
+				usages += objectRelatedModelsProvider.getRelatedModelsCount(
+					groupId, objectRelationship.getObjectRelationshipId(),
+					entryClassPK, null);
+			}
+		}
+
+		return usages;
+	}
+
+	private Predicate _getWhereClause(Long[] groupIds, String languageId) {
+		Predicate predicate = _objectEntryTable.groupId.in(
+			groupIds
+		).and(
+			_objectEntryTable.status.eq(WorkflowConstants.STATUS_EXPIRED)
+		).and(
+			_objectEntryFolderTable.externalReferenceCode.in(
+				new String[] {"L_CONTENTS", "L_FILES"})
+		);
+
+		if (Validator.isNotNull(languageId)) {
+			predicate = predicate.and(
+				_getPropertyValueExpression(
+					_objectEntryVersionTable.content, "$.properties.title_i18n"
+				).like(
+					"%\"" + languageId + "\":%"
+				));
+		}
+
+		return predicate;
+	}
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	private final ObjectDefinitionTable _objectDefinitionTable =
+		ObjectDefinitionTable.INSTANCE;
+	private final ObjectEntryFolderTable _objectEntryFolderTable =
+		ObjectEntryFolderTable.INSTANCE;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private final ObjectEntryTable _objectEntryTable =
+		ObjectEntryTable.INSTANCE;
+	private final ObjectEntryVersionTable _objectEntryVersionTable =
+		ObjectEntryVersionTable.INSTANCE;
+
+	@Reference
+	private ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private Portal _portal;
+
 }

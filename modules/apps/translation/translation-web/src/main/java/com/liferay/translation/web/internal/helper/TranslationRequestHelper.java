@@ -96,15 +96,8 @@ public class TranslationRequestHelper {
 	}
 
 	public long getClassNameId() {
-		if (_classNameId != null) {
-			return _classNameId;
-		}
-
-		_classNameId = PortalUtil.getClassNameId(getModelClassName());
-
-		if (_classNameId == 0) {
-			_classNameId = ParamUtil.getLong(
-				_httpServletRequest, "classNameId");
+		if ((_classNameId == null) && Validator.isNull(_modelClassName)) {
+			_initClassNameIdModelClassName();
 		}
 
 		return _classNameId;
@@ -165,14 +158,8 @@ public class TranslationRequestHelper {
 	}
 
 	public String getModelClassName() {
-		if (_modelClassName != null) {
-			return _modelClassName;
-		}
-
-		_modelClassName = ParamUtil.getString(_httpServletRequest, "className");
-
-		if (Validator.isNull(_modelClassName)) {
-			_modelClassName = PortalUtil.getClassName(getClassNameId());
+		if ((_classNameId == null) && Validator.isNull(_modelClassName)) {
+			_initClassNameIdModelClassName();
 		}
 
 		return _modelClassName;
@@ -235,6 +222,30 @@ public class TranslationRequestHelper {
 		return ListUtil.toLongArray(
 			segmentsExperiences,
 			SegmentsExperienceModel::getSegmentsExperienceId);
+	}
+
+	private void _initClassNameIdModelClassName() {
+		long classNameId = ParamUtil.getLong(
+			_httpServletRequest, "classNameId");
+
+		if (classNameId != 0) {
+			_classNameId = classNameId;
+			_modelClassName = PortalUtil.getClassName(classNameId);
+
+			return;
+		}
+
+		String className = ParamUtil.getString(
+			_httpServletRequest, "className");
+
+		if (Validator.isNotNull(className)) {
+			_classNameId = PortalUtil.getClassNameId(className);
+			_modelClassName = className;
+
+			return;
+		}
+
+		throw new IllegalStateException();
 	}
 
 	private boolean _isExportAllSegmentsExperiences(

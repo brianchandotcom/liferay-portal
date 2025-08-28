@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
+import com.liferay.scim.configuration.web.internal.util.ScimThreadLocal;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
 import jakarta.portlet.ActionRequest;
@@ -155,77 +156,90 @@ public class SaveScimConfigurationMVCActionCommand
 				ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN, accessToken);
 		}
 		else if (Objects.equals(cmd, "reset")) {
-			OAuth2Application oAuth2Application =
-				_oAuth2ApplicationLocalService.getOAuth2Application(
-					themeDisplay.getCompanyId(), scimClientId);
+			boolean resetInProcess = ScimThreadLocal.isResetInProcess();
 
-			_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
-				oAuth2Application.getOAuth2ApplicationId());
+			try {
+				ScimThreadLocal.setResetInProcess(true);
 
-			_oAuth2ApplicationLocalService.deleteOAuth2Application(
-				oAuth2Application);
+				OAuth2Application oAuth2Application =
+					_oAuth2ApplicationLocalService.getOAuth2Application(
+						themeDisplay.getCompanyId(), scimClientId);
 
-			Indexer<UserGroup> userGroupIndexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
-			Indexer<User> userIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				User.class);
+				_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
+					oAuth2Application.getOAuth2ApplicationId());
 
-			ActionableDynamicQuery actionableDynamicQuery =
-				_expandoValueLocalService.getActionableDynamicQuery();
+				_oAuth2ApplicationLocalService.deleteOAuth2Application(
+					oAuth2Application);
 
-			actionableDynamicQuery.setAddCriteriaMethod(
-				dynamicQuery -> {
-					List<Long> columnIds = new ArrayList<>();
+				Indexer<UserGroup> userGroupIndexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
+				Indexer<User> userIndexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 
-					ExpandoColumn expandoColumn =
-						_expandoColumnLocalService.getColumn(
-							themeDisplay.getCompanyId(), User.class.getName(),
-							"CUSTOM_FIELDS", "scimClientId");
+				ActionableDynamicQuery actionableDynamicQuery =
+					_expandoValueLocalService.getActionableDynamicQuery();
 
-					if (expandoColumn != null) {
-						columnIds.add(expandoColumn.getColumnId());
-					}
+				actionableDynamicQuery.setAddCriteriaMethod(
+					dynamicQuery -> {
+						List<Long> columnIds = new ArrayList<>();
 
-					expandoColumn = _expandoColumnLocalService.getColumn(
-						themeDisplay.getCompanyId(), UserGroup.class.getName(),
-						"CUSTOM_FIELDS", "scimClientId");
+						ExpandoColumn expandoColumn =
+							_expandoColumnLocalService.getColumn(
+								themeDisplay.getCompanyId(),
+								User.class.getName(), "CUSTOM_FIELDS",
+								"scimClientId");
 
-					if (expandoColumn != null) {
-						columnIds.add(expandoColumn.getColumnId());
-					}
+						if (expandoColumn != null) {
+							columnIds.add(expandoColumn.getColumnId());
+						}
 
-					if (!columnIds.isEmpty()) {
-						Property columnProperty = PropertyFactoryUtil.forName(
-							"columnId");
+						expandoColumn = _expandoColumnLocalService.getColumn(
+							themeDisplay.getCompanyId(),
+							UserGroup.class.getName(), "CUSTOM_FIELDS",
+							"scimClientId");
 
-						dynamicQuery.add(columnProperty.in(columnIds));
-					}
+						if (expandoColumn != null) {
+							columnIds.add(expandoColumn.getColumnId());
+						}
 
-					Property dataProperty = PropertyFactoryUtil.forName("data");
+						if (!columnIds.isEmpty()) {
+							Property columnProperty =
+								PropertyFactoryUtil.forName("columnId");
 
-					dynamicQuery.add(dataProperty.eq(scimClientId));
-				});
-			actionableDynamicQuery.setPerformActionMethod(
-				(ExpandoValue expandoValue) -> {
-					_expandoRowLocalService.deleteRow(
-						expandoValue.getTableId(), expandoValue.getClassPK());
+							dynamicQuery.add(columnProperty.in(columnIds));
+						}
 
-					String className = _portal.getClassName(
-						expandoValue.getClassNameId());
+						Property dataProperty = PropertyFactoryUtil.forName(
+							"data");
 
-					if (className.equals(User.class.getName())) {
-						userIndexer.reindex(
-							_userLocalService.getUser(
-								expandoValue.getClassPK()));
-					}
-					else {
-						userGroupIndexer.reindex(
-							_userGroupLocalService.getUserGroup(
-								expandoValue.getClassPK()));
-					}
-				});
+						dynamicQuery.add(dataProperty.eq(scimClientId));
+					});
+				actionableDynamicQuery.setPerformActionMethod(
+					(ExpandoValue expandoValue) -> {
+						_expandoRowLocalService.deleteRow(
+							expandoValue.getTableId(),
+							expandoValue.getClassPK());
 
-			actionableDynamicQuery.performActions();
+						String className = _portal.getClassName(
+							expandoValue.getClassNameId());
+
+						if (className.equals(User.class.getName())) {
+							userIndexer.reindex(
+								_userLocalService.getUser(
+									expandoValue.getClassPK()));
+						}
+						else {
+							userGroupIndexer.reindex(
+								_userGroupLocalService.getUserGroup(
+									expandoValue.getClassPK()));
+						}
+					});
+
+				actionableDynamicQuery.performActions();
+			}
+			finally {
+				ScimThreadLocal.setResetInProcess(resetInProcess);
+			}
 		}
 		else if (Objects.equals(cmd, "revoke")) {
 			OAuth2Application oAuth2Application =

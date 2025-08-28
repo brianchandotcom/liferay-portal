@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -27,23 +28,22 @@ const test = mergeTests(
 test(
 	'Can delete a single content from Recycle Bin',
 	{tag: '@LPD-55831'},
-	async ({contentsPage, page, recycleBinPage}) => {
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
 		const contentName = getRandomString();
-		const friendlyUrl = getRandomString();
 
-		await test.step('Create new content', async () => {
-			await contentsPage.goto();
-
-			await contentsPage.createContent('Knowledge Base');
-
-			await page.getByLabel('Title').fill(contentName);
-
-			await page.getByLabel('Friendly URL').fill(friendlyUrl);
-
-			await contentsPage.saveContent();
-		});
+		const applicationName = 'cms/basic-web-contents';
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName,
+			},
+			applicationName,
+			'Default'
+		);
 
 		await test.step('Delete the created content so it goes into the Recycle Bin', async () => {
+			await contentsPage.goto();
+
 			await contentsPage.deleteContent(contentName);
 		});
 
@@ -56,6 +56,13 @@ test(
 				.click();
 
 			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			await page.getByLabel('Delete').waitFor({state: 'visible'});
+
+			await checkAccessibility({
+				page,
+				selectors: ['.modal-content'],
+			});
 
 			await expect(
 				recycleBinPage.deleteItemConfirmationText
@@ -74,23 +81,22 @@ test(
 test(
 	'Can restore a single content from Recycle Bin',
 	{tag: '@LPD-55830'},
-	async ({contentsPage, page, recycleBinPage}) => {
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
 		const contentName = getRandomString();
-		const friendlyUrl = getRandomString();
 
-		await test.step('Create new content', async () => {
-			await contentsPage.goto();
-
-			await contentsPage.createContent('Knowledge Base');
-
-			await page.getByLabel('Title').fill(contentName);
-
-			await page.getByLabel('Friendly URL').fill(friendlyUrl);
-
-			await contentsPage.saveContent();
-		});
+		const applicationName = 'cms/basic-web-contents';
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName,
+			},
+			applicationName,
+			'Default'
+		);
 
 		await test.step('Delete the created content so it goes into the Recycle Bin', async () => {
+			await contentsPage.goto();
+
 			await contentsPage.deleteContent(contentName);
 		});
 
@@ -109,6 +115,11 @@ test(
 				`Success:${contentName} was restored to Contents.`,
 				{autoClose: false}
 			);
+
+			await checkAccessibility({
+				page,
+				selectors: ['.alert-success'],
+			});
 		});
 
 		await test.step('Assert item is restored', async () => {

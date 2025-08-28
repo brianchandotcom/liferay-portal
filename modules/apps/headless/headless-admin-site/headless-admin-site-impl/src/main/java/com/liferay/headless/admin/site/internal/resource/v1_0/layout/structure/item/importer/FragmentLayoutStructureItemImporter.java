@@ -168,6 +168,10 @@ public class FragmentLayoutStructureItemImporter
 		FragmentReference fragmentReference =
 			fragmentInstancePageElementDefinition.getFragmentReference();
 
+		if (fragmentReference == null) {
+			throw new UnsupportedOperationException();
+		}
+
 		if (Objects.equals(
 				fragmentReference.getFragmentReferenceType(),
 				FragmentReference.FragmentReferenceType.

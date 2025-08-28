@@ -18,7 +18,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentRendererController {
 
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext);
 
 	public String render(

@@ -50,7 +50,7 @@ public class FragmentRendererControllerImpl
 	implements FragmentRendererController {
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		FragmentRenderer fragmentRenderer = _getFragmentRenderer(

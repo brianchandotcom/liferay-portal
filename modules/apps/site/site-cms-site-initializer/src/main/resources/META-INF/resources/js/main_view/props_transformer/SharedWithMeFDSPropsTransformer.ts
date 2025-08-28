@@ -60,7 +60,8 @@ export default function SharedWithMeFDSPropsTransformer({
 					...action,
 					isVisible: (item: any) =>
 						Boolean(
-							item?.className !== OBJECT_ENTRY_FOLDER_CLASS_NAME &&
+							item?.className !==
+								OBJECT_ENTRY_FOLDER_CLASS_NAME &&
 								item?.actionIds?.includes('UPDATE')
 						),
 				};
@@ -95,8 +96,8 @@ export default function SharedWithMeFDSPropsTransformer({
 					},
 					isVisible: (item: any) =>
 						Boolean(
-							item?.className !== OBJECT_ENTRY_FOLDER_CLASS_NAME &&
-								!item?.file
+							item?.className !==
+								OBJECT_ENTRY_FOLDER_CLASS_NAME && !item?.file
 						),
 				};
 			}
@@ -105,8 +106,8 @@ export default function SharedWithMeFDSPropsTransformer({
 					...action,
 					isVisible: (item: any) =>
 						Boolean(
-							item?.className !== OBJECT_ENTRY_FOLDER_CLASS_NAME &&
-								item?.file
+							item?.className !==
+								OBJECT_ENTRY_FOLDER_CLASS_NAME && item?.file
 						),
 				};
 			}

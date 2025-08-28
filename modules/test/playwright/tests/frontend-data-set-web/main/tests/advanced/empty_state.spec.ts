@@ -59,6 +59,10 @@ test(
 					.click();
 			});
 
+			await test.step('Check that the text "No Results Found" is displayed', async () => {
+				await expect(page.getByText('No Results Found')).toBeVisible();
+			});
+
 			await test.step('Check that the text "Review your filters and try again." is displayed', async () => {
 				await expect(
 					page.getByText('Review your filters and try again.')
@@ -89,7 +93,7 @@ test(
 			});
 		});
 
-		await test.step('Check the empty state with a search applied', async () => {
+		await test.step('Check the empty state with a search applied and customized configuration', async () => {
 			await test.step('Search using a keyword that will return no results, "no results"', async () => {
 				await fdsSamplePage.managementToolbar.searchInput.fill(
 					'no results'
@@ -100,9 +104,13 @@ test(
 					.click();
 			});
 
-			await test.step('Check that the text "Review your search and try again." is displayed', async () => {
+			await test.step('Check that the text "Custom Title" is displayed', async () => {
+				await expect(page.getByText('Custom Title')).toBeVisible();
+			});
+
+			await test.step('Check that the text "Custom Description" is displayed', async () => {
 				await expect(
-					page.getByText('Review your search and try again.')
+					page.getByText('Custom Description')
 				).toBeVisible();
 			});
 

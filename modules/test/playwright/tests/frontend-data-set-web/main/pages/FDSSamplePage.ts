@@ -99,7 +99,7 @@ export class FDSSamplePage {
 		this.emptyStateContainer = page.locator('.fds .c-empty-state');
 		this.fdsWrapper = page.locator('div.data-set-wrapper').first();
 		this.fileDropModal = page.getByRole('dialog', {
-			name: 'Files',
+			name: 'Custom dummy file uploader',
 		});
 		this.infoPanel = page.locator('.fds-info-panel');
 

@@ -1,13 +1,18 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -18,7 +23,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -36,53 +41,79 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A reference to a default fragment (provided out-of-the-box).",
-	value = "DefaultFragmentReference"
-)
-@io.swagger.v3.oas.annotations.media.Schema(
-	description = "A reference to a default fragment (provided out-of-the-box).",
-	requiredProperties = {"defaultFragmentKey"}
+	description = "The reference to the fragment.", value = "FragmentReference"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DefaultFragmentReference")
-public class DefaultFragmentReference
-	extends FragmentReference implements Serializable {
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(
+			name = "DefaultFragmentReference",
+			value = DefaultFragmentReference.class
+		),
+		@JsonSubTypes.Type(
+			name = "FragmentItemExternalReference",
+			value = FragmentItemExternalReference.class
+		)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.PROPERTY, property = "fragmentReferenceType",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
+@XmlRootElement(name = "FragmentReference")
+public abstract class FragmentReference implements Serializable {
 
-	public static DefaultFragmentReference toDTO(String json) {
-		return ObjectMapperUtil.readValue(DefaultFragmentReference.class, json);
+	public static FragmentReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentReference.class, json);
 	}
 
-	public static DefaultFragmentReference unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			DefaultFragmentReference.class, json);
+	public static FragmentReference unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(FragmentReference.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The key of the default fragment."
+		description = "The fragment reference's type (DefaultFragmentReference, FragmentItemExternalReference)."
 	)
-	public String getDefaultFragmentKey() {
-		if (_defaultFragmentKeySupplier != null) {
-			defaultFragmentKey = _defaultFragmentKeySupplier.get();
+	@JsonGetter("fragmentReferenceType")
+	@Valid
+	public FragmentReferenceType getFragmentReferenceType() {
+		if (_fragmentReferenceTypeSupplier != null) {
+			fragmentReferenceType = _fragmentReferenceTypeSupplier.get();
 
-			_defaultFragmentKeySupplier = null;
+			_fragmentReferenceTypeSupplier = null;
 		}
 
-		return defaultFragmentKey;
-	}
-
-	public void setDefaultFragmentKey(String defaultFragmentKey) {
-		this.defaultFragmentKey = defaultFragmentKey;
-
-		_defaultFragmentKeySupplier = null;
+		return fragmentReferenceType;
 	}
 
 	@JsonIgnore
-	public void setDefaultFragmentKey(
-		UnsafeSupplier<String, Exception> defaultFragmentKeyUnsafeSupplier) {
+	public String getFragmentReferenceTypeAsString() {
+		FragmentReferenceType fragmentReferenceType =
+			getFragmentReferenceType();
 
-		_defaultFragmentKeySupplier = () -> {
+		if (fragmentReferenceType == null) {
+			return null;
+		}
+
+		return fragmentReferenceType.toString();
+	}
+
+	public void setFragmentReferenceType(
+		FragmentReferenceType fragmentReferenceType) {
+
+		this.fragmentReferenceType = fragmentReferenceType;
+
+		_fragmentReferenceTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFragmentReferenceType(
+		UnsafeSupplier<FragmentReferenceType, Exception>
+			fragmentReferenceTypeUnsafeSupplier) {
+
+		_fragmentReferenceTypeSupplier = () -> {
 			try {
-				return defaultFragmentKeyUnsafeSupplier.get();
+				return fragmentReferenceTypeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -93,13 +124,14 @@ public class DefaultFragmentReference
 		};
 	}
 
-	@GraphQLField(description = "The key of the default fragment.")
+	@GraphQLField(
+		description = "The fragment reference's type (DefaultFragmentReference, FragmentItemExternalReference)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String defaultFragmentKey;
+	protected FragmentReferenceType fragmentReferenceType;
 
 	@JsonIgnore
-	private Supplier<String> _defaultFragmentKeySupplier;
+	private Supplier<FragmentReferenceType> _fragmentReferenceTypeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -107,14 +139,13 @@ public class DefaultFragmentReference
 			return true;
 		}
 
-		if (!(object instanceof DefaultFragmentReference)) {
+		if (!(object instanceof FragmentReference)) {
 			return false;
 		}
 
-		DefaultFragmentReference defaultFragmentReference =
-			(DefaultFragmentReference)object;
+		FragmentReference fragmentReference = (FragmentReference)object;
 
-		return Objects.equals(toString(), defaultFragmentReference.toString());
+		return Objects.equals(toString(), fragmentReference.toString());
 	}
 
 	@Override
@@ -128,22 +159,6 @@ public class DefaultFragmentReference
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		String defaultFragmentKey = getDefaultFragmentKey();
-
-		if (defaultFragmentKey != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"defaultFragmentKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(defaultFragmentKey));
-
-			sb.append("\"");
-		}
 
 		FragmentReferenceType fragmentReferenceType =
 			getFragmentReferenceType();
@@ -169,10 +184,49 @@ public class DefaultFragmentReference
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentReference",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("FragmentReferenceType")
+	public static enum FragmentReferenceType {
+
+		DEFAULT_FRAGMENT_REFERENCE("DefaultFragmentReference"),
+		FRAGMENT_ITEM_EXTERNAL_REFERENCE("FragmentItemExternalReference");
+
+		@JsonCreator
+		public static FragmentReferenceType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (FragmentReferenceType fragmentReferenceType : values()) {
+				if (Objects.equals(fragmentReferenceType.getValue(), value)) {
+					return fragmentReferenceType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private FragmentReferenceType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

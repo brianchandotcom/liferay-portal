@@ -249,16 +249,17 @@ public class FragmentInstancePageElementDefinition
 
 	protected String fragmentInstanceExternalReferenceCode;
 
-	public Object getFragmentReference() {
+	public FragmentReference getFragmentReference() {
 		return fragmentReference;
 	}
 
-	public void setFragmentReference(Object fragmentReference) {
+	public void setFragmentReference(FragmentReference fragmentReference) {
 		this.fragmentReference = fragmentReference;
 	}
 
 	public void setFragmentReference(
-		UnsafeSupplier<Object, Exception> fragmentReferenceUnsafeSupplier) {
+		UnsafeSupplier<FragmentReference, Exception>
+			fragmentReferenceUnsafeSupplier) {
 
 		try {
 			fragmentReference = fragmentReferenceUnsafeSupplier.get();
@@ -268,7 +269,7 @@ public class FragmentInstancePageElementDefinition
 		}
 	}
 
-	protected Object fragmentReference;
+	protected FragmentReference fragmentReference;
 
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;

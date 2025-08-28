@@ -272,22 +272,10 @@ public class FragmentInstancePageElementDefinitionSerDes {
 
 			sb.append("\"fragmentReference\": ");
 
-			if (
+			sb.append(
+				String.valueOf(
 					fragmentInstancePageElementDefinition.
-						getFragmentReference() instanceof String) {
-
-				sb.append("\"");
-				sb.append(
-					(String)
-						fragmentInstancePageElementDefinition.
-							getFragmentReference());
-				sb.append("\"");
-			}
-			else {
-				sb.append(
-					fragmentInstancePageElementDefinition.
-						getFragmentReference());
-			}
+						getFragmentReference()));
 		}
 
 		if (fragmentInstancePageElementDefinition.getFragmentStyle() != null) {
@@ -935,7 +923,8 @@ public class FragmentInstancePageElementDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fragmentReference")) {
 				if (jsonParserFieldValue != null) {
 					fragmentInstancePageElementDefinition.setFragmentReference(
-						(Object)jsonParserFieldValue);
+						FragmentReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {

@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -528,10 +527,10 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _fragmentInstanceExternalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "An external reference to the fragment."
+		description = "The fragment reference of the fragment instance."
 	)
 	@Valid
-	public Object getFragmentReference() {
+	public FragmentReference getFragmentReference() {
 		if (_fragmentReferenceSupplier != null) {
 			fragmentReference = _fragmentReferenceSupplier.get();
 
@@ -541,7 +540,7 @@ public class FragmentInstancePageElementDefinition
 		return fragmentReference;
 	}
 
-	public void setFragmentReference(Object fragmentReference) {
+	public void setFragmentReference(FragmentReference fragmentReference) {
 		this.fragmentReference = fragmentReference;
 
 		_fragmentReferenceSupplier = null;
@@ -549,7 +548,8 @@ public class FragmentInstancePageElementDefinition
 
 	@JsonIgnore
 	public void setFragmentReference(
-		UnsafeSupplier<Object, Exception> fragmentReferenceUnsafeSupplier) {
+		UnsafeSupplier<FragmentReference, Exception>
+			fragmentReferenceUnsafeSupplier) {
 
 		_fragmentReferenceSupplier = () -> {
 			try {
@@ -564,12 +564,14 @@ public class FragmentInstancePageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "An external reference to the fragment.")
+	@GraphQLField(
+		description = "The fragment reference of the fragment instance."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object fragmentReference;
+	protected FragmentReference fragmentReference;
 
 	@JsonIgnore
-	private Supplier<Object> _fragmentReferenceSupplier;
+	private Supplier<FragmentReference> _fragmentReferenceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment style of the fragment instance page element."
@@ -1238,7 +1240,7 @@ public class FragmentInstancePageElementDefinition
 			sb.append("\"");
 		}
 
-		Object fragmentReference = getFragmentReference();
+		FragmentReference fragmentReference = getFragmentReference();
 
 		if (fragmentReference != null) {
 			if (sb.length() > 1) {
@@ -1247,19 +1249,7 @@ public class FragmentInstancePageElementDefinition
 
 			sb.append("\"fragmentReference\": ");
 
-			if (fragmentReference instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject(
-						(Map<?, ?>)fragmentReference));
-			}
-			else if (fragmentReference instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)fragmentReference));
-				sb.append("\"");
-			}
-			else {
-				sb.append(fragmentReference);
-			}
+			sb.append(String.valueOf(fragmentReference));
 		}
 
 		FragmentStyle fragmentStyle = getFragmentStyle();

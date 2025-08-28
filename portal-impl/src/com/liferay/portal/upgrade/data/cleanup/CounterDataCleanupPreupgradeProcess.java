@@ -115,16 +115,57 @@ public class CounterDataCleanupPreupgradeProcess
 					counterName, counterValue, dbInspector, tableName);
 
 				if (!counterName.equals(DLFileEntry.class.getName())) {
-					excludedTableNames.add(tableName);
+					excludedTableNames.add(
+						dbInspector.normalizeName(tableName));
 				}
 			}
 
-			_checkKernelCounter(kernelCounterValue, excludedTableNames);
+			_checkKernelCounter(
+				kernelCounterValue, dbInspector, excludedTableNames);
 		}
 	}
 
 	private void _checkKernelCounter(
-		long counterValue, List<String> excludedTableNames) {
+			long counterValue, DBInspector dbInspector,
+			List<String> excludedTableNames)
+		throws Exception {
+
+		List<String> tableNames = dbInspector.getTableNames(null);
+
+		tableNames.remove("Counter");
+		tableNames.removeAll(excludedTableNames);
+
+		long latestCounterValue = 0L;
+
+		for (String tableName : tableNames) {
+			String primaryKeyColumnName = _getPrimaryKeyColumnName(
+				dbInspector, tableName);
+
+			if ((primaryKeyColumnName == null) ||
+				!dbInspector.isNumeric(tableName, primaryKeyColumnName)) {
+
+				continue;
+			}
+
+			long maxCounterValue = _getMaxCounterValue(
+				primaryKeyColumnName, tableName);
+
+			if (maxCounterValue > latestCounterValue) {
+				latestCounterValue = maxCounterValue;
+			}
+		}
+
+		if (counterValue < latestCounterValue) {
+			CounterLocalServiceUtil.reset(
+				Counter.class.getName(), latestCounterValue);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Counter ", Counter.class.getName(),
+						" has been reset to value ", latestCounterValue));
+			}
+		}
 	}
 
 	private void _checkLayoutCounter(

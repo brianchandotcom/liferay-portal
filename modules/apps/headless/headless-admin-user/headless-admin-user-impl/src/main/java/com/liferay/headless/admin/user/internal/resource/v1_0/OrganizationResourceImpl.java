@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -316,13 +315,7 @@ public class OrganizationResourceImpl
 
 			@Override
 			public String getPortletId() {
-				if (FeatureFlagManagerUtil.isEnabled(
-						CompanyConstants.SYSTEM, "LPD-35914")) {
-
-					return UsersAdminPortletKeys.ORGANIZATIONS_ADMIN;
-				}
-
-				return null;
+				return UsersAdminPortletKeys.ORGANIZATIONS_ADMIN;
 			}
 
 			@Override

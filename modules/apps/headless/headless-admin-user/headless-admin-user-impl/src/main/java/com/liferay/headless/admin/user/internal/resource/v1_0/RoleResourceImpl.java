@@ -15,7 +15,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -174,13 +173,7 @@ public class RoleResourceImpl
 
 			@Override
 			public String getPortletId() {
-				if (FeatureFlagManagerUtil.isEnabled(
-						CompanyConstants.SYSTEM, "LPD-35914")) {
-
-					return RolesAdminPortletKeys.ROLES_ADMIN;
-				}
-
-				return null;
+				return RolesAdminPortletKeys.ROLES_ADMIN;
 			}
 
 			@Override

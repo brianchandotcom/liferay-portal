@@ -53,6 +53,12 @@ export class ObjectEntryApiHelper {
 		);
 	}
 
+	async getObjectEntryById(applicationName: string, id: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${applicationName}/${id}`
+		);
+	}
+
 	async postObjectDefinitionRandomObjectEntries(
 		fieldName: any,
 		fieldValue: String,

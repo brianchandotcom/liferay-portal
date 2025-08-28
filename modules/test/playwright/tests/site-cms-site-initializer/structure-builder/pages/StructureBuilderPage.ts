@@ -168,6 +168,7 @@ export class StructureBuilderPage {
 		mandatory,
 		name,
 		picklist,
+		requestFile,
 	}: {
 		erc?: string;
 		label?: string;
@@ -175,6 +176,7 @@ export class StructureBuilderPage {
 		mandatory?: boolean;
 		name?: string;
 		picklist?: string;
+		requestFile?: 'computer' | 'document-library';
 	}) {
 		if (erc !== undefined) {
 			const ercInput = this.page.getByLabel('ERC');
@@ -222,6 +224,19 @@ export class StructureBuilderPage {
 
 		if (mandatory !== undefined && !(await mandatoryToggle.isChecked())) {
 			await this.page.getByLabel('Mandatory').click();
+		}
+
+		if (requestFile !== undefined) {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('option', {
+					name:
+						requestFile === 'computer'
+							? 'Computer'
+							: 'Documents and Media',
+				}),
+				trigger: this.page.getByLabel('Request Files'),
+			});
 		}
 	}
 

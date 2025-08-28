@@ -8,7 +8,6 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -92,11 +91,6 @@ public class ViewRecycleBinSectionDisplayContextTest
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
 		};
-	}
-
-	@Override
-	protected String getRootObjectEntryFolderExternalReferenceCode() {
-		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
 	}
 
 	@Override

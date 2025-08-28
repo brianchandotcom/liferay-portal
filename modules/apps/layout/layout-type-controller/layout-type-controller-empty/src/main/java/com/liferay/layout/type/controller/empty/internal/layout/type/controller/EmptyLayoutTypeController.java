@@ -55,7 +55,12 @@ public class EmptyLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception {
 
-		throw new NoSuchLayoutException();
+		if (!layout.isTypeEmpty()) {
+			throw new NoSuchLayoutException();
+		}
+
+		return super.includeLayoutContent(
+			httpServletRequest, httpServletResponse, layout);
 	}
 
 	@Override
@@ -109,8 +114,10 @@ public class EmptyLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	protected String getViewPage() {
-		return null;
+		return _VIEW_PAGE;
 	}
+
+	private static final String _VIEW_PAGE = "/layout/view/empty.jsp";
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.empty)"

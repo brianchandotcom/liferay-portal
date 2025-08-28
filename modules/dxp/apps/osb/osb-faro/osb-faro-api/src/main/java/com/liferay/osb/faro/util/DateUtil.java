@@ -15,9 +15,9 @@ import java.util.Date;
  */
 public class DateUtil {
 
-	public static final String DATE_FORMAT = "yyyy-MM-dd";
+	public static final String PATTERN_DATE = "yyyy-MM-dd";
 
-	public static final String DATE_TIME_FORMAT =
+	public static final String PATTERN_DATE_TIME =
 		"yyyy-MM-dd['T']HH:mm[:ss][.SSS]['Z']";
 
 	public static String formatDate(Date date, String pattern) {

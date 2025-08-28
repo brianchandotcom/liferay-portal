@@ -27,7 +27,7 @@ public class TokenDisplay {
 	}
 
 	@JsonFormat(
-		pattern = DateUtil.DATE_TIME_FORMAT, shape = JsonFormat.Shape.STRING,
+		pattern = DateUtil.PATTERN_DATE_TIME, shape = JsonFormat.Shape.STRING,
 		timezone = "UTC"
 	)
 	public Date getCreateDate() {
@@ -35,7 +35,7 @@ public class TokenDisplay {
 	}
 
 	@JsonFormat(
-		pattern = DateUtil.DATE_TIME_FORMAT, shape = JsonFormat.Shape.STRING,
+		pattern = DateUtil.PATTERN_DATE_TIME, shape = JsonFormat.Shape.STRING,
 		timezone = "UTC"
 	)
 	public Date getExpirationDate() {
@@ -43,7 +43,7 @@ public class TokenDisplay {
 	}
 
 	@JsonFormat(
-		pattern = DateUtil.DATE_TIME_FORMAT, shape = JsonFormat.Shape.STRING,
+		pattern = DateUtil.PATTERN_DATE_TIME, shape = JsonFormat.Shape.STRING,
 		timezone = "UTC"
 	)
 	public Date getLastAccessDate() {

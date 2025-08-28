@@ -578,7 +578,7 @@ public class ProjectController extends BaseFaroController {
 
 			if (startDateString != null) {
 				startDate = DateUtil.parseDate(
-					startDateString, DateUtil.DATE_FORMAT);
+					startDateString, DateUtil.PATTERN_DATE);
 			}
 
 			if ((startDate == null) ||
@@ -591,7 +591,7 @@ public class ProjectController extends BaseFaroController {
 
 			if (endDateString != null) {
 				endDate = DateUtil.parseDate(
-					endDateString, DateUtil.DATE_FORMAT);
+					endDateString, DateUtil.PATTERN_DATE);
 			}
 
 			projectUsageMetricDisplays.add(
@@ -1108,7 +1108,7 @@ public class ProjectController extends BaseFaroController {
 
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-		return DateUtil.formatDate(calendar.getTime(), DateUtil.DATE_FORMAT);
+		return DateUtil.formatDate(calendar.getTime(), DateUtil.PATTERN_DATE);
 	}
 
 	private ProjectDisplay _getProjectDisplay(FaroProject faroProject)
@@ -1294,9 +1294,9 @@ public class ProjectController extends BaseFaroController {
 			faroProject.getCorpProjectName(), faroProject.getCorpProjectUuid(),
 			DateUtil.formatDate(
 				new Date(faroProject.getLastAccessTime()),
-				DateUtil.DATE_FORMAT),
+				DateUtil.PATTERN_DATE),
 			DateUtil.formatDate(
-				faroProject.getLastAnniversaryDate(), DateUtil.DATE_FORMAT),
+				faroProject.getLastAnniversaryDate(), DateUtil.PATTERN_DATE),
 			offline, usageMetrics, faroProject.getWeDeployKey());
 	}
 

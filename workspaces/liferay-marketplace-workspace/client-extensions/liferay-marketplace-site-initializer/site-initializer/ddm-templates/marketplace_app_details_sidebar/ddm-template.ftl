@@ -48,7 +48,7 @@
 	<#setting date_format = "MMMM d, yyyy">
 
 	<#if CPDefinition_displayDate.getData()?has_content>
-		<p>${CPDefinition_displayDate.getData()?date("MM/dd/yy, h:mm a")}</p>
+		<p>${CPDefinition_displayDate.getData()?date("MM/dd/yy h:mm a")?string("MMMM d, yyyy")}</p>
 	</#if>
 </@section>
 
@@ -119,7 +119,7 @@
 			<#if matched><#break></#if>
 		</#list>
 
-		<#if standardSku.price.price?eval gt 0>
+		<#if standardSku.price?? && standardSku.price.price?eval gt 0>
 			<div class="bg-neutral-8">${standardSku.price.priceFormatted!""}</div>
 		<#else>
 			${languageUtil.get(locale, "free", "Free")?upper_case}

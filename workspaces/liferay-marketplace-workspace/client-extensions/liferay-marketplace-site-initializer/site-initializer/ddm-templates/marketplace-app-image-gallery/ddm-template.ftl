@@ -17,7 +17,7 @@
 			</span>
 		</button>
 
-		<img id = "main-image" src = "${(productImages[0].src?replace("https://", "http://"))}" alt = "${productImages[0].title?html}" />
+		<img id = "main-image" src = "${(productImages[1].src?replace("https://", "http://"))}" alt = "${productImages[1].title?html}" />
 
 		<button class="nav-button next" aria-label="Next Image">
 			<span class="lexicon-icon-overwide"> <@clay["icon"] symbol="angle-right" />
@@ -26,53 +26,49 @@
 	</div>
 
 	<div class="thumbnails-wrapper">
-		<div class="thumbnails">
-			<#list productImages as image>
-				<#assign imgSrc = (image.src?replace("https://", "http://")) />
-
-				<img class="thumbnail" src="${imgSrc}" alt="${image.title?html}" data-index="${image?index}" />
-			</#list>
-		</div>
+		<div class="thumbnails" id="dynamic-thumbnails"></div>
 
 		<button class="view-full-gallery">
 			<span class="title">${languageUtil.get(locale, "full-gallery", "Full Gallery")}</span>
-			<span class="subtitle">${totalCount} ${languageUtil.get(locale, "photos", "Photos")}</span>
+			<span class="subtitle">${totalCount -1} ${languageUtil.get(locale, "photos", "Photos")}</span>
 		</button>
 	</div>
 </div>
 
 <template id="modal-gallery">
-<div class="modal-gallery-content">
-	<button class="modal-prev" data-role="modal-prev" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-		   background: rgba(0,0,0,0.4); border:none; color:white; font-size: 1.6rem;
-		   padding: 14px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center;"
->
-	  <@clay["icon"] symbol="angle-left" />
-	</button>
+	<div class="modal-gallery-content">
+		<button class="modal-prev" data-role="modal-prev" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+			background: rgba(0,0,0,0.4); border:none; color:white; font-size: 1.6rem;
+			padding: 14px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center;"
+	>
+		<@clay["icon"] symbol="angle-left" />
+		</button>
 
-	<img class="modal-image" data-role="modal-image" style="max-width: 100vh; border-radius: 8px;" />
+		<img class="modal-image" data-role="modal-image" style="max-width: 100vh; border-radius: 8px;" />
 
-	<button class="modal-next" data-role="modal-next" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-		   background: rgba(0,0,0,0.4); border:none; color:white; font-size: 1.6rem;
-		   padding: 14px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center;"
->
-	  <@clay["icon"] symbol="angle-right" />
-	</button>
-</div>
+		<button class="modal-next" data-role="modal-next" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+			background: rgba(0,0,0,0.4); border:none; color:white; font-size: 1.6rem;
+			padding: 14px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center;"
+	>
+		<@clay["icon"] symbol="angle-right" />
+		</button>
+	</div>
 </template>
 
 <script>
+
+(function () {
 	let currentIndex = 0;
 	let images = [];
 
 	const carrouselMainImage = document.getElementById('main-image');
 	const carouselNextBtn = document.querySelector('.nav-button.next');
 	const carouselPrevBtn = document.querySelector('.nav-button.prev');
-	const carouselThumbnails = [...document.querySelectorAll('.thumbnail')];
+	const thumbnailsContainer = document.getElementById('dynamic-thumbnails');
 	const fullGalleryBtn = document.querySelector('.view-full-gallery');
 
 	function loadImages() {
-		images = [
+		const allImages = [
 			<#list productImages as image>
 			{
 				src: "${(image.src?replace('https://', 'http://'))?js_string}",
@@ -80,6 +76,8 @@
 			}<#if image_has_next>,</#if>
 			</#list>
 		];
+
+		images = allImages.slice(1);
 	}
 
 	function openModalGallery(startIndex) {
@@ -138,37 +136,46 @@
 		});
 	}
 
+	function renderThumbnails() {
+		const maxVisible = 5;
+		let start = currentIndex - 2;
+
+		if (start < 0) start = 0;
+		if (start > images.length - maxVisible) start = Math.max(images.length - maxVisible, 0);
+
+		const end = Math.min(images.length, start + maxVisible);
+
+		thumbnailsContainer.innerHTML = '';
+
+		for (let i = start; i < end; i++) {
+			const img = document.createElement('img');
+			img.className = 'thumbnail' + (i === currentIndex ? ' selected' : '');
+			img.src = images[i].src;
+			img.alt = images[i].alt;
+			img.dataset.index = i;
+			img.addEventListener('click', () => updateMainImage(i));
+			thumbnailsContainer.appendChild(img);
+		}
+	}
+
 	function updateMainImage(index) {
 		currentIndex = index;
 		carrouselMainImage.src = images[index].src;
 		carrouselMainImage.alt = images[index].alt;
 
-		carouselThumbnails.forEach(img => img.classList.remove('selected'));
-		if (carouselThumbnails[index]) {
-			carouselThumbnails[index].classList.add('selected');
-		}
-
 		carouselPrevBtn.disabled = index === 0;
 		carouselNextBtn.disabled = index === images.length - 1;
+
+		renderThumbnails();
 	}
 
 	function setupNavigationButtons() {
 		carouselPrevBtn.addEventListener('click', () => {
-			if (!carouselPrevBtn.disabled) {
-				updateMainImage(currentIndex - 1);
-			}
+			if (currentIndex > 0) updateMainImage(currentIndex - 1);
 		});
 
 		carouselNextBtn.addEventListener('click', () => {
-			if (!carouselNextBtn.disabled) {
-				updateMainImage(currentIndex + 1);
-			}
-		});
-	}
-
-	function setupThumbnailClickListeners() {
-		carouselThumbnails.forEach((thumb, index) => {
-			thumb.addEventListener('click', () => updateMainImage(index));
+			if (currentIndex < images.length - 1) updateMainImage(currentIndex + 1);
 		});
 	}
 
@@ -179,20 +186,17 @@
 
 	function main() {
 		loadImages();
-		setupThumbnailClickListeners();
 		setupNavigationButtons();
 		setupModalTriggers();
 		updateMainImage(0);
 	}
 
 	main();
+})();
+
 </script>
 
 <style>
-
-.carousel-container {
-	max-width: 808px;
-}
 
 .carousel-container img {
 	cursor: pointer;
@@ -208,7 +212,6 @@
 	background-color: #282934 !important;
 	border-bottom: none;
 	color: white !important;
-
 }
 
 .custom-gallery-modal .liferay-modal-body {
@@ -228,45 +231,49 @@
 }
 
 .main-image-wrapper {
+	align-items: center;
+	display:flex;
+	height: 454px;
+	justify-content: center;
 	position: relative;
+	width: 902px;
 }
 
 .main-image-wrapper img {
 	border-radius: 8px;
-	max-height: 454px;
-	width: 808px;
+	max-height: 100%;
+	width: 100%;
 }
 
 .modal-image {
-  max-width: 100vh;
-  border-radius: 8px;
+	border-radius: 8px;
+	max-width: 100vh;
 }
 
 .modal-prev,
 .modal-next {
-  align-items: center;
-  background: rgba(0, 0, 0, 0.4);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  font-size: 1.6rem;
-  justify-content: center;
-  padding: 14px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.modal-prev {
-  left: 0;
+	align-items: center;
+	background: rgba(0, 0, 0, 0.4);
+	border: none;
+	border-radius: 50%;
+	color: white;
+	cursor: pointer;
+	display: flex;
+	font-size: 1.6rem;
+	justify-content: center;
+	padding: 14px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .modal-next {
-  right: 0;
+	right: 0;
 }
 
+.modal-prev {
+	left: 0;
+}
 
 .nav-button {
 	background: rgba(0,0,0,0.4);
@@ -294,12 +301,12 @@
 	opacity: 0.4;
 }
 
-.nav-button.prev {
-	left: 10px;
-}
-
 .nav-button.next {
 	right: 10px;
+}
+
+.nav-button.prev {
+	left: 10px;
 }
 
 .thumbnails-wrapper {
@@ -308,11 +315,7 @@
 	justify-content: flex-start;
 	margin-top: 12px;
 	max-height: 86px;
-	max-width: 808px;
-}
-
-.view-full-gallery {
-	margin-left: 8px;
+	max-width: 902px;
 }
 
 .thumbnails {
@@ -329,7 +332,7 @@
 	object-fit: cover;
 	opacity: 0.6;
 	transition: opacity 0.3s ease;
-	width: 152px;
+	width: 142px;
 }
 
 .thumbnail.selected {
@@ -347,6 +350,7 @@
 	flex-direction: column;
 	height: 86px;
 	justify-content: center;
+	margin-left: 8px;
 	min-width: 152px;
 	transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }

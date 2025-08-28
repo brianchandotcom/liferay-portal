@@ -12,7 +12,7 @@ import {
 } from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {getObjectValueFromPath, sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export interface IItemSelectorModalProps<T> {
 
@@ -84,36 +84,14 @@ function ItemSelectorModal<T extends Record<string, any>>({
 		}
 	}, [externalItems, open]);
 
-	const selectedData = useMemo(() => {
-		if (fdsProps.selectionType === 'single') {
-			if (!selectedItems.length) {
-				return {label: '', values: []};
-			}
+	const hasSelectedItems = !!selectedItems.length;
 
-			return {
-				label: getObjectValueFromPath({
-					object: selectedItems[0],
-					path: locator.label,
-				}),
-				values: [
-					getObjectValueFromPath({
-						object: selectedItems[0],
-						path: locator.value,
-					}),
-				],
-			};
-		}
-
-		return {
-			label: selectedItems.length.toString(),
-			values: selectedItems.map((item) => {
-				return getObjectValueFromPath({
-					object: item,
-					path: locator.value,
-				});
-			}),
-		};
-	}, [fdsProps.selectionType, selectedItems, locator]);
+	const getSelectedItemLabel = function (selectedItem: T) {
+		return getObjectValueFromPath({
+			object: selectedItem,
+			path: locator.label,
+		});
+	};
 
 	return open ? (
 		<ClayModal observer={observer} size="full-screen">
@@ -139,7 +117,12 @@ function ItemSelectorModal<T extends Record<string, any>>({
 							setSelectedItems(newSelectedItems);
 						}
 					}}
-					selectedItems={selectedData.values}
+					selectedItems={selectedItems.map((item) =>
+						getObjectValueFromPath({
+							object: item,
+							path: locator.value,
+						})
+					)}
 					selectedItemsKey={locator.id}
 					style="fluid"
 				/>
@@ -147,15 +130,16 @@ function ItemSelectorModal<T extends Record<string, any>>({
 
 			<ClayModal.Footer
 				className={classNames({
-					'bg-primary-l3 border-primary border-top':
-						!!selectedData.values.length,
+					'bg-primary-l3 border-primary border-top': hasSelectedItems,
 				})}
 				first={
-					selectedData.values.length ? (
+					hasSelectedItems ? (
 						<>
 							{sub(
 								Liferay.Language.get('x-selected'),
-								<strong>{selectedData.label}</strong>
+								<strong>
+									{getSelectedItemLabel(selectedItems[0])}
+								</strong>
 							)}
 						</>
 					) : undefined
@@ -174,7 +158,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 
 						<ClayButton
 							className="item-preview selector-button"
-							disabled={selectedData.values.length < 1}
+							disabled={!hasSelectedItems}
 							onClick={() => {
 								onItemsChange(
 									fdsProps.selectionType === 'single'

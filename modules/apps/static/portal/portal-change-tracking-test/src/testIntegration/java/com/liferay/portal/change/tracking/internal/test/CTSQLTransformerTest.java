@@ -1094,7 +1094,9 @@ public class CTSQLTransformerTest {
 					companyId, ctCollectionId);
 			Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				_getSQL(inputSQLFileName, expectedOutputSQLFileName, ctCollectionId))) {
+				_getSQL(
+					inputSQLFileName, expectedOutputSQLFileName,
+					ctCollectionId))) {
 
 			PrincipalThreadLocal.setName(userId);
 
@@ -1154,7 +1156,9 @@ public class CTSQLTransformerTest {
 					companyId, ctCollectionId);
 			Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				_getSQL(inputSQLFileName, expectedOutputSQLFileName, ctCollectionId))) {
+				_getSQL(
+					inputSQLFileName, expectedOutputSQLFileName,
+					ctCollectionId))) {
 
 			PrincipalThreadLocal.setName(userId);
 

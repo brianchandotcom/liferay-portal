@@ -76,7 +76,7 @@ public class DeepLTranslator extends BaseTranslator {
 			deepLTranslatorConfiguration);
 
 		String targetLanguageCode = StringUtil.toUpperCase(
-			_getLanguageCode(true, translatorPacket.getTargetLanguageId()));
+			_getTargetLanguageCode(translatorPacket.getTargetLanguageId()));
 
 		if (!supportedLanguageCodes.contains(targetLanguageCode)) {
 			throw new TranslatorException(
@@ -91,8 +91,7 @@ public class DeepLTranslator extends BaseTranslator {
 			deepLTranslatorConfiguration, translatorPacket.getFieldsMap(),
 			translatorPacket.getHTMLMap(),
 			StringUtil.toUpperCase(
-				_getLanguageCode(
-					false, translatorPacket.getSourceLanguageId())),
+				getLanguageCode(translatorPacket.getSourceLanguageId())),
 			targetLanguageCode);
 
 		return new TranslatorPacket() {
@@ -125,44 +124,13 @@ public class DeepLTranslator extends BaseTranslator {
 		};
 	}
 
-	private String _getLanguageCode(boolean targetLanguage, String languageId) {
-		List<String> parts = com.liferay.petra.string.StringUtil.split(
-			languageId, CharPool.UNDERLINE);
-
-		String firstPart = parts.get(0);
-
-		if (firstPart.equals("in")) {
-			return "id";
-		}
-
-		String secondPart = parts.get(1);
-
-		if (secondPart.equals("ES")) {
+	@Override
+	protected String getLanguageCode(String languageId) {
+		if (StringUtil.endsWith(languageId, "ES")) {
 			return "es";
 		}
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(firstPart);
-
-		if (targetLanguage) {
-			if (firstPart.equals("en") || firstPart.equals("pt")) {
-				sb.append(CharPool.DASH);
-				sb.append(secondPart);
-			}
-			else if (firstPart.equals("zh")) {
-				sb.append(CharPool.DASH);
-
-				if (secondPart.equals("TW")) {
-					sb.append("HANT");
-				}
-				else {
-					sb.append("HANS");
-				}
-			}
-		}
-
-		return sb.toString();
+		return super.getLanguageCode(languageId);
 	}
 
 	private List<String> _getSupportedLanguageCodes(
@@ -183,6 +151,25 @@ public class DeepLTranslator extends BaseTranslator {
 						"type", "target"
 					).build())),
 			jsonObject -> jsonObject.getString("language"), _log);
+	}
+
+	private String _getTargetLanguageCode(String languageId) {
+		if (StringUtil.startsWith(languageId, "en") ||
+			StringUtil.startsWith(languageId, "pt")) {
+
+			return StringUtil.replace(
+				languageId, CharPool.UNDERLINE, CharPool.DASH);
+		}
+
+		if (StringUtil.startsWith(languageId, "zh")) {
+			if (StringUtil.endsWith(languageId, "TW")) {
+				return "zh-HANT";
+			}
+
+			return "zh-HANS";
+		}
+
+		return getLanguageCode(languageId);
 	}
 
 	private String _invoke(String authKey, Http.Options options, String url)

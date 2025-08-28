@@ -236,7 +236,7 @@ public class ReportController extends BaseFaroController {
 					return _reportControllerResponseFactory.create(
 						"The \"fromDate\" and \"toDate\" query parameters " +
 							"are mandatory and must be ISO 8601 compliant " +
-								DateUtil.DATE_FORMAT,
+								DateUtil.PATTERN_DATE,
 						Response.Status.BAD_REQUEST);
 				}
 
@@ -254,7 +254,7 @@ public class ReportController extends BaseFaroController {
 
 					return _reportControllerResponseFactory.create(
 						"Both dates in range must be ISO 8601 compliant " +
-							DateUtil.DATE_FORMAT,
+							DateUtil.PATTERN_DATE,
 						Response.Status.BAD_REQUEST);
 				}
 
@@ -307,9 +307,9 @@ public class ReportController extends BaseFaroController {
 		"blog", "document", "event", "form", "individual", "journal",
 		"membership", "page", "search-terms");
 	private static final DateTimeFormatter _dateDateTimeFormatter =
-		DateTimeFormatter.ofPattern(DateUtil.DATE_FORMAT);
+		DateTimeFormatter.ofPattern(DateUtil.PATTERN_DATE);
 	private static final DateTimeFormatter _dateTimeDateTimeFormatter =
-		DateTimeFormatter.ofPattern(DateUtil.DATE_TIME_FORMAT);
+		DateTimeFormatter.ofPattern(DateUtil.PATTERN_DATE_TIME);
 	private static final ReportControllerResponseFactory
 		_reportControllerResponseFactory =
 			new ReportControllerResponseFactory();

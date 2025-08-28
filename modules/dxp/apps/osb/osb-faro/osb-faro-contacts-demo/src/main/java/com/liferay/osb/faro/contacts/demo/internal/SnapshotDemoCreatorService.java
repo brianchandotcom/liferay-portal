@@ -130,7 +130,7 @@ public class SnapshotDemoCreatorService extends DemoCreatorService {
 
 				DateTimeFormatter dateTimeFormatter =
 					DateTimeFormatter.ofPattern(
-						com.liferay.osb.faro.util.DateUtil.DATE_TIME_FORMAT);
+						com.liferay.osb.faro.util.DateUtil.PATTERN_DATE_TIME);
 
 				LocalDateTime localDateTime = LocalDateTime.parse(
 					stringValue, dateTimeFormatter);

@@ -59,6 +59,22 @@ test(
 					.click();
 			});
 
+			await test.step('Check that the "/states/search_state.svg" image is displayed', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.locator(
+						'img[src$="/states/search_state.svg"]'
+					)
+				).toBeVisible();
+			});
+
+			await test.step('Check that the "/states/search_state_reduced_motion.svg" image exists in the DOM', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.locator(
+						'img[src$="/states/search_state_reduced_motion.svg"]'
+					)
+				).toBeAttached();
+			});
+
 			await test.step('Check that the text "No Results Found" is displayed', async () => {
 				await expect(page.getByText('No Results Found')).toBeVisible();
 			});
@@ -114,6 +130,22 @@ test(
 				).toBeVisible();
 			});
 
+			await test.step('Check that the "/states/empty_state.svg" image is displayed', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.locator(
+						'img[src$="/states/empty_state.svg"]'
+					)
+				).toBeVisible();
+			});
+
+			await test.step('Check that the "/states/empty_state_reduced_motion.svg" image exists in the DOM', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.locator(
+						'img[src$="/states/empty_state_reduced_motion.svg"]'
+					)
+				).toBeAttached();
+			});
+
 			await test.step('Check that the button "Clear Search" is displayed', async () => {
 				await expect(
 					fdsSamplePage.emptyStateContainer.getByRole('button', {
@@ -163,6 +195,26 @@ test(
 				await fdsSamplePage.managementToolbar.container
 					.getByRole('button', {name: 'Search'})
 					.click();
+			});
+
+			await test.step('Check that the "/states/search_state.svg" image is displayed', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.locator(
+						'img[src$="/states/search_state.svg"]'
+					)
+				).toBeVisible();
+			});
+
+			await test.step('Check that the "/states/search_state_reduced_motion.svg" image exists in the DOM', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.locator(
+						'img[src$="/states/search_state_reduced_motion.svg"]'
+					)
+				).toBeAttached();
+			});
+
+			await test.step('Check that the text "No Results Found" is displayed', async () => {
+				await expect(page.getByText('No Results Found')).toBeVisible();
 			});
 
 			await test.step('Check that the text "Review your filters or search and try again." is displayed', async () => {

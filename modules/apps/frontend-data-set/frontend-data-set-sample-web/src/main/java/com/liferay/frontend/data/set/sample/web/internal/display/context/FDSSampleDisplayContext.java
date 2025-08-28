@@ -7,10 +7,10 @@ package com.liferay.frontend.data.set.sample.web.internal.display.context;
 
 import com.liferay.frontend.data.set.sample.web.internal.display.context.helper.FDSRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,17 +47,17 @@ public class FDSSampleDisplayContext {
 				JSONUtil.put(
 					"description",
 					LanguageUtil.get(
-						_fdsRequestHelper.getRequest(),
-						"custom-description")
+						_fdsRequestHelper.getRequest(), "custom-description")
 				).put(
 					"image", "/states/empty_state.svg"
 				).put(
+					"imageReducedMotion",
+					"/states/empty_state_reduced_motion.svg"
+				).put(
 					"title",
 					LanguageUtil.get(
-						_fdsRequestHelper.getRequest(),
-						"custom-title")
-				)
-			)
+						_fdsRequestHelper.getRequest(), "custom-title")
+				))
 		).build();
 	}
 

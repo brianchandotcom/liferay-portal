@@ -62,7 +62,7 @@ public class ResourceServlet extends HttpServlet {
 			return;
 		}
 
-		String pathInfo = HttpServletRequestWrapperImpl.getDispatchPathInfo(
+		String pathInfo = LiferayHttpServletRequestWrapper.getDispatchPathInfo(
 			httpServletRequest);
 
 		if (pathInfo == null) {

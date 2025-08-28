@@ -3,6 +3,9 @@ import groovy.json.JsonBuilder
 import java.util.Date
 import java.util.List
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import jenkins.metrics.impl.TimeInQueueAction
 
 import hudson.model.Item
@@ -12,6 +15,8 @@ import hudson.model.ParametersAction
 import hudson.model.ParameterValue
 import hudson.model.Result
 import hudson.model.Run
+
+import java.util.regex.Matcher
 
 Date endDate = new Date()
 
@@ -40,11 +45,25 @@ items.each {
 
 			JsonBuilder buildJsonBuilder = new JsonBuilder()
 
+			String buildDescription = build.getDescription()
+
 			String buildURL = Jenkins.instance.getRootUrl() + build.getUrl()
 
 			List<Object> parameters = []
 
+			String testrayBuildURL = ""
+
 			if (!buildURL.contains("maintenance") && !buildURL.contains("verification") && !buildURL.contains("-controller") && !buildURL.contains("-propagator")) {
+				if ((!buildURL.contains("generate-testray-csv") && !buildURL.contains("-batch") && !buildURL.contains("-downstream")) && (buildDescription != null)) {
+					Pattern pattern = Pattern.compile("https:\\/\\/testray\\.liferay\\.com.*?[^\"]*")
+
+					Matcher matcher = pattern.matcher(buildDescription)
+
+					if (matcher.find()) {
+						testrayBuildURL = matcher.group()
+					}
+				}
+
 				ParametersAction parametersAction = build.getAction(hudson.model.ParametersAction.class)
 
 				if (parametersAction != null) {
@@ -84,7 +103,7 @@ items.each {
 
 			Result result = build.getResult()
 
-			buildJsonBuilder url: buildURL, startTime: build.getTimeInMillis(), result: result.toString(), duration: build.getDuration(), queueDuration: queueDuration, parameters: parameters, builtOn: build.getBuiltOnStr()
+			buildJsonBuilder url: buildURL, startTime: build.getTimeInMillis(), result: result.toString(), duration: build.getDuration(), queueDuration: queueDuration, parameters: parameters, builtOn: build.getBuiltOnStr(), testrayBuildURL: testrayBuildURL
 
 			buildJSONs.add(buildJsonBuilder)
 		}

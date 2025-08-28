@@ -48,6 +48,11 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 				company.getCompanyId(), "LPD-35914"));
 	}
 
+	@Override
+	public void portalInstanceUnregistered(Company company) {
+		_deleteCompanyGroup(company.getCompanyId());
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
@@ -64,30 +69,40 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _createCompanyGroup(long companyId) throws PortalException {
-		Group group = _groupLocalService.fetchFriendlyURLGroup(
-			companyId, CompanyGroupConstants.FRIENDLY_URL);
+	private void _createCompanyGroup(long companyId) {
+		try {
+			Group group = _groupLocalService.fetchFriendlyURLGroup(
+				companyId, CompanyGroupConstants.FRIENDLY_URL);
 
-		if ((group != null) && !_isCompanyGroup(group)) {
-			_groupLocalService.deleteGroup(group);
+			if ((group != null) && !_isCompanyGroup(group)) {
+				_groupLocalService.deleteGroup(group);
+			}
+
+			_groupLocalService.addGroup(
+				_userLocalService.getGuestUserId(companyId),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				StagingGroupHelper.class.getName(), CompanyConstants.SYSTEM,
+				GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null,
+				GroupConstants.TYPE_SITE_RESTRICTED, true,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+				CompanyGroupConstants.FRIENDLY_URL, false, true, null);
 		}
-
-		_groupLocalService.addGroup(
-			_userLocalService.getGuestUserId(companyId),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			StagingGroupHelper.class.getName(), CompanyConstants.SYSTEM,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null,
-			GroupConstants.TYPE_SITE_RESTRICTED, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			CompanyGroupConstants.FRIENDLY_URL, false, true, null);
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 	}
 
-	private void _deleteCompanyGroup(long companyId) throws PortalException {
-		Group group = _groupLocalService.fetchFriendlyURLGroup(
-			companyId, CompanyGroupConstants.FRIENDLY_URL);
+	private void _deleteCompanyGroup(long companyId) {
+		try {
+			Group group = _groupLocalService.fetchFriendlyURLGroup(
+				companyId, CompanyGroupConstants.FRIENDLY_URL);
 
-		if (group != null) {
-			_groupLocalService.deleteGroup(group);
+			if (group != null) {
+				_groupLocalService.deleteGroup(group);
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
 		}
 	}
 
@@ -106,20 +121,15 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 	}
 
 	private void _manageCompanyGroup(long companyId, boolean enabled) {
-		try {
-			if (companyId == CompanyConstants.SYSTEM) {
-				return;
-			}
-
-			if (enabled) {
-				_createCompanyGroup(companyId);
-			}
-			else {
-				_deleteCompanyGroup(companyId);
-			}
+		if (companyId == CompanyConstants.SYSTEM) {
+			return;
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+
+		if (enabled) {
+			_createCompanyGroup(companyId);
+		}
+		else {
+			_deleteCompanyGroup(companyId);
 		}
 	}
 

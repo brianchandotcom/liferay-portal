@@ -2,14 +2,20 @@
 	<#assign
 		knowledgeBaseFrequency = 0
 		knowledgeBaseIds = []
+		selectedFrequency = 0
+		selectedLabel = ""
 		sortedTaxonomyCategories = []
 		totalCount = 0
 	/>
-
 	<#list entries as entry>
 		<#assign label = entry.bucketText?upper_case />
-
-		<#if stringUtil.equals(label, "HOW TO") || stringUtil.equals(label, "REFERENCE")> || stringUtil.equals(label, "TROUBLESHOOTING")
+		<#if entry.isSelected()>
+			<#assign
+				selectedFrequency = entry.getFrequency()
+				selectedLabel = entry.bucketText
+			/>
+		</#if>
+		<#if stringUtil.equals(label, "HOW TO") || stringUtil.equals(label, "REFERENCE") || stringUtil.equals(label, "TROUBLESHOOTING")>
 			<#assign
 				knowledgeBaseFrequency += entry.getFrequency()
 				knowledgeBaseIds += [entry.getFilterValue()]
@@ -23,6 +29,38 @@
 		<#assign totalCount = totalCount + bucketDisplayContext.getCount() />
 	</#list>
 
+	<#assign
+		selectedResourceTypeIds = paramUtil.getParameterValues(request, "resource-type")![]
+		knowledgeBaseSelected = (selectedResourceTypeIds?filter(id -> knowledgeBaseIds?seq_contains(id))?size > 0)
+	/>
+	<#if knowledgeBaseSelected>
+		<#assign
+			selectedFrequency = knowledgeBaseFrequency
+			selectedLabel = languageUtil.get(locale, "knowledge-base", "Knowledge Base")
+		/>
+	</#if>
+	<#if selectedResourceTypeIds?size == 0>
+		<#assign selectedLabel = languageUtil.get(locale, "all-results", "All Results") />
+	</#if>
+
+	<div class="filter-toggle">
+		<div class="filter-toggle-content">
+			<div class="filter-toggle-term-text-term-count">
+				<span class="term-text">${selectedLabel} </span>
+				<span class="term-count">
+					<#if selectedFrequency != 0>
+						${selectedFrequency}
+					<#else>
+						${totalCount}
+					</#if>
+				</span>
+			</div>
+
+			<div class="filter-toggle-arrow-icon">
+			</div>
+		</div>
+	</div>
+
 	<ul class="learn-category-facet-tabs list-unstyled tab-list" id="tab-list">
 		<li class="facet-value">
 			<@clay.button
@@ -31,14 +69,15 @@
 				onClick="${namespace}updateSelection(event)"
 				value="clear"
 			>
-				<span class="term-text">${languageUtil.get(locale, "all-results", "All Results")}</span>
+				<div class="facet-value-term-text-term-count">
+					<span class="term-text">${languageUtil.get(locale, "all-results", "All Results")}</span>
 
-				<#if totalCount?has_content>
-					<span class="term-count">${totalCount}</span>
-				</#if>
+					<#if totalCount?has_content>
+						<span class="term-count">${totalCount}</span>
+					</#if>
+				</div>
 			</@clay.button>
 		</li>
-
 		<#list sortedTaxonomyCategories as entry>
 			<li class="facet-value">
 				<@clay.button
@@ -48,30 +87,25 @@
 					displayType="link"
 					onClick="${namespace}updateSelection(event)"
 				>
-					<span class="term-text">
-						${htmlUtil.escape(entry.getBucketText())}
-					</span>
-
-					<#if entry.isFrequencyVisible()>
-						<span class="term-count">
-							${entry.getFrequency()}
+					<div class="facet-value-term-text-term-count">
+						<span class="term-text">
+							${htmlUtil.escape(entry.getBucketText())}
 						</span>
-					</#if>
+
+						<#if entry.isFrequencyVisible()>
+							<span class="term-count">
+								${entry.getFrequency()}
+							</span>
+						</#if>
+					</div>
 				</@clay.button>
 			</li>
 		</#list>
-
-		<#assign
-			knowledgeBaseSelected = false
-			selectedResourceTypeIds = paramUtil.getParameterValues(request, "resource-type")![]
-		/>
-
-		<#list selectedResourceTypeIds as selectedResourceTypeId>
-			<#if knowledgeBaseIds?seq_contains(selectedResourceTypeId)>
+		<#list selectedResourceTypeIds as selectedId>
+			<#if knowledgeBaseIds?seq_contains(selectedId)>
 				<#assign knowledgeBaseSelected = true />
 			</#if>
 		</#list>
-
 		<li class="facet-value">
 			<@clay.button
 				cssClass="btn-unstyled facet-term tab-btn term-name text-center ${knowledgeBaseSelected?then('selected-tab-btn', '')}"
@@ -79,71 +113,86 @@
 				displayType="link"
 				onClick="${namespace}updateSelection(event)"
 			>
-				<span class="term-text">${languageUtil.get(locale, "knowledge-base", "Knowledge Base")}</span>
+				<div class="facet-value-term-text-term-count">
+					<span class="term-text">${languageUtil.get(locale, "knowledge-base", "Knowledge Base")}</span>
 
-				<#if knowledgeBaseFrequency?has_content>
-					<span class="term-count">${knowledgeBaseFrequency}</span>
-				</#if>
+					<#if knowledgeBaseFrequency?has_content>
+						<span class="term-count">${knowledgeBaseFrequency}</span>
+					</#if>
+				</div>
 			</@clay.button>
 		</li>
 	</ul>
 </#if>
 
 <@liferay_aui.script>
+	document.querySelector(".filter-toggle").addEventListener("click", function() {
+		document.querySelector(".learn-category-facet-tabs").classList.toggle("open");
+	});
+
 	function handleStyleTabs(event) {
 		const buttons = document.querySelectorAll('.tab-btn');
-
 		buttons.forEach(button => button.classList.remove('selected-tab-btn'));
-
 		const targetButton = event.currentTarget;
-
 		if (targetButton.classList.contains('tab-btn')) {
 			targetButton.classList.add('selected-tab-btn');
 		}
 	}
-
 	function ${namespace}updateSelection(event) {
 		event.preventDefault();
 		handleStyleTabs(event);
-
 		const formElement = event.currentTarget.form;
-
 		if (!formElement) {
 			return;
 		}
-
 		const urlSearchParams = new URLSearchParams(window.location.search);
-
 		if (event.currentTarget.value === 'clear') {
 			urlSearchParams.delete('resource-type');
-
 			const clearedUrl = window.location.pathname + '?' + urlSearchParams.toString();
-
 			window.location.href = clearedUrl;
-
 			return;
 		}
-
 		urlSearchParams.delete('resource-type');
-
 		const dataTermId = event.currentTarget.getAttribute('data-term-id');
 		const dataTermIds = event.currentTarget.getAttribute('data-term-ids');
-
 		if (dataTermIds) {
 			const resourceTypeIds = dataTermIds.split(',');
-
 			resourceTypeIds.forEach(id => {
 				urlSearchParams.append('resource-type', id.trim());
 			});
 		} else if (dataTermId) {
 			urlSearchParams.append('resource-type', dataTermId);
 		}
-
 		window.location.href = window.location.pathname + '?' + urlSearchParams.toString();
 	}
 </@liferay_aui.script>
 
 <style>
+	.facet-value-term-text-term-count {
+		width: 100%;
+	}
+
+	.filter-toggle {
+		display: none;
+	}
+
+	.filter-toggle-arrow-icon::after {
+		background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_820_11850' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='3' y='5' width='10' height='6'%3E%3Cpath d='M3.21478 6.3781L7.48679 10.6499C7.76929 10.9324 8.23071 10.9324 8.51321 10.6499L12.7852 6.3781C13.2435 5.91985 12.9202 5.13831 12.2704 5.13831H3.72956C3.07981 5.13831 2.75651 5.91985 3.21478 6.3781Z' fill='%236B6C7E' /%3E%3C/mask%3E%3Cg mask='url(%23mask0_820_11850)'%3E%3Crect width='16' height='16' fill='%23999AA3' /%3E%3C/g%3E%3C/svg%3E");
+		content: '';
+		display: block;
+		height: 16px;
+		width: 16px;
+	}
+
+	.learn-category-facet-tabs {
+		display: flex;
+			flex-direction: row !important;
+	}
+
+	.learn-category-facet-tabs.open {
+		display: flex;
+	}
+
 	.learn-category-facet-tabs .facet-term-unselected .term-text {
 		opacity: 0.8;
 	}
@@ -154,9 +203,9 @@
 
 	.learn-category-facet-tabs.tab-list {
 		align-items:center;
-		display: flex;
 		background: var(--Neutral-01, #F7F7F8);
 		border-radius: 99px;
+		display: flex;
 		height: 52px;
 		padding: 4px 6px;
 	}
@@ -170,7 +219,7 @@
 		width: 100%;
 	}
 
-	.learn-category-facet-tabs .term-count {
+	.term-count {
 		background: var(--Status-Info-Info, #2E5AAC);
 		border-radius: 12px;
 		color: var(--Neutral-00, #FFF);
@@ -178,67 +227,91 @@
 		padding: 2px 5px;
 	}
 
-	.learn-category-facet-tabs .term-text {
+	.term-text {
 		color: var(--Neutral-10, #282934);
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 600;
 	}
 
-	.selected-item-mobile-tab::after {
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='currentColor' class='lexicon-icon lexicon-icon-check' role='presentation' viewBox='0 0 512 512'%3E%3Cpath d='M192.9,429.5c-8.3,0-16.4-3.3-22.3-9.2L44.5,294.1C15,263.2,62.7,222,89.1,249.5L191.5,352l230-258.9 c27.2-30.5,74.3,11.5,47.1,41.9L216.4,418.9c-5.8,6.5-14,10.3-22.6,10.6C193.5,429.5,193.2,429.5,192.9,429.5z'%3E%3C/path%3E%3C/svg%3E");
-		background-repeat: no-repeat;
-		background-size: contain;
-		content: "";
-		height: 15px;
-		position: absolute;
-		right: 1rem;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 15px;
-	}
-
 	@media screen and (max-width: 992px) {
-		.learn-category-facet-tabs .facet-value-mobile {
-			gap: var(--spacer-2, 0.5rem);
+		.facet-value {
+			button {
+				width: 100%;
+			}
 		}
 
-		.learn-category-facet-tabs .facet-value-mobile .term-text {
-			opacity: 0.80;
-		}
-
-		.learn-category-facet-tabs .dropdown-menu,
-		.learn-category-facet-tabs#tab-list-mobile {
-			max-width: none;
-			padding: var(--spacer-2, 0.5rem);
-			width: 100%;
-		}
-
-		.learn-category-facet-tabs#tab-list {
-			display: none !important;
-		}
-
-		.learn-category-facet-tabs#tab-list-mobile {
+		.filter-toggle {
 			align-items: center;
-			display: flex !important;
+			background: #F7F7F8;
+			border-radius: 99px;
+			display: flex;
+			gap: 4px;
+			justify-content: center;
+			padding: 5px;
 			width: 100%;
+			.filter-toggle-content {
+				align-items: center;
+				border-radius: 99px;
+				display: flex;
+				padding: 8px;
+				width: 100%;
+				.filter-toggle-term-text-term-count {
+					width: 100%;
+				}
+				&:hover, &:active, &:focus {
+					background: #E6EDFB;
+				}
+			}
 		}
-	}
 
-	#tab-list-mobile {
-		display: none;
-	}
+		.learn-category-facet-tabs {
+			.facet-value {
+				border-radius: 6px;
+				padding: 8px;
+				text-align-last: start;
+				width: 100%;
 
-	#tab-list-mobile::after {
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23999AA3' d='M103.5 204.3l136.1 136.1c9 9 23.7 9 32.7 0l136.1-136.1c14.6-14.6 4.3-39.5-16.4-39.5H119.9C99.2 164.8 88.9 189.7 103.5 204.3z'/%3E%3C/svg%3E");
-		background-repeat: no-repeat;
-		background-size: contain;
-		content: "";
-		height: 15px;
-		position: absolute;
-		right: 1rem;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 15px;
+				&:hover {
+					background: #EDF3FE;
+				}
+			}
+
+			.selected-tab-btn {
+				align-items: center;
+				background: unset;
+				display: flex;
+				justify-content: space-between;
+				padding: unset;
+
+				&:after {
+					background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_820_175' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='1' y='2' width='14' height='12'%3E%3Cpath d='M6.02807 13.4237C5.76869 13.4237 5.51557 13.3205 5.33119 13.1362L1.39057 9.19242C0.468691 8.2268 1.95932 6.9393 2.78432 7.79867L5.98432 11.0018L13.1718 2.91117C14.0218 1.95805 15.4937 3.27055 14.6437 4.22055L6.76244 13.0924C6.58119 13.2955 6.32494 13.4143 6.05619 13.4237C6.04682 13.4237 6.03744 13.4237 6.02807 13.4237Z' fill='%236B6C7E'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_820_175)'%3E%3Crect width='16' height='16' fill='%2354555F'/%3E%3C/g%3E%3C/svg%3E%0A");
+					content: '';
+					display: block;
+					height: 16px;
+					width: 16px;
+				}
+			}
+
+			&.tab-list {
+				align-items: start;
+				background: #FFFF;
+				border-radius: 10px;
+				box-shadow: 0px 5px 15px 0px rgba(19, 20, 31, 0.12);
+				display: none;
+				flex-direction: column;
+				height: 100%;
+				padding: 8px;
+			}
+		}
+
+		.learn-category-facet-tabs.open {
+			display: flex;
+			flex-direction: column !important;
+		}
+
+		.learn-category-facet-tabs:not(.open) {
+			display: none;
+		}
 	}
 </style>

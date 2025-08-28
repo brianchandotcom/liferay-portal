@@ -102,7 +102,7 @@ export default function FolderFDSPropsTransformer({
 				return (
 					additionalProps.parentObjectEntryFolderExternalReferenceCode ===
 						OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE_FILES &&
-					item.entryClassName.includes(OBJECT_ENTRY_FOLDER_CLASSNAME)
+					item.entryClassName.includes(OBJECT_ENTRY_FOLDER_CLASS_NAME)
 				);
 			},
 			onFileDrop: (droppedFiles: any, dropTarget?: any) =>

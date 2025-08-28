@@ -52,9 +52,28 @@ const freeApp = z.object({
 
 const paidApp = z.object({
 	...baseAppSchema,
-	email: z.string().email(),
-	phone: z.string().min(8),
-	publisherWebsiteURL: z.string().url(),
+	email: z.string().email(i18n.translate('please-fill-in-a-valid-email')),
+	phone: z.string().min(8, {
+		message: i18n.translate('please-fill-in-a-valid-phone-number'),
+	}),
+	publisherWebsiteURL: z
+		.string()
+		.transform((val) => (val.startsWith('http') ? val : `http://${val}`))
+		.refine(
+			(val) => {
+				try {
+					new URL(val);
+
+					return true;
+				}
+				catch {
+					return false;
+				}
+			},
+			{
+				message: i18n.translate('please-fill-in-a-valid-url'),
+			}
+		),
 });
 
 const resources = z.object({

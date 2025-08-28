@@ -425,6 +425,9 @@ export default {
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
 		'Please be sure to specify Liferay compatibility through the appropriate properties or XML files in your plugin.',
 	'please-fill-in-a-valid-email': 'Please fill in a valid email',
+	'please-fill-in-a-valid-phone-number':
+		'Please fill in a valid phone number',
+	'please-fill-in-a-valid-url': 'Please fill in a valid URL',
 	'please-note-that-since-there-is-no-cloud-project-associated-with-your-instance-you-will-not-be-able-to-install-cloud-apps':
 		'Please note that since there is no cloud project associated with your instance, you will not be able to install Cloud Apps',
 	'please-review-before-submitting-once-sent-you-will-not-be-able-to-edit-any-information-until-this-submission-is-completely-reviewed-by-liferay':

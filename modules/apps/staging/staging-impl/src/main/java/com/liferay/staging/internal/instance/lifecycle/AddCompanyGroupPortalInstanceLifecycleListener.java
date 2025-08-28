@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -41,10 +42,11 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) {
-		_manageCompanyGroup(
-			company.getCompanyId(),
-			FeatureFlagManagerUtil.isEnabled(
-				company.getCompanyId(), "LPD-35914"));
+		if (FeatureFlagManagerUtil.isEnabled(
+				company.getCompanyId(), "LPD-35914")) {
+
+			_createCompanyGroup(company.getCompanyId());
+		}
 	}
 
 	@Override
@@ -56,8 +58,8 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			FeatureFlagListener.class,
-			(companyId, featureFlagKey, enabled) -> _manageCompanyGroup(
-				companyId, enabled),
+			(companyId, featureFlagKey, enabled) -> _manageCompanyGroups(
+				enabled),
 			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));
 	}
 
@@ -105,21 +107,30 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _manageCompanyGroup(long companyId, boolean enabled) {
-		if (companyId == CompanyConstants.SYSTEM) {
-			return;
-		}
-
+	private void _manageCompanyGroups(boolean enabled) {
 		if (enabled) {
-			_createCompanyGroup(companyId);
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					if (companyId != CompanyConstants.SYSTEM) {
+						_createCompanyGroup(companyId);
+					}
+				});
 		}
 		else {
-			_deleteCompanyGroup(companyId);
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					if (companyId != CompanyConstants.SYSTEM) {
+						_deleteCompanyGroup(companyId);
+					}
+				});
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddCompanyGroupPortalInstanceLifecycleListener.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

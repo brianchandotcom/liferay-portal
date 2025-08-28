@@ -303,9 +303,7 @@ public class NavItem implements Serializable {
 	 * @throws Exception if an exception occurred
 	 */
 	public boolean hasBrowsableChildren() throws Exception {
-		List<NavItem> browsableChildren = getBrowsableChildren();
-
-		return !browsableChildren.isEmpty();
+		return _hasBrowsableChildren(getChildren());
 	}
 
 	/**
@@ -430,6 +428,20 @@ public class NavItem implements Serializable {
 		}
 
 		return navItems;
+	}
+
+	private boolean _hasBrowsableChildren(List<NavItem> navItems)
+		throws Exception {
+
+		for (NavItem navItem : navItems) {
+			if (navItem.isBrowsable() ||
+				_hasBrowsableChildren(navItem.getChildren())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private List<NavItem> _browsableChildren;

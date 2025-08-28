@@ -56,7 +56,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -108,7 +108,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 			printWriter.write("<div id=\"" + fragmentElementId + "\">");
 
-			JSONObject configurationJSONObject = getConfiguration(
+			JSONObject configurationJSONObject = getConfigurationJSONObject(
 				fragmentRendererContext);
 
 			_writeCss(

@@ -142,7 +142,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			StringPool.BLANK, StringPool.BLANK,
 			JSONFactoryUtil.toString(
-				fragmentRenderer.getConfiguration(
+				fragmentRenderer.getConfigurationJSONObject(
 					new DefaultFragmentRendererContext(null))),
 			0, StringPool.BLANK, StringPool.BLANK, draftLayout, getRenderKey(),
 			fragmentRenderer.getType(), jsonObject.getString("addedItemId"), 0,

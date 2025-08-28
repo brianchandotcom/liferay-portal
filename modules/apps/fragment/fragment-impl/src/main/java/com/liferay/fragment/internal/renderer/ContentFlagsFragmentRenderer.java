@@ -42,7 +42,7 @@ public class ContentFlagsFragmentRenderer
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		return JSONUtil.put(
@@ -114,7 +114,7 @@ public class ContentFlagsFragmentRenderer
 					httpServletRequest,
 					GetterUtil.getString(
 						fragmentEntryConfigurationParser.getFieldValue(
-							getConfiguration(fragmentRendererContext),
+							getConfigurationJSONObject(fragmentRendererContext),
 							fragmentEntryLink.getEditableValuesJSONObject(),
 							fragmentRendererContext.getLocale(), "message"))));
 

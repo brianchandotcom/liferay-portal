@@ -115,7 +115,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			serviceContext.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK,
 			_jsonFactory.toString(
-				fragmentRenderer.getConfiguration(
+				fragmentRenderer.getConfigurationJSONObject(
 					defaultFragmentRendererContext)),
 			StringPool.BLANK, StringPool.BLANK, 0, fragmentEntryKey,
 			fragmentRenderer.getType(), serviceContext);

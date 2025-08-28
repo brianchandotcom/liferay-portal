@@ -109,7 +109,7 @@ public class LayoutReferencesExportImportContentProcessorTest {
 				0, segmentsExperienceId, draftLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				JSONFactoryUtil.toString(
-					fragmentRenderer.getConfiguration(
+					fragmentRenderer.getConfigurationJSONObject(
 						defaultFragmentRendererContext)),
 				JSONUtil.put(
 					FragmentEntryProcessorConstants.

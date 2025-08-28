@@ -27,7 +27,7 @@ public interface FragmentRenderer {
 
 	public String getCollectionKey();
 
-	public default JSONObject getConfiguration(
+	public default JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		return null;

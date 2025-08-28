@@ -299,7 +299,7 @@ public class ContentLayoutTestUtil {
 				layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK,
 				JSONFactoryUtil.toString(
-					fragmentRenderer.getConfiguration(
+					fragmentRenderer.getConfigurationJSONObject(
 						defaultFragmentRendererContext)),
 				editableValues, StringPool.BLANK, 0, fragmentRenderer.getKey(),
 				fragmentRenderer.getType(),

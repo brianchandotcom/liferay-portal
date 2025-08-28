@@ -40,7 +40,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		return JSONUtil.put(
@@ -101,7 +101,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
 
-			JSONObject configurationJSONObject = getConfiguration(
+			JSONObject configurationJSONObject = getConfigurationJSONObject(
 				fragmentRendererContext);
 
 			httpServletRequest.setAttribute(

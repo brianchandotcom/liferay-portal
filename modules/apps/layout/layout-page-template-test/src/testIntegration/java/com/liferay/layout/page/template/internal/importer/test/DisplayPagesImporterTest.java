@@ -251,7 +251,7 @@ public class DisplayPagesImporterTest {
 					0, 0, segmentsExperienceId, draftLayout.getPlid(),
 					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 					JSONFactoryUtil.toString(
-						fragmentRenderer.getConfiguration(
+						fragmentRenderer.getConfigurationJSONObject(
 							new DefaultFragmentRendererContext(null))),
 					JSONUtil.put(
 						FragmentEntryProcessorConstants.

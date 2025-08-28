@@ -70,9 +70,7 @@ test(
 					'Sample55'
 				);
 
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Search'})
-					.click();
+				await fdsSamplePage.managementToolbar.searchButton.click();
 			});
 
 			await test.step('Check that "1 Result Found for:" is displayed', async () => {
@@ -143,9 +141,7 @@ test(
 					'Sample'
 				);
 
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Search'})
-					.click();
+				await fdsSamplePage.managementToolbar.searchButton.click();
 
 				await expect(
 					page.getByText('75 Results Found for:')
@@ -153,9 +149,7 @@ test(
 			});
 
 			await test.step('Click search again', async () => {
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Search'})
-					.click();
+				await fdsSamplePage.managementToolbar.searchButton.click();
 			});
 
 			await test.step('Check that "Requesting Results for:" is not displayed', async () => {

@@ -40,6 +40,7 @@ export class FDSSamplePage {
 	};
 	readonly managementToolbar: {
 		container: Locator;
+		searchButton: Locator;
 		searchInput: Locator;
 	};
 	readonly page: Page;
@@ -117,11 +118,17 @@ export class FDSSamplePage {
 			items: listItems,
 		};
 
+		const managementToolbarContainer =
+			page.getByTestId('managementToolbar');
+
 		this.managementToolbar = {
-			container: page.getByTestId('managementToolbar'),
-			searchInput: page
-				.getByTestId('managementToolbar')
-				.locator('input[type="search"]'),
+			container: managementToolbarContainer,
+			searchButton: managementToolbarContainer.getByRole('button', {
+				name: 'Search',
+			}),
+			searchInput: managementToolbarContainer.locator(
+				'input[type="search"]'
+			),
 		};
 
 		this.page = page;

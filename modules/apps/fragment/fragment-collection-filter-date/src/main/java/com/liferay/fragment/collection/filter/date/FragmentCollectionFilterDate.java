@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 
 	@Override
-	public JSONObject getConfiguration() {
+	public JSONObject getConfigurationJSONObject() {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 
@@ -82,7 +82,8 @@ public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 			httpServletRequest.setAttribute(
 				FragmentCollectionFilterDateDisplayContext.class.getName(),
 				new FragmentCollectionFilterDateDisplayContext(
-					getConfiguration(), _fragmentEntryConfigurationParser,
+					getConfigurationJSONObject(),
+					_fragmentEntryConfigurationParser,
 					fragmentRendererContext));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);

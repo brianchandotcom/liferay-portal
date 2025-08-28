@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentCollectionFilterTags implements FragmentCollectionFilter {
 
 	@Override
-	public JSONObject getConfiguration() {
+	public JSONObject getConfigurationJSONObject() {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 
@@ -94,8 +94,9 @@ public class FragmentCollectionFilterTags implements FragmentCollectionFilter {
 			httpServletRequest.setAttribute(
 				FragmentCollectionFilterTagsDisplayContext.class.getName(),
 				new FragmentCollectionFilterTagsDisplayContext(
-					getConfiguration(), _fragmentEntryConfigurationParser,
-					fragmentRendererContext, httpServletRequest));
+					getConfigurationJSONObject(),
+					_fragmentEntryConfigurationParser, fragmentRendererContext,
+					httpServletRequest));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");

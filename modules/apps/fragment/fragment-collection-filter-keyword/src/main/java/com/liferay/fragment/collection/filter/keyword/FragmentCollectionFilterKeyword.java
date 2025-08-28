@@ -38,7 +38,7 @@ public class FragmentCollectionFilterKeyword
 	implements FragmentCollectionFilter {
 
 	@Override
-	public JSONObject getConfiguration() {
+	public JSONObject getConfigurationJSONObject() {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 
@@ -80,7 +80,8 @@ public class FragmentCollectionFilterKeyword
 			httpServletRequest.setAttribute(
 				FragmentCollectionFilterKeywordDisplayContext.class.getName(),
 				new FragmentCollectionFilterKeywordDisplayContext(
-					getConfiguration(), _fragmentEntryConfigurationParser,
+					getConfigurationJSONObject(),
+					_fragmentEntryConfigurationParser,
 					fragmentRendererContext));
 
 			RequestDispatcher requestDispatcher =

@@ -41,7 +41,7 @@ public class FragmentCollectionFilterCategory
 	implements FragmentCollectionFilter {
 
 	@Override
-	public JSONObject getConfiguration() {
+	public JSONObject getConfigurationJSONObject() {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 
@@ -96,7 +96,8 @@ public class FragmentCollectionFilterCategory
 			httpServletRequest.setAttribute(
 				FragmentCollectionFilterCategoryDisplayContext.class.getName(),
 				new FragmentCollectionFilterCategoryDisplayContext(
-					getConfiguration(), _fragmentEntryConfigurationParser,
+					getConfigurationJSONObject(),
+					_fragmentEntryConfigurationParser,
 					fragmentRendererContext));
 
 			RequestDispatcher requestDispatcher =

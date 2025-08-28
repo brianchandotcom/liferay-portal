@@ -21,7 +21,7 @@ import java.util.Locale;
 @ProviderType
 public interface FragmentCollectionFilter {
 
-	public default JSONObject getConfiguration() {
+	public default JSONObject getConfigurationJSONObject() {
 		return null;
 	}
 

@@ -56,7 +56,7 @@ public class GetCollectionFiltersMVCResourceCommand
 				JSONUtil.put(
 					"configuration",
 					_getConfigurationJSONObject(
-						fragmentCollectionFilter.getConfiguration())
+						fragmentCollectionFilter.getConfigurationJSONObject())
 				).put(
 					"key", fragmentCollectionFilter.getFilterKey()
 				).put(

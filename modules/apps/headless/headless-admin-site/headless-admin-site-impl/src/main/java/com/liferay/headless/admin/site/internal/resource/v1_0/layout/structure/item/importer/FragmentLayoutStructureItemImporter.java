@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -91,7 +92,8 @@ public class FragmentLayoutStructureItemImporter
 		fragmentStyledLayoutStructureItem.setCustomCSS(
 			fragmentInstancePageElementDefinition.getCustomCSS());
 		fragmentStyledLayoutStructureItem.setIndexed(
-			fragmentInstancePageElementDefinition.getIndexed());
+			GetterUtil.getBoolean(
+				fragmentInstancePageElementDefinition.getIndexed()));
 		fragmentStyledLayoutStructureItem.setName(
 			fragmentInstancePageElementDefinition.getName());
 
@@ -138,10 +140,14 @@ public class FragmentLayoutStructureItemImporter
 				fragmentEntry.getFragmentEntryId(),
 				layoutStructureItemImporterContext.getSegmentsExperienceId(),
 				layout.getPlid(),
-				fragmentInstancePageElementDefinition.getCss(),
-				fragmentInstancePageElementDefinition.getHtml(),
-				fragmentInstancePageElementDefinition.getJs(),
-				fragmentInstancePageElementDefinition.getConfiguration(),
+				GetterUtil.getString(
+					fragmentInstancePageElementDefinition.getCss()),
+				GetterUtil.getString(
+					fragmentInstancePageElementDefinition.getHtml()),
+				GetterUtil.getString(
+					fragmentInstancePageElementDefinition.getJs()),
+				GetterUtil.getString(
+					fragmentInstancePageElementDefinition.getConfiguration()),
 				StringPool.BLANK,
 				fragmentInstancePageElementDefinition.getNamespace(), 0,
 				fragmentEntry.getFragmentEntryKey(),
@@ -172,7 +178,9 @@ public class FragmentLayoutStructureItemImporter
 
 			return FragmentEntryLocalServiceUtil.
 				fetchFragmentEntryByExternalReferenceCode(
-					fragmentItemExternalReference.getExternalReferenceCode(),
+					GetterUtil.getString(
+						fragmentItemExternalReference.
+							getExternalReferenceCode()),
 					groupId);
 		}
 
@@ -180,7 +188,8 @@ public class FragmentLayoutStructureItemImporter
 			(DefaultFragmentReference)fragmentReference;
 
 		return FragmentCollectionContributorRegistryUtil.getFragmentEntry(
-			defaultFragmentReference.getDefaultFragmentKey());
+			GetterUtil.getString(
+				defaultFragmentReference.getDefaultFragmentKey()));
 	}
 
 	private long _getOriginalFragmentEntryLinkId(
@@ -254,12 +263,17 @@ public class FragmentLayoutStructureItemImporter
 		fragmentEntryLink.setFragmentEntryId(
 			fragmentEntry.getFragmentEntryId());
 		fragmentEntryLink.setCss(
-			fragmentInstancePageElementDefinition.getCss());
+			GetterUtil.getString(
+				fragmentInstancePageElementDefinition.getCss()));
 		fragmentEntryLink.setHtml(
-			fragmentInstancePageElementDefinition.getHtml());
-		fragmentEntryLink.setJs(fragmentInstancePageElementDefinition.getJs());
+			GetterUtil.getString(
+				fragmentInstancePageElementDefinition.getHtml()));
+		fragmentEntryLink.setJs(
+			GetterUtil.getString(
+				fragmentInstancePageElementDefinition.getJs()));
 		fragmentEntryLink.setConfiguration(
-			fragmentInstancePageElementDefinition.getConfiguration());
+			GetterUtil.getString(
+				fragmentInstancePageElementDefinition.getConfiguration()));
 		fragmentEntryLink.setNamespace(
 			fragmentInstancePageElementDefinition.getNamespace());
 		fragmentEntryLink.setRendererKey(fragmentEntry.getFragmentEntryKey());

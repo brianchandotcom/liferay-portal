@@ -68,7 +68,6 @@ function FirstSectionComponent({
 				</label>
 
 				<Picker
-					aria-label={Liferay.Language.get('file-source')}
 					disabled={disabled || isPublished}
 					id={id}
 					items={FILE_SOURCE_OPTIONS}

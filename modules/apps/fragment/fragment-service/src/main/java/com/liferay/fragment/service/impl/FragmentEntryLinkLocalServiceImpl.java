@@ -162,7 +162,7 @@ public class FragmentEntryLinkLocalServiceImpl
 				_fragmentEntryProcessorRegistry.
 					getDefaultEditableValuesJSONObject(
 						processedHTML,
-						_jsonFactory.toJSONObject(configuration)));
+						_jsonFactory.safeCreateJSONObject(configuration)));
 		}
 
 		fragmentEntryLink.setEditableValues(editableValues);

@@ -112,8 +112,8 @@ public class FragmentEntryLocalServiceImpl
 		_validateFragmentEntryKey(groupId, fragmentEntryKey);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
-			JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
-				configuration, true);
+			JSONObject configurationJSONObject =
+				_jsonFactory.safeCreateJSONObject(configuration, true);
 
 			_fragmentEntryValidator.validateConfiguration(
 				configurationJSONObject);
@@ -678,8 +678,8 @@ public class FragmentEntryLocalServiceImpl
 		_validate(name);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
-			JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
-				configuration, true);
+			JSONObject configurationJSONObject =
+				_jsonFactory.safeCreateJSONObject(configuration, true);
 
 			_fragmentEntryValidator.validateConfiguration(
 				configurationJSONObject);
@@ -1004,7 +1004,7 @@ public class FragmentEntryLocalServiceImpl
 			_validate(draftFragmentEntry.getName());
 		}
 
-		JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
+		JSONObject configurationJSONObject = _jsonFactory.safeCreateJSONObject(
 			draftFragmentEntry.getConfiguration(), true);
 
 		_fragmentEntryValidator.validateConfiguration(configurationJSONObject);

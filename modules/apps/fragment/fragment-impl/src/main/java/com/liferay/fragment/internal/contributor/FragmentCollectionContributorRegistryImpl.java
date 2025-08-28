@@ -372,7 +372,7 @@ public class FragmentCollectionContributorRegistryImpl
 	}
 
 	private boolean _validateFragmentEntry(FragmentEntry fragmentEntry) {
-		JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
+		JSONObject configurationJSONObject = _jsonFactory.safeCreateJSONObject(
 			fragmentEntry.getConfiguration(), true);
 
 		try {

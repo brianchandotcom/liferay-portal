@@ -127,20 +127,20 @@ public class JSONFactoryUtil {
 		return _jsonFactory.looseSerializeDeep(object, jsonTransformer, clazz);
 	}
 
+	public static JSONObject safeCreateJSONObject(String json) {
+		return _jsonFactory.safeCreateJSONObject(json);
+	}
+
+	public static JSONObject safeCreateJSONObject(String json, boolean strict) {
+		return _jsonFactory.safeCreateJSONObject(json, strict);
+	}
+
 	public static String serialize(Object object) {
 		return _jsonFactory.serialize(object);
 	}
 
 	public static String serializeThrowable(Throwable throwable) {
 		return _jsonFactory.serializeThrowable(throwable);
-	}
-
-	public static JSONObject toJSONObject(String json) {
-		return _jsonFactory.toJSONObject(json);
-	}
-
-	public static JSONObject toJSONObject(String json, boolean strict) {
-		return _jsonFactory.toJSONObject(json, strict);
 	}
 
 	public static String toString(JSONObject jsonObject) {

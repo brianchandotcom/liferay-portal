@@ -898,6 +898,14 @@ public class DataFactory {
 		return random.nextInt(count);
 	}
 
+	public String getRecentGroupIds() {
+		StringBundler sb = _customGroupIdsMap.get(_companyId);
+
+		sb.append(_guestGroupId);
+
+		return sb.toString();
+	}
+
 	public List<Integer> getSequence(int size) {
 		List<Integer> sequence = new ArrayList<>(size);
 

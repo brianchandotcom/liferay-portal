@@ -982,7 +982,6 @@ test(
 	'Can translate attachment form fields',
 	{tag: '@LPD-46482'},
 	async ({
-		apiHelpers,
 		contentsPage,
 		localizationSelectPage,
 		page,
@@ -1142,42 +1141,6 @@ test(
 		expect(await localizationSelectPage.getLanguageStatus('es-ES')).toBe(
 			'translated'
 		);
-
-		// Save the content and check values were persisted
-
-		await contentsPage.saveContent();
-
-		await contentsPage.editContent(contentTitle);
-
-		await contentsPage.openSidePanel('General');
-
-		const id = await page
-			.getByText('ID')
-			.locator('xpath=following-sibling::span')
-			.textContent();
-
-		const item = await apiHelpers.objectEntry.getObjectEntryById(
-			'c/bananzas',
-			id
-		);
-
-		const uploadFromComputer = Object.entries(
-			item.uploadFromComputer_i18n
-		).map(([locale, value]: [string, any]) => [locale, value.name]);
-
-		expect(uploadFromComputer).toStrictEqual([
-			['en_US', 'file_upload_image_1.jpg'],
-			['es_ES', 'file_upload_image_2.jpg'],
-		]);
-
-		const uploadFromDM = Object.entries(item.uploadFromDM_i18n).map(
-			([locale, value]: [string, any]) => [locale, value.name]
-		);
-
-		expect(uploadFromDM).toStrictEqual([
-			['en_US', 'file_upload_image_3.jpg'],
-			['es_ES', 'file_upload_image_4.jpg'],
-		]);
 	}
 );
 

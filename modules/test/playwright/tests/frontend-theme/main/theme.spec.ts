@@ -10,9 +10,9 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {performLogout} from '../../../utils/performLogin';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
 import getRandomString from '../../../utils/getRandomString';
+import {performLogout} from '../../../utils/performLogin';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -131,15 +131,17 @@ test(
 		await checkAccessibility({bestPractices: true, page});
 	}
 );
-	test(
-     'Check accessibility for a portal page.',
-     async ({page}) => {
-      await page.goto('/');
 
-      await checkAccessibility({bestPractices: true, page});
+test(
+	'Check accessibility for a portal page.',
+	{tag: '@LPD-55257'},
+	async ({page}) => {
+		await page.goto('/');
 
-      await performLogout(page);
+		await checkAccessibility({bestPractices: true, page});
 
-      await checkAccessibility({bestPractices: true, page});
-     }
-    );
+		await performLogout(page);
+
+		await checkAccessibility({bestPractices: true, page});
+	}
+);

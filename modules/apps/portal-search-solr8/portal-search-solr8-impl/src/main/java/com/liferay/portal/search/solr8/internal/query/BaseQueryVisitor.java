@@ -89,7 +89,7 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 		}
 
 		wrapperBooleanQueryBuilder.add(
-			_filterTranslator.translate(booleanFilter),
+			booleanFilter.accept(new FilterTranslator()),
 			BooleanClause.Occur.MUST);
 
 		return _addBoost(booleanQuery, wrapperBooleanQueryBuilder.build());
@@ -502,7 +502,5 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 		return value;
 	}
-
-	private final FilterTranslator _filterTranslator = new FilterTranslator();
 
 }

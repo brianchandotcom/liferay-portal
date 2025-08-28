@@ -30,7 +30,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -372,13 +371,7 @@ public class ObjectEntryResourceImpl
 
 			@Override
 			public String getPortletId() {
-				if (FeatureFlagManagerUtil.isEnabled(
-						CompanyConstants.SYSTEM, "LPD-35914")) {
-
-					return _objectDefinition.getPortletId();
-				}
-
-				return null;
+				return _objectDefinition.getPortletId();
 			}
 
 			@Override

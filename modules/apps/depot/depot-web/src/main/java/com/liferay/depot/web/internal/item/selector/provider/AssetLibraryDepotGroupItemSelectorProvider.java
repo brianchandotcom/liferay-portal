@@ -19,7 +19,7 @@ public class AssetLibraryDepotGroupItemSelectorProvider
 
 	@Override
 	public String getGroupType() {
-		return "asset-library-depot";
+		return "depot";
 	}
 
 	@Override

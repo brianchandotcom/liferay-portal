@@ -358,12 +358,41 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public List<String> getNestedFields() {
-		return transform(
-			_objectRelationshipLocalService.
-				getObjectRelationshipsByObjectDefinitionId2(
-					_objectDefinition.getObjectDefinitionId()),
-			ObjectRelationshipModel::getName);
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
+
+			@Override
+			public List<String> getNestedFields() {
+				return transform(
+					_objectRelationshipLocalService.
+						getObjectRelationshipsByObjectDefinitionId2(
+							_objectDefinition.getObjectDefinitionId()),
+					ObjectRelationshipModel::getName);
+			}
+
+			@Override
+			public String getPortletId() {
+				if (FeatureFlagManagerUtil.isEnabled(
+						CompanyConstants.SYSTEM, "LPD-35914")) {
+
+					return _objectDefinition.getPortletId();
+				}
+
+				return null;
+			}
+
+			@Override
+			public Scope getScope() {
+				if (StringUtil.equalsIgnoreCase(
+						_objectDefinition.getScope(), "company")) {
+
+					return Scope.COMPANY;
+				}
+
+				return Scope.SITE;
+			}
+
+		};
 	}
 
 	@Override
@@ -432,30 +461,8 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public String getPortletId() {
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-35914")) {
-
-			return _objectDefinition.getPortletId();
-		}
-
-		return null;
-	}
-
-	@Override
 	public String getResourceName() {
 		return _objectDefinition.getShortName();
-	}
-
-	@Override
-	public Scope getScope() {
-		if (StringUtil.equalsIgnoreCase(
-				_objectDefinition.getScope(), "company")) {
-
-			return Scope.COMPANY;
-		}
-
-		return Scope.SITE;
 	}
 
 	@Override

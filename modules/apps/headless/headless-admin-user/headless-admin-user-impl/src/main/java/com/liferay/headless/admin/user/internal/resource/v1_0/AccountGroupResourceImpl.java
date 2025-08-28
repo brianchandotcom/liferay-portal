@@ -203,24 +203,31 @@ public class AccountGroupResourceImpl
 	}
 
 	@Override
-	public List<String> getNestedFields() {
-		return List.of("accountBriefs");
-	}
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
 
-	@Override
-	public String getPortletId() {
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-35914")) {
+			@Override
+			public List<String> getNestedFields() {
+				return List.of("accountBriefs");
+			}
 
-			return AccountPortletKeys.ACCOUNT_GROUPS_ADMIN;
-		}
+			@Override
+			public String getPortletId() {
+				if (FeatureFlagManagerUtil.isEnabled(
+						CompanyConstants.SYSTEM, "LPD-35914")) {
 
-		return null;
-	}
+					return AccountPortletKeys.ACCOUNT_GROUPS_ADMIN;
+				}
 
-	@Override
-	public Scope getScope() {
-		return Scope.COMPANY;
+				return null;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+		};
 	}
 
 	@Override

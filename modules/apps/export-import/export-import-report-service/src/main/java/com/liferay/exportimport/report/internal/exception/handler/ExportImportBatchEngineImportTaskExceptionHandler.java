@@ -55,7 +55,12 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 					(ExportImportVulcanBatchEngineTaskItemDelegate)
 						batchEngineImportTask;
 
-			if (exportImportVulcanBatchEngineTaskItemDelegate.getScope() ==
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					exportImportVulcanBatchEngineTaskItemDelegate.
+						getExportImportDescriptor();
+
+			if (exportImportDescriptor.getScope() ==
 					ExportImportVulcanBatchEngineTaskItemDelegate.Scope.SITE) {
 
 				groupId = GetterUtil.getLong(

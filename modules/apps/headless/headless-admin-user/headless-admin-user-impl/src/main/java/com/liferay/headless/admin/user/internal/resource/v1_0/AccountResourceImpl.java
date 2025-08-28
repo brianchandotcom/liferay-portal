@@ -316,10 +316,33 @@ public class AccountResourceImpl
 	}
 
 	@Override
-	public List<String> getNestedFields() {
-		return List.of(
-			"accountGroupBriefs", "accountRoles", "keywords", "logoBase64",
-			"postalAddresses", "taxonomyCategoryBriefs");
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of(
+					"accountGroupBriefs", "accountRoles", "keywords",
+					"logoBase64", "postalAddresses", "taxonomyCategoryBriefs");
+			}
+
+			@Override
+			public String getPortletId() {
+				if (FeatureFlagManagerUtil.isEnabled(
+						CompanyConstants.SYSTEM, "LPD-35914")) {
+
+					return AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN;
+				}
+
+				return null;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+		};
 	}
 
 	@NestedField(
@@ -379,22 +402,6 @@ public class AccountResourceImpl
 		return getOrganizationAccountsPage(
 			String.valueOf(organization.getOrganizationId()), search, filter,
 			pagination, sorts);
-	}
-
-	@Override
-	public String getPortletId() {
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-35914")) {
-
-			return AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN;
-		}
-
-		return null;
-	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.COMPANY;
 	}
 
 	@Override

@@ -102,8 +102,13 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		_fileName = fileNamePrefix + ".json";
 
+		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+			exportImportDescriptor =
+				exportImportVulcanBatchEngineTaskItemDelegate.
+					getExportImportDescriptor();
+
 		if (ExportImportVulcanBatchEngineTaskItemDelegate.Scope.COMPANY.equals(
-				exportImportVulcanBatchEngineTaskItemDelegate.getScope())) {
+				exportImportDescriptor.getScope())) {
 
 			setDataLevel(DataLevel.PORTAL);
 		}
@@ -211,6 +216,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
 
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					_exportImportVulcanBatchEngineTaskItemDelegate.
+						getExportImportDescriptor();
+
 			BatchEngineExportTaskExecutor.Result result =
 				_batchEngineExportTaskExecutor.execute(
 					_batchEngineExportTaskService.addBatchEngineExportTask(
@@ -219,10 +229,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						BatchEngineTaskExecuteStatus.INITIAL.name(),
 						Collections.emptyList(),
 						BatchEnginePortletDataHandlerUtil.buildExportParameters(
-							_exportImportVulcanBatchEngineTaskItemDelegate.
-								getNestedFields(),
-							_exportImportVulcanBatchEngineTaskItemDelegate.
-								getParameters(),
+							exportImportDescriptor.getNestedFields(),
+							exportImportDescriptor.getParameters(),
 							portletDataContext),
 						_taskItemDelegateName),
 					new BatchEngineExportTaskExecutor.Settings() {

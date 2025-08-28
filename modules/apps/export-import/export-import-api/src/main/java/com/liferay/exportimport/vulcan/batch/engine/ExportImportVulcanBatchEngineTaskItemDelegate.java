@@ -18,17 +18,23 @@ import java.util.Map;
 public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 	extends VulcanBatchEngineTaskItemDelegate<T> {
 
-	public default List<String> getNestedFields() {
-		return null;
+	public ExportImportDescriptor getExportImportDescriptor();
+
+	public interface ExportImportDescriptor {
+
+		public default List<String> getNestedFields() {
+			return null;
+		}
+
+		public default Map<String, Serializable> getParameters() {
+			return null;
+		}
+
+		public String getPortletId();
+
+		public Scope getScope();
+
 	}
-
-	public default Map<String, Serializable> getParameters() {
-		return null;
-	}
-
-	public String getPortletId();
-
-	public Scope getScope();
 
 	public enum Scope {
 

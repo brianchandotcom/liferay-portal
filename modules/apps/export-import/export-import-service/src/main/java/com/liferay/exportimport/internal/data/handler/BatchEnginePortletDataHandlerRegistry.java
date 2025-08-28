@@ -118,8 +118,12 @@ public class BatchEnginePortletDataHandlerRegistry {
 				return null;
 			}
 
-			String portletId =
-				exportImportVulcanBatchEngineTaskItemDelegate.getPortletId();
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					exportImportVulcanBatchEngineTaskItemDelegate.
+						getExportImportDescriptor();
+
+			String portletId = exportImportDescriptor.getPortletId();
 
 			if (Validator.isNull(portletId)) {
 				return null;

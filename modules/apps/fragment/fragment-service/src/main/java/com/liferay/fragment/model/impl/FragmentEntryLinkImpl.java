@@ -34,7 +34,7 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 	@Override
 	public JSONObject getConfigurationJSONObject(boolean strict) {
 		if (_configurationJSONObject == null) {
-			_configurationJSONObject = JSONFactoryUtil.toJSONObject(
+			_configurationJSONObject = JSONFactoryUtil.safeCreateJSONObject(
 				getConfiguration(), strict);
 
 			configurationJSONObjectUpdateEntityCacheBiConsumer.accept(
@@ -52,7 +52,7 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 	@Override
 	public JSONObject getEditableValuesJSONObject(boolean strict) {
 		if (_editableValuesJSONObject == null) {
-			_editableValuesJSONObject = JSONFactoryUtil.toJSONObject(
+			_editableValuesJSONObject = JSONFactoryUtil.safeCreateJSONObject(
 				getEditableValues(), strict);
 
 			editableValuesJSONObjectUpdateEntityCacheBiConsumer.accept(

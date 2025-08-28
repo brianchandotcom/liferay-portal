@@ -335,7 +335,7 @@ public class PortletRegistryImplTest {
 		Mockito.when(
 			fragmentEntryLink.getEditableValuesJSONObject()
 		).thenReturn(
-			JSONFactoryUtil.toJSONObject(editableValues)
+			JSONFactoryUtil.safeCreateJSONObject(editableValues)
 		);
 
 		Mockito.when(

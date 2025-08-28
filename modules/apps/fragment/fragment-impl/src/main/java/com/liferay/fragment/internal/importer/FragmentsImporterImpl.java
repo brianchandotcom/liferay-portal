@@ -318,7 +318,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		int status = WorkflowConstants.STATUS_APPROVED;
 		String errorMessage = null;
 
-		JSONObject configurationJSONObject = _jsonFactory.toJSONObject(
+		JSONObject configurationJSONObject = _jsonFactory.safeCreateJSONObject(
 			configuration, true);
 
 		try {

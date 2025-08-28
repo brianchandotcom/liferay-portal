@@ -351,7 +351,7 @@ public class FragmentLayoutStructureItemImporter
 
 			configuration = fragmentEntry.getConfiguration();
 
-			configurationJSONObject = JSONFactoryUtil.toJSONObject(
+			configurationJSONObject = JSONFactoryUtil.safeCreateJSONObject(
 				configuration, true);
 
 			html = fragmentEntry.getHtml();

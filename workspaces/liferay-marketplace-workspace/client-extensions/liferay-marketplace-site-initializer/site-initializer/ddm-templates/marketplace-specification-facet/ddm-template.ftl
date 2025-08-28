@@ -31,7 +31,7 @@
 		margin: 1rem auto 0;
 		width: 90%;
 	}
-	
+
 	.price-model-facet .view-all-btn {
 		color: #2B3A4B;
 		font-size: 14px;
@@ -39,18 +39,18 @@
 	}
 </style>
 
-<#assign appliedFilterCount = 0>
+<#assign appliedFilterCount = 0 />
 <#list entries?sort_by("displayName") as entry>
-  <#if entry.isSelected()>
-    <#assign appliedFilterCount++ >
-  </#if>
+<#if entry.isSelected()>
+	<#assign appliedFilterCount++>
+</#if>
 </#list>
 
 <#if cpSpecificationOptionsSearchFacetDisplayContext.getParameterName() != 'developer-name'>
 	<#if appliedFilterCount == 0>
-    <#assign title = "${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')}">
+		<#assign title = "${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')}" />
 	<#else>
-    <#assign title = "${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')} (${appliedFilterCount})">
+		<#assign title = "${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')} (${appliedFilterCount})" />
 	</#if>
 	<@liferay_ui["panel-container"]
 		cssClass="price-model-facet bg-white border-radius-xlarge"
@@ -77,6 +77,7 @@
 			<button class="btn-unstyled options-btn mb-4 ml-1" onClick="Liferay.Search.FacetUtil.clearSelections(event);">
 				Clear
 			</button>
+
 			<ul class="list-unstyled">
 				<#assign termDisplayContextCount = 1 />
 				<#list entries?sort_by("displayName") as entry>
@@ -175,10 +176,10 @@
 
 			window.location.href = url.href;
 		}
-	
+
 	function ${namespace}viewAll(event, parameterName) {
 		event.preventDefault();
-	
+
 		const subtreeCategoryTreeElement = document.getElementById(parameterName);
 
 		if (subtreeCategoryTreeElement) {

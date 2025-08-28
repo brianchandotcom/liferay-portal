@@ -7,7 +7,10 @@ package com.liferay.exportimport.vulcan.batch.engine;
 
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Alejandro Tardín
@@ -16,6 +19,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 	extends VulcanBatchEngineTaskItemDelegate<T> {
 
 	public default List<String> getNestedFields() {
+		return null;
+	}
+
+	public default Map<String, Serializable> getParameters() {
 		return null;
 	}
 

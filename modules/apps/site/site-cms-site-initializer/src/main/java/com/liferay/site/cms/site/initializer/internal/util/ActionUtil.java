@@ -417,7 +417,7 @@ public class ActionUtil {
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK,
 			JSONFactoryUtil.toString(
-				fragmentRenderer.getConfiguration(
+				fragmentRenderer.getConfigurationJSONObject(
 					defaultFragmentRendererContext)),
 			editableValues, StringPool.BLANK, 0, fragmentEntryKey,
 			fragmentRenderer.getType(), serviceContext);

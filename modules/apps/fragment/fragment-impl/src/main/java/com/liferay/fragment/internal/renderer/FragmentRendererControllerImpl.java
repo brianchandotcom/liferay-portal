@@ -57,7 +57,8 @@ public class FragmentRendererControllerImpl
 			fragmentRendererContext.getFragmentEntryLink());
 
 		return _translateConfigurationFields(
-			fragmentRenderer.getConfiguration(fragmentRendererContext),
+			fragmentRenderer.getConfigurationJSONObject(
+				fragmentRendererContext),
 			fragmentRendererContext.getLocale());
 	}
 

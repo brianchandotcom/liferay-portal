@@ -56,7 +56,7 @@ public class StatusLabelFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -148,7 +148,7 @@ public class StatusLabelFragmentRenderer implements FragmentRenderer {
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfiguration(fragmentRendererContext),
+				getConfigurationJSONObject(fragmentRendererContext),
 				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), "selectedStatus"));
 	}

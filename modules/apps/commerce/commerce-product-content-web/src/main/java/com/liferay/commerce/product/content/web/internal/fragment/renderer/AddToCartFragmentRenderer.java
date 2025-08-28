@@ -60,7 +60,7 @@ public class AddToCartFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CategoriesInputFragmentRenderer extends BaseInputFragmentRenderer {
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(

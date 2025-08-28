@@ -60,7 +60,7 @@ public class InlineEditableOrderFieldFragmentRenderer
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -175,7 +175,7 @@ public class InlineEditableOrderFieldFragmentRenderer
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfiguration(fragmentRendererContext),
+				getConfigurationJSONObject(fragmentRendererContext),
 				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), name));
 	}

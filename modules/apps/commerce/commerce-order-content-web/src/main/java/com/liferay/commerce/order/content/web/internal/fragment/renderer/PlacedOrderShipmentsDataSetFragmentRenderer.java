@@ -58,7 +58,7 @@ public class PlacedOrderShipmentsDataSetFragmentRenderer
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -166,7 +166,7 @@ public class PlacedOrderShipmentsDataSetFragmentRenderer
 
 		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfiguration(fragmentRendererContext),
+				getConfigurationJSONObject(fragmentRendererContext),
 				fragmentEntryLink.getEditableValuesJSONObject(),
 				fragmentRendererContext.getLocale(), name));
 	}

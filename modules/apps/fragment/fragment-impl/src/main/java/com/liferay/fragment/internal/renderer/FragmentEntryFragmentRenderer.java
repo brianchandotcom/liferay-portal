@@ -79,7 +79,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		FragmentEntryLink fragmentEntryLink =

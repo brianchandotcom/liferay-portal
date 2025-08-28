@@ -93,7 +93,7 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public JSONObject getConfiguration(
+	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
 		try {
@@ -269,7 +269,8 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 
 					if (!GetterUtil.getBoolean(
 							_fragmentEntryConfigurationParser.getFieldValue(
-								getConfiguration(fragmentRendererContext),
+								getConfigurationJSONObject(
+									fragmentRendererContext),
 								editableValuesJSONObject,
 								fragmentRendererContext.getLocale(),
 								StringUtil.removeSubstring(
@@ -321,7 +322,7 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 
 		if (GetterUtil.getBoolean(
 				_fragmentEntryConfigurationParser.getFieldValue(
-					getConfiguration(fragmentRendererContext),
+					getConfigurationJSONObject(fragmentRendererContext),
 					editableValuesJSONObject,
 					fragmentRendererContext.getLocale(), "printOrder"),
 				true)) {

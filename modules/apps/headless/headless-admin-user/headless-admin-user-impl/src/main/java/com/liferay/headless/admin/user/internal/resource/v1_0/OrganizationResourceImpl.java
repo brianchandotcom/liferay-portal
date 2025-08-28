@@ -106,6 +106,8 @@ import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.io.Serializable;
+
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
@@ -401,6 +403,13 @@ public class OrganizationResourceImpl
 					0L)
 			).build(),
 			null, flatten, filter, search, pagination, sorts);
+	}
+
+	@Override
+	public Map<String, Serializable> getParameters() {
+		return HashMapBuilder.<String, Serializable>put(
+			"flatten", "true"
+		).build();
 	}
 
 	@Override

@@ -50,6 +50,9 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 	@After
 	public void tearDown() throws Exception {
 		db.runSQL("drop table " + _TABLE_NAME);
+		db.runSQL("delete from Layout where userId = " + _userId);
+		db.runSQL("delete from MBDiscussion where userId = " + _userId);
+		db.runSQL("delete from Users_Roles where userId = " + _userId);
 	}
 
 	@Override

@@ -54,13 +54,13 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 	public void testUpgradeFrom62() throws Exception {
 		connection = _connection;
 
+		String structureId = RandomTestUtil.randomString();
+
 		try {
 			alterTableAddColumn(
 				"JournalArticle", "structureId", "VARCHAR(75) null");
 			alterTableAddColumn(
 				"JournalFeed", "structureId", "VARCHAR(75) null");
-
-			String structureId = RandomTestUtil.randomString();
 
 			_test(
 				() -> {
@@ -95,6 +95,12 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 				});
 		}
 		finally {
+			runSQL(
+				"delete from JournalArticle where structureId = '" +
+					structureId + StringPool.APOSTROPHE);
+			runSQL(
+				"delete from JournalFeed where structureId = '" + structureId +
+					StringPool.APOSTROPHE);
 			alterTableDropColumn("JournalArticle", "structureId");
 			alterTableDropColumn("JournalFeed", "structureId");
 		}
@@ -104,13 +110,13 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 	public void testUpgradeFrom70to73() throws Exception {
 		connection = _connection;
 
+		String structureId = RandomTestUtil.randomString();
+
 		try {
 			alterTableAddColumn(
 				"JournalArticle", "DDMStructureKey", "VARCHAR(75) null");
 			alterTableAddColumn(
 				"JournalFeed", "DDMStructureKey", "VARCHAR(75) null");
-
-			String structureId = RandomTestUtil.randomString();
 
 			_test(
 				() -> {
@@ -145,6 +151,12 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 				});
 		}
 		finally {
+			runSQL(
+				"delete from JournalArticle where DDMStructureKey = '" +
+					structureId + StringPool.APOSTROPHE);
+			runSQL(
+				"delete from JournalFeed where DDMStructureKey = '" +
+					structureId + StringPool.APOSTROPHE);
 			alterTableDropColumn("JournalArticle", "structureId");
 			alterTableDropColumn("JournalFeed", "structureId");
 		}
@@ -154,35 +166,45 @@ public class DDMStructureDataCleanupPreupgradeProcessTest
 	public void testUpgradeFrom74() throws Exception {
 		long structureId = RandomTestUtil.nextLong();
 
-		_test(
-			() -> {
-				runSQL(
-					StringBundler.concat(
-						"insert into JournalArticle (",
-						"mvccVersion, ctCollectionId, id_, groupId, ",
-						"DDMStructureId) values (0, 0, ",
-						RandomTestUtil.nextLong(), ", ",
-						RandomTestUtil.nextLong(), ", ", structureId, ")"));
-				runSQL(
-					StringBundler.concat(
-						"insert into JournalFeed (",
-						"mvccVersion, ctCollectionId, id_, groupId, ",
-						"DDMStructureId) values (0, 0, ",
-						RandomTestUtil.nextLong(), ", ",
-						RandomTestUtil.nextLong(), ", ", structureId, ")"));
-			},
-			messages -> {
-				Assert.assertTrue(
-					messages.contains(
-						_getExpectedMessage(
-							1, "DDMStructureId", "JournalArticle",
-							"structureId", "DDMStructure", structureId)));
-				Assert.assertTrue(
-					messages.contains(
-						_getExpectedMessage(
-							1, "DDMStructureId", "JournalFeed", "structureId",
-							"DDMStructure", structureId)));
-			});
+		try {
+			_test(
+				() -> {
+					runSQL(
+						StringBundler.concat(
+							"insert into JournalArticle (",
+							"mvccVersion, ctCollectionId, id_, groupId, ",
+							"DDMStructureId) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ",
+							RandomTestUtil.nextLong(), ", ", structureId, ")"));
+					runSQL(
+						StringBundler.concat(
+							"insert into JournalFeed (",
+							"mvccVersion, ctCollectionId, id_, groupId, ",
+							"DDMStructureId) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ",
+							RandomTestUtil.nextLong(), ", ", structureId, ")"));
+				},
+				messages -> {
+					Assert.assertTrue(
+						messages.contains(
+							_getExpectedMessage(
+								1, "DDMStructureId", "JournalArticle",
+								"structureId", "DDMStructure", structureId)));
+					Assert.assertTrue(
+						messages.contains(
+							_getExpectedMessage(
+								1, "DDMStructureId", "JournalFeed",
+								"structureId", "DDMStructure", structureId)));
+				});
+		}
+		finally {
+			runSQL(
+				"delete from JournalArticle where DDMStructureId = '" +
+					structureId + StringPool.APOSTROPHE);
+			runSQL(
+				"delete from JournalFeed where DDMStructureId = '" +
+					structureId + StringPool.APOSTROPHE);
+		}
 	}
 
 	private String _getExpectedMessage(

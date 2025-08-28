@@ -19,6 +19,7 @@ import com.liferay.portal.test.log.LogEntry;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -42,6 +43,14 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcessTest
 				"from Company where Company.companyID = PortletPreferences.",
 				"ownerId) and ownerId is not null and ownerId != 0 and ",
 				"ownerType = ", PortletKeys.PREFS_OWNER_TYPE_COMPANY));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		db.runSQL(
+			"delete from PortletPreferences where companyId = " + _companyId1);
+		db.runSQL(
+			"delete from PortletPreferences where companyId = " + _companyId2);
 	}
 
 	@Override

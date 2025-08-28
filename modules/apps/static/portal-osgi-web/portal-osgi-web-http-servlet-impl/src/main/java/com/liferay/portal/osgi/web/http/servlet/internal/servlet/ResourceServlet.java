@@ -27,8 +27,6 @@ import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.eclipse.equinox.http.servlet.internal.servlet.HttpServletRequestWrapperImpl;
-
 import org.osgi.service.http.context.ServletContextHelper;
 
 /**

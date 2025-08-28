@@ -28,8 +28,6 @@ import java.util.List;
 import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
 import org.eclipse.equinox.http.servlet.internal.servlet.FilterChainImpl;
-import org.eclipse.equinox.http.servlet.internal.servlet.HttpServletRequestWrapperImpl;
-import org.eclipse.equinox.http.servlet.internal.servlet.HttpServletResponseWrapperImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 

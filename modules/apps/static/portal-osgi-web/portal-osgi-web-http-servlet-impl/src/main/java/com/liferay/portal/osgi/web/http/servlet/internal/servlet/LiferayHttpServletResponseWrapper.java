@@ -15,19 +15,20 @@ import java.io.IOException;
 /**
  * @author Dante Wang
  */
-public class HttpServletResponseWrapperImpl extends HttpServletResponseWrapper {
+public class LiferayHttpServletResponseWrapper
+	extends HttpServletResponseWrapper {
 
-	public static HttpServletResponseWrapperImpl findHttpRuntimeResponse(
+	public static LiferayHttpServletResponseWrapper findHttpRuntimeResponse(
 		HttpServletResponse httpServletResponse) {
 
 		while (httpServletResponse instanceof
 					HttpServletResponseWrapper httpServletResponseWrapper) {
 
 			if (httpServletResponseWrapper instanceof
-					HttpServletResponseWrapperImpl
-						httpServletResponseWrapperImpl) {
+					LiferayHttpServletResponseWrapper
+						liferayHttpServletResponseWrapper) {
 
-				return httpServletResponseWrapperImpl;
+				return liferayHttpServletResponseWrapper;
 			}
 
 			httpServletResponse =
@@ -37,7 +38,7 @@ public class HttpServletResponseWrapperImpl extends HttpServletResponseWrapper {
 		return null;
 	}
 
-	public HttpServletResponseWrapperImpl(
+	public LiferayHttpServletResponseWrapper(
 		HttpServletResponse httpServletResponse) {
 
 		super(httpServletResponse);

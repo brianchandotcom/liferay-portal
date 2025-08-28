@@ -35,19 +35,20 @@ import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 /**
  * @author Dante Wang
  */
-public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+public class LiferayHttpServletRequestWrapper
+	extends HttpServletRequestWrapper {
 
-	public static HttpServletRequestWrapperImpl findHttpRuntimeRequest(
+	public static LiferayHttpServletRequestWrapper findHttpRuntimeRequest(
 		HttpServletRequest httpServletRequest) {
 
 		while (httpServletRequest instanceof
 					HttpServletRequestWrapper httpServletRequestWrapper) {
 
 			if (httpServletRequestWrapper instanceof
-					HttpServletRequestWrapperImpl
-						httpServletRequestWrapperImpl) {
+					LiferayHttpServletRequestWrapper
+						liferayHttpServletRequestWrapper) {
 
-				return httpServletRequestWrapperImpl;
+				return liferayHttpServletRequestWrapper;
 			}
 
 			httpServletRequest =
@@ -68,7 +69,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 		return httpServletRequest.getPathInfo();
 	}
 
-	public HttpServletRequestWrapperImpl(
+	public LiferayHttpServletRequestWrapper(
 		HttpServletRequest httpServletRequest) {
 
 		super(httpServletRequest);

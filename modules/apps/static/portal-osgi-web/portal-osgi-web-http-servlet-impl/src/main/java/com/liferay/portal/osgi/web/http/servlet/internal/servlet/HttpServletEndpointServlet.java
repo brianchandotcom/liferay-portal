@@ -49,7 +49,7 @@ public class HttpServletEndpointServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		String dispatchPathInfo =
-			HttpServletRequestWrapperImpl.getDispatchPathInfo(
+			LiferayHttpServletRequestWrapper.getDispatchPathInfo(
 				httpServletRequest);
 
 		if (dispatchPathInfo == null) {

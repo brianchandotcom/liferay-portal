@@ -41,6 +41,7 @@ type Properties = {
 	articleGettingStartedWithLiferayEnterpriseSearchURL: string | null;
 	articleNotifiedWhenMyActivationKeyIsAboutToExpireURL: string | null;
 	articleWhatIsMyInstanceSizingValueURL: string | null;
+	createTicketURL: string | null;
 	featureFlags?: string[];
 	helpCenterURL: string | null;
 	importDate?: Date | null;
@@ -120,6 +121,7 @@ class CustomerPortalWebComponent extends HTMLElement {
 			articleWhatIsMyInstanceSizingValueURL: super.getAttribute(
 				'article-what-is-my-instance-sizing-value-url'
 			),
+			createTicketURL: super.getAttribute('create-ticket-url'),
 			featureFlags: (super.getAttribute('feature-flags') ?? '')
 				.split(',')
 				.map((featureflag) => featureflag.trim()),

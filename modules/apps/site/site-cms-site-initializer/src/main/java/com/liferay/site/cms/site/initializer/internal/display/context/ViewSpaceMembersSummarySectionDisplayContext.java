@@ -38,19 +38,19 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 	public ViewSpaceMembersSummarySectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService, long groupId,
 		GroupLocalService groupLocalService,
+		ModelResourcePermission<Group> groupModelResourcePermission,
 		HttpServletRequest httpServletRequest, Language language,
 		UserGroupLocalService userGroupLocalService,
-		UserLocalService userLocalService,
-		ModelResourcePermission<Group> groupModelResourcePermission) {
+		UserLocalService userLocalService) {
 
 		_depotEntryLocalService = depotEntryLocalService;
 		_groupId = groupId;
 		_groupLocalService = groupLocalService;
+		_groupModelResourcePermission = groupModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
-		_groupModelResourcePermission = groupModelResourcePermission;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

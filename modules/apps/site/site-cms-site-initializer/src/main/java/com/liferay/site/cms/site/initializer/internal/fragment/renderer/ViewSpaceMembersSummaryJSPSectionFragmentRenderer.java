@@ -38,8 +38,8 @@ public class ViewSpaceMembersSummaryJSPSectionFragmentRenderer
 		return new ViewSpaceMembersSummarySectionDisplayContext(
 			_depotEntryLocalService,
 			InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
-			httpServletRequest, _language, _userGroupLocalService,
-			_userLocalService, _groupModelResourcePermission);
+			_groupModelResourcePermission, httpServletRequest, _language,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	@Override

@@ -215,7 +215,8 @@ public class ObjectEntrySingleFormVariationInfoCollectionProviderTest {
 							RandomTestUtil.randomString())
 					).name(
 						"textObjectFieldName"
-					).build()));
+					).build()),
+				Collections.emptyList());
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

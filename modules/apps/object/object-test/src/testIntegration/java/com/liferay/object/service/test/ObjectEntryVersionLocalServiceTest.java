@@ -113,7 +113,8 @@ public class ObjectEntryVersionLocalServiceTest {
 						RandomTestUtil.randomLocaleStringMap()
 					).name(
 						"textObjectFieldName"
-					).build()));
+					).build()),
+				Collections.emptyList());
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

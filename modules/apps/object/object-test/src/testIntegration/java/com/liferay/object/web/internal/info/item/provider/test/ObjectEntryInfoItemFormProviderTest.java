@@ -374,7 +374,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			true, ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Collections.emptyList(), Arrays.asList(objectFields));
+			Collections.emptyList(), Arrays.asList(objectFields),
+			Collections.emptyList());
 	}
 
 	private void _addObjectStateTransition(

@@ -271,7 +271,7 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 							RandomTestUtil.randomString())
 					).name(
 						"textObjectField"
-					).build()));
+					).build()),Collections.emptyList());
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),

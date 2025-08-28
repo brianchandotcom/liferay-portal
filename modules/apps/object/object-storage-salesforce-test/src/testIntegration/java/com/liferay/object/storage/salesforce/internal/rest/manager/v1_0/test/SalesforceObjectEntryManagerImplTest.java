@@ -236,7 +236,8 @@ public class SalesforceObjectEntryManagerImplTest
 						listTypeDefinition.getListTypeDefinitionId()
 					).name(
 						"customStatus"
-					).build()));
+					).build()),
+				Collections.emptyList());
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(

@@ -92,7 +92,8 @@ public class MultiselectPicklistObjectFieldBusinessTypeTest {
 						listTypeDefinition.getListTypeDefinitionId()
 					).name(
 						_OBJECT_FIELD_NAME
-					).build()));
+					).build()),
+				Collections.emptyList());
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),

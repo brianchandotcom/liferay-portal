@@ -178,7 +178,8 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			true, ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Collections.emptyList(), Arrays.asList(objectField));
+			Collections.emptyList(), Arrays.asList(objectField),
+			Collections.emptyList());
 	}
 
 	@DeleteAfterTestRun

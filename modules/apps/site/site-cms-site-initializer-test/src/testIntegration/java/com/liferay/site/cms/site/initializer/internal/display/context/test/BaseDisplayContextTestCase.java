@@ -129,7 +129,7 @@ public abstract class BaseDisplayContextTestCase {
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
-						RandomTestUtil.randomString(), "text", false)));
+						RandomTestUtil.randomString(), "text", false)),Collections.emptyList());
 
 		if (status == WorkflowConstants.STATUS_DRAFT) {
 			return objectDefinition;
@@ -165,7 +165,7 @@ public abstract class BaseDisplayContextTestCase {
 			objectDefinition.getPanelCategoryKey(),
 			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
 			objectDefinition.getScope(), objectDefinition.getStatus(),
-			objectDefinition.getObjectDefinitionSettings());
+			objectDefinition.getObjectDefinitionSettings(),Collections.emptyList());
 	}
 
 	protected ObjectDefinition addCustomObjectDefinition(

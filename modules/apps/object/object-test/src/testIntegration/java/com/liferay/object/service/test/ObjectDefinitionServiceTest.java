@@ -338,7 +338,8 @@ public class ObjectDefinitionServiceTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
-					RandomTestUtil.randomString(), StringUtil.randomId())));
+					RandomTestUtil.randomString(), StringUtil.randomId())),
+			Collections.emptyList());
 	}
 
 	private ObjectDefinition _addSystemObjectDefinition(
@@ -359,7 +360,8 @@ public class ObjectDefinitionServiceTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
-					RandomTestUtil.randomString(), StringUtil.randomId())));
+					RandomTestUtil.randomString(), StringUtil.randomId())),
+			Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -394,7 +396,8 @@ public class ObjectDefinitionServiceTest {
 							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 							ObjectFieldConstants.DB_TYPE_STRING,
 							RandomTestUtil.randomString(),
-							StringUtil.randomId())));
+							StringUtil.randomId())),
+					Collections.emptyList());
 
 			objectDefinition =
 				_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -520,7 +523,7 @@ public class ObjectDefinitionServiceTest {
 					"Able", null, null, false,
 					LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition.getScope(), objectDefinition.getStatus(),
-					Collections.emptyList());
+					Collections.emptyList(), Collections.emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {
@@ -542,7 +545,7 @@ public class ObjectDefinitionServiceTest {
 					RandomTestUtil.randomString(),
 					objectDefinition.getObjectDefinitionId(), objectFolderId,
 					objectDefinition.getTitleObjectFieldId(),
-					Collections.emptyList());
+					Collections.emptyList(), Collections.emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {

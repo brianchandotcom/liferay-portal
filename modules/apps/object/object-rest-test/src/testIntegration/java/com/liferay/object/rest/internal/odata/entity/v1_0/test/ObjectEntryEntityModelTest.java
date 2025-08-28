@@ -361,7 +361,7 @@ public class ObjectEntryEntityModelTest {
 				LocalizedMapUtil.getLocalizedMap(objectDefinitionName), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(), objectFields);
+				Collections.emptyList(), objectFields, Collections.emptyList());
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

@@ -86,7 +86,7 @@ public class ObjectDefinitionTestUtil {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			true, ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Collections.emptyList(), objectFields);
+			Collections.emptyList(), objectFields, Collections.emptyList());
 	}
 
 	public static ObjectDefinition addCustomObjectDefinition(String name)
@@ -128,7 +128,7 @@ public class ObjectDefinitionTestUtil {
 			true, name, null, null, pkObjectFieldDBColumnName,
 			pkObjectFieldName, pluralLabelMap, false, scope,
 			titleObjectFieldName, version, WorkflowConstants.STATUS_DRAFT,
-			Collections.emptyList(), objectFields);
+			Collections.emptyList(), objectFields, Collections.emptyList());
 	}
 
 	public static ObjectDefinition addUnmodifiableSystemObjectDefinition(
@@ -146,7 +146,7 @@ public class ObjectDefinitionTestUtil {
 			false, name, null, null, pkObjectFieldDBColumnName,
 			pkObjectFieldName, pluralLabelMap, false, scope,
 			titleObjectFieldName, version, WorkflowConstants.STATUS_APPROVED,
-			Collections.emptyList(), objectFields);
+			Collections.emptyList(), objectFields, Collections.emptyList());
 	}
 
 	public static String getRandomName() {
@@ -175,7 +175,7 @@ public class ObjectDefinitionTestUtil {
 				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(), objectFields);
+				Collections.emptyList(), objectFields, Collections.emptyList());
 
 		return ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 			userId, objectDefinition.getObjectDefinitionId());

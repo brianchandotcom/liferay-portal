@@ -36,7 +36,8 @@ import java.util.Map;
 public class BatchEnginePortletDataHandlerUtil {
 
 	public static Map<String, Serializable> buildExportParameters(
-		List<String> nestedFields, PortletDataContext portletDataContext) {
+		List<String> nestedFields, Map<String, Serializable> parameters,
+		PortletDataContext portletDataContext) {
 
 		return HashMapBuilder.<String, Serializable>put(
 			"batchNestedFields",
@@ -103,6 +104,8 @@ public class BatchEnginePortletDataHandlerUtil {
 
 				return portletDataContext.getScopeGroupId();
 			}
+		).putAll(
+			parameters
 		).build();
 	}
 

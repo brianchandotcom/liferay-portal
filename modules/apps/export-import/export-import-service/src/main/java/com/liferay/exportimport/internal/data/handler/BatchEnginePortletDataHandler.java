@@ -221,6 +221,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						BatchEnginePortletDataHandlerUtil.buildExportParameters(
 							_exportImportVulcanBatchEngineTaskItemDelegate.
 								getNestedFields(),
+							_exportImportVulcanBatchEngineTaskItemDelegate.
+								getParameters(),
 							portletDataContext),
 						_taskItemDelegateName),
 					new BatchEngineExportTaskExecutor.Settings() {
@@ -337,7 +339,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				Collections.emptyList(), portletDataContext);
+				Collections.emptyList(), null, portletDataContext);
 
 		for (Map.Entry<String, Serializable> entry : parameters.entrySet()) {
 			builder.queryParameter(

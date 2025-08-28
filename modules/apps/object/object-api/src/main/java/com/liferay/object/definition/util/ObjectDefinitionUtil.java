@@ -130,6 +130,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"BulkActionTaskItem", "/cms/bulk-action-task-items"
 		).put(
+			"CMSDefaultPermission", "/cms/default-permissions"
+		).put(
 			"CommerceReturn", "/commerce/returns"
 		).put(
 			"CommerceReturnItem", "/commerce/return-items"
@@ -153,8 +155,6 @@ public class ObjectDefinitionUtil {
 			"DataSetSort", "/data-set-admin/data-sets/sorts"
 		).put(
 			"DataSetTableSection", "/data-set-admin/data-sets/table-sections"
-		).put(
-			"DefaultPermission", "/cms/default-permissions"
 		).put(
 			"ExternalVideo", "/cms/external-videos"
 		).put(

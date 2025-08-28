@@ -69,7 +69,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, _mockPortletDataContext(endDate, null, null));
+				null, null, _mockPortletDataContext(endDate, null, null));
 
 		Assert.assertEquals(
 			"dateModified le " + _dateFormat.format(endDate),
@@ -83,7 +83,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, _mockPortletDataContext(endDate, null, startDate));
+				null, null, _mockPortletDataContext(endDate, null, startDate));
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -96,14 +96,14 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithNestedFields() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				List.of("nestedField1", "nestedField2"),
+				List.of("nestedField1", "nestedField2"), null,
 				_mockPortletDataContext(null, null, null));
 
 		Assert.assertEquals(
 			"nestedField1,nestedField2", parameters.get("batchNestedFields"));
 
 		parameters = BatchEnginePortletDataHandlerUtil.buildExportParameters(
-			List.of("nestedField1", "nestedField2"),
+			List.of("nestedField1", "nestedField2"), null,
 			_mockPortletDataContext(
 				null,
 				HashMapBuilder.put(
@@ -120,7 +120,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithNoDates() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, _mockPortletDataContext(null, null, null));
+				null, null, _mockPortletDataContext(null, null, null));
 
 		Assert.assertNull(parameters.get("filter"));
 	}
@@ -131,7 +131,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, _mockPortletDataContext(null, null, startDate));
+				null, null, _mockPortletDataContext(null, null, startDate));
 
 		Assert.assertEquals(
 			"dateModified ge " + _dateFormat.format(startDate),

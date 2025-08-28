@@ -194,9 +194,9 @@ describe('SpaceSitesModal', () => {
 
 			await userEvent.click(screen.getByPlaceholderText('select-a-site'));
 
-			await screen
-				.getByRole('option', {name: mockUnconnectedSite.name})
-				.click();
+			await userEvent.click(
+				screen.getByRole('option', {name: mockUnconnectedSite.name})
+			);
 
 			await userEvent.click(
 				screen.getByRole('button', {name: 'connect'})
@@ -233,9 +233,9 @@ describe('SpaceSitesModal', () => {
 
 			await userEvent.click(screen.getByPlaceholderText('select-a-site'));
 
-			await screen
-				.getByRole('option', {name: mockUnconnectedSite.name})
-				.click();
+			await userEvent.click(
+				screen.getByRole('option', {name: mockUnconnectedSite.name})
+			);
 
 			await userEvent.click(
 				screen.getByRole('button', {name: 'connect'})

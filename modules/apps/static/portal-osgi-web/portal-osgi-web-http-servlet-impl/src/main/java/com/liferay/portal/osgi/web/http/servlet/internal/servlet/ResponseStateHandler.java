@@ -166,27 +166,7 @@ public class ResponseStateHandler {
 		}
 
 		LiferayHttpServletResponseWrapper liferayHttpServletResponseWrapper =
-			null;
-
-		HttpServletResponse curHttpServletResponse = _httpServletResponse;
-
-		while (curHttpServletResponse instanceof
-					HttpServletResponseWrapper curHttpServletResponseWrapper) {
-
-			if (curHttpServletResponseWrapper instanceof
-					LiferayHttpServletResponseWrapper
-						curLiferayHttpServletResponseWrapper) {
-
-				liferayHttpServletResponseWrapper =
-					curLiferayHttpServletResponseWrapper;
-
-				break;
-			}
-
-			curHttpServletResponse =
-				(HttpServletResponse)
-					curHttpServletResponseWrapper.getResponse();
-		}
+			LiferayHttpServletResponseWrapper.find(_httpServletResponse);
 
 		if (liferayHttpServletResponseWrapper == null) {
 			throw new IllegalStateException(

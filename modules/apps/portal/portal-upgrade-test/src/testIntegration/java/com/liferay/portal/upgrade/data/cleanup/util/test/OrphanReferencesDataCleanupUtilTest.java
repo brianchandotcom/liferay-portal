@@ -54,99 +54,6 @@ public class OrphanReferencesDataCleanupUtilTest {
 	}
 
 	@Test
-	public void testCleanUpSameTableExcludedTable() throws Exception {
-		long auditEventId = RandomTestUtil.nextLong();
-		long companyId = RandomTestUtil.nextLong();
-
-		_testCleanUpSameTable(
-			logCapture -> {
-				List<LogEntry> logEntries = logCapture.getLogEntries();
-
-				Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
-			},
-			() -> _db.runSQL(
-				_connection,
-				"delete from Audit_AuditEvent where auditEventId = " +
-					auditEventId),
-			() -> _db.runSQL(
-				_connection,
-				StringBundler.concat(
-					"insert into Audit_AuditEvent (auditEventId, companyId, ",
-					"className) values (", auditEventId, ", ", companyId, ", '",
-					OrphanReferencesDataCleanupUtilTest.class.getName(), "')")),
-			null, "companyId", "Audit_AuditEvent", "companyId");
-	}
-
-	@Test
-	public void testCleanUpSameTableWithoutWhereClause() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long masterLayoutPlid = RandomTestUtil.nextLong();
-
-		_testCleanUpSameTable(
-			logCapture -> {
-				List<LogEntry> logEntries = logCapture.getLogEntries();
-
-				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
-
-				LogEntry logEntry = logEntries.get(0);
-
-				Assert.assertEquals(
-					_getCleanUpTableExpectedMessage(
-						1, _dbInspector.normalizeName("Layout"),
-						_dbInspector.normalizeName("plid"),
-						_dbInspector.normalizeName("Layout"), masterLayoutPlid),
-					logEntry.getMessage());
-			},
-			() -> _db.runSQL(
-				_connection,
-				"delete from Layout where companyId = " + companyId),
-			() -> _db.runSQL(
-				_connection,
-				StringBundler.concat(
-					"insert into Layout (mvccVersion, ctCollectionId, plid, ",
-					"companyId, masterLayoutPlid) values (0, 0, ",
-					RandomTestUtil.nextLong(), ", ", companyId, ", ",
-					masterLayoutPlid, ")")),
-			null, "masterLayoutPlid", "Layout", "plid");
-	}
-
-	@Test
-	public void testCleanUpSameTableWithWhereClause() throws Exception {
-		long classNameId = RandomTestUtil.nextLong();
-		long classPK = RandomTestUtil.nextLong();
-		long companyId = RandomTestUtil.nextLong();
-
-		_testCleanUpSameTable(
-			logCapture -> {
-				List<LogEntry> logEntries = logCapture.getLogEntries();
-
-				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
-
-				LogEntry logEntry = logEntries.get(0);
-
-				Assert.assertEquals(
-					_getCleanUpTableExpectedMessage(
-						1, _dbInspector.normalizeName("Layout"),
-						_dbInspector.normalizeName("plid"),
-						_dbInspector.normalizeName("Layout"), classPK),
-					logEntry.getMessage());
-			},
-			() -> _db.runSQL(
-				_connection,
-				"delete from Layout where companyId = " + companyId),
-			() -> _db.runSQL(
-				_connection,
-				StringBundler.concat(
-					"insert into Layout (mvccVersion, ctCollectionId, plid, ",
-					"companyId, classNameId, classPK) values (0, 0, ",
-					RandomTestUtil.nextLong(), ", ", companyId, ", ",
-					classNameId, ", ", classPK, ")")),
-			"classNameId = " + classNameId, "classPK", "Layout", "plid");
-	}
-
-	@Test
 	public void testCleanUpTableExcludedTable() throws Exception {
 		long auditEventId = RandomTestUtil.nextLong();
 		long companyId = RandomTestUtil.nextLong();
@@ -285,33 +192,6 @@ public class OrphanReferencesDataCleanupUtilTest {
 			targetValue, " was not found in column ",
 			_dbInspector.normalizeName(targetColumnName), " from table ",
 			_dbInspector.normalizeName(targetTableName));
-	}
-
-	private void _testCleanUpSameTable(
-			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
-			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
-			UnsafeRunnable<Exception> initializeDataUnsafeRunnable,
-			String sourceAdditionalWhereClause, String sourceColumnName,
-			String tableName, String targetColumnName)
-		throws Exception {
-
-		initializeDataUnsafeRunnable.run();
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				OrphanReferencesDataCleanupUtil.class.getName(),
-				LoggerTestUtil.INFO)) {
-
-			OrphanReferencesDataCleanupUtil.cleanUpSameTable(
-				sourceAdditionalWhereClause, _connection,
-				_dbInspector.normalizeName(sourceColumnName),
-				_dbInspector.normalizeName(tableName),
-				_dbInspector.normalizeName(targetColumnName));
-
-			assertUnsafeConsumer.accept(logCapture);
-		}
-		finally {
-			cleanUpDataUnsafeRunnable.run();
-		}
 	}
 
 	private void _testCleanUpTable(

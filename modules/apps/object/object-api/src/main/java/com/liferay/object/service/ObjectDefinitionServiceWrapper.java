@@ -42,7 +42,10 @@ public class ObjectDefinitionServiceWrapper
 			boolean portlet, String scope, String storageType,
 			java.util.List<com.liferay.object.model.ObjectDefinitionSetting>
 				objectDefinitionSettings,
-			java.util.List<com.liferay.object.model.ObjectField> objectFields)
+			java.util.List<com.liferay.object.model.ObjectField> objectFields,
+			java.util.List
+				<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+					workflowDefinitionLinks)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.addCustomObjectDefinition(
@@ -52,7 +55,8 @@ public class ObjectDefinitionServiceWrapper
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
-			storageType, objectDefinitionSettings, objectFields);
+			storageType, objectDefinitionSettings, objectFields,
+			workflowDefinitionLinks);
 	}
 
 	@Override
@@ -80,7 +84,10 @@ public class ObjectDefinitionServiceWrapper
 			boolean portlet, String scope,
 			java.util.List<com.liferay.object.model.ObjectDefinitionSetting>
 				objectDefinitionSettings,
-			java.util.List<com.liferay.object.model.ObjectField> objectFields)
+			java.util.List<com.liferay.object.model.ObjectField> objectFields,
+			java.util.List
+				<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+					workflowDefinitionLinks)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.addSystemObjectDefinition(
@@ -90,7 +97,7 @@ public class ObjectDefinitionServiceWrapper
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
-			objectDefinitionSettings, objectFields);
+			objectDefinitionSettings, objectFields, workflowDefinitionLinks);
 	}
 
 	@Override
@@ -219,7 +226,10 @@ public class ObjectDefinitionServiceWrapper
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
 				String scope, int status,
 				java.util.List<com.liferay.object.model.ObjectDefinitionSetting>
-					objectDefinitionSettings)
+					objectDefinitionSettings,
+				java.util.List
+					<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+						workflowDefinitionLinks)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.updateCustomObjectDefinition(
@@ -233,7 +243,7 @@ public class ObjectDefinitionServiceWrapper
 			enableObjectEntrySubscription, enableObjectEntryVersioning,
 			friendlyURLSeparator, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, pluralLabelMap, scope, status,
-			objectDefinitionSettings);
+			objectDefinitionSettings, workflowDefinitionLinks);
 	}
 
 	@Override
@@ -252,12 +262,16 @@ public class ObjectDefinitionServiceWrapper
 				String externalReferenceCode, long objectDefinitionId,
 				long objectFolderId, long titleObjectFieldId,
 				java.util.List<com.liferay.object.model.ObjectDefinitionSetting>
-					objectDefinitionSettings)
+					objectDefinitionSettings,
+				java.util.List
+					<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+						workflowDefinitionLinks)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.updateSystemObjectDefinition(
 			externalReferenceCode, objectDefinitionId, objectFolderId,
-			titleObjectFieldId, objectDefinitionSettings);
+			titleObjectFieldId, objectDefinitionSettings,
+			workflowDefinitionLinks);
 	}
 
 	@Override

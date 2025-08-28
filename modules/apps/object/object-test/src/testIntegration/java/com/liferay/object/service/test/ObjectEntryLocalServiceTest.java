@@ -3522,9 +3522,9 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			companyObjectEntry2.getURLTitleMap());
 
-		_assertFriendlyURLEntriesSize(
+		_assertFriendlyURLEntries(
 			2, companyObjectDefinition, companyObjectEntry1);
-		_assertFriendlyURLEntriesSize(
+		_assertFriendlyURLEntries(
 			1, companyObjectDefinition, companyObjectEntry2);
 
 		companyObjectDefinition.setTitleObjectFieldId(0);
@@ -3589,10 +3589,8 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			siteObjectDefinition);
 
-		_assertFriendlyURLEntriesSize(
-			0, siteObjectDefinition, siteObjectEntry1);
-		_assertFriendlyURLEntriesSize(
-			0, siteObjectDefinition, siteObjectEntry2);
+		_assertFriendlyURLEntries(0, siteObjectDefinition, siteObjectEntry1);
+		_assertFriendlyURLEntries(0, siteObjectDefinition, siteObjectEntry2);
 	}
 
 	@Test
@@ -7096,7 +7094,7 @@ public class ObjectEntryLocalServiceTest {
 			objectValidationRuleResults.get(0));
 	}
 
-	private void _assertFriendlyURLEntriesSize(
+	private void _assertFriendlyURLEntries(
 			int expectedSize, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry)
 		throws Exception {
@@ -7115,6 +7113,12 @@ public class ObjectEntryLocalServiceTest {
 
 		if (expectedSize == 0) {
 			return;
+		}
+
+		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+			Assert.assertEquals(
+				objectEntry.getDefaultLanguageId(),
+				friendlyURLEntry.getDefaultLanguageId());
 		}
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry);

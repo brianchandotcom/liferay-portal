@@ -54,12 +54,12 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				null, "pencil", "edit-categories",
-				LanguageUtil.get(httpServletRequest, "edit-categories"), "get",
+				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",
 				"edit-categories", null));
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				null, "pencil", "edit-tags",
-				LanguageUtil.get(httpServletRequest, "edit-tags"), "get",
+				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
 				"edit-tags", null));
 
 		return fdsBulkActionDropdownItems;

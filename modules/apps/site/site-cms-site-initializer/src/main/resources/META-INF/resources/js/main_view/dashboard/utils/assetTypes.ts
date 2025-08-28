@@ -12,12 +12,10 @@ export enum AssetType {
 	WebContent = 'WEBCONTENT',
 }
 
-export type AssetTypeIcon = {
-	color: string;
-	symbol: string;
-};
-
-export const AssetTypeIcons: Record<AssetType, AssetTypeIcon> = {
+export const AssetTypeIcons: Record<
+	AssetType,
+	{color: string; symbol: string}
+> = {
 
 	// TODO: Define correct symbols and colors
 

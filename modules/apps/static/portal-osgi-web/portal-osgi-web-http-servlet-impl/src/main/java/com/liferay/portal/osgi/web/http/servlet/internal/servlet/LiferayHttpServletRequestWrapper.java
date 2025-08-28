@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
@@ -63,7 +64,7 @@ public class LiferayHttpServletRequestWrapper
 
 		if (httpServletRequest.getDispatcherType() == DispatcherType.INCLUDE) {
 			return (String)httpServletRequest.getAttribute(
-				"jakarta.servlet.include.path_info");
+				RequestDispatcher.INCLUDE_PATH_INFO);
 		}
 
 		return httpServletRequest.getPathInfo();
@@ -130,7 +131,7 @@ public class LiferayHttpServletRequestWrapper
 				}
 
 				if (attributeName.equals(
-						"jakarta.servlet.include.context_path")) {
+						RequestDispatcher.INCLUDE_CONTEXT_PATH)) {
 
 					LiferayContextController liferayContextController =
 						currentLiferayDispatchTargets.getContextController();
@@ -138,24 +139,24 @@ public class LiferayHttpServletRequestWrapper
 					return liferayContextController.getContextPath();
 				}
 
-				if (attributeName.equals("jakarta.servlet.include.path_info")) {
+				if (attributeName.equals(RequestDispatcher.INCLUDE_PATH_INFO)) {
 					return currentLiferayDispatchTargets.getPathInfo();
 				}
 
 				if (attributeName.equals(
-						"jakarta.servlet.include.query_string")) {
+						RequestDispatcher.INCLUDE_QUERY_STRING)) {
 
 					return currentLiferayDispatchTargets.getQueryString();
 				}
 
 				if (attributeName.equals(
-						"jakarta.servlet.include.request_uri")) {
+						RequestDispatcher.INCLUDE_REQUEST_URI)) {
 
 					return currentLiferayDispatchTargets.getRequestURI();
 				}
 
 				if (attributeName.equals(
-						"jakarta.servlet.include.servlet_path")) {
+						RequestDispatcher.INCLUDE_SERVLET_PATH)) {
 
 					return currentLiferayDispatchTargets.getServletPath();
 				}
@@ -180,7 +181,7 @@ public class LiferayHttpServletRequestWrapper
 				}
 
 				if (attributeName.equals(
-						"jakarta.servlet.forward.context_path")) {
+						RequestDispatcher.FORWARD_CONTEXT_PATH)) {
 
 					LiferayContextController liferayContextController =
 						currentLiferayDispatchTargets.getContextController();
@@ -191,24 +192,24 @@ public class LiferayHttpServletRequestWrapper
 				LiferayDispatchTargets originalLiferayDispatchTargets =
 					_liferayDispatchTargetsDeque.getLast();
 
-				if (attributeName.equals("jakarta.servlet.forward.path_info")) {
+				if (attributeName.equals(RequestDispatcher.FORWARD_PATH_INFO)) {
 					return originalLiferayDispatchTargets.getPathInfo();
 				}
 
 				if (attributeName.equals(
-						"jakarta.servlet.forward.query_string")) {
+						RequestDispatcher.FORWARD_QUERY_STRING)) {
 
 					return originalLiferayDispatchTargets.getQueryString();
 				}
 
 				if (attributeName.equals(
-						"jakarta.servlet.forward.request_uri")) {
+						RequestDispatcher.FORWARD_REQUEST_URI)) {
 
 					return originalLiferayDispatchTargets.getRequestURI();
 				}
 
 				if (attributeName.equals(
-						"jakarta.servlet.forward.servlet_path")) {
+						RequestDispatcher.FORWARD_SERVLET_PATH)) {
 
 					return originalLiferayDispatchTargets.getServletPath();
 				}
@@ -341,8 +342,10 @@ public class LiferayHttpServletRequestWrapper
 		LiferayContextController liferayContextController =
 			liferayDispatchTargets.getContextController();
 
-		if (!path.startsWith("/")) {
-			path = liferayDispatchTargets.getServletPath() + "/" + path;
+		if (!path.startsWith(StringPool.SLASH)) {
+			path =
+				liferayDispatchTargets.getServletPath() + StringPool.SLASH +
+					path;
 		}
 		else {
 			String fullContextPath =
@@ -402,8 +405,8 @@ public class LiferayHttpServletRequestWrapper
 
 			String servletPath = currentLiferayDispatchTargets.getServletPath();
 
-			if (servletPath.equals("/")) {
-				return "";
+			if (servletPath.equals(StringPool.SLASH)) {
+				return StringPool.BLANK;
 			}
 
 			return servletPath;
@@ -559,21 +562,21 @@ public class LiferayHttpServletRequestWrapper
 	private static final Object _NULL_PLACEHOLDER = new Object();
 
 	private static final Set<String> _dispatcherAttributes = Set.of(
-		"jakarta.servlet.error.exception",
-		"jakarta.servlet.error.exception_type", "jakarta.servlet.error.message",
-		"jakarta.servlet.error.request_uri",
-		"jakarta.servlet.error.servlet_name",
-		"jakarta.servlet.error.status_code",
-		"jakarta.servlet.forward.context_path",
-		"jakarta.servlet.forward.path_info",
-		"jakarta.servlet.forward.query_string",
-		"jakarta.servlet.forward.request_uri",
-		"jakarta.servlet.forward.servlet_path",
-		"jakarta.servlet.include.context_path",
-		"jakarta.servlet.include.path_info",
-		"jakarta.servlet.include.query_string",
-		"jakarta.servlet.include.request_uri",
-		"jakarta.servlet.include.servlet_path");
+		RequestDispatcher.ERROR_EXCEPTION,
+		RequestDispatcher.ERROR_EXCEPTION_TYPE, RequestDispatcher.ERROR_MESSAGE,
+		RequestDispatcher.ERROR_REQUEST_URI,
+		RequestDispatcher.ERROR_SERVLET_NAME,
+		RequestDispatcher.ERROR_STATUS_CODE,
+		RequestDispatcher.FORWARD_CONTEXT_PATH,
+		RequestDispatcher.FORWARD_PATH_INFO,
+		RequestDispatcher.FORWARD_QUERY_STRING,
+		RequestDispatcher.FORWARD_REQUEST_URI,
+		RequestDispatcher.FORWARD_SERVLET_PATH,
+		RequestDispatcher.INCLUDE_CONTEXT_PATH,
+		RequestDispatcher.INCLUDE_PATH_INFO,
+		RequestDispatcher.INCLUDE_QUERY_STRING,
+		RequestDispatcher.INCLUDE_REQUEST_URI,
+		RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final Deque<LiferayDispatchTargets> _liferayDispatchTargetsDeque =

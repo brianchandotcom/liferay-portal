@@ -262,6 +262,37 @@ public class CounterDataCleanupPreupgradeProcess
 			String primaryKeyColumnName, String tableName)
 		throws Exception {
 
+		if (StringUtil.equalsIgnoreCase(tableName, "DLFileEntry")) {
+			long maxValue = 0;
+
+			try (PreparedStatement preparedStatement1 =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select ", primaryKeyColumnName, " from ",
+							tableName));
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+				while (resultSet.next()) {
+					String value = resultSet.getString(1);
+
+					try {
+						long valueLong = Long.parseLong(value);
+
+						if (valueLong > maxValue) {
+							maxValue = valueLong;
+						}
+					}
+					catch (NumberFormatException numberFormatException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(numberFormatException);
+						}
+					}
+				}
+			}
+
+			return maxValue;
+		}
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select max(", primaryKeyColumnName, ") from ", tableName));

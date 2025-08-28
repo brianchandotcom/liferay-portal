@@ -58,10 +58,10 @@ public class BNDSettings {
 
 			line = StringUtil.removeSubstring(line, ",\\");
 
-			int x = line.indexOf(StringPool.SEMICOLON);
+			int index = line.indexOf(StringPool.SEMICOLON);
 
-			if (x != -1) {
-				line = line.substring(0, x);
+			if (index != -1) {
+				line = line.substring(0, index);
 			}
 
 			exportPackageNames.add(line);
@@ -84,10 +84,10 @@ public class BNDSettings {
 
 			line = StringUtil.removeSubstring(line, ",\\");
 
-			int x = line.indexOf(StringPool.SEMICOLON);
+			int index = line.indexOf(StringPool.SEMICOLON);
 
-			if (x != -1) {
-				line = line.substring(0, x);
+			if (index != -1) {
+				line = line.substring(0, index);
 			}
 
 			exportPackageNames.add(line);

@@ -356,8 +356,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			LayoutStructureUtil.addLayoutStructureItem(
 				layoutStructure,
 				new LayoutStructureItemImporterContext(
-					groupId, layout, segmentsExperienceId,
-					contextUser.getUserId()),
+					contextUser.getCompanyId(), groupId, layout,
+					segmentsExperienceId, contextUser.getUserId()),
 				pageElement);
 
 		_layoutPageTemplateStructureLocalService.

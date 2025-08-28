@@ -13,12 +13,18 @@ import com.liferay.portal.kernel.model.Layout;
 public class LayoutStructureItemImporterContext {
 
 	public LayoutStructureItemImporterContext(
-		long groupId, Layout layout, long segmentsExperienceId, long userId) {
+		long companyId, long groupId, Layout layout, long segmentsExperienceId,
+		long userId) {
 
+		_companyId = companyId;
 		_groupId = groupId;
 		_layout = layout;
 		_segmentsExperienceId = segmentsExperienceId;
 		_userId = userId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	public long getGroupId() {
@@ -37,6 +43,7 @@ public class LayoutStructureItemImporterContext {
 		return _userId;
 	}
 
+	private final long _companyId;
 	private final long _groupId;
 	private final Layout _layout;
 	private final long _segmentsExperienceId;

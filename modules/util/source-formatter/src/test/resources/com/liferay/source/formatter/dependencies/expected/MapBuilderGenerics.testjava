@@ -26,7 +26,7 @@ public class MapBuilderGenerics {
 		).build();
 	}
 
-	public Map<String, Map<String, String>> testMethod3() {
+	public Map<String, Map<String, String>> method3() {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			HashMapBuilder.put(

@@ -61,10 +61,10 @@ public class UserSegmentsEntryMembershipCheckerTest {
 				"(contains(firstName, 'Tes'))", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(contains(firstName, 'tes'))", _userAttributes));
+				"(contains(firstName, 'Test'))", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(contains(firstName, 'Test'))", _userAttributes));
+				"(contains(firstName, 'tes'))", _userAttributes));
 	}
 
 	@Test
@@ -120,10 +120,10 @@ public class UserSegmentsEntryMembershipCheckerTest {
 				_userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(jobTitle eq 'test')", _userAttributes));
+				"(jobTitle eq 'Test')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(jobTitle eq 'Test')", _userAttributes));
+				"(jobTitle eq 'test')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(roleIds eq '1')", _userAttributes));

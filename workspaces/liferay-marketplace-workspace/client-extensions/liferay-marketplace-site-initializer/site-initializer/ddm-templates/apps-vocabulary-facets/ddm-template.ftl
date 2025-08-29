@@ -77,9 +77,14 @@
 		  Clear
 	  	</button>
 		<ul class="list-unstyled">
-			<#assign optionsCount = 1 />
+			<#assign
+				currentURL = themeDisplay.getURLCurrent()?replace("%20", " ")
+				isExpanded = currentURL?contains("${assetCategoriesSearchFacetDisplayContext.getParameterName()}Expanded")
+				optionsCount = 1
+			/>
+
 			<#list entries as entry>
-				<#if optionsCount lte 5>
+				<#if optionsCount lte 5 || isExpanded>
 						<li class="color-neutral-2 facet-value py-1">
 							<div class="custom-checkbox custom-control font-weight-normal">
 								<label class="facet-checkbox-label" for="${namespace}_term_${entry.getAssetCategoryId()}">
@@ -128,7 +133,7 @@
 					</#if>
 					<#assign optionsCount++ />
 				</#list>
-				<#if optionsCount gt 5>
+				<#if optionsCount gt 6 && !isExpanded>
 					<button
 						class="btn-unstyled mt-4 view-all-btn"
 						id="${assetCategoriesSearchFacetDisplayContext.getParameterName() + 'facetAssetCategoriesViewAll'}"
@@ -183,5 +188,21 @@
 				viewAllButton.style.display = 'none';
 			}
 		}
+
+	  	var newParamURL = '';
+
+	  	if (window.location.search === '') {
+			newParamURL = '?';
+		} else {
+			newParamURL = window.location.search + '&';
+		}
+
+		newParamURL += `${assetCategoriesSearchFacetDisplayContext.getParameterName()}Expanded`
+
+		window.history.pushState(
+			{},
+			"",
+			newParamURL
+		);
 	}
 </@>

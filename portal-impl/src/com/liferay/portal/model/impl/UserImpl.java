@@ -934,6 +934,11 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public boolean isLayoutsUpdated() {
+		return _layoutsUpdated;
+	}
+
+	@Override
 	public boolean isMale() throws PortalException {
 		return getMale();
 	}
@@ -1063,6 +1068,13 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public void setLayoutsUpdated(boolean layoutsUpdated) {
+		_layoutsUpdated = layoutsUpdated;
+
+		layoutsUpdatedUpdateEntityCacheBiConsumer.accept(this, layoutsUpdated);
+	}
+
+	@Override
 	public void setOrganizationIds(long[] organizationIds) {
 		_organizationIds = organizationIds;
 	}
@@ -1180,6 +1192,10 @@ public class UserImpl extends UserBaseImpl {
 	private long _groupId = -1;
 
 	private long[] _groupIds;
+
+	@CacheField(permanent = true, propagateToInterface = true)
+	private boolean _layoutsUpdated;
+
 	private Locale _locale;
 	private long[] _organizationIds;
 	private boolean _passwordModified;

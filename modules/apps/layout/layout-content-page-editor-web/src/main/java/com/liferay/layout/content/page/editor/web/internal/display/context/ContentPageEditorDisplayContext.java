@@ -132,6 +132,7 @@ import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorR
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.style.book.util.StyleBookUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
@@ -699,13 +700,15 @@ public class ContentPageEditorDisplayContext {
 				() -> {
 					Layout layout = themeDisplay.getLayout();
 
+					long styleBookEntryId = _getStyleBookEntryId(layout);
+
 					if (!FeatureFlagManagerUtil.isEnabled(
 							layout.getCompanyId(), "LPD-30204")) {
 
-						return layout.getStyleBookEntryId();
+						return styleBookEntryId;
 					}
 
-					if (layout.getStyleBookEntryId() > 0) {
+					if (styleBookEntryId > 0) {
 						StyleBookEntry defaultStyleBookEntry =
 							DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
 								layout);
@@ -1950,6 +1953,23 @@ public class ContentPageEditorDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 				renderResponse.getNamespace() + "selectSiteNavigationMenu",
 				itemSelectorCriterion));
+	}
+
+	private long _getStyleBookEntryId(Layout layout) {
+		if (Validator.isNull(layout.getStyleBookEntryERC())) {
+			return 0;
+		}
+
+		StyleBookEntry styleBookEntry =
+			StyleBookEntryLocalServiceUtil.
+				fetchStyleBookEntryByExternalReferenceCode(
+					layout.getStyleBookEntryERC(), layout.getGroupId());
+
+		if (styleBookEntry == null) {
+			return 0;
+		}
+
+		return styleBookEntry.getStyleBookEntryId();
 	}
 
 	private List<Map<String, Object>> _getStyleBooks() throws Exception {

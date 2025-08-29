@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.item.selector.StyleBookEntryItemSelectorCriterion;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -241,7 +242,21 @@ public class LayoutLookAndFeelDisplayContext {
 			() -> {
 				Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
-				return String.valueOf(selLayout.getStyleBookEntryId());
+				if (Validator.isNull(selLayout.getStyleBookEntryERC())) {
+					return "0";
+				}
+
+				StyleBookEntry styleBookEntry =
+					StyleBookEntryLocalServiceUtil.
+						fetchStyleBookEntryByExternalReferenceCode(
+							selLayout.getStyleBookEntryERC(),
+							selLayout.getGroupId());
+
+				if (styleBookEntry == null) {
+					return null;
+				}
+
+				return String.valueOf(styleBookEntry.getStyleBookEntryId());
 			}
 		).put(
 			"styleBookEntryName", getStyleBookEntryName()
@@ -259,9 +274,12 @@ public class LayoutLookAndFeelDisplayContext {
 			styleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
 				selLayout);
 		}
-		else if (selLayout.getStyleBookEntryId() > 0) {
-			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				selLayout.getStyleBookEntryId());
+		else if (Validator.isNull(selLayout.getStyleBookEntryERC())) {
+			styleBookEntry =
+				StyleBookEntryLocalServiceUtil.
+					fetchStyleBookEntryByExternalReferenceCode(
+						selLayout.getStyleBookEntryERC(),
+						selLayout.getGroupId());
 		}
 
 		return DefaultStyleBookEntryUtil.getStyleBookEntryName(

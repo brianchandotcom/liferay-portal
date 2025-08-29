@@ -59,12 +59,19 @@ public class ChangeStyleBookEntryMVCActionCommand
 		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
 			themeDisplay.getPermissionChecker(), layout);
 
-		long styleBookEntryId = ParamUtil.getLong(
-			actionRequest, "styleBookEntryId");
+		String styleBookEntryERC = null;
 
-		Layout updatedLayout = _layoutLocalService.updateStyleBookEntryId(
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				ParamUtil.getLong(actionRequest, "styleBookEntryId"));
+
+		if (styleBookEntry != null) {
+			styleBookEntryERC = styleBookEntry.getExternalReferenceCode();
+		}
+
+		Layout updatedLayout = _layoutLocalService.updateStyleBookEntryERC(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			styleBookEntryId);
+			styleBookEntryERC);
 
 		if (layout.isDraftLayout()) {
 			UnicodeProperties layoutTypeSettingsUnicodeProperties =
@@ -99,15 +106,9 @@ public class ChangeStyleBookEntryMVCActionCommand
 						group.isLayoutSetPrototype()));
 		}
 
-		StyleBookEntry styleBookEntry = null;
-
-		if (styleBookEntryId == 0) {
+		if (styleBookEntry == null) {
 			styleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
 				updatedLayout);
-		}
-		else {
-			styleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
-				styleBookEntryId);
 		}
 
 		return JSONUtil.put(

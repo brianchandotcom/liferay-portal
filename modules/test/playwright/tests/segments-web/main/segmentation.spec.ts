@@ -116,7 +116,9 @@ test(
 
 			await segmentsPage.editSegmentsEntry(segmentName);
 
-			await segmentsPage.viewMembers({ expectedEmail:'userea@liferay.com'});
+			await segmentsPage.viewMembers({
+				expectedEmail: 'userea@liferay.com',
+			});
 		});
 
 		await test.step('Then can assert the segment is correctly created', async () => {
@@ -176,7 +178,9 @@ test(
 
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers({ expectedEmail:'userea@liferay.com'});
+			await segmentsPage.viewMembers({
+				expectedEmail: 'userea@liferay.com',
+			});
 		});
 
 		await test.step('Then can assert the segment is correctly created', async () => {
@@ -233,7 +237,9 @@ test(
 
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers({ expectedEmail:'userea@liferay.com'});
+			await segmentsPage.viewMembers({
+				expectedEmail: 'userea@liferay.com',
+			});
 		});
 
 		await test.step('Then can assert the segment is correctly created', async () => {
@@ -510,7 +516,7 @@ test(
 		await test.step('Then asserts that the segment is correctly created including the user', async () => {
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers({ expectedName:`Shaquille O'Neal`});
+			await segmentsPage.viewMembers({expectedName: `Shaquille O'Neal`});
 		});
 	}
 );
@@ -668,7 +674,7 @@ test(
 		await test.step('Then asserts that the segment is correctly created including the user', async () => {
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers({ expectedName: `User 1 + / ? # &`});
+			await segmentsPage.viewMembers({expectedName: `User 1 + / ? # &`});
 		});
 	}
 );
@@ -1197,7 +1203,7 @@ test(
 
 			await page.waitForTimeout(3000);
 
-			await segmentsPage.viewMembers({ expectedName: 'Test Test' });
+			await segmentsPage.viewMembers({expectedName: 'Test Test'});
 
 			await segmentsPage.saveButton.click();
 		});
@@ -1218,6 +1224,55 @@ test(
 			await segmentsPage.viewCriterionValue('Power User');
 
 			await expect(segmentsPage.selectButton).not.toBeVisible();
+		});
+	}
+);
+
+test(
+	`Can edit segment with Country criterion.`,
+
+	{
+		tag: '@LPS-102740',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName1 = 'EditSegment Test';
+		const segmentName2 = 'EditSegmentUserByCountry Test';
+
+		await test.step('Given a segment designer creates a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('test@liferay.com');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('When edits the segment with Country criterion', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName1);
+
+			await segmentsPage.deleteProperty();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName2, {
+				'user-organization': ['Country'],
+			});
+
+			await segmentsPage.editSegmentsEntry(segmentName2);
+
+			await segmentsPage.selectOption('China');
+		});
+
+		await test.step('Then asserts that the segment was edited', async () => {
+			await segmentsPage.clickLinkByText(segmentName2);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('china');
 		});
 	}
 );

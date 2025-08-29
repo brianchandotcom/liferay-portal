@@ -118,7 +118,7 @@ export class SegmentEditorPage {
 		catch {
 			try {
 				await this.page
-					.getByRole('menuitem', {name: label, exact: true})
+					.getByRole('menuitem', {exact: true, name: label})
 					.press('Enter');
 			}
 			catch {

@@ -15653,6 +15653,15 @@ public class ObjectEntryResourceTest {
 			ObjectDefinition objectDefinition2, Object scopeKey)
 		throws Exception {
 
+		objectDefinition1 = _objectDefinitionLocalService.getObjectDefinition(
+			objectDefinition1.getObjectDefinitionId());
+
+		objectDefinition1.setEnableObjectEntryDraft(true);
+
+		objectDefinition1 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				objectDefinition1);
+
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
@@ -15740,6 +15749,8 @@ public class ObjectEntryResourceTest {
 				_objectEntry2.getObjectEntryId()
 			).put(
 				"externalReferenceCode", randomExternalReferenceCode
+			).put(
+				"status", JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
 			).toString(),
 			_getEndpoint(objectDefinition1, scopeKey), Http.Method.POST);
 
@@ -15798,6 +15809,8 @@ public class ObjectEntryResourceTest {
 			"externalReferenceCode", randomExternalReferenceCode
 		).put(
 			"id", (Object)jsonObject.getLong("id")
+		).put(
+			"status", JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
 		);
 
 		String endpoint = endpointFunction.apply(jsonObject);

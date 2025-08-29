@@ -154,9 +154,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String DOWNLOAD_BUNDLE_TASK_NAME = "downloadBundle";
 
-	public static final String FORMAT_SOURCE_JAKARTA_TRANSFORM_TASK_NAME =
-		"formatSourceJakartaTransform";
-
 	public static final String FORMAT_SOURCE_UPGRADE_TASK_NAME =
 		"formatSourceUpgrade";
 
@@ -190,6 +187,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		"stopDockerContainer";
 
 	public static final String TAG_DOCKER_IMAGE_TASK_NAME = "tagDockerImage";
+
+	public static final String UPGRADE_JAKARTA_TASK_NAME = "upgradeJakarta";
 
 	public static final String VERIFY_BUNDLE_TASK_NAME = "verifyBundle";
 
@@ -275,7 +274,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, workspaceExtension, providedModulesConfiguration,
 			verifyProductTask);
 
-		_addTaskFormatSourceJakartaTransform(project);
+		_addTaskUpgradeJakarta(project);
 
 		_addTaskFormatSourceUpgrade(project);
 	}
@@ -1036,23 +1035,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return download;
 	}
 
-	private FormatSourceTask _addTaskFormatSourceJakartaTransform(
-		Project project) {
-
-		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, FORMAT_SOURCE_JAKARTA_TRANSFORM_TASK_NAME,
-			FormatSourceTask.class);
-
-		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
-		formatSourceTask.setCheckCategoryNames("JakartaTransform");
-		formatSourceTask.setDescription(
-			"Runs Liferay Source Formatter to format Java files for Jakarta.");
-		formatSourceTask.setGroup("formatting");
-		formatSourceTask.setJavaParserEnabled(false);
-
-		return formatSourceTask;
-	}
-
 	private FormatSourceTask _addTaskFormatSourceUpgrade(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, FORMAT_SOURCE_UPGRADE_TASK_NAME, FormatSourceTask.class);
@@ -1531,6 +1513,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		return dockerStopContainer;
+	}
+
+	private FormatSourceTask _addTaskUpgradeJakarta(Project project) {
+		FormatSourceTask formatSourceTask = GradleUtil.addTask(
+			project, UPGRADE_JAKARTA_TASK_NAME, FormatSourceTask.class);
+
+		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
+		formatSourceTask.setCheckCategoryNames("JakartaTransform");
+		formatSourceTask.setDescription(
+			"Runs the Jakarta source code upgrade.");
+		formatSourceTask.setGroup("build");
+		formatSourceTask.setJavaParserEnabled(false);
+
+		return formatSourceTask;
 	}
 
 	private VerifyBundleTask _addTaskVerifyBundle(

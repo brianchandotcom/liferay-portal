@@ -1,83 +1,127 @@
 <#assign
-	channel = restClient.get(
-		"/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${themeDisplay.getScopeGroupId()}'"
-	)
+	channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=siteGroupId eq '${themeDisplay.getScopeGroupId()}'")
+
 	productImagesResponse = restClient.get(
 		"/headless-commerce-delivery-catalog/v1.0/channels/" + channel.items[0].id +
 		"/products/" + CPDefinition_cProductId.getData() + "/images?accountId=-1"
 	)
+
 	productImages = productImagesResponse.items![]
 	totalCount = productImagesResponse.totalCount
 >
 
-<div class = "carousel-container">
-	<div class = "main-image-wrapper">
-		<button class = "nav-button prev" aria-label = "Previous Image">
-			<span class = "lexicon-icon-overwide"> <@clay["icon"] symbol = "angle-left" />
-			</span>
+<div class="carousel-container">
+	<div class="main-image-wrapper">
+		<button class="nav-button prev" aria-label = "Previous Image">
+			<span class="lexicon-icon-overwide"> <@clay["icon"] symbol = "angle-left" /></span>
 		</button>
 
-		<img id = "main-image" src = "${(productImages[1].src?replace("https://", "http://"))}" alt = "${productImages[1].title?html}" />
+		<img alt="${productImages[1].title?html}" id="main-image" src="${(productImages[1].src?replace("https://", "http://"))}" />
 
 		<button class="nav-button next" aria-label="Next Image">
-			<span class="lexicon-icon-overwide"> <@clay["icon"] symbol="angle-right" />
-			</span>
+			<span class="lexicon-icon-overwide"> <@clay["icon"] symbol="angle-right" /></span>
 		</button>
 	</div>
 
 	<div class="thumbnails-wrapper">
-		<div class="thumbnails" id="dynamic-thumbnails"></div>
+		<div class="thumbnails"></div>
+		
+		<#assign count = (totalCount?default(0)?number) />
 
-		<button class="view-full-gallery">
-			<span class="title">${languageUtil.get(locale, "full-gallery", "Full Gallery")}</span>
-			<span class="subtitle">${totalCount -1} ${languageUtil.get(locale, "photos", "Photos")}</span>
-		</button>
+		<#if count gt 5>
+			<button class="view-full-gallery">
+				<span class="title">
+					${languageUtil.get(locale, "full-gallery", "Full Gallery")}
+				</span>
+				<span class="subtitle">
+					${count - 1} ${languageUtil.get(locale, "photos", "Photos")}
+				</span>
+			</button>
+		</#if>
+		</div>
 	</div>
-</div>
 
 <template id="modal-gallery">
 	<div class="modal-gallery-content">
-		<button class="modal-prev" data-role="modal-prev" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-			background: rgba(0,0,0,0.4); border:none; color:white; font-size: 1.6rem;
-			padding: 14px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center;"
-	>
-		<@clay["icon"] symbol="angle-left" />
+		<button class="modal-prev" data-role="modal-prev">
+			<@clay["icon"] symbol="angle-left" />
 		</button>
 
-		<img class="modal-image" data-role="modal-image" style="max-width: 100vh; border-radius: 8px;" />
+		<img class="modal-image" data-role="modal-image" />
 
-		<button class="modal-next" data-role="modal-next" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-			background: rgba(0,0,0,0.4); border:none; color:white; font-size: 1.6rem;
-			padding: 14px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center;"
-	>
-		<@clay["icon"] symbol="angle-right" />
+		<button class="modal-next" data-role="modal-next">
+			<@clay["icon"] symbol="angle-right" />
 		</button>
 	</div>
 </template>
 
-<script>
-
-(function () {
+<script ${nonceAttribute}>
 	let currentIndex = 0;
 	let images = [];
 
-	const carrouselMainImage = document.getElementById('main-image');
 	const carouselNextBtn = document.querySelector('.nav-button.next');
 	const carouselPrevBtn = document.querySelector('.nav-button.prev');
-	const thumbnailsContainer = document.getElementById('dynamic-thumbnails');
-	const fullGalleryBtn = document.querySelector('.view-full-gallery');
+	const carouselMainImage = document.getElementById('main-image');
+	const thumbnailsContainer = document.querySelector('.thumbnails');
+	const viewFullGalleryBtn = document.querySelector('.view-full-gallery');
 
 	function loadImages() {
-		const allImages = [
+		images = [
 			<#list productImages as image>
 			{
 				src: "${(image.src?replace('https://', 'http://'))?js_string}",
 				alt: "${image.title?html?js_string}"
 			}<#if image_has_next>,</#if>
 			</#list>
-		];
+		].slice(1);
+	}
 
-		images = allImages.slice(1);
+	function renderThumbnails() {
+		const maxVisible = 5;
+		let start = currentIndex - 2;
+
+		if (start < 0) start = 0;
+		if (start > images.length - maxVisible) start = Math.max(images.length - maxVisible, 0);
+
+		const end = Math.min(images.length, start + maxVisible);
+
+		thumbnailsContainer.innerHTML = '';
+
+		for (let i = start; i < end; i++) {
+			const img = document.createElement('img');
+			img.className = 'thumbnail' + (i === currentIndex ? ' selected' : '');
+			img.src = images[i].src;
+			img.alt = images[i].alt;
+			img.dataset.index = i;
+			img.addEventListener('click', () => updateMainImage(i));
+			thumbnailsContainer.appendChild(img);
+		}
+	}
+
+	function updateMainImage(index) {
+		currentIndex = index;
+		carouselMainImage.src = images[index].src;
+		carouselMainImage.alt = images[index].alt;
+
+		carouselPrevBtn.disabled = index === 0;
+		carouselNextBtn.disabled = index === images.length - 1;
+
+		renderThumbnails();
+	}
+
+	function setupNavigationButtons() {
+		carouselPrevBtn.addEventListener('click', () => {
+			if (currentIndex > 0) updateMainImage(currentIndex - 1);
+		});
+
+		carouselNextBtn.addEventListener('click', () => {
+			if (currentIndex < images.length - 1) updateMainImage(currentIndex + 1);
+		});
+	}
+
+	function setupModalTriggers() {
+		carouselMainImage.addEventListener('click', () => openModalGallery(currentIndex));
+		viewFullGalleryBtn.addEventListener('click', () => openModalGallery(currentIndex));
 	}
 
 	function openModalGallery(startIndex) {
@@ -136,54 +180,6 @@
 		});
 	}
 
-	function renderThumbnails() {
-		const maxVisible = 5;
-		let start = currentIndex - 2;
-
-		if (start < 0) start = 0;
-		if (start > images.length - maxVisible) start = Math.max(images.length - maxVisible, 0);
-
-		const end = Math.min(images.length, start + maxVisible);
-
-		thumbnailsContainer.innerHTML = '';
-
-		for (let i = start; i < end; i++) {
-			const img = document.createElement('img');
-			img.className = 'thumbnail' + (i === currentIndex ? ' selected' : '');
-			img.src = images[i].src;
-			img.alt = images[i].alt;
-			img.dataset.index = i;
-			img.addEventListener('click', () => updateMainImage(i));
-			thumbnailsContainer.appendChild(img);
-		}
-	}
-
-	function updateMainImage(index) {
-		currentIndex = index;
-		carrouselMainImage.src = images[index].src;
-		carrouselMainImage.alt = images[index].alt;
-
-		carouselPrevBtn.disabled = index === 0;
-		carouselNextBtn.disabled = index === images.length - 1;
-
-		renderThumbnails();
-	}
-
-	function setupNavigationButtons() {
-		carouselPrevBtn.addEventListener('click', () => {
-			if (currentIndex > 0) updateMainImage(currentIndex - 1);
-		});
-
-		carouselNextBtn.addEventListener('click', () => {
-			if (currentIndex < images.length - 1) updateMainImage(currentIndex + 1);
-		});
-	}
-
-	function setupModalTriggers() {
-		carrouselMainImage.addEventListener('click', () => openModalGallery(currentIndex));
-		fullGalleryBtn.addEventListener('click', () => openModalGallery(currentIndex));
-	}
-
 	function main() {
 		loadImages();
 		setupNavigationButtons();
@@ -192,12 +188,9 @@
 	}
 
 	main();
-})();
-
 </script>
 
-<style>
-
+<style ${nonceAttribute}>
 .carousel-container img {
 	cursor: pointer;
 }
@@ -221,11 +214,11 @@
 	position: relative;
 }
 
-.custom-gallery-modal .close{
+.custom-gallery-modal .close {
 	color: white !important;
 }
 
-.lexicon-icon-overwide .lexicon-icon{
+.lexicon-icon-overwide .lexicon-icon {
 	height: 2em;
 	margin: 0px;
 }
@@ -233,16 +226,26 @@
 .main-image-wrapper {
 	align-items: center;
 	display:flex;
-	height: 454px;
 	justify-content: center;
 	position: relative;
 	width: 902px;
+  	height: 454px;
 }
 
 .main-image-wrapper img {
 	border-radius: 8px;
 	max-height: 100%;
 	width: 100%;
+}
+
+.main-image-wrapper:hover .nav-button {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.main-image-wrapper:hover .nav-button:disabled{
+	cursor: default;
+	opacity: 0.4;
 }
 
 .modal-image {
@@ -254,8 +257,8 @@
 .modal-next {
 	align-items: center;
 	background: rgba(0, 0, 0, 0.4);
-	border: none;
 	border-radius: 50%;
+	border: none;
 	color: white;
 	cursor: pointer;
 	display: flex;
@@ -277,56 +280,31 @@
 
 .nav-button {
 	background: rgba(0,0,0,0.4);
-	border: none;
 	border-radius: 50%;
+	border: none;
 	color: white;
 	cursor: pointer;
 	font-size: 1.3rem;
 	opacity: 0;
-	position: absolute;
 	padding: 0 10px;
+	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
 	transition: opacity 0.3s ease;
 	user-select: none;
 }
 
-.main-image-wrapper:hover .nav-button {
-	opacity: 1;
-	pointer-events: auto;
-}
-
-.main-image-wrapper:hover .nav-button:disabled{
-	cursor: default;
-	opacity: 0.4;
+.nav-button.prev {
+	left: 10px;
 }
 
 .nav-button.next {
 	right: 10px;
 }
 
-.nav-button.prev {
-	left: 10px;
-}
-
-.thumbnails-wrapper {
-	align-items: center;
-	display: flex;
-	justify-content: flex-start;
-	margin-top: 12px;
-	max-height: 86px;
-	max-width: 902px;
-}
-
-.thumbnails {
-	display: flex;
-	gap: 8px;
-	overflow-x: auto;
-}
-
 .thumbnail {
-	border: 2px solid transparent;
 	border-radius: 12px;
+	border: 2px solid transparent;
 	cursor: pointer;
 	height: 86px;
 	object-fit: cover;
@@ -340,10 +318,25 @@
 	opacity: 1;
 }
 
+.thumbnails {
+	display: flex;
+	gap: 8px;
+	overflow-x: auto;
+}
+
+.thumbnails-wrapper {
+	align-items: center;
+	display: flex;
+	justify-content: flex-start;
+	margin-top: 12px;
+	max-height: 86px;
+	max-width: 902px;
+}
+
 .view-full-gallery {
 	background-color: white;
-	border: 1px solid #E2E2E4;
 	border-radius: 12px;
+	border: 1px solid #E2E2E4;
 	color: #2563eb;
 	cursor: pointer;
 	display: flex;
@@ -355,22 +348,22 @@
 	transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.view-full-gallery:hover {
-	background-color: #f3f4f6;
-	box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+.view-full-gallery .subtitle {
+	color: #6b7280;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1;
 }
 
 .view-full-gallery .title {
-	font-weight: 600;
 	font-size: 16px;
+	font-weight: 600;
 	line-height: 1;
 	margin-bottom: 4px;
 }
 
-.view-full-gallery .subtitle {
-	color: #6b7280;
-	font-weight: 400;
-	font-size: 12px;
-	line-height: 1;
+.view-full-gallery:hover {
+	background-color: #f3f4f6;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
 }
 </style>

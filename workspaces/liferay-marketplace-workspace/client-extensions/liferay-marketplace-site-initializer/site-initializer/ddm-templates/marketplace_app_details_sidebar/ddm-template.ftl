@@ -7,17 +7,15 @@
 		"?accountId=-1&nestedFields=categories,productSpecifications,skus&skus.accountId=-1&skus.currencyCode=USD"
 	)
 
+	catalogName = product.catalogName!""
 	categories = product.categories![]
-	catalogName = (product.catalogName)!""
 	productSpecifications = product.productSpecifications![]
->
 
-<#assign
 	liferayVersions = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "liferay-version"))
 	platformOffering = categories?filter(item -> stringUtil.equals(item.vocabulary, "marketplace liferay platform offering"))
 >
 
-<#assign publisherDetailsResponse = restClient.get("/c/publisherdetailses?filter=publisherName eq 'Acme Development'") />
+<#assign publisherDetailsResponse = restClient.get("/c/publisherdetailses?filter=publisherName eq '${catalogName}'") />
 
 <#if publisherDetailsResponse.items?has_content>
 	<#assign
@@ -33,18 +31,14 @@
 	ramValue = getSpecificationValue("ram")
 	supportEmail = getSpecificationValue("supportemailaddress")
 	supportPhone = getSpecificationValue("supportphone")
-	sanitizedURL = (publisherURL?starts_with("http") || publisherURL?starts_with("https"))?then(publisherURL, "https://" + publisherURL)
 >
 <@section title = languageUtil.get(locale, "developer")>
-	<div>
-		<a class = "bg-neutral-8" href = "/?developer-name=${developerName}">
-			${developerName}
-		</a>
-	</div>
+	<a class="bg-neutral-8" href="/?developer-name=${developerName}">
+		${developerName}
+	</a>
 </@section>
 
 <@section title = languageUtil.get(locale, "publisher-date", "Publisher Date")>
-
 	<#setting date_format = "MMMM d, yyyy">
 
 	<#if CPDefinition_displayDate.getData()?has_content>
@@ -63,16 +57,16 @@
 </@section>
 
 <@section title = languageUtil.get(locale, "version")>
-		${getSpecificationValue("latest-version")}
+	${getSpecificationValue("latest-version", "1.0.0")}
 </@section>
 
-<@section title = languageUtil.get(locale, "supported-versions", "Supported Versions")>
-	<#if liferayVersions?has_content>
+<#if liferayVersions?has_content>
+	<@section title = languageUtil.get(locale, "supported-versions", "Supported Versions")>
 		<#list liferayVersions as version>
 			${version.value}<#if version?has_next>, </#if>
 		</#list>
-	</#if>
-</@section>
+	</@section>
+</#if>
 
 <#if cpuValue?has_content>
 	<@section title = languageUtil.get(locale, "resource-requirements", "Resource Requirements")>
@@ -122,7 +116,7 @@
 		<#if standardSku.price?? && standardSku.price.price?eval gt 0>
 			<div class="bg-neutral-8">${standardSku.price.priceFormatted!""}</div>
 		<#else>
-			${languageUtil.get(locale, "free", "Free")?upper_case}
+			${languageUtil.get(locale, "free", "Free")}
 		</#if>
 	</div>
 </@section>
@@ -140,7 +134,7 @@
 				</span>
 
 				<@clay["icon"]
-					className="link-arrow help-and-support-link-arrow ml-auto"
+					className="help-and-support-link-arrow link-arrow ml-auto"
 					height="12"
 					symbol="angle-right"
 				/>
@@ -158,7 +152,7 @@
 				</span>
 
 				<@clay["icon"]
-					className="link-arrow help-and-support-link-arrow ml-auto"
+					className="help-and-support-link-arrow link-arrow ml-auto"
 					height="12"
 					symbol="angle-right"
 				/>
@@ -180,7 +174,8 @@
 </@section>
 
 <#function getSpecificationValue key default="">
-	<#local spec = productSpecifications?filter(it -> stringUtil.equals(it.specificationKey, key)) />
+	<#local spec = productSpecifications?filter(productSpecification -> 
+		stringUtil.equals(productSpecification.specificationKey, key)) />
 
 	<#return (spec?first.value)!default />
 </#function>
@@ -202,7 +197,7 @@
 	</#if>
 </#macro>
 
-<script>
+<script ${nonceAttribute}>
 	function modalBody() {
 		return `
 			<div class="align-items-center d-flex flex-row mb-3">
@@ -224,7 +219,7 @@
 				</div>
 			</div>
 
-			<#if sanitizedURL?has_content && publisherURL?has_content>
+			<#if publisherURL?has_content>
 				<div class="align-items-center d-flex flex-row mb-3">
 				<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; overflow:hidden; width:40px;">
 						<@clay["icon"]
@@ -236,7 +231,7 @@
 					<div class="d-flex flex-column">
 						<span class="text-black-50">${languageUtil.get(locale, "publisher-website", "Publisher Website")}</span>
 
-						<a href="${sanitizedURL}" target="_blank" class="font-weight-bold">
+						<a href="${publisherURL}" target="_blank" class="font-weight-bold">
 							${publisherURL}
 						</a>
 					</div>
@@ -290,7 +285,7 @@
 	}
 </script>
 
-<script>
+<script ${nonceAttribute}>
 	function copyToClipboard(text) {
 		if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
 			navigator.clipboard.writeText(text);
@@ -300,7 +295,7 @@
 	}
 </script>
 
-<style>
+<style ${nonceAttribute}>
 	.copy-text {
 		color: #282934;
 		font-size: 16px;

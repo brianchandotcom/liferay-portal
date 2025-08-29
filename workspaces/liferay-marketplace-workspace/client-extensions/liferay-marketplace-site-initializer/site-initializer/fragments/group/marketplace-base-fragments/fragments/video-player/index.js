@@ -3,25 +3,30 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/* global Plyr */
-
 const autoplay = configuration.autoplay;
 const lazy = configuration.lazy;
 const loop = configuration.loop;
 const muted = configuration.muted;
+const URLjs = configuration.URLjs;
+const URLcss = configuration.URLcss;
 
 function loadPlyr() {
 	if (typeof Plyr !== 'undefined') {
 		return initPlayer();
 	}
+
 	const link = document.createElement('link');
+
 	link.rel = 'stylesheet';
-	link.href = 'https://cdn.plyr.io/3.7.8/plyr.css';
+	link.href = URLcss;
+
 	document.head.appendChild(link);
 
 	const script = document.createElement('script');
-	script.src = 'https://cdn.plyr.io/3.7.8/plyr.polyfilled.js';
+
+	script.src = URLjs;
 	script.onload = initPlayer;
+
 	document.body.appendChild(script);
 }
 
@@ -57,6 +62,7 @@ function initPlayer() {
 
 	plyrPlayer.setAttribute('data-plyr-provider', 'youtube');
 	plyrPlayer.setAttribute('data-plyr-embed-id', videoId);
+
 	plyrPlaceholder.appendChild(plyrWrapper);
 
 	new Plyr('#plyr-player', {
@@ -81,6 +87,7 @@ Liferay.on('plyr:play', ({details}) => {
 
 	if (props.videoURL) {
 		configuration.videoURL = props.videoURL;
+
 		loadPlyr();
 	}
 });

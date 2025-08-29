@@ -32,6 +32,7 @@ const NAVIGATION_TABS = {
 export default function EditVocabulary({
 	availableAssetTypes,
 	backURL,
+	cmsGroupId,
 	defaultLanguageId,
 	locales,
 	spritemap,
@@ -40,6 +41,7 @@ export default function EditVocabulary({
 }: {
 	availableAssetTypes: AssetType[];
 	backURL: string;
+	cmsGroupId: number;
 	defaultLanguageId: string;
 	locales: any[];
 	spritemap: string;
@@ -151,7 +153,10 @@ export default function EditVocabulary({
 
 		if (isNew) {
 			const {data, error, status} =
-				await VocabularyService.createVocabulary(vocabulary);
+				await VocabularyService.createVocabulary(
+					cmsGroupId,
+					vocabulary
+				);
 
 			if (error) {
 				if (status === 'CONFLICT') {

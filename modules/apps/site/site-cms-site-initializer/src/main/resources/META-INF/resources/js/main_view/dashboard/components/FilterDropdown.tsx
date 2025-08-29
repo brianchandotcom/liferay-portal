@@ -16,6 +16,7 @@ export type Item = {
 	description?: string;
 	hasChildren?: boolean;
 	label: string;
+	siteId?: number;
 	value: string;
 };
 

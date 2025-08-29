@@ -15,8 +15,8 @@ export const FETCH_URLS = {
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${id}/`,
 	getSubCategories: (id: any) =>
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${id}/taxonomy-categories`,
-	getVocabularies: () =>
-		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies`,
+	getVocabularies: (id: any) =>
+		`/o/headless-admin-taxonomy/v1.0/sites/${id}/taxonomy-vocabularies`,
 	getVocabulary: (id: any) =>
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${id}/`,
 };
@@ -46,7 +46,7 @@ function MoveCategoryModalContent({
 			const tree: any[] = [];
 
 			const {data, error} = await ApiHelper.get<any>(
-				FETCH_URLS.getVocabularies()
+				FETCH_URLS.getVocabularies(itemData.siteId)
 			);
 
 			if (data) {
@@ -85,7 +85,7 @@ function MoveCategoryModalContent({
 		};
 
 		buildTree();
-	}, []);
+	}, [itemData.siteId]);
 
 	return (
 		<>

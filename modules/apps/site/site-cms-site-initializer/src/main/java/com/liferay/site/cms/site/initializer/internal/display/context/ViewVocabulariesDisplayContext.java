@@ -48,7 +48,8 @@ public class ViewVocabulariesDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies";
+		return "/o/headless-admin-taxonomy/v1.0/sites/" +
+			_themeDisplay.getScopeGroupId() + "/taxonomy-vocabularies";
 	}
 
 	public List<AssetRendererFactory<?>> getAvailableAssetRendererFactories() {

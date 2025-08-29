@@ -25,6 +25,8 @@ public class ViewTagsDisplayContext {
 
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
+			"cmsGroupId", _themeDisplay.getScopeGroupId()
+		).put(
 			"dataSetId", CMSSiteInitializerFDSNames.CATEGORIZATION_TAGS
 		).put(
 			"tagsURL",

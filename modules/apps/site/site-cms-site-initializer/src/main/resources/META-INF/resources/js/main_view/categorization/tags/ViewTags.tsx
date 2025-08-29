@@ -16,11 +16,13 @@ import EditTagsModal from './EditTagsModal';
 import MergeTagsModal from './MergeTagsModal';
 
 export default function ViewTags({
+	cmsGroupId,
 	dataSetId,
 	tagUsagesURL,
 	tagsURL,
 	vocabulariesURL,
 }: {
+	cmsGroupId: number;
 	dataSetId: string;
 	tagUsagesURL: string;
 	tagsURL: string;
@@ -41,6 +43,7 @@ export default function ViewTags({
 						}) =>
 							CreateTagsModal({
 								closeModal,
+								cmsGroupId,
 								dataSetId,
 							}),
 						size: 'md',
@@ -178,6 +181,7 @@ export default function ViewTags({
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
 				MergeTagsModal({
 					closeModal,
+					cmsGroupId,
 					loadData,
 					tagId: itemData.id,
 					tagName: itemData.name,
@@ -218,7 +222,7 @@ export default function ViewTags({
 			/>
 
 			<FrontendDataSet
-				apiURL="/o/headless-admin-taxonomy/v1.0/keywords"
+				apiURL={`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`}
 				creationMenu={creationMenu}
 				customRenderers={{
 					tableCell: [

@@ -6,9 +6,9 @@
 import {IVocabulary} from '../../common/types/IVocabulary';
 import ApiHelper from './ApiHelper';
 
-async function createVocabulary(vocabulary: IVocabulary) {
+async function createVocabulary(siteId: number, vocabulary: IVocabulary) {
 	return await ApiHelper.post<IVocabulary>(
-		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies`,
+		`/o/headless-admin-taxonomy/v1.0/sites/${siteId}/taxonomy-vocabularies`,
 		vocabulary
 	);
 }

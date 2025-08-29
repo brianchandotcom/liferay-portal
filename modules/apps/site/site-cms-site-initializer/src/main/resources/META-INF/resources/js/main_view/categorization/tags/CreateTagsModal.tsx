@@ -23,9 +23,11 @@ const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
 
 export default function CreateTagsModalContent({
 	closeModal,
+	cmsGroupId,
 	dataSetId,
 }: {
 	closeModal: () => void;
+	cmsGroupId: number;
 	dataSetId: string;
 }) {
 	const [nameInputError, setNameInputError] = useState<string>('');
@@ -47,8 +49,7 @@ export default function CreateTagsModalContent({
 			tagName: '',
 		},
 		onSubmit: (values) => {
-			const url = '/o/headless-admin-taxonomy/v1.0/keywords';
-
+			const url = `/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`;
 			const body = {
 				assetLibraries: selectedSpaces.map((number) => ({
 					id: number,

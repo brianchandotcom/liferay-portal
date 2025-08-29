@@ -78,7 +78,7 @@ const AllCategoriesDropdown: React.FC<IAllFiltersDropdown> = ({
 		});
 
 		const data = await fetchData(
-			`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies${queryParams}`
+			`/o/headless-admin-taxonomy/v1.0/sites/${item.siteId}/taxonomy-vocabularies${queryParams}`
 		);
 
 		const filteredData = data?.items

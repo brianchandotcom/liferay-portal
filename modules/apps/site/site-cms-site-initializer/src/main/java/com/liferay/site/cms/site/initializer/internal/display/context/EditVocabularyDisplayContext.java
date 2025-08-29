@@ -87,6 +87,8 @@ public class EditVocabularyDisplayContext {
 					"/categorization/view-vocabularies"),
 				_themeDisplay)
 		).put(
+			"cmsGroupId", _themeDisplay.getScopeGroupId()
+		).put(
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(_themeDisplay.getSiteDefaultLocale())
 		).put(

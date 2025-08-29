@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -396,10 +397,19 @@ public class TaxonomyVocabularyResourceImpl
 			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return _toTaxonomyVocabulary(
-			_addAssetVocabulary(
-				taxonomyVocabulary.getExternalReferenceCode(), siteId,
-				taxonomyVocabulary));
+		AssetVocabulary assetVocabulary = _addAssetVocabulary(
+			taxonomyVocabulary.getExternalReferenceCode(), siteId,
+			taxonomyVocabulary);
+
+		Group group = _groupLocalService.getGroup(siteId);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") && group.isCMS()) {
+			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+				assetVocabulary.getVocabularyId(),
+				_getAssetLibraryGroupIds(taxonomyVocabulary));
+		}
+
+		return _toTaxonomyVocabulary(assetVocabulary);
 	}
 
 	@Override
@@ -856,9 +866,41 @@ public class TaxonomyVocabularyResourceImpl
 			searchContext -> {
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(
-					SiteConnectedGroupGroupProviderUtil.
-						getCurrentAndAncestorSiteAndDepotGroupIds(groupId));
+
+				Group group = _groupLocalService.getGroup(groupId);
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
+					group.isCMS()) {
+
+					BooleanFilter booleanFilter = new BooleanFilter();
+
+					booleanFilter.addRequiredTerm(
+						Field.GROUP_ID,
+						TaxonomyGroupUtil.getCMSGroupId(
+							contextCompany.getCompanyId()));
+
+					searchContext.setBooleanClauses(
+						new BooleanClause[] {
+							BooleanClauseFactoryUtil.create(
+								new BooleanQueryImpl() {
+									{
+										if (filter != null) {
+											booleanFilter.add(
+												filter,
+												BooleanClauseOccur.MUST);
+										}
+
+										setPreBooleanFilter(booleanFilter);
+									}
+								},
+								BooleanClauseOccur.MUST.getName())
+						});
+				}
+				else {
+					searchContext.setGroupIds(
+						SiteConnectedGroupGroupProviderUtil.
+							getCurrentAndAncestorSiteAndDepotGroupIds(groupId));
+				}
 			},
 			sorts,
 			document -> _toTaxonomyVocabulary(
@@ -1024,6 +1066,9 @@ public class TaxonomyVocabularyResourceImpl
 		target = "(dto.class.name=com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary)"
 	)
 	private DTOActionProvider _dtoActionProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

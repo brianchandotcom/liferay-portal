@@ -338,39 +338,39 @@ public class LocaleUtil {
 				(unicodeLocaleAttributes.size() * 3) +
 					(unicodeLocaleKeys.size() * 3));
 
-		sb.append("{\"country\":\"");
+		sb.append("{\"country\": \"");
 		sb.append(locale.getCountry());
-		sb.append("\",\"displayCountry\":\"");
+		sb.append("\", \"displayCountry\": \"");
 		sb.append(locale.getDisplayCountry());
-		sb.append("\",\"displayLanguage\":\"");
+		sb.append("\", \"displayLanguage\": \"");
 		sb.append(locale.getDisplayLanguage());
-		sb.append("\",\"displayName\":\"");
+		sb.append("\", \"displayName\": \"");
 		sb.append(locale.getDisplayName());
-		sb.append("\",\"displayScript\":\"");
+		sb.append("\", \"displayScript\": \"");
 		sb.append(locale.getDisplayScript());
-		sb.append("\",\"displayVariant\":\"");
+		sb.append("\", \"displayVariant\": \"");
 		sb.append(locale.getDisplayVariant());
-		sb.append("\",\"extensionKeys\":");
+		sb.append("\", \"extensionKeys\":");
 
 		_putValues(sb, extensionKeys);
 
-		sb.append(",\"ISO3Country\":\"");
+		sb.append(",\"ISO3Country\": \"");
 		sb.append(locale.getISO3Country());
-		sb.append("\",\"ISO3Language\":\"");
+		sb.append("\", \"ISO3Language\": \"");
 		sb.append(locale.getISO3Language());
-		sb.append("\",\"language\":\"");
+		sb.append("\", \"language\": \"");
 		sb.append(locale.getLanguage());
-		sb.append("\",\"script\":\"");
+		sb.append("\", \"script\": \"");
 		sb.append(locale.getScript());
-		sb.append("\",\"unicodeLocaleAttributes\":");
+		sb.append("\", \"unicodeLocaleAttributes\":");
 
 		_putValues(sb, unicodeLocaleAttributes);
 
-		sb.append(",\"unicodeLocaleKeys\":");
+		sb.append(", \"unicodeLocaleKeys\":");
 
 		_putValues(sb, unicodeLocaleKeys);
 
-		sb.append(",\"variant\":\"");
+		sb.append(", \"variant\": \"");
 		sb.append(locale.getVariant());
 
 		sb.append("\"}");

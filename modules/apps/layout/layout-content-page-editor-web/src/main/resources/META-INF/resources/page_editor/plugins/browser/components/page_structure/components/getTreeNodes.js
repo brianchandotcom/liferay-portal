@@ -50,7 +50,7 @@ const LAYOUT_DATA_ITEM_TYPE_ICONS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: 'table',
 };
 
-function getCollectionAncestor(layoutData, itemId) {
+export function getCollectionAncestor(layoutData, itemId) {
 	const item = layoutData.items[itemId];
 
 	if (!item) {

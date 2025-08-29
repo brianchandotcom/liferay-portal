@@ -1,0 +1,10 @@
+clusterRoleName: ""
+git:
+    credentials:
+        k8sSecretName: git-credentials
+        token: ""
+        username: ""
+serviceAccount:
+    annotations: {}
+terraformRepo:
+    httpsUrl: https://github.com/liferay/liferay-portal.git

@@ -1180,14 +1180,14 @@ public class ObjectEntryLocalServiceImpl
 			int end)
 		throws PortalException {
 
-		Table table = _objectFieldLocalService.getTable(
-			objectDefinitionId, aggregationTerm);
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			_getDynamicObjectDefinitionTable(objectDefinitionId);
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinitionId, aggregationTerm);
 
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(objectDefinitionId);
+		Table table = _objectFieldLocalService.getTable(
+			objectDefinitionId, aggregationTerm);
 
 		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
 			DSLQueryFactoryUtil.select(

@@ -2326,13 +2326,13 @@ public class DefaultObjectEntryManagerImpl
 			Sort[] sorts)
 		throws Exception {
 
+		long groupId = getGroupId(
+			objectDefinition, String.valueOf(objectEntry.getGroupId()));
+
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				objectDefinition.getClassName(),
 				objectDefinition.getCompanyId(), objectRelationship.getType());
-
-		long groupId = getGroupId(
-			objectDefinition, String.valueOf(objectEntry.getGroupId()));
 
 		Predicate predicate = _filterFactory.create(
 			_objectDefinitionFilterParser.parse(filterString, objectDefinition),

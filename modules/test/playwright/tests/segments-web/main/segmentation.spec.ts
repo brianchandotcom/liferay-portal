@@ -12,6 +12,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../liferay.config';
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -1452,6 +1453,55 @@ test(
 			await page.waitForLoadState('networkidle');
 
 			await segmentsPage.viewCriterionValue('tagName');
+		});
+	}
+);
+
+test(
+	`Can edit segment condition from Equals to Contains option.`,
+
+	{
+		tag: '@LPS-97141',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName1 = 'EditSegment Test';
+		const segmentName2 = 'EditSegmentUserEmailAddressEqualsToContains Test';
+
+		await test.step('Given a segment designer creates a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('test@liferay.com');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('When edits the segment condition', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName1);
+
+			await segmentsPage.changeCriterionInput('Contains');
+
+			await fillAndClickOutside(
+				page,
+				page.getByPlaceholder('Untitled Segment'),
+				segmentName2
+			);
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('Then asserts that the segment was edited', async () => {
+			await segmentsPage.clickLinkByText(segmentName2);
+
+			await page.waitForLoadState('networkidle');
+
+			await expect(page.locator('.operator')).toContainText('Contains');
 		});
 	}
 );

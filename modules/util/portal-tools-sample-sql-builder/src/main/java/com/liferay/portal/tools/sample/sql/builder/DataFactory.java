@@ -4623,7 +4623,7 @@ public class DataFactory {
 			long groupId = _groupCounter.get();
 
 			_customGroupIdsMap.computeIfAbsent(
-				_companyId, key -> new StringBundler()
+				_companyId, companyId -> new StringBundler()
 			).append(
 				groupId
 			).append(

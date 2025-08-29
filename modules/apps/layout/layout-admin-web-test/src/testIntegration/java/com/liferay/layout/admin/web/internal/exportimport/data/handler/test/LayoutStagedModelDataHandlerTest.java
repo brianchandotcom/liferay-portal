@@ -1250,9 +1250,9 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
-		layout = _layoutLocalService.updateStyleBookEntryId(
+		layout = _layoutLocalService.updateStyleBookEntryERC(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			styleBookEntry.getStyleBookEntryId());
+			styleBookEntry.getExternalReferenceCode());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);
@@ -1283,11 +1283,14 @@ public class LayoutStagedModelDataHandlerTest
 		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
 
-		Assert.assertNotEquals(
-			layout.getStyleBookEntryId(), importedLayout.getStyleBookEntryId());
+		Assert.assertEquals(
+			layout.getStyleBookEntryERC(),
+			importedLayout.getStyleBookEntryERC());
 		Assert.assertNotNull(
-			_styleBookEntryLocalService.fetchStyleBookEntry(
-				importedLayout.getStyleBookEntryId()));
+			_styleBookEntryLocalService.
+				fetchStyleBookEntryByExternalReferenceCode(
+					importedLayout.getStyleBookEntryERC(),
+					importedLayout.getGroupId()));
 	}
 
 	@Test

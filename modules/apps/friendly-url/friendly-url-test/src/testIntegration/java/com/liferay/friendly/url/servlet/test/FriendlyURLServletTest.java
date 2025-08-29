@@ -831,7 +831,7 @@ public class FriendlyURLServletTest {
 				LocaleUtil.getSiteDefault(),
 				StringPool.SLASH + RandomTestUtil.randomString()
 			).build(),
-			layout.isIconImage(), null, layout.getStyleBookEntryId(),
+			layout.isIconImage(), null, layout.getStyleBookEntryERC(),
 			layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
 			ServiceContextTestUtil.getServiceContext());
 

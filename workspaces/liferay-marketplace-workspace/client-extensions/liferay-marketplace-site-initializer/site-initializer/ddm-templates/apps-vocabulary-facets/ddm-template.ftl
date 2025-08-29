@@ -1,59 +1,61 @@
 <style ${nonceAttribute}>
-	.vocab-facet {
+	.facet-vocabulary-panel {
 		border-radius: 10px;
 	}
 
-	.vocab-facet .clear-btn {
+	.facet-vocabulary-panel .clear-btn {
 		color: #2B3A4B;
 		font-size: 14px;
 		font-weight: 400;
 	}
 
-	.vocab-facet .panel a {
+	.facet-vocabulary-panel .collapse-icon .collapse-icon-closed .lexicon-icon,
+	.facet-vocabulary-panel .collapse-icon .collapse-icon-open .lexicon-icon {
+		margin-top: 0.3rem;
+	}
+
+	.facet-vocabulary-panel .list-unstyled {
+		margin-bottom: 0;
+	}
+
+	.facet-vocabulary-panel .panel a {
 		padding: 1.5rem;
 		padding-bottom: 0;
 	}
 
-	.vocab-facet .collapse-icon .collapse-icon-closed .lexicon-icon,
-	.vocab-facet .collapse-icon .collapse-icon-open .lexicon-icon {
-		margin-top: 0.3rem;
-	}
-
-	.vocab-facet .panel-body {
+	.facet-vocabulary-panel .panel-body {
 		padding: 0 1.5rem;
 	}
 
-	.vocab-facet .list-unstyled {
-		margin-bottom: 0;
-	}
-
-	.vocab-facet .separator {
+	.facet-vocabulary-panel .separator {
 		margin: 1rem auto 0;
 		width: 90%;
 	}
 
-	.vocab-facet .view-all-btn {
+	.facet-vocabulary-panel .view-all-btn {
 		color: #2B3A4B;
 		font-size: 14px;
 		font-weight: 400;
 	}
 </style>
 
-<#assign appliedFilterCount = 0 />
+<#assign
+	filteredCount = 0
+	title = assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case
+/>
+
 <#list entries as entry>
-<#if entry.isSelected()>
-	<#assign appliedFilterCount++>
-</#if>
+	<#if entry.isSelected()>
+		<#assign filteredCount++>
+	</#if>
 </#list>
 
-<#if appliedFilterCount == 0>
-	<#assign title = "${assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case}" />
-<#else>
-	<#assign title = "${assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case} (${appliedFilterCount})" />
+<#if filteredCount gt 0>
+	<#assign title = title + " (${filteredCount})" />
 </#if>
 
 <@liferay_ui["panel-container"]
-	cssClass="vocab-facet bg-white border-radius-xlarge"
+	cssClass="bg-white border-radius-xlarge facet-vocabulary-panel"
 	extended=true
 	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
 	markupView="lexicon"
@@ -68,14 +70,14 @@
 		persistState=true
 		title="${title}"
 	>
-		<button
-			class="btn-unstyled clear-btn mb-4" id="${namespace + 'facetAssetCategoriesSelectAll'}"
-				onClick="${namespace}selectAll(event)">
-		  Select All
+		<button class="btn-unstyled clear-btn mb-4" id="${namespace + 'facetAssetCategoriesSelectAll'}" onClick="${namespace}selectAll(event)">
+			${languageUtil.get(locale, "select-all")}
 		</button>
+
 	  	<button class="btn-unstyled clear-btn mb-4 ml-1" onClick="Liferay.Search.FacetUtil.clearSelections(event);">
-		  Clear
+		  ${languageUtil.get(locale, "clear")}
 	  	</button>
+
 		<ul class="list-unstyled">
 			<#assign
 				currentURL = themeDisplay.getURLCurrent()?replace("%20", " ")
@@ -84,66 +86,43 @@
 			/>
 
 			<#list entries as entry>
-				<#if optionsCount lte 5 || isExpanded>
-						<li class="color-neutral-2 facet-value py-1">
-							<div class="custom-checkbox custom-control font-weight-normal">
-								<label class="facet-checkbox-label" for="${namespace}_term_${entry.getAssetCategoryId()}">
-									<input
-										${(entry.isSelected())?then("checked","")}
-										class="custom-control-input facet-term"
-										data-term-id="${entry.getAssetCategoryId()}"
-										disabled
-										id="${namespace}_term_${entry.getAssetCategoryId()}"
-										name="${namespace}_term_${entry.getAssetCategoryId()}"
-										onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-										type="checkbox"
-									/>
+				<li class="color-neutral-2 <#if optionsCount gt 5 && !isExpanded>d-none</#if> facet-value py-1">
+					<div class="custom-checkbox custom-control font-weight-normal">
+						<label class="facet-checkbox-label" for="${namespace}_term_${entry.getAssetCategoryId()}">
+							<input
+								${(entry.isSelected())?then("checked","")}
+								class="custom-control-input facet-term"
+								data-term-id="${entry.getAssetCategoryId()}"
+								disabled
+								id="${namespace}_term_${entry.getAssetCategoryId()}"
+								name="${namespace}_term_${entry.getAssetCategoryId()}"
+								onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+								type="checkbox"
+							/>
 
-									<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
-										<span class="custom-control-label-text">
-											${htmlUtil.escape(entry.getDisplayName())}
-										</span>
-									</span>
-								</label>
-							</div>
-						</li>
-					<#else>
-						<li class="color-neutral-2 facet-value py-1 d-none">
-							<div class="custom-checkbox custom-control font-weight-normal">
-								<label class="facet-checkbox-label" for="${namespace}_term_${entry.getAssetCategoryId()}">
-									<input
-										${(entry.isSelected())?then("checked","")}
-										class="custom-control-input facet-term"
-										data-term-id="${entry.getAssetCategoryId()}"
-										disabled
-										id="${namespace}_term_${entry.getAssetCategoryId()}"
-										name="${namespace}_term_${entry.getAssetCategoryId()}"
-										onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-										type="checkbox"
-									/>
+							<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
+								<span class="custom-control-label-text">
+									${htmlUtil.escape(entry.getDisplayName())}
+								</span>
+							</span>
+						</label>
+					</div>
+				</li>
+				<#assign optionsCount++ />
+			</#list>
 
-									<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
-										<span class="custom-control-label-text">
-											${htmlUtil.escape(entry.getDisplayName())}
-										</span>
-									</span>
-								</label>
-							</div>
-						</li>
-					</#if>
-					<#assign optionsCount++ />
-				</#list>
-				<#if optionsCount gt 6 && !isExpanded>
-					<button
-						class="btn-unstyled mt-4 view-all-btn"
-						id="${assetCategoriesSearchFacetDisplayContext.getParameterName() + 'facetAssetCategoriesViewAll'}"
-						onClick="${namespace}viewAll(event, '${namespace + 'facetAssetCategoriesPanel'}')"
-					>
-						<span>${languageUtil.get(locale, "view-all")}</span>
-					</button>
-				</#if>
+			<#if optionsCount gt 6 && !isExpanded>
+				<button
+					class="btn-unstyled mt-4 view-all-btn"
+					id="${assetCategoriesSearchFacetDisplayContext.getParameterName() + 'facetAssetCategoriesViewAll'}"
+					onClick="${namespace}viewAll(event, '${namespace + 'facetAssetCategoriesPanel'}')"
+				>
+					<span>${languageUtil.get(locale, "view-all")}</span>
+				</button>
+			</#if>
 		</ul>
 	</@>
+
 	<hr class="separator" />
 </@>
 
@@ -151,10 +130,10 @@
 	function ${namespace}selectAll(event) {
 		event.preventDefault();
 
-		var parameterName = `${assetCategoriesSearchFacetDisplayContext.getParameterName()}`;
-		var divId = event.target.closest('.collapse').id;
-		var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
-		var url = new URL(window.location.href);
+		const divId = event.target.closest('.collapse').id;
+		const checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
+		const parameterName = `${assetCategoriesSearchFacetDisplayContext.getParameterName()}`;
+		const url = new URL(window.location.href);
 
 		if (url.searchParams.size === 0) {
 			url.href += '?';
@@ -165,6 +144,7 @@
 				if (url.searchParams.size > 0) {
 					url.href += '&';
 				}
+
 				url.href += parameterName + '=' + checkbox.getAttribute('data-term-id');
 			}
 		});
@@ -175,34 +155,25 @@
 	function ${namespace}viewAll(event, dataTarget) {
 		event.preventDefault();
 
-		const subtreeCategoryTreeElement = document.getElementById(dataTarget);
+		const treeElement = document.getElementById(dataTarget);
 
-		if (subtreeCategoryTreeElement) {
-			const hiddenItems = subtreeCategoryTreeElement.querySelectorAll('.d-none');
+		if (treeElement) {
+			const hiddenItems = treeElement.querySelectorAll('.d-none');
+
 			hiddenItems.forEach(item => {
 				item.classList.remove('d-none');
 			});
 
-			const viewAllButton = subtreeCategoryTreeElement.querySelector('.view-all-btn');
+			const viewAllButton = treeElement.querySelector('.view-all-btn');
 			if (viewAllButton) {
 				viewAllButton.style.display = 'none';
 			}
 		}
 
-	  	var newParamURL = '';
-
-	  	if (window.location.search === '') {
-			newParamURL = '?';
-		} else {
-			newParamURL = window.location.search + '&';
-		}
+	  	let newParamURL = window.location.search === '' ? '?' : window.location.search + '&';
 
 		newParamURL += `${assetCategoriesSearchFacetDisplayContext.getParameterName()}Expanded`
 
-		window.history.pushState(
-			{},
-			"",
-			newParamURL
-		);
+		window.history.pushState({}, "", newParamURL);
 	}
 </@>

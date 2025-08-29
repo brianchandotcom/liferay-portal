@@ -1,0 +1,11 @@
+clusterRoleName: ""
+git:
+    credentials:
+        token: ""
+        username: ""
+kubernetesSecretName:
+    gitCredentials: liferay-aws-backup-restore-workflow-git-credentials
+serviceAccount:
+    annotations: {}
+terraformRepo:
+    httpsUrl: https://github.com/liferay/liferay-portal.git

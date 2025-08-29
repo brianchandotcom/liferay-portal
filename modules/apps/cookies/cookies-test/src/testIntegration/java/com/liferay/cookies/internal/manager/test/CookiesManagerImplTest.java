@@ -57,8 +57,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testCookiePathIsCustomContextWhenUsingCustomContext()
-		throws Exception {
+	public void testAddCookieWithCustomContextPath() {
 
 		Cookie cookie = new Cookie(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
@@ -81,27 +80,9 @@ public class CookiesManagerImplTest {
 			customContextMockHttpServletRequest, _mockHttpServletResponse);
 
 		Assert.assertEquals(customContextPath, cookie.getPath());
-	}
 
-	@Test
-	public void testCookiePathIsCustomContextWhenUsingCustomContextWithCustomModuleWebContextPath()
-		throws Exception {
-
-		Cookie cookie = new Cookie(
+		cookie = new Cookie(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		String customContextPath =
-			StringPool.SLASH + RandomTestUtil.randomString();
-
-		MockHttpServletRequest customContextMockHttpServletRequest =
-			new MockHttpServletRequest() {
-
-				@Override
-				public String getContextPath() {
-					return customContextPath;
-				}
-
-			};
 
 		HttpServletRequestWrapper httpServletRequestWrapper =
 			new HttpServletRequestWrapper(customContextMockHttpServletRequest) {
@@ -122,7 +103,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testCookiePathIsSlashWhenUsingRootContext() throws Exception {
+	public void testAddCookieWithRootContext() {
 		Cookie cookie = new Cookie(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
@@ -131,14 +112,6 @@ public class CookiesManagerImplTest {
 			_mockHttpServletRequest, _mockHttpServletResponse);
 
 		Assert.assertEquals(StringPool.SLASH, cookie.getPath());
-	}
-
-	@Test
-	public void testCookiePathIsSlashWhenUsingRootContextWithCustomModuleWebContextPath()
-		throws Exception {
-
-		Cookie cookie = new Cookie(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		HttpServletRequestWrapper httpServletRequestWrapper =
 			new HttpServletRequestWrapper(_mockHttpServletRequest) {
@@ -159,16 +132,15 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testCookiesConsent() throws Exception {
-		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
-		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_PERFORMANCE);
-		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
+	public void testAddCookieWithConsentType() {
+		_testAddCookieWithConsentType(CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
+		_testAddCookieWithConsentType(CookiesConstants.CONSENT_TYPE_NECESSARY);
+		_testAddCookieWithConsentType(CookiesConstants.CONSENT_TYPE_PERFORMANCE);
+		_testAddCookieWithConsentType(CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
 	}
 
 	@Test
-	public void testCookiesWithoutConsentTypeShouldBeDeleted()
-		throws Exception {
+	public void testAddCookieWithoutConsentType() {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.WARN)) {
@@ -204,7 +176,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testDeleteRemainingCookieConsentCookiesWhenCookiesPreferenceHandlingIsDisabled()
+	public void testAddCookieWithPreferenceHandlingDisabled1()
 		throws Exception {
 
 		ConfigurationTestUtil.saveConfiguration(
@@ -238,7 +210,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testExplicitCookieConsentMode() throws Exception {
+	public void testAddCookieWithExplicitConsentModeEnabled() throws Exception {
 		ConfigurationTestUtil.saveConfiguration(
 			CookiesPreferenceHandlingConfiguration.class.getName(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -264,7 +236,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testImplicitCookieConsentMode() throws Exception {
+	public void testAddCookieWithExplicitConsentModeDisabled() throws Exception {
 		ConfigurationTestUtil.saveConfiguration(
 			CookiesPreferenceHandlingConfiguration.class.getName(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -290,32 +262,32 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testInternalCookiesAddedWithoutConsentType() throws Exception {
-		_testInternalCookieWithoutConsentType(
+	public void testAddCookieWhenAddingInternalWithoutConsentType() {
+		_testAddCookieWhenAddingInternalWithoutConsentType(
 			CookiesConstants.NAME_GUEST_LANGUAGE_ID,
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
-		_testInternalCookieWithoutConsentType(
+		_testAddCookieWhenAddingInternalWithoutConsentType(
 			CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testInternalCookieWithoutConsentType(
+		_testAddCookieWhenAddingInternalWithoutConsentType(
 			CookiesConstants.NAME_CONSENT_TYPE_NECESSARY,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testInternalCookieWithoutConsentType(
+		_testAddCookieWhenAddingInternalWithoutConsentType(
 			CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testInternalCookieWithoutConsentType(
+		_testAddCookieWhenAddingInternalWithoutConsentType(
 			CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testInternalCookieWithoutConsentType(
+		_testAddCookieWhenAddingInternalWithoutConsentType(
 			CookiesConstants.NAME_COOKIE_SUPPORT,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testInternalCookieWithoutConsentType(
+		_testAddCookieWhenAddingInternalWithoutConsentType(
 			CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
 	}
 
 	@Test
-	public void testKnownCookiesAddedWithPreviouslyKnownConsentType()
+	public void testAddCookieWhenAddingKnownCookieWithKnownConsentType()
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -367,7 +339,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testSetDifferentConsentTypeToAlreadyKnownCookie()
+	public void testAddCookieWhenUpdatingConsentTypeOfKnownCookie()
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -412,7 +384,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testSkipConsentTypeCheckWhenCookiesPreferenceHandlingIsDisabled()
+	public void testAddCookieWithPreferenceHandlingDisabled2()
 		throws Exception {
 
 		ConfigurationTestUtil.saveConfiguration(
@@ -468,7 +440,7 @@ public class CookiesManagerImplTest {
 				consentCookie.getName(), _mockHttpServletRequest));
 	}
 
-	private void _testCookiesConsentType(int consentType) {
+	private void _testAddCookieWithConsentType(int consentType) {
 		_addConsentCookie(false, consentType);
 
 		Cookie cookie = new Cookie(
@@ -500,7 +472,7 @@ public class CookiesManagerImplTest {
 				cookie.getName(), _mockHttpServletRequest));
 	}
 
-	private void _testInternalCookieWithoutConsentType(
+	private void _testAddCookieWhenAddingInternalWithoutConsentType(
 		String name, int consentType) {
 
 		_addConsentCookie(false, consentType);

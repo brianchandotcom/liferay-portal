@@ -16,8 +16,6 @@ import hudson.model.ParameterValue
 import hudson.model.Result
 import hudson.model.Run
 
-import java.util.regex.Matcher
-
 Date endDate = new Date()
 
 Date startDate = endDate.minus(1)
@@ -44,20 +42,15 @@ items.each {
 			}
 
 			JsonBuilder buildJsonBuilder = new JsonBuilder()
-
-			String buildDescription = build.getDescription()
-
 			String buildURL = Jenkins.instance.getRootUrl() + build.getUrl()
-
 			List<Object> parameters = []
-
 			String testrayBuildURL = ""
 
 			if (!buildURL.contains("maintenance") && !buildURL.contains("verification") && !buildURL.contains("-controller") && !buildURL.contains("-propagator")) {
-				if ((!buildURL.contains("generate-testray-csv") && !buildURL.contains("-batch") && !buildURL.contains("-downstream")) && (buildDescription != null)) {
+				if ((!buildURL.contains("generate-testray-csv") && !buildURL.contains("-batch") && !buildURL.contains("-downstream")) && (build.getDescription() != null)) {
 					Pattern pattern = Pattern.compile("https:\\/\\/testray\\.liferay\\.com.*?[^\"]*")
 
-					Matcher matcher = pattern.matcher(buildDescription)
+					Matcher matcher = pattern.matcher(build.getDescription())
 
 					if (matcher.find()) {
 						testrayBuildURL = matcher.group()

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -147,7 +148,7 @@ public class TestrayProject {
 			"'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"components", TestrayComponent.FIELD_NAMES, filter, null);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
@@ -171,7 +172,7 @@ public class TestrayProject {
 			String.valueOf(getID()), "'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"productVersions", TestrayProductVersion.FIELD_NAMES, filter,
 				null, 1, 1);
 
@@ -180,7 +181,9 @@ public class TestrayProject {
 			}
 
 			return TestrayFactory.newTestrayProductVersion(
-				this, entityJSONObjects.get(0));
+				this,
+				entityJSONObjects.iterator(
+				).next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -196,7 +199,7 @@ public class TestrayProject {
 			String.valueOf(getID()), "'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"productVersions", TestrayProductVersion.FIELD_NAMES, filter,
 				null, 1, 1);
 
@@ -205,7 +208,9 @@ public class TestrayProject {
 			}
 
 			return TestrayFactory.newTestrayProductVersion(
-				this, entityJSONObjects.get(0));
+				this,
+				entityJSONObjects.iterator(
+				).next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -224,7 +229,7 @@ public class TestrayProject {
 			"id eq '", String.valueOf(routineID), "'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"routines", TestrayRoutine.FIELD_NAMES, filter, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
@@ -232,7 +237,9 @@ public class TestrayProject {
 			}
 
 			return TestrayFactory.newTestrayRoutine(
-				this, entityJSONObjects.get(0));
+				this,
+				entityJSONObjects.iterator(
+				).next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -246,7 +253,7 @@ public class TestrayProject {
 			"'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"routines", TestrayRoutine.FIELD_NAMES, filter, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
@@ -254,7 +261,9 @@ public class TestrayProject {
 			}
 
 			return TestrayFactory.newTestrayRoutine(
-				this, entityJSONObjects.get(0));
+				this,
+				entityJSONObjects.iterator(
+				).next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -296,7 +305,7 @@ public class TestrayProject {
 			"r_projectToTeams_c_projectId eq '", String.valueOf(getID()), "'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"teams", TestrayTeam.FIELD_NAMES, filter, null);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
@@ -341,7 +350,7 @@ public class TestrayProject {
 			"r_projectToCases_c_projectId eq '", String.valueOf(getID()), "'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"cases", TestrayCase.FIELD_NAMES, filter, null);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {

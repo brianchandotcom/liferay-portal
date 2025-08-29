@@ -1360,6 +1360,10 @@ public class ObjectEntryDTOConverter
 						fetchObjectRelationshipByObjectFieldId2(
 							objectField.getObjectFieldId());
 
+				if ((primaryKey == 0) && objectRelationship.isEdge()) {
+					continue;
+				}
+
 				if ((primaryKey > 0) &&
 					(!_hasRootModelHierarchyNestedField() ||
 					 !objectRelationship.isEdge())) {

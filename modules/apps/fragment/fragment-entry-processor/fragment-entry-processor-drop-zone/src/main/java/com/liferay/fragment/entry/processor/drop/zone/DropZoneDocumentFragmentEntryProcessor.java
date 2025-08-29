@@ -183,9 +183,7 @@ public class DropZoneDocumentFragmentEntryProcessor
 					}
 				}
 
-				for (int i = 0; i < elements.size(); i++) {
-					Element element = elements.get(i);
-
+				for (Element element : elements) {
 					String dropZoneId = element.attr("data-lfr-drop-zone-id");
 
 					if (fragmentDropZoneIdsMap.containsKey(dropZoneId)) {

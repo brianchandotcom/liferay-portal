@@ -164,7 +164,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		sb.append("'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
 				null, 1, 1);
 
@@ -173,7 +173,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			}
 
 			return TestrayFactory.newJSONObjectTestrayCaseResult(
-				this, entityJSONObjects.get(0));
+				this,
+				entityJSONObjects.iterator(
+				).next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -202,7 +204,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		sb.append("'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				true, "caseResults", TestrayCaseResult.FIELD_NAMES,
 				sb.toString(), null, 0, 1000);
 
@@ -417,14 +419,15 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			"id eq '", matcher.group("buildID"), "'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"builds", FIELD_NAMES, filter, null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				throw new RuntimeException("Unable to find entity JSON object");
 			}
 
-			_jsonObject = entityJSONObjects.get(0);
+			_jsonObject = entityJSONObjects.iterator(
+			).next();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -441,7 +444,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		sb.append("'");
 
 		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
 				null, maxCount, 0);
 

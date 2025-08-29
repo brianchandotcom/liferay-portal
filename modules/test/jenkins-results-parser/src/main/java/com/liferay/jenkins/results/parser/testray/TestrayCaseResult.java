@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
@@ -230,7 +231,7 @@ public class TestrayCaseResult {
 		TestrayServer testrayServer = getTestrayServer();
 
 		try {
-			List<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
+			Set<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
 				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
 				"dateCreated:desc", maxCount, pageSize);
 

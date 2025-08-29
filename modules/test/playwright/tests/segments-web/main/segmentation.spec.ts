@@ -1321,3 +1321,50 @@ test(
 		});
 	}
 );
+
+test(
+	`Can edit segment with Session > URL criterion.`,
+
+	{
+		tag: '@LPS-102743',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName1 = 'EditSegment Test';
+		const segmentName2 = 'EditSegmentUserBySessionURL Test';
+
+		await test.step('Given a segment designer creates a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('test@liferay.com');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('When edits the segment with Session > URL criterion', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName1);
+
+			await segmentsPage.deleteProperty();
+
+			await segmentsPage.addSegmentField('URL', 'Session', segmentName2);
+
+			await segmentsPage.fillField('http://localhost:8080');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('Then asserts that the segment was edited', async () => {
+			await segmentsPage.clickLinkByText(segmentName2);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('http://localhost:8080');
+		});
+	}
+);

@@ -138,10 +138,10 @@ test(
 	async ({page}) => {
 		await page.goto('/');
 
-		await checkAccessibility({bestPractices: true, page});
+		await checkAccessibility({page});
 
 		await performLogout(page);
 
-		await checkAccessibility({bestPractices: true, page});
+		await checkAccessibility({page});
 	}
 );

@@ -284,11 +284,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isRootDescendantNode()) {
-			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
-				objectDefinition.getRootObjectDefinitionId());
-		}
-
 		return ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 			objectDefinition.getClassName());
 	}
@@ -568,16 +563,21 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				ActionKeys.ADD_ENTRY);
 		}
 
-		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission(objectDefinitionId);
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		PortletResourcePermission portletResourcePermission =
+			_getPortletResourcePermission(objectDefinitionId);
+
 		ObjectEntry rootObjectEntry = _getRootObjectEntry(
 			objectDefinition, values);
+
+		if (rootObjectEntry != null) {
+			portletResourcePermission = _getPortletResourcePermission(
+				rootObjectEntry.getObjectDefinitionId());
+		}
+
+		PermissionChecker permissionChecker = getPermissionChecker();
 
 		try {
 			portletResourcePermission.check(
@@ -722,11 +722,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		if (objectDefinition.isRootDescendantNode()) {
-			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
-				objectDefinition.getRootObjectDefinitionId());
-		}
 
 		return ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
 			objectDefinition.getResourceName());

@@ -8,11 +8,15 @@ package com.liferay.layout.type.controller.empty.internal.layout.type.controller
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletResponse;
@@ -55,7 +59,21 @@ public class EmptyLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception {
 
-		if (!layout.isTypeEmpty()) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String urlCurrent = themeDisplay.getURLCurrent();
+
+		Group group = layout.getGroup();
+
+		if (!layout.isTypeEmpty() ||
+			StringUtil.equalsIgnoreCase(
+				urlCurrent, layout.getFriendlyURL(themeDisplay.getLocale())) ||
+			urlCurrent.contains(
+				group.getGroupKey() +
+					layout.getFriendlyURL(themeDisplay.getLocale()))) {
+
 			throw new NoSuchLayoutException();
 		}
 

@@ -1,0 +1,245 @@
+{{- $artifactTerraformRepo := "terraform-repo" -}}
+{{- $containerCommandSh := "sh" -}}
+{{- $paramCommitMessage := include "liferayBackupRestoreWorkflow.param.commitMessage" . -}}
+{{- $paramDataActive := include "liferayBackupRestoreWorkflow.param.dataActive" . -}}
+{{- $paramDataInactive := include "liferayBackupRestoreWorkflow.param.dataInactive" . -}}
+{{- $paramDbRestoreSnapshotIdentifier := include "liferayBackupRestoreWorkflow.param.dbRestoreSnapshotIdentifier" . -}}
+{{- $paramIsRestoring := include "liferayBackupRestoreWorkflow.param.isRestoring" . -}}
+{{- $paramRdsSnapshotId := include "liferayBackupRestoreWorkflow.param.rdsSnapshotId" . -}}
+{{- $paramS3BucketId := include "liferayBackupRestoreWorkflow.param.s3BucketId" . -}}
+{{- $paramS3BucketIdActive := include "liferayBackupRestoreWorkflow.param.s3BucketIdActive" . -}}
+{{- $paramS3BucketIdInactive := include "liferayBackupRestoreWorkflow.param.s3BucketIdInactive" . -}}
+{{- $paramS3RecoveryPointArn := include "liferayBackupRestoreWorkflow.param.s3RecoveryPointArn" . -}}
+{{- $paramTfvarsContent := include "liferayBackupRestoreWorkflow.param.tfvarsContent" . -}}
+{{- $taskCheckoutTerraformRepo := "checkout-terraform-repo" -}}
+{{- $taskCleanupRdsInstance := "cleanup-rds-instance" -}}
+{{- $taskCleanupS3Bucket := "cleanup-s3-bucket" -}}
+{{- $taskFindPeerRecoveryPoints := "find-peer-recovery-points" -}}
+{{- $taskGetDependenciesModuleOutputs := "get-dependencies-module-outputs" -}}
+{{- $taskRestartLiferay := "restart-liferay" -}}
+{{- $taskRestoreRdsInstance := "restore-rds-instance" -}}
+{{- $taskRestoreS3Bucket := "restore-s3-bucket" -}}
+{{- $taskRollbackFailedRestore := "rollback-failed-restore" -}}
+{{- $taskUpdateKubernetesSecret := "update-kubernetes-secret" -}}
+{{- $templateMain := "main" -}}
+{{- $templateTerraformApply := "terraform-apply" -}}
+{{- $tfvarDataActive := "data_active" -}}
+{{- $tfvarIsRestoring := "is_restoring" -}}
+{{- $tfvarDbRestoreSnapshotIdentifier := "db_restore_snapshot_identifier" -}}
+{{- $workflowName := include "liferayBackupRestoreWorkflow.fullname" . -}}
+{{- $workingDir := include "liferayBackupRestoreWorkflow.constant.workingDir" . -}}
+
+{{- $outputArtifactTerraformRepo := include "liferayBackupRestoreWorkflow.task.output.artifact" (dict "artifact" $artifactTerraformRepo "task" $taskCheckoutTerraformRepo) | quote -}}
+{{- $outputParamDataActive := include "liferayBackupRestoreWorkflow.task.output.parameter" (dict "parameter" $paramDataActive "task" $taskGetDependenciesModuleOutputs) | quote -}}
+{{- $outputParamDataInactive := include "liferayBackupRestoreWorkflow.task.output.parameter" (dict "parameter" $paramDataInactive "task" $taskGetDependenciesModuleOutputs) | quote -}}
+{{- $outputParamRdsSnapshotId := include "liferayBackupRestoreWorkflow.task.output.parameter" (dict "parameter" $paramRdsSnapshotId "task" $taskFindPeerRecoveryPoints) | quote -}}
+{{- $outputParamS3BucketIdActive := include "liferayBackupRestoreWorkflow.task.output.parameter" (dict "parameter" $paramS3BucketIdActive "task" $taskGetDependenciesModuleOutputs) | quote -}}
+{{- $outputParamS3BucketIdInactive := include "liferayBackupRestoreWorkflow.task.output.parameter" (dict "parameter" $paramS3BucketIdInactive "task" $taskGetDependenciesModuleOutputs) | quote -}}
+{{- $outputParamS3RecoveryPointArn := include "liferayBackupRestoreWorkflow.task.output.parameter" (dict "parameter" $paramS3RecoveryPointArn "task" $taskFindPeerRecoveryPoints) | quote -}}
+{{- $workingDirTerraform := printf "%s/%s/%s" $workingDir .Values.terraformRepo.sparseCheckoutRelativePath .Values.terraformRepo.dependenciesModuleRelativePath -}}
+
+apiVersion: argoproj.io/v1alpha1
+kind: ClusterWorkflowTemplate
+metadata:
+    labels:
+        {{- include "liferayBackupRestoreWorkflow.labels" . | nindent 8 }}
+    name: {{ $workflowName }}
+spec:
+    arguments:
+        parameters:
+            -   description: "The RDS or S3 recovery point arn of a single backup job run"
+                name: {{ include "liferayBackupRestoreWorkflow.param.recoveryPointArn" . }}
+    artifactRepositoryRef:
+        configMap: {{ include "liferayBackupRestoreWorkflow.configmap.artifactRepositories.name" . }}
+    entrypoint: {{ $templateMain }}
+    templates:
+        -   dag:
+                tasks:
+                    -   name: {{ $taskCheckoutTerraformRepo }}
+                        template: {{ $taskCheckoutTerraformRepo }}
+                    -   name: {{ $taskFindPeerRecoveryPoints }}
+                        template: {{ $taskFindPeerRecoveryPoints }}
+                    -   arguments:
+                            artifacts:
+                                -   from: {{ $outputArtifactTerraformRepo }}
+                                    name: {{ $artifactTerraformRepo }}
+                        depends: {{ $taskCheckoutTerraformRepo }}
+                        name: {{ $taskGetDependenciesModuleOutputs }}
+                        template: {{ $taskGetDependenciesModuleOutputs }}
+                    -   arguments:
+                            artifacts:
+                                -   from: {{ $outputArtifactTerraformRepo }}
+                                    name: {{ $artifactTerraformRepo }}
+                            parameters:
+                                -   name: {{ $paramCommitMessage }}
+                                    value: "chore(restore): provision inactive RDS instance from snapshot"
+                                -   name: {{ $paramTfvarsContent }}
+                                    value: |-
+                                        {{ $tfvarDataActive }} = {{ $outputParamDataActive }}
+                                        {{ $tfvarDbRestoreSnapshotIdentifier }} = {{ $outputParamRdsSnapshotId }}
+                                        {{ $tfvarIsRestoring }} = true
+                        depends: "{{ $taskFindPeerRecoveryPoints }} && {{ $taskGetDependenciesModuleOutputs }}"
+                        name: {{ $taskRestoreRdsInstance }}
+                        template: {{ $templateTerraformApply }}
+                    -   arguments:
+                            parameters:
+                                -   name: {{ $paramS3RecoveryPointArn }}
+                                    value: {{ $outputParamS3RecoveryPointArn }}
+                                -   name: {{ $paramS3BucketId }}
+                                    value: {{ $outputParamS3BucketIdInactive }}
+                        depends: "{{ $taskFindPeerRecoveryPoints }} && {{ $taskGetDependenciesModuleOutputs }}"
+                        name: {{ $taskRestoreS3Bucket }}
+                        template: {{ $taskRestoreS3Bucket }}
+                    -   arguments:
+                            artifacts:
+                                -   from: {{ $outputArtifactTerraformRepo }}
+                                    name: {{ $artifactTerraformRepo }}
+                            parameters:
+                                -   name: {{ $paramCommitMessage }}
+                                    value: "feat(restore): update liferay configuration to restored data plane"
+                                -   name: {{ $paramTfvarsContent }}
+                                    value: |-
+                                        {{ $tfvarDataActive }} = {{ $outputParamDataInactive }}
+                                        {{ $tfvarDbRestoreSnapshotIdentifier }} = null
+                                        {{ $tfvarIsRestoring }} = true
+                        depends: "{{ $taskRestoreRdsInstance }} && {{ $taskRestoreS3Bucket }}"
+                        name: {{ $taskUpdateKubernetesSecret }}
+                        template: {{ $templateTerraformApply }}
+                    -   depends: {{ $taskUpdateKubernetesSecret }}
+                        name: {{ $taskRestartLiferay }}
+                        template: {{ $taskRestartLiferay }}
+                    -   arguments:
+                            artifacts:
+                                -   name: {{ $artifactTerraformRepo }}
+                                    from: {{ $outputArtifactTerraformRepo }}
+                            parameters:
+                                -   name: {{ $paramCommitMessage }}
+                                    value: "chore(restore): clean up rds instance"
+                                -   name: {{ $paramTfvarsContent }}
+                                    value: |-
+                                        {{ $tfvarDataActive }} = {{ $outputParamDataInactive }}
+                                        {{ $tfvarIsRestoring }} = false
+                        depends: {{ $taskRestartLiferay }}
+                        name: {{ $taskCleanupRdsInstance }}
+                        template: {{ $templateTerraformApply }}
+                    -   arguments:
+                            parameters:
+                                -   name: {{ $paramS3BucketId }}
+                                    value: {{ $outputParamS3BucketIdActive }}
+                        depends: {{ $taskRestartLiferay }}
+                        name: {{ $taskCleanupS3Bucket }}
+                        template: {{ $taskCleanupS3Bucket }}
+                    -   arguments:
+                            artifacts:
+                                -   from: {{ $outputArtifactTerraformRepo }}
+                                    name: {{ $artifactTerraformRepo }}
+                            parameters:
+                                -   name: {{ $paramCommitMessage }}
+                                    value: "chore(restore): reset failed restore"
+                                -   name: {{ $paramTfvarsContent }}
+                                    value: |-
+                                        {{ $tfvarDataActive }} = {{ $outputParamDataActive }}
+                                        {{ $tfvarIsRestoring }} = false
+                        depends: "{{ $taskRestoreRdsInstance }}.Succeeded && !{{ $taskRestartLiferay }}.Succeeded"
+                        name: {{ $taskRollbackFailedRestore }}
+                        template: {{ $templateTerraformApply }}
+            name: {{ $templateMain }}
+        -   name: {{ $taskCheckoutTerraformRepo }}
+            outputs:
+                artifacts:
+                    -   name: {{ $artifactTerraformRepo }}
+                        path: {{ $workingDir }}
+            script:
+                command: [ {{ $containerCommandSh }} ]
+                image: "{{ .Values.terraformImage.repository }}:{{ .Values.terraformImage.tag }}"
+                source: |-
+                    {{- include "liferayBackupRestoreWorkflow.script.checkoutTerraformRepo" . | nindent 20 }}
+                {{- include "liferayBackupRestoreWorkflow.volumeMount.gitCredentials" . | nindent 16 }}
+        -   name: {{ $taskFindPeerRecoveryPoints }}
+            outputs:
+                parameters:
+                    -   name: {{ $paramRdsSnapshotId }}
+                        valueFrom:
+                            path: {{ include "liferayBackupRestoreWorkflow.constant.outputPathRdsSnapshotId" . }}
+                    -   name: {{ $paramS3RecoveryPointArn }}
+                        valueFrom:
+                            path: {{ include "liferayBackupRestoreWorkflow.constant.outputPathS3RecoveryPointArn" . }}
+            script:
+                command: [ {{ $containerCommandSh }} ]
+                image: "{{ .Values.awsCliImage.repository }}:{{ .Values.awsCliImage.tag }}"
+                source: |-
+                    {{- include "liferayBackupRestoreWorkflow.script.findPeerRecoveryPoints" . | nindent 20 }}
+        -   inputs:
+                artifacts:
+                    -   name: {{ $artifactTerraformRepo }}
+                        path: {{ $workingDir }}
+            name: {{ $taskGetDependenciesModuleOutputs }}
+            outputs:
+                parameters:
+                    -   name: {{ $paramDataActive }}
+                        valueFrom:
+                            path: {{ include "liferayBackupRestoreWorkflow.constant.outputPathDataActive" . }}
+                    -   name: {{ $paramDataInactive }}
+                        valueFrom:
+                            path: {{ include "liferayBackupRestoreWorkflow.constant.outputPathDataInactive" . }}
+                    -   name: {{ $paramS3BucketIdActive }}
+                        valueFrom:
+                            path: {{ include "liferayBackupRestoreWorkflow.constant.outputPathS3BucketIdActive" . }}
+                    -   name: {{ $paramS3BucketIdInactive }}
+                        valueFrom:
+                            path: {{ include "liferayBackupRestoreWorkflow.constant.outputPathS3BucketIdInactive" . }}
+            script:
+                command: [ {{ $containerCommandSh }} ]
+                image: "{{ .Values.terraformImage.repository }}:{{ .Values.terraformImage.tag }}"
+                source: |-
+                    {{- include "liferayBackupRestoreWorkflow.script.getDependenciesModuleOutputs" . | nindent 20 }}
+                workingDir: {{ $workingDirTerraform }}
+        -   name: {{ $taskCleanupS3Bucket }}
+            inputs:
+                parameters:
+                    -   name: {{ $paramS3BucketId }}
+            container:
+                args:
+                    - "s3"
+                    - "rm"
+                    - "s3://{{ include "liferayBackupRestoreWorkflow.task.input.parameter" $paramS3BucketId }}/"
+                    - "--recursive"
+                command: [ "aws" ]
+                image: "{{ .Values.awsCliImage.repository }}:{{ .Values.awsCliImage.tag }}"
+        -   name: {{ $taskRestoreS3Bucket }}
+            inputs:
+                parameters:
+                    -   name: {{ $paramS3BucketId }}
+                    -   name: {{ $paramS3RecoveryPointArn }}
+            script:
+                command: [ {{ $containerCommandSh }} ]
+                image: "{{ .Values.awsCliImage.repository }}:{{ .Values.awsCliImage.tag }}"
+                source: |-
+                    {{- include "liferayBackupRestoreWorkflow.script.restoreS3Bucket" . | nindent 20 }}
+        -   name: {{ $templateTerraformApply }}
+            inputs:
+                artifacts:
+                    -   name: {{ $artifactTerraformRepo }}
+                        path: {{ $workingDir }}
+                parameters:
+                    -   name: {{ $paramCommitMessage }}
+                    -   name: {{ $paramTfvarsContent }}
+            script:
+                command: [ {{ $containerCommandSh }} ]
+                image: "{{ .Values.terraformImage.repository }}:{{ .Values.terraformImage.tag }}"
+                source: |-
+                    {{- include "liferayBackupRestoreWorkflow.script.terraform-apply" . | nindent 20 }}
+                {{- include "liferayBackupRestoreWorkflow.volumeMount.gitCredentials" . | nindent 16 }}
+                workingDir: {{ $workingDirTerraform }}
+        -   name: {{ $taskRestartLiferay }}
+            script:
+                command: [ {{ $containerCommandSh }} ]
+                image: "{{ .Values.kubectlImage.repository }}:{{ .Values.kubectlImage.tag }}"
+                source: |-
+                    {{- include "liferayBackupRestoreWorkflow.script.restartLiferay" . | nindent 20 }}
+    {{- if and .Values.git.credentials.username .Values.git.credentials.token }}
+    volumes:
+        -   name: {{ include "liferayBackupRestoreWorkflow.constant.gitCredentialsVolumeName" . }}
+            secret:
+                secretName: {{ .Values.kubernetesSecretName.gitCredentials }}
+    {{- end }}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    annotations:
+        workflows.argoproj.io/default-artifact-repository: artifact-repository
+    name: {{ include "liferayBackupRestoreWorkflow.configmap.artifactRepositories.name" . }}
+    namespace: {{ .Values.argoNamespace }}
+data:
+    artifact-repository: |-
+        s3:
+          endpoint: s3.amazonaws.com
+          bucket: {{ .Values.artifactRepositoryBucketId }}

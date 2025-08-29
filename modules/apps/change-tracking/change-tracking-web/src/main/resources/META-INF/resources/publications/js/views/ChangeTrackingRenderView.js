@@ -15,7 +15,6 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {
-	FeatureIndicator,
 	openConfirmModal,
 	openSimpleInputModal,
 	openToast,
@@ -821,15 +820,7 @@ export default function ChangeTrackingRenderView({
 
 		if (moveChangesURL !== null) {
 			dropdownItems.push({
-				label: (
-					<>
-						{Liferay.Language.get('move-changes')}
-
-						<div className="float-right">
-							<FeatureIndicator type="beta" />
-						</div>
-					</>
-				),
+				label: Liferay.Language.get('move-changes'),
 				onClick: () => navigateUtil(moveChangesURL),
 				symbolLeft: 'move-folder',
 			});

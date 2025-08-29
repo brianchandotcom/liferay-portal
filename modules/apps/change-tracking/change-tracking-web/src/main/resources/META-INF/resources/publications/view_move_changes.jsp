@@ -8,7 +8,6 @@
 <%@ include file="/publications/init.jsp" %>
 
 <%
-portletDisplay.setBeta(true);
 portletDisplay.setShowBackIcon(true);
 
 ViewRelatedEntriesDisplayContext viewRelatedEntriesDisplayContext = (ViewRelatedEntriesDisplayContext)request.getAttribute(CTWebKeys.VIEW_RELATED_ENTRIES_DISPLAY_CONTEXT);

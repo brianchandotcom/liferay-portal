@@ -142,36 +142,36 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			return;
 		}
 
+		boolean empty = false;
+
+		if (element.childNodeSize() == 0) {
+			empty = true;
+		}
+
 		linkElement.attr("href", href);
 
 		if (nofollow) {
 			linkElement.attr("rel", "nofollow");
 		}
 
-		boolean emptyElement = false;
-
-		if (element.childNodeSize() == 0) {
-			emptyElement = true;
-		}
-
-		Element parent = element.parent();
-
 		_replaceLinkContent(
-			element, firstChildElement, linkElement, replaceLink, emptyElement);
+			element, empty, firstChildElement, linkElement, replaceLink);
 
-		if (((linkElement != element) || processEditableTag) && !emptyElement &&
+		if (((linkElement != element) || processEditableTag) && !empty &&
 			(linkElement.parent() != element)) {
 
 			element.empty();
 
 			element.appendChild(linkElement);
 		}
-		else if ((linkElement != element) && emptyElement) {
-			if (element.parent() == parent) {
+		else if ((linkElement != element) && empty) {
+			Element parentElement = element.parent();
+
+			if (element.parent() == parentElement) {
 				element.replaceWith(linkElement);
 			}
 			else {
-				parent.appendChild(linkElement);
+				parentElement.appendChild(linkElement);
 			}
 		}
 	}
@@ -226,8 +226,8 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 	}
 
 	private void _replaceLinkContent(
-		Element element, Element firstChildElement, Element linkElement,
-		boolean replaceLink, boolean emptyElement) {
+		Element element, boolean empty, Element firstChildElement,
+		Element linkElement, boolean replaceLink) {
 
 		if (replaceLink) {
 			if (linkElement == firstChildElement) {
@@ -250,7 +250,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 			linkElement.empty();
 
-			if (emptyElement) {
+			if (empty) {
 				linkElement.appendChild(element);
 			}
 			else {

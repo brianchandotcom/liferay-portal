@@ -6,12 +6,10 @@
 package com.liferay.object.web.internal.object.entries.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.display.context.ObjectEntryDisplayContext;
 import com.liferay.object.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -38,6 +36,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.portlet.PortletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -59,6 +58,14 @@ public class ObjectEntryDisplayContextTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@After
+	public void tearDown() throws Exception {
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
 
 	@Test
 	public void testGetBackURL() throws Exception {
@@ -88,17 +95,15 @@ public class ObjectEntryDisplayContextTest {
 			_objectDefinitionLocalService.getObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_AA");
 
-		ObjectEntry objectEntryAA1 = _objectEntryLocalService.getObjectEntry(
-			"AA1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
+		Node nodeAA = objectDefinitionTree.getNode(
 			objectDefinitionAA.getObjectDefinitionId());
+
+		Edge edgeA_AA = nodeAA.getEdge();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(
-				objectEntryAA1.getExternalReferenceCode(), objectDefinitionAA);
-
-		ObjectEntry objectEntryA1 = _objectEntryLocalService.getObjectEntry(
-			"A1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
-			nodeA.getPrimaryKey());
+				"AA1", objectDefinitionAA, edgeA_AA.getObjectRelationshipId(),
+				"A1");
 
 		ObjectDefinition objectDefinitionA =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -112,18 +117,10 @@ public class ObjectEntryDisplayContextTest {
 			).setMVCRenderCommandName(
 				"/object_entries/edit_object_entry"
 			).setParameter(
-				"externalReferenceCode",
-				objectEntryA1.getExternalReferenceCode()
+				"externalReferenceCode", "A1"
 			).setParameter(
 				"screenNavigationCategoryKey",
-				() -> {
-					Node nodeAA = objectDefinitionTree.getNode(
-						objectDefinitionAA.getPrimaryKey());
-
-					Edge edge = nodeAA.getEdge();
-
-					return edge.getObjectRelationshipId();
-				}
+				edgeA_AA.getObjectRelationshipId()
 			).buildString(),
 			_getBackURL(mockHttpServletRequest));
 
@@ -131,12 +128,14 @@ public class ObjectEntryDisplayContextTest {
 			_objectDefinitionLocalService.getObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_AAA");
 
-		ObjectEntry objectEntryAAA1 = _objectEntryLocalService.getObjectEntry(
-			"AAA1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
-			objectDefinitionAAA.getObjectDefinitionId());
+		Node nodeAAA = objectDefinitionTree.getNode(
+			objectDefinitionAAA.getPrimaryKey());
+
+		Edge edgeAA_AAA = nodeAAA.getEdge();
 
 		mockHttpServletRequest = _getMockHttpServletRequest(
-			objectEntryAAA1.getExternalReferenceCode(), objectDefinitionAAA);
+			"AAA1", objectDefinitionAAA, edgeAA_AAA.getObjectRelationshipId(),
+			"AA1");
 
 		Assert.assertEquals(
 			PortletURLBuilder.create(
@@ -146,25 +145,16 @@ public class ObjectEntryDisplayContextTest {
 			).setMVCRenderCommandName(
 				"/object_entries/edit_object_entry"
 			).setParameter(
-				"externalReferenceCode",
-				objectEntryAA1.getExternalReferenceCode()
+				"externalReferenceCode", "AA1"
+			).setParameter(
+				"objectRelationshipId", edgeA_AA.getObjectRelationshipId()
+			).setParameter(
+				"parentObjectEntryERC", "A1"
 			).setParameter(
 				"screenNavigationCategoryKey",
-				() -> {
-					Node nodeAAA = objectDefinitionTree.getNode(
-						objectDefinitionAAA.getPrimaryKey());
-
-					Edge edge = nodeAAA.getEdge();
-
-					return edge.getObjectRelationshipId();
-				}
+				edgeAA_AAA.getObjectRelationshipId()
 			).buildString(),
 			_getBackURL(mockHttpServletRequest));
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
-			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	private String _getBackURL(MockHttpServletRequest mockHttpServletRequest)
@@ -177,7 +167,8 @@ public class ObjectEntryDisplayContextTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-			String externalReferenceCode, ObjectDefinition objectDefinition)
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			long objectRelationshipId, String parentObjectEntryERC)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -207,6 +198,10 @@ public class ObjectEntryDisplayContextTest {
 
 		mockHttpServletRequest.setParameter(
 			"externalReferenceCode", externalReferenceCode);
+		mockHttpServletRequest.setParameter(
+			"objectRelationshipId", String.valueOf(objectRelationshipId));
+		mockHttpServletRequest.setParameter(
+			"parentObjectEntryERC", parentObjectEntryERC);
 		mockHttpServletRequest.setParameter(
 			"mvcRenderCommandName", "/object_entries/edit_object_entry");
 

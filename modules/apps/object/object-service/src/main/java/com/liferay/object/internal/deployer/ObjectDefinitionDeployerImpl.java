@@ -60,7 +60,6 @@ import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectLayoutTabLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
-import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
@@ -282,11 +281,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		try {
 			ObjectDefinitionResourcePermissionUtil.populateResourceActions(
 				_objectActionLocalService, objectDefinition,
-				objectRelationshipsMap,
-				(ObjectDefinitionPersistence)
-					_objectDefinitionLocalService.getBasePersistence(),
-				_objectDefinitionTreeFactory, _portletLocalService,
-				_resourceActions, standaloneObjectActions);
+				_portletLocalService, _resourceActions,
+				standaloneObjectActions);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -447,80 +443,76 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_objectFieldLocalService,
 					_objectRelationshipLocalService)));
 
-		if (!objectDefinition.isRootDescendantNode()) {
-			ConsumerSupplier<ModelResourcePermissionLogic<ObjectEntry>>
-				consumerSupplier = new ConsumerSupplier<>();
-			PortletResourcePermission portletResourcePermission =
-				PortletResourcePermissionFactory.create(
-					objectDefinition.getResourceName(),
-					new ObjectEntryPortletResourcePermissionLogic(
-						_accountEntryLocalService, _groupLocalService,
-						_objectDefinitionLocalService,
-						_organizationLocalService));
+		ConsumerSupplier<ModelResourcePermissionLogic<ObjectEntry>>
+			consumerSupplier = new ConsumerSupplier<>();
+		PortletResourcePermission portletResourcePermission =
+			PortletResourcePermissionFactory.create(
+				objectDefinition.getResourceName(),
+				new ObjectEntryPortletResourcePermissionLogic(
+					_accountEntryLocalService, _groupLocalService,
+					_objectDefinitionLocalService, _organizationLocalService));
 
-			ModelResourcePermission<ObjectEntry> modelResourcePermission =
-				new ObjectEntryModelResourcePermission(
-					_accountEntryLocalService,
-					_accountEntryOrganizationRelLocalService,
-					_groupLocalService, objectDefinition.getClassName(),
-					_objectActionLocalService, _objectDefinitionLocalService,
-					_objectEntryLocalService, consumerSupplier,
-					_objectFieldLocalService, portletResourcePermission,
-					_resourcePermissionLocalService,
-					_userGroupRoleLocalService);
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			new ObjectEntryModelResourcePermission(
+				_accountEntryLocalService,
+				_accountEntryOrganizationRelLocalService, _groupLocalService,
+				objectDefinition.getClassName(), _objectActionLocalService,
+				_objectDefinitionLocalService, _objectEntryLocalService,
+				consumerSupplier, _objectFieldLocalService,
+				portletResourcePermission, _resourcePermissionLocalService,
+				_userGroupRoleLocalService);
 
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					ModelResourcePermission.class, modelResourcePermission,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"com.liferay.object", "true"
-					).put(
-						"model.class.name", objectDefinition.getClassName()
-					).build()));
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				ModelResourcePermission.class, modelResourcePermission,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.object", "true"
+				).put(
+					"model.class.name", objectDefinition.getClassName()
+				).build()));
 
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					PortletResourcePermission.class, portletResourcePermission,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"com.liferay.object", "true"
-					).put(
-						"resource.name", objectDefinition.getResourceName()
-					).build()));
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				PortletResourcePermission.class, portletResourcePermission,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.object", "true"
+				).put(
+					"resource.name", objectDefinition.getResourceName()
+				).build()));
 
-			_sharingModelResourcePermissionConfigurator.configure(
-				modelResourcePermission, consumerSupplier);
+		_sharingModelResourcePermissionConfigurator.configure(
+			modelResourcePermission, consumerSupplier);
 
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					SharingPermissionChecker.class,
-					new ObjectEntrySharingPermissionChecker(
-						modelResourcePermission),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"com.liferay.object", "true"
-					).put(
-						"model.class.name", objectDefinition.getClassName()
-					).build()));
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				SharingPermissionChecker.class,
+				new ObjectEntrySharingPermissionChecker(
+					modelResourcePermission),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.object", "true"
+				).put(
+					"model.class.name", objectDefinition.getClassName()
+				).build()));
 
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					TrashHandler.class,
-					new ObjectEntryTrashHandler(
-						objectDefinition, _objectDefinitionLocalService,
-						_objectEntryService, _systemEventLocalService),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"model.class.name", objectDefinition.getClassName()
-					).build()));
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					WorkflowHandler.class,
-					new ObjectEntryWorkflowHandler(
-						objectDefinition, _objectDefinitionLocalService,
-						_objectEntryLocalService,
-						_workflowDefinitionLinkLocalService),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"model.class.name", objectDefinition.getClassName()
-					).build()));
-		}
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				TrashHandler.class,
+				new ObjectEntryTrashHandler(
+					objectDefinition, _objectDefinitionLocalService,
+					_objectEntryService, _systemEventLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", objectDefinition.getClassName()
+				).build()));
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				WorkflowHandler.class,
+				new ObjectEntryWorkflowHandler(
+					objectDefinition, _objectDefinitionLocalService,
+					_objectEntryLocalService,
+					_workflowDefinitionLinkLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", objectDefinition.getClassName()
+				).build()));
 
 		ObjectLayout objectLayout = null;
 

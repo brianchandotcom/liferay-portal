@@ -41,10 +41,8 @@ import com.liferay.object.scripting.validator.ObjectScriptingValidator;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.base.ObjectActionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
-import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -178,11 +176,7 @@ public class ObjectActionLocalServiceImpl
 				}
 
 				ObjectDefinitionResourcePermissionUtil.populateResourceActions(
-					objectActionLocalService, objectDefinition, null,
-					_objectDefinitionPersistence,
-					new ObjectDefinitionTreeFactory(
-						_objectDefinitionPersistence,
-						_objectRelationshipLocalService),
+					objectActionLocalService, objectDefinition,
 					_portletLocalService, _resourceActions, null);
 			}
 			catch (Exception exception) {
@@ -1148,9 +1142,6 @@ public class ObjectActionLocalServiceImpl
 
 	@Reference
 	private ObjectFolderLocalService _objectFolderLocalService;
-
-	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private ObjectScriptingValidator _objectScriptingValidator;

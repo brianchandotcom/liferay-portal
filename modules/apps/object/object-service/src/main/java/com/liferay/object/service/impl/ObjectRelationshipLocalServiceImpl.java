@@ -73,7 +73,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1067,8 +1066,7 @@ public class ObjectRelationshipLocalServiceImpl
 				_objectDefinitionSettingLocalService, _objectEntryLocalService,
 				_objectFieldPersistence, objectRelationship,
 				objectRelationshipLocalService, objectRelationshipPersistence,
-				_resourceActionLocalService, _resourceActions,
-				_resourcePermissionLocalService,
+				_resourceActionLocalService, _resourcePermissionLocalService,
 				_workflowDefinitionLinkLocalService);
 		}
 
@@ -2111,9 +2109,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Reference
-	private ResourceActions _resourceActions;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

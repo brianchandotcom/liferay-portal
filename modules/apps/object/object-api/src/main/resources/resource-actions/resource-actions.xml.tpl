@@ -42,7 +42,6 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	[%ROOT_DESCENDANT_NODE_OBJECT_DEFINITIONS_MODEL_RESOURCES%]
 	<model-resource>
 		<model-name>[$RESOURCE_NAME$]</model-name>
 		<portlet-ref>

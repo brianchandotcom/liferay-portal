@@ -8,7 +8,6 @@ package com.liferay.object.definition.tree.util;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectActionModel;
 import com.liferay.object.model.ObjectDefinition;
@@ -28,7 +27,6 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -44,7 +42,6 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -253,7 +250,6 @@ public class ObjectDefinitionTreeUtil {
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			ObjectRelationshipPersistence objectRelationshipPersistence,
 			ResourceActionLocalService resourceActionLocalService,
-			ResourceActions resourceActions,
 			ResourcePermissionLocalService resourcePermissionLocalService,
 			WorkflowDefinitionLinkLocalService
 				workflowDefinitionLinkLocalService)
@@ -329,12 +325,11 @@ public class ObjectDefinitionTreeUtil {
 			oldRootObjectDefinitionId2, newRootObjectDefinitionId2);
 
 		_updateObjectDefinitionTree(
-			objectActionPersistence, objectDefinition2,
-			objectDefinitionLocalService, objectDefinitionPersistence,
-			objectDefinitionSettingLocalService, objectEntryLocalService,
-			objectFieldPersistence, objectRelationshipLocalService,
-			objectRelationshipPersistence, oldRootObjectDefinitionId2,
-			newRootObjectDefinitionId2, resourceActions);
+			objectDefinition2, objectDefinitionLocalService,
+			objectDefinitionPersistence, objectDefinitionSettingLocalService,
+			objectEntryLocalService, objectFieldPersistence,
+			objectRelationshipLocalService, objectRelationshipPersistence,
+			oldRootObjectDefinitionId2, newRootObjectDefinitionId2);
 
 		_copyWorkflowDefinitionLinks(
 			objectDefinition1, objectDefinition2,
@@ -714,7 +709,6 @@ public class ObjectDefinitionTreeUtil {
 	}
 
 	private static void _updateObjectDefinitionTree(
-			ObjectActionPersistence objectActionPersistence,
 			ObjectDefinition objectDefinition1,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
@@ -724,25 +718,8 @@ public class ObjectDefinitionTreeUtil {
 			ObjectFieldPersistence objectFieldPersistence,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			ObjectRelationshipPersistence objectRelationshipPersistence,
-			long oldRootObjectDefinitionId, long newRootObjectDefinitionId,
-			ResourceActions resourceActions)
+			long oldRootObjectDefinitionId, long newRootObjectDefinitionId)
 		throws PortalException {
-
-		try {
-			ObjectDefinitionResourcePermissionUtil.
-				populateRootDescendantNodeModelResources(
-					objectActionPersistence, objectDefinitionPersistence,
-					resourceActions, objectDefinition1,
-					newRootObjectDefinitionId);
-
-			ObjectDefinitionResourcePermissionUtil.
-				removeRootDescendantNodeModelResources(
-					objectDefinitionPersistence, resourceActions,
-					objectDefinition1, oldRootObjectDefinitionId);
-		}
-		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
-		}
 
 		if (newRootObjectDefinitionId == 0) {
 			return;
@@ -800,12 +777,12 @@ public class ObjectDefinitionTreeUtil {
 			}
 
 			_updateObjectDefinitionTree(
-				objectActionPersistence, objectDefinition2,
-				objectDefinitionLocalService, objectDefinitionPersistence,
+				objectDefinition2, objectDefinitionLocalService,
+				objectDefinitionPersistence,
 				objectDefinitionSettingLocalService, objectEntryLocalService,
 				objectFieldPersistence, objectRelationshipLocalService,
 				objectRelationshipPersistence, oldRootObjectDefinitionId,
-				newRootObjectDefinitionId, resourceActions);
+				newRootObjectDefinitionId);
 		}
 	}
 

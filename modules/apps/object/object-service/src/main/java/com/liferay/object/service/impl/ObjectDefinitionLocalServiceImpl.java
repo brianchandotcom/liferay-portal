@@ -103,7 +103,6 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFolderPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
-import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
@@ -671,10 +670,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 				ObjectDefinitionResourcePermissionUtil.removeResourceActions(
 					_objectActionLocalService, objectDefinition,
-					objectDefinitionPersistence,
-					new ObjectDefinitionTreeFactory(
-						objectDefinitionLocalService,
-						_objectRelationshipLocalService),
 					_resourceActions);
 			}
 			catch (Exception exception) {

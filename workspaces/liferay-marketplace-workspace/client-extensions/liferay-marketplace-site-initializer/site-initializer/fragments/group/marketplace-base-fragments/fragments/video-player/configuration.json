@@ -25,6 +25,16 @@
 					"label": "Muted",
 					"name": "muted",
 					"type": "checkbox"
+				},
+				{
+					"label": "URL CSS CDN",
+					"name": "URLjs",
+					"type": "text"
+				},
+				{
+					"label": "URL JS CDN",
+					"name": "URLcss",
+					"type": "text"
 				}
 			],
 			"label": "Video Settings"

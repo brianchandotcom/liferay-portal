@@ -517,6 +517,24 @@ public class DLExportImportPortletPreferencesProcessorTest {
 					DLFolder.class.getName(), folder.getFolderId())));
 	}
 
+	@Test
+	public void testImportDLFileEntryInDifferentGroup() throws Exception {
+		_setPortletPreferences(
+			DLAppTestUtil.addFileEntry(TestPropsValues.getGroupId()));
+
+		_portletDataContextImport.setSourceGroupId(
+			TestPropsValues.getGroupId());
+
+		Map<String, String> map = _getPortletPreferencesValues(
+			_exportImportPortletPreferencesProcessor.
+				processImportPortletPreferences(
+					_portletDataContextImport, _portletPreferences));
+
+		Assert.assertEquals(
+			_group.getExternalReferenceCode(),
+			map.get("selectedGroupExternalReferenceCode"));
+	}
+
 	private DepotEntry _addDepotEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(

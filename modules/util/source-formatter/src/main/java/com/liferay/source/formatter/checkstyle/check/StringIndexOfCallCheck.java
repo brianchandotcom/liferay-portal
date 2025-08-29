@@ -48,7 +48,18 @@ public class StringIndexOfCallCheck extends BaseCheck {
 			return;
 		}
 
-		if (nextSiblingDetailAST.getType() == TokenTypes.UNARY_MINUS) {
+		if (nextSiblingDetailAST.getType() == TokenTypes.NUM_INT) {
+			if ((parentDetailAST.getType() != TokenTypes.GE) &&
+				(parentDetailAST.getType() != TokenTypes.LT)) {
+
+				return;
+			}
+
+			if (StringUtil.equals(nextSiblingDetailAST.getText(), "0")) {
+				log(methodCallDetailAST, _MSG_USE_METHOD);
+			}
+		}
+		else if (nextSiblingDetailAST.getType() == TokenTypes.UNARY_MINUS) {
 			if ((parentDetailAST.getType() != TokenTypes.EQUAL) &&
 				(parentDetailAST.getType() != TokenTypes.NOT_EQUAL)) {
 
@@ -63,17 +74,6 @@ public class StringIndexOfCallCheck extends BaseCheck {
 			}
 
 			if (StringUtil.equals(firstChildDetailAST.getText(), "1")) {
-				log(methodCallDetailAST, _MSG_USE_METHOD);
-			}
-		}
-		else if (nextSiblingDetailAST.getType() == TokenTypes.NUM_INT) {
-			if ((parentDetailAST.getType() != TokenTypes.GE) &&
-				(parentDetailAST.getType() != TokenTypes.LT)) {
-
-				return;
-			}
-
-			if (StringUtil.equals(nextSiblingDetailAST.getText(), "0")) {
 				log(methodCallDetailAST, _MSG_USE_METHOD);
 			}
 		}

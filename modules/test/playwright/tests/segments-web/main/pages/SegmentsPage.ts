@@ -156,6 +156,11 @@ export class SegmentsPage {
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
 
+	async deleteProperty() {
+		const deleteButton = this.page.getByTitle('Delete Segment Property');
+		await deleteButton.click();
+	}
+
 	async deleteUnavailableProperty() {
 		const deleteButton = this.page.getByText('Delete Segment Property');
 		await deleteButton.click();
@@ -322,14 +327,40 @@ export class SegmentsPage {
 		await expect(fieldTypeLocator).toBeVisible();
 	}
 
-	async viewMembers(expectedEmail?: string, expectedName?: string) {
+	async viewMemberCount(memberCount: string) {
+		const memberCountLocator = this.page.locator('div.btn-group-item b');
+
+		await expect(memberCountLocator).toHaveText(memberCount);
+	}
+
+	async viewMembers({ expectedEmail, expectedName }: { expectedEmail?: string; expectedName?: string }) {
 		await this.viewMembersButton.click();
 
-		const memberLocator = this.page
-			.frameLocator('iframe#segment-members-dialog_iframe_')
-			.locator('tr', {hasText: expectedEmail || expectedName});
+		const frame = this.page.frameLocator('iframe#segment-members-dialog_iframe_');
 
-		await expect(memberLocator).toBeVisible();
+		let memberLocator;
+
+		if (expectedEmail && expectedName) {
+			memberLocator = frame
+				.locator('tr', {
+					has: frame.locator('td.lfr-email-address-column', { hasText: expectedEmail }),
+				})
+				.filter({
+					has: frame.locator('td.lfr-name-column', { hasText: expectedName }),
+				});
+		} else if (expectedEmail) {
+			memberLocator = frame.locator('tr', {
+				has: frame.locator('td.lfr-email-address-column', { hasText: expectedEmail }),
+			});
+		} else if (expectedName) {
+			memberLocator = frame.locator('tr', {
+				has: frame.locator('td.lfr-name-column', { hasText: expectedName }),
+			});
+		} else {
+			throw new Error('Must provide either expectedEmail or expectedName');
+		}
+
+		await expect(memberLocator).toBeVisible({ timeout: 15000 });
 
 		if (expectedEmail) {
 			await expect(

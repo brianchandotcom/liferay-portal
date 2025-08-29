@@ -117,7 +117,9 @@ test(
 
 			await segmentsPage.editSegmentsEntry(segmentName);
 
-			await segmentsPage.viewMembers('userea@liferay.com');
+			await segmentsPage.viewMembers({
+				expectedEmail: 'userea@liferay.com',
+			});
 		});
 
 		await test.step('Then can assert the segment is correctly created', async () => {
@@ -177,7 +179,9 @@ test(
 
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers('userea@liferay.com');
+			await segmentsPage.viewMembers({
+				expectedEmail: 'userea@liferay.com',
+			});
 		});
 
 		await test.step('Then can assert the segment is correctly created', async () => {
@@ -234,7 +238,9 @@ test(
 
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers('userea@liferay.com');
+			await segmentsPage.viewMembers({
+				expectedEmail: 'userea@liferay.com',
+			});
 		});
 
 		await test.step('Then can assert the segment is correctly created', async () => {
@@ -511,7 +517,7 @@ test(
 		await test.step('Then asserts that the segment is correctly created including the user', async () => {
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers(undefined, `Shaquille O'Neal`);
+			await segmentsPage.viewMembers({expectedName: `Shaquille O'Neal`});
 		});
 	}
 );
@@ -661,11 +667,7 @@ test(
 
 			await segmentsPage.changeCriterionInput('contains');
 
-			const memberCountLocator = page.getByText('1 Member', {
-				exact: true,
-			});
-
-			await expect(memberCountLocator).toBeVisible();
+			await segmentsPage.viewMemberCount('1 Member');
 
 			await segmentsPage.saveButton.click();
 		});
@@ -673,7 +675,7 @@ test(
 		await test.step('Then asserts that the segment is correctly created including the user', async () => {
 			await segmentsPage.clickLinkByText(segmentName);
 
-			await segmentsPage.viewMembers(undefined, `User 1 + / ? # &`);
+			await segmentsPage.viewMembers({expectedName: `User 1 + / ? # &`});
 		});
 	}
 );
@@ -1158,6 +1160,71 @@ test(
 
 			expect(categoryFieldBox1).not.toBe(categoryFieldBox2);
 			expect(dateModifiedFieldBox1).not.toBe(dateModifiedFieldBox2);
+		});
+	}
+);
+
+test(
+	`Can edit segment with a select input.`,
+
+	{
+		tag: '@LPS-94874',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName1 = 'EditSegment Test';
+		const segmentName2 = 'EditSegmentIfHaveASelectInput Test';
+
+		await test.step('Given a segment designer creates a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('test@liferay.com');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('When edits the segment with a criterion that has select input', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName1);
+
+			await segmentsPage.deleteProperty();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName2, {
+				user: ['Regular Role'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectCheckboxItem('Administrator');
+
+			await page.waitForTimeout(3000);
+
+			await segmentsPage.viewMembers({expectedName: 'Test Test'});
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('Then asserts that the segment was edited and select button is not visible', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName2);
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectCheckboxItem('Power User');
+
+			await segmentsPage.saveButton.click();
+
+			await segmentsPage.clickLinkByText(segmentName2);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('Power User');
+
+			await expect(segmentsPage.selectButton).not.toBeVisible();
 		});
 	}
 );

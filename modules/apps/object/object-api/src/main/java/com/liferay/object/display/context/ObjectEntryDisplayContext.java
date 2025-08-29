@@ -24,6 +24,8 @@ import java.util.Map;
  */
 public interface ObjectEntryDisplayContext {
 
+	public String getAPIURL() throws PortalException;
+
 	public String getBackURL() throws PortalException;
 
 	public ObjectDefinition getObjectDefinition1();
@@ -43,7 +45,7 @@ public interface ObjectEntryDisplayContext {
 
 	public String getObjectRelationshipERCObjectFieldName();
 
-	public String getParentObjectEntryId();
+	public String getParentObjectEntryERC();
 
 	public CreationMenu getRelatedModelCreationMenu(
 			ObjectRelationship objectRelationship)

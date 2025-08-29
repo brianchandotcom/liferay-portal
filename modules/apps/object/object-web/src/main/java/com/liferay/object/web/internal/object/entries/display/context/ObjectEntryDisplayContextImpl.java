@@ -57,6 +57,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -180,6 +181,36 @@ public class ObjectEntryDisplayContextImpl
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getAPIURL() throws PortalException {
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.fetchObjectRelationship(
+				ParamUtil.getLong(
+					_objectRequestHelper.getRequest(), "objectRelationshipId"));
+
+		String externalReferenceCode = null;
+
+		if (_objectEntry != null) {
+			externalReferenceCode = _objectEntry.getExternalReferenceCode();
+		}
+
+		if ((objectRelationship == null) || !objectRelationship.isEdge()) {
+			return _getAPIURL(externalReferenceCode, getObjectDefinition1());
+		}
+
+		String parentAPIURL = _getAPIURL(
+			getParentObjectEntryERC(),
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1()));
+
+		String apiURL = parentAPIURL + "/" + objectRelationship.getName();
+
+		if (externalReferenceCode == null) {
+			return apiURL;
+		}
+
+		return apiURL + "/" + externalReferenceCode;
+	}
+
 	@Override
 	public String getBackURL() throws PortalException {
 		HttpServletRequest httpServletRequest =
@@ -197,18 +228,6 @@ public class ObjectEntryDisplayContextImpl
 			backURL = String.valueOf(liferayPortletResponse.createRenderURL());
 		}
 
-		ObjectDefinition objectDefinition = getObjectDefinition1();
-
-		if (!objectDefinition.isDefaultStorageType() ||
-			!objectDefinition.isRootDescendantNode() ||
-			!StringUtil.equals(
-				String.valueOf(
-					httpServletRequest.getAttribute(WebKeys.PORTLET_ID)),
-				objectDefinition.getPortletId())) {
-
-			return backURL;
-		}
-
 		ObjectEntry objectEntry = _getObjectEntry();
 
 		if (objectEntry == null) {
@@ -217,6 +236,18 @@ public class ObjectEntryDisplayContextImpl
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
+
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		if (!objectDefinition.isDefaultStorageType() ||
+			!serviceBuilderObjectEntry.isRootDescendantNode() ||
+			!StringUtil.equals(
+				String.valueOf(
+					httpServletRequest.getAttribute(WebKeys.PORTLET_ID)),
+				objectDefinition.getPortletId())) {
+
+			return backURL;
+		}
 
 		ObjectEntryTreeFactory objectEntryTreeFactory =
 			new ObjectEntryTreeFactory(
@@ -228,6 +259,8 @@ public class ObjectEntryDisplayContextImpl
 		Node node = tree.getNode(serviceBuilderObjectEntry.getObjectEntryId());
 
 		Node parentNode = node.getParentNode();
+
+		Node grandParentNode = parentNode.getParentNode();
 
 		com.liferay.object.model.ObjectEntry parentObjectEntry =
 			_objectEntryLocalService.getObjectEntry(parentNode.getPrimaryKey());
@@ -246,6 +279,30 @@ public class ObjectEntryDisplayContextImpl
 		).setParameter(
 			"externalReferenceCode",
 			parentObjectEntry.getExternalReferenceCode()
+		).setParameter(
+			"objectRelationshipId",
+			() -> {
+				if (grandParentNode == null) {
+					return null;
+				}
+
+				Edge edge = parentNode.getEdge();
+
+				return edge.getObjectRelationshipId();
+			}
+		).setParameter(
+			"parentObjectEntryERC",
+			() -> {
+				if (grandParentNode == null) {
+					return null;
+				}
+
+				com.liferay.object.model.ObjectEntry gradParentObjectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						grandParentNode.getPrimaryKey());
+
+				return gradParentObjectEntry.getExternalReferenceCode();
+			}
 		).setParameter(
 			"screenNavigationCategoryKey",
 			() -> {
@@ -403,7 +460,7 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	@Override
-	public String getParentObjectEntryId() {
+	public String getParentObjectEntryERC() {
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();
 
@@ -900,6 +957,25 @@ public class ObjectEntryDisplayContextImpl
 		);
 	}
 
+	private String _getAPIURL(
+		String externalReferenceCode, ObjectDefinition objectDefinition) {
+
+		String apiURL = "/o" + objectDefinition.getRESTContextPath();
+
+		if (Objects.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_SITE)) {
+
+			apiURL += "/scopes/" + _themeDisplay.getScopeGroupId();
+		}
+
+		if (externalReferenceCode == null) {
+			return apiURL;
+		}
+
+		return apiURL + "/by-external-reference-code/" + externalReferenceCode;
+	}
+
 	private DropdownItem _getCreateNewRelatedModelDropdownItem(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship)
@@ -929,6 +1005,9 @@ public class ObjectEntryDisplayContextImpl
 						objectRelationship.getObjectFieldId2()))
 			).setParameter(
 				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+			).setParameter(
+				"objectRelationshipId",
+				objectRelationship.getObjectRelationshipId()
 			).setParameter(
 				"parentObjectEntryERC",
 				() -> {
@@ -1356,11 +1435,27 @@ public class ObjectEntryDisplayContextImpl
 				ObjectWebKeys.OBJECT_ENTRY_EXTERNAL_REFERENCE_CODE);
 		}
 
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.fetchObjectRelationship(
+				ParamUtil.getLong(
+					_objectRequestHelper.getRequest(), "objectRelationshipId"));
+
 		try {
-			_objectEntry = objectEntryManager.getObjectEntry(
-				_objectRequestHelper.getCompanyId(), _getDTOConverterContext(),
-				externalReferenceCode, objectDefinition,
-				String.valueOf(_getGroupId()));
+			if ((objectRelationship != null) && objectRelationship.isEdge()) {
+				DefaultObjectEntryManager defaultObjectEntryManager =
+					(DefaultObjectEntryManager)objectEntryManager;
+
+				_objectEntry = defaultObjectEntryManager.getRelatedObjectEntry(
+					_getDTOConverterContext(), externalReferenceCode,
+					objectRelationship, getParentObjectEntryERC(),
+					String.valueOf(_getGroupId()));
+			}
+			else {
+				_objectEntry = objectEntryManager.getObjectEntry(
+					_objectRequestHelper.getCompanyId(),
+					_getDTOConverterContext(), externalReferenceCode,
+					objectDefinition, String.valueOf(_getGroupId()));
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

@@ -62,32 +62,51 @@ function isMultimediaMimeType(mimeType: string): boolean {
 
 const getFileMimeTypeValue = (
 	fileMimeTypeValues: Record<string, string> | undefined,
+	objectDefinitionValues: Record<string, string>,
 	item: any
 ) => {
-	if (!fileMimeTypeValues) {
+	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
 		return '';
 	}
 
-	if (item.embedded.file) {
-		const mimeType = item.embedded.file.mimeType;
+	const objectDefinitionExternalReferenceCode =
+		item.embedded.systemProperties?.objectDefinitionBrief
+			?.externalReferenceCode;
 
-		const cssClass = fileMimeTypeValues[mimeType];
+	if (objectDefinitionExternalReferenceCode) {
+		const cssClass =
+			objectDefinitionValues[objectDefinitionExternalReferenceCode];
 
 		if (cssClass) {
 			return cssClass;
 		}
 
-		if (isMultimediaMimeType(mimeType)) {
-			const mimeTypeParts = mimeType.split('/');
+		if (
+			fileMimeTypeValues &&
+			objectDefinitionExternalReferenceCode === 'L_BASIC_DOCUMENT'
+		) {
+			const mimeType = item.embedded.file.mimeType;
 
-			const cssClass = fileMimeTypeValues[mimeTypeParts[0]];
+			const cssClass = fileMimeTypeValues[mimeType];
 
 			if (cssClass) {
 				return cssClass;
 			}
+
+			if (isMultimediaMimeType(mimeType)) {
+				const mimeTypeParts = mimeType.split('/');
+
+				const cssClass = fileMimeTypeValues[mimeTypeParts[0]];
+
+				if (cssClass) {
+					return cssClass;
+				}
+			}
+
+			return fileMimeTypeValues['default'];
 		}
 
-		return fileMimeTypeValues['default'];
+		return objectDefinitionValues['default'];
 	}
 
 	return '';
@@ -96,12 +115,16 @@ const getFileMimeTypeValue = (
 type ViewsItemsProps = {
 	fileMimeTypeCssClasses?: Record<string, string>;
 	fileMimeTypeIcons?: Record<string, string>;
+	objectDefinitionCssClasses: Record<string, string>;
+	objectDefinitionIcons: Record<string, string>;
 	views: IView[];
 };
 
 export default function transformViewsItemProps({
 	fileMimeTypeCssClasses,
 	fileMimeTypeIcons,
+	objectDefinitionCssClasses,
+	objectDefinitionIcons,
 	views,
 }: ViewsItemsProps) {
 	return views.map((view) => {
@@ -114,12 +137,14 @@ export default function transformViewsItemProps({
 					stickerProps: {
 						className: getFileMimeTypeValue(
 							fileMimeTypeCssClasses,
+							objectDefinitionCssClasses,
 							item
 						),
 						content: (
 							<ClayIcon
 								symbol={getFileMimeTypeValue(
 									fileMimeTypeIcons,
+									objectDefinitionIcons,
 									item
 								)}
 							/>

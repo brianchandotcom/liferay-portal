@@ -160,15 +160,11 @@ public class DropZoneDocumentFragmentEntryProcessor
 						layoutStructure.getLayoutStructureItem(dropZoneItemId);
 
 					if (!(childLayoutStructureItem instanceof
-							FragmentDropZoneLayoutStructureItem)) {
+							FragmentDropZoneLayoutStructureItem
+								fragmentDropZoneLayoutStructureItem)) {
 
 						continue;
 					}
-
-					FragmentDropZoneLayoutStructureItem
-						fragmentDropZoneLayoutStructureItem =
-							(FragmentDropZoneLayoutStructureItem)
-								childLayoutStructureItem;
 
 					String fragmentDropZoneId =
 						fragmentDropZoneLayoutStructureItem.

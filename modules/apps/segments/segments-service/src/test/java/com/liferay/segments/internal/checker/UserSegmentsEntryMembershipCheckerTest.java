@@ -61,10 +61,10 @@ public class UserSegmentsEntryMembershipCheckerTest {
 				"(contains(firstName, 'Tes'))", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(contains(firstName, 'tes'))", _userAttributes));
+				"(contains(firstName, 'Test'))", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(contains(firstName, 'Test'))", _userAttributes));
+				"(contains(firstName, 'tes'))", _userAttributes));
 	}
 
 	@Test
@@ -105,6 +105,12 @@ public class UserSegmentsEntryMembershipCheckerTest {
 				"(customField/_00002_test eq true)", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
+				"(dateModified eq " +
+					_dateFormat.format(_userAttributes.get("modifiedDate")) +
+						")",
+				_userAttributes));
+		Assert.assertTrue(
+			UserSegmentsEntryMembershipChecker.isMember(
 				"(emailAddress eq 'test@liferay.com')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
@@ -114,16 +120,10 @@ public class UserSegmentsEntryMembershipCheckerTest {
 				"(firstName eq 'test')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(dateModified eq " +
-					_dateFormat.format(_userAttributes.get("modifiedDate")) +
-						")",
-				_userAttributes));
+				"(jobTitle eq 'Test')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(jobTitle eq 'test')", _userAttributes));
-		Assert.assertTrue(
-			UserSegmentsEntryMembershipChecker.isMember(
-				"(jobTitle eq 'Test')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(roleIds eq '1')", _userAttributes));

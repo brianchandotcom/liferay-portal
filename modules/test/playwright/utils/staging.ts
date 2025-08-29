@@ -11,12 +11,14 @@ import {reloadUntilVisible} from './reloadUntilVisible';
 export async function enableLocalStaging(
 	apiHelpers: DataApiHelpers,
 	page: Page,
-	site: any
+	site: any,
+	parameters?: any
 ) {
 	await page.goto(`/web${site.friendlyUrlPath}`);
 
 	await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
 		groupId: site.id,
+		...parameters,
 	});
 
 	await reloadUntilVisible({

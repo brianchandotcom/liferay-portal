@@ -53,16 +53,16 @@ export class SegmentsPage {
 		return this.page.locator('tr', {has: this.page.getByText(segmentName)});
 	}
 
-	async addSessionSegment(property: string, segmentName: string) {
-		const dropzone = this.page.locator(`.drop-zone-session`);
+	async addSegmentField(criterion: string, property: string, segmentName: string) {
+		const dropzone = this.page.locator(`.drop-zone-root`);
 		const target =
 			(await dropzone.count()) === 0
 				? this.page.locator('.empty-drop-zone')
 				: dropzone.last();
 
-		await this.page.getByRole('button', {name: 'Session'}).click();
+		await this.page.getByRole('button', {name: property}).click();
 
-		await this.page.getByLabel(`Drag ${property}`).press('Enter');
+		await this.page.getByLabel(`Drag ${criterion}`).press('Enter');
 
 		await target.press('Enter');
 

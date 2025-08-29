@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Dictionary;
@@ -53,15 +52,7 @@ public class FeatureFlagManagerUtil {
 	public static boolean isEnabled(long companyId, String key) {
 		return _withFeatureFlagManager(
 			featureFlagManager -> featureFlagManager.isEnabled(companyId, key),
-			() -> {
-				if (PortalRunMode.isTestMode()) {
-					return GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag." + key));
-				}
-
-				return GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag." + key));
-			});
+			() -> GetterUtil.getBoolean(PropsUtil.get("feature.flag." + key)));
 	}
 
 	/**
@@ -87,10 +78,6 @@ public class FeatureFlagManagerUtil {
 
 	private static <T> T _withFeatureFlagManager(
 		Function<FeatureFlagManager, T> function, Supplier<T> supplier) {
-
-		if (PortalRunMode.isTestMode()) {
-			return supplier.get();
-		}
 
 		FeatureFlagManager featureFlagManager =
 			_featureFlagManagerSnapshot.get();

@@ -9,7 +9,7 @@
 		"@clayui/drop-down": "3.127.0",
 		"@clayui/empty-state": "^3.106.1",
 		"@clayui/form": "3.125.0",
-		"@clayui/icon": "^3.56.0",
+		"@clayui/icon": "3.111.0",
 		"@clayui/label": "^3.88.0",
 		"@clayui/link": "^3.85.0",
 		"@clayui/loading-indicator": "^3.60.0",
@@ -64,6 +64,9 @@
 	"license": "LGPL",
 	"name": "@liferay/liferay-marketplace-custom-element",
 	"private": true,
+	"resolutions": {
+		"@clayui/icon": "3.111.0"
+	},
 	"scripts": {
 		"build": "tsc && vite build",
 		"dev": "vite",

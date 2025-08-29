@@ -293,6 +293,20 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}
 
+	@Test
+	@TestInfo("LPD-54863")
+	public void testExportImportObjectEntriesWithErrorReport()
+		throws Exception {
+
+		_testExportImportObjectEntriesWithErrorReport(
+			_stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_testExportImportObjectEntriesWithErrorReport(
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
+	}
+
 	@Ignore("LPD-40798")
 	@Test
 	@TestInfo("LPD-57756")
@@ -521,20 +535,6 @@ public class BatchEnginePortletDataHandlerTest {
 				file, group.getGroupId()
 			).toString(),
 			JSONCompareMode.STRICT);
-	}
-
-	@Test
-	@TestInfo("LPD-54863")
-	public void testFailingObjectEntryImportGeneratesErrorReport()
-		throws Exception {
-
-		_testFailingObjectEntryImportGeneratesErrorReport(
-			_stagingGroupHelper.fetchCompanyGroup(
-				TestPropsValues.getCompanyId()),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_testFailingObjectEntryImportGeneratesErrorReport(
-			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@Test
@@ -1085,6 +1085,49 @@ public class BatchEnginePortletDataHandlerTest {
 			false, objectDefinition.getObjectDefinitionId(), objectEntries);
 	}
 
+	private void _testExportImportObjectEntriesWithErrorReport(
+			Group group, String scope)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_getObjectEntryGroupId(group.getGroupId(), scope), objectDefinition,
+			StringUtil.randomString());
+
+		String originalExternalReferenceCode =
+			objectEntry.getExternalReferenceCode();
+
+		File file = _exportLayouts(
+			false, group.getGroupId(), false, new long[0], objectDefinition);
+
+		objectEntry.setExternalReferenceCode(StringUtil.randomString());
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry);
+
+		ExportImportConfiguration exportImportConfiguration = _importLayouts(
+			false, true, file, group.getGroupId(), objectDefinition);
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				TestPropsValues.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
+
+		Assert.assertEquals(
+			exportImportReportEntries.toString(), 1,
+			exportImportReportEntries.size());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				exportImportReportEntries,
+				exportImportReportEntry ->
+					Objects.equals(
+						exportImportReportEntry.getClassExternalReferenceCode(),
+						originalExternalReferenceCode) &&
+					(exportImportReportEntry.getType() ==
+						ExportImportReportEntryConstants.TYPE_ERROR)));
+	}
+
 	private void _testExportImportObjectEntriesWithRelatedObjectEntries(
 			boolean childFirst, Group group, String scope, String type)
 		throws Exception {
@@ -1196,49 +1239,6 @@ public class BatchEnginePortletDataHandlerTest {
 			false, group, scope, type);
 		_testExportImportObjectEntriesWithRelatedObjectEntries(
 			true, group, scope, type);
-	}
-
-	private void _testFailingObjectEntryImportGeneratesErrorReport(
-			Group group, String scope)
-		throws Exception {
-
-		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			_getObjectEntryGroupId(group.getGroupId(), scope), objectDefinition,
-			StringUtil.randomString());
-
-		String originalExternalReferenceCode =
-			objectEntry.getExternalReferenceCode();
-
-		File file = _exportLayouts(
-			false, group.getGroupId(), false, new long[0], objectDefinition);
-
-		objectEntry.setExternalReferenceCode(StringUtil.randomString());
-
-		_objectEntryLocalService.updateObjectEntry(objectEntry);
-
-		ExportImportConfiguration exportImportConfiguration = _importLayouts(
-			false, true, file, group.getGroupId(), objectDefinition);
-
-		List<ExportImportReportEntry> exportImportReportEntries =
-			_exportImportReportEntryLocalService.getExportImportReportEntries(
-				TestPropsValues.getCompanyId(),
-				exportImportConfiguration.getExportImportConfigurationId());
-
-		Assert.assertEquals(
-			exportImportReportEntries.toString(), 1,
-			exportImportReportEntries.size());
-
-		Assert.assertTrue(
-			ListUtil.exists(
-				exportImportReportEntries,
-				exportImportReportEntry ->
-					Objects.equals(
-						exportImportReportEntry.getClassExternalReferenceCode(),
-						originalExternalReferenceCode) &&
-					(exportImportReportEntry.getType() ==
-						ExportImportReportEntryConstants.TYPE_ERROR)));
 	}
 
 	private void _testGetExportModelCount(

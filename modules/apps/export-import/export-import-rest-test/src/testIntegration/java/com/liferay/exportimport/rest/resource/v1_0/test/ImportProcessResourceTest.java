@@ -60,6 +60,7 @@ public class ImportProcessResourceTest
 		super.setUp();
 	}
 
+	@Override
 	protected ImportProcess
 			testGetAssetLibraryImportProcessesPage_addImportProcess(
 				Long assetLibraryId, ImportProcess importProcess)
@@ -72,12 +73,14 @@ public class ImportProcessResourceTest
 			randomImportProcess());
 	}
 
+	@Override
 	protected ImportProcess testGetImportProcess_addImportProcess()
 		throws Exception {
 
 		return _addImportProcess(_getCompanyGroupId(), randomImportProcess());
 	}
 
+	@Override
 	protected ImportProcess testGetImportProcessesPage_addImportProcess(
 			ImportProcess importProcess)
 		throws Exception {
@@ -85,6 +88,7 @@ public class ImportProcessResourceTest
 		return _addImportProcess(_getCompanyGroupId(), randomImportProcess());
 	}
 
+	@Override
 	protected ImportProcess testGetSiteImportProcessesPage_addImportProcess(
 			Long siteId, ImportProcess importProcess)
 		throws Exception {

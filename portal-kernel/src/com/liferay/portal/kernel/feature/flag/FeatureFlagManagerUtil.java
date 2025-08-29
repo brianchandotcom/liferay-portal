@@ -5,13 +5,11 @@
 
 package com.liferay.portal.kernel.feature.flag;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -61,13 +59,8 @@ public class FeatureFlagManagerUtil {
 						PropsUtil.get("feature.flag." + key));
 				}
 
-				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-							companyId)) {
-
-					return GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag." + key));
-				}
+				return GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag." + key));
 			});
 	}
 

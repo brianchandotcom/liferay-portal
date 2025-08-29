@@ -213,12 +213,12 @@ public class JSPortletExtender {
 
 		String packageVersion = packageJSONObject.getString("version");
 
-		String fragmentAlias = GetterUtil.getString(
-			properties.get(_FRAGMENT_ALIAS_PROPERTY_NAME));
+		String portletAlias = GetterUtil.getString(
+			properties.get(_PROPERTY_KEY_PORTLET_ALIAS));
 
-		if (Validator.isNotNull(fragmentAlias)) {
+		if (Validator.isNotNull(portletAlias)) {
 			_portletRegistry.registerAlias(
-				fragmentAlias, _getPortletName(packageJSONObject));
+				portletAlias, _getPortletName(packageJSONObject));
 		}
 
 		return bundleContext.registerService(
@@ -231,7 +231,7 @@ public class JSPortletExtender {
 			properties);
 	}
 
-	private static final String _FRAGMENT_ALIAS_PROPERTY_NAME =
+	private static final String _PROPERTY_KEY_PORTLET_ALIAS =
 		"com.liferay.fragment.entry.processor.portlet.alias";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -306,12 +306,12 @@ public class JSPortletExtender {
 					ServiceReference<?> serviceReference =
 						serviceRegistration.getReference();
 
-					String fragmentAlias = GetterUtil.getString(
+					String portletAlias = GetterUtil.getString(
 						serviceReference.getProperty(
-							_FRAGMENT_ALIAS_PROPERTY_NAME));
+							_PROPERTY_KEY_PORTLET_ALIAS));
 
-					if (Validator.isNotNull(fragmentAlias)) {
-						_portletRegistry.unregisterAlias(fragmentAlias);
+					if (Validator.isNotNull(portletAlias)) {
+						_portletRegistry.unregisterAlias(portletAlias);
 					}
 
 					serviceRegistration.unregister();

@@ -218,17 +218,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return cachedDownstreamBuildReports;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		try {
-			sb.append(
-				JenkinsResultsParserUtil.getBuildProperty(
-					"cloud.ci.s3.bucket.build.reports.path"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
 		List<Workspace> workspaces = buildDatabase.getWorkspaces();
@@ -237,28 +226,36 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return cachedDownstreamBuildReports;
 		}
 
+		Workspace workspace = workspaces.get(0);
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		String path = JenkinsResultsParserUtil.combine(
+			workspaceGitRepository.getName(), "/",
+			workspaceGitRepository.getBaseBranchSHA(), "/",
+			workspaceGitRepository.getSenderBranchSHA(), "/", getBatchName());
+
 		File baseDir = new File(
 			System.getProperty("java.io.tmpdir"),
-			"cached-build-report-files/" + getBatchName());
+			"cached-build-report-files/" + path);
 
 		if (!baseDir.exists()) {
 			baseDir.mkdirs();
 
-			sb.append("/");
+			StringBuilder sb = new StringBuilder();
 
-			Workspace workspace = workspaces.get(0);
-
-			WorkspaceGitRepository workspaceGitRepository =
-				workspace.getPrimaryWorkspaceGitRepository();
-
-			sb.append(workspaceGitRepository.getName());
+			try {
+				sb.append(
+					JenkinsResultsParserUtil.getBuildProperty(
+						"cloud.ci.s3.bucket.build.reports.path"));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 
 			sb.append("/");
-			sb.append(workspaceGitRepository.getBaseBranchSHA());
-			sb.append("/");
-			sb.append(workspaceGitRepository.getSenderBranchSHA());
-			sb.append("/");
-			sb.append(getBatchName());
+			sb.append(path);
 
 			CloudBucketUtil.syncS3Files(
 				JenkinsResultsParserUtil.getCanonicalPath(baseDir),
@@ -273,6 +270,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		for (File buildReportFile : buildReportFiles) {
 			try {
+				String buildReportFileName = buildReportFile.getName();
+
+				if (buildReportFileName.endsWith(".sha512")) {
+					continue;
+				}
+
 				String buildReportFileContent = JenkinsResultsParserUtil.read(
 					buildReportFile);
 

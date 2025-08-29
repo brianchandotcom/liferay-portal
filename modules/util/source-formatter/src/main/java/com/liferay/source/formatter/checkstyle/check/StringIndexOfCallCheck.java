@@ -58,8 +58,11 @@ public class StringIndexOfCallCheck extends BaseCheck {
 			if (StringUtil.equals(nextSiblingDetailAST.getText(), "0")) {
 				log(methodCallDetailAST, _MSG_USE_METHOD);
 			}
+
+			return;
 		}
-		else if (nextSiblingDetailAST.getType() == TokenTypes.UNARY_MINUS) {
+
+		if (nextSiblingDetailAST.getType() == TokenTypes.UNARY_MINUS) {
 			if ((parentDetailAST.getType() != TokenTypes.EQUAL) &&
 				(parentDetailAST.getType() != TokenTypes.NOT_EQUAL)) {
 

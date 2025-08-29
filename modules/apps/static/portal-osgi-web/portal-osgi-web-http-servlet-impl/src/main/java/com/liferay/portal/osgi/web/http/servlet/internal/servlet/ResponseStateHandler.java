@@ -63,13 +63,10 @@ public class ResponseStateHandler {
 		EndpointRegistration<?> endpointRegistration =
 			_liferayDispatchTargets.getServletRegistration();
 
-		List<FilterRegistration> matchingFilterRegistrations =
-			_liferayDispatchTargets.getMatchingFilterRegistrations();
-
 		endpointRegistration.addReference();
 
 		for (FilterRegistration filterRegistration :
-				matchingFilterRegistrations) {
+				_liferayDispatchTargets.getMatchingFilterRegistrations()) {
 
 			filterRegistration.addReference();
 		}
@@ -164,7 +161,7 @@ public class ResponseStateHandler {
 	private void _handleException() throws IOException, ServletException {
 		if (!(_httpServletResponse instanceof HttpServletResponseWrapper)) {
 			throw new IllegalStateException(
-				"Response is not a HttpServletResponseWrapper");
+				"Response is not an instance of HttpServletResponseWrapper");
 		}
 
 		HttpServletResponseWrapperImpl httpServletResponseWrapperImpl = null;
@@ -191,7 +188,7 @@ public class ResponseStateHandler {
 
 		if (httpServletResponseWrapperImpl == null) {
 			throw new IllegalStateException(
-				"Can not locate HttpServletResponseWrapperImpl");
+				"Unable to get HttpServletResponseWrapperImpl");
 		}
 
 		HttpServletResponse wrappedHttpServletResponse =
@@ -302,7 +299,7 @@ public class ResponseStateHandler {
 	private void _handleResponseCode() throws IOException, ServletException {
 		if (!(_httpServletResponse instanceof HttpServletResponseWrapper)) {
 			throw new IllegalStateException(
-				"Response is not a HttpServletResponseWrapper");
+				"Response is not an instance of HttpServletResponseWrapper");
 		}
 
 		HttpServletResponseWrapperImpl httpServletResponseWrapperImpl =
@@ -311,7 +308,7 @@ public class ResponseStateHandler {
 
 		if (httpServletResponseWrapperImpl == null) {
 			throw new IllegalStateException(
-				"Can not locate HttpServletResponseWrapperImpl");
+				"Unable to get HttpServletResponseWrapperImpl");
 		}
 
 		int status = httpServletResponseWrapperImpl.getInternalStatus();

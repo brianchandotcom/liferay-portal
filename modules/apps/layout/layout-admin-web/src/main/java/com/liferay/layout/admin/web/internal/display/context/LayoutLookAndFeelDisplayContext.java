@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -238,25 +239,11 @@ public class LayoutLookAndFeelDisplayContext {
 		).put(
 			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
 		).put(
-			"styleBookEntryId",
+			"styleBookEntryERC",
 			() -> {
 				Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
-				if (Validator.isNull(selLayout.getStyleBookEntryERC())) {
-					return "0";
-				}
-
-				StyleBookEntry styleBookEntry =
-					StyleBookEntryLocalServiceUtil.
-						fetchStyleBookEntryByExternalReferenceCode(
-							selLayout.getStyleBookEntryERC(),
-							selLayout.getGroupId());
-
-				if (styleBookEntry == null) {
-					return "0";
-				}
-
-				return String.valueOf(styleBookEntry.getStyleBookEntryId());
+				return GetterUtil.getString(selLayout.getStyleBookEntryERC());
 			}
 		).put(
 			"styleBookEntryName", getStyleBookEntryName()

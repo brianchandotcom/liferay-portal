@@ -10,13 +10,13 @@
 	totalCount = productImagesResponse.totalCount
 >
 
-<div class="carousel-container">
-	<div class="main-image-wrapper">
-		<button class="nav-button prev" aria-label = "Previous Image">
-			<span class="lexicon-icon-overwide"> <@clay["icon"] symbol = "angle-left" /></span>
+<div class = "carousel-container">
+	<div class = "main-image-wrapper">
+		<button class = "nav-button prev" aria-label = "Previous Image">
+			<span class = "lexicon-icon-overwide"> <@clay["icon"] symbol = "angle-left" /></span>
 		</button>
 
-		<img alt="${productImages[1].title?html}" id="main-image" src="${(productImages[1].src?replace("https://", "http://"))}" />
+		<img alt = "${productImages[1].title?html}" id = "main-image" src = "${(productImages[1].src?replace("https://", "http://"))}" />
 
 		<button class="nav-button next" aria-label="Next Image">
 			<span class="lexicon-icon-overwide"> <@clay["icon"] symbol="angle-right" /></span>
@@ -25,7 +25,7 @@
 
 	<div class="thumbnails-wrapper">
 		<div class="thumbnails"></div>
-		
+
 		<#assign count = (totalCount?default(0)?number) />
 
 		<#if count gt 5>
@@ -229,7 +229,7 @@
 	justify-content: center;
 	position: relative;
 	width: 902px;
-  	height: 454px;
+	height: 454px;
 }
 
 .main-image-wrapper img {

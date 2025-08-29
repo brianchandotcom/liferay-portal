@@ -31,9 +31,10 @@
 	ramValue = getSpecificationValue("ram")
 	supportEmail = getSpecificationValue("supportemailaddress")
 	supportPhone = getSpecificationValue("supportphone")
+	type = getSpecificationValue("type")?lower_case
 >
 <@section title = languageUtil.get(locale, "developer")>
-	<a class="bg-neutral-8" href="/?developer-name=${developerName}">
+	<a class = "bg-neutral-8" href = "/?developer-name=${developerName}">
 		${developerName}
 	</a>
 </@section>
@@ -53,7 +54,11 @@
 </@section>
 
 <@section title = languageUtil.get(locale, "app-type", "App Type")>
-	${getSpecificationValue("type")?upper_case}
+	<#if type == 'client-extension'> Client Extension </#if>
+	<#if type == 'cloud'> Cloud </#if>
+	<#if type == 'composite-app'> Composite App </#if>
+	<#if type == 'dxp'> DXP </#if>
+	<#if type == 'low-code-configuration'> Low Code Configuration </#if>
 </@section>
 
 <@section title = languageUtil.get(locale, "version")>
@@ -174,7 +179,7 @@
 </@section>
 
 <#function getSpecificationValue key default="">
-	<#local spec = productSpecifications?filter(productSpecification -> 
+	<#local spec = productSpecifications?filter(productSpecification ->
 		stringUtil.equals(productSpecification.specificationKey, key)) />
 
 	<#return (spec?first.value)!default />

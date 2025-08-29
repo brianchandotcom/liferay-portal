@@ -53,7 +53,11 @@ export class SegmentsPage {
 		return this.page.locator('tr', {has: this.page.getByText(segmentName)});
 	}
 
-	async addSegmentField(criterion: string, property: string, segmentName: string) {
+	async addSegmentField(
+		criterion: string,
+		property: string,
+		segmentName: string
+	) {
 		const dropzone = this.page.locator(`.drop-zone-root`);
 		const target =
 			(await dropzone.count()) === 0
@@ -272,17 +276,32 @@ export class SegmentsPage {
 		await this.saveButton.click();
 	}
 
-	async selectSegment(segmentName: string) {
+	async selectEntry(entryName: string) {
 		const iframe = this.page.frameLocator('iframe#selectEntity_iframe_');
-		const segmentElement = iframe.locator('td.lfr-title-column', {
-			hasText: segmentName,
+
+		const titleColumnLocator = iframe.locator('td.lfr-title-column', {
+			hasText: entryName,
+		});
+
+		const nameColumnLocator = iframe.locator('td.lfr-name-column', {
+			hasText: entryName,
 		});
 
 		await this.page.waitForLoadState('networkidle');
 		await this.page.waitForTimeout(5000);
 
-		await segmentElement.waitFor({state: 'visible'});
-		await segmentElement.click();
+		let targetElement: Locator;
+
+		if (await titleColumnLocator.first().isVisible()) {
+			targetElement = titleColumnLocator.first();
+		}
+		else if (await nameColumnLocator.first().isVisible()) {
+			targetElement = nameColumnLocator.first();
+		}
+
+		if (targetElement) {
+			await targetElement.click();
+		}
 	}
 
 	async selectCardItem(itemName: string) {
@@ -333,34 +352,55 @@ export class SegmentsPage {
 		await expect(memberCountLocator).toHaveText(memberCount);
 	}
 
-	async viewMembers({ expectedEmail, expectedName }: { expectedEmail?: string; expectedName?: string }) {
+	async viewMembers({
+		expectedEmail,
+		expectedName,
+	}: {
+		expectedEmail?: string;
+		expectedName?: string;
+	}) {
 		await this.viewMembersButton.click();
 
-		const frame = this.page.frameLocator('iframe#segment-members-dialog_iframe_');
+		const frame = this.page.frameLocator(
+			'iframe#segment-members-dialog_iframe_'
+		);
 
 		let memberLocator;
 
 		if (expectedEmail && expectedName) {
 			memberLocator = frame
 				.locator('tr', {
-					has: frame.locator('td.lfr-email-address-column', { hasText: expectedEmail }),
+					has: frame.locator('td.lfr-email-address-column', {
+						hasText: expectedEmail,
+					}),
 				})
 				.filter({
-					has: frame.locator('td.lfr-name-column', { hasText: expectedName }),
+					has: frame.locator('td.lfr-name-column', {
+						hasText: expectedName,
+					}),
 				});
-		} else if (expectedEmail) {
+		}
+		else if (expectedEmail) {
 			memberLocator = frame.locator('tr', {
-				has: frame.locator('td.lfr-email-address-column', { hasText: expectedEmail }),
+				has: frame.locator('td.lfr-email-address-column', {
+					hasText: expectedEmail,
+				}),
 			});
-		} else if (expectedName) {
+		}
+		else if (expectedName) {
 			memberLocator = frame.locator('tr', {
-				has: frame.locator('td.lfr-name-column', { hasText: expectedName }),
+				has: frame.locator('td.lfr-name-column', {
+					hasText: expectedName,
+				}),
 			});
-		} else {
-			throw new Error('Must provide either expectedEmail or expectedName');
+		}
+		else {
+			throw new Error(
+				'Must provide either expectedEmail or expectedName'
+			);
 		}
 
-		await expect(memberLocator).toBeVisible({ timeout: 15000 });
+		await expect(memberLocator).toBeVisible({timeout: 15000});
 
 		if (expectedEmail) {
 			await expect(

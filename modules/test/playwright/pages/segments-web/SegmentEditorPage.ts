@@ -24,6 +24,7 @@ type SegmentProperty =
 	| 'Segments'
 	| 'Site'
 	| string
+	| 'Tag'
 	| 'Type';
 
 type SegmentProperties = Partial<Record<SegmentSection, SegmentProperty[]>>;
@@ -103,6 +104,7 @@ export class SegmentEditorPage {
 			'Parent Organization': 'Drag Parent Organization',
 			'Segments': 'Drag Segment',
 			'Site': 'Drag Site',
+			'Tag': 'Drag Tag',
 			'Team': 'Drag Team',
 		};
 
@@ -114,7 +116,16 @@ export class SegmentEditorPage {
 			await this.page.getByLabel(label, {exact: true}).press('Enter');
 		}
 		catch {
-			await this.page.locator('li', {hasText: property}).press('Enter');
+			try {
+				await this.page
+					.getByRole('menuitem', {name: label, exact: true})
+					.press('Enter');
+			}
+			catch {
+				await this.page
+					.locator('li', {hasText: property})
+					.press('Enter');
+			}
 		}
 
 		await target.press('Enter');

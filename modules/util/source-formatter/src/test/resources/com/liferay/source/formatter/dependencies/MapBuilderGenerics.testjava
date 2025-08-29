@@ -14,22 +14,16 @@ import java.util.Map;
  */
 public class MapBuilderGenerics {
 
-	protected static final TestClass testClass = new TestClass() {
+	public Map<String, String> method1() {
+		return HashMapBuilder.<String, String>put(
+			"title", "title"
+		).build();
+	}
 
-		@Override
-		public Map<String, String> testMethod1() {
-			return HashMapBuilder.<String, String>put(
-				"title", "title"
-			).build();
-		}
-
-		@Override
-		public Map<String, Object> testMethod2() {
-			return HashMapBuilder.put(
-				"title", "title"
-			).build();
-		}
-
-	};
+	public Map<String, Object> method2() {
+		return HashMapBuilder.put(
+			"title", "title"
+		).build();
+	}
 
 }

@@ -1550,6 +1550,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public void setGroupId(long groupId) {
 	}
 
+	public boolean getLayoutsUpdated() {
+		return false;
+	}
+
+	public void setLayoutsUpdated(boolean layoutsUpdated) {
+	}
+
 	public long[] getUserGroupIds() {
 		return null;
 	}
@@ -2086,6 +2093,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			userCacheModel.groupId = (long)_groupIdMethodHandle.invokeExact(
 				(UserImpl)this);
 
+			userCacheModel.layoutsUpdated =
+				(boolean)_layoutsUpdatedMethodHandle.invokeExact(
+					(UserImpl)this);
+
 			userCacheModel.userGroupIds =
 				(long[])_userGroupIdsMethodHandle.invokeExact((UserImpl)this);
 		}
@@ -2410,6 +2421,20 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	private static final MethodHandle _groupIdMethodHandle;
 
+	protected static final BiConsumer<User, Boolean>
+		layoutsUpdatedUpdateEntityCacheBiConsumer = (user, layoutsUpdated) -> {
+			UserCacheModel userCacheModel = EntityCacheUtil.fetchCacheModel(
+				UserImpl.class, user.getPrimaryKey(), UserCacheModel.class);
+
+			if ((userCacheModel != null) &&
+				(userCacheModel.getMvccVersion() == user.getMvccVersion())) {
+
+				userCacheModel.layoutsUpdated = layoutsUpdated;
+			}
+		};
+
+	private static final MethodHandle _layoutsUpdatedMethodHandle;
+
 	protected static final BiConsumer<User, long[]>
 		userGroupIdsUpdateEntityCacheBiConsumer = (user, userGroupIds) -> {
 			UserCacheModel userCacheModel = EntityCacheUtil.fetchCacheModel(
@@ -2430,6 +2455,9 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		try {
 			_groupIdMethodHandle = lookup.findGetter(
 				UserImpl.class, "_groupId", long.class);
+
+			_layoutsUpdatedMethodHandle = lookup.findGetter(
+				UserImpl.class, "_layoutsUpdated", boolean.class);
 
 			_userGroupIdsMethodHandle = lookup.findGetter(
 				UserImpl.class, "_userGroupIds", long[].class);

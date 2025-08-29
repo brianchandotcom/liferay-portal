@@ -54,7 +54,7 @@ test.describe('General configuration', () => {
 	}) => {
 		await page.goto('/');
 
-		await page.getByLabel('Configure Page').click();
+		await page.getByLabel('Configure Page', {exact: true}).click();
 
 		await expect(page).toHaveURL(/edit_layout/);
 

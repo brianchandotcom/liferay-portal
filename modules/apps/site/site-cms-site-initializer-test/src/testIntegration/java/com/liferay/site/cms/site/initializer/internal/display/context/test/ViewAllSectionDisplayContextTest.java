@@ -38,7 +38,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(Arquillian.class)
 @Sync
 public class ViewAllSectionDisplayContextTest
-	extends BaseSectionDisplayContextTestCase {
+	extends BaseFilesSectionDisplayContextTestCase {
 
 	@ClassRule
 	@Rule

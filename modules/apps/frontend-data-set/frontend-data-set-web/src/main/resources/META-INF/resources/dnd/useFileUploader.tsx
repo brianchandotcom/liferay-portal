@@ -12,8 +12,10 @@ import isFileDropEnabled from '../utils/isFileDropEnabled';
 import {IFileDropSettings, TOnFileDrop} from '../utils/types';
 
 /* This hook connects FDS with state about dropped files, allowing integration
-	with a file uploader component in the future. Current implementation
-	shows a modal with the dropped files.
+	with a file uploader component in the future. To implement an uploader,
+	please provide the the onFileDrop function via fileDropSettings.
+	Default implementation is used if none provided, showing a modal with the
+	list of dropped files.
  */
 const useFileUploader = ({
 	fileDropSettings,
@@ -27,7 +29,7 @@ const useFileUploader = ({
 	const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 	const [dropTarget, setDropTarget] = useState(null);
 
-	const dummyUploader: TOnFileDrop = useCallback(
+	const defaultUploader: TOnFileDrop = useCallback(
 		(droppedFiles: File[], dropTarget: any) => {
 			const ModalBody = () => {
 				const label = (file: File) =>
@@ -89,10 +91,10 @@ const useFileUploader = ({
 			fileDropSettings.onFileDrop(droppedFiles, dropTarget);
 		}
 		else {
-			dummyUploader(droppedFiles, dropTarget);
+			defaultUploader(droppedFiles, dropTarget);
 		}
 	}, [
-		dummyUploader,
+		defaultUploader,
 		droppedFiles,
 		dropTarget,
 		fileDropSettings,

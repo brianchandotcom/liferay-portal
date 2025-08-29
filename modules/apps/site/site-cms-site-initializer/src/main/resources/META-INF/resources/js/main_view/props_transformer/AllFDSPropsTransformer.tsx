@@ -40,6 +40,8 @@ export default function AllFDSPropsTransformer({
 		collaboratorURLs: Record<string, string>;
 		fileMimeTypeCssClasses: Record<string, string>;
 		fileMimeTypeIcons: Record<string, string>;
+		objectDefinitionCssClasses: Record<string, string>;
+		objectDefinitionIcons: Record<string, string>;
 	};
 	creationMenu: any;
 	itemsActions?: any[];
@@ -184,6 +186,9 @@ export default function AllFDSPropsTransformer({
 		views: transformViewsItemsProps({
 			fileMimeTypeCssClasses: additionalProps.fileMimeTypeCssClasses,
 			fileMimeTypeIcons: additionalProps.fileMimeTypeIcons,
+			objectDefinitionCssClasses:
+				additionalProps.objectDefinitionCssClasses,
+			objectDefinitionIcons: additionalProps.objectDefinitionIcons,
 			views,
 		}),
 	};

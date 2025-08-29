@@ -1162,13 +1162,12 @@ test(
 	},
 
 	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
-
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				options: {type: 'content'},
-				title: getRandomString(),
-			});
-		
+			groupId: site.id,
+			options: {type: 'content'},
+			title: getRandomString(),
+		});
+
 		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		userData[user1.alternateName] = {
@@ -1226,9 +1225,12 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await pageEditorPage.segmentEditorPage.createSegment("Segment Title", {
-				segments: ['Segments'],
-			});
+			await pageEditorPage.segmentEditorPage.createSegment(
+				'Segment Title',
+				{
+					segments: ['Segments'],
+				}
+			);
 
 			await segmentsPage.selectButton.click();
 
@@ -1254,11 +1256,20 @@ test(
 
 			await pageEditorPage.createExperience('Experience Content Page');
 
-			await expect(page.getByLabel('Experience: Experience Content Page')).toBeVisible();
+			await expect(
+				page.getByLabel('Experience: Experience Content Page')
+			).toBeVisible();
 
-			await pageEditorPage.editExperienceSegment('Experience Content Page', 'Segment Title');
+			await pageEditorPage.editExperienceSegment(
+				'Experience Content Page',
+				'Segment Title'
+			);
 
-			await pageEditorPage.editTextEditable(headingId, 'element-text', 'User1 and User2');
+			await pageEditorPage.editTextEditable(
+				headingId,
+				'element-text',
+				'User1 and User2'
+			);
 		});
 
 		await test.step('Prioritize experience and publish', async () => {

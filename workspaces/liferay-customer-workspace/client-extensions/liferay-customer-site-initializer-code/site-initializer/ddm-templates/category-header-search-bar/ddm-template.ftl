@@ -1,5 +1,3 @@
-<#ftl output_format="HTML">
-
 <style>
 	.cp-category-header-container {
 		align-items: center;
@@ -50,7 +48,7 @@
 
 	<div class="cp-category-header-container d-flex ${isLandingPage?then('flex-column landing-page-mode','')} mb-5 p-5">
 		<${isLandingPage?then("h1", "h3")}>
-			${mainCategory.name}
+			${htmlUtil.escape(mainCategory.name)}
 		</${isLandingPage?then("h1", "h3")}>
 
 		<@liferay_aui.fieldset cssClass="search-bar">
@@ -110,7 +108,7 @@
 						disabled=true
 						label=""
 						name=htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())
-						placeholder='${languageUtil.get(locale, "search")} ${mainCategory.name}'
+						placeholder='${languageUtil.get(locale, "search")} ${htmlUtil.escape(mainCategory.name)}'
 						title=languageUtil.get(locale, "search")
 						type="text"
 						useNamespace=false
@@ -126,7 +124,7 @@
 							disabled=true
 							id="${namespace + stringUtil.randomId()}"
 							name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
-							placeholder='${languageUtil.get(locale, "search")} ${mainCategory.name}'
+							placeholder='${languageUtil.get(locale, "search")} ${htmlUtil.escape(mainCategory.name)}'
 							title='${languageUtil.get(locale, "search")}'
 							type="text"
 							value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}"

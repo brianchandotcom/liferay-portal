@@ -607,7 +607,7 @@ test(
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Map the form to the Boolean object
+		// Map the form to the Select object
 
 		await pageEditorPage.mapFormFragment(formId, 'Select', 'all', {
 			addLocalizationSelect: true,
@@ -615,15 +615,43 @@ test(
 
 		await pageEditorPage.publishPage();
 
+		// Go to view mode
+
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		const input = page.getByPlaceholder('Choose an Option');
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('option', {
 				name: 'Italy',
 			}),
-			trigger: page.getByPlaceholder('Choose an Option'),
+			trigger: input,
 		});
+
+		const valueInput = page.locator('[name="selectCountry"]');
+
+		await expect(valueInput).toHaveValue('italy');
+
+		// Check we can leave it blank after setting a value
+
+		await input.fill('');
+
+		await input.blur();
+
+		await expect(valueInput).toHaveValue('');
+
+		// Select value again
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Italy',
+			}),
+			trigger: input,
+		});
+
+		// Switch to spanish and select another value
 
 		const spanishOption = page
 			.getByRole('option')

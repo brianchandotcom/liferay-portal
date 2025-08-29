@@ -65,8 +65,11 @@ public class ResponseStateHandler {
 
 		endpointRegistration.addReference();
 
+		List<FilterRegistration> matchingFilterRegistrations =
+			_liferayDispatchTargets.getMatchingFilterRegistrations();
+
 		for (FilterRegistration filterRegistration :
-				_liferayDispatchTargets.getMatchingFilterRegistrations()) {
+				matchingFilterRegistrations) {
 
 			filterRegistration.addReference();
 		}

@@ -8,6 +8,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -635,6 +636,10 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl
 				String relatedExternalReferenceCode)
 		throws Exception;
 
+	public void setContextCompany(Company contextCompany) {
+		this.contextCompany = contextCompany;
+	}
+
 	protected <T, R, E extends Throwable> List<R> transform(
 		Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) {
 
@@ -642,6 +647,7 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected UriInfo contextUriInfo;
 	protected User contextUser;

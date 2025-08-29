@@ -45,13 +45,17 @@ public class CounterDataCleanupPreupgradeProcess
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 			DBInspector dbInspector = new DBInspector(connection);
 			List<String> excludedTableNames = new ArrayList<>();
+			String kernelCounterName = "";
 			long kernelCounterValue = 0;
 
 			while (resultSet.next()) {
 				String counterName = resultSet.getString(1);
 				long counterValue = resultSet.getLong(2);
 
-				if (counterName.equals(Counter.class.getName())) {
+				if (counterName.equals(Counter.class.getName()) ||
+					counterName.equals("com.liferay.counter.model.Counter")) {
+
+					kernelCounterName = counterName;
 					kernelCounterValue = counterValue;
 
 					continue;
@@ -121,13 +125,14 @@ public class CounterDataCleanupPreupgradeProcess
 			}
 
 			_checkKernelCounter(
-				kernelCounterValue, dbInspector, excludedTableNames);
+				kernelCounterName, kernelCounterValue, dbInspector,
+				excludedTableNames);
 		}
 	}
 
 	private void _checkKernelCounter(
-			long counterValue, DBInspector dbInspector,
-			List<String> excludedTableNames)
+			String kernelCounterName, long counterValue,
+			DBInspector dbInspector, List<String> excludedTableNames)
 		throws Exception {
 
 		List<String> tableNames = dbInspector.getTableNames(null);
@@ -158,12 +163,12 @@ public class CounterDataCleanupPreupgradeProcess
 
 		if (counterValue < latestCounterValue) {
 			CounterLocalServiceUtil.reset(
-				Counter.class.getName(), latestCounterValue);
+				kernelCounterName, latestCounterValue);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Counter ", Counter.class.getName(),
+						"Counter ", kernelCounterName,
 						" has been reset to value ", latestCounterValue));
 			}
 		}

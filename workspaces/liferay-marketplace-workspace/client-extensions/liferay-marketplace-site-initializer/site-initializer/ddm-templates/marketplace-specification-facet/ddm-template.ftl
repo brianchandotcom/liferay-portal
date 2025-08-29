@@ -79,9 +79,14 @@
 			</button>
 
 			<ul class="list-unstyled">
-				<#assign termDisplayContextCount = 1 />
+				<#assign
+					currentURL = themeDisplay.getURLCurrent()?replace("%20", " ")
+					isExpanded = currentURL?contains("${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}Expanded")
+					termDisplayContextCount = 1
+				/>
+
 				<#list entries?sort_by("displayName") as entry>
-					<#if termDisplayContextCount lte 5>
+					<#if termDisplayContextCount lte 5 || isExpanded>
 						<li class="color-neutral-2 facet-value py-1">
 							<div class="custom-checkbox custom-control font-weight-normal">
 								<label class="facet-checkbox-label" for="${namespace}_term_${entry.getDisplayName()}">
@@ -138,7 +143,7 @@
 					</#if>
 					<#assign termDisplayContextCount++ />
 				</#list>
-				<#if termDisplayContextCount gt 6>
+				<#if termDisplayContextCount gt 6 && !isExpanded>
 					<button
 						class="btn-unstyled mt-4 view-all-btn"
 						id="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName() + 'facetAssetCategoriesViewAll'}"
@@ -193,5 +198,21 @@
 				viewAllButton.style.display = 'none';
 			}
 		}
+
+		var newParamURL = '';
+
+		if (window.location.search === '') {
+			newParamURL = '?';
+		} else {
+			newParamURL = window.location.search + '&';
+		}
+
+		newParamURL += parameterName + 'Expanded';
+
+		window.history.pushState(
+			{},
+			"",
+			newParamURL
+		);
 	}
 </@>

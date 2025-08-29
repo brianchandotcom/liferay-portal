@@ -128,7 +128,6 @@ public class ExceptionMapperTest {
 			HTTPTestUtil.invokeToHttpCode(
 				null, "/test-vulcan/testPrincipalException2",
 				Http.Method.POST));
-
 		Assert.assertEquals(
 			LanguageUtil.get(LocaleUtil.ENGLISH, "forbidden"),
 			HTTPTestUtil.invokeToJSONObject(
@@ -142,7 +141,6 @@ public class ExceptionMapperTest {
 			).getString(
 				"title"
 			));
-
 		Assert.assertEquals(
 			LanguageUtil.get(LocaleUtil.ITALIAN, "forbidden"),
 			HTTPTestUtil.invokeToJSONObject(
@@ -154,7 +152,6 @@ public class ExceptionMapperTest {
 			).getString(
 				"title"
 			));
-
 		Assert.assertEquals(
 			LanguageUtil.get(LocaleUtil.JAPAN, "forbidden"),
 			HTTPTestUtil.invokeToJSONObject(

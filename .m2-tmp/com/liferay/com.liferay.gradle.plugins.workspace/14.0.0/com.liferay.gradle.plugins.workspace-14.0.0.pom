@@ -101,7 +101,7 @@
     <dependency>
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.project.templates.extensions</artifactId>
-      <version>1.0.145</version>
+      <version>1.0.146</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>

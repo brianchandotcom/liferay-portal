@@ -58,22 +58,8 @@ const paidApp = z.object({
 	}),
 	publisherWebsiteURL: z
 		.string()
-		.transform((val) => (val.startsWith('http') ? val : `http://${val}`))
-		.refine(
-			(val) => {
-				try {
-					new URL(val);
-
-					return true;
-				}
-				catch {
-					return false;
-				}
-			},
-			{
-				message: i18n.translate('please-fill-in-a-valid-url'),
-			}
-		),
+		.url({message: i18n.translate('please-fill-in-a-valid-url')})
+		.transform((url) => (url.startsWith('http') ? url : `https://${url}`)),
 });
 
 const resources = z.object({

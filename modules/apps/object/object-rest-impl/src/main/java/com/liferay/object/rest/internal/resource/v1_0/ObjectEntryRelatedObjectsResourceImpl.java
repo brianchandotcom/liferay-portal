@@ -19,7 +19,6 @@ import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -117,8 +116,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				relatedObjectDefinition.getClassName(),
-				relatedObjectDefinition.getCompanyId(),
-				objectRelationship.getType());
+				contextCompany.getCompanyId(), objectRelationship.getType());
 
 		objectRelatedModelsProvider.disassociateRelatedModels(
 			contextUser.getUserId(),
@@ -495,9 +493,6 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				_objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName),
 			currentExternalReferenceCode, scopeKey);
-	}
-
-	public void setContextCompany(Company contextCompany) {
 	}
 
 	private void _checkCurrentObjectEntry(

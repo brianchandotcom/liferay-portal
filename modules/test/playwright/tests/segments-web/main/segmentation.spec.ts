@@ -339,13 +339,13 @@ test(
 
 			await segmentsPage.selectButton.click();
 
-			await segmentsPage.selectSegment('Segment With User1');
+			await segmentsPage.selectEntry('Segment With User1');
 
 			await segmentsPage.clickDuplicateButton();
 
 			await page.getByRole('button', {name: 'Select'}).nth(1).click();
 
-			await segmentsPage.selectSegment('Segment With User2');
+			await segmentsPage.selectEntry('Segment With User2');
 
 			await segmentsPage.chooseLogic('Or');
 
@@ -386,7 +386,11 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await segmentsPage.addSegmentField('Browser', 'Session', segmentName);
+			await segmentsPage.addSegmentField(
+				'Browser',
+				'Session',
+				segmentName
+			);
 
 			await segmentsPage.fillField('Chrome');
 
@@ -420,7 +424,11 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await segmentsPage.addSegmentField('Language', 'Session', segmentName);
+			await segmentsPage.addSegmentField(
+				'Language',
+				'Session',
+				segmentName
+			);
 
 			await segmentsPage.selectOption('Spanish (Spain)');
 
@@ -564,7 +572,7 @@ test(
 
 			await segmentsPage.selectButton.click();
 
-			await segmentsPage.selectSegment('First Segment');
+			await segmentsPage.selectEntry('First Segment');
 
 			await segmentsPage.saveButton.click();
 		});
@@ -915,7 +923,7 @@ test(
 
 			await segmentsPage.selectButton.click();
 
-			await segmentsPage.selectSegment(teamName);
+			await segmentsPage.selectEntry(teamName);
 
 			await segmentsPage.saveButton.click();
 
@@ -1307,7 +1315,11 @@ test(
 
 			await segmentsPage.deleteProperty();
 
-			await segmentsPage.addSegmentField('Region', 'Organization', segmentName2);
+			await segmentsPage.addSegmentField(
+				'Region',
+				'Organization',
+				segmentName2
+			);
 
 			await segmentsPage.selectOption('Italy - Lombardia');
 		});
@@ -1365,6 +1377,80 @@ test(
 			await page.waitForLoadState('networkidle');
 
 			await segmentsPage.viewCriterionValue('http://localhost:8080');
+		});
+	}
+);
+
+test(
+	`Can edit segment with User > Tag criterion.`,
+
+	{
+		tag: '@LPS-102742',
+	},
+
+	async ({
+		editUserPage,
+		page,
+		pageEditorPage,
+		segmentsPage,
+		usersAndOrganizationsPage,
+	}) => {
+		const segmentName1 = 'EditSegment Test';
+		const segmentName2 = 'EditSegmentUserByUserTag Test';
+
+		await test.step('Given a user is created', async () => {
+			await usersAndOrganizationsPage.goToUsers();
+			await usersAndOrganizationsPage.addUserButton.click();
+
+			await editUserPage.emailAddressInput.fill('userea@liferay.com');
+			await editUserPage.firstNameInput.fill('userfn');
+			await editUserPage.lastNameInput.fill('userln');
+			await editUserPage.screenNameInput.fill('usersn');
+
+			const tagInputFied = page.getByLabel('Tags', {exact: true});
+			await tagInputFied.fill('tagName');
+			await tagInputFied.press('Enter');
+			await page.locator('body').click();
+
+			await editUserPage.saveButton.click();
+		});
+
+		await test.step('And the segment designer creates a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('test@liferay.com');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('When edits the segment with User > Tag criterion', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName1);
+
+			await segmentsPage.deleteProperty();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName2, {
+				user: ['Tag'],
+			});
+
+			await segmentsPage.selectButton.click();
+
+			await segmentsPage.selectEntry('tagName');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('Then asserts that the segment was edited', async () => {
+			await segmentsPage.clickLinkByText(segmentName2);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('tagName');
 		});
 	}
 );

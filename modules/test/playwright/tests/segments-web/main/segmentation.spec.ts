@@ -1230,6 +1230,55 @@ test(
 );
 
 test(
+	`Can edit segment with Country criterion.`,
+
+	{
+		tag: '@LPS-102740',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName1 = 'EditSegment Test';
+		const segmentName2 = 'EditSegmentUserByCountry Test';
+
+		await test.step('Given a segment designer creates a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('test@liferay.com');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('When edits the segment with Country criterion', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName1);
+
+			await segmentsPage.deleteProperty();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName2, {
+				'user-organization': ['Country'],
+			});
+
+			await segmentsPage.editSegmentsEntry(segmentName2);
+
+			await segmentsPage.selectOption('China');
+		});
+
+		await test.step('Then asserts that the segment was edited', async () => {
+			await segmentsPage.clickLinkByText(segmentName2);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('china');
+		});
+	}
+);
+
+test(
 	'Segment member preview count shows the correct number of users when segments are combined',
 	{
 		tag: '@LPS-130344',

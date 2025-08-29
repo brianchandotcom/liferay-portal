@@ -5088,11 +5088,11 @@ public class ObjectEntryLocalServiceImpl
 			ServiceContext serviceContext, long userId)
 		throws PortalException {
 
+		List<ObjectValuePair<Long, Integer>> statusOVPs = new ArrayList<>();
+
 		List<ObjectEntryVersion> objectEntryVersions =
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId());
-
-		List<ObjectValuePair<Long, Integer>> statusOVPs = new ArrayList<>();
 
 		if (ListUtil.isNotEmpty(objectEntryVersions)) {
 			statusOVPs = _getStatusOVPs(

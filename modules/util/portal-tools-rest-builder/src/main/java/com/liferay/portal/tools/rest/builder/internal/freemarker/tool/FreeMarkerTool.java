@@ -381,6 +381,24 @@ public class FreeMarkerTool {
 		return StringUtil.toUpperCase(fieldName);
 	}
 
+	public String getExternalReferenceCodeParameterName(
+		JavaMethodSignature javaMethodSignature, String schemaName) {
+
+		for (JavaMethodParameter javaMethodParameter :
+				javaMethodSignature.getJavaMethodParameters()) {
+
+			String parameterName = javaMethodParameter.getParameterName();
+
+			if (isExternalReferenceCodeParameterName(
+					parameterName, schemaName)) {
+
+				return parameterName;
+			}
+		}
+
+		return null;
+	}
+
 	public String getGraphQLArguments(
 		List<JavaMethodParameter> javaMethodParameters, String schemaVarName) {
 

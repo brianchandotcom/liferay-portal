@@ -131,6 +131,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 	<#assign
 		generateGetPermissionCheckerMethods = false
+		generateGetPermissionCheckerMethodsByExternalReferenceCode = false
 		generateMultipartBodyClasses = []
 		generatePatchMethods = false
 		getParentBatchJavaMethodSignatures = []
@@ -459,7 +460,25 @@ public abstract class Base${schemaName}ResourceImpl
 						/>,
 						siteId, portletName, roleNames);
 				<#else>
-					throw new UnsupportedOperationException("This method needs to be implemented");
+					<#assign
+						externalReferenceCodeParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
+						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
+					/>
+
+					long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
+
+					String resourceName = getPermissionCheckerResourceName(siteExternalReferenceCode, ${externalReferenceCodeParameterName});
+					Long resourceId = getPermissionCheckerResourceId(siteExternalReferenceCode, ${externalReferenceCodeParameterName});
+
+					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
+
+					return toPermissionPage(
+						<@getActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source=schemaName
+						/>,
+						resourceId, resourceName, roleNames);
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "PermissionsPage")>
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
@@ -1425,6 +1444,96 @@ public abstract class Base${schemaName}ResourceImpl
 		/**
 	 	 * @see com.liferay.portal.vulcan.permission.PermissionUtil#getPermissions(long, List, long, String, String[])
 	  	 */
+		private Collection<Permission> _getPermissions(long companyId, List<ResourceAction> resourceActions, long resourceId, String resourceName, String[] roleNames) throws Exception {
+			Map<String, Permission> permissions = new HashMap<>();
+
+			int count = resourcePermissionLocalService.getResourcePermissionsCount(companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(resourceId));
+
+			if (count == 0) {
+				ResourceLocalServiceUtil.addResources(companyId, resourceId, 0, resourceName, String.valueOf(resourceId), false, true, true);
+			}
+
+			List<String> actionIds = transform(resourceActions, resourceAction -> resourceAction.getActionId());
+
+			Set<ResourcePermission> resourcePermissions = new HashSet<>();
+
+			resourcePermissions.addAll(resourcePermissionLocalService.getResourcePermissions(companyId, resourceName, ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId)));
+			resourcePermissions.addAll(resourcePermissionLocalService.getResourcePermissions(companyId, resourceName, ResourceConstants.SCOPE_GROUP, String.valueOf(GroupThreadLocal.getGroupId())));
+			resourcePermissions.addAll(resourcePermissionLocalService.getResourcePermissions(companyId, resourceName, ResourceConstants.SCOPE_GROUP_TEMPLATE, "0"));
+			resourcePermissions.addAll(resourcePermissionLocalService.getResourcePermissions(companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(resourceId)));
+
+			List<Resource> resources = transform(resourcePermissions, resourcePermission -> ResourceLocalServiceUtil.getResource(resourcePermission.getCompanyId(), resourcePermission.getName(), resourcePermission.getScope(), resourcePermission.getPrimKey()));
+
+			Set<com.liferay.portal.kernel.model.Role> roles = new HashSet<>();
+
+			if (roleNames != null) {
+				for (String roleName: roleNames) {
+					roles.add(roleLocalService.getRole(companyId, roleName));
+				}
+			}
+			else {
+				for (ResourcePermission resourcePermission : resourcePermissions) {
+					com.liferay.portal.kernel.model.Role role = roleLocalService.getRole(resourcePermission.getRoleId());
+
+					roles.add(role);
+				}
+			}
+
+			for (com.liferay.portal.kernel.model.Role role : roles) {
+				Set<String> actionsIdsSet = new HashSet<>();
+
+				for (Resource resource : resources) {
+					actionsIdsSet.addAll(resourcePermissionLocalService.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(resource.getCompanyId()), role.getRoleId(), actionIds));
+					actionsIdsSet.addAll(resourcePermissionLocalService.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(GroupThreadLocal.getGroupId()), role.getRoleId(), actionIds));
+					actionsIdsSet.addAll(resourcePermissionLocalService.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", role.getRoleId(), actionIds));
+					actionsIdsSet.addAll(resourcePermissionLocalService.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), resource.getScope(), resource.getPrimKey(), role.getRoleId(), actionIds));
+				}
+
+				if (actionsIdsSet.isEmpty()) {
+					continue;
+				}
+
+				Permission permission = new Permission() {
+					{
+						actionIds = actionsIdsSet.toArray(new String[0]);
+						roleName = role.getName();
+					}
+				};
+
+				permissions.put(role.getName(), permission);
+			}
+
+			return permissions.values();
+		}
+	</#if>
+
+	<#if generateGetPermissionCheckerMethodsByExternalReferenceCode>
+
+		protected Long getPermissionCheckerGroupId(String siteExternalReferenceCode) throws Exception {
+			throw new UnsupportedOperationException("This method needs to be implemented");
+		}
+
+		protected Long getPermissionCheckerResourceId(String siteExternalReferenceCode, String externalReferenceCode) throws Exception {
+			throw new UnsupportedOperationException("This method needs to be implemented");
+		}
+
+		protected String getPermissionCheckerResourceName(String siteExternalReferenceCode, String externalReferenceCode) throws Exception {
+			throw new UnsupportedOperationException("This method needs to be implemented");
+		}
+
+		protected Page<com.liferay.portal.vulcan.permission.Permission> toPermissionPage(Map<String, Map<String, String>> actions, long id, String resourceName, String roleNames) throws Exception {
+			List<ResourceAction> resourceActions = resourceActionLocalService.getResourceActions(resourceName);
+
+			if (Validator.isNotNull(roleNames)) {
+				return Page.of(actions, _getPermissions(contextCompany.getCompanyId(), resourceActions, id, resourceName, StringUtil.split(roleNames)));
+			}
+
+			return Page.of(actions, _getPermissions(contextCompany.getCompanyId(), resourceActions, id, resourceName, null));
+		}
+
+		/**
+		 * @see com.liferay.portal.vulcan.permission.PermissionUtil#getPermissions(long, List, long, String, String[])
+		 */
 		private Collection<Permission> _getPermissions(long companyId, List<ResourceAction> resourceActions, long resourceId, String resourceName, String[] roleNames) throws Exception {
 			Map<String, Permission> permissions = new HashMap<>();
 

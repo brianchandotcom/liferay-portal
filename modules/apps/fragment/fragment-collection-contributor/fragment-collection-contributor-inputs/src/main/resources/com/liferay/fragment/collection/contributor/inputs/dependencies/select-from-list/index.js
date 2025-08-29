@@ -202,6 +202,20 @@ else {
 					},
 				});
 
+				uiInputElement.addEventListener('blur', () => {
+					const translationInput = getTranslationInput({
+						inputId: uiInputElement.id,
+						inputName: input.name,
+						languageId: currentLanguageId,
+						localizationInputsContainer: uiInputElement.parentNode,
+						namespace: fragmentNamespace,
+					});
+
+					if (!uiInputElement.value) {
+						translationInput.value = null;
+					}
+				});
+
 				optionListElement.addEventListener('click', (event) => {
 					const translationInput = getTranslationInput({
 						inputId: uiInputElement.id,
@@ -302,7 +316,13 @@ function handleResultListClick(event, onChange, translationInput) {
 }
 
 function handleInputBlur() {
-	uiInputElement.value = labelInputElement.value;
+	if (!uiInputElement.value) {
+		labelInputElement.value = '';
+		valueInputElement.value = null;
+	}
+	else {
+		uiInputElement.value = labelInputElement.value;
+	}
 
 	if (checkIsOpenDropdown()) {
 		setTimeout(() => closeDropdown(), 500);

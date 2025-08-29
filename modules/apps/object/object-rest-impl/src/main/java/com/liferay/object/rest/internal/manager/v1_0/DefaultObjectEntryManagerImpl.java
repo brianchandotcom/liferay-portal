@@ -240,16 +240,18 @@ public class DefaultObjectEntryManagerImpl
 			ObjectRelationship objectRelationship, String scopeKey)
 		throws Exception {
 
-		ObjectEntry parentObjectEntry = getObjectEntry(
-			objectRelationship.getCompanyId(), dtoConverterContext,
-			externalReferenceCode,
+		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1()),
-			scopeKey);
+				objectRelationship.getObjectDefinitionId1());
+
+		com.liferay.object.model.ObjectEntry parentObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
+				objectDefinition.getObjectDefinitionId());
 
 		return _addRelatedObjectEntry(
-			dtoConverterContext, objectEntry, parentObjectEntry.getId(),
-			objectRelationship, scopeKey);
+			dtoConverterContext, objectEntry,
+			parentObjectEntry.getObjectEntryId(), objectRelationship, scopeKey);
 	}
 
 	@Override

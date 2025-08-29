@@ -2066,6 +2066,10 @@ public class ServicePreAction extends Action {
 	}
 
 	private void _updateUserLayouts(User user) throws Exception {
+		if (user.isLayoutsUpdated()) {
+			return;
+		}
+
 		Boolean hasPowerUserRole = null;
 
 		// Private layouts
@@ -2195,6 +2199,8 @@ public class ServicePreAction extends Action {
 				_deleteDefaultUserPublicLayouts(user);
 			}
 		}
+
+		user.setLayoutsUpdated(true);
 	}
 
 	private static final String _PATH_MAIN = PortalUtil.getPathMain();

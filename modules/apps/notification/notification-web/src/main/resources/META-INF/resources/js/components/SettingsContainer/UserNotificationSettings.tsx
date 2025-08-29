@@ -182,11 +182,11 @@ export function UserNotificationSettings({
 			}
 
 			if (recipientType === 'user-group') {
-				await setSelectItems([
-					await getUserGroups(
-						recipients as Partial<UserNotificationRecipients>[]
-					),
-				]);
+				const userGroups = await getUserGroups(
+					recipients as Partial<UserNotificationRecipients>[]
+				);
+
+				setSelectItems(userGroups);
 
 				return;
 			}
@@ -228,7 +228,7 @@ export function UserNotificationSettings({
 				disabled={values.system}
 				items={RECIPIENT_TYPE_OPTIONS}
 				label={Liferay.Language.get('recipients')}
-				onSelectionChange={(value) => {
+				onSelectionChange={async (value) => {
 					setValues({
 						...values,
 						recipientType: value as string,
@@ -236,14 +236,14 @@ export function UserNotificationSettings({
 					});
 
 					if (value === 'role') {
-						getUserRoles();
+						await getUserRoles();
 					}
 					else if (value === 'user-group') {
-						getUserGroups(
+						const userGroups = await getUserGroups(
 							recipients as Partial<UserNotificationRecipients>[]
-						).then((userGroups) => {
-							setSelectItems([userGroups]);
-						});
+						);
+
+						setSelectItems(userGroups);
 					}
 				}}
 				selectedKey={recipientType}

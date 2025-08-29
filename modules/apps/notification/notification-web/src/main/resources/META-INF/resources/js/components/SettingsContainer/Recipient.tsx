@@ -108,7 +108,7 @@ export function Recipient({
 				setRolesList(newRolesList);
 			}
 			if (recipientType === 'user-group') {
-				const emailNotificationUserGroups = [await getUserGroups()];
+				const emailNotificationUserGroups = await getUserGroups();
 
 				const newUserGroupsList = emailNotificationUserGroups.map(
 					(userGroup) => ({

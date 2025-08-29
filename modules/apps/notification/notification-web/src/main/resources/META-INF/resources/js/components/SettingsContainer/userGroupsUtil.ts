@@ -41,5 +41,5 @@ export async function getUserGroups(
 		value: 'user-groups',
 	} as MultiSelectItem;
 
-	return userGroups;
+	return [userGroups];
 }

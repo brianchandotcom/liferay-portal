@@ -58,16 +58,14 @@ const AdministratorDashboardOutlet = () => {
 	return (
 		<div className="d-flex">
 			<div className="d-flex dashboard-navigation-container">
-				<div className="dashboard-navigation-body">
-					<DashboardNavigation
-						dashboardNavigationItems={dashboardNavigationItems.filter(
-							({adminOnly}) =>
-								typeof adminOnly === 'boolean'
-									? marketplaceUserAccount.isAdmin
-									: true
-						)}
-					/>
-				</div>
+				<DashboardNavigation
+					dashboardNavigationItems={dashboardNavigationItems.filter(
+						({adminOnly}) =>
+							typeof adminOnly === 'boolean'
+								? marketplaceUserAccount.isAdmin
+								: true
+					)}
+				/>
 			</div>
 
 			<span className="h-vh-100 ml-6 w-100">

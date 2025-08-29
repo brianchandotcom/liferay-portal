@@ -258,8 +258,7 @@ public class DepotAssetRendererFactoryWrapperTest {
 		try (SafeCloseable safeCloseable =
 				GroupThreadLocal.setGroupIdWithSafeCloseable(groupId)) {
 
-			Assert.assertSame(
-				null,
+			Assert.assertNull(
 				depotAssetRendererFactoryWrapper.getAssetRenderer(
 					RandomTestUtil.randomLong()));
 		}

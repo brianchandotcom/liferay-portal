@@ -1,7 +1,7 @@
 task runGradleTest
 
 runGradleTest {
-	dependsOn formatSourceJakartaTransform
+	dependsOn upgradeJakarta
 
 	doLast {
 		File file = new File(buildDir.getParentFile(), "modules/foo-web/src/main/java/com/liferay/foo/web/internal/portlet/FooPortlet.java")

@@ -22,21 +22,34 @@ type TrafficChannelsData = {
 };
 
 type TrafficChannelsApiResponse = {
-	items: {count: number; name: string}[];
+	items: {count: number; name: string; percentage: number}[];
 	lastPage: number;
 	page: number;
 	pageSize: number;
 	totalCount: number;
 };
 
+const TrafficChannelsNames: Record<string, string> = {
+	'affiliates': Liferay.Language.get('affiliates'),
+	'direct': Liferay.Language.get('direct'),
+	'display': Liferay.Language.get('display'),
+	'email': Liferay.Language.get('email'),
+	'organic': Liferay.Language.get('organic'),
+	'other': Liferay.Language.get('other'),
+	'other-advertising': Liferay.Language.get('other-advertising'),
+	'paid-search': Liferay.Language.get('paid-search'),
+	'referral': Liferay.Language.get('referral'),
+	'social': Liferay.Language.get('social'),
+};
+
 function mapData(data: TrafficChannelsApiResponse): TrafficChannelsData[] {
-	const {items, totalCount} = data;
+	const {items} = data;
 
 	return data
 		? items.map((channel) => ({
 				count: channel.count,
 				name: channel.name,
-				percentage: (channel.count / totalCount) * 100,
+				percentage: channel.percentage * 100,
 			}))
 		: [];
 }
@@ -52,19 +65,19 @@ const TrafficChannelsEntry = ({
 }) => {
 	return (
 		<div
-			aria-label={`${Liferay.Language.get('traffic-channel')}: ${Liferay.Language.get(name)}`}
+			aria-label={`${Liferay.Language.get('traffic-channel')}: ${Liferay.Language.get(TrafficChannelsNames['name'])}`}
 			className="d-flex flex-row py-3 tab-focus traffic-channel-item"
 			role="row"
 			tabIndex={0}
 		>
 			<div
-				aria-label={Liferay.Language.get(name)}
+				aria-label={Liferay.Language.get(TrafficChannelsNames[name])}
 				className="tab-focus traffic-channel-item__name"
 				role="cell"
 				style={{width: '35%'}}
 			>
 				<Text size={3} weight="semi-bold">
-					{name}
+					{Liferay.Language.get(TrafficChannelsNames[name])}
 				</Text>
 			</div>
 

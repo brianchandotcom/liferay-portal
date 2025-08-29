@@ -95,7 +95,7 @@
 
 			[#if articleFetchCategoryId?has_content]
 				[#attempt]
-					[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${articleFetchCategoryId})&flatten=true") /]
+					[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search='${articleFetchCategoryId}'&flatten=true") /]
 					[#if articles.items?has_content]
 						[#list articles.items as article]
 							[#assign navItems = navItems + [{"data": article, "name": article.title, "type": "article", "url": "${baseURL}/w/${article.friendlyUrlPath}"}] /]
@@ -148,7 +148,7 @@
 
 								[#if configuration.showArticles]
 									[#attempt]
-										[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=taxonomyCategoryIds/any(t:t eq ${siblingCategory.id})&flatten=true") /]
+										[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search='${siblingCategory.id}'&flatten=true") /]
 
 										[#if articles?has_content && articles.items?has_content]
 											[#list articles.items as article]

@@ -26,4 +26,28 @@ public class MapBuilderGenerics {
 		).build();
 	}
 
+	public Map<String, Map<String, String>> testMethod3() {
+		return HashMapBuilder.put(
+			"delete",
+			HashMapBuilder.put(
+				"href", href
+			).put(
+				"method", "DELETE"
+			).build()
+		).put(
+			"share",
+			() -> {
+				if (sharingEnabled) {
+					return HashMapBuilder.put(
+						"href", href
+					).put(
+						"method", "GET"
+					).build();
+				}
+
+				return null;
+			}
+		).build();
+	}
+
 }

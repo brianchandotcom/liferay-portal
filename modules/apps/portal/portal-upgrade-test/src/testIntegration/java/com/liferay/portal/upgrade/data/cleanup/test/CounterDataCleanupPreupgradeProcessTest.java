@@ -74,7 +74,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 								" has been reset to value ", companyId)));
 				}
 				else {
-					Assert.assertTrue(messages.isEmpty());
+					Assert.assertTrue(messages.toString(), messages.isEmpty());
 				}
 			});
 	}
@@ -91,7 +91,8 @@ public class CounterDataCleanupPreupgradeProcessTest
 				"insert into Counter (name, currentId) values ('" +
 					counterName + "', 100 )"),
 			(UnsafeConsumer<List<String>, Exception>)
-				messages -> Assert.assertTrue(messages.isEmpty()));
+				messages -> Assert.assertTrue(
+					messages.toString(), messages.isEmpty()));
 	}
 
 	@Test

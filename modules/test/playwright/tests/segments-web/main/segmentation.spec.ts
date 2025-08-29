@@ -387,7 +387,11 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await segmentsPage.addSessionSegment('Browser', segmentName);
+			await segmentsPage.addSegmentField(
+				'Browser',
+				'Session',
+				segmentName
+			);
 
 			await segmentsPage.fillField('Chrome');
 
@@ -421,7 +425,11 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await segmentsPage.addSessionSegment('Language', segmentName);
+			await segmentsPage.addSegmentField(
+				'Language',
+				'Session',
+				segmentName
+			);
 
 			await segmentsPage.selectOption('Spanish (Spain)');
 
@@ -453,7 +461,7 @@ test(
 
 			await segmentsPage.clickAddNewSegmentButton();
 
-			await segmentsPage.addSessionSegment('URL', segmentName);
+			await segmentsPage.addSegmentField('URL', 'Session', segmentName);
 
 			await segmentsPage.fillField('http://localhost:8080');
 
@@ -1274,6 +1282,55 @@ test(
 			await page.waitForLoadState('networkidle');
 
 			await segmentsPage.viewCriterionValue('china');
+		});
+	}
+);
+
+test(
+	`Can edit segment with Region criterion.`,
+
+	{
+		tag: '@LPS-102740',
+	},
+
+	async ({page, pageEditorPage, segmentsPage}) => {
+		const segmentName1 = 'EditSegment Test';
+		const segmentName2 = 'EditSegmentUserByRegion Test';
+
+		await test.step('Given a segment designer creates a segment', async () => {
+			await goToSegmentsAdmin(page);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await pageEditorPage.segmentEditorPage.createSegment(segmentName1, {
+				user: ['Email Address'],
+			});
+
+			await segmentsPage.fillField('test@liferay.com');
+
+			await segmentsPage.saveButton.click();
+		});
+
+		await test.step('When edits the segment with Region criterion', async () => {
+			await segmentsPage.editSegmentsEntry(segmentName1);
+
+			await segmentsPage.deleteProperty();
+
+			await segmentsPage.addSegmentField(
+				'Region',
+				'Organization',
+				segmentName2
+			);
+
+			await segmentsPage.selectOption('Italy - Lombardia');
+		});
+
+		await test.step('Then asserts that the segment was edited', async () => {
+			await segmentsPage.clickLinkByText(segmentName2);
+
+			await page.waitForLoadState('networkidle');
+
+			await segmentsPage.viewCriterionValue('lombardia');
 		});
 	}
 );

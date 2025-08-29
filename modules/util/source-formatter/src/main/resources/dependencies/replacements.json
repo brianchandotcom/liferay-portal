@@ -4515,6 +4515,16 @@
 	},
 	{
 		"classNames": [
+			"CommerceShippingEngine"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-48918",
+		"newMethods": [
+			"@Override\n\tpublic String getKey() {\n\t\treturn KEY;\n\t}"
+		]
+	},
+	{
+		"classNames": [
 			"DLFileEntryLocalService",
 			"DLFileEntryLocalServiceUtil"
 		],

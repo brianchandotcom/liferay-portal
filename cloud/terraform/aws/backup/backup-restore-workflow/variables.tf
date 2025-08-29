@@ -11,7 +11,7 @@ variable "kubernetes_namespace" {
 	default="liferay-system"
 }
 variable "kubernetes_service_account_name" {
-	default="liferay-backup-restore"
+	default="liferay-aws-backup-restore-workflow"
 }
 variable "region" {
 	type=string

@@ -22,9 +22,9 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class JournalRowChecker extends EmptyOnClickRowChecker {
+public class JournalArticleRowChecker extends EmptyOnClickRowChecker {
 
-	public JournalRowChecker(
+	public JournalArticleRowChecker(
 		JournalArticle refererJournalArticle, PortletResponse portletResponse) {
 
 		super(portletResponse);

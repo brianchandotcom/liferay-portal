@@ -38,7 +38,7 @@
 					[#assign listItems = [] /]
 
 					[#if configuration.showArticles]
-						[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search='${childCategory.id}'&flatten=true").items![] /]
+						[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${childCategory.id}&flatten=true").items![] /]
 
 						[#if articles?has_content]
 							[#list articles as article]
@@ -106,7 +106,7 @@
 			/]
 
 			[#if configuration.showArticles]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search='${categoryId}'&flatten=true").items![] /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${categoryId}&flatten=true").items![] /]
 
 				[#if articles?has_content]
 					[#list articles as article]

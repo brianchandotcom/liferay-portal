@@ -45,7 +45,7 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		if (FeatureFlagManagerUtil.isEnabled(
 				company.getCompanyId(), "LPD-35914")) {
 
-			_addCompanyGroup(company.getCompanyId());
+			_createCompanyGroup(company.getCompanyId());
 		}
 	}
 
@@ -61,7 +61,7 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 			(companyId, featureFlagKey, enabled) -> {
 				if (enabled) {
 					_companyLocalService.forEachCompanyId(
-						this::_addCompanyGroup);
+						this::_createCompanyGroup);
 				}
 				else {
 					_companyLocalService.forEachCompanyId(
@@ -78,7 +78,7 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _addCompanyGroup(long companyId) {
+	private void _createCompanyGroup(long companyId) {
 		try {
 			Group group = _groupLocalService.fetchFriendlyURLGroup(
 				companyId, CompanyGroupConstants.FRIENDLY_URL);

@@ -6,5 +6,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaPackagePathCheck" files="item-selector-criteria-api/.*" />
+		<suppress checks="JavaPackagePathCheck" files="item-selector-test/src/testIntegration/java/com/liferay/item/selector/test/TestItemSelectorCriterion\.java" />
 	</source-check>
 </suppressions>

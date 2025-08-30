@@ -6,7 +6,6 @@
 package com.liferay.staging.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.log.Log;
@@ -33,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PortalInstanceLifecycleListener.class)
 public class AddCompanyGroupPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener
-	implements EveryNodeEveryStartup {
+	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) {

@@ -58,34 +58,32 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testAddCookieWhenAddingInternalWithoutConsentType() {
-		_testAddCookieWhenAddingInternalWithoutConsentType(
+	public void testAddCookieWhenAddingInternalCookieWithoutConsentType() {
+		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
 			CookiesConstants.NAME_GUEST_LANGUAGE_ID,
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
-		_testAddCookieWhenAddingInternalWithoutConsentType(
+		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
 			CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testAddCookieWhenAddingInternalWithoutConsentType(
+		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
 			CookiesConstants.NAME_CONSENT_TYPE_NECESSARY,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testAddCookieWhenAddingInternalWithoutConsentType(
+		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
 			CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testAddCookieWhenAddingInternalWithoutConsentType(
+		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
 			CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testAddCookieWhenAddingInternalWithoutConsentType(
+		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
 			CookiesConstants.NAME_COOKIE_SUPPORT,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
-		_testAddCookieWhenAddingInternalWithoutConsentType(
+		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
 			CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
 			CookiesConstants.CONSENT_TYPE_NECESSARY);
 	}
 
 	@Test
-	public void testAddCookieWhenAddingKnownCookieWithKnownConsentType()
-		throws Exception {
-
+	public void testAddCookieWhenAddingKnownCookieWithKnownConsentType() {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.WARN)) {
 
@@ -135,9 +133,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testAddCookieWhenUpdatingConsentTypeOfKnownCookie()
-		throws Exception {
-
+	public void testAddCookieWhenUpdatingConsentTypeOfKnownCookie() {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.WARN)) {
 
@@ -468,7 +464,7 @@ public class CookiesManagerImplTest {
 				consentCookie.getName(), _mockHttpServletRequest));
 	}
 
-	private void _testAddCookieWhenAddingInternalWithoutConsentType(
+	private void _testAddCookieWhenAddingInternalCookieWithoutConsentType(
 		String name, int consentType) {
 
 		_addConsentCookie(false, consentType);

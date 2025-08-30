@@ -13,6 +13,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -411,6 +412,31 @@ public class CookiesManagerImplTest {
 			httpServletRequestWrapper, _mockHttpServletResponse);
 
 		Assert.assertEquals(StringPool.SLASH, cookie.getPath());
+	}
+
+	@Test
+	public void testDeleteCookiesWithSecureHttpServletRequest() {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		Cookie cookie = new Cookie(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		mockHttpServletRequest.setCookies(cookie);
+
+		mockHttpServletRequest.setSecure(true);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		CookiesManagerUtil.deleteCookies(
+			RandomTestUtil.randomString(), mockHttpServletRequest,
+			mockHttpServletResponse, cookie.getName());
+
+		cookie = (Cookie)ArrayUtil.getValue(
+			mockHttpServletResponse.getCookies(), 0);
+
+		Assert.assertTrue(cookie.getSecure());
 	}
 
 	private void _addConsentCookie(boolean accepted, int consentType) {

@@ -54,7 +54,7 @@ public class CMSDefaultPermissionUtil {
 			new ServiceContext());
 	}
 
-	public static JSONObject getCMSDefaultPermissionPermissions(
+	public static JSONObject getCMSDefaultPermissionPermissionsJSONObject(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 

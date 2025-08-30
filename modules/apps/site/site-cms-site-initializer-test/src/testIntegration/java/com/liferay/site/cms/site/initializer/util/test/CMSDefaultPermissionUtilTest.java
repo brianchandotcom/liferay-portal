@@ -159,7 +159,9 @@ public class CMSDefaultPermissionUtilTest {
 	}
 
 	@Test
-	public void testGetCMSDefaultPermissionPermissions() throws Exception {
+	public void testGetCMSDefaultPermissionPermissionsJSONObject()
+		throws Exception {
+
 		Group group = _depotEntry.getGroup();
 
 		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
@@ -171,8 +173,9 @@ public class CMSDefaultPermissionUtilTest {
 				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
 
 		JSONObject jsonObject =
-			CMSDefaultPermissionUtil.getCMSDefaultPermissionPermissions(
-				group.getExternalReferenceCode(), group.getGroupId());
+			CMSDefaultPermissionUtil.
+				getCMSDefaultPermissionPermissionsJSONObject(
+					group.getExternalReferenceCode(), group.getGroupId());
 
 		JSONArray jsonArray = jsonObject.getJSONArray("L_BASIC_WEB_CONTENT");
 

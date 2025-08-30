@@ -66,7 +66,7 @@ public class JournalArticleLocalServicePerformanceTest {
 	}
 
 	@Test
-	public void testAddJournalArticleWithComplexData() throws Exception {
+	public void testAddJournalArticle() throws Exception {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
 				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),

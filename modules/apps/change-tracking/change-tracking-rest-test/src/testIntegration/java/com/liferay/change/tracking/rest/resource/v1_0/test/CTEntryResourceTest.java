@@ -576,8 +576,8 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 		int i = 0;
 
-		while ((destinationStatistics.getPendingMessageCount() > 0) ||
-			   (destinationStatistics.getActiveThreadCount() > 0)) {
+		while ((destinationStatistics.getActiveThreadCount() > 0) ||
+			   (destinationStatistics.getPendingMessageCount() > 0)) {
 
 			if (i++ > 60) {
 				break;

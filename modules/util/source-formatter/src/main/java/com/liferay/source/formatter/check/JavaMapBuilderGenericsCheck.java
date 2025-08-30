@@ -255,13 +255,13 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 					return false;
 				}
 
-				if (ToolsUtil.isInsideQuotes(content, y) ||
-					(getLevel(content.substring(x, y + 1), "{", "}") != 0)) {
-
+				if (y < matcher.start()) {
 					continue;
 				}
 
-				if (y >= matcher.start()) {
+				if (!ToolsUtil.isInsideQuotes(content, y) &&
+					(getLevel(content.substring(x, y + 1), "{", "}") == 0)) {
+
 					return true;
 				}
 			}

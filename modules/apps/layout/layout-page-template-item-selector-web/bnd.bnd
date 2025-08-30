@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Layout Page Template Item Selector Web
 Bundle-SymbolicName: com.liferay.layout.page.template.item.selector.web
-Bundle-Version: 1.0.48
+Bundle-Version: 1.0.49
 Web-ContextPath: /layout-page-template-item-selector-web

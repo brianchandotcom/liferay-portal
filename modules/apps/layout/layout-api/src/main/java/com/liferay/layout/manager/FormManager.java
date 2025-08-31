@@ -31,7 +31,8 @@ public interface FormManager {
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			boolean includeSubmitButton, Layout layout,
 			LayoutStructure layoutStructure, Locale locale,
-			long segmentsExperienceId, ServiceContext serviceContext,
+			boolean readOnly, long segmentsExperienceId,
+			ServiceContext serviceContext,
 			String[] uniqueInfoFieldIds)
 		throws PortalException;
 

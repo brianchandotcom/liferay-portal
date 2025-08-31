@@ -64,8 +64,8 @@ public class FormManagerImpl implements FormManager {
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			boolean includeSubmitButton, Layout layout,
 			LayoutStructure layoutStructure, Locale locale,
-			long segmentsExperienceId, ServiceContext serviceContext,
-			String[] uniqueInfoFieldIds)
+			boolean readOnly, long segmentsExperienceId,
+			ServiceContext serviceContext, String[] uniqueInfoFieldIds)
 		throws PortalException {
 
 		List<LayoutStructureItem> layoutStructureItems = new ArrayList<>();
@@ -124,7 +124,7 @@ public class FormManagerImpl implements FormManager {
 			layoutStructureItems.add(
 				_addFragmentStyledLayoutStructureItem(
 					addedFragmentEntryLinks, formStyledLayoutStructureItem,
-					fragmentEntry, infoField, layout, layoutStructure,
+					fragmentEntry, infoField, layout, layoutStructure, readOnly,
 					segmentsExperienceId, serviceContext));
 		}
 
@@ -146,7 +146,7 @@ public class FormManagerImpl implements FormManager {
 					_addFragmentStyledLayoutStructureItem(
 						addedFragmentEntryLinks, formStyledLayoutStructureItem,
 						fragmentEntry, null, layout, layoutStructure,
-						segmentsExperienceId, serviceContext));
+						readOnly, segmentsExperienceId, serviceContext));
 			}
 		}
 
@@ -179,11 +179,12 @@ public class FormManagerImpl implements FormManager {
 	}
 
 	private LayoutStructureItem _addFragmentStyledLayoutStructureItem(
-			List<FragmentEntryLink> addedFragmentEntryLinks,
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			FragmentEntry fragmentEntry, InfoField<?> infoField, Layout layout,
-			LayoutStructure layoutStructure, long segmentsExperienceId,
-			ServiceContext serviceContext)
+		List<FragmentEntryLink> addedFragmentEntryLinks,
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		FragmentEntry fragmentEntry, InfoField<?> infoField, Layout layout,
+		LayoutStructure layoutStructure, boolean readOnly,
+		long segmentsExperienceId,
+		ServiceContext serviceContext)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -214,6 +215,7 @@ public class FormManagerImpl implements FormManager {
 			}
 
 			jsonObject.put("inputFieldId", infoField.getUniqueId());
+			jsonObject.put("inputReadOnly", readOnly);
 
 			fragmentEntryLink =
 				_fragmentEntryLinkService.updateFragmentEntryLink(

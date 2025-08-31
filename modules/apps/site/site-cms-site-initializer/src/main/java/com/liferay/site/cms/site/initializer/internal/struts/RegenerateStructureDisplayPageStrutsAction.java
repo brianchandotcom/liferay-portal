@@ -79,7 +79,7 @@ public class RegenerateStructureDisplayPageStrutsAction
 				fragmentEntryLink);
 		}
 
-		ActionUtil.generateLayoutStructure(
+		ActionUtil.generateEditContentLayoutStructure(
 			_formManager, _fragmentEntryLinkListenerRegistry,
 			_fragmentEntryLinkService, _fragmentRendererRegistry, layout,
 			layoutPageTemplateEntry,

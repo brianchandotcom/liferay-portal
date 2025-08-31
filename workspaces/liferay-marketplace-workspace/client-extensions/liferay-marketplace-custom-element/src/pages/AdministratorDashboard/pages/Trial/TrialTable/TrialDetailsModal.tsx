@@ -86,13 +86,13 @@ const TrialDetails: React.FC<TrialDetailsProps> = ({order}) => {
 				{
 					title: i18n.translate('start-date'),
 					value: getDateOrDefault(
-						customFields[OrderCustomFields.START_DATE]
+						customFields[OrderCustomFields.TRIAL_START_DATE]
 					),
 				},
 				{
 					title: i18n.translate('trial-end-date'),
 					value: getDateOrDefault(
-						customFields[OrderCustomFields.END_DATE]
+						customFields[OrderCustomFields.TRIAL_END_DATE]
 					),
 				},
 				{

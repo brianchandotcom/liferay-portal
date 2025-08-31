@@ -147,7 +147,7 @@ function TrialActions({
 						modalContext.onOpenModal({
 							body: (
 								<ExtendRequestModal
-									mutatePlacedOrder={mutatePlacedOrder}
+									mutatePlacedOrderPage={mutatePlacedOrder}
 									onClose={modalContext.onClose}
 									order={placedOrder}
 									ssaTrialExtendMutate={ssaTrialExtendMutate}

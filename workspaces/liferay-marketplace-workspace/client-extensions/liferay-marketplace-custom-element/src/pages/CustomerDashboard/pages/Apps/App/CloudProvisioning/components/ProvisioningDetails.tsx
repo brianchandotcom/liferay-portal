@@ -78,8 +78,6 @@ const ProvisioningDetails: React.FC<ProvisioningDetailsProps> = ({
 						borderless
 						className="text-dark"
 						onClick={onClose}
-						onPointerEnterCapture={() => null}
-						onPointerLeaveCapture={() => null}
 						symbol="times"
 						title="Close"
 					/>

@@ -121,14 +121,15 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 									...apireposne.placedOrder,
 									customFields: {
 										...apireposne.placedOrder.customFields,
-										[OrderCustomFields.END_DATE]: addDays(
-											new Date(
-												apireposne.placedOrder.customFields[
-													OrderCustomFields.END_DATE
-												]
-											),
-											form.duration
-										).toISOString(),
+										[OrderCustomFields.TRIAL_END_DATE]:
+											addDays(
+												new Date(
+													apireposne.placedOrder.customFields[
+														OrderCustomFields.TRIAL_END_DATE
+													]
+												),
+												form.duration
+											).toISOString(),
 									},
 								},
 							};
@@ -151,11 +152,11 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 										...item,
 										customFields: {
 											...item.customFields,
-											[OrderCustomFields.END_DATE]:
+											[OrderCustomFields.TRIAL_END_DATE]:
 												addDays(
 													new Date(
 														order.customFields[
-															OrderCustomFields.END_DATE
+															OrderCustomFields.TRIAL_END_DATE
 														]
 													),
 													form.duration

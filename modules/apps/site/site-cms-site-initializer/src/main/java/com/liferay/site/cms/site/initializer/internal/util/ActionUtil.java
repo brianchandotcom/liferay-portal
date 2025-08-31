@@ -161,7 +161,7 @@ public class ActionUtil {
 		formManager.addFragmentEntryLinksLayoutStructureItems(
 			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
 			formStyledLayoutStructureItem, false, layout, layoutStructure,
-			LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
+			LocaleUtil.getMostRelevantLocale(), false, segmentsExperienceId,
 			serviceContext, null);
 
 		LayoutPageTemplateStructureLocalServiceUtil.

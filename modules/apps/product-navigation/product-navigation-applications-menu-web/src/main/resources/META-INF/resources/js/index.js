@@ -21,6 +21,10 @@ import useKeyboardNavigation from './hooks/useKeyboardNavigation';
 
 import '../css/ApplicationsMenu.scss';
 
+function getImage(filename) {
+	return `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/site-cms-site-initializer/images/${filename}`;
+}
+
 const getOpenMenuTooltipMarkup = (keyLabel) =>
 	`
 	<div>${Liferay.Language.get('open-applications-menu')}</div>
@@ -296,8 +300,12 @@ const SpacesPanel = ({cms}) => {
 								className="applications-menu-shrink c-ml-2"
 								containerElement="span"
 							>
-								<span className="text-truncate">
+								<span className="align-items-center d-flex">
 									{Liferay.Language.get('cms')}
+
+									<span className="badge badge-pill badge-primary ml-1">
+										{Liferay.Language.get('new')}
+									</span>
 								</span>
 							</ClayLayout.ContentCol>
 						</ClayLayout.ContentRow>
@@ -305,16 +313,46 @@ const SpacesPanel = ({cms}) => {
 				)}
 			</div>
 
-			<div className="applications-menu-nav-divider c-my-2"></div>
+			{cms.firstTimeAccess && (
+				<div className="bg-white d-flex flex-column overflow-hidden p-2 rounded-xl">
+					<div className="create-space-step-one-illustration">
+						<img
+							alt={Liferay.Language.get('cms')}
+							src={getImage(
+								'create_space_step_one_illustration.svg'
+							)}
+						/>
+					</div>
 
-			<div className="applications-menu-spaces c-my-2">
-				<ul
-					aria-label={Liferay.Language.get('spaces')}
-					className="list-unstyled"
-				>
-					{cms.spaces && <Spaces spaces={cms.spaces} />}
-				</ul>
-			</div>
+					<p className="pb-2 pt-2 text-2">
+						{Liferay.Language.get(
+							'you-can-now-manage-content-across-multiple-sites'
+						)}
+					</p>
+
+					<a
+						className="btn btn-primary rounded-circle"
+						href="/web/cms/new-space"
+					>
+						{Liferay.Language.get('get-started')}
+					</a>
+				</div>
+			)}
+
+			{!cms.firstTimeAccess && (
+				<>
+					<div className="applications-menu-nav-divider c-my-2"></div>
+
+					<div className="applications-menu-spaces c-my-2">
+						<ul
+							aria-label={Liferay.Language.get('spaces')}
+							className="list-unstyled"
+						>
+							{cms.spaces && <Spaces spaces={cms.spaces} />}
+						</ul>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

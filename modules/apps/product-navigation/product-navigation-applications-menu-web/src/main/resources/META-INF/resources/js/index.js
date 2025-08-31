@@ -398,7 +398,11 @@ const AppsPanel = ({
 			<div className="applications-menu-bg applications-menu-border-top applications-menu-content">
 				<ClayLayout.ContainerFluid size={false}>
 					<ClayLayout.Row>
-						<ClayLayout.Col className="pr-0" md="8" xl="8">
+						<ClayLayout.Col
+							className="pr-0"
+							md={Liferay.FeatureFlags['LPD-17564'] ? '9' : '8'}
+							xl="8"
+						>
 							<ClayTabs.Content activeIndex={activeTab}>
 								{categories.map(({childCategories}, index) => (
 									<ClayTabs.TabPane
@@ -428,7 +432,11 @@ const AppsPanel = ({
 							</ClayTabs.Content>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col className="px-0" md="2" xl="2">
+						<ClayLayout.Col
+							className="px-0"
+							md={Liferay.FeatureFlags['LPD-17564'] ? '2' : '3'}
+							xl={Liferay.FeatureFlags['LPD-17564'] ? '2' : '4'}
+						>
 							<SitesPanel
 								portletNamespace={portletNamespace}
 								sites={sites}
@@ -436,9 +444,11 @@ const AppsPanel = ({
 							/>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col className="px-0" md="2" xl="2">
-							<SpacesPanel cms={cms} />
-						</ClayLayout.Col>
+						{Liferay.FeatureFlags['LPD-17564'] && (
+							<ClayLayout.Col className="px-0" md="2" xl="2">
+								<SpacesPanel cms={cms} />
+							</ClayLayout.Col>
+						)}
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>
 			</div>

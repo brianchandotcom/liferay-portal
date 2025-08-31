@@ -1106,7 +1106,7 @@ nav {
 		width: 100%;
 
 		&:hover {
-			background: var(--color-action-primary-active-lighten, #E6edfb);
+			background: var(--color-action-primary-active-lighten, #e6edfb);
 		}
 	}
 }

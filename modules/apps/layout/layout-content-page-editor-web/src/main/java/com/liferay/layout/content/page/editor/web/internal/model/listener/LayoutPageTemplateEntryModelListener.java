@@ -211,7 +211,7 @@ public class LayoutPageTemplateEntryModelListener
 			_formManager.addFragmentEntryLinksLayoutStructureItems(
 				addedFragmentEntryLinks, _jsonFactory.createJSONObject(),
 				formStyledLayoutStructureItem, true, layout, layoutStructure,
-				LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
+				LocaleUtil.getMostRelevantLocale(), false, segmentsExperienceId,
 				serviceContext, null);
 
 			return addedFragmentEntryLinks;

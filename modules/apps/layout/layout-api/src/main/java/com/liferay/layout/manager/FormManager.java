@@ -30,9 +30,8 @@ public interface FormManager {
 			JSONObject errorJSONObject,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			boolean includeSubmitButton, Layout layout,
-			LayoutStructure layoutStructure, Locale locale,
-			boolean readOnly, long segmentsExperienceId,
-			ServiceContext serviceContext,
+			LayoutStructure layoutStructure, Locale locale, boolean readOnly,
+			long segmentsExperienceId, ServiceContext serviceContext,
 			String[] uniqueInfoFieldIds)
 		throws PortalException;
 

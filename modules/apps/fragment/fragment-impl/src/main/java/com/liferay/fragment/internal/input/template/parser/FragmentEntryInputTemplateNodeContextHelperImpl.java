@@ -200,10 +200,17 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			localizable = infoField.isLocalizable();
 		}
 
+		boolean inputReadOnly = GetterUtil.getBoolean(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getEditableValuesJSONObject(),
+				new FragmentConfigurationField(
+					"inputReadOnly", "boolean", "false", false, "checkbox"),
+				locale));
+
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
-		if (Objects.equals(layoutMode, Constants.READ)) {
+		if (Objects.equals(layoutMode, Constants.READ) || inputReadOnly) {
 			readOnly = true;
 		}
 

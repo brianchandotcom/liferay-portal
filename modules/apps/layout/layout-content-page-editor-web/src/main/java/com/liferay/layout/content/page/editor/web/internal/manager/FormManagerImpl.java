@@ -63,9 +63,9 @@ public class FormManagerImpl implements FormManager {
 			JSONObject errorJSONObject,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			boolean includeSubmitButton, Layout layout,
-			LayoutStructure layoutStructure, Locale locale,
-			boolean readOnly, long segmentsExperienceId,
-			ServiceContext serviceContext, String[] uniqueInfoFieldIds)
+			LayoutStructure layoutStructure, Locale locale, boolean readOnly,
+			long segmentsExperienceId, ServiceContext serviceContext,
+			String[] uniqueInfoFieldIds)
 		throws PortalException {
 
 		List<LayoutStructureItem> layoutStructureItems = new ArrayList<>();
@@ -145,8 +145,8 @@ public class FormManagerImpl implements FormManager {
 				layoutStructureItems.add(
 					_addFragmentStyledLayoutStructureItem(
 						addedFragmentEntryLinks, formStyledLayoutStructureItem,
-						fragmentEntry, null, layout, layoutStructure,
-						readOnly, segmentsExperienceId, serviceContext));
+						fragmentEntry, null, layout, layoutStructure, readOnly,
+						segmentsExperienceId, serviceContext));
 			}
 		}
 
@@ -179,12 +179,11 @@ public class FormManagerImpl implements FormManager {
 	}
 
 	private LayoutStructureItem _addFragmentStyledLayoutStructureItem(
-		List<FragmentEntryLink> addedFragmentEntryLinks,
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		FragmentEntry fragmentEntry, InfoField<?> infoField, Layout layout,
-		LayoutStructure layoutStructure, boolean readOnly,
-		long segmentsExperienceId,
-		ServiceContext serviceContext)
+			List<FragmentEntryLink> addedFragmentEntryLinks,
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			FragmentEntry fragmentEntry, InfoField<?> infoField, Layout layout,
+			LayoutStructure layoutStructure, boolean readOnly,
+			long segmentsExperienceId, ServiceContext serviceContext)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -214,8 +213,11 @@ public class FormManagerImpl implements FormManager {
 					jsonObject);
 			}
 
-			jsonObject.put("inputFieldId", infoField.getUniqueId());
-			jsonObject.put("inputReadOnly", readOnly);
+			jsonObject.put(
+				"inputFieldId", infoField.getUniqueId()
+			).put(
+				"inputReadOnly", readOnly
+			);
 
 			fragmentEntryLink =
 				_fragmentEntryLinkService.updateFragmentEntryLink(

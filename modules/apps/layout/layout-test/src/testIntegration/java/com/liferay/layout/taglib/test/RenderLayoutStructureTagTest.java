@@ -349,7 +349,7 @@ public class RenderLayoutStructureTagTest {
 				layoutStructure.getLayoutStructureItem(
 					jsonObject.getString("addedItemId")),
 			true, draftLayout, layoutStructure,
-			LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
+			LocaleUtil.getMostRelevantLocale(), false, segmentsExperienceId,
 			_serviceContext, null);
 
 		_layoutPageTemplateStructureLocalService.

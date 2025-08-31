@@ -14,6 +14,8 @@ import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.depot.service.DepotEntryPinService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.dto.v1_0.Settings;
@@ -23,6 +25,7 @@ import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -414,6 +418,21 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		_updateDLSizeLimitConfiguration(
 			assetLibrary, group.getGroupId(), mimeTypeSizeLimits);
 
+		if (assetLibrary.getType() == AssetLibrary.Type.SPACE) {
+			Company company = _companyLocalService.getCompanyById(
+				serviceContext.getCompanyId());
+
+			ExpandoBridge bridge = company.getExpandoBridge();
+
+			if (!bridge.hasAttribute("cmsFirstTimeAccess")) {
+				bridge.addAttribute(
+					"cmsFirstTimeAccess", ExpandoColumnConstants.BOOLEAN,
+					false);
+
+				bridge.setAttribute("cmsFirstTimeAccess", Boolean.FALSE);
+			}
+		}
+
 		return depotEntry;
 	}
 
@@ -721,6 +740,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		target = "(component.name=com.liferay.headless.asset.library.internal.dto.v1_0.converter.AssetLibraryDTOConverter)"
 	)
 	private DTOConverter<DepotEntry, AssetLibrary> _assetLibraryDTOConverter;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DepotAppCustomizationLocalService

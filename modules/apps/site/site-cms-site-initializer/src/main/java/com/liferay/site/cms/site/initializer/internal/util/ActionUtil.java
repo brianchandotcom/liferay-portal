@@ -65,7 +65,7 @@ import java.util.List;
  */
 public class ActionUtil {
 
-	public static void generateLayoutStructure(
+	public static void generateEditContentLayoutStructure(
 			FormManager formManager,
 			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
 			FragmentEntryLinkService fragmentEntryLinkService,
@@ -234,7 +234,7 @@ public class ActionUtil {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			Layout layout = _getLayout(
+			Layout layout = _getEditContentLayout(
 				PortalUtil.getClassNameId(objectDefinition.getClassName()),
 				formManager, fragmentEntryLinkListenerRegistry,
 				fragmentEntryLinkService, fragmentRendererRegistry,
@@ -285,7 +285,7 @@ public class ActionUtil {
 			Group group = GroupLocalServiceUtil.getGroup(
 				themeDisplay.getCompanyId(), GroupConstants.CMS);
 
-			Layout layout = _getLayout(
+			Layout layout = _getEditContentLayout(
 				classNameId, formManager, fragmentEntryLinkListenerRegistry,
 				fragmentEntryLinkService, fragmentRendererRegistry, group,
 				objectDefinition,
@@ -354,12 +354,14 @@ public class ActionUtil {
 		return getBaseViewFolderURL(themeDisplay) + objectEntryFolderId;
 	}
 
-	private static LayoutPageTemplateEntry _addDefaultLayoutPageTemplateEntry(
-			long classNameId, FormManager formManager,
-			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
-			FragmentEntryLinkService fragmentEntryLinkService,
-			FragmentRendererRegistry fragmentRendererRegistry, long groupId,
-			String name, ServiceContext serviceContext)
+	private static LayoutPageTemplateEntry
+			_addEditContentDefaultLayoutPageTemplateEntry(
+				long classNameId, FormManager formManager,
+				FragmentEntryLinkListenerRegistry
+					fragmentEntryLinkListenerRegistry,
+				FragmentEntryLinkService fragmentEntryLinkService,
+				FragmentRendererRegistry fragmentRendererRegistry, long groupId,
+				String name, ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -374,7 +376,7 @@ public class ActionUtil {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		generateLayoutStructure(
+		generateEditContentLayoutStructure(
 			formManager, fragmentEntryLinkListenerRegistry,
 			fragmentEntryLinkService, fragmentRendererRegistry, draftLayout,
 			layoutPageTemplateEntry, serviceContext);
@@ -447,7 +449,7 @@ public class ActionUtil {
 			fragmentRenderer.getType(), serviceContext);
 	}
 
-	private static Layout _getLayout(
+	private static Layout _getEditContentLayout(
 			long classNameId, FormManager formManager,
 			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
 			FragmentEntryLinkService fragmentEntryLinkService,
@@ -461,10 +463,12 @@ public class ActionUtil {
 					group.getGroupId(), classNameId, 0);
 
 		if (layoutPageTemplateEntry == null) {
-			layoutPageTemplateEntry = _addDefaultLayoutPageTemplateEntry(
-				classNameId, formManager, fragmentEntryLinkListenerRegistry,
-				fragmentEntryLinkService, fragmentRendererRegistry,
-				group.getGroupId(), objectDefinition.getName(), serviceContext);
+			layoutPageTemplateEntry =
+				_addEditContentDefaultLayoutPageTemplateEntry(
+					classNameId, formManager, fragmentEntryLinkListenerRegistry,
+					fragmentEntryLinkService, fragmentRendererRegistry,
+					group.getGroupId(), objectDefinition.getName(),
+					serviceContext);
 		}
 
 		return LayoutLocalServiceUtil.fetchLayout(

@@ -736,12 +736,38 @@ components:
                         filters ('No Results Found' by default).
                     type: object
         FavIcon:
-            allOf:
-                -   $ref: "#/components/schemas/ClientExtension"
-                -   $ref: "#/components/schemas/ItemExternalReference"
             # @review
             description:
                 The FavIcon of the page specification.
+            discriminator:
+                mapping:
+                    ClientExtension: "#/components/schemas/FavIconClientExtension"
+                    ItemExternalReference: "#/components/schemas/FavIconItemExternalReference"
+                propertyName: favIconType
+            properties:
+                favIconType:
+                    # @review
+                    description:
+                        The FavIcon's type (ClientExtension, ItemExternalReference).
+                    enum: [ClientExtension, ItemExternalReference]
+                    type: string
+            type: object
+        FavIconClientExtension:
+            allOf:
+                -   $ref: "#/components/schemas/ClientExtension"
+                -   $ref: "#/components/schemas/FavIcon"
+            # @review
+            description:
+                A unique reference to a FavIcon of type ClientExtension which remains constant across environments.
+            type: object
+        FavIconItemExternalReference:
+            allOf:
+                -   $ref: "#/components/schemas/FavIcon"
+                -   $ref: "#/components/schemas/ItemExternalReference"
+            # @review
+            description:
+                A unique reference to a FavIcon of type ItemExternalReference which remains constant across
+                environments.
             type: object
         FormConfig:
             # @review

@@ -1,20 +1,23 @@
 <#if entries?has_content>
 	<#assign
+		entryFrequency = 0
 		knowledgeBaseFrequency = 0
 		knowledgeBaseIds = []
-		selectedFrequency = 0
-		selectedLabel = ""
+		label = ""
 		sortedTaxonomyCategories = []
 		totalCount = 0
 	/>
+
 	<#list entries as entry>
 		<#assign label = entry.bucketText?upper_case />
+
 		<#if entry.isSelected()>
 			<#assign
-				selectedFrequency = entry.getFrequency()
-				selectedLabel = entry.bucketText
+				entryFrequency = entry.getFrequency()
+				label = entry.bucketText
 			/>
 		</#if>
+
 		<#if stringUtil.equals(label, "HOW TO") || stringUtil.equals(label, "REFERENCE") || stringUtil.equals(label, "TROUBLESHOOTING")>
 			<#assign
 				knowledgeBaseFrequency += entry.getFrequency()
@@ -31,25 +34,29 @@
 
 	<#assign
 		selectedResourceTypeIds = paramUtil.getParameterValues(request, "resource-type")![]
+
 		knowledgeBaseSelected = (selectedResourceTypeIds?filter(id -> knowledgeBaseIds?seq_contains(id))?size > 0)
 	/>
+
 	<#if knowledgeBaseSelected>
 		<#assign
-			selectedFrequency = knowledgeBaseFrequency
-			selectedLabel = languageUtil.get(locale, "knowledge-base", "Knowledge Base")
+			entryFrequency = knowledgeBaseFrequency
+			label = languageUtil.get(locale, "knowledge-base", "Knowledge Base")
 		/>
 	</#if>
+
 	<#if selectedResourceTypeIds?size == 0>
-		<#assign selectedLabel = languageUtil.get(locale, "all-results", "All Results") />
+		<#assign label = languageUtil.get(locale, "all-results", "All Results") />
 	</#if>
 
 	<div class="filter-toggle">
 		<div class="filter-toggle-content">
 			<div class="filter-toggle-term-text-term-count">
-				<span class="term-text">${selectedLabel} </span>
+				<span class="term-text">${label} </span>
+
 				<span class="term-count">
-					<#if selectedFrequency != 0>
-						${selectedFrequency}
+					<#if entryFrequency != 0>
+						${entryFrequency}
 					<#else>
 						${totalCount}
 					</#if>
@@ -78,6 +85,7 @@
 				</div>
 			</@clay.button>
 		</li>
+
 		<#list sortedTaxonomyCategories as entry>
 			<li class="facet-value">
 				<@clay.button
@@ -101,11 +109,13 @@
 				</@clay.button>
 			</li>
 		</#list>
+
 		<#list selectedResourceTypeIds as selectedId>
 			<#if knowledgeBaseIds?seq_contains(selectedId)>
 				<#assign knowledgeBaseSelected = true />
 			</#if>
 		</#list>
+
 		<li class="facet-value">
 			<@clay.button
 				cssClass="btn-unstyled facet-term tab-btn term-name text-center ${knowledgeBaseSelected?then('selected-tab-btn', '')}"
@@ -132,37 +142,54 @@
 
 	function handleStyleTabs(event) {
 		const buttons = document.querySelectorAll('.tab-btn');
+
 		buttons.forEach(button => button.classList.remove('selected-tab-btn'));
+
 		const targetButton = event.currentTarget;
+
 		if (targetButton.classList.contains('tab-btn')) {
 			targetButton.classList.add('selected-tab-btn');
 		}
 	}
+
 	function ${namespace}updateSelection(event) {
 		event.preventDefault();
 		handleStyleTabs(event);
+
 		const formElement = event.currentTarget.form;
+
 		if (!formElement) {
 			return;
 		}
+
 		const urlSearchParams = new URLSearchParams(window.location.search);
+
 		if (event.currentTarget.value === 'clear') {
 			urlSearchParams.delete('resource-type');
+
 			const clearedUrl = window.location.pathname + '?' + urlSearchParams.toString();
+
 			window.location.href = clearedUrl;
+
 			return;
 		}
+
 		urlSearchParams.delete('resource-type');
+
 		const dataTermId = event.currentTarget.getAttribute('data-term-id');
 		const dataTermIds = event.currentTarget.getAttribute('data-term-ids');
+
 		if (dataTermIds) {
 			const resourceTypeIds = dataTermIds.split(',');
+
 			resourceTypeIds.forEach(id => {
 				urlSearchParams.append('resource-type', id.trim());
 			});
-		} else if (dataTermId) {
+		}
+		else if (dataTermId) {
 			urlSearchParams.append('resource-type', dataTermId);
 		}
+
 		window.location.href = window.location.pathname + '?' + urlSearchParams.toString();
 	}
 </@liferay_aui.script>

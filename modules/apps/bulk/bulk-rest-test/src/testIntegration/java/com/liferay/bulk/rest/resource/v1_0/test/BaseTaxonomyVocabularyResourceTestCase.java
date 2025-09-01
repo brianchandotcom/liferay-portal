@@ -377,6 +377,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("taxonomyVocabularyId"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary.class)) {

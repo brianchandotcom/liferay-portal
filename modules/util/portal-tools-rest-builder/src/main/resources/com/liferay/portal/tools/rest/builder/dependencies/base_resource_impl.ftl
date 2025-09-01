@@ -539,7 +539,22 @@ public abstract class Base${schemaName}ResourceImpl
 						/>
 					</@updateResourcePermissions>
 				<#else>
-					throw new UnsupportedOperationException("This method needs to be implemented");
+					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
+
+					String resourceName = getPermissionCheckerResourceName(siteExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
+					Long resourceId = getPermissionCheckerResourceId(siteExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
+
+					<@updateResourcePermissions
+						groupId = "getPermissionCheckerGroupId(siteExternalReferenceCode)"
+						resourceId = "resourceId"
+						resourceName = "resourceName"
+					>
+						<@getActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source=schemaName
+						/>
+					</@updateResourcePermissions>
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
 				return false;

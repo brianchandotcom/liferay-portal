@@ -315,7 +315,8 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGetSitesPage() throws Exception {
-		Page<Site> page = siteResource.getSitesPage(null, Pagination.of(1, 10));
+		Page<Site> page = siteResource.getSitesPage(
+			null, null, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -323,7 +324,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		Site site2 = testGetSitesPage_addSite(randomSite());
 
-		page = siteResource.getSitesPage(null, Pagination.of(1, 10));
+		page = siteResource.getSitesPage(null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -347,7 +348,7 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGetSitesPageWithPagination() throws Exception {
-		Page<Site> sitesPage = siteResource.getSitesPage(null, null);
+		Page<Site> sitesPage = siteResource.getSitesPage(null, null, null);
 
 		int totalCount = GetterUtil.getInteger(sitesPage.getTotalCount());
 
@@ -363,7 +364,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<Site> page1 = siteResource.getSitesPage(
-				null,
+				null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -373,7 +374,7 @@ public abstract class BaseSiteResourceTestCase {
 			assertContains(site1, (List<Site>)page1.getItems());
 
 			Page<Site> page2 = siteResource.getSitesPage(
-				null,
+				null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -381,7 +382,7 @@ public abstract class BaseSiteResourceTestCase {
 			assertContains(site2, (List<Site>)page2.getItems());
 
 			Page<Site> page3 = siteResource.getSitesPage(
-				null,
+				null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -390,7 +391,7 @@ public abstract class BaseSiteResourceTestCase {
 		}
 		else {
 			Page<Site> page1 = siteResource.getSitesPage(
-				null, Pagination.of(1, totalCount + 2));
+				null, null, Pagination.of(1, totalCount + 2));
 
 			List<Site> sites1 = (List<Site>)page1.getItems();
 
@@ -398,7 +399,7 @@ public abstract class BaseSiteResourceTestCase {
 				sites1.toString(), totalCount + 2, sites1.size());
 
 			Page<Site> page2 = siteResource.getSitesPage(
-				null, Pagination.of(2, totalCount + 2));
+				null, null, Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -407,7 +408,7 @@ public abstract class BaseSiteResourceTestCase {
 			Assert.assertEquals(sites2.toString(), 1, sites2.size());
 
 			Page<Site> page3 = siteResource.getSitesPage(
-				null, Pagination.of(1, (int)totalCount + 3));
+				null, null, Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(site1, (List<Site>)page3.getItems());
 			assertContains(site2, (List<Site>)page3.getItems());
@@ -639,6 +640,14 @@ public abstract class BaseSiteResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (site.getActive() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -659,6 +668,24 @@ public abstract class BaseSiteResourceTestCase {
 
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (site.getKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("manualMembership", additionalAssertFieldName)) {
+				if (site.getManualMembership() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"membershipRestriction", additionalAssertFieldName)) {
+
+				if (site.getMembershipRestriction() == null) {
 					valid = false;
 				}
 
@@ -699,6 +726,14 @@ public abstract class BaseSiteResourceTestCase {
 
 			if (Objects.equals("templateType", additionalAssertFieldName)) {
 				if (site.getTemplateType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeSettings", additionalAssertFieldName)) {
+				if (site.getTypeSettings() == null) {
 					valid = false;
 				}
 
@@ -827,6 +862,14 @@ public abstract class BaseSiteResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(site1.getActive(), site2.getActive())) {
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -861,6 +904,30 @@ public abstract class BaseSiteResourceTestCase {
 
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(site1.getKey(), site2.getKey())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("manualMembership", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getManualMembership(),
+						site2.getManualMembership())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"membershipRestriction", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getMembershipRestriction(),
+						site2.getMembershipRestriction())) {
+
 					return false;
 				}
 
@@ -908,6 +975,17 @@ public abstract class BaseSiteResourceTestCase {
 			if (Objects.equals("templateType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						site1.getTemplateType(), site2.getTemplateType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeSettings", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)site1.getTypeSettings(),
+						(Map)site2.getTypeSettings())) {
 
 					return false;
 				}
@@ -1021,6 +1099,11 @@ public abstract class BaseSiteResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("active")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
 			Object object = site.getExternalReferenceCode();
@@ -1161,6 +1244,17 @@ public abstract class BaseSiteResourceTestCase {
 				sb.append(value);
 				sb.append("'");
 			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("manualMembership")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("membershipRestriction")) {
+			sb.append(String.valueOf(site.getMembershipRestriction()));
 
 			return sb.toString();
 		}
@@ -1313,6 +1407,11 @@ public abstract class BaseSiteResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("typeSettings")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1363,12 +1462,15 @@ public abstract class BaseSiteResourceTestCase {
 	protected Site randomSite() throws Exception {
 		return new Site() {
 			{
+				active = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				manualMembership = RandomTestUtil.randomBoolean();
+				membershipRestriction = RandomTestUtil.randomInt();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				parentSiteKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

@@ -12,6 +12,7 @@ import jakarta.annotation.Generated;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -24,6 +25,27 @@ public class Site implements Cloneable, Serializable {
 	public static Site toDTO(String json) {
 		return SiteSerDes.toDTO(json);
 	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public void setActive(
+		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
+
+		try {
+			active = activeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean active;
 
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
@@ -104,6 +126,49 @@ public class Site implements Cloneable, Serializable {
 	}
 
 	protected String key;
+
+	public Boolean getManualMembership() {
+		return manualMembership;
+	}
+
+	public void setManualMembership(Boolean manualMembership) {
+		this.manualMembership = manualMembership;
+	}
+
+	public void setManualMembership(
+		UnsafeSupplier<Boolean, Exception> manualMembershipUnsafeSupplier) {
+
+		try {
+			manualMembership = manualMembershipUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean manualMembership;
+
+	public Integer getMembershipRestriction() {
+		return membershipRestriction;
+	}
+
+	public void setMembershipRestriction(Integer membershipRestriction) {
+		this.membershipRestriction = membershipRestriction;
+	}
+
+	public void setMembershipRestriction(
+		UnsafeSupplier<Integer, Exception>
+			membershipRestrictionUnsafeSupplier) {
+
+		try {
+			membershipRestriction = membershipRestrictionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer membershipRestriction;
 
 	public MembershipType getMembershipType() {
 		return membershipType;
@@ -224,6 +289,28 @@ public class Site implements Cloneable, Serializable {
 	}
 
 	protected TemplateType templateType;
+
+	public Map<String, String> getTypeSettings() {
+		return typeSettings;
+	}
+
+	public void setTypeSettings(Map<String, String> typeSettings) {
+		this.typeSettings = typeSettings;
+	}
+
+	public void setTypeSettings(
+		UnsafeSupplier<Map<String, String>, Exception>
+			typeSettingsUnsafeSupplier) {
+
+		try {
+			typeSettings = typeSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> typeSettings;
 
 	@Override
 	public Site clone() throws CloneNotSupportedException {

@@ -72,11 +72,12 @@ public interface SiteResource {
 				String externalReferenceCode)
 		throws Exception;
 
-	public Page<Site> getSitesPage(String search, Pagination pagination)
+	public Page<Site> getSitesPage(
+			Boolean active, String search, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSitesPageHttpResponse(
-			String search, Pagination pagination)
+			Boolean active, String search, Pagination pagination)
 		throws Exception;
 
 	public Site postSite(Site site) throws Exception;
@@ -100,13 +101,13 @@ public interface SiteResource {
 		throws Exception;
 
 	public void postSitesPageExportBatch(
-			String search, String callbackURL, String contentType,
-			String fieldNames)
+			Boolean active, String search, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSitesPageExportBatchHttpResponse(
-			String search, String callbackURL, String contentType,
-			String fieldNames)
+			Boolean active, String search, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Site putSiteByExternalReferenceCode(
@@ -740,11 +741,12 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Site> getSitesPage(String search, Pagination pagination)
+		public Page<Site> getSitesPage(
+				Boolean active, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getSitesPageHttpResponse(
-				search, pagination);
+				active, search, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -806,7 +808,7 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse getSitesPageHttpResponse(
-				String search, Pagination pagination)
+				Boolean active, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -829,6 +831,10 @@ public interface SiteResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (active != null) {
+				httpInvoker.parameter("active", String.valueOf(active));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
@@ -1167,13 +1173,13 @@ public interface SiteResource {
 		}
 
 		public void postSitesPageExportBatch(
-				String search, String callbackURL, String contentType,
-				String fieldNames)
+				Boolean active, String search, String callbackURL,
+				String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSitesPageExportBatchHttpResponse(
-					search, callbackURL, contentType, fieldNames);
+					active, search, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1224,8 +1230,8 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse postSitesPageExportBatchHttpResponse(
-				String search, String callbackURL, String contentType,
-				String fieldNames)
+				Boolean active, String search, String callbackURL,
+				String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1250,6 +1256,10 @@ public interface SiteResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (active != null) {
+				httpInvoker.parameter("active", String.valueOf(active));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

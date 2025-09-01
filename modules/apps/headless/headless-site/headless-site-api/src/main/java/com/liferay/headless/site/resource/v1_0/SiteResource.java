@@ -62,7 +62,8 @@ public interface SiteResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public Page<Site> getSitesPage(String search, Pagination pagination)
+	public Page<Site> getSitesPage(
+			Boolean active, String search, Pagination pagination)
 		throws Exception;
 
 	public Site postSite(Site site) throws Exception;
@@ -74,8 +75,8 @@ public interface SiteResource {
 		throws Exception;
 
 	public Response postSitesPageExportBatch(
-			String search, String callbackURL, String contentType,
-			String fieldNames)
+			Boolean active, String search, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Site putSiteByExternalReferenceCode(

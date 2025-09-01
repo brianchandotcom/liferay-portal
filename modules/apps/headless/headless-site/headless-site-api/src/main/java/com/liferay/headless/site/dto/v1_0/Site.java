@@ -56,6 +56,47 @@ public class Site implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Site.class, json);
 	}
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getActive() {
+		if (_activeSupplier != null) {
+			active = _activeSupplier.get();
+
+			_activeSupplier = null;
+		}
+
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+
+		_activeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setActive(
+		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
+
+		_activeSupplier = () -> {
+			try {
+				return activeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean active;
+
+	@JsonIgnore
+	private Supplier<Boolean> _activeSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The site's external reference code."
 	)
@@ -134,7 +175,7 @@ public class Site implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
 	@JsonIgnore
@@ -218,6 +259,89 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getManualMembership() {
+		if (_manualMembershipSupplier != null) {
+			manualMembership = _manualMembershipSupplier.get();
+
+			_manualMembershipSupplier = null;
+		}
+
+		return manualMembership;
+	}
+
+	public void setManualMembership(Boolean manualMembership) {
+		this.manualMembership = manualMembership;
+
+		_manualMembershipSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setManualMembership(
+		UnsafeSupplier<Boolean, Exception> manualMembershipUnsafeSupplier) {
+
+		_manualMembershipSupplier = () -> {
+			try {
+				return manualMembershipUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean manualMembership;
+
+	@JsonIgnore
+	private Supplier<Boolean> _manualMembershipSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Integer getMembershipRestriction() {
+		if (_membershipRestrictionSupplier != null) {
+			membershipRestriction = _membershipRestrictionSupplier.get();
+
+			_membershipRestrictionSupplier = null;
+		}
+
+		return membershipRestriction;
+	}
+
+	public void setMembershipRestriction(Integer membershipRestriction) {
+		this.membershipRestriction = membershipRestriction;
+
+		_membershipRestrictionSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setMembershipRestriction(
+		UnsafeSupplier<Integer, Exception>
+			membershipRestrictionUnsafeSupplier) {
+
+		_membershipRestrictionSupplier = () -> {
+			try {
+				return membershipRestrictionUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer membershipRestriction;
+
+	@JsonIgnore
+	private Supplier<Integer> _membershipRestrictionSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The default value is open."
 	)
@@ -269,7 +393,7 @@ public class Site implements Serializable {
 	}
 
 	@GraphQLField(description = "The default value is open.")
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MembershipType membershipType;
 
 	@JsonIgnore
@@ -451,6 +575,49 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<TemplateType> _templateTypeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Map<String, String> getTypeSettings() {
+		if (_typeSettingsSupplier != null) {
+			typeSettings = _typeSettingsSupplier.get();
+
+			_typeSettingsSupplier = null;
+		}
+
+		return typeSettings;
+	}
+
+	public void setTypeSettings(Map<String, String> typeSettings) {
+		this.typeSettings = typeSettings;
+
+		_typeSettingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTypeSettings(
+		UnsafeSupplier<Map<String, String>, Exception>
+			typeSettingsUnsafeSupplier) {
+
+		_typeSettingsSupplier = () -> {
+			try {
+				return typeSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> typeSettings;
+
+	@JsonIgnore
+	private Supplier<Map<String, String>> _typeSettingsSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -477,6 +644,18 @@ public class Site implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Boolean active = getActive();
+
+		if (active != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"active\": ");
+
+			sb.append(active);
+		}
 
 		String externalReferenceCode = getExternalReferenceCode();
 
@@ -536,6 +715,30 @@ public class Site implements Serializable {
 			sb.append(_escape(key));
 
 			sb.append("\"");
+		}
+
+		Boolean manualMembership = getManualMembership();
+
+		if (manualMembership != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"manualMembership\": ");
+
+			sb.append(manualMembership);
+		}
+
+		Integer membershipRestriction = getMembershipRestriction();
+
+		if (membershipRestriction != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"membershipRestriction\": ");
+
+			sb.append(membershipRestriction);
 		}
 
 		MembershipType membershipType = getMembershipType();
@@ -616,6 +819,18 @@ public class Site implements Serializable {
 			sb.append(templateType);
 
 			sb.append("\"");
+		}
+
+		Map<String, String> typeSettings = getTypeSettings();
+
+		if (typeSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeSettings\": ");
+
+			sb.append(_toJSON(typeSettings));
 		}
 
 		sb.append("}");

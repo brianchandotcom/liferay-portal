@@ -32,7 +32,9 @@ async function getConnectedSitesFromSpace(groupId: string) {
 }
 
 async function getAllSites() {
-	return await ApiHelper.get<{items: Site[]}>(`/o/headless-site/v1.0/sites`);
+	return await ApiHelper.get<{items: Site[]}>(
+		`/o/headless-site/v1.0/sites?active=true`
+	);
 }
 
 export default {

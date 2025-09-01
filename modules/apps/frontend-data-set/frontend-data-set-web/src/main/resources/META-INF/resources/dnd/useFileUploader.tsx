@@ -45,17 +45,19 @@ const useFileUploader = ({
 							<span>
 								Dropped on item{' '}
 
-							{getObjectValueFromPath({
-								object: dropTarget,
-								path: selectedItemsKey,
-							})}
-						</span>
-					) : (
-						<span>Dropped on the FDS, no specific drop target</span>
-					)}
-				</div>
-			);
-		};
+								{getObjectValueFromPath({
+									object: dropTarget,
+									path: selectedItemsKey,
+								})}
+							</span>
+						) : (
+							<span>
+								Dropped on the FDS, no specific drop target
+							</span>
+						)}
+					</div>
+				);
+			};
 
 			openModal({
 				bodyComponent: ModalBody,

@@ -40,15 +40,17 @@ function ManagementBar({
 	);
 
 	function handleCheckboxClick() {
-		const itemKeys = items.map((item) =>
-			getObjectValueFromPath({object: item, path: selectedItemsKey})
-		);
+		if (pageSelectedItemsValue.length) {
+			deselectItems(pageSelectedItemsValue);
 
-		if (pageSelectedItemsValue.length === items.length) {
-			return deselectItems(itemKeys);
+			return;
 		}
 
-		return selectItems(itemKeys);
+		selectItems(
+			items.map((item) =>
+				getObjectValueFromPath({item, path: selectedItemsKey})
+			)
+		);
 	}
 
 	const showBulkActionsBar =

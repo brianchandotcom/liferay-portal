@@ -7,8 +7,9 @@ import {openToast} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 
 import {displayErrorToast} from '../../../common/utils/toastUtil';
+import {DEFAULT_HEADERS} from '../utils/constants';
 
-export async function restoreItemAction(
+export default async function restoreItemAction(
 	label: string,
 	loadData: any,
 	method: any,
@@ -30,15 +31,10 @@ export async function restoreItemAction(
 	};
 
 	if (restoreURL && method) {
-		const headers = {
-			'Accept': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		};
-
 		try {
 			const response = await fetch(restoreURL, {
 				headers: {
-					...headers,
+					...DEFAULT_HEADERS,
 					'Content-Type': 'application/json',
 				},
 				method,
@@ -52,7 +48,7 @@ export async function restoreItemAction(
 				(entry.objectEntryFolderId ?? entry.parentObjectEntryFolderId);
 
 			const entryFolderResponse = await fetch(url, {
-				headers,
+				headers: DEFAULT_HEADERS,
 				method: 'GET',
 			});
 

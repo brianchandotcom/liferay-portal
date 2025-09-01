@@ -244,14 +244,14 @@ export function FormInputGeneralPanel({item}) {
 				const selectedFields = [];
 
 				const findSelectedFields = (itemId) => {
-					const inputItem = state.layoutData.items[itemId];
+					const layoutDataItem = state.layoutData.items[itemId];
 
 					if (
-						inputItem?.itemId !== item.itemId &&
-						inputItem?.type === LAYOUT_DATA_ITEM_TYPES.fragment
+						layoutDataItem?.itemId !== item.itemId &&
+						layoutDataItem?.type === LAYOUT_DATA_ITEM_TYPES.fragment
 					) {
 						const {editableValues, fragmentEntryType} =
-							selectFragmentEntryLink(state, inputItem);
+							selectFragmentEntryLink(state, layoutDataItem);
 
 						if (
 							fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
@@ -267,7 +267,7 @@ export function FormInputGeneralPanel({item}) {
 						}
 					}
 
-					inputItem?.children.forEach(findSelectedFields);
+					layoutDataItem?.children.forEach(findSelectedFields);
 				};
 
 				findSelectedFields(formId);

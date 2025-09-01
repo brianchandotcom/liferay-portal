@@ -465,6 +465,14 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				continue;
 			}
 
+			if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
+				log(
+					nextExpressionStartLineNumber,
+					_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
+
+				return;
+			}
+
 			DetailAST parentDetailAST = identDetailAST.getParent();
 
 			if ((parentDetailAST.getType() == TokenTypes.ASSIGN) &&

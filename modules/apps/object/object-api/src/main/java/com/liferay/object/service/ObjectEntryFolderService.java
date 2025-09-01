@@ -88,6 +88,12 @@ public interface ObjectEntryFolderService extends BaseService {
 			long groupId, long companyId, long parentObjectEntryFolderId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntryFolder getOrAddEmptyObjectEntryFolder(
+			String externalReferenceCode, long groupId, long companyId,
+			long userId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

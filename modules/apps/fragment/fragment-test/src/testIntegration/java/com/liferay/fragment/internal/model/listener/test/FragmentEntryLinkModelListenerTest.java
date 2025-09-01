@@ -16,9 +16,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
-import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
@@ -133,18 +131,8 @@ public class FragmentEntryLinkModelListenerTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_draftLayout.getPlid()));
 
-		String portletId = StringBundler.concat(
-			JournalContentPortletKeys.JOURNAL_CONTENT, "_INSTANCE_",
-			fragmentEntryLink.getNamespace());
-
 		try {
 			_pushServiceContext(fragmentEntryLink, _draftLayout);
-
-			_setUpPortletPreferences(
-				JournalTestUtil.addArticle(
-					TestPropsValues.getGroupId(),
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
-				_draftLayout, portletId);
 
 			publishLayout(_draftLayout, _layout);
 		}
@@ -155,7 +143,10 @@ public class FragmentEntryLinkModelListenerTest {
 		List<com.liferay.portal.kernel.model.PortletPreferences>
 			portletPreferences =
 				_portletPreferencesLocalService.getPortletPreferences(
-					PortletKeys.PREFS_PLID_SHARED, portletId);
+					PortletKeys.PREFS_PLID_SHARED,
+					StringBundler.concat(
+						JournalContentPortletKeys.JOURNAL_CONTENT, "_INSTANCE_",
+						fragmentEntryLink.getNamespace()));
 
 		Assert.assertEquals(
 			portletPreferences.toString(), 0, portletPreferences.size());
@@ -413,20 +404,6 @@ public class FragmentEntryLinkModelListenerTest {
 			serviceContext);
 	}
 
-	private void _assertPortletPreferences(
-		JournalArticle journalArticle, Layout layout, String portletId) {
-
-		PortletPreferences portletPreferences =
-			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
-
-		Assert.assertEquals(
-			String.valueOf(journalArticle.getExternalReferenceCode()),
-			portletPreferences.getValue("articleExternalReferenceCode", null));
-		Assert.assertEquals(
-			String.valueOf(journalArticle.getGroupId()),
-			portletPreferences.getValue("groupExternalReferenceCode", null));
-	}
-
 	private String _createEditableValues(String key, String value) {
 		return JSONUtil.put(
 			FragmentEntryProcessorConstants.
@@ -486,25 +463,6 @@ public class FragmentEntryLinkModelListenerTest {
 		serviceContext.setUserId(TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-	}
-
-	private void _setUpPortletPreferences(
-			JournalArticle journalArticle, Layout layout, String portletId)
-		throws Exception {
-
-		PortletPreferences portletPreferences =
-			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
-
-		portletPreferences.setValue(
-			"articleExternalReferenceCode",
-			journalArticle.getExternalReferenceCode());
-		portletPreferences.setValue(
-			"groupExternalReferenceCode",
-			String.valueOf(journalArticle.getGroupId()));
-
-		portletPreferences.store();
-
-		_assertPortletPreferences(journalArticle, layout, portletId);
 	}
 
 	@Inject

@@ -6,9 +6,14 @@
 import {openToast} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 
+import {
+	getFormattedLabel,
+	getFormattedLink,
+} from '../../../common/utils/getFormattedText';
 import {displayErrorToast} from '../../../common/utils/toastUtil';
+import {DEFAULT_HEADERS} from '../utils/constants';
 
-export async function restoreItemAction(
+export default async function restoreItemAction(
 	label: string,
 	loadData: any,
 	method: any,
@@ -18,11 +23,16 @@ export async function restoreItemAction(
 		folderName: string,
 		folderURL: string
 	) => {
-		const formmatedFolderLink = `<strong><a href="${folderURL}" class="restore-link"><u>${Liferay.Util.escapeHTML(folderName)}</u></a></strong>`;
+		const formmatedFolderLink = getFormattedLink(
+			'restore-link',
+			Liferay.Util.escapeHTML(folderName),
+			folderURL
+		);
+		const formattedItemLabel = getFormattedLabel(label);
 		openToast({
 			message: sub(
 				Liferay.Language.get('x-was-restored-to-x'),
-				label,
+				formattedItemLabel,
 				formmatedFolderLink
 			),
 			type: 'success',
@@ -30,15 +40,10 @@ export async function restoreItemAction(
 	};
 
 	if (restoreURL && method) {
-		const headers = {
-			'Accept': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		};
-
 		try {
 			const response = await fetch(restoreURL, {
 				headers: {
-					...headers,
+					...DEFAULT_HEADERS,
 					'Content-Type': 'application/json',
 				},
 				method,
@@ -52,7 +57,7 @@ export async function restoreItemAction(
 				(entry.objectEntryFolderId ?? entry.parentObjectEntryFolderId);
 
 			const entryFolderResponse = await fetch(url, {
-				headers,
+				headers: DEFAULT_HEADERS,
 				method: 'GET',
 			});
 

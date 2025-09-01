@@ -61,6 +61,11 @@ type BaseScheduleData = {
 	value: string;
 };
 
+export type CategorizationFields = {
+	assetCategoryIds: string;
+	assetTagNames: string;
+};
+
 type ScheduleFieldData = BaseScheduleData & {
 	serverValue: string;
 };
@@ -123,6 +128,10 @@ export default function ContentEditorSidePanel(props: Props) {
 			value: toMomentDate(props.reviewDate),
 		},
 	});
+	const [categorizationFields] = useState<CategorizationFields>({
+		assetCategoryIds: '',
+		assetTagNames: '',
+	});
 
 	const onUpdateSchedule = ({
 		error,
@@ -170,6 +179,16 @@ export default function ContentEditorSidePanel(props: Props) {
 					name={name}
 					type="hidden"
 					value={serverValue}
+				/>
+			))}
+
+			{Object.entries(categorizationFields).map(([name, value]) => (
+				<input
+					form={formId}
+					key={name}
+					name={name}
+					type="hidden"
+					value={value}
 				/>
 			))}
 		</>

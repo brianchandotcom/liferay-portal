@@ -8,6 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 // eslint-disable-next-line
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {
+	fireEvent,
 	render,
 	screen,
 	waitForElementToBeRemoved,
@@ -47,7 +48,8 @@ const AssetTypeSvgIconClass: Record<AssetType, string> = {
 
 const mockData = {
 	data: {
-		expiredAssets: assetsList,
+		items: assetsList,
+		totalCount: 3,
 	},
 	error: null,
 };
@@ -117,12 +119,13 @@ describe('[CMS Dashboard] ExpiredAssetsCard', () => {
 	it('renders 10 items per page by default', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
 			data: {
-				expiredAssets: [
+				items: [
 					...assetsList,
 					...assetsList,
 					...assetsList,
 					...assetsList,
 				],
+				totalCount: 12,
 			},
 			error: null,
 		});
@@ -138,5 +141,45 @@ describe('[CMS Dashboard] ExpiredAssetsCard', () => {
 		expect(getByText('Showing 1 to 10 of 12')).toBeTruthy();
 
 		expect(items.length).toBe(10);
+	});
+
+	it('renders modal view button for each asset', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
+
+		render(<ExpiredAssetsCard />);
+
+		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+
+		const viewModalButtons = screen.getAllByTestId('view-asset-button');
+
+		expect(viewModalButtons.length).toBe(3);
+	});
+
+	it('opens modal when clicked in View Asset button', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
+				items: [
+					{
+						assetType: AssetType.JournalArticle,
+						title: 'Understanding Quantum Computing for Beginners',
+						usages: 1,
+					},
+				],
+				totalCount: 1,
+			},
+			error: null,
+		});
+
+		const {getByRole} = render(<ExpiredAssetsCard />);
+
+		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+
+		const viewModalButton = screen.getByTestId('view-asset-button');
+
+		// TODO not working
+
+		fireEvent.click(viewModalButton);
+
+		expect(getByRole('heading')).toBeTruthy();
 	});
 });

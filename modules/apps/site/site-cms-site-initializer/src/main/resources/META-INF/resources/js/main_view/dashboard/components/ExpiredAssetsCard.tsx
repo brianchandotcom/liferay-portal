@@ -93,7 +93,7 @@ function ExpiredAssetItem({
 						assetType ? AssetTypeIcons[assetType]?.color : '#5c9531'
 					}
 					symbol={
-						assetType ? AssetTypeIcons[assetType]?.color : 'blogs'
+						assetType ? AssetTypeIcons[assetType]?.symbol : 'blogs'
 					}
 				/>
 			</div>
@@ -118,6 +118,7 @@ function ExpiredAssetItem({
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('view-asset')}
 						className="border-0"
+						data-testid="view-asset-button"
 						data-tooltip-align="top"
 						displayType="secondary"
 						onClick={() => {

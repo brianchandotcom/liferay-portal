@@ -6,6 +6,8 @@
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
+import com.liferay.headless.admin.site.client.dto.v1_0.FavIconClientExtension;
+import com.liferay.headless.admin.site.client.dto.v1_0.FavIconItemExternalReference;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -40,61 +42,27 @@ public class FavIconSerDes {
 			return "null";
 		}
 
-		StringBuilder sb = new StringBuilder();
+		FavIcon.FavIconType favIconType = favIcon.getFavIconType();
 
-		sb.append("{");
+		if (favIconType != null) {
+			String favIconTypeString = favIconType.toString();
 
-		if (favIcon.getClassName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			if (favIconTypeString.equals("ClientExtension")) {
+				return FavIconClientExtensionSerDes.toJSON(
+					(FavIconClientExtension)favIcon);
 			}
 
-			sb.append("\"className\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(favIcon.getClassName()));
-
-			sb.append("\"");
-		}
-
-		if (favIcon.getClientExtensionConfig() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			if (favIconTypeString.equals("ItemExternalReference")) {
+				return FavIconItemExternalReferenceSerDes.toJSON(
+					(FavIconItemExternalReference)favIcon);
 			}
 
-			sb.append("\"clientExtensionConfig\": ");
-
-			sb.append(_toJSON(favIcon.getClientExtensionConfig()));
+			throw new IllegalArgumentException(
+				"Unknown favIconType " + favIconTypeString);
 		}
-
-		if (favIcon.getExternalReferenceCode() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"externalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(favIcon.getExternalReferenceCode()));
-
-			sb.append("\"");
+		else {
+			throw new IllegalArgumentException("Missing favIconType parameter");
 		}
-
-		if (favIcon.getScope() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"scope\": ");
-
-			sb.append(String.valueOf(favIcon.getScope()));
-		}
-
-		sb.append("}");
-
-		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
@@ -110,36 +78,11 @@ public class FavIconSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (favIcon.getClassName() == null) {
-			map.put("className", null);
+		if (favIcon.getFavIconType() == null) {
+			map.put("favIconType", null);
 		}
 		else {
-			map.put("className", String.valueOf(favIcon.getClassName()));
-		}
-
-		if (favIcon.getClientExtensionConfig() == null) {
-			map.put("clientExtensionConfig", null);
-		}
-		else {
-			map.put(
-				"clientExtensionConfig",
-				String.valueOf(favIcon.getClientExtensionConfig()));
-		}
-
-		if (favIcon.getExternalReferenceCode() == null) {
-			map.put("externalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"externalReferenceCode",
-				String.valueOf(favIcon.getExternalReferenceCode()));
-		}
-
-		if (favIcon.getScope() == null) {
-			map.put("scope", null);
-		}
-		else {
-			map.put("scope", String.valueOf(favIcon.getScope()));
+			map.put("favIconType", String.valueOf(favIcon.getFavIconType()));
 		}
 
 		return map;
@@ -149,7 +92,7 @@ public class FavIconSerDes {
 
 		@Override
 		protected FavIcon createDTO() {
-			return new FavIcon();
+			return null;
 		}
 
 		@Override
@@ -159,20 +102,7 @@ public class FavIconSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "className")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "clientExtensionConfig")) {
-
-				return true;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "externalReferenceCode")) {
-
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "scope")) {
+			if (Objects.equals(jsonParserFieldName, "favIconType")) {
 				return false;
 			}
 
@@ -180,35 +110,41 @@ public class FavIconSerDes {
 		}
 
 		@Override
+		public FavIcon parseToDTO(String json) {
+			Map<String, Object> jsonMap = parseToMap(json);
+
+			Object favIconType = jsonMap.get("favIconType");
+
+			if (favIconType != null) {
+				String favIconTypeString = favIconType.toString();
+
+				if (favIconTypeString.equals("ClientExtension")) {
+					return FavIconClientExtension.toDTO(json);
+				}
+
+				if (favIconTypeString.equals("ItemExternalReference")) {
+					return FavIconItemExternalReference.toDTO(json);
+				}
+
+				throw new IllegalArgumentException(
+					"Unknown favIconType " + favIconTypeString);
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Missing favIconType parameter");
+			}
+		}
+
+		@Override
 		protected void setField(
 			FavIcon favIcon, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "className")) {
+			if (Objects.equals(jsonParserFieldName, "favIconType")) {
 				if (jsonParserFieldValue != null) {
-					favIcon.setClassName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "clientExtensionConfig")) {
-
-				if (jsonParserFieldValue != null) {
-					favIcon.setClientExtensionConfig(
-						(Map<String, String>)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "externalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					favIcon.setExternalReferenceCode(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "scope")) {
-				if (jsonParserFieldValue != null) {
-					favIcon.setScope(
-						ScopeSerDes.toDTO((String)jsonParserFieldValue));
+					favIcon.setFavIconType(
+						FavIcon.FavIconType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

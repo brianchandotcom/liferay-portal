@@ -44,12 +44,6 @@ function Form({children, item}) {
 
 	const showLoadingState = localConfig.loading;
 
-	const isEmpty = useSelectorCallback(
-		(state) =>
-			isItemEmpty(item, state.layoutData, state.selectedViewportSize),
-		[item]
-	);
-
 	if (showLoadingState) {
 		return <FormLoadingState />;
 	}
@@ -76,13 +70,40 @@ function Form({children, item}) {
 		);
 	}
 
-	const isMapped = formIsMapped(item);
-
-	if (isEmpty || !isMapped) {
-		return <FormEmptyState isMapped={isMapped} item={item} />;
+	if (!formIsMapped(item)) {
+		return <UnmappedForm item={item} />;
 	}
 
+	return <MappedForm item={item}>{children}</MappedForm>;
+}
+
+function MappedForm({children, item}) {
+	const localConfig = useItemLocalConfig(item.itemId);
+
+	const isEmpty = useSelectorCallback(
+		(state) =>
+			isItemEmpty(item, state.layoutData, state.selectedViewportSize),
+		[item]
+	);
+
 	const {showMessagePreview} = localConfig;
+
+	if (isEmpty) {
+		return (
+			<div className="page-editor__no-fragments-state text-center">
+				<img
+					className="page-editor__no-fragments-state__image"
+					src={`${config.imagesPath}/drag_and_drop.svg`}
+				/>
+
+				<p className="page-editor__no-fragments-state__message">
+					{Liferay.Language.get(
+						'drag-and-drop-fragments-or-widgets-here'
+					)}
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<>
@@ -99,30 +120,13 @@ function Form({children, item}) {
 	);
 }
 
-function FormEmptyState({isMapped, item}) {
+function UnmappedForm({item}) {
 	const saveFormConfig = useSaveFormConfig(item);
 
 	const localConfig = useItemLocalConfig(item.itemId);
 
 	if (localConfig.showMessagePreview) {
 		return <FormSuccessMessage item={item} />;
-	}
-
-	if (isMapped) {
-		return (
-			<div className="page-editor__no-fragments-state text-center">
-				<img
-					className="page-editor__no-fragments-state__image"
-					src={`${config.imagesPath}/drag_and_drop.svg`}
-				/>
-
-				<p className="page-editor__no-fragments-state__message">
-					{Liferay.Language.get(
-						'drag-and-drop-fragments-or-widgets-here'
-					)}
-				</p>
-			</div>
-		);
 	}
 
 	return (

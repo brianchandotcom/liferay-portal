@@ -346,8 +346,7 @@ public class LiferayHttpServletRequestWrapper
 			return null;
 		}
 
-		return new RequestDispatcherAdaptor(
-			requestedLiferayDispatchTargets, path);
+		return new RequestDispatcherImpl(requestedLiferayDispatchTargets, path);
 	}
 
 	@Override

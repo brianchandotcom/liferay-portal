@@ -14,7 +14,7 @@ import {LiferayEditorConfig} from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import {Comment} from '../services/CommentService';
@@ -43,6 +43,7 @@ type Props = {
 
 type SidePanelProps = Props & {
 	dateConfig: datetimeUtils.DateConfig;
+	onUpdateCategorization: (props: UpdateCategorizationProps) => void;
 	onUpdateSchedule: (props: UpdateScheduleProps) => void;
 	scheduleFields: ScheduleFields;
 };
@@ -73,6 +74,11 @@ type ScheduleFieldData = BaseScheduleData & {
 export type ScheduleFields = {
 	expirationDate: ScheduleFieldData;
 	reviewDate: ScheduleFieldData;
+};
+
+export type UpdateCategorizationProps = {
+	name: keyof CategorizationFields;
+	value: string;
 };
 
 export type UpdateScheduleProps = BaseScheduleData & {
@@ -128,10 +134,21 @@ export default function ContentEditorSidePanel(props: Props) {
 			value: toMomentDate(props.reviewDate),
 		},
 	});
-	const [categorizationFields] = useState<CategorizationFields>({
-		assetCategoryIds: '',
-		assetTagNames: '',
-	});
+	const [categorizationFields, setCategorizationFields] =
+		useState<CategorizationFields>({
+			assetCategoryIds: '',
+			assetTagNames: '',
+		});
+
+	const onUpdateCategorization = useCallback(
+		({name, value}: UpdateCategorizationProps) => {
+			setCategorizationFields((fields) => ({
+				...fields,
+				[name]: value,
+			}));
+		},
+		[]
+	);
 
 	const onUpdateSchedule = ({
 		error,
@@ -169,6 +186,7 @@ export default function ContentEditorSidePanel(props: Props) {
 			<SidePanel
 				{...props}
 				dateConfig={dateConfig}
+				onUpdateCategorization={onUpdateCategorization}
 				onUpdateSchedule={onUpdateSchedule}
 				scheduleFields={scheduleFields}
 			/>

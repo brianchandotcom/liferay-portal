@@ -592,6 +592,10 @@ test.describe('Categorization Panel', () => {
 
 			await contentsPage.openSidePanel('Categorization');
 
+			const title = getRandomString();
+
+			await page.getByPlaceholder('New Basic Web Content').fill(title);
+
 			// Add a new tag
 
 			const tagsAutocomplete = page.getByPlaceholder('Add tag');
@@ -602,9 +606,27 @@ test.describe('Categorization Panel', () => {
 
 			await page.getByRole('option', {name: 'Create New Tag:'}).click();
 
-			await expect(
-				page.locator('.label-item', {hasText: tagName})
-			).toBeAttached();
+			const tagLabel = page.locator('.label-item', {hasText: tagName});
+
+			await expect(tagLabel).toBeAttached();
+
+			// Publish the content
+
+			await contentsPage.publishButton.click();
+
+			const content = page.locator('.table-list-title a', {
+				hasText: title,
+			});
+
+			await content.waitFor();
+
+			// Edit content and check that the tag is still there
+
+			await content.click();
+
+			await contentsPage.openSidePanel('Categorization');
+
+			await expect(tagLabel).toBeAttached();
 
 			// Delete tag
 

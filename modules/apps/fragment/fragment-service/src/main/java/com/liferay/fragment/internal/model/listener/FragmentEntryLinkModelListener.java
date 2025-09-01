@@ -39,11 +39,7 @@ public class FragmentEntryLinkModelListener
 	public void onBeforeCreate(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
-		List<InfoField<?>> infoFields = _getInfoFields(fragmentEntryLink);
-
-		fragmentEntryLink.setEditableValues(
-			_escapeTextEditableValues(
-				fragmentEntryLink.getEditableValuesJSONObject(), infoFields));
+		_processInfoFields(fragmentEntryLink);
 	}
 
 	@Override
@@ -59,11 +55,7 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
-		List<InfoField<?>> infoFields = _getInfoFields(fragmentEntryLink);
-
-		fragmentEntryLink.setEditableValues(
-			_escapeTextEditableValues(
-				fragmentEntryLink.getEditableValuesJSONObject(), infoFields));
+		_processInfoFields(fragmentEntryLink);
 	}
 
 	private String _escapeTextEditableValues(
@@ -143,16 +135,21 @@ public class FragmentEntryLinkModelListener
 		return editableValuesJSONObject.toString();
 	}
 
-	private List<InfoField<?>> _getInfoFields(
-		FragmentEntryLink fragmentEntryLink) {
-
+	private void _processInfoFields(FragmentEntryLink fragmentEntryLink) {
 		List<InfoField<?>> infoFields = new ArrayList<>();
 
 		InfoFieldUtil.forEachInfoField(
 			fragmentEntryLink, _fragmentRendererController,
-			(name, infoField, unsafeSupplier) -> infoFields.add(infoField));
+			(fieldObjectValuePair, infoField, unsafeSupplier) ->
+						infoFields.add(infoField));
 
-		return infoFields;
+		if (infoFields.isEmpty()) {
+			return;
+		}
+
+		fragmentEntryLink.setEditableValues(
+			_escapeTextEditableValues(
+				fragmentEntryLink.getEditableValuesJSONObject(), infoFields));
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {

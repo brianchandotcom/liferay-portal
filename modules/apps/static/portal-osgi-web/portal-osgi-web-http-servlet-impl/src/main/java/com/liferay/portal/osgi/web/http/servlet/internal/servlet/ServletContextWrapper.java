@@ -281,8 +281,7 @@ public class ServletContextWrapper implements ServletContext {
 			return null;
 		}
 
-		return new RequestDispatcherAdaptor(
-			liferayDispatchTargets, servletName);
+		return new RequestDispatcherImpl(liferayDispatchTargets, servletName);
 	}
 
 	@Override
@@ -314,7 +313,7 @@ public class ServletContextWrapper implements ServletContext {
 			return null;
 		}
 
-		return new RequestDispatcherAdaptor(liferayDispatchTargets, path);
+		return new RequestDispatcherImpl(liferayDispatchTargets, path);
 	}
 
 	@Override

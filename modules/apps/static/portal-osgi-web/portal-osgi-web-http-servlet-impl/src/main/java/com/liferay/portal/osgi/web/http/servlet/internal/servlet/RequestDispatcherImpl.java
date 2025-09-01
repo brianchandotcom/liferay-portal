@@ -23,9 +23,9 @@ import java.io.IOException;
 /**
  * @author Dante Wang
  */
-public class RequestDispatcherAdaptor implements RequestDispatcher {
+public class RequestDispatcherImpl implements RequestDispatcher {
 
-	public RequestDispatcherAdaptor(
+	public RequestDispatcherImpl(
 		LiferayDispatchTargets liferayDispatchTargets, String path) {
 
 		_liferayDispatchTargets = liferayDispatchTargets;
@@ -56,7 +56,7 @@ public class RequestDispatcherAdaptor implements RequestDispatcher {
 
 	@Override
 	public String toString() {
-		String value = _string;
+		String value = _toString;
 
 		if (value == null) {
 			value = StringBundler.concat(
@@ -64,17 +64,17 @@ public class RequestDispatcherAdaptor implements RequestDispatcher {
 				StringPool.COMMA_AND_SPACE, _liferayDispatchTargets,
 				CharPool.CLOSE_BRACKET);
 
-			_string = value;
+			_toString = value;
 		}
 
 		return value;
 	}
 
 	private static final String _SIMPLE_NAME =
-		RequestDispatcherAdaptor.class.getSimpleName();
+		RequestDispatcherImpl.class.getSimpleName();
 
 	private final LiferayDispatchTargets _liferayDispatchTargets;
 	private final String _path;
-	private String _string;
+	private String _toString;
 
 }

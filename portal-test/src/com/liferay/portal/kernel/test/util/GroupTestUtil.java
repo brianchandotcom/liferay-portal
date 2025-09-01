@@ -211,6 +211,58 @@ public class GroupTestUtil {
 		return addGroup(companyId, user.getUserId(), parentGroupId);
 	}
 
+	public static Group addGroupWithScope(int typeDepot) throws Exception {
+		return addGroupWithScope(
+			typeDepot, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+	}
+
+	public static Group addGroupWithScope(int type, long parentGroupId)
+		throws Exception {
+
+		return addGroupWithScope(
+			type, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			parentGroupId);
+	}
+
+	public static Group addGroupWithScope(
+			int type, long companyId, long userId, long parentGroupId)
+		throws Exception {
+
+		String name = RandomTestUtil.randomString(
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		Group group = GroupLocalServiceUtil.fetchGroup(companyId, name);
+
+		if (group != null) {
+			return group;
+		}
+
+		Map<Locale, String> nameMap = HashMapBuilder.put(
+			LocaleUtil.getDefault(), name
+		).build();
+
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
+		boolean site = true;
+		boolean active = true;
+		boolean manualMembership = true;
+		int membershipRestriction =
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
+
+		return GroupLocalServiceUtil.addGroup(
+			userId, parentGroupId, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			type, manualMembership, membershipRestriction, friendlyURL, site,
+			active,
+			ServiceContextTestUtil.getServiceContext(
+				GroupLocalServiceUtil.getGroup(companyId, GroupConstants.GUEST),
+				userId));
+	}
+
 	public static void addLayoutSetVirtualHost(
 			Group group, boolean privateLayout)
 		throws Exception {

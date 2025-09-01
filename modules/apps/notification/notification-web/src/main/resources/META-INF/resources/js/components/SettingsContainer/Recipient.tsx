@@ -33,8 +33,14 @@ interface RecipientProps {
 	id: 'to' | 'cc' | 'bcc';
 	label: string;
 	learnResources: ILearnResourceContext;
-	onChange: (key: string, value: any) => void;
-	onTypeChange: (key: string, type: any) => void;
+	onChange: (
+		key: string,
+		value:
+			| EmailNotificationRecipients[]
+			| Partial<Liferay.Language.FullyLocalizedValue<string>>
+			| string
+	) => void;
+	onTypeChange: (key: string, type: string) => void;
 	recipientOptions: LabelValueObject[];
 	required?: boolean;
 	selectedLocale: Locale;

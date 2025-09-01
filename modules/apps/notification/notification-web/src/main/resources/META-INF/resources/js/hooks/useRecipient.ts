@@ -9,7 +9,13 @@ export function useRecipient(
 ) {
 	const [recipient] = values.recipients as EmailRecipients[];
 
-	const handleChange = (key: string, value: any) => {
+	const handleChange = (
+		key: string,
+		value:
+			| Partial<Liferay.Language.FullyLocalizedValue<string>>
+			| string
+			| EmailNotificationRecipients[]
+	) => {
 		setValues({
 			...values,
 			recipients: [
@@ -21,7 +27,7 @@ export function useRecipient(
 		});
 	};
 
-	const handleTypeChange = (key: string, type: any) => {
+	const handleTypeChange = (key: string, type: string) => {
 		setValues({
 			...values,
 			recipients: [

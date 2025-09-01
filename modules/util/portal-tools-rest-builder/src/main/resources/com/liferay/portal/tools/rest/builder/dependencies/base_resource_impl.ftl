@@ -441,6 +441,26 @@ public abstract class Base${schemaName}ResourceImpl
 							source="AssetLibrary" + schemaName
 						/>,
 						assetLibraryId, portletName, roleNames);
+				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "assetLibraryExternalReferenceCode")>
+					<#assign
+						externalReferenceCodeParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
+						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
+					/>
+
+					long groupId = getPermissionCheckerGroupId(assetLibraryExternalReferenceCode);
+
+					String resourceName = getPermissionCheckerResourceName(assetLibraryExternalReferenceCode, ${externalReferenceCodeParameterName});
+					Long resourceId = getPermissionCheckerResourceId(assetLibraryExternalReferenceCode, ${externalReferenceCodeParameterName});
+
+					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
+
+					return toPermissionPage(
+						<@getActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source=schemaName
+						/>,
+						resourceId, resourceName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -518,6 +538,23 @@ public abstract class Base${schemaName}ResourceImpl
 							resourceId="assetLibraryId"
 							resourceName="portletName"
 							source="AssetLibrary" + schemaName
+						/>
+					</@updateResourcePermissions>
+				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "assetLibraryExternalReferenceCode")>
+					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
+
+					String resourceName = getPermissionCheckerResourceName(assetLibraryExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
+					Long resourceId = getPermissionCheckerResourceId(assetLibraryExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
+
+					<@updateResourcePermissions
+						groupId = "getPermissionCheckerGroupId(assetLibraryExternalReferenceCode)"
+						resourceId = "resourceId"
+						resourceName = "resourceName"
+					>
+						<@getActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source=schemaName
 						/>
 					</@updateResourcePermissions>
 				<#else>

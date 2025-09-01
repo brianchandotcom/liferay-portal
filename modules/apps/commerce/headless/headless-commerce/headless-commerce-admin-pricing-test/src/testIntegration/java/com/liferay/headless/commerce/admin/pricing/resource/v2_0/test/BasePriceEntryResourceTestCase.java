@@ -284,7 +284,7 @@ public abstract class BasePriceEntryResourceTestCase {
 							put("priceEntryId", priceEntry1.getPriceEntryId());
 						}
 					},
-					new GraphQLField("priceEntryId"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -324,7 +324,7 @@ public abstract class BasePriceEntryResourceTestCase {
 									priceEntry2.getPriceEntryId());
 							}
 						},
-						new GraphQLField("priceEntryId")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -2329,6 +2329,10 @@ public abstract class BasePriceEntryResourceTestCase {
 
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
+		graphQLFields.add(new GraphQLField("priceEntryId"));
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(

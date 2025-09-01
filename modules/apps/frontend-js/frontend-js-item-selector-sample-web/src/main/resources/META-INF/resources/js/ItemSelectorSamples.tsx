@@ -117,9 +117,12 @@ export default function ItemSelectorSamples() {
 
 	const [documentsItemSelectorModal, setDocumentsItemSelectorModal] =
 		useState<Document[]>([]);
-	const [spaceItemSelectorModal, setSpaceItemSelectorModal] =
-		useState<Space>();
-	const [userItemSelectorModal, setUserItemSelectorModal] = useState<User>();
+	const [spacesItemSelectorModal, setSpacesItemSelectorModal] = useState<
+		Space[]
+	>([]);
+	const [usersItemSelectorModal, setUsersItemSelectorModal] = useState<
+		User[]
+	>([]);
 
 	const {
 		observer: fileItemSelectorObserver,
@@ -325,7 +328,8 @@ export default function ItemSelectorSamples() {
 							setDocument(items[0]);
 						},
 						onOpenChange: fileItemSelectorOpenChange,
-						onSubmit: setDocumentsItemSelectorModal,
+						onSubmit: (items) =>
+							setDocumentsItemSelectorModal(items),
 						open: fileItemSelectorOpen,
 						type: documentsItemSelectorConfig.type,
 					}}
@@ -349,7 +353,7 @@ export default function ItemSelectorSamples() {
 							setSpace2(items[0]);
 						},
 						onOpenChange: spaceItemSelectorOpenChange,
-						onSubmit: setSpaceItemSelectorModal,
+						onSubmit: (items) => setSpacesItemSelectorModal(items),
 						open: spaceItemSelectorOpen,
 						type: assetLibrariesItemSelectorConfig.type,
 					}}
@@ -373,7 +377,7 @@ export default function ItemSelectorSamples() {
 							setUser(items[0]);
 						},
 						onOpenChange: userItemSelectorOpenChange,
-						onSubmit: setUserItemSelectorModal,
+						onSubmit: (items) => setUsersItemSelectorModal(items),
 						open: userItemSelectorOpen,
 						type: userAccountsItemSelectorConfig.type,
 					}}
@@ -418,19 +422,19 @@ export default function ItemSelectorSamples() {
 						/>
 					))}
 
-				{spaceItemSelectorModal && (
+				{!!spacesItemSelectorModal.length && (
 					<ClayAlert
 						displayType="info"
 						symbol="nodes"
-						title={spaceItemSelectorModal.name}
+						title={spacesItemSelectorModal[0].name}
 					/>
 				)}
 
-				{userItemSelectorModal && (
+				{!!usersItemSelectorModal.length && (
 					<ClayAlert
 						displayType="info"
 						symbol="user"
-						title={userItemSelectorModal.name}
+						title={usersItemSelectorModal[0].name}
 					/>
 				)}
 			</SampleContainer>

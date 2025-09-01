@@ -665,12 +665,6 @@
 			"name": "CMSDefaultPermission",
 			"objectActions": [
 			],
-			"objectDefinitionSettings": [
-				{
-					"name": "acceptAllGroups",
-					"value": "true"
-				}
-			],
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -718,15 +712,15 @@
 					"DBType": "Clob",
 					"businessType": "LongText",
 					"defaultValue": "null",
-					"externalReferenceCode": "PERMISSIONS",
+					"externalReferenceCode": "DEFAULT_PERMISSIONS",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Permissions"
+						"en_US": "Default Permissions"
 					},
 					"localized": false,
-					"name": "permissions",
+					"name": "defaultPermissions",
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": true,
@@ -743,7 +737,7 @@
 				"en_US": "CMS Default Permissions"
 			},
 			"portlet": false,
-			"scope": "depot",
+			"scope": "company",
 			"status": {
 				"code": 0
 			},

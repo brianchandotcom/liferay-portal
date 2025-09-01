@@ -4,30 +4,15 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
-import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/genericOpenModalUtil';
-import {restoreItemAction} from './actions/restoreItemAction';
+import {getFormattedLabel} from '../../common/utils/getFormattedText';
+import {displayDeleteSuccessToast} from '../../common/utils/toastUtil';
+import restoreItemAction from './actions/restoreItemAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
-
-type Action = {
-	href: string;
-	method: string;
-};
-interface ItemData {
-	actions?: {
-		delete: Action;
-		expire: Action;
-		get: Action;
-		replace: Action;
-		restore: Action;
-		update: Action;
-	};
-	embedded: {content: string; objectEntryFolderId: number; title: string};
-}
 
 const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -84,7 +69,9 @@ export default function RecycleBinFDSPropsTransformer({
 			loadData: () => {};
 		}) {
 			if (action.data.id === 'delete') {
-				const formattedItemLabel = `<strong>${Liferay.Util.escapeHTML(itemData.embedded.title)}</strong>`;
+				const formattedItemLabel = getFormattedLabel(
+					itemData.embedded.title
+				);
 				const confirmationText = sub(
 					Liferay.Language.get(
 						'you-are-about-to-permanently-delete-x-this-action-cannot-be-undone'
@@ -92,32 +79,23 @@ export default function RecycleBinFDSPropsTransformer({
 					formattedItemLabel
 				);
 
-				const displayDeleteItemSuccessToast = () => {
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'x-has-been-permanently-deleted'
-							),
-							formattedItemLabel
-						),
-						type: 'success',
-					});
+				const displaySuccessToast = () => {
+					return displayDeleteSuccessToast(itemData.embedded.title);
 				};
+
 				openGenericFDSDeleteConfirmationModal(
 					confirmationText,
 					itemData.actions?.delete?.method,
 					itemData.actions?.delete?.href,
 					itemData.embedded.title,
 					loadData,
-					displayDeleteItemSuccessToast
+					displaySuccessToast
 				);
 			}
 
 			if (action.data.id === 'restore') {
-				const formattedItemLabel = `<strong>${Liferay.Util.escapeHTML(itemData.embedded.title)}</strong>`;
-
 				await restoreItemAction(
-					formattedItemLabel,
+					itemData.embedded.title,
 					loadData,
 					itemData.actions?.restore.method,
 					itemData.actions?.restore.href

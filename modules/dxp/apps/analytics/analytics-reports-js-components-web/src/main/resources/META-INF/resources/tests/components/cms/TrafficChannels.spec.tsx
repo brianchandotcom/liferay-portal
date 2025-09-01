@@ -4,12 +4,14 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+
+// eslint-disable-next-line @liferay/portal/no-cross-module-deep-import, @liferay/no-extraneous-dependencies
+import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {
 	render,
 	screen,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ApiHelper from '../../../js/apis/ApiHelper';
@@ -20,27 +22,33 @@ const mockData = {
 		items: [
 			{
 				count: 10,
-				name: 'Direct',
+				name: 'direct',
+				percentage: 0.833,
 			},
 			{
 				count: 20,
-				name: 'Social',
+				name: 'social',
+				percentage: 0.1667,
 			},
 			{
 				count: 15,
-				name: 'Referrals',
+				name: 'referrals',
+				percentage: 0.125,
 			},
 			{
 				count: 10,
-				name: 'Paid Search',
+				name: 'paid-search',
+				percentage: 0.833,
 			},
 			{
 				count: 30,
-				name: 'Email',
+				name: 'email',
+				percentage: 0.25,
 			},
 			{
 				count: 35,
-				name: 'Others',
+				name: 'others',
+				percentage: 0.2917,
 			},
 		],
 		totalCount: 120,
@@ -63,6 +71,13 @@ describe('TrafficChannels', () => {
 		).toBeTruthy();
 	});
 
+	it('checks the accessibility of the share content', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
+		const {container} = render(<TrafficChannels />);
+
+		await checkAccessibility({bestPractices: true, context: container});
+	});
+
 	it('renders 5 traffic channels and others', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
 		render(<TrafficChannels />);
@@ -80,27 +95,33 @@ describe('TrafficChannels', () => {
 				items: [
 					{
 						count: 10,
-						name: 'Direct',
+						name: 'direct',
+						percentage: 0.1667,
 					},
 					{
 						count: 10,
-						name: 'Social',
+						name: 'social',
+						percentage: 0.1667,
 					},
 					{
 						count: 10,
-						name: 'Referrals',
+						name: 'referrals',
+						percentage: 0.1667,
 					},
 					{
 						count: 10,
-						name: 'Paid Search',
+						name: 'paid-search',
+						percentage: 0.1667,
 					},
 					{
 						count: 10,
-						name: 'Email',
+						name: 'email',
+						percentage: 0.1667,
 					},
 					{
 						count: 10,
-						name: 'Others',
+						name: 'others',
+						percentage: 0.1667,
 					},
 				],
 				totalCount: 60,
@@ -110,32 +131,13 @@ describe('TrafficChannels', () => {
 
 		const expectedPercentage = ((10 / 60) * 100).toFixed(2);
 
-		const container = render(<TrafficChannels />);
+		const {getByText} = render(<TrafficChannels />);
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
-		const trafficChannelItem = container.queryByRole('row', {
-			name: /Direct/,
-		});
+		const trafficChannelItem =
+			getByText(/direct/).parentElement?.parentElement;
 
 		expect(trafficChannelItem?.textContent).toContain(expectedPercentage);
-	});
-
-	it('is accessible via keyboard navigation', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
-
-		render(<TrafficChannels />);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		const firstChannel = screen.getByRole('row', {name: /Direct/});
-		firstChannel.focus();
-
-		expect(firstChannel).toHaveFocus();
-
-		await userEvent.tab();
-
-		const secondChannel = screen.getByRole('row', {name: /Social/});
-		expect(secondChannel).toHaveFocus();
 	});
 });

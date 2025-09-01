@@ -4,6 +4,7 @@
  */
 
 import ClayPanel from '@clayui/panel';
+import {MultiSelectItem} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -11,20 +12,22 @@ import {useRecipient} from '../../hooks/useRecipient';
 import {Recipient} from './Recipient';
 
 interface SecondaryRecipientsProps {
-	baseResourceURL: string;
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
+	roles: MultiSelectItem[];
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
+	userGroups: MultiSelectItem[];
 	values: NotificationTemplate;
 }
 
 export function SecondaryRecipient({
-	baseResourceURL,
 	learnResources,
 	recipientOptions,
+	roles,
 	selectedLocale,
 	setValues,
+	userGroups,
 	values,
 }: SecondaryRecipientsProps) {
 	const {handleChange, handleTypeChange} = useRecipient(setValues, values);
@@ -37,7 +40,6 @@ export function SecondaryRecipient({
 			>
 				<ClayPanel.Body>
 					<Recipient
-						baseResourceURL={baseResourceURL}
 						disabled={values.system}
 						displayType="row"
 						id="cc"
@@ -46,7 +48,9 @@ export function SecondaryRecipient({
 						onChange={handleChange}
 						onTypeChange={handleTypeChange}
 						recipientOptions={recipientOptions}
+						roles={roles}
 						selectedLocale={selectedLocale}
+						userGroups={userGroups}
 						values={values}
 					/>
 				</ClayPanel.Body>
@@ -58,7 +62,6 @@ export function SecondaryRecipient({
 			>
 				<ClayPanel.Body>
 					<Recipient
-						baseResourceURL={baseResourceURL}
 						disabled={values.system}
 						displayType="row"
 						id="bcc"
@@ -67,7 +70,9 @@ export function SecondaryRecipient({
 						onChange={handleChange}
 						onTypeChange={handleTypeChange}
 						recipientOptions={recipientOptions}
+						roles={roles}
 						selectedLocale={selectedLocale}
+						userGroups={userGroups}
 						values={values}
 					/>
 				</ClayPanel.Body>

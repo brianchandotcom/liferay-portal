@@ -22,11 +22,8 @@ import {
 	getCheckedChildren,
 	uncheckMultiSelectItemChildrens,
 } from './multiSelectUtil';
-import {getEmailNotificationRoles} from './rolesUtil';
-import {getUserGroups} from './userGroupsUtil';
 
 interface RecipientProps {
-	baseResourceURL: string;
 	disabled: boolean;
 	displayType: 'column' | 'row';
 	error?: string;
@@ -43,13 +40,14 @@ interface RecipientProps {
 	onTypeChange: (key: string, type: string) => void;
 	recipientOptions: LabelValueObject[];
 	required?: boolean;
+	roles: MultiSelectItem[];
 	selectedLocale: Locale;
 	userEmailAddressLocalized?: boolean;
+	userGroups: MultiSelectItem[];
 	values: NotificationTemplate;
 }
 
 export function Recipient({
-	baseResourceURL,
 	disabled,
 	displayType,
 	error,
@@ -60,8 +58,10 @@ export function Recipient({
 	onTypeChange,
 	recipientOptions,
 	required,
+	roles,
 	selectedLocale,
 	userEmailAddressLocalized,
+	userGroups,
 	values,
 }: RecipientProps) {
 	const [rolesList, setRolesList] = useState<MultiSelectItem[]>([]);
@@ -93,46 +93,36 @@ export function Recipient({
 	];
 
 	useEffect(() => {
-		const fetchInitialData = async () => {
-			const recipients = Array.isArray(recipient[id])
-				? (recipient[id] as EmailNotificationRecipients[])
-				: [];
+		const recipients = Array.isArray(recipient[id])
+			? (recipient[id] as EmailNotificationRecipients[])
+			: [];
 
-			if (recipientType === 'role') {
-				const emailNotificationRoles =
-					await getEmailNotificationRoles(baseResourceURL);
+		if (recipientType === 'role') {
+			const newRolesList = roles.map((role) => ({
+				...role,
+				children: getCheckedChildren(
+					recipients,
+					role.children,
+					'roleName'
+				),
+			}));
 
-				const newRolesList = emailNotificationRoles.map((role) => ({
-					...role,
-					children: getCheckedChildren(
-						recipients,
-						role.children,
-						'roleName'
-					),
-				}));
+			setRolesList(newRolesList);
+		}
 
-				setRolesList(newRolesList);
-			}
-			if (recipientType === 'user-group') {
-				const emailNotificationUserGroups = await getUserGroups();
+		if (recipientType === 'user-group') {
+			const newUserGroupsList = userGroups.map((userGroup) => ({
+				...userGroup,
+				children: getCheckedChildren(
+					recipients,
+					userGroup.children,
+					'userGroupName'
+				),
+			}));
 
-				const newUserGroupsList = emailNotificationUserGroups.map(
-					(userGroup) => ({
-						...userGroup,
-						children: getCheckedChildren(
-							recipients,
-							userGroup.children,
-							'userGroupName'
-						),
-					})
-				);
-
-				setUserGroupsList(newUserGroupsList);
-			}
-		};
-
-		fetchInitialData();
-	}, [baseResourceURL, id, recipient, recipientType]);
+			setUserGroupsList(newUserGroupsList);
+		}
+	}, [id, recipient, recipientType, roles, userGroups]);
 
 	return (
 		<div className={displayType}>

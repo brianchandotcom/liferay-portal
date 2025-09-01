@@ -6,7 +6,7 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {FormError} from '@liferay/object-js-components-web';
+import {FormError, MultiSelectItem} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -15,22 +15,24 @@ import {NotificationTemplateError} from '../EditNotificationTemplate';
 import {Recipient} from './Recipient';
 
 interface PrimaryRecipientProps {
-	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
+	roles: MultiSelectItem[];
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
+	userGroups: MultiSelectItem[];
 	values: NotificationTemplate;
 }
 
 export function PrimaryRecipient({
-	baseResourceURL,
 	errors,
 	learnResources,
 	recipientOptions,
+	roles,
 	selectedLocale,
 	setValues,
+	userGroups,
 	values,
 }: PrimaryRecipientProps) {
 	const [recipient] = values.recipients as EmailRecipients[];
@@ -40,7 +42,6 @@ export function PrimaryRecipient({
 	return (
 		<>
 			<Recipient
-				baseResourceURL={baseResourceURL}
 				disabled={values.system}
 				displayType="column"
 				error={errors.to}
@@ -51,8 +52,10 @@ export function PrimaryRecipient({
 				onTypeChange={handleTypeChange}
 				recipientOptions={recipientOptions}
 				required
+				roles={roles}
 				selectedLocale={selectedLocale}
 				userEmailAddressLocalized
+				userGroups={userGroups}
 				values={values}
 			/>
 

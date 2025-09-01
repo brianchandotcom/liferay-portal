@@ -283,7 +283,7 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 							put("id", productDisplayPage1.getId());
 						}
 					},
-					new GraphQLField("id"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -320,7 +320,7 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 								put("id", productDisplayPage2.getId());
 							}
 						},
-						new GraphQLField("id")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -1983,6 +1983,8 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(

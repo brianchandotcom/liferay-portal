@@ -342,6 +342,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("taxonomyCategoryId"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory.class)) {

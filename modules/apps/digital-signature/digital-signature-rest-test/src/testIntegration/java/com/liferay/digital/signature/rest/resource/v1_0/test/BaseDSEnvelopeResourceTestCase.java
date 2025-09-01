@@ -602,8 +602,6 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		return jsonDeserializer.deserialize(
 			JSONUtil.getValueAsString(
 				invokeGraphQLMutation(
@@ -826,6 +824,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
 
 		graphQLFields.add(new GraphQLField("siteId"));
 

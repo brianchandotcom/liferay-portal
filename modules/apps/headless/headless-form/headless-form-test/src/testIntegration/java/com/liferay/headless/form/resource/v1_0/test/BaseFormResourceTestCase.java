@@ -1116,6 +1116,8 @@ public abstract class BaseFormResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("id"));
+
 		graphQLFields.add(new GraphQLField("siteId"));
 
 		for (java.lang.reflect.Field field :

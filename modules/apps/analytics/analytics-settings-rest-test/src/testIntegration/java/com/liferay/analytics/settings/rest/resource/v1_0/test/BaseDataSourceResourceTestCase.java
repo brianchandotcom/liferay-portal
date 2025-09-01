@@ -409,6 +409,8 @@ public abstract class BaseDataSourceResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("dataSourceId"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.analytics.settings.rest.dto.v1_0.DataSource.

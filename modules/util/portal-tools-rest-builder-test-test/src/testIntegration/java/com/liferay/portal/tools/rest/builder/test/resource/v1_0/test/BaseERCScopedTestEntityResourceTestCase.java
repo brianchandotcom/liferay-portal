@@ -335,7 +335,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 										getExternalReferenceCode() + "\"");
 						}
 					},
-					new GraphQLField("ercScopedTestEntityId"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -380,7 +380,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 											getExternalReferenceCode() + "\"");
 							}
 						},
-						new GraphQLField("ercScopedTestEntityId")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -1205,8 +1205,6 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
 
-		graphQLFields.add(new GraphQLField("externalReferenceCode"));
-
 		return jsonDeserializer.deserialize(
 			JSONUtil.getValueAsString(
 				invokeGraphQLMutation(
@@ -1432,6 +1430,8 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(

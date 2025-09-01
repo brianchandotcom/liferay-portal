@@ -26,11 +26,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 
-//import com.liferay.exportimport.report.service.ExportImportReportEntryLocalServiceUtil;
-
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -384,23 +381,18 @@ public class StagedModelDataHandlerUtil {
 		}
 
 		try {
-
 			stagedModelDataHandler.importStagedModel(
 				portletDataContext, stagedModel);
-
-
-		} catch (PortletDataException exception){
-
-			for (ImportStagedModelErrorHandler importStagedModelErrorHandler :
-				_importStagedModelErrorHandler) {
-
-				importStagedModelErrorHandler.addErrorImportReportEntry(exception, portletDataContext, stagedModel);
-
-			}
-
-
-
 		}
+		catch (PortletDataException portletDataException) {
+			for (ImportStagedModelErrorHandler importStagedModelErrorHandler :
+					_importStagedModelErrorHandler) {
+
+				importStagedModelErrorHandler.addErrorImportReportEntry(
+					portletDataException, portletDataContext, stagedModel);
+			}
+		}
+
 		LastSessionRecorderHelperUtil.syncLastSessionState();
 	}
 
@@ -642,31 +634,9 @@ public class StagedModelDataHandlerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedModelDataHandlerUtil.class);
 
-
-	private static <T extends StagedModel> void _addErrorImportReportEntry(Exception exception, PortletDataContext portletDataContext, T stagedModel) {
-		List<ImportStagedModelErrorHandler> importStagedModelErrorHandlers = new ArrayList<>();
-
-	//	if (group == null) {
-			//return importStagedModelErrorHandlers;
-	//	}
-
-		for (ImportStagedModelErrorHandler importStagedModelErrorHandler :
-			_importStagedModelErrorHandler) {
-
-			//boolean addError =
-				importStagedModelErrorHandler.addErrorImportReportEntry(exception, portletDataContext, stagedModel);
-
-			//if (!addError) {
-				//groupCapabilities.add(capability);
-			//}
-		}
-
-		//return importStagedModelErrorHandlers;
-	}
-
 	private static final ServiceTrackerList<ImportStagedModelErrorHandler>
 		_importStagedModelErrorHandler = ServiceTrackerListFactory.open(
-		SystemBundleUtil.getBundleContext(),
-		ImportStagedModelErrorHandler.class);
+			SystemBundleUtil.getBundleContext(),
+			ImportStagedModelErrorHandler.class);
 
 }

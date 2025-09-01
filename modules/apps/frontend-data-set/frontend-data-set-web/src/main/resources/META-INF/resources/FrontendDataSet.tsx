@@ -67,6 +67,7 @@ import {loadData} from './utils/loadData';
 
 import {logError} from './utils/logError';
 import {
+	EStateInURLKeys,
 	EStateInURLSettings,
 	IField,
 	IFrontendDataSetProps,
@@ -76,6 +77,7 @@ import {
 	IView,
 	TSort,
 } from './utils/types';
+import useSetStateInURL from './utils/useSetStateInURL';
 import ViewsContext from './views/ViewsContext';
 
 // @ts-ignore
@@ -141,6 +143,12 @@ const FrontendDataSetContent = ({
 }: IFrontendDataSetProps) => {
 	const fdsRef = useRef(null);
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
+	const setDelta = useSetStateInURL({
+		id,
+		key: EStateInURLKeys.DELTA,
+		stateInURLSettings,
+		type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
+	});
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
@@ -291,6 +299,15 @@ const FrontendDataSetContent = ({
 	);
 
 	const {activeView, filters, paginationDelta, sorts} = viewsState;
+
+	const handleDeltaChange = useCallback(
+		(delta: number) => {
+			setPageNumber(1);
+
+			viewsDispatch(setDelta(delta));
+		},
+		[setDelta, setPageNumber, viewsDispatch]
+	);
 
 	const {
 		component: View,
@@ -924,14 +941,7 @@ const FrontendDataSetContent = ({
 						selectPerPageItems: Liferay.Language.get('x-items'),
 					}}
 					onActiveChange={setPageNumber}
-					onDeltaChange={(delta) => {
-						setPageNumber(1);
-
-						viewsDispatch({
-							type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
-							value: delta,
-						});
-					}}
+					onDeltaChange={handleDeltaChange}
 					totalItems={total}
 				/>
 			</div>

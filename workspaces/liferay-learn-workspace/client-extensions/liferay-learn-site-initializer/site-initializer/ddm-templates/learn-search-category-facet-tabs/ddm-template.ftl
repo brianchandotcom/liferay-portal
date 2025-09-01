@@ -213,7 +213,7 @@
 
 	.learn-category-facet-tabs {
 		display: flex;
-			flex-direction: row !important;
+		flex-direction: row !important;
 	}
 
 	.learn-category-facet-tabs.open {
@@ -225,12 +225,12 @@
 	}
 
 	.learn-category-facet-tabs .facet-value {
-		flex:1;
+		flex: 1;
 	}
 
 	.learn-category-facet-tabs.tab-list {
-		align-items:center;
-		background: var(--Neutral-01, #F7F7F8);
+		align-items: center;
+		background: var(--Neutral-01, #f7f7f8);
 		border-radius: 99px;
 		display: flex;
 		height: 52px;
@@ -238,7 +238,7 @@
 	}
 
 	.learn-category-facet-tabs .selected-tab-btn {
-		background: var(--Action-Primary-Active-Lighten, #E6EDFB);
+		background: var(--Action-Primary-Active-Lighten, #e6edfb);
 		border-radius: 99px;
 		opacity: 1;
 		padding: 8px;
@@ -247,9 +247,9 @@
 	}
 
 	.term-count {
-		background: var(--Status-Info-Info, #2E5AAC);
+		background: var(--Status-Info-Info, #2e5aac);
 		border-radius: 12px;
-		color: var(--Neutral-00, #FFF);
+		color: var(--Neutral-00, #fff);
 		font-size: 13px;
 		padding: 2px 5px;
 	}
@@ -270,24 +270,29 @@
 
 		.filter-toggle {
 			align-items: center;
-			background: #F7F7F8;
+			background: #f7f7f8;
 			border-radius: 99px;
 			display: flex;
 			gap: 4px;
 			justify-content: center;
 			padding: 5px;
 			width: 100%;
+
 			.filter-toggle-content {
 				align-items: center;
 				border-radius: 99px;
 				display: flex;
 				padding: 8px;
 				width: 100%;
+
 				.filter-toggle-term-text-term-count {
 					width: 100%;
 				}
-				&:hover, &:active, &:focus {
-					background: #E6EDFB;
+
+				&:hover,
+				&:active,
+				&:focus {
+					background: #e6edfb;
 				}
 			}
 		}
@@ -300,7 +305,7 @@
 				width: 100%;
 
 				&:hover {
-					background: #EDF3FE;
+					background: #edf3fe;
 				}
 			}
 
@@ -322,9 +327,9 @@
 
 			&.tab-list {
 				align-items: start;
-				background: #FFFF;
+				background: #ffff;
 				border-radius: 10px;
-				box-shadow: 0px 5px 15px 0px rgba(19, 20, 31, 0.12);
+				box-shadow: 0 5px 15px 0 rgba(19, 20, 31, 0.12);
 				display: none;
 				flex-direction: column;
 				height: 100%;

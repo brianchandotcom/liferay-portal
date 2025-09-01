@@ -93,7 +93,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 			String version = getVersion(params);
 
-			if (version != null) {
+			if (Validator.isNotNull(version)) {
 				infoItemIdentifier.setVersion(version);
 			}
 		}

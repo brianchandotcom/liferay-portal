@@ -30,8 +30,8 @@ public class AnalyticsMessageDataCleanupPreupgradeProcess
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Truncated table " +
-					dbInspector.normalizeName("AnalyticsMessage"));
+				"Table " + dbInspector.normalizeName("AnalyticsMessage") +
+					", truncated because data is no longer needed");
 		}
 	}
 

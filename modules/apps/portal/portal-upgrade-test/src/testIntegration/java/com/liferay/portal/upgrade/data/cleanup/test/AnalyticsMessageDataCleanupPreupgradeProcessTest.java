@@ -86,8 +86,8 @@ public class AnalyticsMessageDataCleanupPreupgradeProcessTest
 
 			Assert.assertTrue(
 				messages.contains(
-					"Truncated table " +
-						_dbInspector.normalizeName("AnalyticsMessage")));
+					"Table " + _dbInspector.normalizeName("AnalyticsMessage") +
+						", truncated because data is no longer needed"));
 
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(
@@ -116,8 +116,8 @@ public class AnalyticsMessageDataCleanupPreupgradeProcessTest
 
 			Assert.assertFalse(
 				messages.contains(
-					"Truncated table " +
-						_dbInspector.normalizeName("AnalyticsMessage")));
+					"Table " + _dbInspector.normalizeName("AnalyticsMessage") +
+						", truncated because data is no longer needed"));
 		}
 	}
 

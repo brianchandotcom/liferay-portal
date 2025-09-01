@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
@@ -34,13 +35,16 @@ public class QuartzJobDetailsDataCleanupPreupgradeProcess
 				return;
 			}
 
+			DBInspector dbInspector = new DBInspector(connection);
+
 			while (resultSet.next()) {
 				_log.info(
 					StringBundler.concat(
-						"Deleted Quartz job detail for job ",
-						resultSet.getString("JOB_NAME"),
-						" from QUARTZ_JOB_DETAILS table because JOB_DATA ",
-						"column was null"));
+						"Table ",
+						dbInspector.normalizeName("QUARTZ_JOB_DETAILS"),
+						", row deleted because ",
+						dbInspector.normalizeName("JOB_DATA"),
+						" was null for job ", resultSet.getString("JOB_NAME")));
 			}
 		}
 	}

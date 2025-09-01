@@ -11,10 +11,13 @@ import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -115,11 +118,12 @@ public class CMSDefaultPermissionUtilTest {
 	@Test
 	public void testAddOrUpdateCMSDefaultPermission() throws Exception {
 		Group group = _depotEntry.getGroup();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry1 =
 			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
-				group.getExternalReferenceCode(), group.getGroupId(),
-				TestPropsValues.getUserId(), group.getExternalReferenceCode(),
+				RandomTestUtil.randomString(), group.getCompanyId(),
+				TestPropsValues.getUserId(), externalReferenceCode,
 				_depotEntry.getModelClassName(),
 				JSONUtil.put(
 					"L_BASIC_WEB_CONTENT", JSONUtil.putAll(ActionKeys.VIEW)));
@@ -127,7 +131,7 @@ public class CMSDefaultPermissionUtilTest {
 		Map<String, Serializable> values = objectEntry1.getValues();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			String.valueOf(values.getOrDefault("permissions", "{}")));
+			String.valueOf(values.getOrDefault("defaultPermissions", "{}")));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("L_BASIC_WEB_CONTENT");
 
@@ -136,8 +140,8 @@ public class CMSDefaultPermissionUtilTest {
 
 		ObjectEntry objectEntry2 =
 			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
-				group.getExternalReferenceCode(), group.getGroupId(),
-				TestPropsValues.getUserId(), group.getExternalReferenceCode(),
+				objectEntry1.getExternalReferenceCode(), group.getCompanyId(),
+				TestPropsValues.getUserId(), externalReferenceCode,
 				_depotEntry.getModelClassName(),
 				JSONUtil.put(
 					"L_BASIC_WEB_CONTENT",
@@ -149,7 +153,7 @@ public class CMSDefaultPermissionUtilTest {
 		values = objectEntry2.getValues();
 
 		jsonObject = JSONFactoryUtil.createJSONObject(
-			String.valueOf(values.getOrDefault("permissions", "{}")));
+			String.valueOf(values.getOrDefault("defaultPermissions", "{}")));
 
 		jsonArray = jsonObject.getJSONArray("L_BASIC_WEB_CONTENT");
 
@@ -159,14 +163,44 @@ public class CMSDefaultPermissionUtilTest {
 	}
 
 	@Test
-	public void testGetCMSDefaultPermissionPermissionsJSONObject()
+	public void testFetchCMSDefaultPermission() throws Exception {
+		Group group = _depotEntry.getGroup();
+
+		ObjectEntry objectEntry =
+			CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
+				group.getCompanyId(), TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), _depotEntry.getModelClassName(),
+				_filterFactory);
+
+		Assert.assertNull(objectEntry);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+			RandomTestUtil.randomString(), group.getCompanyId(),
+			TestPropsValues.getUserId(), externalReferenceCode,
+			_depotEntry.getModelClassName(),
+			JSONUtil.put(
+				"L_BASIC_WEB_CONTENT",
+				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
+
+		Assert.assertNotNull(
+			CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
+				group.getCompanyId(), TestPropsValues.getUserId(),
+				externalReferenceCode, _depotEntry.getModelClassName(),
+				_filterFactory));
+	}
+
+	@Test
+	public void testGetCMSDefaultPermissionDefaultPermissionsJSONObject()
 		throws Exception {
 
 		Group group = _depotEntry.getGroup();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
-			group.getExternalReferenceCode(), group.getGroupId(),
-			TestPropsValues.getUserId(), group.getExternalReferenceCode(),
+			RandomTestUtil.randomString(), group.getCompanyId(),
+			TestPropsValues.getUserId(), externalReferenceCode,
 			_depotEntry.getModelClassName(),
 			JSONUtil.put(
 				"L_BASIC_WEB_CONTENT",
@@ -174,8 +208,10 @@ public class CMSDefaultPermissionUtilTest {
 
 		JSONObject jsonObject =
 			CMSDefaultPermissionUtil.
-				getCMSDefaultPermissionPermissionsJSONObject(
-					group.getExternalReferenceCode(), group.getGroupId());
+				getCMSDefaultPermissionDefaultPermissionsJSONObject(
+					group.getCompanyId(), TestPropsValues.getUserId(),
+					externalReferenceCode, _depotEntry.getModelClassName(),
+					_filterFactory);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("L_BASIC_WEB_CONTENT");
 
@@ -217,6 +253,11 @@ public class CMSDefaultPermissionUtilTest {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject(
+		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
+	)
+	private FilterFactory<Predicate> _filterFactory;
 
 	@Inject
 	private ObjectFolderLocalService _objectFolderLocalService;

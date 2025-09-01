@@ -8,18 +8,22 @@ package com.liferay.site.cms.site.initializer.util;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,20 +32,18 @@ import java.util.Map;
 public class CMSDefaultPermissionUtil {
 
 	public static ObjectEntry addOrUpdateCMSDefaultPermission(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long companyId, long userId,
 			String classExternalReferenceCode, String className,
 			JSONObject permissionsJSONObject)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
+					"L_CMS_DEFAULT_PERMISSION", companyId);
 
 		return ObjectEntryLocalServiceUtil.addOrUpdateObjectEntry(
-			externalReferenceCode, groupId, userId,
+			externalReferenceCode, 0, userId,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.<String, Serializable>put(
@@ -49,25 +51,48 @@ public class CMSDefaultPermissionUtil {
 			).put(
 				"className", className
 			).put(
-				"permissions", permissionsJSONObject.toString()
+				"defaultPermissions", permissionsJSONObject.toString()
 			).build(),
 			new ServiceContext());
 	}
 
-	public static JSONObject getCMSDefaultPermissionPermissionsJSONObject(
-			String externalReferenceCode, long groupId)
+	public static ObjectEntry fetchCMSDefaultPermission(
+			long companyId, long userId, String classExternalReferenceCode,
+			String className, FilterFactory<Predicate> filterFactory)
 		throws PortalException {
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
+					"L_CMS_DEFAULT_PERMISSION", companyId);
 
-		ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.fetchObjectEntry(
-			externalReferenceCode, group.getGroupId(),
-			objectDefinition.getObjectDefinitionId());
+		Predicate predicate = filterFactory.create(
+			StringBundler.concat(
+				"(classExternalReferenceCode eq '", classExternalReferenceCode,
+				"') and (className eq '", className, "')"),
+			objectDefinition);
+
+		List<Long> primaryKeys = ObjectEntryLocalServiceUtil.getPrimaryKeys(
+			new Long[0], companyId, userId,
+			objectDefinition.getObjectDefinitionId(), predicate, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isEmpty(primaryKeys)) {
+			return null;
+		}
+
+		return ObjectEntryLocalServiceUtil.getObjectEntry(primaryKeys.get(0));
+	}
+
+	public static JSONObject
+			getCMSDefaultPermissionDefaultPermissionsJSONObject(
+				long companyId, long userId, String classExternalReferenceCode,
+				String className, FilterFactory<Predicate> filterFactory)
+		throws PortalException {
+
+		ObjectEntry objectEntry = fetchCMSDefaultPermission(
+			companyId, userId, classExternalReferenceCode, className,
+			filterFactory);
 
 		if (objectEntry == null) {
 			return JSONFactoryUtil.createJSONObject();
@@ -76,7 +101,7 @@ public class CMSDefaultPermissionUtil {
 		Map<String, Serializable> values = objectEntry.getValues();
 
 		return JSONFactoryUtil.createJSONObject(
-			String.valueOf(values.getOrDefault("permissions", "{}")));
+			String.valueOf(values.getOrDefault("defaultPermissions", "{}")));
 	}
 
 }

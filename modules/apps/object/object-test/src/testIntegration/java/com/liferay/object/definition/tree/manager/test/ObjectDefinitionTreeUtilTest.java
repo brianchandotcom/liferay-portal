@@ -767,6 +767,7 @@ public class ObjectDefinitionTreeUtilTest {
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryAA1.getObjectEntryId(),
+			objectEntryAA1.getObjectEntryFolderId(),
 			Map.of(objectField.getName(), objectEntryA1.getObjectEntryId()),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -808,6 +809,7 @@ public class ObjectDefinitionTreeUtilTest {
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryAA1.getObjectEntryId(),
+			objectEntryAA1.getObjectEntryFolderId(),
 			Map.of(objectField.getName(), objectEntryB1.getObjectEntryId()),
 			ServiceContextTestUtil.getServiceContext());
 

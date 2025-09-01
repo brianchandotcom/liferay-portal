@@ -738,6 +738,7 @@ public class ObjectActionLocalServiceTest {
 
 			objectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", "João"
 				).put(
@@ -796,6 +797,7 @@ public class ObjectActionLocalServiceTest {
 
 			objectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", RandomTestUtil.randomString()
 				).build(),
@@ -863,6 +865,7 @@ public class ObjectActionLocalServiceTest {
 
 			_objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", "Peter"
 				).build(),
@@ -2123,6 +2126,7 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build(),
@@ -2175,6 +2179,7 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "Paulo"
 			).build(),
@@ -2187,6 +2192,7 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build(),
@@ -2842,6 +2848,7 @@ public class ObjectActionLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build(),
@@ -3800,6 +3807,7 @@ public class ObjectActionLocalServiceTest {
 
 		objectEntry5 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry5.getObjectEntryId(),
+			objectEntry5.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "John"
 			).put(
@@ -3814,6 +3822,7 @@ public class ObjectActionLocalServiceTest {
 
 		objectEntry6 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
+			objectEntry6.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "João"
 			).put(

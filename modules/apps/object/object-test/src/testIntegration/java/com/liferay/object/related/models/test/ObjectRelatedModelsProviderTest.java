@@ -1271,8 +1271,12 @@ public class ObjectRelatedModelsProviderTest {
 			long objectEntryId, Map<String, Serializable> values)
 		throws Exception {
 
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntryId);
+
 		return _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntryId, values,
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(), values,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

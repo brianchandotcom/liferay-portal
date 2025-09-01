@@ -92,6 +92,7 @@ public class CustomAssetDisplayPageFriendlyURLResolverTest {
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				"text", "textValue2"
 			).build(),

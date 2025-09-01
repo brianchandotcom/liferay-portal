@@ -459,8 +459,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		return objectEntryLocalService.partialUpdateObjectEntry(
-			getUserId(), objectEntryId, objectEntryFolderId,
-			values, serviceContext);
+			getUserId(), objectEntryId, objectEntryFolderId, values,
+			serviceContext);
 	}
 
 	@Override
@@ -522,7 +522,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		return objectEntryLocalService.updateObjectEntry(
-			getUserId(), objectEntryId, objectEntryFolderId, values, serviceContext);
+			getUserId(), objectEntryId, objectEntryFolderId, values,
+			serviceContext);
 	}
 
 	@Override

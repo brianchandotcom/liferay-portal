@@ -159,7 +159,8 @@ public class CommerceReturnObjectEntryValuesContributor
 
 				_objectEntryLocalService.updateObjectEntry(
 					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-					objectEntryValues, new ServiceContext());
+					objectEntry.getObjectEntryFolderId(), objectEntryValues,
+					new ServiceContext());
 			}
 
 			values.put(
@@ -188,7 +189,8 @@ public class CommerceReturnObjectEntryValuesContributor
 
 				_objectEntryLocalService.updateObjectEntry(
 					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-					objectEntryValues, new ServiceContext());
+					objectEntry.getObjectEntryFolderId(), objectEntryValues,
+					new ServiceContext());
 			}
 
 			return;
@@ -223,7 +225,8 @@ public class CommerceReturnObjectEntryValuesContributor
 
 				_objectEntryLocalService.updateObjectEntry(
 					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-					objectEntryValues, new ServiceContext());
+					objectEntry.getObjectEntryFolderId(), objectEntryValues,
+					new ServiceContext());
 			}
 		}
 

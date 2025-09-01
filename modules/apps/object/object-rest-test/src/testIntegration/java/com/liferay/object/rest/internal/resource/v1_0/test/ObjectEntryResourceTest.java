@@ -5874,6 +5874,7 @@ public class ObjectEntryResourceTest {
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 			).build(),
@@ -7072,6 +7073,7 @@ public class ObjectEntryResourceTest {
 
 			_objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntryId,
+				serviceBuilderObjectEntry.getObjectEntryFolderId(),
 				HashMapBuilder.<String, Serializable>put(
 					"authorOfGospel", false
 				).put(

@@ -119,10 +119,6 @@ public class ServiceContextUtil {
 		long companyId, long groupId, String externalReferenceCode,
 		TaxonomyCategoryBrief taxonomyCategoryBrief) {
 
-		if (groupId != 0) {
-			return groupId;
-		}
-
 		Scope scope = taxonomyCategoryBrief.getScope();
 
 		if (Validator.isNull(externalReferenceCode) || (scope == null) ||

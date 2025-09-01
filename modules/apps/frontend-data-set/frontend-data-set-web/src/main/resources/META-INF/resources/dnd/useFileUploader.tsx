@@ -5,7 +5,7 @@
 
 import {openModal} from 'frontend-js-components-web';
 import {getObjectValueFromPath} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {TOnFileDrop} from '../DnDContext';
 import isFileDropEnabled from '../utils/isFileDropEnabled';
@@ -27,32 +27,21 @@ const useFileUploader = ({
 	const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 	const [dropTarget, setDropTarget] = useState(null);
 
-	const onFileDrop: TOnFileDrop = (droppedItem: any, dropTarget?: any) => {
-		if (droppedItem) {
-			const files: File[] = droppedItem.files;
-			setDroppedFiles(files);
-			setDropTarget(dropTarget ? dropTarget : null);
-		}
-	};
+	const dummyUploader = useCallback(
+		(droppedFiles: File[], dropTarget: any) => {
+			const ModalBody = () => {
+				const label = (file: File) =>
+					`'${file.name}' of size '${file.size}' and type '${file.type}'`;
 
-	useEffect(() => {
-		if (!isFileDropEnabled(fileDropSettings) || !droppedFiles?.length) {
-			return;
-		}
+				return (
+					<div>
+						{droppedFiles.map((file: File) => (
+							<li key={file.name}>{label(file)}</li>
+						))}
 
-		const ModalBody = () => {
-			const label = (file: File) =>
-				`'${file.name}' of size '${file.size}' and type '${file.type}'`;
-
-			return (
-				<div>
-					{droppedFiles.map((file: File) => (
-						<li key={file.name}>{label(file)}</li>
-					))}
-
-					{dropTarget ? (
-						<span>
-							Dropped on item{' '}
+						{dropTarget ? (
+							<span>
+								Dropped on item{' '}
 
 							{getObjectValueFromPath({
 								object: dropTarget,
@@ -66,11 +55,29 @@ const useFileUploader = ({
 			);
 		};
 
-		openModal({
-			bodyComponent: ModalBody,
-			size: 'lg',
-			title: Liferay.Language.get('files'),
-		});
+			openModal({
+				bodyComponent: ModalBody,
+				size: 'lg',
+				title: Liferay.Language.get('files'),
+			});
+		},
+		[selectedItemsKey]
+	);
+
+	const onFileDrop: TOnFileDrop = (droppedItem: any, dropTarget?: any) => {
+		if (droppedItem) {
+			const files: File[] = droppedItem.files;
+			setDroppedFiles(files);
+			setDropTarget(dropTarget ? dropTarget : null);
+		}
+	};
+
+	useEffect(() => {
+		if (!isFileDropEnabled(fileDropSettings) || !droppedFiles?.length) {
+			return;
+		}
+
+		dummyUploader(droppedFiles, dropTarget);
 	}, [droppedFiles, dropTarget, fileDropSettings, selectedItemsKey]);
 
 	return {onFileDrop};

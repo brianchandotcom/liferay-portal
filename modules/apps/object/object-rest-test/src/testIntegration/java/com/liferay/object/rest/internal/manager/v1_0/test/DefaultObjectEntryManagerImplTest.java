@@ -113,6 +113,7 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.function.UnsafeBiFunction;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.UnsafeTriFunction;
 import com.liferay.petra.lang.SafeCloseable;
@@ -9696,33 +9697,33 @@ public class DefaultObjectEntryManagerImplTest
 				buildEqualsExpressionFilterString(
 					"textObjectFieldName", "textObjectFieldValue1"),
 				null, null),
-			Page.of(List.of(objectEntryAA1)));
+			Page.of(List.of(objectEntryAA1), null, 1));
 		assertEquals(
 			unsafeTriFunction.apply(
 				buildEqualsExpressionFilterString(
 					"textObjectFieldName", "textObjectFieldValue2"),
 				null, null),
-			Page.of(List.of(objectEntryAA2)));
+			Page.of(List.of(objectEntryAA2), null, 1));
 
 		// Search
 
 		assertEquals(
 			unsafeTriFunction.apply(null, "textObjectFieldValue", null),
-			Page.of(List.of(objectEntryAA1, objectEntryAA2)));
+			Page.of(List.of(objectEntryAA1, objectEntryAA2), null, 2));
 		assertEquals(
 			unsafeTriFunction.apply(null, "textObjectFieldValue1", null),
-			Page.of(List.of(objectEntryAA1)));
+			Page.of(List.of(objectEntryAA1), null, 1));
 
 		// Sort
 
 		assertEquals(
 			unsafeTriFunction.apply(
 				null, null, getSorts("textObjectFieldName:asc")),
-			Page.of(List.of(objectEntryAA1, objectEntryAA2)));
+			Page.of(List.of(objectEntryAA1, objectEntryAA2), null, 2));
 		assertEquals(
 			unsafeTriFunction.apply(
 				null, null, getSorts("textObjectFieldName:desc")),
-			Page.of(List.of(objectEntryAA2, objectEntryAA1)));
+			Page.of(List.of(objectEntryAA2, objectEntryAA1), null, 1));
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntryAA1.getId());
 		_objectEntryLocalService.deleteObjectEntry(objectEntryAA2.getId());
@@ -9787,20 +9788,17 @@ public class DefaultObjectEntryManagerImplTest
 
 		_addRoleUser(new String[] {ActionKeys.VIEW}, objectDefinitionA, _user);
 
-		Page<ObjectEntry> objectEntryPage = unsafeBiFunction.apply(
-			objectEntryA, objectRelationshipA_AA);
+		UnsafeSupplier<Page<ObjectEntry>, Exception> unsafeSupplier =
+			() -> _objectEntryManager.getObjectEntries(
+				TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey,
+				null, _createDTOConverterContext(), (String)null, null, null,
+				null);
 
 		assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			List.of(objectEntryA_AA));
-
-		objectEntryPage = _objectEntryManager.getObjectEntries(
-			TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey, null,
-			_createDTOConverterContext(), (String)null, null, null, null);
-
+			unsafeBiFunction.apply(objectEntryA, objectRelationshipA_AA),
+			Page.of(List.of(objectEntryA_AA), null, 1));
 		assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			Collections.emptyList());
+			unsafeSupplier.get(), Page.of(Collections.emptyList(), null, 0));
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -9824,13 +9822,8 @@ public class DefaultObjectEntryManagerImplTest
 				objectEntryA.getId()),
 			() -> unsafeBiFunction.apply(objectEntryA, objectRelationshipA_AA));
 
-		objectEntryPage = _objectEntryManager.getObjectEntries(
-			TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey, null,
-			_createDTOConverterContext(), (String)null, null, null, null);
-
 		assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			List.of(objectEntryAA));
+			unsafeSupplier.get(), Page.of(List.of(objectEntryAA), null, 1));
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -9856,20 +9849,11 @@ public class DefaultObjectEntryManagerImplTest
 				_createDTOConverterContext(), objectEntryA.getId(),
 				objectRelationshipA_AA, null));
 
-		objectEntryPage = _objectEntryManager.getObjectEntries(
-			TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey, null,
-			_createDTOConverterContext(), (String)null, null, null, null);
-
 		assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			Collections.emptyList());
-
-		objectEntryPage = unsafeBiFunction.apply(
-			objectEntryB, objectRelationshipB_AA);
-
+			unsafeSupplier.get(), Page.of(Collections.emptyList(), null, 0));
 		assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			List.of(objectEntryB_AA));
+			unsafeBiFunction.apply(objectEntryB, objectRelationshipB_AA),
+			Page.of(List.of(objectEntryB_AA), null, 1));
 
 		// User with permission to view object definitions A, AA, and B
 
@@ -9879,27 +9863,14 @@ public class DefaultObjectEntryManagerImplTest
 		_addRoleUser(new String[] {ActionKeys.VIEW}, objectDefinitionAA, _user);
 		_addRoleUser(new String[] {ActionKeys.VIEW}, objectDefinitionB, _user);
 
-		objectEntryPage = unsafeBiFunction.apply(
-			objectEntryA, objectRelationshipA_AA);
-
 		assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			List.of(objectEntryA_AA));
-
-		objectEntryPage = _objectEntryManager.getObjectEntries(
-			TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey, null,
-			_createDTOConverterContext(), (String)null, null, null, null);
-
+			unsafeBiFunction.apply(objectEntryA, objectRelationshipA_AA),
+			Page.of(List.of(objectEntryA_AA), null, 1));
 		assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			List.of(objectEntryAA));
-
-		objectEntryPage = unsafeBiFunction.apply(
-			objectEntryB, objectRelationshipB_AA);
-
+			unsafeSupplier.get(), Page.of(List.of(objectEntryAA), null, 1));
 		assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			List.of(objectEntryB_AA));
+			unsafeBiFunction.apply(objectEntryB, objectRelationshipB_AA),
+			Page.of(List.of(objectEntryB_AA), null, 1));
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntryAA.getId());
 		_objectEntryLocalService.deleteObjectEntry(objectEntryA_AA.getId());

@@ -10,13 +10,7 @@ import {Size} from '@clayui/modal/lib/types';
 import MultiSelect from '@clayui/multi-select';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
-import {
-	PropsWithChildren,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
 
 import {Input} from '../../../components/Input/Input';
@@ -38,10 +32,6 @@ import trialOAuth2 from '../../../services/oauth/Trial';
 import ProductPurchaseSSATrial from '../../ProductPurchase/services/ProductPurchaseSSATrial';
 import {useSSADashboardOutlet} from '../SSADashboardOutlet';
 import {siteInitializers, trialObjectives} from '../constants';
-
-const Label = ({children}: PropsWithChildren) => (
-	<Form.Label className="mb-2">{children}</Form.Label>
-);
 
 const SectionTitle = ({title}: {title: string}) => (
 	<>
@@ -71,10 +61,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 	modal,
 	mutate,
 }) => {
-	const [submitSuccessful, setSubmittingSuccessful] = useState(false);
+	const {ssaAccount} = useSSADashboardOutlet();
 	const {properties} = useMarketplaceContext();
 	const {data: product} = useDeliveryProduct(properties.productId);
-	const {ssaAccount} = useSSADashboardOutlet();
 
 	const productPurchase = useMemo(() => {
 		if (!ssaAccount || !product) {
@@ -142,7 +131,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 			];
 
 			try {
-				const order = await productPurchase?.createOrder({
+				const order = await (
+					productPurchase as ProductPurchaseSSATrial
+				).createOrder({
 					customFields: {
 						[OrderCustomFields.TRIAL_SETTINGS]: JSON.stringify({
 							consoleInviteEmailAddresses,
@@ -152,10 +143,6 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 						}),
 					},
 				} as Cart);
-
-				if (!order) {
-					return;
-				}
 
 				mutate(
 					(orders: APIResponse<PlacedOrder>) => ({
@@ -172,13 +159,21 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 							...orders.items,
 						],
 					}),
-					{revalidate: true}
+					{revalidate: false}
 				);
 
-				setSubmittingSuccessful(true);
+				if (!order) {
+					return;
+				}
+
+				await trialOAuth2.provisioningTrial(order.id);
+
+				mutate((response: APIResponse<PlacedOrder>) => response, {
+					revalidate: true,
+				});
 
 				Liferay.Util.openToast({
-					message: 'Trial is being provisioned.',
+					message: 'Trial successfully provisioned.',
 					title: i18n.translate('success'),
 					type: 'success',
 				});
@@ -190,24 +185,18 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 					message: i18n.translate('an-unexpected-error-occurred'),
 					type: 'danger',
 				});
-
-				modal.onClose();
 			}
+
+			modal.onClose();
 		},
 		[modal, mutate, productPurchase, setError]
 	);
-
-	useEffect(() => {
-		if (!modal.open) {
-			setSubmittingSuccessful(false);
-		}
-	}, [modal.open]);
 
 	if (!modal.open) {
 		return null;
 	}
 
-	if (submitSuccessful) {
+	if (isSubmitting) {
 		return (
 			<Modal
 				observer={modal.observer}
@@ -244,7 +233,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 			visible={modal.open}
 		>
 			<ClayForm.Group className="mb-3 pr-2 w-100">
-				<Label>{i18n.translate('project-id')}</Label>
+				<Form.Label className="mb-2">
+					{i18n.translate('project-id')}
+				</Form.Label>
 
 				<ClayInput.Group
 					className={classNames({
@@ -280,7 +271,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 			</ClayForm.Group>
 
 			<ClayForm.Group className="mb-3 mt-2 pr-2 w-100">
-				<Label>{i18n.translate('solution')}</Label>
+				<Form.Label className="mb-2">
+					{i18n.translate('solution')}
+				</Form.Label>
 
 				<Select
 					{...register('siteInitializerKey')}
@@ -294,7 +287,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 
 				<div className="d-flex">
 					<div className="pr-2 w-100">
-						<Label>{i18n.translate('objective')}</Label>
+						<Form.Label className="mb-2">
+							{i18n.translate('objective')}
+						</Form.Label>
 
 						<Select
 							{...register('objective')}
@@ -306,7 +301,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 					</div>
 
 					<div className="pr-2 w-100">
-						<Label>{i18n.translate('duration-days')}</Label>
+						<Form.Label className="mb-2">
+							{i18n.translate('duration-days')}
+						</Form.Label>
 						<Input
 							{...register('duration')}
 							disabled={!objective}
@@ -322,7 +319,9 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 			<div className="mb-3 pr-2 w-100">
 				<SectionTitle title={i18n.translate('additional-admin')} />
 
-				<Label>{i18n.translate('email-address')}</Label>
+				<Form.Label className="mb-2">
+					{i18n.translate('email-address')}
+				</Form.Label>
 
 				<MultiSelect
 					className="bg-white marketplace-form-select"

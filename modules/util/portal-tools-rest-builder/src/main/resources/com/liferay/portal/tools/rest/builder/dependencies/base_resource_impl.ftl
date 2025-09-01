@@ -459,7 +459,7 @@ public abstract class Base${schemaName}ResourceImpl
 							source="Site" + schemaName
 						/>,
 						siteId, portletName, roleNames);
-				<#else>
+				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "siteExternalReferenceCode")>
 					<#assign
 						externalReferenceCodeParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
 						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
@@ -479,6 +479,8 @@ public abstract class Base${schemaName}ResourceImpl
 							source=schemaName
 						/>,
 						resourceId, resourceName, roleNames);
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "PermissionsPage")>
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
@@ -538,7 +540,7 @@ public abstract class Base${schemaName}ResourceImpl
 							source="Site" + schemaName
 						/>
 					</@updateResourcePermissions>
-				<#else>
+				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "siteExternalReferenceCode")>
 					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
 					String resourceName = getPermissionCheckerResourceName(siteExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
@@ -555,6 +557,8 @@ public abstract class Base${schemaName}ResourceImpl
 							source=schemaName
 						/>
 					</@updateResourcePermissions>
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
 				return false;

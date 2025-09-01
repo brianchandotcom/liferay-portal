@@ -138,36 +138,26 @@ public class FragmentEntryLinkModelListener
 		return editableValuesJSONObject.toString();
 	}
 
-	private List<InfoField<?>> _getInfoFields(
-			FragmentEntryLink fragmentEntryLink)
-		throws Exception {
-
-		List<InfoField<?>> infoFields = new ArrayList<>();
-
+	private void _processInfoFields(FragmentEntryLink fragmentEntryLink) {
 		Layout layout = _layoutLocalService.fetchLayout(
 			fragmentEntryLink.getPlid());
 
 		if (layout == null) {
-			return infoFields;
+			return;
 		}
 
-		try (AutoCloseable autoCloseable =
-				_layoutServiceContextHelper.getServiceContextAutoCloseable(
-					layout)) {
-
-			InfoFieldUtil.forEachInfoField(
-				fragmentEntryLink, _fragmentRendererController,
-				(name, infoField, unsafeSupplier) -> infoFields.add(infoField));
-		}
-
-		return infoFields;
-	}
-
-	private void _processInfoFields(FragmentEntryLink fragmentEntryLink) {
-		List<InfoField<?>> infoFields;
+		List<InfoField<?>> infoFields = new ArrayList<>();
 
 		try {
-			infoFields = _getInfoFields(fragmentEntryLink);
+			try (AutoCloseable autoCloseable =
+					_layoutServiceContextHelper.getServiceContextAutoCloseable(
+						layout)) {
+
+				InfoFieldUtil.forEachInfoField(
+					fragmentEntryLink, _fragmentRendererController,
+					(name, infoField, unsafeSupplier) -> infoFields.add(
+						infoField));
+			}
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

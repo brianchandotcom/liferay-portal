@@ -9,6 +9,7 @@ import Sonda from 'sonda/esbuild';
 import {
 	BUILD_MAIN_EXPORTS_PATH,
 	BUNDLE_REPORTS_PATH,
+	SRC_PATH,
 } from '../../util/constants.mjs';
 import getFlatName from '../../util/getFlatName.mjs';
 import getEntryPoint from './getEntryPoint.mjs';
@@ -64,6 +65,15 @@ async function bundle(
 		sourcemap: true,
 		target: ['es2022'],
 	};
+
+	if (moduleName === 'ckeditor5') {
+		esbuildConfig.alias = {
+			'@ckeditor/ckeditor5-icons/dist/index.js': path.resolve(
+				SRC_PATH,
+				'./js/ckeditor5/icons.ts'
+			),
+		};
+	}
 
 	if (process.env.CREATE_BUNDLE_REPORTS) {
 		esbuildConfig.plugins.push(

@@ -238,7 +238,7 @@ public class PageSpecificationDTOConverter
 
 						return new FavIconItemExternalReference() {
 							{
-								setClassName(() -> FileEntry.class.getName());
+								setClassName(FileEntry.class::getName);
 								setExternalReferenceCode(
 									fileEntry::getExternalReferenceCode);
 								setFavIconType(

@@ -260,6 +260,7 @@ declare module Liferay {
 		export function getLanguageId(): Language.Locale;
 		export function getLayoutRelativeControlPanelURL(): string;
 		export function getPathContext(): string;
+		export function getPathFriendlyURLPublic(): string;
 		export function getPathMain(): string;
 		export function getPathThemeImages(): string;
 		export function getPathThemeSpritemap(): string;

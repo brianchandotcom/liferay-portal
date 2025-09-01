@@ -406,7 +406,11 @@ public class LocaleUtil {
 		}
 
 		if (!hasCountry && !hasVariant) {
-			return locale.getLanguage();
+			languageId = locale.getLanguage();
+
+			_languageIds.put(locale, languageId);
+
+			return languageId;
 		}
 
 		int length = 3;

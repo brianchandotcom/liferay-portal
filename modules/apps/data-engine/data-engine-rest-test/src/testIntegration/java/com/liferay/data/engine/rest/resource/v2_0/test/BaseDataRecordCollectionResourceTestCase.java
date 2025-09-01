@@ -287,7 +287,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 								dataRecordCollection1.getId());
 						}
 					},
-					new GraphQLField("id"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -327,7 +327,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 									dataRecordCollection2.getId());
 							}
 						},
-						new GraphQLField("id")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -1621,6 +1621,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
 
 		graphQLFields.add(new GraphQLField("siteId"));
 

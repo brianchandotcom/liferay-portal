@@ -1180,6 +1180,8 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("paymentMethodGroupRelOrderTypeId"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.headless.commerce.admin.channel.dto.v1_0.

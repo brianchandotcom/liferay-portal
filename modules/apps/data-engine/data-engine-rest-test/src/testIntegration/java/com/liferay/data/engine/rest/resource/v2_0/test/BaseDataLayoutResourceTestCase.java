@@ -301,7 +301,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 							put("dataLayoutId", dataLayout1.getId());
 						}
 					},
-					new GraphQLField("id"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -336,7 +336,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 								put("dataLayoutId", dataLayout2.getId());
 							}
 						},
-						new GraphQLField("id")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -1522,6 +1522,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
 
 		graphQLFields.add(new GraphQLField("siteId"));
 

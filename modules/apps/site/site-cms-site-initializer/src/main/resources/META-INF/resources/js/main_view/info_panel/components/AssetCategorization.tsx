@@ -21,11 +21,13 @@ export default function AssetCategorization({
 	cmsGroupId,
 	getObjectEntryURL,
 	inputSize,
+	onUpdateCategorization,
 	updateObjectEntryURL,
 }: {
 	cmsGroupId: string;
 	getObjectEntryURL: string;
 	inputSize?: CategorizationInputSize;
+	onUpdateCategorization?: (data: IAssetObjectEntry) => void;
 	updateObjectEntryURL: string;
 }) {
 	const [objectEntry, setObjectEntry] = useState<IAssetObjectEntry | null>(
@@ -46,6 +48,8 @@ export default function AssetCategorization({
 
 		if (data) {
 			setObjectEntry(data);
+
+			onUpdateCategorization?.(data);
 		}
 		else if (error) {
 			if (keywords?.length) {
@@ -64,12 +68,14 @@ export default function AssetCategorization({
 
 			if (data) {
 				setObjectEntry(data);
+
+				onUpdateCategorization?.(data);
 			}
 			else if (error) {
 				console.error(error);
 			}
 		})();
-	}, [getObjectEntryURL]);
+	}, [getObjectEntryURL, onUpdateCategorization]);
 
 	if (!objectEntry) {
 		return null;

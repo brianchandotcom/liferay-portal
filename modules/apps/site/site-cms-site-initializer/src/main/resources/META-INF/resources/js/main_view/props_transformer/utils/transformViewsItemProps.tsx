@@ -122,6 +122,38 @@ type ViewsItemsProps = {
 	views: IView[];
 };
 
+export function transformItemCardView(
+	item: any,
+	fileMimeTypeCssClasses: Record<string, string> | undefined,
+	fileMimeTypeIcons: Record<string, string> | undefined,
+	objectDefinitionCssClasses: Record<string, string>,
+	objectDefinitionIcons: Record<string, string>,
+	props: any
+) {
+	return {
+		...props,
+		description: dateFormat(item.dateModified),
+		href: getHrefLink(item, props),
+		stickerProps: {
+			className: getFileMimeTypeValue(
+				fileMimeTypeCssClasses,
+				objectDefinitionCssClasses,
+				item
+			),
+			content: (
+				<ClayIcon
+					symbol={getFileMimeTypeValue(
+						fileMimeTypeIcons,
+						objectDefinitionIcons,
+						item
+					)}
+				/>
+			),
+		},
+		...getThumbnailProps(item),
+	};
+}
+
 export default function transformViewsItemProps({
 	fileMimeTypeCssClasses,
 	fileMimeTypeIcons,
@@ -132,28 +164,14 @@ export default function transformViewsItemProps({
 	return views.map((view) => {
 		if (view.name === 'cards') {
 			view.setItemComponentProps = ({item, props}) => {
-				return {
-					...props,
-					description: dateFormat(item.dateModified),
-					href: getHrefLink(item, props),
-					stickerProps: {
-						className: getFileMimeTypeValue(
-							fileMimeTypeCssClasses,
-							objectDefinitionCssClasses,
-							item
-						),
-						content: (
-							<ClayIcon
-								symbol={getFileMimeTypeValue(
-									fileMimeTypeIcons,
-									objectDefinitionIcons,
-									item
-								)}
-							/>
-						),
-					},
-					...getThumbnailProps(item),
-				};
+				return transformItemCardView(
+					item,
+					fileMimeTypeCssClasses,
+					fileMimeTypeIcons,
+					objectDefinitionCssClasses,
+					objectDefinitionIcons,
+					props
+				);
 			};
 		}
 

@@ -22,76 +22,6 @@
 		display: block;
 	}
 
-	.app-category-badge {
-		border-bottom-left-radius: 10px;
-		border-bottom-right-radius: 10px;
-		border-top-left-radius: 2px;
-		border-top-right-radius: 2px;
-		display: inline-block;
-		font-size: 11px;
-		height: 20px;
-		line-height: 20px;
-		padding: 0 8px;
-		position: absolute;
-		right: 32px;
-		top: -6px;
-	}
-
-	.app-category-batch,
-	.app-category-checkout,
-	.app-category-fragments,
-	.app-category-no-type,
-	.app-category-object-action,
-	.app-category-other,
-	.app-category-payment-methods,
-	.app-category-site-initializer,
-	.app-category-theme,
-	.app-category-workflow-action {
-		transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-	}
-
-	.app-category-batch {
-		background: #FFE6C6;
-		color: #9D4C00;
-	}
-
-	.app-category-checkout,
-	.app-category-other {
-		background: #DAF4C7;
-		color: #4E7135;
-	}
-
-	.app-category-fragments,
-	.app-category-workflow-action {
-		background: #DCD7E9;
-		color: #503690;
-	}
-
-	.app-category-no-type {
-		background: #cccccc;
-		color: #ffffff;
-	}
-
-	.app-category-object-action {
-		background-color: #D1ECFA;
-		color: #166E9E;
-	}
-
-	.app-category-payment-methods {
-		background: #D2E6FF;
-		color: #2868FF;
-	}
-
-	.app-category-site-initializer {
-		background: #D1EEDC;
-		color: #0E7835;
-	}
-
-	.app-category-theme {
-		background: #FBE0FF;
-		color: #720086;
-	}
-
 	.app-search-results-card {
 		border: solid 1px #E2E2E4;
 		border-radius: 10px;
@@ -223,19 +153,12 @@
 									<div>
 										<#if productCategory?has_content>
 											<#if productCategory.name == 'Other'>
-												<div class="app-category-badge"></div>
+	   											<div class="app-type-badge"></div>
 											<#else>
-												<div class="app-category-badge app-category-no-type font-weight-semi-bold
-													<#if productCategory.name == 'Theme'> app-category-theme</#if>
-													<#if productCategory.name == 'Object action'> app-category-object-action</#if>
-													<#if productCategory.name == 'Site Initializer'> app-category-site-initializer</#if>
-													<#if productCategory.name == 'Payment methods'> app-category-payment-methods</#if>
-													<#if productCategory.name == 'Workflow action'>	app-category-workflow-action</#if>
-													<#if productCategory.name == 'Batch'>	app-category-batch</#if>
-													<#if productCategory.name == 'Checkout'>	app-category-checkout</#if>
-													<#if productCategory.name == 'Fragments'>	app-category-fragments</#if>
-												">
-												 	${productCategory.name}
+												<#assign badgeType = productCategory.name?lower_case?replace(" ", "-", "r") />
+
+												<div class="app-type-badge ${badgeType}">
+													${productCategory.name}
 												</div>
 											</#if>
 										</#if>

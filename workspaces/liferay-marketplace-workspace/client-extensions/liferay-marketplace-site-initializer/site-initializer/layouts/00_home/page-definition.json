@@ -167,7 +167,7 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "home-catalog-display",
+												"key": "home-publisher-display",
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {

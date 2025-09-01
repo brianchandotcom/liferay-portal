@@ -5,13 +5,10 @@
 				{
 					"dataType": "string",
 					"defaultValue": "[ { \"id\": \"37771493\", \"name\": \"Payment methods\", \"color\": \"#4B9BFF\", \"icon\": \"dollar-symbol\" }, { \"id\": \"37771496\", \"name\": \"Theme\", \"color\": \"#AF78FF\", \"icon\": \"theme\" }, { \"id\": \"37771499\", \"name\": \"Site Initializer\", \"color\": \"#50D2A0\", \"icon\": \"display\" }, { \"id\": \"37771502\", \"name\": \"Fragments\", \"color\": \"#FF5F5F\", \"icon\": \"web-content\" }, { \"id\": \"37771505\", \"name\": \"Batch\", \"color\": \"#FFB46E\", \"icon\": \"cog\" }, { \"id\": \"37771508\", \"name\": \"Checkout\", \"color\": \"#9BE169\", \"icon\": \"shopping-cart\" }, { \"id\": \"37771511\", \"name\": \"Object action\", \"color\": \"#5FC8FF\", \"icon\": \"sheets\" }, { \"id\": \"37785614\", \"name\": \"Workflow action\", \"color\": \"#7785FF\", \"icon\": \"rules\" }]",
-					"description": "button-list",
-					"label": "Button list",
-					"name": "buttonList",
-					"type": "text",
-					"typeOptions": {
-						"placeholder": "Json Caped data"
-					}
+					"description": "App Categories",
+					"label": "App Categories",
+					"name": "appCategories",
+					"type": "text"
 				}
 			]
 		},
@@ -20,13 +17,10 @@
 				{
 					"dataType": "string",
 					"defaultValue": "EXPLORE BY CATEGORY",
-					"description": "button-text",
+					"description": "Section Title",
 					"label": "Section Title",
 					"name": "sectionTitle",
-					"type": "text",
-					"typeOptions": {
-						"placeholder": "EXPLORE BY CATEGORY"
-					}
+					"type": "text"
 				}
 			]
 		}

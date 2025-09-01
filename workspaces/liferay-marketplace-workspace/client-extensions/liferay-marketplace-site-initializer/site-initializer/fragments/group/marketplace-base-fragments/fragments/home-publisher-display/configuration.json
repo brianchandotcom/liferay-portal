@@ -5,7 +5,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": "Finest Publishers",
-					"description": "button-text",
+					"description": "Title",
 					"label": "Section Title",
 					"name": "sectionTitle",
 					"type": "text",
@@ -19,13 +19,13 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "Fragments and client extensions to foster your prouctivity",
-					"description": "button-text",
-					"label": "Section Decription",
+					"defaultValue": "Fragments and client extensions to foster your productivity",
+					"description": "Sub title",
+					"label": "Section Description",
 					"name": "sectionDescription",
 					"type": "text",
 					"typeOptions": {
-						"placeholder": "Fragments and client extensions to foster your prouctivity"
+						"placeholder": "Fragments and client extensions to foster your productivity"
 					}
 				}
 			]
@@ -35,7 +35,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": "00000",
-					"description": "button-text",
+					"description": "Publisher Details Object Id",
 					"label": "Publisher Details Object Id",
 					"name": "publisherDetailsObjectId",
 					"type": "text",

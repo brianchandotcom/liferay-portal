@@ -37,6 +37,22 @@ function debounceFunction(fn: Function, delay: number) {
 	return debounced;
 }
 
+export function getObjectValueFromPath({
+	object,
+	path = 'id',
+}: {
+	object: object;
+	path?: string | null;
+}): any {
+	if (!path) {
+		path = 'id';
+	}
+
+	return path.split('.').reduce((acc, currentPath) => {
+		return acc?.[currentPath as keyof typeof acc] ?? null;
+	}, object);
+}
+
 export function loadClientExtensions() {
 	return Promise.resolve();
 }

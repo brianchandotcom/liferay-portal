@@ -1,0 +1,60 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Finest Publishers",
+					"description": "button-text",
+					"label": "Section Title",
+					"name": "sectionTitle",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Finest Publishers"
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Fragments and client extensions to foster your prouctivity",
+					"description": "button-text",
+					"label": "Section Decription",
+					"name": "sectionDescription",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Fragments and client extensions to foster your prouctivity"
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "00000",
+					"description": "button-text",
+					"label": "Publisher Details Object Id",
+					"name": "publisherDetailsObjectId",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "00000"
+					}
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"description": "hide-rating-info",
+					"label": "Hide Rating Info",
+					"name": "hideRatingInfo",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

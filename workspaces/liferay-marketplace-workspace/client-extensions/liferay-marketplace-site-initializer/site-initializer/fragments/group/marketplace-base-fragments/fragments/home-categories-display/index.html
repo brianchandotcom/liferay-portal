@@ -1,0 +1,33 @@
+[#assign jsonString = configuration.buttonList]
+[#assign userData = jsonString?eval_json]
+
+[#assign portalURL = portalUtil.getLayoutURL(themeDisplay) /]
+
+[#if portalURL?contains("localhost")]
+	[#assign baseURL = "http://localhost:8080/web/marketplace" /]
+[#else]
+	[#assign baseURL = "https://marketplace-uat.liferay.com" /]
+[/#if]
+
+<div class="marketplace-categories-container">
+	<div class="d-flex flex-row justify-content-between mb-4 w-100">
+		<div class="font-weight-bold title-container">
+			${configuration.sectionTitle}
+		</div>
+	</div>
+
+	<div class="categories-container d-flex flex-wrap X">
+		[#list userData as user]
+
+			<a class="align-items-center btn category-button d-flex justify-content-center px-4 py-3 text-nowrap" href="${baseURL}/applications?Category=${user.id}" target="_self" type="button">
+				<span style="color:${user.color}; background:transparent !important;">
+					[@clay["icon"] symbol="${user.icon}" /]
+				</span>
+
+				<p class="m-0 ml-2">
+					${user.name}
+				</p>
+			</a>
+		[/#list]
+	</div>
+</div>

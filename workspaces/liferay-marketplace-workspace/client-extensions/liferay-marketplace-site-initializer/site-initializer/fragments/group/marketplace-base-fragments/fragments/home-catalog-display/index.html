@@ -1,0 +1,120 @@
+[#if themeDisplay?has_content]
+	[#assign scopeGroupId = themeDisplay.getScopeGroupId() /]
+[/#if]
+
+[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1") /]
+
+[#if channel?has_content]
+	[#assign channelId = channel.items[0].id /]
+[/#if]
+
+[#if channelId?has_content]
+	[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?accountId=-1&images.accountId=-1&nestedFields=categories,productSpecifications,images") /]
+[/#if]
+
+[#assign publisherPage = restClient.get("/c/publisherdetailses?pageSize=4") /]
+
+[#assign portalURL = portalUtil.getLayoutURL(themeDisplay) /]
+
+[#if portalURL?contains("localhost")]
+	[#assign baseURL = "http://localhost:8080/web/marketplace" /]
+[#else]
+	[#assign baseURL = "https://marketplace-uat.liferay.com" /]
+[/#if]
+
+[#assign redirectPath = "${baseURL}/e/publisher-details/${configuration.publisherDetailsObjectId}" /]
+
+<div class="section-container">
+	<div>
+		<div class="d-flex flex-row justify-content-between w-100">
+			<h1 class="mb-1">${configuration.sectionTitle}</h1>
+
+			<button class="btn btn-link d-none font-weight-bold" type="button">
+				<span class="language-caret-icon">
+					<span>View More</span>
+					<span>[@clay["icon"] symbol="order-arrow-right" /]</span>
+				</span>
+			</button>
+		</div>
+
+		<p class="text-black-50 mb-4">${configuration.sectionDescription}</p>
+	</div>
+
+	<div>
+		[#if publisherPage?has_content]
+			[#assign catalogs = publisherPage.items /]
+
+			<div class="container-gap d-flex flex-row flex-wrap mb-5">
+				[#list catalogs as catalog]
+					[#assign
+						catalogName = catalog.publisherName
+						catalogImage = catalog.publisherProfileImage
+						catalogDescription = catalog.description
+						description = stringUtil.shorten(htmlUtil.stripHtml(catalogDescription!""), 140, "...")
+					/]
+
+					[#if catalog.catalogId?has_content]
+						[#assign publisherCatalogId = catalog.catalogId /]
+					[/#if]
+
+					[#assign requestUrl =
+						"/headless-commerce-delivery-catalog/v1.0/channels/"
+						+ channelId
+						+ "/products?accountId=-1&nestedFields=categories,productSpecifications&filter=catalogId eq "
+						+ publisherCatalogId
+					/]
+
+					[#assign catalogApps = restClient.get(requestUrl) /]
+
+					<a class="bg-white border-radius-medium catalog-card d-flex flex-column justify-content-between mb-0 text-dark text-decoration-none" href="${redirectPath}/${catalog.id}" target="_self">
+						<div>
+							<div class="align-items-center catalog-card-header d-flex">
+								<div class="image-container mr-2 rounded">
+									<img alt="" class="catalog-image" height="56" src="${catalogImage}" width="56" />
+								</div>
+
+								<div class="catalog-card-name font-weight-bold mb-1">
+									${catalogName}
+								</div>
+							</div>
+
+							<div class="d-flex flex-column font-size-paragraph justify-content-between">
+								<div class="catalog-card-description font-weight-normal mb-2 mt-2">
+									${description}
+								</div>
+							</div>
+						</div>
+
+						<div>
+							<div class="d-flex flex-row justify-content-start">
+								<p class="m-0 mr-2">
+									<span class="mr-1">
+										${catalogApps.totalCount}
+									</span>
+									<span>
+										Apps
+									</span>
+								</p>
+
+								[#if configuration.hideRatingInfo == false]
+									<div class="align-items-center d-flex justify-content-center ml-3">
+										<span class="stars">
+											[@clay["icon"] symbol="star" /]
+										</span>
+
+										<p class="ml-1 m-0">4.85</p>
+									</div>
+
+									<div class="align-items-center d-flex justify-content-center ml-3">
+										<span>[@clay["icon"] symbol="download" /]</span>
+										<span class="ml-1">85k</span>
+									</div>
+								[/#if]
+							</div>
+						</div>
+					</a>
+				[/#list]
+			</div>
+		[/#if]
+	</div>
+</div>

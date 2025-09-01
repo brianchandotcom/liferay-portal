@@ -42,7 +42,7 @@ it('Assert role names checked items', () => {
 		},
 	];
 
-	const rolesNamesList = [
+	const roleNames = [
 		{roleName: 'Account Administrator'},
 		{roleName: 'Account Manager'},
 		{roleName: 'Account Member'},
@@ -53,11 +53,7 @@ it('Assert role names checked items', () => {
 		{roleName: 'Owner'},
 	];
 
-	const checkedChildren = getCheckedChildren(
-		rolesNamesList,
-		children,
-		'roleName'
-	);
+	const checkedChildren = getCheckedChildren(children, roleNames, 'roleName');
 
 	expect(checkedChildren).toStrictEqual([
 		{
@@ -113,18 +109,13 @@ it('Assert roles in User Notification', () => {
 		},
 	];
 
-	const itemsNamesList = {
-		recipients: [
-			{
-				roleName: 'Name1',
-			},
-		],
-	};
+	const recipients = [
+		{
+			roleName: 'Name1',
+		},
+	];
 
-	const userNotificationRoles = getUserNotificationRoles(
-		items,
-		itemsNamesList.recipients
-	);
+	const userNotificationRoles = getUserNotificationRoles(items, recipients);
 
 	expect(userNotificationRoles.children).toStrictEqual([
 		{

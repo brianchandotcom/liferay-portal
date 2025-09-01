@@ -101,8 +101,8 @@ export function Recipient({
 			const newRolesList = roles.map((role) => ({
 				...role,
 				children: getCheckedChildren(
-					recipients,
 					role.children,
+					recipients,
 					'roleName'
 				),
 			}));
@@ -114,8 +114,8 @@ export function Recipient({
 			const newUserGroupsList = userGroups.map((userGroup) => ({
 				...userGroup,
 				children: getCheckedChildren(
-					recipients,
 					userGroup.children,
+					recipients,
 					'userGroupName'
 				),
 			}));

@@ -15,6 +15,7 @@ import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
+import deleteItemAction from './actions/deleteItemAction';
 import fileDropAction from './actions/fileDropAction';
 import multipleFilesUploadAction, {
 	MultipleFileUploaderData,
@@ -161,15 +162,21 @@ export default function FolderFDSPropsTransformer({
 
 			return action;
 		}),
-		onActionDropdownItemClick: ({
+		async onActionDropdownItemClick({
 			action,
 			event,
 			itemData,
+			loadData,
 		}: {
 			action: any;
 			event: Event;
-			itemData: any;
-		}) => {
+			itemData: ItemData;
+			loadData: () => {};
+		}) {
+			if (action?.data?.id === 'delete') {
+				await deleteItemAction(itemData, loadData);
+			}
+
 			if (
 				action?.data?.id === 'export-for-translation' ||
 				action?.data?.id === 'import-translation'

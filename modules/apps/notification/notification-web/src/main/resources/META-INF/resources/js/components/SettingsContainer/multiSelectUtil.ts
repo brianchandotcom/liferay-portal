@@ -9,16 +9,18 @@ import {
 } from '@liferay/object-js-components-web';
 
 export function getCheckedChildren(
-	namesList: EmailNotificationRecipients[],
 	children: MultiSelectItemChild[],
+	recipients: EmailNotificationRecipients[],
 	type: EmailNotificationRecipientTypeOptions
 ) {
-	const names = namesList.map((name) => name[type]) as string[];
+	const recipientTypeOptions = recipients.map(
+		(recipient) => recipient[type]
+	) as string[];
 
 	return children.map((child) => {
 		return {
 			...child,
-			checked: names.includes(child.value),
+			checked: recipientTypeOptions.includes(child.value),
 		};
 	});
 }

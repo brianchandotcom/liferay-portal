@@ -13,9 +13,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.http.HttpInvoker;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
@@ -47,6 +54,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -62,6 +70,7 @@ import jakarta.annotation.Generated;
 
 import jakarta.ws.rs.core.MultivaluedHashMap;
 
+import java.io.File;
 import java.lang.reflect.Method;
 
 import java.text.Format;
@@ -2398,6 +2407,69 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				Collections.singletonList(taxonomyCategory1),
 				(List<TaxonomyCategory>)page.getItems());
 		}
+	}
+
+	@Test
+	public void testExportImportTaxonomyCategory() throws Exception {
+		TaxonomyCategory taxonomyCategory =
+			testExportImportTaxonomyCategory_addTaxonomyCategory();
+
+		File larFile = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), testGroup.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+								AssetCategoriesAdminPortletKeys.
+									ASSET_CATEGORIES_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
+							).build())));
+
+		taxonomyCategoryResource.
+			deleteSiteTaxonomyCategoryByExternalReferenceCode(
+				testGroup.getGroupId(),
+				taxonomyCategory.getExternalReferenceCode());
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildImportLayoutSettingsMap(
+							TestPropsValues.getUser(), testGroup.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+								AssetCategoriesAdminPortletKeys.
+									ASSET_CATEGORIES_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
+							).build()));
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
+
+		Assert.assertNotNull(
+			taxonomyCategoryResource
+				.getSiteTaxonomyCategoryByExternalReferenceCode(testGroup.getGroupId(), taxonomyCategory.getExternalReferenceCode()));
+	}
+
+	protected TaxonomyCategory testExportImportTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return taxonomyCategoryResource.postSiteTaxonomyCategory(
+			testGroup.getGroupId(), randomTaxonomyCategory());
 	}
 
 	@Test
@@ -5658,5 +5730,12 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	private
 		com.liferay.headless.admin.taxonomy.resource.v1_0.
 			TaxonomyCategoryResource _taxonomyCategoryResource;
+
+	@Inject
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+
+	@Inject
+	private ExportImportLocalService _exportImportLocalService;
 
 }

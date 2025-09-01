@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -64,28 +65,23 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 		_backgroundTask = _backgroundTaskLocalService.updateBackgroundTask(
 			_backgroundTask);
 
-		try {
-			Map<String, Serializable> taskContextMap =
-				_backgroundTask.getTaskContextMap();
+		Map<String, Serializable> taskContextMap =
+			_backgroundTask.getTaskContextMap();
 
-			Assert.assertTrue(
-				Objects.equals(_getTaskContextMap(true), taskContextMap));
+		Assert.assertTrue(
+			Objects.equals(_getTaskContextMap(true), taskContextMap));
 
-			_upgradeProcess.upgrade();
+		_upgradeProcess.upgrade();
 
-			_entityCache.clearCache();
+		_entityCache.clearCache();
 
-			_backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
-				_backgroundTask.getBackgroundTaskId());
+		_backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
+			_backgroundTask.getBackgroundTaskId());
 
-			taskContextMap = _backgroundTask.getTaskContextMap();
+		taskContextMap = _backgroundTask.getTaskContextMap();
 
-			Assert.assertTrue(
-				Objects.equals(_getTaskContextMap(false), taskContextMap));
-		}
-		finally {
-			_backgroundTaskLocalService.deleteBackgroundTask(_backgroundTask);
-		}
+		Assert.assertTrue(
+			Objects.equals(_getTaskContextMap(false), taskContextMap));
 	}
 
 	@Test
@@ -104,12 +100,7 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 			"update BackgroundTask set taskContextMap = '{}' where " +
 				"backgroundTaskId = " + _backgroundTask.getBackgroundTaskId());
 
-		try {
-			_upgradeProcess.upgrade();
-		}
-		finally {
-			_backgroundTaskLocalService.deleteBackgroundTask(_backgroundTask);
-		}
+		_upgradeProcess.upgrade();
 	}
 
 	private Map<String, Serializable> _getTaskContextMap(boolean addCompanyId) {
@@ -156,6 +147,7 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
+	@DeleteAfterTestRun
 	private BackgroundTask _backgroundTask;
 
 	@Inject

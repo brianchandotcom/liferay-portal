@@ -14,6 +14,7 @@ import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
+import deleteItemAction from './actions/deleteItemAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
@@ -139,14 +140,19 @@ export default function FilesFDSPropsTransformer({
 
 			return action;
 		}),
-		onActionDropdownItemClick: ({
+		async onActionDropdownItemClick({
 			action,
 			itemData,
+			loadData,
 		}: {
 			action: any;
-			itemData: any;
-		}) => {
-			if (action?.data?.id === 'share') {
+			itemData: ItemData;
+			loadData: () => {};
+		}) {
+			if (action?.data?.id === 'delete') {
+				await deleteItemAction(itemData, loadData);
+			}
+			else if (action?.data?.id === 'share') {
 				const {autocompleteURL, collaboratorURLs} = additionalProps;
 
 				shareAction({

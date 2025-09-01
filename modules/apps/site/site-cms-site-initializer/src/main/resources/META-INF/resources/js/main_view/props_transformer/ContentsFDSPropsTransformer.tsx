@@ -13,6 +13,7 @@ import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
+import deleteItemAction from './actions/deleteItemAction';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
@@ -120,16 +121,21 @@ export default function ContentFDSPropsTransformer({
 
 			return action;
 		}),
-		onActionDropdownItemClick: ({
+		async onActionDropdownItemClick({
 			action,
 			event,
 			itemData,
+			loadData,
 		}: {
 			action: any;
 			event: Event;
-			itemData: any;
-		}) => {
-			if (
+			itemData: ItemData;
+			loadData: () => {};
+		}) {
+			if (action?.data?.id === 'delete') {
+				await deleteItemAction(itemData, loadData);
+			}
+			else if (
 				action?.data?.id === 'export-for-translation' ||
 				action?.data?.id === 'import-translation'
 			) {

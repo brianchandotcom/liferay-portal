@@ -1675,14 +1675,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if (javaMethodSignature.pathJavaMethodParameters?size == 1)>
 						<#assign
 							firstPathJavaMethodParameter = javaMethodSignature.pathJavaMethodParameters[0]
-							modifiedPathJavaMethodParameterName = firstPathJavaMethodParameter.parameterName?remove_beginning("parent")?remove_ending("Id")?cap_first
+							modifiedPathJavaMethodParameterName = firstPathJavaMethodParameter.parameterName?remove_beginning("parent")?remove_ending("ExternalReferenceCode")?remove_ending("Id")?cap_first
+							parentIdentifierType = (firstPathJavaMethodParameter.parameterName?ends_with("ExternalReferenceCode"))?string("ExternalReferenceCode", "Id")
 						/>
 
 						<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstPathJavaMethodParameter.parameterName, schemaName) && stringUtil.equals(javaMethodSignature.methodName, "post" + modifiedPathJavaMethodParameterName + schemaName)>
 							<#if freeMarkerTool.isCollection(javaMethodSignature, javaMethodSignatures, modifiedPathJavaMethodParameterName + schemaNames)>
-								return permissions${schemaName}Resource.post${modifiedPathJavaMethodParameterName}${schemaName}(testGet${modifiedPathJavaMethodParameterName}${schemaNames}Page_get<#if stringUtil.startsWith(firstPathJavaMethodParameter.parameterName, "parent")>Parent</#if>${modifiedPathJavaMethodParameterName}Id(), ${schemaVarName}
+								return permissions${schemaName}Resource.post${modifiedPathJavaMethodParameterName}${schemaName}(testGet${modifiedPathJavaMethodParameterName}${schemaNames}Page_get<#if stringUtil.startsWith(firstPathJavaMethodParameter.parameterName, "parent")>Parent</#if>${modifiedPathJavaMethodParameterName}${parentIdentifierType}(), ${schemaVarName}
 							<#else>
-								return permissions${schemaName}Resource.post${modifiedPathJavaMethodParameterName}${schemaName}(testGet${modifiedPathJavaMethodParameterName}${schemaName}_get${modifiedPathJavaMethodParameterName}Id(${schemaVarName})
+								return permissions${schemaName}Resource.post${modifiedPathJavaMethodParameterName}${schemaName}(testGet${modifiedPathJavaMethodParameterName}${schemaName}_get${modifiedPathJavaMethodParameterName}${parentIdentifierType}(${schemaVarName})
 							</#if>
 							);
 						<#else>

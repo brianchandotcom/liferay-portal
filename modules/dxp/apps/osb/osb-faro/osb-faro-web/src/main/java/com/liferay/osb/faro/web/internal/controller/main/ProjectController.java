@@ -53,6 +53,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
@@ -74,6 +75,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -1013,6 +1015,49 @@ public class ProjectController extends BaseFaroController {
 				"recently");
 	}
 
+	private DSLQuery _getDSLQuery(
+			Date endDate, long faroProjectId, Date startDate)
+		throws Exception {
+
+		FaroProjectUsageTable faroProjectUsageTable =
+			FaroProjectUsageTable.INSTANCE;
+
+		Predicate predicate = faroProjectUsageTable.faroProjectId.eq(
+			faroProjectId);
+
+		if (endDate != null) {
+			predicate = predicate.and(
+				faroProjectUsageTable.usageTime.lt(endDate.getTime()));
+		}
+
+		if (startDate != null) {
+			predicate = predicate.and(
+				faroProjectUsageTable.usageTime.gte(startDate.getTime()));
+		}
+
+		return DSLQueryFactoryUtil.select(
+			DSLFunctionFactoryUtil.sum(
+				faroProjectUsageTable.knownIndividualsCount
+			).as(
+				"knownIndividualsCount"
+			),
+			faroProjectUsageTable.monthDateKey,
+			DSLFunctionFactoryUtil.sum(
+				faroProjectUsageTable.pageViewsCount
+			).as(
+				"pageViewsCount"
+			)
+		).from(
+			faroProjectUsageTable
+		).where(
+			predicate
+		).groupBy(
+			faroProjectUsageTable.monthDateKey
+		).orderBy(
+			faroProjectUsageTable.monthDateKey.descending()
+		);
+	}
+
 	private String _getEmailAddressDomainsErrorMessage(
 		Collection<String> invalidEmailAddressDomains) {
 
@@ -1197,88 +1242,50 @@ public class ProjectController extends BaseFaroController {
 			FaroProject faroProject, Date endDate, Date startDate)
 		throws Exception {
 
-		long knownIndividualsCountSinceLastAnniversary = 0;
-		long pageViewsCountSinceLastAnniversary = 0;
-
-		FaroProjectUsageTable faroProjectUsageTable =
-			FaroProjectUsageTable.INSTANCE;
-
-		Predicate predicate = faroProjectUsageTable.faroProjectId.eq(
-			faroProject.getFaroProjectId());
-
-		if (endDate != null) {
-			predicate = predicate.and(
-				faroProjectUsageTable.usageTime.lt(endDate.getTime()));
-		}
+		Map<String, Tuple> tuples = new HashMap<>();
 
 		List<Object[]> results = _faroProjectUsageLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				DSLFunctionFactoryUtil.sum(
-					faroProjectUsageTable.knownIndividualsCount
-				).as(
-					"knownIndividualsCount"
-				),
-				DSLFunctionFactoryUtil.sum(
-					faroProjectUsageTable.pageViewsCount
-				).as(
-					"pageViewsCount"
-				)
-			).from(
-				faroProjectUsageTable
-			).where(
-				predicate.and(
-					faroProjectUsageTable.usageTime.gte(
-						faroProject.getLastAnniversaryDate(
-						).getTime()))
-			));
+			_getDSLQuery(
+				endDate, faroProject.getFaroProjectId(),
+				faroProject.getLastAnniversaryDate()));
 
 		if (!results.isEmpty()) {
-			Object[] objects = results.get(0);
+			long knownIndividualsCountSinceLastAnniversary = 0;
+			long pageViewsCountSinceLastAnniversary = 0;
 
-			knownIndividualsCountSinceLastAnniversary = GetterUtil.getLong(
-				objects[0]);
-			pageViewsCountSinceLastAnniversary = GetterUtil.getLong(objects[1]);
+			for (int i = results.size() - 1; i >= 0; i--) {
+				Object[] objects = results.get(i);
+
+				knownIndividualsCountSinceLastAnniversary += (long)objects[0];
+				pageViewsCountSinceLastAnniversary += (long)objects[2];
+
+				tuples.put(
+					GetterUtil.getString(objects[1]),
+					new Tuple(
+						knownIndividualsCountSinceLastAnniversary,
+						pageViewsCountSinceLastAnniversary));
+			}
 		}
 
-		if (startDate != null) {
-			predicate = predicate.and(
-				faroProjectUsageTable.usageTime.gte(startDate.getTime()));
+		if (!Objects.equals(faroProject.getLastAnniversaryDate(), startDate)) {
+			results = _faroProjectUsageLocalService.dslQuery(
+				_getDSLQuery(
+					endDate, faroProject.getFaroProjectId(), startDate));
 		}
-
-		results = _faroProjectUsageLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				DSLFunctionFactoryUtil.sum(
-					faroProjectUsageTable.knownIndividualsCount
-				).as(
-					"knownIndividualsCount"
-				),
-				faroProjectUsageTable.monthDateKey,
-				DSLFunctionFactoryUtil.sum(
-					faroProjectUsageTable.pageViewsCount
-				).as(
-					"pageViewsCount"
-				)
-			).from(
-				faroProjectUsageTable
-			).where(
-				predicate
-			).groupBy(
-				faroProjectUsageTable.monthDateKey
-			).orderBy(
-				faroProjectUsageTable.monthDateKey.descending()
-			));
 
 		List<UsageMetric> usageMetrics = new ArrayList<>();
 
 		if (!results.isEmpty()) {
 			for (Object[] objects : results) {
+				Tuple tuple = tuples.get(GetterUtil.getString(objects[1]));
+
 				usageMetrics.add(
 					new UsageMetric(
 						GetterUtil.getString(objects[1]),
 						GetterUtil.getLong(objects[0]),
-						knownIndividualsCountSinceLastAnniversary,
+						GetterUtil.getLong(tuple.getObject(0)),
 						GetterUtil.getLong(objects[2]),
-						pageViewsCountSinceLastAnniversary));
+						GetterUtil.getLong(tuple.getObject(1))));
 			}
 		}
 

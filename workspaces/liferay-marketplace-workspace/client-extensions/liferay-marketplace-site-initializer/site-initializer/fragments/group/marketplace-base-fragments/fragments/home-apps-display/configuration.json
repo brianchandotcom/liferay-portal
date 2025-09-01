@@ -19,13 +19,13 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "Fragments and client extensions to foster your prouctivity",
+					"defaultValue": "Fragments and client extensions to foster your productivity",
 					"description": "apps-section-description",
-					"label": "Section Decription",
+					"label": "Section Description",
 					"name": "sectionDescription",
 					"type": "text",
 					"typeOptions": {
-						"placeholder": "Fragments and client extensions to foster your prouctivity"
+						"placeholder": "Fragments and client extensions to foster your productivity"
 					}
 				}
 			]

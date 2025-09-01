@@ -100,13 +100,15 @@ public class FragmentEntryLinkModelListenerTest {
 	public void setUp() throws Exception {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			TestPropsValues.getGroupId());
+
+		_layout = LayoutTestUtil.addTypeContentLayout(
+			_groupLocalService.getGroup(TestPropsValues.getGroupId()));
+
+		_draftLayout = _layout.fetchDraftLayout();
 	}
 
 	@Test
 	public void testAddFragmentEntryLinkWithEmbeddedWidget() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(
-			_groupLocalService.getGroup(TestPropsValues.getGroupId()));
-
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(
 				TestPropsValues.getGroupId());
@@ -122,31 +124,29 @@ public class FragmentEntryLinkModelListenerTest {
 				FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		FragmentEntryLink fragmentEntryLink =
 			FragmentTestUtil.addFragmentEntryLink(
-				fragmentEntry, draftLayout.getPlid());
+				fragmentEntry, _draftLayout.getPlid());
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, draftLayout, null, 0,
+			fragmentEntryLink, _draftLayout, null, 0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()));
+				_draftLayout.getPlid()));
 
 		String portletId = StringBundler.concat(
 			JournalContentPortletKeys.JOURNAL_CONTENT, "_INSTANCE_",
 			fragmentEntryLink.getNamespace());
 
 		try {
-			_pushServiceContext(fragmentEntryLink, draftLayout);
+			_pushServiceContext(fragmentEntryLink, _draftLayout);
 
 			_setUpPortletPreferences(
 				JournalTestUtil.addArticle(
 					TestPropsValues.getGroupId(),
 					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
-				draftLayout, portletId);
+				_draftLayout, portletId);
 
-			publishLayout(draftLayout, layout);
+			publishLayout(_draftLayout, _layout);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -405,11 +405,12 @@ public class FragmentEntryLinkModelListenerTest {
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			TestPropsValues.getGroupId(), 0, 0, 0, 0, fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs(),
-			fragmentEntry.getConfiguration(), editableValues,
-			RandomTestUtil.randomString(), 0, RandomTestUtil.randomString(),
-			FragmentConstants.TYPE_COMPONENT, serviceContext);
+			TestPropsValues.getGroupId(), 0, 0, 0, _draftLayout.getPlid(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			editableValues, RandomTestUtil.randomString(), 0,
+			RandomTestUtil.randomString(), FragmentConstants.TYPE_COMPONENT,
+			serviceContext);
 	}
 
 	private void _assertPortletPreferences(
@@ -509,6 +510,8 @@ public class FragmentEntryLinkModelListenerTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	private Layout _draftLayout;
+
 	@Inject
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
@@ -521,6 +524,8 @@ public class FragmentEntryLinkModelListenerTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	private Layout _layout;
 
 	@Inject
 	private Portal _portal;

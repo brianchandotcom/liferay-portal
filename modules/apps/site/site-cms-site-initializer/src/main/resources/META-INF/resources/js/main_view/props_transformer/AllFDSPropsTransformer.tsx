@@ -13,6 +13,7 @@ import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
 import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
+import deleteItemAction from './actions/deleteItemAction';
 import fileDropAction from './actions/fileDropAction';
 import multipleFilesUploadAction, {
 	MultipleFileUploaderData,
@@ -132,15 +133,21 @@ export default function AllFDSPropsTransformer({
 
 			return action;
 		}),
-		onActionDropdownItemClick: ({
+		async onActionDropdownItemClick({
 			action,
 			event,
 			itemData,
+			loadData,
 		}: {
 			action: any;
 			event: Event;
-			itemData: any;
-		}) => {
+			itemData: ItemData;
+			loadData: () => {};
+		}) {
+			if (action?.data?.id === 'delete') {
+				await deleteItemAction(itemData, loadData);
+			}
+
 			if (
 				action?.data?.id === 'export-for-translation' ||
 				action?.data?.id === 'import-translation'

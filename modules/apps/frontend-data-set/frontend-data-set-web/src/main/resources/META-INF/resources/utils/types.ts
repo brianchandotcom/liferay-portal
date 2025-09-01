@@ -376,8 +376,12 @@ export {
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from '../constants';
 
+export enum EStateInURLKeys {
+	DELTA = 'delta',
+}
+
 export interface IStateInURL {
-	delta: number;
+	[EStateInURLKeys.DELTA]: number;
 }
 
 export {Card} from '../views/cards/Cards';

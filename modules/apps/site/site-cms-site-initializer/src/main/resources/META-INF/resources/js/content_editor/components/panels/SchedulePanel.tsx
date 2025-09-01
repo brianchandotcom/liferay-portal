@@ -13,7 +13,7 @@ import React, {useId, useState} from 'react';
 import FieldWrapper from '../../../common/components/forms/FieldWrapper';
 import {
 	ScheduleFields,
-	UpdateFieldProps,
+	UpdateScheduleProps,
 	toServerFormat,
 } from '../ContentEditorSidePanel';
 
@@ -24,12 +24,12 @@ const LABELS = {
 
 export default function SchedulePanel({
 	dateConfig,
-	fields,
-	onUpdateFieldData,
+	onUpdateSchedule,
+	scheduleFields: fields,
 }: {
 	dateConfig: datetimeUtils.DateConfig;
-	fields: ScheduleFields;
-	onUpdateFieldData: (props: UpdateFieldProps) => void;
+	onUpdateSchedule: (props: UpdateScheduleProps) => void;
+	scheduleFields: ScheduleFields;
 }) {
 	return (
 		<div className="px-3">
@@ -51,7 +51,7 @@ export default function SchedulePanel({
 						label={label}
 						name={name}
 						neverExpire={!values.serverValue}
-						updateFieldData={onUpdateFieldData}
+						updateFieldData={onUpdateSchedule}
 					/>
 				);
 			})}

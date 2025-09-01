@@ -43,8 +43,8 @@ type Props = {
 
 type SidePanelProps = Props & {
 	dateConfig: datetimeUtils.DateConfig;
-	fields: ScheduleFields;
-	onUpdateFieldData: (props: UpdateFieldProps) => void;
+	onUpdateSchedule: (props: UpdateScheduleProps) => void;
+	scheduleFields: ScheduleFields;
 };
 
 type Item = {
@@ -55,19 +55,22 @@ type Item = {
 	title: string;
 };
 
-type BaseData = {
+type BaseScheduleData = {
 	error: string;
 	neverExpire: boolean;
 	value: string;
 };
 
-export type FieldData = BaseData & {
+type ScheduleFieldData = BaseScheduleData & {
 	serverValue: string;
 };
 
-export type ScheduleFields = {expirationDate: FieldData; reviewDate: FieldData};
+export type ScheduleFields = {
+	expirationDate: ScheduleFieldData;
+	reviewDate: ScheduleFieldData;
+};
 
-export type UpdateFieldProps = BaseData & {
+export type UpdateScheduleProps = BaseScheduleData & {
 	name: keyof ScheduleFields;
 };
 
@@ -121,12 +124,12 @@ export default function ContentEditorSidePanel(props: Props) {
 		},
 	});
 
-	const onUpdateFieldData = ({
+	const onUpdateSchedule = ({
 		error,
 		name,
 		neverExpire,
 		value,
-	}: UpdateFieldProps) => {
+	}: UpdateScheduleProps) => {
 		const values = neverExpire
 			? {serverValue: ''}
 			: {
@@ -134,7 +137,7 @@ export default function ContentEditorSidePanel(props: Props) {
 					value,
 				};
 
-		setScheduleFields((fields: ScheduleFields) => ({
+		setScheduleFields((fields) => ({
 			...fields,
 			[name]: {
 				...fields[name],
@@ -157,8 +160,8 @@ export default function ContentEditorSidePanel(props: Props) {
 			<SidePanel
 				{...props}
 				dateConfig={dateConfig}
-				fields={scheduleFields}
-				onUpdateFieldData={onUpdateFieldData}
+				onUpdateSchedule={onUpdateSchedule}
+				scheduleFields={scheduleFields}
 			/>
 			{Object.entries(scheduleFields).map(([name, {serverValue}]) => (
 				<input
@@ -179,7 +182,7 @@ function SidePanel(props: SidePanelProps) {
 
 	useEffect(() => {
 		const validateScheduleFields = ({event}: {event: MouseEvent}) => {
-			const hasError = Object.values(props.fields).some(
+			const hasError = Object.values(props.scheduleFields).some(
 				(field) => field.error && field.serverValue
 			);
 
@@ -196,7 +199,7 @@ function SidePanel(props: SidePanelProps) {
 		return () => {
 			Liferay.detach(EVENT_VALIDATE_FORM, validateScheduleFields);
 		};
-	}, [props.fields]);
+	}, [props.scheduleFields]);
 
 	useEffect(() => {
 		if (hasError) {

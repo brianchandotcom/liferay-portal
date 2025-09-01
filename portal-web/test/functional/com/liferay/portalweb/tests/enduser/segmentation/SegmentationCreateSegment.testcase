@@ -689,7 +689,6 @@ definition {
 		}
 	}
 
-
 	@description = "Test Automation for LPS-130326: Validate if it's posible to create a segment based on Session > User Agent criteria"
 	@priority = 5
 	@uitest

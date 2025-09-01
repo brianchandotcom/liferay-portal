@@ -15,6 +15,8 @@ import '../../../../css/main.scss';
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
+const MULTIMEDIA_TYPES = ['audio/', 'image/', 'video/'];
+
 const getHrefLink = (item: any, props: any) => {
 	const actionId = 'actionLink';
 	const {actions} = props;
@@ -57,9 +59,7 @@ const getThumbnailProps = (item: any) => {
 };
 
 function isMultimediaMimeType(mimeType: string): boolean {
-	const multimediaTypes = ['audio/', 'image/', 'video/'];
-
-	return multimediaTypes.some((prefix) => mimeType.startsWith(prefix));
+	return MULTIMEDIA_TYPES.some((prefix) => mimeType.startsWith(prefix));
 }
 
 const getFileMimeTypeValue = (

@@ -6038,7 +6038,11 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.rest.internal.resource.v1_0." +
+					"ObjectEntryRelatedObjectsResourceImpl",
+				LoggerTestUtil.ERROR);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.ERROR)) {

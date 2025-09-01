@@ -5,6 +5,8 @@
 
 package com.liferay.object.web.internal.info.item.updater;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
@@ -12,18 +14,21 @@ import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.info.item.handler.ObjectEntryInfoItemExceptionRequestHandler;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
@@ -106,9 +111,27 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 										setCode(() -> statusInt);
 									}
 								});
-							setTaxonomyCategoryIds(
-								() -> ArrayUtil.toLongArray(
-									serviceContext.getAssetCategoryIds()));
+							setTaxonomyCategoryBriefs(
+								() -> TransformUtil.transformToArray(
+									ListUtil.fromArray(
+										serviceContext.getAssetCategoryIds()),
+									assetCategoryId -> {
+										AssetCategory assetCategory =
+											AssetCategoryServiceUtil.
+												getCategory(assetCategoryId);
+
+										return new TaxonomyCategoryBrief() {
+											{
+												setScope(
+													() -> ScopeUtil.toScope(
+														assetCategory.
+															getGroupId()));
+												setTaxonomyCategoryId(
+													() -> assetCategoryId);
+											}
+										};
+									},
+									TaxonomyCategoryBrief.class));
 						}
 					},
 					scopeKey);

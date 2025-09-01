@@ -4140,8 +4140,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 >
 	<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 		${schemaVarNameId}
-	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-		${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 	<#elseif generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
 		testDepotEntryGroup.getExternalReferenceCode()
 	<#elseif generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
@@ -4150,6 +4148,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 		testGroup.getExternalReferenceCode()
 	<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 		testGroup.getGroupId()
+	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+		${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+		${schemaVarName}.getExternalReferenceCode()
 	<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 		${schemaVarName}
 	<#elseif stringUtil.equals(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>

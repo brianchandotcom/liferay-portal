@@ -888,6 +888,14 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition getObjectDefinitionByClassName(
+			long companyId, String className)
+		throws PortalException {
+
+		return objectDefinitionPersistence.findByC_C(companyId, className);
+	}
+
+	@Override
 	public List<ObjectDefinition> getObjectDefinitions(
 		boolean accountEntryRestricted) {
 

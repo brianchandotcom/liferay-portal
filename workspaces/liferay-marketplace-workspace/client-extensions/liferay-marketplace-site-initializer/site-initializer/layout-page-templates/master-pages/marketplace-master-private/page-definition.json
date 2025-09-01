@@ -3,19 +3,18 @@
 		"pageElements": [
 			{
 				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] {\n\nposition:sticky;\ntop:-48px;\nz-index:970;\n}",
 					"fragmentStyle": {
-						"borderWidth": "0",
-						"minHeight": "100vh"
+						"backgroundColor": "#FFFFFF"
 					},
 					"indexed": true,
 					"layout": {
-						"contentDisplay": "FlexColumn",
-						"justify": "SpaceBetween"
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: solid 1px var(--neutral-02, #E2E2E4);\n}",
 							"indexed": true,
 							"layout": {
 							}
@@ -55,7 +54,6 @@
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: solid 1px var(--neutral-02, #E2E2E4);\n}",
 											"fragmentStyle": {
 												"height": "48px"
 											},
@@ -256,6 +254,7 @@
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
+														"siteNavigationMenuId": 0
 													},
 													"fragmentFields": [
 													],
@@ -276,12 +275,20 @@
 									}
 								],
 								"type": "Section"
-							},
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: solid 1px var(--neutral-02, #E2E2E4);\n}",
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
 							{
 								"definition": {
-									"cssClasses": [
-										"nav-mobile-class"
-									],
 									"customCSS": ".[$FRAGMENT_CLASS$] {\n \n}",
 									"fragmentStyle": {
 										"borderWidth": "0",
@@ -656,7 +663,7 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"customCSS": ".[$FRAGMENT_CLASS$] .nav-item:hover {\n\tbackground-color: #EDF3FE !important;\n}\n\n.dropdown-menu {\n\tmin-width: 130px;\n}\n\nul {\n\tpadding: 0px\n}\n\n.mobile-menu-container .lfr-nav-item {\n\tborder-radius: 8px;\n\tborder: none;\n\tmargin: 6px;\n\tpadding: 6px;\n\ttext-align: center;\n\ttransition: all 0.3s cubic-bezier(.25, .8, .25, 1);\n}\n\n.mobile-menu-container .lfr-nav-item a:hover {\n\tbackground: #EDF3FE;\n\tcolor: #0053F0;\n\ttransition: all 0.3s cubic-bezier(.25, .8, .25, 1);\n}\n",
+																			"customCSS": ".[$FRAGMENT_CLASS$] .nav-item:hover {\n\tbackground-color: #EDF3FE !important;\n}\n\n.dropdown-menu {\n\tmin-width: 130px;\n}\n\n.mobile-menu-container ul {\n\tpadding: 0px !important;\n}\n\n.mobile-menu-container .lfr-nav-item {\n\tborder-radius: 8px;\n\tborder: none;\n\tmargin: 6px;\n\tpadding: 6px;\n\ttext-align: center;\n\ttransition: all 0.3s cubic-bezier(.25, .8, .25, 1);\n}\n\n.mobile-menu-container .lfr-nav-item a:hover {\n\tbackground: #EDF3FE;\n\tcolor: #0053F0;\n\ttransition: all 0.3s cubic-bezier(.25, .8, .25, 1);\n}\n",
 																			"fragment": {
 																				"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
 																			},
@@ -687,7 +694,33 @@
 									}
 								],
 								"type": "Section"
-							},
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"minHeight": "100vh"
+					},
+					"indexed": true,
+					"layout": {
+						"contentDisplay": "FlexColumn",
+						"justify": "SpaceBetween"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
 							{
 								"definition": {
 									"fragmentStyle": {

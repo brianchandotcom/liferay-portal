@@ -16,6 +16,14 @@
 		"title": "App Documentation URL"
 	},
 	{
+		"categoryKey": "product-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-APP-ENTRY-UUID",
+		"description": "",
+		"facetable": false,
+		"key": "app-entry-uuid",
+		"title": "App Entry UUID"
+	},
+	{
 		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-APP-INSTALLATION-GUIDE-URL",
 		"description": "",
@@ -118,6 +126,14 @@
 		"facetable": true,
 		"key": "cpu",
 		"title": "Number of CPUs"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-OUR-SELECTION",
+		"description": "",
+		"facetable": true,
+		"key": "our-selection",
+		"title": "Our Selection"
 	},
 	{
 		"categoryKey": "product-metadata",

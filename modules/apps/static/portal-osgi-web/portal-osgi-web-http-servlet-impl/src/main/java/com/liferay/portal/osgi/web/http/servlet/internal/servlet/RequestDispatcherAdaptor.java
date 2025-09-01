@@ -5,7 +5,10 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.RequestDispatcher;
@@ -17,17 +20,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
-
 /**
  * @author Dante Wang
  */
 public class RequestDispatcherAdaptor implements RequestDispatcher {
 
 	public RequestDispatcherAdaptor(
-		DispatchTargets dispatchTargets, String path) {
+		LiferayDispatchTargets liferayDispatchTargets, String path) {
 
-		_dispatchTargets = dispatchTargets;
+		_liferayDispatchTargets = liferayDispatchTargets;
 		_path = path;
 	}
 
@@ -36,7 +37,7 @@ public class RequestDispatcherAdaptor implements RequestDispatcher {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
-		_dispatchTargets.doDispatch(
+		_liferayDispatchTargets.doDispatch(
 			(HttpServletRequest)servletRequest,
 			(HttpServletResponse)servletResponse, _path,
 			DispatcherType.FORWARD);
@@ -47,7 +48,7 @@ public class RequestDispatcherAdaptor implements RequestDispatcher {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
-		_dispatchTargets.doDispatch(
+		_liferayDispatchTargets.doDispatch(
 			(HttpServletRequest)servletRequest,
 			(HttpServletResponse)servletResponse, _path,
 			DispatcherType.INCLUDE);
@@ -59,7 +60,9 @@ public class RequestDispatcherAdaptor implements RequestDispatcher {
 
 		if (value == null) {
 			value = StringBundler.concat(
-				_SIMPLE_NAME, '[', _path, ", ", _dispatchTargets, ']');
+				_SIMPLE_NAME, CharPool.OPEN_BRACKET, _path,
+				StringPool.COMMA_AND_SPACE, _liferayDispatchTargets,
+				CharPool.CLOSE_BRACKET);
 
 			_string = value;
 		}
@@ -68,10 +71,9 @@ public class RequestDispatcherAdaptor implements RequestDispatcher {
 	}
 
 	private static final String _SIMPLE_NAME =
-		org.eclipse.equinox.http.servlet.internal.servlet.
-			RequestDispatcherAdaptor.class.getSimpleName();
+		RequestDispatcherAdaptor.class.getSimpleName();
 
-	private final DispatchTargets _dispatchTargets;
+	private final LiferayDispatchTargets _liferayDispatchTargets;
 	private final String _path;
 	private String _string;
 

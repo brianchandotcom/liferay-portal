@@ -4,8 +4,8 @@
  */
 
 import {OrderTypes} from '../../../enums/Order';
-import ProductPurchaseSolutionTrial from './ProductPurchasePreBuiltTrial';
+import ProductPurchase from './ProductPurchase';
 
-export default class ProductPurchaseSSATrial extends ProductPurchaseSolutionTrial {
+export default class ProductPurchaseSSATrial extends ProductPurchase {
 	protected orderTypeExternalReferenceCode = OrderTypes.SSA_SAAS;
 }

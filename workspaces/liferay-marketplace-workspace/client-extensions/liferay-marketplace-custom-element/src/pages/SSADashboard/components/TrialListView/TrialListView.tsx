@@ -28,6 +28,7 @@ import TrialStatus from '../TrialStatus/TrialStatus';
 
 type TrialsListViewProps = {
 	actions: Action[];
+	authorOnlyTrials?: boolean;
 	createTrialFormModal: any;
 	isSortable?: boolean;
 	listViewProps?: Partial<ListViewProps<PlacedOrder>>;
@@ -47,34 +48,38 @@ type TrialsListViewProps = {
 
 const refreshInterval = 60 * 1000;
 
-export default function TrialListView({
-	actions,
-	createTrialFormModal,
-	listViewProps,
-	managementToolbarProps,
-}: TrialsListViewProps) {
-	const {ssaAccount, ssaTrialExtend} = useSSADashboardOutlet();
-	const {marketplaceUserAccount, myUserAccount} = useMarketplaceContext();
-
-	const resource = `/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${ssaAccount.id}/placed-orders?${new URLSearchParams(
+const getResourceURL = (accountId: number) =>
+	`/o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${accountId}/placed-orders?${new URLSearchParams(
 		{
 			nestedFields: 'placedOrderItems',
 			sort: 'createDate:desc',
 		}
 	)}`;
 
-	const searchBuilder = useMemo(
-		() =>
-			new SearchBuilder().eq(
-				'orderTypeExternalReferenceCode',
-				OrderTypes.SSA_SAAS
-			),
-		[]
-	);
+export default function TrialListView({
+	actions,
+	authorOnlyTrials,
+	createTrialFormModal,
+	listViewProps,
+	managementToolbarProps,
+}: TrialsListViewProps) {
+	const {ssaAccount, ssaTrialExtend} = useSSADashboardOutlet();
+	const {myUserAccount} = useMarketplaceContext();
 
-	if (!marketplaceUserAccount.isSSAAdmin) {
-		searchBuilder.and().eq('author', myUserAccount?.name);
-	}
+	const author = myUserAccount?.name;
+
+	const searchBuilder = useMemo(() => {
+		const searchBuilder = new SearchBuilder().eq(
+			'orderTypeExternalReferenceCode',
+			OrderTypes.SSA_SAAS
+		);
+
+		if (authorOnlyTrials) {
+			searchBuilder.and().eq('author', author);
+		}
+
+		return searchBuilder;
+	}, [author, authorOnlyTrials]);
 
 	return (
 		<>
@@ -87,7 +92,7 @@ export default function TrialListView({
 					...managementToolbarProps,
 				}}
 				refreshInterval={refreshInterval}
-				resource={resource}
+				resource={getResourceURL(ssaAccount.id)}
 				tableProps={{
 					actions,
 					columns: [

@@ -325,6 +325,11 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinition getObjectDefinitionByClassName(
+			long companyId, String className)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectDefinition getObjectDefinitionByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException;

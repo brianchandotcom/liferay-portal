@@ -414,6 +414,14 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getObjectDefinition(companyId, name);
 	}
 
+	public static ObjectDefinition getObjectDefinitionByClassName(
+			long companyId, String className)
+		throws PortalException {
+
+		return getService().getObjectDefinitionByClassName(
+			companyId, className);
+	}
+
 	public static ObjectDefinition getObjectDefinitionByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {

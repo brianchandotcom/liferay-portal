@@ -5,12 +5,15 @@
 
 package com.liferay.exportimport.kernel.lar;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
@@ -23,8 +26,11 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 
+//import com.liferay.exportimport.report.service.ExportImportReportEntryLocalServiceUtil;
+
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -377,9 +383,24 @@ public class StagedModelDataHandlerUtil {
 			return;
 		}
 
-		stagedModelDataHandler.importStagedModel(
-			portletDataContext, stagedModel);
+		try {
 
+			stagedModelDataHandler.importStagedModel(
+				portletDataContext, stagedModel);
+
+
+		} catch (PortletDataException exception){
+
+			for (ImportStagedModelErrorHandler importStagedModelErrorHandler :
+				_importStagedModelErrorHandler) {
+
+				importStagedModelErrorHandler.addErrorImportReportEntry(exception, portletDataContext, stagedModel);
+
+			}
+
+
+
+		}
 		LastSessionRecorderHelperUtil.syncLastSessionState();
 	}
 
@@ -620,5 +641,32 @@ public class StagedModelDataHandlerUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedModelDataHandlerUtil.class);
+
+
+	private static <T extends StagedModel> void _addErrorImportReportEntry(Exception exception, PortletDataContext portletDataContext, T stagedModel) {
+		List<ImportStagedModelErrorHandler> importStagedModelErrorHandlers = new ArrayList<>();
+
+	//	if (group == null) {
+			//return importStagedModelErrorHandlers;
+	//	}
+
+		for (ImportStagedModelErrorHandler importStagedModelErrorHandler :
+			_importStagedModelErrorHandler) {
+
+			//boolean addError =
+				importStagedModelErrorHandler.addErrorImportReportEntry(exception, portletDataContext, stagedModel);
+
+			//if (!addError) {
+				//groupCapabilities.add(capability);
+			//}
+		}
+
+		//return importStagedModelErrorHandlers;
+	}
+
+	private static final ServiceTrackerList<ImportStagedModelErrorHandler>
+		_importStagedModelErrorHandler = ServiceTrackerListFactory.open(
+		SystemBundleUtil.getBundleContext(),
+		ImportStagedModelErrorHandler.class);
 
 }

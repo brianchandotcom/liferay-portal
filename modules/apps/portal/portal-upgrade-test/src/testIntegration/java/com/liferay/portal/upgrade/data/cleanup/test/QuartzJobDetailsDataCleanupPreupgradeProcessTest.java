@@ -8,6 +8,8 @@ package com.liferay.portal.upgrade.data.cleanup.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -17,6 +19,8 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupgradeProcess;
+
+import java.sql.Connection;
 
 import java.util.List;
 
@@ -42,6 +46,10 @@ public class QuartzJobDetailsDataCleanupPreupgradeProcessTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
+
+		_dbInspector = new DBInspector(_connection);
+
 		if (DBPartition.isPartitionEnabled()) {
 			_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				PortalInstancePool.getDefaultCompanyId());
@@ -50,6 +58,8 @@ public class QuartzJobDetailsDataCleanupPreupgradeProcessTest
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		DataAccess.cleanUp(_connection);
+
 		if (_safeCloseable != null) {
 			_safeCloseable.close();
 		}
@@ -81,9 +91,11 @@ public class QuartzJobDetailsDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
-						"Deleted Quartz job detail for job ", jobName,
-						" from QUARTZ_JOB_DETAILS table because JOB_DATA ",
-						"column was null")));
+						"Table ",
+						_dbInspector.normalizeName("QUARTZ_JOB_DETAILS"),
+						", row deleted because ",
+						_dbInspector.normalizeName("JOB_DATA"),
+						" was null for job ", jobName)));
 		}
 		finally {
 			runSQL(
@@ -92,6 +104,8 @@ public class QuartzJobDetailsDataCleanupPreupgradeProcessTest
 		}
 	}
 
+	private static Connection _connection;
+	private static DBInspector _dbInspector;
 	private static SafeCloseable _safeCloseable;
 
 }

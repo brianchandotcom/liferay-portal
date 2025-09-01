@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
@@ -34,14 +35,17 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 				return;
 			}
 
+			DBInspector dbInspector = new DBInspector(connection);
+
 			while (resultSet.next()) {
 				long fileEntryId = resultSet.getLong("fileEntryId");
 				String name = resultSet.getString("name");
 
 				_log.info(
 					StringBundler.concat(
-						"Deleted document library file entry ", fileEntryId,
-						" because its name was ",
+						"Table ", dbInspector.normalizeName("DLFileEntry"),
+						", row with fileEntryId ", fileEntryId,
+						" deleted because its name was ",
 						(name == null) ? "null" : "empty"));
 			}
 		}

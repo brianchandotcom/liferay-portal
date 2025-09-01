@@ -62,13 +62,14 @@ public class NullUnicodeContentDataCleanupPreupgradeProcess
 					columnName, ", ", oldData, ", ", newData, ") where ",
 					columnName, " like ", likeClause))) {
 
-			int rowCount = preparedStatement.executeUpdate();
+			int count = preparedStatement.executeUpdate();
 
-			if (_log.isInfoEnabled() && (rowCount > 0)) {
+			if (_log.isInfoEnabled() && (count > 0)) {
 				_log.info(
 					StringBundler.concat(
 						"Table ", dbInspector.normalizeName(tableName), ", ",
-						rowCount, " rows updated because ",
+						count, " row", (count > 1) ? "s " : " ",
+						"updated because ",
 						dbInspector.normalizeName(columnName),
 						" had invalid characters"));
 			}

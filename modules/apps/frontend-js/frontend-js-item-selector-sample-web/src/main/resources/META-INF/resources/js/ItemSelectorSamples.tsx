@@ -325,7 +325,7 @@ export default function ItemSelectorSamples() {
 							setDocument(items[0]);
 						},
 						onOpenChange: fileItemSelectorOpenChange,
-						onSelection: setDocumentsItemSelectorModal,
+						onSubmit: setDocumentsItemSelectorModal,
 						open: fileItemSelectorOpen,
 						type: documentsItemSelectorConfig.type,
 					}}
@@ -349,7 +349,7 @@ export default function ItemSelectorSamples() {
 							setSpace2(items[0]);
 						},
 						onOpenChange: spaceItemSelectorOpenChange,
-						onSelection: setSpaceItemSelectorModal,
+						onSubmit: setSpaceItemSelectorModal,
 						open: spaceItemSelectorOpen,
 						type: assetLibrariesItemSelectorConfig.type,
 					}}
@@ -373,7 +373,7 @@ export default function ItemSelectorSamples() {
 							setUser(items[0]);
 						},
 						onOpenChange: userItemSelectorOpenChange,
-						onSelection: setUserItemSelectorModal,
+						onSubmit: setUserItemSelectorModal,
 						open: userItemSelectorOpen,
 						type: userAccountsItemSelectorConfig.type,
 					}}

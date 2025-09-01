@@ -45,14 +45,6 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_backgroundTask = _backgroundTaskLocalService.createBackgroundTask(
-			_counterLocalService.increment());
-
-		_backgroundTask.setTaskContextMap(_getTaskContextMap(true));
-
-		_backgroundTask = _backgroundTaskLocalService.updateBackgroundTask(
-			_backgroundTask);
-
 		_upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
 			"com.liferay.portal.background.task.internal.upgrade.v2_0_1." +
@@ -61,23 +53,36 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Map<String, Serializable> taskContextMap =
-			_backgroundTask.getTaskContextMap();
+		_backgroundTask = _backgroundTaskLocalService.createBackgroundTask(
+			_counterLocalService.increment());
 
-		Assert.assertTrue(
-			Objects.equals(_getTaskContextMap(true), taskContextMap));
+		_backgroundTask.setTaskContextMap(_getTaskContextMap(true));
 
-		_upgradeProcess.upgrade();
+		_backgroundTask = _backgroundTaskLocalService.updateBackgroundTask(
+			_backgroundTask);
 
-		_entityCache.clearCache();
+		try {
+			Map<String, Serializable> taskContextMap =
+				_backgroundTask.getTaskContextMap();
 
-		_backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
-			_backgroundTask.getBackgroundTaskId());
+			Assert.assertTrue(
+				Objects.equals(_getTaskContextMap(true), taskContextMap));
 
-		taskContextMap = _backgroundTask.getTaskContextMap();
+			_upgradeProcess.upgrade();
 
-		Assert.assertTrue(
-			Objects.equals(_getTaskContextMap(false), taskContextMap));
+			_entityCache.clearCache();
+
+			_backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
+				_backgroundTask.getBackgroundTaskId());
+
+			taskContextMap = _backgroundTask.getTaskContextMap();
+
+			Assert.assertTrue(
+				Objects.equals(_getTaskContextMap(false), taskContextMap));
+		}
+		finally {
+			_backgroundTaskLocalService.deleteBackgroundTask(_backgroundTask);
+		}
 	}
 
 	private Map<String, Serializable> _getTaskContextMap(boolean addCompanyId) {

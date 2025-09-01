@@ -101,6 +101,13 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 				"backgroundTaskId = " + _backgroundTask.getBackgroundTaskId());
 
 		_upgradeProcess.upgrade();
+
+		_entityCache.clearCache();
+
+		_backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
+			_backgroundTask.getBackgroundTaskId());
+
+		Assert.assertNotNull(_backgroundTask.getTaskContextMap());
 	}
 
 	private Map<String, Serializable> _getTaskContextMap(boolean addCompanyId) {

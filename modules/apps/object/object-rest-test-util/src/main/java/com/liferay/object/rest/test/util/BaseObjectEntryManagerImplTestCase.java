@@ -118,6 +118,9 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 		assertEquals(
 			(List<ObjectEntry>)actualPage.getItems(),
 			(List<ObjectEntry>)expectedPage.getItems());
+
+		Assert.assertEquals(
+			expectedPage.getTotalCount(), actualPage.getTotalCount());
 	}
 
 	protected void assertFacets(
@@ -241,7 +244,9 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 
 		assertEquals(
 			getObjectEntries(context, getSorts(context.get("sort"))),
-			Page.of(ListUtil.fromArray(expectedObjectEntries)));
+			Page.of(
+				ListUtil.fromArray(expectedObjectEntries), null,
+				expectedObjectEntries.length));
 	}
 
 	protected static User adminUser;

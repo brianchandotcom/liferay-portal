@@ -308,8 +308,12 @@ public class NotificationQueueEntryResourceTest
 				NotificationQueueEntry notificationQueueEntry)
 		throws Exception {
 
-		return notificationQueueEntryResource.postNotificationQueueEntry(
-			notificationQueueEntry);
+		NotificationQueueEntry postNotificationQueueEntry =
+			notificationQueueEntryResource.postNotificationQueueEntry(
+				notificationQueueEntry);
+
+		return notificationQueueEntryResource.getNotificationQueueEntry(
+			postNotificationQueueEntry.getId());
 	}
 
 	@Inject

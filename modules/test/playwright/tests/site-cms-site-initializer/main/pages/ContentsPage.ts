@@ -87,7 +87,7 @@ export class ContentsPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 	}
 
-	async deleteContent(title: string) {
+	async deleteContent(title: string, recycleBinEnabled: boolean = false) {
 		const card = this.page
 			.locator('tr', {hasText: title})
 			.or(this.page.locator('.card-row', {hasText: title}));
@@ -102,7 +102,17 @@ export class ContentsPage {
 			trigger: card.locator('button'),
 		});
 
-		await waitForAlert(this.page, 'Your request completed successfully');
+		if (recycleBinEnabled) {
+			await waitForAlert(this.page, `Success:${title} was moved`, {
+				autoClose: false,
+			});
+		}
+		else {
+			await waitForAlert(
+				this.page,
+				`Success:${title} has been permanently deleted.`
+			);
+		}
 	}
 
 	async editContent(title: string) {

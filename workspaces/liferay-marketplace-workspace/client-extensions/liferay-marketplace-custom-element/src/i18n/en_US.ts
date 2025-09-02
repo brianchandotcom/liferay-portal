@@ -51,7 +51,7 @@ export default {
 		'An administrator of the Marketplace will review your request shortly. If you have questions regarding your submission, please email',
 	'an-app-build-is-your-compiled-or-non-compiled-code-submitted-on-behalf-of-your-account-to-the-marketplace-once-submitted-it-will-be-reviewed-and-tested-by-our-marketplace-administrators-for-approval-in-the-marketplace':
 		'An App Build is your compiled or non-compiled code submitted on behalf of your account to the Marketplace. Once submitted, it will be reviewed and tested by our Marketplace administrators for approval in the Marketplace.',
-	'an-unexpected-error-occurred': 'An unexpected error ocurred',
+	'an-unexpected-error-occurred': 'An unexpected error ocurred.',
 	'and': 'and',
 	'annual-target': 'Annual Target',
 	'app-build': 'App Build',
@@ -68,7 +68,7 @@ export default {
 	'app-type': 'App Type',
 	'app-usage-terms-url': 'App Usage Terms URL',
 	'app-version': 'App Version',
-	'app-x-submitted': 'App <b>{0}</b> submitted',
+	'app-x-submitted': 'App <b>{0}</b> submitted.',
 	'apply': 'Apply',
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
@@ -258,12 +258,12 @@ export default {
 	'extension-optional': 'Extension (optional)',
 	'extension-request': 'Extension Request',
 	'extension-status': 'Extension Status',
-	'failed-to-approve-trial-extension': 'Failed to approve trial extension',
+	'failed-to-approve-trial-extension': 'Failed to approve trial extension.',
 	'failed-to-expire-trial': 'Failed to expire the trial.',
-	'failed-to-extend-trial': 'Failed to extend trial',
+	'failed-to-extend-trial': 'Failed to extend trial.',
 	'failed-to-reject-trial-extension': 'Failed to reject trial extension.',
 	'failure': 'Failure',
-	'file-not-available-for-download': 'File not available for download',
+	'file-not-available-for-download': 'File not available for download.',
 	'filter': 'Filter',
 	'first-name': 'First Name',
 	'form': 'form',
@@ -315,7 +315,8 @@ export default {
 	'insufficient-resource-requirements': 'Insufficient Resource Requirements',
 	'intl-code': 'Intl. code',
 	'ip-addresses': 'IP Addresses',
-	'key-activations-available-x-of-x': 'Key activations available: {0} of {1}',
+	'key-activations-available-x-of-x':
+		'Key activations available: {0} of {1}.',
 	'key-deactivation-requested-succesfully':
 		'Key deactivation requested successfully',
 	'key-type': 'Key Type',
@@ -424,16 +425,16 @@ export default {
 		'Please be aware that since you are adding a new version of the app the only section visible is the “Build”.',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
 		'Please be sure to specify Liferay compatibility through the appropriate properties or XML files in your plugin.',
-	'please-fill-in-a-valid-email': 'Please fill in a valid email',
+	'please-fill-in-a-valid-email': 'Please fill in a valid email.',
 	'please-fill-in-a-valid-phone-number':
-		'Please fill in a valid phone number',
-	'please-fill-in-a-valid-url': 'Please fill in a valid URL',
+		'Please fill in a valid phone number.',
+	'please-fill-in-a-valid-url': 'Please fill in a valid URL.',
 	'please-note-that-since-there-is-no-cloud-project-associated-with-your-instance-you-will-not-be-able-to-install-cloud-apps':
-		'Please note that since there is no cloud project associated with your instance, you will not be able to install Cloud Apps',
+		'Please note that since there is no cloud project associated with your instance, you will not be able to install Cloud Apps.',
 	'please-review-before-submitting-once-sent-you-will-not-be-able-to-edit-any-information-until-this-submission-is-completely-reviewed-by-liferay':
 		'Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.',
 	'please-select-the-account-you-wish-to-link-to-your-liferay-dxp-below':
-		'Please select the account you wish to link to your Liferay DXP below',
+		'Please select the account you wish to link to your Liferay DXP below.',
 	'price': 'Price',
 	'pricing': 'Pricing',
 	'privacy-policy': 'Privacy Policy',
@@ -529,10 +530,10 @@ export default {
 	'solution-header': 'Solution Header',
 	'solution-submission': 'Solution Submission',
 	'solution-summary': 'Solution Summary',
-	'solution-x-submitted': 'Solution <b>{0}</b> submitted',
+	'solution-x-submitted': 'Solution <b>{0}</b> submitted.',
 	'solutions': 'Solutions',
 	'solutions-info': 'Solutions Info',
-	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
+	'sorry-there-are-no-results-found': 'Sorry, there are no results found.',
 	'specify-your-apps-version-this-will-help-the-user-to-understand-the-latest-version-of-your-app-offered-on-the-marketplace':
 		'Specify your app’s version. This will help the user to understand the latest version of your app offered on the Marketplace.',
 	'ssa-trial-installation-in-progress': 'SSA Trial Installation in Progress',
@@ -604,7 +605,7 @@ export default {
 	'this-action-cannot-be-undone': 'This action cannot be undone.',
 	'this-app-is-already-installed-in-this-environment':
 		'This app is already installed in this environment.',
-	'this-field-is-required': 'This field is required',
+	'this-field-is-required': 'This field is required.',
 	'this-is-the-first-version-of-the-app-to-be-published':
 		'This is the first version of the app to be published',
 	'this-key-is-expired-and-cannot-be-downloaded':
@@ -626,11 +627,11 @@ export default {
 	'trial-end-date': 'Trial End Date',
 	'trial-error': 'Trial Error',
 	'trial-expired-successfully': 'Trial expired successfully.',
+	'trial-extended-successfully': 'Trial extended successfully.',
 	'trial-extension-approved-successfully':
 		'Trial extension approved successfully',
 	'trial-extension-rejected-successfully':
 		'Trial extension rejected successfully.',
-	'trial-extension-successfully': 'Trial extension successfully',
 	'trial-info': 'Trial Info',
 	'trial-resources': 'Trial Resources',
 	'trial-start-date': 'Trial Start Date',
@@ -658,7 +659,7 @@ export default {
 	'user-account': 'User Account',
 	'users-requests-to-become-a-publisher':
 		'Users requests to become a publisher',
-	'value-between-1-and-60': 'Value between 1 and 60',
+	'value-between-1-and-60': 'Value between 1 and 60.',
 	'version': 'Version',
 	'via-github-repo': 'Via GitHub Repo',
 	'via-liferay-experience-cloud-integration': 'Via Liferay SaaS Integration',

@@ -11,7 +11,6 @@ import com.liferay.oauth2.provider.exception.OAuth2ApplicationRequiredException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -47,12 +46,10 @@ public class OAuth2ApplicationModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Company company = _companyLocalService.getCompanyById(
+		_company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
-		_companyId = company.getCompanyId();
-
-		_user = UserTestUtil.addCompanyAdminUser(company);
+		_user = UserTestUtil.addCompanyAdminUser(_company);
 
 		String oAuth2ApplicationName = RandomTestUtil.randomString();
 
@@ -62,7 +59,7 @@ public class OAuth2ApplicationModelListenerTest {
 			"com.liferay.scim.rest.internal.configuration." +
 				"ScimClientOAuth2ApplicationConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", _companyId
+				"companyId", _company.getCompanyId()
 			).put(
 				"matcherField", "email"
 			).put(
@@ -81,7 +78,7 @@ public class OAuth2ApplicationModelListenerTest {
 	public void testOnBeforeRemoveWithoutResetInProcess() throws Exception {
 		OAuth2Application scimOAuth2Application =
 			_oAuth2ApplicationLocalService.getOAuth2Application(
-				_companyId, _clientId);
+				_company.getCompanyId(), _clientId);
 
 		_oAuth2ApplicationLocalService.deleteOAuth2Application(
 			scimOAuth2Application.getOAuth2ApplicationId());
@@ -96,7 +93,7 @@ public class OAuth2ApplicationModelListenerTest {
 
 			OAuth2Application scimOAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
-					_companyId, _clientId);
+					_company.getCompanyId(), _clientId);
 
 			_oAuth2ApplicationLocalService.deleteOAuth2Application(
 				scimOAuth2Application.getOAuth2ApplicationId());
@@ -115,13 +112,10 @@ public class OAuth2ApplicationModelListenerTest {
 	private static User _user;
 
 	private String _clientId;
-	private Long _companyId;
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private Language _language;
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

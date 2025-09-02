@@ -174,6 +174,7 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 		return new String[] {"title", "href", "usages"};
 	}
 
+	@Override
 	protected ExpiredAsset testGetExpiredAssetsPage_addExpiredAsset(
 			ExpiredAsset expiredAsset)
 		throws Exception {
@@ -228,7 +229,6 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
 			_serviceContext);
 
-		expiredAsset.setTitle(englishTitle);
 		expiredAsset.setHref(
 			() -> StringBundler.concat(
 				_themeDisplay.getPortalURL(), _portal.getPathMain(),
@@ -236,6 +236,8 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 				"/edit_content_item?&p_l_mode=read&p_p_state=",
 				LiferayWindowState.POP_UP, "&objectEntryId=",
 				objectEntry.getObjectEntryId()));
+
+		expiredAsset.setTitle(englishTitle);
 		expiredAsset.setUsages(1);
 
 		return expiredAsset;

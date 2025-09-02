@@ -6,6 +6,7 @@
 package com.liferay.notification.internal.type.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
@@ -441,6 +442,11 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
+		resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW);
 		resourcePermissionLocalService.setResourcePermissions(
 			TestPropsValues.getCompanyId(),
 			childObjectDefinition.getClassName(),

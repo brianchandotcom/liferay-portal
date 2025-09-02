@@ -4,7 +4,7 @@
  */
 
 type AssetLibrary = {
-	externalReferenceCode: string;
-	id: string;
+	externalReferenceCode?: string;
+	id: number;
 	name: string;
 };

@@ -3266,7 +3266,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			200,
 			messageBoardMessageResource.
 				putSiteMessageBoardMessagePermissionsPageHttpResponse(
-					messageBoardMessage.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -3280,7 +3280,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			404,
 			messageBoardMessageResource.
 				putSiteMessageBoardMessagePermissionsPageHttpResponse(
-					messageBoardMessage.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

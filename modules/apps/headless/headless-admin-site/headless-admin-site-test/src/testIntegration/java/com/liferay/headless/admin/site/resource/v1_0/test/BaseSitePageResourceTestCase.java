@@ -982,7 +982,8 @@ public abstract class BaseSitePageResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			sitePageResource.putSiteSitePagePermissionsPageHttpResponse(
-				testGroup.getExternalReferenceCode(), null,
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(),
 				new Permission[] {
 					new Permission() {
 						{
@@ -995,7 +996,8 @@ public abstract class BaseSitePageResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			sitePageResource.putSiteSitePagePermissionsPageHttpResponse(
-				testGroup.getExternalReferenceCode(), null,
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(),
 				new Permission[] {
 					new Permission() {
 						{

@@ -3119,7 +3119,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			200,
 			documentFolderResource.
 				putSiteDocumentFolderPermissionsPageHttpResponse(
-					documentFolder.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -3133,7 +3133,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			404,
 			documentFolderResource.
 				putSiteDocumentFolderPermissionsPageHttpResponse(
-					documentFolder.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

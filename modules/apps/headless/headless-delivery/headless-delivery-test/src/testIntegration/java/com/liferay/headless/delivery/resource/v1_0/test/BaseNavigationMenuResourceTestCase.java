@@ -1620,7 +1620,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			200,
 			navigationMenuResource.
 				putSiteNavigationMenuPermissionsPageHttpResponse(
-					navigationMenu.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -1634,7 +1634,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			404,
 			navigationMenuResource.
 				putSiteNavigationMenuPermissionsPageHttpResponse(
-					navigationMenu.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

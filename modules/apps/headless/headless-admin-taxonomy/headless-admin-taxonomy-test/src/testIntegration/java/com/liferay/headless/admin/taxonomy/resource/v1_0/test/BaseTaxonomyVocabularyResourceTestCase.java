@@ -3213,7 +3213,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			200,
 			taxonomyVocabularyResource.
 				putSiteTaxonomyVocabularyPermissionsPageHttpResponse(
-					taxonomyVocabulary.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -3227,7 +3227,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			404,
 			taxonomyVocabularyResource.
 				putSiteTaxonomyVocabularyPermissionsPageHttpResponse(
-					taxonomyVocabulary.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

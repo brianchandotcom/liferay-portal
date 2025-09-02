@@ -328,7 +328,7 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 
 		await waitForAlert(page);
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		await page.getByRole('cell').getByRole('link').click();
 

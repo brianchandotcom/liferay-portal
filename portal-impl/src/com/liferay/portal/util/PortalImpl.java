@@ -159,6 +159,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -8018,6 +8019,9 @@ public class PortalImpl implements Portal {
 	private boolean _requiresLayoutFriendlyURL(
 		String siteGroupFriendlyURL, String layoutFriendlyURL,
 		String groupFriendlyURL) {
+
+		groupFriendlyURL = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+			groupFriendlyURL);
 
 		if (groupFriendlyURL.contains(
 				_PUBLIC_GROUP_SERVLET_MAPPING + StringPool.SLASH)) {

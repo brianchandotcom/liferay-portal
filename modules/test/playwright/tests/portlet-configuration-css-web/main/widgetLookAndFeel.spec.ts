@@ -101,14 +101,21 @@ test(
 		tag: '@LPD-63964',
 	},
 	async ({apiHelpers, page, site, widgetPagePage}) => {
+
+		// Create widget page
+
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			title: getRandomString(),
 		});
 
+		// Add nested applications widget
+
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 		await widgetPagePage.addPortlet('Nested Applications');
+
+		// Configure styles
 
 		await widgetPagePage.clickOnAction(
 			'Nested Applications',
@@ -154,12 +161,12 @@ test(
 
 		await lookAndFeelIFrame.getByRole('button', {name: 'Save'}).click();
 
-		await lookAndFeelIFrame.getByRole('button', {name: 'Save'}).click();
-
 		await page
 			.getByRole('dialog')
 			.getByRole('button', {name: 'Close'})
 			.click();
+
+		// Add web content display widget inside nested portlet
 
 		await widgetPagePage.dragPortlet(
 			'Web Content Display',
@@ -169,6 +176,8 @@ test(
 		);
 
 		await page.reload();
+
+		// Check that styles are applied correctly
 
 		let portlet = page.locator('.portlet-content', {
 			hasText: 'Nested Applications',

@@ -16,7 +16,10 @@ import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragm
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../../../../app/config/index';
-import {useObjectFields} from '../../../../../../app/contexts/ObjectDataContext';
+import {
+	useObjectFields,
+	useObjectLabel,
+} from '../../../../../../app/contexts/ObjectDataContext';
 import {
 	useDispatch,
 	useSelector,
@@ -409,6 +412,7 @@ export function FormInputGeneralPanel({item}) {
 							form={{
 								classNameId,
 								classTypeId,
+								fieldSetName,
 								fields: formFields,
 							}}
 							item={item}
@@ -561,11 +565,15 @@ function FormInputMappingOptions({
 	form,
 	onValueSelect,
 }) {
-	const {classNameId, classTypeId, fields: formFields} = form;
+	const {classNameId, classTypeId, fieldSetName, fields: formFields} = form;
 
 	const {subtype, type} = useMemo(
 		() => getTypeLabels(classNameId, classTypeId),
 		[classNameId, classTypeId]
+	);
+
+	const label = useObjectLabel(
+		fieldSetName ? {name: fieldSetName} : {classNameId, classTypeId}
 	);
 
 	const relationshipSelectId = useId();
@@ -730,7 +738,7 @@ function FormInputMappingOptions({
 										({name}) =>
 											name === selectedRelationship
 									).label
-								: type}
+								: label || type}
 						</p>
 					)}
 

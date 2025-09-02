@@ -101,7 +101,7 @@ public class DeepLTranslatorTest {
 			translatorPacket.getFieldsMap());
 	}
 
-	private String _getTranslationString(String text) {
+	private String _getTranslations(String text) {
 		return JSONUtil.put(
 			"translations",
 			JSONUtil.put(
@@ -231,15 +231,15 @@ public class DeepLTranslatorTest {
 					).toString();
 
 					if (targetLanguage.equals("ZH-HANT")) {
-						return _getTranslationString("哈囉，世界！");
+						return _getTranslations("哈囉，世界！");
 					}
 
 					if (targetLanguage.equals("ES")) {
-						return _getTranslationString("¡Hola, mundo!");
+						return _getTranslations("¡Hola, mundo!");
 					}
 
 					if (targetLanguage.equals("PT-BR")) {
-						return _getTranslationString("Olá, mundo!");
+						return _getTranslations("Olá, mundo!");
 					}
 				}
 

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * @author Mumen Tayyem
  */
@@ -35,24 +32,34 @@ public class ActionRestController extends BaseRestController {
 
 		JSONObject jsonObject = new JSONObject(json);
 
-		for (String key : jsonObject.keySet()){
-			if (key.contains("item_")){
-				try{
-					patch("Bearer " + jwt.getTokenValue(),
-							new JSONObject()
-									.put(
-											"shippingAddressId", jsonObject.getString(key)
-									).toString(),
-							UriComponentsBuilder.fromPath(
-									"/o/headless-commerce-delivery-cart/v1.0/cart-items/"+key.split("item_")[1]
-							).build().toUri());
-				} catch (Exception exception){
-					return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		for (String key : jsonObject.keySet()) {
+			if (key.contains("item_")) {
+				try {
+					patch(
+						"Bearer " + jwt.getTokenValue(),
+						new JSONObject(
+						).put(
+							"shippingAddressId", jsonObject.getString(key)
+						).toString(),
+						UriComponentsBuilder.fromPath(
+							"/o/headless-commerce-delivery-cart/v1.0/cart-items/" +
+								key.split("item_")[1]
+						).build(
+						).toUri());
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					return new ResponseEntity<>(
+						HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
 		}
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		ReadyRestController.class);
 
 }

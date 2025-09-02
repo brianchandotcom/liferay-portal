@@ -8,7 +8,6 @@ package com.liferay.list.type.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.DuplicateListTypeEntryExternalReferenceCodeException;
-import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.ListTypeEntrySystemException;
 import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
@@ -111,7 +110,7 @@ public class ListTypeEntryLocalServiceTest {
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				_listTypeDefinition.isSystem()));
 		AssertUtils.assertFailure(
-			ListTypeDefinitionSystemException.class, false,
+			ListTypeEntrySystemException.class, false,
 			"Only allowed bundles can add system list type entries",
 			() -> _testAddListTypeEntry(
 				_systemListTypeDefinition.getListTypeDefinitionId(), "baker",
@@ -154,7 +153,7 @@ public class ListTypeEntryLocalServiceTest {
 	@Test
 	public void testDeleteListTypeEntry() throws Exception {
 		AssertUtils.assertFailure(
-			ListTypeDefinitionSystemException.class, false,
+			ListTypeEntrySystemException.class, false,
 			"Only allowed bundles can delete system list type entries",
 			() -> _listTypeEntryLocalService.deleteListTypeEntry(
 				_systemListTypeEntry.getListTypeEntryId()));

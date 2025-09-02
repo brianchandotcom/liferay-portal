@@ -5,7 +5,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Body, Cell, Row, Table, Text} from '@clayui/core';
-import Icon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -17,7 +16,13 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import ApiHelper from '../../../common/services/ApiHelper';
 import formatActionURL from '../../../common/utils/formatActionURL';
 import {ViewDashboardContext} from '../ViewDashboardContext';
-import {AssetType, AssetTypeIcons} from '../utils/assetTypes';
+import {
+	AssetType,
+
+	// TODO When available, implement asset type to show the correct icon
+
+	AssetTypeIcons as _AssetTypeIcons,
+} from '../utils/assetTypes';
 import {BaseCard} from './BaseCard';
 import {Item} from './FilterDropdown';
 
@@ -25,7 +30,7 @@ type ExpiredAsset = {
 
 	// TODO: When available, implement asset type to show the correct icon
 
-	assetType?: AssetType;
+	_assetType?: AssetType;
 	href: string;
 	title: string;
 	usages: number;
@@ -74,7 +79,8 @@ function ExpiredAssetItem({
 
 	// TODO: When available, implement asset type to show the correct icon
 
-	assetType,
+	// assetType,
+
 	href,
 	title,
 	usage,
@@ -86,17 +92,20 @@ function ExpiredAssetItem({
 }) {
 	return (
 		<div className="align-items-center cms-dashboard__expired-assets__item d-flex">
-			<div className="bg-white mb-1 mr-2 p-2 rounded-lg">
+
+			{/* TODO: When available, implement asset type to show the correct icon */}
+
+			{/* <div className="bg-white mb-1 mr-2 p-2 rounded-lg">
 				<Icon
 					className="mx-1"
 					color={
-						assetType ? AssetTypeIcons[assetType]?.color : '#5c9531'
+						AssetTypeIcons[assetType]?.colorS
 					}
 					symbol={
-						assetType ? AssetTypeIcons[assetType]?.symbol : 'blogs'
+						AssetTypeIcons[assetType]?.symbol
 					}
 				/>
-			</div>
+			</div> */}
 
 			<div className="d-flex flex-column">
 				<span className="mb-0 text-dark text-weight-semi-bold">
@@ -204,7 +213,10 @@ function ExpiredAssetsCard() {
 								<Row>
 									<Cell className="border-0">
 										<ExpiredAssetItem
-											assetType={row['assetType']}
+
+											// TODO: When available, implement asset type to show the correct icon
+											// assetType={row['assetType']}
+
 											href={row['href']}
 											title={row['title']}
 											usage={row['usages']}

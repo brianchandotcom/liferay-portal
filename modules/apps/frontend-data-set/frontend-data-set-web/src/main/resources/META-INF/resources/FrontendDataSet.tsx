@@ -163,12 +163,15 @@ const FrontendDataSetContent = ({
 	const [allItemsSelectedActive, setAllItemsSelectedActive] = useState(false);
 
 	const [selectedItems, setSelectedItems] = useControlledState({
-		defaultValue: [],
+		defaultName: 'selectedItems',
+		defaultValue: externalSelectedItems ?? [],
+		handleName: 'onSelectedItemsChange',
+		name: 'selectedItems',
 		onChange: onSelectedItemsChange,
-		value: externalSelectedItems,
+		value: externalSelectedItems ?? undefined,
 	});
 
-	let selectedItemsValue = (selectedItems || []).map((item) =>
+	let selectedItemsValue = selectedItems.map((item) =>
 		getObjectValueFromPath({object: item, path: selectedItemsKey})
 	);
 

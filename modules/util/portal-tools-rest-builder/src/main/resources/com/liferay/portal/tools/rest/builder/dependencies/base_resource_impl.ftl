@@ -2116,21 +2116,19 @@ public abstract class Base${schemaName}ResourceImpl
 	schemaIdParameterName
 	scopeParameterName
 >
-	<#assign isScoped = scopeParameterName?has_content />
-
 	String resourceName = getPermissionCheckerResourceName(
-	 	<#if isScoped>
+	 	<#if scopeParameterName?has_content>
 	 		${scopeParameterName},
 	 	</#if>
 	 	${schemaIdParameterName});
 	Long resourceId = getPermissionCheckerResourceId(
-		<#if isScoped>
+		<#if scopeParameterName?has_content>
 			${scopeParameterName},
 		</#if>
 	${schemaIdParameterName});
 
 	PermissionServiceUtil.checkPermission(getPermissionCheckerGroupId(
-		<#if isScoped>
+		<#if scopeParameterName?has_content>
 			${scopeParameterName}
 		<#else>
 			${schemaIdParameterName}

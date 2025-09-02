@@ -14,16 +14,23 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
@@ -32,12 +39,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -58,7 +67,10 @@ import com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpaceLis
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -168,6 +180,166 @@ public class ActionUtil {
 			updateLayoutPageTemplateStructureData(
 				serviceContext.getUserId(), layout.getGroupId(),
 				layout.getPlid(), segmentsExperienceId,
+				layoutStructure.toString());
+
+		for (FragmentEntryLink addedFragmentEntryLink :
+				addedFragmentEntryLinks) {
+
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
+					addedFragmentEntryLink);
+			}
+		}
+	}
+
+	public static void generateTranslateContentLayoutStructure(
+			FormManager formManager,
+			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
+			FragmentEntryLinkService fragmentEntryLinkService,
+			FragmentRendererRegistry fragmentRendererRegistry,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
+			Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long segmentsExperienceId =
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		layoutStructure.addRootLayoutStructureItem();
+
+		ContainerStyledLayoutStructureItem
+			parentContainerStyledLayoutStructureItem =
+				(ContainerStyledLayoutStructureItem)
+					layoutStructure.addContainerStyledLayoutStructureItem(
+						layoutStructure.getMainItemId(), 0);
+
+		parentContainerStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"paddingBottom", "40px"
+				).put(
+					"paddingLeft", "12px"
+				).put(
+					"paddingRight", "12px"
+				).put(
+					"paddingTop", "40px"
+				)));
+
+		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
+			(RowStyledLayoutStructureItem)
+				layoutStructure.addRowStyledLayoutStructureItem(
+					parentContainerStyledLayoutStructureItem.getItemId(), 0, 2);
+
+		ColumnLayoutStructureItem firstColumnLayoutStructureItem =
+			(ColumnLayoutStructureItem)
+				layoutStructure.addColumnLayoutStructureItem(
+					rowStyledLayoutStructureItem.getItemId(), 0);
+
+		firstColumnLayoutStructureItem.setSize(6);
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.addFormStyledLayoutStructureItem(
+					firstColumnLayoutStructureItem.getItemId(), 0);
+
+		formStyledLayoutStructureItem.setClassNameId(
+			layoutPageTemplateEntry.getClassNameId());
+
+		Set<String> localizableInfoFieldIds = _getLocalizableInfoFieldIds(
+			layoutPageTemplateEntry.getClassNameId(), layout.getGroupId(),
+			infoItemServiceRegistry, infoSearchClassMapperRegistry);
+
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+
+		formManager.addFragmentEntryLinksLayoutStructureItems(
+			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
+			formStyledLayoutStructureItem, false, layout, layoutStructure,
+			LocaleUtil.getMostRelevantLocale(), true, segmentsExperienceId,
+			serviceContext, localizableInfoFieldIds.toArray(new String[0]));
+
+		FragmentEntryLink localizationSelectFragmentEntryLink =
+			_addFragmentEntryLink(
+				JSONUtil.toString(
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put("size", "small"))),
+				fragmentEntryLinkService, fragmentRendererRegistry,
+				"localization-select", layout, segmentsExperienceId,
+				serviceContext);
+
+		if (localizationSelectFragmentEntryLink != null) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					localizationSelectFragmentEntryLink.
+						getFragmentEntryLinkId(),
+					formStyledLayoutStructureItem.getItemId(), 0);
+
+			layoutStructureItem.updateItemConfig(
+				JSONUtil.put("styles", JSONUtil.put("marginBottom", "5")));
+
+			addedFragmentEntryLinks.add(localizationSelectFragmentEntryLink);
+		}
+
+		ColumnLayoutStructureItem secondColumnLayoutStructureItem =
+			(ColumnLayoutStructureItem)
+				layoutStructure.addColumnLayoutStructureItem(
+					rowStyledLayoutStructureItem.getItemId(), 1);
+
+		secondColumnLayoutStructureItem.setSize(6);
+
+		formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.addFormStyledLayoutStructureItem(
+					secondColumnLayoutStructureItem.getItemId(), 0);
+
+		formStyledLayoutStructureItem.setClassNameId(
+			layoutPageTemplateEntry.getClassNameId());
+
+		formManager.addFragmentEntryLinksLayoutStructureItems(
+			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
+			formStyledLayoutStructureItem, false, layout, layoutStructure,
+			LocaleUtil.getMostRelevantLocale(), false, segmentsExperienceId,
+			serviceContext, localizableInfoFieldIds.toArray(new String[0]));
+
+		localizationSelectFragmentEntryLink = _addFragmentEntryLink(
+			JSONUtil.toString(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"allowLocalizationManagement", "true"
+					).put(
+						"size", "small"
+					))),
+			fragmentEntryLinkService, fragmentRendererRegistry,
+			"localization-select", layout, segmentsExperienceId,
+			serviceContext);
+
+		if (localizationSelectFragmentEntryLink != null) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					localizationSelectFragmentEntryLink.
+						getFragmentEntryLinkId(),
+					formStyledLayoutStructureItem.getItemId(), 0);
+
+			layoutStructureItem.updateItemConfig(
+				JSONUtil.put("styles", JSONUtil.put("marginBottom", "5")));
+
+			addedFragmentEntryLinks.add(localizationSelectFragmentEntryLink);
+		}
+
+		LayoutPageTemplateStructureLocalServiceUtil.
+			updateLayoutPageTemplateStructureData(
+				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
 				layoutStructure.toString());
 
 		for (FragmentEntryLink addedFragmentEntryLink :
@@ -341,6 +513,62 @@ public class ActionUtil {
 		return getBaseSpaceURL(themeDisplay) + classPK;
 	}
 
+	public static String getTranslateURL(
+		FormManager formManager,
+		FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
+		FragmentEntryLinkService fragmentEntryLinkService,
+		FragmentRendererRegistry fragmentRendererRegistry,
+		HttpServletRequest httpServletRequest, String id,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
+		ObjectDefinition objectDefinition) {
+
+		try {
+			long classNameId = PortalUtil.getClassNameId(
+				objectDefinition.getClassName());
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Group group = GroupLocalServiceUtil.getGroup(
+				themeDisplay.getCompanyId(), GroupConstants.CMS);
+
+			Layout layout = _getTranslateContentLayout(
+				classNameId, formManager, fragmentEntryLinkListenerRegistry,
+				fragmentEntryLinkService, fragmentRendererRegistry, group,
+				infoItemServiceRegistry, infoSearchClassMapperRegistry,
+				objectDefinition,
+				ServiceContextFactory.getInstance(httpServletRequest));
+
+			String translateURL = PortalUtil.addPreservedParameters(
+				themeDisplay,
+				StringBundler.concat(
+					PortalUtil.getGroupFriendlyURL(
+						group.getPublicLayoutSet(), themeDisplay, false, false),
+					_getURLSeparator(),
+					layout.getFriendlyURL(themeDisplay.getLocale()),
+					StringPool.SLASH, classNameId, StringPool.SLASH, id));
+
+			String backURL = ParamUtil.getString(
+				httpServletRequest, "redirect");
+
+			if (Validator.isNotNull(backURL)) {
+				translateURL = HttpComponentsUtil.addParameter(
+					translateURL, "redirect", backURL);
+			}
+
+			return translateURL;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public static String getViewFolderRecycleBinURL(
 		long objectEntryFolderId, ThemeDisplay themeDisplay) {
 
@@ -449,6 +677,62 @@ public class ActionUtil {
 			fragmentRenderer.getType(), serviceContext);
 	}
 
+	private static LayoutPageTemplateEntry
+			_addTranslateContentDefaultLayoutPageTemplateEntry(
+				long classNameId, FormManager formManager,
+				FragmentEntryLinkListenerRegistry
+					fragmentEntryLinkListenerRegistry,
+				FragmentEntryLinkService fragmentEntryLinkService,
+				FragmentRendererRegistry fragmentRendererRegistry, long groupId,
+				InfoItemServiceRegistry infoItemServiceRegistry,
+				InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
+				String name, ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.addLayoutPageTemplateEntry(
+				null, serviceContext.getUserId(), groupId, 0,
+				_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX + classNameId,
+				classNameId, 0, name,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		generateTranslateContentLayoutStructure(
+			formManager, fragmentEntryLinkListenerRegistry,
+			fragmentEntryLinkService, fragmentRendererRegistry,
+			infoItemServiceRegistry, infoSearchClassMapperRegistry, draftLayout,
+			layoutPageTemplateEntry, serviceContext);
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntry(groupId, "cms-translation-master");
+
+		if (masterLayoutPageTemplateEntry != null) {
+			draftLayout.setMasterLayoutPlid(
+				masterLayoutPageTemplateEntry.getPlid());
+		}
+
+		LayoutLocalServiceUtil.copyLayoutContent(draftLayout, layout);
+
+		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
+
+		if (masterLayoutPageTemplateEntry != null) {
+			draftLayout.setMasterLayoutPlid(
+				masterLayoutPageTemplateEntry.getPlid());
+		}
+
+		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		LayoutLocalServiceUtil.updateLayout(draftLayout);
+
+		return layoutPageTemplateEntry;
+	}
+
 	private static Layout _getEditContentLayout(
 			long classNameId, FormManager formManager,
 			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
@@ -475,6 +759,78 @@ public class ActionUtil {
 			layoutPageTemplateEntry.getPlid());
 	}
 
+	private static Set<String> _getLocalizableInfoFieldIds(
+			long classNameId, long groupId,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry)
+		throws Exception {
+
+		ClassName className = ClassNameLocalServiceUtil.fetchClassName(
+			classNameId);
+
+		String itemClassName = infoSearchClassMapperRegistry.getClassName(
+			className.getClassName());
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, itemClassName);
+
+		if (infoItemFormProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						itemClassName);
+			}
+
+			return Collections.emptySet();
+		}
+
+		Set<String> localizableInfoFieldIds = new HashSet<>();
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, groupId);
+
+		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
+			if (infoField.isLocalizable()) {
+				localizableInfoFieldIds.add(infoField.getUniqueId());
+			}
+		}
+
+		return localizableInfoFieldIds;
+	}
+
+	private static Layout _getTranslateContentLayout(
+			long classNameId, FormManager formManager,
+			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
+			FragmentEntryLinkService fragmentEntryLinkService,
+			FragmentRendererRegistry fragmentRendererRegistry, Group group,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
+			ObjectDefinition objectDefinition, ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntry(
+					group.getGroupId(),
+					_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX + classNameId);
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				_addTranslateContentDefaultLayoutPageTemplateEntry(
+					classNameId, formManager, fragmentEntryLinkListenerRegistry,
+					fragmentEntryLinkService, fragmentRendererRegistry,
+					group.getGroupId(), infoItemServiceRegistry,
+					infoSearchClassMapperRegistry,
+					_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
+						objectDefinition.getName(),
+					serviceContext);
+		}
+
+		return LayoutLocalServiceUtil.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+	}
+
 	private static String _getURLSeparator() {
 		FriendlyURLResolver friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.
@@ -489,6 +845,9 @@ public class ActionUtil {
 
 		return FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET;
 	}
+
+	private static final String _LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX =
+		"LFR_CMS_TRANSLATION_";
 
 	private static final Log _log = LogFactoryUtil.getLog(ActionUtil.class);
 

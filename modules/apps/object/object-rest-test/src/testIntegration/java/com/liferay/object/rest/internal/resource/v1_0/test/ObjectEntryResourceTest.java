@@ -5959,6 +5959,8 @@ public class ObjectEntryResourceTest {
 	public void testGetObjectEntryActionsWithSystemSharingDisabled()
 		throws Exception {
 
+		_addCMSGroup();
+
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.sharing.internal.configuration." +

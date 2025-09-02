@@ -7,6 +7,8 @@ package com.liferay.portal.kernel.hashed.files;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
 
+import java.net.URL;
+
 import java.util.function.BiConsumer;
 
 /**
@@ -26,6 +28,13 @@ public class HashedFilesRegistryUtil {
 			_hashedFilesRegistrySnapshot.get();
 
 		return hashedFilesRegistry.get(unhashedFileURI);
+	}
+
+	public static URL getResourceURL(String fileURI) {
+		HashedFilesRegistry hashedFilesRegistry =
+			_hashedFilesRegistrySnapshot.get();
+
+		return hashedFilesRegistry.getResourceURL(fileURI);
 	}
 
 	private static final Snapshot<HashedFilesRegistry>

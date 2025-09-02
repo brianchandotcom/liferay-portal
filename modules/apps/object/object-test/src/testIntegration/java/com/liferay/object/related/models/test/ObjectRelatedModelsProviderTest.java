@@ -117,30 +117,35 @@ public class ObjectRelatedModelsProviderTest {
 			Arrays.asList(
 				new LongTextObjectFieldBuilder(
 				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
+					RandomTestUtil.randomLocaleStringMap()
 				).name(
-					"longText"
+					"localizedLongText"
 				).localized(
 					true
 				).build(),
 				new RichTextObjectFieldBuilder(
 				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
+					RandomTestUtil.randomLocaleStringMap()
 				).name(
-					"richText"
+					"localizedRichText"
 				).localized(
 					true
 				).build(),
 				new TextObjectFieldBuilder(
 				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
+					RandomTestUtil.randomLocaleStringMap()
 				).name(
-					"text"
+					"localizedText"
 				).localized(
 					true
+				).build(),
+				new TextObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"text"
 				).build()));
 
 		_setUser(TestPropsValues.getUser());
@@ -270,7 +275,7 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			_objectDefinition2,
 			HashMapBuilder.<String, Serializable>put(
-				"able", "First Entry"
+				"text", "First Entry"
 			).put(
 				_relationshipObjectField.getName(),
 				objectEntry1.getObjectEntryId()
@@ -284,7 +289,7 @@ public class ObjectRelatedModelsProviderTest {
 		_addObjectEntry(
 			_objectDefinition2,
 			HashMapBuilder.<String, Serializable>put(
-				"able", "Second Entry"
+				"text", "Second Entry"
 			).put(
 				_relationshipObjectField.getName(),
 				objectEntry1.getObjectEntryId()
@@ -298,7 +303,7 @@ public class ObjectRelatedModelsProviderTest {
 		_updateObjectEntry(
 			objectEntry2.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
-				"able", "Third Entry"
+				"text", "Third Entry"
 			).put(
 				_relationshipObjectField.getName(),
 				objectEntry1.getObjectEntryId()
@@ -313,17 +318,17 @@ public class ObjectRelatedModelsProviderTest {
 
 		Map<String, Serializable> expectedLocalizedValues =
 			HashMapBuilder.<String, Serializable>put(
-				"longText_i18n",
+				"localizedLongText_i18n",
 				HashMapBuilder.put(
 					"en_US", RandomTestUtil.randomString()
 				).build()
 			).put(
-				"richText_i18n",
+				"localizedRichText_i18n",
 				HashMapBuilder.put(
 					"en_US", RandomTestUtil.randomString()
 				).build()
 			).put(
-				"text_i18n",
+				"localizedText_i18n",
 				HashMapBuilder.put(
 					"en_US", "en_US " + RandomTestUtil.randomString()
 				).build()
@@ -343,14 +348,14 @@ public class ObjectRelatedModelsProviderTest {
 			_objectEntryLocalService.getValues(objectEntry5.getObjectEntryId());
 
 		Assert.assertEquals(
-			expectedLocalizedValues.get("longText_i18n"),
-			actualLocalizedValues.get("longText_i18n"));
+			expectedLocalizedValues.get("localizedLongText_i18n"),
+			actualLocalizedValues.get("localizedLongText_i18n"));
 		Assert.assertEquals(
-			expectedLocalizedValues.get("richText_i18n"),
-			actualLocalizedValues.get("richText_i18n"));
+			expectedLocalizedValues.get("localizedRichText_i18n"),
+			actualLocalizedValues.get("localizedRichText_i18n"));
 		Assert.assertEquals(
-			expectedLocalizedValues.get("text_i18n"),
-			actualLocalizedValues.get("text_i18n"));
+			expectedLocalizedValues.get("localizedText_i18n"),
+			actualLocalizedValues.get("localizedText_i18n"));
 
 		_objectRelatedModelsProvider.disassociateRelatedModels(
 			TestPropsValues.getUserId(),
@@ -361,14 +366,14 @@ public class ObjectRelatedModelsProviderTest {
 			objectEntry5.getObjectEntryId());
 
 		Assert.assertEquals(
-			expectedLocalizedValues.get("longText_i18n"),
-			actualLocalizedValues.get("longText_i18n"));
+			expectedLocalizedValues.get("localizedLongText_i18n"),
+			actualLocalizedValues.get("localizedLongText_i18n"));
 		Assert.assertEquals(
-			expectedLocalizedValues.get("richText_i18n"),
-			actualLocalizedValues.get("richText_i18n"));
+			expectedLocalizedValues.get("localizedRichText_i18n"),
+			actualLocalizedValues.get("localizedRichText_i18n"));
 		Assert.assertEquals(
-			expectedLocalizedValues.get("text_i18n"),
-			actualLocalizedValues.get("text_i18n"));
+			expectedLocalizedValues.get("localizedText_i18n"),
+			actualLocalizedValues.get("localizedText_i18n"));
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry5);
 

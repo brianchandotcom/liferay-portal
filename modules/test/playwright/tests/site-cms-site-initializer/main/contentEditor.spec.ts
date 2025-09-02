@@ -10,15 +10,18 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {createCategories} from '../../../helpers/CreateCategories';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
+import {categorizationPagesTest} from './fixtures/categorizationPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
+	categorizationPagesTest,
 	cmsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
@@ -580,9 +583,27 @@ test.describe('Schedule Panel', () => {
 
 test.describe('Categorization Panel', () => {
 	test(
-		'Add tags to content',
+		'Add categories and tags to the content',
 		{tag: '@LPD-62047'},
-		async ({contentsPage, page, tagsPage}) => {
+		async ({
+			apiHelpers,
+			contentsPage,
+			page,
+			tagsPage,
+			vocabulariesPage,
+		}) => {
+
+			// Create category
+
+			const categoryName = getRandomString();
+			const vocabularyName = getRandomString();
+
+			await createCategories({
+				apiHelpers,
+				assetLibraries: [{id: -1, name: 'All Spaces'}],
+				categoryNames: [{name: categoryName}],
+				vocabularyName,
+			});
 
 			// Create a content
 
@@ -596,7 +617,7 @@ test.describe('Categorization Panel', () => {
 
 			await page.getByPlaceholder('New Basic Web Content').fill(title);
 
-			// Add a new tag
+			// Add a new tag to the content
 
 			const tagsAutocomplete = page.getByPlaceholder('Add tag');
 
@@ -610,6 +631,24 @@ test.describe('Categorization Panel', () => {
 
 			await expect(tagLabel).toBeAttached();
 
+			// Add a new category to the content
+
+			const categoriesAutocomplete =
+				page.getByPlaceholder('Add category');
+
+			await categoriesAutocomplete.fill(categoryName);
+
+			const option = page.getByRole('option', {name: categoryName});
+
+			option.waitFor();
+			option.click();
+
+			const categoryLabel = page.locator('.label-item', {
+				hasText: categoryName,
+			});
+
+			await expect(categoryLabel).toBeAttached();
+
 			// Publish the content
 
 			await contentsPage.publishButton.click();
@@ -620,19 +659,24 @@ test.describe('Categorization Panel', () => {
 
 			await content.waitFor();
 
-			// Edit content and check that the tag is still there
+			// Edit content and check that the tag and category are still there
 
 			await content.click();
 
 			await contentsPage.openSidePanel('Categorization');
 
 			await expect(tagLabel).toBeAttached();
+			await expect(categoryLabel).toBeAttached();
 
 			// Delete tag
 
 			await tagsPage.goto();
-
 			await tagsPage.deleteTag(tagName);
+
+			// Delete vocabulary
+
+			await vocabulariesPage.goto();
+			await vocabulariesPage.deleteVocabulary(vocabularyName);
 		}
 	);
 });

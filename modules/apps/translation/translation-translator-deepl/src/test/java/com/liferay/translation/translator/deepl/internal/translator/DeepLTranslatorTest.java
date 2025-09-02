@@ -209,16 +209,14 @@ public class DeepLTranslatorTest {
 						payloadJSONObject, "Object/target_lang"
 					).toString();
 
-					if (targetLanguage.equals("ZH-HANT")) {
-						return _getTranslationsJSON("哈囉，世界！");
-					}
-
 					if (targetLanguage.equals("ES")) {
 						return _getTranslationsJSON("¡Hola, mundo!");
 					}
-
-					if (targetLanguage.equals("PT-BR")) {
+					else if (targetLanguage.equals("PT-BR")) {
 						return _getTranslationsJSON("Olá, mundo!");
+					}
+					else if (targetLanguage.equals("ZH-HANT")) {
+						return _getTranslationsJSON("哈囉，世界！");
 					}
 				}
 

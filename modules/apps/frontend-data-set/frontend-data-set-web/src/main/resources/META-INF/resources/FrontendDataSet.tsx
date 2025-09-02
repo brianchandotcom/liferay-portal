@@ -665,6 +665,35 @@ const FrontendDataSetContent = ({
 		}
 	}, [dataSetWrapperRef]);
 
+	const handlePopState = useCallback(() => {
+		const stateFromURL = getStateFromURL();
+		if (!stateFromURL) {
+			return;
+		}
+
+		const delta = stateFromURL.delta;
+
+		if (delta && delta !== paginationDelta) {
+			handleDeltaChange(delta);
+		}
+	}, [getStateFromURL, handleDeltaChange, paginationDelta]);
+
+	useEffect(() => {
+		const registerEvent =
+			stateInURLSettings === EStateInURLSettings.PUSH &&
+			(!Liferay.SPA || !Liferay.SPA.app);
+
+		if (registerEvent) {
+			window.addEventListener('popstate', handlePopState);
+		}
+
+		return () => {
+			if (registerEvent) {
+				window.removeEventListener('popstate', handlePopState);
+			}
+		};
+	}, [handlePopState, stateInURLSettings]);
+
 	const refreshData = useCallback(
 		(successNotification?: ISuccessNotification) => {
 			setDataLoading(true);

@@ -6,10 +6,9 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
 import jakarta.servlet.Servlet;
-
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.ResourceDTO;
@@ -20,13 +19,14 @@ import org.osgi.service.http.runtime.dto.ResourceDTO;
 public class ResourceRegistration extends EndpointRegistration<ResourceDTO> {
 
 	public ResourceRegistration(
-		ContextController.ServiceHolder<Servlet> serviceHolder,
-		ResourceDTO resourceDTO, ServletContextHelper servletContextHelper,
-		ContextController contextController, ClassLoader legacyTCCL) {
+		ServiceHolder<Servlet> serviceHolder, ResourceDTO resourceDTO,
+		ServletContextHelper servletContextHelper,
+		LiferayContextController liferayContextController,
+		ClassLoader legacyTCCL) {
 
 		super(
-			serviceHolder, resourceDTO, servletContextHelper, contextController,
-			legacyTCCL);
+			serviceHolder, resourceDTO, servletContextHelper,
+			liferayContextController, legacyTCCL);
 
 		Servlet servlet = serviceHolder.get();
 

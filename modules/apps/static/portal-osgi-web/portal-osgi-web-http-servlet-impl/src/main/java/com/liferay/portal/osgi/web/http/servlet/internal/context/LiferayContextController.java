@@ -7,10 +7,18 @@ package com.liferay.portal.osgi.web.http.servlet.internal.context;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.EventListenerServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.FilterServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.ResourceServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.ServletServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListenerRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListeners;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.ResourceRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpSessionWrapper;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.Servlet;
@@ -44,20 +52,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
-import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
-import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
-import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
-import org.eclipse.equinox.http.servlet.internal.registration.ResourceRegistration;
-import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
-import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
-import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 import org.eclipse.equinox.http.servlet.internal.util.Path;
 import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
@@ -75,7 +74,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Dante Wang
  */
-public class LiferayContextController extends ContextController {
+public class LiferayContextController {
 
 	public LiferayContextController(
 		BundleContext bundleContext,
@@ -208,7 +207,6 @@ public class LiferayContextController extends ContextController {
 		_servletServiceTracker.open(true);
 	}
 
-	@Override
 	public FilterRegistration addFilterRegistration(
 			ServiceReference<Filter> serviceReference)
 		throws ServletException {
@@ -216,21 +214,18 @@ public class LiferayContextController extends ContextController {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public ListenerRegistration addListenerRegistration(
+	public EventListenerRegistration addListenerRegistration(
 		ServiceReference<EventListener> serviceReference) {
 
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public ResourceRegistration addResourceRegistration(
 		ServiceReference<?> serviceReference) {
 
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public ServletRegistration addServletRegistration(
 			ServiceReference<Servlet> serviceReference)
 		throws ServletException {
@@ -244,17 +239,16 @@ public class LiferayContextController extends ContextController {
 		}
 	}
 
-	@Override
 	public void destroy() {
-		Collection<HttpSessionAdaptor> httpSessionAdaptors =
-			_activeHttpSessionAdaptors.values();
+		Collection<HttpSessionWrapper> httpSessionWrappers =
+			_activeHttpSessionWrappersMap.values();
 
-		Iterator<HttpSessionAdaptor> iterator = httpSessionAdaptors.iterator();
+		Iterator<HttpSessionWrapper> iterator = httpSessionWrappers.iterator();
 
 		while (iterator.hasNext()) {
-			HttpSessionAdaptor httpSessionAdaptor = iterator.next();
+			HttpSessionWrapper httpSessionWrapper = iterator.next();
 
-			httpSessionAdaptor.invalidate();
+			httpSessionWrapper.invalidate();
 
 			iterator.remove();
 		}
@@ -272,28 +266,24 @@ public class LiferayContextController extends ContextController {
 		_endpointRegistrations.clear();
 		_eventListeners.clear();
 		_filterRegistrations.clear();
-		_listenerRegistrations.clear();
+		_eventListenerRegistrations.clear();
 		_servletContextHelperDataContext.destroy();
 
 		_shutdown = true;
 	}
 
-	@Override
-	public Map<String, HttpSessionAdaptor> getActiveSessions() {
-		return _activeHttpSessionAdaptors;
+	public Map<String, HttpSessionWrapper> getActiveSessions() {
+		return _activeHttpSessionWrappersMap;
 	}
 
-	@Override
 	public String getContextName() {
 		return _contextName;
 	}
 
-	@Override
 	public String getContextPath() {
 		return _contextPath;
 	}
 
-	@Override
 	public LiferayDispatchTargets getDispatchTargets(String pathString) {
 		Path path = new Path(pathString);
 
@@ -322,7 +312,6 @@ public class LiferayContextController extends ContextController {
 		return liferayDispatchTargets;
 	}
 
-	@Override
 	public LiferayDispatchTargets getDispatchTargets(
 		String servletName, String requestURI, String servletPath,
 		String pathInfo, String extension, String queryString, Match match) {
@@ -390,22 +379,18 @@ public class LiferayContextController extends ContextController {
 			queryString, requestURI, servletName, servletPath);
 	}
 
-	@Override
 	public Set<EndpointRegistration<?>> getEndpointRegistrations() {
 		return _endpointRegistrations;
 	}
 
-	@Override
 	public EventListeners getEventListeners() {
 		return _eventListeners;
 	}
 
-	@Override
 	public Set<FilterRegistration> getFilterRegistrations() {
 		return _filterRegistrations;
 	}
 
-	@Override
 	public String getFullContextPath() {
 		List<String> httpServiceEndpoints =
 			_httpServletEndpointController.getHttpServiceEndpoints();
@@ -424,45 +409,27 @@ public class LiferayContextController extends ContextController {
 		return defaultHttpServiceEndpoint.concat(_contextPath);
 	}
 
-	@Override
 	public HttpServletEndpointController getHttpServletEndpointController() {
 		return _httpServletEndpointController;
 	}
 
-	@Override
-	public Map<String, String> getInitParams() {
-		return _servletContextInitParams;
-	}
-
-	@Override
-	public Set<ListenerRegistration> getListenerRegistrations() {
-		return _listenerRegistrations;
-	}
-
-	public ServletContextHelper getServletContextHelper(Bundle bundle) {
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		return bundleContext.getService(_serviceReference);
-	}
-
-	@Override
-	public HttpSessionAdaptor getSessionAdaptor(
+	public HttpSessionWrapper getHttpSessionWrapper(
 		HttpSession httpSession, ServletContext servletContext) {
 
 		String sessionId = httpSession.getId();
 
-		HttpSessionAdaptor httpSessionAdaptor = _activeHttpSessionAdaptors.get(
-			sessionId);
+		HttpSessionWrapper httpSessionAdaptor =
+			_activeHttpSessionWrappersMap.get(sessionId);
 
 		if (httpSessionAdaptor != null) {
 			return httpSessionAdaptor;
 		}
 
-		httpSessionAdaptor = HttpSessionAdaptor.createHttpSessionAdaptor(
+		httpSessionAdaptor = HttpSessionWrapper.createHttpSessionWrapper(
 			httpSession, servletContext, this);
 
-		HttpSessionAdaptor previousHttpSessionAdaptor =
-			_activeHttpSessionAdaptors.putIfAbsent(
+		HttpSessionWrapper previousHttpSessionAdaptor =
+			_activeHttpSessionWrappersMap.putIfAbsent(
 				sessionId, httpSessionAdaptor);
 
 		if (previousHttpSessionAdaptor != null) {
@@ -486,12 +453,24 @@ public class LiferayContextController extends ContextController {
 		return httpSessionAdaptor;
 	}
 
-	@Override
+	public Map<String, String> getInitParams() {
+		return _servletContextInitParams;
+	}
+
+	public Set<EventListenerRegistration> getListenerRegistrations() {
+		return _eventListenerRegistrations;
+	}
+
+	public ServletContextHelper getServletContextHelper(Bundle bundle) {
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return bundleContext.getService(_serviceReference);
+	}
+
 	public boolean matches(org.osgi.framework.Filter osgiFilter) {
 		return osgiFilter.match(_serviceReference);
 	}
 
-	@Override
 	public boolean matches(ServiceReference<?> serviceReference) {
 		String contextSelect = (String)serviceReference.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
@@ -517,12 +496,10 @@ public class LiferayContextController extends ContextController {
 		}
 	}
 
-	@Override
 	public void removeActiveSession(String sessionId) {
-		_activeHttpSessionAdaptors.remove(sessionId);
+		_activeHttpSessionWrappersMap.remove(sessionId);
 	}
 
-	@Override
 	public void ungetServletContextHelper(Bundle bundle) {
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -579,13 +556,15 @@ public class LiferayContextController extends ContextController {
 	private static final Pattern _contextNamePattern = Pattern.compile(
 		"^([a-zA-Z_0-9\\-]+\\.)*[a-zA-Z_0-9\\-]+$");
 
-	private final ConcurrentMap<String, HttpSessionAdaptor>
-		_activeHttpSessionAdaptors = new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, HttpSessionWrapper>
+		_activeHttpSessionWrappersMap = new ConcurrentHashMap<>();
 	private final BundleContext _bundleContext;
 	private final String _contextName;
 	private final String _contextPath;
 	private final Set<EndpointRegistration<?>> _endpointRegistrations =
 		new ConcurrentSkipListSet<>();
+	private final Set<EventListenerRegistration> _eventListenerRegistrations =
+		new HashSet<>();
 	private final EventListeners _eventListeners = new EventListeners();
 	private final Set<FilterRegistration> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
@@ -593,31 +572,29 @@ public class LiferayContextController extends ContextController {
 		_filterServiceTracker;
 	private final HttpServletEndpointController _httpServletEndpointController;
 	private final ServiceTracker
-		<EventListener, AtomicReference<ListenerRegistration>>
+		<EventListener, AtomicReference<EventListenerRegistration>>
 			_httpSessionAttributeListenerServiceTracker;
 	private final ServiceTracker
-		<EventListener, AtomicReference<ListenerRegistration>>
+		<EventListener, AtomicReference<EventListenerRegistration>>
 			_httpSessionListenerServiceTracker;
-	private final Set<ListenerRegistration> _listenerRegistrations =
-		new HashSet<>();
 	private final ServiceTracker<Object, AtomicReference<ResourceRegistration>>
 		_resourceServiceTracker;
 	private final ServiceReference<ServletContextHelper> _serviceReference;
 	private final ServiceTracker
-		<EventListener, AtomicReference<ListenerRegistration>>
+		<EventListener, AtomicReference<EventListenerRegistration>>
 			_servletContextAttributeListenerServiceTracker;
 	private final ServletContextHelperDataContext
 		_servletContextHelperDataContext;
 	private final long _servletContextHelperServiceId;
 	private final Map<String, String> _servletContextInitParams;
 	private final ServiceTracker
-		<EventListener, AtomicReference<ListenerRegistration>>
+		<EventListener, AtomicReference<EventListenerRegistration>>
 			_servletContextListenerServiceTracker;
 	private final ServiceTracker
-		<EventListener, AtomicReference<ListenerRegistration>>
+		<EventListener, AtomicReference<EventListenerRegistration>>
 			_servletRequestAttributeListenerServiceTracker;
 	private final ServiceTracker
-		<EventListener, AtomicReference<ListenerRegistration>>
+		<EventListener, AtomicReference<EventListenerRegistration>>
 			_servletRequestListenerServiceTracker;
 	private final ServiceTracker<Servlet, AtomicReference<ServletRegistration>>
 		_servletServiceTracker;

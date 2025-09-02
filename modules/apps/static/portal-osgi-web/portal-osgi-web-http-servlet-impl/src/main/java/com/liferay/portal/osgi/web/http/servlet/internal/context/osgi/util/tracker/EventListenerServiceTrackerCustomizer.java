@@ -11,7 +11,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListenerRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListeners;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServiceHolder;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
 import jakarta.servlet.ServletContext;
@@ -30,12 +34,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
-import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
-import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -49,8 +49,8 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  */
 public class EventListenerServiceTrackerCustomizer
 	extends BaseServiceTrackerCustomizer
-		<EventListener, ListenerRegistration,
-		 AtomicReference<ListenerRegistration>> {
+		<EventListener, EventListenerRegistration,
+		 AtomicReference<EventListenerRegistration>> {
 
 	public EventListenerServiceTrackerCustomizer(
 		BundleContext bundleContext,
@@ -66,7 +66,7 @@ public class EventListenerServiceTrackerCustomizer
 	}
 
 	@Override
-	public AtomicReference<ListenerRegistration> addingService(
+	public AtomicReference<EventListenerRegistration> addingService(
 		ServiceReference<EventListener> serviceReference) {
 
 		Object listenerObject = serviceReference.getProperty(
@@ -79,7 +79,7 @@ public class EventListenerServiceTrackerCustomizer
 			return null;
 		}
 
-		AtomicReference<ListenerRegistration>
+		AtomicReference<EventListenerRegistration>
 			listenerRegistrationAtomicReference = new AtomicReference<>();
 
 		try {
@@ -107,18 +107,17 @@ public class EventListenerServiceTrackerCustomizer
 		return listenerRegistrationAtomicReference;
 	}
 
-	private ListenerRegistration _addListenerRegistration(
+	private EventListenerRegistration _addListenerRegistration(
 		ServiceReference<EventListener> serviceReference) {
 
 		liferayContextController.checkShutdown();
 
-		ContextController.ServiceHolder<EventListener> serviceHolder =
-			new ContextController.ServiceHolder<>(
-				bundleContext.getServiceObjects(serviceReference));
+		ServiceHolder<EventListener> serviceHolder = new ServiceHolder<>(
+			bundleContext.getServiceObjects(serviceReference));
 
 		EventListener eventListener = serviceHolder.get();
 
-		ListenerRegistration listenerRegistration = null;
+		EventListenerRegistration listenerRegistration = null;
 
 		try {
 			if (eventListener == null) {
@@ -133,10 +132,10 @@ public class EventListenerServiceTrackerCustomizer
 					"Event listener does not implement a supported interface");
 			}
 
-			Set<ListenerRegistration> listenerRegistrations =
+			Set<EventListenerRegistration> listenerRegistrations =
 				liferayContextController.getListenerRegistrations();
 
-			for (ListenerRegistration curListenerRegistration :
+			for (EventListenerRegistration curListenerRegistration :
 					listenerRegistrations) {
 
 				if (Objects.equals(
@@ -152,7 +151,7 @@ public class EventListenerServiceTrackerCustomizer
 					serviceHolder.getBundle()),
 				servletContextHelperDataContext);
 
-			listenerRegistration = new ListenerRegistration(
+			listenerRegistration = new EventListenerRegistration(
 				serviceHolder, eventListenerClasses,
 				_createListenerDTO(eventListenerClasses, serviceReference),
 				servletContext, liferayContextController);

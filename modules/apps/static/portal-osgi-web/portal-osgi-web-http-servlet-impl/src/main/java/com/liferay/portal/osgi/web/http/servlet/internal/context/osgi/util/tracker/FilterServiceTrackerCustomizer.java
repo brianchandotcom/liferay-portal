@@ -10,7 +10,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServiceHolder;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.FilterConfigImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
@@ -21,11 +24,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.error.RegisteredFilterException;
-import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
 import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
 import org.osgi.framework.BundleContext;
@@ -97,9 +98,8 @@ public class FilterServiceTrackerCustomizer
 
 		liferayContextController.checkShutdown();
 
-		ContextController.ServiceHolder<Filter> serviceHolder =
-			new ContextController.ServiceHolder<>(
-				bundleContext.getServiceObjects(serviceReference));
+		ServiceHolder<Filter> serviceHolder = new ServiceHolder<>(
+			bundleContext.getServiceObjects(serviceReference));
 
 		Filter filter = serviceHolder.get();
 

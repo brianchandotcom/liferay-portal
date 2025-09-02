@@ -10,6 +10,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.FilterChainImpl;
 
 import jakarta.servlet.DispatcherType;
@@ -28,8 +30,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
 import org.osgi.framework.Bundle;
@@ -47,15 +47,15 @@ public class FilterRegistration
 	implements Comparable<FilterRegistration> {
 
 	public FilterRegistration(
-		ContextController.ServiceHolder<Filter> serviceHolder,
-		FilterDTO filterDTO, int priority, ContextController contextController,
+		ServiceHolder<Filter> serviceHolder, FilterDTO filterDTO, int priority,
+		LiferayContextController liferayContextController,
 		ClassLoader legacyTCCL) {
 
 		super(serviceHolder.get(), filterDTO);
 
 		_serviceHolder = serviceHolder;
 		_priority = priority;
-		_contextController = contextController;
+		_liferayContextController = liferayContextController;
 
 		_patterns = _getPatterns(filterDTO);
 
@@ -89,7 +89,7 @@ public class FilterRegistration
 			}
 
 			_initDestroyWithContextController =
-				(filter == null) || contextController.matches(filter);
+				(filter == null) || liferayContextController.matches(filter);
 		}
 		else {
 			_initDestroyWithContextController = true;
@@ -133,7 +133,8 @@ public class FilterRegistration
 					ThreadContextClassLoaderUtil.swap(_classLoader)) {
 
 				HttpServletEndpointController httpServletEndpointController =
-					_contextController.getHttpServletEndpointController();
+					_liferayContextController.
+						getHttpServletEndpointController();
 
 				Set<Object> registeredObjects =
 					httpServletEndpointController.getRegisteredObjects();
@@ -143,11 +144,11 @@ public class FilterRegistration
 				registeredObjects.remove(filter);
 
 				Set<FilterRegistration> filterRegistrations =
-					_contextController.getFilterRegistrations();
+					_liferayContextController.getFilterRegistrations();
 
 				filterRegistrations.remove(this);
 
-				_contextController.ungetServletContextHelper(
+				_liferayContextController.ungetServletContextHelper(
 					_serviceHolder.getBundle());
 
 				super.destroy();
@@ -319,10 +320,10 @@ public class FilterRegistration
 		FilterRegistration.class);
 
 	private final ClassLoader _classLoader;
-	private final ContextController _contextController;
 	private final boolean _initDestroyWithContextController;
+	private final LiferayContextController _liferayContextController;
 	private final Pattern[] _patterns;
 	private final int _priority;
-	private final ContextController.ServiceHolder<Filter> _serviceHolder;
+	private final ServiceHolder<Filter> _serviceHolder;
 
 }

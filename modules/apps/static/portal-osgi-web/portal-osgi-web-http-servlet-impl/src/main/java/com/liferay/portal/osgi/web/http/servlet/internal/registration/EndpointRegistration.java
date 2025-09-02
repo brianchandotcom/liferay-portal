@@ -9,6 +9,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
@@ -22,8 +24,6 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Set;
 
-import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
 import org.osgi.dto.DTO;
@@ -39,15 +39,16 @@ public abstract class EndpointRegistration<D extends DTO>
 	implements Comparable<EndpointRegistration<?>> {
 
 	public EndpointRegistration(
-		ContextController.ServiceHolder<Servlet> serviceHolder, D d,
+		ServiceHolder<Servlet> serviceHolder, D d,
 		ServletContextHelper servletContextHelper,
-		ContextController contextController, ClassLoader legacyTCCL) {
+		LiferayContextController liferayContextController,
+		ClassLoader legacyTCCL) {
 
 		super(serviceHolder.get(), d);
 
 		_serviceHolder = serviceHolder;
 		_servletContextHelper = servletContextHelper;
-		_contextController = contextController;
+		_liferayContextController = liferayContextController;
 
 		if (legacyTCCL != null) {
 			_classLoader = legacyTCCL;
@@ -72,12 +73,12 @@ public abstract class EndpointRegistration<D extends DTO>
 				_classLoader)) {
 
 			Set<EndpointRegistration<?>> endpointRegistrations =
-				_contextController.getEndpointRegistrations();
+				_liferayContextController.getEndpointRegistrations();
 
 			endpointRegistrations.remove(this);
 
 			HttpServletEndpointController httpServletEndpointController =
-				_contextController.getHttpServletEndpointController();
+				_liferayContextController.getHttpServletEndpointController();
 
 			Set<Object> registeredObjects =
 				httpServletEndpointController.getRegisteredObjects();
@@ -86,7 +87,7 @@ public abstract class EndpointRegistration<D extends DTO>
 
 			registeredObjects.remove(servlet);
 
-			_contextController.ungetServletContextHelper(
+			_liferayContextController.ungetServletContextHelper(
 				_serviceHolder.getBundle());
 
 			super.destroy();
@@ -202,8 +203,8 @@ public abstract class EndpointRegistration<D extends DTO>
 		EndpointRegistration.class.getSimpleName();
 
 	private final ClassLoader _classLoader;
-	private final ContextController _contextController;
-	private final ContextController.ServiceHolder<Servlet> _serviceHolder;
+	private final LiferayContextController _liferayContextController;
+	private final ServiceHolder<Servlet> _serviceHolder;
 	private final ServletContextHelper _servletContextHelper;
 	private String _toString;
 

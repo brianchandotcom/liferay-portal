@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.LiferayHttpServletRequestWrapper;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.LiferayHttpServletResponseWrapper;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ResponseStateHandler;
@@ -38,15 +40,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
-import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
-import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
 import org.eclipse.equinox.http.servlet.internal.util.Params;
 
 /**
  * @author Dante Wang
  */
-public class LiferayDispatchTargets extends DispatchTargets {
+public class LiferayDispatchTargets {
 
 	public LiferayDispatchTargets(
 		EndpointRegistration<?> endpointRegistration,
@@ -54,11 +53,6 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		List<FilterRegistration> matchingFilterRegistrations, String pathInfo,
 		String queryString, String requestURI, String servletName,
 		String servletPath) {
-
-		super(
-			liferayContextController, endpointRegistration,
-			matchingFilterRegistrations, servletName, requestURI, servletPath,
-			pathInfo, queryString);
 
 		_endpointRegistration = endpointRegistration;
 		_liferayContextController = liferayContextController;
@@ -82,7 +76,6 @@ public class LiferayDispatchTargets extends DispatchTargets {
 			servletName, servletPath);
 	}
 
-	@Override
 	public void addRequestParameters(HttpServletRequest httpServletRequest) {
 		if (_queryString == null) {
 			_parameterMap = httpServletRequest.getParameterMap();
@@ -109,7 +102,6 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		_parameterMap = Collections.unmodifiableMap(parsedParameterMap);
 	}
 
-	@Override
 	public boolean doDispatch(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String path,
@@ -224,37 +216,30 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		return true;
 	}
 
-	@Override
 	public LiferayContextController getContextController() {
 		return _liferayContextController;
 	}
 
-	@Override
 	public DispatcherType getDispatcherType() {
 		return _dispatcherType;
 	}
 
-	@Override
 	public List<FilterRegistration> getMatchingFilterRegistrations() {
 		return _matchingFilterRegistrations;
 	}
 
-	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _parameterMap;
 	}
 
-	@Override
 	public String getPathInfo() {
 		return _pathInfo;
 	}
 
-	@Override
 	public String getQueryString() {
 		return _queryString;
 	}
 
-	@Override
 	public String getRequestURI() {
 		if (_requestURI == null) {
 			return null;
@@ -263,27 +248,22 @@ public class LiferayDispatchTargets extends DispatchTargets {
 		return _liferayContextController.getFullContextPath() + _requestURI;
 	}
 
-	@Override
 	public String getServletName() {
 		return _servletName;
 	}
 
-	@Override
 	public String getServletPath() {
 		return _servletPath;
 	}
 
-	@Override
 	public EndpointRegistration<?> getServletRegistration() {
 		return _endpointRegistration;
 	}
 
-	@Override
 	public Map<String, Object> getSpecialOverides() {
 		return _specialOverrides;
 	}
 
-	@Override
 	public void setDispatcherType(DispatcherType dispatcherType) {
 		_dispatcherType = dispatcherType;
 	}

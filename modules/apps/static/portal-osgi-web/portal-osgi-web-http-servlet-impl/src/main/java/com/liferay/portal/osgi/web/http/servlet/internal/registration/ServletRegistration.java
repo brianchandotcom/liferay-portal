@@ -5,9 +5,10 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+
 import jakarta.servlet.Servlet;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
 import org.osgi.service.http.context.ServletContextHelper;
@@ -20,14 +21,14 @@ import org.osgi.service.http.runtime.dto.ServletDTO;
 public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 
 	public ServletRegistration(
-		ContextController.ServiceHolder<Servlet> servletHolder,
-		ServletDTO servletDTO, ErrorPageDTO errorPageDTO,
-		ServletContextHelper servletContextHelper,
-		ContextController contextController, ClassLoader legacyTCCL) {
+		ServiceHolder<Servlet> servletHolder, ServletDTO servletDTO,
+		ErrorPageDTO errorPageDTO, ServletContextHelper servletContextHelper,
+		LiferayContextController liferayContextController,
+		ClassLoader legacyTCCL) {
 
 		super(
-			servletHolder, servletDTO, servletContextHelper, contextController,
-			legacyTCCL);
+			servletHolder, servletDTO, servletContextHelper,
+			liferayContextController, legacyTCCL);
 
 		_errorPageDTO = errorPageDTO;
 	}

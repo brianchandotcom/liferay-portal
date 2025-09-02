@@ -7,6 +7,8 @@ package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListeners;
 
 import jakarta.servlet.http.HttpSessionAttributeListener;
 import jakarta.servlet.http.HttpSessionBindingEvent;
@@ -19,9 +21,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
-import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 
 /**
  * @author Dante Wang
@@ -50,11 +49,11 @@ public class HttpSessionTracker {
 		}
 
 		for (HttpSessionWrapper httpSessionWrapper : httpSessionWrappers) {
-			ContextController contextController =
+			LiferayContextController liferayContextController =
 				httpSessionWrapper.getContextController();
 
 			EventListeners eventListeners =
-				contextController.getEventListeners();
+				liferayContextController.getEventListeners();
 
 			List<HttpSessionListener> httpSessionListeners = eventListeners.get(
 				HttpSessionListener.class);
@@ -96,7 +95,7 @@ public class HttpSessionTracker {
 				}
 			}
 
-			contextController.removeActiveSession(httpSessionWrapper.getId());
+			liferayContextController.removeActiveSession(httpSessionWrapper.getId());
 		}
 	}
 

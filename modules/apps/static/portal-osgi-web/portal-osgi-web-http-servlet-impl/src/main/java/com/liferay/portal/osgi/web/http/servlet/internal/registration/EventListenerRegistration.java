@@ -8,6 +8,8 @@ package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpSessionWrapper;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
@@ -26,9 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
-import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.runtime.dto.ListenerDTO;
@@ -40,16 +39,17 @@ public class EventListenerRegistration
 	extends Registration<EventListener, ListenerDTO> {
 
 	public EventListenerRegistration(
-		ContextController.ServiceHolder<EventListener> serviceHolder,
+		ServiceHolder<EventListener> serviceHolder,
 		List<Class<? extends EventListener>> classes, ListenerDTO listenerDTO,
-		ServletContext servletContext, ContextController contextController) {
+		ServletContext servletContext,
+		LiferayContextController liferayContextController) {
 
 		super(serviceHolder.get(), listenerDTO);
 
 		_serviceHolder = serviceHolder;
 		_classes = classes;
 		_servletContext = servletContext;
-		_contextController = contextController;
+		_liferayContextController = liferayContextController;
 
 		Bundle bundle = serviceHolder.getBundle();
 
@@ -69,16 +69,16 @@ public class EventListenerRegistration
 				_classLoader)) {
 
 			Set<EventListenerRegistration> listenerRegistrations =
-				_contextController.getListenerRegistrations();
+				_liferayContextController.getListenerRegistrations();
 
 			listenerRegistrations.remove(this);
 
 			EventListeners eventListeners =
-				_contextController.getEventListeners();
+				_liferayContextController.getEventListeners();
 
 			eventListeners.remove(_classes, this);
 
-			_contextController.ungetServletContextHelper(
+			_liferayContextController.ungetServletContextHelper(
 				_serviceHolder.getBundle());
 
 			super.destroy();
@@ -87,11 +87,14 @@ public class EventListenerRegistration
 				_classes.contains(HttpSessionAttributeListener.class) ||
 				_classes.contains(HttpSessionListener.class)) {
 
-				Map<String, HttpSessionAdaptor> activeSessions =
-					_contextController.getActiveSessions();
+				Map<String, HttpSessionWrapper> activeSessions =
+					_liferayContextController.getActiveSessions();
 
-				for (HttpSessionAdaptor adaptor : activeSessions.values()) {
-					adaptor.invokeSessionListeners(_classes, super.getT());
+				for (HttpSessionWrapper httpSessionWrapper :
+						activeSessions.values()) {
+
+					httpSessionWrapper.invokeSessionListeners(
+						_classes, super.getT());
 				}
 			}
 
@@ -138,9 +141,9 @@ public class EventListenerRegistration
 
 	private final List<Class<? extends EventListener>> _classes;
 	private final ClassLoader _classLoader;
-	private final ContextController _contextController;
 	private final EventListener _eventListenerProxy;
-	private final ContextController.ServiceHolder<EventListener> _serviceHolder;
+	private final LiferayContextController _liferayContextController;
+	private final ServiceHolder<EventListener> _serviceHolder;
 	private final ServletContext _servletContext;
 
 	private class EventListenerInvocationHandler implements InvocationHandler {

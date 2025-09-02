@@ -8,6 +8,9 @@ package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListeners;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterChain;
@@ -25,11 +28,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
-import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
-import org.eclipse.equinox.http.servlet.internal.servlet.FilterChainImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
-import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 
 import org.osgi.service.http.context.ServletContextHelper;
 

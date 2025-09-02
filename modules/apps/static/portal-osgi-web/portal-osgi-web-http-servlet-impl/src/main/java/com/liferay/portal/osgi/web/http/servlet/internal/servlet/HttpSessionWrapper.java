@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListeners;
 
 import jakarta.servlet.ServletContext;
@@ -29,8 +30,6 @@ import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.List;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
-
 /**
  * @author Dante Wang
  */
@@ -38,10 +37,10 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 
 	public static HttpSessionWrapper createHttpSessionWrapper(
 		HttpSession httpSession, ServletContext servletContext,
-		ContextController contextController) {
+		LiferayContextController liferayContextController) {
 
 		HttpSessionWrapper httpSessionWrapper = new HttpSessionWrapper(
-			httpSession, servletContext, contextController);
+			httpSession, servletContext, liferayContextController);
 
 		HttpSessionTracker.addHttpSessionWrapper(httpSessionWrapper);
 
@@ -58,8 +57,8 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 		return Collections.enumeration(_getAttributeNames());
 	}
 
-	public ContextController getContextController() {
-		return _contextController;
+	public LiferayContextController getContextController() {
+		return _liferayContextController;
 	}
 
 	@Override
@@ -95,7 +94,8 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 	public void invalidate() {
 		HttpSessionEvent httpSessionEvent = new HttpSessionEvent(this);
 
-		EventListeners eventListeners = _contextController.getEventListeners();
+		EventListeners eventListeners =
+			_liferayContextController.getEventListeners();
 
 		for (HttpSessionListener listener :
 				eventListeners.get(HttpSessionListener.class)) {
@@ -130,7 +130,7 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 			}
 		}
 
-		_contextController.removeActiveSession(_id);
+		_liferayContextController.removeActiveSession(_id);
 	}
 
 	public void invokeSessionListeners(
@@ -200,7 +200,7 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 
 		if (value != null) {
 			EventListeners eventListeners =
-				_contextController.getEventListeners();
+				_liferayContextController.getEventListeners();
 
 			List<HttpSessionAttributeListener> httpSessionAttributeListeners =
 				eventListeners.get(HttpSessionAttributeListener.class);
@@ -237,7 +237,8 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 
 		_httpSession.setAttribute(attributeName, value);
 
-		EventListeners eventListeners = _contextController.getEventListeners();
+		EventListeners eventListeners =
+			_liferayContextController.getEventListeners();
 
 		List<HttpSessionAttributeListener> httpSessionAttributeListeners =
 			eventListeners.get(HttpSessionAttributeListener.class);
@@ -284,13 +285,14 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 
 	private HttpSessionWrapper(
 		HttpSession httpSession, ServletContext servletContext,
-		ContextController contextController) {
+		LiferayContextController liferayContextController) {
 
 		_httpSession = httpSession;
 		_servletContext = servletContext;
-		_contextController = contextController;
+		_liferayContextController = liferayContextController;
 
-		_attributePrefix = "equinox.http." + contextController.getContextName();
+		_attributePrefix =
+			"equinox.http." + liferayContextController.getContextName();
 		_id = httpSession.getId();
 	}
 
@@ -321,9 +323,9 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 	private static final long serialVersionUID = 3418610936889860782L;
 
 	private final transient String _attributePrefix;
-	private final transient ContextController _contextController;
 	private final transient HttpSession _httpSession;
 	private final String _id;
+	private final transient LiferayContextController _liferayContextController;
 	private final transient ServletContext _servletContext;
 	private String _toString;
 

@@ -667,16 +667,33 @@ const FrontendDataSetContent = ({
 
 	const handlePopState = useCallback(() => {
 		const stateFromURL = getStateFromURL();
+
 		if (!stateFromURL) {
 			return;
 		}
 
+		const stateUpdates: Array<{
+			type: keyof VIEWS_ACTION_TYPES;
+			value: IStateInURL[keyof IStateInURL];
+		}> = [];
+
 		const delta = stateFromURL.delta;
 
 		if (delta && delta !== paginationDelta) {
-			handleDeltaChange(delta);
+			setPageNumber(1);
+			stateUpdates.push({
+				type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
+				value: delta,
+			});
 		}
-	}, [getStateFromURL, handleDeltaChange, paginationDelta]);
+
+		if (stateUpdates.length) {
+			viewsDispatch({
+				type: VIEWS_ACTION_TYPES.BATCH_UPDATE,
+				value: stateUpdates,
+			});
+		}
+	}, [getStateFromURL, paginationDelta, viewsDispatch]);
 
 	useEffect(() => {
 		const registerEvent =

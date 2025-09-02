@@ -6,18 +6,13 @@
 package com.liferay.scim.configuration.web.internal.model.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException;
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationRequiredException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -45,11 +40,6 @@ public class OAuth2ApplicationModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = _companyLocalService.getCompanyById(
-			TestPropsValues.getCompanyId());
-
-		User user = UserTestUtil.addCompanyAdminUser(_company);
-
 		String oAuth2ApplicationName = RandomTestUtil.randomString();
 
 		_clientId = ScimClientUtil.generateScimClientId(oAuth2ApplicationName);
@@ -58,13 +48,13 @@ public class OAuth2ApplicationModelListenerTest {
 			"com.liferay.scim.rest.internal.configuration." +
 				"ScimClientOAuth2ApplicationConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", _company.getCompanyId()
+				"companyId", TestPropsValues.getCompanyId()
 			).put(
 				"matcherField", "email"
 			).put(
 				"oAuth2ApplicationName", oAuth2ApplicationName
 			).put(
-				"userId", user.getUserId()
+				"userId", TestPropsValues.getUserId()
 			).build());
 	}
 
@@ -77,7 +67,7 @@ public class OAuth2ApplicationModelListenerTest {
 	public void testOnBeforeRemoveWithoutResetInProcess() throws Exception {
 		OAuth2Application scimOAuth2Application =
 			_oAuth2ApplicationLocalService.getOAuth2Application(
-				_company.getCompanyId(), _clientId);
+				TestPropsValues.getCompanyId(), _clientId);
 
 		_oAuth2ApplicationLocalService.deleteOAuth2Application(
 			scimOAuth2Application.getOAuth2ApplicationId());
@@ -92,15 +82,14 @@ public class OAuth2ApplicationModelListenerTest {
 
 			OAuth2Application scimOAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
-					_company.getCompanyId(), _clientId);
+					TestPropsValues.getCompanyId(), _clientId);
 
 			_oAuth2ApplicationLocalService.deleteOAuth2Application(
 				scimOAuth2Application.getOAuth2ApplicationId());
 
-			Assert.assertThrows(
-				NoSuchOAuth2ApplicationException.class,
-				() -> _oAuth2ApplicationLocalService.getOAuth2Application(
-					scimOAuth2Application.getOAuth2ApplicationId()));
+			Assert.assertNull(
+				_oAuth2ApplicationLocalService.fetchOAuth2Application(
+					TestPropsValues.getCompanyId(), _clientId));
 		}
 		finally {
 			ScimThreadLocal.setResetInProcess(resetInProcess);
@@ -108,10 +97,6 @@ public class OAuth2ApplicationModelListenerTest {
 	}
 
 	private String _clientId;
-	private Company _company;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

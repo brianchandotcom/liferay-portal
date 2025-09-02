@@ -50,8 +50,8 @@ const renderComponent = (fields: ScheduleFields = initialFields) => {
 	return render(
 		<SchedulePanel
 			dateConfig={dateConfig}
-			fields={fields}
-			onUpdateFieldData={jest.fn()}
+			onUpdateSchedule={jest.fn()}
+			scheduleFields={fields}
 		/>
 	);
 };

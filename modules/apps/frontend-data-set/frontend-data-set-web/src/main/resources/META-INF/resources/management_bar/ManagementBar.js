@@ -56,7 +56,7 @@ function ManagementBar({
 
 	return (
 		<>
-			{!!bulkActions.length && selectionType === 'multiple' && (
+			{selectionType === 'multiple' && (
 				<BulkActions
 					bulkActions={bulkActions}
 					deselectItems={deselectItems}

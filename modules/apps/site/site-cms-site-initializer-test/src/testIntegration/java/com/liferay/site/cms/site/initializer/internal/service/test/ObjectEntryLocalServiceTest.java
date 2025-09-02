@@ -152,45 +152,75 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				systemObjectDefinition.getObjectDefinitionId());
 
-		Role role = _roleLocalService.getRole(
-			systemObjectDefinition.getCompanyId(),
-			RoleConstants.CMS_ADMINISTRATOR);
-
-		String[] actionIds = {
-			ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
-			ActionKeys.VIEW
-		};
-
-		for (String actionId : actionIds) {
-			Assert.assertTrue(
-				_resourcePermissionLocalService.hasResourcePermission(
-					systemObjectDefinition.getCompanyId(),
-					systemObjectDefinition.getClassName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(systemObjectDefinition.getCompanyId()),
-					role.getRoleId(), actionId));
-		}
-
-		String[] viewPermissionRoleNames = {
-			RoleConstants.GUEST, RoleConstants.USER
-		};
-
-		for (String roleName : viewPermissionRoleNames) {
-			role = _roleLocalService.getRole(
-				systemObjectDefinition.getCompanyId(), roleName);
-
-			Assert.assertTrue(
-				_resourcePermissionLocalService.hasResourcePermission(
-					systemObjectDefinition.getCompanyId(),
-					ObjectDefinition.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(
-						systemObjectDefinition.getObjectDefinitionId()),
-					role.getRoleId(), ActionKeys.VIEW));
-		}
+		_assertHasResourcePermissionScopeCompany(systemObjectDefinition);
+		_assertHasResourcePermissionScopeIndividual(systemObjectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			systemObjectDefinition.getObjectDefinitionId());
+	}
+
+	private void _assertHasResourcePermissionScopeCompany(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(
+			objectDefinition.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(objectDefinition.getCompanyId()),
+				role.getRoleId(), ActionKeys.DELETE));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(objectDefinition.getCompanyId()),
+				role.getRoleId(), ActionKeys.PERMISSIONS));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(objectDefinition.getCompanyId()),
+				role.getRoleId(), ActionKeys.UPDATE));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(objectDefinition.getCompanyId()),
+				role.getRoleId(), ActionKeys.VIEW));
+	}
+
+	private void _assertHasResourcePermissionScopeIndividual(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(
+			objectDefinition.getCompanyId(), RoleConstants.GUEST);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectDefinition.getCompanyId(),
+				ObjectDefinition.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectDefinition.getObjectDefinitionId()),
+				role.getRoleId(), ActionKeys.VIEW));
+
+		role = _roleLocalService.getRole(
+			objectDefinition.getCompanyId(), RoleConstants.USER);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectDefinition.getCompanyId(),
+				ObjectDefinition.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectDefinition.getObjectDefinitionId()),
+				role.getRoleId(), ActionKeys.VIEW));
 	}
 
 	private String _getObjectFolderExternalReferenceCode() {

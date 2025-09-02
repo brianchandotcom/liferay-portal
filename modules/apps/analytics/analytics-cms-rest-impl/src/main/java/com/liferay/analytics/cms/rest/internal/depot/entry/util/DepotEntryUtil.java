@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Thiago Buarque
  */
-public class DepotEntryRetrieverUtil {
+public class DepotEntryUtil {
 
 	public static List<DepotEntry> getDepotEntries(
 			long companyId, Long depotEntryId)
@@ -107,15 +107,13 @@ public class DepotEntryRetrieverUtil {
 		return depotEntries;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DepotEntryRetrieverUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(DepotEntryUtil.class);
 
 	private static final Snapshot<DepotEntryGroupRelLocalService>
 		_depotEntryGroupRelLocalServiceSnapshot = new Snapshot<>(
-			DepotEntryRetrieverUtil.class,
-			DepotEntryGroupRelLocalService.class);
+			DepotEntryUtil.class, DepotEntryGroupRelLocalService.class);
 	private static final Snapshot<DepotEntryService>
 		_depotEntryServiceSnapshot = new Snapshot<>(
-			DepotEntryRetrieverUtil.class, DepotEntryService.class);
+			DepotEntryUtil.class, DepotEntryService.class);
 
 }

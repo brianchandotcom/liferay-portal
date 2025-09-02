@@ -37,6 +37,7 @@ const trafficChannelsNames: Record<string, string> = {
 	'organic': Liferay.Language.get('organic'),
 	'other': Liferay.Language.get('other'),
 	'other-advertising': Liferay.Language.get('other-advertising'),
+	'paid': Liferay.Language.get('paid'),
 	'paid-search': Liferay.Language.get('paid-search'),
 	'referral': Liferay.Language.get('referral'),
 	'social': Liferay.Language.get('social'),

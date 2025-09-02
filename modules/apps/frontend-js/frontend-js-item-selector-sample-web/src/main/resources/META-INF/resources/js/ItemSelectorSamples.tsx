@@ -321,15 +321,13 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.DOCUMENTS,
 							}),
 						},
-						items: document ? [document] : [],
+						items: documentsItemSelectorModal,
 						locator: documentsItemSelectorConfig.locator,
 						observer: fileItemSelectorObserver,
 						onItemsChange: (items: Document[]) => {
-							setDocument(items[0]);
+							setDocumentsItemSelectorModal(items);
 						},
 						onOpenChange: fileItemSelectorOpenChange,
-						onSubmit: (items) =>
-							setDocumentsItemSelectorModal(items),
 						open: fileItemSelectorOpen,
 						type: documentsItemSelectorConfig.type,
 					}}
@@ -346,14 +344,13 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
 							}),
 						},
-						items: space2 ? [space2] : [],
+						items: spacesItemSelectorModal,
 						locator: assetLibrariesItemSelectorConfig.locator,
 						observer: spaceItemSelectorObserver,
 						onItemsChange: (items: Space[]) => {
-							setSpace2(items[0]);
+							setSpacesItemSelectorModal(items);
 						},
 						onOpenChange: spaceItemSelectorOpenChange,
-						onSubmit: (items) => setSpacesItemSelectorModal(items),
 						open: spaceItemSelectorOpen,
 						type: assetLibrariesItemSelectorConfig.type,
 					}}
@@ -370,14 +367,13 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
 							}),
 						},
-						items: user ? [user] : [],
+						items: usersItemSelectorModal,
 						locator: userAccountsItemSelectorConfig.locator,
 						observer: userItemSelectorObserver,
 						onItemsChange: (items: User[]) => {
-							setUser(items[0]);
+							setUsersItemSelectorModal(items);
 						},
 						onOpenChange: userItemSelectorOpenChange,
-						onSubmit: (items) => setUsersItemSelectorModal(items),
 						open: userItemSelectorOpen,
 						type: userAccountsItemSelectorConfig.type,
 					}}

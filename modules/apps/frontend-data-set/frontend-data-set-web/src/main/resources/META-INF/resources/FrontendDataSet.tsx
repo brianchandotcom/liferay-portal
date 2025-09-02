@@ -127,6 +127,7 @@ const FrontendDataSetContent = ({
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
 	showManagementBar = true,
+	showNavBarWhenSelected = false,
 	showPagination = true,
 	showSearch = true,
 	showSelectAll = false,
@@ -167,12 +168,12 @@ const FrontendDataSetContent = ({
 	});
 
 	let selectedItemsValue = (selectedItems || []).map((item) =>
-		getObjectValueFromPath({item, path: selectedItemsKey})
+		getObjectValueFromPath({object: item, path: selectedItemsKey})
 	);
 
 	if (allItemsSelectedActive) {
 		selectedItemsValue = items.map((item) =>
-			getObjectValueFromPath({item, path: selectedItemsKey})
+			getObjectValueFromPath({object: item, path: selectedItemsKey})
 		);
 	}
 
@@ -529,7 +530,7 @@ const FrontendDataSetContent = ({
 
 		const newSelectedItems = selectedItems.filter((selectedItem) => {
 			const selectedItemValue = getObjectValueFromPath({
-				item: selectedItem,
+				object: selectedItem,
 				path: selectedItemsKey,
 			});
 
@@ -560,7 +561,7 @@ const FrontendDataSetContent = ({
 				[...selectedItems, ...items].find(
 					(item) =>
 						getObjectValueFromPath({
-							item,
+							object: item,
 							path: selectedItemsKey,
 						}) === val
 				)
@@ -615,7 +616,7 @@ const FrontendDataSetContent = ({
 						setSelectedItems(
 							data.items.filter((item: any) => {
 								const itemValue = getObjectValueFromPath({
-									item,
+									object: item,
 									path: selectedItemsKey,
 								});
 
@@ -806,6 +807,7 @@ const FrontendDataSetContent = ({
 				selectedItemsKey={selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}
 				selectionType={selectionType}
+				showNavBarWhenSelected={showNavBarWhenSelected}
 				showSearch={showSearch}
 				showSelectAll={showSelectAll}
 				total={total}
@@ -843,11 +845,11 @@ const FrontendDataSetContent = ({
 									items.filter(
 										(item) =>
 											getObjectValueFromPath({
-												item,
+												object: item,
 												path: selectedItemsKey,
 											}) !==
 											getObjectValueFromPath({
-												item: selectedItem,
+												object: selectedItem,
 												path: selectedItemsKey,
 											})
 									)
@@ -858,7 +860,7 @@ const FrontendDataSetContent = ({
 							else {
 								selectItems({
 									value: getObjectValueFromPath({
-										item: selectedItem,
+										object: selectedItem,
 										path: selectedItemsKey,
 									}),
 								});

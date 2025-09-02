@@ -323,6 +323,7 @@ export interface IFrontendDataSetProps {
 	showBulkActionsManagementBar?: boolean;
 	showBulkActionsManagementBarActions?: boolean;
 	showManagementBar?: boolean;
+	showNavBarWhenSelected?: boolean;
 	showPagination?: boolean;
 	showSearch?: boolean;
 	showSelectAll?: boolean;

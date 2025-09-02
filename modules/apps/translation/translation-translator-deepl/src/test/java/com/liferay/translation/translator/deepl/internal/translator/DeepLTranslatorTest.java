@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -20,8 +19,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration;
-
-import java.io.IOException;
 
 import java.util.Map;
 
@@ -44,13 +41,13 @@ public class DeepLTranslatorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws ConfigurationException, IOException {
+	public void setUp() throws Exception {
 		_setUpDeepLTranslator();
 		_setUpPortalUtil();
 	}
 
 	@Test
-	public void testTranslationHandlesBaseLanguage() throws PortalException {
+	public void testTranslationHandlesBaseLanguage() throws Exception {
 		TranslatorPacket translatorPacket = _deepLTranslator.translate(
 			_getTranslatorPocket(
 				Map.of("infoField--JournalArticle_title--0", false), "en_US",
@@ -62,7 +59,7 @@ public class DeepLTranslatorTest {
 	}
 
 	@Test
-	public void testTranslationHandlesLanguageVariant() throws PortalException {
+	public void testTranslationHandlesLanguageVariant() throws Exception {
 		TranslatorPacket translatorPacket = _deepLTranslator.translate(
 			_getTranslatorPocket(
 				Map.of("infoField--JournalArticle_title--0", false), "en_US",
@@ -135,7 +132,7 @@ public class DeepLTranslatorTest {
 	}
 
 	private ConfigurationProvider _setUpConfigurationProvider(long companyId)
-		throws ConfigurationException {
+		throws Exception {
 
 		ConfigurationProvider configurationProvider = Mockito.mock(
 			ConfigurationProvider.class);
@@ -177,7 +174,7 @@ public class DeepLTranslatorTest {
 		return configurationProvider;
 	}
 
-	private void _setUpDeepLTranslator() {
+	private void _setUpDeepLTranslator() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			_deepLTranslator, "_configurationProvider",
 			_setUpConfigurationProvider(_COMPANY_ID));
@@ -187,7 +184,7 @@ public class DeepLTranslatorTest {
 			_deepLTranslator, "_jsonFactory", new JSONFactoryImpl());
 	}
 
-	private Http _setUpHttp() throws IOException {
+	private Http _setUpHttp() throws Exception {
 		Http http = Mockito.mock(Http.class);
 
 		Mockito.when(

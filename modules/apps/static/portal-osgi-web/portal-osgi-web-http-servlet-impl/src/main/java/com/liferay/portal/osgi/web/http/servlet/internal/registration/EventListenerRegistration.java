@@ -1,0 +1,178 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.osgi.web.http.servlet.internal.registration;
+
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.http.HttpSessionAttributeListener;
+import jakarta.servlet.http.HttpSessionBindingListener;
+import jakarta.servlet.http.HttpSessionListener;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import java.util.EventListener;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.service.http.runtime.dto.ListenerDTO;
+
+/**
+ * @author Dante Wang
+ */
+public class EventListenerRegistration
+	extends Registration<EventListener, ListenerDTO> {
+
+	public EventListenerRegistration(
+		ContextController.ServiceHolder<EventListener> serviceHolder,
+		List<Class<? extends EventListener>> classes, ListenerDTO listenerDTO,
+		ServletContext servletContext, ContextController contextController) {
+
+		super(serviceHolder.get(), listenerDTO);
+
+		_serviceHolder = serviceHolder;
+		_classes = classes;
+		_servletContext = servletContext;
+		_contextController = contextController;
+
+		Bundle bundle = serviceHolder.getBundle();
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		_classLoader = bundleWiring.getClassLoader();
+
+		_eventListenerProxy = (EventListener)ProxyUtil.newProxyInstance(
+			EventListenerRegistration.class.getClassLoader(),
+			classes.toArray(new Class<?>[0]),
+			new EventListenerInvocationHandler());
+	}
+
+	@Override
+	public synchronized void destroy() {
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
+
+			Set<EventListenerRegistration> listenerRegistrations =
+				_contextController.getListenerRegistrations();
+
+			listenerRegistrations.remove(this);
+
+			EventListeners eventListeners =
+				_contextController.getEventListeners();
+
+			eventListeners.remove(_classes, this);
+
+			_contextController.ungetServletContextHelper(
+				_serviceHolder.getBundle());
+
+			super.destroy();
+
+			if (_classes.contains(HttpSessionBindingListener.class) ||
+				_classes.contains(HttpSessionAttributeListener.class) ||
+				_classes.contains(HttpSessionListener.class)) {
+
+				Map<String, HttpSessionAdaptor> activeSessions =
+					_contextController.getActiveSessions();
+
+				for (HttpSessionAdaptor adaptor : activeSessions.values()) {
+					adaptor.invokeSessionListeners(_classes, super.getT());
+				}
+			}
+
+			if (_classes.contains(ServletContextListener.class)) {
+				ServletContextListener servletContextListener =
+					(ServletContextListener)super.getT();
+
+				servletContextListener.contextDestroyed(
+					new ServletContextEvent(_servletContext));
+			}
+		}
+		finally {
+			_serviceHolder.release();
+		}
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object instanceof
+				EventListenerRegistration eventListenerRegistration) {
+
+			return Objects.equals(
+				eventListenerRegistration.getT(), super.getT());
+		}
+
+		return false;
+	}
+
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
+	public EventListener getT() {
+		return _eventListenerProxy;
+	}
+
+	@Override
+	public int hashCode() {
+		return Long.valueOf(
+			getD().serviceId
+		).hashCode();
+	}
+
+	private final List<Class<? extends EventListener>> _classes;
+	private final ClassLoader _classLoader;
+	private final ContextController _contextController;
+	private final EventListener _eventListenerProxy;
+	private final ContextController.ServiceHolder<EventListener> _serviceHolder;
+	private final ServletContext _servletContext;
+
+	private class EventListenerInvocationHandler implements InvocationHandler {
+
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			ClassLoader original = Thread.currentThread(
+			).getContextClassLoader();
+
+			try {
+				Thread.currentThread(
+				).setContextClassLoader(
+					_classLoader
+				);
+
+				try {
+					return method.invoke(
+						EventListenerRegistration.super.getT(), args);
+				}
+				catch (InvocationTargetException invocationTargetException) {
+					throw invocationTargetException.getCause();
+				}
+			}
+			finally {
+				Thread.currentThread(
+				).setContextClassLoader(
+					original
+				);
+			}
+		}
+
+	}
+
+}

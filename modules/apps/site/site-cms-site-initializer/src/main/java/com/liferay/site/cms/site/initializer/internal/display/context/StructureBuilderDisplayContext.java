@@ -130,6 +130,11 @@ public class StructureBuilderDisplayContext {
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
 					"/cms/reset_structure_display_page")
 			).put(
+				"resetTranslationDisplayPageURL",
+				() -> StringBundler.concat(
+					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
+					"/cms/reset_translation_display_page")
+			).put(
 				"structureBuilderURL",
 				() -> PortalUtil.getLayoutFullURL(
 					LayoutLocalServiceUtil.getLayoutByFriendlyURL(

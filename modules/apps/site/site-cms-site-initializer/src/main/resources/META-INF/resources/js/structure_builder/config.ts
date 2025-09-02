@@ -12,6 +12,7 @@ export type Config = {
 		| 'L_CMS_FILE_TYPES'
 		| 'L_CMS_STRUCTURE_REPEATABLE_GROUPS';
 	resetStructureDisplayPageURL: string;
+	resetTranslationDisplayPageURL: string;
 	structureBuilderURL: string;
 };
 

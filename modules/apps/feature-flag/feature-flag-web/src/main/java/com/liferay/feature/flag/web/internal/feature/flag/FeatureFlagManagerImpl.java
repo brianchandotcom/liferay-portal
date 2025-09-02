@@ -26,15 +26,18 @@ public class FeatureFlagManagerImpl implements FeatureFlagManager {
 	public List<FeatureFlag> getFeatureFlags(
 		long companyId, Predicate<FeatureFlag> predicate) {
 
-		return _featureFlagsBagProvider.withFeatureFlagsBag(
-			companyId,
-			featureFlagsBag -> featureFlagsBag.getFeatureFlags(predicate));
+		FeatureFlagsBag featureFlagsBag =
+			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(companyId);
+
+		return featureFlagsBag.getFeatureFlags(predicate);
 	}
 
 	@Override
 	public String getJSON(long companyId) {
-		return _featureFlagsBagProvider.withFeatureFlagsBag(
-			companyId, FeatureFlagsBag::getJSON);
+		FeatureFlagsBag featureFlagsBag =
+			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(companyId);
+
+		return featureFlagsBag.getJSON();
 	}
 
 	@Override
@@ -43,8 +46,10 @@ public class FeatureFlagManagerImpl implements FeatureFlagManager {
 			companyId = CompanyConstants.SYSTEM;
 		}
 
-		return _featureFlagsBagProvider.withFeatureFlagsBag(
-			companyId, featureFlagsBag -> featureFlagsBag.isEnabled(key));
+		FeatureFlagsBag featureFlagsBag =
+			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(companyId);
+
+		return featureFlagsBag.isEnabled(key);
 	}
 
 	@Override

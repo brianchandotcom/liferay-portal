@@ -40,7 +40,11 @@ const BusinessEventsItemDetails = () => {
 	const [modalType, setModalType] = useState('');
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
-	const {loading: loadingTickets, tickets} = useAccountsTickets(accountKey);
+	const {loading: loadingTickets, tickets} = useAccountsTickets(
+		businessEvent,
+		accountKey,
+		loading
+	);
 
 	const location = useLocation();
 	const navigate = useNavigate();

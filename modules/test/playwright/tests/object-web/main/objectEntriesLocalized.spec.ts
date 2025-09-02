@@ -204,7 +204,7 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		// go back to list
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		const responseBody = await response.json();
 
@@ -363,7 +363,7 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		// go back to list
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		const responseBody = await response.json();
 
@@ -506,7 +506,7 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		// go back to list
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		const responseBody = await response.json();
 
@@ -611,7 +611,7 @@ test.describe('Localized object entries are saved correctly', () => {
 			page.getByText('Success:Your request completed successfully.')
 		).toBeVisible();
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		const responseBody = await response.json();
 
@@ -734,7 +734,7 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		await page.waitForTimeout(2000);
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		await entryLink.click();
 
@@ -962,7 +962,7 @@ test.describe('Localized object entries are saved correctly', () => {
 			page.getByText('Success:Your request completed successfully.')
 		).toBeVisible();
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		const responseBody = await response.json();
 
@@ -1009,7 +1009,7 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		await page.waitForTimeout(1000);
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		await entryLink.click();
 
@@ -1116,7 +1116,7 @@ test.describe('Localized object entries are saved correctly', () => {
 			page.getByText('Success:Your request completed successfully.')
 		).toBeVisible();
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		const responseBody = await response.json();
 
@@ -1182,7 +1182,7 @@ test.describe('Localized object entries are saved correctly', () => {
 			.first()
 			.waitFor({state: 'hidden'});
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await viewObjectEntriesPage.backButton.click();
 
 		await entryLink.click();
 

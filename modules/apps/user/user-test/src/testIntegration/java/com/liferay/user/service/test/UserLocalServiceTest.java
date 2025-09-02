@@ -1628,18 +1628,18 @@ public class UserLocalServiceTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		Group globalGroup = company.getGroup();
+		Group companyGroup = company.getGroup();
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			globalGroup.getGroupId());
+			companyGroup.getGroupId());
 
 		AssetCategory assetCategory = AssetTestUtil.addCategory(
-			globalGroup.getGroupId(), assetVocabulary.getVocabularyId());
+			companyGroup.getGroupId(), assetVocabulary.getVocabularyId());
 
 		long[] assetCategoryIds = {assetCategory.getCategoryId()};
 
 		_assetEntryLocalService.updateEntry(
-			user.getUserId(), globalGroup.getGroupId(), user.getCreateDate(),
+			user.getUserId(), companyGroup.getGroupId(), user.getCreateDate(),
 			user.getModifiedDate(), User.class.getName(), user.getUserId(),
 			user.getUuid(), 0, assetCategoryIds, null, true, false, null, null,
 			null, null, null, user.getFullName(), null, null, null, null, 0, 0,
@@ -1647,13 +1647,13 @@ public class UserLocalServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				globalGroup.getGroupId(), user.getUserId());
+				companyGroup.getGroupId(), user.getUserId());
 
 		serviceContext.setAssetCategoryIds(null);
 
 		Group group = GroupTestUtil.addGroup();
 
-		long[] groupIds = {globalGroup.getGroupId(), group.getGroupId()};
+		long[] groupIds = {companyGroup.getGroupId(), group.getGroupId()};
 
 		user = _userLocalService.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,

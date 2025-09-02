@@ -18,13 +18,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.Map;
 
@@ -102,15 +100,6 @@ public class DeepLTranslatorTest {
 		Assert.assertEquals(
 			Map.of("infoField--JournalArticle_title--0", "哈囉，世界！"),
 			translatorPacket.getFieldsMap());
-	}
-
-	protected String read(String fileName) throws IOException {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		return StringUtil.read(inputStream);
 	}
 
 	private String _getTranslationString(String text) {

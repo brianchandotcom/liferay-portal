@@ -1415,7 +1415,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			wikiNodeResource.putSiteWikiNodePermissionsPageHttpResponse(
-				wikiNode.getSiteId(),
+				testGroup.getGroupId(),
 				new Permission[] {
 					new Permission() {
 						{
@@ -1428,7 +1428,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			wikiNodeResource.putSiteWikiNodePermissionsPageHttpResponse(
-				wikiNode.getSiteId(),
+				testGroup.getGroupId(),
 				new Permission[] {
 					new Permission() {
 						{

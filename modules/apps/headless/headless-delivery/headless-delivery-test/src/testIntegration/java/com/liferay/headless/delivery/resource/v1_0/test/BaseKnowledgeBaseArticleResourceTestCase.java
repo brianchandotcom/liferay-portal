@@ -2887,7 +2887,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			200,
 			knowledgeBaseArticleResource.
 				putSiteKnowledgeBaseArticlePermissionsPageHttpResponse(
-					knowledgeBaseArticle.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -2901,7 +2901,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			404,
 			knowledgeBaseArticleResource.
 				putSiteKnowledgeBaseArticlePermissionsPageHttpResponse(
-					knowledgeBaseArticle.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

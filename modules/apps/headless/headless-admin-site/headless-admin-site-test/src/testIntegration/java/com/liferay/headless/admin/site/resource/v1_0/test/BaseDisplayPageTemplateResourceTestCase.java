@@ -1166,7 +1166,8 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 			200,
 			displayPageTemplateResource.
 				putSiteDisplayPageTemplatePermissionsPageHttpResponse(
-					testGroup.getExternalReferenceCode(), null,
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -1180,7 +1181,8 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 			404,
 			displayPageTemplateResource.
 				putSiteDisplayPageTemplatePermissionsPageHttpResponse(
-					testGroup.getExternalReferenceCode(), null,
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode(),
 					new Permission[] {
 						new Permission() {
 							{

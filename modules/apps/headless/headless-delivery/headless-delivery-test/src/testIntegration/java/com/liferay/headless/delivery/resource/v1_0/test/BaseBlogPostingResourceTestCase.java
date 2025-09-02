@@ -1632,7 +1632,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			blogPostingResource.putSiteBlogPostingPermissionsPageHttpResponse(
-				blogPosting.getSiteId(),
+				testGroup.getGroupId(),
 				new Permission[] {
 					new Permission() {
 						{
@@ -1645,7 +1645,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingResource.putSiteBlogPostingPermissionsPageHttpResponse(
-				blogPosting.getSiteId(),
+				testGroup.getGroupId(),
 				new Permission[] {
 					new Permission() {
 						{

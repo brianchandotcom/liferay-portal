@@ -2552,7 +2552,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			200,
 			messageBoardThreadResource.
 				putSiteMessageBoardThreadPermissionsPageHttpResponse(
-					messageBoardThread.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -2566,7 +2566,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			404,
 			messageBoardThreadResource.
 				putSiteMessageBoardThreadPermissionsPageHttpResponse(
-					messageBoardThread.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

@@ -3197,7 +3197,7 @@ public abstract class BaseDocumentResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			documentResource.putSiteDocumentPermissionsPageHttpResponse(
-				document.getSiteId(),
+				testGroup.getGroupId(),
 				new Permission[] {
 					new Permission() {
 						{
@@ -3210,7 +3210,7 @@ public abstract class BaseDocumentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			documentResource.putSiteDocumentPermissionsPageHttpResponse(
-				document.getSiteId(),
+				testGroup.getGroupId(),
 				new Permission[] {
 					new Permission() {
 						{

@@ -34,7 +34,7 @@ import {unzipAndCheckFolder} from './utils/stagingUtil';
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-35914': {enabled: true, system: true},
+		'LPD-35914': {enabled: true},
 	}),
 	loginTest(),
 	assetPublisherPagesTest,

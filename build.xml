@@ -520,6 +520,7 @@ message.
 			file="${jar.file}"
 			preservelastmodified="true"
 			todir="${liferay.home}/osgi/static"
+			verbose="true"
 		/>
 
 		<basename file="${jar.file}" property="file.name" />
@@ -527,6 +528,7 @@ message.
 		<move
 			file="${liferay.home}/osgi/static/${file.name}"
 			tofile="${liferay.home}/osgi/static/${artifact.name}.jar"
+			verbose="true"
 		/>
 	</target>
 

@@ -169,7 +169,7 @@ public class UpgradeLogAppender implements Appender {
 		try {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-			Class<?> clazz =  classLoader.loadClass(loggerName);
+			Class<?> clazz = classLoader.loadClass(loggerName);
 
 			if (clazz.equals(DuplicateUniqueFinderRowsCleaner.class) ||
 				clazz.equals(OrphanReferencesDataCleanupUtil.class) ||

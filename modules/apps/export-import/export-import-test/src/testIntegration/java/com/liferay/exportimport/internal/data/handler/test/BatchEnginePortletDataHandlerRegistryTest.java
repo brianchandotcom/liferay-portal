@@ -11,8 +11,8 @@ import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngin
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -76,15 +75,15 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws PortalException {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			CompanyConstants.SYSTEM, true, "LPD-35914");
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws PortalException {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			CompanyConstants.SYSTEM, false, "LPD-35914");
+			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@Test
@@ -100,7 +99,12 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 				Portlet.class,
 				new GenericPortlet() {
 				},
-				MapUtil.singletonDictionary("jakarta.portlet.name", portletId));
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.company",
+					TestPropsValues.getCompanyId()
+				).put(
+					"jakarta.portlet.name", portletId
+				).build());
 			SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
 				VulcanBatchEngineTaskItemDelegate.class,
 				new TestExportImportVulcanBatchEngineTaskItemDelegate(

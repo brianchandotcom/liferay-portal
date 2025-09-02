@@ -45,7 +45,7 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 	@Override
 	public Group fetchCompanyGroup(long companyId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-35914")) {
 			return null;
 		}
 

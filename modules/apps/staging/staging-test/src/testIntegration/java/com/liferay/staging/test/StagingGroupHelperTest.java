@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -142,7 +141,7 @@ public class StagingGroupHelperTest {
 	@Test
 	public void testFetchCompanyGroup() throws Exception {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			CompanyConstants.SYSTEM, true, "LPD-35914");
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			TestPropsValues.getCompanyId());
@@ -204,7 +203,7 @@ public class StagingGroupHelperTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			CompanyConstants.SYSTEM, true, "LPD-35914");
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		Assert.assertNotNull(
 			_stagingGroupHelper.fetchCompanyGroup(

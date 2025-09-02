@@ -21,6 +21,7 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOCo
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.WorkflowDefinitionLinkUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinitionEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
@@ -70,6 +71,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -303,7 +305,12 @@ public class ObjectDefinitionResourceImpl
 						contextUser.getCompanyId(), _groupLocalService,
 						objectDefinition.getObjectDefinitionSettings(),
 						_objectDefinitionSettingLocalService),
-					objectFields);
+					objectFields,
+					WorkflowDefinitionLinkUtil.toWorkflowDefinitionLinks(
+						contextUser.getCompanyId(), _groupLocalService,
+						contextUser.getUserId(),
+						_workflowDefinitionLinkLocalService,
+						objectDefinition.getWorkflowDefinitionLinks()));
 		}
 		else {
 			serviceBuilderObjectDefinition =
@@ -346,7 +353,12 @@ public class ObjectDefinitionResourceImpl
 						contextUser.getCompanyId(), _groupLocalService,
 						objectDefinition.getObjectDefinitionSettings(),
 						_objectDefinitionSettingLocalService),
-					objectFields);
+					objectFields,
+					WorkflowDefinitionLinkUtil.toWorkflowDefinitionLinks(
+						contextUser.getCompanyId(), _groupLocalService,
+						contextUser.getUserId(),
+						_workflowDefinitionLinkLocalService,
+						objectDefinition.getWorkflowDefinitionLinks()));
 		}
 
 		if (!Validator.isBlank(objectDefinition.getExternalReferenceCode())) {
@@ -574,7 +586,12 @@ public class ObjectDefinitionResourceImpl
 					ObjectDefinitionSettingUtil.toObjectDefinitionSettings(
 						contextUser.getCompanyId(), _groupLocalService,
 						objectDefinition.getObjectDefinitionSettings(),
-						_objectDefinitionSettingLocalService));
+						_objectDefinitionSettingLocalService),
+					WorkflowDefinitionLinkUtil.toWorkflowDefinitionLinks(
+						contextUser.getCompanyId(), _groupLocalService,
+						contextUser.getUserId(),
+						_workflowDefinitionLinkLocalService,
+						objectDefinition.getWorkflowDefinitionLinks()));
 		}
 		else {
 			serviceBuilderObjectDefinition =
@@ -632,7 +649,12 @@ public class ObjectDefinitionResourceImpl
 					ObjectDefinitionSettingUtil.toObjectDefinitionSettings(
 						contextUser.getCompanyId(), _groupLocalService,
 						objectDefinition.getObjectDefinitionSettings(),
-						_objectDefinitionSettingLocalService));
+						_objectDefinitionSettingLocalService),
+					WorkflowDefinitionLinkUtil.toWorkflowDefinitionLinks(
+						contextUser.getCompanyId(), _groupLocalService,
+						contextUser.getUserId(),
+						_workflowDefinitionLinkLocalService,
+						objectDefinition.getWorkflowDefinitionLinks()));
 		}
 
 		List<ObjectAction> objectActions = ListUtil.fromArray(
@@ -1478,5 +1500,9 @@ public class ObjectDefinitionResourceImpl
 	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

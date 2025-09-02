@@ -397,14 +397,14 @@ export class JournalEditArticlePage {
 			.getByRole('button', {name: 'Save as Draft'});
 
 		await expect(async () => {
-		await this.page
-			.getByRole('button', {exact: true, name: 'Save as Draft'})
-			.click();
+			await this.page
+				.getByRole('button', {exact: true, name: 'Save as Draft'})
+				.click();
 
 			await expect(draftButton).toBeVisible();
 		}).toPass();
 
-			await draftButton.click();
+		await draftButton.click();
 
 		await expect(this.page.getByText('Version: 1.0 Draft')).toBeVisible();
 	}
@@ -472,7 +472,7 @@ export class JournalEditArticlePage {
 			trigger: this.page.getByLabel('Select View, Currently Selected: '),
 		});
 
-		const row = await this.page
+		const row = this.page
 			.locator('.list-group-item')
 			.filter({hasText: title});
 
@@ -540,7 +540,7 @@ export class JournalEditArticlePage {
 			.filter({hasText: title})
 			.waitFor();
 
-		const row = await this.page
+		const row = this.page
 			.locator('.list-group-item')
 			.filter({hasText: title});
 

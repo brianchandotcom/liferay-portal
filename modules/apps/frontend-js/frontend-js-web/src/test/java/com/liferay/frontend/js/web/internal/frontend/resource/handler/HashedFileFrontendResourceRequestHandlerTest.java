@@ -7,7 +7,6 @@ package com.liferay.frontend.js.web.internal.frontend.resource.handler;
 
 import com.liferay.frontend.js.web.internal.frontend.resource.FrontendResource;
 import com.liferay.frontend.js.web.test.util.FrontendJSWebTestUtil;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
@@ -19,9 +18,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.ByteArrayInputStream;
 
@@ -82,10 +78,9 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), RandomTestUtil.randomLong(),
-					"maxAgeKey", _mockPortal(), false, "sendNoCacheKey",
-					_mockServiceTrackerMap(
-						_mockServletContext(_hashedFilePath)));
+					_mockHashedFilesRegistry(true), RandomTestUtil.randomLong(),
+					"maxAgeKey", Mockito.mock(Portal.class), false,
+					"sendNoCacheKey");
 
 		Assert.assertTrue(
 			hashedFileFrontendResourceRequestHandler.canHandleRequest(
@@ -115,10 +110,9 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), RandomTestUtil.randomLong(),
-					"maxAgeKey", _mockPortal(), true, "sendNoCacheKey",
-					_mockServiceTrackerMap(
-						_mockServletContext(_hashedFilePath)));
+					_mockHashedFilesRegistry(true), RandomTestUtil.randomLong(),
+					"maxAgeKey", Mockito.mock(Portal.class), true,
+					"sendNoCacheKey");
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
@@ -150,10 +144,8 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), maxAge, "maxAgeKey",
-					_mockPortal(), true, "sendNoCacheKey",
-					_mockServiceTrackerMap(
-						_mockServletContext(_hashedFilePath)));
+					_mockHashedFilesRegistry(true), maxAge, "maxAgeKey",
+					Mockito.mock(Portal.class), true, "sendNoCacheKey");
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
@@ -179,10 +171,9 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), RandomTestUtil.randomLong(),
-					"maxAgeKey", _mockPortal(), true, "sendNoCacheKey",
-					_mockServiceTrackerMap(
-						_mockServletContext(_hashedFilePath)));
+					_mockHashedFilesRegistry(true), RandomTestUtil.randomLong(),
+					"maxAgeKey", Mockito.mock(Portal.class), true,
+					"sendNoCacheKey");
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
@@ -215,11 +206,9 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					Mockito.mock(HashedFilesRegistry.class),
-					RandomTestUtil.randomLong(), "maxAgeKey", _mockPortal(),
-					true, "sendNoCacheKey",
-					_mockServiceTrackerMap(
-						_mockServletContext(_UNHASHED_FILE_PATH)));
+					_mockHashedFilesRegistry(false),
+					RandomTestUtil.randomLong(), "maxAgeKey",
+					Mockito.mock(Portal.class), true, "sendNoCacheKey");
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
@@ -268,15 +257,37 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		);
 	}
 
-	private HashedFilesRegistry _mockHashedFilesRegistry() {
+	private HashedFilesRegistry _mockHashedFilesRegistry(boolean hashedFile)
+		throws Exception {
+
 		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
 			HashedFilesRegistry.class);
 
+		if (hashedFile) {
+			Mockito.when(
+				hashedFilesRegistry.get(
+					Mockito.eq("/o/frontend-js-web" + _UNHASHED_FILE_PATH))
+			).thenReturn(
+				"/o/frontend-js-web" + _hashedFilePath
+			);
+		}
+
+		URL url = Mockito.mock(URL.class);
+
 		Mockito.when(
-			hashedFilesRegistry.get(
-				Mockito.eq("/o/frontend-js-web" + _UNHASHED_FILE_PATH))
+			url.openStream()
 		).thenReturn(
-			"/o/frontend-js-web" + _hashedFilePath
+			new ByteArrayInputStream(
+				"export default x;".getBytes(StandardCharsets.UTF_8))
+		);
+
+		Mockito.when(
+			hashedFilesRegistry.getResourceURL(
+				Mockito.eq(
+					"/o/frontend-js-web" +
+						(hashedFile ? _hashedFilePath : _UNHASHED_FILE_PATH)))
+		).thenReturn(
+			url
 		);
 
 		return hashedFilesRegistry;
@@ -290,58 +301,6 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 		return mockHttpServletRequest;
 	}
-
-	private Portal _mockPortal() {
-		Portal portal = Mockito.mock(Portal.class);
-
-		Mockito.when(
-			portal.getCompanyId(Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			_COMPANY_ID
-		);
-
-		return portal;
-	}
-
-	private ServiceTrackerMap<String, ServletContext> _mockServiceTrackerMap(
-		ServletContext servletContext) {
-
-		ServiceTrackerMap<String, ServletContext> serviceTrackerMap =
-			Mockito.mock(ServiceTrackerMap.class);
-
-		Mockito.when(
-			serviceTrackerMap.getService("/o/frontend-js-web")
-		).thenReturn(
-			servletContext
-		);
-
-		return serviceTrackerMap;
-	}
-
-	private ServletContext _mockServletContext(String resourcePath)
-		throws Exception {
-
-		ServletContext servletContext = Mockito.mock(ServletContext.class);
-
-		URL url = Mockito.mock(URL.class);
-
-		Mockito.when(
-			url.openStream()
-		).thenReturn(
-			new ByteArrayInputStream(
-				"export default x;".getBytes(StandardCharsets.UTF_8))
-		);
-
-		Mockito.when(
-			servletContext.getResource(resourcePath)
-		).thenReturn(
-			url
-		);
-
-		return servletContext;
-	}
-
-	private static final long _COMPANY_ID = 1L;
 
 	private static final String _HASH =
 		FrontendJSWebTestUtil.randomHashedFileHash();

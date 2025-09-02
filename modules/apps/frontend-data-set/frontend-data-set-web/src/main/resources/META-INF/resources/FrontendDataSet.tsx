@@ -66,6 +66,7 @@ import {loadData} from './utils/loadData';
 // @ts-ignore
 
 import {logError} from './utils/logError';
+import {writeStateInURL} from './utils/stateInURL';
 import {
 	EStateInURLKeys,
 	EStateInURLSettings,
@@ -289,6 +290,16 @@ const FrontendDataSetContent = ({
 			(stateFromURL?.delta ||
 				pagination?.initialDelta ||
 				DEFAULT_PAGINATION_DELTA);
+
+		writeStateInURL(
+			id,
+			{
+				...(paginationDelta && {
+					[EStateInURLKeys.DELTA]: paginationDelta,
+				}),
+			},
+			stateInURLSettings
+		);
 
 		return {
 			activeView,

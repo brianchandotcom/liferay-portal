@@ -27,6 +27,7 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
@@ -285,6 +286,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
 		resourcePermissionLocalService.addResourcePermission(
 			guestUser.getCompanyId(), childObjectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(guestUser.getCompanyId()), guestRole.getRoleId(),
+			ActionKeys.VIEW);
+		resourcePermissionLocalService.addResourcePermission(
+			guestUser.getCompanyId(), ListTypeDefinition.class.getName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(guestUser.getCompanyId()), guestRole.getRoleId(),
 			ActionKeys.VIEW);

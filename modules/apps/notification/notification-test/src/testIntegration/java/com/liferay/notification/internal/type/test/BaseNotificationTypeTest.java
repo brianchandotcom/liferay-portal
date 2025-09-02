@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -224,6 +225,12 @@ public class BaseNotificationTypeTest {
 			user1.getCompanyId(), "ii", ListTypeConstants.CONTACT_SUFFIX);
 
 		role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW);
 
 		user2 = userLocalService.addUser(
 			user1.getUserId(), user1.getCompanyId(), true, null, null, true,
@@ -715,6 +722,11 @@ public class BaseNotificationTypeTest {
 	protected static ObjectDefinition parentObjectDefinition;
 
 	protected static LinkedHashMap<String, Object> parentObjectEntryValues;
+
+	@Inject
+	protected static ResourcePermissionLocalService
+		resourcePermissionLocalService;
+
 	protected static Role role;
 	protected static User user1;
 	protected static User user2;
@@ -743,9 +755,6 @@ public class BaseNotificationTypeTest {
 		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 	)
 	protected ObjectEntryManager objectEntryManager;
-
-	@Inject
-	protected ResourcePermissionLocalService resourcePermissionLocalService;
 
 	private String _getListType(String type, User user) throws Exception {
 		Contact contact = user.fetchContact();

@@ -280,21 +280,41 @@ export function FormInputGeneralPanel({item}) {
 			})();
 
 			fields = fields
-				.map((fieldset) => ({
-					...fieldset,
-					fields: fieldset.fields
-						.filter(
-							(field) =>
-								allowedInputTypes.includes(field.type) &&
-								!selectedFields.includes(field.key)
-						)
-						.map((field) =>
-							field.required
-								? {...field, label: `${field.label}*`}
-								: field
-						),
-				}))
-				.filter((fieldset) => fieldset.fields.length);
+				.map((field) => {
+					const isFieldSet = 'fields' in field;
+
+					if (isFieldSet && !field.relationship) {
+						return {
+							...field,
+							fields: field.fields
+								.filter(
+									(field) =>
+										allowedInputTypes.includes(
+											field.type
+										) && !selectedFields.includes(field.key)
+								)
+								.map((field) =>
+									field.required
+										? {...field, label: `${field.label}*`}
+										: field
+								),
+						};
+					}
+
+					if (
+						allowedInputTypes.includes(field.type) &&
+						!selectedFields.includes(field.key)
+					) {
+						return field.required
+							? {...field, label: `${field.label}*`}
+							: field;
+					}
+
+					return null;
+				})
+				.filter(
+					(field) => field && (!field.fields || field.fields.length)
+				);
 
 			return fields;
 		},
@@ -701,7 +721,9 @@ function FormInputMappingOptions({
 				</>
 			) : null}
 
-			{fields.flatMap((fieldSet) => fieldSet.fields).length ? (
+			{fields.flatMap((field) =>
+				'fields' in field ? field.fields : [field]
+			).length ? (
 				<>
 					<MappingFieldSelector
 						fields={fields}

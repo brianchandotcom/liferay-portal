@@ -315,6 +315,7 @@ public class TrialRestController extends BaseRestController {
 				jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
 				trialSettingsJSONObject.optString(
 					"projectId", String.valueOf(orderId)),
+				trialSettingsJSONObject.optString("siteInitializerKey", null),
 				trialProvisioningContextJSONObject);
 		}
 		catch (Exception exception) {
@@ -510,6 +511,7 @@ public class TrialRestController extends BaseRestController {
 
 	private PortalInstance _postPortalInstance(
 			Jwt jwt, String emailAddress, String projectId,
+			String siteInitializerKey,
 			JSONObject trialProvisioningContextJSONObject)
 		throws Exception {
 
@@ -530,14 +532,13 @@ public class TrialRestController extends BaseRestController {
 				"username"
 			).toString());
 
-		portalInstance.setAdmin(() -> admin);
-
-		portalInstance.setDomain(() -> "lxc.app");
-
 		String domain =
 			projectId + "." +
 				trialProvisioningContextJSONObject.getString("domain");
 
+		portalInstance.setAdmin(() -> admin);
+		portalInstance.setDomain(() -> "lxc.app");
+		portalInstance.setSiteInitializerKey(() -> siteInitializerKey);
 		portalInstance.setPortalInstanceId(() -> domain);
 		portalInstance.setVirtualHost(() -> domain);
 

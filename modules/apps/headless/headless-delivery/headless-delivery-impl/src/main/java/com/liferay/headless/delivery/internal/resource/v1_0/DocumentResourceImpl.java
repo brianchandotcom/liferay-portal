@@ -370,28 +370,20 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		existingFileEntry = _moveDocument(
 			documentId, document, existingFileEntry);
 
-		String fileName = null;
-		String title = null;
 		String description = null;
 		Date displayDate = null;
 		Date expirationDate = null;
+		String fileName = null;
+		String title = null;
 		String urlTitle = null;
 
 		if (document != null) {
-			fileName = document.getFileName();
-			title = document.getTitle();
 			description = document.getDescription();
 			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
+			fileName = document.getFileName();
+			title = document.getTitle();
 			urlTitle = document.getFriendlyUrlPath();
-		}
-
-		if (fileName == null) {
-			fileName = binaryFile.getFileName();
-		}
-
-		if (title == null) {
-			title = existingFileEntry.getTitle();
 		}
 
 		if (description == null) {
@@ -404,6 +396,14 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		if (expirationDate == null) {
 			existingFileEntry.getExpirationDate();
+		}
+
+		if (fileName == null) {
+			fileName = binaryFile.getFileName();
+		}
+
+		if (title == null) {
+			title = existingFileEntry.getTitle();
 		}
 
 		return _toDocument(

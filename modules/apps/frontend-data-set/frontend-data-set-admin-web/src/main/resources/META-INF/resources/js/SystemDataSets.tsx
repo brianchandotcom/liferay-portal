@@ -30,7 +30,6 @@ import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 import {IDataSet, ISystemDataSet} from './utils/types';
 
 interface IFrontendDataSetContext {
-	onSelect: Function;
 	selectItems: ({value}: {value: any}) => void;
 	selectable: boolean;
 	selectedItemsKey: keyof ISystemDataSet;
@@ -44,13 +43,8 @@ const SystemDataSetsView = ({
 	frontendDataSetContext: any;
 	items: Array<ISystemDataSet>;
 }) => {
-	const {
-		onSelect,
-		selectItems,
-		selectable,
-		selectedItemsKey,
-		selectedItemsValue,
-	} = useContext(frontendDataSetContext) as IFrontendDataSetContext;
+	const {selectItems, selectable, selectedItemsKey, selectedItemsValue} =
+		useContext(frontendDataSetContext) as IFrontendDataSetContext;
 
 	return (
 		<ClayList>
@@ -72,8 +66,6 @@ const SystemDataSetsView = ({
 								selectItems({
 									value: item[selectedItemsKey],
 								});
-
-								onSelect({selectedItems: [item]});
 							}
 						}}
 					>
@@ -192,11 +184,9 @@ const SelectSystemDataSetModalContent = ({
 						{...FDS_DEFAULT_PROPS}
 						apiURL={getSystemDataSetsURL}
 						id="SystemDataSets"
-						onSelect={({
-							selectedItems,
-						}: {
-							selectedItems: Array<ISystemDataSet>;
-						}) => {
+						onSelectedItemsChange={(
+							selectedItems: Array<ISystemDataSet>
+						) => {
 							setSelectedSystemDataSet(selectedItems[0]);
 						}}
 						selectedItemsKey="name"
@@ -496,6 +486,8 @@ const SystemDataSets = ({
 			},
 		},
 	];
+
+	console.log('fire-2');
 
 	return (
 		<div className="data-sets system-data-sets">

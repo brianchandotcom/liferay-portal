@@ -287,13 +287,13 @@ public class NotificationQueueEntryResourceTest
 				recipients = new Object[] {
 					HashMapBuilder.<String, Object>put(
 						NotificationRecipientSettingConstants.NAME_FROM,
-						"[%CURRENT_USER_EMAIL_ADDRESS%]"
+						RandomTestUtil.randomString() + "@liferay.com"
 					).put(
 						NotificationRecipientSettingConstants.NAME_FROM_NAME,
-						"[%CURRENT_USER_FIRST_NAME%]"
+						RandomTestUtil.randomString()
 					).put(
 						NotificationRecipientSettingConstants.NAME_TO,
-						"[%CURRENT_USER_EMAIL_ADDRESS%]"
+						RandomTestUtil.randomString() + "@liferay.com"
 					).build()
 				};
 				subject = StringUtil.toLowerCase(RandomTestUtil.randomString());

@@ -236,12 +236,10 @@ public class DeepLTranslatorTest {
 
 		portalUtil.setPortal(Mockito.mock(Portal.class));
 
-		String[] urlArray = {"https://api-free.deepl.com/v2/languages", ""};
-
 		Mockito.when(
 			PortalUtil.stripURLAnchor(Mockito.anyString(), Mockito.anyString())
 		).thenReturn(
-			urlArray
+			new String[] {"https://api-free.deepl.com/v2/languages", ""}
 		);
 	}
 

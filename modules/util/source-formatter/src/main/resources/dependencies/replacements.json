@@ -2424,6 +2424,23 @@
 	},
 	{
 		"classNames": [
+			"IndexerPostProcessor"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-27752",
+		"methodsToFormat": [
+			{
+				"from": "regex:@Override\\n\\t(?<methodSignature>public void postProcessContextQuery\\(\\n*\\s*BooleanQuery contextQuery, SearchContext searchContext\\))",
+				"to": "@Override\n\tpublic void postProcessContextBooleanFilter(\n\t\t\tBooleanFilter booleanFilter, SearchContext searchContext)"
+			},
+			{
+				"from": "regex:@Override\\n\\t(?<methodSignature>public void postProcessSearchQuery\\(\\n*\\s*BooleanQuery searchQuery, SearchContext searchContext\\))",
+				"to": "@Override\n\tpublic void postProcessSearchQuery(\n\t\t\tBooleanQuery searchQuery, BooleanFilter booleanFilter,\n\t\t\tSearchContext searchContext)"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"BaseJSPDynamicInclude"
 		],
 		"classStructurePattern": true,

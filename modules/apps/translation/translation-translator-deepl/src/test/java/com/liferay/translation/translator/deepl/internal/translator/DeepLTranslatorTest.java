@@ -5,7 +5,6 @@
 
 package com.liferay.translation.translator.deepl.internal.translator;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -103,14 +102,15 @@ public class DeepLTranslatorTest {
 	}
 
 	private String _getTranslationString(String text) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("{\"translations\":[{\"detected_source_language\":\"EN\",");
-		sb.append("\"text\":\"");
-		sb.append(text);
-		sb.append("\"}]}");
-
-		return sb.toString();
+		return JSONUtil.put(
+			"translations",
+			JSONUtil.put(
+				JSONUtil.put(
+					"detected_source_language", "EN"
+				).put(
+					"text", text
+				))
+		).toString();
 	}
 
 	private TranslatorPacket _getTranslatorPocket(

@@ -52,34 +52,6 @@ let MOCK_CACHE = {
 	'allowedInputTypes-dateFragment': ['date'],
 	'allowedInputTypes-numericFragment': ['numeric'],
 	'allowedInputTypes-textFragment': ['text'],
-	'formFields-classNameId-classTypeId': [
-		{
-			fields: [
-				{
-					key: 'requiredField',
-					label: 'Required Field',
-					name: 'requiredField',
-					required: true,
-					type: 'text',
-				},
-				{
-					key: 'notRequiredField',
-					label: 'Not Required Field',
-					name: 'notRequiredField',
-					required: false,
-					type: 'text',
-				},
-				{
-					key: 'numericField',
-					label: 'Numeric Field',
-					name: 'numericField',
-					required: false,
-					type: 'numeric',
-				},
-			],
-			label: 'Fieldset',
-		},
-	],
 };
 
 jest.mock(
@@ -110,6 +82,40 @@ jest.mock(
 jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCache',
 	() => jest.fn(({key}) => MOCK_CACHE[key.join('-')])
+);
+
+jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ObjectDataContext',
+	() => {
+		return {
+			useObjectFields: () => {
+				return [
+					{
+						key: 'requiredField',
+						label: 'Required Field',
+						name: 'requiredField',
+						required: true,
+						type: 'text',
+					},
+					{
+						key: 'notRequiredField',
+						label: 'Not Required Field',
+						name: 'notRequiredField',
+						required: false,
+						type: 'text',
+					},
+					{
+						key: 'numericField',
+						label: 'Numeric Field',
+						name: 'numericField',
+						required: false,
+						type: 'numeric',
+					},
+				];
+			},
+			useObjectLabel: () => 'Object 1',
+		};
+	}
 );
 
 const mockRelationships = () => {

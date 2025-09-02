@@ -1839,6 +1839,7 @@ public class EditableFragmentEntryProcessorTest {
 			_themeLocalService.getTheme(
 				_company.getCompanyId(), layoutSet.getThemeId()),
 			null);
+		themeDisplay.setPortalURL(_company.getPortalURL(_group.getGroupId()));
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(_getHttpServletRequest(locale));
 		themeDisplay.setResponse(new MockHttpServletResponse());

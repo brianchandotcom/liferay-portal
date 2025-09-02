@@ -167,10 +167,9 @@ public class UpgradeLogAppender implements Appender {
 
 	private boolean _isDataCleanupMessage(String loggerName) {
 		try {
-			Class<?> clazz = PortalClassLoaderUtil.getClassLoader(
-			).loadClass(
-				loggerName
-			);
+			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+			Class<?> clazz =  classLoader.loadClass(loggerName);
 
 			if (clazz.equals(DuplicateUniqueFinderRowsCleaner.class) ||
 				clazz.equals(OrphanReferencesDataCleanupUtil.class) ||

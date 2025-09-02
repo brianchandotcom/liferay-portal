@@ -16,6 +16,7 @@ import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragm
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../../../../app/config/index';
+import {useObjectFields} from '../../../../../../app/contexts/ObjectDataContext';
 import {
 	useDispatch,
 	useSelector,
@@ -169,17 +170,17 @@ export function FormInputGeneralPanel({item}) {
 		[item.itemId]
 	);
 
-	const {classNameId, classTypeId, formId} = useSelectorCallback(
-		(state) =>
-			selectFormConfiguration(item, state.layoutData) ||
-			DEFAULT_FORM_CONFIGURATION,
-		[item.itemId]
-	);
+	const {classNameId, classTypeId, fieldSetName, formId} =
+		useSelectorCallback(
+			(state) =>
+				selectFormConfiguration(item, state.layoutData) ||
+				DEFAULT_FORM_CONFIGURATION,
+			[item.itemId]
+		);
 
-	const formFields = useCache({
-		fetcher: () => FormService.getFormFields({classNameId, classTypeId}),
-		key: [CACHE_KEYS.formFields, classNameId, classTypeId],
-	});
+	const formFields = useObjectFields(
+		fieldSetName ? {name: fieldSetName} : {classNameId, classTypeId}
+	);
 
 	const {fragmentEntryKey, groupId} = fragmentEntryLinkRef.current;
 

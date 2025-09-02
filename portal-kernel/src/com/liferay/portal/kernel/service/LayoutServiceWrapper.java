@@ -669,6 +669,16 @@ public class LayoutServiceWrapper
 		return _layoutService.getLayoutsCount(groupId, type);
 	}
 
+	@Override
+	public Layout getOrAddEmptyLayout(
+			String externalReferenceCode, long userId, long groupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _layoutService.getOrAddEmptyLayout(
+			externalReferenceCode, userId, groupId, serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

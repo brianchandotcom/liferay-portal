@@ -302,7 +302,6 @@ public class BatchEnginePortletDataHandlerTest {
 			_stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId()),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		_testExportImportObjectEntriesWithErrorReport(
 			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
 	}
@@ -1116,7 +1115,6 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertEquals(
 			exportImportReportEntries.toString(), 1,
 			exportImportReportEntries.size());
-
 		Assert.assertTrue(
 			ListUtil.exists(
 				exportImportReportEntries,

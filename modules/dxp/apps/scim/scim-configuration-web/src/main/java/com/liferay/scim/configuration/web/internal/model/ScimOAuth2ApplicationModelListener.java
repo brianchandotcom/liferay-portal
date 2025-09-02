@@ -10,6 +10,8 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -17,12 +19,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.scim.rest.util.ScimClientUtil;
 import com.liferay.scim.rest.util.ScimThreadLocal;
 
-import java.io.IOException;
-
 import java.util.Dictionary;
 import java.util.Objects;
 
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -41,35 +40,35 @@ public class ScimOAuth2ApplicationModelListener
 			return;
 		}
 
-		String scimClientId = null;
+		Configuration[] configurations = null;
 
 		try {
-			Configuration[] configurations =
-				_configurationAdmin.listConfigurations(
-					StringBundler.concat(
-						"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
-						"=com.liferay.scim.rest.internal.configuration.",
-						"ScimClientOAuth2ApplicationConfiguration)(",
-						"companyId=", oAuth2Application.getCompanyId(), "))"));
-
-			if (configurations == null) {
-				return;
+			configurations = _configurationAdmin.listConfigurations(
+				StringBundler.concat(
+					"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
+					"=com.liferay.scim.rest.internal.configuration.",
+					"ScimClientOAuth2ApplicationConfiguration)(companyId=",
+					oAuth2Application.getCompanyId(), "))"));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
-
-			Configuration configuration = configurations[0];
-
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
-
-			String oAuth2ApplicationName = GetterUtil.getString(
-				properties.get("oAuth2ApplicationName"));
-
-			scimClientId = ScimClientUtil.generateScimClientId(
-				oAuth2ApplicationName);
 		}
-		catch (InvalidSyntaxException | IOException exception) {
-			throw new RuntimeException(exception);
+
+		if (configurations == null) {
+			return;
 		}
+
+		Configuration configuration = configurations[0];
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		String oAuth2ApplicationName = GetterUtil.getString(
+			properties.get("oAuth2ApplicationName"));
+
+		String scimClientId = ScimClientUtil.generateScimClientId(
+			oAuth2ApplicationName);
 
 		if (Objects.equals(oAuth2Application.getClientId(), scimClientId)) {
 			ReflectionUtil.throwException(
@@ -81,6 +80,9 @@ public class ScimOAuth2ApplicationModelListener
 						false)));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ScimOAuth2ApplicationModelListener.class);
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

@@ -38,7 +38,7 @@ import org.junit.runner.RunWith;
  * @author Christian Moura
  */
 @RunWith(Arquillian.class)
-public class ScimOAuth2ApplicationModelListenerTest {
+public class OAuth2ApplicationModelListenerTest {
 
 	@ClassRule
 	@Rule

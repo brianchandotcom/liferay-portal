@@ -154,7 +154,12 @@ test(
 
 		await lookAndFeelIFrame.getByRole('button', {name: 'Save'}).click();
 
-		await page.reload();
+		await lookAndFeelIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await page
+			.getByRole('dialog')
+			.getByRole('button', {name: 'Close'})
+			.click();
 
 		await widgetPagePage.dragPortlet(
 			'Web Content Display',
@@ -165,18 +170,15 @@ test(
 
 		await page.reload();
 
-		let portlet = page.locator(
-			'div.portlet-content.portlet-content-editable',
-			{hasText: 'Nested Applications'}
-		);
+		let portlet = page.locator('.portlet-content', {
+			hasText: 'Nested Applications',
+		});
 
 		await expect(portlet).toHaveCSS('background-color', 'rgb(0, 0, 0)');
 
-		portlet = page
-			.locator('h2.portlet-title-text', {hasText: 'WEB CONTENT DISPLAY'})
-			.locator('..')
-			.locator('..')
-			.locator('..');
+		portlet = portlet.locator('.portlet-content', {
+			hasText: 'Web Content Display',
+		});
 
 		await expect(portlet).toHaveCSS(
 			'background-color',

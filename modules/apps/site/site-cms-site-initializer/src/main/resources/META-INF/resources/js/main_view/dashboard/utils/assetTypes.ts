@@ -4,25 +4,40 @@
  */
 
 export enum AssetType {
+	BasicContent = 'BASIC_CONTENT',
 	Blog = 'BLOG',
-	CustomStructure = 'CUSTOMSTRUCTURE',
-	Document = 'DOCUMENT',
-	JournalArticle = 'JOURNALARTICLE',
-	KnowledgeTransfer = 'KNOWLEDGETRANSFER',
-	WebContent = 'WEBCONTENT',
+	CustomStructure = 'CUSTOM_STRUCTURE',
+	FileDefault = 'FILE_DEFAULT',
+	FileCompressed = 'FILE_COMPRESSED',
+	FileSpreadsheet = 'FILE_SPREADSHEET',
+	FileImage = 'FILE_IMAGE',
+	FileAudioVideo = 'FILE_AUDIO_VIDEO',
+	FileVectorial = 'FILE_VECTORIAL',
+	FileText = 'FILE_TEXT',
+	FileCode = 'FILE_CODE',
+	KnowledgeBase = 'KNOWLEDGE_BASE',
 }
 
 export const AssetTypeIcons: Record<
 	AssetType,
 	{color: string; symbol: string}
 > = {
-
-	// TODO: Define correct symbols and colors
-
-	[AssetType.JournalArticle]: {color: '#5c9531', symbol: 'blogs'},
-	[AssetType.Blog]: {color: '', symbol: ''},
-	[AssetType.Document]: {color: '', symbol: ''},
-	[AssetType.CustomStructure]: {color: '', symbol: ''},
-	[AssetType.KnowledgeTransfer]: {color: '#e82092', symbol: 'wiki'},
-	[AssetType.WebContent]: {color: '#2080ff', symbol: 'web-content'},
+	[AssetType.BasicContent]: {color: '#6B6C7E', symbol: 'forms'},
+	[AssetType.Blog]: {color: '#458613', symbol: 'blogs'},
+	[AssetType.CustomStructure]: {color: '#338FFF', symbol: 'web-content'},
+	[AssetType.FileDefault]: {color: '#6B6C7E', symbol: 'document-default'},
+	[AssetType.FileCompressed]: {
+		color: '#6B6C7E',
+		symbol: 'document-compressed',
+	},
+	[AssetType.FileSpreadsheet]: {color: '#24A892', symbol: 'document-table'},
+	[AssetType.FileImage]: {color: '#FF4D4D', symbol: 'document-image'},
+	[AssetType.FileAudioVideo]: {
+		color: '#FF4D4D',
+		symbol: 'document-multimedia',
+	},
+	[AssetType.FileVectorial]: {color: '#BF66FF', symbol: 'document-vectorial'},
+	[AssetType.FileText]: {color: '#0099E6', symbol: 'document-text'},
+	[AssetType.FileCode]: {color: '#FF4DB2', symbol: 'document-code'},
+	[AssetType.KnowledgeBase]: {color: '#E50082', symbol: 'wiki'},
 };

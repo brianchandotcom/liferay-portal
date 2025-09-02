@@ -498,23 +498,30 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		try {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
 
-			if (jsonArray.length() > 0) {
-				StringBundler sb = new StringBundler(jsonArray.length());
+			if (jsonArray.length() == 0) {
+				return StringPool.BLANK;
+			}
 
-				for (int i = 0; i < jsonArray.length(); i++) {
-					if (i > 0) {
-						sb.append(StringPool.COMMA_AND_SPACE);
-					}
+			StringBundler sb = new StringBundler(jsonArray.length());
 
-					LocalizedValue localizedValue =
-						ddmFormFieldOptions.getOptionLabels(
-							jsonArray.getString(i));
-
-					sb.append(localizedValue.getString(locale));
+			for (int i = 0; i < jsonArray.length(); i++) {
+				if (i > 0) {
+					sb.append(StringPool.COMMA_AND_SPACE);
 				}
 
-				return sb.toString();
+				String optionValueString = jsonArray.getString(i);
+
+				if (optionValueString.isEmpty()) {
+					continue;
+				}
+
+				LocalizedValue localizedValue =
+					ddmFormFieldOptions.getOptionLabels(optionValueString);
+
+				sb.append(localizedValue.getString(locale));
 			}
+
+			return sb.toString();
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

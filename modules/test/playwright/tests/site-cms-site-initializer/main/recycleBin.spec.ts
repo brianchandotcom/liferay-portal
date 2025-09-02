@@ -25,6 +25,8 @@ const test = mergeTests(
 	loginTest()
 );
 
+const recycleBinEnabled: boolean = true;
+
 test(
 	'Can delete a single content from Recycle Bin',
 	{tag: '@LPD-55831'},
@@ -44,7 +46,7 @@ test(
 		await test.step('Delete the created content so it goes into the Recycle Bin', async () => {
 			await contentsPage.goto();
 
-			await contentsPage.deleteContent(contentName);
+			await contentsPage.deleteContent(contentName, recycleBinEnabled);
 		});
 
 		await test.step('Go to the Recycle Bin and delete the content permanently', async () => {
@@ -97,7 +99,7 @@ test(
 		await test.step('Delete the created content so it goes into the Recycle Bin', async () => {
 			await contentsPage.goto();
 
-			await contentsPage.deleteContent(contentName);
+			await contentsPage.deleteContent(contentName, recycleBinEnabled);
 		});
 
 		await test.step('Go to the Recycle Bin and restore the item ', async () => {
@@ -131,7 +133,7 @@ test(
 		});
 
 		await test.step('Clean up', async () => {
-			await contentsPage.deleteContent(contentName);
+			await contentsPage.deleteContent(contentName, recycleBinEnabled);
 
 			await recycleBinPage.goto();
 
@@ -195,7 +197,7 @@ test(
 		await test.step('Move the folder to Recycle Bin', async () => {
 			await contentsPage.goto();
 
-			await contentsPage.deleteContent(folderName);
+			await contentsPage.deleteContent(folderName, recycleBinEnabled);
 		});
 
 		await test.step('Assert navigation within Recycle Bin', async () => {
@@ -266,6 +268,71 @@ test(
 			await waitForAlert(
 				page,
 				`Success:${folderName} has been permanently deleted.`
+			);
+		});
+	}
+);
+
+test(
+	'Can use the success toast options of undo and redirect to Recycle Bin after deleting content',
+	{tag: '@LPD-53983'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		const contentName = getRandomString();
+		const applicationName = 'cms/basic-web-contents';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName,
+			},
+			applicationName,
+			'Default'
+		);
+
+		await test.step('Delete the created content so it goes into the Recycle Bin', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(contentName, recycleBinEnabled);
+
+			await checkAccessibility({
+				page,
+				selectors: ['.alert-success'],
+			});
+		});
+
+		await test.step('Restore the content using the undo button from the success toast', async () => {
+			await page.getByRole('button', {name: 'Undo'}).click();
+
+			await expect(
+				page.getByText(`Success:${contentName} was restored`)
+			).toBeVisible();
+		});
+
+		await test.step('Delete the content again and go to the Recycle Bin using the toast link', async () => {
+			await contentsPage.deleteContent(contentName, recycleBinEnabled);
+
+			await page.getByRole('link', {name: 'Recycle Bin'}).click();
+		});
+
+		await test.step('Delete the content from the Recycle Bin', async () => {
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+
+			await recycleBinPage.execItemAction({
+				action: 'Delete',
+				filter: contentName,
+			});
+
+			await expect(
+				recycleBinPage.deleteItemConfirmationText
+			).toBeVisible();
+
+			await recycleBinPage.deleteButton.last().click();
+
+			await waitForAlert(
+				page,
+				`Success:${contentName} has been permanently deleted.`
 			);
 		});
 	}

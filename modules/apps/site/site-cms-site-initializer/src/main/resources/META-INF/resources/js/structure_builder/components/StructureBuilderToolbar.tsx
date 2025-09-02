@@ -490,5 +490,7 @@ async function publishStructure({
 		await DisplayPageService.resetDisplayPage({erc: structureERC});
 	}
 
+	await DisplayPageService.resetTranslationDisplayPage({erc: structureERC});
+
 	onSuccess();
 }

@@ -227,8 +227,8 @@
 																	"groupVocabularyExternalReferenceCodes": "",
 																	"maxTerms": "10",
 																	"order": "key:asc",
-																	"parameterName": "Edition",
-																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Edition$]"
+																	"parameterName": "Availability",
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Availability$]"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}

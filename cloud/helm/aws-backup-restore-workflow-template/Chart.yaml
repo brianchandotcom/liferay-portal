@@ -1,7 +1,7 @@
 apiVersion: v2
 appVersion: latest
 description:
-    Provides Argo clusterworkflowtemplate to perform backup restores for Liferay on AWS
+    This chart contains a cluster workflow template which enables a Liferay AWS backup restore.
 icon: https://www-cdn.liferay.com/documents/d/guest/liferay-logo
 name: liferay-aws-backup-restore-workflow-template
 type: application

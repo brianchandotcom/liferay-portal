@@ -296,13 +296,11 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_CONFIG, null);
 
-		HttpServletRequest httpServletRequest =
-			new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		httpServletRequest.setAttribute(
 			WebKeys.USER_ID, TestPropsValues.getUserId());

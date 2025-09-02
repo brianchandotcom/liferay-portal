@@ -49,6 +49,7 @@ public class BackgroundTaskCompanyIdUpgradeProcess extends UpgradeProcess {
 
 							_backgroundTaskThreadLocalManager.
 								serializeThreadLocals(taskContextMap);
+
 							preparedStatement.setString(
 								1, JSONFactoryUtil.serialize(taskContextMap));
 

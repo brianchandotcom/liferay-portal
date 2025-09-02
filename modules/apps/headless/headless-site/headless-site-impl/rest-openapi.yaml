@@ -1,7 +1,6 @@
 components:
     schemas:
         Site:
-            # @review
             description:
                 Represents the site being created.
             properties:
@@ -68,7 +67,6 @@ paths:
     "/sites/{siteId}":
         delete:
             description:
-                # @review
                 Deletes a site and all of its associated content.
             operationId: deleteSite
             parameters:
@@ -83,6 +81,25 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+            tags: ["Site"]
+        get:
+            operationId: getSite
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
             tags: ["Site"]
     /sites:
         get:
@@ -145,11 +162,31 @@ paths:
                                 $ref: "#/components/schemas/Site"
                     description:
                         default response
-            # @review
+            tags: ["Site"]
+        put:
+            description:
+                Updates a site and all of its associated content.
+            operationId: putSite
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Site"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Site"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
             tags: ["Site"]
     /sites/by-external-reference-code/{externalReferenceCode}:
         delete:
-            # @review
             description:
                 Deletes a site and all of its associated content.
             operationId: deleteSiteByExternalReferenceCode

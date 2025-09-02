@@ -188,9 +188,7 @@ public class DeepLTranslatorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_deepLTranslator, "_configurationProvider", configurationProvider);
-
 		ReflectionTestUtil.setFieldValue(_deepLTranslator, "_http", http);
-
 		ReflectionTestUtil.setFieldValue(
 			_deepLTranslator, "_jsonFactory", new JSONFactoryImpl());
 	}

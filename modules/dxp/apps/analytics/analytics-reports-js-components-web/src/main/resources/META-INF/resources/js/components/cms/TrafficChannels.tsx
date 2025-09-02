@@ -29,7 +29,7 @@ type TrafficChannelsApiResponse = {
 	totalCount: number;
 };
 
-const TrafficChannelsNames: Record<string, string> = {
+const trafficChannelsNames: Record<string, string> = {
 	'affiliates': Liferay.Language.get('affiliates'),
 	'direct': Liferay.Language.get('direct'),
 	'display': Liferay.Language.get('display'),
@@ -65,19 +65,19 @@ const TrafficChannelsEntry = ({
 }) => {
 	return (
 		<div
-			aria-label={`${Liferay.Language.get('traffic-channel')}: ${Liferay.Language.get(TrafficChannelsNames['name'])}`}
+			aria-label={`${Liferay.Language.get('traffic-channel')}: ${Liferay.Language.get(trafficChannelsNames[name])}`}
 			className="d-flex flex-row py-3 tab-focus traffic-channel-item"
 			role="row"
 			tabIndex={0}
 		>
 			<div
-				aria-label={Liferay.Language.get(TrafficChannelsNames[name])}
+				aria-label={Liferay.Language.get(trafficChannelsNames[name])}
 				className="tab-focus traffic-channel-item__name"
 				role="cell"
 				style={{width: '35%'}}
 			>
 				<Text size={3} weight="semi-bold">
-					{Liferay.Language.get(TrafficChannelsNames[name])}
+					{Liferay.Language.get(trafficChannelsNames[name])}
 				</Text>
 			</div>
 

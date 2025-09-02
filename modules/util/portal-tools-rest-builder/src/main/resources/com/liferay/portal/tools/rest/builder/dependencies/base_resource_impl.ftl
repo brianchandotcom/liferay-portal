@@ -415,7 +415,13 @@ public abstract class Base${schemaName}ResourceImpl
 						schemaIdParameterName = "${schemaVarName}Id"
 						schemaName = schemaName
 						scopeParameterName = ""
-					/>
+					>
+						<@getActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source=schemaName
+						/>
+					</@getResourcePermissions>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -441,7 +447,13 @@ public abstract class Base${schemaName}ResourceImpl
 						schemaIdParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
 						schemaName = schemaName
 						scopeParameterName = "assetLibraryExternalReferenceCode"
-					/>
+					>
+						<@getActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source="AssetLibrary" + schemaName
+						/>
+					</@getResourcePermissions>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -467,7 +479,13 @@ public abstract class Base${schemaName}ResourceImpl
 						schemaIdParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
 						schemaName = schemaName
 						scopeParameterName = "siteExternalReferenceCode"
-					/>
+					>
+						<@getActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source="Site" + schemaName
+						/>
+					</@getResourcePermissions>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -523,7 +541,7 @@ public abstract class Base${schemaName}ResourceImpl
 						<@getActions
 							resourceId="resourceId"
 							resourceName="resourceName"
-							source=schemaName
+							source="AssetLibrary" + schemaName
 						/>
 					</@updateResourcePermissions>
 				<#else>
@@ -560,7 +578,7 @@ public abstract class Base${schemaName}ResourceImpl
 						<@getActions
 							resourceId="resourceId"
 							resourceName="resourceName"
-							source=schemaName
+							source="Site" + schemaName
 						/>
 					</@updateResourcePermissions>
 				<#else>
@@ -2135,13 +2153,7 @@ public abstract class Base${schemaName}ResourceImpl
 		</#if>
 	), resourceName, resourceId);
 
-	return toPermissionPage(
-		<@getActions
-			resourceId="resourceId"
-			resourceName="resourceName"
-			source=schemaName
-		/>,
-		resourceId, resourceName, roleNames);
+	return toPermissionPage(<#nested>, resourceId, resourceName, roleNames);
 </#macro>
 
 <#macro updateResourcePermissions

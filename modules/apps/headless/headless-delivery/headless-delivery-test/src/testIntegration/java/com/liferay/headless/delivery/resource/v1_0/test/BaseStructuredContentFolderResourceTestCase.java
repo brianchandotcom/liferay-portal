@@ -3174,7 +3174,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			200,
 			structuredContentFolderResource.
 				putSiteStructuredContentFolderPermissionsPageHttpResponse(
-					structuredContentFolder.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -3188,7 +3188,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			404,
 			structuredContentFolderResource.
 				putSiteStructuredContentFolderPermissionsPageHttpResponse(
-					structuredContentFolder.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

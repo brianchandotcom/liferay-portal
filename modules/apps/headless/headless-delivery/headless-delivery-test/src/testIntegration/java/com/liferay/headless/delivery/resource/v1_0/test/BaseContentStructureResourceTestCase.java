@@ -1700,7 +1700,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			200,
 			contentStructureResource.
 				putSiteContentStructurePermissionsPageHttpResponse(
-					contentStructure.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -1714,7 +1714,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			404,
 			contentStructureResource.
 				putSiteContentStructurePermissionsPageHttpResponse(
-					contentStructure.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

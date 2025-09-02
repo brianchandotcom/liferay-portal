@@ -2731,7 +2731,7 @@ public abstract class BaseKeywordResourceTestCase {
 		assertHttpResponseStatusCode(
 			200,
 			keywordResource.putSiteKeywordPermissionsPageHttpResponse(
-				keyword.getSiteId(),
+				testGroup.getGroupId(),
 				new Permission[] {
 					new Permission() {
 						{
@@ -2744,7 +2744,7 @@ public abstract class BaseKeywordResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			keywordResource.putSiteKeywordPermissionsPageHttpResponse(
-				keyword.getSiteId(),
+				testGroup.getGroupId(),
 				new Permission[] {
 					new Permission() {
 						{

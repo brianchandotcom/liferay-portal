@@ -1707,7 +1707,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			200,
 			knowledgeBaseFolderResource.
 				putSiteKnowledgeBaseFolderPermissionsPageHttpResponse(
-					knowledgeBaseFolder.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -1721,7 +1721,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			404,
 			knowledgeBaseFolderResource.
 				putSiteKnowledgeBaseFolderPermissionsPageHttpResponse(
-					knowledgeBaseFolder.getSiteId(),
+					testGroup.getGroupId(),
 					new Permission[] {
 						new Permission() {
 							{

@@ -7,8 +7,6 @@ package com.liferay.frontend.js.web.internal.frontend.resource.handler;
 
 import com.liferay.frontend.js.web.internal.frontend.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.frontend.resource.HashedFileFrontendResource;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -17,19 +15,13 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Iván Zaera Avellón
@@ -40,8 +32,7 @@ public class HashedFileFrontendResourceRequestHandler
 	public HashedFileFrontendResourceRequestHandler(
 		String contentType, String fileExtension,
 		HashedFilesRegistry hashedFilesRegistry, long maxAge, String maxAgeKey,
-		Portal portal, boolean sendNoCache, String sendNoCacheKey,
-		ServiceTrackerMap<String, ServletContext> serviceTrackerMap) {
+		Portal portal, boolean sendNoCache, String sendNoCacheKey) {
 
 		_contentType = contentType;
 		_fileExtension = fileExtension;
@@ -51,7 +42,6 @@ public class HashedFileFrontendResourceRequestHandler
 		_portal = portal;
 		_sendNoCache = sendNoCache;
 		_sendNoCacheKey = sendNoCacheKey;
-		_serviceTrackerMap = serviceTrackerMap;
 	}
 
 	@Override
@@ -80,81 +70,70 @@ public class HashedFileFrontendResourceRequestHandler
 
 		String requestURI = httpServletRequest.getRequestURI();
 
-		String hash = HashedFilesUtil.getHash(requestURI);
+		String requestHash = HashedFilesUtil.getHash(requestURI);
 
-		if (hash != null) {
+		if (requestHash != null) {
 			return _createFrontendResource(
-				hash, true, 31536000, requestURI, false);
-		}
-
-		long maxAge = _maxAge;
-		boolean sendNoCache = _sendNoCache;
-
-		try {
-			Settings settings = FallbackKeysSettingsUtil.getSettings(
-				new CompanyServiceSettingsLocator(
-					_portal.getCompanyId(httpServletRequest),
-					"com.liferay.frontend.js.web.internal.configuration." +
-						"FrontendCachingConfiguration",
-					"com.liferay.frontend.js.web.internal.configuration." +
-						"FrontendCachingConfiguration"));
-
-			maxAge = Long.valueOf(
-				settings.getValue(_maxAgeKey, String.valueOf(_maxAge)));
-			sendNoCache = Boolean.valueOf(
-				settings.getValue(
-					_sendNoCacheKey, String.valueOf(_sendNoCache)));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get frontend caching configuration, using " +
-						"reasonable defaults instead",
-					exception);
-			}
+				_portal.getCompanyId(httpServletRequest), requestHash, true,
+				requestURI);
 		}
 
 		String hashedFileURI = _hashedFilesRegistry.get(requestURI);
 
 		if (hashedFileURI == null) {
 			return _createFrontendResource(
-				null, false, maxAge, requestURI, sendNoCache);
+				_portal.getCompanyId(httpServletRequest), null, false,
+				requestURI);
 		}
 
 		return _createFrontendResource(
-			HashedFilesUtil.getHash(hashedFileURI), false, maxAge,
-			hashedFileURI, sendNoCache);
+			_portal.getCompanyId(httpServletRequest),
+			HashedFilesUtil.getHash(hashedFileURI), false, hashedFileURI);
 	}
 
 	private FrontendResource _createFrontendResource(
-			String eTag, boolean immutable, long maxAge, String resourceURI,
-			boolean sendNoCache)
-		throws MalformedURLException {
+		long companyId, String eTag, boolean immutable, String resourceURI) {
 
-		List<String> resourceURIParts = Arrays.asList(
-			resourceURI.split(StringPool.SLASH));
+		long maxAge = 31536000;
+		boolean sendNoCache = false;
 
-		ServletContext servletContext = _serviceTrackerMap.getService(
-			StringUtil.merge(resourceURIParts.subList(0, 3), StringPool.SLASH));
+		if (!immutable) {
+			maxAge = _maxAge;
+			sendNoCache = _sendNoCache;
 
-		if (servletContext == null) {
-			return null;
+			try {
+				Settings settings = FallbackKeysSettingsUtil.getSettings(
+					new CompanyServiceSettingsLocator(
+						companyId,
+						"com.liferay.frontend.js.web.internal.configuration." +
+							"FrontendCachingConfiguration",
+						"com.liferay.frontend.js.web.internal.configuration." +
+							"FrontendCachingConfiguration"));
+
+				maxAge = Long.valueOf(
+					settings.getValue(_maxAgeKey, String.valueOf(_maxAge)));
+				sendNoCache = Boolean.valueOf(
+					settings.getValue(
+						_sendNoCacheKey, String.valueOf(_sendNoCache)));
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get frontend caching configuration, using " +
+							"reasonable defaults instead",
+						exception);
+				}
+			}
 		}
 
-		String resourcePath = StringUtil.merge(
-			resourceURIParts.subList(3, resourceURIParts.size()),
-			StringPool.SLASH);
+		URL resourceURL = _hashedFilesRegistry.getResourceURL(resourceURI);
 
-		resourcePath = StringPool.SLASH + resourcePath;
-
-		URL url = servletContext.getResource(resourcePath);
-
-		if (url == null) {
+		if (resourceURL == null) {
 			return null;
 		}
 
 		return new HashedFileFrontendResource(
-			_contentType, eTag, immutable, maxAge, sendNoCache, url);
+			_contentType, eTag, immutable, maxAge, sendNoCache, resourceURL);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -168,6 +147,5 @@ public class HashedFileFrontendResourceRequestHandler
 	private final Portal _portal;
 	private final boolean _sendNoCache;
 	private final String _sendNoCacheKey;
-	private final ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;
 
 }

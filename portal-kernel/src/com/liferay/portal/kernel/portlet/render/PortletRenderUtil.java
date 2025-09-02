@@ -5,11 +5,14 @@
 
 package com.liferay.portal.kernel.portlet.render;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.hashed.files.HashedFilesRegistryUtil;
 import com.liferay.portal.kernel.hashed.files.HashedFilesUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -31,6 +34,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,6 +44,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Iván Zaera Avellón
@@ -260,8 +266,11 @@ public class PortletRenderUtil {
 			}
 		}
 
-		if (urlType == URLType.CSS) {
-			staticResourceURL += "?themeId=" + themeDisplay.getThemeId();
+		if ((urlType == URLType.CSS) && _isTokenized(staticResourceURL)) {
+			staticResourceURL = HttpComponentsUtil.addParameter(
+				staticResourceURL, "themeId", themeDisplay.getThemeId());
+			staticResourceURL = HttpComponentsUtil.addParameter(
+				staticResourceURL, "tokenize", true);
 		}
 
 		return staticResourceURL;
@@ -368,6 +377,36 @@ public class PortletRenderUtil {
 		}
 
 		return urls;
+	}
+
+	private static boolean _isTokenized(String resourceURI) {
+		if (!_isTokenizedCache.containsKey(resourceURI)) {
+			URL resourceURL = HashedFilesRegistryUtil.getResourceURL(
+				resourceURI);
+
+			String content;
+
+			try {
+				content = StreamUtil.toString(resourceURL.openStream());
+			}
+			catch (IOException ioException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Treating " + resourceURI + " as non tokenized",
+						ioException);
+				}
+
+				return false;
+			}
+
+			_isTokenizedCache.putIfAbsent(
+				resourceURI,
+				content.contains("@base_url@") ||
+				content.contains("@portal_ctx@") ||
+				content.contains("@theme_image_path@"));
+		}
+
+		return _isTokenizedCache.get(resourceURI);
 	}
 
 	private static void _writeCSSPath(
@@ -529,6 +568,11 @@ public class PortletRenderUtil {
 
 		};
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletRenderUtil.class);
+
+	private static final Map<String, Boolean> _isTokenizedCache =
+		new ConcurrentHashMap<>();
 	private static final Set<String> _specialPrefixes = SetUtil.fromArray(
 		"module:", "nocombo:");
 

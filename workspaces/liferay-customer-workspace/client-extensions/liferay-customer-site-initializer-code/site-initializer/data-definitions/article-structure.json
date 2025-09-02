@@ -32,6 +32,61 @@
 			"tip": {
 				"en_US": ""
 			}
+		},
+		{
+			"customProperties": {
+				"confirmationErrorMessage": {
+					"en_US": ""
+				},
+				"confirmationLabel": {
+					"en_US": ""
+				},
+				"dataType": "string",
+				"direction": [
+					"vertical"
+				],
+				"displayStyle": "singleline",
+				"fieldNamespace": "",
+				"fieldReference": "category",
+				"hideField": false,
+				"htmlAutocompleteAttribute": "",
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+				},
+				"placeholder": {
+					"en_US": ""
+				},
+				"requireConfirmation": false,
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"tooltip": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Category"
+			},
+			"localizable": false,
+			"name": "category",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
 		}
 	],
 	"dataDefinitionKey": "ARTICLE",
@@ -47,6 +102,16 @@
 								"columnSize": 12,
 								"fieldNames": [
 									"content"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"category"
 								]
 							}
 						]
@@ -72,7 +137,7 @@
 	"defaultLanguageId": "en_US",
 	"description": {
 	},
-	"externalReferenceCode": "b05af329-1ac7-bc3e-b251-490bae54d769",
+	"externalReferenceCode": "ARTICLE_STRUCTURE",
 	"name": {
 		"en_US": "Article"
 	},

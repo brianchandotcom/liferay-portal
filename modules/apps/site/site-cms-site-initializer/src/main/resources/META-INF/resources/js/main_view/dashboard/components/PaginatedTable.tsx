@@ -125,7 +125,7 @@ const PaginatedTable: React.FC<IPaginatedTable> = ({
 	};
 
 	return (
-		<div className="px-3">
+		<div>
 			<Table
 				borderless={viewType === 'chart'}
 				columnsVisibility={false}

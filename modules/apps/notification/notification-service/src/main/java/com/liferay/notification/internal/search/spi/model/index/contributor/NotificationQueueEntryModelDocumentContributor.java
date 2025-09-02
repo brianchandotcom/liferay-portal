@@ -8,6 +8,7 @@ package com.liferay.notification.internal.search.spi.model.index.contributor;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.Map;
@@ -28,6 +29,10 @@ public class NotificationQueueEntryModelDocumentContributor
 	public void contribute(
 		Document document, NotificationQueueEntry notificationQueueEntry) {
 
+		document.addDate(Field.SENT_DATE, notificationQueueEntry.getSentDate());
+		document.addKeyword("subject", notificationQueueEntry.getSubject());
+		document.addText("subject", notificationQueueEntry.getSubject());
+
 		Map<String, Object> notificationRecipientSettingsMap =
 			NotificationRecipientSettingUtil.
 				getNotificationRecipientSettingsMap(notificationQueueEntry);
@@ -38,9 +43,6 @@ public class NotificationQueueEntryModelDocumentContributor
 		document.addText(
 			"fromName",
 			String.valueOf(notificationRecipientSettingsMap.get("from")));
-
-		document.addKeyword("subject", notificationQueueEntry.getSubject());
-		document.addText("subject", notificationQueueEntry.getSubject());
 	}
 
 }

@@ -6,7 +6,7 @@
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.cms.rest.dto.v1_0.ExpiredAsset;
-import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryRetrieverUtil;
+import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.ExpiredAssetResource;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.model.ObjectDefinitionTable;
@@ -66,8 +66,8 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 			Long depotEntryId, String languageId, Pagination pagination)
 		throws Exception {
 
-		Long[] groupIds = DepotEntryRetrieverUtil.getGroupIds(
-			DepotEntryRetrieverUtil.getDepotEntries(
+		Long[] groupIds = DepotEntryUtil.getGroupIds(
+			DepotEntryUtil.getDepotEntries(
 				contextCompany.getCompanyId(), depotEntryId));
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId, true, false);

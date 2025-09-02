@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -50,17 +50,14 @@ public class DeepLTranslatorTest {
 	public void setUp() throws ConfigurationException, IOException {
 		_companyId = RandomTestUtil.randomLong();
 
-		ReflectionTestUtil.setFieldValue(
-			_deepLTranslator, "_configurationProvider", _configurationProvider);
+		ConfigurationProvider configurationProvider =
+			_setUpConfigurationProvider(_companyId);
 
-		ReflectionTestUtil.setFieldValue(_deepLTranslator, "_http", _http);
+		Http http = _setUpHttp();
 
-		ReflectionTestUtil.setFieldValue(
-			_deepLTranslator, "_jsonFactory", _jsonFactory);
+		_setUpDeepLTranslator(configurationProvider, http);
 
 		_setUpPortalUtil();
-
-		_setUpDeepL();
 	}
 
 	@Test
@@ -162,16 +159,14 @@ public class DeepLTranslatorTest {
 		};
 	}
 
-	private void _setUpDeepL() throws ConfigurationException, IOException {
+	private ConfigurationProvider _setUpConfigurationProvider(long companyId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
 		DeepLTranslatorConfiguration deepLTranslatorConfiguration =
 			Mockito.mock(DeepLTranslatorConfiguration.class);
-
-		Mockito.when(
-			_configurationProvider.getCompanyConfiguration(
-				DeepLTranslatorConfiguration.class, _companyId)
-		).thenReturn(
-			deepLTranslatorConfiguration
-		);
 
 		Mockito.when(
 			deepLTranslatorConfiguration.authKey()
@@ -185,6 +180,12 @@ public class DeepLTranslatorTest {
 			true
 		);
 
+		Mockito.when(
+			deepLTranslatorConfiguration.url()
+		).thenReturn(
+			"https://api-free.deepl.com/v2/translate"
+		);
+
 		String languagesUrlString = "https://api-free.deepl.com/v2/languages";
 
 		Mockito.when(
@@ -194,21 +195,32 @@ public class DeepLTranslatorTest {
 		);
 
 		Mockito.when(
-			deepLTranslatorConfiguration.url()
+			configurationProvider.getCompanyConfiguration(
+				DeepLTranslatorConfiguration.class, companyId)
 		).thenReturn(
-			"https://api-free.deepl.com/v2/translate"
+			deepLTranslatorConfiguration
 		);
 
-		String[] urlArray = {languagesUrlString, ""};
+		return configurationProvider;
+	}
+
+	private void _setUpDeepLTranslator(
+		ConfigurationProvider configurationProvider, Http http) {
+
+		ReflectionTestUtil.setFieldValue(
+			_deepLTranslator, "_configurationProvider", configurationProvider);
+
+		ReflectionTestUtil.setFieldValue(_deepLTranslator, "_http", http);
+
+		ReflectionTestUtil.setFieldValue(
+			_deepLTranslator, "_jsonFactory", new JSONFactoryImpl());
+	}
+
+	private Http _setUpHttp() throws IOException {
+		Http http = Mockito.mock(Http.class);
 
 		Mockito.when(
-			PortalUtil.stripURLAnchor(Mockito.anyString(), Mockito.anyString())
-		).thenReturn(
-			urlArray
-		);
-
-		Mockito.when(
-			_http.URLtoString(Mockito.any(Http.Options.class))
+			http.URLtoString(Mockito.any(Http.Options.class))
 		).thenAnswer(
 			invocation -> {
 				Http.Options options = invocation.getArgument(0);
@@ -223,7 +235,7 @@ public class DeepLTranslatorTest {
 					Http.Body body = options.getBody();
 
 					JSONObject payloadJSONObject =
-						_jsonFactory.createJSONObject(body.getContent());
+						JSONFactoryUtil.createJSONObject(body.getContent());
 
 					String targetLanguage = JSONUtil.getValue(
 						payloadJSONObject, "Object/target_lang"
@@ -249,20 +261,25 @@ public class DeepLTranslatorTest {
 				).toString();
 			}
 		);
+
+		return http;
 	}
 
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		portalUtil.setPortal(_portal);
+		portalUtil.setPortal(Mockito.mock(Portal.class));
+
+		String[] urlArray = {"https://api-free.deepl.com/v2/languages", ""};
+
+		Mockito.when(
+			PortalUtil.stripURLAnchor(Mockito.anyString(), Mockito.anyString())
+		).thenReturn(
+			urlArray
+		);
 	}
 
 	private long _companyId;
-	private final ConfigurationProvider _configurationProvider = Mockito.mock(
-		ConfigurationProvider.class);
 	private final DeepLTranslator _deepLTranslator = new DeepLTranslator();
-	private final Http _http = Mockito.mock(Http.class);
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
-	private final Portal _portal = Mockito.mock(Portal.class);
 
 }

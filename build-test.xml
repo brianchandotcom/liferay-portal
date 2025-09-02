@@ -15846,6 +15846,10 @@ if (ppstate.equals("normal")) {
 		<record-test-csv-report test.type="junit" />
 	</target>
 
+	<target name="record-test-playwright-csv-report">
+		<record-test-csv-report test.type="playwright-js" />
+	</target>
+
 	<target name="record-test-plugin-names">
 		<condition else="plugins-compile" property="test.batch.name" value="${test.batch.name}">
 			<isset property="test.batch.name" />

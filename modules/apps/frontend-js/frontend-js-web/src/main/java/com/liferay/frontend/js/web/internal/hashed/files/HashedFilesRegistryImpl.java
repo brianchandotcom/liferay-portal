@@ -5,20 +5,25 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.ServletContext;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,7 +44,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 
 	public void forEach(BiConsumer<String, String> biConsumer) {
-		_openServiceTracker();
+		_lazyActivate();
 
 		for (Map.Entry<String, String> entry : _map.entrySet()) {
 			biConsumer.accept(entry.getKey(), entry.getValue());
@@ -47,9 +52,36 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	}
 
 	public String get(String unhashedFileURI) {
-		_openServiceTracker();
+		_lazyActivate();
 
 		return _map.get(unhashedFileURI);
+	}
+
+	@Override
+	public URL getResourceURL(String fileURI) {
+		_lazyActivate();
+
+		List<String> fileURIParts = Arrays.asList(
+			fileURI.split(StringPool.SLASH));
+
+		ServletContext servletContext = _serviceTrackerMap.getService(
+			StringUtil.merge(fileURIParts.subList(0, 3), StringPool.SLASH));
+
+		if (servletContext == null) {
+			return null;
+		}
+
+		String resourcePath = StringUtil.merge(
+			fileURIParts.subList(3, fileURIParts.size()), StringPool.SLASH);
+
+		resourcePath = StringPool.SLASH + resourcePath;
+
+		try {
+			return servletContext.getResource(resourcePath);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	@Activate
@@ -65,6 +97,12 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 			_serviceTracker.close();
 
 			_serviceTracker = null;
+		}
+
+		if (_serviceTrackerMap != null) {
+			_serviceTrackerMap.close();
+
+			_serviceTrackerMap = null;
 		}
 	}
 
@@ -180,21 +218,40 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		return hashedResourcePaths;
 	}
 
-	private void _openServiceTracker() {
-		if (_serviceTracker != null) {
-			return;
+	private void _lazyActivate() {
+		if (_serviceTracker == null) {
+			synchronized (this) {
+				if (_serviceTracker == null) {
+					_serviceTracker = new ServiceTracker<>(
+						_bundleContext, ServletContext.class,
+						_createServiceTrackerCustomizer());
+
+					_serviceTracker.open();
+				}
+			}
 		}
 
-		synchronized (this) {
-			if (_serviceTracker != null) {
-				return;
+		if (_serviceTrackerMap == null) {
+			synchronized (this) {
+				if (_serviceTrackerMap == null) {
+					_serviceTrackerMap =
+						ServiceTrackerMapFactory.openSingleValueMap(
+							_bundleContext, ServletContext.class, null,
+							(serviceReference, emitter) -> {
+								ServletContext servletContext =
+									_bundleContext.getService(serviceReference);
+
+								try {
+									emitter.emit(
+										servletContext.getContextPath());
+								}
+								finally {
+									_bundleContext.ungetService(
+										serviceReference);
+								}
+							});
+				}
 			}
-
-			_serviceTracker = new ServiceTracker<>(
-				_bundleContext, ServletContext.class,
-				_createServiceTrackerCustomizer());
-
-			_serviceTracker.open();
 		}
 	}
 
@@ -205,5 +262,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	private final Map<String, String> _map = new ConcurrentHashMap<>();
 	private volatile ServiceTracker<ServletContext, Map<String, String>>
 		_serviceTracker;
+	private volatile ServiceTrackerMap<String, ServletContext>
+		_serviceTrackerMap;
 
 }

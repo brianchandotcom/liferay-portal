@@ -121,7 +121,7 @@ const FrontendDataSetContent = ({
 	overrideEmptyResultView,
 	pagination,
 	portletId,
-	selectedItems: selectedItemsProp,
+	selectedItems: externalSelectedItems,
 	selectedItemsKey = 'id',
 	selectionType,
 	showBulkActionsManagementBar = true,
@@ -163,7 +163,7 @@ const FrontendDataSetContent = ({
 
 	const [selectedItems, setSelectedItems] = useControlledState({
 		onChange: onSelectedItemsChange,
-		value: selectedItemsProp || [],
+		value: externalSelectedItems || [],
 	});
 
 	let selectedItemsValue = (selectedItems || []).map((item) =>

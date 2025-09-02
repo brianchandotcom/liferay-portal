@@ -10,6 +10,7 @@ import com.google.common.io.CountingInputStream;
 
 import com.liferay.poshi.core.pql.PQLEntityFactory;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -68,6 +69,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -93,6 +95,7 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -100,6 +103,7 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.lang.ObjectUtils;
@@ -4080,6 +4084,138 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return true;
+	}
+
+	public static boolean isValid7zFile(File file) {
+		String fileName = file.getName();
+
+		if (!fileName.endsWith(".7z")) {
+			return false;
+		}
+
+		Process process = null;
+
+		String processOutput;
+
+		try {
+			process = executeBashCommands("7z t " + file);
+
+			processOutput = readInputStream(process.getInputStream());
+		}
+		catch (IOException | TimeoutException exception) {
+			return false;
+		}
+
+		int exitValue = process.exitValue();
+
+		if ((exitValue == 0) && !processOutput.contains("Files: 0\n")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isValidTarFile(File file) {
+		if (!file.exists()) {
+			return false;
+		}
+
+		String fileName = file.getName();
+
+		if (!fileName.endsWith(".tar")) {
+			return false;
+		}
+
+		try (InputStream bufferedInputStream = new BufferedInputStream(
+				new FileInputStream(file));
+			TarArchiveInputStream tarArchiveInputStream =
+				new TarArchiveInputStream(bufferedInputStream)) {
+
+			TarArchiveEntry tarArchiveEntry;
+
+			byte[] buffer = new byte[8192];
+
+			while ((tarArchiveEntry =
+						tarArchiveInputStream.getNextTarEntry()) != null) {
+
+				if (tarArchiveEntry.isDirectory()) {
+					continue;
+				}
+
+				while (tarArchiveInputStream.read(buffer) != -1) {
+				}
+			}
+
+			return true;
+		}
+		catch (IOException ioException) {
+			return false;
+		}
+	}
+
+	public static boolean isValidTarGzipFile(File file) {
+		if (!file.exists()) {
+			return false;
+		}
+
+		String fileName = file.getName();
+
+		if (!fileName.endsWith(".tar.gz")) {
+			return false;
+		}
+
+		try (GZIPInputStream gzipInputStream = new GZIPInputStream(
+				new FileInputStream(file));
+			InputStream bufferedInputStream = new BufferedInputStream(
+				gzipInputStream);
+			TarArchiveInputStream tarArchiveInputStream =
+				new TarArchiveInputStream(bufferedInputStream)) {
+
+			TarArchiveEntry tarArchiveEntry;
+
+			byte[] buffer = new byte[8192];
+
+			while ((tarArchiveEntry =
+						tarArchiveInputStream.getNextTarEntry()) != null) {
+
+				if (tarArchiveEntry.isDirectory()) {
+					continue;
+				}
+
+				while (tarArchiveInputStream.read(buffer) != -1) {
+				}
+			}
+
+			return true;
+		}
+		catch (IOException ioException) {
+			return false;
+		}
+	}
+
+	public static boolean isValidZipFile(File file) throws IOException {
+		if (!file.exists()) {
+			return false;
+		}
+
+		String fileName = file.getName();
+
+		if (!fileName.endsWith(".war") && !fileName.endsWith(".zip")) {
+			return false;
+		}
+
+		try (ZipFile zipFile = new ZipFile(file, ZipFile.OPEN_READ)) {
+			Enumeration<?> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				enumeration.nextElement();
+			}
+
+			return true;
+		}
+		catch (IOException ioException) {
+			return false;
+		}
 	}
 
 	public static boolean isWindows() {

@@ -20,6 +20,18 @@ async function resetDisplayPage({erc}: {erc: Structure['erc']}) {
 	return await ApiHelper.post(resetStructureDisplayPageURL);
 }
 
+async function resetTranslationDisplayPage({erc}: {erc: Structure['erc']}) {
+	const resetStructureDisplayPageURL = addParams(
+		{
+			objectDefinitionExternalReferenceCode: erc,
+		},
+		config.resetTranslationDisplayPageURL
+	);
+
+	return await ApiHelper.post(resetStructureDisplayPageURL);
+}
+
 export default {
 	resetDisplayPage,
+	resetTranslationDisplayPage,
 };

@@ -76,17 +76,8 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 					ActionKeys.UPDATE, ActionKeys.VIEW
 				});
 
-			for (String roleName : _VIEW_PERMISSION_ROLE_NAMES) {
-				role = _roleLocalService.getRole(
-					objectDefinition.getCompanyId(), roleName);
-
-				_resourcePermissionLocalService.setResourcePermissions(
-					objectDefinition.getCompanyId(),
-					ObjectDefinition.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(objectDefinition.getObjectDefinitionId()),
-					role.getRoleId(), new String[] {ActionKeys.VIEW});
-			}
+			_setResourcePermissions(objectDefinition, RoleConstants.GUEST);
+			_setResourcePermissions(objectDefinition, RoleConstants.USER);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -112,9 +103,19 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 			null, null);
 	}
 
-	private static final String[] _VIEW_PERMISSION_ROLE_NAMES = {
-		RoleConstants.GUEST, RoleConstants.USER
-	};
+	private void _setResourcePermissions(
+			ObjectDefinition objectDefinition, String roleName)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(
+			objectDefinition.getCompanyId(), roleName);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectDefinition.getObjectDefinitionId()),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CMSPermissionsObjectDefinitionLocalServiceWrapper.class);

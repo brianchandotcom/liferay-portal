@@ -311,6 +311,15 @@ public abstract class BaseSectionDisplayContext {
 				LanguageUtil.get(httpServletRequest, "share"), "get", "share",
 				"link"),
 			new FDSActionDropdownItem(
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/translate_content_item?objectEntryId={embedded.id}&",
+					"redirect=", themeDisplay.getURLCurrent()),
+				"automatic-translate", "actionLink",
+				LanguageUtil.get(httpServletRequest, "translate"), "get",
+				"update", null),
+			new FDSActionDropdownItem(
 				"{actions.expire.href}", "time", "expire",
 				LanguageUtil.get(httpServletRequest, "expire"), "post",
 				"expire", "headless"),

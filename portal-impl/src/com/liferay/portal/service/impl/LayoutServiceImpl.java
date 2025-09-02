@@ -1037,6 +1037,26 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public Layout getOrAddEmptyLayout(
+			String externalReferenceCode, long userId, long groupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_LAYOUT);
+
+		return layoutLocalService.getOrAddEmptyLayout(
+			externalReferenceCode, userId, groupId, serviceContext);
+	}
+
+	@Override
 	public String[] getTempFileNames(long groupId, String folderName)
 		throws PortalException {
 

@@ -5,13 +5,21 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.junit.runner.Description;
 
@@ -30,6 +38,11 @@ public class FeatureFlagTestRule
 		throws Throwable {
 
 		_restoreFeatureFlags(previousValues);
+
+		ReflectionTestUtil.setFieldValue(
+			FeatureFlagManagerUtil.class, "_featureFlagManagerSnapshot",
+			new Snapshot<>(
+				FeatureFlagManagerUtil.class, FeatureFlagManager.class));
 	}
 
 	@Override
@@ -44,6 +57,20 @@ public class FeatureFlagTestRule
 	@Override
 	protected Map<String, String> beforeClass(Description description)
 		throws Throwable {
+
+		Snapshot<FeatureFlagManager> featureFlagManagerSnapshot =
+			ReflectionTestUtil.getFieldValue(
+				FeatureFlagManagerUtil.class, "_featureFlagManagerSnapshot");
+
+		FeatureFlagManager featureFlagManager =
+			featureFlagManagerSnapshot.get();
+
+		if (featureFlagManager != null) {
+			ReflectionTestUtil.setFieldValue(
+				featureFlagManagerSnapshot, "_serviceSupplier",
+				(Supplier<Object>)() -> new MockFeatureFlagManager(
+					featureFlagManager));
+		}
 
 		return _updateFeatureFlags(description);
 	}
@@ -105,6 +132,42 @@ public class FeatureFlagTestRule
 		}
 
 		return previousValues;
+	}
+
+	private static class MockFeatureFlagManager implements FeatureFlagManager {
+
+		@Override
+		public List<com.liferay.portal.kernel.feature.flag.FeatureFlag>
+			getFeatureFlags(
+				long companyId,
+				Predicate<com.liferay.portal.kernel.feature.flag.FeatureFlag>
+					predicate) {
+
+			return _featureFlagManager.getFeatureFlags(companyId, predicate);
+		}
+
+		@Override
+		public String getJSON(long companyId) {
+			return ReflectionTestUtil.getFieldValue(
+				FeatureFlagManagerUtil.class, "_JSON");
+		}
+
+		@Override
+		public boolean isEnabled(long companyId, String key) {
+			return GetterUtil.getBoolean(PropsUtil.get("feature.flag." + key));
+		}
+
+		@Override
+		public boolean isEnabled(String key) {
+			return GetterUtil.getBoolean(PropsUtil.get("feature.flag." + key));
+		}
+
+		private MockFeatureFlagManager(FeatureFlagManager featureFlagManager) {
+			_featureFlagManager = featureFlagManager;
+		}
+
+		private final FeatureFlagManager _featureFlagManager;
+
 	}
 
 }

@@ -374,9 +374,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 			await viewObjectEntriesPage.clickAddObjectEntry();
 
-			friendlyUrlInput = page.getByRole('textbox', {
-				name: 'Friendly URL There is a limit',
-			});
+			friendlyUrlInput = page.getByLabel('Friendly URL', {exact: true});
 
 			await expect(friendlyUrlInput).not.toBeDisabled();
 		});

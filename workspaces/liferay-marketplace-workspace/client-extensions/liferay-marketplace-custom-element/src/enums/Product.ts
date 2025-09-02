@@ -127,7 +127,7 @@ export enum ProductVocabulary {
 	APP_AREA = 'Marketplace App Category',
 	APP_CATEGORY = 'Marketplace Category',
 	APP_TAGS = 'Marketplace App Tags',
-	EDITION = 'Marketplace Availability',
+	AVAILABILITY = 'Marketplace Availability',
 	LIFERAY_PLATFORM_OFFERING = 'Marketplace Liferay Platform Offering',
 	LIFERAY_VERSION = 'Marketplace Liferay Version',
 	PRODUCT_TYPE = 'Marketplace Product Type',

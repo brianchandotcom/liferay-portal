@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -49,7 +48,7 @@ public class OAuth2ApplicationModelListenerTest {
 		_company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
-		_user = UserTestUtil.addCompanyAdminUser(_company);
+		User user = UserTestUtil.addCompanyAdminUser(_company);
 
 		String oAuth2ApplicationName = RandomTestUtil.randomString();
 
@@ -65,7 +64,7 @@ public class OAuth2ApplicationModelListenerTest {
 			).put(
 				"oAuth2ApplicationName", oAuth2ApplicationName
 			).put(
-				"userId", _user.getUserId()
+				"userId", user.getUserId()
 			).build());
 	}
 
@@ -107,9 +106,6 @@ public class OAuth2ApplicationModelListenerTest {
 			ScimThreadLocal.setResetInProcess(resetInProcess);
 		}
 	}
-
-	@DeleteAfterTestRun
-	private static User _user;
 
 	private String _clientId;
 	private Company _company;

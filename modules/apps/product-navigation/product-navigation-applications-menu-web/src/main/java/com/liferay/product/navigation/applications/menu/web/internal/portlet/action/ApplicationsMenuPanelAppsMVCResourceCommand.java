@@ -119,6 +119,60 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 		);
 	}
 
+	private Collection<AssetLibrary> _getAssetLibraries(
+		Page<AssetLibrary> assetLibrariesPage,
+		Page<AssetLibrary> pinnedByMeAssetLibrariesPage) {
+
+		if (assetLibrariesPage.getTotalCount() == 0) {
+			return Collections.emptyList();
+		}
+
+		if (pinnedByMeAssetLibrariesPage.getTotalCount() == 5) {
+			return pinnedByMeAssetLibrariesPage.getItems();
+		}
+
+		List<AssetLibrary> assetLibraries = new ArrayList<>(
+			pinnedByMeAssetLibrariesPage.getItems());
+
+		List<Long> assetLibraryIds = ListUtil.toList(
+			assetLibraries, AssetLibrary::getId);
+
+		for (AssetLibrary assetLibrary : assetLibrariesPage.getItems()) {
+			if (!assetLibraryIds.contains(assetLibrary.getId())) {
+				assetLibraries.add(assetLibrary);
+			}
+
+			if (assetLibraries.size() == 5) {
+				return assetLibraries;
+			}
+		}
+
+		return assetLibraries;
+	}
+
+	private Page<AssetLibrary> _getAssetLibrariesPage(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		AssetLibraryResource.Builder builder =
+			_assetLibraryResourceFactory.create();
+
+		AssetLibraryResource assetLibraryResource = builder.user(
+			themeDisplay.getUser()
+		).build();
+
+		Page<AssetLibrary> assetLibrariesPage =
+			assetLibraryResource.getAssetLibrariesPage(
+				null, null, null, Pagination.of(1, 5), null);
+
+		return Page.of(
+			assetLibrariesPage.getActions(),
+			_getAssetLibraries(
+				assetLibrariesPage,
+				assetLibraryResource.getAssetLibrariesPinnedByMePage(
+					Pagination.of(1, 5))),
+			Pagination.of(1, 5), assetLibrariesPage.getTotalCount());
+	}
+
 	private JSONArray _getChildPanelCategoriesJSONArray(
 			HttpServletRequest httpServletRequest, String key,
 			ThemeDisplay themeDisplay)
@@ -193,8 +247,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 					return null;
 				}
 
-				Page<AssetLibrary> page = _getCMSSpaceAssetLibraryPage(
-					themeDisplay);
+				Page<AssetLibrary> page = _getAssetLibrariesPage(themeDisplay);
 
 				return JSONUtil.toJSONArray(
 					page.getItems(),
@@ -205,72 +258,26 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 					).put(
 						"id", assetLibrary.getId()
 					).put(
-						"logoColor", _getCMSSpaceLogoURL(assetLibrary)
+						"logoColor",
+						() -> {
+							Settings settings = assetLibrary.getSettings();
+
+							return settings.getLogoColor();
+						}
 					).put(
 						"name", assetLibrary.getName()
 					).put(
 						"url",
-						_getCMSSpaceURL(assetLibrary.getId(), themeDisplay)
+						() -> StringBundler.concat(
+							themeDisplay.getPathFriendlyURLPublic(),
+							GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
+							PortalUtil.getClassNameId(DepotEntry.class),
+							StringPool.SLASH, assetLibrary.getId())
 					));
 			}
 		).put(
 			"url", GroupConstants.CMS_FRIENDLY_URL + "/home"
 		);
-	}
-
-	private Collection<AssetLibrary> _getCMSSpaceAssetLibraries(
-		Page<AssetLibrary> assetLibrariesPage,
-		Page<AssetLibrary> pinnedByMeAssetLibrariesPage) {
-
-		if (assetLibrariesPage.getTotalCount() == 0) {
-			return Collections.emptyList();
-		}
-
-		if (pinnedByMeAssetLibrariesPage.getTotalCount() == 5) {
-			return pinnedByMeAssetLibrariesPage.getItems();
-		}
-
-		List<AssetLibrary> assetLibraries = new ArrayList<>(
-			pinnedByMeAssetLibrariesPage.getItems());
-
-		List<Long> assetLibraryIds = ListUtil.toList(
-			assetLibraries, AssetLibrary::getId);
-
-		for (AssetLibrary assetLibrary : assetLibrariesPage.getItems()) {
-			if (!assetLibraryIds.contains(assetLibrary.getId())) {
-				assetLibraries.add(assetLibrary);
-			}
-
-			if (assetLibraries.size() == 5) {
-				return assetLibraries;
-			}
-		}
-
-		return assetLibraries;
-	}
-
-	private Page<AssetLibrary> _getCMSSpaceAssetLibraryPage(
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		AssetLibraryResource.Builder builder =
-			_assetLibraryResourceFactory.create();
-
-		AssetLibraryResource assetLibraryResource = builder.user(
-			themeDisplay.getUser()
-		).build();
-
-		Page<AssetLibrary> assetLibrariesPage =
-			assetLibraryResource.getAssetLibrariesPage(
-				null, null, null, Pagination.of(1, 5), null);
-
-		return Page.of(
-			assetLibrariesPage.getActions(),
-			_getCMSSpaceAssetLibraries(
-				assetLibrariesPage,
-				assetLibraryResource.getAssetLibrariesPinnedByMePage(
-					Pagination.of(1, 5))),
-			Pagination.of(1, 5), assetLibrariesPage.getTotalCount());
 	}
 
 	private long _getCMSSpaceDepotEntryId(
@@ -308,20 +315,6 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 		}
 
 		return 0;
-	}
-
-	private String _getCMSSpaceLogoURL(AssetLibrary assetLibrary) {
-		Settings settings = assetLibrary.getSettings();
-
-		return settings.getLogoColor();
-	}
-
-	private String _getCMSSpaceURL(long classPK, ThemeDisplay themeDisplay) {
-		return StringBundler.concat(
-			themeDisplay.getPathFriendlyURLPublic(),
-			GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-			PortalUtil.getClassNameId(DepotEntry.class), StringPool.SLASH,
-			classPK);
 	}
 
 	private JSONObject _getPanelAppJSONObject(

@@ -174,7 +174,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 			}
 
 			Liferay.Util.openToast({
-				message: i18n.translate('trial-extension-successfully'),
+				message: i18n.translate('trial-extended-successfully'),
 				title: i18n.translate('success'),
 				type: 'success',
 			});

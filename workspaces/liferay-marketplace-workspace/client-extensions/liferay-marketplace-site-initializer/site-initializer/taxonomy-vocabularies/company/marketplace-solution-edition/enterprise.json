@@ -1,7 +1,7 @@
 {
-	"name": "CE",
+	"name": "Enterprise",
 	"name_i18n": {
-		"en_US": "CE"
+		"en_US": "Enterprise"
 	},
 	"viewableBy": "Anyone"
 }

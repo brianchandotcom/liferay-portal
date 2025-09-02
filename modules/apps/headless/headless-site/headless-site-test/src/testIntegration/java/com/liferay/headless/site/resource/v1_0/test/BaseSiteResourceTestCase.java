@@ -13,6 +13,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.site.client.dto.v1_0.Site;
 import com.liferay.headless.site.client.http.HttpInvoker;
 import com.liferay.headless.site.client.pagination.Page;
@@ -103,6 +106,16 @@ public abstract class BaseSiteResourceTestCase {
 			testCompany.getCompanyId());
 
 		siteResource = SiteResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -202,6 +215,52 @@ public abstract class BaseSiteResourceTestCase {
 	protected Site testDeleteSite_addSite() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteSiteBatch() throws Exception {
+		Site site1 = testDeleteSiteBatch_addSite();
+
+		testDeleteSiteBatch_deleteSite(
+			202, site1.getExternalReferenceCode(), null);
+
+		site1 = testDeleteSiteBatch_addSite();
+
+		testDeleteSiteBatch_deleteSite(202, null, site1.getId());
+
+		site1 = testDeleteSiteBatch_addSite();
+		Site site2 = testDeleteSiteBatch_addSite();
+
+		testDeleteSiteBatch_deleteSite(
+			202, site2.getExternalReferenceCode(), site1.getId());
+
+		testDeleteSiteBatch_deleteSite(
+			202, site2.getExternalReferenceCode(), site1.getId());
+	}
+
+	protected Site testDeleteSiteBatch_addSite() throws Exception {
+		return testDeleteSite_addSite();
+	}
+
+	protected void testDeleteSiteBatch_deleteSite(
+			int expectedStatusCode, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			siteResource.deleteSiteBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		waitForFinish(
+			"COMPLETED",
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -365,31 +424,24 @@ public abstract class BaseSiteResourceTestCase {
 	public void testPostSite() throws Exception {
 		Site randomSite = randomSite();
 
-		Map<String, File> multipartFiles = getMultipartFiles();
-
-		Site postSite = testPostSite_addSite(randomSite, multipartFiles);
+		Site postSite = testPostSite_addSite(randomSite);
 
 		assertEquals(randomSite, postSite);
 		assertValid(postSite);
-
-		assertValid(postSite, multipartFiles);
 	}
 
-	protected Site testPostSite_addSite(
-			Site site, Map<String, File> multipartFiles)
-		throws Exception {
-
+	protected Site testPostSite_addSite(Site site) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testPostFormDataSite() throws Exception {
+	public void testPostSiteSiteInitializer() throws Exception {
 		Site randomSite = randomSite();
 
 		Map<String, File> multipartFiles = getMultipartFiles();
 
-		Site postSite = testPostFormDataSite_addSite(
+		Site postSite = testPostSiteSiteInitializer_addSite(
 			randomSite, multipartFiles);
 
 		assertEquals(randomSite, postSite);
@@ -398,7 +450,7 @@ public abstract class BaseSiteResourceTestCase {
 		assertValid(postSite, multipartFiles);
 	}
 
-	protected Site testPostFormDataSite_addSite(
+	protected Site testPostSiteSiteInitializer_addSite(
 			Site site, Map<String, File> multipartFiles)
 		throws Exception {
 
@@ -457,6 +509,66 @@ public abstract class BaseSiteResourceTestCase {
 		throws Exception {
 
 		return randomSite();
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Site site1 = testBatchEngineDeleteImportTask_addSite();
+
+		testBatchEngineDeleteImportTask_deleteSite(
+			200, site1.getExternalReferenceCode(), null);
+
+		site1 = testBatchEngineDeleteImportTask_addSite();
+
+		testBatchEngineDeleteImportTask_deleteSite(200, null, site1.getId());
+
+		site1 = testBatchEngineDeleteImportTask_addSite();
+		Site site2 = testBatchEngineDeleteImportTask_addSite();
+
+		testBatchEngineDeleteImportTask_deleteSite(
+			200, site2.getExternalReferenceCode(), site1.getId());
+
+		testBatchEngineDeleteImportTask_deleteSite(
+			200, site2.getExternalReferenceCode(), site1.getId());
+	}
+
+	protected Site testBatchEngineDeleteImportTask_addSite() throws Exception {
+		return testDeleteSite_addSite();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteSite(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).parameters(
+			parameters
+		).build();
+
+		HttpResponse httpResponse =
+			importTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.site.dto.v1_0.Site", null, null, null,
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected void assertContains(Site site, List<Site> sites) {
@@ -1276,7 +1388,30 @@ public abstract class BaseSiteResourceTestCase {
 		return randomSite();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected SiteResource siteResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

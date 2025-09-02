@@ -224,7 +224,7 @@ paths:
         post:
             description:
                 Adds a new site based on a multipart/form-data
-            operationId: postSiteInitializer
+            operationId: postSiteSiteInitializer
             requestBody:
                 content:
                     multipart/form-data:

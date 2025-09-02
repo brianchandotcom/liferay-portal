@@ -175,6 +175,15 @@ public class PortalImplCanonicalURLTest {
 				LocaleUtil.US, "/weben"
 			).build());
 
+		_layout5 = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.US, "Test Page"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "/test-page"
+			).build());
+
 		String groupKey = PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME;
 
 		if (Validator.isNull(groupKey)) {
@@ -214,6 +223,22 @@ public class PortalImplCanonicalURLTest {
 			completeURL,
 			_portal.getCanonicalURL(
 				completeURL, themeDisplay, _layout2, false, false));
+	}
+
+	@Test
+	public void testCanonicalURLLayoutFriendlyUrlWithHyphen() throws Exception {
+		String portalDomain = "localhost";
+
+		Assert.assertEquals(
+			_generateURL(
+				portalDomain, "8080", StringPool.BLANK, _group.getFriendlyURL(),
+				_layout5.getFriendlyURL(), false),
+			_portal.getCanonicalURL(
+				_generateURL(
+					portalDomain, "8080", StringPool.BLANK,
+					_group.getFriendlyURL(), "/test%20page", false),
+				_createThemeDisplay(portalDomain, _defaultGroup, 8080, false),
+				_layout5, false, false));
 	}
 
 	@Test
@@ -787,6 +812,7 @@ public class PortalImplCanonicalURLTest {
 	private Layout _layout2;
 	private Layout _layout3;
 	private Layout _layout4;
+	private Layout _layout5;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

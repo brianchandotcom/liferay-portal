@@ -135,7 +135,7 @@ export interface ITicket {
 	selected?: boolean;
 	status: string;
 	subject: string;
-	ticketId: number;
+	ticketId: string | number;
 }
 
 export interface ITimeInput {

@@ -922,8 +922,9 @@ public class ObjectEntryServiceHttp {
 
 	public static com.liferay.object.model.ObjectEntry partialUpdateObjectEntry(
 			HttpPrincipal httpPrincipal, long objectEntryId,
-			java.util.Map<String, java.io.Serializable> values,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long objectEntryFolderId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			java.util.Map<String, java.io.Serializable> values)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -932,7 +933,8 @@ public class ObjectEntryServiceHttp {
 				_partialUpdateObjectEntryParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectEntryId, values, serviceContext);
+				methodKey, objectEntryId, objectEntryFolderId, serviceContext,
+				values);
 
 			Object returnObj = null;
 
@@ -1080,8 +1082,9 @@ public class ObjectEntryServiceHttp {
 
 	public static com.liferay.object.model.ObjectEntry updateObjectEntry(
 			HttpPrincipal httpPrincipal, long objectEntryId,
-			java.util.Map<String, java.io.Serializable> values,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long objectEntryFolderId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			java.util.Map<String, java.io.Serializable> values)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1090,7 +1093,8 @@ public class ObjectEntryServiceHttp {
 				_updateObjectEntryParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectEntryId, values, serviceContext);
+				methodKey, objectEntryId, objectEntryFolderId, serviceContext,
+				values);
 
 			Object returnObj = null;
 
@@ -1242,8 +1246,9 @@ public class ObjectEntryServiceHttp {
 		};
 	private static final Class<?>[] _partialUpdateObjectEntryParameterTypes21 =
 		new Class[] {
-			long.class, java.util.Map.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class,
+			java.util.Map.class
 		};
 	private static final Class<?>[]
 		_restoreObjectEntryFromTrashParameterTypes22 = new Class[] {
@@ -1256,8 +1261,9 @@ public class ObjectEntryServiceHttp {
 		new Class[] {long.class, long.class};
 	private static final Class<?>[] _updateObjectEntryParameterTypes25 =
 		new Class[] {
-			long.class, java.util.Map.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class,
+			java.util.Map.class
 		};
 	private static final Class<?>[] _validateParameterTypes26 = new Class[] {
 		long.class, com.liferay.object.model.ObjectEntry.class,

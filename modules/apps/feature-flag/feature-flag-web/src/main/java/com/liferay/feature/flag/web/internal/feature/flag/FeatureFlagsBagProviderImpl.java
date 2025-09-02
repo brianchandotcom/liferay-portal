@@ -49,7 +49,6 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.osgi.framework.BundleContext;
@@ -143,13 +142,6 @@ public class FeatureFlagsBagProviderImpl
 	@Override
 	public FeatureFlagsBagProvider unwrapProxy() {
 		return this;
-	}
-
-	@Override
-	public <T> T withFeatureFlagsBag(
-		long companyId, Function<FeatureFlagsBag, T> function) {
-
-		return function.apply(getOrCreateFeatureFlagsBag(companyId));
 	}
 
 	@Activate

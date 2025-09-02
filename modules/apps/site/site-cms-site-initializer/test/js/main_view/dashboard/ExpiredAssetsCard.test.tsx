@@ -8,7 +8,6 @@ import '@testing-library/jest-dom/extend-expect';
 // eslint-disable-next-line
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {
-	fireEvent,
 	render,
 	screen,
 	waitForElementToBeRemoved,
@@ -17,34 +16,24 @@ import React from 'react';
 
 import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {ExpiredAssetsCard} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/ExpiredAssetsCard';
-import {AssetType} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/utils/assetTypes';
 
 const assetsList = [
 	{
-		assetType: AssetType.JournalArticle,
+		href: 'http://fakeurl.com',
 		title: 'Understanding Quantum Computing for Beginners',
 		usages: 1,
 	},
 	{
-		assetType: AssetType.KnowledgeTransfer,
+		href: 'http://fakeurl.com',
 		title: 'A Guide to Sustainable Energy Solutions',
 		usages: 8,
 	},
 	{
-		assetType: AssetType.WebContent,
+		href: 'http://fakeurl.com',
 		title: 'Top 10 Tips for Remote Work Productivity',
 		usages: 6,
 	},
 ];
-
-const AssetTypeSvgIconClass: Record<AssetType, string> = {
-	[AssetType.JournalArticle]: 'lexicon-icon-blogs',
-	[AssetType.KnowledgeTransfer]: 'lexicon-icon-wiki',
-	[AssetType.WebContent]: 'lexicon-icon-web-content',
-	[AssetType.Blog]: '',
-	[AssetType.CustomStructure]: '',
-	[AssetType.Document]: '',
-};
 
 const mockData = {
 	data: {
@@ -73,26 +62,6 @@ describe('[CMS Dashboard] ExpiredAssetsCard', () => {
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
 		await checkAccessibility({context: container});
-	});
-
-	it('renders the correct icon depending on the asset type', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
-
-		const {container} = render(<ExpiredAssetsCard />);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		const items = container.querySelectorAll(
-			'.cms-dashboard__expired-assets__item'
-		);
-
-		for (const [index, item] of items.entries()) {
-			expect(item.textContent).toContain(assetsList[index].title);
-
-			expect(item.querySelector('svg')).toHaveClass(
-				AssetTypeSvgIconClass[assetsList[index].assetType]
-			);
-		}
 	});
 
 	it('displays the number of usage for each item', async () => {
@@ -153,33 +122,5 @@ describe('[CMS Dashboard] ExpiredAssetsCard', () => {
 		const viewModalButtons = screen.getAllByTestId('view-asset-button');
 
 		expect(viewModalButtons.length).toBe(3);
-	});
-
-	it('opens modal when clicked in View Asset button', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: {
-				items: [
-					{
-						assetType: AssetType.JournalArticle,
-						title: 'Understanding Quantum Computing for Beginners',
-						usages: 1,
-					},
-				],
-				totalCount: 1,
-			},
-			error: null,
-		});
-
-		const {getByRole} = render(<ExpiredAssetsCard />);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		const viewModalButton = screen.getByTestId('view-asset-button');
-
-		// TODO not working
-
-		fireEvent.click(viewModalButton);
-
-		expect(getByRole('heading')).toBeTruthy();
 	});
 });

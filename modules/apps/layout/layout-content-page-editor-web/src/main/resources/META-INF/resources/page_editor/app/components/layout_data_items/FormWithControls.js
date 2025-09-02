@@ -6,11 +6,12 @@
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import FormMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormMappingOptions';
 import {config} from '../../config';
 import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
+import {useSaveObjectFields} from '../../contexts/ObjectDataContext';
 import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import {formIsMapped} from '../../utils/formIsMapped';
@@ -87,6 +88,14 @@ function MappedForm({children, item}) {
 	);
 
 	const {showMessagePreview} = localConfig;
+
+	const {classNameId, classTypeId} = item.config;
+
+	const saveFields = useSaveObjectFields({classNameId, classTypeId});
+
+	useEffect(() => {
+		saveFields();
+	}, [saveFields]);
 
 	if (isEmpty) {
 		return (

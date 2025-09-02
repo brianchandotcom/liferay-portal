@@ -1,5 +1,19 @@
 components:
     schemas:
+        AssetDeletionOverview:
+            properties:
+                deletionType:
+                    enum: [PERMANENT_DELETION, RECYCLE_BIN]
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                mimeType:
+                    type: string
+                title:
+                    type: string
+                usages:
+                    type: integer
         Channel:
             properties:
                 groupId:
@@ -152,6 +166,50 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/asset-deletion-overviews":
+        post:
+            operationId: postAssetDeletionOverviewsPage
+            parameters:
+                -   in: query
+                    name: languageId
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetDeletionOverview"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetDeletionOverview"
+                                type: array
+            tags: ["AssetDeletionOverview"]
     "/channels":
         get:
             operationId: getChannelsPage

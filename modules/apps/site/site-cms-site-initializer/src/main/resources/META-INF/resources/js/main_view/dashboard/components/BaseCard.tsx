@@ -4,10 +4,12 @@
  */
 
 import {Text} from '@clayui/core';
+import classNames from 'classnames';
 import React from 'react';
 
 export interface IBaseCard extends React.HTMLAttributes<HTMLElement> {
 	Preferences?: React.ReactNode;
+	contentClassName?: string;
 	description?: string;
 	title: string;
 }
@@ -15,6 +17,7 @@ export interface IBaseCard extends React.HTMLAttributes<HTMLElement> {
 const BaseCard: React.FC<IBaseCard> = ({
 	Preferences,
 	children,
+	contentClassName,
 	description,
 	title,
 }) => {
@@ -38,7 +41,15 @@ const BaseCard: React.FC<IBaseCard> = ({
 				</div>
 			)}
 
-			<div className="d-flex flex-column justify-content-center mt-3">
+			<div
+				className={classNames(
+					'd-flex',
+					'flex-column',
+					'justify-content-center',
+					'mt-3',
+					contentClassName
+				)}
+			>
 				{children}
 			</div>
 		</div>

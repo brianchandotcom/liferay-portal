@@ -192,6 +192,7 @@ function ExpiredAssetsCard() {
 				/>
 			) : (
 				<BaseCard
+					contentClassName="mx-n3"
 					description={Liferay.Language.get(
 						'this-report-provides-a-list-of-assets-that-have-reached-their-expiration-date'
 					)}
@@ -201,7 +202,7 @@ function ExpiredAssetsCard() {
 						<Body items={displayedItems}>
 							{(row) => (
 								<Row>
-									<Cell className="borderless">
+									<Cell className="border-0">
 										<ExpiredAssetItem
 											assetType={row['assetType']}
 											href={row['href']}

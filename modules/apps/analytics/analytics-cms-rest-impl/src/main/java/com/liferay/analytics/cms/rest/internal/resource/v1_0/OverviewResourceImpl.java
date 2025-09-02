@@ -7,7 +7,7 @@ package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.cms.rest.dto.v1_0.Overview;
 import com.liferay.analytics.cms.rest.dto.v1_0.Trend;
-import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryRetrieverUtil;
+import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRelTable;
 import com.liferay.asset.kernel.model.AssetCategoryTable;
@@ -69,14 +69,14 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			Integer rangeKey, String rangeStart)
 		throws Exception {
 
-		List<DepotEntry> depotEntries = DepotEntryRetrieverUtil.getDepotEntries(
+		List<DepotEntry> depotEntries = DepotEntryUtil.getDepotEntries(
 			contextCompany.getCompanyId(), depotEntryId);
 
 		if (depotEntries.isEmpty()) {
 			return _toOverview(0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
 		}
 
-		Long[] groupIds = DepotEntryRetrieverUtil.getGroupIds(depotEntries);
+		Long[] groupIds = DepotEntryUtil.getGroupIds(depotEntries);
 
 		return _toOverview(
 			_getOverviewObjects(
@@ -93,14 +93,14 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			Integer rangeKey, String rangeStart)
 		throws Exception {
 
-		List<DepotEntry> depotEntries = DepotEntryRetrieverUtil.getDepotEntries(
+		List<DepotEntry> depotEntries = DepotEntryUtil.getDepotEntries(
 			contextCompany.getCompanyId(), depotEntryId);
 
 		if (depotEntries.isEmpty()) {
 			return _toOverview(0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
 		}
 
-		Long[] groupIds = DepotEntryRetrieverUtil.getGroupIds(depotEntries);
+		Long[] groupIds = DepotEntryUtil.getGroupIds(depotEntries);
 
 		return _toOverview(
 			_getOverviewObjects(

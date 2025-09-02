@@ -105,6 +105,10 @@ public class FaroSubscriptionDisplay {
 		return _individualsLimit;
 	}
 
+	public int getIndividualsStatus() {
+		return _individualsStatus;
+	}
+
 	public Date getLastAnniversaryDate() {
 		if (_lastAnniversaryDate == null) {
 			return null;
@@ -123,6 +127,10 @@ public class FaroSubscriptionDisplay {
 
 	public long getPageViewsLimit() {
 		return _pageViewsLimit;
+	}
+
+	public int getPageViewsStatus() {
+		return _pageViewsStatus;
 	}
 
 	public Date getStartDate() {
@@ -199,6 +207,12 @@ public class FaroSubscriptionDisplay {
 
 		_individualsCountSinceLastAnniversary = (long)objects[0];
 		_pageViewsCountSinceLastAnniversary = (long)objects[1];
+
+		_individualsStatus = getStatus(
+			_individualsCountSinceLastAnniversary, _individualsLimit);
+
+		_pageViewsStatus = getStatus(
+			_pageViewsCountSinceLastAnniversary, _pageViewsLimit);
 	}
 
 	public static class AddOn {
@@ -366,10 +380,12 @@ public class FaroSubscriptionDisplay {
 	private Date _endDate;
 	private long _individualsCountSinceLastAnniversary;
 	private long _individualsLimit;
+	private int _individualsStatus;
 	private Date _lastAnniversaryDate;
 	private String _name;
 	private long _pageViewsCountSinceLastAnniversary;
 	private long _pageViewsLimit;
+	private int _pageViewsStatus;
 	private Date _startDate;
 	private long _syncedIndividualsCount;
 

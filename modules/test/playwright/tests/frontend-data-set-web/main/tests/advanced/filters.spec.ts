@@ -349,5 +349,63 @@ test(
 				expect.soft(await redCells.count()).toBeGreaterThan(0);
 			});
 		});
+
+		await test.step('Assert the synchronization of the filters', async () => {
+			await test.step('Refresh the page', async () => {
+				await page.reload();
+
+				await page
+					.getByText('This is a description for sample 1.')
+					.waitFor();
+			});
+
+			await test.step('Open the "Color" filter summary box', async () => {
+				await page
+					.getByRole('button', {name: 'Color: Blue, Green, Yellow'})
+					.click();
+			});
+
+			await test.step('Uncheck the "Blue" checkbox', async () => {
+				await page.getByRole('checkbox', {name: 'Blue'}).uncheck();
+			});
+
+			await test.step('Click on the "Show Results" button', async () => {
+				await page.getByRole('button', {name: 'Show Results'}).click();
+			});
+
+			await test.step('Assert that the active filters button displays with "Green, Yellow" and the checkboxes are checked', async () => {
+				const activeFiltersButton = page
+					.getByRole('button')
+					.filter({hasText: 'Filter'});
+
+				await expect(activeFiltersButton).toBeVisible();
+
+				await activeFiltersButton.click();
+
+				await page.getByRole('menuitem', {name: 'Color'}).click();
+
+				await expect(
+					page.getByRole('checkbox', {name: 'Green'})
+				).toBeChecked();
+
+				await expect(
+					page.getByRole('checkbox', {name: 'Yellow'})
+				).toBeChecked();
+			});
+
+			await test.step('Uncheck the "Green" checkbox and assert the filter resume is updated to "Yellow"', async () => {
+				await page.getByRole('checkbox', {name: 'Green'}).uncheck();
+
+				await expect(
+					page.getByRole('checkbox', {name: 'Green'})
+				).not.toBeChecked();
+
+				await page.getByRole('button', {name: 'Show Results'}).click();
+
+				await expect(
+					page.getByRole('button', {name: 'Color: Yellow'})
+				).toBeVisible();
+			});
+		});
 	}
 );

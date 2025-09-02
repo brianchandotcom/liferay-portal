@@ -1409,6 +1409,8 @@ public class Main {
 				_taxonomyCategoriesJSONObject.put(
 					taxonomyCategory.getExternalReferenceCode(),
 					taxonomyCategory.getId());
+
+				continue;
 			}
 
 			existingTaxonomyVocabularies.put(

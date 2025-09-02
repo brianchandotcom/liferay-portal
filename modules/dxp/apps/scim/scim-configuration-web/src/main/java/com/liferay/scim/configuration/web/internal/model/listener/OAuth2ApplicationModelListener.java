@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Christian Moura
  */
 @Component(service = ModelListener.class)
-public class ScimOAuth2ApplicationModelListener
+public class OAuth2ApplicationModelListener
 	extends BaseModelListener<OAuth2Application> {
 
 	@Override
@@ -82,7 +82,7 @@ public class ScimOAuth2ApplicationModelListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ScimOAuth2ApplicationModelListener.class);
+		OAuth2ApplicationModelListener.class);
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

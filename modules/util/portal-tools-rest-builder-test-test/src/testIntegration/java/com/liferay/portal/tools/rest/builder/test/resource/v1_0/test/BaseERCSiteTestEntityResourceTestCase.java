@@ -675,8 +675,9 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 				ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return permissionsERCSiteTestEntityResource.postSiteERCSiteTestEntity(
+			testGetSiteERCSiteTestEntitiesPage_getSiteExternalReferenceCode(),
+			ercSiteTestEntity);
 	}
 
 	@Test
@@ -737,7 +738,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			200,
 			ercSiteTestEntityResource.
 				putSiteERCSiteTestEntityPermissionsPageHttpResponse(
-					ercSiteTestEntity.getSiteExternalReferenceCode(), null,
+					testGroup.getExternalReferenceCode(),
+					ercSiteTestEntity.getExternalReferenceCode(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -751,7 +753,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			404,
 			ercSiteTestEntityResource.
 				putSiteERCSiteTestEntityPermissionsPageHttpResponse(
-					ercSiteTestEntity.getSiteExternalReferenceCode(), null,
+					testGroup.getExternalReferenceCode(),
+					ercSiteTestEntity.getExternalReferenceCode(),
 					new Permission[] {
 						new Permission() {
 							{

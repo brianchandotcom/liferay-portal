@@ -666,8 +666,10 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return permissionsERCAssetLibraryTestEntityResource.
+			postAssetLibraryERCAssetLibraryTestEntity(
+				testGetAssetLibraryERCAssetLibraryTestEntitiesPage_getAssetLibraryExternalReferenceCode(),
+				ercAssetLibraryTestEntity);
 	}
 
 	@Test
@@ -730,9 +732,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			200,
 			ercAssetLibraryTestEntityResource.
 				putAssetLibraryERCAssetLibraryTestEntityPermissionsPageHttpResponse(
-					ercAssetLibraryTestEntity.
-						getAssetLibraryExternalReferenceCode(),
-					null,
+					testDepotEntryGroup.getExternalReferenceCode(),
+					ercAssetLibraryTestEntity.getExternalReferenceCode(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -746,9 +747,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			404,
 			ercAssetLibraryTestEntityResource.
 				putAssetLibraryERCAssetLibraryTestEntityPermissionsPageHttpResponse(
-					ercAssetLibraryTestEntity.
-						getAssetLibraryExternalReferenceCode(),
-					null,
+					testDepotEntryGroup.getExternalReferenceCode(),
+					ercAssetLibraryTestEntity.getExternalReferenceCode(),
 					new Permission[] {
 						new Permission() {
 							{

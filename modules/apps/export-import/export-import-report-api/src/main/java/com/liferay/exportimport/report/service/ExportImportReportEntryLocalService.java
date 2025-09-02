@@ -52,11 +52,13 @@ public interface ExportImportReportEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.exportimport.report.service.impl.ExportImportReportEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the export import report entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExportImportReportEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ExportImportReportEntry addEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId, String modelName,
 		int origin, String scope, String scopeKey);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long classPK, long exportImportConfigurationId,

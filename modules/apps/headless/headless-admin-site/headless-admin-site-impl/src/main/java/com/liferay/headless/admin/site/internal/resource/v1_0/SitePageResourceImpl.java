@@ -317,7 +317,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				_cetManager, sitePage.getExternalReferenceCode(), groupId,
 				_getParentLayoutId(
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
-					sitePage.getParentSitePageExternalReferenceCode()),
+					sitePage.getParentSitePageExternalReferenceCode(),
+					serviceContext),
 				nameMap, typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				LocalizedMapUtil.getLocalizedMap(
@@ -339,7 +340,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	private long _getParentLayoutId(
 			long defaultParentLayoutId, long groupId,
-			String parentSitePageExternalReferenceCode)
+			String parentSitePageExternalReferenceCode,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (parentSitePageExternalReferenceCode == null) {
@@ -350,12 +352,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			return LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 		}
 
-		Layout layout = _layoutService.fetchLayoutByExternalReferenceCode(
-			parentSitePageExternalReferenceCode, groupId);
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
+		Layout layout = _layoutService.getOrAddEmptyLayout(
+			parentSitePageExternalReferenceCode, groupId, serviceContext);
 
 		return layout.getLayoutId();
 	}
@@ -446,7 +444,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			"parentLayoutId",
 			_getParentLayoutId(
 				layout.getParentLayoutId(), layout.getGroupId(),
-				sitePage.getParentSitePageExternalReferenceCode()));
+				sitePage.getParentSitePageExternalReferenceCode(),
+				serviceContext));
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.updateContentLayout(

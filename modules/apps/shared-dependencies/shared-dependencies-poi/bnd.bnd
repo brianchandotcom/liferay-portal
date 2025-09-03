@@ -5,9 +5,6 @@ Import-Package:\
 	!com.github.javaparser.*,\
 	!com.github.luben.zstd.*,\
 	\
-	!com.graphbuilder.curve,\
-	!com.graphbuilder.geom,\
-	\
 	!com.microsoft.schemas.office.powerpoint,\
 	!com.microsoft.schemas.office.x2006.*,\
 	\

@@ -158,11 +158,16 @@ const FrontendDataSetContent = ({
 			},
 		},
 	});
-	const setDelta = useSetStateInURL({
+	const setStateInURL = useSetStateInURL({
 		id,
-		key: EStateInURLKeys.DELTA,
+		setters: [
+			{
+				key: EStateInURLKeys.DELTA,
+
+				type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
+			},
+		],
 		stateInURLSettings,
-		type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
 	});
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
@@ -331,9 +336,9 @@ const FrontendDataSetContent = ({
 		(delta: number) => {
 			setPageNumber(1);
 
-			viewsDispatch(setDelta(delta));
+			viewsDispatch(setStateInURL[EStateInURLKeys.DELTA](delta));
 		},
-		[setDelta, setPageNumber, viewsDispatch]
+		[setStateInURL, setPageNumber, viewsDispatch]
 	);
 
 	const {

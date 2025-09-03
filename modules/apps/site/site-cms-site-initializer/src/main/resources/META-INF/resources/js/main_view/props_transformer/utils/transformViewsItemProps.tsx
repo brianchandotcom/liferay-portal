@@ -76,11 +76,11 @@ const getFileMimeTypeObjectDefinitionStickerValue = (
 			?.externalReferenceCode;
 
 	if (objectDefinitionExternalReferenceCode) {
-		const cssClass =
+		const objectDefinitionCssClass =
 			objectDefinitionValues[objectDefinitionExternalReferenceCode];
 
-		if (cssClass) {
-			return cssClass;
+		if (objectDefinitionCssClass) {
+			return objectDefinitionCssClass;
 		}
 
 		if (
@@ -89,19 +89,20 @@ const getFileMimeTypeObjectDefinitionStickerValue = (
 		) {
 			const mimeType = item.embedded.file.mimeType;
 
-			const cssClass = fileMimeTypeValues[mimeType];
+			const fileMimeTypeCssClass = fileMimeTypeValues[mimeType];
 
-			if (cssClass) {
-				return cssClass;
+			if (fileMimeTypeCssClass) {
+				return fileMimeTypeCssClass;
 			}
 
 			if (isMultimediaMimeType(mimeType)) {
 				const mimeTypeParts = mimeType.split('/');
 
-				const cssClass = fileMimeTypeValues[mimeTypeParts[0]];
+				const fileMimeTypeCssClass =
+					fileMimeTypeValues[mimeTypeParts[0]];
 
-				if (cssClass) {
-					return cssClass;
+				if (fileMimeTypeCssClass) {
+					return fileMimeTypeCssClass;
 				}
 			}
 

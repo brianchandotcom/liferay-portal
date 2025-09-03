@@ -257,6 +257,27 @@
 			}
 		}
 	}
+	
+	document.addEventListener('DOMContentLoaded', () => {
+		const panel = document.getElementById('${namespace}facetAssetCategoriesPanel');
+
+		if (!panel) return;
+
+		const panelBody = panel.querySelector('.panel-collapse');
+		const panelHeaderButton = panel.querySelector('.panel-header .btn');
+
+		if (window.innerWidth <= 768) {
+			if (panelBody) {
+				panelBody.classList.remove('show');
+				panelBody.classList.add('collapse');
+			}
+
+			if (panelHeaderButton) {
+				panelHeaderButton.classList.add('collapsed');
+				panelHeaderButton.setAttribute('aria-expanded', 'false');
+			}
+		} 
+	});
 </@>
 
 <style>

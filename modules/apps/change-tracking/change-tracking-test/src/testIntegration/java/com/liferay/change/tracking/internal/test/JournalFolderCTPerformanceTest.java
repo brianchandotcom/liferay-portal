@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
  */
 @DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
-public class JournalFolderServiceCTPerformanceTest {
+public class JournalFolderCTPerformanceTest {
 
 	@ClassRule
 	@Rule

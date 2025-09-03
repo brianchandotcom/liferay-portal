@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author David Truong
  */
 @RunWith(Arquillian.class)
-public class JournalArticleLocalServiceCTPerformanceTest {
+public class JournalArticleCTPerformanceTest {
 
 	@ClassRule
 	@Rule

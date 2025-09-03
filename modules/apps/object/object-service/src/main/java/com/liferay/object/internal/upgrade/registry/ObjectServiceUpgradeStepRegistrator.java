@@ -658,6 +658,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.22.1", "10.23.0",
 			new ObjectEntryFolderPermissionUpgradeProcess(
 				_resourceActionLocalService, _resourcePermissionLocalService));
+
+		registry.register(
+			"10.23.0", "10.24.0",
+			new com.liferay.object.internal.upgrade.v10_24_0.
+				ObjectDefinitionUpgradeProcess());
 	}
 
 	@Reference

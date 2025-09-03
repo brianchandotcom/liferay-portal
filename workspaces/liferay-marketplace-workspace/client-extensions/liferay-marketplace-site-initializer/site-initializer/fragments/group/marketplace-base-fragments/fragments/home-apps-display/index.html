@@ -1,26 +1,22 @@
 <div class="home-apps-display">
 	<div class="section-container">
-		<div>
+		<div id="section-header">
 			<div class="d-flex flex-row justify-content-between w-100">
 				<h1 class="mb-1">${configuration.sectionTitle}</h1>
-					<a class="btn btn-link font-weight-bold" href="/web/marketplace/applications?our-selection=${configuration.specificationFilterValue}" target="_self">
+
+				<a class="btn btn-link font-weight-bold" href="/web/marketplace/applications?our-selection=${configuration.specificationFilterValue}" target="_self">
 					<span class="language-caret-icon">
-						<span>View More</span>
+						<span>${languageUtil.get(locale, "view-more")}</span>
+						
 						<span>[@clay["icon"] symbol="order-arrow-right" /]</span>
 					</span>
 				</a>
 			</div>
 
-			<div>
-				<p class="text-black-50 mb-4">${configuration.sectionDescription}</p>
-			</div>
+			<p class="text-black-50 mb-4">${configuration.sectionDescription}</p>
 		</div>
 
 		[#if configuration.specificationFilterValue?has_content]
-			[#if themeDisplay?has_content]
-				[#assign scopeGroupId = themeDisplay.getScopeGroupId() /]
-			[/#if]
-
 			[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1") /]
 
 			[#if channel?has_content]
@@ -28,191 +24,149 @@
 			[/#if]
 
 			[#if channelId?has_content]
-				[#assign response =restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?accountId=-1&images.accountId=-1&nestedFields=categories,productSpecifications,images&pageSize=${configuration.pageSize}&filter=specificationValues/any(x:contains(x,'${configuration.specificationFilterValue}'))") /]
+				[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?accountId=-1&images.accountId=-1&nestedFields=categories,productSpecifications,images&pageSize=${configuration.pageSize}&filter=specificationValues/any(x:contains(x,'${configuration.specificationFilterValue}'))") /]
 			[/#if]
 
-			<div>
-				[#if response?has_content]
-					[#assign products = response.items /]
-					<div class="apps-container d-flex flex-row flex-wrap mb-5">
-						[#list products as product]
-							[#if product?has_content]
-								[#assign
-									catalogName=product.catalogName
-									portalURL=portalUtil.getLayoutURL(themeDisplay)
-									productName=product.name
-									remainingCategoriesText=[]
-								/]
+			<div id="section-body">
+				[#assign products = response.items /]
 
-								[#if product.categories?has_content]
-									[#assign productCategories=product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-app-category")![] categoriesListSize = productCategories?size-1 productTypes=product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-category")![]/]
-								[/#if]
+				<div class="apps-container d-flex flex-row flex-wrap mb-5">
+					[#list products as product]
+						[#if product?has_content]
+							[#assign remainingCategoriesText=[] /]
 
-								[#assign productType = productTypes[0]!"" /]
+							[#if product.categories?has_content]
+								[#assign productCategories=product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-app-category")![] categoriesListSize = productCategories?size-1 productTypes=product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-category")![]/]
+							[/#if]
 
-								[#if product.productSpecifications?has_content]
-									[#assign productSpecifications=product.productSpecifications![] /]
-								[/#if]
+							[#assign productType = productTypes[0]!"" /]
 
-								[#if product.description?has_content]
-									[#assign productDescription=stringUtil.shorten(htmlUtil.stripHtml(product.description!""), 140, "...") /]
-								[#else]
-									[#assign productDescription=catalogName /]
-								[/#if]
+							[#if product.productSpecifications?has_content]
+								[#assign productSpecifications=product.productSpecifications![] /]
 
-								<a class="product-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none [#if configuration.cardSize == 'large'] large [/#if] [#if configuration.cardSize == 'medium'] medium [/#if] [#if configuration.cardSize == 'small'] small [/#if]" href="p/${product.slug}" target="_self">
-									<div class="align-items-center card-image-title-container d-flex">
-										<div class="image-container mr-2 rounded">
-											<img alt="${productName}" class="app-search-image" height="56" src="${(product.urlImage?replace('https://', 'http://'))?js_string}" width="56" />
+								[#function getSpecificationValue key default=""]
+									[#local spec = productSpecifications?filter(productSpecification ->
+										stringUtil.equals(productSpecification.specificationKey, key)) /]
+
+									[#return (spec?first.value)!default /]
+								[/#function]
+							[/#if]
+
+							[#assign productDescription=stringUtil.shorten(htmlUtil.stripHtml(product.description!""), 140, "...") /]
+
+							<a class="product-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none [#if configuration.cardSize == 'large'] large [/#if] [#if configuration.cardSize == 'medium'] medium [/#if] [#if configuration.cardSize == 'small'] small [/#if]" href="p/${product.slug}" target="_self">
+								<div class="align-items-center card-image-title-container d-flex">
+									<div class="image-container mr-2 rounded">
+										<img alt="${product.name}" class="app-search-image" draggable="false" height="56" src="${(product.urlImage?replace('https://', 'http://'))?js_string}" width="56" />
+									</div>
+
+									<div class="d-flex flex-column w-100">
+										[#if productType?has_content]
+											<span class="d-flex justify-content-end">
+												[#if productType.name == 'Other']
+													<div class="app-type-badge"></div>
+												[#else]
+													[#assign badgeType = productType.name?lower_case?replace(" ", "-", "r")]
+
+													<div class="app-type-badge ${badgeType}">
+														${productType.name}
+													</div>
+												[/#if]
+											</span>
+										[/#if]
+
+										<div class="app-name font-weight-bold mb-1">
+											${product.name}
 										</div>
 
-										<div class="d-flex flex-column w-100">
-											<span class="d-flex justify-content-end">
-												<div>
-													[#if productType?has_content]
-														[#if productType.name == 'Other']
-															<div class="app-type-badge"></div>
-														[#else]
-															[#assign badgeType = productType.name?lower_case?replace(" ", "-", "r")]
+										<div class="catalog-name mt-0 text-black-50">
+											${getSpecificationValue("developer-name")}
+										</div>
 
-															<div class="app-type-badge ${badgeType}">
-																${productType.name}
-															</div>
-														[/#if]
-													[/#if]
+										[#if configuration.cardSize == 'small']
+											<div class="d-flex justify-content-between w-100">
+												<div class="font-weight-semi-bold text-capitalize">
+													${getSpecificationValue("price-model")}
 												</div>
-											</span>
 
-											<div class="app-name font-weight-bold mb-1">
-												${productName}
-											</div>
+												[#if configuration.hideRatingInfo == false]
+													<div class="align-items-center d-flex justify-content-center">
+														<span class="stars">
+															[@clay["icon"] symbol="star" /]
+														</span>
 
-											[#if productSpecifications?has_content]
-												[#assign productDeveloperName=productSpecifications?filter(item -> item.specificationKey == "developer-name") /]
-
-												[#list productDeveloperName as developerNameItem]
-													[#if developerNameItem.value?has_content]
-														[#assign developerName=developerNameItem.value /]
-													[#else]
-														[#assign developerName="" /]
-													[/#if]
-
-													<div class="catalog-name mt-0 text-black-50">
-														${developerName}
+														<p class="m-0 ml-1">4.85</p>
 													</div>
+												[/#if]
+											</div>
+										[/#if]
+									</div>
+								</div>
+
+								<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
+									[#if configuration.cardSize != 'small']
+										<div class="app-card-description font-weight-normal mb-3 mt-3">
+											${productDescription}
+										</div>
+									[/#if]
+
+									[#if configuration.cardSize == 'large']
+										<div class="d-flex flex-column">
+											<div class="font-weight-semi-bold text-capitalize">
+												${getSpecificationValue("price-model")}
+											</div>
+													
+											[#if productCategories?has_content]
+												[#assign principalCategory=productCategories[0] remainingCategories=productCategories?filter(category -> category.name != principalCategory.name) /]
+
+												[#list remainingCategories as category]
+													[#assign remainingCategoriesText=remainingCategoriesText + [category.name] /]
 												[/#list]
 											[/#if]
 
-											[#if configuration.cardSize == 'small']
-												[#if productSpecifications?has_content]
-													[#assign productPriceModels=productSpecifications?filter(item -> item.specificationKey == "price-model") /]
+											[#if principalCategory?has_content]
+												[#assign tagName=stringUtil.shorten(htmlUtil.stripHtml(principalCategory.name!""), 100, "...") /]
 
-													[#list productPriceModels as productPriceModel]
-														[#if productPriceModel.value?has_content]
-															[#assign priceModel=productPriceModel.value /]
-														[#else]
-															[#assign priceModel="" /]
-														[/#if]
+												<div>
+													<span class="mb-1 mr-3 product-tag px-2 py-1 rounded text-nowrap" title="${principalCategory.name}">
+														${tagName}
+													</span>
 
-														<div class="d-flex justify-content-between w-100">
-															<div class="font-weight-semi-bold text-capitalize">
-																${priceModel}
-															</div>
-
-															[#if configuration.hideRatingInfo == false]
-															<div class="align-items-center d-flex justify-content-center">
-																<span class="stars">
-																	[@clay["icon"] symbol="star" /]
-																</span>
-
-																<p class="m-0 ml-1">
-																	4.85
-																</p>
-															</div>
-															[/#if]
-														</div>
-													[/#list]
-												[/#if]
+													[#if categoriesListSize?has_content && remainingCategoriesText?has_content]
+														<span class="mb-1 product-tag px-2 py-1 rounded text-nowrap" title="${remainingCategoriesText?join('\n')}">
+															+ ${categoriesListSize}
+														</span>
+													[/#if]
+												</div>
 											[/#if]
-										</div>
-									</div>
 
-									<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
-										[#if configuration.cardSize != 'small']
-											<div class="app-card-description font-weight-normal mb-3 mt-3">
-												${productDescription}
-											</div>
-										[/#if]
-
-										[#if configuration.cardSize == 'large']
-											<div class="d-flex flex-column">
-												[#if productSpecifications?has_content]
-													[#assign productPriceModels=productSpecifications?filter(item -> item.specificationKey == "price-model") /]
-													[#list productPriceModels as productPriceModel]
-														[#if productPriceModel.value?has_content]
-															[#assign priceModel=productPriceModel.value /]
-														[#else]
-															[#assign priceModel="" /]
-														[/#if]
-
-														<div class="font-weight-semi-bold text-capitalize">
-															${priceModel}
-														</div>
-													[/#list]
-												[/#if]
-
-												[#if productCategories?has_content]
-													[#assign principalCategory=productCategories[0] remainingCategories=productCategories?filter(category -> category.name != principalCategory.name) /]
-
-													[#list remainingCategories as category]
-														[#assign remainingCategoriesText=remainingCategoriesText + [category.name] /]
-													[/#list]
-												[/#if]
-
-												[#if principalCategory?has_content]
-													[#assign tagName=stringUtil.shorten(htmlUtil.stripHtml(principalCategory.name!""), 100, "...") /]
-
-													<div>
-														<span class="mb-1 mr-3 product-tag px-2 py-1 rounded text-nowrap" title="${principalCategory.name}">
-															${tagName}
+											[#if configuration.hideRatingInfo == false]
+												<div class="d-flex flex-row justify-content-between mt-3">
+													<div class="align-items-center d-flex justify-content-center">
+														<span class="stars">
+															[@clay["icon"] symbol="star" /]
+															[@clay["icon"] symbol="star" /]
+															[@clay["icon"] symbol="star" /]
+															[@clay["icon"] symbol="star-half" /]
+															[@clay["icon"] symbol="star-o" /]
 														</span>
 
-														[#if categoriesListSize?has_content && remainingCategoriesText?has_content]
-															<span class="mb-1 product-tag px-2 py-1 rounded text-nowrap" title="${remainingCategoriesText?join('\n')}">
-																+ ${categoriesListSize}
-															</span>
-														[/#if]
+														<p class="ml-1 m-0">4.85 (200)</p>
 													</div>
-												[/#if]
 
-												[#if configuration.hideRatingInfo == false]
-													<div class="d-flex flex-row justify-content-between mt-3">
-														<div class="align-items-center d-flex justify-content-center">
-															<span class="stars">
-																[@clay["icon"] symbol="star" /]
-																[@clay["icon"] symbol="star" /]
-																[@clay["icon"] symbol="star" /]
-																[@clay["icon"] symbol="star-half" /]
-																[@clay["icon"] symbol="star-o" /]
-															</span>
-
-															<p class="ml-1 m-0">4.85 (200)</p>
-														</div>
-
-														<div class="align-items-center d-flex justify-content-center">
-															[@clay["icon"] symbol="download" /]
-															<span class="m-0 ml-1">85k</span>
-														</div>
+													<div class="align-items-center d-flex justify-content-center">
+														[@clay["icon"] symbol="download" /]
+														<span class="m-0 ml-1">85k</span>
 													</div>
-												[/#if]
-											</div>
-										[/#if]
-									</div>
-								</a>
-							[/#if]
-						[/#list]
-					</div>
-				[/#if]
+												</div>
+											[/#if]
+										</div>
+									[/#if]
+								</div>
+							</a>
+						[/#if]
+					[/#list]
+				</div>
 			</div>
 		[/#if]
 	</div>

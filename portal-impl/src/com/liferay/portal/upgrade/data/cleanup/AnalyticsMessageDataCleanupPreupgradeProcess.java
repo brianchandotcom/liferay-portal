@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 
 /**
  * @author Luis Ortiz
@@ -28,11 +29,8 @@ public class AnalyticsMessageDataCleanupPreupgradeProcess
 
 		runSQL("truncate table AnalyticsMessage");
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Table " + dbInspector.normalizeName("AnalyticsMessage") +
-					", truncated because data is no longer needed");
-		}
+		DataCleanupLoggingUtil.logTruncate(
+			_log, dbInspector.normalizeName("AnalyticsMessage"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

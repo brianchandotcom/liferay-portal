@@ -109,20 +109,21 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 			List<String> messages = logCapture.getMessages();
 
 			Assert.assertEquals(messages.toString(), 2, messages.size());
+
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName("DDMContent"),
-						", 1 row updated because ",
+						", 1 row updated column ",
 						_dbInspector.normalizeName("data_"),
-						" had invalid characters")));
+						" because it had invalid characters")));
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName("JournalArticle"),
-						", 1 row updated because ",
+						", 1 row updated column ",
 						_dbInspector.normalizeName("content"),
-						" had invalid characters")));
+						" because it had invalid characters")));
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(

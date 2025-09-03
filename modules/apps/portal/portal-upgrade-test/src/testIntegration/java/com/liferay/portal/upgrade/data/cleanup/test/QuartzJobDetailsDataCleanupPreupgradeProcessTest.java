@@ -93,7 +93,7 @@ public class QuartzJobDetailsDataCleanupPreupgradeProcessTest
 					StringBundler.concat(
 						"Table ",
 						_dbInspector.normalizeName("QUARTZ_JOB_DETAILS"),
-						", row deleted because ",
+						", 1 row deleted because ",
 						_dbInspector.normalizeName("JOB_DATA"),
 						" was null for job ", jobName)));
 		}

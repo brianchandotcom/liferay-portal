@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -44,7 +45,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.sql.Clob;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,59 +77,46 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		}
 
 		return Page.of(
-			_getExpiredAssets(
-				languageId, groupIds, LocaleUtil.toLanguageId(locale),
-				pagination),
+			transform(
+				_getExpiredObjectsList(
+					languageId, groupIds, LanguageUtil.getLanguageId(locale),
+					pagination),
+				objects -> {
+					ExpiredAsset expiredAsset = new ExpiredAsset();
+
+					long objectEntryId = (Long)objects[3];
+
+					expiredAsset.setHref(
+						() -> StringBundler.concat(
+							_portal.getPortalURL(contextHttpServletRequest),
+							_portal.getPathMain(),
+							GroupConstants.CMS_FRIENDLY_URL,
+							"/edit_content_item?&p_l_mode=read&p_p_state=",
+							LiferayWindowState.POP_UP, "&objectEntryId=",
+							objectEntryId));
+
+					expiredAsset.setTitle(
+						() -> {
+							String localizedTitle = String.valueOf(objects[1]);
+
+							if (Validator.isNotNull(localizedTitle)) {
+								return localizedTitle;
+							}
+
+							return String.valueOf(objects[4]);
+						});
+
+					expiredAsset.setUsages(
+						() -> _getUsages(
+							String.valueOf(objects[0]), groupIds,
+							(Long)objects[2], objectEntryId));
+
+					return expiredAsset;
+				}),
 			pagination, _getExpiredObjectsTotalCount(languageId, groupIds));
 	}
 
-	private List<ExpiredAsset> _getExpiredAssets(
-		String filterLanguageId, Long[] groupIds, String languageId,
-		Pagination pagination) {
-
-		List<ExpiredAsset> expiredAssets = new ArrayList<>();
-
-		for (Object[] object :
-				_getExpiredObjects(
-					filterLanguageId, groupIds, languageId, pagination)) {
-
-			ExpiredAsset expiredAsset = new ExpiredAsset();
-
-			long objectEntryId = (Long)object[3];
-
-			expiredAsset.setHref(
-				() -> StringBundler.concat(
-					_portal.getPortalURL(contextHttpServletRequest),
-					_portal.getPathMain(), GroupConstants.CMS_FRIENDLY_URL,
-					"/edit_content_item?&p_l_mode=read&p_p_state=",
-					LiferayWindowState.POP_UP, "&objectEntryId=",
-					objectEntryId));
-
-			expiredAsset.setTitle(
-				() -> {
-					String localizedTitle = String.valueOf(object[1]);
-
-					if (Validator.isNotNull(localizedTitle)) {
-						return localizedTitle;
-					}
-
-					return String.valueOf(object[4]);
-				});
-
-			String className = String.valueOf(object[0]);
-
-			expiredAsset.setUsages(
-				() -> _getUsages(
-					_portal.getClassNameId(className), objectEntryId, className,
-					groupIds, (Long)object[2]));
-
-			expiredAssets.add(expiredAsset);
-		}
-
-		return expiredAssets;
-	}
-
-	private List<Object[]> _getExpiredObjects(
+	private List<Object[]> _getExpiredObjectsList(
 		String filterLanguageId, Long[] groupIds, String languageId,
 		Pagination pagination) {
 
@@ -250,6 +237,26 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 			contentColumn, "properties.title_i18n." + languageId);
 	}
 
+	private Predicate _getPredicate(Long[] groupIds, String languageId) {
+		Predicate predicate = _objectEntryTable.groupId.in(
+			groupIds
+		).and(
+			_objectEntryTable.status.eq(WorkflowConstants.STATUS_EXPIRED)
+		).and(
+			_objectEntryFolderTable.externalReferenceCode.in(
+				new String[] {"L_CONTENTS", "L_FILES"})
+		);
+
+		if (Validator.isNotNull(languageId)) {
+			predicate = predicate.and(
+				DSLFunctionFactoryUtil.castClobText(
+					_getLocalizedTitleExpression(languageId)
+				).isNotNull());
+		}
+
+		return predicate;
+	}
+
 	private <T> Expression<T> _getPropertyValueExpression(
 		Expression<T> columnExpression, String propertyPath) {
 
@@ -318,13 +325,14 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 	}
 
 	private int _getUsages(
-			long classNameId, long entryClassPK, String entryClassName,
-			Long[] groupIds, long objectDefinitionId)
+			String className, Long[] groupIds, long objectDefinitionId,
+			long objectEntryId)
 		throws PortalException {
 
 		int usages =
 			_layoutClassedModelUsageLocalService.
-				getLayoutClassedModelUsagesCount(classNameId, entryClassPK);
+				getLayoutClassedModelUsagesCount(
+					_portal.getClassNameId(className), objectEntryId);
 
 		List<ObjectRelationship> objectRelationships =
 			_objectRelationshipLocalService.
@@ -334,37 +342,17 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 			ObjectRelatedModelsProvider objectRelatedModelsProvider =
 				_objectRelatedModelsProviderRegistry.
 					getObjectRelatedModelsProvider(
-						entryClassName, contextCompany.getCompanyId(),
+						className, contextCompany.getCompanyId(),
 						objectRelationship.getType());
 
 			for (long groupId : groupIds) {
 				usages += objectRelatedModelsProvider.getRelatedModelsCount(
 					groupId, objectRelationship.getObjectRelationshipId(),
-					entryClassPK, null);
+					objectEntryId, null);
 			}
 		}
 
 		return usages;
-	}
-
-	private Predicate _getPredicate(Long[] groupIds, String languageId) {
-		Predicate predicate = _objectEntryTable.groupId.in(
-			groupIds
-		).and(
-			_objectEntryTable.status.eq(WorkflowConstants.STATUS_EXPIRED)
-		).and(
-			_objectEntryFolderTable.externalReferenceCode.in(
-				new String[] {"L_CONTENTS", "L_FILES"})
-		);
-
-		if (Validator.isNotNull(languageId)) {
-			predicate = predicate.and(
-				DSLFunctionFactoryUtil.castClobText(
-					_getLocalizedTitleExpression(languageId)
-				).isNotNull());
-		}
-
-		return predicate;
 	}
 
 	@Reference

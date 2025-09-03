@@ -290,7 +290,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 				assetVocabularyGroupRelTable.groupId.in(assetGroupIds)
 			)
 		).where(
-			_getWhereClause(
+			_getPredicate(
 				externalReferenceCode, groupIds, languageId, false, rangeEnd,
 				rangeKey, rangeStart)
 		);
@@ -302,6 +302,55 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		}
 
 		return results.get(0);
+	}
+
+	private Predicate _getPredicate(
+		String externalReferenceCode, Long[] groupIds, String languageId,
+		boolean previous, String rangeEnd, Integer rangeKey,
+		String rangeStart) {
+
+		Predicate predicate =
+			ObjectFolderTable.INSTANCE.externalReferenceCode.eq(
+				externalReferenceCode);
+
+		predicate = predicate.and(
+			ObjectEntryTable.INSTANCE.status.neq(
+				WorkflowConstants.STATUS_IN_TRASH));
+
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			predicate = predicate.and(
+				ObjectEntryTable.INSTANCE.groupId.in(groupIds));
+		}
+
+		if (!Validator.isBlank(languageId)) {
+			predicate = predicate.and(
+				DSLFunctionFactoryUtil.castClobText(
+					_getLocalizedTitleExpression(languageId)
+				).isNotNull());
+		}
+
+		if (!previous) {
+			predicate = predicate.and(
+				ObjectEntryTable.INSTANCE.createDate.gte(
+					_getStartDate(rangeKey, rangeStart)));
+
+			if (Validator.isNotNull(rangeEnd)) {
+				predicate = predicate.and(
+					ObjectEntryTable.INSTANCE.createDate.lte(
+						_getEndDate(rangeEnd)));
+			}
+		}
+		else {
+			predicate = predicate.and(
+				ObjectEntryTable.INSTANCE.createDate.gte(
+					_getPreviousStartDate(rangeEnd, rangeKey, rangeStart))
+			).and(
+				ObjectEntryTable.INSTANCE.createDate.lt(
+					_getStartDate(rangeKey, rangeStart))
+			);
+		}
+
+		return predicate;
 	}
 
 	private Date _getPreviousStartDate(
@@ -380,7 +429,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			assetEntryTable,
 			assetEntryTable.classPK.eq(objectEntryTable.objectEntryId)
 		).where(
-			_getWhereClause(
+			_getPredicate(
 				externalReferenceCode, groupIds, languageId, true, rangeEnd,
 				rangeKey, rangeStart)
 		);
@@ -456,55 +505,6 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		calendar.set(Calendar.SECOND, 0);
 
 		return calendar.getTime();
-	}
-
-	private Predicate _getWhereClause(
-		String externalReferenceCode, Long[] groupIds, String languageId,
-		boolean previous, String rangeEnd, Integer rangeKey,
-		String rangeStart) {
-
-		Predicate predicate =
-			ObjectFolderTable.INSTANCE.externalReferenceCode.eq(
-				externalReferenceCode);
-
-		predicate = predicate.and(
-			ObjectEntryTable.INSTANCE.status.neq(
-				WorkflowConstants.STATUS_IN_TRASH));
-
-		if (ArrayUtil.isNotEmpty(groupIds)) {
-			predicate = predicate.and(
-				ObjectEntryTable.INSTANCE.groupId.in(groupIds));
-		}
-
-		if (!Validator.isBlank(languageId)) {
-			predicate = predicate.and(
-				DSLFunctionFactoryUtil.castClobText(
-					_getLocalizedTitleExpression(languageId)
-				).isNotNull());
-		}
-
-		if (!previous) {
-			predicate = predicate.and(
-				ObjectEntryTable.INSTANCE.createDate.gte(
-					_getStartDate(rangeKey, rangeStart)));
-
-			if (Validator.isNotNull(rangeEnd)) {
-				predicate = predicate.and(
-					ObjectEntryTable.INSTANCE.createDate.lte(
-						_getEndDate(rangeEnd)));
-			}
-		}
-		else {
-			predicate = predicate.and(
-				ObjectEntryTable.INSTANCE.createDate.gte(
-					_getPreviousStartDate(rangeEnd, rangeKey, rangeStart))
-			).and(
-				ObjectEntryTable.INSTANCE.createDate.lt(
-					_getStartDate(rangeKey, rangeStart))
-			);
-		}
-
-		return predicate;
 	}
 
 	private Overview _toOverview(

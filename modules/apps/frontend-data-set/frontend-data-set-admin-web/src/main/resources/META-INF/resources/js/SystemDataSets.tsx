@@ -487,8 +487,6 @@ const SystemDataSets = ({
 		},
 	];
 
-	console.log('fire-2');
-
 	return (
 		<div className="data-sets system-data-sets">
 			<FrontendDataSet

@@ -547,7 +547,8 @@ const FrontendDataSetContent = ({
 	function selectItems({value}: {value: any}) {
 		const values = Array.isArray(value) ? value : [value];
 
-		const nextSelectedValues = [...selectedItemsValue];
+		const nextSelectedValues =
+			selectionType === 'single' ? [] : [...selectedItemsValue];
 
 		values.forEach((val) => {
 			const index = nextSelectedValues.indexOf(val);

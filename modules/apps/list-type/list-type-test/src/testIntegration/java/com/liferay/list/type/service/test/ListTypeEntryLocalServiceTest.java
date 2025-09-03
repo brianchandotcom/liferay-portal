@@ -151,6 +151,16 @@ public class ListTypeEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddListTypeEntryNonTestMode() throws Exception {
+		AssertUtils.assertFailure(
+			ListTypeDefinitionSystemException.class, false,
+			"Only allowed bundles can add system list type entries",
+			() -> _testAddListTypeEntry(
+				_systemListTypeDefinition.getListTypeDefinitionId(), "baker",
+				_systemListTypeDefinition.isSystem()));
+	}
+
+	@Test
 	public void testDeleteListTypeEntry() throws Exception {
 		AssertUtils.assertFailure(
 			ListTypeEntrySystemException.class, false,

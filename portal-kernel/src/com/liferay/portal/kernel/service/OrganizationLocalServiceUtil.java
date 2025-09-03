@@ -764,6 +764,10 @@ public class OrganizationLocalServiceUtil {
 			companyId, parentOrganizationId, status);
 	}
 
+	public static List<Organization> getOrganizationsByLogoId(long logoId) {
+		return getService().getOrganizationsByLogoId(logoId);
+	}
+
 	/**
 	 * Returns the number of organizations.
 	 *

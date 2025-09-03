@@ -134,17 +134,18 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 			Assert.assertFalse(
 				messages.contains(
 					StringBundler.concat(
-						"Deleted configuration ", existentConfigurationId,
-						" because ", existentPrimaryKey, " was not found in ",
-						tableName, ".", primaryKeyColumnName)));
+						"Table Configuration_, 1 row deleted because ",
+						existentConfigurationId, " has ", existentPrimaryKey,
+						" that was not found in ", tableName, ".",
+						primaryKeyColumnName)));
 
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
-						"Deleted configuration ", nonexistentConfigurationId,
-						" because ", nonexistentPrimaryKey,
-						" was not found in ", tableName, ".",
-						primaryKeyColumnName)));
+						"Table Configuration_, 1 row deleted because ",
+						nonexistentConfigurationId, " has ",
+						nonexistentPrimaryKey, " that was not found in ",
+						tableName, ".", primaryKeyColumnName)));
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(existentConfigurationId);

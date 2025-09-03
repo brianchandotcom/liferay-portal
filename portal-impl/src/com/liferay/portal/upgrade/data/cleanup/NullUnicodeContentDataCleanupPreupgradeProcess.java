@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 
 import java.sql.PreparedStatement;
 
@@ -64,15 +65,10 @@ public class NullUnicodeContentDataCleanupPreupgradeProcess
 
 			int count = preparedStatement.executeUpdate();
 
-			if (_log.isInfoEnabled() && (count > 0)) {
-				_log.info(
-					StringBundler.concat(
-						"Table ", dbInspector.normalizeName(tableName), ", ",
-						count, " row", (count > 1) ? "s " : " ",
-						"updated because ",
-						dbInspector.normalizeName(columnName),
-						" had invalid characters"));
-			}
+			DataCleanupLoggingUtil.logUpdate(
+				_log, count, dbInspector.normalizeName(tableName),
+				dbInspector.normalizeName(columnName), null,
+				"it had invalid characters");
 		}
 	}
 

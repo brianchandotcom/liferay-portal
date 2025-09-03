@@ -5,11 +5,11 @@
 
 package com.liferay.portal.upgrade.data.cleanup;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,13 +38,10 @@ public class QuartzJobDetailsDataCleanupPreupgradeProcess
 			DBInspector dbInspector = new DBInspector(connection);
 
 			while (resultSet.next()) {
-				_log.info(
-					StringBundler.concat(
-						"Table ",
-						dbInspector.normalizeName("QUARTZ_JOB_DETAILS"),
-						", row deleted because ",
-						dbInspector.normalizeName("JOB_DATA"),
-						" was null for job ", resultSet.getString("JOB_NAME")));
+				DataCleanupLoggingUtil.logDelete(
+					_log, 1, dbInspector.normalizeName("QUARTZ_JOB_DETAILS"),
+					dbInspector.normalizeName("JOB_DATA") +
+						" was null for job " + resultSet.getString("JOB_NAME"));
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -105,13 +106,11 @@ public class ConfigurationDataCleanupPreupgradeProcess
 		preparedStatement.setString(1, configurationId);
 		preparedStatement.addBatch();
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Deleted configuration ", configurationId, " because ",
-					primaryKey, " was not found in ", tableName, ".",
-					primaryKeyColumnName));
-		}
+		DataCleanupLoggingUtil.logDelete(
+			_log, 1, "Configuration_",
+			StringBundler.concat(
+				configurationId, " has ", primaryKey, " that was not found in ",
+				tableName, ".", primaryKeyColumnName));
 	}
 
 	private long _getPrimaryKey(String dictionary, Pattern pattern) {

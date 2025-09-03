@@ -65,12 +65,9 @@ public class OrphanReferencesDataCleanupUtil {
 			}
 
 			while (resultSet.next()) {
-				long count = resultSet.getLong(2);
-
-				_log.info(
+				DataCleanupLoggingUtil.logDelete(
+					_log, resultSet.getLong(2), sourceTableName,
 					StringBundler.concat(
-						"Table ", sourceTableName, ", ", String.valueOf(count),
-						" row", (count > 1) ? "s " : " ", "deleted because ",
 						sourceColumnName, StringPool.SPACE,
 						String.valueOf(resultSet.getObject(1)),
 						" was not found in ", targetTableName,

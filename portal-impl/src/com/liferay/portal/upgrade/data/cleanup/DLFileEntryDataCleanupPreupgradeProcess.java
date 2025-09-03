@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,11 +42,10 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 				long fileEntryId = resultSet.getLong("fileEntryId");
 				String name = resultSet.getString("name");
 
-				_log.info(
+				DataCleanupLoggingUtil.logDelete(
+					_log, 1, dbInspector.normalizeName("DLFileEntry"),
 					StringBundler.concat(
-						"Table ", dbInspector.normalizeName("DLFileEntry"),
-						", row with fileEntryId ", fileEntryId,
-						" deleted because its name was ",
+						"fileEntryId ", fileEntryId, " name was ",
 						(name == null) ? "null" : "empty"));
 			}
 		}

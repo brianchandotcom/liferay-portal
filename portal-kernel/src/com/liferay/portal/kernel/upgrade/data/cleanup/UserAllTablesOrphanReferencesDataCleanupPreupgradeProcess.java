@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
@@ -78,16 +79,12 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 
 					preparedStatement2.executeUpdate();
 
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"Table ", sourceTableName, ", ", count,
-								(count == 1) ? " row " : " rows ",
-								"deleted because ", sourceColumnName,
-								StringPool.SPACE, userId, " was not found in ",
-								targetTableName, StringPool.PERIOD,
-								targetColumnName));
-					}
+					DataCleanupLoggingUtil.logDelete(
+						_log, count, sourceTableName,
+						StringBundler.concat(
+							sourceColumnName, StringPool.SPACE, userId,
+							" was not found in ", targetTableName,
+							StringPool.PERIOD, targetColumnName));
 
 					continue;
 				}
@@ -112,17 +109,12 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 
 				preparedStatement3.executeUpdate();
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Table ", sourceTableName, ", ", count,
-							(count == 1) ? " row " : " rows ",
-							"updated column ", sourceColumnName, " to value ",
-							newUserId, " because ", sourceColumnName,
-							StringPool.SPACE, userId, " was not found in ",
-							targetTableName, StringPool.PERIOD,
-							targetColumnName));
-				}
+				DataCleanupLoggingUtil.logUpdate(
+					_log, count, sourceTableName, sourceColumnName, newUserId,
+					StringBundler.concat(
+						sourceColumnName, StringPool.SPACE, userId,
+						" was not found in ", targetTableName,
+						StringPool.PERIOD, targetColumnName));
 			}
 		}
 	}

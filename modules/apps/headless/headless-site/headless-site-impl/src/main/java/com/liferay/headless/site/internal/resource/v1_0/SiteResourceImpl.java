@@ -198,14 +198,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public Site postSite(Site site) throws Exception {
-		try {
-			Group group = _addGroup(site.getExternalReferenceCode(), site);
+		Group group = _addGroup(site.getExternalReferenceCode(), site);
 
-			return _toSite(group);
-		}
-		catch (Throwable throwable) {
-			throw new Exception(throwable);
-		}
+		return _toSite(group);
 	}
 
 	@Override
@@ -394,8 +389,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Group group = _groupService.addOrUpdateGroup(
-			externalReferenceCode, _getParentGroupId(site.getParentSiteKey()),
+		Group group = _groupService.addGroup(
+			_getParentGroupId(site.getParentSiteKey()),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), site.getName()
@@ -405,6 +400,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			_getMembershipRestriction(site.getMembershipRestriction()),
 			site.getFriendlyUrlPath(), true, false, _isActive(site.getActive()),
 			serviceContext);
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			group.setExternalReferenceCode(externalReferenceCode);
+
+			group = _groupLocalService.updateGroup(group);
+		}
 
 		if (Validator.isNotNull(site.getTypeSettings())) {
 			UnicodeProperties unicodeProperties =

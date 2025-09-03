@@ -91,11 +91,12 @@ public class CustomAssetDisplayPageFriendlyURLResolverTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryId(), TestPropsValues.getUserId(),
+			objectEntry.getObjectEntryFolderId(),
+			ServiceContextTestUtil.getServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"text", "textValue2"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		Assert.assertEquals(2, objectEntry.getVersion());
 

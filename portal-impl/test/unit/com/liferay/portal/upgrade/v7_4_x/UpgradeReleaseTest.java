@@ -26,7 +26,7 @@ public class UpgradeReleaseTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testUpgradePortalRelease() throws Exception {
+	public void testUpgrade() throws Exception {
 		StringBundler sb = new StringBundler();
 
 		UpgradeRelease upgradeRelease = new UpgradeRelease() {

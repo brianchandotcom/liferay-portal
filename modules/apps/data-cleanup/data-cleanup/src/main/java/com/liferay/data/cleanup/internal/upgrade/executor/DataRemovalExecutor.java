@@ -75,6 +75,11 @@ public class DataRemovalExecutor {
 			() -> new DLPreviewCTSContentDataUpgradeProcess(
 				_ctCollectionLocalService, _ctEntryLocalService, _portal));
 		_removeModuleData(
+			dataRemovalConfiguration::removeExpiredJournalArticles,
+			"com.liferay.journal.service",
+			() -> new ExpiredJournalArticleUpgradeProcess(
+				_journalArticleLocalService));
+		_removeModuleData(
 			dataRemovalConfiguration::removeOutdatedPublishedCTCollections,
 			"com.liferay.change.tracking.service",
 			() -> new OutdatedPublishedCTCollectionUpgradeProcess(
@@ -84,11 +89,6 @@ public class DataRemovalExecutor {
 			"com.liferay.change.tracking.store.service",
 			() -> new PublishedCTSContentDataUpgradeProcess(
 				_ctsContentLocalService, _portal));
-		_removeModuleData(
-			dataRemovalConfiguration::removeExpiredJournalArticles,
-			"com.liferay.journal.service",
-			() -> new ExpiredJournalArticleUpgradeProcess(
-				_journalArticleLocalService));
 		_removeModuleData(
 			dataRemovalConfiguration::removeWidgetLayoutTypeSettings,
 			"com.liferay.layout.service",

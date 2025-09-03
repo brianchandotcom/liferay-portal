@@ -7,6 +7,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaSignature;
@@ -66,6 +67,10 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 
 		String returnType = signature.getReturnType();
 
+		if (Validator.isBlank(returnType)) {
+			return javaTermContent;
+		}
+
 		Matcher matcher1 = _returnPattern.matcher(javaTermContent);
 
 		while (matcher1.find()) {
@@ -90,7 +95,7 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 					ifCondition, trueValue, falseValue);
 			}
 
-			if ((returnType == null) || !returnType.equals("boolean")) {
+			if (!returnType.equals("boolean")) {
 				continue;
 			}
 

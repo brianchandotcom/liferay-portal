@@ -1517,6 +1517,18 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey());
 					}
 
+					if (Objects.equals(
+							objectDefinition.getScope(),
+							ObjectDefinitionConstants.SCOPE_COMPANY) &&
+						!Objects.equals(
+							relatedObjectDefinition.getScope(),
+							ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+						scopeKey = MapUtil.getString(
+							nestedObjectEntry.getProperties(), "scopeKey",
+							null);
+					}
+
 					long groupId = 0;
 
 					if ((serviceBuilderObjectEntry.getGroupId() > 0) &&

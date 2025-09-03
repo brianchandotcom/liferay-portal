@@ -7,9 +7,6 @@ package com.clarity.solution;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.json.JSONObject;
 
 import org.springframework.http.HttpStatus;
@@ -40,31 +37,20 @@ public class ActionRestController extends BaseRestController {
 				continue;
 			}
 
-			try {
-				patch(
-					"Bearer " + jwt.getTokenValue(),
-					new JSONObject(
-					).put(
-						"shippingAddressId", jsonObject.getString(key)
-					).toString(),
-					UriComponentsBuilder.fromPath(
-						"/o/headless-commerce-delivery-cart/v1.0/cart-items/" +
-							key.split("item_")[1]
-					).build(
-					).toUri());
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-
-				return new ResponseEntity<>(
-					HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			patch(
+				"Bearer " + jwt.getTokenValue(),
+				new JSONObject(
+				).put(
+					"shippingAddressId", jsonObject.getString(key)
+				).toString(),
+				UriComponentsBuilder.fromPath(
+					"/o/headless-commerce-delivery-cart/v1.0/cart-items/" +
+						key.split("item_")[1]
+				).build(
+				).toUri());
 		}
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
-	private static final Log _log = LogFactory.getLog(
-		ReadyRestController.class);
 
 }

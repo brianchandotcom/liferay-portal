@@ -62,7 +62,7 @@ function isMultimediaMimeType(mimeType: string): boolean {
 	return MULTIMEDIA_TYPES.some((prefix) => mimeType.startsWith(prefix));
 }
 
-const getFileMimeTypeValue = (
+const getFileMimeTypeObjectDefinitionStickerValue = (
 	fileMimeTypeValues: Record<string, string> | undefined,
 	objectDefinitionValues: Record<string, string>,
 	item: any
@@ -135,14 +135,14 @@ export function transformItemCardView(
 		description: dateFormat(item.dateModified),
 		href: getHrefLink(item, props),
 		stickerProps: {
-			className: getFileMimeTypeValue(
+			className: getFileMimeTypeObjectDefinitionStickerValue(
 				fileMimeTypeCssClasses,
 				objectDefinitionCssClasses,
 				item
 			),
 			content: (
 				<ClayIcon
-					symbol={getFileMimeTypeValue(
+					symbol={getFileMimeTypeObjectDefinitionStickerValue(
 						fileMimeTypeIcons,
 						objectDefinitionIcons,
 						item

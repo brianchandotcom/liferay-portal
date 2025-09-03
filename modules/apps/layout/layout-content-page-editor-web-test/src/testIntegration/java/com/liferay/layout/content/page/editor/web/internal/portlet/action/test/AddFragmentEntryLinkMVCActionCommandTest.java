@@ -11,6 +11,7 @@ import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -252,6 +253,25 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			LayoutContentPageEditorWebPortletKeys.
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
 			true);
+	}
+
+	@Test
+	public void testAddFragmentEntryLinkWithFragmentRenderer()
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(_group.getGroupId());
+
+		mockLiferayPortletActionRequest.addParameter(
+			"fragmentEntryKey", _fragmentRenderer.getKey());
+
+		FragmentEntryLink fragmentEntryLink = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "addFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
+
+		Assert.assertEquals(
+			_fragmentRenderer.getKey(), fragmentEntryLink.getRendererKey());
 	}
 
 	private FragmentEntry _addFragmentEntry(String html) throws Exception {
@@ -502,6 +522,11 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.fragment.renderer.collection.filter.internal.CollectionAppliedFiltersFragmentRenderer"
+	)
+	private FragmentRenderer _fragmentRenderer;
 
 	@DeleteAfterTestRun
 	private Group _group;

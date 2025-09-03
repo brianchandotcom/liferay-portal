@@ -78,7 +78,8 @@ public class HashedFileFrontendResourceRequestHandler
 				requestURI);
 		}
 
-		String hashedFileURI = _hashedFilesRegistry.get(requestURI);
+		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
+			requestURI);
 
 		if (hashedFileURI == null) {
 			return _createFrontendResource(

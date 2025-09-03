@@ -22,7 +22,7 @@ public interface HashedFilesRegistry {
 	 * @return a valid URI or null if hashed file does not exist
 	 * @review
 	 */
-	public String get(String unhashedFileURI);
+	public String getHashedFileURI(String unhashedFileURI);
 
 	/**
 	 * Get the URL of the file associated to a given URI.

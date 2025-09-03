@@ -238,13 +238,6 @@ public class ShippingAddressResourceTest
 		return _commerceShipment.getCommerceShipmentId();
 	}
 
-	@Override
-	protected ShippingAddress testGraphQLShippingAddress_addShippingAddress()
-		throws Exception {
-
-		return _toShippingAddress(_commerceShipment.fetchCommerceAddress());
-	}
-
 	private String _getRegionISOCode(CommerceAddress commerceAddress)
 		throws Exception {
 

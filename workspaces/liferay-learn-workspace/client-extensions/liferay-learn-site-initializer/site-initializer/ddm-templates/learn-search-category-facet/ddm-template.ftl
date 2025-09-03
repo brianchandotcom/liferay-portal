@@ -259,24 +259,24 @@
 	}
 	
 	document.addEventListener('DOMContentLoaded', () => {
-		const panel = document.getElementById('${namespace}facetAssetCategoriesPanel');
+		const panels = document.querySelectorAll('.panel-group .panel');
 
-		if (!panel) return;
+		panels.forEach(panel => {
+			const panelBody = panel.querySelector('.panel-collapse');
+			const panelHeaderButton = panel.querySelector('.panel-header-link'); 
 
-		const panelBody = panel.querySelector('.panel-collapse');
-		const panelHeaderButton = panel.querySelector('.panel-header .btn');
+			if (window.innerWidth <= 768) {
+				if (panelBody) {
+					panelBody.classList.remove('show');
+					panelBody.classList.add('collapse');
+				}
 
-		if (window.innerWidth <= 768) {
-			if (panelBody) {
-				panelBody.classList.remove('show');
-				panelBody.classList.add('collapse');
-			}
-
-			if (panelHeaderButton) {
-				panelHeaderButton.classList.add('collapsed');
-				panelHeaderButton.setAttribute('aria-expanded', 'false');
-			}
-		} 
+				if (panelHeaderButton) {
+					panelHeaderButton.classList.add('collapsed');
+					panelHeaderButton.setAttribute('aria-expanded', 'false');
+				}
+			} 
+		});
 	});
 </@>
 

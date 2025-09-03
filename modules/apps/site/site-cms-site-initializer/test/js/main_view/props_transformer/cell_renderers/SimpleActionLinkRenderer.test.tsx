@@ -21,7 +21,32 @@ const testActionFolder = {
 
 const test = {
 	actions: [testAction, testActionFolder],
-	itemData: {entryClassName: 'com.liferay.object.model.ObjectEntry'},
+	additionalProps: {
+		fileMimeTypeCssClasses: {
+			default: 'file-icon-color-0',
+		},
+		fileMimeTypeIcons: {
+			default: '',
+		},
+		objectDefinitionCssClasses: {
+			L_BASIC_WEB_CONTENT: 'file-icon-color-1',
+			default: 'file-icon-color-0',
+		},
+		objectDefinitionIcons: {
+			L_BASIC_WEB_CONTENT: 'web-content',
+			default: '',
+		},
+	},
+	itemData: {
+		embedded: {
+			systemProperties: {
+				objectDefinitionBrief: {
+					externalReferenceCode: 'L_BASIC_WEB_CONTENT',
+				},
+			},
+		},
+		entryClassName: 'com.liferay.object.model.ObjectEntry',
+	},
 	itemDataFolder: {
 		entryClassName: 'com.liferay.object.model.ObjectEntryFolder',
 	},
@@ -36,6 +61,7 @@ describe('SimpleActionLinkRenderer. Render the value only.', () => {
 		render(
 			<SimpleActionLinkRenderer
 				actions={[]}
+				additionalProps={test.additionalProps}
 				itemData={test.itemData}
 				options={test.options}
 				value={test.value}
@@ -51,6 +77,7 @@ describe('SimpleActionLinkRenderer. Render the value only.', () => {
 		render(
 			<SimpleActionLinkRenderer
 				actions={test.actions}
+				additionalProps={test.additionalProps}
 				itemData={test.itemData}
 				options={{actionId: ''}}
 				value={test.value}
@@ -66,6 +93,7 @@ describe('SimpleActionLinkRenderer. Render the value only.', () => {
 		render(
 			<SimpleActionLinkRenderer
 				actions={test.actions}
+				additionalProps={test.additionalProps}
 				itemData={test.itemData}
 				options={{actionId: 'edit'}}
 				value={test.value}
@@ -83,6 +111,7 @@ describe('SimpleActionLinkRenderer. Render the link.', () => {
 		render(
 			<SimpleActionLinkRenderer
 				actions={test.actions}
+				additionalProps={test.additionalProps}
 				itemData={test.itemData}
 				options={test.options}
 				value={test.value}
@@ -99,6 +128,7 @@ describe('SimpleActionLinkRenderer. Render the link.', () => {
 		render(
 			<SimpleActionLinkRenderer
 				actions={test.actions}
+				additionalProps={test.additionalProps}
 				itemData={test.itemDataFolder}
 				options={test.options}
 				value={test.value}

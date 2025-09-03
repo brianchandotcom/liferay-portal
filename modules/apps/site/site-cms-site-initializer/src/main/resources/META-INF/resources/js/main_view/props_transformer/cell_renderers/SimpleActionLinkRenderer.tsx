@@ -5,13 +5,13 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import React from 'react';
 
 import formatActionURL from '../../../common/utils/formatActionURL';
 import {getFileMimeTypeValue} from '../utils/transformViewsItemProps';
 
-import '../../../../css/main.scss';
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
@@ -60,10 +60,13 @@ export default function SimpleActionLinkRenderer({
 	const formattedHref = formatActionURL(itemData, selectedAction.href);
 
 	return (
-		<div className="table-list-title">
-			<ClayIcon
+		<div className="align-items-center d-flex table-list-title">
+			<ClaySticker
 				className={classNames(
 					'c-mr-2',
+					'flex-shrink-0',
+					'inline-item',
+					'inline-item-before',
 					isFolder
 						? 'file-icon-color-0'
 						: getFileMimeTypeValue(
@@ -72,16 +75,19 @@ export default function SimpleActionLinkRenderer({
 								itemData
 							)
 				)}
-				symbol={
-					isFolder
-						? 'folder'
-						: getFileMimeTypeValue(
-								additionalProps.fileMimeTypeIcons,
-								additionalProps.objectDefinitionIcons,
-								itemData
-							)
-				}
-			/>
+			>
+				<ClayIcon
+					symbol={
+						isFolder
+							? 'folder'
+							: getFileMimeTypeValue(
+									additionalProps.fileMimeTypeIcons,
+									additionalProps.objectDefinitionIcons,
+									itemData
+								)
+					}
+				/>
+			</ClaySticker>
 
 			<ClayLink data-senna-off href={formattedHref}>
 				{value}

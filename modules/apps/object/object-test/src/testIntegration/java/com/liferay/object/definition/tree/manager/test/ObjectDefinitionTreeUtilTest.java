@@ -36,7 +36,6 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.function.UnsafeBiConsumer;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -157,9 +156,9 @@ public class ObjectDefinitionTreeUtilTest {
 					_objectDefinitionLocalService);
 			});
 
-		_asserScreenNavigationCategories(2, "C_AA");
-		_asserScreenNavigationCategories(1, "C_AAA");
-		_asserScreenNavigationCategories(0, "C_AAAA");
+		_assertScreenNavigationCategories(2, "C_AA");
+		_assertScreenNavigationCategories(1, "C_AAA");
+		_assertScreenNavigationCategories(0, "C_AAAA");
 
 		// Bind a draft object definition as a parent node in a published
 		// object definition tree
@@ -186,9 +185,9 @@ public class ObjectDefinitionTreeUtilTest {
 					_objectDefinitionLocalService);
 			});
 
-		_asserScreenNavigationCategories(0, "C_A");
-		_asserScreenNavigationCategories(2, "C_AA");
-		_asserScreenNavigationCategories(1, "C_AAA");
+		_assertScreenNavigationCategories(0, "C_A");
+		_assertScreenNavigationCategories(2, "C_AA");
+		_assertScreenNavigationCategories(1, "C_AAA");
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -217,8 +216,8 @@ public class ObjectDefinitionTreeUtilTest {
 					_objectDefinitionLocalService);
 			});
 
-		_asserScreenNavigationCategories(0, "C_A");
-		_asserScreenNavigationCategories(1, "C_AA");
+		_assertScreenNavigationCategories(0, "C_A");
+		_assertScreenNavigationCategories(1, "C_AA");
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
@@ -253,19 +252,8 @@ public class ObjectDefinitionTreeUtilTest {
 					_objectDefinitionLocalService);
 			});
 
-		_asserScreenNavigationCategories(0, "C_A");
-		_asserScreenNavigationCategories(1, "C_AA");
-
-		long objectDefinitionId = objectDefinitionA.getObjectDefinitionId();
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			StringBundler.concat(
-				"There must be no unrelated object entries when both object ",
-				"definitions are published so that the object relationship ",
-				"can be an edge to a root context"),
-			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(), objectDefinitionId));
+		_assertScreenNavigationCategories(0, "C_A");
+		_assertScreenNavigationCategories(1, "C_AA");
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
@@ -314,10 +302,10 @@ public class ObjectDefinitionTreeUtilTest {
 					_objectDefinitionLocalService);
 			});
 
-		_asserScreenNavigationCategories(0, "C_A");
-		_asserScreenNavigationCategories(0, "C_AA");
-		_asserScreenNavigationCategories(2, "C_AAA");
-		_asserScreenNavigationCategories(1, "C_AAAA");
+		_assertScreenNavigationCategories(0, "C_A");
+		_assertScreenNavigationCategories(0, "C_AA");
+		_assertScreenNavigationCategories(2, "C_AAA");
+		_assertScreenNavigationCategories(1, "C_AAAA");
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -356,9 +344,9 @@ public class ObjectDefinitionTreeUtilTest {
 					_objectDefinitionLocalService);
 			});
 
-		_asserScreenNavigationCategories(0, "C_A");
-		_asserScreenNavigationCategories(0, "C_AA");
-		_asserScreenNavigationCategories(1, "C_AAA");
+		_assertScreenNavigationCategories(0, "C_A");
+		_assertScreenNavigationCategories(0, "C_AA");
+		_assertScreenNavigationCategories(1, "C_AAA");
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -733,139 +721,111 @@ public class ObjectDefinitionTreeUtilTest {
 	@Test
 	public void testBindObjectDefinitionsWithObjectEntries() throws Exception {
 		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition("AA");
+			_addAndPublishCustomObjectDefinition();
 		ObjectDefinition objectDefinitionAAA =
-			_addAndPublishCustomObjectDefinition("AAA");
+			_addAndPublishCustomObjectDefinition();
 
-		ObjectRelationship objectRelationship1 =
-			_objectRelationshipLocalService.addObjectRelationship(
-				StringUtil.randomId(), TestPropsValues.getUserId(),
-				objectDefinitionAA.getObjectDefinitionId(),
-				objectDefinitionAAA.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+		ObjectEntry objectEntryAA1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionAA.getObjectDefinitionId(), Map.of());
 
-		ObjectEntry objectDefinitionAAObjectEntry1 =
-			ObjectEntryTestUtil.addObjectEntry(
-				0, objectDefinitionAA.getObjectDefinitionId(),
-				Collections.emptyMap());
-		ObjectEntry objectDefinitionAAAObjectEntry1 =
-			ObjectEntryTestUtil.addObjectEntry(
-				0, objectDefinitionAAA.getObjectDefinitionId(),
-				Collections.emptyMap());
+		ObjectRelationship objectRelationshipAA_AAA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinitionAA,
+				objectDefinitionAAA);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationshipAA_AAA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAAA1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionAAA.getObjectDefinitionId(),
+			Map.of(objectField.getName(), objectEntryAA1.getObjectEntryId()));
+
+		Assert.assertEquals(0, objectEntryAA1.getRootObjectEntryId());
+		Assert.assertEquals(0, objectEntryAAA1.getRootObjectEntryId());
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService, List.of(objectRelationshipAA_AAA));
+
+		objectEntryAA1 = _objectEntryLocalService.getObjectEntry(
+			objectEntryAA1.getObjectEntryId());
+		objectEntryAAA1 = _objectEntryLocalService.getObjectEntry(
+			objectEntryAAA1.getObjectEntryId());
+
+		Assert.assertEquals(
+			objectEntryAA1.getObjectEntryId(),
+			objectEntryAA1.getRootObjectEntryId());
+		Assert.assertEquals(
+			objectEntryAA1.getObjectEntryId(),
+			objectEntryAAA1.getRootObjectEntryId());
+
+		ObjectDefinition objectDefinitionA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipA_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinitionA,
+				objectDefinitionAA);
+
+		objectField = _objectFieldLocalService.getObjectField(
+			objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryA1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionA.getObjectDefinitionId(), Map.of());
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntryAA1.getObjectEntryId(),
+			Map.of(objectField.getName(), objectEntryA1.getObjectEntryId()),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(0, objectEntryA1.getRootObjectEntryId());
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService, List.of(objectRelationshipA_AA));
+
+		objectEntryA1 = _objectEntryLocalService.getObjectEntry(
+			objectEntryA1.getObjectEntryId());
+		objectEntryAA1 = _objectEntryLocalService.getObjectEntry(
+			objectEntryAA1.getObjectEntryId());
+		objectEntryAAA1 = _objectEntryLocalService.getObjectEntry(
+			objectEntryAAA1.getObjectEntryId());
+
+		Assert.assertEquals(
+			objectEntryA1.getObjectEntryId(),
+			objectEntryA1.getRootObjectEntryId());
+		Assert.assertEquals(
+			objectEntryA1.getObjectEntryId(),
+			objectEntryAA1.getRootObjectEntryId());
+		Assert.assertEquals(
+			objectEntryA1.getObjectEntryId(),
+			objectEntryAAA1.getRootObjectEntryId());
+
+		ObjectDefinition objectDefinitionB =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipB_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinitionB,
+				objectDefinitionAA);
+
+		objectField = _objectFieldLocalService.getObjectField(
+			objectRelationshipB_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryB1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionB.getObjectDefinitionId(), Map.of());
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntryAA1.getObjectEntryId(),
+			Map.of(objectField.getName(), objectEntryB1.getObjectEntryId()),
+			ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
-			StringBundler.concat(
-				"There must be no unrelated object entries when both object ",
-				"definitions are published so that the object relationship ",
-				"can be an edge to a root context"),
+			"There must be no related object entries that are root " +
+				"descendant nodes so that the object relationship can be an " +
+					"edge to a root context",
 			() -> TreeTestUtil.bind(
-				_objectRelationshipLocalService, List.of(objectRelationship1)));
-
-		ObjectField objectField1 = _objectFieldLocalService.getObjectField(
-			objectRelationship1.getObjectFieldId2());
-
-		objectDefinitionAAAObjectEntry1 =
-			_objectEntryLocalService.updateObjectEntry(
-				objectDefinitionAAAObjectEntry1.getUserId(),
-				objectDefinitionAAAObjectEntry1.getObjectEntryId(),
-				Collections.singletonMap(
-					objectField1.getName(),
-					objectDefinitionAAObjectEntry1.getObjectEntryId()),
-				ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			0, objectDefinitionAAObjectEntry1.getRootObjectEntryId());
-		Assert.assertEquals(
-			0, objectDefinitionAAAObjectEntry1.getRootObjectEntryId());
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService, List.of(objectRelationship1));
-
-		objectDefinitionAAObjectEntry1 =
-			_objectEntryLocalService.getObjectEntry(
-				objectDefinitionAAObjectEntry1.getObjectEntryId());
-		objectDefinitionAAAObjectEntry1 =
-			_objectEntryLocalService.getObjectEntry(
-				objectDefinitionAAAObjectEntry1.getObjectEntryId());
-
-		long expectedRootObjectEntryId =
-			objectDefinitionAAObjectEntry1.getRootObjectEntryId();
-
-		Assert.assertEquals(
-			expectedRootObjectEntryId,
-			objectDefinitionAAObjectEntry1.getRootObjectEntryId());
-		Assert.assertEquals(
-			expectedRootObjectEntryId,
-			objectDefinitionAAAObjectEntry1.getRootObjectEntryId());
-
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition("A");
-
-		ObjectRelationship objectRelationship2 =
-			_objectRelationshipLocalService.addObjectRelationship(
-				StringUtil.randomId(), TestPropsValues.getUserId(),
-				objectDefinitionA.getObjectDefinitionId(),
-				objectDefinitionAA.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
-			objectRelationship2.getObjectFieldId2());
-
-		ObjectEntry objectDefinitionAObjectEntry1 =
-			ObjectEntryTestUtil.addObjectEntry(
-				0, objectDefinitionA.getObjectDefinitionId(),
-				Collections.emptyMap());
-
-		_objectEntryLocalService.updateObjectEntry(
-			objectDefinitionAAObjectEntry1.getUserId(),
-			objectDefinitionAAObjectEntry1.getObjectEntryId(),
-			Collections.singletonMap(
-				objectField2.getName(),
-				objectDefinitionAObjectEntry1.getObjectEntryId()),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			0, objectDefinitionAObjectEntry1.getRootObjectEntryId());
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService, List.of(objectRelationship2));
-
-		objectDefinitionAObjectEntry1 = _objectEntryLocalService.getObjectEntry(
-			objectDefinitionAObjectEntry1.getObjectEntryId());
-		objectDefinitionAAObjectEntry1 =
-			_objectEntryLocalService.getObjectEntry(
-				objectDefinitionAAObjectEntry1.getObjectEntryId());
-		objectDefinitionAAAObjectEntry1 =
-			_objectEntryLocalService.getObjectEntry(
-				objectDefinitionAAAObjectEntry1.getObjectEntryId());
-
-		expectedRootObjectEntryId =
-			objectDefinitionAObjectEntry1.getRootObjectEntryId();
-
-		Assert.assertEquals(
-			expectedRootObjectEntryId,
-			objectDefinitionAObjectEntry1.getRootObjectEntryId());
-		Assert.assertEquals(
-			expectedRootObjectEntryId,
-			objectDefinitionAAObjectEntry1.getRootObjectEntryId());
-		Assert.assertEquals(
-			expectedRootObjectEntryId,
-			objectDefinitionAAAObjectEntry1.getRootObjectEntryId());
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {
-				objectDefinitionA.getName(), objectDefinitionAA.getName(),
-				objectDefinitionAAA.getName()
-			},
-			_objectEntryLocalService, _objectRelationshipLocalService);
+				_objectRelationshipLocalService,
+				List.of(objectRelationshipB_AA)));
 	}
 
 	@Test
@@ -1002,9 +962,9 @@ public class ObjectDefinitionTreeUtilTest {
 						objectDefinition1.getRootObjectDefinitionId()),
 					_objectDefinitionLocalService));
 
-		_asserScreenNavigationCategories(2, "C_AA");
-		_asserScreenNavigationCategories(2, "C_AAA");
-		_asserScreenNavigationCategories(1, "C_AAAA");
+		_assertScreenNavigationCategories(2, "C_AA");
+		_assertScreenNavigationCategories(2, "C_AAA");
+		_assertScreenNavigationCategories(1, "C_AAAA");
 
 		// Bind a published object definition as a parent node in a published
 		// object definition tree
@@ -1026,10 +986,10 @@ public class ObjectDefinitionTreeUtilTest {
 						objectDefinition1.getObjectDefinitionId()),
 					_objectDefinitionLocalService));
 
-		_asserScreenNavigationCategories(2, "C_A");
-		_asserScreenNavigationCategories(2, "C_AA");
-		_asserScreenNavigationCategories(2, "C_AAA");
-		_asserScreenNavigationCategories(1, "C_AAAA");
+		_assertScreenNavigationCategories(2, "C_A");
+		_assertScreenNavigationCategories(2, "C_AA");
+		_assertScreenNavigationCategories(2, "C_AAA");
+		_assertScreenNavigationCategories(1, "C_AAAA");
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -1070,10 +1030,10 @@ public class ObjectDefinitionTreeUtilTest {
 						objectDefinition1.getRootObjectDefinitionId()),
 					_objectDefinitionLocalService));
 
-		_asserScreenNavigationCategories(2, "C_A");
-		_asserScreenNavigationCategories(2, "C_AA");
-		_asserScreenNavigationCategories(2, "C_AAA");
-		_asserScreenNavigationCategories(1, "C_AAAA");
+		_assertScreenNavigationCategories(2, "C_A");
+		_assertScreenNavigationCategories(2, "C_AA");
+		_assertScreenNavigationCategories(2, "C_AAA");
+		_assertScreenNavigationCategories(1, "C_AAAA");
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -1100,8 +1060,8 @@ public class ObjectDefinitionTreeUtilTest {
 						objectDefinition1.getObjectDefinitionId()),
 					_objectDefinitionLocalService));
 
-		_asserScreenNavigationCategories(2, "C_B");
-		_asserScreenNavigationCategories(1, "C_BB");
+		_assertScreenNavigationCategories(2, "C_B");
+		_assertScreenNavigationCategories(1, "C_BB");
 
 		// Object definitions must have the same scope to enable inheritance
 
@@ -2118,24 +2078,6 @@ public class ObjectDefinitionTreeUtilTest {
 			null, values, ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _asserScreenNavigationCategories(
-			int expectedSize, String objectDefinitionName)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), objectDefinitionName);
-
-		List<ScreenNavigationCategory> screenNavigationCategories =
-			ScreenNavigationRegistryUtil.getScreenNavigationCategories(
-				objectDefinition.getClassName(), TestPropsValues.getUser(),
-				null);
-
-		Assert.assertEquals(
-			screenNavigationCategories.toString(), expectedSize,
-			screenNavigationCategories.size());
-	}
-
 	private void _assertHasResourcePermission(
 			boolean expectedHasResourcePermission, ObjectEntry objectEntry,
 			Role role)
@@ -2215,6 +2157,24 @@ public class ObjectDefinitionTreeUtilTest {
 
 		Assert.assertEquals(
 			expectedRootObjectEntryId, objectEntry.getRootObjectEntryId());
+	}
+
+	private void _assertScreenNavigationCategories(
+			int expectedSize, String objectDefinitionName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), objectDefinitionName);
+
+		List<ScreenNavigationCategory> screenNavigationCategories =
+			ScreenNavigationRegistryUtil.getScreenNavigationCategories(
+				objectDefinition.getClassName(), TestPropsValues.getUser(),
+				null);
+
+		Assert.assertEquals(
+			screenNavigationCategories.toString(), expectedSize,
+			screenNavigationCategories.size());
 	}
 
 	private void _assertWorkflowDefinitionLink(

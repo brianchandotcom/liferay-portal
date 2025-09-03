@@ -443,7 +443,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
-	@TestInfo("LPD-57756")
+	@TestInfo("LPD-58645")
 	public void testExportImportWithDifferentScopedObjectEntries()
 		throws Exception {
 

@@ -111,12 +111,10 @@ public class GroupModelListenerTest {
 
 		Group group = depotEntry.getGroup();
 
-		JSONObject jsonObject =
-			CMSDefaultPermissionUtil.
-				getCMSDefaultPermissionDefaultPermissionsJSONObject(
-					depotEntry.getCompanyId(), depotEntry.getUserId(),
-					group.getExternalReferenceCode(),
-					depotEntry.getModelClassName(), _filterFactory);
+		JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+			depotEntry.getCompanyId(), depotEntry.getUserId(),
+			group.getExternalReferenceCode(), depotEntry.getModelClassName(),
+			_filterFactory);
 
 		Assert.assertTrue(
 			jsonObject.has(
@@ -152,7 +150,7 @@ public class GroupModelListenerTest {
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT));
 
 		Assert.assertNull(
-			CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
 				depotEntry.getCompanyId(), depotEntry.getUserId(),
 				group.getExternalReferenceCode(),
 				depotEntry.getModelClassName(), _filterFactory));

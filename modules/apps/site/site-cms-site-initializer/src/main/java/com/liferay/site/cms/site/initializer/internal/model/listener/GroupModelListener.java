@@ -67,7 +67,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					getObjectDefinitionByExternalReferenceCode(
 						"L_BASIC_DOCUMENT", group.getCompanyId());
 
-			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 				null, group.getCompanyId(), group.getCreatorUserId(),
 				group.getExternalReferenceCode(), DepotEntry.class.getName(),
 				JSONUtil.put(
@@ -126,11 +126,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 
 		try {
-			ObjectEntry objectEntry =
-				CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
-					group.getCompanyId(), group.getCreatorUserId(),
-					group.getExternalReferenceCode(),
-					DepotEntry.class.getName(), _filterFactory);
+			ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
+				group.getCompanyId(), group.getCreatorUserId(),
+				group.getExternalReferenceCode(), DepotEntry.class.getName(),
+				_filterFactory);
 
 			if (objectEntry == null) {
 				return;

@@ -180,27 +180,20 @@ public class ObjectEntryFolderModelListenerTest {
 		Group group = _groupLocalService.getGroup(
 			_objectEntryFolder.getGroupId());
 
-		JSONObject jsonObject1 =
-			CMSDefaultPermissionUtil.
-				getCMSDefaultPermissionDefaultPermissionsJSONObject(
-					group.getCompanyId(), group.getCreatorUserId(),
-					group.getExternalReferenceCode(),
-					DepotEntry.class.getName(), _filterFactory);
+		JSONObject jsonObject1 = CMSDefaultPermissionUtil.getJSONObject(
+			group.getCompanyId(), group.getCreatorUserId(),
+			group.getExternalReferenceCode(), DepotEntry.class.getName(),
+			_filterFactory);
 
-		ObjectEntry objectEntry =
-			CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
-				_objectEntryFolder.getCompanyId(),
-				_objectEntryFolder.getUserId(),
-				_objectEntryFolder.getExternalReferenceCode(),
-				_objectEntryFolder.getModelClassName(), _filterFactory);
+		ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
+			_objectEntryFolder.getCompanyId(), _objectEntryFolder.getUserId(),
+			_objectEntryFolder.getExternalReferenceCode(),
+			_objectEntryFolder.getModelClassName(), _filterFactory);
 
-		JSONObject jsonObject2 =
-			CMSDefaultPermissionUtil.
-				getCMSDefaultPermissionDefaultPermissionsJSONObject(
-					_objectEntryFolder.getCompanyId(),
-					_objectEntryFolder.getUserId(),
-					_objectEntryFolder.getExternalReferenceCode(),
-					_objectEntryFolder.getModelClassName(), _filterFactory);
+		JSONObject jsonObject2 = CMSDefaultPermissionUtil.getJSONObject(
+			_objectEntryFolder.getCompanyId(), _objectEntryFolder.getUserId(),
+			_objectEntryFolder.getExternalReferenceCode(),
+			_objectEntryFolder.getModelClassName(), _filterFactory);
 
 		Assert.assertEquals(jsonObject1.toString(), jsonObject2.toString());
 
@@ -210,7 +203,7 @@ public class ObjectEntryFolderModelListenerTest {
 				RoleConstants.CMS_ADMINISTRATOR,
 				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
 
-		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			objectEntry.getExternalReferenceCode(), objectEntry.getCompanyId(),
 			objectEntry.getUserId(),
 			_objectEntryFolder.getExternalReferenceCode(),
@@ -227,13 +220,10 @@ public class ObjectEntryFolderModelListenerTest {
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
 
-		JSONObject jsonObject3 =
-			CMSDefaultPermissionUtil.
-				getCMSDefaultPermissionDefaultPermissionsJSONObject(
-					objectEntryFolder.getCompanyId(),
-					objectEntryFolder.getUserId(),
-					objectEntryFolder.getExternalReferenceCode(),
-					objectEntryFolder.getModelClassName(), _filterFactory);
+		JSONObject jsonObject3 = CMSDefaultPermissionUtil.getJSONObject(
+			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
+			objectEntryFolder.getExternalReferenceCode(),
+			objectEntryFolder.getModelClassName(), _filterFactory);
 
 		Assert.assertEquals(jsonObject2.toString(), jsonObject3.toString());
 		Assert.assertTrue(
@@ -280,7 +270,7 @@ public class ObjectEntryFolderModelListenerTest {
 			_sharingEntryLocalService.getSharingEntriesCount());
 
 		Assert.assertNull(
-			CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
 				objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
 				objectEntryFolder.getExternalReferenceCode(),
 				objectEntryFolder.getModelClassName(), _filterFactory));

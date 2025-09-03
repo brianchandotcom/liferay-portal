@@ -61,15 +61,15 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatReturnStatements(JavaTerm javaTerm) {
-		String javaTermContent = javaTerm.getContent();
-
 		JavaSignature signature = javaTerm.getSignature();
 
 		String returnType = signature.getReturnType();
 
 		if (Validator.isBlank(returnType)) {
-			return javaTermContent;
+			return javaTerm.getContent();
 		}
+
+		String javaTermContent = javaTerm.getContent();
 
 		Matcher matcher1 = _returnPattern.matcher(javaTermContent);
 

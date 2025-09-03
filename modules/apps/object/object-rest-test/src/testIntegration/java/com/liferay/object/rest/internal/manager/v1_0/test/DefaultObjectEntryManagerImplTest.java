@@ -113,7 +113,6 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.function.UnsafeBiFunction;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.UnsafeTriFunction;
 import com.liferay.petra.lang.SafeCloseable;
@@ -9788,17 +9787,15 @@ public class DefaultObjectEntryManagerImplTest
 
 		_addRoleUser(new String[] {ActionKeys.VIEW}, objectDefinitionA, _user);
 
-		UnsafeSupplier<Page<ObjectEntry>, Exception> unsafeSupplier =
-			() -> _objectEntryManager.getObjectEntries(
-				TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey,
-				null, _createDTOConverterContext(), (String)null, null, null,
-				null);
-
 		assertEquals(
 			unsafeBiFunction.apply(objectEntryA, objectRelationshipA_AA),
 			Page.of(List.of(objectEntryA_AA), null, 1));
 		assertEquals(
-			unsafeSupplier.get(), Page.of(Collections.emptyList(), null, 0));
+			_objectEntryManager.getObjectEntries(
+				TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey,
+				null, _createDTOConverterContext(), (String)null, null, null,
+				null),
+			Page.of(Collections.emptyList(), null, 0));
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -9823,7 +9820,11 @@ public class DefaultObjectEntryManagerImplTest
 			() -> unsafeBiFunction.apply(objectEntryA, objectRelationshipA_AA));
 
 		assertEquals(
-			unsafeSupplier.get(), Page.of(List.of(objectEntryAA), null, 1));
+			_objectEntryManager.getObjectEntries(
+				TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey,
+				null, _createDTOConverterContext(), (String)null, null, null,
+				null),
+			Page.of(List.of(objectEntryAA), null, 1));
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -9850,7 +9851,11 @@ public class DefaultObjectEntryManagerImplTest
 				objectRelationshipA_AA, null));
 
 		assertEquals(
-			unsafeSupplier.get(), Page.of(Collections.emptyList(), null, 0));
+			_objectEntryManager.getObjectEntries(
+				TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey,
+				null, _createDTOConverterContext(), (String)null, null, null,
+				null),
+			Page.of(Collections.emptyList(), null, 0));
 		assertEquals(
 			unsafeBiFunction.apply(objectEntryB, objectRelationshipB_AA),
 			Page.of(List.of(objectEntryB_AA), null, 1));
@@ -9867,7 +9872,11 @@ public class DefaultObjectEntryManagerImplTest
 			unsafeBiFunction.apply(objectEntryA, objectRelationshipA_AA),
 			Page.of(List.of(objectEntryA_AA), null, 1));
 		assertEquals(
-			unsafeSupplier.get(), Page.of(List.of(objectEntryAA), null, 1));
+			_objectEntryManager.getObjectEntries(
+				TestPropsValues.getCompanyId(), objectDefinitionAA, scopeKey,
+				null, _createDTOConverterContext(), (String)null, null, null,
+				null),
+			Page.of(List.of(objectEntryAA), null, 1));
 		assertEquals(
 			unsafeBiFunction.apply(objectEntryB, objectRelationshipB_AA),
 			Page.of(List.of(objectEntryB_AA), null, 1));

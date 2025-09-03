@@ -308,8 +308,7 @@ public class RelationshipObjectFieldBusinessType
 
 		BaseModel<?> baseModel =
 			systemObjectDefinitionManager.getOrAddEmptyBaseModel(
-				externalReferenceCode, objectDefinition.getCompanyId(),
-				_userLocalService.getUserById(userId));
+				externalReferenceCode, _userLocalService.getUserById(userId));
 
 		return baseModel.getPrimaryKeyObj();
 	}

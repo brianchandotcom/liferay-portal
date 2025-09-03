@@ -108,7 +108,7 @@ function NavBar({creationMenu, handleCheckboxClick, items, showSearch}) {
 
 				{showInfoPanel && (
 					<ManagementToolbar.Item>
-						<InfoPanelToggleButton symbol="info-panel-closed" />
+						<InfoPanelToggleButton symbol="info-circle-open" />
 					</ManagementToolbar.Item>
 				)}
 			</ManagementToolbar.ItemList>

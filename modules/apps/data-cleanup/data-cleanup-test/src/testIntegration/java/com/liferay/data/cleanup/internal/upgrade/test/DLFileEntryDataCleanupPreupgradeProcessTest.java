@@ -8,6 +8,7 @@ package com.liferay.data.cleanup.internal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -25,7 +26,9 @@ import java.sql.ResultSet;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,6 +45,18 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
+
+		_dbInspector = new DBInspector(_connection);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		DataAccess.cleanUp(_connection);
+	}
 
 	@Test
 	public void testRemoveDLFileEntryOrphanData() throws Exception {
@@ -80,13 +95,16 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 			Assert.assertTrue(
 				messages.contains(
-					"Deleted document library file entry " + fileEntryId1 +
-						" because its name was null"));
+					StringBundler.concat(
+						"Table ", _dbInspector.normalizeName("DLFileEntry"),
+						", row with fileEntryId ", fileEntryId1,
+						" deleted because its name was null")));
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
-						"Deleted document library file entry ", fileEntryId2,
-						" because its name was ",
+						"Table ", _dbInspector.normalizeName("DLFileEntry"),
+						", row with fileEntryId ", fileEntryId2,
+						" deleted because its name was ",
 						(DBManagerUtil.getDBType() == DBType.ORACLE) ? "null" :
 							"empty")));
 		}
@@ -113,5 +131,8 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 			}
 		}
 	}
+
+	private static Connection _connection;
+	private static DBInspector _dbInspector;
 
 }

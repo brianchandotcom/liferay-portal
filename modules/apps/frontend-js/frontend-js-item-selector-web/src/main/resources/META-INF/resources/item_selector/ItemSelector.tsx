@@ -4,12 +4,15 @@
  */
 
 import ClayAutocomplete from '@clayui/autocomplete';
+import {ClayButtonWithIcon} from '@clayui/button';
 import {FetchPolicy, useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {InternalDispatch, useControlledState} from '@clayui/shared';
 import {fetch, getObjectValueFromPath} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
+
+import ItemSelectorModal, {IItemSelectorModalProps} from './itemSelectorModal';
 
 const NETWORK_STATUS_UNUSED = 4;
 
@@ -30,6 +33,43 @@ interface HeadlessPage<T = unknown> {
 	items: T[];
 	lastPage: number;
 	page: number;
+}
+
+function ItemSelectorModalButton({
+	itemSelectorModalProps,
+	items,
+	locator,
+	setItems,
+}: {
+	itemSelectorModalProps: IItemSelectorModalProps<any>;
+	items: any[];
+	locator: {
+		id: string;
+		label: string;
+		value: string;
+	};
+	setItems: InternalDispatch<any>;
+}) {
+	return (
+		<>
+			<ClayInput.GroupItem shrink>
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('Select User')}
+					displayType="secondary"
+					onClick={() =>
+						itemSelectorModalProps.onOpenChange(true)
+					}
+					symbol="search-experiences"
+				/>
+			</ClayInput.GroupItem>
+			<ItemSelectorModal
+				{...itemSelectorModalProps}
+				items={items}
+				locator={locator}
+				onItemsChange={setItems}
+			/>
+		</>
+	);
 }
 
 export interface IItemSelectorProps<T>

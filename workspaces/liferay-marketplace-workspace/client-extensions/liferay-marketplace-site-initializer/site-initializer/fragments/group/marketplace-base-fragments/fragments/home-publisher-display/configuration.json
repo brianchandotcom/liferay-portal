@@ -5,13 +5,9 @@
 				{
 					"dataType": "string",
 					"defaultValue": "Finest Publishers",
-					"description": "Title",
 					"label": "Section Title",
 					"name": "sectionTitle",
-					"type": "text",
-					"typeOptions": {
-						"placeholder": "Finest Publishers"
-					}
+					"type": "text"
 				}
 			]
 		},
@@ -20,13 +16,9 @@
 				{
 					"dataType": "string",
 					"defaultValue": "Fragments and client extensions to foster your productivity",
-					"description": "Sub title",
 					"label": "Section Description",
 					"name": "sectionDescription",
-					"type": "text",
-					"typeOptions": {
-						"placeholder": "Fragments and client extensions to foster your productivity"
-					}
+					"type": "text"
 				}
 			]
 		},
@@ -35,13 +27,9 @@
 				{
 					"dataType": "string",
 					"defaultValue": "00000",
-					"description": "Publisher Details Object Id",
 					"label": "Publisher Details Object Id",
 					"name": "publisherDetailsObjectId",
-					"type": "text",
-					"typeOptions": {
-						"placeholder": "00000"
-					}
+					"type": "text"
 				}
 			]
 		},
@@ -49,7 +37,6 @@
 			"fields": [
 				{
 					"defaultValue": false,
-					"description": "hide-rating-info",
 					"label": "Hide Rating Info",
 					"name": "hideRatingInfo",
 					"type": "checkbox"

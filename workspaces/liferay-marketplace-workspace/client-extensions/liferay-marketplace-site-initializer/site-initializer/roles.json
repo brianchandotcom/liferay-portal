@@ -66,22 +66,13 @@
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"name": "App Editor",
-		"type": 6
-	},
-	{
-		"actions": [
-		],
-		"name": "Invited Member",
-		"type": 6
-	},
-	{
-		"actions": [
-		],
+		"actions": [],
 		"name": "Solution Publisher",
 		"type": 6
+	},
+	{
+		"name": "Finance Administrator",
+		"type": 1
 	},
 	{
 		"actions": [
@@ -128,10 +119,6 @@
 			}
 		],
 		"name": "Account Administrator",
-		"type": 1
-	},
-	{
-		"name": "Account Administrator (Regular)",
 		"type": 1
 	},
 	{

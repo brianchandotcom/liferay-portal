@@ -161,81 +161,7 @@ public class SaveScimConfigurationMVCActionCommand
 			try {
 				ScimThreadLocal.setResetInProcess(true);
 
-				OAuth2Application oAuth2Application =
-					_oAuth2ApplicationLocalService.getOAuth2Application(
-						themeDisplay.getCompanyId(), scimClientId);
-
-				_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
-					oAuth2Application.getOAuth2ApplicationId());
-
-				_oAuth2ApplicationLocalService.deleteOAuth2Application(
-					oAuth2Application);
-
-				Indexer<UserGroup> userGroupIndexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
-				Indexer<User> userIndexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-				ActionableDynamicQuery actionableDynamicQuery =
-					_expandoValueLocalService.getActionableDynamicQuery();
-
-				actionableDynamicQuery.setAddCriteriaMethod(
-					dynamicQuery -> {
-						List<Long> columnIds = new ArrayList<>();
-
-						ExpandoColumn expandoColumn =
-							_expandoColumnLocalService.getColumn(
-								themeDisplay.getCompanyId(),
-								User.class.getName(), "CUSTOM_FIELDS",
-								"scimClientId");
-
-						if (expandoColumn != null) {
-							columnIds.add(expandoColumn.getColumnId());
-						}
-
-						expandoColumn = _expandoColumnLocalService.getColumn(
-							themeDisplay.getCompanyId(),
-							UserGroup.class.getName(), "CUSTOM_FIELDS",
-							"scimClientId");
-
-						if (expandoColumn != null) {
-							columnIds.add(expandoColumn.getColumnId());
-						}
-
-						if (!columnIds.isEmpty()) {
-							Property columnProperty =
-								PropertyFactoryUtil.forName("columnId");
-
-							dynamicQuery.add(columnProperty.in(columnIds));
-						}
-
-						Property dataProperty = PropertyFactoryUtil.forName(
-							"data");
-
-						dynamicQuery.add(dataProperty.eq(scimClientId));
-					});
-				actionableDynamicQuery.setPerformActionMethod(
-					(ExpandoValue expandoValue) -> {
-						_expandoRowLocalService.deleteRow(
-							expandoValue.getTableId(),
-							expandoValue.getClassPK());
-
-						String className = _portal.getClassName(
-							expandoValue.getClassNameId());
-
-						if (className.equals(User.class.getName())) {
-							userIndexer.reindex(
-								_userLocalService.getUser(
-									expandoValue.getClassPK()));
-						}
-						else {
-							userGroupIndexer.reindex(
-								_userGroupLocalService.getUserGroup(
-									expandoValue.getClassPK()));
-						}
-					});
-
-				actionableDynamicQuery.performActions();
+				_reset(scimClientId, themeDisplay);
 			}
 			finally {
 				ScimThreadLocal.setResetInProcess(resetInProcess);
@@ -297,6 +223,81 @@ public class SaveScimConfigurationMVCActionCommand
 					).build());
 			}
 		}
+	}
+
+	private void _reset(String scimClientId, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.getOAuth2Application(
+				themeDisplay.getCompanyId(), scimClientId);
+
+		_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
+			oAuth2Application.getOAuth2ApplicationId());
+
+		_oAuth2ApplicationLocalService.deleteOAuth2Application(
+			oAuth2Application);
+
+		Indexer<UserGroup> userGroupIndexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
+		Indexer<User> userIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_expandoValueLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				List<Long> columnIds = new ArrayList<>();
+
+				ExpandoColumn expandoColumn =
+					_expandoColumnLocalService.getColumn(
+						themeDisplay.getCompanyId(), User.class.getName(),
+						"CUSTOM_FIELDS", "scimClientId");
+
+				if (expandoColumn != null) {
+					columnIds.add(expandoColumn.getColumnId());
+				}
+
+				expandoColumn = _expandoColumnLocalService.getColumn(
+					themeDisplay.getCompanyId(), UserGroup.class.getName(),
+					"CUSTOM_FIELDS", "scimClientId");
+
+				if (expandoColumn != null) {
+					columnIds.add(expandoColumn.getColumnId());
+				}
+
+				if (!columnIds.isEmpty()) {
+					Property columnProperty = PropertyFactoryUtil.forName(
+						"columnId");
+
+					dynamicQuery.add(columnProperty.in(columnIds));
+				}
+
+				Property dataProperty = PropertyFactoryUtil.forName("data");
+
+				dynamicQuery.add(dataProperty.eq(scimClientId));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(ExpandoValue expandoValue) -> {
+				_expandoRowLocalService.deleteRow(
+					expandoValue.getTableId(), expandoValue.getClassPK());
+
+				String className = _portal.getClassName(
+					expandoValue.getClassNameId());
+
+				if (className.equals(User.class.getName())) {
+					userIndexer.reindex(
+						_userLocalService.getUser(expandoValue.getClassPK()));
+				}
+				else {
+					userGroupIndexer.reindex(
+						_userGroupLocalService.getUserGroup(
+							expandoValue.getClassPK()));
+				}
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Reference

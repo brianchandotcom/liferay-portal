@@ -97,8 +97,8 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 					bundle.getSymbolicName(),
 					"com.liferay.site.initializer.cms")) {
 
-				_deleteBatchFile(bundle, "01.object.folder");
-				_deleteBatchFile(bundle, "02.object.definition");
+				_deleteFile(bundle, "01.object.folder");
+				_deleteFile(bundle, "02.object.definition");
 
 				CompletableFuture<Void> completableFuture =
 					_batchEngineUnitProcessor.processBatchEngineUnits(
@@ -128,7 +128,6 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
-
 		_themeDisplay = _getThemeDisplay();
 	}
 
@@ -236,14 +235,13 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 				"/edit_content_item?&p_l_mode=read&p_p_state=",
 				LiferayWindowState.POP_UP, "&objectEntryId=",
 				objectEntry.getObjectEntryId()));
-
 		expiredAsset.setTitle(englishTitle);
 		expiredAsset.setUsages(1);
 
 		return expiredAsset;
 	}
 
-	private void _deleteBatchFile(Bundle bundle, String fileName) {
+	private void _deleteFile(Bundle bundle, String fileName) {
 		File file = bundle.getDataFile(
 			".com.liferay.headless.builder.internal.batch." + fileName +
 				".batch.engine.data.json.0.processed");

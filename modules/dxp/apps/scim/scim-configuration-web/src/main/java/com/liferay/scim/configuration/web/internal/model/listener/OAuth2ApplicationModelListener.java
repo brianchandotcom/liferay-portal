@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.scim.rest.util.ScimClientUtil;
@@ -56,7 +57,7 @@ public class OAuth2ApplicationModelListener
 			}
 		}
 
-		if (configurations == null) {
+		if (ArrayUtil.isEmpty(configurations)) {
 			return;
 		}
 

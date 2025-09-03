@@ -48,7 +48,7 @@ ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayC
 
 <aui:form method="post" name="fm">
 	<frontend-data-set:headless-display
-		apiURL="<%= importErrorsDisplayContext.getAPIURL() %>"
+		apiURL="<%= importErrorsDisplayContext.getAPIURL(String.valueOf(backgroundTaskId)) %>"
 		fdsActionDropdownItems="<%= importErrorsDisplayContext.getFDSActionDropdownItems() %>"
 		id="<%= stagingGroupHelper.isCompanyGroup(groupDisplayContextHelper.getGroup()) ? ExportImportFDSNames.COMPANY_IMPORT_ERRORS : ExportImportFDSNames.IMPORT_ERRORS %>"
 		style="fluid"

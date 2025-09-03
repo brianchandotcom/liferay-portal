@@ -54,7 +54,7 @@
 		"keywords": [
 		]
 	},
-	"name": "Webhook Message Start Event Connector",
+	"name": "Liferay Webhook Message Start Event Connector",
 	"properties": [
 		{
 			"binding": {

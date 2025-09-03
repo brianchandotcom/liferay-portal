@@ -73,7 +73,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		if (BulkAction.Type.DELETE_BULK_ACTION.equals(bulkAction.getType())) {
 			return _executeDeleteBulkAction(
 				bulkAction,
-				_getBulkActionItemMap(
+				_getBulkActionItemsMap(
 					bulkAction.getBulkActionItems(), filter, search,
 					GetterUtil.getBoolean(bulkAction.getSelectAll())));
 		}
@@ -143,10 +143,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	private BulkActionTask _executeDeleteBulkAction(
 			BulkAction bulkAction,
-			Map<String, List<BulkActionItem>> bulkActionItemMap)
+			Map<String, List<BulkActionItem>> bulkActionItemsMap)
 		throws Exception {
 
-		if (MapUtil.isEmpty(bulkActionItemMap)) {
+		if (MapUtil.isEmpty(bulkActionItemsMap)) {
 			return new BulkActionTask();
 		}
 
@@ -160,7 +160,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		ImportTaskResource importTaskResource = _getImportTaskResource();
 
 		for (Map.Entry<String, List<BulkActionItem>> entry :
-				bulkActionItemMap.entrySet()) {
+				bulkActionItemsMap.entrySet()) {
 
 			String taskItemDelegateName = _getTaskItemDelegateName(
 				entry.getKey());
@@ -188,12 +188,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return bulkActionTask;
 	}
 
-	private Map<String, List<BulkActionItem>> _getBulkActionItemMap(
+	private Map<String, List<BulkActionItem>> _getBulkActionItemsMap(
 			BulkActionItem[] bulkActionItems, Filter filter, String search,
 			boolean selectAll)
 		throws Exception {
 
-		Map<String, List<BulkActionItem>> bulkActionItemMap = new HashMap<>();
+		Map<String, List<BulkActionItem>> bulkActionItemsMap = new HashMap<>();
 
 		if (selectAll && ArrayUtil.isEmpty(bulkActionItems)) {
 			if (filter == null) {
@@ -218,7 +218,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					String.valueOf(searchResult.getEmbedded()));
 
-				bulkActionItemMap.computeIfAbsent(
+				bulkActionItemsMap.computeIfAbsent(
 					searchResult.getEntryClassName(), key -> new ArrayList<>()
 				).add(
 					new BulkActionItem() {
@@ -232,22 +232,22 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				);
 			}
 
-			return bulkActionItemMap;
+			return bulkActionItemsMap;
 		}
 
 		if (ArrayUtil.isEmpty(bulkActionItems)) {
-			return bulkActionItemMap;
+			return bulkActionItemsMap;
 		}
 
 		for (BulkActionItem bulkActionItem : bulkActionItems) {
-			bulkActionItemMap.computeIfAbsent(
+			bulkActionItemsMap.computeIfAbsent(
 				bulkActionItem.getClassName(), key -> new ArrayList<>()
 			).add(
 				bulkActionItem
 			);
 		}
 
-		return bulkActionItemMap;
+		return bulkActionItemsMap;
 	}
 
 	private long _getBulkActionTaskItemObjectDefinitionId() throws Exception {

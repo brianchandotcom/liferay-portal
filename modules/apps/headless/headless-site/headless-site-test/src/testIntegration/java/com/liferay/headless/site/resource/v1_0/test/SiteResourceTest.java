@@ -212,9 +212,25 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteWithoutAuthentication();
 	}
 
+	@LazyReferencing
+	@Override
+	@Test
+	public void testPutSite() throws Exception {
+		super.testPutSite();
+
+		_testPutSiteBatch();
+	}
+
 	@Override
 	protected void assertValid(Site site, Map<String, File> multipartFiles)
 		throws Exception {
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"active", "friendlyUrlPath", "manualMembership", "name"
+		};
 	}
 
 	@Override
@@ -261,6 +277,11 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
+	protected Site testGetSite_addSite() throws Exception {
+		return testPostSite_addSite(randomSite());
+	}
+
+	@Override
 	protected Site testGetSiteByExternalReferenceCode_addSite()
 		throws Exception {
 
@@ -299,11 +320,32 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
+	protected Site testPutSite_addSite() throws Exception {
+		return testPostSite_addSite(randomSite());
+	}
+
+	@Override
 	protected Site testPutSiteByExternalReferenceCode_addSite()
 		throws Exception {
 
 		return siteResource.putSiteByExternalReferenceCode(
 			RandomTestUtil.randomString(), randomSite(), getMultipartFiles());
+	}
+
+	private void _assertEquals(Group group, Site site) throws Exception {
+		Assert.assertEquals(site.getActive(), group.isActive());
+		Assert.assertEquals(site.getFriendlyUrlPath(), group.getFriendlyURL());
+		Assert.assertEquals(
+			site.getManualMembership(), group.isManualMembership());
+		Assert.assertEquals(
+			site.getMembershipRestriction(),
+			Integer.valueOf(group.getMembershipRestriction()));
+		Assert.assertEquals(
+			site.getMembershipType(),
+			Site.MembershipType.create(
+				GroupConstants.getTypeLabel(group.getType())));
+		Assert.assertEquals(
+			site.getName(), group.getName(LocaleUtil.getDefault()));
 	}
 
 	private void _testGetSiteByExternalReferenceCodeWithDollar()
@@ -466,19 +508,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
 
-		Assert.assertEquals(site.getActive(), group.isActive());
-		Assert.assertEquals(site.getFriendlyUrlPath(), group.getFriendlyURL());
-		Assert.assertEquals(
-			site.getManualMembership(), group.isManualMembership());
-		Assert.assertEquals(
-			site.getMembershipRestriction(),
-			Integer.valueOf(group.getMembershipRestriction()));
-		Assert.assertEquals(
-			site.getMembershipType(),
-			Site.MembershipType.create(
-				GroupConstants.getTypeLabel(group.getType())));
-		Assert.assertEquals(
-			site.getName(), group.getName(LocaleUtil.getDefault()));
+		_assertEquals(group, site);
 
 		_sites.add(
 			siteResource.getSiteByExternalReferenceCode(
@@ -868,6 +898,49 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 			Assert.assertEquals("403", problem.getStatus());
 		}
+	}
+
+	private void _testPutSiteBatch() throws Exception {
+		Site site = randomSite();
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_jsonFactory.createJSONObject(site.toString())
+				).toString(),
+				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
+
+		_assertEquals(group, site);
+
+		_sites.add(
+			siteResource.getSiteByExternalReferenceCode(
+				site.getExternalReferenceCode()));
+
+		Site updatedSite = randomSite();
+
+		updatedSite.setExternalReferenceCode(site.getExternalReferenceCode());
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_jsonFactory.createJSONObject(updatedSite.toString())
+				).toString(),
+				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+
+		group = _groupLocalService.getGroupByExternalReferenceCode(
+			updatedSite.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
+
+		_assertEquals(group, updatedSite);
+
+		_sites.add(
+			siteResource.getSiteByExternalReferenceCode(
+				updatedSite.getExternalReferenceCode()));
 	}
 
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =

@@ -55,7 +55,7 @@
 		"keywords": [
 		]
 	},
-	"name": "Webhook Intermediate Event Connector",
+	"name": "Liferay Webhook Intermediate Event Connector",
 	"properties": [
 		{
 			"binding": {

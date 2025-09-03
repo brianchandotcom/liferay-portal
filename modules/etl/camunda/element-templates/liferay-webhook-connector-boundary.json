@@ -54,7 +54,7 @@
 		"keywords": [
 		]
 	},
-	"name": "Webhook Boundary Event Connector",
+	"name": "Liferay Webhook Boundary Event Connector",
 	"properties": [
 		{
 			"binding": {

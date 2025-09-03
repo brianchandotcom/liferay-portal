@@ -847,6 +847,11 @@ public class OrganizationLocalServiceWrapper
 			companyId, parentOrganizationId, status);
 	}
 
+	@Override
+	public java.util.List<Organization> getOrganizationsByLogoId(long logoId) {
+		return _organizationLocalService.getOrganizationsByLogoId(logoId);
+	}
+
 	/**
 	 * Returns the number of organizations.
 	 *

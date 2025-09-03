@@ -602,6 +602,9 @@ public interface OrganizationLocalService
 	public int getOrganizationsAndUsersCount(
 		long companyId, long parentOrganizationId, int status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Organization> getOrganizationsByLogoId(long logoId);
+
 	/**
 	 * Returns the number of organizations.
 	 *

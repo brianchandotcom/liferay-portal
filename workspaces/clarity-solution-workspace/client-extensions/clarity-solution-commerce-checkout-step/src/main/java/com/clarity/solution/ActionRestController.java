@@ -35,10 +35,8 @@ public class ActionRestController extends BaseRestController {
 		for (String key : jsonObject.keySet()) {
 			if (key.contains("item_")) {
 				try {
-					String uri =
+					String apiURL =
 						"/o/headless-commerce-delivery-cart/v1.0/cart-items/";
-
-					uri += key.split("item_")[1];
 
 					patch(
 						"Bearer " + jwt.getTokenValue(),
@@ -47,7 +45,7 @@ public class ActionRestController extends BaseRestController {
 							"shippingAddressId", jsonObject.getString(key)
 						).toString(),
 						UriComponentsBuilder.fromPath(
-							uri
+							apiURL + key.split("item_")[1]
 						).build(
 						).toUri());
 				}

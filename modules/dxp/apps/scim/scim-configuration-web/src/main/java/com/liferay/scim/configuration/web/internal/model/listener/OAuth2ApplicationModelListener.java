@@ -5,7 +5,7 @@
 
 package com.liferay.scim.configuration.web.internal.model.listener;
 
-import com.liferay.oauth2.provider.exception.OAuth2ApplicationRequiredException;
+import com.liferay.oauth2.provider.exception.RequiredOAuth2ApplicationException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -72,7 +72,7 @@ public class OAuth2ApplicationModelListener
 
 		if (Objects.equals(oAuth2Application.getClientId(), scimClientId)) {
 			ReflectionUtil.throwException(
-				new OAuth2ApplicationRequiredException(
+				new RequiredOAuth2ApplicationException(
 					_language.format(
 						LocaleUtil.getDefault(),
 						"oauth2-application-x-is-required-by-x",

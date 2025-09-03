@@ -118,6 +118,14 @@ test(
 
 			await segmentsPage.editSegmentsEntry(segmentName);
 
+			await segmentsPage.saveButton.click();
+
+			await segmentsPage.viewSegmentsItemTable(segmentName);
+
+			await page.reload();
+
+			await segmentsPage.clickLinkByText(segmentName);
+
 			await segmentsPage.viewMembers({
 				expectedEmail: 'userea@liferay.com',
 			});

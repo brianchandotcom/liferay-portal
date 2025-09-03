@@ -34,6 +34,37 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}
 
+	private String _formatReturnAssignStatement(
+		Matcher matcher, String returnStatement) {
+
+		String returnFollowingCode = matcher.group(2);
+
+		int index = returnFollowingCode.indexOf(" =");
+
+		if (index == -1) {
+			return returnStatement;
+		}
+
+		String s = returnFollowingCode.substring(0, index);
+
+		if (!s.matches("\\w+")) {
+			return returnStatement;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("\n");
+		sb.append(matcher.group(1));
+		sb.append(returnFollowingCode);
+		sb.append(";\n\n");
+		sb.append(matcher.group(1));
+		sb.append("return ");
+		sb.append(s);
+		sb.append(";\n");
+
+		return sb.toString();
+	}
+
 	private String _formatReturnStatement(
 		String javaTermContent, String returnStatement, String tabs,
 		String ifCondition, String trueValue, String falseValue) {
@@ -93,6 +124,14 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 				return _formatReturnStatement(
 					javaTermContent, returnStatement, matcher1.group(1),
 					ifCondition, trueValue, falseValue);
+			}
+
+			String newReturnStatement = _formatReturnAssignStatement(
+				matcher1, returnStatement);
+
+			if (!newReturnStatement.equals(returnStatement)) {
+				return StringUtil.replace(
+					javaTermContent, returnStatement, newReturnStatement);
 			}
 
 			if (!returnType.equals("boolean")) {

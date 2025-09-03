@@ -122,6 +122,11 @@ export interface IItemSelectorProps<T>
 	displaySelectedItems?: boolean;
 
 	/**
+	 * Props passed to the ItemSelectorModal component.
+	 */
+	itemSelectorModalProps?: IItemSelectorModalProps<T>;
+
+	/**
 	 * Items that are currently selected (controlled).
 	 */
 	items?: T[];
@@ -174,6 +179,7 @@ function ItemSelector<T extends Record<string, any>>({
 	defaultValue,
 	defaultItems,
 	displaySelectedItems = true,
+	itemSelectorModalProps,
 	...otherProps
 }: IItemSelectorProps<T>) {
 	useEffect(() => {
@@ -339,6 +345,15 @@ function ItemSelector<T extends Record<string, any>>({
 						{children}
 					</ClayMultiSelect>
 				</ClayInput.GroupItem>
+
+				{itemSelectorModalProps && (
+					<ItemSelectorModalButton
+						itemSelectorModalProps={itemSelectorModalProps}
+						items={items}
+						locator={locator}
+						setItems={setItems}
+					/>
+				)}
 			</ClayInput.Group>
 		);
 	}
@@ -378,6 +393,15 @@ function ItemSelector<T extends Record<string, any>>({
 					{memoizedChildren}
 				</ClayAutocomplete>
 			</ClayInput.GroupItem>
+
+			{itemSelectorModalProps && (
+				<ItemSelectorModalButton
+					itemSelectorModalProps={itemSelectorModalProps}
+					items={items}
+					locator={locator}
+					setItems={setItems}
+				/>
+			)}
 		</ClayInput.Group>
 	);
 }

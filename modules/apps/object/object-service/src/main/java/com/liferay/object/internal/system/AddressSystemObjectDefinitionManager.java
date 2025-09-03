@@ -255,7 +255,7 @@ public class AddressSystemObjectDefinitionManager
 
 	@Override
 	public BaseModel<?> getOrAddEmptyBaseModel(
-			String externalReferenceCode, long companyId, User user)
+			String externalReferenceCode, User user)
 		throws PortalException {
 
 		return _addressService.getOrAddEmptyAddress(

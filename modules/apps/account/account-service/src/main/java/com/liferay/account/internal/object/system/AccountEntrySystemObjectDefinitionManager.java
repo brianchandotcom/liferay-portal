@@ -155,7 +155,7 @@ public class AccountEntrySystemObjectDefinitionManager
 
 	@Override
 	public BaseModel<?> getOrAddEmptyBaseModel(
-			String externalReferenceCode, long companyId, User user)
+			String externalReferenceCode, User user)
 		throws PortalException {
 
 		return _accountEntryService.getOrAddEmptyAccountEntry(

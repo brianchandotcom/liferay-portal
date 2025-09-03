@@ -155,7 +155,7 @@ public class OrganizationSystemObjectDefinitionManager
 
 	@Override
 	public BaseModel<?> getOrAddEmptyBaseModel(
-			String externalReferenceCode, long companyId, User user)
+			String externalReferenceCode, User user)
 		throws PortalException {
 
 		return _organizationService.getOrAddEmptyOrganization(

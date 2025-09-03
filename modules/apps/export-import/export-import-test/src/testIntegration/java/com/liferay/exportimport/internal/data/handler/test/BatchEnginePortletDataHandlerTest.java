@@ -447,7 +447,7 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportWithDifferentScopedObjectEntries()
 		throws Exception {
 
-		Group group1 = GroupTestUtil.addGroupWithScope(
+		Group group1 = GroupTestUtil.addGroupWithType(
 			GroupConstants.TYPE_DEPOT);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(group1);
@@ -461,7 +461,7 @@ public class BatchEnginePortletDataHandlerTest {
 			false, group1.getGroupId(), false,
 			new long[] {layout.getLayoutId()}, objectDefinition);
 
-		Group group2 = GroupTestUtil.addGroupWithScope(
+		Group group2 = GroupTestUtil.addGroupWithType(
 			GroupConstants.TYPE_DEPOT);
 
 		_importLayouts(

@@ -211,20 +211,19 @@ public class GroupTestUtil {
 		return addGroup(companyId, user.getUserId(), parentGroupId);
 	}
 
-	public static Group addGroupWithScope(int typeDepot) throws Exception {
-		return addGroupWithScope(
-			typeDepot, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+	public static Group addGroupWithType(int type) throws Exception {
+		return addGroupWithType(type, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 	}
 
-	public static Group addGroupWithScope(int type, long parentGroupId)
+	public static Group addGroupWithType(int type, long parentGroupId)
 		throws Exception {
 
-		return addGroupWithScope(
+		return addGroupWithType(
 			type, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			parentGroupId);
 	}
 
-	public static Group addGroupWithScope(
+	public static Group addGroupWithType(
 			int type, long companyId, long userId, long parentGroupId)
 		throws Exception {
 

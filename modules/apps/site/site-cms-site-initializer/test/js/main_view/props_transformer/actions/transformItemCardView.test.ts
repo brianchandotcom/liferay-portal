@@ -18,11 +18,8 @@ function assertStickerProps(
 ): void {
 	expect(result).toHaveProperty('stickerProps');
 
-	expect(result.stickerProps).toHaveProperty('className');
-	expect(result.stickerProps).toHaveProperty('content');
-
-	expect(result.stickerProps.className).toBe(expectedClassName);
-	expect(result.stickerProps.content.props.symbol).toBe(expectedSymbol);
+	expect(result.stickerProps?.className).toBe(expectedClassName);
+	expect(result.stickerProps?.content?.props?.symbol).toBe(expectedSymbol);
 }
 
 describe('transformItemCardView', () => {

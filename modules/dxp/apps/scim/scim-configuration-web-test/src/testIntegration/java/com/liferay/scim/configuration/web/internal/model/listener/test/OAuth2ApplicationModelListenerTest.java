@@ -6,7 +6,7 @@
 package com.liferay.scim.configuration.web.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth2.provider.exception.OAuth2ApplicationRequiredException;
+import com.liferay.oauth2.provider.exception.RequiredOAuth2ApplicationException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -63,7 +63,7 @@ public class OAuth2ApplicationModelListenerTest {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
-	@Test(expected = OAuth2ApplicationRequiredException.class)
+	@Test(expected = RequiredOAuth2ApplicationException.class)
 	public void testOnBeforeRemoveWithoutResetInProcess() throws Exception {
 		OAuth2Application scimOAuth2Application =
 			_oAuth2ApplicationLocalService.getOAuth2Application(

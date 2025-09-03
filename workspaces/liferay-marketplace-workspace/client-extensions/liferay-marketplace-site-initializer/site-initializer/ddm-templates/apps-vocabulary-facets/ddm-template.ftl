@@ -75,18 +75,18 @@
 		</button>
 
 	  	<button class="btn-unstyled clear-btn mb-4 ml-1" onClick="Liferay.Search.FacetUtil.clearSelections(event);">
-		  ${languageUtil.get(locale, "clear")}
+			${languageUtil.get(locale, "clear")}
 	  	</button>
 
 		<ul class="list-unstyled">
 			<#assign
 				currentURL = themeDisplay.getURLCurrent()?replace("%20", " ")
 				isExpanded = currentURL?contains("${assetCategoriesSearchFacetDisplayContext.getParameterName()}Expanded")
-				optionsCount = 1
+				optionsCount = 0
 			/>
 
 			<#list entries as entry>
-				<li class="color-neutral-2 <#if optionsCount gt 5 && !isExpanded>d-none</#if> facet-value py-1">
+				<li class="color-neutral-2 <#if optionsCount gte 5 && !isExpanded>d-none</#if> facet-value py-1">
 					<div class="custom-checkbox custom-control font-weight-normal">
 						<label class="facet-checkbox-label" for="${namespace}_term_${entry.getAssetCategoryId()}">
 							<input
@@ -111,7 +111,7 @@
 				<#assign optionsCount++ />
 			</#list>
 
-			<#if optionsCount gt 6 && !isExpanded>
+			<#if optionsCount gt 5 && !isExpanded>
 				<button
 					class="btn-unstyled mt-4 view-all-btn"
 					id="${assetCategoriesSearchFacetDisplayContext.getParameterName() + 'facetAssetCategoriesViewAll'}"

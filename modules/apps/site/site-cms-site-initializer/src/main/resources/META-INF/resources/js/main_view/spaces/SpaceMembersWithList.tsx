@@ -83,7 +83,7 @@ export function SpaceMembersWithList({
 							spaceId: assetLibraryId,
 						}),
 						AdminUserService.getUserRoles({
-							filter: 'type eq 5',
+							filter: "type eq 5 and name ne 'Asset Library Connected Site Member'",
 						}),
 					]);
 

@@ -7,7 +7,7 @@
 				<a class="btn btn-link font-weight-bold" href="/web/marketplace/applications?our-selection=${configuration.specificationFilterValue}" target="_self">
 					<span class="language-caret-icon">
 						<span>${languageUtil.get(locale, "view-more")}</span>
-						
+
 						<span>[@clay["icon"] symbol="order-arrow-right" /]</span>
 					</span>
 				</a>
@@ -115,7 +115,7 @@
 											<div class="font-weight-semi-bold text-capitalize">
 												${getSpecificationValue("price-model")}
 											</div>
-													
+
 											[#if productCategories?has_content]
 												[#assign principalCategory=productCategories[0] remainingCategories=productCategories?filter(category -> category.name != principalCategory.name) /]
 

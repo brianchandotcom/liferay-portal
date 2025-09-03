@@ -78,9 +78,7 @@ public class AccountEntrySystemObjectDefinitionManagerTest {
 				TestPropsValues.getCompanyId(), "}"),
 			() ->
 				_accountEntrySystemObjectDefinitionManager.
-					getOrAddEmptyBaseModel(
-						externalReferenceCode, TestPropsValues.getCompanyId(),
-						user1));
+					getOrAddEmptyBaseModel(externalReferenceCode, user1));
 
 		// Lazy referencing enabled
 
@@ -93,8 +91,7 @@ public class AccountEntrySystemObjectDefinitionManagerTest {
 				(AccountEntry)
 					_accountEntrySystemObjectDefinitionManager.
 						getOrAddEmptyBaseModel(
-							RandomTestUtil.randomString(),
-							TestPropsValues.getCompanyId(), user1);
+							RandomTestUtil.randomString(), user1);
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, accountEntry.getStatus());
@@ -114,8 +111,7 @@ public class AccountEntrySystemObjectDefinitionManagerTest {
 				() ->
 					_accountEntrySystemObjectDefinitionManager.
 						getOrAddEmptyBaseModel(
-							RandomTestUtil.randomString(),
-							TestPropsValues.getCompanyId(), user2));
+							RandomTestUtil.randomString(), user2));
 
 			// Without permissions, existing account entry
 
@@ -129,8 +125,7 @@ public class AccountEntrySystemObjectDefinitionManagerTest {
 				() ->
 					_accountEntrySystemObjectDefinitionManager.
 						getOrAddEmptyBaseModel(
-							accountEntry.getExternalReferenceCode(),
-							TestPropsValues.getCompanyId(), user2));
+							accountEntry.getExternalReferenceCode(), user2));
 		}
 
 		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);

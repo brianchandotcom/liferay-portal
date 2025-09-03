@@ -215,9 +215,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 				TestPropsValues.getCompanyId(), "}"),
 			() ->
 				_organizationSystemObjectDefinitionManager.
-					getOrAddEmptyBaseModel(
-						externalReferenceCode, TestPropsValues.getCompanyId(),
-						user1));
+					getOrAddEmptyBaseModel(externalReferenceCode, user1));
 
 		// Lazy referencing enabled
 
@@ -230,8 +228,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 				(Organization)
 					_organizationSystemObjectDefinitionManager.
 						getOrAddEmptyBaseModel(
-							RandomTestUtil.randomString(),
-							TestPropsValues.getCompanyId(), user1);
+							RandomTestUtil.randomString(), user1);
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, organization.getStatus());
@@ -251,8 +248,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 				() ->
 					_organizationSystemObjectDefinitionManager.
 						getOrAddEmptyBaseModel(
-							RandomTestUtil.randomString(),
-							TestPropsValues.getCompanyId(), user2));
+							RandomTestUtil.randomString(), user2));
 
 			// Without permissions, existing organization
 
@@ -266,8 +262,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 				() ->
 					_organizationSystemObjectDefinitionManager.
 						getOrAddEmptyBaseModel(
-							organization.getExternalReferenceCode(),
-							TestPropsValues.getCompanyId(), user2));
+							organization.getExternalReferenceCode(), user2));
 		}
 
 		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);

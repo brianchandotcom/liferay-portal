@@ -148,7 +148,7 @@ public class AddressSystemObjectDefinitionManagerTest {
 				externalReferenceCode, ", companyId=",
 				TestPropsValues.getCompanyId(), "}"),
 			() -> _systemObjectDefinitionManager.getOrAddEmptyBaseModel(
-				externalReferenceCode, TestPropsValues.getCompanyId(), user1));
+				externalReferenceCode, user1));
 
 		// Lazy referecing enabled
 
@@ -158,11 +158,8 @@ public class AddressSystemObjectDefinitionManagerTest {
 			// With permissions
 
 			Address address =
-				(Address)
-					_systemObjectDefinitionManager.
-						getOrAddEmptyBaseModel(
-							RandomTestUtil.randomString(),
-							TestPropsValues.getCompanyId(), user1);
+				(Address)_systemObjectDefinitionManager.getOrAddEmptyBaseModel(
+					RandomTestUtil.randomString(), user1);
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, address.getStatus());
@@ -179,11 +176,8 @@ public class AddressSystemObjectDefinitionManagerTest {
 					"User ", user2.getUserId(),
 					" must have UPDATE permission for ", User.class.getName(),
 					" ", user1.getUserId()),
-				() ->
-					_systemObjectDefinitionManager.
-						getOrAddEmptyBaseModel(
-							RandomTestUtil.randomString(),
-							TestPropsValues.getCompanyId(), user1));
+				() -> _systemObjectDefinitionManager.getOrAddEmptyBaseModel(
+					RandomTestUtil.randomString(), user1));
 
 			// Without permissions, existing address
 
@@ -193,11 +187,8 @@ public class AddressSystemObjectDefinitionManagerTest {
 					"User ", user2.getUserId(),
 					" must have VIEW permission for ", User.class.getName(),
 					" ", user1.getUserId()),
-				() ->
-					_systemObjectDefinitionManager.
-						getOrAddEmptyBaseModel(
-							address.getExternalReferenceCode(),
-							address.getCompanyId(), user2));
+				() -> _systemObjectDefinitionManager.getOrAddEmptyBaseModel(
+					address.getExternalReferenceCode(), user2));
 		}
 
 		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);

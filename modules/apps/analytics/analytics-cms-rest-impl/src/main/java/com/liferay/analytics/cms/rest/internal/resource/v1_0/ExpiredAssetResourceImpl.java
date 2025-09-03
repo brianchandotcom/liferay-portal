@@ -210,62 +210,50 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		return GetterUtil.getLong(results.get(0));
 	}
 
-	private <T> Expression<T> _getLocalizedTitleExpression(String languageId) {
-		DB db = DBManagerUtil.getDB();
-
-		String localizedTitlePath = "$.properties.title_i18n." + languageId;
-
+	private Expression<Clob> _getLocalizedTitleExpression(String languageId) {
 		Column<ObjectEntryVersionTable, Clob> contentColumn =
 			ObjectEntryVersionTable.INSTANCE.content;
 
-		if ((db.getDBType() == DBType.MYSQL) ||
-			(db.getDBType() == DBType.MARIADB)) {
+		DB db = DBManagerUtil.getDB();
 
-			return new DSLFunction<>(
-				new DSLFunctionType("JSON_UNQUOTE(", ")"),
+		if (db.getDBType() == DBType.HYPERSONIC) {
+			DSLFunction<Object> dslFunction1 = new DSLFunction<>(
+				new DSLFunctionType("REGEXP_SUBSTRING(", ")"),
 				new DSLFunction<>(
-					new DSLFunctionType("JSON_EXTRACT(", ")"), contentColumn,
-					new Scalar<>(localizedTitlePath)));
-		}
+					new DSLFunctionType("CONVERT(", ", SQL_VARCHAR)"),
+					contentColumn),
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>("(?s)\"title_i18n\"\\s*:\\s*(\\{.*?\\})")));
 
-		if (db.getDBType() == DBType.POSTGRESQL) {
+			DSLFunction<Object> dslFunction2 = new DSLFunction<>(
+				new DSLFunctionType("REGEXP_SUBSTRING(", ")"), dslFunction1,
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>(
+						StringBundler.concat(
+							"\"", languageId, "\"\\s*:\\s*\"([^\"]*)\""))));
+
 			return new DSLFunction<>(
-				new DSLFunctionType("json_extract_path_text(", ")"),
-				contentColumn, new Scalar<>("properties"),
-				new Scalar<>("title_i18n"),
-				new Scalar<>(String.valueOf(languageId)));
+				new DSLFunctionType("REGEXP_REPLACE(", ")"), dslFunction2,
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>(
+						StringBundler.concat(
+							"^\"", languageId, "\"\\s*:\\s*\"([^\"]*)\"$"))),
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>("$1")));
 		}
 
-		return new DSLFunction<>(
-			new DSLFunctionType("JSON_VALUE(", ")"), contentColumn,
-			new Scalar<>(localizedTitlePath));
+		return _getPropertyValueExpression(
+			contentColumn, "properties.title_i18n." + languageId);
 	}
 
 	private <T> Expression<T> _getPropertyValueExpression(
-		Expression<T> expression, String propertyName) {
+		Expression<T> columnExpression, String propertyPath) {
 
 		DB db = DBManagerUtil.getDB();
-
-		if ((db.getDBType() == DBType.MYSQL) ||
-			(db.getDBType() == DBType.MARIADB)) {
-
-			return new DSLFunction<>(
-				new DSLFunctionType("JSON_EXTRACT(", ")"), expression,
-				new Scalar<>(propertyName));
-		}
-
-		return new DSLFunction<>(
-			new DSLFunctionType("JSON_QUERY(", ")"), expression,
-			new Scalar<>(propertyName));
-	}
-
-	private <T> Expression<T> _getTitleExpression() {
-		DB db = DBManagerUtil.getDB();
-
-		String defaultTitlePath = "$.properties.title";
-
-		Column<ObjectEntryVersionTable, Clob> contentColumn =
-			ObjectEntryVersionTable.INSTANCE.content;
 
 		if ((db.getDBType() == DBType.MYSQL) ||
 			(db.getDBType() == DBType.MARIADB)) {
@@ -273,20 +261,60 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 			return new DSLFunction<>(
 				new DSLFunctionType("JSON_UNQUOTE(", ")"),
 				new DSLFunction<>(
-					new DSLFunctionType("JSON_EXTRACT(", ")"), contentColumn,
-					new Scalar<>(defaultTitlePath)));
+					new DSLFunctionType("JSON_EXTRACT(", ")"), columnExpression,
+					new Scalar<>("$." + propertyPath)));
 		}
 
 		if (db.getDBType() == DBType.POSTGRESQL) {
+			String[] propertyNameParts = propertyPath.split("\\.");
+
+			Expression[] expressions =
+				new Expression[propertyNameParts.length + 1];
+
+			expressions[0] = columnExpression;
+
+			for (int i = 1; i < expressions.length; i++) {
+				expressions[i] = new Scalar<>(propertyNameParts[i]);
+			}
+
 			return new DSLFunction<>(
 				new DSLFunctionType("json_extract_path_text(", ")"),
-				contentColumn, new Scalar<>("properties"),
-				new Scalar<>("title"));
+				expressions);
 		}
 
 		return new DSLFunction<>(
-			new DSLFunctionType("JSON_VALUE(", ")"), contentColumn,
-			new Scalar<>(defaultTitlePath));
+			new DSLFunctionType("JSON_VALUE(", ")"), columnExpression,
+			new Scalar<>("$." + propertyPath));
+	}
+
+	private Expression<Clob> _getTitleExpression() {
+		DB db = DBManagerUtil.getDB();
+
+		Column<ObjectEntryVersionTable, Clob> contentColumn =
+			ObjectEntryVersionTable.INSTANCE.content;
+
+		if (db.getDBType() == DBType.HYPERSONIC) {
+			DSLFunction<Object> dslFunction = new DSLFunction<>(
+				new DSLFunctionType("REGEXP_SUBSTRING(", ")"),
+				new DSLFunction<>(
+					new DSLFunctionType("CONVERT(", ", SQL_VARCHAR)"),
+					contentColumn),
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>(
+						"\"title\"\\s*:\\s*\"(?:[^\"\\\\]|\\\\.)*\"")));
+
+			return new DSLFunction<>(
+				new DSLFunctionType("REGEXP_REPLACE(", ")"), dslFunction,
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>("^\"title\"\\s*:\\s*\"([^\"]*)\"$")),
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>("$1")));
+		}
+
+		return _getPropertyValueExpression(contentColumn, "properties.title");
 	}
 
 	private int _getUsages(
@@ -331,11 +359,9 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 
 		if (Validator.isNotNull(languageId)) {
 			predicate = predicate.and(
-				_getPropertyValueExpression(
-					_objectEntryVersionTable.content, "$.properties.title_i18n"
-				).like(
-					"%\"" + languageId + "\":%"
-				));
+				DSLFunctionFactoryUtil.castClobText(
+					_getLocalizedTitleExpression(languageId)
+				).isNotNull());
 		}
 
 		return predicate;

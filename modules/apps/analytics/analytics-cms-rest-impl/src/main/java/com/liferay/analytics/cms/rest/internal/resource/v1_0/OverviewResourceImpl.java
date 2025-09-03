@@ -23,6 +23,7 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersionTable;
 import com.liferay.object.model.ObjectFolderTable;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -31,6 +32,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -42,6 +44,8 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.sql.Clob;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -137,6 +141,46 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		}
 
 		return null;
+	}
+
+	private Expression<Clob> _getLocalizedTitleExpression(String languageId) {
+		Column<ObjectEntryVersionTable, Clob> contentColumn =
+			ObjectEntryVersionTable.INSTANCE.content;
+
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.HYPERSONIC) {
+			DSLFunction<Object> dslFunction1 = new DSLFunction<>(
+				new DSLFunctionType("REGEXP_SUBSTRING(", ")"),
+				new DSLFunction<>(
+					new DSLFunctionType("CONVERT(", ", SQL_VARCHAR)"),
+					contentColumn),
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>("(?s)\"title_i18n\"\\s*:\\s*(\\{.*?\\})")));
+
+			DSLFunction<Object> dslFunction2 = new DSLFunction<>(
+				new DSLFunctionType("REGEXP_SUBSTRING(", ")"), dslFunction1,
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>(
+						StringBundler.concat(
+							"\"", languageId, "\"\\s*:\\s*\"([^\"]*)\""))));
+
+			return new DSLFunction<>(
+				new DSLFunctionType("REGEXP_REPLACE(", ")"), dslFunction2,
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>(
+						StringBundler.concat(
+							"^\"", languageId, "\"\\s*:\\s*\"([^\"]*)\"$"))),
+				new DSLFunction<>(
+					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
+					new Scalar<>("$1")));
+		}
+
+		return _getPropertyValueExpression(
+			contentColumn, "properties.title_i18n." + languageId);
 	}
 
 	private Object[] _getOverviewObjects(
@@ -351,7 +395,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 	}
 
 	private <T> Expression<T> _getPropertyValueExpression(
-		Expression<T> expression, String propertyName) {
+		Expression<T> columnExpression, String propertyPath) {
 
 		DB db = DBManagerUtil.getDB();
 
@@ -359,13 +403,32 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			(db.getDBType() == DBType.MARIADB)) {
 
 			return new DSLFunction<>(
-				new DSLFunctionType("JSON_EXTRACT(", ")"), expression,
-				new Scalar<>(propertyName));
+				new DSLFunctionType("JSON_UNQUOTE(", ")"),
+				new DSLFunction<>(
+					new DSLFunctionType("JSON_EXTRACT(", ")"), columnExpression,
+					new Scalar<>("$." + propertyPath)));
+		}
+
+		if (db.getDBType() == DBType.POSTGRESQL) {
+			String[] propertyNameParts = propertyPath.split("\\.");
+
+			Expression[] expressions =
+				new Expression[propertyNameParts.length + 1];
+
+			expressions[0] = columnExpression;
+
+			for (int i = 1; i < expressions.length; i++) {
+				expressions[i] = new Scalar<>(propertyNameParts[i]);
+			}
+
+			return new DSLFunction<>(
+				new DSLFunctionType("json_extract_path_text(", ")"),
+				expressions);
 		}
 
 		return new DSLFunction<>(
-			new DSLFunctionType("JSON_QUERY(", ")"), expression,
-			new Scalar<>(propertyName));
+			new DSLFunctionType("JSON_VALUE(", ")"), columnExpression,
+			new Scalar<>("$." + propertyPath));
 	}
 
 	private Date _getStartDate(Integer rangeKey, String rangeStart) {
@@ -415,11 +478,9 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 
 		if (!Validator.isBlank(languageId)) {
 			predicate = predicate.and(
-				_getPropertyValueExpression(
-					ObjectEntryVersionTable.INSTANCE.content, "$.properties"
-				).like(
-					"%\"" + languageId + "\":%"
-				));
+				DSLFunctionFactoryUtil.castClobText(
+					_getLocalizedTitleExpression(languageId)
+				).isNotNull());
 		}
 
 		if (!previous) {

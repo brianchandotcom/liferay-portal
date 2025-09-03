@@ -120,9 +120,9 @@ export default function ItemSelectorSamples() {
 	const [user, setUser] = useState<User | null>();
 
 	const {
-		observer: fileItemSelectorObserver,
-		onOpenChange: fileItemSelectorOpenChange,
-		open: fileItemSelectorOpen,
+		observer: documentItemSelectorObserver,
+		onOpenChange: documentItemSelectorOpenChange,
+		open: documentItemSelectorOpen,
 	} = useModal();
 	const {
 		observer: spaceItemSelectorObserver,
@@ -317,12 +317,12 @@ export default function ItemSelectorSamples() {
 						},
 						items: document ? [document] : [],
 						locator: documentsItemSelectorConfig.locator,
-						observer: fileItemSelectorObserver,
+						observer: documentItemSelectorObserver,
 						onItemsChange: (items: Document[]) => {
 							setDocument(items[0]);
 						},
-						onOpenChange: fileItemSelectorOpenChange,
-						open: fileItemSelectorOpen,
+						onOpenChange: documentItemSelectorOpenChange,
+						open: documentItemSelectorOpen,
 						type: documentsItemSelectorConfig.type,
 					}}
 				/>
@@ -377,7 +377,7 @@ export default function ItemSelectorSamples() {
 					<ClayButton
 						displayType="primary"
 						onClick={() => {
-							fileItemSelectorOpenChange(true);
+							documentItemSelectorOpenChange(true);
 						}}
 					>
 						Select Document

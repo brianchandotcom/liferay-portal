@@ -136,7 +136,7 @@ test(
 			await workflowTaskRow.getByRole('button').click();
 			await page.getByRole('menuitem', {name: 'Update Due Date'}).click();
 
-			await expect(page.getByRole('textbox').first()).toHaveValue(
+			await expect(page.locator('input[type="date"]')).toHaveValue(
 				dueDate
 			);
 		});

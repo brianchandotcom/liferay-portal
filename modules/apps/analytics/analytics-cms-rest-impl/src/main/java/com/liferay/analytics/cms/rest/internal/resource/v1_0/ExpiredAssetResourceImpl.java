@@ -93,9 +93,9 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 				_getExpiredObjects(
 					filterLanguageId, groupIds, languageId, pagination)) {
 
-			long objectEntryId = (Long)object[3];
-
 			ExpiredAsset expiredAsset = new ExpiredAsset();
+
+			long objectEntryId = (Long)object[3];
 
 			expiredAsset.setHref(
 				() -> StringBundler.concat(

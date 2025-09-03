@@ -866,7 +866,7 @@ test(
 
 		await documentLibraryPage.goToViewHistoryFileEntry(title);
 
-		await page.getByRole('link', {name: 'Back'}).click();
+		await page.locator('span[title="Back"]').click();
 
 		await expect(
 			page.getByRole('button', {name: 'Versions'})

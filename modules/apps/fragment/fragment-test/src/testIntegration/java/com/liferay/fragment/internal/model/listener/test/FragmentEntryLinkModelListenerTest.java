@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -50,8 +51,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
-import jakarta.portlet.PortletPreferences;
 
 import java.util.List;
 
@@ -139,13 +138,12 @@ public class FragmentEntryLinkModelListenerTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		List<com.liferay.portal.kernel.model.PortletPreferences>
-			portletPreferences =
-				_portletPreferencesLocalService.getPortletPreferences(
-					PortletKeys.PREFS_PLID_SHARED,
-					StringBundler.concat(
-						JournalContentPortletKeys.JOURNAL_CONTENT, "_INSTANCE_",
-						fragmentEntryLink.getNamespace()));
+		List<PortletPreferences> portletPreferences =
+			_portletPreferencesLocalService.getPortletPreferences(
+				PortletKeys.PREFS_PLID_SHARED,
+				StringBundler.concat(
+					JournalContentPortletKeys.JOURNAL_CONTENT, "_INSTANCE_",
+					fragmentEntryLink.getNamespace()));
 
 		Assert.assertEquals(
 			portletPreferences.toString(), 0, portletPreferences.size());

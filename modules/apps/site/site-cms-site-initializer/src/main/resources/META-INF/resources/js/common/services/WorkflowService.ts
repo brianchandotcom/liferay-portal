@@ -63,7 +63,7 @@ export async function getWorkflowTasksAssignedToMe({
 				items: transformedWorkflowTasks,
 				page,
 			}),
-			totalCount: data.totalCount,
+			totalCount: transformedWorkflowTasks.length,
 		};
 	}
 
@@ -125,7 +125,7 @@ export async function getWorkflowTasksAssignedToMyRoles({
 				items: transformedWorkflowTasks,
 				page,
 			}),
-			totalCount: data.totalCount,
+			totalCount: transformedWorkflowTasks.length,
 		};
 	}
 

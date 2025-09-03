@@ -165,7 +165,7 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 				_objectEntryVersionTable.version.eq(_objectEntryTable.version)
 			)
 		).where(
-			_getWhereClause(groupIds, filterLanguageId)
+			_getPredicate(groupIds, filterLanguageId)
 		).orderBy(
 			_objectEntryVersionTable.statusDate.descending()
 		).limit(
@@ -202,7 +202,7 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 				_objectEntryVersionTable.version.eq(_objectEntryTable.version)
 			)
 		).where(
-			_getWhereClause(groupIds, filterLanguageId)
+			_getPredicate(groupIds, filterLanguageId)
 		);
 
 		List<Object[]> results = _objectEntryLocalService.dslQuery(dslQuery);
@@ -319,7 +319,7 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		return usages;
 	}
 
-	private Predicate _getWhereClause(Long[] groupIds, String languageId) {
+	private Predicate _getPredicate(Long[] groupIds, String languageId) {
 		Predicate predicate = _objectEntryTable.groupId.in(
 			groupIds
 		).and(

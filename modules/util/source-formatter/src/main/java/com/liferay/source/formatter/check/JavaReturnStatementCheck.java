@@ -41,7 +41,13 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 
 		int index = returnFollowingCode.indexOf(" =");
 
-		if (index == -1) {
+		if ((index == -1) || ((index + 2) >= returnFollowingCode.length())) {
+			return returnStatement;
+		}
+
+		char c = returnFollowingCode.charAt(index + 2);
+
+		if (!Character.isWhitespace(c)) {
 			return returnStatement;
 		}
 

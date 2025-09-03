@@ -10,7 +10,7 @@ import React from 'react';
 import dateFormat from '../../../common/utils/dateFormat';
 import formatActionURL from '../../../common/utils/formatActionURL';
 
-import '../../../../css/main.scss';
+import '../../../../css/props_transformer/ObjectDefinitionsIcons.scss';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';

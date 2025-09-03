@@ -15,11 +15,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -175,41 +172,6 @@ public class DisplayPageTemplateResourceTest
 		displayPageTemplate.setTitle(layoutPageTemplateEntry.getName());
 
 		return displayPageTemplate;
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetSiteDisplayPageTemplatesPage() throws Exception {
-		Long siteId = testGetSiteDisplayPageTemplatesPage_getSiteId();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"admin",
-			new GraphQLField(
-				"displayPageTemplates",
-				HashMapBuilder.<String, Object>put(
-					"page", 1
-				).put(
-					"pageSize", 2
-				).put(
-					"siteKey", "\"" + siteId + "\""
-				).build(),
-				new GraphQLField("items", getGraphQLFields()),
-				new GraphQLField("page"), new GraphQLField("totalCount")));
-
-		JSONObject contentStructuresJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/admin", "JSONObject/displayPageTemplates");
-
-		Assert.assertEquals(0, contentStructuresJSONObject.get("totalCount"));
-
-		testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
-			siteId, randomDisplayPageTemplate());
-
-		contentStructuresJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/admin", "JSONObject/displayPageTemplates");
-
-		Assert.assertEquals(1, contentStructuresJSONObject.get("totalCount"));
 	}
 
 	@Override

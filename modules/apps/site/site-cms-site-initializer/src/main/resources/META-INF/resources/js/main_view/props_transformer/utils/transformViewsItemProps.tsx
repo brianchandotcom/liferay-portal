@@ -164,8 +164,8 @@ export default function transformViewsItemProps({
 }: ViewsItemsProps) {
 	return views.map((view) => {
 		if (view.name === 'cards') {
-			view.setItemComponentProps = ({item, props}) => {
-				return transformItemCardView(
+			view.setItemComponentProps = ({item, props}) =>
+				transformItemCardView(
 					item,
 					fileMimeTypeCssClasses,
 					fileMimeTypeIcons,
@@ -173,7 +173,6 @@ export default function transformViewsItemProps({
 					objectDefinitionIcons,
 					props
 				);
-			};
 		}
 
 		return view;

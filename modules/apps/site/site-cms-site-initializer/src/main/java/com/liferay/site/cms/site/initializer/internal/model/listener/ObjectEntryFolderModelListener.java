@@ -71,7 +71,7 @@ public class ObjectEntryFolderModelListener
 						ObjectEntryFolder.class.getName()),
 					ResourceAction::getActionId, String.class));
 
-			_addOrUpdateCMSDefaultPermission(objectEntryFolder);
+			_addOrUpdateCMSDefaultPermissionObjectEntry(objectEntryFolder);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -103,12 +103,10 @@ public class ObjectEntryFolderModelListener
 		}
 
 		try {
-			ObjectEntry objectEntry =
-				CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
-					objectEntryFolder.getCompanyId(),
-					objectEntryFolder.getUserId(),
-					objectEntryFolder.getExternalReferenceCode(),
-					objectEntryFolder.getModelClassName(), _filterFactory);
+			ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
+				objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
+				objectEntryFolder.getExternalReferenceCode(),
+				objectEntryFolder.getModelClassName(), _filterFactory);
 
 			if (objectEntry == null) {
 				return;
@@ -122,7 +120,7 @@ public class ObjectEntryFolderModelListener
 		}
 	}
 
-	private void _addOrUpdateCMSDefaultPermission(
+	private void _addOrUpdateCMSDefaultPermissionObjectEntry(
 			ObjectEntryFolder objectEntryFolder)
 		throws PortalException {
 
@@ -141,17 +139,14 @@ public class ObjectEntryFolderModelListener
 				_objectEntryFolderLocalService.getObjectEntryFolder(
 					objectEntryFolder.getParentObjectEntryFolderId());
 
-			JSONObject jsonObject =
-				CMSDefaultPermissionUtil.
-					getCMSDefaultPermissionDefaultPermissionsJSONObject(
-						parentObjectEntryFolder.getCompanyId(),
-						parentObjectEntryFolder.getUserId(),
-						parentObjectEntryFolder.getExternalReferenceCode(),
-						parentObjectEntryFolder.getModelClassName(),
-						_filterFactory);
+			JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+				parentObjectEntryFolder.getCompanyId(),
+				parentObjectEntryFolder.getUserId(),
+				parentObjectEntryFolder.getExternalReferenceCode(),
+				parentObjectEntryFolder.getModelClassName(), _filterFactory);
 
 			if (jsonObject != null) {
-				CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+				CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 					null, objectEntryFolder.getCompanyId(),
 					objectEntryFolder.getUserId(),
 					objectEntryFolder.getExternalReferenceCode(),
@@ -164,18 +159,16 @@ public class ObjectEntryFolderModelListener
 		Group group = _groupLocalService.getGroup(
 			objectEntryFolder.getGroupId());
 
-		JSONObject jsonObject =
-			CMSDefaultPermissionUtil.
-				getCMSDefaultPermissionDefaultPermissionsJSONObject(
-					group.getCompanyId(), group.getCreatorUserId(),
-					group.getExternalReferenceCode(),
-					DepotEntry.class.getName(), _filterFactory);
+		JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+			group.getCompanyId(), group.getCreatorUserId(),
+			group.getExternalReferenceCode(), DepotEntry.class.getName(),
+			_filterFactory);
 
 		if (jsonObject == null) {
 			return;
 		}
 
-		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			null, objectEntryFolder.getCompanyId(),
 			objectEntryFolder.getUserId(),
 			objectEntryFolder.getExternalReferenceCode(),

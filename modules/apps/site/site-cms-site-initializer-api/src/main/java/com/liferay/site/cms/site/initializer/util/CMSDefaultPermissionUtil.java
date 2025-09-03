@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class CMSDefaultPermissionUtil {
 
-	public static ObjectEntry addOrUpdateCMSDefaultPermission(
+	public static ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long companyId, long userId,
 			String classExternalReferenceCode, String className,
 			JSONObject permissionsJSONObject)
@@ -56,7 +56,7 @@ public class CMSDefaultPermissionUtil {
 			new ServiceContext());
 	}
 
-	public static ObjectEntry fetchCMSDefaultPermission(
+	public static ObjectEntry fetchObjectEntry(
 			long companyId, long userId, String classExternalReferenceCode,
 			String className, FilterFactory<Predicate> filterFactory)
 		throws PortalException {
@@ -81,16 +81,15 @@ public class CMSDefaultPermissionUtil {
 			return null;
 		}
 
-		return ObjectEntryLocalServiceUtil.getObjectEntry(primaryKeys.get(0));
+		return ObjectEntryLocalServiceUtil.fetchObjectEntry(primaryKeys.get(0));
 	}
 
-	public static JSONObject
-			getCMSDefaultPermissionDefaultPermissionsJSONObject(
-				long companyId, long userId, String classExternalReferenceCode,
-				String className, FilterFactory<Predicate> filterFactory)
+	public static JSONObject getJSONObject(
+			long companyId, long userId, String classExternalReferenceCode,
+			String className, FilterFactory<Predicate> filterFactory)
 		throws PortalException {
 
-		ObjectEntry objectEntry = fetchCMSDefaultPermission(
+		ObjectEntry objectEntry = fetchObjectEntry(
 			companyId, userId, classExternalReferenceCode, className,
 			filterFactory);
 

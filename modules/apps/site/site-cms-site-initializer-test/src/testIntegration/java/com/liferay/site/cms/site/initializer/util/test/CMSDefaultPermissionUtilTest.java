@@ -116,12 +116,12 @@ public class CMSDefaultPermissionUtilTest {
 	}
 
 	@Test
-	public void testAddOrUpdateCMSDefaultPermission() throws Exception {
+	public void testAddOrUpdateObjectEntry() throws Exception {
 		Group group = _depotEntry.getGroup();
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry1 =
-			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 				RandomTestUtil.randomString(), group.getCompanyId(),
 				TestPropsValues.getUserId(), externalReferenceCode,
 				_depotEntry.getModelClassName(),
@@ -139,7 +139,7 @@ public class CMSDefaultPermissionUtilTest {
 		Assert.assertEquals(1, jsonArray.length());
 
 		ObjectEntry objectEntry2 =
-			CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 				objectEntry1.getExternalReferenceCode(), group.getCompanyId(),
 				TestPropsValues.getUserId(), externalReferenceCode,
 				_depotEntry.getModelClassName(),
@@ -163,20 +163,19 @@ public class CMSDefaultPermissionUtilTest {
 	}
 
 	@Test
-	public void testFetchCMSDefaultPermission() throws Exception {
+	public void testFetchObjectEntry() throws Exception {
 		Group group = _depotEntry.getGroup();
 
-		ObjectEntry objectEntry =
-			CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
-				group.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), _depotEntry.getModelClassName(),
-				_filterFactory);
+		ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
+			group.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), _depotEntry.getModelClassName(),
+			_filterFactory);
 
 		Assert.assertNull(objectEntry);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			RandomTestUtil.randomString(), group.getCompanyId(),
 			TestPropsValues.getUserId(), externalReferenceCode,
 			_depotEntry.getModelClassName(),
@@ -185,20 +184,18 @@ public class CMSDefaultPermissionUtilTest {
 				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
 
 		Assert.assertNotNull(
-			CMSDefaultPermissionUtil.fetchCMSDefaultPermission(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
 				group.getCompanyId(), TestPropsValues.getUserId(),
 				externalReferenceCode, _depotEntry.getModelClassName(),
 				_filterFactory));
 	}
 
 	@Test
-	public void testGetCMSDefaultPermissionDefaultPermissionsJSONObject()
-		throws Exception {
-
+	public void testGetJSONObject() throws Exception {
 		Group group = _depotEntry.getGroup();
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		CMSDefaultPermissionUtil.addOrUpdateCMSDefaultPermission(
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			RandomTestUtil.randomString(), group.getCompanyId(),
 			TestPropsValues.getUserId(), externalReferenceCode,
 			_depotEntry.getModelClassName(),
@@ -206,12 +203,10 @@ public class CMSDefaultPermissionUtilTest {
 				"L_BASIC_WEB_CONTENT",
 				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
 
-		JSONObject jsonObject =
-			CMSDefaultPermissionUtil.
-				getCMSDefaultPermissionDefaultPermissionsJSONObject(
-					group.getCompanyId(), TestPropsValues.getUserId(),
-					externalReferenceCode, _depotEntry.getModelClassName(),
-					_filterFactory);
+		JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+			group.getCompanyId(), TestPropsValues.getUserId(),
+			externalReferenceCode, _depotEntry.getModelClassName(),
+			_filterFactory);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("L_BASIC_WEB_CONTENT");
 

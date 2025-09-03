@@ -145,6 +145,9 @@ export default function ItemSelectorSamples() {
 		User[]
 	>([]);
 	const [cmsFile, setCMSFile] = useState<CMSFile | null>(null);
+	const [usersMultiselect, setUsersMultiselect] = useState<
+		User[]
+	>([]);
 
 	const {
 		observer: documentItemSelectorObserver,
@@ -165,6 +168,9 @@ export default function ItemSelectorSamples() {
 		observer: cmsFileItemSelectorObserver,
 		onOpenChange: cmsFileItemSelectorOpenChange,
 		open: cmsFileItemSelectorOpen,
+		observer: itemSelectorMultiSelectModalObserver,
+		onOpenChange: itemSelectorMultiSelectModalOpenChange,
+		open: itemSelectorMultiSelectModalOpen,
 	} = useModal();
 
 	return (
@@ -263,6 +269,47 @@ export default function ItemSelectorSamples() {
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.title}>
 							{item.title}
+						</ItemSelector.Item>
+					)}
+				</ItemSelector>
+			</SampleContainer>
+
+			<SampleContainer label="Multiple Select Item selector pops up modal on button click">
+				<ItemSelector
+					apiURL={`${location.origin}/o/headless-admin-user/v1.0/user-accounts`}
+					itemSelectorModalProps={{
+						open: itemSelectorMultiSelectModalOpen,
+						onOpenChange: itemSelectorMultiSelectModalOpenChange,
+						observer: itemSelectorMultiSelectModalObserver,
+						type: userAccountsItemSelectorConfig.type,
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
+							id: `itemSelectorModal-documents-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
+							}),
+						},
+						items: usersMultiselect,
+						onItemsChange: (items: User[]) => {
+							setUsersMultiselect([
+								...usersMultiselect,
+								...items,
+							]);
+						},
+					}}
+					locator={{
+						id: 'id',
+						label: 'name',
+						value: 'id',
+					}}
+					multiSelect
+					placeholder="Select an User"
+				>
+					{(item) => (
+						<ItemSelector.Item key={item.id} textValue={item.name}>
+							{item.name}
 						</ItemSelector.Item>
 					)}
 				</ItemSelector>

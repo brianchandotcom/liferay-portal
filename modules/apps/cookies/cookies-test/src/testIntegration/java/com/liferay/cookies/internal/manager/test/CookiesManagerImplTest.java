@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -411,7 +412,7 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testDeleteCookiesWithSecureHttpServletRequest() {
+	public void testDeleteCookiesWithHttpsRequest() {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -420,6 +421,7 @@ public class CookiesManagerImplTest {
 
 		mockHttpServletRequest.setCookies(cookie);
 
+		mockHttpServletRequest.setScheme(Http.HTTPS);
 		mockHttpServletRequest.setSecure(true);
 
 		MockHttpServletResponse mockHttpServletResponse =

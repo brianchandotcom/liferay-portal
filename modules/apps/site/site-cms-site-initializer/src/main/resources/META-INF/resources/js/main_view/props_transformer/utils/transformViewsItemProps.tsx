@@ -64,8 +64,8 @@ function isMultimediaMimeType(mimeType: string): boolean {
 
 const getFileMimeTypeObjectDefinitionStickerValue = (
 	fileMimeTypeValues: Record<string, string> | undefined,
-	objectDefinitionValues: Record<string, string>,
-	item: any
+	item: any,
+	objectDefinitionValues: Record<string, string>
 ) => {
 	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
 		return '';
@@ -137,15 +137,15 @@ export function transformItemCardView(
 		stickerProps: {
 			className: getFileMimeTypeObjectDefinitionStickerValue(
 				fileMimeTypeCssClasses,
-				objectDefinitionCssClasses,
-				item
+				item,
+				objectDefinitionCssClasses
 			),
 			content: (
 				<ClayIcon
 					symbol={getFileMimeTypeObjectDefinitionStickerValue(
 						fileMimeTypeIcons,
-						objectDefinitionIcons,
-						item
+						item,
+						objectDefinitionIcons
 					)}
 				/>
 			),

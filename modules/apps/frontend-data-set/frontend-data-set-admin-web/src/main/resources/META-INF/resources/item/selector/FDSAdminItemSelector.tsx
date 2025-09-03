@@ -72,12 +72,7 @@ const FDSAdminItemSelector = ({
 					onSelectedItemsChange={(
 						selectedItems: Array<ISelectedItem>
 					) => {
-						setSelectedItem({
-							externalReferenceCode:
-								selectedItems[0].externalReferenceCode,
-							id: selectedItems[0].id,
-							label: selectedItems[0].label,
-						});
+						setSelectedItem(selectedItems[0]);
 					}}
 					selectedItems={[selectedItem]}
 					selectedItemsKey="externalReferenceCode"

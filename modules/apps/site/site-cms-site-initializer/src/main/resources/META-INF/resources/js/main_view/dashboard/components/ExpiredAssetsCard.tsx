@@ -228,7 +228,7 @@ function ExpiredAssetsCard() {
 
 			<ClayPaginationBarWithBasicItems
 				activeDelta={pagination.delta}
-				className="mt-3"
+				className="mx-3"
 				ellipsisBuffer={3}
 				ellipsisProps={{
 					'aria-label': Liferay.Language.get('more'),

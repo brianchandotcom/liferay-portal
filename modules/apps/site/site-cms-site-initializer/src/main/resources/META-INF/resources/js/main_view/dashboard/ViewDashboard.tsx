@@ -84,7 +84,7 @@ const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 					<ClayLayout.Col size={12}>
 						<SectionHeader
 							icon="order-form-pencil"
-							title="Health and Usage"
+							title={Liferay.Language.get('health-and-usage')}
 						/>
 					</ClayLayout.Col>
 				</ClayLayout.Row>

@@ -7,7 +7,6 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {Body, Cell, Row, Table, Text} from '@clayui/core';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -99,7 +98,7 @@ function ExpiredAssetItem({
 				<Icon
 					className="mx-1"
 					color={
-						AssetTypeIcons[assetType]?.colorS
+						AssetTypeIcons[assetType]?.color
 					}
 					symbol={
 						AssetTypeIcons[assetType]?.symbol
@@ -122,26 +121,24 @@ function ExpiredAssetItem({
 				</Text>
 			</div>
 
-			<ClayTooltipProvider>
-				<div className="ml-auto">
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('view-asset')}
-						className="border-0"
-						data-testid="view-asset-button"
-						data-tooltip-align="top"
-						displayType="secondary"
-						onClick={() => {
-							openModal({
-								size: 'full-screen',
-								title,
-								url: formatActionURL(title, href),
-							});
-						}}
-						symbol="view"
-						title={Liferay.Language.get('view-asset')}
-					/>
-				</div>
-			</ClayTooltipProvider>
+			<div className="ml-auto">
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('view-asset')}
+					className="border-0"
+					data-testid="view-asset-button"
+					data-tooltip-align="top"
+					displayType="secondary"
+					onClick={() => {
+						openModal({
+							size: 'full-screen',
+							title,
+							url: formatActionURL(title, href),
+						});
+					}}
+					symbol="view"
+					title={Liferay.Language.get('view-asset')}
+				/>
+			</div>
 		</div>
 	);
 }
@@ -152,7 +149,7 @@ function ExpiredAssetsCard() {
 	} = useContext(ViewDashboardContext);
 	const [expiredAssetsList, setExpiredAssetsList] =
 		useState<ExpiredAssetsApiResponse>();
-	const [tableSpecs, setTableSpecs] = useState<{delta: number; page: number}>(
+	const [pagination, setPagination] = useState<{delta: number; page: number}>(
 		{
 			delta: 10,
 			page: 1,
@@ -176,76 +173,74 @@ function ExpiredAssetsCard() {
 	}, [language, space]);
 
 	const handlePageChange = (newPage: number) => {
-		setTableSpecs({...tableSpecs, page: newPage});
+		setPagination({...pagination, page: newPage});
 	};
 
 	const handleDeltaChange = (newDelta: number) => {
-		setTableSpecs({delta: newDelta, page: 1});
+		setPagination({delta: newDelta, page: 1});
 	};
 
 	const displayedItems = useMemo(() => {
-		const startIndex = (tableSpecs.page - 1) * tableSpecs.delta;
-		const endIndex = startIndex + tableSpecs.delta;
+		const startIndex = (pagination.page - 1) * pagination.delta;
+		const endIndex = startIndex + pagination.delta;
 
 		return expiredAssetsList?.items.slice(startIndex, endIndex) || [];
-	}, [tableSpecs, expiredAssetsList]);
+	}, [pagination, expiredAssetsList]);
+
+	if (loading) {
+		return (
+			<ClayLoadingIndicator
+				data-testid="loading"
+				displayType="primary"
+				shape="squares"
+				size="md"
+			/>
+		);
+	}
 
 	return (
-		<div className="cms-dashboard__expired-assets">
-			{loading ? (
-				<ClayLoadingIndicator
-					data-testid="loading"
-					displayType="primary"
-					shape="squares"
-					size="md"
-				/>
-			) : (
-				<BaseCard
-					contentClassName="mx-n3"
-					description={Liferay.Language.get(
-						'this-report-provides-a-list-of-assets-that-have-reached-their-expiration-date'
-					)}
-					title={Liferay.Language.get('expired-assets')}
-				>
-					<Table borderless striped={true}>
-						<Body items={displayedItems}>
-							{(row) => (
-								<Row>
-									<Cell className="border-0">
-										<ExpiredAssetItem
-
-											// TODO: When available, implement asset type to show the correct icon
-											// assetType={row['assetType']}
-
-											href={row['href']}
-											title={row['title']}
-											usage={row['usages']}
-										/>
-									</Cell>
-								</Row>
-							)}
-						</Body>
-					</Table>
-
-					<ClayPaginationBarWithBasicItems
-						activeDelta={tableSpecs.delta}
-						className="mt-3"
-						ellipsisBuffer={3}
-						ellipsisProps={{
-							'aria-label': Liferay.Language.get('more'),
-							'title': Liferay.Language.get('more'),
-						}}
-						onActiveChange={(newPage: number) =>
-							handlePageChange(newPage)
-						}
-						onDeltaChange={(newDelta: number) =>
-							handleDeltaChange(newDelta)
-						}
-						totalItems={expiredAssetsList?.totalCount || 0}
-					/>
-				</BaseCard>
+		<BaseCard
+			contentClassName="mx-n3"
+			description={Liferay.Language.get(
+				'this-report-provides-a-list-of-assets-that-have-reached-their-expiration-date'
 			)}
-		</div>
+			title={Liferay.Language.get('expired-assets')}
+		>
+			<Table borderless striped={true}>
+				<Body items={displayedItems}>
+					{(row) => (
+						<Row>
+							<Cell className="border-0">
+								<ExpiredAssetItem
+
+									// TODO: When available, implement asset type to show the correct icon
+									// assetType={row['assetType']}
+
+									href={row['href']}
+									title={row['title']}
+									usage={row['usages']}
+								/>
+							</Cell>
+						</Row>
+					)}
+				</Body>
+			</Table>
+
+			<ClayPaginationBarWithBasicItems
+				activeDelta={pagination.delta}
+				className="mt-3"
+				ellipsisBuffer={3}
+				ellipsisProps={{
+					'aria-label': Liferay.Language.get('more'),
+					'title': Liferay.Language.get('more'),
+				}}
+				onActiveChange={(newPage: number) => handlePageChange(newPage)}
+				onDeltaChange={(newDelta: number) =>
+					handleDeltaChange(newDelta)
+				}
+				totalItems={expiredAssetsList?.totalCount || 0}
+			/>
+		</BaseCard>
 	);
 }
 

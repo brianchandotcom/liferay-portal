@@ -293,7 +293,7 @@ public class SettingsTestUtil {
 	}
 
 	public static Settings getSettings(
-		FavIconType favIconType, ServiceContext serviceContext) {
+		FavIcon.FavIconType favIconType, ServiceContext serviceContext) {
 
 		return new Settings() {
 			{
@@ -360,7 +360,7 @@ public class SettingsTestUtil {
 	}
 
 	public static void modifySettings(
-			FavIconType favIconType, ServiceContext serviceContext,
+			FavIcon.FavIconType favIconType, ServiceContext serviceContext,
 			Settings settings)
 		throws Exception {
 
@@ -485,12 +485,6 @@ public class SettingsTestUtil {
 		}
 	}
 
-	public enum FavIconType {
-
-		CLIENT_EXTENSION, ITEM_EXTERNAL_REFERENCE
-
-	}
-
 	private static void _assertClientExtension(
 		ClientExtension clientExtension, Layout layout, String type) {
 
@@ -604,10 +598,10 @@ public class SettingsTestUtil {
 		return clientExtension;
 	}
 
-	private static FavIcon _getFavIcon(FavIconType favIconType)
+	private static FavIcon _getFavIcon(FavIcon.FavIconType favIconType)
 		throws Exception {
 
-		if (favIconType == FavIconType.CLIENT_EXTENSION) {
+		if (favIconType == FavIcon.FavIconType.CLIENT_EXTENSION) {
 			return _getFavIconClientExtension();
 		}
 

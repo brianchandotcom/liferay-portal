@@ -13,6 +13,7 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplateSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
@@ -1373,8 +1374,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			patchWidgetPageTemplateSettings.getLayoutTemplateId());
 
 		SettingsTestUtil.modifySettings(
-			SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
-			serviceContext, widgetPageSpecification.getSettings());
+			FavIcon.FavIconType.ITEM_EXTERNAL_REFERENCE, serviceContext,
+			widgetPageSpecification.getSettings());
 
 		pageTemplate =
 			pageTemplateResource.
@@ -1611,7 +1612,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		widgetPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
-				SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
+				FavIcon.FavIconType.ITEM_EXTERNAL_REFERENCE,
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 
@@ -1747,7 +1748,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			PageSpecificationsTestUtil.getWidgetPageSpecification(
 				null, pageTemplate.getExternalReferenceCode(),
 				SettingsTestUtil.getSettings(
-					SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
+					FavIcon.FavIconType.ITEM_EXTERNAL_REFERENCE,
 					ServiceContextTestUtil.getServiceContext(
 						testGroup.getGroupId(), TestPropsValues.getUserId())),
 				PageSpecification.Status.APPROVED,
@@ -1796,7 +1797,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		widgetPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
-				SettingsTestUtil.FavIconType.CLIENT_EXTENSION,
+				FavIcon.FavIconType.CLIENT_EXTENSION,
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 

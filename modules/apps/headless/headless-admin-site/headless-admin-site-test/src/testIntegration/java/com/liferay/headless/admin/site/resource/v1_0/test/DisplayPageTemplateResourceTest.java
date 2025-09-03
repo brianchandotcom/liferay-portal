@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateOpenGraphSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSEOSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
@@ -1381,12 +1382,11 @@ public class DisplayPageTemplateResourceTest
 
 		draftContentPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
-				SettingsTestUtil.FavIconType.CLIENT_EXTENSION, serviceContext));
+				FavIcon.FavIconType.CLIENT_EXTENSION, serviceContext));
 
 		publishedContentPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
-				SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE,
-				serviceContext));
+				FavIcon.FavIconType.ITEM_EXTERNAL_REFERENCE, serviceContext));
 
 		displayPageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {

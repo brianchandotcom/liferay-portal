@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
@@ -1415,14 +1416,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		SettingsTestUtil.FavIconType favIconType =
-			SettingsTestUtil.FavIconType.ITEM_EXTERNAL_REFERENCE;
+		FavIcon.FavIconType favIconType =
+			FavIcon.FavIconType.ITEM_EXTERNAL_REFERENCE;
 
 		for (PageSpecification pageSpecification : pageSpecifications) {
 			pageSpecification.setSettings(
 				SettingsTestUtil.getSettings(favIconType, serviceContext));
 
-			favIconType = SettingsTestUtil.FavIconType.CLIENT_EXTENSION;
+			favIconType = FavIcon.FavIconType.CLIENT_EXTENSION;
 		}
 
 		sitePage.setPageSpecifications(pageSpecifications);

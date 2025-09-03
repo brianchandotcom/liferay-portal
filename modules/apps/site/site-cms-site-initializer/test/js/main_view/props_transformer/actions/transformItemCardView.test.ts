@@ -23,10 +23,7 @@ function assertStickerProps(
 }
 
 describe('transformItemCardView', () => {
-	const baseMockProps = {actions: {}, id: 1, title: 'Item Title'};
-	const baseMockItem = {
-		dateModified: '2025-01-01T12:00:00Z',
-	};
+	const baseMockProps = {actions: {}};
 	const mockFileMimeTypeCssClasses = {
 		'default': 'file-icon-color-0',
 		'image': 'file-icon-color-3',
@@ -56,7 +53,6 @@ describe('transformItemCardView', () => {
 				{
 					entryClassName:
 						'com.liferay.object.model.ObjectEntryFolder',
-					...baseMockItem,
 				},
 				mockFileMimeTypeCssClasses,
 				mockFileMimeTypeIcons,
@@ -80,7 +76,6 @@ describe('transformItemCardView', () => {
 							},
 						},
 					},
-					...baseMockItem,
 				},
 				mockFileMimeTypeCssClasses,
 				mockFileMimeTypeIcons,
@@ -104,7 +99,6 @@ describe('transformItemCardView', () => {
 							},
 						},
 					},
-					...baseMockItem,
 				},
 				mockFileMimeTypeCssClasses,
 				mockFileMimeTypeIcons,
@@ -131,7 +125,6 @@ describe('transformItemCardView', () => {
 							},
 						},
 					},
-					...baseMockItem,
 				},
 				mockFileMimeTypeCssClasses,
 				mockFileMimeTypeIcons,
@@ -158,7 +151,6 @@ describe('transformItemCardView', () => {
 							},
 						},
 					},
-					...baseMockItem,
 				},
 				mockFileMimeTypeCssClasses,
 				mockFileMimeTypeIcons,
@@ -185,7 +177,6 @@ describe('transformItemCardView', () => {
 							},
 						},
 					},
-					...baseMockItem,
 				},
 				mockFileMimeTypeCssClasses,
 				mockFileMimeTypeIcons,
@@ -212,7 +203,6 @@ describe('transformItemCardView', () => {
 							},
 						},
 					},
-					...baseMockItem,
 				},
 				mockFileMimeTypeCssClasses,
 				mockFileMimeTypeIcons,

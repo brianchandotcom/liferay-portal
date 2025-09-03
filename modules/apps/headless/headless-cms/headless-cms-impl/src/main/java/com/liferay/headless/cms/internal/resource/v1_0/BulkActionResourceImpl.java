@@ -195,7 +195,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		if (selectAll && ArrayUtil.isEmpty(bulkActionItems)) {
 			if (filter == null) {
-				throw new ValidationException("Filter cannot be null");
+				throw new ValidationException("Filter is null");
 			}
 
 			_searchResultResource.setContextAcceptLanguage(

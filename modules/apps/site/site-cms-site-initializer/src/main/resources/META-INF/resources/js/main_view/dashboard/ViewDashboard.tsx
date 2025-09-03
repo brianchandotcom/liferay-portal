@@ -89,7 +89,7 @@ const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				<ClayLayout.Row>
+				<ClayLayout.Row className="mb-4">
 					<ClayLayout.Col size={12}>
 						<ExpiredAssetsCard />
 					</ClayLayout.Col>

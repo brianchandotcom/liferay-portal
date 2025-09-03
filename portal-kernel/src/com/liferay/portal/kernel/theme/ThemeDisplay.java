@@ -190,8 +190,10 @@ public class ThemeDisplay
 			return _clayCSSURL;
 		}
 
-		return PortalUtil.getStaticResourceURL(
+		_clayCSSURL = PortalUtil.getStaticResourceURL(
 			getRequest(), getPathThemeCss() + "/clay.css");
+
+		return _clayCSSURL;
 	}
 
 	public ColorScheme getColorScheme() {
@@ -557,8 +559,10 @@ public class ThemeDisplay
 			return _mainCSSURL;
 		}
 
-		return PortalUtil.getStaticResourceURL(
+		_mainCSSURL = PortalUtil.getStaticResourceURL(
 			getRequest(), getPathThemeCss() + "/main.css");
+
+		return _mainCSSURL;
 	}
 
 	public String getMainJSURL() {
@@ -566,8 +570,10 @@ public class ThemeDisplay
 			return _mainJSURL;
 		}
 
-		return PortalUtil.getStaticResourceURL(
+		_mainJSURL = PortalUtil.getStaticResourceURL(
 			getRequest(), getPathThemeJavaScript() + "/main.js");
+
+		return _mainJSURL;
 	}
 
 	public List<NavItem> getNavItems() throws PortalException {

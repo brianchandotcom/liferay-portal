@@ -254,6 +254,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			GroupPermissionUtil.check(
 				PermissionThreadLocal.getPermissionChecker(), group,
 				ActionKeys.UPDATE);
+
+			group = _updateGroup(
+				group.getGroupId(),
+				multipartBody.getValueAsInstance("site", Site.class));
+
+			return _toSite(group);
 		}
 
 		PermissionChecker permissionChecker =

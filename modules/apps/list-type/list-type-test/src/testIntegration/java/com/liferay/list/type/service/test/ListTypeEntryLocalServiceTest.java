@@ -110,12 +110,6 @@ public class ListTypeEntryLocalServiceTest {
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				_listTypeDefinition.isSystem()));
 		AssertUtils.assertFailure(
-			ListTypeEntrySystemException.class, false,
-			"Only allowed bundles can add system list type entries",
-			() -> _testAddListTypeEntry(
-				_systemListTypeDefinition.getListTypeDefinitionId(), "baker",
-				_systemListTypeDefinition.isSystem()));
-		AssertUtils.assertFailure(
 			ListTypeEntryKeyException.class, "Key is null",
 			() -> _testAddListTypeEntry(
 				_listTypeDefinition.getListTypeDefinitionId(), null,
@@ -126,6 +120,12 @@ public class ListTypeEntryLocalServiceTest {
 			() -> _testAddListTypeEntry(
 				_listTypeDefinition.getListTypeDefinitionId(), " able ",
 				_listTypeDefinition.isSystem()));
+		AssertUtils.assertFailure(
+			ListTypeEntrySystemException.class, false,
+			"Only allowed bundles can add system list type entries",
+			() -> _testAddListTypeEntry(
+				_systemListTypeDefinition.getListTypeDefinitionId(), "baker",
+				_systemListTypeDefinition.isSystem()));
 		AssertUtils.assertFailure(
 			ListTypeEntrySystemException.class, true,
 			"System list type entries cannot be added to custom list type " +

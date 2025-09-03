@@ -84,12 +84,12 @@
 				<#assign
 					currentURL = themeDisplay.getURLCurrent()?replace("%20", " ")
 					isExpanded = currentURL?contains("${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}Expanded")
-					optionsCount = 1
+					optionsCount = 0
 				/>
 
 				<#list entries?sort_by("displayName") as entry>
 					<#if optionsCount lte 5 || isExpanded>
-						<li class="color-neutral-2 <#if optionsCount gt 5 && !isExpanded>d-none</#if> facet-value py-1">
+						<li class="color-neutral-2 <#if optionsCount gte 5 && !isExpanded>d-none</#if> facet-value py-1">
 							<div class="custom-checkbox custom-control font-weight-normal">
 								<label class="facet-checkbox-label" for="${namespace}_term_${entry.getDisplayName()}">
 									<input
@@ -119,7 +119,7 @@
 					<#assign optionsCount++ />
 				</#list>
 
-				<#if optionsCount gt 6 && !isExpanded>
+				<#if optionsCount gt 5 && !isExpanded>
 					<button
 						class="btn-unstyled mt-4 view-all-btn"
 						id="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName() + 'facetAssetCategoriesViewAll'}"

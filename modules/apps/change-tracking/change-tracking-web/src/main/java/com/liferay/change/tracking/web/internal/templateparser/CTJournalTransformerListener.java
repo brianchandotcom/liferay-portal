@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,7 +7,6 @@ package com.liferay.change.tracking.web.internal.templateparser;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 
@@ -33,33 +32,35 @@ public class CTJournalTransformerListener extends BaseTransformerListener {
 	public String onOutput(
 		String output, String languageId, Map<String, String> tokens) {
 
-		if (!output.contains("videoEmbed=true")) {
-			return output;
-		}
-
-		Long ctCollectionId = Long.valueOf(tokens.get("ct_collection_id"));
-
-		if (ctCollectionId ==
-				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
-
+		if (!output.contains("previewCTCollectionId")) {
 			return output;
 		}
 
 		Source source = new Source(output);
 
-		StartTag iframeTag = source.getFirstStartTag("iframe");
+		StartTag imgTag = source.getFirstStartTag("img");
 
-		Attributes attributes = iframeTag.getAttributes();
+		if (imgTag == null) {
+			return output;
+		}
+
+		Long ctCollectionId = Long.valueOf(tokens.get("ct_collection_id"));
+
+		Attributes attributes = imgTag.getAttributes();
 
 		OutputDocument outputDocument = new OutputDocument(source);
 
 		Map<String, String> map = outputDocument.replace(attributes, false);
 
+		String src = attributes.getValue("src");
+
+		int previewCTCollectionId = src.indexOf("previewCTCollectionId=");
+
 		map.put(
 			"src",
 			StringBundler.concat(
-				attributes.getValue("src"), "&ctCollectionId=",
-				ctCollectionId));
+				src.substring(0, previewCTCollectionId),
+				"previewCTCollectionId=", ctCollectionId));
 
 		return outputDocument.toString();
 	}

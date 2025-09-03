@@ -352,6 +352,14 @@ export class SegmentsPage {
 		await expect(memberCountLocator).toHaveText(memberCount);
 	}
 
+	async viewSegmentsItemTable(segmentName: string) {
+		const itemSegmentTable = this.page.locator(
+			`a:has-text('${segmentName}')`
+		);
+
+		await expect(itemSegmentTable).toBeVisible();
+	}
+
 	async viewMembers({
 		expectedEmail,
 		expectedName,

@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.processor.VideoProcessorUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -689,16 +687,7 @@ public class WebServerServlet extends HttpServlet {
 			Organization organization = null;
 
 			List<Organization> organizations =
-				OrganizationLocalServiceUtil.dslQuery(
-					DSLQueryFactoryUtil.select(
-						OrganizationTable.INSTANCE
-					).from(
-						OrganizationTable.INSTANCE
-					).where(
-						OrganizationTable.INSTANCE.logoId.eq(imageId)
-					).limit(
-						0, 1
-					));
+				OrganizationLocalServiceUtil.getOrganizationsByLogoId(imageId);
 
 			if (ListUtil.isNotEmpty(organizations)) {
 				organization = organizations.get(0);

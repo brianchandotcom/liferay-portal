@@ -155,13 +155,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		BulkActionTask bulkActionTask = _addBulkActionTask(
 			deleteBulkAction.getTypeAsString());
 
-		long bulkActionTaskItemObjectDefinitionId =
-			_getBulkActionTaskItemObjectDefinitionId();
-		ImportTaskResource importTaskResource = _getImportTaskResource();
-
 		for (Map.Entry<String, List<BulkActionItem>> entry :
 				bulkActionItemsMap.entrySet()) {
 
+			ImportTaskResource importTaskResource = _getImportTaskResource();
 			String taskItemDelegateName = _getTaskItemDelegateName(
 				entry.getKey());
 
@@ -181,7 +178,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					bulkActionItem.getClassPK(),
 					importTask.getExecuteStatusAsString(), importTask.getId(),
 					bulkActionItem.getName(),
-					bulkActionTaskItemObjectDefinitionId, taskItemDelegateName);
+					_getBulkActionTaskItemObjectDefinitionId(),
+					taskItemDelegateName);
 			}
 		}
 

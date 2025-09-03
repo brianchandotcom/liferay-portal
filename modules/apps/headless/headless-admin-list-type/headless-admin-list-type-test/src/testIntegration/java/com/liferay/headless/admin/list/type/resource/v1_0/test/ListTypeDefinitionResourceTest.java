@@ -58,36 +58,6 @@ public class ListTypeDefinitionResourceTest
 			});
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetListTypeDefinition() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetListTypeDefinitionByExternalReferenceCode() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetListTypeDefinitionByExternalReferenceCodeNotFound() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetListTypeDefinitionNotFound() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetListTypeDefinitionsPage() throws Exception {
-	}
-
 	@Override
 	@Test
 	public void testPostListTypeDefinition() throws Exception {

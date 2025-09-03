@@ -26,7 +26,6 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -165,18 +164,6 @@ public class ListTypeEntryResourceTest
 						listTypeEntry2, entityField.getName(), 1);
 				}
 			});
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetListTypeEntry() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetListTypeEntryNotFound() throws Exception {
 	}
 
 	@Override

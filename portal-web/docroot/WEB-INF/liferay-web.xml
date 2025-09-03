@@ -344,6 +344,8 @@
 	<filter-mapping>
 		<filter-name>Valid Host Name Filter</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Thread Dump Filter</filter-name>

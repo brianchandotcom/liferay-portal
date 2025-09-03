@@ -7,32 +7,25 @@ package com.liferay.object.internal.system.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.system.SystemObjectDefinitionManager;
-import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.object.test.util.BaseSystemObjectDefinitionManagerTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -44,7 +37,8 @@ import org.junit.runner.RunWith;
  * @author Matyas Wollner
  */
 @RunWith(Arquillian.class)
-public class AddressSystemObjectDefinitionManagerTest {
+public class AddressSystemObjectDefinitionManagerTest
+	extends BaseSystemObjectDefinitionManagerTestCase {
 
 	@ClassRule
 	@Rule
@@ -52,16 +46,21 @@ public class AddressSystemObjectDefinitionManagerTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
-		_systemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager("Address");
+		super.setUp();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
 	}
 
 	@Test
 	public void testGetObjectFields() throws Exception {
 		List<ObjectField> objectFields =
-			_systemObjectDefinitionManager.getObjectFields();
+			systemObjectDefinitionManager.getObjectFields();
 
 		Assert.assertEquals(objectFields.toString(), 12, objectFields.size());
 
@@ -125,88 +124,52 @@ public class AddressSystemObjectDefinitionManagerTest {
 			).isEmpty());
 	}
 
+	@Override
 	@Test
 	@TestInfo("LPD-63933")
 	public void testGetOrAddEmptyBaseModel() throws Exception {
+		super.testGetOrAddEmptyBaseModel();
+	}
 
-		// Lazy referencing disable
+	@Override
+	protected void assertGetOrAddEmptyBaseModelWithoutPermissions(
+			BaseModel<?> baseModel, User user)
+		throws PortalException {
 
-		String originalName = PrincipalThreadLocal.getName();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		User user1 = TestPropsValues.getUser();
-
-		_setUser(user1);
-
-		String externalReferenceCode = RandomTestUtil.randomString();
+		User adminUser = TestPropsValues.getUser();
 
 		AssertUtils.assertFailure(
 			PortalException.class,
 			StringBundler.concat(
-				"No Address exists with the key {externalReferenceCode=",
-				externalReferenceCode, ", companyId=",
-				TestPropsValues.getCompanyId(), "}"),
-			() -> _systemObjectDefinitionManager.getOrAddEmptyBaseModel(
-				externalReferenceCode, user1));
+				"User ", user.getUserId(), " must have UPDATE permission for ",
+				User.class.getName(), " ", adminUser.getUserId()),
+			() -> systemObjectDefinitionManager.getOrAddEmptyBaseModel(
+				RandomTestUtil.randomString(), adminUser));
 
-		// Lazy referecing enabled
+		Address address = (Address)baseModel;
 
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			// With permissions
-
-			Address address =
-				(Address)_systemObjectDefinitionManager.getOrAddEmptyBaseModel(
-					RandomTestUtil.randomString(), user1);
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, address.getStatus());
-
-			// Without permissions
-
-			User user2 = UserTestUtil.addUser();
-
-			_setUser(user2);
-
-			AssertUtils.assertFailure(
-				PortalException.class,
-				StringBundler.concat(
-					"User ", user2.getUserId(),
-					" must have UPDATE permission for ", User.class.getName(),
-					" ", user1.getUserId()),
-				() -> _systemObjectDefinitionManager.getOrAddEmptyBaseModel(
-					RandomTestUtil.randomString(), user1));
-
-			// Without permissions, existing address
-
-			AssertUtils.assertFailure(
-				PortalException.class,
-				StringBundler.concat(
-					"User ", user2.getUserId(),
-					" must have VIEW permission for ", User.class.getName(),
-					" ", user1.getUserId()),
-				() -> _systemObjectDefinitionManager.getOrAddEmptyBaseModel(
-					address.getExternalReferenceCode(), user2));
-		}
-
-		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
-
-		PrincipalThreadLocal.setName(originalName);
+		AssertUtils.assertFailure(
+			PortalException.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must have VIEW permission for ",
+				User.class.getName(), " ", adminUser.getUserId()),
+			() -> systemObjectDefinitionManager.getOrAddEmptyBaseModel(
+				address.getExternalReferenceCode(), adminUser));
 	}
 
-	private void _setUser(User user) throws Exception {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+	@Override
+	protected void assertGetOrAddEmptyBaseModelWithPermissions(
+		BaseModel<?> baseModel) {
 
-		PrincipalThreadLocal.setName(user.getUserId());
+		Address address = (Address)baseModel;
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EMPTY, address.getStatus());
 	}
 
-	private SystemObjectDefinitionManager _systemObjectDefinitionManager;
-
-	@Inject
-	private SystemObjectDefinitionManagerRegistry
-		_systemObjectDefinitionManagerRegistry;
+	@Override
+	protected String getSystemObjectDefinitionName() {
+		return "Address";
+	}
 
 }

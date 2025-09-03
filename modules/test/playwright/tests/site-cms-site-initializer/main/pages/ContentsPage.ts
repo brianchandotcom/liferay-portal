@@ -47,7 +47,7 @@ export class ContentsPage {
 	async goto() {
 		await this.page.goto(PORTLET_URLS.cmsContents);
 
-		await this.newButton.waitFor();
+		await this.newButton.waitFor({state: 'visible'});
 	}
 
 	async closeSidePanel() {
@@ -146,6 +146,8 @@ export class ContentsPage {
 			.getByRole('row', {name: folderName})
 			.getByRole('link')
 			.click();
+
+		await this.page.getByPlaceholder('Search').waitFor({state: 'visible'});
 	}
 
 	async openSidePanel(panelName: SidePanelName = 'General') {

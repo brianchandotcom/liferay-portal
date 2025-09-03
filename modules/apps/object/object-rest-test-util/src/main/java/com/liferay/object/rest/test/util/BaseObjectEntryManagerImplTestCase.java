@@ -199,16 +199,15 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 		return null;
 	}
 
-	protected Sort[] getSorts(String sort) {
-		if (sort == null) {
+	protected Sort[] getSorts(String sortString) {
+		if (sortString == null) {
 			return new Sort[] {SortFactoryUtil.create("createDate", false)};
 		}
 
-		String[] sortParts = StringUtil.split(sort, ":");
+		String[] parts = StringUtil.split(sortString, ":");
 
 		return new Sort[] {
-			SortFactoryUtil.create(
-				sortParts[0], Objects.equals(sortParts[1], "desc"))
+			SortFactoryUtil.create(parts[0], Objects.equals(parts[1], "desc"))
 		};
 	}
 

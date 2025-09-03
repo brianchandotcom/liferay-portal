@@ -216,7 +216,7 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 
 		if (hashedFile) {
 			Mockito.when(
-				hashedFilesRegistry.get(
+				hashedFilesRegistry.getHashedFileURI(
 					Mockito.eq("/o/frontend-js-web" + _UNHASHED_FILE_PATH))
 			).thenReturn(
 				"/o/frontend-js-web" + _hashedFilePath

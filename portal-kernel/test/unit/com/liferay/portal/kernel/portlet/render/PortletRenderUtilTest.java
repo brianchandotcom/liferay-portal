@@ -208,7 +208,7 @@ public class PortletRenderUtilTest {
 		// HashedFilesRegistryUtil
 
 		_hashedFilesRegistryUtilMockedStatic.when(
-			() -> HashedFilesRegistryUtil.get(Mockito.anyString())
+			() -> HashedFilesRegistryUtil.getHashedFileURI(Mockito.anyString())
 		).thenAnswer(
 			invocationOnMock -> HashedFilesUtil.addHash(
 				invocationOnMock.getArgument(0), "HASH1234")

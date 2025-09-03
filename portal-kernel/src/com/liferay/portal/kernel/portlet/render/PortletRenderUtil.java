@@ -243,7 +243,8 @@ public class PortletRenderUtil {
 
 		String staticResourceURL = unhashedFileURI;
 
-		String hashedFileURI = HashedFilesRegistryUtil.get(unhashedFileURI);
+		String hashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
+			unhashedFileURI);
 
 		if (hashedFileURI == null) {
 			if (PortalUtil.isRightToLeft(httpServletRequest)) {

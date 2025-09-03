@@ -55,11 +55,11 @@ public class StyleSheetFrontendResourceRequestHandler
 		String hashedFileURI;
 
 		if (HashedFilesUtil.containsHash(requestURI)) {
-			hashedFileURI = _hashedFilesRegistry.get(
+			hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
 				HashedFilesUtil.removeHash(requestURI));
 		}
 		else {
-			hashedFileURI = _hashedFilesRegistry.get(requestURI);
+			hashedFileURI = _hashedFilesRegistry.getHashedFileURI(requestURI);
 		}
 
 		if (hashedFileURI != null) {
@@ -90,7 +90,8 @@ public class StyleSheetFrontendResourceRequestHandler
 				requestHash, tokens == null, requestURI, tokens);
 		}
 
-		String hashedFileURI = _hashedFilesRegistry.get(requestURI);
+		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
+			requestURI);
 
 		if (hashedFileURI == null) {
 			return _createFrontendResource(null, false, requestURI, tokens);

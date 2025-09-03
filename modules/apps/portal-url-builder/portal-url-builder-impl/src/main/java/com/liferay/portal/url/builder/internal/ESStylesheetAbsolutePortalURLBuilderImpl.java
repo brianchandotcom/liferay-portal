@@ -32,7 +32,7 @@ public class ESStylesheetAbsolutePortalURLBuilderImpl
 
 		String prefix = pathModule + webContextPath;
 
-		String hashedFileURI = hashedFilesRegistry.get(
+		String hashedFileURI = hashedFilesRegistry.getHashedFileURI(
 			prefix + esStylesheetPath);
 
 		if (hashedFileURI != null) {

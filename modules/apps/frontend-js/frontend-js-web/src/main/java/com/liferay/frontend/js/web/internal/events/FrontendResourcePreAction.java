@@ -48,25 +48,25 @@ public class FrontendResourcePreAction extends Action {
 
 		boolean rtl = _portal.isRightToLeft(httpServletRequest);
 
-		String clayCSSHashedURI = _hashedFilesRegistry.get(
+		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
 			contextPath + (rtl ? "/css/clay_rtl.css" : "/css/clay.css"));
 
-		if (clayCSSHashedURI != null) {
-			themeDisplay.setDefaultClayCSSURL(clayCSSHashedURI);
+		if (hashedFileURI != null) {
+			themeDisplay.setDefaultClayCSSURL(hashedFileURI);
 		}
 
-		String mainCSSHashedURI = _hashedFilesRegistry.get(
+		hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
 			contextPath + (rtl ? "/css/main_rtl.css" : "/css/main.css"));
 
-		if (mainCSSHashedURI != null) {
-			themeDisplay.setDefaultMainCSSURL(mainCSSHashedURI);
+		if (hashedFileURI != null) {
+			themeDisplay.setDefaultMainCSSURL(hashedFileURI);
 		}
 
-		String mainJSHashedURI = _hashedFilesRegistry.get(
+		hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
 			contextPath + "/js/main.js");
 
-		if (mainJSHashedURI != null) {
-			themeDisplay.setDefaultMainJSURL(mainJSHashedURI);
+		if (hashedFileURI != null) {
+			themeDisplay.setDefaultMainJSURL(hashedFileURI);
 		}
 	}
 

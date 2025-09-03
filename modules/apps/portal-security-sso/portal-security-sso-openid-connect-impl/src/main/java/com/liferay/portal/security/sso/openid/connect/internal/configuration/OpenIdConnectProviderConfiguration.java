@@ -127,8 +127,8 @@ public interface OpenIdConnectProviderConfiguration {
 	public String[] customTokenRequestParameters();
 
 	@Meta.AD(
-		deflt = "", description = "custom-claims-help",
-		name = "custom-claims", required = false
+		deflt = "", description = "custom-claims-help", name = "custom-claims",
+		required = false
 	)
 	public String[] customClaims();
 

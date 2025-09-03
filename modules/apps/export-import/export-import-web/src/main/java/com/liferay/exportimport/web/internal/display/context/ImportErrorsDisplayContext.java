@@ -6,6 +6,7 @@
 package com.liferay.exportimport.web.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -29,8 +30,10 @@ public class ImportErrorsDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public String getAPIURL() {
-		return "/group/__mocks__/get-import-error-list";
+	public String getAPIURL(String importProcessId) {
+		return StringBundler.concat(
+			"/o/export-import/v1.0/import-processes/", importProcessId,
+			"/errors");
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {

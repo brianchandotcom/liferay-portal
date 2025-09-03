@@ -518,7 +518,7 @@ public interface LayoutService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout getOrAddEmptyLayout(
-			String externalReferenceCode, long userId, long groupId,
+			String externalReferenceCode, long groupId,
 			ServiceContext serviceContext)
 		throws Exception;
 

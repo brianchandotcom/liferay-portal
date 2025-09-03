@@ -21,6 +21,7 @@ import multipleFilesUploadAction, {
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
+import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
@@ -81,6 +82,18 @@ export default function AllFDSPropsTransformer({
 				{
 					component: SpaceRenderer,
 					name: 'spaceTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({actions, itemData, options, value}) =>
+						SimpleActionLinkRenderer({
+							actions,
+							additionalProps,
+							itemData,
+							options,
+							value,
+						}),
+					name: 'simpleActionLinkTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 				{

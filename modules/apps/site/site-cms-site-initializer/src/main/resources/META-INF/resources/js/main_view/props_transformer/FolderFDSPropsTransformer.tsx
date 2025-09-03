@@ -84,7 +84,14 @@ export default function FolderFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: SimpleActionLinkRenderer,
+					component: ({actions, itemData, options, value}) =>
+						SimpleActionLinkRenderer({
+							actions,
+							additionalProps,
+							itemData,
+							options,
+							value,
+						}),
 					name: 'simpleActionLinkTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

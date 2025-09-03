@@ -26,6 +26,11 @@
 				"friendlyURL": "/ssa-dashboard",
 				"privateLayout": false,
 				"type": "layout"
+			},
+			{
+				"friendlyURL": "/finance-dashboard",
+				"privateLayout": false,
+				"type": "layout"
 			}
 		],
 		"name": "Primary Navigation"
@@ -60,6 +65,11 @@
 			},
 			{
 				"friendlyURL": "/ssa-dashboard",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/finance-dashboard",
 				"privateLayout": false,
 				"type": "layout"
 			}

@@ -26,11 +26,13 @@ import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFolderItem;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectRelationshipTable;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
@@ -55,6 +57,7 @@ import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -1439,6 +1442,85 @@ public class ObjectRelationshipLocalServiceImpl
 		return classPKs.size();
 	}
 
+	private int _getRelatedRootDescendantNodeObjectEntriesCount(
+			ObjectDefinition objectDefinition, long objectFieldId)
+		throws PortalException {
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService);
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				true, objectDefinition, _objectFieldLocalService);
+
+		List<ObjectRelationship> objectRelationships =
+			getObjectRelationshipsByObjectDefinitionId2(
+				objectDefinition.getObjectDefinitionId(), true);
+
+		if (objectRelationships.isEmpty()) {
+			return 0;
+		}
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.countDistinct(
+			ObjectEntryTable.INSTANCE.objectEntryId
+		).from(
+			dynamicObjectDefinitionTable
+		).innerJoinON(
+			extensionDynamicObjectDefinitionTable,
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+			).eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+			)
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
+		).where(
+			ObjectEntryTable.INSTANCE.companyId.eq(
+				objectDefinition.getCompanyId()
+			).and(
+				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+					objectDefinition.getObjectDefinitionId())
+			).and(
+				() -> {
+					ObjectField objectField =
+						_objectFieldPersistence.fetchByPrimaryKey(
+							objectFieldId);
+
+					Column<?, Long> column =
+						(Column<?, Long>)_objectFieldLocalService.getColumn(
+							objectField.getObjectDefinitionId(),
+							objectField.getName());
+
+					return column.neq(0L);
+				}
+			).and(
+				() -> {
+					Predicate predicate = null;
+
+					for (ObjectRelationship objectRelationship :
+							objectRelationships) {
+
+						ObjectField objectField =
+							_objectFieldPersistence.fetchByPrimaryKey(
+								objectRelationship.getObjectFieldId2());
+
+						Column<?, Long> column =
+							(Column<?, Long>)_objectFieldLocalService.getColumn(
+								objectField.getObjectDefinitionId(),
+								objectField.getName());
+
+						predicate = Predicate.or(predicate, column.neq(0L));
+					}
+
+					return predicate;
+				}
+			)
+		);
+
+		return objectRelationshipPersistence.dslQueryCount(dslQuery);
+	}
+
 	private String _getServiceRegistrationKey(
 		ObjectRelationship objectRelationship) {
 
@@ -1698,44 +1780,20 @@ public class ObjectRelationshipLocalServiceImpl
 			if ((objectRelationship != null) &&
 				(objectRelationship.getObjectRelationshipId() != 0)) {
 
-				int relatedObjectEntriesCount =
-					_objectEntryLocalService.getOneToManyObjectEntriesCount(
-						0, objectRelationship.getObjectRelationshipId(), null,
-						0L, false, null);
+				int relatedRootDescendantNodeObjectEntriesCount =
+					_getRelatedRootDescendantNodeObjectEntriesCount(
+						objectDefinition2,
+						objectRelationship.getObjectFieldId2());
 
-				if (relatedObjectEntriesCount > 0) {
+				if (relatedRootDescendantNodeObjectEntriesCount > 0) {
 					throw new ObjectRelationshipEdgeException(
+						"There must be no related object entries that are " +
+							"root descendant nodes so that the object " +
+								"relationship can be an edge to a root context",
 						StringBundler.concat(
-							"There must be no unrelated object entries when ",
-							"both object definitions are published so that ",
-							"the object relationship can be an edge to a root ",
-							"context"),
-						StringBundler.concat(
-							"there-must-be-no-unrelated-object-entries-when-",
-							"both-object-definitions-are-published-so-that-",
-							"the-object-relationship-can-be-an-edge-to-a-root-",
-							"context"));
-				}
-
-				List<ObjectField> objectFields =
-					_objectFieldPersistence.findByObjectDefinitionId(
-						objectDefinition2.getObjectDefinitionId());
-
-				Long relatedRootObjectEntriesCount =
-					_objectEntryLocalService.getRootOneToManyObjectEntriesCount(
-						objectDefinition2.getCompanyId(), objectFields,
-						objectDefinition2.getObjectDefinitionId(), null);
-
-				if (relatedRootObjectEntriesCount > 0) {
-					throw new ObjectRelationshipEdgeException(
-						StringBundler.concat(
-							"There must be no root related object entries so ",
-							"that the object relationship can be an edge to a ",
-							"root context"),
-						StringBundler.concat(
-							"there-must-be-no-root-related-object-entries-so-",
-							"that-the-object-relationship-can-be-an-edge-to-a-",
-							"root-context"));
+							"there-must-be-no-related-object-entries-that-are-",
+							"root-descendant-nodes-so-that-the-object-",
+							"relationship-can-be-an-edge-to-a-root-context"));
 				}
 			}
 

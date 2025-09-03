@@ -1334,25 +1334,6 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public Long getRootOneToManyObjectEntriesCount(
-			long companyId, List<ObjectField> objectFields,
-			long objectDefinitionId2, String search)
-		throws PortalException {
-
-		DSLQuery dslQuery = _getRootOneToManyObjectEntriesGroupByStep(
-			DSLQueryFactoryUtil.countDistinct(
-				ObjectEntryTable.INSTANCE.objectEntryId),
-			companyId, objectFields, objectDefinitionId2, search);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Get root one to many related object entries: " + dslQuery);
-		}
-
-		return objectEntryPersistence.dslQuery(dslQuery);
-	}
-
-	@Override
 	public Map<String, Object> getSystemModelAttributes(
 			ObjectDefinition objectDefinition, long primaryKey)
 		throws PortalException {
@@ -3597,34 +3578,20 @@ public class ObjectEntryLocalServiceImpl
 			long objectDefinitionId)
 		throws PortalException {
 
-		// TODO Cache this across the cluster with proper invalidation when the
-		// object definition or its object fields are updated
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		return new DynamicObjectDefinitionTable(
-			objectDefinition,
-			_objectFieldLocalService.getObjectFields(
-				objectDefinitionId, objectDefinition.getDBTableName()),
-			objectDefinition.getDBTableName());
+		return DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+			false,
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId),
+			_objectFieldLocalService);
 	}
 
 	private DynamicObjectDefinitionTable
 			_getExtensionDynamicObjectDefinitionTable(long objectDefinitionId)
 		throws PortalException {
 
-		// TODO Cache this across the cluster with proper invalidation when the
-		// object definition or its object fields are updated
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		return new DynamicObjectDefinitionTable(
-			objectDefinition,
-			_objectFieldLocalService.getObjectFields(
-				objectDefinitionId, objectDefinition.getExtensionDBTableName()),
-			objectDefinition.getExtensionDBTableName());
+		return DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+			true,
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId),
+			_objectFieldLocalService);
 	}
 
 	private DSLQuery _getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
@@ -4076,23 +4043,10 @@ public class ObjectEntryLocalServiceImpl
 					objectRelationship.getObjectDefinitionId2())
 			).and(
 				() -> {
-					Column<DynamicObjectDefinitionTable, Long> column = null;
-
-					if (Objects.equals(
-							objectField.getDBTableName(),
-							dynamicObjectDefinitionTable.getName())) {
-
-						column =
-							(Column<DynamicObjectDefinitionTable, Long>)
-								dynamicObjectDefinitionTable.getColumn(
-									objectField.getDBColumnName());
-					}
-					else {
-						column =
-							(Column<DynamicObjectDefinitionTable, Long>)
-								extensionDynamicObjectDefinitionTable.getColumn(
-									objectField.getDBColumnName());
-					}
+					Column<?, Long> column =
+						(Column<?, Long>)_objectFieldLocalService.getColumn(
+							objectField.getObjectDefinitionId(),
+							objectField.getName());
 
 					return column.eq(related ? primaryKey : 0L);
 				}
@@ -4462,87 +4416,6 @@ public class ObjectEntryLocalServiceImpl
 
 		return _getExtensionDynamicObjectDefinitionTable(
 			rootObjectDefinition.getObjectDefinitionId());
-	}
-
-	private GroupByStep _getRootOneToManyObjectEntriesGroupByStep(
-			FromStep fromStep, long companyId, List<ObjectField> objectFields,
-			long objectDefinitionId2, String search)
-		throws PortalException {
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(objectDefinitionId2);
-		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
-			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId2);
-		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
-
-		return fromStep.from(
-			dynamicObjectDefinitionTable
-		).innerJoinON(
-			extensionDynamicObjectDefinitionTable,
-			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				primaryKeyColumn
-			)
-		).innerJoinON(
-			ObjectEntryTable.INSTANCE,
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(primaryKeyColumn)
-		).where(
-			ObjectEntryTable.INSTANCE.companyId.eq(
-				companyId
-			).and(
-				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-					objectDefinitionId2)
-			).and(
-				() -> {
-					Predicate predicate = null;
-
-					Column<DynamicObjectDefinitionTable, Long> column = null;
-
-					for (ObjectField objectField : objectFields) {
-						if (Objects.equals(
-								objectField.getBusinessType(),
-								ObjectFieldConstants.
-									BUSINESS_TYPE_RELATIONSHIP)) {
-
-							if (Objects.equals(
-									objectField.getDBTableName(),
-									dynamicObjectDefinitionTable.getName())) {
-
-								column =
-									(Column<DynamicObjectDefinitionTable, Long>)
-										dynamicObjectDefinitionTable.getColumn(
-											objectField.getDBColumnName());
-							}
-							else {
-								column =
-									(Column<DynamicObjectDefinitionTable, Long>)
-										extensionDynamicObjectDefinitionTable.
-											getColumn(
-												objectField.getDBColumnName());
-							}
-
-							Predicate neqPredicate = column.neq(0L);
-
-							if (predicate == null) {
-								predicate = neqPredicate;
-							}
-							else {
-								predicate = predicate.or(neqPredicate);
-							}
-						}
-					}
-
-					return predicate;
-				}
-			).and(
-				ObjectEntrySearchUtil.getRelatedModelsPredicate(
-					_objectDefinitionPersistence.fetchByPrimaryKey(
-						objectDefinitionId2),
-					_objectFieldLocalService, search,
-					dynamicObjectDefinitionTable)
-			)
-		);
 	}
 
 	private Expression<?>[] _getSelectExpressions(

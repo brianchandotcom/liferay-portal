@@ -159,11 +159,6 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 		return slaResult;
 	}
 
-	@Override
-	protected SLAResult testGraphQLSLAResult_addSLAResult() throws Exception {
-		return testGetProcessLastSLAResult_addSLAResult();
-	}
-
 	private Instance _instance;
 	private Process _process;
 

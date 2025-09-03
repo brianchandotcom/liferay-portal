@@ -42,7 +42,6 @@ public class TimeRangeResourceTest extends BaseTimeRangeResourceTestCase {
 		assertEquals(_getDefaultTimeRanges(), timeRanges);
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetTimeRangesPage() throws Exception {
 		JSONObject timeRangesJSONObject = JSONUtil.getValueAsJSONObject(

@@ -214,16 +214,6 @@ public class ProductConfigurationResourceTest
 	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
-	public void testGraphQLGetProductByExternalReferenceCodeConfigurationNotFound()
-		throws Exception {
-
-		super.
-			testGraphQLGetProductByExternalReferenceCodeConfigurationNotFound();
-	}
-
-	@FeatureFlag("LPD-10889")
-	@Override
-	@Test
 	public void testGraphQLGetProductConfiguration() throws Exception {
 		super.testGraphQLGetProductConfiguration();
 	}

@@ -196,14 +196,6 @@ public class ContentElementResourceTest
 			contentElement, (Double)_get(contentElement, "priority"), siteId);
 	}
 
-	@Override
-	protected ContentElement testGraphQLContentElement_addContentElement()
-		throws Exception {
-
-		return _addContentElement(
-			randomContentElement(), null, testGroup.getGroupId());
-	}
-
 	private ContentElement _addContentElement(
 			ContentElement contentElement, Double priority, Long siteId)
 		throws Exception {

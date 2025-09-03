@@ -41,7 +41,6 @@ public class ReindexStatusResourceTest
 			reindexStatuses.toString(), 0, reindexStatuses.size());
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetReindexStatusesPage() throws Exception {
 		JSONObject reindexStatusesJSONObject = JSONUtil.getValueAsJSONObject(

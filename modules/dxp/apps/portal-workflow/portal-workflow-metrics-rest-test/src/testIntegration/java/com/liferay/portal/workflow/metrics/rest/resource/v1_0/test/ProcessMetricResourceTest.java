@@ -164,7 +164,6 @@ public class ProcessMetricResourceTest
 			});
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetProcessMetricsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(

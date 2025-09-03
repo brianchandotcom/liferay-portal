@@ -89,7 +89,6 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 			calendars);
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetCalendarsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(

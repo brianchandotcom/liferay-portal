@@ -252,14 +252,6 @@ public class PlacedOrderAddressResourceTest
 		return _commerceOrder.getCommerceOrderId();
 	}
 
-	@Override
-	protected PlacedOrderAddress
-			testGraphQLPlacedOrderAddress_addPlacedOrderAddress()
-		throws Exception {
-
-		return _updateBillingAndShippingAddresses();
-	}
-
 	private PlacedOrderAddress _updateBillingAndShippingAddresses()
 		throws Exception {
 

@@ -9,6 +9,7 @@ import {FetchPolicy, useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {InternalDispatch, useControlledState} from '@clayui/shared';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch, getObjectValueFromPath} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -53,14 +54,21 @@ function ItemSelectorModalButton({
 	return (
 		<>
 			<ClayInput.GroupItem shrink>
-				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('Select User')}
-					displayType="secondary"
-					onClick={() =>
-						itemSelectorModalProps.onOpenChange(true)
-					}
-					symbol="search-experiences"
-				/>
+				<ClayTooltipProvider>
+					<span
+						data-tooltip-align="top"
+						title={Liferay.Language.get('open-full-list')}
+					>
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('Select User')}
+							displayType="secondary"
+							onClick={() =>
+								itemSelectorModalProps.onOpenChange(true)
+							}
+							symbol="search-experiences"
+						/>
+					</span>
+				</ClayTooltipProvider>
 			</ClayInput.GroupItem>
 			<ItemSelectorModal
 				{...itemSelectorModalProps}

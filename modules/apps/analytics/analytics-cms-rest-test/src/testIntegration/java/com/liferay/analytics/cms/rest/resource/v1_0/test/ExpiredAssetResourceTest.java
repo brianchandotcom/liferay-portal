@@ -235,6 +235,7 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 				"/edit_content_item?&p_l_mode=read&p_p_state=",
 				LiferayWindowState.POP_UP, "&objectEntryId=",
 				objectEntry.getObjectEntryId()));
+
 		expiredAsset.setTitle(englishTitle);
 		expiredAsset.setUsages(1);
 

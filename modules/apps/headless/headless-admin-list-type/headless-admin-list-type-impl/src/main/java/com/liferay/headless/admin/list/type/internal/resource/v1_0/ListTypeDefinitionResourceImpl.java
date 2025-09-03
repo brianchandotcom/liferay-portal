@@ -16,6 +16,7 @@ import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -75,10 +76,16 @@ public class ListTypeDefinitionResourceImpl
 			String externalReferenceCode)
 		throws PortalException {
 
-		return _toListTypeDefinition(
+		com.liferay.list.type.model.ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionService.
 				fetchListTypeDefinitionByExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId()));
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (listTypeDefinition == null) {
+			throw new NoSuchModelException();
+		}
+
+		return _toListTypeDefinition(listTypeDefinition);
 	}
 
 	@Override

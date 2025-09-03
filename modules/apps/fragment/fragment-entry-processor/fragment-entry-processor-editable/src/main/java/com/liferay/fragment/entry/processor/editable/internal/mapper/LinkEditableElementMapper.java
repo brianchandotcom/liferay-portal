@@ -154,6 +154,8 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			linkElement.attr("rel", "nofollow");
 		}
 
+		Element parentElement = element.parent();
+
 		_replaceLinkContent(
 			element, empty, firstChildElement, linkElement, replaceLink);
 
@@ -165,8 +167,6 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			element.appendChild(linkElement);
 		}
 		else if ((linkElement != element) && empty) {
-			Element parentElement = element.parent();
-
 			if (element.parent() == parentElement) {
 				element.replaceWith(linkElement);
 			}

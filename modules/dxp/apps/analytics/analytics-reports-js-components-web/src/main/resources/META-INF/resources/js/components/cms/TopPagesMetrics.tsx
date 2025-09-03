@@ -48,7 +48,7 @@ const TopPagesMetricsTable: React.FC<TopPagesMetricsTableProps> = ({data}) => {
 	const formattedData: FormattedPage[] = data.topPages.map((topPage) => ({
 		count: toThousands(topPage.defaultMetric.value),
 		link: topPage.canonicalUrl,
-		page: `${topPage.siteName} | ${topPage.pageTitle}`,
+		page: topPage.pageTitle,
 		percentage: `${getPercentage((topPage.defaultMetric.value / data.totalCount) * 100)}%`,
 	}));
 
@@ -71,8 +71,6 @@ const TopPagesMetricsTable: React.FC<TopPagesMetricsTableProps> = ({data}) => {
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell headingCell noWrap>
-							<span>{Liferay.Language.get('site')} | </span>
-
 							<span>{Liferay.Language.get('page-title')}</span>
 						</ClayTable.Cell>
 

@@ -448,8 +448,8 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 
 		DB db = DBManagerUtil.getDB();
 
-		if ((db.getDBType() == DBType.MYSQL) ||
-			(db.getDBType() == DBType.MARIADB)) {
+		if ((db.getDBType() == DBType.MARIADB) ||
+			(db.getDBType() == DBType.MYSQL)) {
 
 			return new DSLFunction<>(
 				new DSLFunctionType("JSON_UNQUOTE(", ")"),
@@ -457,17 +457,16 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 					new DSLFunctionType("JSON_EXTRACT(", ")"), columnExpression,
 					new Scalar<>("$." + propertyPath)));
 		}
-
-		if (db.getDBType() == DBType.POSTGRESQL) {
-			String[] propertyNameParts = propertyPath.split("\\.");
+		else if (db.getDBType() == DBType.POSTGRESQL) {
+			String[] propertyPathParts = propertyPath.split("\\.");
 
 			Expression[] expressions =
-				new Expression[propertyNameParts.length + 1];
+				new Expression[propertyPathParts.length + 1];
 
 			expressions[0] = columnExpression;
 
 			for (int i = 1; i < expressions.length; i++) {
-				expressions[i] = new Scalar<>(propertyNameParts[i]);
+				expressions[i] = new Scalar<>(propertyPathParts[i]);
 			}
 
 			return new DSLFunction<>(

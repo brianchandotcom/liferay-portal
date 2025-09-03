@@ -340,6 +340,7 @@ public class ActionUtil {
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
+				serviceContext.getUserId(),
 				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
 				layoutStructure.toString());
 

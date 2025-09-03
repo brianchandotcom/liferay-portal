@@ -23,11 +23,11 @@ public class HashedFilesRegistryUtil {
 		hashedFilesRegistry.forEach(biConsumer);
 	}
 
-	public static String get(String unhashedFileURI) {
+	public static String getHashedFileURI(String unhashedFileURI) {
 		HashedFilesRegistry hashedFilesRegistry =
 			_hashedFilesRegistrySnapshot.get();
 
-		return hashedFilesRegistry.get(unhashedFileURI);
+		return hashedFilesRegistry.getHashedFileURI(unhashedFileURI);
 	}
 
 	public static URL getResourceURL(String fileURI) {

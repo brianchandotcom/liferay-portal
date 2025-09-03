@@ -14,6 +14,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -180,10 +181,10 @@ public class TestrayProject {
 				return null;
 			}
 
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
 			return TestrayFactory.newTestrayProductVersion(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+				this, iterator.next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -207,10 +208,10 @@ public class TestrayProject {
 				return null;
 			}
 
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
 			return TestrayFactory.newTestrayProductVersion(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+				this, iterator.next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -236,10 +237,9 @@ public class TestrayProject {
 				return null;
 			}
 
-			return TestrayFactory.newTestrayRoutine(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			return TestrayFactory.newTestrayRoutine(this, iterator.next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -260,10 +260,9 @@ public class TestrayProject {
 				return null;
 			}
 
-			return TestrayFactory.newTestrayRoutine(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			return TestrayFactory.newTestrayRoutine(this, iterator.next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

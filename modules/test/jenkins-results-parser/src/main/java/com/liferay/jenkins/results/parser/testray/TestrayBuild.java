@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -173,10 +174,10 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 				return null;
 			}
 
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
 			return TestrayFactory.newJSONObjectTestrayCaseResult(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+				this, iterator.next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -427,8 +428,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 				throw new RuntimeException("Unable to find entity JSON object");
 			}
 
-			_jsonObject = entityJSONObjects.iterator(
-			).next();
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			_jsonObject = iterator.next();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

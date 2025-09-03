@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -81,8 +82,9 @@ public class TestrayServer {
 				return null;
 			}
 
-			JSONObject entityJSONObject = entityJSONObjects.iterator(
-			).next();
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			JSONObject entityJSONObject = iterator.next();
 
 			JSONObject projectJSONObject = entityJSONObject.getJSONObject(
 				"projectToBuilds");
@@ -126,10 +128,10 @@ public class TestrayServer {
 				return null;
 			}
 
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
 			testrayCaseType = TestrayFactory.newTestrayCaseType(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+				this, iterator.next());
 
 			_testrayCaseTypesID.put(testrayCaseType.getID(), testrayCaseType);
 			_testrayCaseTypesName.put(
@@ -161,10 +163,10 @@ public class TestrayServer {
 				return null;
 			}
 
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
 			testrayCaseType = TestrayFactory.newTestrayCaseType(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+				this, iterator.next());
 
 			_testrayCaseTypesID.put(testrayCaseType.getID(), testrayCaseType);
 			_testrayCaseTypesName.put(
@@ -191,10 +193,10 @@ public class TestrayServer {
 				return null;
 			}
 
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
 			TestrayProject testrayProject = TestrayFactory.newTestrayProject(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+				this, iterator.next());
 
 			_testrayProjects.put(testrayProject.getID(), testrayProject);
 
@@ -221,10 +223,10 @@ public class TestrayServer {
 				return null;
 			}
 
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
 			TestrayProject testrayProject = TestrayFactory.newTestrayProject(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+				this, iterator.next());
 
 			_testrayProjects.put(testrayProject.getID(), testrayProject);
 
@@ -272,8 +274,9 @@ public class TestrayServer {
 				return null;
 			}
 
-			JSONObject entityJSONObject = entityJSONObjects.iterator(
-			).next();
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			JSONObject entityJSONObject = iterator.next();
 
 			JSONObject projectJSONObject = entityJSONObject.getJSONObject(
 				"routineToProjects");

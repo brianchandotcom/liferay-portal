@@ -14,6 +14,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -128,10 +129,9 @@ public class TestrayRoutine {
 				return null;
 			}
 
-			return TestrayFactory.newTestrayBuild(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			return TestrayFactory.newTestrayBuild(this, iterator.next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -153,10 +153,9 @@ public class TestrayRoutine {
 				return null;
 			}
 
-			return TestrayFactory.newTestrayBuild(
-				this,
-				entityJSONObjects.iterator(
-				).next());
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			return TestrayFactory.newTestrayBuild(this, iterator.next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -305,9 +304,9 @@ public class TestrayRoutine {
 				return;
 			}
 
-			setJSONObject(
-				entityJSONObjects.iterator(
-				).next());
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			setJSONObject(iterator.next());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

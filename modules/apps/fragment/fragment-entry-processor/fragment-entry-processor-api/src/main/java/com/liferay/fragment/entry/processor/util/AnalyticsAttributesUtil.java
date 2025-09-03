@@ -16,19 +16,24 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
@@ -41,6 +46,8 @@ public class AnalyticsAttributesUtil {
 	public static final String ACTION_DOWNLOAD = "download";
 
 	public static final String ACTION_IMPRESSION = "impression";
+
+	public static final String ACTION_VIEW = "view";
 
 	public static void addAnalyticsAttributes(
 		JSONObject editableValueJSONObject, Element element,
@@ -133,10 +140,26 @@ public class AnalyticsAttributesUtil {
 		Object object = infoItemFieldMapped.getObject();
 
 		if (object instanceof ObjectEntry) {
+			ObjectEntry objectEntry = (ObjectEntry)object;
+
+			String objectFieldBusinessType = _getObjectFieldBusinessType(
+				infoItemFieldMapped.getFieldName(),
+				objectEntry.getObjectDefinitionId());
+
+			if (Objects.equals(
+					objectFieldBusinessType,
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) ||
+				Objects.equals(
+					objectFieldBusinessType,
+					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+
+				element.attr("data-analytics-asset-action", ACTION_VIEW);
+			}
+
 			element.attr(
 				"data-analytics-object-definition-name",
 				_getAnalyticsObjectDefinitionName(
-					infoItemServiceRegistry, (ObjectEntry)object));
+					infoItemServiceRegistry, objectEntry));
 		}
 
 		element.attr(
@@ -267,6 +290,23 @@ public class AnalyticsAttributesUtil {
 		return String.valueOf(infoFieldValue.getValue(locale));
 	}
 
+	private static String _getObjectFieldBusinessType(
+		String fieldName, long objectDefinitionId) {
+
+		ObjectFieldLocalService objectFieldLocalService =
+			_objectFieldLocalServiceSnapshot.get();
+
+		ObjectField objectField = objectFieldLocalService.fetchObjectField(
+			objectDefinitionId,
+			StringUtil.removeSubstring(fieldName, "ObjectField_"));
+
+		if (objectField == null) {
+			return null;
+		}
+
+		return objectField.getBusinessType();
+	}
+
 	private static boolean _isImageTag(Element element) {
 		Tag tag = element.tag();
 
@@ -275,5 +315,9 @@ public class AnalyticsAttributesUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsAttributesUtil.class);
+
+	private static final Snapshot<ObjectFieldLocalService>
+		_objectFieldLocalServiceSnapshot = new Snapshot<>(
+			AnalyticsAttributesUtil.class, ObjectFieldLocalService.class);
 
 }

@@ -47,5 +47,7 @@ export class RecycleBinPage {
 			.getByRole('row', {name: folderName})
 			.getByRole('link')
 			.click();
+
+		await this.page.getByPlaceholder('Search').waitFor({state: 'visible'});
 	}
 }

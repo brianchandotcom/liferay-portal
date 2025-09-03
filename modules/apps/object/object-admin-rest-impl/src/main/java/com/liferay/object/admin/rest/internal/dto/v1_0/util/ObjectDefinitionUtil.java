@@ -148,6 +148,18 @@ public class ObjectDefinitionUtil {
 					serviceBuilderObjectDefinition::isEnableCategorization);
 				setEnableComments(
 					serviceBuilderObjectDefinition::isEnableComments);
+				setEnableFormContainer(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								serviceBuilderObjectDefinition.getCompanyId(),
+								"LPD-17564")) {
+
+							return null;
+						}
+
+						return serviceBuilderObjectDefinition.
+							isEnableFormContainer();
+					});
 				setEnableFriendlyURLCustomization(
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {

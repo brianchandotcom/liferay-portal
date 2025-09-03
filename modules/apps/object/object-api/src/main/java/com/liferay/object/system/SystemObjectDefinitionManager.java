@@ -89,11 +89,11 @@ public interface SystemObjectDefinitionManager {
 	public List<ObjectField> getObjectFields();
 
 	public default BaseModel<?> getOrAddEmptyBaseModel(
-			String externalReferenceCode, long companyId, User user)
+			String externalReferenceCode, User user)
 		throws PortalException {
 
 		return getBaseModelByExternalReferenceCode(
-			externalReferenceCode, companyId);
+			externalReferenceCode, user.getCompanyId());
 	}
 
 	public default Page<?> getPage(

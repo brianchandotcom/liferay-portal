@@ -110,7 +110,6 @@
 	</div>
 </div>
 
-
 <style type="text/css">
 	.apps-search-results .app-search-results-card:hover {
 		color: var(--black);

@@ -8,8 +8,8 @@
 	[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?accountId=-1&images.accountId=-1&nestedFields=categories,productSpecifications,images") /]
 [/#if]
 
-[#assign 
-	publisherdetailsesPage = restClient.get("/c/publisherdetailses?pageSize=4") 
+[#assign
+	publisherdetailsesPage = restClient.get("/c/publisherdetailses?pageSize=4")
 	publishers = publisherdetailsesPage.items![]
 /]
 

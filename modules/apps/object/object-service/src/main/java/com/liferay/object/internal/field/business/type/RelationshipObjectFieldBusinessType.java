@@ -259,7 +259,7 @@ public class RelationshipObjectFieldBusinessType
 
 			ObjectEntry objectEntry =
 				_objectEntryService.getOrAddEmptyObjectEntry(
-					externalReferenceCode, objectDefinition1GroupId, userId,
+					externalReferenceCode, objectDefinition1GroupId,
 					objectDefinition1.getObjectDefinitionId());
 
 			return objectEntry.getObjectEntryId();

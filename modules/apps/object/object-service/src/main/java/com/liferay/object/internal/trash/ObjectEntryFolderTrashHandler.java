@@ -44,7 +44,6 @@ public class ObjectEntryFolderTrashHandler extends BaseTrashHandler {
 		throws PortalException {
 
 		_objectEntryFolderService.restoreObjectEntryFolderFromTrash(
-			userId,
 			_objectEntryFolderLocalService.fetchObjectEntryFolder(classPK),
 			ServiceContextThreadLocal.getServiceContext());
 	}

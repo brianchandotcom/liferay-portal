@@ -621,8 +621,7 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.subscribeObjectEntry(
-			externalReferenceCode, _objectDefinition, null,
-			contextUser.getUserId());
+			externalReferenceCode, _objectDefinition, null);
 	}
 
 	@Override
@@ -640,8 +639,7 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.unsubscribeObjectEntry(
-			externalReferenceCode, _objectDefinition, null,
-			contextUser.getUserId());
+			externalReferenceCode, _objectDefinition, null);
 	}
 
 	@Override
@@ -809,8 +807,7 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.subscribeObjectEntry(
-			externalReferenceCode, _objectDefinition, scopeKey,
-			contextUser.getUserId());
+			externalReferenceCode, _objectDefinition, scopeKey);
 	}
 
 	@Override
@@ -828,8 +825,7 @@ public class ObjectEntryResourceImpl
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.unsubscribeObjectEntry(
-			externalReferenceCode, _objectDefinition, scopeKey,
-			contextUser.getUserId());
+			externalReferenceCode, _objectDefinition, scopeKey);
 	}
 
 	@Override

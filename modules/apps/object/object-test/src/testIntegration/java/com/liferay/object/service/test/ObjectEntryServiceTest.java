@@ -784,8 +784,6 @@ public class ObjectEntryServiceTest {
 
 		_setUser(user);
 
-		long userId1 = user.getUserId();
-
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		AssertUtils.assertFailure(
@@ -796,7 +794,7 @@ public class ObjectEntryServiceTest {
 				", companyId=", _group.getCompanyId(), ", objectDefinitionId=",
 				_objectDefinition.getObjectDefinitionId(), "}"),
 			() -> _objectEntryService.getOrAddEmptyObjectEntry(
-				externalReferenceCode, _group.getGroupId(), userId1,
+				externalReferenceCode, _group.getGroupId(),
 				_objectDefinition.getObjectDefinitionId()));
 
 		// Lazy referencing enabled
@@ -809,7 +807,6 @@ public class ObjectEntryServiceTest {
 			ObjectEntry objectEntry =
 				_objectEntryService.getOrAddEmptyObjectEntry(
 					RandomTestUtil.randomString(), _group.getGroupId(),
-					user.getUserId(),
 					_objectDefinition.getObjectDefinitionId());
 
 			// Without permissions
@@ -818,17 +815,17 @@ public class ObjectEntryServiceTest {
 
 			_setUser(user);
 
-			long userId2 = user.getUserId();
+			long userId = user.getUserId();
 
 			AssertUtils.assertFailure(
 				PrincipalException.MustHavePermission.class,
 				StringBundler.concat(
-					"User ", userId2,
+					"User ", userId,
 					" must have ADD_OBJECT_ENTRY permission for ",
 					_objectDefinition.getResourceName(), " ",
 					_group.getGroupId()),
 				() -> _objectEntryService.getOrAddEmptyObjectEntry(
-					RandomTestUtil.randomString(), _group.getGroupId(), userId2,
+					RandomTestUtil.randomString(), _group.getGroupId(),
 					_objectDefinition.getObjectDefinitionId()));
 
 			// Without permissions, existing object entry
@@ -836,12 +833,12 @@ public class ObjectEntryServiceTest {
 			AssertUtils.assertFailure(
 				PrincipalException.MustHavePermission.class,
 				StringBundler.concat(
-					"User ", userId2, " must have VIEW permission for ",
+					"User ", userId, " must have VIEW permission for ",
 					objectEntry.getModelClassName(), " ",
 					objectEntry.getObjectEntryId()),
 				() -> _objectEntryService.getOrAddEmptyObjectEntry(
 					objectEntry.getExternalReferenceCode(),
-					objectEntry.getGroupId(), userId2,
+					objectEntry.getGroupId(),
 					objectEntry.getObjectDefinitionId()));
 		}
 	}
@@ -1254,8 +1251,7 @@ public class ObjectEntryServiceTest {
 		_setUser(user);
 
 		_objectEntryService.restoreObjectEntryFromTrash(
-			user.getUserId(), objectEntry,
-			ServiceContextTestUtil.getServiceContext());
+			objectEntry, ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Inject

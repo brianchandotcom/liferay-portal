@@ -77,7 +77,7 @@ public class ObjectEntryFolderServiceTest {
 			NoSuchObjectEntryFolderException.class, null,
 			() -> _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 				RandomTestUtil.randomString(), _group.getGroupId(),
-				TestPropsValues.getCompanyId(), _user.getUserId(),
+				TestPropsValues.getCompanyId(),
 				ServiceContextTestUtil.getServiceContext()));
 
 		// Lazy referencing enabled
@@ -90,7 +90,7 @@ public class ObjectEntryFolderServiceTest {
 			_objectEntryFolder =
 				_objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 					RandomTestUtil.randomString(), _group.getGroupId(),
-					TestPropsValues.getCompanyId(), _user.getUserId(),
+					TestPropsValues.getCompanyId(),
 					ServiceContextTestUtil.getServiceContext());
 
 			// Without permissions
@@ -108,7 +108,7 @@ public class ObjectEntryFolderServiceTest {
 					_group.getGroupId()),
 				() -> _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 					RandomTestUtil.randomString(), _group.getGroupId(),
-					TestPropsValues.getCompanyId(), user.getUserId(),
+					TestPropsValues.getCompanyId(),
 					ServiceContextTestUtil.getServiceContext()));
 
 			// Without permissions, existing object entry folder
@@ -123,7 +123,7 @@ public class ObjectEntryFolderServiceTest {
 				() -> _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 					_objectEntryFolder.getExternalReferenceCode(),
 					_objectEntryFolder.getGroupId(),
-					_objectEntryFolder.getCompanyId(), user.getUserId(),
+					_objectEntryFolder.getCompanyId(),
 					ServiceContextTestUtil.getServiceContext()));
 		}
 	}
@@ -189,8 +189,7 @@ public class ObjectEntryFolderServiceTest {
 		_setUser(user);
 
 		_objectEntryFolderService.moveObjectEntryFolderToTrash(
-			user.getUserId(), objectEntryFolder,
-			ServiceContextTestUtil.getServiceContext());
+			objectEntryFolder, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _testRestoreObjectEntryFolderFromTrash(
@@ -213,8 +212,7 @@ public class ObjectEntryFolderServiceTest {
 		_setUser(user);
 
 		_objectEntryFolderService.restoreObjectEntryFolderFromTrash(
-			user.getUserId(), objectEntryFolder,
-			ServiceContextTestUtil.getServiceContext());
+			objectEntryFolder, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private User _adminUser;

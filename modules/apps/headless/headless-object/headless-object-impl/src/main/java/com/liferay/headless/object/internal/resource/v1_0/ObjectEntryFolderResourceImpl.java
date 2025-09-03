@@ -245,7 +245,7 @@ public class ObjectEntryFolderResourceImpl
 
 		return _toObjectEntryFolder(
 			_objectEntryFolderService.restoreObjectEntryFolderFromTrash(
-				contextUser.getUserId(), serviceBuilderObjectEntryFolder,
+				serviceBuilderObjectEntryFolder,
 				ServiceContextBuilder.create(
 					serviceBuilderObjectEntryFolder.getGroupId(),
 					contextHttpServletRequest, null
@@ -272,8 +272,7 @@ public class ObjectEntryFolderResourceImpl
 						contextUser.getCompanyId());
 
 		_objectEntryFolderService.subscribeObjectEntryFolder(
-			contextUser.getUserId(), groupId,
-			serviceBuilderObjectEntryFolder.getObjectEntryFolderId());
+			groupId, serviceBuilderObjectEntryFolder.getObjectEntryFolderId());
 	}
 
 	@Override
@@ -296,8 +295,7 @@ public class ObjectEntryFolderResourceImpl
 						contextUser.getCompanyId());
 
 		_objectEntryFolderService.unsubscribeObjectEntryFolder(
-			contextUser.getUserId(), groupId,
-			serviceBuilderObjectEntryFolder.getObjectEntryFolderId());
+			groupId, serviceBuilderObjectEntryFolder.getObjectEntryFolderId());
 	}
 
 	@Override
@@ -443,7 +441,7 @@ public class ObjectEntryFolderResourceImpl
 		}
 		else {
 			_objectEntryFolderService.moveObjectEntryFolderToTrash(
-				contextUser.getUserId(), serviceBuilderObjectEntryFolder,
+				serviceBuilderObjectEntryFolder,
 				ServiceContextBuilder.create(
 					serviceBuilderObjectEntryFolder.getGroupId(),
 					contextHttpServletRequest, null

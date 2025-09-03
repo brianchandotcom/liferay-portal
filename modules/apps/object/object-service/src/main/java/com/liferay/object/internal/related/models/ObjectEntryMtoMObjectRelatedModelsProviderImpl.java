@@ -203,7 +203,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 			for (ObjectEntry objectEntry : relatedModels) {
 				_objectEntryService.moveObjectEntryToTrash(
-					userId, objectEntry, new ServiceContext());
+					objectEntry, new ServiceContext());
 			}
 		}
 	}
@@ -236,7 +236,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			}
 
 			_objectEntryService.restoreObjectEntryFromTrash(
-				userId, objectEntry, new ServiceContext());
+				objectEntry, new ServiceContext());
 		}
 	}
 

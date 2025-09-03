@@ -480,7 +480,7 @@ public class DefaultObjectEntryManagerImpl
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.expireObjectEntry(
-				dtoConverterContext.getUserId(), objectEntryId,
+				objectEntryId,
 				ServiceContextUtil.createServiceContext(objectEntryId));
 
 		_objectEntryVersionService.expireObjectEntryVersions(
@@ -1127,7 +1127,7 @@ public class DefaultObjectEntryManagerImpl
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
 			_objectEntryService.restoreObjectEntryFromTrash(
-				dtoConverterContext.getUserId(), serviceBuilderObjectEntry,
+				serviceBuilderObjectEntry,
 				ServiceContextUtil.createServiceContext(
 					serviceBuilderObjectEntry.getObjectEntryId())));
 	}
@@ -1163,7 +1163,7 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public void subscribeObjectEntry(
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey, long userId)
+			String scopeKey)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -1172,14 +1172,14 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getObjectDefinitionId());
 
 		_objectEntryService.subscribeObjectEntry(
-			userId, getGroupId(objectDefinition, scopeKey),
+			getGroupId(objectDefinition, scopeKey),
 			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	@Override
 	public void unsubscribeObjectEntry(
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey, long userId)
+			String scopeKey)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -1188,7 +1188,7 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getObjectDefinitionId());
 
 		_objectEntryService.unsubscribeObjectEntry(
-			userId, serviceBuilderObjectEntry.getObjectEntryId());
+			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	@Override
@@ -1509,7 +1509,7 @@ public class DefaultObjectEntryManagerImpl
 							dtoConverterContext, relatedObjectDefinition,
 							_objectEntryService.getOrAddEmptyObjectEntry(
 								nestedObjectEntry.getExternalReferenceCode(),
-								groupId, dtoConverterContext.getUserId(),
+								groupId,
 								relatedObjectDefinition.
 									getObjectDefinitionId()));
 					}
@@ -1770,7 +1770,7 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		_objectEntryService.moveObjectEntryToTrash(
-			dtoConverterContext.getUserId(), serviceBuilderObjectEntry,
+			serviceBuilderObjectEntry,
 			ServiceContextUtil.createServiceContext(
 				serviceBuilderObjectEntry.getObjectEntryId()));
 	}
@@ -1910,7 +1910,6 @@ public class DefaultObjectEntryManagerImpl
 
 		if (serviceBuilderObjectEntry.getVersion() == version) {
 			_objectEntryService.expireObjectEntry(
-				dtoConverterContext.getUserId(),
 				serviceBuilderObjectEntry.getObjectEntryId(),
 				ServiceContextUtil.createServiceContext(
 					serviceBuilderObjectEntry.getObjectEntryId()));
@@ -2147,7 +2146,7 @@ public class DefaultObjectEntryManagerImpl
 			ObjectEntryFolder objectEntryFolder =
 				_objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
 					objectEntryFolderExternalReferenceCode, groupId, companyId,
-					serviceContext.getGuestOrUserId(), serviceContext);
+					serviceContext);
 
 			return objectEntryFolder.getObjectEntryFolderId();
 		}

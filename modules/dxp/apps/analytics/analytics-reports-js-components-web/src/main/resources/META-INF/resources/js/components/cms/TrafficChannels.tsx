@@ -66,19 +66,19 @@ const TrafficChannelsEntry = ({
 }) => {
 	return (
 		<div
-			aria-label={`${Liferay.Language.get('traffic-channel')}: ${Liferay.Language.get(trafficChannelsNames[name])}`}
+			aria-label={`${Liferay.Language.get('traffic-channel')}: ${trafficChannelsNames[name]}`}
 			className="d-flex flex-row py-3 tab-focus traffic-channel-item"
 			role="row"
 			tabIndex={0}
 		>
 			<div
-				aria-label={Liferay.Language.get(trafficChannelsNames[name])}
+				aria-label={trafficChannelsNames[name]}
 				className="tab-focus traffic-channel-item__name"
 				role="cell"
 				style={{width: '35%'}}
 			>
 				<Text size={3} weight="semi-bold">
-					{Liferay.Language.get(trafficChannelsNames[name])}
+					{trafficChannelsNames[name]}
 				</Text>
 			</div>
 

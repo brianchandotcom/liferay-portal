@@ -392,8 +392,9 @@ public class DefaultObjectEntryManagerImpl
 		_deleteRelateObjectEntry(
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
+			objectRelationship,
 			_objectEntryService.getObjectEntry(objectEntryId),
-			objectRelationship, parentObjectEntryId);
+			parentObjectEntryId);
 	}
 
 	@Override
@@ -417,11 +418,11 @@ public class DefaultObjectEntryManagerImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		_deleteRelateObjectEntry(
-			objectDefinition2,
+			objectDefinition2, objectRelationship,
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, getGroupId(objectDefinition2, scopeKey),
 				objectDefinition2.getObjectDefinitionId()),
-			objectRelationship, serviceBuilderObjectEntry.getObjectEntryId());
+			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	@Override
@@ -841,10 +842,11 @@ public class DefaultObjectEntryManagerImpl
 			aggregation, dtoConverterContext, filterString,
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
+			objectRelationship, pagination, objectDefinition, search,
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId()),
-			objectRelationship, pagination, objectDefinition, search, sorts);
+			sorts);
 	}
 
 	@Override
@@ -874,8 +876,8 @@ public class DefaultObjectEntryManagerImpl
 
 		return _getRelatedObjectEntries(
 			null, dtoConverterContext, null, relatedObjectDefinition,
-			_objectEntryService.getObjectEntry(objectEntryId),
-			objectRelationship, pagination, objectDefinition, null, null);
+			objectRelationship, pagination, objectDefinition, null,
+			_objectEntryService.getObjectEntry(objectEntryId), null);
 	}
 
 	@Override
@@ -888,8 +890,8 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext,
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
-			_objectEntryService.getObjectEntry(objectEntryId),
 			objectRelationship,
+			_objectEntryService.getObjectEntry(objectEntryId),
 			_objectEntryService.getObjectEntry(parentObjectEntryId));
 	}
 
@@ -909,11 +911,10 @@ public class DefaultObjectEntryManagerImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		return _getRelatedObjectEntry(
-			dtoConverterContext, objectDefinition2,
+			dtoConverterContext, objectDefinition2, objectRelationship,
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, getGroupId(objectDefinition2, scopeKey),
 				objectDefinition2.getObjectDefinitionId()),
-			objectRelationship,
 			_objectEntryService.getObjectEntry(
 				parentExternalReferenceCode,
 				getGroupId(objectDefinition1, scopeKey),
@@ -1624,35 +1625,19 @@ public class DefaultObjectEntryManagerImpl
 		}
 	}
 
-	private void _checkParentObjectEntry(
-			com.liferay.object.model.ObjectEntry objectEntry,
-			ObjectField objectField, long parentObjectEntryId)
-		throws Exception {
-
-		if (!Objects.equals(
-				MapUtil.getLong(objectEntry.getValues(), objectField.getName()),
-				parentObjectEntryId)) {
-
-			throw new NoSuchObjectEntryException(
-				StringBundler.concat(
-					"No ObjectEntry exists with the key {",
-					objectField.getName(), "=", parentObjectEntryId,
-					", objectEntryId=", objectEntry.getObjectEntryId(), "}"));
-		}
-	}
-
 	private void _checkRootDescendantNode(
-			com.liferay.object.model.ObjectEntry objectEntry,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
 			boolean skipCheckRootDescendantNode)
 		throws Exception {
 
-		if (objectEntry.isRootDescendantNode() &&
+		if (serviceBuilderObjectEntry.isRootDescendantNode() &&
 			!skipCheckRootDescendantNode) {
 
 			throw new NoSuchObjectEntryException(
 				StringBundler.concat(
 					"No ObjectEntry exists with the key {objectEntryId=",
-					objectEntry.getObjectEntryId(), ", rootObjectEntryId=0}"));
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					", rootObjectEntryId=0}"));
 		}
 	}
 
@@ -1783,27 +1768,33 @@ public class DefaultObjectEntryManagerImpl
 
 	private void _deleteRelateObjectEntry(
 			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry,
-			ObjectRelationship objectRelationship, long parentObjectEntryId)
+			ObjectRelationship objectRelationship,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			long parentObjectEntryId)
 		throws Exception {
 
-		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
 		if (!Objects.equals(
-				MapUtil.getLong(objectEntry.getValues(), objectField.getName()),
+				MapUtil.getLong(
+					serviceBuilderObjectEntry.getValues(),
+					objectField.getName()),
 				parentObjectEntryId)) {
 
 			throw new NoSuchObjectEntryException(
 				StringBundler.concat(
 					"No ObjectEntry exists with the key {",
 					objectField.getName(), "=", parentObjectEntryId,
-					", objectEntryId=", objectEntry.getObjectEntryId(), "}"));
+					", objectEntryId=",
+					serviceBuilderObjectEntry.getObjectEntryId(), "}"));
 		}
 
-		_objectEntryService.deleteObjectEntry(objectEntry.getObjectEntryId());
+		_objectEntryService.deleteObjectEntry(
+			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	private void _disassociateRelatedModels(
@@ -2084,14 +2075,15 @@ public class DefaultObjectEntryManagerImpl
 	private ObjectEntry _getObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry)
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
-		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
-		_checkRootDescendantNode(objectEntry, false);
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
+		_checkRootDescendantNode(serviceBuilderObjectEntry, false);
 
 		return _toObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
 	}
 
 	private long _getObjectEntryFolderId(
@@ -2320,14 +2312,15 @@ public class DefaultObjectEntryManagerImpl
 	private Page<ObjectEntry> _getRelatedObjectEntries(
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
 			String filterString, ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry,
 			ObjectRelationship objectRelationship, Pagination pagination,
 			ObjectDefinition parentObjectDefinition, String search,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
 			Sort[] sorts)
 		throws Exception {
 
 		long groupId = getGroupId(
-			objectDefinition, String.valueOf(objectEntry.getGroupId()));
+			objectDefinition,
+			String.valueOf(serviceBuilderObjectEntry.getGroupId()));
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -2347,9 +2340,9 @@ public class DefaultObjectEntryManagerImpl
 				ActionUtil.addAction(
 					ActionKeys.VIEW,
 					ObjectEntryRelatedObjectsResourceImpl.class,
-					objectEntry.getObjectEntryId(),
+					serviceBuilderObjectEntry.getObjectEntryId(),
 					"getCurrentObjectEntriesObjectRelationshipNamePage", null,
-					objectEntry.getUserId(),
+					serviceBuilderObjectEntry.getUserId(),
 					parentObjectDefinition.getClassName(), groupId,
 					dtoConverterContext.getUriInfo())
 			).build(),
@@ -2358,41 +2351,54 @@ public class DefaultObjectEntryManagerImpl
 				aggregationTerm ->
 					objectEntryLocalService.getOneToManyAggregationCounts(
 						groupId, objectDefinition.getObjectDefinitionId(),
-						objectEntry.getObjectEntryId(),
+						serviceBuilderObjectEntry.getObjectEntryId(),
 						objectRelationship.getObjectRelationshipId(),
 						aggregationTerm, predicate, true, search, start, end)),
 			_toObjectEntries(
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
-					predicate, objectEntry.getPrimaryKey(), search, start, end,
-					sorts)),
+					predicate, serviceBuilderObjectEntry.getPrimaryKey(),
+					search, start, end, sorts)),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				groupId, objectRelationship.getObjectRelationshipId(),
-				predicate, objectEntry.getPrimaryKey(), search));
+				predicate, serviceBuilderObjectEntry.getPrimaryKey(), search));
 	}
 
 	private ObjectEntry _getRelatedObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry,
 			ObjectRelationship objectRelationship,
-			com.liferay.object.model.ObjectEntry parentObjectEntry)
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			com.liferay.object.model.ObjectEntry
+				serviceBuilderParentObjectEntry)
 		throws Exception {
 
 		if (!objectRelationship.isEdge()) {
 			throw new UnsupportedOperationException();
 		}
 
-		_checkParentObjectEntry(
-			objectEntry,
-			_objectFieldLocalService.getObjectField(
-				objectRelationship.getObjectFieldId2()),
-			parentObjectEntry.getObjectEntryId());
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		if (!Objects.equals(
+				MapUtil.getLong(
+					serviceBuilderObjectEntry.getValues(),
+					objectField.getName()),
+				serviceBuilderParentObjectEntry.getObjectEntryId())) {
+
+			throw new NoSuchObjectEntryException(
+				StringBundler.concat(
+					"No ObjectEntry exists with the key {",
+					objectField.getName(), "=",
+					serviceBuilderParentObjectEntry.getObjectEntryId(),
+					", objectEntryId=",
+					serviceBuilderObjectEntry.getObjectEntryId(), "}"));
+		}
 
 		return _toObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
 	}
 
 	private int _getStartPosition(Pagination pagination) {

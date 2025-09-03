@@ -20,7 +20,7 @@ module "postgres_blue" {
 	}
 	source="../modules/db-instance"
 	username=random_password.postgres_username.result
-	vpc_security_group_ids=[local.vpc_config.cluster_security_group_id]
+	vpc_security_group_ids=[aws_security_group.rds.id]
 }
 module "postgres_green" {
 	count=local.is_active_data_green || var.is_restoring ? 1 : 0
@@ -33,7 +33,7 @@ module "postgres_green" {
 	}
 	source="../modules/db-instance"
 	username=random_password.postgres_username.result
-	vpc_security_group_ids=[local.vpc_config.cluster_security_group_id]
+	vpc_security_group_ids=[aws_security_group.rds.id]
 }
 module "s3_bucket_blue" {
 	deployment_name=var.deployment_name

@@ -9,6 +9,8 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.KeywordEntityModel;
 import com.liferay.headless.admin.taxonomy.internal.util.TaxonomyGroupUtil;
@@ -69,7 +71,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/keyword.properties",
 	scope = ServiceScope.PROTOTYPE, service = KeywordResource.class
 )
-public class KeywordResourceImpl extends BaseKeywordResourceImpl {
+public class KeywordResourceImpl
+	extends BaseKeywordResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<Keyword> {
 
 	@Override
 	public void deleteAssetLibraryKeywordByExternalReferenceCode(
@@ -147,6 +151,23 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
+
+			@Override
+			public String getPortletId() {
+				return AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.SITE;
+			}
+
+		};
 	}
 
 	@Override

@@ -55,6 +55,8 @@ public interface SiteResource {
 	public void deleteSiteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
+	public Site getSite(Long siteId) throws Exception;
+
 	public Site getSiteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
@@ -77,6 +79,11 @@ public interface SiteResource {
 	public Response postSitesPageExportBatch(
 			Boolean active, String search, String callbackURL,
 			String contentType, String fieldNames)
+		throws Exception;
+
+	public Site putSite(Site site) throws Exception;
+
+	public Response putSiteBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Site putSiteByExternalReferenceCode(

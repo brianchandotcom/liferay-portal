@@ -125,9 +125,9 @@ export default function ItemSelectorSamples() {
 	>([]);
 
 	const {
-		observer: fileItemSelectorObserver,
-		onOpenChange: fileItemSelectorOpenChange,
-		open: fileItemSelectorOpen,
+		observer: documentItemSelectorObserver,
+		onOpenChange: documentItemSelectorOpenChange,
+		open: documentItemSelectorOpen,
 	} = useModal();
 	const {
 		observer: spaceItemSelectorObserver,
@@ -323,12 +323,12 @@ export default function ItemSelectorSamples() {
 						items: documentsItemSelectorModal,
 						locator: documentsItemSelectorConfig.locator,
 						multiSelect: true,
-						observer: fileItemSelectorObserver,
+						observer: documentItemSelectorObserver,
 						onItemsChange: (items: Document[]) => {
 							setDocumentsItemSelectorModal(items);
 						},
-						onOpenChange: fileItemSelectorOpenChange,
-						open: fileItemSelectorOpen,
+						onOpenChange: documentItemSelectorOpenChange,
+						open: documentItemSelectorOpen,
 						type: documentsItemSelectorConfig.type,
 					}}
 				/>
@@ -383,7 +383,7 @@ export default function ItemSelectorSamples() {
 					<ClayButton
 						displayType="primary"
 						onClick={() => {
-							fileItemSelectorOpenChange(true);
+							documentItemSelectorOpenChange(true);
 						}}
 					>
 						Select Documents

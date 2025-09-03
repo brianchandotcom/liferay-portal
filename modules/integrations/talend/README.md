@@ -72,10 +72,10 @@ the repository mirror location:
 
 ## Build
 
-Run Maven `clean install` tasks in the `modules/etl/talend` folder:
+Run Maven `clean install` tasks in the `modules/integrations/talend` folder:
 
 ```sh
-$ cd modules/etl/talend
+$ cd modules/integrations/talend
 $ mvn clean install
 ```
 
@@ -101,7 +101,7 @@ If you get a missing artifact error, it could be the result of a failed test. To
 Navigate to each talend subfolder and run Maven clean install task with the skip test flag:
 
 ```sh
-$ cd modules/etl/talend/..
+$ cd modules/integrations/talend/..
 $ mvn clean install -DskipTests
 ```
 
@@ -116,7 +116,7 @@ Detailed steps for adding new components are described in the Talend Wiki:
 
 Here is a brief summary:
 
-1. From the root folder of the project, (`liferay-portal/modules/etl/talend/`),
+1. From the root folder of the project, (`liferay-portal/modules/integrations/talend/`),
    execute `mvn clean install` to build the component.
 
 1. Assuming that Studio has been extracted like this:
@@ -131,7 +131,7 @@ Here is a brief summary:
    Copy the component definition bundle latest version into `$STUDIO_ROOT/plugins`:
 
     ```sh
-    $ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
+    $ cp [liferay-portal/modules/integrations/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
          $STUDIO_ROOT/plugins
     ```
 
@@ -186,13 +186,13 @@ registration:
 1. In the `configuration` folder, remove any folders with names starting
    with `org.eclipse`.
 
-1. From the root folder of the project, `liferay-portal/modules/etl/talend/`, execute
+1. From the root folder of the project, `liferay-portal/modules/integrations/talend/`, execute
    `mvn clean install` to rebuild and publish the components to Maven repo.
 
 1. Copy the new version of the component definition bundle into `$STUDIO_ROOT/plugins`.
 
 	```sh
-	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
+	$ cp [liferay-portal/modules/integrations/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
 		 $STUDIO_ROOT/plugins
 	```
     TIP: **Please make sure you remove old jar version.**

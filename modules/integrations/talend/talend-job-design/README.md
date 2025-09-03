@@ -23,7 +23,7 @@ Talend Open Studio is available at these locations:
 
 1. In the import form, name the project and choose to select the project root directory.
 
-1. Click the browse button, navigate to your `[repository home]/modules/etl/talend/talend-job-designs/tos-711-liferay` folder, and select it.
+1. Click the browse button, navigate to your `[repository home]/modules/integrations/talend/talend-job-designs/tos-711-liferay` folder, and select it.
 
 1. Click the import button.
 

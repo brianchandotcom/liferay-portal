@@ -20,7 +20,7 @@ The Liferay connector is available on [Anypoint Exchange](https://www.mulesoft.c
 
 1. Pass the command line parameter `-parameters` to the Java compiler. For example, on IntelliJ, go to Preferences &rarr; Build, Execution, Deployment &rarr; Compiler &rarr; Java Compiler and add `-parameters` in the Additional Command Line Parameters section.
 
-1. Execute `mvn clean install` from the `modules/etl/mulesoft` folder.
+1. Execute `mvn clean install` from the `modules/integrations/mulesoft` folder.
 
 Mule SDK instructions: https://docs.mulesoft.com/mule-sdk/1.1/getting-started
 

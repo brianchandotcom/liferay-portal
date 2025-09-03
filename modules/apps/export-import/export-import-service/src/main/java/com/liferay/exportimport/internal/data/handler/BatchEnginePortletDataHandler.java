@@ -114,13 +114,13 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (ExportImportVulcanBatchEngineTaskItemDelegate.Scope.DEPOT.equals(
-				exportImportVulcanBatchEngineTaskItemDelegate.getScope())) {
+				exportImportDescriptor.getScope())) {
 
 			setDataLevel(DataLevel.DEPOT);
 		}
 
 		if (ExportImportVulcanBatchEngineTaskItemDelegate.Scope.SITE.equals(
-				exportImportVulcanBatchEngineTaskItemDelegate.getScope())) {
+				exportImportDescriptor.getScope())) {
 
 			setDataLevel(DataLevel.SITE);
 		}

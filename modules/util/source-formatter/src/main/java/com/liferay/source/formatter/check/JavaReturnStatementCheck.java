@@ -130,8 +130,9 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 				matcher1, returnStatement);
 
 			if (!newReturnStatement.equals(returnStatement)) {
-				return StringUtil.replace(
-					javaTermContent, returnStatement, newReturnStatement);
+				return StringUtil.replaceFirst(
+					javaTermContent, returnStatement, newReturnStatement,
+					matcher1.start());
 			}
 
 			if (!returnType.equals("boolean")) {

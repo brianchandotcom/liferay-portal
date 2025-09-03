@@ -74,28 +74,31 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(4), "share", "share", "share", "get",
 			"item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(5), "time", "expire", "expire", "post",
+			fdsActionDropdownItems.get(5), "automatic-translate", "translate", "translate", "get",
 			"item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(6), "view", "view-content", "view", null,
+			fdsActionDropdownItems.get(6), "time", "expire", "expire", "post",
 			"item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(7), "view", "view-file", "view", null,
+			fdsActionDropdownItems.get(7), "view", "view-content", "view", null,
 			"item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(8), "date-time", "version-history",
+			fdsActionDropdownItems.get(8), "view", "view-file", "view", null,
+			"item");
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(9), "date-time", "version-history",
 			"view-history", "get", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(9), "upload", "export-for-translation",
+			fdsActionDropdownItems.get(10), "upload", "export-for-translation",
 			"export-for-translation", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(10), "download", "import-translation",
+			fdsActionDropdownItems.get(11), "download", "import-translation",
 			"import-translation", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(11), "password-policies", "permissions",
+			fdsActionDropdownItems.get(12), "password-policies", "permissions",
 			"permissions", "get", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(12), "trash", "delete", "delete",
+			fdsActionDropdownItems.get(13), "trash", "delete", "delete",
 			"delete", "item");
 	}
 

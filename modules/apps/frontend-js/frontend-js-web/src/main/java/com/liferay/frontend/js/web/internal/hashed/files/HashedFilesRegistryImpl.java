@@ -51,7 +51,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		}
 	}
 
-	public String get(String unhashedFileURI) {
+	public String getHashedFileURI(String unhashedFileURI) {
 		_lazyActivate();
 
 		return _map.get(unhashedFileURI);

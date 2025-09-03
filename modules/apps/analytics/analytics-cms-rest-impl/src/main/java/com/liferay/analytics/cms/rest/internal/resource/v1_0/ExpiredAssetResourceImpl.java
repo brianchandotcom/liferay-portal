@@ -105,7 +105,6 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 
 							return String.valueOf(objects[4]);
 						});
-
 					expiredAsset.setUsages(
 						() -> _getUsages(
 							String.valueOf(objects[0]), groupIds,
@@ -113,7 +112,7 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 
 					return expiredAsset;
 				}),
-			pagination, _getExpiredObjectsTotalCount(languageId, groupIds));
+			pagination, _getExpiredObjectsListTotalCount(languageId, groupIds));
 	}
 
 	private List<Object[]> _getExpiredObjectsList(
@@ -162,7 +161,7 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		return _objectEntryLocalService.dslQuery(dslQuery);
 	}
 
-	private long _getExpiredObjectsTotalCount(
+	private long _getExpiredObjectsListTotalCount(
 		String filterLanguageId, Long[] groupIds) {
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -262,8 +261,8 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 
 		DB db = DBManagerUtil.getDB();
 
-		if ((db.getDBType() == DBType.MYSQL) ||
-			(db.getDBType() == DBType.MARIADB)) {
+		if ((db.getDBType() == DBType.MARIADB) ||
+			(db.getDBType() == DBType.MYSQL)) {
 
 			return new DSLFunction<>(
 				new DSLFunctionType("JSON_UNQUOTE(", ")"),
@@ -271,17 +270,16 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 					new DSLFunctionType("JSON_EXTRACT(", ")"), columnExpression,
 					new Scalar<>("$." + propertyPath)));
 		}
-
-		if (db.getDBType() == DBType.POSTGRESQL) {
-			String[] propertyNameParts = propertyPath.split("\\.");
+		else if (db.getDBType() == DBType.POSTGRESQL) {
+			String[] propertyPathParts = propertyPath.split("\\.");
 
 			Expression[] expressions =
-				new Expression[propertyNameParts.length + 1];
+				new Expression[propertyPathParts.length + 1];
 
 			expressions[0] = columnExpression;
 
 			for (int i = 1; i < expressions.length; i++) {
-				expressions[i] = new Scalar<>(propertyNameParts[i]);
+				expressions[i] = new Scalar<>(propertyPathParts[i]);
 			}
 
 			return new DSLFunction<>(
@@ -295,10 +293,10 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 	}
 
 	private Expression<Clob> _getTitleExpression() {
-		DB db = DBManagerUtil.getDB();
-
 		Column<ObjectEntryVersionTable, Clob> contentColumn =
 			ObjectEntryVersionTable.INSTANCE.content;
+
+		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() == DBType.HYPERSONIC) {
 			DSLFunction<Object> dslFunction = new DSLFunction<>(

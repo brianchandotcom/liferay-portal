@@ -72,6 +72,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -466,6 +467,70 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		}
 	}
 
+	private String _getGridLabel(
+		LocalizedValue label, String defaultLabel, Locale locale) {
+
+		if (label != null) {
+			return HtmlUtil.escape(label.getString(locale));
+		}
+
+		return defaultLabel;
+	}
+
+	private String _getGridOptionValues(
+		DDMFormField ddmFormField, Locale locale, String optionValueString) {
+
+		try {
+			JSONObject valuesJSONObject = JSONFactoryUtil.createJSONObject(
+				optionValueString);
+
+			if (valuesJSONObject.length() == 0) {
+				return StringPool.BLANK;
+			}
+
+			DDMFormFieldOptions rows =
+				(DDMFormFieldOptions)ddmFormField.getProperty("rows");
+			DDMFormFieldOptions columns =
+				(DDMFormFieldOptions)ddmFormField.getProperty("columns");
+
+			StringBundler sb = new StringBundler(valuesJSONObject.length() * 5);
+
+			Set<String> rowOptions = rows.getOptionsValues();
+
+			for (String rowOption : rowOptions) {
+				if (valuesJSONObject.has(rowOption)) {
+					String columnOption = valuesJSONObject.getString(rowOption);
+
+					LocalizedValue rowLabel = rows.getOptionLabels(rowOption);
+					LocalizedValue columnLabel = columns.getOptionLabels(
+						columnOption);
+
+					sb.append(_getGridLabel(rowLabel, rowOption, locale));
+
+					sb.append(StringPool.COLON);
+					sb.append(StringPool.SPACE);
+
+					sb.append(_getGridLabel(columnLabel, columnOption, locale));
+
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+			}
+
+			if (sb.index() > 0) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			return sb.toString();
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getOptionValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
@@ -476,6 +541,13 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		}
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		if (StringUtil.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.GRID)) {
+
+			return _getGridOptionValues(
+				ddmFormField, locale, value.getString(locale));
+		}
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();

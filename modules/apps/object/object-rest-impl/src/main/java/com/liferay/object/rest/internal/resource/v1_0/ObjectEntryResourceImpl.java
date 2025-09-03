@@ -382,6 +382,12 @@ public class ObjectEntryResourceImpl
 					return Scope.COMPANY;
 				}
 
+				if (StringUtil.equalsIgnoreCase(
+						_objectDefinition.getScope(), "depot")) {
+
+					return Scope.DEPOT;
+				}
+
 				return Scope.SITE;
 			}
 
@@ -456,23 +462,6 @@ public class ObjectEntryResourceImpl
 	@Override
 	public String getResourceName() {
 		return _objectDefinition.getShortName();
-	}
-
-	@Override
-	public Scope getScope() {
-		if (StringUtil.equalsIgnoreCase(
-				_objectDefinition.getScope(), "company")) {
-
-			return Scope.COMPANY;
-		}
-
-		if (StringUtil.equalsIgnoreCase(
-				_objectDefinition.getScope(), "depot")) {
-
-			return Scope.DEPOT;
-		}
-
-		return Scope.SITE;
 	}
 
 	@Override

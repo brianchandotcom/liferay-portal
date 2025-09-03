@@ -30,8 +30,8 @@ public abstract class BaseFilesSectionDisplayContextTestCase
 				expectedAdditionalProps.entrySet()) {
 
 			Assert.assertEquals(
-				expectedAdditionalProps.get(entry.getKey()),
-				actualAdditionalProps.get(entry.getKey()));
+				String.valueOf(expectedAdditionalProps.get(entry.getKey())),
+				String.valueOf(actualAdditionalProps.get(entry.getKey())));
 		}
 
 		_assertEquals(

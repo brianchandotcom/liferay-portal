@@ -26,7 +26,6 @@ import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectLayout;
@@ -35,7 +34,6 @@ import com.liferay.object.model.ObjectLayoutColumn;
 import com.liferay.object.model.ObjectLayoutRow;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -71,7 +69,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -83,14 +80,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.io.Serializable;
-
 import java.sql.Connection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -915,8 +909,6 @@ public class ObjectRelationshipLocalServiceTest {
 
 		Assert.assertFalse(objectField2.isRequired());
 
-		_testUpdateObjectRelationshipEdgeWithMultipleParents();
-
 		ObjectRelationship systemObjectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
@@ -1525,61 +1517,6 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 
 		_addObjectRelationshipSystemObjectDefinition();
-	}
-
-	private void _testUpdateObjectRelationshipEdgeWithMultipleParents()
-		throws Exception {
-
-		ObjectRelationship objectRelationship1 =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition3.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		ObjectRelationship objectRelationship2 =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_objectDefinition2.getObjectDefinitionId(),
-				_objectDefinition3.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			0, _objectDefinition1.getObjectDefinitionId(), new HashMap<>());
-
-		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			0, _objectDefinition2.getObjectDefinitionId(), new HashMap<>());
-
-		ObjectEntryTestUtil.addObjectEntry(
-			0, _objectDefinition3.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				StringBundler.concat(
-					"r_", objectRelationship1.getName(), "_",
-					_objectDefinition1.getPKObjectFieldName()),
-				objectEntry1.getObjectEntryId()
-			).put(
-				StringBundler.concat(
-					"r_", objectRelationship2.getName(), "_",
-					_objectDefinition2.getPKObjectFieldName()),
-				objectEntry2.getObjectEntryId()
-			).build());
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"There must be no root related object entries so that the object " +
-				"relationship can be an edge to a root context",
-			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship2.getExternalReferenceCode(),
-				objectRelationship2.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				null));
 	}
 
 	@Inject

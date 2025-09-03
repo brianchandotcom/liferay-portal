@@ -257,13 +257,13 @@
 			}
 		}
 	}
-	
+
 	document.addEventListener('DOMContentLoaded', () => {
 		const panels = document.querySelectorAll('.panel-group .panel');
 
 		panels.forEach(panel => {
 			const panelBody = panel.querySelector('.panel-collapse');
-			const panelHeaderButton = panel.querySelector('.panel-header-link'); 
+			const panelHeaderButton = panel.querySelector('.panel-header-link');
 
 			if (window.innerWidth <= 768) {
 				if (panelBody) {
@@ -275,7 +275,7 @@
 					panelHeaderButton.classList.add('collapsed');
 					panelHeaderButton.setAttribute('aria-expanded', 'false');
 				}
-			} 
+			}
 		});
 	});
 </@>

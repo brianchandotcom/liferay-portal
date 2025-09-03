@@ -104,8 +104,8 @@
 
 		if (!panel) return;
 
-		const panelBody = panel.querySelector('#sort-filter-items'); 
-		const panelHeaderButton = panel.querySelector('.sort-collapse-trigger'); 
+		const panelBody = panel.querySelector('#sort-filter-items');
+		const panelHeaderButton = panel.querySelector('.sort-collapse-trigger');
 
 		if (window.innerWidth <= 768) {
 			if (panelBody) {
@@ -117,7 +117,7 @@
 				panelHeaderButton.classList.add('collapsed');
 				panelHeaderButton.setAttribute('aria-expanded', 'false');
 			}
-		} 
+		}
 	});
 </script>
 

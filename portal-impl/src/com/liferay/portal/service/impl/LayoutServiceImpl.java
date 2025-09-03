@@ -1038,7 +1038,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public Layout getOrAddEmptyLayout(
-			String externalReferenceCode, long userId, long groupId,
+			String externalReferenceCode, long groupId,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -1053,7 +1053,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.ADD_LAYOUT);
 
 		return layoutLocalService.getOrAddEmptyLayout(
-			externalReferenceCode, userId, groupId, serviceContext);
+			externalReferenceCode, getUserId(), groupId, serviceContext);
 	}
 
 	@Override

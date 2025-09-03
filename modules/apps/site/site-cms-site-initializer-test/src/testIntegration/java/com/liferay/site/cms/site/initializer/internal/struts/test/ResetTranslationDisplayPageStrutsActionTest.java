@@ -47,8 +47,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -123,30 +121,11 @@ public class ResetTranslationDisplayPageStrutsActionTest {
 	}
 
 	@Test
-	@TestInfo("LPD-54517")
+	@TestInfo("LPD-52073")
 	public void testExecute() throws Exception {
 		long classNameId = _portal.getClassNameId(
 			_objectDefinition.getClassName());
-		HttpServletRequest httpServletRequest = _getMockHttpServletRequest();
 
-		String layoutPageTemplateEntryKey =
-			"LFR_CMS_TRANSLATION_" + classNameId;
-
-		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-			_group.getGroupId(), classNameId, 0, false,
-			layoutPageTemplateEntryKey, WorkflowConstants.STATUS_APPROVED);
-
-		_resetStructureDisplayPageStrutsAction.execute(
-			httpServletRequest, new MockHttpServletResponse());
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), layoutPageTemplateEntryKey);
-
-		Assert.assertNull(layoutPageTemplateEntry);
-	}
-
-	private HttpServletRequest _getMockHttpServletRequest() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			ContentLayoutTestUtil.getMockHttpServletRequest(
 				_companyLocalService.getCompany(_company.getCompanyId()),
@@ -159,7 +138,21 @@ public class ResetTranslationDisplayPageStrutsActionTest {
 			"redirect", RandomTestUtil.randomString());
 		mockHttpServletRequest.setRequestURI(_layout.getFriendlyURL());
 
-		return mockHttpServletRequest;
+		String layoutPageTemplateEntryKey =
+			"LFR_CMS_TRANSLATION_" + classNameId;
+
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(), classNameId, 0, false,
+			layoutPageTemplateEntryKey, WorkflowConstants.STATUS_APPROVED);
+
+		_resetStructureDisplayPageStrutsAction.execute(
+			mockHttpServletRequest, new MockHttpServletResponse());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(), layoutPageTemplateEntryKey);
+
+		Assert.assertNull(layoutPageTemplateEntry);
 	}
 
 	private static Company _company;

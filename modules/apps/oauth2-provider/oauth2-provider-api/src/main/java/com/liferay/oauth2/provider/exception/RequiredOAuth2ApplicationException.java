@@ -10,20 +10,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OAuth2ApplicationRequiredException extends PortalException {
+public class RequiredOAuth2ApplicationException extends PortalException {
 
-	public OAuth2ApplicationRequiredException() {
+	public RequiredOAuth2ApplicationException() {
 	}
 
-	public OAuth2ApplicationRequiredException(String msg) {
+	public RequiredOAuth2ApplicationException(String msg) {
 		super(msg);
 	}
 
-	public OAuth2ApplicationRequiredException(String msg, Throwable throwable) {
+	public RequiredOAuth2ApplicationException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public OAuth2ApplicationRequiredException(Throwable throwable) {
+	public RequiredOAuth2ApplicationException(Throwable throwable) {
 		super(throwable);
 	}
 

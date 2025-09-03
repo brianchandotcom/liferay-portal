@@ -98,6 +98,27 @@
 			dataTargetElement.classList.toggle('show');
 		}
 	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const panel = document.querySelector('.portlet-sort');
+
+		if (!panel) return;
+
+		const panelBody = panel.querySelector('#sort-filter-items'); 
+		const panelHeaderButton = panel.querySelector('.sort-collapse-trigger'); 
+
+		if (window.innerWidth <= 768) {
+			if (panelBody) {
+				panelBody.classList.remove('show');
+				panelBody.classList.add('collapse');
+			}
+
+			if (panelHeaderButton) {
+				panelHeaderButton.classList.add('collapsed');
+				panelHeaderButton.setAttribute('aria-expanded', 'false');
+			}
+		} 
+	});
 </script>
 
 <style>

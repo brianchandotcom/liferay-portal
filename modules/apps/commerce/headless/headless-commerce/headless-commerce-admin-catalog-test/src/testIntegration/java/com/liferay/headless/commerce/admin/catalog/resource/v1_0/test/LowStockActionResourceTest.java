@@ -43,7 +43,6 @@ public class LowStockActionResourceTest
 		assertValid(page);
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetLowStockActionsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(

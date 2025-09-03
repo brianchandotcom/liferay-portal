@@ -123,13 +123,6 @@ public class ContentTemplateResourceTest
 		return _getContentTemplate(GroupLocalServiceUtil.getGroup(siteId));
 	}
 
-	@Override
-	protected ContentTemplate testGraphQLContentTemplate_addContentTemplate()
-		throws Exception {
-
-		return testGetSiteContentTemplate_addContentTemplate();
-	}
-
 	private DDMForm _deserialize(String content) {
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);

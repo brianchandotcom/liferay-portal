@@ -96,7 +96,6 @@ public class LanguageResourceTest extends BaseLanguageResourceTestCase {
 		assertValid(page);
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetSiteLanguagesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(

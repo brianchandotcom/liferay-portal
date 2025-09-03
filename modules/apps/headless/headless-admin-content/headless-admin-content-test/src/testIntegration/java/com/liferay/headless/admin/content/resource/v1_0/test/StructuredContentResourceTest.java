@@ -493,11 +493,8 @@ public class StructuredContentResourceTest
 				getStructuredContent2.getStructuredContentFolderId()));
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetSiteStructuredContentsPage() throws Exception {
-		super.testGraphQLGetSiteStructuredContentsPage();
-
 		Page<StructuredContent> page =
 			structuredContentResource.getSiteStructuredContentsPage(
 				testGroup.getGroupId(), null, null, null, null,

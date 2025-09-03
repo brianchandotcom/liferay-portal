@@ -43,7 +43,6 @@ public class IndexResourceTest extends BaseIndexResourceTestCase {
 		assertEqualsIgnoringOrder(indexes, _getDefaultIndexes());
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetIndexesPage() throws Exception {
 		JSONObject indexesJSONObject = JSONUtil.getValueAsJSONObject(

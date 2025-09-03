@@ -177,7 +177,6 @@ public class DisplayPageTemplateResourceTest
 		return displayPageTemplate;
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetSiteDisplayPageTemplatesPage() throws Exception {
 		Long siteId = testGetSiteDisplayPageTemplatesPage_getSiteId();

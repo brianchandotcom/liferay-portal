@@ -86,7 +86,6 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		assertValid(page);
 	}
 
-	@Override
 	@Test
 	public void testGraphQLGetRegionsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(

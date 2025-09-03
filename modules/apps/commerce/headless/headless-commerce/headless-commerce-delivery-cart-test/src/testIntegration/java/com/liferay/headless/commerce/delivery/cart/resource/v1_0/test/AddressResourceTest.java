@@ -176,11 +176,6 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 	}
 
 	@Override
-	protected Address testGraphQLAddress_addAddress() throws Exception {
-		return _toAddress(_getCommerceAddress());
-	}
-
-	@Override
 	protected Long testGraphQLGetCartBillingAddres_getCartId()
 		throws Exception {
 

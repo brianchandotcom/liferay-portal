@@ -339,7 +339,7 @@ public abstract class BaseSectionDisplayContext {
 					GroupConstants.CMS_FRIENDLY_URL,
 					"/translate_content_item?objectEntryId={embedded.id}&",
 					"redirect=", themeDisplay.getURLCurrent()),
-				"automatic-translate", "actionLink",
+				"automatic-translate", "translate",
 				LanguageUtil.get(httpServletRequest, "translate"), "get",
 				"update", null),
 			new FDSActionDropdownItem(

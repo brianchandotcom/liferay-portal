@@ -60,26 +60,26 @@ public class CookiesManagerImplTest {
 	@Test
 	public void testAddCookieWhenAddingInternalCookieWithoutConsentType() {
 		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
-			CookiesConstants.NAME_GUEST_LANGUAGE_ID,
-			CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
+			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+			CookiesConstants.NAME_GUEST_LANGUAGE_ID);
 		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
-			CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
-			CookiesConstants.CONSENT_TYPE_NECESSARY);
+			CookiesConstants.CONSENT_TYPE_NECESSARY,
+			CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL);
 		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
-			CookiesConstants.NAME_CONSENT_TYPE_NECESSARY,
-			CookiesConstants.CONSENT_TYPE_NECESSARY);
+			CookiesConstants.CONSENT_TYPE_NECESSARY,
+			CookiesConstants.NAME_CONSENT_TYPE_NECESSARY);
 		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
-			CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-			CookiesConstants.CONSENT_TYPE_NECESSARY);
+			CookiesConstants.CONSENT_TYPE_NECESSARY,
+			CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE);
 		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
-			CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-			CookiesConstants.CONSENT_TYPE_NECESSARY);
+			CookiesConstants.CONSENT_TYPE_NECESSARY,
+			CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION);
 		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
-			CookiesConstants.NAME_COOKIE_SUPPORT,
-			CookiesConstants.CONSENT_TYPE_NECESSARY);
+			CookiesConstants.CONSENT_TYPE_NECESSARY,
+			CookiesConstants.NAME_COOKIE_SUPPORT);
 		_testAddCookieWhenAddingInternalCookieWithoutConsentType(
-			CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
-			CookiesConstants.CONSENT_TYPE_NECESSARY);
+			CookiesConstants.CONSENT_TYPE_NECESSARY,
+			CookiesConstants.NAME_USER_CONSENT_CONFIGURED);
 	}
 
 	@Test
@@ -465,7 +465,7 @@ public class CookiesManagerImplTest {
 	}
 
 	private void _testAddCookieWhenAddingInternalCookieWithoutConsentType(
-		String name, int consentType) {
+		int consentType, String name) {
 
 		_addConsentCookie(false, consentType);
 

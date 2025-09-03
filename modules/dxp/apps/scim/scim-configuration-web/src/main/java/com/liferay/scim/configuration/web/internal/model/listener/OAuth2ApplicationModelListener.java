@@ -75,7 +75,7 @@ public class OAuth2ApplicationModelListener
 				new OAuth2ApplicationRequiredException(
 					_language.format(
 						LocaleUtil.getDefault(),
-						"oauth2-application-x-required-by-x",
+						"oauth2-application-x-is-required-by-x",
 						new String[] {oAuth2Application.getName(), "SCIM"},
 						false)));
 		}

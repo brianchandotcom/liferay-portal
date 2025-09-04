@@ -26,7 +26,6 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "00000",
 					"label": "Publisher Details Object Id",
 					"name": "publisherDetailsObjectId",
 					"type": "text"

@@ -289,7 +289,7 @@ public class DefaultObjectEntryManagerImpl
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry = getObjectEntryByVersion(
+		ObjectEntry objectEntry = _getObjectEntryByVersion(
 			dtoConverterContext, objectEntryId, version);
 
 		return _copyVersionedObjectEntry(
@@ -307,7 +307,7 @@ public class DefaultObjectEntryManagerImpl
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry = getObjectEntryByVersion(
+		ObjectEntry objectEntry = _getObjectEntryByVersion(
 			dtoConverterContext, externalReferenceCode, objectDefinition,
 			scopeKey, version);
 
@@ -1138,7 +1138,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return _restoreVersionedObjectEntry(
 			dtoConverterContext, objectDefinition,
-			getObjectEntryByVersion(
+			_getObjectEntryByVersion(
 				dtoConverterContext, objectEntryId, version),
 			version);
 	}
@@ -1152,7 +1152,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return _restoreVersionedObjectEntry(
 			dtoConverterContext, objectDefinition,
-			getObjectEntryByVersion(
+			_getObjectEntryByVersion(
 				dtoConverterContext, externalReferenceCode, objectDefinition,
 				scopeKey, version),
 			version);
@@ -2096,6 +2096,37 @@ public class DefaultObjectEntryManagerImpl
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
+	}
+
+	private ObjectEntry _getObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext, Long objectEntryId,
+			int version)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		return _objectEntryDTOConverter.toDTO(
+			_getObjectEntryVersionDTOConverterContext(
+				dtoConverterContext,
+				_objectEntryVersionService.getObjectEntryVersion(
+					objectEntryId, version),
+				serviceBuilderObjectEntry),
+			serviceBuilderObjectEntry);
+	}
+
+	private ObjectEntry _getObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String scopeKey, int version)
+		throws Exception {
+
+		ObjectEntry objectEntry = getObjectEntry(
+			objectDefinition.getCompanyId(), dtoConverterContext,
+			externalReferenceCode, objectDefinition, scopeKey);
+
+		return _getObjectEntryByVersion(
+			dtoConverterContext, objectEntry.getId(), version);
 	}
 
 	private long _getObjectEntryFolderId(

@@ -3094,6 +3094,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setExpandoBridgeAttributes(serviceContext);
 
+		if ((layout.getStatus() == WorkflowConstants.STATUS_EMPTY) &&
+			!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+
+			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
+		else if ((layout.getStatus() == WorkflowConstants.STATUS_EMPTY) &&
+				 Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+
+			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+
 		layout = layoutLocalService.updateLayout(layout);
 
 		// Layout friendly URLs

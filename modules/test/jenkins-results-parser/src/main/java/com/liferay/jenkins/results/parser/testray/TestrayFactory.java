@@ -294,6 +294,12 @@ public class TestrayFactory {
 		return new TestrayRun(testrayBuild, batchName, propertiesFiles);
 	}
 
+	public static TestrayRunComparison newTestrayRunComparison(
+		TestrayRun testrayRunA, TestrayRun testrayRunB) {
+
+		return new TestrayRunComparison(testrayRunA, testrayRunB);
+	}
+
 	public static TestrayServer newTestrayServer(String testrayServerURL) {
 		TestrayServer testrayServer = _testrayServers.get(testrayServerURL);
 

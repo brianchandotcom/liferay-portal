@@ -1,5 +1,6 @@
 buildService {
 	apiDir = "../portal-security-sso-openid-connect-persistence-api/src/main/java"
+	testDir = "../portal-security-sso-openid-connect-persistence-test/src/testIntegration/java"
 }
 
 dependencies {

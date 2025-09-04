@@ -228,6 +228,13 @@ public class OpenIdConnectSessionLocalServiceUtil {
 			userId, authServerWellKnownURI, clientId);
 	}
 
+	public static OpenIdConnectSession fetchOpenIdConnectSession(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
+		long userId) {
+
+		return getService().fetchOpenIdConnectSession(themeDisplay, userId);
+	}
+
 	public static List<OpenIdConnectSession>
 		getAccessTokenExpirationDateOpenIdConnectSessions(
 			java.util.Date ltAccessTokenExpirationDate, int start, int end) {

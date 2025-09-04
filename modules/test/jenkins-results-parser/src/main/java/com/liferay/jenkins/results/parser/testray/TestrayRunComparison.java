@@ -20,6 +20,15 @@ import org.json.JSONObject;
  */
 public class TestrayRunComparison {
 
+	public double getCommonStatusTestCountPercentage() {
+		if (_totalTestCount == 0) {
+			return 0.0;
+		}
+
+		return (double)Math.round(
+			_totalCommonStatusTestCount * 10000.0 / _totalTestCount) / 100.0;
+	}
+
 	public URL getComparisonURL() {
 		StringBuilder sb = new StringBuilder();
 
@@ -37,6 +46,22 @@ public class TestrayRunComparison {
 		}
 	}
 
+	public long getNewFailureTestCount() {
+		return _newFailureTestCount;
+	}
+
+	public long getNewUntestedTestCount() {
+		return _newUntestedTestCount;
+	}
+
+	public long getTotalCommonStatusTestCount() {
+		return _totalCommonStatusTestCount;
+	}
+
+	public long getTotalTestCount() {
+		return _totalTestCount;
+	}
+
 	protected TestrayRunComparison(
 		TestrayRun testrayRunA, TestrayRun testrayRunB) {
 
@@ -47,6 +72,92 @@ public class TestrayRunComparison {
 
 		_testrayRunA = testrayRunA;
 		_testrayRunB = testrayRunB;
+
+		_calculateTestResultCounts();
+	}
+
+	private void _calculateTestResultCounts() {
+		JSONObject jsonObject = _getRunComparisonsJSONObject();
+
+		JSONArray resultsJSONArray = jsonObject.optJSONArray("results");
+
+		if (resultsJSONArray == null) {
+			return;
+		}
+
+		JSONObject resultJSONObject = resultsJSONArray.optJSONObject(0);
+
+		if (resultJSONObject == null) {
+			return;
+		}
+
+		JSONObject runsJSONObject = resultJSONObject.optJSONObject("Runs");
+
+		if (runsJSONObject == null) {
+			return;
+		}
+
+		for (String statusA : _STATUSES) {
+			JSONObject statusJSONObject = runsJSONObject.optJSONObject(statusA);
+
+			if (statusJSONObject == null) {
+				continue;
+			}
+
+			for (String statusB : _STATUSES) {
+				long testCount = statusJSONObject.optLong(statusB, 0);
+
+				_totalTestCount += testCount;
+
+				if (statusA.equals(statusB)) {
+					_totalCommonStatusTestCount += testCount;
+
+					continue;
+				}
+
+				if (_isUntestedStatus(statusA) && _isUntestedStatus(statusB)) {
+					continue;
+				}
+
+				if (statusA.equals(_PASSED)) {
+					if (_isFailureStatus(statusB)) {
+						_newFailureTestCount += testCount;
+
+						continue;
+					}
+
+					_newUntestedTestCount += testCount;
+
+					continue;
+				}
+
+				if (statusB.equals(_PASSED)) {
+					if (_isFailureStatus(statusA)) {
+						_newFailureTestCount -= testCount;
+
+						continue;
+					}
+
+					_newUntestedTestCount -= testCount;
+
+					continue;
+				}
+
+				if (_isFailureStatus(statusA)) {
+					if (_isFailureStatus(statusB)) {
+						_totalCommonStatusTestCount += testCount;
+
+						continue;
+					}
+
+					_newFailureTestCount -= testCount;
+
+					continue;
+				}
+
+				_newFailureTestCount += testCount;
+			}
+		}
 	}
 
 	private JSONObject _getRunComparisonsJSONObject() {
@@ -117,7 +228,11 @@ public class TestrayRunComparison {
 	}
 
 	private JSONObject _jsonObject;
+	private long _newFailureTestCount = 0L;
+	private long _newUntestedTestCount = 0L;
 	private final TestrayRun _testrayRunA;
 	private final TestrayRun _testrayRunB;
+	private long _totalCommonStatusTestCount = 0L;
+	private long _totalTestCount = 0L;
 
 }

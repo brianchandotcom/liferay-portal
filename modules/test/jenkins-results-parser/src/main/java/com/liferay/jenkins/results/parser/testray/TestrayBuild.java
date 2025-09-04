@@ -273,6 +273,18 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return _testrayRoutine;
 	}
 
+	public synchronized TestrayRun getTestrayRun(String name) {
+		for (TestrayRun testrayRun : getTestrayRuns()) {
+			String testrayRunIDString = testrayRun.getRunIDString();
+
+			if (testrayRunIDString.equals(name)) {
+				return testrayRun;
+			}
+		}
+
+		return null;
+	}
+
 	public synchronized List<TestrayRun> getTestrayRuns() {
 		if (_testrayRuns != null) {
 			return _testrayRuns;

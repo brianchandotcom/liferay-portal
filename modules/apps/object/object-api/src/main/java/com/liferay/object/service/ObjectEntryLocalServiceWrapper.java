@@ -798,13 +798,13 @@ public class ObjectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry partialUpdateObjectEntry(
-			long userId, long objectEntryId,
+			long userId, long objectEntryId, long objectEntryFolderId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.partialUpdateObjectEntry(
-			userId, objectEntryId, values, serviceContext);
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	@Override
@@ -869,13 +869,13 @@ public class ObjectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId,
+			long userId, long objectEntryId, long objectEntryFolderId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.updateObjectEntry(
-			userId, objectEntryId, values, serviceContext);
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	/**

@@ -626,10 +626,12 @@ public class LayoutUtil {
 			}
 
 			unicodeProperties.putAll(typeSettingsUnicodeProperties);
+
+			layout.setTypeSettingsProperties(unicodeProperties);
 		}
 
 		return _updatePortletLayout(
-			layout, serviceContext, unicodeProperties, widgetPageSpecification);
+			layout, serviceContext, widgetPageSpecification);
 	}
 
 	private static void _addPortletLookAndFeelToConfigurationMap(
@@ -1100,23 +1102,11 @@ public class LayoutUtil {
 
 	private static Layout _updatePortletLayout(
 			Layout layout, ServiceContext serviceContext,
-			UnicodeProperties typeSettingsUnicodeProperties,
 			WidgetPageSpecification widgetPageSpecification)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		boolean layoutCustomizable = GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.get(
-				LayoutConstants.CUSTOMIZABLE_LAYOUT));
-
-		if (!layoutCustomizable) {
-			layoutTypePortlet.removeCustomization(unicodeProperties);
-		}
 
 		if (widgetPageSpecification == null) {
 			return LayoutServiceUtil.updateLayout(
@@ -1127,6 +1117,9 @@ public class LayoutUtil {
 		WidgetPageSection[] widgetPageSections =
 			widgetPageSpecification.getWidgetPageSections();
 
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
 		List<String> columns = layoutTypePortlet.getColumns();
 
 		if (widgetPageSections.length != columns.size()) {
@@ -1135,9 +1128,12 @@ public class LayoutUtil {
 
 		List<String> portletIds = layoutTypePortlet.getPortletIds();
 
+		boolean layoutCustomizable = GetterUtil.getBoolean(
+			unicodeProperties.get(LayoutConstants.CUSTOMIZABLE_LAYOUT));
+
 		for (WidgetPageSection widgetPageSection : widgetPageSections) {
 			boolean customizable = GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.get(
+				unicodeProperties.get(
 					CustomizedPages.namespaceColumnId(
 						widgetPageSection.getId())));
 

@@ -836,6 +836,33 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	}
 
 	@Override
+	protected Account testGraphQLAccount_addAccount(Account account)
+		throws Exception {
+
+		return _postAccount(account);
+	}
+
+	@Override
+	protected Long
+			testGraphQLDeleteOrganizationAccountsByExternalReferenceCode_getOrganizationId()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		return organization.getOrganizationId();
+	}
+
+	@Override
+	protected String
+			testGraphQLDeleteOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode_getOrganizationExternalReferenceCode()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		return organization.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Account testPatchAccount_addAccount() throws Exception {
 		return _postAccount();
 	}

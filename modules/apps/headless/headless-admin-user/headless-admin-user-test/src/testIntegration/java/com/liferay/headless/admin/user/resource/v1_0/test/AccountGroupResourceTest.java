@@ -292,6 +292,14 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 	}
 
 	@Override
+	protected String
+			testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
 	protected AccountGroup testPatchAccountGroup_addAccountGroup()
 		throws Exception {
 

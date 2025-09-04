@@ -167,6 +167,15 @@ public class MessageBoardThreadResourceTest
 	}
 
 	@Override
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
+		List<GraphQLField> graphQLFields = super.getGraphQLFields();
+
+		graphQLFields.add(new GraphQLField("friendlyUrlPath"));
+
+		return graphQLFields;
+	}
+
+	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {
 			"childMessagesCount", "creatorId", "lastPostDate",

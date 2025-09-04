@@ -327,9 +327,11 @@ public class ObjectDefinitionResourceTest
 		long totalCount = objectDefinitionsJSONObject.getLong("totalCount");
 
 		ObjectDefinition objectDefinition1 =
-			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
+			testGraphQLObjectDefinition_addObjectDefinition(
+				randomObjectDefinition());
 		ObjectDefinition objectDefinition2 =
-			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
+			testGraphQLObjectDefinition_addObjectDefinition(
+				randomObjectDefinition());
 
 		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

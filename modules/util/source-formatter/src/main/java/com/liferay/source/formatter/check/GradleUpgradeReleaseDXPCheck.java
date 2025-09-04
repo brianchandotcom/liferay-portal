@@ -52,18 +52,19 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 		String artifactName = "release\\.dxp\\.api";
 
 		content = content.replaceAll(
-			"(name\\s*:\\s*\"" + artifactName +
-				"\"\\s*,\\s*version\\s*:\\s*\")[^\"]+\"",
-			"$1" + upgradeToVersion + CharPool.QUOTE);
-
+			StringBundler.concat(
+				"(\"com\\.liferay\\.portal:", artifactName, ":)[^\"\\s]+\""),
+			StringBundler.concat("$1", upgradeToVersion, CharPool.QUOTE));
 		content = content.replaceAll(
-			"(version\\s*:\\s*\")[^\"]+(\"\\s*,\\s*name\\s*:\\s*\"" +
-				artifactName + "\")",
-			"$1" + upgradeToVersion + "$2");
-
+			StringBundler.concat(
+				"(name\\s*:\\s*\"", artifactName,
+				"\"\\s*,\\s*version\\s*:\\s*\")[^\"]+\""),
+			StringBundler.concat("$1", upgradeToVersion, CharPool.QUOTE));
 		content = content.replaceAll(
-			"(\"com\\.liferay\\.portal:" + artifactName + ":)[^\"\\s]+\"",
-			"$1" + upgradeToVersion + CharPool.QUOTE);
+			StringBundler.concat(
+				"(version\\s*:\\s*\")[^\"]+(\"\\s*,\\s*name\\s*:\\s*\"",
+				artifactName, "\")"),
+			StringBundler.concat("$1", upgradeToVersion, "$2"));
 
 		return _formatDependencies(content, upgradeToVersion);
 	}

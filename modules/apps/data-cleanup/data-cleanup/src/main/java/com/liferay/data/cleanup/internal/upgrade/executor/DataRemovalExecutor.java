@@ -18,14 +18,11 @@ import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.data.cleanup.AnalyticsMessageDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.CompanyDataCleanupPreupgradeProcess;
@@ -37,7 +34,6 @@ import com.liferay.portal.upgrade.data.cleanup.GroupDataCleanupPreupgradeProcess
 import com.liferay.portal.upgrade.data.cleanup.NullUnicodeContentDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.UserDataCleanupPreupgradeProcess;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -108,22 +104,6 @@ public class DataRemovalExecutor {
 		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
 				dataCleanupPreupgradeProcessSuite.
 					getDataCleanupPreupgradeProcesses()) {
-
-			Class<?> clazz = dataCleanupPreupgradeProcess.getClass();
-
-			if (ArrayUtil.contains(
-					PropsValues.
-						UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST,
-					clazz.getName())) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skipping blacklisted data cleanup process: " +
-							clazz.getName());
-				}
-
-				continue;
-			}
 
 			if (_isDataCleanupPreupgradeProcessEnabled(
 					dataCleanupPreupgradeProcess, dataRemovalConfiguration)) {
@@ -200,9 +180,6 @@ public class DataRemovalExecutor {
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DataRemovalExecutor.class);
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

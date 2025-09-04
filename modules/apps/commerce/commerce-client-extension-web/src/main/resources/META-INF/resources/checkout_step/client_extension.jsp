@@ -10,10 +10,10 @@
 <%
 String clientId = (String)request.getAttribute("clientId");
 
-long orderId = 0;
+Long orderId = (Long)request.getAttribute("orderId");
 
-if (request.getAttribute("orderId") != null) {
-	orderId = (long)request.getAttribute("orderId");
+if (orderId == null) {
+	orderId = 0L;
 }
 
 String renderURL = (String)request.getAttribute(CommerceClientExtensionWebKeys.RENDER_URL);

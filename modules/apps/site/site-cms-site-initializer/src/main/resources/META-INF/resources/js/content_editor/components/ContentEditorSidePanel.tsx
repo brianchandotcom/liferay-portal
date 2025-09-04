@@ -145,7 +145,11 @@ export default function ContentEditorSidePanel(props: Props) {
 	};
 
 	useEffect(() => {
-		const form = document.querySelector('.lfr-layout-structure-item-form');
+		let form = document.querySelector('.lfr-main-form-container');
+
+		if (!form) {
+			form = document.querySelector('.lfr-layout-structure-item-form');
+		}
 
 		if (form) {
 			setFormId(form.id);

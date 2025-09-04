@@ -131,6 +131,10 @@ public class ActionUtil {
 		formStyledLayoutStructureItem.setClassNameId(
 			layoutPageTemplateEntry.getClassNameId());
 
+		formStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put(
+				"cssClasses", JSONUtil.put("lfr-main-form-container")));
+
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
 		FragmentEntryLink spaceListFragmentEntryLink = _addFragmentEntryLink(
@@ -304,6 +308,9 @@ public class ActionUtil {
 
 		formStyledLayoutStructureItem.setClassNameId(
 			layoutPageTemplateEntry.getClassNameId());
+		formStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put(
+				"cssClasses", JSONUtil.put("lfr-main-form-container")));
 
 		formManager.addFragmentEntryLinksLayoutStructureItems(
 			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),

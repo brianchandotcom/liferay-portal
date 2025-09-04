@@ -423,10 +423,36 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	}
 
 	@Override
+	protected ObjectField
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageObjectDefinitionObjectField_addObjectField(
+				String objectDefinitionExternalReferenceCode,
+				ObjectField objectField)
+		throws Exception {
+
+		return objectFieldResource.
+			postObjectDefinitionByExternalReferenceCodeObjectField(
+				objectDefinitionExternalReferenceCode, objectField);
+	}
+
+	@Override
 	protected ObjectField testGraphQLObjectField_addObjectField()
 		throws Exception {
 
 		return _addObjectField();
+	}
+
+	@Override
+	protected Long
+		testGraphQLPostObjectDefinitionByExternalReferenceCodeObjectField_getObjectDefinitionId() {
+
+		return _objectDefinition.getObjectDefinitionId();
+	}
+
+	@Override
+	protected Long
+		testGraphQLPostObjectDefinitionObjectField_getObjectDefinitionId() {
+
+		return _objectDefinition.getObjectDefinitionId();
 	}
 
 	@Override

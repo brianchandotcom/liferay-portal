@@ -117,6 +117,15 @@ public class BlogPostingImageResourceTest
 		return testGroup.getGroupId();
 	}
 
+	protected BlogPostingImage
+			testGraphQLSiteBlogPostingImage_addBlogPostingImage(
+				Long siteId, BlogPostingImage blogPostingImage)
+		throws Exception {
+
+		return blogPostingImageResource.postSiteBlogPostingImage(
+			siteId, blogPostingImage, getMultipartFiles());
+	}
+
 	private String _read(String url) throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 

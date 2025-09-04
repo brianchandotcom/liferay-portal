@@ -303,6 +303,14 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	}
 
 	@Override
+	protected TestEntity testGraphQLTestEntity_addTestEntity(
+			TestEntity testEntity)
+		throws Exception {
+
+		return testEntityResource.postTestEntity(testEntity);
+	}
+
+	@Override
 	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
 		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
 	}

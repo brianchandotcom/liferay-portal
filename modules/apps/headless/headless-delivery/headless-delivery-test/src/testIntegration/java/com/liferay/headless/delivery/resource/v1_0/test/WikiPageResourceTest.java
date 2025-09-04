@@ -154,6 +154,11 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 	}
 
 	@Override
+	protected WikiPage testGraphQLSiteWikiPage_addWikiPage() throws Exception {
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
+	}
+
+	@Override
 	protected WikiPage testGraphQLWikiPage_addWikiPage() throws Exception {
 		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}

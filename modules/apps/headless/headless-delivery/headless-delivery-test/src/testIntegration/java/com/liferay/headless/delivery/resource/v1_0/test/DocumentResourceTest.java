@@ -400,6 +400,20 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	}
 
 	@Override
+	protected Document testGraphQLAssetLibraryDocument_addDocument(
+			Long assetLibraryId, Document document)
+		throws Exception {
+
+		Document addedDocument =
+			super.testGetAssetLibraryDocumentsRatedByMePage_addDocument(
+				assetLibraryId, document);
+
+		_addDocumentRatingsEntry(addedDocument);
+
+		return addedDocument;
+	}
+
+	@Override
 	protected Document testGraphQLDocument_addDocument() throws Exception {
 		return testPostDocumentFolderDocument_addDocument(
 			randomDocument(), getMultipartFiles());
@@ -419,6 +433,20 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected Document testGraphQLSiteDocument_addDocument(
+			Long siteId, Document document)
+		throws Exception {
+
+		Document addedDocument =
+			super.testGetSiteDocumentsRatedByMePage_addDocument(
+				siteId, document);
+
+		_addDocumentRatingsEntry(addedDocument);
+
+		return addedDocument;
 	}
 
 	@Override

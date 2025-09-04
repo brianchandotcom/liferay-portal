@@ -735,6 +735,64 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@Override
+	protected String
+			testGraphQLDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Long testGraphQLDeleteAccountOrganization_getAccountId()
+		throws Exception {
+
+		return _accountEntry.getAccountEntryId();
+	}
+
+	@Override
+	protected Organization
+			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_addOrganization()
+		throws Exception {
+
+		Organization organization = _addOrganization(randomOrganization(), "0");
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), GetterUtil.getLong(organization.getId()));
+
+		return organization;
+	}
+
+	@Override
+	protected String
+			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		return _user.getEmailAddress();
+	}
+
+	@Override
+	protected Organization
+			testGraphQLDeleteUserAccountByEmailAddress_addOrganization()
+		throws Exception {
+
+		Organization organization = _addOrganization(randomOrganization(), "0");
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), GetterUtil.getLong(organization.getId()));
+
+		return organization;
+	}
+
+	@Override
+	protected String
+			testGraphQLDeleteUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		return _user.getEmailAddress();
+	}
+
+	@Override
 	protected Organization
 			testGraphQLGetAccountByExternalReferenceCodeOrganization_addOrganization()
 		throws Exception {

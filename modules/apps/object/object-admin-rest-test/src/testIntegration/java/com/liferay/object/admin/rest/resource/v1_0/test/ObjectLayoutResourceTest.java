@@ -150,11 +150,41 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 	}
 
 	@Override
+	protected ObjectLayout
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPageObjectDefinitionObjectLayout_addObjectLayout(
+				String objectDefinitionExternalReferenceCode,
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayoutResource.
+			postObjectDefinitionByExternalReferenceCodeObjectLayout(
+				objectDefinitionExternalReferenceCode, objectLayout);
+	}
+
+	@Override
 	protected ObjectLayout testGraphQLObjectLayout_addObjectLayout()
 		throws Exception {
 
 		return objectLayoutResource.postObjectDefinitionObjectLayout(
 			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
+	}
+
+	@Override
+	protected Long
+			testGraphQLPostObjectDefinitionByExternalReferenceCodeObjectLayout_getObjectDefinitionId(
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayout.getObjectDefinitionId();
+	}
+
+	@Override
+	protected Long
+			testGraphQLPostObjectDefinitionObjectLayout_getObjectDefinitionId(
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayout.getObjectDefinitionId();
 	}
 
 	@Override

@@ -230,8 +230,8 @@ public class TaxonomyCategoryResourceTest
 			});
 
 		TaxonomyCategory taxonomyCategory =
-			testGraphQLTaxonomyCategory_addTaxonomyCategory(
-				randomTaxonomyCategory);
+			testGraphQLSiteTaxonomyCategory_addTaxonomyCategory(
+				testGroup.getGroupId(), randomTaxonomyCategory);
 
 		Assert.assertTrue(equals(randomTaxonomyCategory, taxonomyCategory));
 	}
@@ -421,15 +421,6 @@ public class TaxonomyCategoryResourceTest
 		testGraphQLGetAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() {
 
 		return testDepotEntry.getGroupId();
-	}
-
-	@Override
-	protected Long
-			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-				TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		return taxonomyCategory.getTaxonomyVocabularyId();
 	}
 
 	@Override

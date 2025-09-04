@@ -313,6 +313,14 @@ public class MeasurementUnitResourceTest
 	}
 
 	@Override
+	protected MeasurementUnit testGraphQLMeasurementUnit_addMeasurementUnit(
+			MeasurementUnit measurementUnit)
+		throws Exception {
+
+		return _postMeasurementUnit(measurementUnit);
+	}
+
+	@Override
 	protected MeasurementUnit testPostMeasurementUnit_addMeasurementUnit(
 			MeasurementUnit measurementUnit)
 		throws Exception {

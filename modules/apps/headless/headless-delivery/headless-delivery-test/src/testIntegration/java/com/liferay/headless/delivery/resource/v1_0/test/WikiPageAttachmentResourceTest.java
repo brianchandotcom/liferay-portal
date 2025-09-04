@@ -265,6 +265,14 @@ public class WikiPageAttachmentResourceTest
 	}
 
 	@Override
+	protected String
+			testGraphQLDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode()
+		throws Exception {
+
+		return _wikiPage.getExternalReferenceCode();
+	}
+
+	@Override
 	protected WikiPageAttachment
 			testGraphQLGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
 		throws Exception {
@@ -286,6 +294,16 @@ public class WikiPageAttachmentResourceTest
 		throws Exception {
 
 		return _wikiPage.getExternalReferenceCode();
+	}
+
+	@Override
+	protected WikiPageAttachment
+			testGraphQLSiteWikiPageAttachment_addWikiPageAttachment()
+		throws Exception {
+
+		return wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
+			_wikiPage.getResourcePrimKey(), randomWikiPageAttachment(),
+			getMultipartFiles());
 	}
 
 	@Override

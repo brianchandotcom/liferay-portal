@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
+import java.util.List;
+
 import org.junit.runner.RunWith;
 
 /**
@@ -25,6 +27,15 @@ public class MessageBoardSectionResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"title"};
+	}
+
+	@Override
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
+		List<GraphQLField> graphQLFields = super.getGraphQLFields();
+
+		graphQLFields.add(new GraphQLField("friendlyUrlPath"));
+
+		return graphQLFields;
 	}
 
 	@Override

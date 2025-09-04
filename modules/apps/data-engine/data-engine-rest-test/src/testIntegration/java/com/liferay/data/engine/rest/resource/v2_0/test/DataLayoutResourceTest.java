@@ -501,11 +501,35 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Override
+	protected Long testGraphQLDataDefinitionDataLayout_getDataDefinitionId()
+		throws Exception {
+
+		return _dataDefinition.getId();
+	}
+
+	@Override
 	protected DataLayout testGraphQLDataLayout_addDataLayout()
 		throws Exception {
 
 		return dataLayoutResource.postDataDefinitionDataLayout(
 			_dataDefinition.getId(), randomDataLayout());
+	}
+
+	@Override
+	protected Long
+			testGraphQLDeleteDataDefinitionDataLayout_getDataDefinitionId(
+				DataLayout dataLayout)
+		throws Exception {
+
+		return _dataDefinition.getId();
+	}
+
+	@Override
+	protected Long testGraphQLPostDataDefinitionDataLayout_getDataDefinitionId(
+			DataLayout dataLayout)
+		throws Exception {
+
+		return _dataDefinition.getId();
 	}
 
 	@Override

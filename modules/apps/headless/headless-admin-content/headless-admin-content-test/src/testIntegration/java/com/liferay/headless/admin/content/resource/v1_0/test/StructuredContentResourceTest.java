@@ -647,6 +647,13 @@ public class StructuredContentResourceTest
 	}
 
 	@Override
+	protected Double testGraphQLDeleteStructuredContentByVersion_getVersion()
+		throws Exception {
+
+		return 1.0D;
+	}
+
+	@Override
 	protected StructuredContent
 			testGraphQLStructuredContent_addStructuredContent()
 		throws Exception {

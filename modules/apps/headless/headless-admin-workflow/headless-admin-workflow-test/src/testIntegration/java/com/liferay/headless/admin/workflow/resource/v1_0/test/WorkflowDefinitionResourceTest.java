@@ -413,6 +413,22 @@ public class WorkflowDefinitionResourceTest
 
 	@Override
 	protected WorkflowDefinition
+			testGraphQLWorkflowDefinition_addWorkflowDefinition(
+				WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		workflowDefinition =
+			workflowDefinitionResource.postWorkflowDefinitionDeploy(
+				workflowDefinition);
+
+		_workflowDefinitions.put(
+			workflowDefinition.getName(), workflowDefinition);
+
+		return workflowDefinition;
+	}
+
+	@Override
+	protected WorkflowDefinition
 			testPostWorkflowDefinition_addWorkflowDefinition(
 				WorkflowDefinition workflowDefinition)
 		throws Exception {

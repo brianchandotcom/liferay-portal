@@ -310,6 +310,14 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected MessageBoardMessage
+			testGraphQLSiteMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		return _addMessageBoardMessage();
+	}
+
+	@Override
+	protected MessageBoardMessage
 			testPatchMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 

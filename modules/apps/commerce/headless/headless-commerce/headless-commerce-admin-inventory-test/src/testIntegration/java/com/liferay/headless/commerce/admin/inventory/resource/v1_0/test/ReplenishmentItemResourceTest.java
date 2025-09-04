@@ -253,6 +253,25 @@ public class ReplenishmentItemResourceTest
 	}
 
 	@Override
+	protected ReplenishmentItem
+			testGraphQLReplenishmentItem_addReplenishmentItem(
+				Long warehouseId, String sku,
+				ReplenishmentItem replenishmentItem)
+		throws Exception {
+
+		_commerceInventoryReplenishmentItem =
+			_commerceInventoryReplenishmentItemLocalService.
+				addCommerceInventoryReplenishmentItem(
+					replenishmentItem.getExternalReferenceCode(),
+					_user.getUserId(), replenishmentItem.getWarehouseId(),
+					replenishmentItem.getAvailabilityDate(),
+					replenishmentItem.getQuantity(), replenishmentItem.getSku(),
+					StringPool.BLANK);
+
+		return _toReplenishmentItem(_commerceInventoryReplenishmentItem);
+	}
+
+	@Override
 	protected ReplenishmentItem testPostReplenishmentItem_addReplenishmentItem(
 			ReplenishmentItem replenishmentItem)
 		throws Exception {

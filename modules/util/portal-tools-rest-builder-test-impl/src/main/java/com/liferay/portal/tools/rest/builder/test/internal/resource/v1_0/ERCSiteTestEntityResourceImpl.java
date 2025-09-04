@@ -31,8 +31,27 @@ public class ERCSiteTestEntityResourceImpl
 	}
 
 	@Override
+	protected ERCSiteTestEntity doGetSiteERCSiteTestEntity(
+			String siteExternalReferenceCode,
+			String ercSiteTestEntityExternalReferenceCode)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	protected ERCSiteTestEntity doPostSiteERCSiteTestEntity(
 			String siteExternalReferenceCode,
+			ERCSiteTestEntity ercSiteTestEntity)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected ERCSiteTestEntity doPutSiteERCSiteTestEntity(
+			String siteExternalReferenceCode,
+			String ercSiteTestEntityExternalReferenceCode,
 			ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 

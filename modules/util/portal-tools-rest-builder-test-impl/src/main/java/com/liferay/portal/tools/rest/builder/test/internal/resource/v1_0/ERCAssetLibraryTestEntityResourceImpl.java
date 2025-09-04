@@ -34,8 +34,29 @@ public class ERCAssetLibraryTestEntityResourceImpl
 
 	@Override
 	protected ERCAssetLibraryTestEntity
+			doGetAssetLibraryERCAssetLibraryTestEntity(
+				String assetLibraryExternalReferenceCode,
+				String ercAssetLibraryTestEntityExternalReferenceCode)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected ERCAssetLibraryTestEntity
 			doPostAssetLibraryERCAssetLibraryTestEntity(
 				String assetLibraryExternalReferenceCode,
+				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected ERCAssetLibraryTestEntity
+			doPutAssetLibraryERCAssetLibraryTestEntity(
+				String assetLibraryExternalReferenceCode,
+				String ercAssetLibraryTestEntityExternalReferenceCode,
 				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 

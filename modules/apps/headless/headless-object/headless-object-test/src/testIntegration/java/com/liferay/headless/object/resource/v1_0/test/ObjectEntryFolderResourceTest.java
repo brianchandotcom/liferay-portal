@@ -488,6 +488,15 @@ public class ObjectEntryFolderResourceTest
 
 	@Override
 	protected String
+			testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolder.getScopeKey();
+	}
+
+	@Override
+	protected String
 			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
 				ObjectEntryFolder objectEntryFolder)
 		throws Exception {

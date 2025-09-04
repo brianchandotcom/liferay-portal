@@ -111,6 +111,15 @@ export default function FolderFDSPropsTransformer({
 						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
+			else if (
+				action?.data?.id === 'export-for-translation' ||
+				action?.data?.id === 'import-translation'
+			) {
+				return {
+					...action,
+					isVisible: (item: any) => Boolean(!item?.embedded?.file),
+				};
+			}
 			else if (action?.data?.id === 'view-content') {
 				return {
 					...action,
@@ -140,7 +149,19 @@ export default function FolderFDSPropsTransformer({
 			event: Event;
 			itemData: any;
 		}) => {
-			if (action?.data?.id === 'share') {
+			if (
+				action?.data?.id === 'export-for-translation' ||
+				action?.data?.id === 'import-translation'
+			) {
+				event?.preventDefault();
+
+				openModal({
+					size: 'full-screen',
+					title: action.label,
+					url: formatActionURL(itemData, action.href),
+				});
+			}
+			else if (action?.data?.id === 'share') {
 				const {autocompleteURL, collaboratorURLs} = additionalProps;
 
 				shareAction({

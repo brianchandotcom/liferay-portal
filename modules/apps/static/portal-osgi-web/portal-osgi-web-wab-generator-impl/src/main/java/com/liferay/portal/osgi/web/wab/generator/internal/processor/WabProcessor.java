@@ -557,12 +557,12 @@ public class WabProcessor {
 		}
 
 		try (ZipFile zipFile = new ZipFile(_file)) {
+			_pluginPackageProperties = new Properties();
+
 			ZipEntry zipEntry = zipFile.getEntry(
 				"WEB-INF/liferay-plugin-package.properties");
 
 			if (zipEntry == null) {
-				_pluginPackageProperties = new Properties();
-
 				return _pluginPackageProperties;
 			}
 
@@ -577,8 +577,6 @@ public class WabProcessor {
 				if (_log.isDebugEnabled()) {
 					_log.debug(ioException);
 				}
-
-				_pluginPackageProperties = new Properties();
 
 				return _pluginPackageProperties;
 			}

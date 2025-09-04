@@ -1,5 +1,5 @@
 {
-	"@generated": "916b46581c3a81a4d5b96cf4da445d8111a7b4ba",
+	"@generated": "31f26822c82fd8221761f5bf04dc4da97a68b43a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -27,7 +27,7 @@
 				"../../../object/object-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"document-library-preview-image": [
-				"../../../document-library/document-library-preview-image/src/main/resources/META-INF/resources/preview/js/index.js"
+				"../../../document-library/document-library-preview-image/src/main/resources/META-INF/resources/preview/js/index.tsx"
 			],
 			"frontend-editor-ckeditor-web": [
 				"../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/js/index.ts"

@@ -86,6 +86,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 	public enum Report {
 
+		AWS_BUILD_COMPARISON("AWS Build Comparison"),
 		BUILD_HISTORY("Build History"), CI_SYSTEM_HISTORY("CI System History"),
 		CI_SYSTEM_STATUS("CI System Status"),
 		PULL_REQUEST_HISTORY("Pull Request History"),
@@ -327,6 +328,40 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 	}
 
+	private void _generateAWSBuildComparisonReport(String reportName)
+		throws IOException {
+
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			return;
+		}
+
+		CloudBucketUtil.syncGCPFiles(
+			_ARCHIVE_BASE_DIR_PATH + "/aws/data",
+			CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/aws/data");
+
+		long reportDurationDays = _getReportDurationDays(reportName);
+		String startDateString = _getStartDateString(reportName);
+
+		_copyArchivedBuildData(reportDurationDays, startDateString);
+
+		_copyArchivedBuildData(
+			reportDurationDays, startDateString,
+			new File(_ARCHIVE_BASE_DIR_PATH + "/aws/data"),
+			new File(_TMP_BASE_DIR_PATH + "/aws/builds"));
+
+		String filePath = _getReportFilePath(reportName);
+
+		BuildHistoryReport awsBuildComparisonReport =
+			BuildHistoryReport.newAWSBuildComparisonReport(
+				reportDurationDays, new File(filePath), startDateString);
+
+		awsBuildComparisonReport.write();
+
+		_updateReport(filePath);
+
+		_archiveReport(filePath);
+	}
+
 	private void _generateBuildHistoryReport(String reportName)
 		throws IOException {
 
@@ -475,6 +510,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		for (String reportName : reportNames) {
 			try {
+				if (reportName.equals(Report.AWS_BUILD_COMPARISON.toString())) {
+					_generateAWSBuildComparisonReport(reportName);
+				}
+
 				if (reportName.equals(Report.BUILD_HISTORY.toString())) {
 					_generateBuildHistoryReport(reportName);
 				}
@@ -882,6 +921,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private static final Map<String, String> _reportDirNames =
 		new HashMap<String, String>() {
 			{
+				put(
+					Report.AWS_BUILD_COMPARISON.toString(),
+					"aws-build-comparison-report");
 				put(Report.BUILD_HISTORY.toString(), "build-history-report");
 				put(Report.CI_SYSTEM_HISTORY.toString(), "ci-system-history");
 				put(Report.CI_SYSTEM_STATUS.toString(), "ci-system-status");
@@ -896,8 +938,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private static final Pattern _scriptElementPattern = Pattern.compile(
 		_SCRIPT_ELEMENT_REGEX);
 	private static final List<String> _validReportNames = Arrays.asList(
-		Report.BUILD_HISTORY.toString(), Report.CI_SYSTEM_HISTORY.toString(),
-		Report.CI_SYSTEM_STATUS.toString(),
+		Report.AWS_BUILD_COMPARISON.toString(), Report.BUILD_HISTORY.toString(),
+		Report.CI_SYSTEM_HISTORY.toString(), Report.CI_SYSTEM_STATUS.toString(),
 		Report.PULL_REQUEST_HISTORY.toString(),
 		Report.RELEASE_HISTORY.toString(), Report.UPSTREAM_HISTORY.toString(),
 		Report.UTILIZATION.toString());

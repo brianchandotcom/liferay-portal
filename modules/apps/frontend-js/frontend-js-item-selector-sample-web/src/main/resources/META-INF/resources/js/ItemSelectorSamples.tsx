@@ -274,6 +274,41 @@ export default function ItemSelectorSamples() {
 				</ItemSelector>
 			</SampleContainer>
 
+			<SampleContainer label="Item selector pops up modal on button click autocomplete">
+				<ItemSelector
+					apiURL={`${location.origin}/o/headless-admin-user/v1.0/user-accounts`}
+					itemSelectorModalProps={{
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
+							id: `itemSelectorModal-users-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
+							}),
+						},
+						items: user2 ? [user2] : [],
+						observer: itemSelectorModalObserver,
+						onItemsChange: (items: User[]) => setUser2(items[0]),
+						onOpenChange: itemSelectorModalOpenChange,
+						open: itemSelectorModalOpen,
+						type: userAccountsItemSelectorConfig.type,
+					}}
+					locator={{
+						id: 'id',
+						label: 'name',
+						value: 'id',
+					}}
+					placeholder="Select an User"
+				>
+					{(item) => (
+						<ItemSelector.Item key={item.id} textValue={item.name}>
+							{item.name}
+						</ItemSelector.Item>
+					)}
+				</ItemSelector>
+			</SampleContainer>
+
 			<SampleContainer label="Multiple Select Item selector pops up modal on button click">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-admin-user/v1.0/user-accounts`}

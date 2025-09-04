@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -128,7 +129,10 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 						}
 					});
 
-				return customizableSectionIds.toArray(new String[0]);
+				List<String> sortedCustomizableSectionIds = ListUtil.sort(
+					customizableSectionIds);
+
+				return sortedCustomizableSectionIds.toArray(new String[0]);
 			});
 		widgetPageSettings.setLayoutTemplateId(
 			() -> layout.getTypeSettingsProperty(

@@ -438,7 +438,7 @@ const AppsPanel = ({
 					<ClayLayout.Row>
 						<ClayLayout.Col
 							className="pr-0"
-							md={Liferay.FeatureFlags['LPD-17564'] ? '9' : '8'}
+							md={Liferay.FeatureFlags['LPD-17564'] ? '8' : '9'}
 							xl="8"
 						>
 							<ClayTabs.Content activeIndex={activeTab}>

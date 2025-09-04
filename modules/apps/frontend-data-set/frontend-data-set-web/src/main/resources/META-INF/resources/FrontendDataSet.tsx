@@ -156,6 +156,15 @@ const FrontendDataSetContent = ({
 
 				return delta;
 			},
+			[EStateInURLKeys.VIEW_NAME]: (viewName: string) => {
+				const view = views.find(({name}) => name === viewName);
+
+				if (view) {
+					return viewName;
+				}
+
+				return null;
+			},
 		},
 	});
 	const stateInURLSetters = useSetStateInURL({
@@ -163,8 +172,11 @@ const FrontendDataSetContent = ({
 		setters: [
 			{
 				key: EStateInURLKeys.DELTA,
-
 				type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
+			},
+			{
+				key: EStateInURLKeys.VIEW_NAME,
+				type: VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW,
 			},
 		],
 		stateInURLSettings,

@@ -378,10 +378,12 @@ export {
 
 export enum EStateInURLKeys {
 	DELTA = 'delta',
+	VIEW_NAME = 'view',
 }
 
 export interface IStateInURL {
 	[EStateInURLKeys.DELTA]: number;
+	[EStateInURLKeys.VIEW_NAME]: string;
 }
 
 export type IStateInURLSetter<K extends keyof IStateInURL> = (

@@ -466,6 +466,12 @@ export class JournalEditArticlePage {
 				: `Success:${title} will be published on`
 		);
 
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'list'}),
+			trigger: this.page.getByLabel('Select View, Currently Selected: '),
+		});
+
 		const row = await this.page
 			.locator('.list-group-item')
 			.filter({hasText: title});

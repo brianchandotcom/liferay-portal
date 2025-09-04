@@ -150,10 +150,18 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private void _copyArchivedBuildData(
 		long durationDays, String startDateString) {
 
+		_copyArchivedBuildData(
+			durationDays, startDateString,
+			new File(_ARCHIVE_BASE_DIR_PATH + "/data"),
+			new File(_TMP_BASE_DIR_PATH + "/builds"));
+	}
+
+	private void _copyArchivedBuildData(
+		long durationDays, String startDateString, File archivedDataDir,
+		File outputDir) {
+
 		String[] dateStrings = JenkinsResultsParserUtil.getDateStrings(
 			durationDays, LocalDate.parse(startDateString, _dateTimeFormatter));
-
-		File archivedDataDir = new File(_ARCHIVE_BASE_DIR_PATH + "/data");
 
 		List<Callable<Void>> callables = new ArrayList<>();
 
@@ -166,8 +174,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 						File archiveFile = new File(
 							archivedDataDir, dateString + ".tar.gz");
 
-						File unarchivedDir = new File(
-							_TMP_BASE_DIR_PATH, "/builds/" + dateString);
+						File unarchivedDir = new File(outputDir, dateString);
 
 						if (archiveFile.exists() && !unarchivedDir.exists()) {
 							System.out.println(

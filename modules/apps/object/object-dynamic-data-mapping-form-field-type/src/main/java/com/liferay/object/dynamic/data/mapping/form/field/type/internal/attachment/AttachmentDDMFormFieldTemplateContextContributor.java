@@ -118,8 +118,7 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		).put(
 			"tip",
 			_language.format(
-				ddmFormFieldRenderingContext.getLocale(),
-				"upload-a-x-no-larger-than-x",
+				themeDisplay.getLocale(), "upload-a-x-no-larger-than-x",
 				new Object[] {
 					ddmFormField.getProperty("acceptedFileExtensions"),
 					_language.formatStorageSize(

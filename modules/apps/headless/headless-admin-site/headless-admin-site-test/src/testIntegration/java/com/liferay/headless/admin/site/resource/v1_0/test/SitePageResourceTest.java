@@ -544,26 +544,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertEquals(expectedPriority, (int)pageSettings.getPriority());
 	}
 
-	private SitePage _testPatchSiteSiteByExternalReferenceCodeSitePage(
-			SitePage expectedSitePage, SitePage sitePage)
-		throws Exception {
-
-		SitePage patchSitePage =
-			sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
-				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode(), sitePage);
-
-		assertEquals(expectedSitePage, patchSitePage);
-		assertValid(patchSitePage);
-
-		_assertSitePage(
-			_layoutLocalService.getLayoutByExternalReferenceCode(
-				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
-			patchSitePage);
-
-		return patchSitePage;
-	}
-
 	private void
 			_assertPatchSiteSiteByExternalReferenceCodeSitePageProblemException(
 				ServiceContext serviceContext, Layout... layouts)
@@ -959,6 +939,26 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode()));
+	}
+
+	private SitePage _testPatchSiteSiteByExternalReferenceCodeSitePage(
+			SitePage expectedSitePage, SitePage sitePage)
+		throws Exception {
+
+		SitePage patchSitePage =
+			sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), sitePage);
+
+		assertEquals(expectedSitePage, patchSitePage);
+		assertValid(patchSitePage);
+
+		_assertSitePage(
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
+			patchSitePage);
+
+		return patchSitePage;
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeSitePage(

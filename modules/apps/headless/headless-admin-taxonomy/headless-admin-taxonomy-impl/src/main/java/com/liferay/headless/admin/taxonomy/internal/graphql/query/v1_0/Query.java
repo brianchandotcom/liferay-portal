@@ -156,33 +156,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywords(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public KeywordPage keywords(
-			@GraphQLName("search") String search,
-			@GraphQLName("aggregation") List<String> aggregations,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> new KeywordPage(
-				keywordResource.getKeywordsPage(
-					search,
-					_aggregationBiFunction.apply(keywordResource, aggregations),
-					_filterBiFunction.apply(keywordResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(keywordResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywordsRanked(page: ___, pageSize: ___, search: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -245,12 +218,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteKeywords(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywords(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted."
 	)
-	public KeywordPage siteKeywords(
+	public KeywordPage keywords(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("aggregation") List<String> aggregations,
@@ -610,12 +583,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteTaxonomyVocabularies(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyVocabularies(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a Site's taxonomy vocabularies. Results can be paginated, filtered, searched, and sorted."
 	)
-	public TaxonomyVocabularyPage siteTaxonomyVocabularies(
+	public TaxonomyVocabularyPage taxonomyVocabularies(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("aggregation") List<String> aggregations,
@@ -680,38 +653,6 @@ public class Query {
 				taxonomyVocabularyResource.
 					getSiteTaxonomyVocabularyPermissionsPage(
 						Long.valueOf(siteKey), roleNames)));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyVocabularies(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(
-		description = "Gets all taxonomy vocabularies that were created in CMS. Does not retrieve vocabularies created in DXP. CMS vocabularies are distinguished by having a `groupId = 0`."
-	)
-	public TaxonomyVocabularyPage taxonomyVocabularies(
-			@GraphQLName("search") String search,
-			@GraphQLName("aggregation") List<String> aggregations,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxonomyVocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyVocabularyResource -> new TaxonomyVocabularyPage(
-				taxonomyVocabularyResource.getTaxonomyVocabulariesPage(
-					search,
-					_aggregationBiFunction.apply(
-						taxonomyVocabularyResource, aggregations),
-					_filterBiFunction.apply(
-						taxonomyVocabularyResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(
-						taxonomyVocabularyResource, sortsString))));
 	}
 
 	/**

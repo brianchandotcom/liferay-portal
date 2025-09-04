@@ -99,7 +99,7 @@ export function writeStateInURL(
 	}
 }
 
-function contains(
+export function contains(
 	a: Partial<IStateInURL> | null,
 	b: Partial<IStateInURL> | null
 ) {

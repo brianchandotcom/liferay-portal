@@ -104,7 +104,7 @@ public class FragmentEntryLinkModelListenerTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryLinkWithEmbeddedWidget() throws Exception {
+	public void testAddFragmentEntryLinkWithEmbeddedPortlet() throws Exception {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(
 				TestPropsValues.getGroupId());

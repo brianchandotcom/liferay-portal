@@ -41,6 +41,10 @@ import org.json.JSONArray;
  */
 public class BuildHistoryProcessor {
 
+	public static File getBaseDir() {
+		return _baseDir;
+	}
+
 	public static ExecutorService getExecutorService() {
 		return _executorService;
 	}
@@ -204,6 +208,10 @@ public class BuildHistoryProcessor {
 		return _getBuildHistories(duration, null, null, biConsumer, startTime);
 	}
 
+	public static void setBaseDir(File baseDir) {
+		_baseDir = baseDir;
+	}
+
 	private static void _addToBuildHistoriesMap(
 		Collection<BuildJSONObject> buildJSONObjects,
 		Map<String, BuildHistory> buildHistoriesMap, long duration,
@@ -279,7 +287,7 @@ public class BuildHistoryProcessor {
 	private static Set<BuildJSONObject> _getBuildJSONObjects(
 		String dateString) {
 
-		File dateDir = new File(_BASE_DIR, dateString);
+		File dateDir = new File(_baseDir, dateString);
 
 		if (dateDir.listFiles() == null) {
 			return Collections.emptySet();
@@ -410,10 +418,9 @@ public class BuildHistoryProcessor {
 		return mergedBuildHistory;
 	}
 
-	private static final File _BASE_DIR;
-
 	private static final Integer _THREAD_COUNT = 8;
 
+	private static File _baseDir;
 	private static final Properties _buildProperties;
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
@@ -430,7 +437,7 @@ public class BuildHistoryProcessor {
 			}
 		};
 
-		_BASE_DIR = new File(
+		_baseDir = new File(
 			_buildProperties.getProperty("archive.ci.build.data.tmp.dir"),
 			"builds");
 	}

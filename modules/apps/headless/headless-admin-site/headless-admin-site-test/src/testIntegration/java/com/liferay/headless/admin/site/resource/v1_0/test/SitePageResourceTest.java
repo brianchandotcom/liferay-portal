@@ -1352,8 +1352,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		String sitePageExternalReferenceCode =
 			sitePage.getExternalReferenceCode();
 
-		int pageSettingsPriority = widgetPageSettings.getPriority();
-
 		sitePage = _testPatchSiteSiteByExternalReferenceCodeSitePage(
 			sitePage,
 			new SitePage() {
@@ -1366,7 +1364,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 								setCustomizableSectionIds(
 									new String[] {"column-1", "column-3"});
 								setLayoutTemplateId("1_2_columns_i");
-								setPriority(pageSettingsPriority);
 								setType(Type.WIDGET_PAGE_SETTINGS);
 							}
 						});
@@ -1391,7 +1388,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 								setCustomizable(true);
 								setCustomizableSectionIds(
 									new String[] {"column-2"});
-								setPriority(pageSettingsPriority);
 								setType(Type.WIDGET_PAGE_SETTINGS);
 							}
 						});
@@ -1413,7 +1409,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					setPageSettings(
 						new WidgetPageSettings() {
 							{
-								setPriority(pageSettingsPriority);
 								setType(Type.WIDGET_PAGE_SETTINGS);
 							}
 						});

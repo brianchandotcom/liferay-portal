@@ -4,15 +4,7 @@
  */
 
 import {writeStateInURL} from './stateInURL';
-import {EStateInURLSettings, IStateInURL} from './types';
-
-type StateSetter<K extends keyof IStateInURL> = (
-	value: IStateInURL[K]
-) => (viewsDispatch: Function) => void;
-
-type StateSetters = {
-	[K in keyof IStateInURL]: StateSetter<K>;
-};
+import {EStateInURLSettings, IStateInURL, IStateInURLSetters} from './types';
 
 function useSetStateInURL({
 	id,
@@ -25,13 +17,13 @@ function useSetStateInURL({
 		type: string;
 	}[];
 	stateInURLSettings: EStateInURLSettings;
-}): StateSetters {
+}): IStateInURLSetters {
 	const stateSetters = {};
 
 	for (const setter of setters) {
 		const {key, type} = setter;
 
-		(stateSetters as StateSetters)[key] = getSetter({
+		(stateSetters as IStateInURLSetters)[key] = getSetter({
 			id,
 			key,
 			stateInURLSettings,
@@ -39,7 +31,7 @@ function useSetStateInURL({
 		});
 	}
 
-	return stateSetters as StateSetters;
+	return stateSetters as IStateInURLSetters;
 }
 
 function getSetter<K extends keyof IStateInURL>({

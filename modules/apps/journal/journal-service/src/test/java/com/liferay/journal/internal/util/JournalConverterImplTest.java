@@ -25,7 +25,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -90,6 +89,11 @@ public class JournalConverterImplTest {
 	}
 
 	private void _testUpdateContentDynamicElementWithOptions() {
+		JournalConverterImpl journalConverterImpl = new JournalConverterImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			journalConverterImpl, "_jsonFactory", new JSONFactoryImpl());
+
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field2", "select");
 
@@ -98,32 +102,16 @@ public class JournalConverterImplTest {
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
 		String value = RandomTestUtil.randomString();
-		String optionReference = RandomTestUtil.randomString();
 
 		ddmFormFieldOptions.addOption(value);
 		ddmFormFieldOptions.addOptionLabel(
 			value, LocaleUtil.US, RandomTestUtil.randomString());
+
+		String optionReference = RandomTestUtil.randomString();
+
 		ddmFormFieldOptions.addOptionReference(value, optionReference);
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
-		Map<Locale, List<Serializable>> valuesMap =
-			HashMapBuilder.<Locale, List<Serializable>>put(
-				LocaleUtil.US,
-				() -> ListUtil.fromArray(
-					JSONUtil.put(
-						value
-					).toString())
-			).build();
-
-		Field field = new Field(
-			RandomTestUtil.randomLong(), ddmFormField.getName(), valuesMap,
-			LocaleUtil.US);
-
-		JournalConverterImpl journalConverterImpl = new JournalConverterImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			journalConverterImpl, "_jsonFactory", new JSONFactoryImpl());
 
 		SAXReaderImpl saxReaderImpl = new SAXReaderImpl();
 
@@ -136,14 +124,26 @@ public class JournalConverterImplTest {
 			new Class<?>[] {
 				int.class, DDMFormField.class, Element.class, Field.class
 			},
-			0, ddmFormField, rootElement, field);
+			0, ddmFormField, rootElement,
+			new Field(
+				RandomTestUtil.randomLong(), ddmFormField.getName(),
+				HashMapBuilder.<Locale, List<Serializable>>put(
+					LocaleUtil.US,
+					() -> ListUtil.fromArray(
+						JSONUtil.put(
+							value
+						).toString())
+				).build(),
+				LocaleUtil.US));
 
-		List<Element> dynamicContents = rootElement.elements("dynamic-content");
+		List<Element> dynamicContentElements = rootElement.elements(
+			"dynamic-content");
 
 		Assert.assertEquals(
-			dynamicContents.toString(), 1, dynamicContents.size());
+			dynamicContentElements.toString(), 1,
+			dynamicContentElements.size());
 
-		Element dynamicContentElement = dynamicContents.get(0);
+		Element dynamicContentElement = dynamicContentElements.get(0);
 
 		List<Element> optionReferenceElements = dynamicContentElement.elements(
 			"optionReference");

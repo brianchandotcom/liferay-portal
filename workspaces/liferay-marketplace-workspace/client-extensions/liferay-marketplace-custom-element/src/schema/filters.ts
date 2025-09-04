@@ -395,6 +395,31 @@ const filterSchema = {
 		],
 		name: 'administratorSolutions',
 	},
+	financeOrders: {
+		fields: [
+			baseFilters.dateCreated,
+			overrides(baseFilters.dateCreated, {
+				label: i18n.translate('modified-date'),
+				name: 'modifiedDate',
+			}),
+			overrides(baseFilters.status, {
+				name: 'statusCode',
+				options: [
+					{
+						label: "Unpaid",
+						value: "Unpaid",
+					},
+					{
+						label: "Paid",
+						value: "Paid",
+					}
+				],
+				removeQuoteMark: true,
+				type: 'multiselect',
+			}),
+		],
+		name: 'financeOrders',
+	},
 };
 
 export {filterSchema};

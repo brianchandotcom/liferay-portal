@@ -43,7 +43,6 @@ public class OAuth2ApplicationModelListenerTest {
 		String oAuth2ApplicationName = RandomTestUtil.randomString();
 
 		_clientId = ScimClientUtil.generateScimClientId(oAuth2ApplicationName);
-
 		_pid = ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.scim.rest.internal.configuration." +
 				"ScimClientOAuth2ApplicationConfiguration",

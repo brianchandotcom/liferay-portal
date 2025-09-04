@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
-import com.liferay.site.cms.site.initializer.internal.constants.CMSLayoutConstants;
 import com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpaceListComponentSectionFragmentRenderer;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -701,9 +700,8 @@ public class ActionUtil {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.addLayoutPageTemplateEntry(
 				null, serviceContext.getUserId(), groupId, 0,
-				CMSLayoutConstants.
-					TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
-						classNameId,
+				_TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
+					classNameId,
 				classNameId, 0, name,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -824,9 +822,8 @@ public class ActionUtil {
 			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntry(
 					group.getGroupId(),
-					CMSLayoutConstants.
-						TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
-							classNameId);
+					_TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
+						classNameId);
 
 		if (layoutPageTemplateEntry == null) {
 			layoutPageTemplateEntry =
@@ -835,9 +832,8 @@ public class ActionUtil {
 					fragmentEntryLinkService, fragmentRendererRegistry,
 					group.getGroupId(), infoItemServiceRegistry,
 					infoSearchClassMapperRegistry,
-					CMSLayoutConstants.
-						TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
-							objectDefinition.getName(),
+					_TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
+						objectDefinition.getName(),
 					serviceContext);
 		}
 
@@ -859,6 +855,10 @@ public class ActionUtil {
 
 		return FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET;
 	}
+
+	private static final String
+		_TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX =
+			"LFR_CMS_TRANSLATION_";
 
 	private static final Log _log = LogFactoryUtil.getLog(ActionUtil.class);
 

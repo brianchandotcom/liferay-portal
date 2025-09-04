@@ -83,8 +83,8 @@ public class InventoryAnalysisResourceTest
 					bundle.getSymbolicName(),
 					"com.liferay.site.initializer.cms")) {
 
-				_setUpProcessedFile(bundle, "01.object.folder");
-				_setUpProcessedFile(bundle, "02.object.definition");
+				_deleteFile(bundle, "01.object.folder");
+				_deleteFile(bundle, "02.object.definition");
 
 				CompletableFuture<Void> completableFuture =
 					_batchEngineUnitProcessor.processBatchEngineUnits(
@@ -202,7 +202,7 @@ public class InventoryAnalysisResourceTest
 		Assert.assertEquals("My Category", inventoryAnalysisItem.getTitle());
 	}
 
-	private void _setUpProcessedFile(Bundle bundle, String fileName) {
+	private void _deleteFile(Bundle bundle, String fileName) {
 		File file = bundle.getDataFile(
 			".com.liferay.headless.builder.internal.batch." + fileName +
 				".batch.engine.data.json.0.processed");

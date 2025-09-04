@@ -85,8 +85,8 @@ public class GroupModelListenerTest {
 				continue;
 			}
 
-			_setUpProcessedFile(bundle, "01.object.folder");
-			_setUpProcessedFile(bundle, "02.object.definition");
+			_deleteFile(bundle, "01.object.folder");
+			_deleteFile(bundle, "02.object.definition");
 
 			CompletableFuture<Void> completableFuture =
 				_batchEngineUnitProcessor.processBatchEngineUnits(
@@ -156,6 +156,16 @@ public class GroupModelListenerTest {
 				depotEntry.getModelClassName(), _filterFactory));
 	}
 
+	private void _deleteFile(Bundle bundle, String fileName) {
+		File file = bundle.getDataFile(
+			".com.liferay.site.initializer.cms.internal.batch." + fileName +
+				".batch.engine.data.json.0.processed");
+
+		if ((file != null) && file.exists()) {
+			file.delete();
+		}
+	}
+
 	private boolean _isCMSSiteInitialized() throws Exception {
 		ObjectFolder objectFolder =
 			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
@@ -167,16 +177,6 @@ public class GroupModelListenerTest {
 		}
 
 		return false;
-	}
-
-	private void _setUpProcessedFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
 	}
 
 	@Inject

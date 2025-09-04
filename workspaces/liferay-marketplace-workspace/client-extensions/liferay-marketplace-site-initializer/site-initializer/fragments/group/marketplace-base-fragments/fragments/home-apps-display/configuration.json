@@ -72,7 +72,6 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "Highlights",
 					"description": "specification-filter-value",
 					"label": "Specification Filter Value",
 					"name": "specificationFilterValue",

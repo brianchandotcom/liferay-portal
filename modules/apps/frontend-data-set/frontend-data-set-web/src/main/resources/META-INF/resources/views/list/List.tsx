@@ -154,6 +154,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					onClick={() => {
 						if (selectable) {
 							onItemSelectionChange({
+								force: true,
 								item,
 							});
 						}

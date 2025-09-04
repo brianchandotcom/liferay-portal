@@ -34,7 +34,6 @@ export declare function FrontendDataSet({
 	nestedItemsReferenceKey,
 	onActionDropdownItemClick,
 	onBulkActionItemClick,
-	onSelect,
 	overrideEmptyResultView,
 	pagination,
 	portletId,
@@ -308,7 +307,6 @@ export interface IFrontendDataSetProps {
 	nestedItemsReferenceKey?: string;
 	onActionDropdownItemClick?: any;
 	onBulkActionItemClick?: any;
-	onSelect?: ({selectedItems}: {selectedItems: Array<any>}) => void;
 	onSelectedItemsChange?: (selectedItems: Array<any>) => void;
 	overrideEmptyResultView?: boolean;
 	pagination?: {

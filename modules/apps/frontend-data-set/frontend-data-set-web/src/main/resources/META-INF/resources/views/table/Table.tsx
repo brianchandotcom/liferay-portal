@@ -419,6 +419,7 @@ function ClayTableRowOptionalDropTarget({
 		onClick: selectable
 			? () => {
 					onItemSelectionChange({
+						force: true,
 						item,
 					});
 				}

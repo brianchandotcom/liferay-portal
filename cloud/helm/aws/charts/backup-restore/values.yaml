@@ -1,0 +1,37 @@
+argo:
+    artifactRepositoryBucketId: ""
+    namespace: argo
+awsBackupService:
+    assumedIamRoleArn: ""
+    restoreWaitTimeoutSeconds: 7200
+    vaultName: "liferay-backup"
+createClusterResources: true
+fullnameOverride: ""
+git:
+    credentials:
+        token: ""
+        username: ""
+    repository:
+        branch: master
+        paths:
+            dependenciesModule: cloud/terraform/aws/dependencies
+            sparseCheckout: cloud/terraform/aws
+        url: https://github.com/liferay/liferay-portal.git
+    user:
+        email: ""
+        name: ""
+images:
+    awsCli:
+        repository: amazon/aws-cli
+        tag: "2.27.63"
+    kubectl:
+        repository: registry.k8s.io/kubectl
+        tag: v1.34.0
+    terraform:
+        repository: hashicorp/terraform
+        tag: "1.12.2"
+liferayWorkload:
+    managedSecretName: managed-service-details
+    name: liferay-default
+nameOverride: ""
+serviceAccountAnnotations: {}

@@ -286,89 +286,6 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	@Override
-	protected Page<TaxonomyVocabulary> doGetTaxonomyVocabulariesPage(
-			String search, Aggregation aggregation, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return SearchUtil.search(
-			HashMapBuilder.put(
-				"create",
-				addAction(
-					ActionKeys.ADD_VOCABULARY, "postTaxonomyVocabulary",
-					AssetCategoriesPermission.RESOURCE_NAME,
-					TaxonomyGroupUtil.getCMSGroupId(
-						contextCompany.getCompanyId()))
-			).put(
-				"createBatch",
-				addAction(
-					ActionKeys.ADD_VOCABULARY, "postTaxonomyVocabularyBatch",
-					AssetCategoriesPermission.RESOURCE_NAME,
-					TaxonomyGroupUtil.getCMSGroupId(
-						contextCompany.getCompanyId()))
-			).put(
-				"deleteBatch",
-				addAction(
-					ActionKeys.DELETE, "deleteTaxonomyVocabularyBatch",
-					AssetCategoriesPermission.RESOURCE_NAME, null)
-			).put(
-				"get",
-				addAction(
-					ActionKeys.VIEW, "getTaxonomyVocabulariesPage",
-					AssetCategoriesPermission.RESOURCE_NAME,
-					TaxonomyGroupUtil.getCMSGroupId(
-						contextCompany.getCompanyId()))
-			).put(
-				"updateBatch",
-				addAction(
-					ActionKeys.UPDATE, "putTaxonomyVocabularyBatch",
-					AssetCategoriesPermission.RESOURCE_NAME, null)
-			).build(),
-			booleanQuery -> {
-			},
-			filter, AssetVocabulary.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ASSET_VOCABULARY_ID),
-			searchContext -> {
-				searchContext.addVulcanAggregation(aggregation);
-
-				BooleanFilter booleanFilter = new BooleanFilter();
-
-				booleanFilter.addRequiredTerm(
-					Field.GROUP_ID,
-					TaxonomyGroupUtil.getCMSGroupId(
-						contextCompany.getCompanyId()));
-
-				searchContext.setBooleanClauses(
-					new BooleanClause[] {
-						BooleanClauseFactoryUtil.create(
-							new BooleanQueryImpl() {
-								{
-									if (filter != null) {
-										booleanFilter.add(
-											filter, BooleanClauseOccur.MUST);
-									}
-
-									setPreBooleanFilter(booleanFilter);
-								}
-							},
-							BooleanClauseOccur.MUST.getName())
-					});
-
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toTaxonomyVocabulary(
-				_assetVocabularyService.getVocabulary(
-					GetterUtil.getLong(
-						document.get(Field.ASSET_VOCABULARY_ID)))));
-	}
-
-	@Override
 	protected TaxonomyVocabulary doGetTaxonomyVocabulary(
 			Long taxonomyVocabularyId)
 		throws Exception {
@@ -408,27 +325,6 @@ public class TaxonomyVocabularyResourceImpl
 				assetVocabulary.getVocabularyId(),
 				_getAssetLibraryGroupIds(taxonomyVocabulary));
 		}
-
-		return _toTaxonomyVocabulary(assetVocabulary);
-	}
-
-	@Override
-	protected TaxonomyVocabulary doPostTaxonomyVocabulary(
-			TaxonomyVocabulary taxonomyVocabulary)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		AssetVocabulary assetVocabulary = _addAssetVocabulary(
-			taxonomyVocabulary.getExternalReferenceCode(),
-			TaxonomyGroupUtil.getCMSGroupId(contextCompany.getCompanyId()),
-			taxonomyVocabulary);
-
-		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-			assetVocabulary.getVocabularyId(),
-			_getAssetLibraryGroupIds(taxonomyVocabulary));
 
 		return _toTaxonomyVocabulary(assetVocabulary);
 	}

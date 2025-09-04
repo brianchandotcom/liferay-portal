@@ -25,14 +25,9 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -178,58 +173,6 @@ public class KeywordResourceImpl
 	}
 
 	@Override
-	public Page<Keyword> getKeywordsPage(
-			String search, Aggregation aggregation, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return SearchUtil.search(
-			null,
-			booleanQuery -> {
-			},
-			filter, AssetTag.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.addVulcanAggregation(aggregation);
-				searchContext.setAttribute(Field.NAME, search);
-
-				BooleanFilter booleanFilter = new BooleanFilter();
-
-				booleanFilter.addRequiredTerm(
-					Field.GROUP_ID,
-					TaxonomyGroupUtil.getCMSGroupId(
-						contextCompany.getCompanyId()));
-
-				searchContext.setBooleanClauses(
-					new BooleanClause[] {
-						BooleanClauseFactoryUtil.create(
-							new BooleanQueryImpl() {
-								{
-									if (filter != null) {
-										booleanFilter.add(
-											filter, BooleanClauseOccur.MUST);
-									}
-
-									setPreBooleanFilter(booleanFilter);
-								}
-							},
-							BooleanClauseOccur.MUST.getName())
-					});
-
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toKeyword(
-				_assetTagService.getTag(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
-	}
-
-	@Override
 	public Page<Keyword> getKeywordsRankedPage(
 		String search, Long siteId, Pagination pagination) {
 
@@ -314,24 +257,6 @@ public class KeywordResourceImpl
 		throws Exception {
 
 		return postSiteKeyword(assetLibraryId, keyword);
-	}
-
-	@Override
-	public Keyword postKeyword(Keyword keyword) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		Keyword postKeyword = postSiteKeyword(
-			TaxonomyGroupUtil.getCMSGroupId(contextCompany.getCompanyId()),
-			keyword);
-
-		_assetTagGroupRelLocalService.setAssetTagGroupRels(
-			postKeyword.getId(),
-			TaxonomyGroupUtil.getAssetLibraryGroupIds(
-				keyword.getAssetLibraries()));
-
-		return postKeyword;
 	}
 
 	@Override

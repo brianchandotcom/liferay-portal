@@ -201,8 +201,8 @@ public class ObjectEntryFolderServiceImpl
 			ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER);
 
 		return objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
-			externalReferenceCode, groupId, companyId,
-			getPermissionChecker().getUserId(), serviceContext);
+			externalReferenceCode, groupId, companyId, getUserId(),
+			serviceContext);
 	}
 
 	@Override
@@ -215,8 +215,7 @@ public class ObjectEntryFolderServiceImpl
 			ActionKeys.DELETE);
 
 		return objectEntryFolderLocalService.moveObjectEntryFolderToTrash(
-			getPermissionChecker().getUserId(), objectEntryFolder,
-			serviceContext);
+			getUserId(), objectEntryFolder, serviceContext);
 	}
 
 	@Override
@@ -229,8 +228,7 @@ public class ObjectEntryFolderServiceImpl
 			ActionKeys.DELETE);
 
 		return objectEntryFolderLocalService.restoreObjectEntryFolderFromTrash(
-			getPermissionChecker().getUserId(), objectEntryFolder,
-			serviceContext);
+			getUserId(), objectEntryFolder, serviceContext);
 	}
 
 	@Override
@@ -243,7 +241,7 @@ public class ObjectEntryFolderServiceImpl
 			objectEntryFolderId, ActionKeys.SUBSCRIBE);
 
 		objectEntryFolderLocalService.subscribeObjectEntryFolder(
-			getPermissionChecker().getUserId(), groupId, objectEntryFolderId);
+			getUserId(), groupId, objectEntryFolderId);
 	}
 
 	@Override
@@ -256,7 +254,7 @@ public class ObjectEntryFolderServiceImpl
 			objectEntryFolderId, ActionKeys.SUBSCRIBE);
 
 		objectEntryFolderLocalService.unsubscribeObjectEntryFolder(
-			getPermissionChecker().getUserId(), groupId, objectEntryFolderId);
+			getUserId(), groupId, objectEntryFolderId);
 	}
 
 	@Override

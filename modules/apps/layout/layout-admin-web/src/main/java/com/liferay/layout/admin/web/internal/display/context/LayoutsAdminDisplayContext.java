@@ -237,11 +237,15 @@ public class LayoutsAdminDisplayContext {
 		).build();
 	}
 
-	public String getAddLayoutURL() {
+	public String getAddLayoutURL(boolean editAction) {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			() -> {
+				if (editAction) {
+					return "/layout_admin/convert_empty_layout";
+				}
+
 				long layoutPageTemplateEntryId = ParamUtil.getLong(
 					httpServletRequest, "layoutPageTemplateEntryId");
 

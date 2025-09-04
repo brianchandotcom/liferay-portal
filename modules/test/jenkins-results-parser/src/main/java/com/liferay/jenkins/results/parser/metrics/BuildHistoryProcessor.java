@@ -309,9 +309,7 @@ public class BuildHistoryProcessor {
 						try {
 							String jsonFileName = jsonFile.getCanonicalPath();
 
-							if (jsonFileName.contains("test-1-0") ||
-								jsonFileName.contains("test-1-41")) {
-
+							if (jsonFileName.contains("test-1-0")) {
 								return null;
 							}
 

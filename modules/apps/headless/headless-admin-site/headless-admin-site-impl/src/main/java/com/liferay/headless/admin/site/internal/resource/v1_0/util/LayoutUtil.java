@@ -598,13 +598,25 @@ public class LayoutUtil {
 		).build();
 
 		if (typeSettingsUnicodeProperties != null) {
-			String layoutTemplateId = GetterUtil.getString(
-				typeSettingsUnicodeProperties.remove(
-					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID),
-				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
+
+			layoutTypePortlet.removeCustomization(unicodeProperties);
+
+			typeSettingsUnicodeProperties.setProperty(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT,
+				String.valueOf(
+					GetterUtil.getBoolean(
+						typeSettingsUnicodeProperties.get(
+							LayoutConstants.CUSTOMIZABLE_LAYOUT))));
+
+			String layoutTemplateId = typeSettingsUnicodeProperties.getProperty(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
+				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+
+			typeSettingsUnicodeProperties.setProperty(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
+				layoutTemplateId);
 
 			if (!Objects.equals(
 					layoutTemplateId,

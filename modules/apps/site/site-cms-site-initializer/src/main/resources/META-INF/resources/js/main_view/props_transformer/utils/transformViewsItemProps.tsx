@@ -4,7 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {IView} from '@liferay/frontend-data-set-web';
+import {Card, IView} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 import dateFormat from '../../../common/utils/dateFormat';
@@ -12,12 +12,16 @@ import formatActionURL from '../../../common/utils/formatActionURL';
 
 import '../../../../css/props_transformer/ObjectDefinitionsIcons.scss';
 
+type Card = React.ComponentProps<typeof Card> & {
+	actions: {data: {id: string}; href?: string}[];
+};
+
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
 const MULTIMEDIA_TYPES = ['audio/', 'image/', 'video/'];
 
-const getHrefLink = (item: any, props: any) => {
+const getHrefLink = (item: any, props: Card) => {
 	const actionId = 'actionLink';
 	const {actions} = props;
 
@@ -129,7 +133,7 @@ export function transformItemCardView(
 	fileMimeTypeIcons: Record<string, string> | undefined,
 	objectDefinitionCssClasses: Record<string, string>,
 	objectDefinitionIcons: Record<string, string>,
-	props: any
+	props: Card
 ) {
 	return {
 		...props,
@@ -164,7 +168,13 @@ export default function transformViewsItemProps({
 }: ViewsItemsProps) {
 	return views.map((view) => {
 		if (view.name === 'cards') {
-			view.setItemComponentProps = ({item, props}) =>
+			view.setItemComponentProps = ({
+				item,
+				props,
+			}: {
+				item: any;
+				props: Card;
+			}) =>
 				transformItemCardView(
 					item,
 					fileMimeTypeCssClasses,

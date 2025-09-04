@@ -1373,7 +1373,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		_userGroupLocalService.addUserUserGroup(
 			user1.getUserId(), userGroup2.getUserGroupId());
-
 		_userGroupLocalService.addUserUserGroup(
 			user2.getUserId(), userGroup2.getUserGroupId());
 

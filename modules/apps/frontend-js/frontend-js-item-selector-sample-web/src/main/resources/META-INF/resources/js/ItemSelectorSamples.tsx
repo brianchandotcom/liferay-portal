@@ -149,6 +149,8 @@ export default function ItemSelectorSamples() {
 		User[]
 	>([]);
 	const [user2, setUser2] = useState<User | null>();
+	const [space3, setSpace3] = useState<Space | null>();
+	const [spacesMultiselect, setSpacesMultiselect] = useState<Space[]>([]);
 
 	const {
 		observer: documentItemSelectorObserver,
@@ -174,9 +176,19 @@ export default function ItemSelectorSamples() {
 		open: itemSelectorModalOpen,
 	} = useModal();
 	const {
+		observer: itemSelectorSpaceModalObserver,
+		onOpenChange: itemSelectorSpaceModalOpenChange,
+		open: itemSelectorSpaceModalOpen,
+	} = useModal();
+	const {
 		observer: itemSelectorMultiSelectModalObserver,
 		onOpenChange: itemSelectorMultiSelectModalOpenChange,
 		open: itemSelectorMultiSelectModalOpen,
+	} = useModal();
+	const {
+		observer: itemSelectorSpacesMultiSelectModalObserver,
+		onOpenChange: itemSelectorSpacesMultiSelectModalOpenChange,
+		open: itemSelectorSpacesMultiSelectModalOpen,
 	} = useModal();
 
 	return (
@@ -280,7 +292,7 @@ export default function ItemSelectorSamples() {
 				</ItemSelector>
 			</SampleContainer>
 
-			<SampleContainer label="Item selector pops up modal on button click autocomplete">
+			<SampleContainer label="Item selector pops up modal on button click autocomplete (Users)">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-admin-user/v1.0/user-accounts`}
 					itemSelectorModalProps={{
@@ -315,7 +327,7 @@ export default function ItemSelectorSamples() {
 				</ItemSelector>
 			</SampleContainer>
 
-			<SampleContainer label="Multiple Select Item selector pops up modal on button click">
+			<SampleContainer label="Multiple Select Item selector pops up modal on button click (Users)">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-admin-user/v1.0/user-accounts`}
 					itemSelectorModalProps={{
@@ -347,6 +359,83 @@ export default function ItemSelectorSamples() {
 					}}
 					multiSelect
 					placeholder="Select an User"
+				>
+					{(item) => (
+						<ItemSelector.Item key={item.id} textValue={item.name}>
+							{item.name}
+						</ItemSelector.Item>
+					)}
+				</ItemSelector>
+			</SampleContainer>
+
+			<SampleContainer label="Item selector pops up modal on button click autocomplete (Spaces)">
+				<ItemSelector
+					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
+					itemSelectorModalProps={{
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
+							id: `itemSelectorModal-spaces-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
+							}),
+						},
+						items: space3 ? [space3] : [],
+						observer: itemSelectorSpaceModalObserver,
+						onItemsChange: (items: Space[]) => setSpace3(items[0]),
+						onOpenChange: itemSelectorSpaceModalOpenChange,
+						open: itemSelectorSpaceModalOpen,
+						type: assetLibrariesItemSelectorConfig.type,
+					}}
+					locator={{
+						id: 'id',
+						label: 'name',
+						value: 'id',
+					}}
+					placeholder="Select an Space"
+				>
+					{(item) => (
+						<ItemSelector.Item key={item.id} textValue={item.name}>
+							{item.name}
+						</ItemSelector.Item>
+					)}
+				</ItemSelector>
+			</SampleContainer>
+
+			<SampleContainer label="Multiple Select Item selector pops up modal on button click (Spaces)">
+				<ItemSelector
+					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
+					itemSelectorModalProps={{
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
+							id: `itemSelectorModal-spaces-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
+							}),
+						},
+						items: spacesMultiselect,
+						observer: itemSelectorSpacesMultiSelectModalObserver,
+						onItemsChange: (items: Space[]) => {
+							setSpacesMultiselect([
+								...spacesMultiselect,
+								...items,
+							]);
+						},
+						onOpenChange:
+							itemSelectorSpacesMultiSelectModalOpenChange,
+						open: itemSelectorSpacesMultiSelectModalOpen,
+						type: assetLibrariesItemSelectorConfig.type,
+					}}
+					locator={{
+						id: 'id',
+						label: 'name',
+						value: 'id',
+					}}
+					multiSelect
+					placeholder="Select an Space"
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>

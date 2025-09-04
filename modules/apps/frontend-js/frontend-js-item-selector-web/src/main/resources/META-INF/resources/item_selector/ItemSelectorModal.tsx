@@ -37,6 +37,11 @@ export interface IItemSelectorModalProps<T> {
 	};
 
 	/**
+	 * Flag for if multiple items can be selected.
+	 */
+	multiSelect?: boolean;
+
+	/**
 	 * Expects the 'observer' property from the Clay useModal hook.
 	 */
 	observer: any;
@@ -70,6 +75,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 		label: 'title',
 		value: 'id',
 	},
+	multiSelect = false,
 	observer,
 	onItemsChange,
 	onOpenChange,
@@ -104,6 +110,8 @@ function ItemSelectorModal<T extends Record<string, any>>({
 					{...fdsProps}
 					onSelectedItemsChange={setSelectedItems}
 					selectedItems={selectedItems}
+					selectedItemsKey={locator.value}
+					selectionType={multiSelect ? 'multiple' : 'single'}
 					showNavBarWhenSelected={true}
 					style="fluid"
 				/>

@@ -199,6 +199,9 @@ public interface OpenIdConnectSessionLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OpenIdConnectSession fetchCurrentOpenIdConnectSession(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OpenIdConnectSession fetchOpenIdConnectSession(
 		long openIdConnectSessionId);
 

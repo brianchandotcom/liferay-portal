@@ -215,6 +215,12 @@ public class OpenIdConnectSessionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static OpenIdConnectSession fetchCurrentOpenIdConnectSession(
+		long userId) {
+
+		return getService().fetchCurrentOpenIdConnectSession(userId);
+	}
+
 	public static OpenIdConnectSession fetchOpenIdConnectSession(
 		long openIdConnectSessionId) {
 

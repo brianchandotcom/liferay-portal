@@ -9615,7 +9615,7 @@ public class DefaultObjectEntryManagerImplTest
 			scopeKey);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_createDTOConverterContext(), objectDefinitionAA,
+			_createDTOConverterContext(adminUser), objectDefinitionAA,
 			objectEntryAA1.getId());
 
 		Assert.assertNull(

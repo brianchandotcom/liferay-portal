@@ -779,6 +779,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		return new WidgetPageSettings() {
 			{
+				setCustomizable(false);
+				setCustomizableSectionIds(new String[0]);
 				setLayoutTemplateId("1_column");
 				setType(Type.WIDGET_PAGE_SETTINGS);
 			}

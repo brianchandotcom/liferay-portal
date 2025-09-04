@@ -561,20 +561,26 @@ public class WabProcessor {
 				"WEB-INF/liferay-plugin-package.properties");
 
 			if (zipEntry == null) {
-				return _pluginPackageProperties = new Properties();
+				_pluginPackageProperties = new Properties();
+
+				return _pluginPackageProperties;
 			}
 
 			try {
-				return _pluginPackageProperties = PropertiesUtil.load(
+				_pluginPackageProperties = PropertiesUtil.load(
 					zipFile.getInputStream(zipEntry),
 					StandardCharsets.UTF_8.name());
+
+				return _pluginPackageProperties;
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(ioException);
 				}
 
-				return _pluginPackageProperties = new Properties();
+				_pluginPackageProperties = new Properties();
+
+				return _pluginPackageProperties;
 			}
 		}
 	}

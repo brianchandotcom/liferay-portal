@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -349,6 +350,7 @@ public class ObjectDefinitionResourceTest
 					objectDefinitionsJSONObject.getString("items"))));
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	@TestInfo("LPD-49994")
@@ -552,6 +554,7 @@ public class ObjectDefinitionResourceTest
 
 		_testPostObjectDefinitionBatch();
 		_testPostObjectDefinitionWithSystemAggregationObjectField();
+		_testPostObjectDefinitionWithWorkflowDefinitionLinks();
 	}
 
 	@FeatureFlags(
@@ -1160,6 +1163,127 @@ public class ObjectDefinitionResourceTest
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 		}
 
+		// WorkflowDefinitionLink company scope
+
+		WorkflowDefinition workflowDefinition1 =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				WorkflowDefinitionConstants.
+					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER,
+				TestPropsValues.getCompanyId());
+
+		WorkflowDefinitionLink workflowDefinitionLink1 =
+			new WorkflowDefinitionLink() {
+				{
+					groupExternalReferenceCode = StringPool.BLANK;
+					workflowDefinitionName = workflowDefinition1.getName();
+				}
+			};
+
+		WorkflowDefinitionLink[] workflowDefinitionLinks = {
+			workflowDefinitionLink1
+		};
+
+		postObjectDefinition.setWorkflowDefinitionLinks(
+			workflowDefinitionLinks);
+
+		_assertWorkflowDefinitionLinks(
+			workflowDefinitionLinks,
+			objectDefinitionResource.putObjectDefinition(
+				postObjectDefinition.getId(), postObjectDefinition));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			postObjectDefinition.getId());
+
+		// WorkflowDefinitionLink site scope
+
+		postObjectDefinition = randomObjectDefinition();
+
+		postObjectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		postObjectDefinition = _addObjectDefinition(postObjectDefinition);
+
+		Group group3 = GroupTestUtil.addGroup();
+
+		String content = workflowDefinition1.getContentAsXML();
+
+		WorkflowDefinition workflowDefinition2 =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), content.getBytes());
+
+		WorkflowDefinitionLink workflowDefinitionLink2 =
+			new WorkflowDefinitionLink() {
+				{
+					groupExternalReferenceCode =
+						group3.getExternalReferenceCode();
+					workflowDefinitionName = workflowDefinition2.getName();
+				}
+			};
+
+		Group group4 = GroupTestUtil.addGroup();
+
+		WorkflowDefinition workflowDefinition3 =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), content.getBytes());
+
+		WorkflowDefinitionLink workflowDefinitionLink3 =
+			new WorkflowDefinitionLink() {
+				{
+					groupExternalReferenceCode =
+						group4.getExternalReferenceCode();
+					workflowDefinitionName = workflowDefinition3.getName();
+				}
+			};
+
+		workflowDefinitionLinks = new WorkflowDefinitionLink[] {
+			workflowDefinitionLink1, workflowDefinitionLink2,
+			workflowDefinitionLink3
+		};
+
+		postObjectDefinition.setWorkflowDefinitionLinks(
+			workflowDefinitionLinks);
+
+		postObjectDefinition = objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		_assertWorkflowDefinitionLinks(
+			workflowDefinitionLinks, postObjectDefinition);
+
+		workflowDefinitionLink1.setWorkflowDefinitionName(
+			workflowDefinition2.getName());
+		workflowDefinitionLink2.setWorkflowDefinitionName(
+			workflowDefinition1.getName());
+
+		workflowDefinitionLinks = new WorkflowDefinitionLink[] {
+			workflowDefinitionLink1, workflowDefinitionLink2,
+			workflowDefinitionLink3
+		};
+
+		postObjectDefinition.setWorkflowDefinitionLinks(
+			workflowDefinitionLinks);
+
+		postObjectDefinition = objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		_assertWorkflowDefinitionLinks(
+			workflowDefinitionLinks, postObjectDefinition);
+
+		workflowDefinitionLinks = new WorkflowDefinitionLink[] {
+			workflowDefinitionLink2
+		};
+
+		postObjectDefinition.setWorkflowDefinitionLinks(
+			workflowDefinitionLinks);
+
+		postObjectDefinition = objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		_assertWorkflowDefinitionLinks(
+			workflowDefinitionLinks, postObjectDefinition);
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
 	}
@@ -1641,6 +1765,16 @@ public class ObjectDefinitionResourceTest
 		}
 	}
 
+	private void _assertWorkflowDefinitionLinks(
+		WorkflowDefinitionLink[] workflowDefinitionLinks,
+		ObjectDefinition objectDefinition) {
+
+		Assert.assertEquals(
+			new HashSet<>(Arrays.asList(workflowDefinitionLinks)),
+			new HashSet<>(
+				Arrays.asList(objectDefinition.getWorkflowDefinitionLinks())));
+	}
+
 	private ObjectRelationship _createObjectRelationship(
 		ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2,
 		ObjectRelationship.Type type) {
@@ -2088,6 +2222,90 @@ public class ObjectDefinitionResourceTest
 				aggregationObjectFieldName));
 	}
 
+	@TestInfo("LPD-63539")
+	private void _testPostObjectDefinitionWithWorkflowDefinitionLinks()
+		throws Exception {
+
+		// Company scope
+
+		ObjectDefinition objectDefinition = randomObjectDefinition();
+
+		WorkflowDefinition workflowDefinition1 =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				WorkflowDefinitionConstants.
+					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER,
+				TestPropsValues.getCompanyId());
+
+		WorkflowDefinitionLink workflowDefinitionLink1 =
+			new WorkflowDefinitionLink() {
+				{
+					groupExternalReferenceCode = StringPool.BLANK;
+					workflowDefinitionName = workflowDefinition1.getName();
+				}
+			};
+
+		WorkflowDefinitionLink[] workflowDefinitionLinks = {
+			workflowDefinitionLink1
+		};
+
+		objectDefinition.setWorkflowDefinitionLinks(workflowDefinitionLinks);
+
+		_assertWorkflowDefinitionLinks(
+			workflowDefinitionLinks, _addObjectDefinition(objectDefinition));
+
+		// Site scope
+
+		objectDefinition = randomObjectDefinition();
+
+		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		String content = workflowDefinition1.getContentAsXML();
+
+		WorkflowDefinition workflowDefinition2 =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), content.getBytes());
+
+		WorkflowDefinitionLink workflowDefinitionLink2 =
+			new WorkflowDefinitionLink() {
+				{
+					groupExternalReferenceCode =
+						group1.getExternalReferenceCode();
+					workflowDefinitionName = workflowDefinition2.getName();
+				}
+			};
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		WorkflowDefinition workflowDefinition3 =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), content.getBytes());
+
+		WorkflowDefinitionLink workflowDefinitionLink3 =
+			new WorkflowDefinitionLink() {
+				{
+					groupExternalReferenceCode =
+						group2.getExternalReferenceCode();
+					workflowDefinitionName = workflowDefinition3.getName();
+				}
+			};
+
+		workflowDefinitionLinks = new WorkflowDefinitionLink[] {
+			workflowDefinitionLink1, workflowDefinitionLink2,
+			workflowDefinitionLink3
+		};
+
+		objectDefinition.setWorkflowDefinitionLinks(workflowDefinitionLinks);
+
+		_assertWorkflowDefinitionLinks(
+			workflowDefinitionLinks, _addObjectDefinition(objectDefinition));
+	}
+
 	private JSONObject _waitForFinish(
 			String expectedExecuteStatus, boolean importTask,
 			JSONObject jsonObject)
@@ -2117,6 +2335,9 @@ public class ObjectDefinitionResourceTest
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private Language _language;

@@ -45,7 +45,7 @@ import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
-import com.liferay.object.exception.ObjectDefinitionScopeException;
+import com.liferay.object.exception.ObjectDefinitionPortletException;
 import com.liferay.object.exception.ObjectDefinitionSettingNameException;
 import com.liferay.object.exception.ObjectDefinitionSettingValueException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
@@ -53,6 +53,7 @@ import com.liferay.object.exception.ObjectDefinitionSystemException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
+import com.liferay.object.exception.ObjectScopeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
@@ -3350,14 +3351,14 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(scope)) {
-			throw new ObjectDefinitionScopeException("Scope is null");
+			throw new ObjectScopeException("Scope is null");
 		}
 
 		try {
 			_objectScopeProviderRegistry.getObjectScopeProvider(scope);
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
-			throw new ObjectDefinitionScopeException(
+			throw new ObjectScopeException(
 				illegalArgumentException.getMessage());
 		}
 
@@ -3366,7 +3367,7 @@ public class ObjectDefinitionLocalServiceImpl
 				storageType,
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
 
-			throw new ObjectDefinitionScopeException(
+			throw new ObjectScopeException(
 				StringBundler.concat(
 					"Scope \"", ObjectDefinitionConstants.SCOPE_SITE,
 					"\" cannot be associated with storage type \"",

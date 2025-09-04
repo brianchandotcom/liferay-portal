@@ -10,20 +10,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class ObjectDefinitionScopeException extends PortalException {
+public class ObjectScopeException extends PortalException {
 
-	public ObjectDefinitionScopeException() {
+	public ObjectScopeException() {
 	}
 
-	public ObjectDefinitionScopeException(String msg) {
+	public ObjectScopeException(String msg) {
 		super(msg);
 	}
 
-	public ObjectDefinitionScopeException(String msg, Throwable throwable) {
+	public ObjectScopeException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public ObjectDefinitionScopeException(Throwable throwable) {
+	public ObjectScopeException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.Serializable;
 
 import java.util.Date;
@@ -197,6 +199,10 @@ public interface OpenIdConnectSessionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OpenIdConnectSession fetchOpenIdConnectSession(
+		HttpServletRequest httpServletRequest, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OpenIdConnectSession fetchOpenIdConnectSession(

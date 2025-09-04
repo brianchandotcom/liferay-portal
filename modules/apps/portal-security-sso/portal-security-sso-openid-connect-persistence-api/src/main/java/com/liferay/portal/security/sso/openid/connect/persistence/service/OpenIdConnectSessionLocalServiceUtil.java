@@ -216,6 +216,14 @@ public class OpenIdConnectSessionLocalServiceUtil {
 	}
 
 	public static OpenIdConnectSession fetchOpenIdConnectSession(
+		jakarta.servlet.http.HttpServletRequest httpServletRequest,
+		long userId) {
+
+		return getService().fetchOpenIdConnectSession(
+			httpServletRequest, userId);
+	}
+
+	public static OpenIdConnectSession fetchOpenIdConnectSession(
 		long openIdConnectSessionId) {
 
 		return getService().fetchOpenIdConnectSession(openIdConnectSessionId);

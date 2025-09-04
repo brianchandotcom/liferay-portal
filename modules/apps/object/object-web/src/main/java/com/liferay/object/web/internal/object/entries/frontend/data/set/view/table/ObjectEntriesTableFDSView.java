@@ -160,6 +160,17 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				_objectFieldLocalService.getObjectFields(
 					_objectDefinition.getObjectDefinitionId())) {
 
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+				ObjectRelationship objectRelationship =
+					objectField.getObjectRelationship();
+
+				if (objectRelationship.isEdge()) {
+					continue;
+				}
+			}
+
 			_addObjectField(
 				fdsTableSchemaBuilder, objectField.getLabel(locale, true),
 				objectField);

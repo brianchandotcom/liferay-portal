@@ -384,4 +384,12 @@ export interface IStateInURL {
 	[EStateInURLKeys.DELTA]: number;
 }
 
+export type IStateInURLSetter<K extends keyof IStateInURL> = (
+	value: IStateInURL[K]
+) => (viewsDispatch: Function) => void;
+
+export type IStateInURLSetters = {
+	[K in keyof IStateInURL]: IStateInURLSetter<K>;
+};
+
 export {Card} from '../views/cards/Cards';

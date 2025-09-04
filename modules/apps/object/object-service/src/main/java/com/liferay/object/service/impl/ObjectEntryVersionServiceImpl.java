@@ -46,8 +46,7 @@ public class ObjectEntryVersionServiceImpl
 
 	@Override
 	public ObjectEntryVersion expireObjectEntryVersion(
-			ObjectEntry objectEntry, ServiceContext serviceContext, long userId,
-			int version)
+			ObjectEntry objectEntry, ServiceContext serviceContext, int version)
 		throws PortalException {
 
 		_objectEntryService.checkModelResourcePermission(
@@ -55,12 +54,12 @@ public class ObjectEntryVersionServiceImpl
 			ActionKeys.UPDATE);
 
 		return objectEntryVersionLocalService.expireObjectEntryVersion(
-			userId, objectEntry, version, serviceContext);
+			getUserId(), objectEntry, version, serviceContext);
 	}
 
 	@Override
 	public void expireObjectEntryVersions(
-			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+			ObjectEntry objectEntry, ServiceContext serviceContext)
 		throws Exception {
 
 		_objectEntryService.checkModelResourcePermission(
@@ -68,7 +67,7 @@ public class ObjectEntryVersionServiceImpl
 			ActionKeys.UPDATE);
 
 		objectEntryVersionLocalService.expireObjectEntryVersions(
-			userId, objectEntry, serviceContext);
+			getUserId(), objectEntry, serviceContext);
 	}
 
 	@Override

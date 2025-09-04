@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -48,6 +49,22 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 			return content;
 		}
 
+		String artifactName = "release\\.dxp\\.api";
+
+		content = content.replaceAll(
+			"(name\\s*:\\s*\"" + artifactName +
+				"\"\\s*,\\s*version\\s*:\\s*\")[^\"]+\"",
+			"$1" + upgradeToVersion + CharPool.QUOTE);
+
+		content = content.replaceAll(
+			"(version\\s*:\\s*\")[^\"]+(\"\\s*,\\s*name\\s*:\\s*\"" +
+				artifactName + "\")",
+			"$1" + upgradeToVersion + "$2");
+
+		content = content.replaceAll(
+			"(\"com\\.liferay\\.portal:" + artifactName + ":)[^\"\\s]+\"",
+			"$1" + upgradeToVersion + CharPool.QUOTE);
+
 		return _formatDependencies(content, upgradeToVersion);
 	}
 
@@ -68,7 +85,7 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 
 		Iterator<GradleDependency> iterator = gradleDependencies.iterator();
 
-		boolean hasCompile = false;
+		boolean hasCompileOrImplementation = false;
 		boolean hasTest = false;
 
 		while (iterator.hasNext()) {
@@ -87,8 +104,10 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 
 			String configuration = gradleDependency.getConfiguration();
 
-			if (configuration.startsWith("compile")) {
-				hasCompile = true;
+			if (configuration.startsWith("compile") ||
+				configuration.startsWith("implementation")) {
+
+				hasCompileOrImplementation = true;
 			}
 
 			if (configuration.startsWith("test")) {
@@ -102,7 +121,7 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 
 		gradleBuildFile.deleteGradleDependencies(gradleDependencies);
 
-		if (hasCompile) {
+		if (hasCompileOrImplementation) {
 			gradleBuildFile.insertGradleDependency(
 				"compileOnly", "com.liferay.portal", "release.dxp.api",
 				upgradeToVersion);

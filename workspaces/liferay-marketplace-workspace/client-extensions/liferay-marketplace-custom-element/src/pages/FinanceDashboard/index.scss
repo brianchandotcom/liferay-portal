@@ -1,12 +1,27 @@
-.finance-orders-dashboard-page {
-	&-container {
-		display: flex;
-		gap: 2rem;
-		min-width: 300px;
-		padding: 0;
+.finance-orders-dashboard-page-container {
+	display: flex;
+	gap: 2rem;
+	min-width: 300px;
+	padding: 0;
 
-		.dashboard-navigation-container {
-			min-width: 280px;
-		}
+	.secondary-text {
+		color: #6c6c75;
+	}
+
+	.order-item-display {
+		border-bottom: none !important;
+	}
+
+	.payment-icon-warning {
+		color: #B95000;
+	}
+
+	.detailed-card-header-clay-icon {
+		color: #377cff;
+		background-color: #e7efff;
+	}
+
+	.dashboard-navigation-container {
+		min-width: 280px;
 	}
 }

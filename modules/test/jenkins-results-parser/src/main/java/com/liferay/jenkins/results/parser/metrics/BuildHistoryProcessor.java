@@ -166,6 +166,36 @@ public class BuildHistoryProcessor {
 			duration, null, jobNamePattern, biConsumer, startTime);
 	}
 
+	public static Collection<BuildHistory> newTopLevelBuildHistories(
+		long duration, long startTime) {
+
+		BiConsumer<Set<BuildJSONObject>, Map<String, BuildHistory>> biConsumer =
+			new BiConsumer<Set<BuildJSONObject>, Map<String, BuildHistory>>() {
+
+				@Override
+				public void accept(
+					Set<BuildJSONObject> buildJSONObjects,
+					Map<String, BuildHistory> buildHistories) {
+
+					Set<BuildJSONObject> topLevelBuildJSONObjects =
+						new HashSet<>();
+
+					for (BuildJSONObject buildJSONObject : buildJSONObjects) {
+						if (buildJSONObject.isTopLevelBuild()) {
+							topLevelBuildJSONObjects.add(buildJSONObject);
+						}
+					}
+
+					_addToBuildHistoriesMap(
+						topLevelBuildJSONObjects, buildHistories, duration,
+						new GroupByJobName(), startTime);
+				}
+
+			};
+
+		return _getBuildHistories(duration, null, null, biConsumer, startTime);
+	}
+
 	public static Collection<BuildHistory> newUtilizationBuildHistories(
 		long duration, long startTime) {
 

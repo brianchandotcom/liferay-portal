@@ -3063,7 +3063,6 @@ public class DefaultObjectEntryManagerImplTest
 					objectRelationship, _group.getGroupKey()));
 	}
 
-	@FeatureFlag("LPD-17564")
 	@Test
 	public void testCopyObjectEntryByVersion() throws Exception {
 
@@ -3077,15 +3076,16 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry copyObjectEntry1 =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition1, objectEntry.getId(),
-				2);
+				_createDTOConverterContext(adminUser), _objectDefinition1,
+				objectEntry.getId(), 2);
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				_objectDefinition1, null, 2),
+				_createDTOConverterContext(adminUser),
+				objectEntry.getExternalReferenceCode(), _objectDefinition1,
+				null, 2),
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext,
+				_createDTOConverterContext(adminUser),
 				copyObjectEntry1.getExternalReferenceCode(), _objectDefinition1,
 				null, 1));
 
@@ -3097,15 +3097,17 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry copyObjectEntry2 =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), 2);
+				_createDTOConverterContext(adminUser),
+				objectEntry.getExternalReferenceCode(), _objectDefinition4,
+				_group.getGroupKey(), 2);
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), 2),
+				_createDTOConverterContext(adminUser),
+				objectEntry.getExternalReferenceCode(), _objectDefinition4,
+				_group.getGroupKey(), 2),
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext,
+				_createDTOConverterContext(adminUser),
 				copyObjectEntry2.getExternalReferenceCode(), _objectDefinition4,
 				_group.getGroupKey(), 1));
 
@@ -3119,8 +3121,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry copyObjectEntry3 =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition4, objectEntry.getId(),
-				1);
+				_createDTOConverterContext(adminUser), _objectDefinition4,
+				objectEntry.getId(), 1);
 
 		Status status = copyObjectEntry3.getStatus();
 
@@ -3138,13 +3140,15 @@ public class DefaultObjectEntryManagerImplTest
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_EXPIRED,
 			_defaultObjectEntryManager.expireObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), 2));
+				_createDTOConverterContext(adminUser),
+				objectEntry.getExternalReferenceCode(), _objectDefinition4,
+				_group.getGroupKey(), 2));
 
 		ObjectEntry copyObjectEntry4 =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
-				_objectDefinition4, _group.getGroupKey(), 2);
+				_createDTOConverterContext(adminUser),
+				objectEntry.getExternalReferenceCode(), _objectDefinition4,
+				_group.getGroupKey(), 2);
 
 		status = copyObjectEntry4.getStatus();
 
@@ -8457,7 +8461,7 @@ public class DefaultObjectEntryManagerImplTest
 		throws Exception {
 
 		return _defaultObjectEntryManager.addObjectEntry(
-			dtoConverterContext, objectDefinition,
+			_createDTOConverterContext(adminUser), objectDefinition,
 			new ObjectEntry() {
 				{
 					externalReferenceCode = RandomTestUtil.randomString();
@@ -8953,9 +8957,13 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private DTOConverterContext _createDTOConverterContext() {
+		return _createDTOConverterContext(_user);
+	}
+
+	private DTOConverterContext _createDTOConverterContext(User user) {
 		return new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), dtoConverterRegistry, null,
-			LocaleUtil.getDefault(), null, _user);
+			LocaleUtil.getDefault(), null, user);
 	}
 
 	private Tree _createObjectEntryTree(
@@ -10161,7 +10169,8 @@ public class DefaultObjectEntryManagerImplTest
 		throws Exception {
 
 		return _defaultObjectEntryManager.updateObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
+			TestPropsValues.getCompanyId(),
+			_createDTOConverterContext(adminUser),
 			objectEntry.getExternalReferenceCode(), objectDefinition,
 			new ObjectEntry() {
 				{

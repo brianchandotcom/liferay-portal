@@ -52,6 +52,7 @@ test('LPD-61649 Assert structure content fields are shown in the data tab', asyn
 	const basicTextFieldName = 'Text1234';
 	const imageFieldName = 'Image345';
 	const nonLocalizableFieldName = 'TextNonLocalizable';
+	const selectFieldName = 'Select123';
 	const structureName = 'Structure 1';
 
 	const dataDefinition = getDataStructureDefinition({
@@ -64,6 +65,24 @@ test('LPD-61649 Assert structure content fields are shown in the data tab', asyn
 				required: true,
 			},
 			{fieldType: 'image', name: imageFieldName},
+			{
+				fieldType: 'select',
+				name: selectFieldName,
+				options: {
+					en_US: [
+						{
+							label: 'option1',
+							reference: 'option1',
+							value: 'option1',
+						},
+						{
+							label: 'option2',
+							reference: 'option2',
+							value: 'option2',
+						},
+					],
+				},
+			},
 		],
 		name: structureName,
 	});
@@ -120,6 +139,7 @@ test('LPD-61649 Assert structure content fields are shown in the data tab', asyn
 	await expect(
 		page.getByText(nonLocalizableFieldName, {exact: true})
 	).toBeVisible();
+	await expect(page.getByText(selectFieldName, {exact: true})).toBeVisible();
 	await expect(page.getByText(structureName, {exact: true})).toBeVisible();
 	await expect(page.getByText(content, {exact: true}).first()).toBeVisible();
 });

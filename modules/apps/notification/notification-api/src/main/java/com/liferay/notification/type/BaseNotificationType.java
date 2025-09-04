@@ -131,83 +131,9 @@ public abstract class BaseNotificationType implements NotificationType {
 						NotificationRecipientSettingConstants.
 							getRecipientTypeName(entry.getKey())));
 
-				if (Objects.equals(
-						recipientType,
-						NotificationRecipientConstants.TYPE_ROLE)) {
-
-					Set<String> roleNames = new HashSet<>();
-
-					for (Map<String, String> roleMap :
-							_toList(entry.getValue())) {
-
-						String roleName = roleMap.get(
-							NotificationRecipientSettingConstants.
-								NAME_ROLE_NAME);
-
-						if (Validator.isNull(roleName) ||
-							roleNames.contains(roleName)) {
-
-							continue;
-						}
-
-						Role role = roleLocalService.fetchRole(
-							user.getCompanyId(), roleName);
-
-						if ((role == null) ||
-							((role.getType() != RoleConstants.TYPE_ACCOUNT) &&
-							 (role.getType() !=
-								 RoleConstants.TYPE_ORGANIZATION) &&
-							 (role.getType() != RoleConstants.TYPE_REGULAR))) {
-
-							continue;
-						}
-
-						roleNames.add(roleName);
-
-						_addNotificationRecipientSetting(
-							entry.getKey(), notificationRecipientId,
-							notificationRecipientSettings, user, roleName);
-					}
-				}
-				else if (Objects.equals(
-							recipientType,
-							NotificationRecipientConstants.TYPE_USER_GROUP)) {
-
-					Set<String> userGroupNames = new HashSet<>();
-
-					for (Map<String, String> userGroupMap :
-							_toList(entry.getValue())) {
-
-						String userGroupName = userGroupMap.get(
-							NotificationRecipientSettingConstants.
-								NAME_USER_GROUP_NAME);
-
-						if (Validator.isNull(userGroupName) ||
-							userGroupNames.contains(userGroupName)) {
-
-							continue;
-						}
-
-						UserGroup userGroup =
-							userGroupLocalService.fetchUserGroup(
-								user.getCompanyId(), userGroupName);
-
-						if (userGroup == null) {
-							continue;
-						}
-
-						userGroupNames.add(userGroupName);
-
-						_addNotificationRecipientSetting(
-							entry.getKey(), notificationRecipientId,
-							notificationRecipientSettings, user, userGroupName);
-					}
-				}
-				else {
-					_addNotificationRecipientSetting(
-						entry.getKey(), notificationRecipientId,
-						notificationRecipientSettings, user, entry.getValue());
-				}
+				_addNotificationRecipientSetting(
+					entry, notificationRecipientId,
+					notificationRecipientSettings, recipientType, user);
 			}
 		}
 
@@ -499,6 +425,81 @@ public abstract class BaseNotificationType implements NotificationType {
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private void _addNotificationRecipientSetting(
+		Map.Entry<String, Object> entry, long notificationRecipientId,
+		List<NotificationRecipientSetting> notificationRecipientSettings,
+		String recipientType, User user) {
+
+		if (Objects.equals(
+				recipientType, NotificationRecipientConstants.TYPE_ROLE)) {
+
+			Set<String> roleNames = new HashSet<>();
+
+			for (Map<String, String> roleMap : _toList(entry.getValue())) {
+				String roleName = roleMap.get(
+					NotificationRecipientSettingConstants.NAME_ROLE_NAME);
+
+				if (Validator.isNull(roleName) ||
+					roleNames.contains(roleName)) {
+
+					continue;
+				}
+
+				Role role = roleLocalService.fetchRole(
+					user.getCompanyId(), roleName);
+
+				if ((role == null) ||
+					((role.getType() != RoleConstants.TYPE_ACCOUNT) &&
+					 (role.getType() != RoleConstants.TYPE_ORGANIZATION) &&
+					 (role.getType() != RoleConstants.TYPE_REGULAR))) {
+
+					continue;
+				}
+
+				roleNames.add(roleName);
+
+				_addNotificationRecipientSetting(
+					entry.getKey(), notificationRecipientId,
+					notificationRecipientSettings, user, roleName);
+			}
+		}
+		else if (Objects.equals(
+					recipientType,
+					NotificationRecipientConstants.TYPE_USER_GROUP)) {
+
+			Set<String> userGroupNames = new HashSet<>();
+
+			for (Map<String, String> userGroupMap : _toList(entry.getValue())) {
+				String userGroupName = userGroupMap.get(
+					NotificationRecipientSettingConstants.NAME_USER_GROUP_NAME);
+
+				if (Validator.isNull(userGroupName) ||
+					userGroupNames.contains(userGroupName)) {
+
+					continue;
+				}
+
+				UserGroup userGroup = userGroupLocalService.fetchUserGroup(
+					user.getCompanyId(), userGroupName);
+
+				if (userGroup == null) {
+					continue;
+				}
+
+				userGroupNames.add(userGroupName);
+
+				_addNotificationRecipientSetting(
+					entry.getKey(), notificationRecipientId,
+					notificationRecipientSettings, user, userGroupName);
+			}
+		}
+		else {
+			_addNotificationRecipientSetting(
+				entry.getKey(), notificationRecipientId,
+				notificationRecipientSettings, user, entry.getValue());
+		}
+	}
 
 	private void _addNotificationRecipientSetting(
 		String name, long notificationRecipientId,

@@ -1,0 +1,12 @@
+.finance-orders-dashboard-page {
+	&-container {
+		display: flex;
+		gap: 2rem;
+		min-width: 300px;
+		padding: 0;
+
+		.dashboard-navigation-container {
+			min-width: 280px;
+		}
+	}
+}

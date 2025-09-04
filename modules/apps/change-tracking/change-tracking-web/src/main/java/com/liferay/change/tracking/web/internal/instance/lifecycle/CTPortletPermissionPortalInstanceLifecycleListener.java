@@ -105,17 +105,19 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(company.getCompanyId()), role.getRoleId());
 
-			if (modelResourcePermission == null) {
-				for (String actionId :
-						PublicationsRegularRolesUtil.getModelResourceActions(
-							publicationsRegularRole)) {
+			if (modelResourcePermission != null) {
+				continue;
+			}
 
-					_resourcePermissionLocalService.addResourcePermission(
-						company.getCompanyId(), CTCollection.class.getName(),
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(company.getCompanyId()),
-						role.getRoleId(), actionId);
-				}
+			for (String actionId :
+					PublicationsRegularRolesUtil.getModelResourceActions(
+						publicationsRegularRole)) {
+
+				_resourcePermissionLocalService.addResourcePermission(
+					company.getCompanyId(), CTCollection.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(company.getCompanyId()),
+					role.getRoleId(), actionId);
 			}
 		}
 	}

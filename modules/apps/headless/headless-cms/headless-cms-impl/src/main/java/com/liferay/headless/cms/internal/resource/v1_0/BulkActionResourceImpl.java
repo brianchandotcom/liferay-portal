@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -69,6 +70,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	public BulkActionTask postBulkAction(
 			String search, Filter filter, BulkAction bulkAction)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		if (BulkAction.Type.DELETE_BULK_ACTION.equals(bulkAction.getType())) {
 			return _executeDeleteBulkAction(
@@ -155,14 +162,20 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		BulkActionTask bulkActionTask = _addBulkActionTask(
 			deleteBulkAction.getTypeAsString());
 
+		_importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+		_importTaskResource.setContextCompany(contextCompany);
+		_importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		_importTaskResource.setContextUriInfo(contextUriInfo);
+		_importTaskResource.setContextUser(contextUser);
+
 		for (Map.Entry<String, List<BulkActionItem>> entry :
 				bulkActionItemsMap.entrySet()) {
 
-			ImportTaskResource importTaskResource = _getImportTaskResource();
 			String taskItemDelegateName = _getTaskItemDelegateName(
 				entry.getKey());
 
-			ImportTask importTask = importTaskResource.deleteImportTaskObject(
+			ImportTask importTask = _importTaskResource.deleteImportTaskObject(
 				_getClassName(entry.getKey()), null, null, "ON_ERROR_CONTINUE",
 				taskItemDelegateName,
 				transform(
@@ -284,25 +297,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return "com.liferay.object.rest.dto.v1_0.ObjectEntry";
 	}
 
-	private ImportTaskResource _getImportTaskResource() {
-		if (_importTaskResource != null) {
-			return _importTaskResource;
-		}
-
-		_importTaskResource = _importTaskResourceFactory.create(
-		).httpServletRequest(
-			contextHttpServletRequest
-		).httpServletResponse(
-			contextHttpServletResponse
-		).uriInfo(
-			contextUriInfo
-		).user(
-			contextUser
-		).build();
-
-		return _importTaskResource;
-	}
-
 	private String _getTaskItemDelegateName(String key) throws Exception {
 		if (StringUtil.equals(
 				"com.liferay.object.model.ObjectEntryFolder", key)) {
@@ -321,10 +315,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	private ObjectDefinition _bulkActionTaskItemObjectDefinition;
 	private ObjectDefinition _bulkActionTaskObjectDefinition;
-	private ImportTaskResource _importTaskResource;
 
 	@Reference
-	private ImportTaskResource.Factory _importTaskResourceFactory;
+	private ImportTaskResource _importTaskResource;
 
 	@Reference
 	private JSONFactory _jsonFactory;

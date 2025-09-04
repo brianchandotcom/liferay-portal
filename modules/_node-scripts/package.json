@@ -4,7 +4,7 @@
 		"node-scripts": "./bin.js"
 	},
 	"com.liferay": {
-		"sha256": "0725adfad72ca2bf330309e2adc5707883eb3b47db85e8650ba74f77a2e626f4"
+		"sha256": "0b5f068c115a00be02a3f097133dd76bbd96b991168e333b283cd79319caaf67"
 	},
 	"dependencies": {
 		"@babel/preset-env": "7.24.7",
@@ -60,7 +60,10 @@
 		"typescript": "4.4.2",
 		"unzipper": "^0.11.6"
 	},
-	"exports": "./index.js",
+	"exports": {
+		".": "./index.js",
+		"./theme": "./exports/theme.js"
+	},
 	"name": "@liferay/node-scripts",
 	"scripts": {
 		"checkFormat": "node-scripts format:self --check",

@@ -232,8 +232,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(_objectEntryManager);
 
-		defaultObjectEntryManager.deleteObjectEntry(
-			dtoConverterContext, _objectDefinition, id);
+		defaultObjectEntryManager.deleteObjectEntry(_objectDefinition, id);
 
 		return true;
 	}

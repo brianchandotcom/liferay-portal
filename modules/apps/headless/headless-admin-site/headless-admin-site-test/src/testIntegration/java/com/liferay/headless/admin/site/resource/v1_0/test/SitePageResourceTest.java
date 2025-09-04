@@ -35,6 +35,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -698,6 +699,21 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)sitePage.getPageSettings();
+
+		Assert.assertEquals(
+			GetterUtil.getBoolean(
+				layout.getTypeSettingsProperty(
+					LayoutConstants.CUSTOMIZABLE_LAYOUT)),
+			GetterUtil.getBoolean(widgetPageSettings.getCustomizable()));
+
+		for (String customizableSectionId :
+				widgetPageSettings.getCustomizableSectionIds()) {
+
+			Assert.assertEquals(
+				"true",
+				layout.getTypeSettingsProperty(
+					CustomizedPages.namespaceColumnId(customizableSectionId)));
+		}
 
 		Assert.assertEquals(
 			layout.getTypeSettingsProperty(

@@ -730,6 +730,14 @@ public class AccountChannelEntryResourceTest
 
 	@Override
 	protected AccountChannelEntry
+			testGraphQLAccountChannelEntry_addAccountChannelEntry()
+		throws Exception {
+
+		return _postAccountChannelEntryBillingAddress();
+	}
+
+	@Override
+	protected AccountChannelEntry
 			testGraphQLGetAccountChannelBillingAddressId_addAccountChannelEntry()
 		throws Exception {
 

@@ -83,7 +83,8 @@ public class SiteTestEntityResourceTest
 
 		long totalCount = siteTestEntitiesJSONObject.getLong("totalCount");
 
-		testGraphQLGetSiteSiteTestEntitiesPage_addSiteTestEntity();
+		testGraphQLSiteSiteTestEntity_addSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
 
 		siteTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(
@@ -99,7 +100,8 @@ public class SiteTestEntityResourceTest
 		Assert.assertEquals(
 			totalCount + 1, siteTestEntitiesJSONObject.getLong("totalCount"));
 
-		testGraphQLGetSiteSiteTestEntitiesPage_addSiteTestEntity();
+		testGraphQLSiteSiteTestEntity_addSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
 
 		siteTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(

@@ -301,6 +301,13 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected Long testGraphQLPostCountryRegion_getCountryId(Region region)
+		throws Exception {
+
+		return _country.getCountryId();
+	}
+
+	@Override
 	protected Region testGraphQLRegion_addRegion() throws Exception {
 		Region region = randomRegion();
 

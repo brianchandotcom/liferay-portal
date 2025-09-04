@@ -137,6 +137,22 @@ public class ListTypeDefinitionResourceTest
 	}
 
 	@Override
+	protected Long
+			testGraphQLDeleteSpecificationListTypeDefinition_getSpecificationId()
+		throws Exception {
+
+		return _cpSpecificationOption.getCPSpecificationOptionId();
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testGraphQLListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
 	protected ListTypeDefinition
 			testPostSpecificationIdListTypeDefinition_addListTypeDefinition(
 				ListTypeDefinition listTypeDefinition)

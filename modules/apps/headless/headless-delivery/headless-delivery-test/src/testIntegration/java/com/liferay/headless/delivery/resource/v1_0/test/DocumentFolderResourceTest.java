@@ -149,6 +149,36 @@ public class DocumentFolderResourceTest
 		return addedDocumentFolder;
 	}
 
+	@Override
+	protected DocumentFolder
+			testGraphQLAssetLibraryDocumentFolder_addDocumentFolder(
+				Long assetLibraryId, DocumentFolder documentFolder)
+		throws Exception {
+
+		DocumentFolder addedDocumentFolder =
+			super.
+				testGetAssetLibraryDocumentFoldersRatedByMePage_addDocumentFolder(
+					assetLibraryId, documentFolder);
+
+		_addDocumentFolderRatingsEntry(addedDocumentFolder);
+
+		return addedDocumentFolder;
+	}
+
+	@Override
+	protected DocumentFolder testGraphQLSiteDocumentFolder_addDocumentFolder(
+			Long siteId, DocumentFolder documentFolder)
+		throws Exception {
+
+		DocumentFolder addedDocumentFolder =
+			super.testGetSiteDocumentFoldersRatedByMePage_addDocumentFolder(
+				siteId, documentFolder);
+
+		_addDocumentFolderRatingsEntry(addedDocumentFolder);
+
+		return addedDocumentFolder;
+	}
+
 	private void _addDocumentFolderRatingsEntry(DocumentFolder documentFolder)
 		throws Exception {
 

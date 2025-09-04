@@ -9,9 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Ticket;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.headless.admin.user.client.resource.v1_0.TicketResource;
-import com.liferay.headless.admin.user.client.serdes.v1_0.TicketSerDes;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -24,7 +22,6 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 
@@ -76,76 +73,6 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 
 		_assertGetUserAccountTicketWithPermission(
 			requestingUser, ticketResource::getUserAccountPasswordResetTicket);
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetUserAccountEmailVerificationTicket()
-		throws Exception {
-
-		assertValid(
-			TicketSerDes.toDTO(
-				JSONUtil.getValueAsString(
-					invokeGraphQLQuery(
-						new GraphQLField(
-							"userAccountEmailVerificationTicket",
-							new HashMapBuilder<>().<String, Object>put(
-								"userAccountId",
-								testGraphQLGetUserAccountEmailVerificationTicket_getUserAccountId()
-							).build(),
-							getGraphQLFields())),
-					"JSONObject/data",
-					"Object/userAccountEmailVerificationTicket")));
-		assertValid(
-			TicketSerDes.toDTO(
-				JSONUtil.getValueAsString(
-					invokeGraphQLQuery(
-						new GraphQLField(
-							"headlessAdminUser_v1_0",
-							new GraphQLField(
-								"userAccountEmailVerificationTicket",
-								new HashMapBuilder<>().<String, Object>put(
-									"userAccountId",
-									testGraphQLGetUserAccountEmailVerificationTicket_getUserAccountId()
-								).build(),
-								getGraphQLFields()))),
-					"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-					"Object/userAccountEmailVerificationTicket")));
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetUserAccountPasswordResetTicket()
-		throws Exception {
-
-		assertValid(
-			TicketSerDes.toDTO(
-				JSONUtil.getValueAsString(
-					invokeGraphQLQuery(
-						new GraphQLField(
-							"userAccountPasswordResetTicket",
-							new HashMapBuilder<>().<String, Object>put(
-								"userAccountId",
-								testGraphQLGetUserAccountPasswordResetTicket_getUserAccountId()
-							).build(),
-							getGraphQLFields())),
-					"JSONObject/data",
-					"Object/userAccountPasswordResetTicket")));
-		assertValid(
-			TicketSerDes.toDTO(
-				JSONUtil.getValueAsString(
-					invokeGraphQLQuery(
-						new GraphQLField(
-							"headlessAdminUser_v1_0",
-							new GraphQLField(
-								"userAccountPasswordResetTicket",
-								new HashMapBuilder<>().<String, Object>put(
-									"userAccountId",
-									testGraphQLGetUserAccountPasswordResetTicket_getUserAccountId()
-								).build(),
-								getGraphQLFields()))),
-					"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-					"Object/userAccountPasswordResetTicket")));
 	}
 
 	@Override
@@ -209,22 +136,6 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 
 	@Override
 	protected Long testGetUserAccountPasswordResetTicket_getUserAccountId()
-		throws Exception {
-
-		return _user.getUserId();
-	}
-
-	@Override
-	protected Long
-			testGraphQLGetUserAccountEmailVerificationTicket_getUserAccountId()
-		throws Exception {
-
-		return _user.getUserId();
-	}
-
-	@Override
-	protected Long
-			testGraphQLGetUserAccountPasswordResetTicket_getUserAccountId()
 		throws Exception {
 
 		return _user.getUserId();

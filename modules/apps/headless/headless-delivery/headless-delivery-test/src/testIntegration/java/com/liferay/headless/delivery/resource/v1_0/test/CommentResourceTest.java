@@ -973,7 +973,63 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 	@Override
 	protected Comment testGraphQLComment_addComment() throws Exception {
-		return testGetComment_addComment();
+		return _addBlogPostingComment();
+	}
+
+	@Override
+	protected String
+			testGraphQLDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getBlogPostingExternalReferenceCode()
+		throws Exception {
+
+		return _blogsEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Comment
+			testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return _addCommentComment();
+	}
+
+	@Override
+	protected String
+			testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
+		throws Exception {
+
+		return _parentComment.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Comment
+			testGraphQLDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return _addDocumentComment();
+	}
+
+	@Override
+	protected String
+			testGraphQLDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getDocumentExternalReferenceCode()
+		throws Exception {
+
+		return _fileEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Comment
+			testGraphQLDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return _addStructuredContentComment();
+	}
+
+	@Override
+	protected String
+			testGraphQLDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getStructuredContentExternalReferenceCode()
+		throws Exception {
+
+		return _journalArticle.getExternalReferenceCode();
 	}
 
 	@Override
@@ -1070,6 +1126,10 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		throws Exception {
 
 		return _journalArticle.getExternalReferenceCode();
+	}
+
+	protected Comment testGraphQLSiteComment_addComment() throws Exception {
+		return _addBlogPostingComment();
 	}
 
 	@Override

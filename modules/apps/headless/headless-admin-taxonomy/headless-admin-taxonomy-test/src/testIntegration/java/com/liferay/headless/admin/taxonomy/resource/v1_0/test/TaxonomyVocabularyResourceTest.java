@@ -281,22 +281,6 @@ public class TaxonomyVocabularyResourceTest
 	}
 
 	@Override
-	protected Long
-			testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected Long
-			testGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
 	protected Long testGetSiteTaxonomyVocabulariesPage_getIrrelevantSiteId()
 		throws Exception {
 
@@ -313,22 +297,6 @@ public class TaxonomyVocabularyResourceTest
 		throws Exception {
 
 		return testGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
-	}
-
-	@Override
-	protected Long
-			testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected Long
-			testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		return testDepotEntry.getDepotEntryId();
 	}
 
 	private void _addCMSGroup() throws Exception {

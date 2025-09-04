@@ -1036,6 +1036,10 @@
 			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="JavaLocalServiceImplUserIdUsageCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds incorrect use of `GuestOrUserUtil.getUserId()` or `PrincipalThreadLocal.getUserId()`." />
+		</check>
 		<check name="JavaModuleClassGetResourceCallCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that dependencies files are located in the correct directory." />

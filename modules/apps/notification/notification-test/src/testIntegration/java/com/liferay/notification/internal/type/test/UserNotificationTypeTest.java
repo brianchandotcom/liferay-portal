@@ -361,17 +361,15 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	public void testSendNotificationRecipientTypeUserGroup() throws Exception {
 		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();
 
-		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
-
 		_userGroupLocalService.addUserUserGroup(
 			user1.getUserId(), userGroup1.getUserGroupId());
-
 		_userGroupLocalService.addUserUserGroup(
 			user2.getUserId(), userGroup1.getUserGroupId());
 
+		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
+
 		_userGroupLocalService.addUserUserGroup(
 			user1.getUserId(), userGroup2.getUserGroupId());
-
 		_userGroupLocalService.addUserUserGroup(
 			user2.getUserId(), userGroup2.getUserGroupId());
 
@@ -390,7 +388,6 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				1,
 				_userNotificationEventLocalService.
 					getUserNotificationEventsCount(user1.getUserId()));
-
 			Assert.assertEquals(
 				1,
 				_userNotificationEventLocalService.
@@ -399,10 +396,12 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		finally {
 			_userGroupLocalService.setUserUserGroups(
 				user1.getUserId(), new long[0]);
+
+			_userGroupLocalService.deleteUserGroup(userGroup1);
+
 			_userGroupLocalService.setUserUserGroups(
 				user2.getUserId(), new long[0]);
 
-			_userGroupLocalService.deleteUserGroup(userGroup1);
 			_userGroupLocalService.deleteUserGroup(userGroup2);
 		}
 	}

@@ -30,7 +30,7 @@ public class BuildJSONObject extends JSONObject {
 	public BuildJSONObject(String source) {
 		super(source);
 
-		_topLevelBuildURL = _getTopLevelBuildURL();
+		_topLevelBuildUrl = _getTopLevelBuildUrl();
 	}
 
 	public long getDuration() {
@@ -38,7 +38,7 @@ public class BuildJSONObject extends JSONObject {
 	}
 
 	public String getJobName() {
-		return _getJobName(getURL());
+		return _getJobName(getUrl());
 	}
 
 	public Map<String, String> getParameters() {
@@ -86,16 +86,16 @@ public class BuildJSONObject extends JSONObject {
 		return optString("testrayBuildURL");
 	}
 
-	public String getTopLevelBuildURL() {
-		return _topLevelBuildURL;
+	public String getTopLevelBuildUrl() {
+		return _topLevelBuildUrl;
 	}
 
-	public String getURL() {
+	public String getUrl() {
 		return optString("url");
 	}
 
 	public boolean isTopLevelBuild() {
-		String url = getURL();
+		String url = getUrl();
 
 		if (url.contains("-batch") || url.contains("-downstream") ||
 			url.contains("maintenance") || url.contains("-validation")) {
@@ -111,7 +111,7 @@ public class BuildJSONObject extends JSONObject {
 			return null;
 		}
 
-		Matcher matcher = _buildURLPattern.matcher(buildURL);
+		Matcher matcher = _buildUrlPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
 			return null;
@@ -120,7 +120,7 @@ public class BuildJSONObject extends JSONObject {
 		return matcher.group("jobName");
 	}
 
-	private String _getTopLevelBuildURL() {
+	private String _getTopLevelBuildUrl() {
 		if (isTopLevelBuild()) {
 			return null;
 		}
@@ -144,9 +144,9 @@ public class BuildJSONObject extends JSONObject {
 			distPathMatcher.group("buildNumber"), "/");
 	}
 
-	private static final Pattern _buildURLPattern = Pattern.compile(
+	private static final Pattern _buildUrlPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"(?<jobURL>https?://(?<masterHostname>",
+			"(?<jobUrl>https?://(?<masterHostname>",
 			"(?<cohortName>test-\\d+)-\\d+)(\\.liferay\\.com)?/job/",
 			"(?<jobName>[^/]+)/(.*/)?)(?<buildNumber>\\d+)/?"));
 	private static final Pattern _distPathPattern = Pattern.compile(
@@ -155,6 +155,6 @@ public class BuildJSONObject extends JSONObject {
 			"(?<jobName>[\\w\\-\\(\\)]+)\\/(?<buildNumber>[\\d]+)"));
 
 	private String _startDateString;
-	private final String _topLevelBuildURL;
+	private final String _topLevelBuildUrl;
 
 }

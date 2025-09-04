@@ -647,7 +647,7 @@ public class BuildHistoryProcessor {
 
 				if (parameters.containsKey("CI_TEST_SUITE")) {
 					_topLevelBuildTestSuiteMap.put(
-						buildJSONObject.getURL(),
+						buildJSONObject.getUrl(),
 						parameters.get("CI_TEST_SUITE"));
 
 					return parameters.get("CI_TEST_SUITE");
@@ -656,10 +656,10 @@ public class BuildHistoryProcessor {
 				return "[Unknown]";
 			}
 
-			String topLevelBuildURL = buildJSONObject.getTopLevelBuildURL();
+			String topLevelBuildUrl = buildJSONObject.getTopLevelBuildUrl();
 
-			if (_topLevelBuildTestSuiteMap.containsKey(topLevelBuildURL)) {
-				return _topLevelBuildTestSuiteMap.get(topLevelBuildURL);
+			if (_topLevelBuildTestSuiteMap.containsKey(topLevelBuildUrl)) {
+				return _topLevelBuildTestSuiteMap.get(topLevelBuildUrl);
 			}
 
 			return "[Unknown]";

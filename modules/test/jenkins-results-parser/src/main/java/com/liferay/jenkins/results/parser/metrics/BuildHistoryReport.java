@@ -171,8 +171,8 @@ public class BuildHistoryReport {
 								getCommonStatusTestCountPercentage());
 						add(testrayRunComparison.getNewFailureTestCount());
 						add(testrayRunComparison.getNewUntestedTestCount());
-						add(buildJSONObject.getURL());
-						add(awsBuildJSONObject.getURL());
+						add(buildJSONObject.getUrl());
+						add(awsBuildJSONObject.getUrl());
 						add(testrayBuildUrl);
 						add(awsTestrayBuildUrl);
 						add(buildJSONObject.getStartTime());

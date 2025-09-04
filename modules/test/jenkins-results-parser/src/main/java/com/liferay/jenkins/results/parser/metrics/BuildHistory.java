@@ -49,8 +49,8 @@ public class BuildHistory {
 		}
 	}
 
-	public boolean containsTopLevelBuildURL(String url) {
-		return _topLevelBuildURLs.contains(url);
+	public boolean containsTopLevelBuildUrl(String url) {
+		return _topLevelBuildUrls.contains(url);
 	}
 
 	public Map<String, BuildJSONObject> getBuildIdentifiersMap() {
@@ -122,8 +122,8 @@ public class BuildHistory {
 		return timeline.getJSONObject();
 	}
 
-	public Set<String> getTopLevelBuildURLs() {
-		return _topLevelBuildURLs;
+	public Set<String> getTopLevelBuildUrls() {
+		return _topLevelBuildUrls;
 	}
 
 	public void merge(BuildHistory buildHistory) {
@@ -150,7 +150,7 @@ public class BuildHistory {
 		}
 
 		_buildIdentifiersMap.putAll(buildHistory.getBuildIdentifiersMap());
-		_topLevelBuildURLs.addAll(buildHistory.getTopLevelBuildURLs());
+		_topLevelBuildUrls.addAll(buildHistory.getTopLevelBuildUrls());
 	}
 
 	public void setDuration(long duration) {
@@ -395,7 +395,7 @@ public class BuildHistory {
 				for (int i = startIndex; i <= endIndex; i++) {
 					_buildCounts[i]++;
 
-					if (containsTopLevelBuildURL(buildJSONObject.getURL())) {
+					if (containsTopLevelBuildUrl(buildJSONObject.getUrl())) {
 						_topLevelBuildCounts[i]++;
 					}
 				}
@@ -498,10 +498,10 @@ public class BuildHistory {
 			buildJSONObject.getDuration());
 
 		if (buildJSONObject.isTopLevelBuild()) {
-			_topLevelBuildURLs.add(buildJSONObject.getURL());
+			_topLevelBuildUrls.add(buildJSONObject.getUrl());
 
 			String buildIdentifier = _getBuildIdentifier(
-				buildJSONObject.getURL(), buildJSONObject);
+				buildJSONObject.getUrl(), buildJSONObject);
 
 			if (buildIdentifier != null) {
 				_buildIdentifiersMap.put(buildIdentifier, buildJSONObject);
@@ -576,7 +576,7 @@ public class BuildHistory {
 	}
 
 	private String _getJobName(String buildUrl) {
-		Matcher matcher = _jobURLPattern.matcher(String.valueOf(buildUrl));
+		Matcher matcher = _jobUrlPattern.matcher(String.valueOf(buildUrl));
 
 		if (matcher.find()) {
 			return matcher.group("jobName");
@@ -660,7 +660,7 @@ public class BuildHistory {
 
 	private static final long _TIMELINE_SAMPLE_PERIOD_MINUTES = 15;
 
-	private static final Pattern _jobURLPattern = Pattern.compile(
+	private static final Pattern _jobUrlPattern = Pattern.compile(
 		"https?://(?<masterHostname>test-\\d+-\\d+)(\\.liferay\\.com)?/job/" +
 			"(?<jobName>[^/]+)/?");
 
@@ -679,6 +679,6 @@ public class BuildHistory {
 	private long _startTime;
 	private Table _table;
 	private Timeline _timeline;
-	private final Set<String> _topLevelBuildURLs = new HashSet<>();
+	private final Set<String> _topLevelBuildUrls = new HashSet<>();
 
 }

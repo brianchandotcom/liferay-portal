@@ -555,11 +555,11 @@ public class BuildHistory {
 		}
 
 		if (portalUpstreamSHA.length() > 8) {
-			portalUpstreamSHA = portalUpstreamSHA.substring(0, 8);
+			portalUpstreamSHA = portalUpstreamSHA.substring(0, 7);
 		}
 
 		if (portalSenderSHA.length() > 8) {
-			portalSenderSHA = portalSenderSHA.substring(0, 8);
+			portalSenderSHA = portalSenderSHA.substring(0, 7);
 		}
 
 		sb.append(portalUpstreamSHA);

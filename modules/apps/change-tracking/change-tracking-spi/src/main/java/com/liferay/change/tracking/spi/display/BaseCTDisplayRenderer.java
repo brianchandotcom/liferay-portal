@@ -493,7 +493,8 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			DDMFormFieldOptions columns =
 				(DDMFormFieldOptions)ddmFormField.getProperty("columns");
 
-			StringBundler sb = new StringBundler(valuesJSONObject.length() * 5);
+			StringBundler sb = new StringBundler(
+				valuesJSONObject.length() * 11);
 
 			Set<String> rowOptions = rows.getOptionsValues();
 
@@ -505,12 +506,18 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 					LocalizedValue columnLabel = columns.getOptionLabels(
 						columnOption);
 
+					sb.append(StringPool.OPEN_CURLY_BRACE);
+					sb.append(StringPool.QUOTE);
 					sb.append(_getGridLabel(rowLabel, rowOption, locale));
+					sb.append(StringPool.QUOTE);
 
 					sb.append(StringPool.COLON);
 					sb.append(StringPool.SPACE);
 
+					sb.append(StringPool.QUOTE);
 					sb.append(_getGridLabel(columnLabel, columnOption, locale));
+					sb.append(StringPool.QUOTE);
+					sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 					sb.append(StringPool.COMMA_AND_SPACE);
 				}
@@ -574,7 +581,9 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				return StringPool.BLANK;
 			}
 
-			StringBundler sb = new StringBundler(jsonArray.length());
+			StringBundler sb = new StringBundler((3 * jsonArray.length()) + 1);
+
+			sb.append(StringPool.OPEN_BRACKET);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				if (i > 0) {
@@ -590,8 +599,12 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				LocalizedValue localizedValue =
 					ddmFormFieldOptions.getOptionLabels(optionValueString);
 
+				sb.append(StringPool.QUOTE);
 				sb.append(localizedValue.getString(locale));
+				sb.append(StringPool.QUOTE);
 			}
+
+			sb.append(StringPool.CLOSE_BRACKET);
 
 			return sb.toString();
 		}

@@ -99,14 +99,7 @@ export default function FilesFDSPropsTransformer({
 			/>
 		),
 		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'download') {
-				return {
-					...action,
-					isVisible: (item: any) =>
-						Boolean(item?.embedded?.file?.link?.href),
-				};
-			}
-			else if (action?.data?.id === 'actionLink') {
+			if (action?.data?.id === 'actionLink') {
 				return {
 					...action,
 					isVisible: (item: any) =>
@@ -114,6 +107,13 @@ export default function FilesFDSPropsTransformer({
 							item?.entryClassName !==
 								OBJECT_ENTRY_FOLDER_CLASS_NAME
 						),
+				};
+			}
+			else if (action?.data?.id === 'download') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
 			else if (
@@ -146,7 +146,18 @@ export default function FilesFDSPropsTransformer({
 			action: any;
 			itemData: any;
 		}) => {
-			if (action?.data?.id === 'view-file') {
+			if (action?.data?.id === 'share') {
+				const {autocompleteURL, collaboratorURLs} = additionalProps;
+
+				shareAction({
+					autocompleteURL,
+					collaboratorURL: collaboratorURLs[itemData.entryClassName],
+					creator: itemData.embedded.creator,
+					itemId: itemData.embedded.id,
+					title: itemData.embedded?.title,
+				});
+			}
+			else if (action?.data?.id === 'view-file') {
 				openModal({
 					containerProps: {
 						className: '',
@@ -157,17 +168,6 @@ export default function FilesFDSPropsTransformer({
 							headerName: itemData.embedded.title,
 						}),
 					size: 'full-screen',
-				});
-			}
-			else if (action?.data?.id === 'share') {
-				const {autocompleteURL, collaboratorURLs} = additionalProps;
-
-				shareAction({
-					autocompleteURL,
-					collaboratorURL: collaboratorURLs[itemData.entryClassName],
-					creator: itemData.embedded.creator,
-					itemId: itemData.embedded.id,
-					title: itemData.embedded?.title,
 				});
 			}
 		},

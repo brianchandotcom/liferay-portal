@@ -148,6 +148,7 @@ export default function ItemSelectorSamples() {
 	const [usersMultiselect, setUsersMultiselect] = useState<
 		User[]
 	>([]);
+	const [user2, setUser2] = useState<User | null>();
 
 	const {
 		observer: documentItemSelectorObserver,
@@ -168,6 +169,11 @@ export default function ItemSelectorSamples() {
 		observer: cmsFileItemSelectorObserver,
 		onOpenChange: cmsFileItemSelectorOpenChange,
 		open: cmsFileItemSelectorOpen,
+		observer: itemSelectorModalObserver,
+		onOpenChange: itemSelectorModalOpenChange,
+		open: itemSelectorModalOpen,
+	} = useModal();
+	const {
 		observer: itemSelectorMultiSelectModalObserver,
 		onOpenChange: itemSelectorMultiSelectModalOpenChange,
 		open: itemSelectorMultiSelectModalOpen,
@@ -313,10 +319,6 @@ export default function ItemSelectorSamples() {
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-admin-user/v1.0/user-accounts`}
 					itemSelectorModalProps={{
-						open: itemSelectorMultiSelectModalOpen,
-						onOpenChange: itemSelectorMultiSelectModalOpenChange,
-						observer: itemSelectorMultiSelectModalObserver,
-						type: userAccountsItemSelectorConfig.type,
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
 							apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
@@ -327,12 +329,16 @@ export default function ItemSelectorSamples() {
 							}),
 						},
 						items: usersMultiselect,
+						observer: itemSelectorMultiSelectModalObserver,
 						onItemsChange: (items: User[]) => {
 							setUsersMultiselect([
 								...usersMultiselect,
 								...items,
 							]);
 						},
+						onOpenChange: itemSelectorMultiSelectModalOpenChange,
+						open: itemSelectorMultiSelectModalOpen,
+						type: userAccountsItemSelectorConfig.type,
 					}}
 					locator={{
 						id: 'id',

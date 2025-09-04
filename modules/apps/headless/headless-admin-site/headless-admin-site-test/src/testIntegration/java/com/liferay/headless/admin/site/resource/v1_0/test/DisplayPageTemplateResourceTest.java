@@ -1371,11 +1371,6 @@ public class DisplayPageTemplateResourceTest
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				null, PageSpecification.Status.DRAFT);
 
-		ContentPageSpecification publishedContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				draftContentPageSpecification.getExternalReferenceCode(),
-				PageSpecification.Status.APPROVED);
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
@@ -1383,6 +1378,11 @@ public class DisplayPageTemplateResourceTest
 		draftContentPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
 				FavIcon.FavIconType.CLIENT_EXTENSION, serviceContext));
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				PageSpecification.Status.APPROVED);
 
 		publishedContentPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(

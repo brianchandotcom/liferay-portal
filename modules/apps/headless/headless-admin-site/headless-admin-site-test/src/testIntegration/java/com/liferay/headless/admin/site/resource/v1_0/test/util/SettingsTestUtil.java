@@ -94,7 +94,7 @@ public class SettingsTestUtil {
 				(FavIconItemExternalReference)favIcon;
 		}
 		else {
-			Assert.fail("Unexpected FavIcon class: " + favIcon.getClass());
+			Assert.fail("Unexpected class: " + favIcon.getClass());
 		}
 
 		if (layout.getFaviconFileEntryId() == 0) {

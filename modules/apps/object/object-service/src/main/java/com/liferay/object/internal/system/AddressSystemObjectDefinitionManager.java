@@ -7,6 +7,7 @@ package com.liferay.object.internal.system;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -118,12 +119,98 @@ public class AddressSystemObjectDefinitionManager
 		return Arrays.asList(
 			new TextObjectFieldBuilder(
 			).labelMap(
+				createLabelMap("country")
+			).name(
+				"addressCountry"
+			).required(
+				false
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"city"
+			).labelMap(
+				createLabelMap("city")
+			).name(
+				"addressLocality"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("region")
+			).name(
+				"addressRegion"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"subtype"
+			).labelMap(
+				createLabelMap("subtype")
+			).name(
+				"addressSubtype"
+			).required(
+				false
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("type")
+			).name(
+				"addressType"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
 				createLabelMap("name")
 			).name(
 				"name"
 			).required(
 				true
 			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("phone-number")
+			).name(
+				"phoneNumber"
+			).required(
+				false
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"zip"
+			).labelMap(
+				createLabelMap("postal-code")
+			).name(
+				"postalCode"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new BooleanObjectFieldBuilder(
+			).dbColumnName(
+				"primary_"
+			).labelMap(
+				createLabelMap("primary")
+			).name(
+				"primary"
+			).required(
 				true
 			).build(),
 			new TextObjectFieldBuilder(
@@ -135,6 +222,30 @@ public class AddressSystemObjectDefinitionManager
 				"streetAddressLine1"
 			).required(
 				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"street2"
+			).labelMap(
+				createLabelMap("street2")
+			).name(
+				"streetAddressLine2"
+			).required(
+				false
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"street3"
+			).labelMap(
+				createLabelMap("street3")
+			).name(
+				"streetAddressLine3"
+			).required(
+				false
 			).system(
 				true
 			).build());
@@ -177,7 +288,7 @@ public class AddressSystemObjectDefinitionManager
 
 	@Override
 	public int getVersion() {
-		return 2;
+		return 3;
 	}
 
 	@Override

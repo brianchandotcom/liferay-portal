@@ -426,9 +426,43 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		DDMFormFieldValue ddmFormFieldValue, DisplayBuilder<T> displayBuilder,
 		Locale locale) {
 
+		Value value = ddmFormFieldValue.getValue();
+
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		LocalizedValue label = ddmFormField.getLabel();
+
+		if (value == null) {
+			displayBuilder.display(label.getString(locale), StringPool.BLANK);
+
+			return;
+		}
+		else if (StringUtil.equals(
+					ddmFormField.getType(), DDMFormFieldTypeConstants.COLOR)) {
+
+			displayBuilder.display(
+				label.getString(locale),
+				StringBundler.concat(
+					"<span class=\"mr-2\">",
+					StringPool.POUND.concat(value.getString(locale)),
+					"</span><span style=\"background-color: ",
+					StringPool.POUND.concat(value.getString(locale)),
+					"; display: inline-block; height: 80%; vertical-align: ",
+					"middle; width: 50%;\" />"),
+				false);
+
+			return;
+		}
+		else if (StringUtil.equals(
+					ddmFormField.getType(), DDMFormFieldTypeConstants.GRID)) {
+
+			displayBuilder.display(
+				label.getString(locale),
+				_getGridOptionValues(
+					ddmFormField, locale, value.getString(locale)));
+
+			return;
+		}
 
 		displayBuilder.display(
 			label.getString(locale),
@@ -547,19 +581,12 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			return StringPool.BLANK;
 		}
 
+		String valueString = value.getString(locale);
+
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		if (StringUtil.equals(
-				ddmFormField.getType(), DDMFormFieldTypeConstants.GRID)) {
-
-			return _getGridOptionValues(
-				ddmFormField, locale, value.getString(locale));
-		}
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
-
-		String valueString = value.getString(locale);
 
 		LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
 			valueString);

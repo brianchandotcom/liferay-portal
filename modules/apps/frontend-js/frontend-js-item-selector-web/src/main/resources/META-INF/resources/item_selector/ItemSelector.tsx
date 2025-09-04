@@ -60,7 +60,7 @@ function ItemSelectorModalButton({
 						title={Liferay.Language.get('open-full-list')}
 					>
 						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('Select User')}
+							aria-label={Liferay.Language.get('select-items')}
 							displayType="secondary"
 							onClick={() =>
 								itemSelectorModalProps.onOpenChange(true)

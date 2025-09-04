@@ -358,6 +358,22 @@ function ItemSelector<T extends Record<string, any>>({
 		);
 	}
 
+	const handleModalItemsChange = (selectedItems: T[]) => {
+		setItems(selectedItems);
+
+		if (selectedItems.length) {
+			const firstItemLabel = getObjectValueFromPath({
+				object: selectedItems[0],
+				path: locator.label,
+			});
+
+			setValue(firstItemLabel);
+		}
+		else {
+			setValue('');
+		}
+	};
+
 	return (
 		<ClayInput.Group>
 			<ClayInput.GroupItem>
@@ -399,7 +415,7 @@ function ItemSelector<T extends Record<string, any>>({
 					itemSelectorModalProps={itemSelectorModalProps}
 					items={items}
 					locator={locator}
-					setItems={setItems}
+					setItems={handleModalItemsChange}
 				/>
 			)}
 		</ClayInput.Group>

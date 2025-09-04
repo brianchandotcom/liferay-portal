@@ -9795,6 +9795,99 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostNestedSiteObjectEntryThroughCompanyToSiteScopedRelationship()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _siteScopedObjectDefinition1,
+			TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject jsonObject = JSONUtil.put(
+			_OBJECT_FIELD_NAME_1, _OBJECT_TEXT_FIELD_VALUE_1
+		).put(
+			"externalReferenceCode", _ERC_VALUE_1
+		).put(
+			_objectRelationship1.getName(),
+			JSONUtil.putAll(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, _OBJECT_TEXT_FIELD_VALUE_2
+				).put(
+					"externalReferenceCode", _ERC_VALUE_2
+				).put(
+					"scopeKey", "Guest"
+				))
+		);
+
+		JSONAssert.assertEquals(
+			jsonObject.toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				jsonObject.toString(), _objectDefinition1.getRESTContextPath(),
+				Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// No scopeKey
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				StringBundler.concat(
+					"No scope key was provided for the \"",
+					_siteScopedObjectDefinition1.getName(), "\" entry.")
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, _OBJECT_TEXT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_3
+				).put(
+					_objectRelationship1.getName(),
+					JSONUtil.putAll(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_1, _OBJECT_TEXT_FIELD_VALUE_2
+						).put(
+							"externalReferenceCode",
+							"c" + RandomTestUtil.randomString()
+						))
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// Empty scopeKey
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Group ID 0 is not valid for scope \"site\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, _OBJECT_TEXT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_3
+				).put(
+					_objectRelationship1.getName(),
+					JSONUtil.putAll(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_1, _OBJECT_TEXT_FIELD_VALUE_2
+						).put(
+							"externalReferenceCode",
+							"c" + RandomTestUtil.randomString()
+						).put(
+							"scopeKey", ""
+						))
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
 	public void testPostObjectEntryExpire() throws Exception {
 
 		// Company scope
@@ -14584,7 +14677,8 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _assertCustomObjectEntryWithPermissions(
-		JSONArray expectedPermissionsJSONArray, JSONObject jsonObject) {
+			JSONArray expectedPermissionsJSONArray, JSONObject jsonObject)
+		throws Exception {
 
 		JSONArray actualPermissionsJSONArray = jsonObject.getJSONArray(
 			"permissions");
@@ -14599,7 +14693,9 @@ public class ObjectEntryResourceTest {
 			JSONCompareMode.LENIENT);
 	}
 
-	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray) {
+	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray)
+		throws Exception {
+
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -19380,6 +19476,12 @@ public class ObjectEntryResourceTest {
 	private static final int _OBJECT_FIELD_VALUE_3 = RandomTestUtil.randomInt();
 
 	private static final int _OBJECT_FIELD_VALUE_4 = RandomTestUtil.randomInt();
+
+	private static final String _OBJECT_TEXT_FIELD_VALUE_1 =
+		RandomTestUtil.randomString();
+
+	private static final String _OBJECT_TEXT_FIELD_VALUE_2 =
+		RandomTestUtil.randomString();
 
 	private static final String _TAG_1 = StringUtil.toLowerCase(
 		RandomTestUtil.randomString());

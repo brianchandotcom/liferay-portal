@@ -23,7 +23,7 @@ function assertStickerProps(
 }
 
 describe('transformItemCardView', () => {
-	const baseMockProps = {actions: {}};
+	const baseMockProps = {actions: []};
 	const mockFileMimeTypeCssClasses = {
 		'default': 'file-icon-color-0',
 		'image': 'file-icon-color-3',

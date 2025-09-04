@@ -104,14 +104,15 @@
 
 		if (!panel) return;
 
-		const panelBody = panel.querySelector('#sort-filter-items');
-		const panelHeaderButton = panel.querySelector('.sort-collapse-trigger');
-
 		if (window.innerWidth <= 768) {
+			const panelBody = panel.querySelector('#sort-filter-items');
+
 			if (panelBody) {
 				panelBody.classList.remove('show');
 				panelBody.classList.add('collapse');
 			}
+
+			const panelHeaderButton = panel.querySelector('.sort-collapse-trigger');
 
 			if (panelHeaderButton) {
 				panelHeaderButton.classList.add('collapsed');

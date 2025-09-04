@@ -66,6 +66,8 @@ export function writeStateInURL(
 		settings === EStateInURLSettings.REPLACE || !currentState;
 
 	if (Liferay.SPA && Liferay.SPA.app) {
+		Liferay.SPA.app.browserPathBeforeNavigate = path;
+
 		Liferay.SPA.app.updateHistory_(
 			document.title,
 			path,
@@ -73,6 +75,7 @@ export function writeStateInURL(
 				...window.history.state,
 				path,
 				redirectPath: path,
+				senna: true,
 			},
 			replaceState
 		);

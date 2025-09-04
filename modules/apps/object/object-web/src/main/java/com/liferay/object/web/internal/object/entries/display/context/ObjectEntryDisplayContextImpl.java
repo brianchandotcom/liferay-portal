@@ -204,11 +204,11 @@ public class ObjectEntryDisplayContextImpl
 
 		String apiURL = parentAPIURL + "/" + objectRelationship.getName();
 
-		if (externalReferenceCode == null) {
-			return apiURL;
+		if (externalReferenceCode != null) {
+			return apiURL + "/" + externalReferenceCode;
 		}
 
-		return apiURL + "/" + externalReferenceCode;
+		return apiURL;
 	}
 
 	@Override
@@ -969,11 +969,11 @@ public class ObjectEntryDisplayContextImpl
 			apiURL += "/scopes/" + _themeDisplay.getScopeGroupId();
 		}
 
-		if (externalReferenceCode == null) {
-			return apiURL;
+		if (externalReferenceCode != null) {
+			return apiURL + "/by-external-reference-code/" + externalReferenceCode;
 		}
 
-		return apiURL + "/by-external-reference-code/" + externalReferenceCode;
+		return apiURL;
 	}
 
 	private DropdownItem _getCreateNewRelatedModelDropdownItem(

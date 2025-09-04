@@ -9,7 +9,8 @@ import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
-import persistActiveView from '../../thunks/persistActiveView';
+import {saveViewSettings} from '../../utils/saveViewSettings';
+import {EStateInURLKeys} from '../../utils/types';
 import ViewsContext from '../../views/ViewsContext';
 
 const ActiveViewSelectorTrigger = React.forwardRef(
@@ -27,18 +28,20 @@ const ActiveViewSelectorTrigger = React.forwardRef(
 );
 
 function ActiveViewSelector({views}) {
-	const {appURL, id, portletId} = useContext(FrontendDataSetContext);
+	const {appURL, id, portletId, stateInURLSetters} = useContext(
+		FrontendDataSetContext
+	);
 	const [{activeView}, viewsDispatch] = useContext(ViewsContext);
 
 	const handleSelectionChange = (value) => {
-		viewsDispatch(
-			persistActiveView({
-				activeViewName: value,
-				appURL,
-				id,
-				portletId,
-			})
-		);
+		viewsDispatch(stateInURLSetters[EStateInURLKeys.VIEW_NAME](value));
+
+		saveViewSettings({
+			appURL,
+			id,
+			portletId,
+			settings: {name: value},
+		});
 	};
 
 	return (

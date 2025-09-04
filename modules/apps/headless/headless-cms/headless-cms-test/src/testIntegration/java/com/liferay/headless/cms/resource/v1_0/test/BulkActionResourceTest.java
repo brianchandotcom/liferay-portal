@@ -239,8 +239,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 					_bulkActionTaskObjectDefinition.getObjectDefinitionId(),
 					"bulkActionTaskToBulkActionTaskItems"
 				).getObjectRelationshipId(),
-				bulkActionTaskObjectEntry.getObjectEntryId(), true, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				null, bulkActionTaskObjectEntry.getObjectEntryId(), true, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			objectEntry -> Objects.equals(
 				GetterUtil.getLong(
 					objectEntry.getValues(

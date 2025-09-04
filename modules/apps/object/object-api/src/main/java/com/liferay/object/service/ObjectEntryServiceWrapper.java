@@ -70,12 +70,12 @@ public class ObjectEntryServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry expireObjectEntry(
-			long userId, long objectEntryId,
+			long objectEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryService.expireObjectEntry(
-			userId, objectEntryId, serviceContext);
+			objectEntryId, serviceContext);
 	}
 
 	@Override
@@ -183,12 +183,11 @@ public class ObjectEntryServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry getOrAddEmptyObjectEntry(
-			String externalReferenceCode, long groupId, long userId,
-			long objectDefinitionId)
+			String externalReferenceCode, long groupId, long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryService.getOrAddEmptyObjectEntry(
-			externalReferenceCode, groupId, userId, objectDefinitionId);
+			externalReferenceCode, groupId, objectDefinitionId);
 	}
 
 	/**
@@ -240,12 +239,12 @@ public class ObjectEntryServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry moveObjectEntryToTrash(
-			long userId, com.liferay.object.model.ObjectEntry objectEntry,
+			com.liferay.object.model.ObjectEntry objectEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryService.moveObjectEntryToTrash(
-			userId, objectEntry, serviceContext);
+			objectEntry, serviceContext);
 	}
 
 	@Override
@@ -261,28 +260,26 @@ public class ObjectEntryServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry restoreObjectEntryFromTrash(
-			long userId, com.liferay.object.model.ObjectEntry objectEntry,
+			com.liferay.object.model.ObjectEntry objectEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryService.restoreObjectEntryFromTrash(
-			userId, objectEntry, serviceContext);
+			objectEntry, serviceContext);
 	}
 
 	@Override
-	public void subscribeObjectEntry(
-			long userId, long groupId, long objectEntryId)
+	public void subscribeObjectEntry(long groupId, long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_objectEntryService.subscribeObjectEntry(
-			userId, groupId, objectEntryId);
+		_objectEntryService.subscribeObjectEntry(groupId, objectEntryId);
 	}
 
 	@Override
-	public void unsubscribeObjectEntry(long userId, long objectEntryId)
+	public void unsubscribeObjectEntry(long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_objectEntryService.unsubscribeObjectEntry(userId, objectEntryId);
+		_objectEntryService.unsubscribeObjectEntry(objectEntryId);
 	}
 
 	@Override

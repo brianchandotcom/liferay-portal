@@ -87,7 +87,7 @@ public class ObjectEntryVersionServiceHttp {
 				HttpPrincipal httpPrincipal,
 				com.liferay.object.model.ObjectEntry objectEntry,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext,
-				long userId, int version)
+				int version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -96,7 +96,7 @@ public class ObjectEntryVersionServiceHttp {
 				_expireObjectEntryVersionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectEntry, serviceContext, userId, version);
+				methodKey, objectEntry, serviceContext, version);
 
 			Object returnObj = null;
 
@@ -127,7 +127,7 @@ public class ObjectEntryVersionServiceHttp {
 	}
 
 	public static void expireObjectEntryVersions(
-			HttpPrincipal httpPrincipal, long userId,
+			HttpPrincipal httpPrincipal,
 			com.liferay.object.model.ObjectEntry objectEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
@@ -139,7 +139,7 @@ public class ObjectEntryVersionServiceHttp {
 				_expireObjectEntryVersionsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, objectEntry, serviceContext);
+				methodKey, objectEntry, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -295,12 +295,11 @@ public class ObjectEntryVersionServiceHttp {
 	private static final Class<?>[] _expireObjectEntryVersionParameterTypes1 =
 		new Class[] {
 			com.liferay.object.model.ObjectEntry.class,
-			com.liferay.portal.kernel.service.ServiceContext.class, long.class,
-			int.class
+			com.liferay.portal.kernel.service.ServiceContext.class, int.class
 		};
 	private static final Class<?>[] _expireObjectEntryVersionsParameterTypes2 =
 		new Class[] {
-			long.class, com.liferay.object.model.ObjectEntry.class,
+			com.liferay.object.model.ObjectEntry.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getObjectEntryVersionParameterTypes3 =

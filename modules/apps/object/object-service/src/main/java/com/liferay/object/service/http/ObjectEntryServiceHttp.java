@@ -207,7 +207,7 @@ public class ObjectEntryServiceHttp {
 	}
 
 	public static com.liferay.object.model.ObjectEntry expireObjectEntry(
-			HttpPrincipal httpPrincipal, long userId, long objectEntryId,
+			HttpPrincipal httpPrincipal, long objectEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -217,7 +217,7 @@ public class ObjectEntryServiceHttp {
 				_expireObjectEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, objectEntryId, serviceContext);
+				methodKey, objectEntryId, serviceContext);
 
 			Object returnObj = null;
 
@@ -676,7 +676,7 @@ public class ObjectEntryServiceHttp {
 
 	public static com.liferay.object.model.ObjectEntry getOrAddEmptyObjectEntry(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long groupId, long userId, long objectDefinitionId)
+			long groupId, long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -685,8 +685,7 @@ public class ObjectEntryServiceHttp {
 				_getOrAddEmptyObjectEntryParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId, userId,
-				objectDefinitionId);
+				methodKey, externalReferenceCode, groupId, objectDefinitionId);
 
 			Object returnObj = null;
 
@@ -882,7 +881,7 @@ public class ObjectEntryServiceHttp {
 	}
 
 	public static com.liferay.object.model.ObjectEntry moveObjectEntryToTrash(
-			HttpPrincipal httpPrincipal, long userId,
+			HttpPrincipal httpPrincipal,
 			com.liferay.object.model.ObjectEntry objectEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -893,7 +892,7 @@ public class ObjectEntryServiceHttp {
 				_moveObjectEntryToTrashParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, objectEntry, serviceContext);
+				methodKey, objectEntry, serviceContext);
 
 			Object returnObj = null;
 
@@ -967,7 +966,7 @@ public class ObjectEntryServiceHttp {
 
 	public static com.liferay.object.model.ObjectEntry
 			restoreObjectEntryFromTrash(
-				HttpPrincipal httpPrincipal, long userId,
+				HttpPrincipal httpPrincipal,
 				com.liferay.object.model.ObjectEntry objectEntry,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -978,7 +977,7 @@ public class ObjectEntryServiceHttp {
 				_restoreObjectEntryFromTrashParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, objectEntry, serviceContext);
+				methodKey, objectEntry, serviceContext);
 
 			Object returnObj = null;
 
@@ -1009,8 +1008,7 @@ public class ObjectEntryServiceHttp {
 	}
 
 	public static void subscribeObjectEntry(
-			HttpPrincipal httpPrincipal, long userId, long groupId,
-			long objectEntryId)
+			HttpPrincipal httpPrincipal, long groupId, long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1019,7 +1017,7 @@ public class ObjectEntryServiceHttp {
 				_subscribeObjectEntryParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, objectEntryId);
+				methodKey, groupId, objectEntryId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1046,7 +1044,7 @@ public class ObjectEntryServiceHttp {
 	}
 
 	public static void unsubscribeObjectEntry(
-			HttpPrincipal httpPrincipal, long userId, long objectEntryId)
+			HttpPrincipal httpPrincipal, long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1055,7 +1053,7 @@ public class ObjectEntryServiceHttp {
 				_unsubscribeObjectEntryParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, objectEntryId);
+				methodKey, objectEntryId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1186,8 +1184,7 @@ public class ObjectEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _expireObjectEntryParameterTypes4 =
 		new Class[] {
-			long.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _fetchManyToOneObjectEntryParameterTypes5 =
 		new Class[] {long.class, long.class, long.class};
@@ -1225,7 +1222,7 @@ public class ObjectEntryServiceHttp {
 			boolean.class, String.class
 		};
 	private static final Class<?>[] _getOrAddEmptyObjectEntryParameterTypes15 =
-		new Class[] {String.class, long.class, long.class, long.class};
+		new Class[] {String.class, long.class, long.class};
 	private static final Class<?>[]
 		_hasModelResourcePermissionParameterTypes16 = new Class[] {
 			long.class, long.class, String.class
@@ -1244,7 +1241,7 @@ public class ObjectEntryServiceHttp {
 		};
 	private static final Class<?>[] _moveObjectEntryToTrashParameterTypes20 =
 		new Class[] {
-			long.class, com.liferay.object.model.ObjectEntry.class,
+			com.liferay.object.model.ObjectEntry.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _partialUpdateObjectEntryParameterTypes21 =
@@ -1254,13 +1251,13 @@ public class ObjectEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_restoreObjectEntryFromTrashParameterTypes22 = new Class[] {
-			long.class, com.liferay.object.model.ObjectEntry.class,
+			com.liferay.object.model.ObjectEntry.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _subscribeObjectEntryParameterTypes23 =
-		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _unsubscribeObjectEntryParameterTypes24 =
 		new Class[] {long.class, long.class};
+	private static final Class<?>[] _unsubscribeObjectEntryParameterTypes24 =
+		new Class[] {long.class};
 	private static final Class<?>[] _updateObjectEntryParameterTypes25 =
 		new Class[] {
 			long.class, java.util.Map.class,

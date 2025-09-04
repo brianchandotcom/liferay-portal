@@ -70,12 +70,11 @@ public class ObjectEntryServiceUtil {
 	}
 
 	public static ObjectEntry expireObjectEntry(
-			long userId, long objectEntryId,
+			long objectEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().expireObjectEntry(
-			userId, objectEntryId, serviceContext);
+		return getService().expireObjectEntry(objectEntryId, serviceContext);
 	}
 
 	public static ObjectEntry fetchManyToOneObjectEntry(
@@ -166,12 +165,11 @@ public class ObjectEntryServiceUtil {
 	}
 
 	public static ObjectEntry getOrAddEmptyObjectEntry(
-			String externalReferenceCode, long groupId, long userId,
-			long objectDefinitionId)
+			String externalReferenceCode, long groupId, long objectDefinitionId)
 		throws PortalException {
 
 		return getService().getOrAddEmptyObjectEntry(
-			externalReferenceCode, groupId, userId, objectDefinitionId);
+			externalReferenceCode, groupId, objectDefinitionId);
 	}
 
 	/**
@@ -216,12 +214,11 @@ public class ObjectEntryServiceUtil {
 	}
 
 	public static ObjectEntry moveObjectEntryToTrash(
-			long userId, ObjectEntry objectEntry,
+			ObjectEntry objectEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().moveObjectEntryToTrash(
-			userId, objectEntry, serviceContext);
+		return getService().moveObjectEntryToTrash(objectEntry, serviceContext);
 	}
 
 	public static ObjectEntry partialUpdateObjectEntry(
@@ -234,25 +231,24 @@ public class ObjectEntryServiceUtil {
 	}
 
 	public static ObjectEntry restoreObjectEntryFromTrash(
-			long userId, ObjectEntry objectEntry,
+			ObjectEntry objectEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().restoreObjectEntryFromTrash(
-			userId, objectEntry, serviceContext);
+			objectEntry, serviceContext);
 	}
 
-	public static void subscribeObjectEntry(
-			long userId, long groupId, long objectEntryId)
+	public static void subscribeObjectEntry(long groupId, long objectEntryId)
 		throws PortalException {
 
-		getService().subscribeObjectEntry(userId, groupId, objectEntryId);
+		getService().subscribeObjectEntry(groupId, objectEntryId);
 	}
 
-	public static void unsubscribeObjectEntry(long userId, long objectEntryId)
+	public static void unsubscribeObjectEntry(long objectEntryId)
 		throws PortalException {
 
-		getService().unsubscribeObjectEntry(userId, objectEntryId);
+		getService().unsubscribeObjectEntry(objectEntryId);
 	}
 
 	public static ObjectEntry updateObjectEntry(

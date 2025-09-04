@@ -49,12 +49,11 @@ public interface ObjectEntryVersionService extends BaseService {
 		throws PortalException;
 
 	public ObjectEntryVersion expireObjectEntryVersion(
-			ObjectEntry objectEntry, ServiceContext serviceContext, long userId,
-			int version)
+			ObjectEntry objectEntry, ServiceContext serviceContext, int version)
 		throws PortalException;
 
 	public void expireObjectEntryVersions(
-			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+			ObjectEntry objectEntry, ServiceContext serviceContext)
 		throws Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

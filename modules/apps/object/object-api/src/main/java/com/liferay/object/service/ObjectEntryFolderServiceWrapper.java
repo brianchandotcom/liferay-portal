@@ -121,6 +121,17 @@ public class ObjectEntryFolderServiceWrapper
 			groupId, companyId, parentObjectEntryFolderId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder
+			getOrAddEmptyObjectEntryFolder(
+				String externalReferenceCode, long groupId, long companyId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
+			externalReferenceCode, groupId, companyId, serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -134,43 +145,41 @@ public class ObjectEntryFolderServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectEntryFolder
 			moveObjectEntryFolderToTrash(
-				long userId,
 				com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryFolderService.moveObjectEntryFolderToTrash(
-			userId, objectEntryFolder, serviceContext);
+			objectEntryFolder, serviceContext);
 	}
 
 	@Override
 	public com.liferay.object.model.ObjectEntryFolder
 			restoreObjectEntryFolderFromTrash(
-				long userId,
 				com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryFolderService.restoreObjectEntryFolderFromTrash(
-			userId, objectEntryFolder, serviceContext);
+			objectEntryFolder, serviceContext);
 	}
 
 	@Override
 	public void subscribeObjectEntryFolder(
-			long userId, long groupId, long objectEntryFolderId)
+			long groupId, long objectEntryFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_objectEntryFolderService.subscribeObjectEntryFolder(
-			userId, groupId, objectEntryFolderId);
+			groupId, objectEntryFolderId);
 	}
 
 	@Override
 	public void unsubscribeObjectEntryFolder(
-			long userId, long groupId, long objectEntryFolderId)
+			long groupId, long objectEntryFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_objectEntryFolderService.unsubscribeObjectEntryFolder(
-			userId, groupId, objectEntryFolderId);
+			groupId, objectEntryFolderId);
 	}
 
 	@Override

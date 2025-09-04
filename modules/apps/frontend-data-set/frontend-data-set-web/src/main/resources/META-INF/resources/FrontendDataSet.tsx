@@ -544,8 +544,27 @@ const FrontendDataSetContent = ({
 		setSelectedItems(newSelectedItems);
 	}
 
-	function selectItems({value}: {value: any}) {
+	function selectItems({force, value}: {force?: boolean; value: any}) {
 		const values = Array.isArray(value) ? value : [value];
+
+		if (force) {
+			setSelectedItems(
+				selectedItemsValue.length === 1 &&
+					selectedItemsValue.includes(value)
+					? []
+					: [
+							items.find(
+								(item) =>
+									getObjectValueFromPath({
+										object: item,
+										path: selectedItemsKey,
+									}) === values[0]
+							),
+						]
+			);
+
+			return;
+		}
 
 		const nextSelectedValues =
 			selectionType === 'single' ? [] : [...selectedItemsValue];
@@ -841,8 +860,10 @@ const FrontendDataSetContent = ({
 						items={items}
 						itemsActions={itemsActions}
 						onItemSelectionChange={({
+							force,
 							item: selectedItem,
 						}: {
+							force?: boolean;
 							item: any;
 						}) => {
 							if (allItemsSelectedActive) {
@@ -864,6 +885,7 @@ const FrontendDataSetContent = ({
 							}
 							else {
 								selectItems({
+									force,
 									value: getObjectValueFromPath({
 										object: selectedItem,
 										path: selectedItemsKey,
@@ -1209,7 +1231,6 @@ const FrontendDataSetContent = ({
 				portletId,
 				searchParam,
 				searching,
-				selectItems,
 				selectable,
 				selectedItems,
 				selectedItemsKey,

@@ -156,6 +156,29 @@ const Card = forwardRef<HTMLDivElement, any>(
 					getLocalizedValue(item, schema.image)?.value
 				),
 			labels: getLabels(item),
+			onClick: (event: any) => {
+				const target = event.nativeEvent.target;
+
+				if (
+					target.closest('.dropdown-toggle') ||
+					target.closest('.dropdown-item')
+				) {
+					return;
+				}
+
+				// This logic is to avoid the onClick event from being
+				// triggered twice when the user clicks on anything other
+				// than the checkbox/radio in a selectable card
+
+				if (target.tagName !== 'INPUT') {
+					event.preventDefault();
+
+					onItemSelectionChange?.({
+						force: true,
+						item,
+					});
+				}
+			},
 			onSelectChange: selectable
 				? () => {
 						onItemSelectionChange?.({

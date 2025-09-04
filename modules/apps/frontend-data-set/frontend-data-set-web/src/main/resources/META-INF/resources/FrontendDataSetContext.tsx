@@ -58,13 +58,11 @@ export interface IFrontendDataSetContext {
 	onInfoPanelToggleButtonClick: Function;
 	onItemsChange: ({itemKey, items}: {itemKey: string; items: any}) => void;
 	onSearch: ({query}: {query: string}) => void;
-	onSelect?: ({selectedItems}: {selectedItems: Array<any>}) => void;
 	openModal: Function;
 	openSidePanel: Function;
 	portletId?: string;
 	searchParam?: string;
 	searching: boolean;
-	selectItems: Function;
 	selectable?: boolean;
 	selectedItems?: Array<any>;
 	selectedItemsKey: string;
@@ -134,10 +132,8 @@ const FrontendDataSetContext = React.createContext({
 	onInfoPanelToggleButtonClick: () => {},
 	onItemsChange: () => {},
 	onSearch: () => {},
-	onSelect: () => {},
 	openModal: () => {},
 	openSidePanel: () => {},
-	selectItems: () => {},
 	selectable: false,
 	selectedItems: [],
 	selectedItemsValue: [],

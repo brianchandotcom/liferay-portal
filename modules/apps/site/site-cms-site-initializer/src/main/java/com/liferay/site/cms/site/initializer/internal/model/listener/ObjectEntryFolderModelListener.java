@@ -124,8 +124,7 @@ public class ObjectEntryFolderModelListener
 			objectEntryFolder.getModelClassName(), jsonObject);
 	}
 
-	private Role _getOrAddCMSAdministratorRole(
-			long companyId, long userId)
+	private Role _getOrAddCMSAdministratorRole(long companyId, long userId)
 		throws Exception {
 
 		String name = RoleConstants.CMS_ADMINISTRATOR;

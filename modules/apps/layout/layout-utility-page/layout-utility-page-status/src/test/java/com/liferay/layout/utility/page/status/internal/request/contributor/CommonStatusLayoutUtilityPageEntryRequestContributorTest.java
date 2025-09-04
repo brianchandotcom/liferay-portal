@@ -5,6 +5,7 @@
 
 package com.liferay.layout.utility.page.status.internal.request.contributor;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -12,6 +13,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -650,8 +652,15 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_mockPortal(currentURL, pathProxy);
 
-		_commonStatusLayoutUtilityPageEntryRequestContributor.
-			addAttributesAndParameters(dynamicServletRequest);
+		long companyId = (Long)dynamicServletRequest.getAttribute(
+			WebKeys.COMPANY_ID);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			_commonStatusLayoutUtilityPageEntryRequestContributor.
+				addAttributesAndParameters(dynamicServletRequest);
+		}
 
 		Assert.assertEquals(
 			groupId, dynamicServletRequest.getParameter("groupId"));

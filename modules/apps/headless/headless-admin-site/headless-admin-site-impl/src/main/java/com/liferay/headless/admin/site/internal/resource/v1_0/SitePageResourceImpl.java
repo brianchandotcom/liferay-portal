@@ -394,10 +394,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				LayoutConstants.CUSTOMIZABLE_LAYOUT,
 				String.valueOf(
 					GetterUtil.getBoolean(widgetPageSettings.getCustomizable()))
-			).setProperty(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
-				widgetPageSettings.getLayoutTemplateId()
 			);
+
+		if (widgetPageSettings.getLayoutTemplateId() != null) {
+			unicodePropertiesWrapper.setProperty(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
+				widgetPageSettings.getLayoutTemplateId());
+		}
 
 		String[] customizableSectionIds =
 			widgetPageSettings.getCustomizableSectionIds();

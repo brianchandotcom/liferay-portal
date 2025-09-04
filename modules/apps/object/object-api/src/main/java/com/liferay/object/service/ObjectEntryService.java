@@ -164,8 +164,8 @@ public interface ObjectEntryService extends BaseService {
 		throws PortalException;
 
 	public ObjectEntry partialUpdateObjectEntry(
-			long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
 	public ObjectEntry restoreObjectEntryFromTrash(
@@ -179,8 +179,8 @@ public interface ObjectEntryService extends BaseService {
 		throws PortalException;
 
 	public ObjectEntry updateObjectEntry(
-			long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void validate(

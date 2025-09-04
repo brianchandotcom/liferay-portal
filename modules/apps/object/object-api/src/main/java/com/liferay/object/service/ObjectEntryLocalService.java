@@ -513,8 +513,8 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 	public ObjectEntry partialUpdateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void restoreObjectEntriesFromTrash(
@@ -546,8 +546,8 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 	public ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

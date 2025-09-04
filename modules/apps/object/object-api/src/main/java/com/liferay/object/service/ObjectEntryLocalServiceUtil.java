@@ -697,12 +697,13 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static ObjectEntry partialUpdateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().partialUpdateObjectEntry(
-			userId, objectEntryId, values, serviceContext);
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	public static void restoreObjectEntriesFromTrash(
@@ -758,12 +759,13 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateObjectEntry(
-			userId, objectEntryId, values, serviceContext);
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	/**

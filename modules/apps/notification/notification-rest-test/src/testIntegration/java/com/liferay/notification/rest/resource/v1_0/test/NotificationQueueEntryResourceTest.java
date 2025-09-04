@@ -11,6 +11,7 @@ import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.client.pagination.Page;
 import com.liferay.notification.rest.client.serdes.v1_0.NotificationQueueEntrySerDes;
+import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.test.util.NotificationTemplateUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -19,11 +20,14 @@ import com.liferay.object.test.util.ObjectActionTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectEntryTestUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import org.junit.Assert;
@@ -209,6 +213,14 @@ public class NotificationQueueEntryResourceTest
 				null, null, null, null);
 
 		Assert.assertTrue(notificationQueueEntriesPage.getTotalCount() > 0);
+
+		for (NotificationQueueEntry notificationQueueEntry :
+				notificationQueueEntriesPage.getItems()) {
+
+			_notificationQueueEntries.add(
+				_notificationQueueEntryLocalService.getNotificationQueueEntry(
+					notificationQueueEntry.getId()));
+		}
 	}
 
 	@Ignore
@@ -312,9 +324,21 @@ public class NotificationQueueEntryResourceTest
 			notificationQueueEntryResource.postNotificationQueueEntry(
 				notificationQueueEntry);
 
+		_notificationQueueEntries.add(
+			_notificationQueueEntryLocalService.getNotificationQueueEntry(
+				postNotificationQueueEntry.getId()));
+
 		return notificationQueueEntryResource.getNotificationQueueEntry(
 			postNotificationQueueEntry.getId());
 	}
+
+	@DeleteAfterTestRun
+	private List<com.liferay.notification.model.NotificationQueueEntry>
+		_notificationQueueEntries = new ArrayList<>();
+
+	@Inject
+	private NotificationQueueEntryLocalService
+		_notificationQueueEntryLocalService;
 
 	@Inject
 	private NotificationTemplateLocalService _notificationTemplateLocalService;

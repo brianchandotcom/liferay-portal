@@ -35,12 +35,6 @@ ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayC
 						navigationItem.setHref(currentURL);
 						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "errors-report"));
 					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setHref(importErrorsDisplayContext.getImportErrorDetailsURL());
-						navigationItem.setLabel("Link to mocked detailed view of an error");
-					});
 			}
 		}
 	%>'

@@ -15,7 +15,6 @@ import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.DuplicateObjectRelationshipExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
-import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
@@ -23,6 +22,7 @@ import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdExce
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.exception.ObjectRelationshipSystemException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
+import com.liferay.object.exception.ObjectScopeException;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
 import com.liferay.object.model.ObjectDefinition;
@@ -2080,7 +2080,7 @@ public class ObjectRelationshipLocalServiceImpl
 			!StringUtil.equals(
 				objectDefinition1.getScope(), objectDefinition2.getScope())) {
 
-			throw new ObjectDefinitionScopeException(
+			throw new ObjectScopeException(
 				"An object definition scoped by depot can only be related to " +
 					"object definitions of the same scope");
 		}

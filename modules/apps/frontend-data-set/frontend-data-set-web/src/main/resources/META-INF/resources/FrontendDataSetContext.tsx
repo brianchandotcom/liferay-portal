@@ -7,10 +7,11 @@ import React from 'react';
 
 import {
 	EStateInURLSettings,
+	IDataSetData,
 	IInlineEditingSettings,
 	IItemsActions,
-	ISchema,
 	IStateInURLSetters,
+	TRenderer,
 } from './utils/types';
 
 export interface IFrontendDataSetContext {
@@ -94,39 +95,6 @@ export interface IFrontendDataSetContext {
 	}: IDataSetData) => void;
 	updateItem: Function;
 }
-
-export interface IDataSetData {
-	items: Array<any>;
-	lastPage: number;
-	page: number;
-	pageSize?: number;
-	totalCount: number;
-}
-
-export interface IHTMLElementBuilder {
-	(args: any): HTMLElement;
-}
-
-export interface IClientExtensionRenderer {
-	externalReferenceCode?: string;
-	htmlElementBuilder?: IHTMLElementBuilder;
-	name?: string;
-	type: 'clientExtension';
-	url?: string;
-}
-
-export interface IInternalRenderer {
-	component: React.ComponentType<any>;
-	default?: boolean;
-	label?: string;
-	name?: string;
-	schema?: ISchema;
-	symbol?: string;
-	type: 'internal';
-	url?: string;
-}
-
-export type TRenderer = IClientExtensionRenderer | IInternalRenderer;
 
 const FrontendDataSetContext = React.createContext({
 	allItemsSelectedActive: false,

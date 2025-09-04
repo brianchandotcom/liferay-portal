@@ -4,8 +4,7 @@
  */
 
 import {ModalStatus} from 'frontend-js-components-web';
-
-import {TRenderer} from '../FrontendDataSetContext';
+import React from 'react';
 
 export declare function FrontendDataSet({
 	actionParameterName,
@@ -363,11 +362,39 @@ export interface ISuccessNotification {
 	showSuccessNotification?: boolean;
 }
 
-export {
-	IClientExtensionRenderer,
-	IInternalRenderer,
-} from '../FrontendDataSetContext';
-export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from '../cell_renderers/InternalCellRenderer';
+export interface IDataSetData {
+	items: Array<any>;
+	lastPage: number;
+	page: number;
+	pageSize?: number;
+	totalCount: number;
+}
+
+export interface IHTMLElementBuilder {
+	(args: any): HTMLElement;
+}
+
+export interface IClientExtensionRenderer {
+	externalReferenceCode?: string;
+	htmlElementBuilder?: IHTMLElementBuilder;
+	name?: string;
+	type: 'clientExtension';
+	url?: string;
+}
+
+export interface IInternalRenderer {
+	component: React.ComponentType<any>;
+	default?: boolean;
+	label?: string;
+	name?: string;
+	schema?: ISchema;
+	symbol?: string;
+	type: 'internal';
+	url?: string;
+}
+
+export type TRenderer = IClientExtensionRenderer | IInternalRenderer;
+
 export {
 	DEFAULT_FETCH_HEADERS,
 	FDS_ARRAY_FIELD_NAME_DELIMITER,
@@ -393,5 +420,3 @@ export type IStateInURLSetter<K extends keyof IStateInURL> = (
 export type IStateInURLSetters = {
 	[K in keyof IStateInURL]: IStateInURLSetter<K>;
 };
-
-export {Card} from '../views/cards/Cards';

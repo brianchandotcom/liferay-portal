@@ -197,12 +197,13 @@ public class ObjectEntryDisplayContextImpl
 			return _getAPIURL(externalReferenceCode, getObjectDefinition1());
 		}
 
-		String parentAPIURL = _getAPIURL(
+		String parentObjectEntryAPIURL = _getAPIURL(
 			getParentObjectEntryERC(),
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1()));
 
-		String apiURL = parentAPIURL + "/" + objectRelationship.getName();
+		String apiURL =
+			parentObjectEntryAPIURL + "/" + objectRelationship.getName();
 
 		if (externalReferenceCode != null) {
 			return apiURL + "/" + externalReferenceCode;
@@ -297,11 +298,13 @@ public class ObjectEntryDisplayContextImpl
 					return null;
 				}
 
-				com.liferay.object.model.ObjectEntry gradParentObjectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						grandParentNode.getPrimaryKey());
+				com.liferay.object.model.ObjectEntry
+					grandParentServiceBuilderObjectEntry =
+						_objectEntryLocalService.getObjectEntry(
+							grandParentNode.getPrimaryKey());
 
-				return gradParentObjectEntry.getExternalReferenceCode();
+				return grandParentServiceBuilderObjectEntry.
+					getExternalReferenceCode();
 			}
 		).setParameter(
 			"screenNavigationCategoryKey",
@@ -970,7 +973,8 @@ public class ObjectEntryDisplayContextImpl
 		}
 
 		if (externalReferenceCode != null) {
-			return apiURL + "/by-external-reference-code/" + externalReferenceCode;
+			return apiURL + "/by-external-reference-code/" +
+				externalReferenceCode;
 		}
 
 		return apiURL;

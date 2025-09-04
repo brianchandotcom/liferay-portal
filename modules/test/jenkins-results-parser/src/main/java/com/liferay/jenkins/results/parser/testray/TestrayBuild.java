@@ -75,6 +75,10 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		}
 	}
 
+	public List<TestrayCaseResult> getFailedTestrayCaseResults() {
+		return getTestrayCaseResults(null, null, true);
+	}
+
 	public long getID() {
 		return _jsonObject.getLong("id");
 	}
@@ -181,11 +185,12 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults() {
-		return getTestrayCaseResults(null, null);
+		return getTestrayCaseResults(null, null, false);
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults(
-		TestrayCaseType testrayCaseType, TestrayRun testrayRun) {
+		TestrayCaseType testrayCaseType, TestrayRun testrayRun,
+		boolean filterbyFailures) {
 
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
@@ -200,6 +205,13 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		sb.append("r_buildToCaseResult_c_buildId eq '");
 		sb.append(getID());
 		sb.append("'");
+
+		if (filterbyFailures) {
+			sb.append(" ");
+			sb.append("and (dueStatus eq 'FAILED'");
+			sb.append(" ");
+			sb.append("or dueStatus eq 'UNTESTED')");
+		}
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(

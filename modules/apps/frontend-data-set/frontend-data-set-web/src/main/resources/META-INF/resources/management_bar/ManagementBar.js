@@ -56,7 +56,7 @@ function ManagementBar({
 
 	return (
 		<>
-			{selectionType === 'multiple' && (
+			{selectionType === 'multiple' && !showNavBarWhenSelected && (
 				<BulkActions
 					bulkActions={bulkActions}
 					deselectItems={deselectItems}

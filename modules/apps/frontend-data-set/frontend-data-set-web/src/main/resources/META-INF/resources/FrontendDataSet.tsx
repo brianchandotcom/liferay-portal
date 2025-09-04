@@ -66,6 +66,7 @@ import {loadData} from './utils/loadData';
 // @ts-ignore
 
 import {logError} from './utils/logError';
+import {saveViewSettings} from './utils/saveViewSettings';
 import {writeStateInURL} from './utils/stateInURL';
 import {
 	EStateInURLKeys,
@@ -715,13 +716,34 @@ const FrontendDataSetContent = ({
 			});
 		}
 
+		if (stateFromURL.view) {
+			saveViewSettings({
+				appURL,
+				id,
+				portletId,
+				settings: {name: stateFromURL.view},
+			});
+
+			stateUpdates.push({
+				type: VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW,
+				value: stateFromURL.view,
+			});
+		}
+
 		if (stateUpdates.length) {
 			viewsDispatch({
 				type: VIEWS_ACTION_TYPES.BATCH_UPDATE,
 				value: stateUpdates,
 			});
 		}
-	}, [getStateFromURL, paginationDelta, viewsDispatch]);
+	}, [
+		appURL,
+		getStateFromURL,
+		id,
+		paginationDelta,
+		portletId,
+		viewsDispatch,
+	]);
 
 	useEffect(() => {
 		const registerEvent =

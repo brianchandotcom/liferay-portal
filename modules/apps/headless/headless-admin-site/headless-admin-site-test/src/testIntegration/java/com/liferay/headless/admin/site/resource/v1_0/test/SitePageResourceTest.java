@@ -318,6 +318,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			serviceContext, SitePage.Type.WIDGET_PAGE);
 
 		_testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications();
+		_testPutSiteSiteByExternalReferenceCodeSitePageWithWidgetPageSettings();
 		_testPutSiteSiteByExternalReferenceCodeSitePageWithPriority();
 
 		Layout layout = _addLayout(
@@ -1784,6 +1785,60 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						testGroup.getGroupId()),
 					putSitePage);
 			});
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithWidgetPageSettings()
+		throws Exception {
+
+		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		SitePage sitePage = _testPutSiteSiteByExternalReferenceCodeSitePage(
+			randomSitePage, randomSitePage);
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setCustomizable(true);
+		widgetPageSettings.setCustomizableSectionIds(
+			new String[] {"column-1", "column-3"});
+		widgetPageSettings.setLayoutTemplateId("1_2_columns_i");
+
+		sitePage = _testPutSiteSiteByExternalReferenceCodeSitePage(
+			sitePage, sitePage);
+
+		widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setCustomizableSectionIds(new String[] {"column-2"});
+
+		SitePage expectedSitePage = sitePage.clone();
+
+		WidgetPageSettings expectedWidgetPageSettings =
+			(WidgetPageSettings)expectedSitePage.getPageSettings();
+
+		widgetPageSettings.setLayoutTemplateId((String)null);
+
+		expectedWidgetPageSettings.setLayoutTemplateId("2_columns_ii");
+
+		sitePage = _testPutSiteSiteByExternalReferenceCodeSitePage(
+			expectedSitePage, sitePage);
+
+		widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setCustomizable(false);
+
+		expectedSitePage = sitePage.clone();
+
+		expectedWidgetPageSettings =
+			(WidgetPageSettings)expectedSitePage.getPageSettings();
+
+		widgetPageSettings.setCustomizableSectionIds((String[])null);
+		widgetPageSettings.setLayoutTemplateId((String)null);
+
+		expectedWidgetPageSettings.setCustomizableSectionIds(new String[0]);
+		expectedWidgetPageSettings.setLayoutTemplateId("2_columns_ii");
+
+		_testPutSiteSiteByExternalReferenceCodeSitePage(
+			expectedSitePage, sitePage);
 	}
 
 	private void _testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(

@@ -49,29 +49,8 @@ public class ObjectEntryFolderModelListener
 	public void onAfterCreate(ObjectEntryFolder objectEntryFolder)
 		throws ModelListenerException {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntryFolder.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
-
 		try {
-			Role role = _getOrAddCMSAdministratorRoleAndPermissions(
-				objectEntryFolder.getCompanyId(),
-				objectEntryFolder.getUserId());
-
-			_resourcePermissionLocalService.setResourcePermissions(
-				objectEntryFolder.getCompanyId(),
-				ObjectEntryFolder.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
-				role.getRoleId(),
-				TransformUtil.transformToArray(
-					_resourceActionLocalService.getResourceActions(
-						ObjectEntryFolder.class.getName()),
-					ResourceAction::getActionId, String.class));
-
-			_addOrUpdateCMSDefaultPermissionObjectEntry(objectEntryFolder);
+			_onAfterCreate(objectEntryFolder);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -82,38 +61,8 @@ public class ObjectEntryFolderModelListener
 	public void onAfterRemove(ObjectEntryFolder objectEntryFolder)
 		throws ModelListenerException {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntryFolder.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
-
-		_sharingEntryLocalService.deleteSharingEntries(
-			_portal.getClassNameId(ObjectEntryFolder.class.getName()),
-			objectEntryFolder.getObjectEntryFolderId());
-
-		ObjectDefinition cmsDefaultPermissionObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMS_DEFAULT_PERMISSION",
-					objectEntryFolder.getCompanyId());
-
-		if (cmsDefaultPermissionObjectDefinition == null) {
-			return;
-		}
-
 		try {
-			ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
-				objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
-				objectEntryFolder.getExternalReferenceCode(),
-				objectEntryFolder.getModelClassName(), _filterFactory);
-
-			if (objectEntry == null) {
-				return;
-			}
-
-			_objectEntryLocalService.deleteObjectEntry(
-				objectEntry.getObjectEntryId());
+			_onAfterRemove(objectEntryFolder);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -122,7 +71,7 @@ public class ObjectEntryFolderModelListener
 
 	private void _addOrUpdateCMSDefaultPermissionObjectEntry(
 			ObjectEntryFolder objectEntryFolder)
-		throws PortalException {
+		throws Exception {
 
 		ObjectDefinition cmsDefaultPermissionObjectDefinition =
 			_objectDefinitionLocalService.
@@ -190,6 +139,67 @@ public class ObjectEntryFolderModelListener
 		return _roleLocalService.addRole(
 			null, userId, null, 0, name, null, null, RoleConstants.TYPE_REGULAR,
 			null, null);
+	}
+
+	private void _onAfterCreate(ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		Role role = _getOrAddCMSAdministratorRoleAndPermissions(
+			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId());
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			objectEntryFolder.getCompanyId(), ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+			role.getRoleId(),
+			TransformUtil.transformToArray(
+				_resourceActionLocalService.getResourceActions(
+					ObjectEntryFolder.class.getName()),
+				ResourceAction::getActionId, String.class));
+
+		_addOrUpdateCMSDefaultPermissionObjectEntry(objectEntryFolder);
+	}
+
+	private void _onAfterRemove(ObjectEntryFolder objectEntryFolder)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		_sharingEntryLocalService.deleteSharingEntries(
+			_portal.getClassNameId(ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId());
+
+		ObjectDefinition cmsDefaultPermissionObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION",
+					objectEntryFolder.getCompanyId());
+
+		if (cmsDefaultPermissionObjectDefinition == null) {
+			return;
+		}
+
+		ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
+			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
+			objectEntryFolder.getExternalReferenceCode(),
+			objectEntryFolder.getModelClassName(), _filterFactory);
+
+		if (objectEntry == null) {
+			return;
+		}
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
 	}
 
 	@Reference(

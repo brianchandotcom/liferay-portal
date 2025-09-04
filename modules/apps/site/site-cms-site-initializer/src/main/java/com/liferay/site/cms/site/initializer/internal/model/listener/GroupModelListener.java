@@ -20,6 +20,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -41,66 +42,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onAfterCreate(Group group) throws ModelListenerException {
-		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
-
-		ObjectDefinition cmsDefaultPermissionObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
-
-		if (cmsDefaultPermissionObjectDefinition == null) {
-			return;
-		}
-
 		try {
-			ObjectDefinition basicWebContentObjectDefinition =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_BASIC_WEB_CONTENT", group.getCompanyId());
-			ObjectDefinition basicDocumentObjectDefinition =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_BASIC_DOCUMENT", group.getCompanyId());
-
-			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-				null, group.getCompanyId(), group.getCreatorUserId(),
-				group.getExternalReferenceCode(), DepotEntry.class.getName(),
-				JSONUtil.put(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-					JSONUtil.put(
-						RoleConstants.CMS_ADMINISTRATOR,
-						TransformUtil.transformToArray(
-							_resourceActionLocalService.getResourceActions(
-								basicWebContentObjectDefinition.
-									getResourceName()),
-							resourceAction -> resourceAction.getActionId(),
-							String.class))
-				).put(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
-					JSONUtil.put(
-						RoleConstants.CMS_ADMINISTRATOR,
-						TransformUtil.transformToArray(
-							_resourceActionLocalService.getResourceActions(
-								basicDocumentObjectDefinition.
-									getResourceName()),
-							resourceAction -> resourceAction.getActionId(),
-							String.class))
-				).put(
-					"OBJECT_ENTRY_FOLDER",
-					JSONUtil.put(
-						RoleConstants.CMS_ADMINISTRATOR,
-						JSONUtil.putAll(
-							TransformUtil.transformToArray(
-								_resourceActionLocalService.getResourceActions(
-									ObjectEntryFolder.class.getName()),
-								resourceAction -> resourceAction.getActionId(),
-								String.class)))
-				));
+			_onAfterCreate(group);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -109,34 +52,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onAfterRemove(Group group) throws ModelListenerException {
-		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
-
-		ObjectDefinition cmsDefaultPermissionObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
-
-		if (cmsDefaultPermissionObjectDefinition == null) {
-			return;
-		}
-
 		try {
-			ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
-				group.getCompanyId(), group.getCreatorUserId(),
-				group.getExternalReferenceCode(), DepotEntry.class.getName(),
-				_filterFactory);
-
-			if (objectEntry == null) {
-				return;
-			}
-
-			_objectEntryLocalService.deleteObjectEntry(
-				objectEntry.getObjectEntryId());
+			_onAfterRemove(group);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -151,6 +68,96 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
+	}
+
+	private void _onAfterCreate(Group group) throws PortalException {
+		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
+			!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		ObjectDefinition cmsDefaultPermissionObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
+
+		if (cmsDefaultPermissionObjectDefinition == null) {
+			return;
+		}
+
+		ObjectDefinition basicWebContentObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_BASIC_WEB_CONTENT", group.getCompanyId());
+		ObjectDefinition basicDocumentObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_BASIC_DOCUMENT", group.getCompanyId());
+
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			null, group.getCompanyId(), group.getCreatorUserId(),
+			group.getExternalReferenceCode(), DepotEntry.class.getName(),
+			JSONUtil.put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+				JSONUtil.put(
+					RoleConstants.CMS_ADMINISTRATOR,
+					TransformUtil.transformToArray(
+						_resourceActionLocalService.getResourceActions(
+							basicWebContentObjectDefinition.getResourceName()),
+						resourceAction -> resourceAction.getActionId(),
+						String.class))
+			).put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+				JSONUtil.put(
+					RoleConstants.CMS_ADMINISTRATOR,
+					TransformUtil.transformToArray(
+						_resourceActionLocalService.getResourceActions(
+							basicDocumentObjectDefinition.getResourceName()),
+						resourceAction -> resourceAction.getActionId(),
+						String.class))
+			).put(
+				"OBJECT_ENTRY_FOLDER",
+				JSONUtil.put(
+					RoleConstants.CMS_ADMINISTRATOR,
+					JSONUtil.putAll(
+						TransformUtil.transformToArray(
+							_resourceActionLocalService.getResourceActions(
+								ObjectEntryFolder.class.getName()),
+							resourceAction -> resourceAction.getActionId(),
+							String.class)))
+			));
+	}
+
+	private void _onAfterRemove(Group group) throws PortalException {
+		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
+			!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		ObjectDefinition cmsDefaultPermissionObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
+
+		if (cmsDefaultPermissionObjectDefinition == null) {
+			return;
+		}
+
+		ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
+			group.getCompanyId(), group.getCreatorUserId(),
+			group.getExternalReferenceCode(), DepotEntry.class.getName(),
+			_filterFactory);
+
+		if (objectEntry == null) {
+			return;
+		}
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
 	}
 
 	private void _onBeforeRemove(Group group) throws Exception {

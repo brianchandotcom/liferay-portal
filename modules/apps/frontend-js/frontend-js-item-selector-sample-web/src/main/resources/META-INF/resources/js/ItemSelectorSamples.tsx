@@ -92,7 +92,7 @@ const documentsItemSelectorConfig = {
 		label: 'fileName',
 		value: 'id',
 	},
-	type: Liferay.Language.get('document'),
+	type: Liferay.Language.get('documents'),
 	views: documentViews,
 };
 
@@ -315,7 +315,6 @@ export default function ItemSelectorSamples() {
 							...FDS_DEFAULT_PROPS,
 							apiURL: documentsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-documents-${getRandomId()}`,
-							selectionType: 'multiple',
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
 									EItemSelectorModalViewsConfig.DOCUMENTS,
@@ -323,6 +322,7 @@ export default function ItemSelectorSamples() {
 						},
 						items: documentsItemSelectorModal,
 						locator: documentsItemSelectorConfig.locator,
+						multiSelect: true,
 						observer: fileItemSelectorObserver,
 						onItemsChange: (items: Document[]) => {
 							setDocumentsItemSelectorModal(items);
@@ -386,7 +386,7 @@ export default function ItemSelectorSamples() {
 							fileItemSelectorOpenChange(true);
 						}}
 					>
-						Select Multiple Documents
+						Select Documents
 					</ClayButton>
 
 					<ClayButton

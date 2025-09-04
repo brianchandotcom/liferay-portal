@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {EFDSVisualizationMode, waitForFDS} from '../../../../utils/waitFor';
 
 export class ItemSelectorSamplePage {
+	readonly fdsContentContainer: Locator;
 	readonly fragmentWidgetSearchInput: Locator;
 	readonly modal: {
 		cancelButton: Locator;
@@ -18,6 +19,8 @@ export class ItemSelectorSamplePage {
 	readonly samplePageHeader: Locator;
 	readonly selectDocumentButton: Locator;
 	readonly selectDocumentModalHeader: Locator;
+	readonly selectUserButton: Locator;
+	readonly selectUserModalHeader: Locator;
 	readonly table: {
 		bodyRows: Locator;
 		container: Locator;
@@ -25,6 +28,9 @@ export class ItemSelectorSamplePage {
 	readonly visualizationModeSelector: Locator;
 
 	constructor(page: Page) {
+		this.fdsContentContainer = page.locator(
+			'.fds .data-set-content-wrapper'
+		);
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);
@@ -48,11 +54,19 @@ export class ItemSelectorSamplePage {
 		});
 		this.selectDocumentButton = page.getByRole('button', {
 			exact: true,
-			name: 'Select Document',
+			name: 'Select Documents',
 		});
 		this.selectDocumentModalHeader = page.getByRole('heading', {
 			exact: true,
-			name: 'Select Document',
+			name: 'Select Documents',
+		});
+		this.selectUserButton = page.getByRole('button', {
+			exact: true,
+			name: 'Select User',
+		});
+		this.selectUserModalHeader = page.getByRole('heading', {
+			exact: true,
+			name: 'Select User',
 		});
 
 		const tableContainer = page.locator('.fds table');

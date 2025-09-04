@@ -88,11 +88,11 @@ test('Item Selector Modal with single selection', async ({
 		await expect(page.getByText('Item Selector Modal')).toBeVisible();
 	});
 
-	await test.step('Click in the Select File button opens the Item Selector Modal with a FDS component', async () => {
-		await itemSelectorSamplePage.selectDocumentButton.click();
+	await test.step('Click in the Select User button opens the Item Selector Modal with a FDS component', async () => {
+		await itemSelectorSamplePage.selectUserButton.click();
 
 		await expect(
-			itemSelectorSamplePage.selectDocumentModalHeader
+			itemSelectorSamplePage.selectUserModalHeader
 		).toBeVisible();
 
 		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
@@ -109,9 +109,7 @@ test('Item Selector Modal with single selection', async ({
 		await expect(itemSelectorSamplePage.modal.selectButton).toBeEnabled();
 
 		await expect(
-			itemSelectorSamplePage.page.getByText(
-				`${imageFile.fileName} Selected`
-			)
+			itemSelectorSamplePage.page.getByText(`Test Selected`)
 		).toBeVisible();
 
 		await itemSelectorSamplePage.page
@@ -120,9 +118,7 @@ test('Item Selector Modal with single selection', async ({
 			.click();
 
 		await expect(
-			itemSelectorSamplePage.page.getByText(
-				`${jsonFile.fileName} Selected`
-			)
+			itemSelectorSamplePage.page.getByText(`Test Selected`)
 		).toBeVisible();
 	});
 
@@ -135,17 +131,58 @@ test('Item Selector Modal with single selection', async ({
 		itemSelectorSamplePage.selectByRowAndRole({row: 0});
 
 		await expect(
-			itemSelectorSamplePage.page.getByText(
-				`${imageFile.fileName} Selected`
-			)
+			itemSelectorSamplePage.page.getByText(`Test Selected`)
 		).toBeVisible();
 
 		itemSelectorSamplePage.selectByRowAndRole({row: 1});
 
 		await expect(
+			itemSelectorSamplePage.page.getByText(`Test Selected`)
+		).toBeVisible();
+	});
+});
+
+test('Item Selector Modal with multiple selection', async ({
+	itemSelectorSamplePage,
+	page,
+}) => {
+	await test.step('Check that an Item Selector Modal appears in the page', async () => {
+		await expect(page.getByText('Item Selector Modal')).toBeVisible();
+	});
+
+	await test.step('Click in the Select Documents button opens the Item Selector Modal with a FDS component', async () => {
+		await itemSelectorSamplePage.selectDocumentButton.click();
+
+		await expect(
+			itemSelectorSamplePage.selectDocumentModalHeader
+		).toBeVisible();
+
+		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
+	});
+
+	await test.step('Check that multiple items can be selected in the Cards visualization mode', async () => {
+		await expect(itemSelectorSamplePage.modal.selectButton).toBeDisabled();
+
+		await itemSelectorSamplePage.fdsContentContainer
+			.locator('.custom-checkbox')
+			.first()
+			.click();
+
+		await expect(itemSelectorSamplePage.modal.selectButton).toBeEnabled();
+
+		await expect(
 			itemSelectorSamplePage.page.getByText(
-				`${jsonFile.fileName} Selected`
+				`${imageFile.fileName} Selected`
 			)
+		).toBeVisible();
+
+		await itemSelectorSamplePage.fdsContentContainer
+			.locator('.custom-checkbox')
+			.last()
+			.click();
+
+		await expect(
+			itemSelectorSamplePage.page.getByText(`2 Items Selected`)
 		).toBeVisible();
 	});
 });

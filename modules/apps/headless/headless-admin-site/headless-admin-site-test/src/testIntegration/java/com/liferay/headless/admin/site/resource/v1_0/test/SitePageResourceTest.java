@@ -1577,6 +1577,26 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getUuid()));
 	}
 
+	private SitePage _testPutSiteSiteByExternalReferenceCodeSitePage(
+			SitePage expectedSitePage, SitePage sitePage)
+		throws Exception {
+
+		SitePage putSitePage =
+			sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), sitePage);
+
+		assertEquals(expectedSitePage, putSitePage);
+		assertValid(putSitePage);
+
+		_assertSitePage(
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
+			putSitePage);
+
+		return putSitePage;
+	}
+
 	private void _testPutSiteSiteByExternalReferenceCodeSitePageWithPageSpecifications()
 		throws Exception {
 

@@ -255,6 +255,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				StringUtil.toLowerCase(RandomTestUtil.randomString())));
 
 		_testPostByExternalReferenceCodeSitePageWithPageSpecifications();
+		_testPostByExternalReferenceCodeSitePageWithWidgetPageSettings();
 	}
 
 	@Override
@@ -1473,6 +1474,45 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				postPageSpecifications,
 				(WidgetPageSpecification)pageSpecifications[0]);
 		}
+	}
+
+	private void _testPostByExternalReferenceCodeSitePageWithWidgetPageSettings()
+		throws Exception {
+
+		SitePage sitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		_testPostByExternalReferenceCodeSitePage(sitePage);
+
+		sitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setCustomizable(true);
+		widgetPageSettings.setCustomizableSectionIds(
+			new String[] {"column-1", "column-3"});
+		widgetPageSettings.setLayoutTemplateId("1_2_columns_i");
+
+		_testPostByExternalReferenceCodeSitePage(sitePage);
+
+		sitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setCustomizable((Boolean)null);
+		widgetPageSettings.setCustomizableSectionIds((String[])null);
+		widgetPageSettings.setLayoutTemplateId((String)null);
+
+		SitePage expectedSitePage = sitePage.clone();
+
+		WidgetPageSettings expectedWidgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
+
+		expectedWidgetPageSettings.setCustomizable(false);
+		expectedWidgetPageSettings.setCustomizableSectionIds(new String[0]);
+		expectedWidgetPageSettings.setLayoutTemplateId("2_columns_ii");
+
+		_testPostByExternalReferenceCodeSitePage(expectedSitePage, sitePage);
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeSitePageWithPageSpecificationsWithWidgetPageSpecification()

@@ -45,6 +45,9 @@ export class FDSSamplePage {
 		searchInput: Locator;
 	};
 	readonly page: Page;
+	readonly paginator: {
+		itemsPerPageSelector: Locator;
+	};
 	readonly showViewOptionsButton: Locator;
 	readonly sidePanel: Locator;
 	readonly sidePanelFrame: FrameLocator;
@@ -134,6 +137,13 @@ export class FDSSamplePage {
 		};
 
 		this.page = page;
+
+		this.paginator = {
+			itemsPerPageSelector: page.getByLabel('Items Per Page', {
+				exact: true,
+			}),
+		};
+
 		this.selectAllCheckbox = page.getByText('Select All');
 
 		const selectionToolbarContainer = page.getByTestId('selectionToolbar');
@@ -173,6 +183,16 @@ export class FDSSamplePage {
 		this.toggleInfoPanelButton = page.getByLabel('Toggle Info Panel');
 
 		this.visualizationModeSelector = page.getByLabel('Show View Options');
+	}
+
+	async changeItemsPerPage({delta}: {delta: string}) {
+		await this.paginator.itemsPerPageSelector.click();
+
+		const dropdownItem = this.page.getByRole('option', {name: delta});
+
+		await dropdownItem.waitFor({state: 'visible'});
+
+		await dropdownItem.click();
 	}
 
 	async changeVisualizationMode({

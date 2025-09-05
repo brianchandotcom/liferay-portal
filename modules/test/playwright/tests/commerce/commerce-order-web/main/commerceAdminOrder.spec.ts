@@ -838,6 +838,19 @@ test(
 			);
 		});
 
+		await test.step('Verify note label in an order created via the account selector ', async () => {
+			await page.goto(`/web/${site.name}`);
+
+			await commerceLayoutsPage
+				.accountSelectorButton(account.name)
+				.click();
+			await commerceLayoutsPage.createNewOrderButton.click();
+
+			await expect(
+				pendingOrdersPage.questionAndAnswersText
+			).toBeVisible();
+		});
+
 		await test.step('Verify inactive order type is not assigned to an order created via the account selector ', async () => {
 			await page.goto(`/web/${site.name}`);
 

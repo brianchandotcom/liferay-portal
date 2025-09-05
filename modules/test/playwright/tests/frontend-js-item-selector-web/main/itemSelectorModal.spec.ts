@@ -230,9 +230,24 @@ test('Check user selection via modal in multiselect input', async ({
 });
 
 test('Check space selection via modal in autocomplete input', async ({
+	apiHelpers,
 	itemSelectorSamplePage,
 	page,
 }) => {
+	const spaceName = `Space ${getRandomString()}`;
+
+	const assetLibrary =
+		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+	apiHelpers.data.push({
+		id: assetLibrary.id,
+		type: 'assetLibrary',
+	});
+
 	const inputGroupLabel =
 		'Item selector pops up modal on button click autocomplete (Spaces)';
 
@@ -241,7 +256,7 @@ test('Check space selection via modal in autocomplete input', async ({
 			.getByLabel('Select Items')
 			.click();
 
-		await page.getByText('Default', {exact: true}).first().click();
+		await page.getByText(spaceName, {exact: true}).first().click();
 
 		await itemSelectorSamplePage.modal.selectButton.click();
 	});
@@ -251,14 +266,29 @@ test('Check space selection via modal in autocomplete input', async ({
 			(
 				await itemSelectorSamplePage.inputGroup(inputGroupLabel)
 			).getByRole('combobox')
-		).toHaveValue('Default');
+		).toHaveValue(spaceName);
 	});
 });
 
 test('Check space selection via modal in multiselect input', async ({
+	apiHelpers,
 	itemSelectorSamplePage,
 	page,
 }) => {
+	const spaceName = `Space ${getRandomString()}`;
+
+	const assetLibrary =
+		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+	apiHelpers.data.push({
+		id: assetLibrary.id,
+		type: 'assetLibrary',
+	});
+
 	const inputGroupLabel =
 		'Multiple Select Item selector pops up modal on button click (Spaces)';
 
@@ -267,14 +297,14 @@ test('Check space selection via modal in multiselect input', async ({
 			.getByLabel('Select Items')
 			.click();
 
-		await page.getByText('Default', {exact: true}).first().click();
+		await page.getByText(spaceName, {exact: true}).first().click();
 
 		await itemSelectorSamplePage.modal.selectButton.click();
 	});
 
 	await test.step('Assert that multiselect item is selected', async () => {
 		expect(
-			await itemSelectorSamplePage.multiselectGridItem('Default')
+			await itemSelectorSamplePage.multiselectGridItem(spaceName)
 		).toBeVisible();
 	});
 });

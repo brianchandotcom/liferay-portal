@@ -7,6 +7,7 @@ package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.cms.rest.dto.v1_0.ExpiredAsset;
 import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
+import com.liferay.analytics.cms.rest.internal.resource.v1_0.util.ObjectEntryVersionTitleExpressionUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.ExpiredAssetResource;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.model.ObjectDefinitionTable;
@@ -18,19 +19,11 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
-import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
-import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -42,8 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.sql.Clob;
 
 import java.util.List;
 import java.util.Locale;
@@ -122,14 +113,15 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 			_objectDefinitionTable.className,
 			DSLFunctionFactoryUtil.castClobText(
-				_getLocalizedTitleExpression(languageId)
+				ObjectEntryVersionTitleExpressionUtil.
+					getLocalizedTitleExpression(languageId)
 			).as(
 				"localized_title"
 			),
 			_objectEntryTable.objectDefinitionId,
 			_objectEntryTable.objectEntryId,
 			DSLFunctionFactoryUtil.castClobText(
-				_getTitleExpression()
+				ObjectEntryVersionTitleExpressionUtil.getTitleExpression()
 			).as(
 				"title"
 			)
@@ -196,46 +188,6 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		return GetterUtil.getLong(results.get(0));
 	}
 
-	private Expression<Clob> _getLocalizedTitleExpression(String languageId) {
-		Column<ObjectEntryVersionTable, Clob> contentColumn =
-			ObjectEntryVersionTable.INSTANCE.content;
-
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.HYPERSONIC) {
-			DSLFunction<Object> dslFunction1 = new DSLFunction<>(
-				new DSLFunctionType("REGEXP_SUBSTRING(", ")"),
-				new DSLFunction<>(
-					new DSLFunctionType("CONVERT(", ", SQL_VARCHAR)"),
-					contentColumn),
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>("(?s)\"title_i18n\"\\s*:\\s*(\\{.*?\\})")));
-
-			DSLFunction<Object> dslFunction2 = new DSLFunction<>(
-				new DSLFunctionType("REGEXP_SUBSTRING(", ")"), dslFunction1,
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>(
-						StringBundler.concat(
-							"\"", languageId, "\"\\s*:\\s*\"([^\"]*)\""))));
-
-			return new DSLFunction<>(
-				new DSLFunctionType("REGEXP_REPLACE(", ")"), dslFunction2,
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>(
-						StringBundler.concat(
-							"^\"", languageId, "\"\\s*:\\s*\"([^\"]*)\"$"))),
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>("$1")));
-		}
-
-		return _getPropertyValueExpression(
-			contentColumn, "properties.title_i18n." + languageId);
-	}
-
 	private Predicate _getPredicate(Long[] groupIds, String languageId) {
 		Predicate predicate = _objectEntryTable.groupId.in(
 			groupIds
@@ -249,77 +201,12 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		if (Validator.isNotNull(languageId)) {
 			predicate = predicate.and(
 				DSLFunctionFactoryUtil.castClobText(
-					_getLocalizedTitleExpression(languageId)
+					ObjectEntryVersionTitleExpressionUtil.
+						getLocalizedTitleExpression(languageId)
 				).isNotNull());
 		}
 
 		return predicate;
-	}
-
-	private <T> Expression<T> _getPropertyValueExpression(
-		Expression<T> columnExpression, String propertyPath) {
-
-		DB db = DBManagerUtil.getDB();
-
-		if ((db.getDBType() == DBType.MARIADB) ||
-			(db.getDBType() == DBType.MYSQL)) {
-
-			return new DSLFunction<>(
-				new DSLFunctionType("JSON_UNQUOTE(", ")"),
-				new DSLFunction<>(
-					new DSLFunctionType("JSON_EXTRACT(", ")"), columnExpression,
-					new Scalar<>("$." + propertyPath)));
-		}
-		else if (db.getDBType() == DBType.POSTGRESQL) {
-			String[] propertyPathParts = propertyPath.split("\\.");
-
-			Expression[] expressions =
-				new Expression[propertyPathParts.length + 1];
-
-			expressions[0] = columnExpression;
-
-			for (int i = 1; i < expressions.length; i++) {
-				expressions[i] = new Scalar<>(propertyPathParts[i]);
-			}
-
-			return new DSLFunction<>(
-				new DSLFunctionType("json_extract_path_text(", ")"),
-				expressions);
-		}
-
-		return new DSLFunction<>(
-			new DSLFunctionType("JSON_VALUE(", ")"), columnExpression,
-			new Scalar<>("$." + propertyPath));
-	}
-
-	private Expression<Clob> _getTitleExpression() {
-		Column<ObjectEntryVersionTable, Clob> contentColumn =
-			ObjectEntryVersionTable.INSTANCE.content;
-
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.HYPERSONIC) {
-			DSLFunction<Object> dslFunction = new DSLFunction<>(
-				new DSLFunctionType("REGEXP_SUBSTRING(", ")"),
-				new DSLFunction<>(
-					new DSLFunctionType("CONVERT(", ", SQL_VARCHAR)"),
-					contentColumn),
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>(
-						"\"title\"\\s*:\\s*\"(?:[^\"\\\\]|\\\\.)*\"")));
-
-			return new DSLFunction<>(
-				new DSLFunctionType("REGEXP_REPLACE(", ")"), dslFunction,
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>("^\"title\"\\s*:\\s*\"([^\"]*)\"$")),
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>("$1")));
-		}
-
-		return _getPropertyValueExpression(contentColumn, "properties.title");
 	}
 
 	private int _getUsages(

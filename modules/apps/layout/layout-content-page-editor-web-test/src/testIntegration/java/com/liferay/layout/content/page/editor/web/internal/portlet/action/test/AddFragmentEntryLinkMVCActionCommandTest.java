@@ -265,6 +265,9 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", _fragmentRenderer.getKey());
 
+		_addFragmentEntry(
+			RandomTestUtil.randomString(), _fragmentRenderer.getKey());
+
 		FragmentEntryLink fragmentEntryLink = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
 			new Class<?>[] {ActionRequest.class},
@@ -272,9 +275,18 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 		Assert.assertEquals(
 			_fragmentRenderer.getKey(), fragmentEntryLink.getRendererKey());
+
+		Assert.assertEquals("", fragmentEntryLink.getHtml());
 	}
 
 	private FragmentEntry _addFragmentEntry(String html) throws Exception {
+		return _addFragmentEntry(html, RandomTestUtil.randomString());
+	}
+
+	private FragmentEntry _addFragmentEntry(
+			String html, String fragmentEntryKey)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -285,11 +297,10 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 		return _fragmentEntryLocalService.addFragmentEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			fragmentCollection.getFragmentCollectionId(),
-			StringUtil.randomString(), StringUtil.randomString(),
-			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
-			false, "{fieldSets: []}", null, 0, false, false,
-			FragmentConstants.TYPE_COMPONENT, null,
+			fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
+			StringUtil.randomString(), RandomTestUtil.randomString(), html,
+			RandomTestUtil.randomString(), false, "{fieldSets: []}", null, 0,
+			false, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
@@ -524,7 +535,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.fragment.renderer.collection.filter.internal.CollectionAppliedFiltersFragmentRenderer"
+		filter = "component.name=com.liferay.fragment.internal.renderer.SaveContentFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
 

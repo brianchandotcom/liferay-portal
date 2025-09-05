@@ -18,7 +18,7 @@ git:
             sparseCheckout: cloud/terraform/aws
         url: https://github.com/liferay/liferay-portal.git
     user:
-        email: ""
+        emailAddress: ""
         name: ""
 images:
     awsCli:

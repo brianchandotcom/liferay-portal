@@ -23,7 +23,6 @@ describe('TopPagesMetrics', () => {
 								value: 500,
 							},
 							pageTitle: 'Page 1',
-							siteName: 'Site A',
 						},
 						{
 							canonicalUrl: 'http://example.com/page2',
@@ -32,7 +31,6 @@ describe('TopPagesMetrics', () => {
 								value: 300,
 							},
 							pageTitle: 'Page 2',
-							siteName: 'Site B',
 						},
 					],
 					totalCount: 1000,
@@ -50,23 +48,25 @@ describe('TopPagesMetrics', () => {
 		).toBeInTheDocument();
 
 		const headers = screen.getAllByRole('columnheader');
-		expect(headers[0]).toHaveTextContent(/site/i);
+		expect(headers[0]).toHaveTextContent(/page-title/i);
 		expect(headers[1]).toHaveTextContent(/views/i);
 		expect(headers[2]).toHaveTextContent('x-of-x');
 
 		const rows = screen.getAllByRole('row');
 
 		const firstRow = within(rows[1]);
-		expect(
-			firstRow.getByRole('link', {name: 'Site A | Page 1'})
-		).toHaveAttribute('href', 'http://example.com/page1');
+		expect(firstRow.getByRole('link', {name: 'Page 1'})).toHaveAttribute(
+			'href',
+			'http://example.com/page1'
+		);
 		expect(firstRow.getByText('500')).toBeInTheDocument();
 		expect(firstRow.getByText('50%')).toBeInTheDocument();
 
 		const secondRow = within(rows[2]);
-		expect(
-			secondRow.getByRole('link', {name: 'Site B | Page 2'})
-		).toHaveAttribute('href', 'http://example.com/page2');
+		expect(secondRow.getByRole('link', {name: 'Page 2'})).toHaveAttribute(
+			'href',
+			'http://example.com/page2'
+		);
 		expect(secondRow.getByText('300')).toBeInTheDocument();
 		expect(secondRow.getByText('30%')).toBeInTheDocument();
 	});
@@ -86,7 +86,7 @@ describe('TopPagesMetrics', () => {
 		).toBeInTheDocument();
 
 		const headers = screen.getAllByRole('columnheader');
-		expect(headers[0]).toHaveTextContent(/site/i);
+		expect(headers[0]).toHaveTextContent(/page-title/i);
 		expect(headers[1]).toHaveTextContent(/views/i);
 		expect(headers[2]).toHaveTextContent('x-of-x');
 

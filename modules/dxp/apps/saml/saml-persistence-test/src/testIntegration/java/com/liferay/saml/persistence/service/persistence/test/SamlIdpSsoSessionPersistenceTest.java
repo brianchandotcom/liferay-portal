@@ -174,6 +174,13 @@ public class SamlIdpSsoSessionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUserId() throws Exception {
+		_persistence.countByUserId(RandomTestUtil.nextLong());
+
+		_persistence.countByUserId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SamlIdpSsoSession newSamlIdpSsoSession = addSamlIdpSsoSession();
 
@@ -481,6 +488,12 @@ public class SamlIdpSsoSessionPersistenceTest {
 			ReflectionTestUtil.invoke(
 				samlIdpSsoSession, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "samlIdpSsoSessionKey"));
+
+		Assert.assertEquals(
+			Long.valueOf(samlIdpSsoSession.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				samlIdpSsoSession, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 	}
 
 	protected SamlIdpSsoSession addSamlIdpSsoSession() throws Exception {

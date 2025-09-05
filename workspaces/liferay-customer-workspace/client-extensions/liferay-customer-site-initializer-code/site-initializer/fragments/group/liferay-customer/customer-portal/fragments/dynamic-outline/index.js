@@ -7,9 +7,16 @@ window.addEventListener('load', () => {
 	const dynamicOutline = fragmentElement.querySelector(
 		`#dynamicOutline${fragmentNamespace}`
 	);
+
+	const dynamicOutlineUl = dynamicOutline.querySelector('ul');
 	const headers = document.querySelectorAll(
 		`.${configuration.targetWrapper} h1, .${configuration.targetWrapper} h2, .${configuration.targetWrapper} h3`
 	);
+
+	if (headers.length === 0) {
+		return;
+	}
+
 	const outlineMap = new Map();
 
 	const scrollToHeader = (header) => {
@@ -48,10 +55,12 @@ window.addEventListener('load', () => {
 
 		li.appendChild(a);
 
-		dynamicOutline.appendChild(li);
+		dynamicOutlineUl.appendChild(li);
 
 		outlineMap.set(header.id, a);
 	});
+
+	dynamicOutline.classList.remove('d-none');
 
 	const intersectingHeaders = new Set();
 

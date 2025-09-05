@@ -909,17 +909,17 @@ public class EditableFragmentEntryProcessorTest {
 			AnalyticsAttributesUtil.ACTION_IMPRESSION,
 			element.attr("data-analytics-asset-action"));
 		Assert.assertEquals(
-			objectEntry.getExternalReferenceCode(),
-			element.attr("data-analytics-external-reference-code"));
-		Assert.assertEquals(
 			"title", element.attr("data-analytics-asset-field"));
 		Assert.assertEquals(
 			String.valueOf(objectEntry.getPrimaryKey()),
 			element.attr("data-analytics-asset-id"));
 		Assert.assertEquals(
+			"titleValue", element.attr("data-analytics-asset-title"));
+		Assert.assertEquals(
 			"object-entry", element.attr("data-analytics-asset-type"));
 		Assert.assertEquals(
-			"titleValue", element.attr("data-analytics-asset-title"));
+			objectEntry.getExternalReferenceCode(),
+			element.attr("data-analytics-external-reference-code"));
 		Assert.assertEquals(
 			objectDefinition.getName(),
 			element.attr("data-analytics-object-definition-name"));
@@ -980,15 +980,15 @@ public class EditableFragmentEntryProcessorTest {
 			AnalyticsAttributesUtil.ACTION_VIEW,
 			element.attr("data-analytics-asset-action"));
 		Assert.assertEquals(
-			objectEntry.getExternalReferenceCode(),
-			element.attr("data-analytics-external-reference-code"));
-		Assert.assertEquals(
 			"content", element.attr("data-analytics-asset-field"));
 		Assert.assertEquals(
 			String.valueOf(objectEntry.getPrimaryKey()),
 			element.attr("data-analytics-asset-id"));
 		Assert.assertEquals(
 			"object-entry", element.attr("data-analytics-asset-type"));
+		Assert.assertEquals(
+			objectEntry.getExternalReferenceCode(),
+			element.attr("data-analytics-external-reference-code"));
 		Assert.assertEquals(
 			objectDefinition.getName(),
 			element.attr("data-analytics-object-definition-name"));

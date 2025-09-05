@@ -7,8 +7,6 @@ Import-Package:\
 	!com.sun.management.*,\
 	!com.sun.msv.*,\
 	\
-	!io.netty.*,\
-	\
 	!javax.annotation.*,\
 	\
 	!javax.servlet.*,\

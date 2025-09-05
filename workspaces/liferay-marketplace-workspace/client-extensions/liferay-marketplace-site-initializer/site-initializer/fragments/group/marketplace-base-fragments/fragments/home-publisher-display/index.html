@@ -15,7 +15,7 @@
 
 		<p class="text-black-50 mb-4">${configuration.sectionDescription}</p>
 	</div>
-	
+
 	[#if configuration.publisherDetailsObjectId?has_content]
 
 		[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1") /]

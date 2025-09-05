@@ -105,8 +105,10 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 
 	const onSubmit = useCallback(
 		async (data: FormFields) => {
+			const projectId = data.projectId.toLowerCase();
+
 			try {
-				await trialOAuth2.checkDomainAvailability(data.projectId);
+				await trialOAuth2.checkDomainAvailability(projectId);
 			}
 			catch (error: any) {
 				console.error(error.message);
@@ -138,7 +140,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 						[OrderCustomFields.TRIAL_SETTINGS]: JSON.stringify({
 							consoleInviteEmailAddresses,
 							duration: data.duration,
-							projectId: data.projectId,
+							projectId,
 							siteInitializerKey: data.siteInitializerKey,
 						}),
 					},

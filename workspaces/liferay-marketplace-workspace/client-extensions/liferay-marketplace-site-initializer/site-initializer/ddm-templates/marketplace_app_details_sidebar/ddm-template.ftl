@@ -43,7 +43,7 @@
 	<#setting date_format = "MMMM d, yyyy">
 
 	<#if CPDefinition_displayDate.getData()?has_content>
-		<p>${CPDefinition_displayDate.getData()?date("MM/dd/yy h:mm a")?string("MMMM d, yyyy")}</p>
+		<p>${CPDefinition_displayDate.getData()}</p>
 	</#if>
 </@section>
 

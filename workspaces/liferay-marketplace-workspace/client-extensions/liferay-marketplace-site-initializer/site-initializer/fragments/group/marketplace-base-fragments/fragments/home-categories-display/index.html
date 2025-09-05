@@ -10,7 +10,7 @@
 	[#if appCategories?has_content]
 		<div class="categories-container d-flex flex-wrap">
 			[#list appCategories as category]
-				<a class="align-items-center btn category-button d-flex justify-content-center px-4 py-3 rounded text-nowrap" href="/web/marketpalce/applications?Category=${category.id}" target="_self">
+				<a class="align-items-center btn category-button d-flex justify-content-center px-4 py-3 rounded text-nowrap" href="/web/marketplace/applications?Category=${category.id}" target="_self">
 					<span class="category-icon" style="--category-color:${category.color}">
 						[@clay["icon"] symbol="${category.icon}" /]
 					</span>

@@ -193,6 +193,7 @@
 <style ${nonceAttribute}>
 .carousel-container img {
 	cursor: pointer;
+	object-fit: contain;
 }
 
 .custom-gallery-modal button:disabled {

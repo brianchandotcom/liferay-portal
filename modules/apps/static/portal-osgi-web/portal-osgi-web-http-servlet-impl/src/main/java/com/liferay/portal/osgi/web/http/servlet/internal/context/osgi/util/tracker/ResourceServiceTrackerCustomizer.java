@@ -139,13 +139,14 @@ public class ResourceServiceTrackerCustomizer
 			liferayContextController.getServletContextHelper(bundle);
 
 		ResourceRegistration resourceRegistration = new ResourceRegistration(
+			liferayContextController, resourceDTO,
 			new ServiceHolder<>(
 				bundle,
 				new ResourceServlet(resourcePrefix, servletContextHelper),
 				resourceDTO.serviceId,
 				GetterUtil.getInteger(
 					serviceReference.getProperty(Constants.SERVICE_RANKING))),
-			resourceDTO, servletContextHelper, liferayContextController);
+			servletContextHelper);
 
 		try {
 			resourceRegistration.init(

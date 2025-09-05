@@ -21,7 +21,7 @@ import org.osgi.dto.DTO;
  */
 public abstract class Registration<S, D extends DTO> {
 
-	public Registration(S service, D dto) {
+	public Registration(D dto, S service) {
 		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
 		_readLock = readWriteLock.readLock();
@@ -30,8 +30,8 @@ public abstract class Registration<S, D extends DTO> {
 
 		_condition = _writeLock.newCondition();
 
-		_service = service;
 		_dto = dto;
+		_service = service;
 	}
 
 	public void addReference() {

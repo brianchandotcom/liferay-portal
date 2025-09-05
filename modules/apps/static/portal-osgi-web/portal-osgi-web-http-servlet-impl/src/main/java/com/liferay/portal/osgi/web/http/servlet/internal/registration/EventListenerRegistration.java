@@ -37,20 +37,19 @@ public class EventListenerRegistration
 	extends Registration<EventListener, ListenerDTO> {
 
 	public EventListenerRegistration(
-		ServiceHolder<EventListener> serviceHolder,
-		List<Class<? extends EventListener>> classes, ListenerDTO listenerDTO,
-		ServletContext servletContext,
-		LiferayContextController liferayContextController) {
+		List<Class<? extends EventListener>> classes,
+		LiferayContextController liferayContextController,
+		ListenerDTO listenerDTO, ServiceHolder<EventListener> serviceHolder,
+		ServletContext servletContext) {
 
-		super(serviceHolder.get(), listenerDTO);
+		super(listenerDTO, serviceHolder.get());
 
-		_serviceHolder = serviceHolder;
 		_classes = classes;
-		_servletContext = servletContext;
 		_liferayContextController = liferayContextController;
+		_serviceHolder = serviceHolder;
+		_servletContext = servletContext;
 
 		_classLoader = serviceHolder.getBundleClassLoader();
-
 		_eventListenerProxy = (EventListener)ProxyUtil.newProxyInstance(
 			EventListenerRegistration.class.getClassLoader(),
 			classes.toArray(new Class<?>[0]),
@@ -142,6 +141,7 @@ public class EventListenerRegistration
 
 	private class EventListenerInvocationHandler implements InvocationHandler {
 
+		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 

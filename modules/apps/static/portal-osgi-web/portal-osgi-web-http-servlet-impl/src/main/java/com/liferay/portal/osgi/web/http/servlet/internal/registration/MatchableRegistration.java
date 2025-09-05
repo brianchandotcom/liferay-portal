@@ -16,17 +16,16 @@ import org.osgi.dto.DTO;
 public abstract class MatchableRegistration<S, D extends DTO>
 	extends Registration<S, D> {
 
-	public MatchableRegistration(S service, D dto) {
-		super(service, dto);
+	public MatchableRegistration(D dto, S service) {
+		super(dto, service);
 	}
 
 	public abstract String match(
-		String name, String servletPath, String pathInfo, String extension,
-		Match match);
+		String extension, Match match, String name, String pathInfo,
+		String servletPath);
 
 	protected boolean doMatch(
-			String pattern, String servletPath, String pathInfo,
-			String extension, Match match)
+			String extension, Match match, String pattern, String servletPath)
 		throws IllegalArgumentException {
 
 		if (match == Match.EXACT) {
@@ -43,7 +42,7 @@ public abstract class MatchableRegistration<S, D extends DTO>
 			}
 
 			if ((match == Match.REGEX) &&
-				isPathWildcardMatch(pattern, servletPath, pathInfo)) {
+				isPathWildcardMatch(pattern, servletPath)) {
 
 				return true;
 			}
@@ -66,9 +65,7 @@ public abstract class MatchableRegistration<S, D extends DTO>
 		return false;
 	}
 
-	protected boolean isPathWildcardMatch(
-		String pattern, String servletPath, String pathInfo) {
-
+	protected boolean isPathWildcardMatch(String pattern, String servletPath) {
 		int cpl = pattern.length() - 2;
 
 		if (pattern.endsWith(Const.SLASH_STAR) &&

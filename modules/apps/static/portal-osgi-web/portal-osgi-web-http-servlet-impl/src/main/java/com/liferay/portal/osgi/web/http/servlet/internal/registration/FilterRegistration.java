@@ -45,16 +45,11 @@ public class FilterRegistration
 	implements Comparable<FilterRegistration> {
 
 	public FilterRegistration(
-		ServiceHolder<Filter> serviceHolder, FilterDTO filterDTO, int priority,
-		LiferayContextController liferayContextController) {
+		FilterDTO filterDTO, LiferayContextController liferayContextController,
+		int priority, ServiceHolder<Filter> serviceHolder) {
 
-		super(serviceHolder.get(), filterDTO);
+		super(filterDTO, serviceHolder.get());
 
-		_serviceHolder = serviceHolder;
-		_priority = priority;
-		_liferayContextController = liferayContextController;
-
-		_patterns = _getPatterns(filterDTO);
 		_classLoader = serviceHolder.getBundleClassLoader();
 
 		ServiceReference<Filter> serviceReference =
@@ -81,6 +76,12 @@ public class FilterRegistration
 		else {
 			_initDestroyWithContextController = true;
 		}
+
+		_liferayContextController = liferayContextController;
+		_priority = priority;
+		_serviceHolder = serviceHolder;
+
+		_patterns = _getPatterns(filterDTO);
 	}
 
 	public boolean appliesTo(FilterChainImpl filterChainImpl) {
@@ -192,9 +193,15 @@ public class FilterRegistration
 		}
 	}
 
+	@Override
 	public String match(
-		String name, String requestURI, String extension, Match match) {
+		String extension, Match match, String name, String pathInfo,
+		String servletPath) {
 
+		throw new UnsupportedOperationException();
+	}
+
+	public String match(String extension, String name, String requestURI) {
 		if ((name != null) && (getDTO().servletNames != null)) {
 			for (String servletName : getDTO().servletNames) {
 				if (servletName.equals(name)) {
@@ -205,7 +212,7 @@ public class FilterRegistration
 
 		if ((requestURI != null) && !requestURI.isEmpty()) {
 			for (String pattern : getDTO().patterns) {
-				if (doPatternMatch(pattern, requestURI, extension)) {
+				if (doPatternMatch(extension, requestURI, pattern)) {
 					return pattern;
 				}
 			}
@@ -224,16 +231,8 @@ public class FilterRegistration
 		return null;
 	}
 
-	@Override
-	public String match(
-		String name, String servletPath, String pathInfo, String extension,
-		Match match) {
-
-		throw new UnsupportedOperationException();
-	}
-
 	protected boolean doPatternMatch(
-			String pattern, String path, String extension)
+			String extension, String path, String pattern)
 		throws IllegalArgumentException {
 
 		if (pattern.indexOf("/*.") == 0) {
@@ -254,7 +253,7 @@ public class FilterRegistration
 		}
 
 		if (pattern.charAt(0) == '/') {
-			if (isPathWildcardMatch(pattern, path)) {
+			if (isPathWildcardMatch(path, pattern)) {
 				if (extensionWithPrefixMatch != null) {
 					return extensionWithPrefixMatch.equals(extension);
 				}
@@ -272,7 +271,7 @@ public class FilterRegistration
 		return false;
 	}
 
-	protected boolean isPathWildcardMatch(String pattern, String path) {
+	protected boolean isPathWildcardMatch(String path, String pattern) {
 		if (path == null) {
 			return false;
 		}

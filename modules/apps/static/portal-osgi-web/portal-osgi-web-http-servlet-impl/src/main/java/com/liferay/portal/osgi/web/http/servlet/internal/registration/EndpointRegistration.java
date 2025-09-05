@@ -37,15 +37,15 @@ public abstract class EndpointRegistration<D extends DTO>
 	implements Comparable<EndpointRegistration<?>> {
 
 	public EndpointRegistration(
-		ServiceHolder<Servlet> serviceHolder, D dto,
-		ServletContextHelper servletContextHelper,
-		LiferayContextController liferayContextController) {
+		D dto, LiferayContextController liferayContextController,
+		ServiceHolder<Servlet> serviceHolder,
+		ServletContextHelper servletContextHelper) {
 
-		super(serviceHolder.get(), dto);
+		super(dto, serviceHolder.get());
 
+		_liferayContextController = liferayContextController;
 		_serviceHolder = serviceHolder;
 		_servletContextHelper = servletContextHelper;
-		_liferayContextController = liferayContextController;
 
 		_classLoader = serviceHolder.getBundleClassLoader();
 	}
@@ -132,8 +132,8 @@ public abstract class EndpointRegistration<D extends DTO>
 	}
 
 	public String match(
-		String name, String servletPath, String pathInfo, String extension,
-		Match match) {
+		String extension, Match match, String name, String pathInfo,
+		String servletPath) {
 
 		if (name != null) {
 			if (Objects.equals(getName(), name)) {
@@ -150,7 +150,7 @@ public abstract class EndpointRegistration<D extends DTO>
 		}
 
 		for (String pattern : patterns) {
-			if (doMatch(pattern, servletPath, pathInfo, extension, match)) {
+			if (doMatch(extension, match, pattern, servletPath)) {
 				return pattern;
 			}
 		}

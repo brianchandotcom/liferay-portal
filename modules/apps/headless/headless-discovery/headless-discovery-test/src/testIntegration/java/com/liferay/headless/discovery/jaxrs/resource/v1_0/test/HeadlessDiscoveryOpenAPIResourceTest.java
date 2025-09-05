@@ -121,7 +121,8 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
 						RandomTestUtil.randomString(),
-						"x" + RandomTestUtil.randomString(), false)),Collections.emptyList());
+						"x" + RandomTestUtil.randomString(), false)),
+				Collections.emptyList());
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),

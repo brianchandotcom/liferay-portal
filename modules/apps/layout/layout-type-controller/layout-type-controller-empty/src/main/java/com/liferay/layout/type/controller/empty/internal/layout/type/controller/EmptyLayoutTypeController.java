@@ -59,6 +59,11 @@ public class EmptyLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Override
+	public boolean isBrowsable() {
+		return false;
+	}
+
+	@Override
 	public boolean isFirstPageable() {
 		return true;
 	}

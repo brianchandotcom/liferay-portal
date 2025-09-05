@@ -5,13 +5,15 @@
 	lastViewedProjectERC = ""
 /]
 
-[#list request.getCookies() as cookie]
-	[#if cookie.getName() == "CP_LAST_VIEWED_PROJECT_" + themeDisplay.getUserId()]
-		[#assign lastViewedProjectERC = cookie.getValue()!""]
+[#if request?has_content]
+	[#list request.getCookies() as cookie]
+		[#if cookie.getName() == "CP_LAST_VIEWED_PROJECT_" + themeDisplay.getUserId()]
+			[#assign lastViewedProjectERC = cookie.getValue()!""]
 
-		[#break]
-	[/#if]
-[/#list]
+			[#break]
+		[/#if]
+	[/#list]
+[/#if]
 
 [#if koroneikiAccounts?is_hash && koroneikiAccounts.items?? && koroneikiAccounts.totalCount??]
 	[#assign lastCreatedProjectERC = (koroneikiAccounts.items[0].externalReferenceCode)!"" /]

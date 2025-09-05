@@ -1,16 +1,7 @@
 <style>
 	.cp-category-header-container {
 		align-items: center;
-		background-image: url('/documents/d/customer-portal/search_bar-png');
-		background-size: cover;
-		height: 120px;
 		justify-content: space-between;
-
-		h1, h3 {
-			color: var(--color-neutral-0, #FFFFFF);
-			font-weight: var(--font-weight-semi-bold);
-			text-align: center;
-		}
 
 		.search-bar {
 			max-width: 100%;
@@ -23,8 +14,6 @@
 	}
 
 	.landing-page-mode {
-		background-image: url('/documents/d/customer-portal/search_bar_landing_page-png');
-		height: 280px;
 		justify-content: center;
 
 		.search-bar {
@@ -33,7 +22,7 @@
 	}
 </style>
 
-<#assign displayObject = (request.getAttribute("LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER").getDisplayObject())!{} />
+<#assign displayObject = (renderRequest.getAttribute("LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER").getDisplayObject())!{} />
 
 <#if displayObject?has_content>
 	<#assign
@@ -46,7 +35,7 @@
 <#if mainCategory?has_content>
 	<#assign isLandingPage = currentCategoryId?string == mainCategoryId />
 
-	<div class="cp-category-header-container d-flex ${isLandingPage?then('flex-column landing-page-mode','')} mb-5 p-5">
+	<div class="cp-category-header-container d-flex ${isLandingPage?then('flex-column landing-page-mode','')}">
 		<${isLandingPage?then("h1", "h3")}>
 			${htmlUtil.escape(mainCategory.name)}
 		</${isLandingPage?then("h1", "h3")}>

@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
     annotations:
         workflows.argoproj.io/default-artifact-repository: {{ $defaultArtifactRepository }}
-    name: {{ include "liferayAwsBackupRestore.artifactRepositoryConfigMapName" . }}
+    name: {{ include "liferayAWSBackupRestore.artifactRepositoryConfigMapName" . }}
     namespace: {{ .Values.argo.namespace }}
 data:
     {{ $defaultArtifactRepository }}: |-

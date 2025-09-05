@@ -1,72 +1,72 @@
-{{- define "liferayAwsBackupRestore.argo.param.commitMessage" -}}
+{{- define "liferayAWSBackupRestore.argo.param.commitMessage" -}}
 commit-message
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.dataActive" -}}
+{{- define "liferayAWSBackupRestore.argo.param.dataActive" -}}
 data-active
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.dataInactive" -}}
+{{- define "liferayAWSBackupRestore.argo.param.dataInactive" -}}
 data-inactive
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.dbRestoreSnapshotIdentifier" -}}
+{{- define "liferayAWSBackupRestore.argo.param.dbRestoreSnapshotIdentifier" -}}
 db-restore-snapshot-identifier
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.recoveryPointArn" -}}
+{{- define "liferayAWSBackupRestore.argo.param.recoveryPointArn" -}}
 recovery-point-arn
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.rdsSnapshotId" -}}
+{{- define "liferayAWSBackupRestore.argo.param.rdsSnapshotId" -}}
 rds-snapshot-id
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.s3BucketId" -}}
+{{- define "liferayAWSBackupRestore.argo.param.s3BucketId" -}}
 s3-bucket-id
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.s3BucketIdActive" -}}
+{{- define "liferayAWSBackupRestore.argo.param.s3BucketIdActive" -}}
 s3-bucket-id-active
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.s3BucketIdInactive" -}}
+{{- define "liferayAWSBackupRestore.argo.param.s3BucketIdInactive" -}}
 s3-bucket-id-inactive
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.s3RecoveryPointArn" -}}
+{{- define "liferayAWSBackupRestore.argo.param.s3RecoveryPointArn" -}}
 s3-recovery-point-arn
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.param.tfvarsContent" -}}
+{{- define "liferayAWSBackupRestore.argo.param.tfvarsContent" -}}
 tfvars-content
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.ref.taskInputParam" -}}
+{{- define "liferayAWSBackupRestore.argo.ref.taskInputParam" -}}
 {{- "{{" }}inputs.parameters.{{ . }}}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.ref.taskOutputArtifact" -}}
+{{- define "liferayAWSBackupRestore.argo.ref.taskOutputArtifact" -}}
 {{- "{{" }}tasks.{{ .task }}.outputs.artifacts.{{ .artifact }}}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.ref.taskOutputParam" -}}
+{{- define "liferayAWSBackupRestore.argo.ref.taskOutputParam" -}}
 {{- "{{" }}tasks.{{ .task }}.outputs.parameters.{{ .parameter }}}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.argo.ref.workflowParam" -}}
+{{- define "liferayAWSBackupRestore.argo.ref.workflowParam" -}}
 {{- "{{" }}workflow.parameters.{{ . }}}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.artifactRepositoryConfigMapName" -}}
-{{- printf "%s-art-repo" (include "liferayAwsBackupRestore.name" .) | trunc 63 | trimSuffix "-" -}}
+{{- define "liferayAWSBackupRestore.artifactRepositoryConfigMapName" -}}
+{{- printf "%s-art-repo" (include "liferayAWSBackupRestore.name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.chart" -}}
+{{- define "liferayAWSBackupRestore.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.fullname" -}}
+{{- define "liferayAWSBackupRestore.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -79,74 +79,74 @@ tfvars-content
 {{- end -}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.gitCredentials.fileName" -}}
+{{- define "liferayAWSBackupRestore.gitCredentials.fileName" -}}
 .git-credentials
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.gitCredentials.mountPath" -}}
-{{- printf "/mnt/%s" (include "liferayAwsBackupRestore.gitCredentials.fileName" .) -}}
+{{- define "liferayAWSBackupRestore.gitCredentials.mountPath" -}}
+{{- printf "/mnt/%s" (include "liferayAWSBackupRestore.gitCredentials.fileName" .) -}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.gitCredentials.secretName" -}}
-{{- printf "%s-git-creds" (include "liferayAwsBackupRestore.name" .) | trunc 63 | trimSuffix "-" -}}
+{{- define "liferayAWSBackupRestore.gitCredentials.secretName" -}}
+{{- printf "%s-git-creds" (include "liferayAWSBackupRestore.name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.gitCredentials.tempPath" -}}
-{{- printf "/tmp/%s" (include "liferayAwsBackupRestore.gitCredentials.fileName" .) -}}
+{{- define "liferayAWSBackupRestore.gitCredentials.tempPath" -}}
+{{- printf "/tmp/%s" (include "liferayAWSBackupRestore.gitCredentials.fileName" .) -}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.gitCredentials.volumeMount" -}}
+{{- define "liferayAWSBackupRestore.gitCredentials.volumeMount" -}}
 {{- if and .Values.git.credentials.token .Values.git.credentials.username -}}
 volumeMounts:
-    -   mountPath: {{ include "liferayAwsBackupRestore.gitCredentials.mountPath" . }}
-        name: {{ include "liferayAwsBackupRestore.gitCredentials.volumeName" . }}
-        subPath: {{ include "liferayAwsBackupRestore.gitCredentials.fileName" . }}
+    -   mountPath: {{ include "liferayAWSBackupRestore.gitCredentials.mountPath" . }}
+        name: {{ include "liferayAWSBackupRestore.gitCredentials.volumeName" . }}
+        subPath: {{ include "liferayAWSBackupRestore.gitCredentials.fileName" . }}
 {{- end -}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.gitCredentials.volumeName" -}}
+{{- define "liferayAWSBackupRestore.gitCredentials.volumeName" -}}
 git-credentials
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.labels" -}}
-{{ include "liferayAwsBackupRestore.selectorLabels" . }}
+{{- define "liferayAWSBackupRestore.labels" -}}
+{{ include "liferayAWSBackupRestore.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-helm.sh/chart: {{ include "liferayAwsBackupRestore.chart" . }}
+helm.sh/chart: {{ include "liferayAWSBackupRestore.chart" . }}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.name" -}}
+{{- define "liferayAWSBackupRestore.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.path.dataActive" -}}
+{{- define "liferayAWSBackupRestore.path.dataActive" -}}
 /tmp/data-active.txt
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.path.dataInactive" -}}
+{{- define "liferayAWSBackupRestore.path.dataInactive" -}}
 /tmp/data-inactive.txt
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.path.rdsSnapshotId" -}}
+{{- define "liferayAWSBackupRestore.path.rdsSnapshotId" -}}
 /tmp/rds-snapshot-id.txt
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.path.s3BucketIdActive" -}}
+{{- define "liferayAWSBackupRestore.path.s3BucketIdActive" -}}
 /tmp/s3-bucket-id-active.txt
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.path.s3BucketIdInactive" -}}
+{{- define "liferayAWSBackupRestore.path.s3BucketIdInactive" -}}
 /tmp/s3-bucket-id-inactive.txt
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.path.s3RecoveryPointArn" -}}
+{{- define "liferayAWSBackupRestore.path.s3RecoveryPointArn" -}}
 /tmp/s3-recovery-point-arn.txt
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.path.workingDir" -}}
+{{- define "liferayAWSBackupRestore.path.workingDir" -}}
 /src
 {{- end -}}
 
-{{- define "liferayAwsBackupRestore.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "liferayAwsBackupRestore.name" . }}
+{{- define "liferayAWSBackupRestore.selectorLabels" -}}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ include "liferayAWSBackupRestore.name" . }}
 {{- end -}}

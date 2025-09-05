@@ -393,7 +393,8 @@ public class CookiesManagerImplTest {
 
 		Assert.assertEquals(StringPool.SLASH, cookie.getPath());
 
-		HttpServletRequestWrapper httpServletRequestWrapper =
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
 			new HttpServletRequestWrapper(_mockHttpServletRequest) {
 
 				@Override
@@ -402,11 +403,8 @@ public class CookiesManagerImplTest {
 						RandomTestUtil.randomString();
 				}
 
-			};
-
-		CookiesManagerUtil.addCookie(
-			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
-			httpServletRequestWrapper, _mockHttpServletResponse);
+			},
+			_mockHttpServletResponse);
 
 		Assert.assertEquals(StringPool.SLASH, cookie.getPath());
 	}

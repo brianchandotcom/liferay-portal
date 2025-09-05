@@ -110,6 +110,33 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 	}
 
 	@Test
+	public void testGetFriendlyURLPreventsCrossSiteCircularCall()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			journalArticle.getDDMStructureId(), true,
+			WorkflowConstants.STATUS_APPROVED);
+
+		_setUpThemeDisplay(
+			_layoutLocalService.getLayout(_assetDisplayPageEntry.getPlid()));
+
+		Assert.assertNull(
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()),
+				LocaleUtil.getSiteDefault(), _themeDisplay));
+	}
+
+	@Test
 	public void testGetFriendlyURLWithLayoutUUIDBasedAssetDisplayPage()
 		throws Exception {
 

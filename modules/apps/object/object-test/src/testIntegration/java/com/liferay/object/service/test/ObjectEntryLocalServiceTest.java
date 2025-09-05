@@ -6433,16 +6433,6 @@ public class ObjectEntryLocalServiceTest {
 					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 					"objectRelationship2")));
 
-		Assert.assertNotNull(
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				objectDefinitionA.getClassName()));
-		Assert.assertNull(
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				objectDefinitionAA.getClassName()));
-		Assert.assertNull(
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				objectDefinitionAAA.getClassName()));
-
 		ObjectEntry objectEntryA = _addObjectEntry(
 			0, objectDefinitionA.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(

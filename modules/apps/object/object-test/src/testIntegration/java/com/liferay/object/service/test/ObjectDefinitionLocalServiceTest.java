@@ -573,31 +573,19 @@ public class ObjectDefinitionLocalServiceTest {
 		TreeTestUtil.forEachNodeObjectDefinition(
 			tree.iterator(), _objectDefinitionLocalService,
 			nodeObjectDefinition -> {
-				if (nodeObjectDefinition.isRootNode()) {
-					Assert.assertEquals(
-						4,
-						_resourceActionLocalService.getResourceActionsCount(
-							nodeObjectDefinition.getClassName()));
-					Assert.assertEquals(
-						2,
-						_resourceActionLocalService.getResourceActionsCount(
-							nodeObjectDefinition.getResourceName()));
-				}
-				else {
-					Assert.assertEquals(
-						0,
-						_resourceActionLocalService.getResourceActionsCount(
-							nodeObjectDefinition.getClassName()));
-					Assert.assertEquals(
-						0,
-						_resourceActionLocalService.getResourceActionsCount(
-							nodeObjectDefinition.getResourceName()));
-				}
-
+				Assert.assertEquals(
+					4,
+					_resourceActionLocalService.getResourceActionsCount(
+						nodeObjectDefinition.getClassName()));
 				Assert.assertEquals(
 					6,
 					_resourceActionLocalService.getResourceActionsCount(
 						nodeObjectDefinition.getPortletId()));
+				Assert.assertEquals(
+					2,
+					_resourceActionLocalService.getResourceActionsCount(
+						nodeObjectDefinition.getResourceName()));
+
 				Assert.assertEquals(
 					1,
 					_resourcePermissionLocalService.getResourcePermissionsCount(

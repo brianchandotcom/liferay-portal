@@ -62,9 +62,11 @@ public class HttpSessionTracker {
 				HttpSessionEvent httpSessionEvent = new HttpSessionEvent(
 					httpSessionWrapper);
 
-				for (HttpSessionListener listener : httpSessionListeners) {
+				for (HttpSessionListener httpSessionListener :
+						httpSessionListeners) {
+
 					try {
-						listener.sessionDestroyed(httpSessionEvent);
+						httpSessionListener.sessionDestroyed(httpSessionEvent);
 					}
 					catch (IllegalStateException illegalStateException) {
 						if (_log.isDebugEnabled()) {
@@ -95,23 +97,20 @@ public class HttpSessionTracker {
 				}
 			}
 
-			liferayContextController.removeActiveSession(httpSessionWrapper.getId());
+			liferayContextController.removeActiveSession(
+				httpSessionWrapper.getId());
 		}
 	}
 
-	public static boolean removeHttpSessionWrapper(
+	public static void removeHttpSessionWrapper(
 		HttpSessionWrapper httpSessionWrapper) {
 
 		Set<HttpSessionWrapper> httpSessionWrappers =
 			_httpSessionWrappersMap.get(httpSessionWrapper.getId());
 
-		if ((httpSessionWrappers != null) &&
-			httpSessionWrappers.remove(httpSessionWrapper)) {
-
-			return true;
+		if (httpSessionWrappers != null) {
+			httpSessionWrappers.remove(httpSessionWrapper);
 		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

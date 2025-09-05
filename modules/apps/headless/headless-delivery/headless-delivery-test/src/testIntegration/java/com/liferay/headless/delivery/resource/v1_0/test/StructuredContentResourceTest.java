@@ -109,6 +109,8 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -504,7 +506,6 @@ public class StructuredContentResourceTest
 		super.testPatchStructuredContent();
 
 		_testPatchStructuredContentWithDateExpired();
-		_testPatchStructuredContentWithDateExpiredNeverExpired();
 		_testPatchStructuredContentWithRandomTitle();
 	}
 
@@ -1201,6 +1202,16 @@ public class StructuredContentResourceTest
 		return null;
 	}
 
+	private Date _getDate(int year) {
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.add(Calendar.YEAR, year);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return calendar.getTime();
+	}
+
 	private String _randomColor() {
 		return String.format(
 			"#%02d%02d%02d", RandomTestUtil.randomInt(0, 100),
@@ -1477,16 +1488,6 @@ public class StructuredContentResourceTest
 		return simpleDateFormat.format(new Date());
 	}
 
-	private Date _randomDatePlusAYear() {
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-		calendar.add(Calendar.YEAR, 1);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-
-		return calendar.getTime();
-	}
-
 	private String _randomGrid() {
 		return StringBundler.concat(
 			"{", _COMPLETE_STRUCTURED_CONTENT_OPTIONS[0], ":",
@@ -1607,6 +1608,8 @@ public class StructuredContentResourceTest
 			_useDepotDDMStructureStructureId ?
 				_depotDDMStructure.getStructureId() :
 					_ddmStructure.getStructureId());
+		structuredContent.setDateExpired(() -> null);
+		structuredContent.setNeverExpire(true);
 		structuredContent.setRelatedContents(
 			new RelatedContent[] {
 				new RelatedContent() {
@@ -2128,7 +2131,7 @@ public class StructuredContentResourceTest
 	private void _testGetStructuredContentWithDateExpired() throws Exception {
 		StructuredContent structuredContent = randomStructuredContent();
 
-		Date dateExpired = _randomDatePlusAYear();
+		Date dateExpired = _getDate(1);
 
 		structuredContent.setDateExpired(dateExpired);
 
@@ -2151,7 +2154,7 @@ public class StructuredContentResourceTest
 
 		StructuredContent structuredContent = randomStructuredContent();
 
-		structuredContent.setDateExpired(_randomDatePlusAYear());
+		structuredContent.setDateExpired(_getDate(1));
 
 		structuredContent.setNeverExpire(true);
 
@@ -2525,30 +2528,13 @@ public class StructuredContentResourceTest
 	}
 
 	private void _testPatchStructuredContentWithDateExpired() throws Exception {
-		StructuredContent structuredContent = randomStructuredContent();
-
-		StructuredContent postStructuredContent =
-			structuredContentResource.postSiteStructuredContent(
-				testGroup.getGroupId(), structuredContent);
-
-		Date randomDate = _randomDatePlusAYear();
-
-		StructuredContent patchStructuredContent =
-			structuredContentResource.patchStructuredContent(
-				postStructuredContent.getId(),
-				new StructuredContent() {
-					{
-						dateExpired = randomDate;
-						neverExpire = false;
-					}
-				});
-
-		Assert.assertFalse(patchStructuredContent.getNeverExpire());
-		Assert.assertEquals(
-			randomDate, patchStructuredContent.getDateExpired());
+		_testPatchStructuredContentWithDateExpiredExpire();
+		_testPatchStructuredContentWithDateExpiredExpire2();
+		_testPatchStructuredContentWithDateExpiredExpireBadRequest();
+		_testPatchStructuredContentWithDateExpiredNeverExpire();
 	}
 
-	private void _testPatchStructuredContentWithDateExpiredNeverExpired()
+	private void _testPatchStructuredContentWithDateExpiredExpire()
 		throws Exception {
 
 		StructuredContent structuredContent = randomStructuredContent();
@@ -2557,14 +2543,105 @@ public class StructuredContentResourceTest
 			structuredContentResource.postSiteStructuredContent(
 				testGroup.getGroupId(), structuredContent);
 
-		Date randomDate = _randomDatePlusAYear();
+		Date date = _getDate(1);
 
 		StructuredContent patchStructuredContent =
 			structuredContentResource.patchStructuredContent(
 				postStructuredContent.getId(),
 				new StructuredContent() {
 					{
-						dateExpired = randomDate;
+						dateExpired = date;
+						neverExpire = false;
+					}
+				});
+
+		Assert.assertFalse(patchStructuredContent.getNeverExpire());
+		Assert.assertEquals(date, patchStructuredContent.getDateExpired());
+	}
+
+	private void _testPatchStructuredContentWithDateExpiredExpire2()
+		throws Exception {
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		StructuredContent patchStructuredContent =
+			structuredContentResource.patchStructuredContent(
+				postStructuredContent.getId(),
+				new StructuredContent() {
+					{
+						neverExpire = false;
+					}
+				});
+
+		Assert.assertFalse(patchStructuredContent.getNeverExpire());
+
+		Date patchDate = patchStructuredContent.getDateExpired();
+
+		Date date = _getDate(1);
+
+		Assert.assertEquals(date.getYear(), patchDate.getYear());
+		Assert.assertEquals(date.getMonth(), patchDate.getMonth());
+		Assert.assertEquals(date.getDay(), patchDate.getDay());
+		Assert.assertEquals(date.getHours(), patchDate.getHours());
+	}
+
+	private void _testPatchStructuredContentWithDateExpiredExpireBadRequest()
+		throws Exception {
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		Date date = _getDate(-1);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.OFF)) {
+
+			assertHttpResponseStatusCode(
+				400,
+				structuredContentResource.patchStructuredContentHttpResponse(
+					postStructuredContent.getId(),
+					new StructuredContent() {
+						{
+							dateExpired = date;
+							neverExpire = false;
+						}
+					}));
+		}
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertTrue(getStructuredContent.getNeverExpire());
+		Assert.assertNull(getStructuredContent.getDateExpired());
+	}
+
+	private void _testPatchStructuredContentWithDateExpiredNeverExpire()
+		throws Exception {
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		Date date = _getDate(1);
+
+		StructuredContent patchStructuredContent =
+			structuredContentResource.patchStructuredContent(
+				postStructuredContent.getId(),
+				new StructuredContent() {
+					{
+						dateExpired = date;
 						neverExpire = true;
 					}
 				});

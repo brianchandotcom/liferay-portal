@@ -642,6 +642,7 @@
 		<check name="JavaReturnStatementCheck">
 			<category name="Styling" />
 			<description name="Finds unnecessary `else` statement (when `if` and `else` statement both end with `return` statement)." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaSeeAnnotationCheck">
 			<category name="Bug Prevention" />

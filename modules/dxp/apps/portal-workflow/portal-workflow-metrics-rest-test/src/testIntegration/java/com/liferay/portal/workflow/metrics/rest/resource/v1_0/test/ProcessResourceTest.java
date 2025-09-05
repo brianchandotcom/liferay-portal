@@ -92,7 +92,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		process.setTitle(RandomTestUtil.randomString());
 		process.setTitle_i18n(
 			HashMapBuilder.put(
-				LocaleUtil.US.toLanguageTag(), process.getTitle()
+				LocaleUtil.US.toString(), process.getTitle()
 			).build());
 
 		return process;

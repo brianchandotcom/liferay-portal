@@ -21,12 +21,11 @@ public class ResourceRegistration extends EndpointRegistration<ResourceDTO> {
 	public ResourceRegistration(
 		ServiceHolder<Servlet> serviceHolder, ResourceDTO resourceDTO,
 		ServletContextHelper servletContextHelper,
-		LiferayContextController liferayContextController,
-		ClassLoader legacyTCCL) {
+		LiferayContextController liferayContextController) {
 
 		super(
 			serviceHolder, resourceDTO, servletContextHelper,
-			liferayContextController, legacyTCCL);
+			liferayContextController);
 
 		Servlet servlet = serviceHolder.get();
 

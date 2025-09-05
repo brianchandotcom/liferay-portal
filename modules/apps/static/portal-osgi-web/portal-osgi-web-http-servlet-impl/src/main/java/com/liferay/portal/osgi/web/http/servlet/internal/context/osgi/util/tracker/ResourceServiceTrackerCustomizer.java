@@ -145,7 +145,7 @@ public class ResourceServiceTrackerCustomizer
 				resourceDTO.serviceId,
 				GetterUtil.getInteger(
 					serviceReference.getProperty(Constants.SERVICE_RANKING))),
-			resourceDTO, servletContextHelper, liferayContextController, null);
+			resourceDTO, servletContextHelper, liferayContextController);
 
 		try {
 			resourceRegistration.init(

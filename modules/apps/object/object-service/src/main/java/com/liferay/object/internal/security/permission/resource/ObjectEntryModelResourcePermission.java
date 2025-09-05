@@ -309,6 +309,14 @@ public class ObjectEntryModelResourcePermission
 		if (objectEntry.getRootObjectEntryId() != 0) {
 			objectEntry = _objectEntryLocalService.getObjectEntry(
 				objectEntry.getRootObjectEntryId());
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId());
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId(), actionId);
 		}
 
 		throw new PrincipalException.MustHavePermission(

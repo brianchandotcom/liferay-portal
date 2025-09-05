@@ -139,7 +139,7 @@ public class EventListenerServiceTrackerCustomizer
 					listenerRegistrations) {
 
 				if (Objects.equals(
-						curListenerRegistration.getT(), eventListener)) {
+						curListenerRegistration.getService(), eventListener)) {
 
 					return null;
 				}
@@ -158,7 +158,7 @@ public class EventListenerServiceTrackerCustomizer
 
 			if (eventListenerClasses.contains(ServletContextListener.class)) {
 				ServletContextListener servletContextListener =
-					(ServletContextListener)listenerRegistration.getT();
+					(ServletContextListener)listenerRegistration.getService();
 
 				servletContextListener.contextInitialized(
 					new ServletContextEvent(servletContext));

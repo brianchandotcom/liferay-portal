@@ -47,14 +47,14 @@ public class ResourceRegistration extends EndpointRegistration<ResourceDTO> {
 
 	@Override
 	public String[] getPatterns() {
-		ResourceDTO resourceDTO = getD();
+		ResourceDTO resourceDTO = getDTO();
 
 		return resourceDTO.patterns;
 	}
 
 	@Override
 	public long getServiceId() {
-		ResourceDTO resourceDTO = getD();
+		ResourceDTO resourceDTO = getDTO();
 
 		return resourceDTO.serviceId;
 	}

@@ -37,11 +37,11 @@ public abstract class EndpointRegistration<D extends DTO>
 	implements Comparable<EndpointRegistration<?>> {
 
 	public EndpointRegistration(
-		ServiceHolder<Servlet> serviceHolder, D d,
+		ServiceHolder<Servlet> serviceHolder, D dto,
 		ServletContextHelper servletContextHelper,
 		LiferayContextController liferayContextController) {
 
-		super(serviceHolder.get(), d);
+		super(serviceHolder.get(), dto);
 
 		_serviceHolder = serviceHolder;
 		_servletContextHelper = servletContextHelper;
@@ -71,7 +71,7 @@ public abstract class EndpointRegistration<D extends DTO>
 			Set<Object> registeredObjects =
 				httpServletEndpointController.getRegisteredObjects();
 
-			Servlet servlet = getT();
+			Servlet servlet = getService();
 
 			registeredObjects.remove(servlet);
 
@@ -90,9 +90,9 @@ public abstract class EndpointRegistration<D extends DTO>
 	@Override
 	public boolean equals(Object object) {
 		if (object instanceof EndpointRegistration<?> endpointRegistration) {
-			Servlet servlet = getT();
+			Servlet servlet = getService();
 
-			return servlet.equals(endpointRegistration.getT());
+			return servlet.equals(endpointRegistration.getService());
 		}
 
 		return false;
@@ -105,7 +105,7 @@ public abstract class EndpointRegistration<D extends DTO>
 	public abstract long getServiceId();
 
 	public ServletContext getServletContext() {
-		Servlet servlet = getT();
+		Servlet servlet = getService();
 
 		ServletConfig servletConfig = servlet.getServletConfig();
 
@@ -125,7 +125,7 @@ public abstract class EndpointRegistration<D extends DTO>
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
 				_classLoader)) {
 
-			Servlet servlet = getT();
+			Servlet servlet = getService();
 
 			servlet.init(servletConfig);
 		}
@@ -166,7 +166,7 @@ public abstract class EndpointRegistration<D extends DTO>
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
 				_classLoader)) {
 
-			Servlet servlet = getT();
+			Servlet servlet = getService();
 
 			servlet.service(httpServletRequest, httpServletResponse);
 		}
@@ -178,7 +178,7 @@ public abstract class EndpointRegistration<D extends DTO>
 
 		if (value == null) {
 			value = StringBundler.concat(
-				_SIMPLE_NAME, CharPool.OPEN_BRACKET, getD(),
+				_SIMPLE_NAME, CharPool.OPEN_BRACKET, getDTO(),
 				CharPool.CLOSE_BRACKET);
 
 			_toString = value;

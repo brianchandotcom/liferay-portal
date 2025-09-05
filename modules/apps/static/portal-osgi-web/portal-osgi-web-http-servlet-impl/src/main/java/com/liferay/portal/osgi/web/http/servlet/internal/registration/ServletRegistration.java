@@ -38,21 +38,21 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 
 	@Override
 	public String getName() {
-		ServletDTO servletDTO = getD();
+		ServletDTO servletDTO = getDTO();
 
 		return servletDTO.name;
 	}
 
 	@Override
 	public String[] getPatterns() {
-		ServletDTO servletDTO = getD();
+		ServletDTO servletDTO = getDTO();
 
 		return servletDTO.patterns;
 	}
 
 	@Override
 	public long getServiceId() {
-		ServletDTO servletDTO = getD();
+		ServletDTO servletDTO = getDTO();
 
 		return servletDTO.serviceId;
 	}

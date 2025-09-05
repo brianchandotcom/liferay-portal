@@ -528,7 +528,7 @@ public class LiferayHttpServletRequestWrapper
 		EndpointRegistration<?> endpointRegistration =
 			liferayDispatchTargets.getServletRegistration();
 
-		Servlet servlet = endpointRegistration.getT();
+		Servlet servlet = endpointRegistration.getService();
 
 		ServletConfig servletConfig = servlet.getServletConfig();
 

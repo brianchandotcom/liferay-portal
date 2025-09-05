@@ -19,9 +19,9 @@ import org.osgi.dto.DTO;
 /**
  * @author Dante Wang
  */
-public abstract class Registration<T, D extends DTO> {
+public abstract class Registration<S, D extends DTO> {
 
-	public Registration(T service, D dto) {
+	public Registration(S service, D dto) {
 		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
 		_readLock = readWriteLock.readLock();
@@ -77,11 +77,11 @@ public abstract class Registration<T, D extends DTO> {
 		}
 	}
 
-	public D getD() {
+	public D getDTO() {
 		return _dto;
 	}
 
-	public T getT() {
+	public S getService() {
 		return _service;
 	}
 
@@ -109,9 +109,7 @@ public abstract class Registration<T, D extends DTO> {
 
 	@Override
 	public String toString() {
-		DTO dto = getD();
-
-		return dto.toString();
+		return String.valueOf(getDTO());
 	}
 
 	protected final AtomicInteger referenceCount = new AtomicInteger();
@@ -122,7 +120,7 @@ public abstract class Registration<T, D extends DTO> {
 	private volatile boolean _destroyed;
 	private final D _dto;
 	private final Lock _readLock;
-	private final T _service;
+	private final S _service;
 	private final Lock _writeLock;
 
 }

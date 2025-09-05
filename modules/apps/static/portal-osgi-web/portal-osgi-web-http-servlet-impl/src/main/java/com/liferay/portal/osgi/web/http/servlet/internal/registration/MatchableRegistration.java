@@ -13,11 +13,11 @@ import org.osgi.dto.DTO;
 /**
  * @author Dante Wang
  */
-public abstract class MatchableRegistration<T, D extends DTO>
-	extends Registration<T, D> {
+public abstract class MatchableRegistration<S, D extends DTO>
+	extends Registration<S, D> {
 
-	public MatchableRegistration(T target, D dto) {
-		super(target, dto);
+	public MatchableRegistration(S service, D dto) {
+		super(service, dto);
 	}
 
 	public abstract String match(

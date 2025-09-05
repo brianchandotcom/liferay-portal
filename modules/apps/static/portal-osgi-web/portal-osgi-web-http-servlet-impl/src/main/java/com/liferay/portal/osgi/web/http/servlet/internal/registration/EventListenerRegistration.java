@@ -88,13 +88,13 @@ public class EventListenerRegistration
 						activeSessions.values()) {
 
 					httpSessionWrapper.invokeSessionListeners(
-						_classes, super.getT());
+						_classes, super.getService());
 				}
 			}
 
 			if (_classes.contains(ServletContextListener.class)) {
 				ServletContextListener servletContextListener =
-					(ServletContextListener)super.getT();
+					(ServletContextListener)super.getService();
 
 				servletContextListener.contextDestroyed(
 					new ServletContextEvent(_servletContext));
@@ -111,10 +111,15 @@ public class EventListenerRegistration
 				EventListenerRegistration eventListenerRegistration) {
 
 			return Objects.equals(
-				eventListenerRegistration.getT(), super.getT());
+				eventListenerRegistration.getService(), super.getService());
 		}
 
 		return false;
+	}
+
+	@Override
+	public EventListener getService() {
+		return _eventListenerProxy;
 	}
 
 	public ServletContext getServletContext() {
@@ -122,14 +127,9 @@ public class EventListenerRegistration
 	}
 
 	@Override
-	public EventListener getT() {
-		return _eventListenerProxy;
-	}
-
-	@Override
 	public int hashCode() {
 		return Long.valueOf(
-			getD().serviceId
+			getDTO().serviceId
 		).hashCode();
 	}
 
@@ -156,7 +156,7 @@ public class EventListenerRegistration
 
 				try {
 					return method.invoke(
-						EventListenerRegistration.super.getT(), args);
+						EventListenerRegistration.super.getService(), args);
 				}
 				catch (InvocationTargetException invocationTargetException) {
 					throw invocationTargetException.getCause();

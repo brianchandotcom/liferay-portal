@@ -96,7 +96,7 @@ public class EventListeners {
 			EventListenerRegistration eventListenerRegistration =
 				_eventListenerRegistrations.get(index);
 
-			return (R)eventListenerRegistration.getT();
+			return (R)eventListenerRegistration.getService();
 		}
 
 		public int size() {

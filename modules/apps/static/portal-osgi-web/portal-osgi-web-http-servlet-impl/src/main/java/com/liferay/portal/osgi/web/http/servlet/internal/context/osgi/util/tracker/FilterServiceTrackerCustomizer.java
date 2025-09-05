@@ -124,7 +124,9 @@ public class FilterServiceTrackerCustomizer
 				for (FilterRegistration curFilterRegistration :
 						filterRegistrations) {
 
-					if (Objects.equals(curFilterRegistration.getT(), filter)) {
+					if (Objects.equals(
+							curFilterRegistration.getService(), filter)) {
+
 						throw new RegisteredFilterException(filter);
 					}
 				}

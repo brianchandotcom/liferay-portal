@@ -84,7 +84,7 @@ public class FilterRegistration
 	}
 
 	public boolean appliesTo(FilterChainImpl filterChainImpl) {
-		FilterDTO filterDTO = getD();
+		FilterDTO filterDTO = getDTO();
 
 		DispatcherType dispatcherType = filterChainImpl.getDispatcherType();
 
@@ -105,9 +105,9 @@ public class FilterRegistration
 			return -priorityDifference;
 		}
 
-		FilterDTO filterDTO = getD();
+		FilterDTO filterDTO = getDTO();
 
-		FilterDTO otherFilterDTO = filterRegistration.getD();
+		FilterDTO otherFilterDTO = filterRegistration.getDTO();
 
 		return Long.compare(
 			Math.abs(filterDTO.serviceId), Math.abs(otherFilterDTO.serviceId));
@@ -126,7 +126,7 @@ public class FilterRegistration
 				Set<Object> registeredObjects =
 					httpServletEndpointController.getRegisteredObjects();
 
-				Filter filter = getT();
+				Filter filter = getService();
 
 				registeredObjects.remove(filter);
 
@@ -156,7 +156,7 @@ public class FilterRegistration
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
 				_classLoader)) {
 
-			Filter filter = getT();
+			Filter filter = getService();
 
 			filter.doFilter(
 				httpServletRequest, httpServletResponse, filterChain);
@@ -166,7 +166,8 @@ public class FilterRegistration
 	@Override
 	public boolean equals(Object object) {
 		if (object instanceof FilterRegistration filterRegistration) {
-			return Objects.equals(getT(), filterRegistration.getT());
+			return Objects.equals(
+				getService(), filterRegistration.getService());
 		}
 
 		return false;
@@ -174,7 +175,7 @@ public class FilterRegistration
 
 	@Override
 	public int hashCode() {
-		FilterDTO filterDTO = getD();
+		FilterDTO filterDTO = getDTO();
 
 		return Long.hashCode(filterDTO.serviceId);
 	}
@@ -184,7 +185,7 @@ public class FilterRegistration
 			try (SafeCloseable safeCloseable =
 					ThreadContextClassLoaderUtil.swap(_classLoader)) {
 
-				Filter filter = getT();
+				Filter filter = getService();
 
 				filter.init(filterConfig);
 			}
@@ -194,8 +195,8 @@ public class FilterRegistration
 	public String match(
 		String name, String requestURI, String extension, Match match) {
 
-		if ((name != null) && (getD().servletNames != null)) {
-			for (String servletName : getD().servletNames) {
+		if ((name != null) && (getDTO().servletNames != null)) {
+			for (String servletName : getDTO().servletNames) {
 				if (servletName.equals(name)) {
 					return name;
 				}
@@ -203,7 +204,7 @@ public class FilterRegistration
 		}
 
 		if ((requestURI != null) && !requestURI.isEmpty()) {
-			for (String pattern : getD().patterns) {
+			for (String pattern : getDTO().patterns) {
 				if (doPatternMatch(pattern, requestURI, extension)) {
 					return pattern;
 				}

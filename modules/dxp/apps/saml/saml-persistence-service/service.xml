@@ -92,6 +92,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="UserId" return-type="SamlIdpSsoSession">
+			<finder-column name="userId" />
+		</finder>
 		<finder name="LtCreateDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="createDate" />
 		</finder>

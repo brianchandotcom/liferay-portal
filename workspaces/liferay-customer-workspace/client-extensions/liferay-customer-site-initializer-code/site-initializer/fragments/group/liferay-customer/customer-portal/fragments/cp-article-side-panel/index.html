@@ -1,7 +1,7 @@
 [#function isCategoryVisible category]
 	[#if category.taxonomyCategoryProperties?has_content]
 		[#list category.taxonomyCategoryProperties as prop]
-			[#if prop.key == 'visible' && prop.value == 'false']
+			[#if prop.key == 'visibleInNav' && prop.value == 'false']
 				[#return false /]
 			[/#if]
 		[/#list]

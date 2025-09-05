@@ -119,7 +119,7 @@
 				[#assign childrenCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId + "/taxonomy-categories").items![] /]
 
 				[#list childrenCategories as childCategory]
-					[#assign isChildCategoryVisible = getProperty(childCategory.taxonomyCategoryProperties, "visible") /]
+					[#assign isChildCategoryVisible = getProperty(childCategory.taxonomyCategoryProperties, "visibleInNav") /]
 
 					[#if isChildCategoryVisible == "false"]
 						[#continue /]

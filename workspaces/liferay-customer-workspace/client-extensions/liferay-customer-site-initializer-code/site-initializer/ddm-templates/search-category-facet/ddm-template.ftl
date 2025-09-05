@@ -19,7 +19,7 @@
 	<#assign displayableCategories = [] />
 
 	<#list categories.items as item>
-		<#if hasTaxonomyProperty(item, "visible", "false")>
+		<#if hasTaxonomyProperty(item, "visibleInSearch", "false")>
 			<#continue>
 		</#if>
 

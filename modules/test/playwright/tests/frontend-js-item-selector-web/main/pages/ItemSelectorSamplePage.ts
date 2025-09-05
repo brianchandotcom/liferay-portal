@@ -40,8 +40,7 @@ export class ItemSelectorSamplePage {
 			'Search Fragments and Widgets'
 		);
 		this.inputGroup = async (label: string) => {
-			return page.getByText(label)
-			.locator('..');
+			return page.getByText(label).locator('..');
 		};
 		this.modal = {
 			cancelButton: page.getByRole('button', {
@@ -54,7 +53,10 @@ export class ItemSelectorSamplePage {
 			}),
 		};
 		this.multiselectGridItem = async (name: string) => {
-			return page.getByRole('gridcell', { name, exact: true });
+			return page.getByRole('gridcell', {
+				exact: true,
+				name,
+			});
 		};
 		this.page = page;
 		this.filtersButton = page.getByRole('button', {

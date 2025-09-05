@@ -58,7 +58,10 @@ public class FilterRegistration
 		String legacyContextFilter = (String)serviceReference.getProperty(
 			"equinox.context.select");
 
-		if (legacyContextFilter != null) {
+		if (legacyContextFilter == null) {
+			_initDestroyWithContextController = true;
+		}
+		else {
 			org.osgi.framework.Filter filter = null;
 
 			try {
@@ -72,9 +75,6 @@ public class FilterRegistration
 
 			_initDestroyWithContextController =
 				(filter == null) || liferayContextController.matches(filter);
-		}
-		else {
-			_initDestroyWithContextController = true;
 		}
 
 		_liferayContextController = liferayContextController;
@@ -116,36 +116,37 @@ public class FilterRegistration
 
 	@Override
 	public void destroy() {
-		if (_initDestroyWithContextController) {
-			try (SafeCloseable safeCloseable =
-					ThreadContextClassLoaderUtil.swap(_classLoader)) {
+		if (!_initDestroyWithContextController) {
+			return;
+		}
 
-				HttpServletEndpointController httpServletEndpointController =
-					_liferayContextController.
-						getHttpServletEndpointController();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
 
-				Set<Object> registeredObjects =
-					httpServletEndpointController.getRegisteredObjects();
+			HttpServletEndpointController httpServletEndpointController =
+				_liferayContextController.getHttpServletEndpointController();
 
-				Filter filter = getService();
+			Set<Object> registeredObjects =
+				httpServletEndpointController.getRegisteredObjects();
 
-				registeredObjects.remove(filter);
+			Filter filter = getService();
 
-				Set<FilterRegistration> filterRegistrations =
-					_liferayContextController.getFilterRegistrations();
+			registeredObjects.remove(filter);
 
-				filterRegistrations.remove(this);
+			Set<FilterRegistration> filterRegistrations =
+				_liferayContextController.getFilterRegistrations();
 
-				_liferayContextController.ungetServletContextHelper(
-					_serviceHolder.getBundle());
+			filterRegistrations.remove(this);
 
-				super.destroy();
+			_liferayContextController.ungetServletContextHelper(
+				_serviceHolder.getBundle());
 
-				filter.destroy();
-			}
-			finally {
-				_serviceHolder.release();
-			}
+			super.destroy();
+
+			filter.destroy();
+		}
+		finally {
+			_serviceHolder.release();
 		}
 	}
 
@@ -182,14 +183,16 @@ public class FilterRegistration
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
-		if (_initDestroyWithContextController) {
-			try (SafeCloseable safeCloseable =
-					ThreadContextClassLoaderUtil.swap(_classLoader)) {
+		if (!_initDestroyWithContextController) {
+			return;
+		}
 
-				Filter filter = getService();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
 
-				filter.init(filterConfig);
-			}
+			Filter filter = getService();
+
+			filter.init(filterConfig);
 		}
 	}
 
@@ -210,22 +213,22 @@ public class FilterRegistration
 			}
 		}
 
-		if ((requestURI != null) && !requestURI.isEmpty()) {
-			for (String pattern : getDTO().patterns) {
-				if (doPatternMatch(extension, requestURI, pattern)) {
-					return pattern;
-				}
-			}
-
-			for (Pattern pattern : _patterns) {
-				Matcher matcher = pattern.matcher(requestURI);
-
-				if (matcher.matches()) {
-					return pattern.toString();
-				}
-			}
-
+		if ((requestURI == null) || requestURI.isEmpty()) {
 			return null;
+		}
+
+		for (String pattern : getDTO().patterns) {
+			if (doPatternMatch(extension, requestURI, pattern)) {
+				return pattern;
+			}
+		}
+
+		for (Pattern pattern : _patterns) {
+			Matcher matcher = pattern.matcher(requestURI);
+
+			if (matcher.matches()) {
+				return pattern.toString();
+			}
 		}
 
 		return null;

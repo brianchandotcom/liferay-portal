@@ -127,9 +127,7 @@ public class EventListenerRegistration
 
 	@Override
 	public int hashCode() {
-		return Long.valueOf(
-			getDTO().serviceId
-		).hashCode();
+		return Long.hashCode(getDTO().serviceId);
 	}
 
 	private final List<Class<? extends EventListener>> _classes;
@@ -145,14 +143,8 @@ public class EventListenerRegistration
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
-			ClassLoader original = Thread.currentThread(
-			).getContextClassLoader();
-
-			try {
-				Thread.currentThread(
-				).setContextClassLoader(
-					_classLoader
-				);
+			try (SafeCloseable safeCloseable =
+					ThreadContextClassLoaderUtil.swap(_classLoader)) {
 
 				try {
 					return method.invoke(
@@ -161,12 +153,6 @@ public class EventListenerRegistration
 				catch (InvocationTargetException invocationTargetException) {
 					throw invocationTargetException.getCause();
 				}
-			}
-			finally {
-				Thread.currentThread(
-				).setContextClassLoader(
-					original
-				);
 			}
 		}
 

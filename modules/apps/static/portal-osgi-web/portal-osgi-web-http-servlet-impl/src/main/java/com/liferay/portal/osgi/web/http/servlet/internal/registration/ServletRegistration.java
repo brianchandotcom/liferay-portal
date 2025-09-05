@@ -33,10 +33,6 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 		_errorPageDTO = errorPageDTO;
 	}
 
-	public ErrorPageDTO getErrorPageDTO() {
-		return _errorPageDTO;
-	}
-
 	@Override
 	public String getName() {
 		ServletDTO servletDTO = getDTO();

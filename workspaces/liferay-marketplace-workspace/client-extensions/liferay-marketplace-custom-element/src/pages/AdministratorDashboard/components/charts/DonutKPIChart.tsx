@@ -43,8 +43,8 @@ const DonutKPIChart: React.FC<DonutKPIChartProps> = ({
 	);
 
 	const data = [
-		{name: 'filed', value: percentage},
-		{name: 'remainder', value: 100 - percentage},
+		{name: 'filed', value: Math.min(percentage, 100)},
+		{name: 'remainder', value: Math.max(0, 100 - percentage)},
 	];
 
 	return (
@@ -101,7 +101,11 @@ const DonutKPIChart: React.FC<DonutKPIChartProps> = ({
 								x="52%"
 								y="52%"
 							>
-								<tspan fontSize="44">{percentage}</tspan>
+								<tspan
+									fontSize={percentage >= 100 ? '40' : '44'}
+								>
+									{percentage}
+								</tspan>
 								<tspan fontSize="14">%</tspan>
 							</text>
 						</PieChart>

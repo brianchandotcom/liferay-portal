@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -237,6 +238,11 @@ public class ObjectDefinitionsActionsDisplayContext
 					objectDefinition.getClassName())) {
 
 			if ((StringUtil.equals(
+					objectActionTrigger.getKey(),
+					ObjectActionTriggerConstants.KEY_ON_AFTER_LOGIN) &&
+				 !StringUtil.equals(
+					 objectDefinition.getClassName(), User.class.getName())) ||
+				(StringUtil.equals(
 					objectActionTrigger.getKey(),
 					ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE) &&
 				 !objectDefinition.isRootNode()) ||

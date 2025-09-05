@@ -97,14 +97,14 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName("DLFileEntry"),
-						", row with fileEntryId ", fileEntryId1,
-						" deleted because its name was null")));
+						", 1 row deleted because fileEntryId ", fileEntryId1,
+						" name was null")));
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName("DLFileEntry"),
-						", row with fileEntryId ", fileEntryId2,
-						" deleted because its name was ",
+						", 1 row deleted because fileEntryId ", fileEntryId2,
+						" name was ",
 						(DBManagerUtil.getDBType() == DBType.ORACLE) ? "null" :
 							"empty")));
 		}

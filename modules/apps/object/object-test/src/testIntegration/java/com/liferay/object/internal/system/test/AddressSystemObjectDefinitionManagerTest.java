@@ -37,7 +37,7 @@ public class AddressSystemObjectDefinitionManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_addressSystemObjectDefinitionManager =
+		_systemObjectDefinitionManager =
 			_systemObjectDefinitionManagerRegistry.
 				getSystemObjectDefinitionManager("Address");
 	}
@@ -45,7 +45,7 @@ public class AddressSystemObjectDefinitionManagerTest {
 	@Test
 	public void testGetObjectFields() throws Exception {
 		List<ObjectField> objectFields =
-			_addressSystemObjectDefinitionManager.getObjectFields();
+			_systemObjectDefinitionManager.getObjectFields();
 
 		Assert.assertEquals(objectFields.toString(), 12, objectFields.size());
 
@@ -109,7 +109,7 @@ public class AddressSystemObjectDefinitionManagerTest {
 			).isEmpty());
 	}
 
-	private SystemObjectDefinitionManager _addressSystemObjectDefinitionManager;
+	private SystemObjectDefinitionManager _systemObjectDefinitionManager;
 
 	@Inject
 	private SystemObjectDefinitionManagerRegistry

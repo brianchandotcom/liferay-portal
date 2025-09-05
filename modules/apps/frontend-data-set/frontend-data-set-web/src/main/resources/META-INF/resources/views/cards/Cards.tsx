@@ -156,12 +156,12 @@ const Card = forwardRef<HTMLDivElement, any>(
 					getLocalizedValue(item, schema.image)?.value
 				),
 			labels: getLabels(item),
-			onClick: (event: any) => {
-				const target = event.nativeEvent.target;
+			onClick: (event: React.MouseEvent) => {
+				const target = event.nativeEvent.target as Element;
 
 				if (
-					target.closest('.dropdown-toggle') ||
-					target.closest('.dropdown-item')
+					target?.closest('.dropdown-toggle') ||
+					target?.closest('.dropdown-item')
 				) {
 					return;
 				}

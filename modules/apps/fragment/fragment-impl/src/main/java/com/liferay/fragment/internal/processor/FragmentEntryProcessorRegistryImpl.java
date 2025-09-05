@@ -23,6 +23,9 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -276,10 +279,14 @@ public class FragmentEntryProcessorRegistryImpl
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"fragment.entry.processor.priority")));
+		_documentPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM, _DOCUMENT_PORTAL_CACHE_NAME);
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		PortalCacheHelperUtil.removePortalCache(
+			PortalCacheManagerNames.SINGLE_VM, _DOCUMENT_PORTAL_CACHE_NAME);
 		_cssFragmentEntryProcessors.close();
 		_defaultEditableValuesFragmentEntryProcessors.close();
 		_documentFragmentEntryProcessors.close();
@@ -290,15 +297,22 @@ public class FragmentEntryProcessorRegistryImpl
 	}
 
 	private Document _getDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
+		Document document = _documentPortalCache.get(html);
 
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
+		if (document == null) {
+			document = Jsoup.parseBodyFragment(html);
 
-		outputSettings.prettyPrint(false);
+			Document.OutputSettings outputSettings =
+				new Document.OutputSettings();
 
-		document.outputSettings(outputSettings);
+			outputSettings.prettyPrint(false);
 
-		return document;
+			document.outputSettings(outputSettings);
+
+			_documentPortalCache.put(html, document);
+		}
+
+		return document.clone();
 	}
 
 	private String _renderWidgetHTML(
@@ -346,6 +360,10 @@ public class FragmentEntryProcessorRegistryImpl
 		return html;
 	}
 
+	private static final String _DOCUMENT_PORTAL_CACHE_NAME =
+		FragmentEntryProcessorRegistryImpl.class.getName() +
+			"._documentPortalCache";
+
 	private static final ThreadLocal<Set<String>> _validHTMLs =
 		new CentralizedThreadLocal(
 			FragmentEntryProcessorRegistryImpl.class.getName() + "._validHTMLs",
@@ -359,6 +377,7 @@ public class FragmentEntryProcessorRegistryImpl
 		_documentFragmentEntryProcessors;
 	private ServiceTrackerList<DocumentFragmentEntryValidator>
 		_documentFragmentEntryValidators;
+	private PortalCache<String, Document> _documentPortalCache;
 	private ServiceTrackerList<FragmentEntryAutocompleteContributor>
 		_fragmentEntryAutocompleteContributors;
 	private ServiceTrackerList<FragmentEntryProcessor> _fragmentEntryProcessors;

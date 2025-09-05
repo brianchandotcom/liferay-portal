@@ -67,10 +67,6 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 		return _httpSession.getCreationTime();
 	}
 
-	public HttpSession getHttpSession() {
-		return _httpSession;
-	}
-
 	@Override
 	public String getId() {
 		return _id;

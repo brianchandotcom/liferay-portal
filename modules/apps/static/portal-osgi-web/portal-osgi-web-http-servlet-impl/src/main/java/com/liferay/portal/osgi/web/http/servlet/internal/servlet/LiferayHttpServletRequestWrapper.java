@@ -411,7 +411,7 @@ public class LiferayHttpServletRequestWrapper
 			LiferayContextController liferayContextController =
 				liferayDispatchTargets.getContextController();
 
-			return liferayContextController.getSessionAdaptor(
+			return liferayContextController.getHttpSessionWrapper(
 				httpSession, _getServletContext(liferayDispatchTargets));
 		}
 

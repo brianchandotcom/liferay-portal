@@ -43,7 +43,8 @@ public class LayoutPageTemplateCollectionFixture {
 			String name)
 		throws PortalException {
 
-		return createLayoutPageTemplateCollection(name, RandomTestUtil.randomString());
+		return createLayoutPageTemplateCollection(
+			name, RandomTestUtil.randomString());
 	}
 
 	public LayoutPageTemplateCollection createLayoutPageTemplateCollection(
@@ -53,11 +54,13 @@ public class LayoutPageTemplateCollectionFixture {
 		ServiceContext serviceContext = _getServiceContext();
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.addLayoutPageTemplateCollection(
-				RandomTestUtil.randomString(), serviceContext.getUserId(),
-				_group.getGroupId(), 0, RandomTestUtil.randomString(), name,
-				description, LayoutPageTemplateCollectionTypeConstants.BASIC,
-				serviceContext);
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					RandomTestUtil.randomString(), serviceContext.getUserId(),
+					_group.getGroupId(), 0, RandomTestUtil.randomString(), name,
+					description,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					serviceContext);
 
 		_layoutPageTemplateCollections.add(layoutPageTemplateCollection);
 
@@ -68,6 +71,17 @@ public class LayoutPageTemplateCollectionFixture {
 		getLayoutPageTemplateCollections() {
 
 		return _layoutPageTemplateCollections;
+	}
+
+	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
+			LayoutPageTemplateCollection layoutPageTemplateCollection)
+		throws PortalException {
+
+		return _layoutPageTemplateCollectionLocalService.
+			updateLayoutPageTemplateCollection(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateCollection.getName());
 	}
 
 	private ServiceContext _getServiceContext() {
@@ -83,7 +97,7 @@ public class LayoutPageTemplateCollectionFixture {
 	private final Group _group;
 	private final LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
-	private final List<LayoutPageTemplateCollection> _layoutPageTemplateCollections =
-		new ArrayList<>();
+	private final List<LayoutPageTemplateCollection>
+		_layoutPageTemplateCollections = new ArrayList<>();
 
 }

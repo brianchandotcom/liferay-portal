@@ -84,6 +84,12 @@ test(
 
 			expect(controls).toEqual(advancedPresetControls);
 		});
+
+		await test.step('Toolbar buttons have Clay icons', async () => {
+			await expect(
+				classicPage.toolbar.container.locator('svg use[href*="/clay/"]')
+			).toHaveCount(23);
+		});
 	}
 );
 

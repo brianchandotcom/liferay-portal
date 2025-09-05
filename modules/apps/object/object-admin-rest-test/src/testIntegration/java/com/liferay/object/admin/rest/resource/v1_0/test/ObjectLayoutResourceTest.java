@@ -94,7 +94,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 
 		objectLayout.setDefaultObjectLayout(false);
 		objectLayout.setName(
-			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
 		objectLayout.setObjectDefinitionExternalReferenceCode(
 			_objectDefinition.getExternalReferenceCode());
 		objectLayout.setObjectDefinitionId(
@@ -181,7 +181,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 			{
 				collapsable = RandomTestUtil.randomBoolean();
 				name = Collections.singletonMap(
-					"en-US", RandomTestUtil.randomString());
+					"en_US", RandomTestUtil.randomString());
 				objectLayoutRows = new ObjectLayoutRow[] {
 					_randomObjectLayoutRow()
 				};
@@ -216,7 +216,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 		return new ObjectLayoutTab() {
 			{
 				name = Collections.singletonMap(
-					"en-US", RandomTestUtil.randomString());
+					"en_US", RandomTestUtil.randomString());
 				objectLayoutBoxes = new ObjectLayoutBox[] {
 					_randomObjectLayoutBox()
 				};

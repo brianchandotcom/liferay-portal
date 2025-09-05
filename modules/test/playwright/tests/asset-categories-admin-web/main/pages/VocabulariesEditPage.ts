@@ -112,6 +112,10 @@ export class VocabulariesEditPage {
 	}
 
 	async toggleRequired() {
+		if (await this.page.getByLabel('Asset Types').isHidden()) {
+			await this.expandPanel('Associated Asset Types');
+		}
+
 		await this.requiredToggle.click();
 		await this.saveButton.click();
 

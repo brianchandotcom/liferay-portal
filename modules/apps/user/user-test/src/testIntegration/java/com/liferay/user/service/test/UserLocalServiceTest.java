@@ -8,6 +8,7 @@ package com.liferay.user.service.test;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
@@ -1631,7 +1632,8 @@ public class UserLocalServiceTest {
 		Group companyGroup = company.getGroup();
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			companyGroup.getGroupId());
+			companyGroup.getGroupId(), _portal.getClassNameId(User.class),
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, true);
 
 		AssetCategory assetCategory = AssetTestUtil.addCategory(
 			companyGroup.getGroupId(), assetVocabulary.getVocabularyId());

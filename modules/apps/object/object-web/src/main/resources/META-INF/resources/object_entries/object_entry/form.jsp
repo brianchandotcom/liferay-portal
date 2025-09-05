@@ -332,7 +332,8 @@ portletDisplay.setURLBack(backURL);
 								};
 							}
 
-							const method = !externalReferenceCode ? 'POST' : 'PATCH';
+							const method =
+								'<%= objectEntryDisplayContext.getMethod() %>';
 
 							if (method === 'PATCH') {
 								values = Object.assign(values, {

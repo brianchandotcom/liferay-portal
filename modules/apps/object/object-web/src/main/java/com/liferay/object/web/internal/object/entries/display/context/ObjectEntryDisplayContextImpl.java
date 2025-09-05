@@ -336,6 +336,24 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	@Override
+	public String getMethod() throws PortalException {
+		if (_objectEntry == null) {
+			return "POST";
+		}
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(_objectEntry.getId());
+
+		if ((getObjectLayoutTab() != null) ||
+			(serviceBuilderObjectEntry.getRootObjectEntryId() != 0)) {
+
+			return "PATCH";
+		}
+
+		return "PUT";
+	}
+
+	@Override
 	public ObjectDefinition getObjectDefinition1() {
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();

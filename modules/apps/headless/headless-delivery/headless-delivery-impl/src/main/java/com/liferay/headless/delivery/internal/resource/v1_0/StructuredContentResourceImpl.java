@@ -517,31 +517,37 @@ public class StructuredContentResourceImpl
 		_validateContentFields(
 			structuredContent.getContentFields(), ddmStructure);
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			structuredContent.getDatePublished(),
-			journalArticle.getDisplayDate(),
-			ZoneId.of(contextUser.getTimeZoneId()));
-
 		int expirationDateMonth = 0;
 		int expirationDateDay = 0;
 		int expirationDateYear = 0;
 		int expirationDateHour = 0;
 		int expirationDateMinute = 0;
 
-		boolean neverExpire = GetterUtil.getBoolean(
-			structuredContent.getNeverExpire());
+		Boolean neverExpire = structuredContent.getNeverExpire();
+
+		if (neverExpire == null) {
+			if (journalArticle.getExpirationDate() == null) {
+				neverExpire = true;
+			}
+			else {
+				neverExpire = false;
+			}
+		}
 
 		if (!neverExpire) {
+			Date date = new Date();
+
 			Date dateExpired = structuredContent.getDateExpired();
 
 			if (dateExpired == null) {
 				dateExpired = journalArticle.getExpirationDate();
 			}
 
-			if ((dateExpired != null) &&
-				dateExpired.after(
-					new Date(System.currentTimeMillis() + Time.MINUTE))) {
+			if (dateExpired == null) {
+				dateExpired = new Date(date.getTime() + Time.YEAR);
+			}
 
+			if (dateExpired.after(date)) {
 				Calendar expirationCal = CalendarFactoryUtil.getCalendar(
 					contextUser.getTimeZone());
 
@@ -558,9 +564,15 @@ public class StructuredContentResourceImpl
 				}
 			}
 			else {
-				neverExpire = true;
+				throw new BadRequestException(
+					"Please enter a valid expiration date");
 			}
 		}
+
+		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+			structuredContent.getDatePublished(),
+			journalArticle.getDisplayDate(),
+			ZoneId.of(contextUser.getTimeZoneId()));
 
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(

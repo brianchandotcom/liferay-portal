@@ -206,10 +206,11 @@ public class FaroSubscriptionDisplay {
 		Object[] objects = results.get(0);
 
 		_individualsCountSinceLastAnniversary = (long)objects[0];
-		_pageViewsCountSinceLastAnniversary = (long)objects[1];
 
 		_individualsStatus = getStatus(
 			_individualsCountSinceLastAnniversary, _individualsLimit);
+
+		_pageViewsCountSinceLastAnniversary = (long)objects[1];
 
 		_pageViewsStatus = getStatus(
 			_pageViewsCountSinceLastAnniversary, _pageViewsLimit);

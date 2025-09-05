@@ -427,7 +427,7 @@ test(
 				'id': buildTableRowSpec('true', 'Action Link'),
 				'size': buildTableRowSpec('false', ''),
 				'status': buildTableRowSpec('false', 'Status'),
-				'title': buildTableRowSpec('true', 'Default'),
+				'title': buildTableRowSpec('true', 'Action Link'),
 			});
 
 			await page.getByTitle('Back').click();

@@ -229,7 +229,10 @@ export function AdministratorOrdersListView({
 						id: 'createDate',
 						name: i18n.translate('created-at'),
 						render: (createDate) => (
-							<span className="ml-2 text-capitalize text-nowrap">
+							<span
+								className="ml-2 text-capitalize text-nowrap"
+								title={createDate}
+							>
 								{formatDistance(
 									new Date(createDate ?? ''),
 									Date.now(),
@@ -291,7 +294,6 @@ export default function Orders() {
 					))}
 				</div>
 			</div>
-
 			<Page
 				pageRendererProps={{className: 'border py-2'}}
 				title={i18n.translate('orders')}

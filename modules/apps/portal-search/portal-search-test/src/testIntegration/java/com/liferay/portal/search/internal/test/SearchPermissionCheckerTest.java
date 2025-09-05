@@ -105,9 +105,10 @@ public class SearchPermissionCheckerTest {
 		_group = GroupTestUtil.addGroup();
 		_organization = OrganizationTestUtil.addOrganization();
 
-		_searchPermissionChecker = _bundleContext.getService(_serviceReference);
 		_serviceReference = _bundleContext.getServiceReference(
 			SearchPermissionChecker.class);
+
+		_searchPermissionChecker = _bundleContext.getService(_serviceReference);
 	}
 
 	@After

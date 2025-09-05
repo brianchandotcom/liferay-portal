@@ -91,7 +91,7 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 			(companyId, featureFlagKey, enabled) -> {
 				if (enabled) {
 					_companyLocalService.forEachCompanyId(
-						this::_addCompanyGroup);
+						this._addCompanyGroup);
 				}
 			},
 			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));

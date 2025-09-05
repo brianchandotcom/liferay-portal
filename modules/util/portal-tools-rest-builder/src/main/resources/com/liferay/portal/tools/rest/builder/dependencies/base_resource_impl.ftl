@@ -411,17 +411,16 @@ public abstract class Base${schemaName}ResourceImpl
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
 					<#assign generateGetPermissionCheckerMethods = true />
 
+					Long groupId = getPermissionCheckerGroupId(${schemaVarName + "Id"});
+					Long resourceId = getPermissionCheckerResourceId(${schemaVarName + "Id"});
+
 					<@getResourcePermissions
-						schemaIdParameterName = "${schemaVarName}Id"
+						actions = getActions("groupId", "resourceId", "resourceName", schemaName)
+						groupId = "groupId"
+						schemaIdParameterName = schemaVarName + "Id"
 						schemaName = schemaName
 						scopeParameterName = ""
-					>
-						<@getActions
-							resourceId="resourceId"
-							resourceName="resourceName"
-							source=schemaName
-						/>
-					</@getResourcePermissions>
+					/>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -433,27 +432,23 @@ public abstract class Base${schemaName}ResourceImpl
 
 					PermissionServiceUtil.checkPermission(assetLibraryId, portletName, assetLibraryId);
 
-					return toPermissionPage(
-						<@getActions
-							resourceId="assetLibraryId"
-							resourceName="portletName"
-							source="AssetLibrary" + schemaName
-						/>,
-						assetLibraryId, portletName, roleNames);
+					return toPermissionPage(${getActions("assetLibraryId", "assetLibraryId", "portletName", schemaName + "AssetLibrary")}, assetLibraryId, portletName, roleNames);
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "assetLibraryExternalReferenceCode")>
-					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
+					<#assign
+						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
+						schemaExternalReferenceCodeParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
+					/>
+
+					Long groupId = getPermissionCheckerGroupId(assetLibraryExternalReferenceCode);
+					Long resourceId = getPermissionCheckerResourceId(assetLibraryExternalReferenceCode, ${schemaExternalReferenceCodeParameterName});
 
 					<@getResourcePermissions
-						schemaIdParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
+						actions = getActions("groupId", "resourceId", "resourceName", schemaName + "AssetLibrary" + schemaName)
+						groupId = "groupId"
+						schemaIdParameterName = schemaExternalReferenceCodeParameterName
 						schemaName = schemaName
 						scopeParameterName = "assetLibraryExternalReferenceCode"
-					>
-						<@getActions
-							resourceId="resourceId"
-							resourceName="resourceName"
-							source="AssetLibrary" + schemaName
-						/>
-					</@getResourcePermissions>
+					/>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -465,27 +460,23 @@ public abstract class Base${schemaName}ResourceImpl
 
 					PermissionServiceUtil.checkPermission(siteId, portletName, siteId);
 
-					return toPermissionPage(
-						<@getActions
-							resourceId="siteId"
-							resourceName="portletName"
-							source="Site" + schemaName
-						/>,
-						siteId, portletName, roleNames);
+					return toPermissionPage(${getActions("siteId", "siteId", "portletName", "Site")}, siteId, portletName, roleNames);
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "siteExternalReferenceCode")>
-					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
+					<#assign
+						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
+						schemaExternalReferenceCodeParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
+					/>
+
+					Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
+					Long resourceId = getPermissionCheckerResourceId(siteExternalReferenceCode, ${schemaExternalReferenceCodeParameterName});
 
 					<@getResourcePermissions
-						schemaIdParameterName = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
+						actions = getActions("groupId", "resourceId", "resourceName", "Site" + schemaName)
+						groupId = "groupId"
+						schemaIdParameterName = schemaExternalReferenceCodeParameterName
 						schemaName = schemaName
 						scopeParameterName = "siteExternalReferenceCode"
-					>
-						<@getActions
-							resourceId="resourceId"
-							resourceName="resourceName"
-							source="Site" + schemaName
-						/>
-					</@getResourcePermissions>
+					/>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -493,20 +484,16 @@ public abstract class Base${schemaName}ResourceImpl
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
 					<#assign generateGetPermissionCheckerMethods = true />
 
+					Long groupId = getPermissionCheckerGroupId(${schemaVarName + "Id"});
 					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
 					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
 
 					<@updateResourcePermissions
-						groupId = "getPermissionCheckerGroupId(${schemaVarName}Id)"
+						actions = getActions("groupId", "resourceId", "resourceName", schemaName)
+						groupId = "groupId"
 						resourceId = "resourceId"
 						resourceName = "resourceName"
-					>
-						<@getActions
-							resourceId="resourceId"
-							resourceName="resourceName"
-							source=schemaName
-						/>
-					</@updateResourcePermissions>
+					/>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -517,33 +504,24 @@ public abstract class Base${schemaName}ResourceImpl
 					String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
 					<@updateResourcePermissions
+						actions = getActions("assetLibraryId", "assetLibraryId", "portletName", "AssetLibrary" + schemaName)
 						groupId = "assetLibraryId"
 						resourceId = "assetLibraryId"
 						resourceName = "portletName"
-					>
-						<@getActions
-							resourceId="assetLibraryId"
-							resourceName="portletName"
-							source="AssetLibrary" + schemaName
-						/>
-					</@updateResourcePermissions>
+					/>
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "assetLibraryExternalReferenceCode")>
 					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
+					Long groupId = getPermissionCheckerGroupId(assetLibraryExternalReferenceCode);
 					String resourceName = getPermissionCheckerResourceName(assetLibraryExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
 					Long resourceId = getPermissionCheckerResourceId(assetLibraryExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
 
 					<@updateResourcePermissions
-						groupId = "getPermissionCheckerGroupId(assetLibraryExternalReferenceCode)"
+						actions = getActions("groupId", "resourceId", "resourceName", "AssetLibrary" + schemaName)
+						groupId = "groupId"
 						resourceId = "resourceId"
 						resourceName = "resourceName"
-					>
-						<@getActions
-							resourceId="resourceId"
-							resourceName="resourceName"
-							source="AssetLibrary" + schemaName
-						/>
-					</@updateResourcePermissions>
+					/>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -554,33 +532,24 @@ public abstract class Base${schemaName}ResourceImpl
 					String portletName = getPermissionCheckerPortletName(siteId);
 
 					<@updateResourcePermissions
+						actions = getActions("siteId", "siteId", "portletName", "Site" + schemaName)
 						groupId = "siteId"
 						resourceId = "siteId"
 						resourceName = "portletName"
-					>
-						<@getActions
-							resourceId="siteId"
-							resourceName="portletName"
-							source="Site" + schemaName
-						/>
-					</@updateResourcePermissions>
+					/>
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "siteExternalReferenceCode")>
 					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
+					Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
 					String resourceName = getPermissionCheckerResourceName(siteExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
 					Long resourceId = getPermissionCheckerResourceId(siteExternalReferenceCode, ${freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)});
 
 					<@updateResourcePermissions
-						groupId = "getPermissionCheckerGroupId(siteExternalReferenceCode)"
+						actions = getActions("groupId", "resourceId", "resourceName", "Site" + schemaName)
+						groupId = "groupId"
 						resourceId = "resourceId"
 						resourceName = "resourceName"
-					>
-						<@getActions
-							resourceId="resourceId"
-							resourceName="resourceName"
-							source="Site" + schemaName
-						/>
-					</@updateResourcePermissions>
+					/>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -1476,15 +1445,15 @@ public abstract class Base${schemaName}ResourceImpl
 	</#if>
 
 	<#if generateGetPermissionCheckerMethodsByExternalReferenceCode>
-		protected Long getPermissionCheckerGroupId(String siteExternalReferenceCode) throws Exception {
+		protected Long getPermissionCheckerGroupId(String groupExternalReferenceCode) throws Exception {
 			throw new UnsupportedOperationException("This method needs to be implemented");
 		}
 
-		protected Long getPermissionCheckerResourceId(String siteExternalReferenceCode, String externalReferenceCode) throws Exception {
+		protected Long getPermissionCheckerResourceId(String groupExternalReferenceCode, String externalReferenceCode) throws Exception {
 			throw new UnsupportedOperationException("This method needs to be implemented");
 		}
 
-		protected String getPermissionCheckerResourceName(String siteExternalReferenceCode, String externalReferenceCode) throws Exception {
+		protected String getPermissionCheckerResourceName(String groupExternalReferenceCode, String externalReferenceCode) throws Exception {
 			throw new UnsupportedOperationException("This method needs to be implemented");
 		}
 	</#if>
@@ -2059,17 +2028,18 @@ public abstract class Base${schemaName}ResourceImpl
 	</#if>
 </#macro>
 
-<#macro getActions
+<#function getActions
+	groupId
 	resourceId
 	resourceName
 	source
 >
-	HashMapBuilder.put(
-		"get", addAction(ActionKeys.PERMISSIONS, "get${source}PermissionsPage", ${resourceName}, ${resourceId})
+	<#return "HashMapBuilder.put(
+		\"get\", addAction(ActionKeys.PERMISSIONS, ${resourceId}, \"get${source}PermissionsPage\", null, ${resourceName}, ${groupId})
 	).put(
-		"replace", addAction(ActionKeys.PERMISSIONS, "put${source}PermissionsPage", ${resourceName}, ${resourceId})
-	).build()
-</#macro>
+		\"replace\", addAction(ActionKeys.PERMISSIONS, ${resourceId}, \"put${source}PermissionsPage\", null, ${resourceName}, ${groupId})
+	).build()">
+</#function>
 
 <#macro getCreateBatchJavaMethodParameters
 	javaMethodSignature
@@ -2130,6 +2100,8 @@ public abstract class Base${schemaName}ResourceImpl
 </#macro>
 
 <#macro getResourcePermissions
+	actions
+	groupId
 	schemaName
 	schemaIdParameterName
 	scopeParameterName
@@ -2139,24 +2111,14 @@ public abstract class Base${schemaName}ResourceImpl
 	 		${scopeParameterName},
 	 	</#if>
 	 	${schemaIdParameterName});
-	Long resourceId = getPermissionCheckerResourceId(
-		<#if scopeParameterName?has_content>
-			${scopeParameterName},
-		</#if>
-	${schemaIdParameterName});
 
-	PermissionServiceUtil.checkPermission(getPermissionCheckerGroupId(
-		<#if scopeParameterName?has_content>
-			${scopeParameterName}
-		<#else>
-			${schemaIdParameterName}
-		</#if>
-	), resourceName, resourceId);
+	PermissionServiceUtil.checkPermission(${groupId}, resourceName, resourceId);
 
-	return toPermissionPage(<#nested>, resourceId, resourceName, roleNames);
+	return toPermissionPage(${actions}, resourceId, resourceName, roleNames);
 </#macro>
 
 <#macro updateResourcePermissions
+	actions
 	groupId
 	resourceId
 	resourceName
@@ -2181,5 +2143,5 @@ public abstract class Base${schemaName}ResourceImpl
 
 	resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), ${groupId}, ${resourceName}, String.valueOf(${resourceId}), modelPermissions);
 
-	return toPermissionPage(<#nested>, ${resourceId}, ${resourceName}, null);
+	return toPermissionPage(${actions}, ${resourceId}, ${resourceName}, null);
 </#macro>

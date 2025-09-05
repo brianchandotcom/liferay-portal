@@ -1,0 +1,348 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Page, expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {frontendSPAInfrastructureConfigurationTest} from '../../../../../fixtures/frontendSPAInfrastructureConfigurationTest';
+import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
+import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
+import {FDSSamplePage} from '../../pages/FDSSamplePage';
+
+interface IStateInURL {
+	delta: number;
+	view: string;
+}
+
+const test = mergeTests(
+	apiHelpersTest,
+	fdsSamplePageTest,
+	frontendSPAInfrastructureConfigurationTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+		'LPD-22473': {enabled: true},
+	}),
+	isolatedSiteTest,
+	loginTest()
+);
+
+const getStateFromURL = (url: string, fdsId: string): Partial<IStateInURL> => {
+	const params = new URLSearchParams(url);
+
+	const stateParam = params.get(
+		`fds_state_com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-${fdsId}`
+	);
+
+	if (!stateParam) {
+		return null;
+	}
+
+	let state = {};
+
+	try {
+		state = JSON.parse(stateParam);
+	}
+	catch (error) {
+		return null;
+	}
+
+	return state;
+};
+
+const assertDelta = async (
+	delta: number,
+	fdsId: string,
+	fdsSamplePage: FDSSamplePage,
+	page: Page
+) => {
+	const state = getStateFromURL(new URL(page.url()).search, fdsId);
+
+	expect(state.delta).toBe(delta);
+
+	await expect(fdsSamplePage.paginator.itemsPerPageSelector).toHaveText(
+		`${delta} Items`
+	);
+};
+
+const assertView = async (
+	fdsId: string,
+	page: Page,
+	visualizationMode: EFDSVisualizationMode,
+	viewName?: string
+) => {
+	const state = getStateFromURL(new URL(page.url()).search, fdsId);
+
+	await waitForFDS({page, visualizationMode});
+
+	expect(state.view).toBe(viewName ? viewName : visualizationMode);
+};
+
+const changeDelta = async (
+	delta: number,
+	fdsId: string,
+	fdsSamplePage: FDSSamplePage,
+	page: Page
+) => {
+	await fdsSamplePage.changeItemsPerPage({delta: `${delta} Items`});
+
+	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
+
+	await assertDelta(delta, fdsId, fdsSamplePage, page);
+};
+
+const spaConfigurations = [
+	{
+		name: 'SPA is disabled',
+		configure: async ({frontendSPAInfrastructureConfigurationPage}) => {
+			await frontendSPAInfrastructureConfigurationPage.goto();
+			await frontendSPAInfrastructureConfigurationPage.disableSPA();
+		},
+	},
+	{
+		name: 'SPA is enabled',
+		configure: async ({frontendSPAInfrastructureConfigurationPage}) => {
+			await frontendSPAInfrastructureConfigurationPage.goto();
+			await frontendSPAInfrastructureConfigurationPage.enableSPA();
+		},
+	},
+];
+
+for (const spaConfiguration of spaConfigurations) {
+	test.describe(`State in URL, ${spaConfiguration.name}`, () => {
+		test.beforeEach(
+			async ({
+				fdsSamplePage,
+				frontendSPAInfrastructureConfigurationPage,
+				page,
+				site,
+			}) => {
+				await test.step('Configure SPA', async () => {
+					await spaConfiguration.configure({
+						frontendSPAInfrastructureConfigurationPage,
+					});
+				});
+
+				await fdsSamplePage.setupFDSSampleWidget({site});
+
+				await fdsSamplePage.selectTab('Advanced');
+
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
+			}
+		);
+
+		test(
+			'URL in state, push history, delta',
+			{tag: '@LPD-20947'},
+			async ({fdsSamplePage, page}) => {
+				const setDelta = (delta) =>
+					changeDelta(delta, 'advanced', fdsSamplePage, page);
+
+				const checkDelta = (delta) =>
+					assertDelta(delta, 'advanced', fdsSamplePage, page);
+
+				await test.step('Change delta via UI several times', async () => {
+					await setDelta(40);
+					await setDelta(60);
+					await setDelta(20);
+				});
+
+				await test.step('Check back navigation', async () => {
+					await page.goBack();
+					await checkDelta(60);
+					await page.goBack();
+					await checkDelta(40);
+
+					// initial delta is 20
+
+					await page.goBack();
+					await checkDelta(20);
+				});
+
+				await test.step('Check forward navigation', async () => {
+					await page.goForward();
+					await checkDelta(40);
+					await page.goForward();
+					await checkDelta(60);
+					await page.goForward();
+					await checkDelta(20);
+				});
+
+				await test.step('Mix navigation and change via UI', async () => {
+					await page.goBack();
+					await checkDelta(60);
+
+					await setDelta(40); // last delta value (20) is removed from history
+
+					await page.goBack();
+					await checkDelta(60);
+					await page.goForward();
+					await checkDelta(40);
+					expect(await page.goForward()).toBeNull();
+				});
+			}
+		);
+
+		test(
+			'URL in state, push history, view name',
+			{tag: '@LPD-20947'},
+			async ({fdsSamplePage, page}, testData) => {
+				const checkView = (visualizationMode: EFDSVisualizationMode) =>
+					assertView(
+						'advanced',
+						page,
+						visualizationMode,
+						visualizationMode === EFDSVisualizationMode.TABLE
+							? 'customizedTable'
+							: undefined
+					);
+
+				await test.step('Change view name via UI several times', async () => {
+					await fdsSamplePage.changeVisualizationMode({
+						page,
+						visualizationMode: EFDSVisualizationMode.CARDS,
+					});
+					await checkView(EFDSVisualizationMode.CARDS);
+					await fdsSamplePage.changeVisualizationMode({
+						page,
+						visualizationMode: EFDSVisualizationMode.LIST,
+					});
+					await checkView(EFDSVisualizationMode.LIST);
+					await fdsSamplePage.changeVisualizationMode({
+						page,
+						visualizationMode: EFDSVisualizationMode.TABLE,
+					});
+					await checkView(EFDSVisualizationMode.TABLE);
+				});
+
+				await test.step('Check back navigation', async () => {
+					await page.goBack();
+					await checkView(EFDSVisualizationMode.LIST);
+					await page.goBack();
+					await checkView(EFDSVisualizationMode.CARDS);
+
+					// initial view is table
+
+					await page.goBack();
+					await checkView(EFDSVisualizationMode.TABLE);
+				});
+
+				await test.step('Check forward navigation', async () => {
+					await page.goForward();
+					await checkView(EFDSVisualizationMode.CARDS);
+					await page.goForward();
+					await checkView(EFDSVisualizationMode.LIST);
+					await page.goForward();
+					await checkView(EFDSVisualizationMode.TABLE);
+				});
+
+				await test.step('Mix navigation and change via UI', async () => {
+					await page.goBack();
+					await checkView(EFDSVisualizationMode.LIST);
+					await fdsSamplePage.changeVisualizationMode({
+						page,
+						visualizationMode: EFDSVisualizationMode.CARDS,
+					});
+
+					// last view value (table) is removed from history
+
+					await page.goBack();
+					await checkView(EFDSVisualizationMode.LIST);
+					await page.goForward();
+					await checkView(EFDSVisualizationMode.CARDS);
+					expect(await page.goForward()).toBeNull();
+				});
+			}
+		);
+
+		test(
+			'URL in state, replace history',
+			{tag: '@LPD-20947'},
+			async ({fdsSamplePage, page}, testData) => {
+				const checkDelta = (delta) =>
+					assertDelta(
+						delta,
+						'customInternalView',
+						fdsSamplePage,
+						page
+					);
+
+				const checkView = (visualizationMode: EFDSVisualizationMode) =>
+					assertView('customInternalView', page, visualizationMode);
+
+				const setDelta = (delta) =>
+					changeDelta(
+						delta,
+						'customInternalView',
+						fdsSamplePage,
+						page
+					);
+
+				await test.step('Change to custom view component tab', async () => {
+					await fdsSamplePage.selectTab('Custom Internal View');
+					await page.locator('.fds-carousel-view-sample').waitFor();
+				});
+
+				await test.step('Make several state changes via UI', async () => {
+					await fdsSamplePage.changeVisualizationMode({
+						page,
+						visualizationMode: EFDSVisualizationMode.TABLE,
+					});
+					await checkView(EFDSVisualizationMode.TABLE);
+
+					await setDelta(40);
+				});
+
+				await test.step('Check back navigation', async () => {
+					await page.goBack();
+
+					// we are now in the advanced sample because we are not stacking state changes onto URL history
+
+					await assertView(
+						'advanced',
+						page,
+						EFDSVisualizationMode.TABLE,
+						'customizedTable'
+					);
+					await assertDelta(20, 'advanced', fdsSamplePage, page);
+				});
+
+				await test.step('Check forward navigation', async () => {
+					await page.goForward();
+					await checkView(EFDSVisualizationMode.TABLE);
+					await checkDelta(40);
+				});
+			}
+		);
+
+		test(
+			'URL in state is turned off by default',
+			{tag: '@LPD-20947'},
+			async ({fdsSamplePage, page}, testData) => {
+				await test.step('Change to single selection tab', async () => {
+					await fdsSamplePage.selectTab('Single Selection');
+					await waitForFDS({
+						page,
+						visualizationMode: EFDSVisualizationMode.TABLE,
+					});
+				});
+
+				await test.step('Assert there is no state un URL', async () => {
+					expect(
+						getStateFromURL(
+							new URL(page.url()).search,
+							'singleSelection'
+						)
+					).toBeNull();
+				});
+			}
+		);
+	});
+}

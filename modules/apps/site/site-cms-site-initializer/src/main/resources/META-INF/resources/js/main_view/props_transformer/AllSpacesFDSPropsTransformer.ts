@@ -4,7 +4,9 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {sub} from 'frontend-js-web';
 
+import deleteEntryAction from './actions/deleteEntryAction';
 import manageMembersAction, {
 	ManageMembersData,
 } from './actions/manageMembersAction';
@@ -66,6 +68,7 @@ export default function AllSpacesFDSPropsTransformer({
 		}),
 		onActionDropdownItemClick: ({
 			action,
+			event,
 			itemData,
 			loadData,
 		}: {
@@ -75,18 +78,41 @@ export default function AllSpacesFDSPropsTransformer({
 					permissionKey: string | null;
 				};
 			};
+			event: Event;
 			itemData: {
+				actions: {
+					delete: {href: string; method: string};
+				};
 				creatorUserId: string;
 				id: string;
+				name: string;
 				siteId: string;
 			};
 			loadData: () => {};
 		}) => {
-			if (action.data.id === 'pin' || action.data.id === 'unpin') {
+			if (action.data.id === 'delete') {
+				event?.preventDefault();
+
+				deleteEntryAction({
+					bodyHTML: Liferay.Language.get(
+						'delete-space-confirmation-body'
+					),
+					deleteAction: itemData.actions.delete,
+					loadData,
+					successMessage: sub(
+						Liferay.Language.get('x-was-successfully-deleted'),
+						itemData.name
+					),
+					title: sub(
+						Liferay.Language.get('delete-space-confirmation-title'),
+						itemData.name
+					),
+				});
+			}
+			else if (action.data.id === 'pin' || action.data.id === 'unpin') {
 				window.location.reload();
 			}
-
-			if (action.data.id === 'view-members') {
+			else if (action.data.id === 'view-members') {
 				const hasAssignMembersPermission =
 					action.data.permissionKey === 'assign-members';
 				const assetLibraryCreatorUserId = itemData.creatorUserId;

@@ -91,7 +91,7 @@ const useOrderMetrics = (param: FilterType) => {
 					'createDate',
 					new Date(
 						currentTime.getFullYear(),
-						currentTime.getMonth(),
+						0,
 						1,
 						0,
 						0,

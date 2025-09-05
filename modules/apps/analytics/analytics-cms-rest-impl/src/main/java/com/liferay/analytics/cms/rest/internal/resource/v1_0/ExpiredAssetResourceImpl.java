@@ -10,9 +10,9 @@ import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.ExpiredAssetResource;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.model.ObjectDefinitionTable;
-import com.liferay.object.model.ObjectEntryFolderTable;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersionTable;
+import com.liferay.object.model.ObjectFolderTable;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
@@ -140,9 +140,9 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 			_objectDefinitionTable.objectDefinitionId.eq(
 				_objectEntryTable.objectDefinitionId)
 		).innerJoinON(
-			_objectEntryFolderTable,
-			_objectEntryFolderTable.objectEntryFolderId.eq(
-				_objectEntryTable.objectEntryFolderId)
+			_objectFolderTable,
+			_objectDefinitionTable.objectFolderId.eq(
+				_objectFolderTable.objectFolderId)
 		).innerJoinON(
 			_objectEntryVersionTable,
 			_objectEntryVersionTable.objectEntryId.eq(
@@ -177,9 +177,9 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 			_objectDefinitionTable.objectDefinitionId.eq(
 				_objectEntryTable.objectDefinitionId)
 		).innerJoinON(
-			_objectEntryFolderTable,
-			_objectEntryFolderTable.objectEntryFolderId.eq(
-				_objectEntryTable.objectEntryFolderId)
+			_objectFolderTable,
+			_objectDefinitionTable.objectFolderId.eq(
+				_objectFolderTable.objectFolderId)
 		).innerJoinON(
 			_objectEntryVersionTable,
 			_objectEntryVersionTable.objectEntryId.eq(
@@ -242,8 +242,8 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		).and(
 			_objectEntryTable.status.eq(WorkflowConstants.STATUS_EXPIRED)
 		).and(
-			_objectEntryFolderTable.externalReferenceCode.in(
-				new String[] {"L_CONTENTS", "L_FILES"})
+			_objectFolderTable.externalReferenceCode.in(
+				new String[] {"L_CMS_CONTENT_STRUCTURES", "L_CMS_FILE_TYPES"})
 		);
 
 		if (Validator.isNotNull(languageId)) {
@@ -359,8 +359,6 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 
 	private final ObjectDefinitionTable _objectDefinitionTable =
 		ObjectDefinitionTable.INSTANCE;
-	private final ObjectEntryFolderTable _objectEntryFolderTable =
-		ObjectEntryFolderTable.INSTANCE;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
@@ -369,6 +367,8 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		ObjectEntryTable.INSTANCE;
 	private final ObjectEntryVersionTable _objectEntryVersionTable =
 		ObjectEntryVersionTable.INSTANCE;
+	private final ObjectFolderTable _objectFolderTable =
+		ObjectFolderTable.INSTANCE;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

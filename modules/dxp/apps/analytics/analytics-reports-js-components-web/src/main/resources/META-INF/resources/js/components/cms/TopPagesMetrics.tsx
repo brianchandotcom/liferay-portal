@@ -25,7 +25,7 @@ export type TopPage = {
 	canonicalUrl: string;
 	defaultMetric: Metric;
 	pageTitle: string;
-	siteName: string;
+	siteName?: string;
 };
 
 export type AssetData = {

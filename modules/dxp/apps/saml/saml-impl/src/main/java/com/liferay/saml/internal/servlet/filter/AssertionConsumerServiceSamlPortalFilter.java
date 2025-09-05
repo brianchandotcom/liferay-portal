@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"after-filter=Virtual Host Filter", "dispatcher=REQUEST",
 		"enabled=true",
-		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
+		"init-param.url-regex-ignore-pattern=^/(html|o)/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
 		"servlet-filter-name=Assertion Consumer Service SAML Portal Filter",
 		"url-pattern=/c/portal/saml/acs"

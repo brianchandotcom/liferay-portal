@@ -147,8 +147,8 @@ public class ListTypeDefinitionLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap("Tests"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(),
-				Collections.singletonList(objectField),Collections.emptyList());
+				Collections.emptyList(), Collections.singletonList(objectField),
+				Collections.emptyList());
 
 		AssertUtils.assertFailure(
 			RequiredListTypeDefinitionException.class, null,

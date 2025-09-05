@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.runtime.dto.ListenerDTO;
 
 /**
@@ -51,11 +49,7 @@ public class EventListenerRegistration
 		_servletContext = servletContext;
 		_liferayContextController = liferayContextController;
 
-		Bundle bundle = serviceHolder.getBundle();
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		_classLoader = bundleWiring.getClassLoader();
+		_classLoader = serviceHolder.getBundleClassLoader();
 
 		_eventListenerProxy = (EventListener)ProxyUtil.newProxyInstance(
 			EventListenerRegistration.class.getClassLoader(),

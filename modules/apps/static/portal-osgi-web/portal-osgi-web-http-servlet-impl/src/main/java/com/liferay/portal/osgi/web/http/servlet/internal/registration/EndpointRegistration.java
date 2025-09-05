@@ -27,8 +27,6 @@ import java.util.Set;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
 import org.osgi.dto.DTO;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
 
 /**
@@ -41,8 +39,7 @@ public abstract class EndpointRegistration<D extends DTO>
 	public EndpointRegistration(
 		ServiceHolder<Servlet> serviceHolder, D d,
 		ServletContextHelper servletContextHelper,
-		LiferayContextController liferayContextController,
-		ClassLoader legacyTCCL) {
+		LiferayContextController liferayContextController) {
 
 		super(serviceHolder.get(), d);
 
@@ -50,16 +47,7 @@ public abstract class EndpointRegistration<D extends DTO>
 		_servletContextHelper = servletContextHelper;
 		_liferayContextController = liferayContextController;
 
-		if (legacyTCCL != null) {
-			_classLoader = legacyTCCL;
-		}
-		else {
-			Bundle bundle = serviceHolder.getBundle();
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			_classLoader = bundleWiring.getClassLoader();
-		}
+		_classLoader = serviceHolder.getBundleClassLoader();
 	}
 
 	@Override

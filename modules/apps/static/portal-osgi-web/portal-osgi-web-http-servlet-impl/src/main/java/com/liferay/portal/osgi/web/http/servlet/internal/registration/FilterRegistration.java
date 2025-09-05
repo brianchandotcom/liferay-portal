@@ -32,11 +32,9 @@ import java.util.regex.Pattern;
 
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.runtime.dto.FilterDTO;
 
 /**
@@ -48,8 +46,7 @@ public class FilterRegistration
 
 	public FilterRegistration(
 		ServiceHolder<Filter> serviceHolder, FilterDTO filterDTO, int priority,
-		LiferayContextController liferayContextController,
-		ClassLoader legacyTCCL) {
+		LiferayContextController liferayContextController) {
 
 		super(serviceHolder.get(), filterDTO);
 
@@ -58,17 +55,7 @@ public class FilterRegistration
 		_liferayContextController = liferayContextController;
 
 		_patterns = _getPatterns(filterDTO);
-
-		if (legacyTCCL != null) {
-			_classLoader = legacyTCCL;
-		}
-		else {
-			Bundle bundle = serviceHolder.getBundle();
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			_classLoader = bundleWiring.getClassLoader();
-		}
+		_classLoader = serviceHolder.getBundleClassLoader();
 
 		ServiceReference<Filter> serviceReference =
 			serviceHolder.getServiceReference();

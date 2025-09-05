@@ -23,12 +23,11 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 	public ServletRegistration(
 		ServiceHolder<Servlet> servletHolder, ServletDTO servletDTO,
 		ErrorPageDTO errorPageDTO, ServletContextHelper servletContextHelper,
-		LiferayContextController liferayContextController,
-		ClassLoader legacyTCCL) {
+		LiferayContextController liferayContextController) {
 
 		super(
 			servletHolder, servletDTO, servletContextHelper,
-			liferayContextController, legacyTCCL);
+			liferayContextController);
 
 		_errorPageDTO = errorPageDTO;
 	}

@@ -112,26 +112,8 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 									}
 								});
 							setTaxonomyCategoryBriefs(
-								() -> TransformUtil.transformToArray(
-									ListUtil.fromArray(
-										serviceContext.getAssetCategoryIds()),
-									assetCategoryId -> {
-										AssetCategory assetCategory =
-											AssetCategoryServiceUtil.
-												getCategory(assetCategoryId);
-
-										return new TaxonomyCategoryBrief() {
-											{
-												setScope(
-													() -> ScopeUtil.toScope(
-														assetCategory.
-															getGroupId()));
-												setTaxonomyCategoryId(
-													() -> assetCategoryId);
-											}
-										};
-									},
-									TaxonomyCategoryBrief.class));
+								() -> _toTaxonomyCategoryBriefs(
+									serviceContext.getAssetCategoryIds()));
 						}
 					},
 					scopeKey);
@@ -180,6 +162,27 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		}
 
 		return null;
+	}
+
+	private TaxonomyCategoryBrief[] _toTaxonomyCategoryBriefs(
+		long[] assetCategoryIds) {
+
+		return TransformUtil.transformToArray(
+			ListUtil.fromArray(assetCategoryIds),
+			assetCategoryId -> {
+				AssetCategory assetCategory =
+					AssetCategoryServiceUtil.getCategory(assetCategoryId);
+
+				return new TaxonomyCategoryBrief() {
+					{
+						setScope(
+							() -> ScopeUtil.toScope(
+								assetCategory.getGroupId()));
+						setTaxonomyCategoryId(() -> assetCategoryId);
+					}
+				};
+			},
+			TaxonomyCategoryBrief.class);
 	}
 
 	private static final DateFormat _dateTimeFormatter =

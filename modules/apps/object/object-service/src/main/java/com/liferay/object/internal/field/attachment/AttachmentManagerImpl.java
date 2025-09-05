@@ -107,12 +107,38 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			ObjectDefinition objectDefinition =
 				objectField.getObjectDefinition();
 
-			dlFolderId = _getRepositoryFolderId(
+			DLFolder dlFolder = getDLFolder(
 				companyId, groupId, objectDefinition.getPortletId(),
 				serviceContext, userId);
+
+			dlFolderId = dlFolder.getFolderId();
 		}
 
 		return _dlFolderLocalService.getDLFolder(dlFolderId);
+	}
+
+	@Override
+	public DLFolder getDLFolder(
+			long companyId, long groupId, String portletId,
+			ServiceContext serviceContext, long userId)
+		throws PortalException {
+
+		Repository repository = _getRepository(
+			groupId, portletId, serviceContext);
+
+		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
+			repository.getGroupId(), repository.getDlFolderId(),
+			String.valueOf(userId));
+
+		if (dlFolder != null) {
+			return dlFolder;
+		}
+
+		return _dlFolderLocalService.addFolder(
+			null, _userLocalService.getGuestUserId(companyId),
+			repository.getGroupId(), repository.getRepositoryId(), false,
+			repository.getDlFolderId(), String.valueOf(userId), null, false,
+			serviceContext);
 	}
 
 	@Override
@@ -312,35 +338,6 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 		return _portletFileRepository.addPortletRepository(
 			groupId, portletId, serviceContext);
-	}
-
-	private Long _getRepositoryFolderId(
-			long companyId, long groupId, String portletId,
-			ServiceContext serviceContext, long userId)
-		throws PortalException {
-
-		Repository repository = _getRepository(
-			groupId, portletId, serviceContext);
-
-		if (repository == null) {
-			return null;
-		}
-
-		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
-			repository.getGroupId(), repository.getDlFolderId(),
-			String.valueOf(userId));
-
-		if (dlFolder != null) {
-			return dlFolder.getFolderId();
-		}
-
-		dlFolder = _dlFolderLocalService.addFolder(
-			null, _userLocalService.getGuestUserId(companyId),
-			repository.getGroupId(), repository.getRepositoryId(), false,
-			repository.getDlFolderId(), String.valueOf(userId), null, false,
-			serviceContext);
-
-		return dlFolder.getFolderId();
 	}
 
 	private Long _getStorageDLFolderId(

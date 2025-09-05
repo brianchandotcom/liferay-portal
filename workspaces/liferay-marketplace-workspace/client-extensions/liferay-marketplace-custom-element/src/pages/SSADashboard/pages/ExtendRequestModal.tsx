@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {addDays} from 'date-fns';
+import {add, addDays} from 'date-fns';
 import {ReactElement, useState} from 'react';
 import {KeyedMutator} from 'swr';
 
@@ -193,9 +193,14 @@ const ExtendRequestModal: React.FC<ExtendSSATrialModalProps> = ({
 						>
 							<span className="extend-request-info">
 								{formatDate(
-									order.customFields[
-										OrderCustomFields.TRIAL_END_DATE
-									],
+									add(
+										new Date(
+											order.customFields[
+												OrderCustomFields.TRIAL_END_DATE
+											]
+										),
+										{days: trialExtend.duration}
+									),
 									'DNE'
 								)}
 							</span>

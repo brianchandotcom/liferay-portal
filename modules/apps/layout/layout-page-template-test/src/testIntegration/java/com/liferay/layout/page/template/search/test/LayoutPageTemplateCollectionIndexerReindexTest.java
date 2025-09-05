@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -67,6 +67,17 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 				createLayoutPageTemplateCollection();
 
 		String searchTerm = layoutPageTemplateCollection.getName();
+
+		_assertFieldValue(Field.NAME, searchTerm, searchTerm);
+
+		layoutPageTemplateCollection.setName(RandomTestUtil.randomString());
+
+		layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionFixture.
+				updateLayoutPageTemplateCollection(
+					layoutPageTemplateCollection);
+
+		searchTerm = layoutPageTemplateCollection.getName();
 
 		_assertFieldValue(Field.NAME, searchTerm, searchTerm);
 
@@ -140,7 +151,6 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 			).build());
 	}
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject

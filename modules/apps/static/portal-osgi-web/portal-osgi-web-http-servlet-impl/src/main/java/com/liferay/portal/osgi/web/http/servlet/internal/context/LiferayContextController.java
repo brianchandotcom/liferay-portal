@@ -426,7 +426,7 @@ public class LiferayContextController {
 		}
 
 		httpSessionAdaptor = HttpSessionWrapper.createHttpSessionWrapper(
-			httpSession, servletContext, this);
+			httpSession, this, servletContext);
 
 		HttpSessionWrapper previousHttpSessionAdaptor =
 			_activeHttpSessionWrappersMap.putIfAbsent(

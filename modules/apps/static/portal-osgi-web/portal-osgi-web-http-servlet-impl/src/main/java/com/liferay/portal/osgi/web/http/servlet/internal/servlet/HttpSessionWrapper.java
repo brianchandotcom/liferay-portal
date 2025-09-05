@@ -36,11 +36,12 @@ import java.util.List;
 public class HttpSessionWrapper implements HttpSession, Serializable {
 
 	public static HttpSessionWrapper createHttpSessionWrapper(
-		HttpSession httpSession, ServletContext servletContext,
-		LiferayContextController liferayContextController) {
+		HttpSession httpSession,
+		LiferayContextController liferayContextController,
+		ServletContext servletContext) {
 
 		HttpSessionWrapper httpSessionWrapper = new HttpSessionWrapper(
-			httpSession, servletContext, liferayContextController);
+			httpSession, liferayContextController, servletContext);
 
 		HttpSessionTracker.addHttpSessionWrapper(httpSessionWrapper);
 
@@ -198,23 +199,25 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 
 		_httpSession.removeAttribute(attributeName);
 
-		if (value != null) {
-			EventListeners eventListeners =
-				_liferayContextController.getEventListeners();
+		if (value == null) {
+			return;
+		}
 
-			List<HttpSessionAttributeListener> httpSessionAttributeListeners =
-				eventListeners.get(HttpSessionAttributeListener.class);
+		EventListeners eventListeners =
+			_liferayContextController.getEventListeners();
 
-			if (!httpSessionAttributeListeners.isEmpty()) {
-				HttpSessionBindingEvent httpSessionBindingEvent =
-					new HttpSessionBindingEvent(this, attributeName);
+		List<HttpSessionAttributeListener> httpSessionAttributeListeners =
+			eventListeners.get(HttpSessionAttributeListener.class);
 
-				for (HttpSessionAttributeListener httpSessionAttributeListener :
-						httpSessionAttributeListeners) {
+		if (!httpSessionAttributeListeners.isEmpty()) {
+			HttpSessionBindingEvent httpSessionBindingEvent =
+				new HttpSessionBindingEvent(this, attributeName);
 
-					httpSessionAttributeListener.attributeRemoved(
-						httpSessionBindingEvent);
-				}
+			for (HttpSessionAttributeListener httpSessionAttributeListener :
+					httpSessionAttributeListeners) {
+
+				httpSessionAttributeListener.attributeRemoved(
+					httpSessionBindingEvent);
 			}
 		}
 	}
@@ -243,21 +246,23 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 		List<HttpSessionAttributeListener> httpSessionAttributeListeners =
 			eventListeners.get(HttpSessionAttributeListener.class);
 
-		if (!httpSessionAttributeListeners.isEmpty()) {
-			HttpSessionBindingEvent httpSessionBindingEvent =
-				new HttpSessionBindingEvent(this, attributeName, value);
+		if (httpSessionAttributeListeners.isEmpty()) {
+			return;
+		}
 
-			for (HttpSessionAttributeListener httpSessionAttributeListener :
-					httpSessionAttributeListeners) {
+		HttpSessionBindingEvent httpSessionBindingEvent =
+			new HttpSessionBindingEvent(this, attributeName, value);
 
-				if (attributeAdded) {
-					httpSessionAttributeListener.attributeAdded(
-						httpSessionBindingEvent);
-				}
-				else {
-					httpSessionAttributeListener.attributeReplaced(
-						httpSessionBindingEvent);
-				}
+		for (HttpSessionAttributeListener httpSessionAttributeListener :
+				httpSessionAttributeListeners) {
+
+			if (attributeAdded) {
+				httpSessionAttributeListener.attributeAdded(
+					httpSessionBindingEvent);
+			}
+			else {
+				httpSessionAttributeListener.attributeReplaced(
+					httpSessionBindingEvent);
 			}
 		}
 	}
@@ -284,15 +289,16 @@ public class HttpSessionWrapper implements HttpSession, Serializable {
 	}
 
 	private HttpSessionWrapper(
-		HttpSession httpSession, ServletContext servletContext,
-		LiferayContextController liferayContextController) {
+		HttpSession httpSession,
+		LiferayContextController liferayContextController,
+		ServletContext servletContext) {
 
 		_httpSession = httpSession;
-		_servletContext = servletContext;
 		_liferayContextController = liferayContextController;
+		_servletContext = servletContext;
 
-		_attributePrefix =
-			"equinox.http." + liferayContextController.getContextName();
+		_attributePrefix = "equinox.http.".concat(
+			liferayContextController.getContextName());
 		_id = httpSession.getId();
 	}
 

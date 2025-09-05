@@ -26,13 +26,13 @@ import java.util.List;
 public class FilterChainImpl implements FilterChain {
 
 	public FilterChainImpl(
-		List<FilterRegistration> filterRegistrations,
+		DispatcherType dispatcherType,
 		EndpointRegistration<?> endpointRegistration,
-		DispatcherType dispatcherType) {
+		List<FilterRegistration> filterRegistrations) {
 
-		_filterRegistrations = filterRegistrations;
-		_endpointRegistration = endpointRegistration;
 		_dispatcherType = dispatcherType;
+		_endpointRegistration = endpointRegistration;
+		_filterRegistrations = filterRegistrations;
 
 		_filterCount = filterRegistrations.size();
 	}

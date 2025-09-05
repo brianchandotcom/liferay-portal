@@ -20,10 +20,10 @@ import org.osgi.framework.wiring.BundleWiring;
 public class ServiceHolder<S> implements Comparable<ServiceHolder<?>> {
 
 	public ServiceHolder(
-		S service, Bundle bundle, long serviceId, int serviceRanking) {
+		Bundle bundle, S service, long serviceId, int serviceRanking) {
 
-		_service = service;
 		_bundle = bundle;
+		_service = service;
 		_serviceId = serviceId;
 		_serviceRanking = serviceRanking;
 

@@ -104,8 +104,8 @@ public class ResponseStateHandler {
 					Collections.sort(matchingFilterRegistrations);
 
 					FilterChain filterChain = new FilterChainImpl(
-						matchingFilterRegistrations, endpointRegistration,
-						_liferayDispatchTargets.getDispatcherType());
+						_liferayDispatchTargets.getDispatcherType(),
+						endpointRegistration, matchingFilterRegistrations);
 
 					filterChain.doFilter(
 						_httpServletRequest, _httpServletResponse);

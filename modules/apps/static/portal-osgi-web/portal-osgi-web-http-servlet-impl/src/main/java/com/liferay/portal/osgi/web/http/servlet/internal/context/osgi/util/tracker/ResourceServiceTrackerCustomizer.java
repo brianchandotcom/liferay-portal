@@ -140,8 +140,9 @@ public class ResourceServiceTrackerCustomizer
 
 		ResourceRegistration resourceRegistration = new ResourceRegistration(
 			new ServiceHolder<>(
+				bundle,
 				new ResourceServlet(resourcePrefix, servletContextHelper),
-				bundle, resourceDTO.serviceId,
+				resourceDTO.serviceId,
 				GetterUtil.getInteger(
 					serviceReference.getProperty(Constants.SERVICE_RANKING))),
 			resourceDTO, servletContextHelper, liferayContextController, null);

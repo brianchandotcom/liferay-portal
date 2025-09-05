@@ -30,8 +30,6 @@ public class NotificationQueueEntryModelDocumentContributor
 		Document document, NotificationQueueEntry notificationQueueEntry) {
 
 		document.addDate(Field.SENT_DATE, notificationQueueEntry.getSentDate());
-		document.addKeyword("subject", notificationQueueEntry.getSubject());
-		document.addText("subject", notificationQueueEntry.getSubject());
 
 		Map<String, Object> notificationRecipientSettingsMap =
 			NotificationRecipientSettingUtil.
@@ -43,6 +41,9 @@ public class NotificationQueueEntryModelDocumentContributor
 		document.addText(
 			"fromName",
 			String.valueOf(notificationRecipientSettingsMap.get("from")));
+
+		document.addKeyword("subject", notificationQueueEntry.getSubject());
+		document.addText("subject", notificationQueueEntry.getSubject());
 	}
 
 }

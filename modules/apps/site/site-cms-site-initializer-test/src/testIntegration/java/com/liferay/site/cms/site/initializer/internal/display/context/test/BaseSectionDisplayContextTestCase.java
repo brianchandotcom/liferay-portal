@@ -21,12 +21,14 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -70,12 +73,25 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	public HashMap<String, Object> getBaseAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
+			"assetLibraries", _getDepotEntriesJSONArray()
+		).put(
 			"autocompleteURL",
 			() -> StringBundler.concat(
 				"/o/search/v1.0/search?emptySearch=",
 				"true&entryClassNames=com.liferay.portal.kernel.model.",
 				"User,com.liferay.portal.kernel.model.",
 				"UserGroup&nestedFields=embedded")
+		).put(
+			"baseAssetLibraryViewURL",
+			StringBundler.concat(
+				GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
+				_portal.getClassNameId(DepotEntry.class), StringPool.SLASH)
+		).put(
+			"baseFolderViewURL",
+			StringBundler.concat(
+				GroupConstants.CMS_FRIENDLY_URL, "/e/view-folder/",
+				_portal.getClassNameId(ObjectEntryFolder.class),
+				StringPool.SLASH)
 		).put(
 			"cmsGroupId",
 			() -> {
@@ -135,6 +151,11 @@ public abstract class BaseSectionDisplayContextTestCase
 			).put(
 				"L_KNOWLEDGE_BASE", "wiki"
 			).build()
+		).put(
+			"parentObjectEntryFolderExternalReferenceCode",
+			getRootObjectEntryFolderExternalReferenceCode()
+		).put(
+			"redirect", "http://localhost:8080/currentURL"
 		).build();
 	}
 
@@ -515,6 +536,28 @@ public abstract class BaseSectionDisplayContextTestCase
 		Assert.assertNull(dropdownItemData);
 	}
 
+	private JSONArray _getDepotEntriesJSONArray() {
+		return _getDepotEntriesJSONArray(
+			TransformUtil.transform(
+				_depotEntryLocalService.getDepotEntries(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				DepotEntry::getGroupId));
+	}
+
+	private JSONArray _getDepotEntriesJSONArray(List<Long> groupIds) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Long groupId : groupIds) {
+			JSONObject jsonObject = _getJSONObject(groupId);
+
+			if (jsonObject != null) {
+				jsonArray.put(jsonObject);
+			}
+		}
+
+		return jsonArray;
+	}
+
 	private DropdownItem _getDropdownItem(
 		List<DropdownItem> dropdownItems, String label) {
 
@@ -544,6 +587,20 @@ public abstract class BaseSectionDisplayContextTestCase
 		}
 
 		return jsonArray;
+	}
+
+	private JSONObject _getJSONObject(long groupId) {
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"groupId", group.getGroupId()
+		).put(
+			"name", group.getName(LocaleUtil.getDefault())
+		);
 	}
 
 	private String _getRedirect(DropdownItem dropdownItem) {
@@ -653,5 +710,8 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

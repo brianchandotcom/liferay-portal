@@ -16,9 +16,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -26,9 +24,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -53,7 +49,6 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,11 +78,7 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
+	public void setupCMSContext() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(OverviewResourceTest.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
@@ -119,21 +110,17 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 
 		_serviceContext.setAttribute("staging", Boolean.TRUE);
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			testGroup, _serviceContext);
 
-		_objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
 		_themeDisplay = _getThemeDisplay();
 	}
 
 	@Override
 	@Test
 	public void testGetExpiredAssetsPage() throws Exception {
+		setupCMSContext();
+
 		Page<ExpiredAsset> page = expiredAssetResource.getExpiredAssetsPage(
 			null, null, Pagination.of(1, 10));
 
@@ -169,6 +156,14 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testGetExpiredAssetsPageWithPagination() throws Exception {
+		setupCMSContext();
+
+		super.testGetExpiredAssetsPageWithPagination();
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"title", "href", "usages"};
 	}
@@ -188,19 +183,17 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 			String portugueseTitle)
 		throws Exception {
 
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderLocalService.
-				getObjectEntryFolderByExternalReferenceCode(
-					"L_CONTENTS", testGroup.getGroupId(),
-					testCompany.getCompanyId());
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
 
 		_serviceContext.setAttribute(
 			"friendlyUrlMap", new HashMap<String, String>());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_depotEntry.getGroupId(), _depotEntry.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			objectEntryFolder.getObjectEntryFolderId(), "en_US",
+			objectDefinition.getObjectDefinitionId(), 0, "en_US",
 			HashMapBuilder.<String, Serializable>put(
 				"title_i18n",
 				() -> {
@@ -223,7 +216,7 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			testGroup.getGroupId(), StringPool.BLANK,
-			_portal.getClassNameId(_objectDefinition.getClassName()),
+			_portal.getClassNameId(objectDefinition.getClassName()),
 			objectEntry.getObjectEntryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
 			_serviceContext);
@@ -271,31 +264,25 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 	}
 
 	@Inject
-	private static GroupLocalService _groupLocalService;
-
-	@Inject
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
 	@Inject
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
-	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
 
-	private ObjectDefinition _objectDefinition;
-
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

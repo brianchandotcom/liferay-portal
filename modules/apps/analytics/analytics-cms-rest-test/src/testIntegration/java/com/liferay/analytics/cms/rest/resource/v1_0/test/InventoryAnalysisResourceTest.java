@@ -47,7 +47,6 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -69,11 +68,7 @@ import org.osgi.framework.FrameworkUtil;
 public class InventoryAnalysisResourceTest
 	extends BaseInventoryAnalysisResourceTestCase {
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
+	public void setupCMSContext() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(OverviewResourceTest.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
@@ -146,6 +141,8 @@ public class InventoryAnalysisResourceTest
 	@Override
 	@Test
 	public void testGetInventoryAnalysis() throws Exception {
+		setupCMSContext();
+
 		InventoryAnalysis inventoryAnalysis =
 			inventoryAnalysisResource.getInventoryAnalysis(
 				null, _depotEntry.getDepotEntryId(), null, null, null, null,

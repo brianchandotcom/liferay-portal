@@ -53,7 +53,6 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -74,11 +73,7 @@ import org.osgi.framework.FrameworkUtil;
 @RunWith(Arquillian.class)
 public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
+	public void setupCMSContext() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(OverviewResourceTest.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
@@ -117,6 +112,8 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 	@Override
 	@Test
 	public void testGetContentOverview() throws Exception {
+		setupCMSContext();
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -193,6 +190,8 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 	@Override
 	@Test
 	public void testGetFileOverview() throws Exception {
+		setupCMSContext();
+
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_depotEntry.getGroupId());
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 

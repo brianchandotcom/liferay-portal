@@ -296,14 +296,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			newContent = StringUtil.replace(
 				newContent, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-		}
-		else if (checkCategoryNames.contains("Upgrade")) {
-			newContent = StringUtil.replace(
-				newContent, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-		}
 
-		if (!content.equals(newContent)) {
-			modifiedMessages.add(file.toString() + " (ReturnCharacter)");
+			if (!content.equals(newContent)) {
+				modifiedMessages.add(file.toString() + " (ReturnCharacter)");
+			}
 		}
 
 		newContent = parse(file, fileName, newContent, modifiedMessages);

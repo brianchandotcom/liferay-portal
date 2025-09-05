@@ -1620,26 +1620,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSiteClonedFromSiteTemplateCP(clonedFromTemplate = null, siteTemplateName = null) {
-		Click(
-			key_itemName = "Other",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Site Template");
-
-		if (${clonedFromTemplate} == "true") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "SiteSettingsSiteTemplate#CONTENT_CONTAINER",
-				value1 = "These pages are linked to site template ${siteTemplateName} without propagation of changes.");
-		}
-		else {
-			AssertTextEquals.assertPartialText(
-				locator1 = "SiteSettingsSiteTemplate#CONTENT_CONTAINER",
-				value1 = "This site is not related to a site template.");
-		}
-	}
-
-	@summary = "Default summary"
 	macro viewSiteFriendlyURLPG(siteName = null, sitePageURL = null) {
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",

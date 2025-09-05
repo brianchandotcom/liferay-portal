@@ -128,13 +128,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openURLLocale(localizationPageURL = null) {
-		Navigator.openSpecificURL(url = ${localizationPageURL});
-
-		AssertLocation(value1 = ${localizationPageURL});
-	}
-
-	@summary = "Default summary"
 	macro searchInCollectionFilter(searchTerm = null) {
 		if (!(isSet(index))) {
 			var index = 1;
@@ -318,18 +311,6 @@ definition {
 			key_pageLocale = ${defaultLanguageLocalizationMessage},
 			preferredLanguageLocalizationMessage = ${preferredLanguageLocalizationMessage},
 			translationLanguageLocalizationMessage = ${translationLanguageLocalizationMessage});
-	}
-
-	@summary = "Default summary"
-	macro viewURLLocale(localizationPageURL = null, localizationOption = null) {
-		if (isSet(localizationOption)) {
-			AssertClick(
-				key_pageLocale = ${localizationOption},
-				locator1 = "Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE",
-				value1 = ${localizationOption});
-		}
-
-		AssertLocation(value1 = ${localizationPageURL});
 	}
 
 	@summary = "Default summary"

@@ -85,6 +85,8 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(AssetDeletionOverviewResourceImpl.class);
+
 			add(ChannelResourceImpl.class);
 
 			add(ConnectionInfoResourceImpl.class);

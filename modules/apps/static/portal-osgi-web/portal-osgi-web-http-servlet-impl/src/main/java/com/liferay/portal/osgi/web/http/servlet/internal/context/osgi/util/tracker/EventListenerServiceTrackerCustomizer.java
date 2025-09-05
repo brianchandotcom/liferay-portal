@@ -152,9 +152,9 @@ public class EventListenerServiceTrackerCustomizer
 				servletContextHelperDataContext);
 
 			listenerRegistration = new EventListenerRegistration(
-				serviceHolder, eventListenerClasses,
+				eventListenerClasses, liferayContextController,
 				_createListenerDTO(eventListenerClasses, serviceReference),
-				servletContext, liferayContextController);
+				serviceHolder, servletContext);
 
 			if (eventListenerClasses.contains(ServletContextListener.class)) {
 				ServletContextListener servletContextListener =

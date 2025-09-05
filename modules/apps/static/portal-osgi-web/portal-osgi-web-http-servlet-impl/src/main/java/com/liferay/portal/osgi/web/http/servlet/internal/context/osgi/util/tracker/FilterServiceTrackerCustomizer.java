@@ -135,11 +135,11 @@ public class FilterServiceTrackerCustomizer
 					filter, serviceReference);
 
 				filterRegistration = new FilterRegistration(
-					serviceHolder, filterDTO,
+					filterDTO, liferayContextController,
 					GetterUtil.getInteger(
 						serviceReference.getProperty(
 							Constants.SERVICE_RANKING)),
-					liferayContextController);
+					serviceHolder);
 
 				filterRegistration.init(
 					new FilterConfigImpl(

@@ -21,13 +21,14 @@ import org.osgi.service.http.runtime.dto.ServletDTO;
 public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 
 	public ServletRegistration(
-		ServiceHolder<Servlet> servletHolder, ServletDTO servletDTO,
-		ErrorPageDTO errorPageDTO, ServletContextHelper servletContextHelper,
-		LiferayContextController liferayContextController) {
+		ErrorPageDTO errorPageDTO,
+		LiferayContextController liferayContextController,
+		ServiceHolder<Servlet> servletHolder,
+		ServletContextHelper servletContextHelper, ServletDTO servletDTO) {
 
 		super(
-			servletHolder, servletDTO, servletContextHelper,
-			liferayContextController);
+			servletDTO, liferayContextController, servletHolder,
+			servletContextHelper);
 
 		_errorPageDTO = errorPageDTO;
 	}
@@ -59,8 +60,8 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 
 	@Override
 	public String match(
-		String name, String servletPath, String pathInfo, String extension,
-		Match match) {
+		String extension, Match match, String name, String pathInfo,
+		String servletPath) {
 
 		if ((_errorPageDTO != null) && (name != null)) {
 			for (long errorCode : _errorPageDTO.errorCodes) {
@@ -78,7 +79,7 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 			}
 		}
 
-		return super.match(name, servletPath, pathInfo, extension, match);
+		return super.match(extension, match, name, pathInfo, servletPath);
 	}
 
 	private final ErrorPageDTO _errorPageDTO;

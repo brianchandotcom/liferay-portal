@@ -136,8 +136,8 @@ public class ServletServiceTrackerCustomizer
 						serviceHolder.getBundle());
 
 				servletRegistration = new ServletRegistration(
-					serviceHolder, servletDTO, objectValuePair.getValue(),
-					servletContextHelper, liferayContextController);
+					objectValuePair.getValue(), liferayContextController,
+					serviceHolder, servletContextHelper, servletDTO);
 
 				servletRegistration.init(
 					new ServletConfigImpl(

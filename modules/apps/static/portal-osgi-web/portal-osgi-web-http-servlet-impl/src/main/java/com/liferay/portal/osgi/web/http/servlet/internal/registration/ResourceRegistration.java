@@ -19,13 +19,13 @@ import org.osgi.service.http.runtime.dto.ResourceDTO;
 public class ResourceRegistration extends EndpointRegistration<ResourceDTO> {
 
 	public ResourceRegistration(
-		ServiceHolder<Servlet> serviceHolder, ResourceDTO resourceDTO,
-		ServletContextHelper servletContextHelper,
-		LiferayContextController liferayContextController) {
+		LiferayContextController liferayContextController,
+		ResourceDTO resourceDTO, ServiceHolder<Servlet> serviceHolder,
+		ServletContextHelper servletContextHelper) {
 
 		super(
-			serviceHolder, resourceDTO, servletContextHelper,
-			liferayContextController);
+			resourceDTO, liferayContextController, serviceHolder,
+			servletContextHelper);
 
 		Servlet servlet = serviceHolder.get();
 

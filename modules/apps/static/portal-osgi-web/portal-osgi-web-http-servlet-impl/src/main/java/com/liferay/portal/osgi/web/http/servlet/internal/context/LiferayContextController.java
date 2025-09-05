@@ -325,8 +325,8 @@ public class LiferayContextController {
 
 			if (Objects.nonNull(
 					curEndpointRegistration.match(
-						servletName, servletPath, pathInfo, extension,
-						match))) {
+						extension, match, servletName, pathInfo,
+						servletPath))) {
 
 				endpointRegistration = curEndpointRegistration;
 
@@ -366,8 +366,7 @@ public class LiferayContextController {
 		for (FilterRegistration filterRegistration : _filterRegistrations) {
 			if (Objects.nonNull(
 					filterRegistration.match(
-						endpointRegistrationName, requestURI, extension,
-						null)) &&
+						extension, endpointRegistrationName, requestURI)) &&
 				!matchingFilterRegistrations.contains(filterRegistration)) {
 
 				matchingFilterRegistrations.add(filterRegistration);

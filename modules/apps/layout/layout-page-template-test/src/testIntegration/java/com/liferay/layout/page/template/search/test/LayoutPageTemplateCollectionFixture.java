@@ -35,30 +35,16 @@ public class LayoutPageTemplateCollectionFixture {
 	public LayoutPageTemplateCollection createLayoutPageTemplateCollection()
 		throws PortalException {
 
-		return createLayoutPageTemplateCollection(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-	}
-
-	public LayoutPageTemplateCollection createLayoutPageTemplateCollection(
-			String name)
-		throws PortalException {
-
-		return createLayoutPageTemplateCollection(
-			name, RandomTestUtil.randomString());
-	}
-
-	public LayoutPageTemplateCollection createLayoutPageTemplateCollection(
-			String name, String description)
-		throws PortalException {
-
-		ServiceContext serviceContext = _getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					RandomTestUtil.randomString(), serviceContext.getUserId(),
-					_group.getGroupId(), 0, RandomTestUtil.randomString(), name,
-					description,
+					_group.getGroupId(), 0, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
@@ -82,16 +68,6 @@ public class LayoutPageTemplateCollectionFixture {
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateCollection.getName());
-	}
-
-	private ServiceContext _getServiceContext() {
-		try {
-			return ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId());
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
 	}
 
 	private final Group _group;

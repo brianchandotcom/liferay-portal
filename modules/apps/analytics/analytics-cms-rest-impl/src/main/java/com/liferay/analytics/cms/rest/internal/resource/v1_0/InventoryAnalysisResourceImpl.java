@@ -7,6 +7,7 @@ package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.cms.rest.dto.v1_0.InventoryAnalysis;
 import com.liferay.analytics.cms.rest.dto.v1_0.InventoryAnalysisItem;
+import com.liferay.analytics.cms.rest.internal.resource.v1_0.util.ObjectEntryVersionTitleExpressionUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.InventoryAnalysisResource;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRelTable;
 import com.liferay.asset.kernel.model.AssetCategoryTable;
@@ -25,20 +26,12 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersionTable;
 import com.liferay.object.model.ObjectFolderTable;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
-import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
-import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
-import com.liferay.petra.sql.dsl.spi.expression.Scalar;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -54,8 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.sql.Clob;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -323,46 +314,6 @@ public class InventoryAnalysisResourceImpl
 		return groupIds;
 	}
 
-	private Expression<Clob> _getLocalizedTitleExpression(String languageId) {
-		Column<ObjectEntryVersionTable, Clob> contentColumn =
-			ObjectEntryVersionTable.INSTANCE.content;
-
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.HYPERSONIC) {
-			DSLFunction<Object> dslFunction1 = new DSLFunction<>(
-				new DSLFunctionType("REGEXP_SUBSTRING(", ")"),
-				new DSLFunction<>(
-					new DSLFunctionType("CONVERT(", ", SQL_VARCHAR)"),
-					contentColumn),
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>("(?s)\"title_i18n\"\\s*:\\s*(\\{.*?\\})")));
-
-			DSLFunction<Object> dslFunction2 = new DSLFunction<>(
-				new DSLFunctionType("REGEXP_SUBSTRING(", ")"), dslFunction1,
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>(
-						StringBundler.concat(
-							"\"", languageId, "\"\\s*:\\s*\"([^\"]*)\""))));
-
-			return new DSLFunction<>(
-				new DSLFunctionType("REGEXP_REPLACE(", ")"), dslFunction2,
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>(
-						StringBundler.concat(
-							"^\"", languageId, "\"\\s*:\\s*\"([^\"]*)\"$"))),
-				new DSLFunction<>(
-					new DSLFunctionType("CAST(", " AS LONGVARCHAR)"),
-					new Scalar<>("$1")));
-		}
-
-		return _getPropertyValueExpression(
-			contentColumn, "properties.title_i18n." + languageId);
-	}
-
 	private Predicate _getPredicate(
 		Long categoryId, Long[] groupIds, String languageId, String rangeEnd,
 		Integer rangeKey, String rangeStart, Long structureId, Long tagId,
@@ -390,7 +341,8 @@ public class InventoryAnalysisResourceImpl
 		if (Validator.isNotNull(languageId)) {
 			predicate = predicate.and(
 				DSLFunctionFactoryUtil.castClobText(
-					_getLocalizedTitleExpression(languageId)
+					ObjectEntryVersionTitleExpressionUtil.
+						getLocalizedTitleExpression(languageId)
 				).isNotNull());
 		}
 
@@ -424,42 +376,6 @@ public class InventoryAnalysisResourceImpl
 		}
 
 		return predicate;
-	}
-
-	private <T> Expression<T> _getPropertyValueExpression(
-		Expression<T> columnExpression, String propertyPath) {
-
-		DB db = DBManagerUtil.getDB();
-
-		if ((db.getDBType() == DBType.MARIADB) ||
-			(db.getDBType() == DBType.MYSQL)) {
-
-			return new DSLFunction<>(
-				new DSLFunctionType("JSON_UNQUOTE(", ")"),
-				new DSLFunction<>(
-					new DSLFunctionType("JSON_EXTRACT(", ")"), columnExpression,
-					new Scalar<>("$." + propertyPath)));
-		}
-		else if (db.getDBType() == DBType.POSTGRESQL) {
-			String[] propertyPathParts = propertyPath.split("\\.");
-
-			Expression[] expressions =
-				new Expression[propertyPathParts.length + 1];
-
-			expressions[0] = columnExpression;
-
-			for (int i = 1; i < expressions.length; i++) {
-				expressions[i] = new Scalar<>(propertyPathParts[i]);
-			}
-
-			return new DSLFunction<>(
-				new DSLFunctionType("json_extract_path_text(", ")"),
-				expressions);
-		}
-
-		return new DSLFunction<>(
-			new DSLFunctionType("JSON_VALUE(", ")"), columnExpression,
-			new Scalar<>("$." + propertyPath));
 	}
 
 	private Expression<?>[] _getSelectExpressions(String groupBy) {

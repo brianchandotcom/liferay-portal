@@ -314,11 +314,13 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 		.locator('input[name*="$createAccountCaptchaEnabled$"]')
 		.first();
 
-	await captchaCheckbox.click();
+	await expect(async () => {
+		await captchaCheckbox.click();
 
-	await expect(captchaCheckbox).not.toBeChecked();
+		await expect(captchaCheckbox).not.toBeChecked();
 
-	await page.getByTestId('submitConfiguration').click();
+		await page.getByTestId('submitConfiguration').click();
+	}).toPass();
 
 	try {
 		const {channel, site} = await classicCommerceSetUp(

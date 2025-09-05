@@ -200,7 +200,7 @@ export function InventoryAnalysisCard() {
 								)}
 
 								<Text weight="semi-bold">
-									{Liferay.Language.get(selectedItem.name)}
+									{selectedItem.name}
 								</Text>
 
 								<ClayIcon

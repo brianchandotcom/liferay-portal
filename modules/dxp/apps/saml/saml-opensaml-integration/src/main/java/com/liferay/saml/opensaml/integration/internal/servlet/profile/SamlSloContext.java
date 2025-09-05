@@ -155,6 +155,10 @@ public class SamlSloContext implements Serializable {
 		return _userId;
 	}
 
+	public SamlSloRequestInfo removeSamlSloRequestInfo(String entityId) {
+		return _samlRequestInfos.remove(entityId);
+	}
+
 	public void setRelayState(String relayState) {
 		_relayState = relayState;
 	}

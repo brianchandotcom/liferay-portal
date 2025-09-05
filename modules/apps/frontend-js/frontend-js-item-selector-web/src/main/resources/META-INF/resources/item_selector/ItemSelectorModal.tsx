@@ -110,7 +110,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 					{...fdsProps}
 					onSelectedItemsChange={setSelectedItems}
 					selectedItems={selectedItems}
-					selectedItemsKey={locator.value}
+					selectedItemsKey={locator.id}
 					selectionType={multiSelect ? 'multiple' : 'single'}
 					showNavBarWhenSelected={true}
 					style="fluid"

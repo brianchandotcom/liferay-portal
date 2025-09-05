@@ -10,10 +10,6 @@ data-active
 data-inactive
 {{- end -}}
 
-{{- define "liferayAWSBackupRestore.argo.param.dbRestoreSnapshotIdentifier" -}}
-db-restore-snapshot-identifier
-{{- end -}}
-
 {{- define "liferayAWSBackupRestore.argo.param.recoveryPointArn" -}}
 recovery-point-arn
 {{- end -}}
@@ -142,7 +138,7 @@ helm.sh/chart: {{ include "liferayAWSBackupRestore.chart" . }}
 /tmp/s3-recovery-point-arn.txt
 {{- end -}}
 
-{{- define "liferayAWSBackupRestore.path.workingDir" -}}
+{{- define "liferayAWSBackupRestore.path.src" -}}
 /src
 {{- end -}}
 

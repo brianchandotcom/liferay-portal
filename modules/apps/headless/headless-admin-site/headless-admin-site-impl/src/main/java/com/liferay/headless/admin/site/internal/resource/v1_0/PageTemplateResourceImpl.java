@@ -565,10 +565,11 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			_cetManager, groupId, contentPageTemplate.getPageSpecifications(),
-			true, nameMap, nameMap, nameMap, null, LayoutConstants.TYPE_CONTENT,
-			null, true, true, Collections.emptyMap(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			_cetManager, groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			contentPageTemplate.getPageSpecifications(), true, nameMap, nameMap,
+			nameMap, null, LayoutConstants.TYPE_CONTENT, null, true, true,
+			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		return layout.getPlid();
 	}

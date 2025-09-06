@@ -317,10 +317,11 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			_cetManager, groupId, masterPage.getPageSpecifications(), true,
-			nameMap, nameMap, nameMap, null, LayoutConstants.TYPE_CONTENT, null,
-			true, true, Collections.emptyMap(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			_cetManager, groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			masterPage.getPageSpecifications(), true, nameMap, nameMap, nameMap,
+			null, LayoutConstants.TYPE_CONTENT, null, true, true,
+			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		return layout.getPlid();
 	}

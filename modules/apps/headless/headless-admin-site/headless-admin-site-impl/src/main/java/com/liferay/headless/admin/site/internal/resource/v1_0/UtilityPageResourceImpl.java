@@ -318,9 +318,10 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			_cetManager, groupId, utilityPage.getPageSpecifications(), false,
-			nameMap, titleMap, descriptionMap, null,
-			LayoutConstants.TYPE_UTILITY, null, true, true,
+			_cetManager, groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			utilityPage.getPageSpecifications(), false, nameMap, titleMap,
+			descriptionMap, null, LayoutConstants.TYPE_UTILITY, null, true,
+			true,
 			LocalizedMapUtil.getLocalizedMap(
 				utilityPage.getFriendlyUrlPath_i18n()),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);

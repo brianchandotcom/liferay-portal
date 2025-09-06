@@ -4,7 +4,7 @@ argo:
 awsBackupService:
     assumedIamRoleArn: ""
     restoreWaitTimeoutSeconds: 7200
-    vaultName: "liferay-backup"
+    vaultName: liferay-backup
 createClusterResources: true
 fullnameOverride: ""
 git:
@@ -23,13 +23,13 @@ git:
 images:
     awsCli:
         repository: amazon/aws-cli
-        tag: "2.27.63"
+        tag: 2.27.63
     kubectl:
         repository: registry.k8s.io/kubectl
         tag: v1.34.0
     terraform:
         repository: hashicorp/terraform
-        tag: "1.12.2"
+        tag: 1.12.2
 liferayWorkload:
     managedSecretName: managed-service-details
     name: liferay-default

@@ -86,7 +86,7 @@ import java.util.Objects;
 public class LayoutUtil {
 
 	public static Layout addContentLayout(
-			CETManager cetManager, long groupId,
+			CETManager cetManager, long groupId, long parentLayoutId,
 			PageSpecification[] pageSpecifications, boolean privateLayout,
 			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
@@ -104,10 +104,10 @@ public class LayoutUtil {
 				GetterUtil.getString(
 					serviceContext.getAttribute("layoutExternalReferenceCode"),
 					null),
-				serviceContext.getUserId(), groupId, privateLayout, 0, 0, 0,
-				nameMap, titleMap, descriptionMap, null, robotsMap, type,
-				typeSettingsUnicodeProperties.toString(), hidden, system,
-				friendlyURLMap, 0L, serviceContext);
+				serviceContext.getUserId(), groupId, privateLayout,
+				parentLayoutId, 0, 0, nameMap, titleMap, descriptionMap, null,
+				robotsMap, type, typeSettingsUnicodeProperties.toString(),
+				hidden, system, friendlyURLMap, 0L, serviceContext);
 
 			return LayoutLocalServiceUtil.updateStatus(
 				serviceContext.getUserId(), layout.getPlid(), status,
@@ -248,8 +248,8 @@ public class LayoutUtil {
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			publishedContentPageSpecification.getExternalReferenceCode(),
-			serviceContext.getUserId(), groupId, privateLayout, 0, 0, 0,
-			nameMap, titleMap, descriptionMap, null, robotsMap, type,
+			serviceContext.getUserId(), groupId, privateLayout, parentLayoutId,
+			0, 0, nameMap, titleMap, descriptionMap, null, robotsMap, type,
 			typeSettingsUnicodeProperties.toString(), hidden, system,
 			friendlyURLMap, masterLayoutPlid, serviceContext);
 

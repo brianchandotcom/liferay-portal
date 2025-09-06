@@ -100,7 +100,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			return list;
 		}
 
-		Set<Long> primKeyIds = new HashSet<>();
+		Set<Long> permittedClassPKs = new HashSet<>();
 
 		Set<Long> roleIdsSet = _getRoleIdsSet(groupIds);
 
@@ -117,13 +117,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				(roleIdsSet.contains(resourcePermission.getRoleId()) ||
 				 (signedIn && (resourcePermission.getOwnerId() == userId)))) {
 
-				primKeyIds.add(resourcePermission.getPrimKeyId());
+				permittedClassPKs.add(resourcePermission.getPrimKeyId());
 			}
 		}
 
 		_collectSharingEntryClassPKs(
 			baseModel.getModelClassName(), permissionChecker.getUserId(),
-			groupIds, primKeyIds);
+			groupIds, permittedClassPKs);
 
 		if ((baseModel instanceof GroupedModel) && (groupIds.length > 0)) {
 			Set<Long> disabledGroupIds = new HashSet<>();
@@ -138,7 +138,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				return ListUtil.filter(
 					list,
 					t -> {
-						if (primKeyIds.contains((Long)t.getPrimaryKeyObj())) {
+						if (permittedClassPKs.contains(
+								(Long)t.getPrimaryKeyObj())) {
+
 							return true;
 						}
 
@@ -151,7 +153,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		return ListUtil.filter(
-			list, t -> primKeyIds.contains((Long)t.getPrimaryKeyObj()));
+			list, t -> permittedClassPKs.contains((Long)t.getPrimaryKeyObj()));
 	}
 
 	@Override
@@ -407,7 +409,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private void _collectSharingEntryClassPKs(
-		String className, long userId, long[] groupIds, Set<Long> primKeyIds) {
+		String className, long userId, long[] groupIds,
+		Set<Long> permittedClassPKs) {
 
 		List<PermissionSQLContributor> permissionSQLContributors =
 			_serviceTrackerMap.getService(className);
@@ -420,7 +423,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				permissionSQLContributors) {
 
 			permissionSQLContributor.collectPermittedClassPKs(
-				className, userId, groupIds, primKeyIds);
+				className, userId, groupIds, permittedClassPKs);
 		}
 	}
 

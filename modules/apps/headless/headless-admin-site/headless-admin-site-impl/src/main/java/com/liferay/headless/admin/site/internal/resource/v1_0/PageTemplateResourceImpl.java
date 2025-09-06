@@ -565,8 +565,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			_cetManager, groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			contentPageTemplate.getPageSpecifications(), true, nameMap, nameMap,
+			_cetManager, groupId, contentPageTemplate.getPageSpecifications(),
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, nameMap, nameMap,
 			nameMap, null, LayoutConstants.TYPE_CONTENT, null, true, true,
 			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);

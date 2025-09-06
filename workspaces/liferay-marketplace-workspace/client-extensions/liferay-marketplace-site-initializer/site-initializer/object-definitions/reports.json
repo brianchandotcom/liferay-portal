@@ -3,7 +3,7 @@
 	"label": {
 		"en_US": "Report"
 	},
-	"name": "Reports",
+	"name": "Report",
 	"objectFields": [
 		{
 			"DBType": "String",

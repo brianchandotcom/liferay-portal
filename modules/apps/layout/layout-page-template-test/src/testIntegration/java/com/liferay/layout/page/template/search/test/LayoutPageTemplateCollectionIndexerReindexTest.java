@@ -83,7 +83,7 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 			layoutPageTemplateCollection.getCompanyId(),
 			uidFactory.getUID(layoutPageTemplateCollection));
 
-		_assertNoHits(name);
+		_assertNoFieldValues(name);
 
 		_reindex(layoutPageTemplateCollection);
 
@@ -96,7 +96,7 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 		_layoutPageTemplateCollectionLocalService.
 			deleteLayoutPageTemplateCollection(layoutPageTemplateCollection);
 
-		_assertNoHits(name);
+		_assertNoFieldValues(name);
 	}
 
 	@Rule
@@ -121,7 +121,7 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 			fieldName, fieldValue, _search(queryString));
 	}
 
-	private void _assertNoHits(String queryString) throws Exception {
+	private void _assertNoFieldValues(String queryString) throws Exception {
 		FieldValuesAssert.assertFieldValues(
 			Collections.emptyMap(), _search(queryString));
 	}

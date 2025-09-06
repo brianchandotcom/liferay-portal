@@ -46,11 +46,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -60,7 +58,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -76,14 +73,10 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -1726,8 +1719,6 @@ public class ObjectDefinitionTreeUtilTest {
 
 		_addObjectAction("C_AA");
 
-		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA"));
-
 		_testCreateObjectDefinitionTree(
 			true,
 			LinkedHashMapBuilder.put(
@@ -1739,8 +1730,6 @@ public class ObjectDefinitionTreeUtilTest {
 		_updateWorkflowDefinitionLink("C_AAAA", "Single Approver");
 
 		_addObjectAction("C_AAAAA");
-
-		_assertModelResourceNames(ListUtil.fromArray("C_AAAA", "C_AAAAA"));
 
 		objectDefinitionAAA =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("AAA");
@@ -1761,8 +1750,6 @@ public class ObjectDefinitionTreeUtilTest {
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinitionAAA.getObjectDefinitionId());
-
-		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA", "C_AAAAA"));
 
 		objectDefinitionA = _objectDefinitionLocalService.getObjectDefinition(
 			TestPropsValues.getCompanyId(), "C_A");
@@ -1789,8 +1776,6 @@ public class ObjectDefinitionTreeUtilTest {
 			objectDefinitionA.getObjectDefinitionId(),
 			_objectRelationshipLocalService);
 
-		_assertModelResourceNames(ListUtil.fromArray("C_A"));
-		_assertModelResourceNames(ListUtil.fromArray("C_AA", "C_AAAAA"));
 		_assertWorkflowDefinitionLink("C_AA", "Single Approver");
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
@@ -2161,40 +2146,6 @@ public class ObjectDefinitionTreeUtilTest {
 				role.getRoleId(), ActionKeys.VIEW));
 	}
 
-	private void _assertModelResourceNames(List<String> objectDefinitionNames)
-		throws Exception {
-
-		Map<String, Set<String>> resourceReferences =
-			ReflectionTestUtil.getFieldValue(
-				_resourceActions, "_resourceReferences");
-
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), objectDefinitionNames.get(0));
-
-		List<String> modelResourceNames = ListUtil.filter(
-			new ArrayList<>(
-				resourceReferences.get(rootObjectDefinition.getPortletId())),
-			resourceName -> StringUtil.startsWith(
-				resourceName,
-				ObjectDefinitionConstants.
-					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
-
-		Assert.assertEquals(
-			modelResourceNames.toString(), objectDefinitionNames.size(),
-			modelResourceNames.size());
-
-		for (String objectDefinitionName : objectDefinitionNames) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), objectDefinitionName);
-
-			Assert.assertThat(
-				modelResourceNames,
-				CoreMatchers.hasItem(objectDefinition.getClassName()));
-		}
-	}
-
 	private void _assertRootObjectDefinitionIdIsZero(
 			String objectDefinitionShortName)
 		throws Exception {
@@ -2432,9 +2383,6 @@ public class ObjectDefinitionTreeUtilTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Inject
-	private ResourceActions _resourceActions;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

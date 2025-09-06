@@ -7,7 +7,6 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {addDays} from 'date-fns';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {KeyedMutator} from 'swr';
@@ -28,7 +27,7 @@ type ExtendSSATrialModalProps = {
 	mutatePlacedOrder?: KeyedMutator<any>;
 	onClose: () => void;
 	order: PlacedOrder;
-	orderMutate?: KeyedMutator<any>;
+	orderMutate: KeyedMutator<any>;
 	ssaTrialExtendMutate: KeyedMutator<any>;
 };
 
@@ -113,64 +112,14 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 
 			if (extendType === EXTEND_TYPES.AUTO_EXTEND) {
 				if (mutatePlacedOrder) {
-					mutatePlacedOrder(
-						(apireposne: any) => {
-							return {
-								...apireposne,
-								placedOrder: {
-									...apireposne.placedOrder,
-									customFields: {
-										...apireposne.placedOrder.customFields,
-										[OrderCustomFields.TRIAL_END_DATE]:
-											addDays(
-												new Date(
-													apireposne.placedOrder.customFields[
-														OrderCustomFields.TRIAL_END_DATE
-													]
-												),
-												form.duration
-											).toISOString(),
-									},
-								},
-							};
-						},
-						{revalidate: false}
-					);
+					mutatePlacedOrder((response: any) => response, {
+						revalidate: true,
+					});
 				}
 
-				if (orderMutate) {
-					orderMutate(
-						(orders: any) => {
-							const updatedOrder = {
-								...order,
-								items: orders.items.map((item: any) => {
-									if (item.id !== order.id) {
-										return item;
-									}
-
-									return {
-										...item,
-										customFields: {
-											...item.customFields,
-											[OrderCustomFields.TRIAL_END_DATE]:
-												addDays(
-													new Date(
-														order.customFields[
-															OrderCustomFields.TRIAL_END_DATE
-														]
-													),
-													form.duration
-												).toISOString(),
-										},
-									};
-								}),
-							};
-
-							return updatedOrder;
-						},
-						{revalidate: false}
-					);
-				}
+				orderMutate((response: any) => response, {
+					revalidate: true,
+				});
 			}
 
 			Liferay.Util.openToast({
@@ -200,6 +149,7 @@ const ExtendSSATrialModal: React.FC<ExtendSSATrialModalProps> = ({
 			<ClayAlert displayType={extendOptions?.alertType}>
 				{extendOptions?.alertText}
 			</ClayAlert>
+
 			<FormInput
 				{...inputProps}
 				boldLabel

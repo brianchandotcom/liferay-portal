@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import DropDown from '@clayui/drop-down';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useMemo} from 'react';
 import {useParams} from 'react-router-dom';
@@ -17,13 +17,60 @@ import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import {safeJSONParse} from '../../../../utils/util';
 import OrderDetailsHeader from '../../../CustomerDashboard/components/OrderDetailsHeader';
-import {useSSADashboardOutlet} from '../../SSADashboardOutlet';
-import TrialActions from './TrialActions';
+import useSSAActions from '../../useSSAActions';
 import TrialDetailsBody from './TrialDetailsBody';
+
+type TrialActionsProps = {
+	mutatePlacedOrder: ReturnType<typeof useGetProductByOrderId>['mutate'];
+	placedOrder: PlacedOrder;
+};
+
+function TrialActions({mutatePlacedOrder, placedOrder}: TrialActionsProps) {
+	const actions = useSSAActions();
+
+	return (
+		<ClayDropDownWithItems
+			className="align-items-center cursor-pointer d-flex h-100"
+			items={
+				actions
+					.filter((_, index) => index > 0)
+					.map((action) => {
+						const disabled =
+							typeof action.disabled === 'function'
+								? action.disabled(placedOrder)
+								: action.disabled;
+
+						const hidden =
+							typeof action.hidden === 'function'
+								? action.hidden(placedOrder)
+								: action.hidden;
+
+						return {
+							...action,
+							disabled,
+							hidden,
+							label: action.name,
+							onClick: () =>
+								action?.onClick?.(
+									placedOrder,
+									mutatePlacedOrder
+								),
+						};
+					}) as any[]
+			}
+			trigger={
+				<ClayButton displayType="secondary">
+					{i18n.translate('manage-trial')}
+
+					<ClayIcon className="ml-2" symbol="angle-down-small" />
+				</ClayButton>
+			}
+		/>
+	);
+}
 
 export default function TrialDetails() {
 	const {orderId} = useParams();
-	const {ssaTrialExtendMutate} = useSSADashboardOutlet();
 	const {
 		data,
 		error,
@@ -72,27 +119,10 @@ export default function TrialDetails() {
 					productOwner={marketplaceProduct.catalogName}
 				/>
 
-				<DropDown
-					className="align-items-center cursor-pointer d-flex h-100"
-					trigger={
-						<ClayButton displayType="secondary">
-							{i18n.translate('manage-trial')}
-
-							<ClayIcon
-								className="ml-2"
-								symbol="angle-down-small"
-							/>
-						</ClayButton>
-					}
-				>
-					{data?.placedOrder && (
-						<TrialActions
-							mutatePlacedOrder={mutatePlacedOrder}
-							placedOrder={data?.placedOrder}
-							ssaTrialExtendMutate={ssaTrialExtendMutate}
-						/>
-					)}
-				</DropDown>
+				<TrialActions
+					mutatePlacedOrder={mutatePlacedOrder}
+					placedOrder={placedOrder}
+				/>
 			</div>
 
 			<TrialDetailsBody

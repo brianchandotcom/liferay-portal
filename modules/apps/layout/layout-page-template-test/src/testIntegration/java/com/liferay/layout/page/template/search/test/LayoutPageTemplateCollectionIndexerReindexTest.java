@@ -10,11 +10,9 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTy
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +29,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,21 +45,18 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
-	}
-
 	@Test
 	public void testReindex() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					RandomTestUtil.randomString(), serviceContext.getUserId(),
-					_group.getGroupId(), 0, RandomTestUtil.randomString(),
+					TestPropsValues.getGroupId(), 0,
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
@@ -120,13 +114,14 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 	protected UIDFactory uidFactory;
 
 	private void _assertFieldValue(
-		String fieldName, String fieldValue, String searchTerm) {
+			String fieldName, String fieldValue, String searchTerm)
+		throws Exception {
 
 		FieldValuesAssert.assertFieldValue(
 			fieldName, fieldValue, _search(searchTerm));
 	}
 
-	private void _assertNoHits(String searchTerm) {
+	private void _assertNoHits(String searchTerm) throws Exception {
 		FieldValuesAssert.assertFieldValues(
 			Collections.emptyMap(), _search(searchTerm));
 	}
@@ -143,14 +138,15 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 	}
 
 	private void _reindexAllIndexerModels() throws Exception {
-		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+		indexer.reindex(
+			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 	}
 
-	private SearchResponse _search(String searchTerm) {
+	private SearchResponse _search(String searchTerm) throws Exception {
 		return _searcher.search(
 			_searchRequestBuilderFactory.builder(
 			).companyId(
-				_group.getCompanyId()
+				TestPropsValues.getCompanyId()
 			).fields(
 				StringPool.STAR
 			).modelIndexerClasses(
@@ -159,11 +155,6 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 				searchTerm
 			).build());
 	}
-
-	private Group _group;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutPageTemplateCollectionLocalService

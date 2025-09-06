@@ -130,16 +130,16 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 		indexWriterHelper.deleteDocument(companyId, uid, true);
 	}
 
+	private void _reindex() throws Exception {
+		indexer.reindex(
+			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
+	}
+
 	private void _reindex(
 			LayoutPageTemplateCollection layoutPageTemplateCollection)
 		throws Exception {
 
 		indexer.reindex(layoutPageTemplateCollection);
-	}
-
-	private void _reindex() throws Exception {
-		indexer.reindex(
-			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 	}
 
 	private SearchResponse _search(String queryString) throws Exception {

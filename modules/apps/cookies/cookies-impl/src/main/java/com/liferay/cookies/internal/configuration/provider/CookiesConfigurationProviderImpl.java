@@ -8,6 +8,7 @@ package com.liferay.cookies.internal.configuration.provider;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
+import com.liferay.cookies.configuration.ProductAnalyticsConfiguration;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.cookies.internal.configuration.admin.service.CookiesPreferenceHandlingManagedServiceFactory;
@@ -170,6 +171,15 @@ public class CookiesConfigurationProviderImpl
 		).setParameter(
 			"pid", pid
 		).buildString();
+	}
+
+	@Override
+	public ProductAnalyticsConfiguration getProductAnalyticsConfiguration(
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return _getCookiesConfiguration(
+			ProductAnalyticsConfiguration.class, themeDisplay);
 	}
 
 	@Override

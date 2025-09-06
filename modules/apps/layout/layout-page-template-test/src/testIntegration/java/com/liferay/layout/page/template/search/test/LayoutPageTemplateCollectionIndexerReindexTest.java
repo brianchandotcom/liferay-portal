@@ -98,6 +98,11 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 		_reindexAllIndexerModels();
 
 		_assertFieldValue(Field.NAME, searchTerm, searchTerm);
+
+		_layoutPageTemplateCollectionLocalService.
+			deleteLayoutPageTemplateCollection(layoutPageTemplateCollection);
+
+		_assertNoHits(searchTerm);
 	}
 
 	@Rule

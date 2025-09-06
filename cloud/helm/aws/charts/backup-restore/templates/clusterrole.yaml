@@ -6,30 +6,30 @@ metadata:
     {{- include "liferayAWSBackupRestore.labels" . | nindent 8 }}
     name: {{ include "liferayAWSBackupRestore.name" . }}
 rules:
-    -   apiGroups: [ "" ]
-        resources: [ "namespaces" ]
+    -   apiGroups: [""]
+        resources: ["namespaces"]
         verbs:
-            - get
-            - list
-    -   apiGroups: [ "" ]
-        resourceNames: [ {{ .Values.liferayWorkload.managedSecretName }} ]
-        resources: [ "secrets" ]
+            -   get
+            -   list
+    -   apiGroups: [""]
+        resourceNames: [{{ .Values.liferayWorkload.managedSecretName }}]
+        resources: ["secrets"]
         verbs:
-            - create
-            - get
-            - patch
-            - update
-    -   apiGroups: [ "apps" ]
-        resourceNames: [ {{ .Values.liferayWorkload.name }} ]
-        resources: [ "statefulsets" ]
+            -   create
+            -   get
+            -   patch
+            -   update
+    -   apiGroups: ["apps"]
+        resourceNames: [{{ .Values.liferayWorkload.name }}]
+        resources: ["statefulsets"]
         verbs:
-            - get
-            - list
-            - patch
-            - watch
-    -   apiGroups: [ "argoproj.io" ]
-        resources: [ "workflowtaskresults" ]
+            -   get
+            -   list
+            -   patch
+            -   watch
+    -   apiGroups: ["argoproj.io"]
+        resources: ["workflowtaskresults"]
         verbs:
-            - create
-            - patch
+            -   create
+            -   patch
 {{- end }}

@@ -1,11 +1,11 @@
 {{- $defaultArtifactRepository := "artifact-repository" -}}
 apiVersion: v1
-kind: ConfigMap
 data:
     {{ $defaultArtifactRepository }}: |-
         s3:
             bucket: {{ .Values.argo.artifactRepositoryBucketId }}
             endpoint: s3.amazonaws.com
+kind: ConfigMap
 metadata:
     annotations:
         workflows.argoproj.io/default-artifact-repository: {{ $defaultArtifactRepository }}

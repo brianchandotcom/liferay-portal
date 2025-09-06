@@ -12,7 +12,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import TagService from '../../../common/services/TagService';
 import {IAssetObjectEntry} from '../../../common/types/AssetType';
-import {Categorization} from '../services/ObjectEntryService';
+import {EntryCategorizationDTO} from '../services/ObjectEntryService';
 import {CategorizationInputSize} from './AssetCategorization';
 
 const AssetTags = ({
@@ -21,10 +21,12 @@ const AssetTags = ({
 	objectEntry,
 	updateObjectEntry,
 }: {
-	cmsGroupId: string;
+	cmsGroupId: number;
 	inputSize?: CategorizationInputSize;
-	objectEntry: IAssetObjectEntry;
-	updateObjectEntry: (object: Categorization) => Promise<void>;
+	objectEntry:
+		| IAssetObjectEntry
+		| Pick<IAssetObjectEntry, 'keywords' | 'taxonomyCategoryBriefs'>;
+	updateObjectEntry: (object: EntryCategorizationDTO) => void | Promise<void>;
 }) => {
 	const [keywords, setKeywords] = useState([] as string[]);
 	const [networkStatus, setNetworkStatus] = useState(4);

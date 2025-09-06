@@ -135,7 +135,6 @@ public class PortalImplCanonicalURLTest {
 			).put(
 				LocaleUtil.US, "/home1"
 			).build());
-
 		_layout2 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
@@ -152,7 +151,6 @@ public class PortalImplCanonicalURLTest {
 			).put(
 				LocaleUtil.US, "/home2"
 			).build());
-
 		_layout3 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
@@ -165,7 +163,6 @@ public class PortalImplCanonicalURLTest {
 			HashMapBuilder.put(
 				LocaleUtil.US, _group.getFriendlyURL()
 			).build());
-
 		_layout4 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
@@ -174,7 +171,6 @@ public class PortalImplCanonicalURLTest {
 			HashMapBuilder.put(
 				LocaleUtil.US, "/weben"
 			).build());
-
 		_layout5 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
@@ -226,7 +222,7 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testCanonicalURLLayoutFriendlyUrlWithHyphen() throws Exception {
+	public void testCanonicalURLLayoutFriendlyURLWithHyphen() throws Exception {
 		String portalDomain = "localhost";
 
 		Assert.assertEquals(

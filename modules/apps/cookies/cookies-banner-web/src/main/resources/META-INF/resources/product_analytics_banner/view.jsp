@@ -69,6 +69,6 @@ ProductAnalyticsBannerDisplayContext productAnalyticsBannerDisplayContext = (Pro
 
 <liferay-frontend:component
 	componentId="ProductAnalyticsBanner"
-	context="<%= productAnalyticsBannerDisplayContext.getContext() %>"
+	context="<%= productAnalyticsBannerDisplayContext.getContext(locale) %>"
 	module="{ProductAnalyticsBanner} from cookies-banner-web"
 />

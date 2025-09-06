@@ -102,10 +102,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		Set<Long> primKeyIds = new HashSet<>();
 
-		Set<Long> roleIds = _getRoleIdSet(groupIds);
-
-		boolean signedIn = permissionChecker.isSignedIn();
-		long userId = permissionChecker.getUserId();
+		Set<Long> roleIdsSet = _getRoleIdsSet(groupIds);
 
 		for (ResourcePermission resourcePermission :
 				_resourcePermissionLocalService.getResourcePermissions(
@@ -114,8 +111,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					ResourceConstants.SCOPE_INDIVIDUAL)) {
 
 			if (resourcePermission.isViewActionId() &&
-				(roleIds.contains(resourcePermission.getRoleId()) ||
-				 (signedIn && (resourcePermission.getOwnerId() == userId)))) {
+				(roleIdsSet.contains(resourcePermission.getRoleId()) ||
+				 (permissionChecker.isSignedIn() &&
+				  (resourcePermission.getOwnerId() ==
+					  permissionChecker.getUserId())))) {
 
 				primKeyIds.add(resourcePermission.getPrimKeyId());
 			}
@@ -618,31 +617,31 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			return _getRoleIds(groupIds[0]);
 		}
 
-		Set<Long> roleIds = new HashSet<>();
+		Set<Long> roleIdsSet = new HashSet<>();
 
 		for (long groupId : groupIds) {
 			for (long roleId : _getRoleIds(groupId)) {
-				roleIds.add(roleId);
+				roleIdsSet.add(roleId);
 			}
 		}
 
-		return ArrayUtil.toLongArray(roleIds);
+		return ArrayUtil.toLongArray(roleIdsSet);
 	}
 
-	private Set<Long> _getRoleIdSet(long[] groupIds) {
+	private Set<Long> _getRoleIdsSet(long[] groupIds) {
 		if (groupIds.length == 1) {
 			return SetUtil.fromArray(_getRoleIds(groupIds[0]));
 		}
 
-		Set<Long> roleIds = new HashSet<>();
+		Set<Long> roleIdsSet = new HashSet<>();
 
 		for (long groupId : groupIds) {
 			for (long roleId : _getRoleIds(groupId)) {
-				roleIds.add(roleId);
+				roleIdsSet.add(roleId);
 			}
 		}
 
-		return roleIds;
+		return roleIdsSet;
 	}
 
 	private DSLQuery _insertResourcePermissionQuery(

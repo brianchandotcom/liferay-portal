@@ -42,6 +42,10 @@ public interface CookiesConfigurationProvider {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	public ProductAnalyticsConfiguration getProductAnalyticsConfiguration(
+			ThemeDisplay themeDisplay)
+		throws Exception;
+
 	public String getSystemConfigurationURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;

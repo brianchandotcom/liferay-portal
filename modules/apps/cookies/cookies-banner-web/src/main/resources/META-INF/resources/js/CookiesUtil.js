@@ -10,6 +10,8 @@ import {
 	setCookie as setCookieUtil,
 } from 'frontend-js-web';
 
+export const productAnalyticsConfiguredCookieName =
+	'PRODUCT_ANALYTICS_CONFIGURED';
 export const userConfigCookieName = 'USER_CONSENT_CONFIGURED';
 
 export function acceptAllCookies(
@@ -46,6 +48,12 @@ export function setCookie(name, value) {
 	setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
 		path: themeDisplay.getPathContext() || '/',
 	});
+}
+
+export function setProductAnalyticsConfigCookie() {
+	setCookie(productAnalyticsConfiguredCookieName, 'true');
+
+	getOpener()?.Liferay.fire('productAnalyticsBannerSetCookie');
 }
 
 export function setUserConfigCookie() {

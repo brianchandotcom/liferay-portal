@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -31,7 +30,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -165,9 +163,6 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 	@Inject
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
-
-	@DeleteAfterTestRun
-	private List<LayoutPageTemplateCollection> _layoutPageTemplateCollections;
 
 	@Inject
 	private Searcher _searcher;

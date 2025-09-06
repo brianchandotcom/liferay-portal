@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.petra.string.StringPool;
@@ -14,9 +15,10 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -28,7 +30,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -50,21 +51,22 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
-
-		_layoutPageTemplateCollectionFixture =
-			new LayoutPageTemplateCollectionFixture(
-				_group, _layoutPageTemplateCollectionLocalService);
-
-		_layoutPageTemplateCollections =
-			_layoutPageTemplateCollectionFixture.
-				getLayoutPageTemplateCollections();
 	}
 
 	@Test
 	public void testReindex() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionFixture.
-				createLayoutPageTemplateCollection();
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					RandomTestUtil.randomString(), serviceContext.getUserId(),
+					_group.getGroupId(), 0, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					serviceContext);
 
 		String searchTerm = layoutPageTemplateCollection.getName();
 
@@ -73,9 +75,11 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 		layoutPageTemplateCollection.setName(RandomTestUtil.randomString());
 
 		layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionFixture.
+			_layoutPageTemplateCollectionLocalService.
 				updateLayoutPageTemplateCollection(
-					layoutPageTemplateCollection);
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					layoutPageTemplateCollection.getName());
 
 		searchTerm = layoutPageTemplateCollection.getName();
 
@@ -156,15 +160,9 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
-	private LayoutPageTemplateCollectionFixture
-		_layoutPageTemplateCollectionFixture;
-
 	@Inject
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
-
-	@DeleteAfterTestRun
-	private List<LayoutPageTemplateCollection> _layoutPageTemplateCollections;
 
 	@Inject
 	private Searcher _searcher;

@@ -24,7 +24,7 @@ const AssetCategories = ({
 	objectEntry,
 	updateObjectEntry,
 }: {
-	cmsGroupId: number;
+	cmsGroupId: number | string;
 	inputSize?: CategorizationInputSize;
 	objectEntry:
 		| IAssetObjectEntry

@@ -21,7 +21,7 @@ const AssetTags = ({
 	objectEntry,
 	updateObjectEntry,
 }: {
-	cmsGroupId: number;
+	cmsGroupId: number | string;
 	inputSize?: CategorizationInputSize;
 	objectEntry:
 		| IAssetObjectEntry

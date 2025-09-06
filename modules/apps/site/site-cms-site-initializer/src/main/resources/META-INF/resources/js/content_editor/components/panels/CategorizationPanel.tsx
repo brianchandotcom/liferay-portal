@@ -18,7 +18,7 @@ export default function CategorizationPanel({
 	onUpdateCategorization,
 }: {
 	contentAPIURL: string;
-	groupId: string;
+	groupId: number | string;
 	onUpdateCategorization: (props: UpdateCategorizationProps) => void;
 }) {
 	const updateCategorization = useCallback(

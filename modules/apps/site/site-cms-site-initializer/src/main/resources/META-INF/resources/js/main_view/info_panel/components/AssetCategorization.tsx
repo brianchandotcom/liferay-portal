@@ -24,7 +24,7 @@ export default function AssetCategorization({
 	onUpdateCategorization,
 	updateObjectEntryURL,
 }: {
-	cmsGroupId: number;
+	cmsGroupId: number | string;
 	getObjectEntryURL: string;
 	inputSize?: CategorizationInputSize;
 	onUpdateCategorization?: (data: IAssetObjectEntry) => void;

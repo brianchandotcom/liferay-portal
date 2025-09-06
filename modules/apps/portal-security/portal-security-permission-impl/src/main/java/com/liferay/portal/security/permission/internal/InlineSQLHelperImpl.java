@@ -104,6 +104,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		Set<Long> roleIdsSet = _getRoleIdsSet(groupIds);
 
+		boolean signedIn = permissionChecker.isSignedIn();
+		long userId = permissionChecker.getUserId();
+
 		for (ResourcePermission resourcePermission :
 				_resourcePermissionLocalService.getResourcePermissions(
 					permissionChecker.getCompanyId(),
@@ -112,9 +115,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			if (resourcePermission.isViewActionId() &&
 				(roleIdsSet.contains(resourcePermission.getRoleId()) ||
-				 (permissionChecker.isSignedIn() &&
-				  (resourcePermission.getOwnerId() ==
-					  permissionChecker.getUserId())))) {
+				 (signedIn && (resourcePermission.getOwnerId() == userId)))) {
 
 				primKeyIds.add(resourcePermission.getPrimKeyId());
 			}

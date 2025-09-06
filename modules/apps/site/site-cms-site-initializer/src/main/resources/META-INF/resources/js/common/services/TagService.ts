@@ -6,7 +6,7 @@
 import {Tag} from '../types/Tag';
 import ApiHelper from './ApiHelper';
 
-async function createTag({groupId, name}: {groupId: string; name: string}) {
+async function createTag({groupId, name}: {groupId: number; name: string}) {
 	return await ApiHelper.post<Tag>(
 		`/o/headless-admin-taxonomy/v1.0/sites/${groupId}/keywords`,
 		{name}

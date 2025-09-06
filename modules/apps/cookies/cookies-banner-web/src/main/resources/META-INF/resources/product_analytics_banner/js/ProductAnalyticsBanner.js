@@ -15,10 +15,19 @@ import {
 	setProductAnalyticsConfigCookie,
 } from '../../js/CookiesUtil';
 
+let openProductAnalyticsConsentModal = () => {
+	console.warn(
+		'OpenProductAnalyticsConsentModal was called, but product analytics feature is not enabled'
+	);
+};
+
 export default function ({
+	configurationNamespace,
+	configurationURL,
 	namespace,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
+	title,
 }) {
 	const acceptAllButton = document.getElementById(
 		`${namespace}acceptAllButton`
@@ -61,6 +70,100 @@ export default function ({
 			setProductAnalyticsConfigCookie();
 		});
 
+		openProductAnalyticsConsentModal = ({
+			alertDisplayType,
+			alertMessage,
+			customTitle,
+			onCloseFunction,
+		}) => {
+			let url = configurationURL;
+
+			if (alertDisplayType) {
+				url = `${url}&_${configurationNamespace}_alertDisplayType=${alertDisplayType}`;
+			}
+
+			if (alertMessage) {
+				url = `${url}&_${configurationNamespace}_alertMessage=${alertMessage}`;
+			}
+
+			openModal({
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get(
+							'use-necessary-cookies-only'
+						),
+						onClick() {
+							declineAllCookies(
+								optionalConsentCookieTypeNames,
+								requiredConsentCookieTypeNames
+							);
+
+							setProductAnalyticsConfigCookie();
+
+							setBannerVisibility(productAnalyticsBanner);
+
+							getOpener().Liferay.fire('closeModal');
+						},
+					},
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('accept-selected'),
+						onClick() {
+							Object.entries(cookiePreferences).forEach(
+								([key, value]) => {
+									setCookie(key, value);
+								}
+							);
+
+							requiredConsentCookieTypeNames.forEach(
+								(requiredConsentCookieTypeName) => {
+									setCookie(
+										requiredConsentCookieTypeName,
+										'true'
+									);
+								}
+							);
+
+							setProductAnalyticsConfigCookie();
+
+							setBannerVisibility(productAnalyticsBanner);
+
+							getOpener().Liferay.fire('closeModal');
+						},
+					},
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('accept-all'),
+						onClick() {
+							acceptAllCookies(
+								optionalConsentCookieTypeNames,
+								requiredConsentCookieTypeNames
+							);
+
+							setProductAnalyticsConfigCookie();
+
+							setBannerVisibility(productAnalyticsBanner);
+
+							getOpener().Liferay.fire('closeModal');
+						},
+					},
+				],
+				displayType: 'primary',
+				height: '70vh',
+				id: 'productAnalyticsConsentPanel',
+				iframeBodyCssClass: '',
+				onClose: onCloseFunction || undefined,
+				size: 'lg',
+				title: customTitle || title,
+				url,
+			});
+		};
+
+		customizeButton.addEventListener('click', () => {
+			openProductAnalyticsConsentModal({});
+		});
+
 		if (declineAllButton !== null) {
 			declineAllButton.addEventListener('click', () => {
 				productAnalyticsBanner.style.display = 'none';
@@ -80,6 +183,15 @@ function checkProductAnalyticsConsentForTypes(cookieTypes, modalOptions) {
 	return new Promise((resolve, reject) => {
 		if (isCookieTypesAccepted(cookieTypes)) {
 			resolve();
+		}
+		else {
+			openProductAnalyticsConsentModal({
+				alertDisplayType: modalOptions?.alertDisplayType || 'info',
+				alertMessage: modalOptions?.alertMessage || null,
+				customTitle: modalOptions?.customTitle || null,
+				onCloseFunction: () =>
+					isCookieTypesAccepted(cookieTypes) ? resolve() : reject(),
+			});
 		}
 	});
 }
@@ -101,4 +213,4 @@ function setBannerVisibility(productAnalyticsBanner) {
 	}
 }
 
-export {checkProductAnalyticsConsentForTypes};
+export {checkProductAnalyticsConsentForTypes, openProductAnalyticsConsentModal};

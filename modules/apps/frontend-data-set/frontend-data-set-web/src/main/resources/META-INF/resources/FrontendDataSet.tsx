@@ -73,10 +73,12 @@ import {
 	IFrontendDataSetProps,
 	IModalConfig,
 	IRequestOptions,
+	IStateInURL,
 	ISuccessNotification,
 	IView,
 	TSort,
 } from './utils/types';
+import useGetStateFromURL from './utils/useGetStateFromURL';
 import useSetStateInURL from './utils/useSetStateInURL';
 import ViewsContext from './views/ViewsContext';
 
@@ -143,6 +145,18 @@ const FrontendDataSetContent = ({
 }: IFrontendDataSetProps) => {
 	const fdsRef = useRef(null);
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
+	const getStateFromURL = useGetStateFromURL({
+		id,
+		stateInitializers: {
+			[EStateInURLKeys.DELTA]: (delta: number) => {
+				if (isNaN(delta) || delta < 1) {
+					return null;
+				}
+
+				return delta;
+			},
+		},
+	});
 	const setDelta = useSetStateInURL({
 		id,
 		key: EStateInURLKeys.DELTA,
@@ -197,7 +211,7 @@ const FrontendDataSetContent = ({
 
 	const isMounted = useIsMounted();
 
-	const getInitialViewsState = () => {
+	const getInitialViewsState = (stateFromURL: Partial<IStateInURL>) => {
 		const customInternalViews =
 			customRenderers?.views?.map((customRenderer: TRenderer) => ({
 
@@ -272,7 +286,9 @@ const FrontendDataSetContent = ({
 
 		const paginationDelta =
 			showPagination &&
-			(pagination?.initialDelta || DEFAULT_PAGINATION_DELTA);
+			(stateFromURL?.delta ||
+				pagination?.initialDelta ||
+				DEFAULT_PAGINATION_DELTA);
 
 		return {
 			activeView,
@@ -295,7 +311,7 @@ const FrontendDataSetContent = ({
 	};
 
 	const [viewsState, viewsDispatch] = useThunk(
-		useReducer(viewsReducer, getInitialViewsState())
+		useReducer(viewsReducer, getStateFromURL(), getInitialViewsState)
 	);
 
 	const {activeView, filters, paginationDelta, sorts} = viewsState;

@@ -2268,11 +2268,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		return EmptyModelManagerUtil.getOrAddEmptyModel(
 			Layout.class,
-			() -> layoutLocalService.addLayout(
-				externalReferenceCode, userId, groupId, false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, externalReferenceCode,
-				StringPool.BLANK, null, LayoutConstants.TYPE_EMPTY, true, false,
-				null, serviceContext),
+			() -> {
+				serviceContext.setAttribute(
+					"layout.instanceable.allowed", Boolean.TRUE);
+
+				return layoutLocalService.addLayout(
+					externalReferenceCode, userId, groupId, false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+					externalReferenceCode, StringPool.BLANK, null,
+					LayoutConstants.TYPE_EMPTY, true, false, null,
+					serviceContext);
+			},
 			externalReferenceCode, this::fetchLayoutByExternalReferenceCode,
 			this::getLayoutByExternalReferenceCode, groupId);
 	}

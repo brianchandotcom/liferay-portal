@@ -94,7 +94,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (_skipReplace(
+		if (_isSkipReplace(
 				permissionChecker, baseModel.getModelClassName(), groupIds)) {
 
 			return list;
@@ -174,7 +174,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			groupIds = new long[] {0};
 		}
 
-		if (_skipReplace(permissionChecker, modelClassName, groupIds)) {
+		if (_isSkipReplace(permissionChecker, modelClassName, groupIds)) {
 			return null;
 		}
 
@@ -288,7 +288,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if ((sql == null) ||
-			_skipReplace(permissionChecker, className, groupIds)) {
+			_isSkipReplace(permissionChecker, className, groupIds)) {
 
 			return sql;
 		}
@@ -757,7 +757,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return sb.toString();
 	}
 
-	private boolean _skipReplace(
+	private boolean _isSkipReplace(
 		PermissionChecker permissionChecker, String className,
 		long[] groupIds) {
 

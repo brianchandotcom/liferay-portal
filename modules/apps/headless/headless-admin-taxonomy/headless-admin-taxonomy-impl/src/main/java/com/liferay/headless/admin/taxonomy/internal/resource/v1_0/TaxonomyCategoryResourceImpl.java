@@ -893,6 +893,13 @@ public class TaxonomyCategoryResourceImpl
 		throws Exception {
 
 		Long taxonomyVocabularyId = taxonomyCategory.getTaxonomyVocabularyId();
+
+		if (_assetVocabularyService.fetchVocabulary(taxonomyVocabularyId) ==
+				null) {
+
+			taxonomyVocabularyId = null;
+		}
+
 		String taxonomyVocabularyExternalReferenceCode = StringPool.BLANK;
 
 		if (taxonomyVocabularyId == null) {

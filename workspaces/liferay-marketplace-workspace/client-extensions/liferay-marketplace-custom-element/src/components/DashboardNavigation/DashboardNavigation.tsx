@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import useAccounts from '../../hooks/data/useAccounts';
 import AccountSearchDropdown from './AccountSearchDropdown';
 import DashboardNavigationItem from './DashboardNavigationItem';
 
 import './DashboardNavigation.scss';
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
 
 export type DashboardListItems = {
 	active?: boolean;

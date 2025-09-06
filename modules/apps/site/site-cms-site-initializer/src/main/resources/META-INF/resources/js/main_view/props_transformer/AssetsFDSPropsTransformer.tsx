@@ -10,6 +10,7 @@ import React from 'react';
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
 import formatActionURL from '../../common/utils/formatActionURL';
+import CategoriesAndTagsModalContent from '../categorization/modal/CategoriesAndTagsModalContent';
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
@@ -287,7 +288,27 @@ export default function AssetsFDSPropsTransformer({
 			action: any;
 			selectedData: any;
 		}) => {
-			if (action?.data?.id === 'default-permissions') {
+			if (action?.data?.id === 'categoriesAndTags') {
+				openModal({
+					center: true,
+					containerProps: {
+						className: 'modal-height-lg',
+					},
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						CategoriesAndTagsModalContent({
+							apiURL: otherProps.apiURL,
+							closeModal,
+							cmsGroupId: additionalProps.cmsGroupId as number,
+							selectedData,
+						}),
+					size: 'md',
+				});
+			}
+			else if (action?.data?.id === 'default-permissions') {
 				defaultPermissionsBulkAction({
 					apiURL: otherProps.apiURL,
 					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,

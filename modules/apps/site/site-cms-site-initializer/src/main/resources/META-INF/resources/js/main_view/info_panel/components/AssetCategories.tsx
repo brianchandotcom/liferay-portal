@@ -15,7 +15,7 @@ import {
 	IGroupedTaxonomies,
 	ITaxonomyCategoryFacade,
 } from '../../../common/types/AssetType';
-import {Categorization} from '../services/ObjectEntryService';
+import {EntryCategorizationDTO} from '../services/ObjectEntryService';
 import {CategorizationInputSize} from './AssetCategorization';
 
 const AssetCategories = ({
@@ -24,10 +24,12 @@ const AssetCategories = ({
 	objectEntry,
 	updateObjectEntry,
 }: {
-	cmsGroupId: string;
+	cmsGroupId: number;
 	inputSize?: CategorizationInputSize;
-	objectEntry: IAssetObjectEntry;
-	updateObjectEntry: (object: Categorization) => Promise<void>;
+	objectEntry:
+		| IAssetObjectEntry
+		| Pick<IAssetObjectEntry, 'keywords' | 'taxonomyCategoryBriefs'>;
+	updateObjectEntry: (object: EntryCategorizationDTO) => void | Promise<void>;
 }) => {
 	const [groupedTaxonomies, setGroupedTaxonomies] = useState(
 		{} as IGroupedTaxonomies
@@ -54,6 +56,7 @@ const AssetCategories = ({
 			}
 
 			await updateObjectEntry({
+				lastAddedBrief: item,
 				taxonomyCategoryIds: [
 					...groupedTaxonomies.taxonomyCategoryIds,
 					taxonomyCategoryId,
@@ -82,7 +85,7 @@ const AssetCategories = ({
 		[groupedTaxonomies, updateObjectEntry]
 	);
 
-	const updateCategories = useCallback(
+	const groupTaxonomies = useCallback(
 		(taxonomyCategoryBriefs: any[] = []) => {
 			setValue('');
 
@@ -132,8 +135,8 @@ const AssetCategories = ({
 	);
 
 	useEffect(() => {
-		updateCategories(objectEntry.taxonomyCategoryBriefs);
-	}, [objectEntry, updateCategories]);
+		groupTaxonomies(objectEntry.taxonomyCategoryBriefs);
+	}, [objectEntry, groupTaxonomies]);
 
 	return (
 		<ClayPanel

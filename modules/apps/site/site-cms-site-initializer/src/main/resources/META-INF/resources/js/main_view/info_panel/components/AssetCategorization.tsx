@@ -8,7 +8,7 @@ import React, {ComponentProps, useEffect, useState} from 'react';
 
 import {IAssetObjectEntry} from '../../../common/types/AssetType';
 import ObjectEntryService, {
-	Categorization,
+	EntryCategorizationDTO,
 } from '../services/ObjectEntryService';
 import AssetCategories from './AssetCategories';
 import AssetTags from './AssetTags';
@@ -24,7 +24,7 @@ export default function AssetCategorization({
 	onUpdateCategorization,
 	updateObjectEntryURL,
 }: {
-	cmsGroupId: string;
+	cmsGroupId: number;
 	getObjectEntryURL: string;
 	inputSize?: CategorizationInputSize;
 	onUpdateCategorization?: (data: IAssetObjectEntry) => void;
@@ -37,7 +37,7 @@ export default function AssetCategorization({
 	const updateObjectEntry = async ({
 		keywords,
 		taxonomyCategoryIds,
-	}: Categorization): Promise<void> => {
+	}: EntryCategorizationDTO): Promise<void> => {
 		const {data, error} = await ObjectEntryService.patchObjectEntry(
 			{
 				keywords: keywords || objectEntry?.keywords!,

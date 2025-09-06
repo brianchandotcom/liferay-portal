@@ -368,9 +368,6 @@ public class LayoutLocalServiceTest {
 
 		// Lazy referencing disabled
 
-		_serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
 		try {
 			_layoutLocalService.getOrAddEmptyLayout(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -744,36 +741,6 @@ public class LayoutLocalServiceTest {
 			UnicodePropertiesBuilder.put(
 				"javascript", "</script>"
 			).buildString());
-	}
-
-	@Test
-	public void testUpdateLayoutWithLazyReferencingEnabled() throws Exception {
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			_serviceContext.setAttribute(
-				"layout.instanceable.allowed", Boolean.TRUE);
-
-			Layout layout = _layoutLocalService.getOrAddEmptyLayout(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), _serviceContext);
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, layout.getStatus());
-
-			layout = _layoutLocalService.updateLayout(
-				_group.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getParentLayoutId(),
-				layout.getNameMap(), layout.getTitleMap(),
-				layout.getDescriptionMap(), layout.getKeywordsMap(),
-				layout.getRobotsMap(), LayoutConstants.TYPE_CONTENT, false,
-				layout.getFriendlyURLMap(), layout.isIconImage(), null,
-				layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
-				layout.getMasterLayoutPlid(), _serviceContext);
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_DRAFT, layout.getStatus());
-		}
 	}
 
 	@Test

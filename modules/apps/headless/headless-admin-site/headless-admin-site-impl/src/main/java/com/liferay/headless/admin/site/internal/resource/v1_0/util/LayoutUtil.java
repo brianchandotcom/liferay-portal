@@ -86,13 +86,14 @@ import java.util.Objects;
 public class LayoutUtil {
 
 	public static Layout addContentLayout(
-			CETManager cetManager, long groupId, long parentLayoutId,
-			PageSpecification[] pageSpecifications, boolean privateLayout,
-			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
-			String type, UnicodeProperties typeSettingsUnicodeProperties,
-			boolean hidden, boolean system, Map<Locale, String> friendlyURLMap,
-			int status, ServiceContext serviceContext)
+			CETManager cetManager, long groupId,
+			PageSpecification[] pageSpecifications, long parentLayoutId,
+			boolean privateLayout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> robotsMap, String type,
+			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
+			boolean system, Map<Locale, String> friendlyURLMap, int status,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (typeSettingsUnicodeProperties == null) {

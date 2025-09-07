@@ -2260,7 +2260,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return nextLayoutId;
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	public Layout getOrAddEmptyLayout(
 			String externalReferenceCode, long userId, long groupId,
 			ServiceContext serviceContext)

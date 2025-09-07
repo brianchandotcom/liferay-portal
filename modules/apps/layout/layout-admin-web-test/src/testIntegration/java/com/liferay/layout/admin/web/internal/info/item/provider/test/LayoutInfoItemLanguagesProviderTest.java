@@ -15,10 +15,17 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
@@ -75,6 +82,46 @@ public class LayoutInfoItemLanguagesProviderTest {
 
 		Assert.assertArrayEquals(
 			_getAvailableLocalesLayoutTranslatedLanguages(layout),
+			infoItemLanguagesProvider.getAvailableLanguageIds(layout));
+	}
+
+	@Test
+	public void testGetAvailableLanguagesWithoutLocalesInheritedFromCompany()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		layout.setNameMap(
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build());
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		String[] availableLanguages = {"en_US"};
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				_group.getTypeSettings()
+			).put(
+				PropsKeys.LOCALES, StringUtil.merge(availableLanguages)
+			).put(
+				"inheritLocales", Boolean.FALSE.toString()
+			).build();
+
+		_group = _groupLocalService.updateGroup(
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
+
+		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemLanguagesProvider.class, Layout.class.getName());
+
+		Assert.assertArrayEquals(
+			availableLanguages,
 			infoItemLanguagesProvider.getAvailableLanguageIds(layout));
 	}
 
@@ -164,6 +211,9 @@ public class LayoutInfoItemLanguagesProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

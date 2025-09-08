@@ -1187,9 +1187,9 @@ public class ObjectDefinitionResourceTest
 			workflowDefinitionLinks);
 
 		_assertWorkflowDefinitionLinks(
-			workflowDefinitionLinks,
 			objectDefinitionResource.putObjectDefinition(
-				postObjectDefinition.getId(), postObjectDefinition));
+				postObjectDefinition.getId(), postObjectDefinition),
+			workflowDefinitionLinks);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
@@ -1250,7 +1250,7 @@ public class ObjectDefinitionResourceTest
 			postObjectDefinition.getId(), postObjectDefinition);
 
 		_assertWorkflowDefinitionLinks(
-			workflowDefinitionLinks, postObjectDefinition);
+			postObjectDefinition, workflowDefinitionLinks);
 
 		workflowDefinitionLink1.setWorkflowDefinitionName(
 			workflowDefinition2.getName());
@@ -1269,7 +1269,7 @@ public class ObjectDefinitionResourceTest
 			postObjectDefinition.getId(), postObjectDefinition);
 
 		_assertWorkflowDefinitionLinks(
-			workflowDefinitionLinks, postObjectDefinition);
+			postObjectDefinition, workflowDefinitionLinks);
 
 		workflowDefinitionLinks = new WorkflowDefinitionLink[] {
 			workflowDefinitionLink2
@@ -1282,7 +1282,7 @@ public class ObjectDefinitionResourceTest
 			postObjectDefinition.getId(), postObjectDefinition);
 
 		_assertWorkflowDefinitionLinks(
-			workflowDefinitionLinks, postObjectDefinition);
+			postObjectDefinition, workflowDefinitionLinks);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
@@ -1766,13 +1766,13 @@ public class ObjectDefinitionResourceTest
 	}
 
 	private void _assertWorkflowDefinitionLinks(
-		WorkflowDefinitionLink[] workflowDefinitionLinks,
-		ObjectDefinition objectDefinition) {
+		ObjectDefinition objectDefinition,
+		WorkflowDefinitionLink[] workflowDefinitionLinks) {
 
 		Assert.assertEquals(
-			new HashSet<>(Arrays.asList(workflowDefinitionLinks)),
 			new HashSet<>(
-				Arrays.asList(objectDefinition.getWorkflowDefinitionLinks())));
+				Arrays.asList(objectDefinition.getWorkflowDefinitionLinks())),
+			new HashSet<>(Arrays.asList(workflowDefinitionLinks)));
 	}
 
 	private ObjectRelationship _createObjectRelationship(
@@ -2251,7 +2251,7 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setWorkflowDefinitionLinks(workflowDefinitionLinks);
 
 		_assertWorkflowDefinitionLinks(
-			workflowDefinitionLinks, _addObjectDefinition(objectDefinition));
+			_addObjectDefinition(objectDefinition), workflowDefinitionLinks);
 
 		// Site scope
 
@@ -2303,7 +2303,7 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setWorkflowDefinitionLinks(workflowDefinitionLinks);
 
 		_assertWorkflowDefinitionLinks(
-			workflowDefinitionLinks, _addObjectDefinition(objectDefinition));
+			_addObjectDefinition(objectDefinition), workflowDefinitionLinks);
 	}
 
 	private JSONObject _waitForFinish(

@@ -119,6 +119,19 @@ const getFileMimeTypeObjectDefinitionStickerValue = (
 	return '';
 };
 
+const getLabels = (item: any, props: Card) => {
+	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
+		return [
+			{
+				displayType: 'empty',
+				value: '',
+			},
+		];
+	}
+
+	return props.labels;
+};
+
 type ViewsItemsProps = {
 	fileMimeTypeCssClasses?: Record<string, string>;
 	fileMimeTypeIcons?: Record<string, string>;
@@ -139,6 +152,7 @@ export function transformItemCardView(
 		...props,
 		description: dateFormat(item.dateModified),
 		href: getHrefLink(item, props),
+		labels: getLabels(item, props),
 		stickerProps: {
 			className: getFileMimeTypeObjectDefinitionStickerValue(
 				fileMimeTypeCssClasses,

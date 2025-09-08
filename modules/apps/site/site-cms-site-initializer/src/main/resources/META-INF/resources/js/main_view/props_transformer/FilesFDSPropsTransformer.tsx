@@ -9,6 +9,7 @@ import React from 'react';
 
 import {START_TASK} from '../../common/utils/events';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
+import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import createAssetAction from './actions/createAssetAction';
@@ -49,6 +50,7 @@ export default function FilesFDSPropsTransformer({
 		baseFolderViewURL: string;
 		cmsGroupId?: number;
 		collaboratorURLs: Record<string, string>;
+		defaultPermissionAdditionalProps?: any;
 		fileMimeTypeCssClasses: Record<string, string>;
 		fileMimeTypeIcons: Record<string, string>;
 		objectDefinitionCssClasses: Record<string, string>;
@@ -132,6 +134,16 @@ export default function FilesFDSPropsTransformer({
 						),
 				};
 			}
+			else if (action?.data?.id === 'default-permissions') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(
+							item?.entryClassName ===
+								OBJECT_ENTRY_FOLDER_CLASS_NAME
+						),
+				};
+			}
 			else if (action?.data?.id === 'download') {
 				return {
 					...action,
@@ -171,7 +183,28 @@ export default function FilesFDSPropsTransformer({
 			itemData: ItemData;
 			loadData: () => {};
 		}) {
-			if (action?.data?.id === 'delete') {
+			if (action?.data?.id === 'default-permissions') {
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: ({
+										   closeModal,
+									   }: {
+						closeModal: () => void;
+					}) =>
+						DefaultPermissionModalContent({
+							...(additionalProps.defaultPermissionAdditionalProps ||
+								{}),
+							classExternalReferenceCode:
+							itemData.embedded.externalReferenceCode,
+							className: itemData.entryClassName,
+							closeModal,
+						}),
+					size: 'full-screen',
+				});
+			}
+			else if (action?.data?.id === 'delete') {
 				await deleteItemAction(itemData, loadData);
 			}
 

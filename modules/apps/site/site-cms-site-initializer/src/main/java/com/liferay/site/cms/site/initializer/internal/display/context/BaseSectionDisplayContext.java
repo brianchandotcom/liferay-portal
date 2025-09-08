@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
@@ -38,11 +39,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -63,9 +67,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Marco Galluzzi
@@ -161,6 +167,9 @@ public abstract class BaseSectionDisplayContext {
 
 				return collaboratorURLs;
 			}
+		).put(
+			"defaultPermissionAdditionalProps",
+			_getDefaultPermissionAdditionalProps()
 		).put(
 			"fileMimeTypeCssClasses",
 			() -> {
@@ -443,6 +452,10 @@ public abstract class BaseSectionDisplayContext {
 				language.get(httpServletRequest, "permissions"), "get", null,
 				"modal-permissions"),
 			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies", "default-permissions",
+				LanguageUtil.get(httpServletRequest, "default-permissions"),
+				null, null, null),
+			new FDSActionDropdownItem(
 				null, "trash", "delete",
 				language.get(httpServletRequest, "delete"), null, "delete",
 				null));
@@ -569,6 +582,97 @@ public abstract class BaseSectionDisplayContext {
 		}
 
 		return acceptedGroupIds;
+	}
+
+	private Map<String, Object> _getDefaultPermissionAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"actions",
+			() -> HashMapBuilder.put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+				() -> {
+					ObjectDefinition objectDefinition =
+						ObjectDefinitionLocalServiceUtil.
+							getObjectDefinitionByExternalReferenceCode(
+								"L_BASIC_WEB_CONTENT",
+								themeDisplay.getCompanyId());
+
+					return TransformUtil.transformToArray(
+						ResourceActionsUtil.getResourceActions(
+							objectDefinition.getClassName()),
+						resourceAction -> HashMapBuilder.put(
+							"key", resourceAction
+						).put(
+							"label",
+							ResourceActionsUtil.getAction(
+								httpServletRequest, resourceAction)
+						).build(),
+						Map.class);
+				}
+			).put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+				() -> {
+					ObjectDefinition objectDefinition =
+						ObjectDefinitionLocalServiceUtil.
+							getObjectDefinitionByExternalReferenceCode(
+								"L_BASIC_DOCUMENT",
+								themeDisplay.getCompanyId());
+
+					return TransformUtil.transformToArray(
+						ResourceActionsUtil.getResourceActions(
+							objectDefinition.getClassName()),
+						resourceAction -> HashMapBuilder.put(
+							"key", resourceAction
+						).put(
+							"label",
+							ResourceActionsUtil.getAction(
+								httpServletRequest, resourceAction)
+						).build(),
+						Map.class);
+				}
+			).put(
+				"OBJECT_ENTRY_FOLDERS",
+				() -> TransformUtil.transformToArray(
+					ResourceActionsUtil.getResourceActions(
+						ObjectEntryFolder.class.getName()),
+					resourceAction -> HashMapBuilder.put(
+						"key", resourceAction
+					).put(
+						"label",
+						ResourceActionsUtil.getAction(
+							httpServletRequest, resourceAction)
+					).build(),
+					Map.class)
+			).build()
+		).put(
+			"roles",
+			() -> {
+				Set<String> excludedRoleNamesSet = new HashSet<String>() {
+					{
+						add(RoleConstants.ADMINISTRATOR);
+						add(RoleConstants.SITE_ADMINISTRATOR);
+						add(RoleConstants.SITE_OWNER);
+					}
+				};
+
+				return TransformUtil.transformToArray(
+					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+						themeDisplay.getCompanyId(), null,
+						ListUtil.fromCollection(excludedRoleNamesSet), null,
+						null,
+						new int[] {
+							RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
+						},
+						0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					role -> HashMapBuilder.put(
+						"key", role.getName()
+					).put(
+						"name", role.getTitle(themeDisplay.getLocale())
+					).put(
+						"type", String.valueOf(role.getType())
+					).build(),
+					Map.class);
+			}
+		).build();
 	}
 
 	private JSONArray _getDepotEntriesJSONArray() {

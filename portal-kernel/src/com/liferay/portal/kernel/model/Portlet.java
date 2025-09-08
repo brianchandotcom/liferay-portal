@@ -1364,6 +1364,8 @@ public interface Portlet extends PersistedModel, PortletModel {
 
 	public boolean isFullPageDisplayable();
 
+	public boolean isHeaderPortlet();
+
 	/**
 	 * Returns <code>true</code> to include the portlet and make it available to
 	 * be made active.

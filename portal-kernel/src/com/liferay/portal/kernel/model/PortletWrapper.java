@@ -2011,6 +2011,11 @@ public class PortletWrapper
 		return model.isFullPageDisplayable();
 	}
 
+	@Override
+	public boolean isHeaderPortlet() {
+		return model.isHeaderPortlet();
+	}
+
 	/**
 	 * Returns <code>true</code> to include the portlet and make it available to
 	 * be made active.

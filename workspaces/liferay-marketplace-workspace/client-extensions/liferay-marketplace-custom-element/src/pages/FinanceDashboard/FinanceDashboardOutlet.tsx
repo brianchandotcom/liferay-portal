@@ -27,11 +27,11 @@ const FinanceDashboardOutlet = () => {
 							path: '/',
 							symbol: 'change-list',
 						},
-                        {
+						{
 							itemTitle: 'Payments',
 							path: '/payments',
 							symbol: 'credit-card',
-						}
+						},
 					]}
 				/>
 				<span className="h-vh-100 ml-6 w-100">

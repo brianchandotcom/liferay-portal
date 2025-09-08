@@ -407,21 +407,21 @@ const filterSchema = {
 				name: 'paymentStatusInfo/code',
 				options: [
 					{
-						label: "Unpaid",
+						label: 'Unpaid',
 						value: "'1'",
 					},
 					{
-						label: "Paid",
+						label: 'Paid',
 						value: "'0'",
 					},
 					{
-						label: "Failed",
-						value: "4",
+						label: 'Failed',
+						value: '4',
 					},
 					{
-						label: "Cancelled",
-						value: "8",
-					}
+						label: 'Cancelled',
+						value: '8',
+					},
 				],
 				removeQuoteMark: true,
 				type: 'multiselect',

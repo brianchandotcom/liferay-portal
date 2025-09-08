@@ -3,22 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Button from '@clayui/button';
 import {useParams} from 'react-router-dom';
 
-import {PageRenderer} from '../../../../../components/Page';
 import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
-import OrderDetailsHeader from '../../../components/Order/OrderDetailsHeader';
-import Table from '../../../../../components/Table/Table';
-import useAdminOrderProduct from '../../../../../hooks/useAdminOrderProduct';
-import {PaymentStatus as PaymentStatusCode} from '../../../../../enums/Order';
+import {PageRenderer} from '../../../../../components/Page';
 import QATable, {Orientation} from '../../../../../components/QATable';
-import PaymentStatus from '../../../components/Order/PaymentStatus/PaymentStatus';
-import {Liferay} from '../../../../../liferay/liferay';
+import Table from '../../../../../components/Table/Table';
+import {PaymentStatus as PaymentStatusCode} from '../../../../../enums/Order';
 import {ProductSpecificationKey} from '../../../../../enums/Product';
-import {safeJSONParse} from '../../../../../utils/util';
-import HeadlessCommerceAdminOrder from '../../../../../services/rest/HeadlessCommerceAdminOrder';
-import Button from '@clayui/button';
+import useAdminOrderProduct from '../../../../../hooks/useAdminOrderProduct';
 import i18n from '../../../../../i18n';
+import {Liferay} from '../../../../../liferay/liferay';
+import HeadlessCommerceAdminOrder from '../../../../../services/rest/HeadlessCommerceAdminOrder';
+import {safeJSONParse} from '../../../../../utils/util';
+import OrderDetailsHeader from '../../../components/Order/OrderDetailsHeader';
+import PaymentStatus from '../../../components/Order/PaymentStatus/PaymentStatus';
 
 function formatAddress(address: BillingAddress) {
 	if (address) {
@@ -35,6 +35,7 @@ function formatAddress(address: BillingAddress) {
 
 		return `${address?.street1}, ${address?.city}, ${address?.regionISOCode} ${address?.zip} , ${countryNames.of(address?.countryISOCode)}`;
 	}
+
 	return '-';
 }
 
@@ -44,11 +45,11 @@ function formatCurrency(price: number, currencyCode: string) {
 	}
 
 	return price.toLocaleString(currencyCode, {
-		style: 'currency',
 		currency: currencyCode,
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2,
 		currencyDisplay: 'narrowSymbol',
+		maximumFractionDigits: 2,
+		minimumFractionDigits: 2,
+		style: 'currency',
 	});
 }
 
@@ -59,10 +60,10 @@ function formatDate(date: string | undefined) {
 
 	return new Date(date).toLocaleDateString('en-US', {
 		day: 'numeric',
-		month: 'short',
-		year: 'numeric',
 		hour: 'numeric',
 		minute: '2-digit',
+		month: 'short',
+		year: 'numeric',
 	});
 }
 
@@ -73,7 +74,7 @@ function textWrapper(content: string | undefined) {
 		paragraph = content;
 	}
 
-	return <p className="mt-1 mb-2">{paragraph}</p>;
+	return <p className="mb-2 mt-1">{paragraph}</p>;
 }
 
 const OrderDetails = () => {
@@ -136,15 +137,15 @@ const OrderDetails = () => {
 						{i18n.translate('mark-as-paid')}
 					</Button>
 				)}
-				paymentStatusCode={order?.paymentStatusInfo.code as number}
 				orderId={orderId as string}
+				paymentStatusCode={order?.paymentStatusInfo.code as number}
 			/>
 
 			<div className="d-flex mt-5">
 				<DetailedCard
-					className="w-100 mr-5"
 					cardIconAltText="order-form-pencil"
 					cardTitle="Account Details"
+					className="mr-5 w-100"
 					clayIcon="order-form-pencil"
 				>
 					<QATable
@@ -183,9 +184,9 @@ const OrderDetails = () => {
 				</DetailedCard>
 
 				<DetailedCard
-					className="w-100"
 					cardIconAltText="change-list"
 					cardTitle="Transaction Details"
+					className="w-100"
 					clayIcon="change-list"
 				>
 					<QATable
@@ -247,9 +248,9 @@ const OrderDetails = () => {
 			</div>
 
 			<DetailedCard
-				className="w-100 mt-5 pb-0"
 				cardIconAltText="order-form"
 				cardTitle="Order Details"
+				className="mt-5 pb-0 w-100"
 				clayIcon="order-form"
 			>
 				<Table
@@ -263,10 +264,10 @@ const OrderDetails = () => {
 								]);
 
 								return (
-									<div className="d-flex alignt-items-center mt-2">
+									<div className="alignt-items-center d-flex mt-2">
 										<img
 											alt="App Icon"
-											className="order-details-app-icon mr-2 rounded"
+											className="mr-2 order-details-app-icon rounded"
 											draggable={false}
 											src={product?.thumbnail}
 										/>
@@ -327,7 +328,7 @@ const OrderDetails = () => {
 							key: 'finalPriceWithTaxAmount',
 							render: (finalPriceWithTaxAmount) =>
 								textWrapper(
-									formatCurrency	(
+									formatCurrency(
 										finalPriceWithTaxAmount,
 										currencyCode
 									)

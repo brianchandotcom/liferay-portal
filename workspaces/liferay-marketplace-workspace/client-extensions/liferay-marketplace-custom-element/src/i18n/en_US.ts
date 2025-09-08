@@ -509,7 +509,8 @@ export default {
 	'save-this-address-for-future-orders':
 		'Save this address for future orders',
 	'search': 'Search',
-	'section-that-shows-the-latest-sales-made': 'Section that shows the latest sales made',
+	'section-that-shows-the-latest-sales-made':
+		'Section that shows the latest sales made',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',
 	'select-an-option': 'Select an Option',

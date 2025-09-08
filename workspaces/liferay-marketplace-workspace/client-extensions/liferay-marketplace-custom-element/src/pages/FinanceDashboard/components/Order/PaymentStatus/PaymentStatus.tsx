@@ -22,13 +22,13 @@ const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
 	<div>
 		<ClayIcon
 			className={classNames('mr-2 payment-status-icon', {
+				'payment-icon-warning':
+					paymentStatus === PaymentStatusCode.PAYMENT_PENDING ||
+					paymentStatus === PaymentStatusCode.PENDING,
 				'text-danger':
 					paymentStatus === PaymentStatusCode.FAILED ||
 					paymentStatus === PaymentStatusCode.CANCELLED,
 				'text-success': paymentStatus === PaymentStatusCode.PAID,
-				'payment-icon-warning':
-					paymentStatus === PaymentStatusCode.PAYMENT_PENDING ||
-					paymentStatus === PaymentStatusCode.PENDING,
 			})}
 			symbol="circle"
 		/>

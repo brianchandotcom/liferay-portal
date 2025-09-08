@@ -4,8 +4,8 @@
  */
 
 import BackLink from '../../../../components/BackLink';
-import i18n from '../../../../i18n';
 import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
+import i18n from '../../../../i18n';
 import PaymentStatus from './PaymentStatus/PaymentStatus';
 
 type OrderDetailsHeaderProps = {
@@ -20,7 +20,7 @@ const OrderDetailsHeader = ({
 	paymentStatusCode,
 }: OrderDetailsHeaderProps) => {
 	return (
-		<div className="d-flex justify-content-between align-items-center">
+		<div className="align-items-center d-flex justify-content-between">
 			<div>
 				<BackLink>
 					{i18n.translate('back-to-last-transaction')}
@@ -28,7 +28,7 @@ const OrderDetailsHeader = ({
 
 				<h2>{orderId}</h2>
 
-				{<PaymentStatus paymentStatus={paymentStatusCode} />}
+				<PaymentStatus paymentStatus={paymentStatusCode} />
 			</div>
 
 			{(paymentStatusCode === PaymentStatusCode.PAYMENT_PENDING ||

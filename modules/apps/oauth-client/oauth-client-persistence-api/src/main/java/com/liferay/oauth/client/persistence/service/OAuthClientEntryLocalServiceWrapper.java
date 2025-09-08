@@ -44,6 +44,22 @@ public class OAuthClientEntryLocalServiceWrapper
 			tokenRequestParametersJSON);
 	}
 
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
+			addOAuthClientEntry(
+				long userId, String authRequestParametersJSON,
+				String authServerWellKnownURI, String customClaimsJSON,
+				String infoJSON, long metadataCacheTime,
+				String oidcUserInfoMapperJSON,
+				String tokenRequestParametersJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientEntryLocalService.addOAuthClientEntry(
+			userId, authRequestParametersJSON, authServerWellKnownURI,
+			customClaimsJSON, infoJSON, metadataCacheTime,
+			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
+	}
+
 	/**
 	 * Adds the o auth client entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -406,6 +422,23 @@ public class OAuthClientEntryLocalServiceWrapper
 			oAuthClientEntryId, authRequestParametersJSON,
 			authServerWellKnownURI, infoJSON, metadataCacheTime,
 			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
+			updateOAuthClientEntry(
+				long oAuthClientEntryId, String authRequestParametersJSON,
+				String authServerWellKnownURI, String customClaimsJSON,
+				String infoJSON, long metadataCacheTime,
+				String oidcUserInfoMapperJSON,
+				String tokenRequestParametersJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientEntryLocalService.updateOAuthClientEntry(
+			oAuthClientEntryId, authRequestParametersJSON,
+			authServerWellKnownURI, customClaimsJSON, infoJSON,
+			metadataCacheTime, oidcUserInfoMapperJSON,
+			tokenRequestParametersJSON);
 	}
 
 	/**

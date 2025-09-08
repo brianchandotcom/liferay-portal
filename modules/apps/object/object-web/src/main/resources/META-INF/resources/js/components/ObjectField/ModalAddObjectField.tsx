@@ -95,6 +95,7 @@ export function ModalAddObjectField({
 	const {errors, handleChange, handleSubmit, setValues, values} =
 		useObjectFieldForm({
 			initialValues,
+			objectFields: objectDefinition?.objectFields,
 			onSubmit,
 		});
 

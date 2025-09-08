@@ -60,7 +60,7 @@ interface ObjectFieldFormBaseProps {
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	learnResources?: ILearnResourceContext;
 	modelBuilder?: boolean;
-	objectDefinition?: ObjectDefinition;
+	objectDefinition?: ObjectDefinition | ObjectDefinitionNodeData;
 	objectField: Partial<ObjectField>;
 	objectFieldBusinessTypesInfo: ObjectFieldBusinessType[];
 	objectRelationshipId?: number;
@@ -270,6 +270,11 @@ export default function ObjectFieldFormBase({
 				? values.indexedLanguageId ?? defaultLanguageId
 				: '';
 
+		errors.businessType =
+			selectedBusinessType === values.businessType
+				? errors.businessType
+				: undefined;
+
 		setSelectedOutputValue(undefined);
 
 		setValues({
@@ -459,6 +464,7 @@ export default function ObjectFieldFormBase({
 				className={className}
 				disabled={disabled}
 				error={errors.businessType}
+				id="object-field-form-base__type-input"
 				items={objectFieldBusinessTypesInfo}
 				label={Liferay.Language.get('type')}
 				onSelectionChange={(value) => {

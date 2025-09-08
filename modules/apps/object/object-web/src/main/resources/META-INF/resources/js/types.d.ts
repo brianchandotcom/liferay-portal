@@ -309,6 +309,7 @@ interface ObjectField {
 }
 
 type ObjectFieldBusinessTypeName =
+	| 'Assignee'
 	| 'Aggregation'
 	| 'Attachment'
 	| 'AutoIncrement'

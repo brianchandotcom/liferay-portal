@@ -28,7 +28,7 @@ interface BasicInfoContainerProps {
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	learnResources: ILearnResourceContext;
 	modelBuilder?: boolean;
-	objectDefinition?: ObjectDefinition;
+	objectDefinition?: ObjectDefinition | ObjectDefinitionNodeData;
 	objectFieldBusinessTypes: ObjectFieldBusinessType[];
 	objectRelationshipId: number;
 	onSubmit?: () => void;

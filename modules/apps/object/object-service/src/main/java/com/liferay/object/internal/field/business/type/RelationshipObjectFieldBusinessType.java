@@ -308,7 +308,11 @@ public class RelationshipObjectFieldBusinessType
 			systemObjectDefinitionManager.getBaseModelByExternalReferenceCode(
 				externalReferenceCode, objectDefinition.getCompanyId());
 
-		return baseModel.getPrimaryKeyObj();
+		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+
+		return modelAttributes.get(
+			systemObjectDefinitionManager.getPrimaryKeyColumn(
+			).getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

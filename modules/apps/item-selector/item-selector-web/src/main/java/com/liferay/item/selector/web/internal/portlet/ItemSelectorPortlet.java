@@ -8,13 +8,9 @@ package com.liferay.item.selector.web.internal.portlet;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -73,25 +69,7 @@ public class ItemSelectorPortlet extends MVCPortlet {
 
 		localizedItemSelectorRendering.store(renderRequest);
 
-		try {
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			if (permissionChecker.isGroupAdmin(
-					themeDisplay.getScopeGroupId()) ||
-				GroupPermissionUtil.contains(
-					permissionChecker, themeDisplay.getScopeGroup(),
-					ActionKeys.VIEW)) {
-
-				super.render(renderRequest, renderResponse);
-			}
-			else {
-				include("/error.jsp", renderRequest, renderResponse);
-			}
-		}
-		catch (PortalException portalException) {
-			throw new PortletException(portalException);
-		}
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Reference

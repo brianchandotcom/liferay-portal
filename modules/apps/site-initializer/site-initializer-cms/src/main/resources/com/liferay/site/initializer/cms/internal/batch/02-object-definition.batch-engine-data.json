@@ -274,7 +274,6 @@
 					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
-					"required": true,
 					"state": false,
 					"system": false,
 					"type": "Long",

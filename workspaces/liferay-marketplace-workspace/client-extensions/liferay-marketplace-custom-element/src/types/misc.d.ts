@@ -40,28 +40,6 @@ type ContactSales = {
 	name: string;
 };
 
-type DefaultProperties = {
-	accountExternalReferenceCode: string;
-	accountId: string;
-	analyticsCloudURL: string;
-	cloudConsoleURL: string;
-	contactSupportURL: string;
-	eulaBaseURL: string;
-	featureFlags: string[];
-	kpi: {
-		kpiConnectorQuartelyRelease: string;
-		kpiLowCodePublishedApps: string;
-		kpiPartnershipIntegration: string;
-		kpiProjectUsingMarketplaceApps: string;
-		kpiQuartelyReleaseApps: string;
-	};
-	marketoFormId: string;
-	productId: string;
-	trialAccountCheck: 'false' | 'true';
-	trialEulaURL: string;
-	useSiteTaxonomyVocabularyQuery: boolean;
-};
-
 type ListTypeDefinition = {
 	externalReferenceCode: string;
 	id: number;

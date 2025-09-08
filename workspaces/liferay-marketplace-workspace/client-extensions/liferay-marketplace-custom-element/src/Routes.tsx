@@ -6,6 +6,7 @@
 import React, {Suspense} from 'react';
 
 import Loading from './components/Loading';
+import {MarketplaceProperties} from './utils/attributes';
 
 const lazyRoutes = {
 	'administrator-dashboard': React.lazy(
@@ -43,11 +44,13 @@ export type RouteType = keyof typeof lazyRoutes;
 
 type AppRoutesProps = {
 	path: RouteType;
-	properties: DefaultProperties;
+	properties: MarketplaceProperties;
 };
 
 export default function Routes({path, properties}: AppRoutesProps) {
-	const Route = lazyRoutes[path] as React.FC<{properties: DefaultProperties}>;
+	const Route = lazyRoutes[path] as React.FC<{
+		properties: MarketplaceProperties;
+	}>;
 
 	if (!Route) {
 		return <h1>Page not found</h1>;

@@ -7,6 +7,7 @@ import {Component, Fragment} from 'react';
 
 import ErrorBoundary from '../components/ErrorBoundary';
 import Providers from '../providers';
+import {MarketplaceProperties} from '../utils/attributes';
 
 /**
  * @description due the lazy rendering, the context needs to be initialized
@@ -21,7 +22,7 @@ export default function withProviders<T extends object>(
 		withErrorBoundary: boolean;
 	}
 ) {
-	return class extends Component<T & {properties: DefaultProperties}> {
+	return class extends Component<T & {properties: MarketplaceProperties}> {
 		render() {
 			const Wrapper = properties?.withErrorBoundary
 				? ErrorBoundary

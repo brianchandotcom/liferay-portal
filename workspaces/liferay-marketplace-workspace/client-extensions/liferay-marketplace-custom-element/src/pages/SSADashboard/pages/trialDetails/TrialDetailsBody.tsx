@@ -183,6 +183,9 @@ const TrialDetailsBody: React.FC<TrialDetailsBodyProps> = ({
 										{ssaProject}
 									</ExternalLink>
 								),
+								visible:
+									OrderWorkflowStatusCode.IN_PROGRESS ===
+									placedOrder?.orderStatusInfo?.code,
 							},
 							{
 								title: i18n.translate('trial-status'),

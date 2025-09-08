@@ -38,7 +38,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="idTokenSigningAlgValues" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getIdTokenSigningAlgValues()[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="id-token-signing-alg-value" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getIdTokenSigningAlgValues()[i] %>" />
 			</div>
 		</div>
 
@@ -71,7 +71,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="subjectTypes" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getSubjectTypes()[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="subject-type" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getSubjectTypes()[i] %>" />
 			</div>
 		</div>
 
@@ -116,7 +116,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="customAuthorizationRequestParameters" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getCustomAuthorizationRequestParameters()[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-authorization-request-parameter" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getCustomAuthorizationRequestParameters()[i] %>" />
 			</div>
 		</div>
 
@@ -149,7 +149,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="customTokenRequestParameters" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getCustomTokenRequestParameters()[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-token-request-parameter" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getCustomTokenRequestParameters()[i] %>" />
 			</div>
 		</div>
 
@@ -185,7 +185,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:select fieldParam="<%= claimColumnId %>" id="<%= claimColumnId %>" inlineField="<%= true %>" name="<%= claimColumnId %>" showEmptyOption="<%= true %>">
+				<aui:select fieldParam="<%= claimColumnId %>" id="<%= claimColumnId %>" inlineField="<%= true %>" label="custom-claims-key" name="<%= claimColumnId %>" showEmptyOption="<%= true %>">
 
 					<%
 					for (ExpandoColumn expandoColumn : openIdConnectProviderConfigurationDisplayContext.getAvailableCustomFields()) {
@@ -201,7 +201,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 			</div>
 
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="customClaims" name="<%= fieldId %>" type="text" value="<%= customClaimsValues[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-claims-value" name="<%= fieldId %>" type="text" value="<%= customClaimsValues[i] %>" />
 			</div>
 		</div>
 

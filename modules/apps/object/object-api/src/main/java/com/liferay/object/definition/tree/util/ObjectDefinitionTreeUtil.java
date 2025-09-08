@@ -9,7 +9,6 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectAction;
-import com.liferay.object.model.ObjectActionModel;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntry;
@@ -26,7 +25,6 @@ import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -35,16 +33,8 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -248,11 +238,7 @@ public class ObjectDefinitionTreeUtil {
 			ObjectFieldPersistence objectFieldPersistence,
 			ObjectRelationship objectRelationship,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
-			ObjectRelationshipPersistence objectRelationshipPersistence,
-			ResourceActionLocalService resourceActionLocalService,
-			ResourcePermissionLocalService resourcePermissionLocalService,
-			WorkflowDefinitionLinkLocalService
-				workflowDefinitionLinkLocalService)
+			ObjectRelationshipPersistence objectRelationshipPersistence)
 		throws PortalException {
 
 		objectRelationship.setEdge(false);
@@ -303,8 +289,6 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
 
-		objectDefinition2.setScope(objectDefinition1.getScope());
-
 		long oldRootObjectDefinitionId2 =
 			objectDefinition2.getRootObjectDefinitionId();
 		long newRootObjectDefinitionId2 = _getRootObjectDefinitionId(
@@ -314,11 +298,6 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinition2, objectDefinitionLocalService,
 			objectDefinitionSettingLocalService, oldRootObjectDefinitionId2,
 			newRootObjectDefinitionId2);
-
-		_copyResourcePermissions(
-			objectActionPersistence, objectDefinition1, objectDefinition2,
-			objectEntryLocalService, resourceActionLocalService,
-			resourcePermissionLocalService);
 
 		_updateObjectEntries(
 			objectDefinition2, objectEntryLocalService,
@@ -330,10 +309,6 @@ public class ObjectDefinitionTreeUtil {
 			objectEntryLocalService, objectFieldPersistence,
 			objectRelationshipLocalService, objectRelationshipPersistence,
 			oldRootObjectDefinitionId2, newRootObjectDefinitionId2);
-
-		_copyWorkflowDefinitionLinks(
-			objectDefinition1, objectDefinition2,
-			workflowDefinitionLinkLocalService);
 
 		if (objectDefinition2.isRootNode()) {
 			_deployObjectDefinition(
@@ -363,155 +338,6 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence, objectDefinitionSettingLocalService,
 			objectRelationshipLocalService, objectRelationshipPersistence,
 			oldRootObjectDefinitionIds);
-	}
-
-	private static void _copyResourcePermissions(
-			long companyId,
-			ResourceActionLocalService resourceActionLocalService,
-			ResourcePermissionLocalService resourcePermissionLocalService,
-			String sourceName, String targetName,
-			List<String> targetObjectActionNames)
-		throws PortalException {
-
-		List<ResourceAction> resourceActions =
-			resourceActionLocalService.getResourceActions(sourceName);
-
-		_copyResourcePermissions(
-			resourcePermissionLocalService, resourceActions,
-			resourcePermissionLocalService.getResourcePermissions(
-				companyId, sourceName, ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(companyId)),
-			targetName, targetObjectActionNames, String.valueOf(companyId));
-		_copyResourcePermissions(
-			resourcePermissionLocalService, resourceActions,
-			resourcePermissionLocalService.getResourcePermissions(
-				companyId, sourceName, ResourceConstants.SCOPE_GROUP_TEMPLATE,
-				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID)),
-			targetName, targetObjectActionNames,
-			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID));
-	}
-
-	private static void _copyResourcePermissions(
-			ObjectActionPersistence objectActionPersistence,
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2,
-			ObjectEntryLocalService objectEntryLocalService,
-			ResourceActionLocalService resourceActionLocalService,
-			ResourcePermissionLocalService resourcePermissionLocalService)
-		throws PortalException {
-
-		if (!objectDefinition1.isApproved() ||
-			!objectDefinition2.isApproved()) {
-
-			return;
-		}
-
-		List<String> objectActionNames = TransformUtil.transform(
-			objectActionPersistence.findByO_A_OATK(
-				objectDefinition2.getObjectDefinitionId(), true,
-				ObjectActionTriggerConstants.KEY_STANDALONE),
-			ObjectActionModel::getName);
-		List<ResourceAction> resourceActions =
-			resourceActionLocalService.getResourceActions(
-				objectDefinition1.getClassName());
-
-		_performActions(
-			objectDefinition2.getObjectDefinitionId(), objectEntryLocalService,
-			true,
-			(ObjectEntry objectEntry) -> _copyResourcePermissions(
-				resourcePermissionLocalService, resourceActions,
-				resourcePermissionLocalService.getResourcePermissions(
-					objectDefinition1.getCompanyId(),
-					objectDefinition1.getClassName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(objectEntry.getRootObjectEntryId())),
-				objectDefinition2.getClassName(), objectActionNames,
-				String.valueOf(objectEntry.getObjectEntryId())));
-
-		_copyResourcePermissions(
-			objectDefinition1.getCompanyId(), resourceActionLocalService,
-			resourcePermissionLocalService, objectDefinition1.getClassName(),
-			objectDefinition2.getClassName(), objectActionNames);
-
-		_copyResourcePermissions(
-			objectDefinition1.getCompanyId(), resourceActionLocalService,
-			resourcePermissionLocalService, objectDefinition1.getPortletId(),
-			objectDefinition2.getPortletId(), null);
-		_copyResourcePermissions(
-			objectDefinition1.getCompanyId(), resourceActionLocalService,
-			resourcePermissionLocalService, objectDefinition1.getResourceName(),
-			objectDefinition2.getResourceName(), null);
-	}
-
-	private static void _copyResourcePermissions(
-			ResourcePermissionLocalService resourcePermissionLocalService,
-			List<ResourceAction> sourceResourceActions,
-			List<ResourcePermission> sourceResourcePermissions,
-			String targetName, List<String> targetObjectActionNames,
-			String targetPrimKey)
-		throws PortalException {
-
-		for (ResourcePermission sourceResourcePermission :
-				sourceResourcePermissions) {
-
-			List<String> targetResourceActionIds = new ArrayList<>();
-
-			for (ResourceAction sourceResourceAction : sourceResourceActions) {
-				long bitwiseValue = sourceResourceAction.getBitwiseValue();
-
-				if ((sourceResourcePermission.getActionIds() & bitwiseValue) !=
-						bitwiseValue) {
-
-					continue;
-				}
-
-				targetResourceActionIds.add(sourceResourceAction.getActionId());
-			}
-
-			if (ListUtil.isNotEmpty(targetObjectActionNames)) {
-				targetResourceActionIds.addAll(
-					resourcePermissionLocalService.
-						getAvailableResourcePermissionActionIds(
-							sourceResourcePermission.getCompanyId(), targetName,
-							sourceResourcePermission.getScope(), targetPrimKey,
-							sourceResourcePermission.getRoleId(),
-							targetObjectActionNames));
-			}
-
-			resourcePermissionLocalService.setResourcePermissions(
-				sourceResourcePermission.getCompanyId(), targetName,
-				sourceResourcePermission.getScope(), targetPrimKey,
-				sourceResourcePermission.getRoleId(),
-				targetResourceActionIds.toArray(new String[0]));
-		}
-	}
-
-	private static void _copyWorkflowDefinitionLinks(
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2,
-			WorkflowDefinitionLinkLocalService
-				workflowDefinitionLinkLocalService)
-		throws PortalException {
-
-		if (!objectDefinition1.isApproved() ||
-			!objectDefinition2.isApproved()) {
-
-			return;
-		}
-
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
-					objectDefinition1.getCompanyId(),
-					objectDefinition1.getClassName())) {
-
-			workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-				workflowDefinitionLink.getUserId(),
-				workflowDefinitionLink.getCompanyId(),
-				workflowDefinitionLink.getGroupId(),
-				objectDefinition2.getClassName(), 0, 0,
-				workflowDefinitionLink.getWorkflowDefinitionName(),
-				workflowDefinitionLink.getWorkflowDefinitionVersion());
-		}
 	}
 
 	private static void _deployObjectDefinition(

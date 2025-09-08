@@ -1,11 +1,12 @@
 [#assign knowledgeArticle = configuration.articleSelector /]
 
 <a class="article-entry" href="${themeDisplay.getCDNBaseURL()}/l/${knowledgeArticle.objectEntryId!}">
-	<div class="article-entry_title">
+	<div class="article-entry-title">
 		${knowledgeArticle.title!}
 	</div>
-
-	<div class="article-entry_description">
-		${knowledgeArticle.description!}
-	</div>
+	[#if knowledgeArticle.description?has_content]
+		<div class="article-entry-description">
+			${knowledgeArticle.description}
+		</div>
+	[/#if]
 </a>

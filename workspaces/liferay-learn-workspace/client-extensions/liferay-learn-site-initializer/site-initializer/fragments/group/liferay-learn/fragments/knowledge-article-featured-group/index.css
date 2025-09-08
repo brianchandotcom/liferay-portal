@@ -1,4 +1,4 @@
-.article-section_banner {
+.article-section-banner {
 	background: radial-gradient(
 				14.55% 34.6% at 100% 34.6%,
 				rgba(55, 124, 255, 0.68) 0%,
@@ -25,12 +25,12 @@
 	position: relative;
 }
 
-.article-section_banner-image {
+.article-section-banner-image {
 	overflow: hidden;
 	position: sticky;
 }
 
-.article-section_banner-title {
+.article-section-banner-title {
 	align-items: center;
 	color: var(--color-neutral-0, #FFFFFF);
 	display: flex;
@@ -42,7 +42,7 @@
 	width: 100%;
 }
 
-.article-section_container {
+.article-section-container {
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
@@ -50,7 +50,7 @@
 }
 
 @media screen and (max-width: 426px) {
-	.article-section_banner-image {
+	.article-section-banner-image {
 		display: none;
 	}
 }

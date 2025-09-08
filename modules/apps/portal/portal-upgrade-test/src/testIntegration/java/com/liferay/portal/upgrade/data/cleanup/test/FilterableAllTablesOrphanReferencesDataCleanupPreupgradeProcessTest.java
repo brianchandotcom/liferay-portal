@@ -68,7 +68,7 @@ public class FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				messages.contains(
 					getExpectedMessage(
-						1, "DDMTemplateLink",
+						1L, "classPK", "DDMTemplateLink",
 						new String[] {"resourcePrimKey", "id_"},
 						"JournalArticle", _journalId)));
 		};

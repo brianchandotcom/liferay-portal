@@ -68,9 +68,7 @@ const handleActionClick = ({
 
 	const doAction = ({defaultPrevented}: {defaultPrevented: boolean}) => {
 		if (target === INFO_PANEL && onInfoPanelToggleButtonClick) {
-			onItemSelectionChange?.({
-				item: itemData,
-			});
+			onItemSelectionChange?.(itemData);
 
 			!infoPanelOpen && onInfoPanelToggleButtonClick();
 		}

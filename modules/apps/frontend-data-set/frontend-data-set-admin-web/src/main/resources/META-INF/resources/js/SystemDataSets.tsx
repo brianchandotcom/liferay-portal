@@ -39,12 +39,15 @@ interface IFrontendDataSetContext {
 const SystemDataSetsView = ({
 	frontendDataSetContext,
 	items,
+	onItemSelectionChange,
 }: {
 	frontendDataSetContext: any;
 	items: Array<ISystemDataSet>;
+	onItemSelectionChange?: Function;
 }) => {
-	const {selectItems, selectable, selectedItemsKey, selectedItemsValue} =
-		useContext(frontendDataSetContext) as IFrontendDataSetContext;
+	const {selectable, selectedItemsKey, selectedItemsValue} = useContext(
+		frontendDataSetContext
+	) as IFrontendDataSetContext;
 
 	return (
 		<ClayList>
@@ -63,9 +66,7 @@ const SystemDataSetsView = ({
 						key={item.name}
 						onClick={() => {
 							if (selectable) {
-								selectItems({
-									value: item[selectedItemsKey],
-								});
+								onItemSelectionChange?.(item);
 							}
 						}}
 					>
@@ -189,6 +190,7 @@ const SelectSystemDataSetModalContent = ({
 						) => {
 							setSelectedSystemDataSet(selectedItems[0]);
 						}}
+						selectedItems={[selectedSystemDataSet]}
 						selectedItemsKey="name"
 						selectionType="single"
 						views={[

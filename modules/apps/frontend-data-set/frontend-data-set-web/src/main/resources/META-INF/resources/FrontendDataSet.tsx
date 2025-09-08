@@ -544,10 +544,10 @@ const FrontendDataSetContent = ({
 		setSelectedItems(newSelectedItems);
 	}
 
-	function selectItems({force, value}: {force?: boolean; value: any}) {
+	function selectItems(value: any, forceSingleSelection = false) {
 		const values = Array.isArray(value) ? value : [value];
 
-		if (force) {
+		if (forceSingleSelection) {
 			setSelectedItems(
 				selectedItemsValue.length === 1 &&
 					selectedItemsValue.includes(value)
@@ -823,9 +823,7 @@ const FrontendDataSetContent = ({
 					setAllItemsSelectedActive(value);
 				}}
 				selectItems={(items: Array<any>) => {
-					selectItems({
-						value: items,
-					});
+					selectItems(items);
 				}}
 				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}
@@ -859,13 +857,10 @@ const FrontendDataSetContent = ({
 						header={header}
 						items={items}
 						itemsActions={itemsActions}
-						onItemSelectionChange={({
-							force,
-							item: selectedItem,
-						}: {
-							force?: boolean;
-							item: any;
-						}) => {
+						onItemSelectionChange={(
+							selectedItem: any,
+							forceSingleSelection: boolean
+						) => {
 							if (allItemsSelectedActive) {
 								setSelectedItems(
 									items.filter(
@@ -884,13 +879,13 @@ const FrontendDataSetContent = ({
 								setAllItemsSelectedActive(false);
 							}
 							else {
-								selectItems({
-									force,
-									value: getObjectValueFromPath({
+								selectItems(
+									getObjectValueFromPath({
 										object: selectedItem,
 										path: selectedItemsKey,
 									}),
-								});
+									forceSingleSelection
+								);
 							}
 						}}
 						style={style}

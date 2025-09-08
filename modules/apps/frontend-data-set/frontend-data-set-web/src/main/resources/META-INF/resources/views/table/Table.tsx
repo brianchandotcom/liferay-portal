@@ -227,9 +227,7 @@ const Row = ({
 									<SelectionComponent
 										checked={active}
 										onChange={() =>
-											onItemSelectionChange({
-												item,
-											})
+											onItemSelectionChange(item)
 										}
 										title={Liferay.Language.get(
 											'select-item'
@@ -418,10 +416,7 @@ function ClayTableRowOptionalDropTarget({
 		items,
 		onClick: selectable
 			? () => {
-					onItemSelectionChange({
-						force: true,
-						item,
-					});
+					onItemSelectionChange(item, true);
 				}
 			: undefined,
 		ref: dropRef,

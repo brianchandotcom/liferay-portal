@@ -173,17 +173,12 @@ const Card = forwardRef<HTMLDivElement, any>(
 				if (target.tagName !== 'INPUT') {
 					event.preventDefault();
 
-					onItemSelectionChange?.({
-						force: true,
-						item,
-					});
+					onItemSelectionChange?.(item, true);
 				}
 			},
 			onSelectChange: selectable
 				? () => {
-						onItemSelectionChange?.({
-							item,
-						});
+						onItemSelectionChange?.(item);
 					}
 				: undefined,
 			selectableType: selectionType === 'single' ? 'radio' : 'checkbox',

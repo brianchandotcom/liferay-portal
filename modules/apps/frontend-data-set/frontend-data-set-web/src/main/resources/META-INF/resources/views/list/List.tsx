@@ -119,9 +119,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 									: false
 							}
 							onChange={() => {
-								onItemSelectionChange({
-									item,
-								});
+								onItemSelectionChange(item);
 							}}
 							value={itemId}
 						/>
@@ -153,10 +151,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					expand
 					onClick={() => {
 						if (selectable) {
-							onItemSelectionChange({
-								force: true,
-								item,
-							});
+							onItemSelectionChange(item, true);
 						}
 					}}
 				>

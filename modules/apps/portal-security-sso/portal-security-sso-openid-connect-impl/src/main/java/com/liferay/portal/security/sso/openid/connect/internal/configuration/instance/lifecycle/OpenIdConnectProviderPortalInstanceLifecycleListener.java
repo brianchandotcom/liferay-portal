@@ -113,6 +113,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 		_oAuthClientEntryLocalService.addOAuthClientEntry(
 			guestUserId, _generateAuthRequestParametersJSON(properties),
 			_updateOAuthClientASLocalMetadata(guestUserId, properties),
+			_generateCustomClaimsJSON(properties),
 			_generateInfoJSON(properties),
 			GetterUtil.getLong(
 				properties.get("discoveryEndPointCacheInMillis")),
@@ -194,6 +195,25 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 		}
 
 		return _CLIENT_TO + providerName;
+	}
+
+	private String _generateCustomClaimsJSON(Dictionary<String, ?> properties) {
+		String[] customClaims = GetterUtil.getStringValues(
+			properties.get("customClaims"));
+
+		JSONObject customClaimsJSONObject = _jsonFactory.createJSONObject();
+
+		for (String customClaim : customClaims) {
+			if (customClaim.isEmpty()) {
+				continue;
+			}
+
+			String[] splitClaim = customClaim.split("=");
+
+			customClaimsJSONObject.put(splitClaim[0], splitClaim[1]);
+		}
+
+		return customClaimsJSONObject.toString();
 	}
 
 	private String _generateInfoJSON(Dictionary<String, ?> properties) {
@@ -447,6 +467,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 						_generateAuthRequestParametersJSON(properties),
 						_updateOAuthClientASLocalMetadata(
 							guestUserId, properties),
+						_generateCustomClaimsJSON(properties),
 						_generateInfoJSON(properties),
 						GetterUtil.getLong(
 							properties.get("discoveryEndPointCacheInMillis")),

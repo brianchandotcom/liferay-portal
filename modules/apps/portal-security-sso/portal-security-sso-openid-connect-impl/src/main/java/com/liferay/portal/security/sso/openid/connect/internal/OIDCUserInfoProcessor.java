@@ -69,12 +69,13 @@ public class OIDCUserInfoProcessor {
 
 	public long processUserInfo(
 			long companyId, String issuer, ServiceContext serviceContext,
-			String userInfoJSON, String userInfoMapperJSON)
+			String userInfoJSON, String userInfoMapperJSON,
+			String customClaimsJSON)
 		throws Exception {
 
 		User user = _addOrUpdateUser(
-			companyId, issuer, serviceContext, userInfoJSON,
-			userInfoMapperJSON);
+			companyId, issuer, serviceContext, userInfoJSON, userInfoMapperJSON,
+			customClaimsJSON);
 
 		try {
 			_addAddress(serviceContext, user, userInfoJSON, userInfoMapperJSON);
@@ -196,7 +197,8 @@ public class OIDCUserInfoProcessor {
 
 	private User _addOrUpdateUser(
 			long companyId, String issuer, ServiceContext serviceContext,
-			String userInfoJSON, String userInfoMapperJSON)
+			String userInfoJSON, String userInfoMapperJSON,
+			String customClaimsJSON)
 		throws Exception {
 
 		JSONObject userInfoMapperJSONObject = _jsonFactory.createJSONObject(
@@ -269,6 +271,10 @@ public class OIDCUserInfoProcessor {
 				expandoColumn.getTableId(), expandoColumn.getColumnId(),
 				user.getUserId(), String.valueOf(oAuthClientEntryId));
 
+			_addOrUpdateUserCustomClaims(
+				companyId, user.getUserId(), customClaimsJSON,
+				userInfoJSONObject);
+
 			return _userLocalService.updatePasswordReset(
 				user.getUserId(), false);
 		}
@@ -276,6 +282,9 @@ public class OIDCUserInfoProcessor {
 		Contact contact = user.getContact();
 
 		serviceContext.setUuid(user.getUuid());
+
+		_addOrUpdateUserCustomClaims(
+			companyId, user.getUserId(), customClaimsJSON, userInfoJSONObject);
 
 		return _userLocalService.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
@@ -301,6 +310,40 @@ public class OIDCUserInfoProcessor {
 			user.getUserGroupRoles(),
 			_getUserGroupIds(companyId, oAuthClientEntryId, user, userGroupIds),
 			serviceContext);
+	}
+
+	private void _addOrUpdateUserCustomClaims(
+			long companyId, long userId, String customClaimsJSON,
+			JSONObject userInfoJSONObject)
+		throws Exception {
+
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			companyId,
+			_classNameLocalService.getClassNameId(User.class.getName()),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		JSONObject customClaimsJSONObject = _jsonFactory.createJSONObject(
+			customClaimsJSON);
+
+		for (String key : customClaimsJSONObject.keySet()) {
+			String value = GetterUtil.getString(
+				customClaimsJSONObject.get(key));
+
+			String claimValue = userInfoJSONObject.getString(value);
+
+			if (claimValue.isEmpty()) {
+				continue;
+			}
+
+			ExpandoColumn expandoColumn =
+				_expandoColumnLocalService.fetchColumn(
+					expandoTable.getTableId(), key);
+
+			_expandoValueLocalService.addValue(
+				_classNameLocalService.getClassNameId(User.class.getName()),
+				expandoColumn.getTableId(), expandoColumn.getColumnId(), userId,
+				claimValue);
+		}
 	}
 
 	private void _addPhone(

@@ -130,6 +130,7 @@ public class InfoFieldUtil {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
+		defaultFragmentRendererContext.setDisablePortletRender(true);
 		defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
 		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
 

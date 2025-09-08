@@ -262,7 +262,7 @@ function SidePanel(props: SidePanelProps) {
 
 					return (
 						<VerticalBar.Panel key={item.title}>
-							<div className="align-items-center border-0 d-flex justify-content-between sidebar-header">
+							<div className="align-items-center d-flex justify-content-between pl-3 sidebar-header">
 								<div className="component-title">
 									{item.title}
 								</div>

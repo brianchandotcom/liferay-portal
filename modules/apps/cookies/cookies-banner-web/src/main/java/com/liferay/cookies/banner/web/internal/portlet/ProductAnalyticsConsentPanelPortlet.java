@@ -10,7 +10,9 @@ import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
 import com.liferay.cookies.banner.web.internal.display.context.ProductAnalyticsConsentPanelDisplayContext;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.portlet.Portlet;
 import jakarta.portlet.PortletException;
@@ -54,6 +56,12 @@ public class ProductAnalyticsConsentPanelPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(renderRequest), "LPD-51356")) {
+
+			return;
+		}
+
 		ProductAnalyticsConsentPanelDisplayContext
 			productAnalyticsConsentPanelDisplayContext =
 				new ProductAnalyticsConsentPanelDisplayContext(
@@ -75,5 +83,8 @@ public class ProductAnalyticsConsentPanelPortlet extends MVCPortlet {
 	@Reference
 	private LayoutUtilityPageEntryLayoutProvider
 		_layoutUtilityPageEntryLayoutProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -4419,6 +4419,19 @@
 	},
 	{
 		"classNames": [
+			"CommerceDiscountRuleType"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-48183",
+		"newImports": [
+			"com.liferay.portal.kernel.util.Validator"
+		],
+		"newMethods": [
+			"@Override\n\tpublic boolean validate(String typeSettings) {\n\t\treturn Validator.isNotNull(typeSettings);\n\t}"
+		]
+	},
+	{
+		"classNames": [
 			"PortletSharedSearchSettings"
 		],
 		"from": "getParameterValues71",

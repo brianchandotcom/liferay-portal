@@ -310,7 +310,11 @@ public class RelationshipObjectFieldBusinessType
 			systemObjectDefinitionManager.getOrAddEmptyBaseModel(
 				externalReferenceCode, _userLocalService.getUserById(userId));
 
-		return baseModel.getPrimaryKeyObj();
+		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+
+		return modelAttributes.get(
+			systemObjectDefinitionManager.getPrimaryKeyColumn(
+			).getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

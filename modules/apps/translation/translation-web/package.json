@@ -19,6 +19,11 @@
 		"prop-types": "15.7.2",
 		"react": "18.2.0"
 	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
+		]
+	},
 	"main": "js/index.js",
 	"name": "translation-web",
 	"scripts": {

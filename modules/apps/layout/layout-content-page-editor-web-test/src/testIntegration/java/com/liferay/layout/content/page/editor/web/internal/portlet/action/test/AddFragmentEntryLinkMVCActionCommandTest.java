@@ -266,7 +266,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			"fragmentEntryKey", _fragmentRenderer.getKey());
 
 		_addFragmentEntry(
-			RandomTestUtil.randomString(), _fragmentRenderer.getKey());
+			_fragmentRenderer.getKey(), RandomTestUtil.randomString());
 
 		FragmentEntryLink fragmentEntryLink = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
@@ -280,11 +280,11 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 	}
 
 	private FragmentEntry _addFragmentEntry(String html) throws Exception {
-		return _addFragmentEntry(html, RandomTestUtil.randomString());
+		return _addFragmentEntry(RandomTestUtil.randomString(), html);
 	}
 
 	private FragmentEntry _addFragmentEntry(
-			String html, String fragmentEntryKey)
+			String fragmentEntryKey, String html)
 		throws Exception {
 
 		ServiceContext serviceContext =

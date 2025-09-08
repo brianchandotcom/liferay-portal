@@ -169,8 +169,7 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 
 		SearchContainer<PortletPreferences>
 			widgetTemplatesUsagesSearchContainer = new SearchContainer<>(
-				_renderRequest, _getPortletURL(), null,
-				"there-are-no-usages");
+				_renderRequest, _getPortletURL(), null, "there-are-no-usages");
 
 		DDMTemplate ddmTemplate = getDDMTemplate();
 
@@ -203,6 +202,18 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 			fetchLayoutPageTemplateEntryByPlid(layoutPageTemplateEntryPlid);
 	}
 
+	private PortletURL _getPortletURL() {
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/template/view_widget_templates_usages"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"ddmTemplateId", _ddmTemplate.getTemplateId()
+		).buildPortletURL();
+	}
+
 	private List<PortletPreferences> _getWidgetTemplatesUsages(
 		int start, int end) {
 
@@ -230,18 +241,6 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 			).limit(
 				start, end
 			));
-	}
-
-	private PortletURL _getPortletURL() {
-		return PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setMVCRenderCommandName(
-			"/template/view_widget_templates_usages"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"ddmTemplateId", _ddmTemplate.getTemplateId()
-		).buildPortletURL();
 	}
 
 	private DDMTemplate _ddmTemplate;

@@ -8,6 +8,7 @@ import {createReadStream} from 'fs';
 import path from 'node:path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -16,11 +17,15 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getGlobalSite from '../../../utils/getGlobalSite';
 import getRandomString from '../../../utils/getRandomString';
+import {data} from './dependencies/payload_page_with_21_breadcrumbs';
 import {templatesPageTest} from './fixtures/templatesPageTest';
 
 const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
+	featureFlagsTest({
+		'LPD-35443': {enabled: true},
+	}),
 	loginTest(),
 	templatesPageTest,
 	pageViewModePagesTest
@@ -336,6 +341,54 @@ test(
 				'Some of these templates are being used in pages. Are you sure you want to delete this? It will be deleted immediately.'
 			)
 		).toBeVisible();
+	}
+);
+
+test(
+	'Pagination of View usages of widget templates',
+	{tag: '@LPD-64473'},
+	async ({apiHelpers, page, site, templatesPage}) => {
+		await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
+
+		const breadcrumbWidgetTemplateName = getRandomString();
+
+		await templatesPage.createWidgetTemplate(
+			breadcrumbWidgetTemplateName,
+			'Breadcrumb Template'
+		);
+		await templatesPage.editTemplate(breadcrumbWidgetTemplateName);
+		await templatesPage.importInformationTemplate(
+			__dirname,
+			'information_template_breadcrumbs.ftl'
+		);
+
+		const breadcrumbWidgetTemplateKey =
+			await templatesPage.getTemplateKey();
+
+		await templatesPage.saveTemplate(breadcrumbWidgetTemplateName);
+
+		// Payload to create a page with 21 breadcrumbs using the Horizontal Widget Display Template created above
+
+		const customPayload = data(
+			'ddmTemplate_' + breadcrumbWidgetTemplateKey,
+			site.externalReferenceCode,
+			String(site.id)
+		);
+
+		const layout = await apiHelpers.headlessAdminSite.createPage(
+			site.externalReferenceCode,
+			customPayload
+		);
+
+		// Assert usages between page created and payload
+
+		await expect(layout.externalReferenceCode).toEqual(
+			customPayload.externalReferenceCode
+		);
+
+		await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
+
+		await templatesPage.viewUsagesPage(breadcrumbWidgetTemplateName, page);
 	}
 );
 

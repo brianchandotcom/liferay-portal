@@ -164,6 +164,34 @@ export class TemplatesPage {
 		});
 	}
 
+	async viewUsagesPage(widgetTemplateName: string, page: Page) {
+
+		// Assert number of usages
+
+		await expect(
+			page
+				.locator('tr')
+				.filter({hasText: widgetTemplateName})
+				.locator('.lfr-usages-column')
+		).toHaveText('21');
+
+		await this.page.getByLabel('Show Actions').click();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'View Usages'})
+			.click();
+
+		await this.page.waitForURL(/view_widget_templates_usages/);
+
+		await this.page.getByRole('link', {name: 'Page 2'}).click();
+
+		const headers = this.page.locator('tr th');
+
+		// Assert page 2 headers
+
+		await expect(headers).toHaveText(['Name', 'Type', 'Instance ID']);
+	}
+
 	async getTemplateKey() {
 		await this.page.getByLabel('Properties').click();
 

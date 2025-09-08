@@ -12,6 +12,12 @@ export default class HeadlessCommerceAdminOrder {
 		);
 	}
 
+	static getOrder(orderId: string, searchParams = new URLSearchParams()) {
+		return fetcher<Order>(
+			`o/headless-commerce-admin-order/v1.0/orders/${orderId}?${searchParams.toString()}`
+		);
+	}
+
 	static getOrders(searchParams = new URLSearchParams()) {
 		return fetcher<APIResponse>(
 			`o/headless-commerce-admin-order/v1.0/orders?${searchParams.toString()}`
@@ -21,6 +27,13 @@ export default class HeadlessCommerceAdminOrder {
 	static getOrdersGQL(searchParams = new URLSearchParams()) {
 		return fetcher<APIResponse>(
 			`o/headless-commerce-admin-order/v1.0/orders?${searchParams.toString()}`
+		);
+	}
+
+	static patchOrder(orderId: number | string, order: Partial<Order>) {
+		return fetcher.patch<Order>(
+			`o/headless-commerce-admin-order/v1.0/orders/${orderId}`,
+			order
 		);
 	}
 }

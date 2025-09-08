@@ -58,10 +58,12 @@ type Order = {
 	account: {
 		id: number;
 		name: string;
+		taxId: string;
 		type: string;
 	};
 	accountExternalReferenceCode?: string;
 	accountId: number;
+	billingAddress?: BillingAddress;
 	billingAddressId?: number;
 	channel: {
 		currencyCode?: string;
@@ -98,13 +100,21 @@ type Order = {
 	};
 	orderTypeExternalReferenceCode?: string;
 	orderTypeId?: number;
-	paymentStatusInfo: PaymentStatusInfo
+	paymentMethod?: string;
+	paymentStatus?: number;
+	paymentStatusInfo: PaymentStatusInfo;
+	placedOrderBillingAddress?: BillingAddress;
+	placedOrderBillingAddressId?: number;
 	placedOrderItems?: any;
+	projectName?: string;
 	shippingAmount?: number;
 	shippingWithTaxAmount?: number;
+	subtotalFormatted?: string;
+	taxAmountFormatted?: string;
 	totalAmount?: number;
 	totalFormatted: string;
 	totalWithTaxAmountFormatted: string;
+	transactionId: string;
 };
 
 type OrderType = {

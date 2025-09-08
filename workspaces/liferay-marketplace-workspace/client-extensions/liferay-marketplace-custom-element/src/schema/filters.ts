@@ -403,15 +403,24 @@ const filterSchema = {
 				name: 'modifiedDate',
 			}),
 			overrides(baseFilters.status, {
-				name: 'statusCode',
+				label: i18n.translate('payment-status'),
+				name: 'paymentStatusInfo/code',
 				options: [
 					{
 						label: "Unpaid",
-						value: "Unpaid",
+						value: "'1'",
 					},
 					{
 						label: "Paid",
-						value: "Paid",
+						value: "'0'",
+					},
+					{
+						label: "Failed",
+						value: "4",
+					},
+					{
+						label: "Cancelled",
+						value: "8",
 					}
 				],
 				removeQuoteMark: true,

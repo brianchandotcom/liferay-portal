@@ -83,6 +83,7 @@ export default {
 	'available': 'Available',
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
+	'back-to-last-transaction': 'Back to Last Transaction',
 	'back-to-my-apps': 'Back to My Apps',
 	'back-to-my-solutions': 'Back to My Solutions',
 	'back-to-solutions': 'Back to Solutions',
@@ -322,6 +323,7 @@ export default {
 		'Key deactivation requested successfully',
 	'key-type': 'Key Type',
 	'last-name': 'Last Name',
+	'last-orders': 'Last Orders',
 	'last-update': 'Last Update',
 	'learn-more': 'Learn More',
 	'learn-more-about-app-resource-requirements':
@@ -361,6 +363,7 @@ export default {
 	'manage-trial': 'Manage Trial',
 	'manage-your-current-trials': 'Manage your current trials',
 	'manage-your-teams-trial': "Manage your team's trial",
+	'mark-as-paid': 'Mark as Paid',
 	'maximum-number-of-upload-reached': 'Maximum Number of Upload Reached',
 	'modified-date': 'Modifed Date',
 	'modular-components-built-with-html-css-and-javascript-offer-extensible-and-reusable-elements-or-collections-of-elements-for-constructing-content-pages-and-templates':
@@ -507,6 +510,7 @@ export default {
 	'save-this-address-for-future-orders':
 		'Save this address for future orders',
 	'search': 'Search',
+	'section-that-shows-the-latest-sales-made': 'Section that shows the latest sales made',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',
 	'select-an-option': 'Select an Option',

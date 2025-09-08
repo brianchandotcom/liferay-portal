@@ -412,15 +412,12 @@ public abstract class Base${schemaName}ResourceImpl
 					<#assign generateGetPermissionCheckerMethods = true />
 
 					Long groupId = getPermissionCheckerGroupId(${schemaVarName + "Id"});
+					String resourceName = getPermissionCheckerResourceName(${schemaVarName + "Id"});
 					Long resourceId = getPermissionCheckerResourceId(${schemaVarName + "Id"});
 
-					<@getResourcePermissions
-						actions = getActions("groupId", "resourceId", "resourceName", schemaName)
-						groupId = "groupId"
-						schemaIdParameterName = schemaVarName + "Id"
-						schemaName = schemaName
-						scopeParameterName = ""
-					/>
+					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
+
+					return toPermissionPage(${getActions("groupId", "resourceId", "resourceName", schemaName)}, resourceId, resourceName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -440,15 +437,12 @@ public abstract class Base${schemaName}ResourceImpl
 					/>
 
 					Long groupId = getPermissionCheckerGroupId(assetLibraryExternalReferenceCode);
+					String resourceName = getPermissionCheckerResourceName(assetLibraryExternalReferenceCode, ${schemaExternalReferenceCodeParameterName});
 					Long resourceId = getPermissionCheckerResourceId(assetLibraryExternalReferenceCode, ${schemaExternalReferenceCodeParameterName});
 
-					<@getResourcePermissions
-						actions = getActions("groupId", "resourceId", "resourceName", schemaName + "AssetLibrary" + schemaName)
-						groupId = "groupId"
-						schemaIdParameterName = schemaExternalReferenceCodeParameterName
-						schemaName = schemaName
-						scopeParameterName = "assetLibraryExternalReferenceCode"
-					/>
+					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
+
+					return toPermissionPage(${getActions("groupId", "resourceId", "resourceName", schemaName + "AssetLibrary" + schemaName)}, resourceId, resourceName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -468,15 +462,12 @@ public abstract class Base${schemaName}ResourceImpl
 					/>
 
 					Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
+					String resourceName = getPermissionCheckerResourceName(siteExternalReferenceCode, ${schemaExternalReferenceCodeParameterName});
 					Long resourceId = getPermissionCheckerResourceId(siteExternalReferenceCode, ${schemaExternalReferenceCodeParameterName});
 
-					<@getResourcePermissions
-						actions = getActions("groupId", "resourceId", "resourceName", "Site" + schemaName)
-						groupId = "groupId"
-						schemaIdParameterName = schemaExternalReferenceCodeParameterName
-						schemaName = schemaName
-						scopeParameterName = "siteExternalReferenceCode"
-					/>
+					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
+
+					return toPermissionPage(${getActions("groupId", "resourceId", "resourceName", "Site" + schemaName)}, resourceId, resourceName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -2097,24 +2088,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 		<#sep>, </#sep>
 	</#list>
-</#macro>
-
-<#macro getResourcePermissions
-	actions
-	groupId
-	schemaName
-	schemaIdParameterName
-	scopeParameterName
->
-	String resourceName = getPermissionCheckerResourceName(
-	 	<#if scopeParameterName?has_content>
-	 		${scopeParameterName},
-	 	</#if>
-	 	${schemaIdParameterName});
-
-	PermissionServiceUtil.checkPermission(${groupId}, resourceName, resourceId);
-
-	return toPermissionPage(${actions}, resourceId, resourceName, roleNames);
 </#macro>
 
 <#macro updateResourcePermissions

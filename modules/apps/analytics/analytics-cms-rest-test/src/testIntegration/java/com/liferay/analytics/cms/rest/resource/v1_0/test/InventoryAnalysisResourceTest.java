@@ -131,7 +131,7 @@ public class InventoryAnalysisResourceTest
 
 	private void _deleteFile(Bundle bundle, String fileName) {
 		File file = bundle.getDataFile(
-			".com.liferay.headless.builder.internal.batch." + fileName +
+			".com.liferay.site.initializer.cms.internal.batch." + fileName +
 				".batch.engine.data.json.0.processed");
 
 		if ((file != null) && file.exists()) {

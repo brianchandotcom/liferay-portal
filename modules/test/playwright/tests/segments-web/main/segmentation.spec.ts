@@ -1664,3 +1664,74 @@ test(
 		});
 	}
 );
+
+test(
+	'Validate segment experience using IP Geocoder Country',
+	{
+		tag: '@LPS-163095',
+	},
+
+	async ({apiHelpers, page, pageEditorPage, segmentsPage}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {type: 'content'},
+			title: getRandomString(),
+		});
+		
+		const mockAddress = '?mockIPGeocoderRemoteAddr=57.78.128.0';
+
+		const segmentName = 'IP Geocoder Country Segment';
+
+		await test.step('Create segment using IP Geocoder Country', async () => {
+			await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await segmentsPage.addSegmentField(
+				'IP Geocoder Country',
+				'Session',
+				segmentName
+			);
+
+			await segmentsPage.selectOption('Spain');
+
+			await waitForAlert(page);
+		});
+
+		await test.step('Create segmented experience', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			const headingId = await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.createExperience('Experience Content Page');
+
+			await expect(page.getByLabel('Experience: Experience Content Page')).toBeVisible();
+
+			await pageEditorPage.editExperienceSegment('Experience Content Page', 'IP Geocoder Country Segment');
+
+			await pageEditorPage.editTextEditable(headingId, 'element-text', 'Spanish Segment Heading');
+		});
+
+		await test.step('Prioritize experience and publish', async () => {
+			await pageEditorPage.openExperienceSelector();
+
+			const experience = page.locator('.dropdown-menu__experience', {
+				hasText: 'Experience Content Page',
+			});
+
+			await experience
+				.getByLabel('Prioritize Experience', {exact: true})
+				.click();
+
+			await pageEditorPage.publishPage();
+		});
+
+		await test.step('Validate correct experience is displayed using a spanish IP address', async () => {
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}${mockAddress}`);
+
+			await expect(page.getByText('Spanish Segment Heading')).toBeVisible();
+		});
+	}
+);

@@ -4,8 +4,10 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
+import PermissionModal from '../default_permission/DefaultPermissionModalContent';
 import deleteEntryAction from './actions/deleteEntryAction';
 import manageMembersAction, {
 	ManageMembersData,
@@ -84,13 +86,35 @@ export default function AllSpacesFDSPropsTransformer({
 					delete: {href: string; method: string};
 				};
 				creatorUserId: string;
+				externalReferenceCode: string;
 				id: string;
 				name: string;
 				siteId: string;
 			};
 			loadData: () => {};
 		}) => {
-			if (action.data.id === 'delete') {
+			if (action.data.id === 'default-permissions') {
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						PermissionModal({
+							...(additionalProps.defaultPermissionAdditionalProps ||
+								{}),
+							classExternalReferenceCode:
+								itemData.externalReferenceCode,
+							className: 'com.liferay.depot.model.DepotEntry',
+							closeModal,
+						}),
+					size: 'full-screen',
+				});
+			}
+			else if (action.data.id === 'delete') {
 				event?.preventDefault();
 
 				deleteEntryAction({

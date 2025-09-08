@@ -33,7 +33,17 @@ export class InstanceSettingsPage {
 		await expect(checkbox).toBeChecked();
 	}
 
-	async checkSetting(options: {
+	async configureRadioSetting(label: string, checked: boolean) {
+		const checkbox = this.page.getByLabel(label).first();
+		await expect(checkbox).toBeVisible();
+		if (checked) {
+			await checkbox.check();
+		} else {
+			await checkbox.uncheck();
+		}
+	}
+
+	async checkSettingVisibility(options: {
 		customLocator?: Locator;
 		description?: string;
 		label?: string;

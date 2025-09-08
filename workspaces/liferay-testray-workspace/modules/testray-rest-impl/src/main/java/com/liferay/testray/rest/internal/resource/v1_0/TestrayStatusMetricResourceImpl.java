@@ -441,6 +441,8 @@ public class TestrayStatusMetricResourceImpl
 		if (StringUtil.equalsIgnoreCase(issueType, "epic")) {
 			sb.append(" or i.c_jiraissueid_ = status.");
 			sb.append(_objectRelationshipNames.get(issueType)[1]);
+			sb.append(" or i.c_jiraissueid_ = status.");
+			sb.append(_objectRelationshipNames.get(issueType)[2]);
 		}
 
 		sb.append(" where i.r_parentissue_c_jiraissueid = ? group by ");
@@ -792,7 +794,7 @@ public class TestrayStatusMetricResourceImpl
 	private final Map<String, String[]> _objectRelationshipNames =
 		HashMapBuilder.put(
 			"epic",
-			new String[] {"r_story_c_jiraissueid", "r_task_c_jiraissueid"}
+			new String[] {"c_jiraissueid_", "r_story_c_jiraissueid", "r_task_c_jiraissueid"}
 		).put(
 			"initiative", new String[] {"r_epic_c_jiraissueid"}
 		).put(

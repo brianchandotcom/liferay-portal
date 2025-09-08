@@ -516,3 +516,77 @@ test(
 		await expect(multiselect.nth(2).getByText('Small')).toBeVisible();
 	}
 );
+
+test(
+	'Dropdown shows all results when there is no filter applied',
+	{tag: ['@LPD-64860']},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create lemon baskets
+
+		const lemonBaskets = [];
+
+		for (let i = 0; i < 19; i++) {
+			const lemonBasket = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					lemonDimensions: ['large'],
+					material: 'plastic',
+				},
+				'c/lemonbaskets',
+				pageManagementSite.key
+			);
+
+			lemonBaskets.push({lemonBasket});
+		}
+
+		try {
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to Lemon, select Lemon Basket to Lemons and publish
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+				'Lemon Basket to Lemons',
+			]);
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and check values
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByPlaceholder('Choose an Option').click();
+
+			await expect(page.getByRole('option')).toHaveCount(21);
+		}
+		finally {
+			for (const lemonBasket of lemonBaskets) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					'c/lemonbaskets',
+					String(lemonBasket.id)
+				);
+			}
+		}
+	}
+);

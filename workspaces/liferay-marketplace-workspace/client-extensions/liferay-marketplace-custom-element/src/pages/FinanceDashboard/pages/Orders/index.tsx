@@ -7,7 +7,10 @@ import {useNavigate} from 'react-router-dom';
 
 import ListView from '../../../../components/ListView';
 import Page from '../../../../components/Page';
+import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
+import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
 import PaymentStatus from '../../components/Order/PaymentStatus/PaymentStatus';
 
 const Orders = () => {
@@ -37,6 +40,41 @@ const Orders = () => {
 				resource="o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,orderItems&sort=createDate:desc"
 				tableProps={{
 					actions: [
+						{
+							disabled(item) {
+								return (
+									item.paymentStatus ===
+										PaymentStatusCode.PAID ||
+									item.paymentStatus ===
+										PaymentStatusCode.CANCELLED
+								);
+							},
+							name: i18n.translate('mark-as-paid'),
+							onClick: async (order: Order, mutate) => {
+								try {
+									await HeadlessCommerceAdminOrder.patchOrder(
+										order.id,
+										{
+											paymentStatus:
+												PaymentStatusCode.PAID,
+										}
+									);
+									mutate((response: Order) => response, {
+										revalidate: true,
+									});
+									Liferay.Util.openToast({
+										message: 'Order marked as paid.',
+										type: 'success',
+									});
+								}
+								catch (error) {
+									Liferay.Util.openToast({
+										message: 'Oops! Something went wrong.',
+										type: 'danger',
+									});
+								}
+							},
+						},
 						{
 							name: i18n.translate('view-details'),
 							onClick: (order: Order) => {
@@ -90,6 +128,9 @@ const Orders = () => {
 							id: 'paymentStatusInfo',
 							name: 'Status',
 							render: (paymentStatus) => {
+
+								// this is where it should update
+
 								return (
 									<PaymentStatus
 										paymentStatus={paymentStatus.code}
@@ -102,7 +143,7 @@ const Orders = () => {
 							name: 'Total',
 						},
 					],
-					onClickRow: (order) => navigate('/order/' + order.id),
+					navigateTo: (order) => `/order/${order.id}`,
 				}}
 			/>
 		</Page>

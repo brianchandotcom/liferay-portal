@@ -61,76 +61,71 @@ public class AssetCategoryPortletDataHandlerTest
 	)
 	@Test
 	public void testExportImportAssetCategory() throws Exception {
-		try {
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				CompanyConstants.SYSTEM, true, "LPD-35914");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			CompanyConstants.SYSTEM, true, "LPD-35914");
 
-			AssetVocabulary assetVocabulary =
-				_assetVocabularyLocalService.addVocabulary(
-					TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-					RandomTestUtil.randomString(),
-					ServiceContextTestUtil.getServiceContext());
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
 
-			AssetCategory assetCategory =
-				_assetCategoryLocalService.addCategory(
-					TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-					RandomTestUtil.randomString(),
-					assetVocabulary.getVocabularyId(),
-					ServiceContextTestUtil.getServiceContext());
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			ServiceContextTestUtil.getServiceContext());
 
-			File larFile = _exportImportLocalService.exportLayoutsAsFile(
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						TestPropsValues.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						ExportImportConfigurationSettingsMapFactoryUtil.
-							buildExportLayoutSettingsMap(
-								TestPropsValues.getUser(),
-								stagingGroup.getGroupId(), false, new long[0],
-								HashMapBuilder.put(
-									PortletDataHandlerKeys.PORTLET_DATA,
-									new String[] {Boolean.TRUE.toString()}
-								).put(
-									PortletDataHandlerKeys.PORTLET_DATA + "_" +
-										AssetCategoriesAdminPortletKeys.
-											ASSET_CATEGORIES_ADMIN,
-									new String[] {Boolean.TRUE.toString()}
-								).build())));
+		File larFile = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(),
+							stagingGroup.getGroupId(), false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									AssetCategoriesAdminPortletKeys.
+										ASSET_CATEGORIES_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
+							).build())));
 
-			_assetCategoryLocalService.deleteCategory(assetCategory);
+		_assetCategoryLocalService.deleteCategory(assetCategory);
 
-			ExportImportConfiguration exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						TestPropsValues.getUserId(),
-						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						ExportImportConfigurationSettingsMapFactoryUtil.
-							buildImportLayoutSettingsMap(
-								TestPropsValues.getUser(),
-								stagingGroup.getGroupId(), false, new long[0],
-								HashMapBuilder.put(
-									PortletDataHandlerKeys.PORTLET_DATA,
-									new String[] {Boolean.TRUE.toString()}
-								).put(
-									PortletDataHandlerKeys.PORTLET_DATA + "_" +
-										AssetCategoriesAdminPortletKeys.
-											ASSET_CATEGORIES_ADMIN,
-									new String[] {Boolean.TRUE.toString()}
-								).build()));
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildImportLayoutSettingsMap(
+							TestPropsValues.getUser(),
+							stagingGroup.getGroupId(), false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									AssetCategoriesAdminPortletKeys.
+										ASSET_CATEGORIES_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
+							).build()));
 
-			_exportImportLocalService.importLayouts(
-				exportImportConfiguration, larFile);
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
 
-			Assert.assertNotNull(
-				_assetCategoryLocalService.
-					fetchAssetCategoryByExternalReferenceCode(
-						assetCategory.getExternalReferenceCode(),
-						stagingGroup.getGroupId()));
-		}
-		finally {
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				CompanyConstants.SYSTEM, false, "LPD-35914");
-		}
+		Assert.assertNotNull(
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					assetCategory.getExternalReferenceCode(),
+					stagingGroup.getGroupId()));
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			CompanyConstants.SYSTEM, false, "LPD-35914");
 	}
 
 	@Override

@@ -143,6 +143,7 @@ public class TaxonomyCategoryResourceImpl
 		return _entityModel;
 	}
 
+	@Override
 	public ExportImportDescriptor getExportImportDescriptor() {
 		return new ExportImportDescriptor() {
 

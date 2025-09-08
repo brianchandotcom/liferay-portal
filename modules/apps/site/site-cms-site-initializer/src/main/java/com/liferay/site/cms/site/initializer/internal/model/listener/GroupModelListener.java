@@ -105,7 +105,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					RoleConstants.CMS_ADMINISTRATOR,
 					TransformUtil.transformToArray(
 						_resourceActionLocalService.getResourceActions(
-							basicWebContentObjectDefinition.getResourceName()),
+							basicWebContentObjectDefinition.getClassName()),
 						resourceAction -> resourceAction.getActionId(),
 						String.class))
 			).put(
@@ -114,7 +114,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					RoleConstants.CMS_ADMINISTRATOR,
 					TransformUtil.transformToArray(
 						_resourceActionLocalService.getResourceActions(
-							basicDocumentObjectDefinition.getResourceName()),
+							basicDocumentObjectDefinition.getClassName()),
 						resourceAction -> resourceAction.getActionId(),
 						String.class))
 			).put(

@@ -300,25 +300,27 @@ public abstract class BaseNavigationMenuResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(navigationMenuId);
 		String resourceName = getPermissionCheckerResourceName(
 			navigationMenuId);
 		Long resourceId = getPermissionCheckerResourceId(navigationMenuId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(navigationMenuId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getNavigationMenuPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getNavigationMenuPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putNavigationMenuPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putNavigationMenuPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -436,13 +438,13 @@ public abstract class BaseNavigationMenuResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteNavigationMenuPermissionsPage", portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteNavigationMenuPermissionsPage", portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -814,13 +816,13 @@ public abstract class BaseNavigationMenuResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(navigationMenuId);
 		String resourceName = getPermissionCheckerResourceName(
 			navigationMenuId);
 		Long resourceId = getPermissionCheckerResourceId(navigationMenuId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(navigationMenuId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -856,21 +858,22 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(navigationMenuId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getNavigationMenuPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getNavigationMenuPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putNavigationMenuPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putNavigationMenuPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -997,13 +1000,15 @@ public abstract class BaseNavigationMenuResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteNavigationMenuPermissionsPage", portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteNavigationMenuPermissionsPage", null, portletName,
+					siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteNavigationMenuPermissionsPage", portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteNavigationMenuPermissionsPage", null, portletName,
+					siteId)
 			).build(),
 			siteId, portletName, null);
 	}

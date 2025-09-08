@@ -346,14 +346,14 @@ public abstract class BaseKeywordResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryKeywordPermissionsPage", portletName,
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getKeywordAssetLibraryPermissionsPage", null, portletName,
 					assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryKeywordPermissionsPage", portletName,
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putKeywordAssetLibraryPermissionsPage", null, portletName,
 					assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -690,13 +690,13 @@ public abstract class BaseKeywordResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteKeywordPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteKeywordPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -1385,14 +1385,14 @@ public abstract class BaseKeywordResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryKeywordPermissionsPage", portletName,
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getAssetLibraryKeywordPermissionsPage", null, portletName,
 					assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryKeywordPermissionsPage", portletName,
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putAssetLibraryKeywordPermissionsPage", null, portletName,
 					assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, null);
@@ -1687,13 +1687,13 @@ public abstract class BaseKeywordResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteKeywordPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteKeywordPermissionsPage", null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteKeywordPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteKeywordPermissionsPage", null, portletName, siteId)
 			).build(),
 			siteId, portletName, null);
 	}

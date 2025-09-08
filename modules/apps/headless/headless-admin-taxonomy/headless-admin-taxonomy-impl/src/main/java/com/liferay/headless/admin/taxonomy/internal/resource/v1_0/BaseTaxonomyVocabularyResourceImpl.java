@@ -495,14 +495,14 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryTaxonomyVocabularyPermissionsPage",
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getTaxonomyVocabularyAssetLibraryPermissionsPage", null,
 					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryTaxonomyVocabularyPermissionsPage",
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putTaxonomyVocabularyAssetLibraryPermissionsPage", null,
 					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -747,15 +747,13 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteTaxonomyVocabularyPermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteTaxonomyVocabularyPermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -971,27 +969,27 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(taxonomyVocabularyId);
 		String resourceName = getPermissionCheckerResourceName(
 			taxonomyVocabularyId);
 		Long resourceId = getPermissionCheckerResourceId(taxonomyVocabularyId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(taxonomyVocabularyId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getTaxonomyVocabularyPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getTaxonomyVocabularyPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putTaxonomyVocabularyPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putTaxonomyVocabularyPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -1836,14 +1834,14 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryTaxonomyVocabularyPermissionsPage",
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getAssetLibraryTaxonomyVocabularyPermissionsPage", null,
 					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryTaxonomyVocabularyPermissionsPage",
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putAssetLibraryTaxonomyVocabularyPermissionsPage", null,
 					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, null);
@@ -2001,15 +1999,15 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteTaxonomyVocabularyPermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteTaxonomyVocabularyPermissionsPage", null,
+					portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteTaxonomyVocabularyPermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteTaxonomyVocabularyPermissionsPage", null,
+					portletName, siteId)
 			).build(),
 			siteId, portletName, null);
 	}
@@ -2156,13 +2154,13 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(taxonomyVocabularyId);
 		String resourceName = getPermissionCheckerResourceName(
 			taxonomyVocabularyId);
 		Long resourceId = getPermissionCheckerResourceId(taxonomyVocabularyId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(taxonomyVocabularyId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -2198,23 +2196,22 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(taxonomyVocabularyId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getTaxonomyVocabularyPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getTaxonomyVocabularyPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putTaxonomyVocabularyPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putTaxonomyVocabularyPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

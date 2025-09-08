@@ -310,13 +310,13 @@ public abstract class BaseWikiNodeResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteWikiNodePermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteWikiNodePermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -491,23 +491,24 @@ public abstract class BaseWikiNodeResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(wikiNodeId);
 		String resourceName = getPermissionCheckerResourceName(wikiNodeId);
 		Long resourceId = getPermissionCheckerResourceId(wikiNodeId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(wikiNodeId), resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getWikiNodePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getWikiNodePermissionsPage", null, resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putWikiNodePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putWikiNodePermissionsPage", null, resourceName, groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -804,13 +805,13 @@ public abstract class BaseWikiNodeResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteWikiNodePermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteWikiNodePermissionsPage", null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteWikiNodePermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteWikiNodePermissionsPage", null, portletName, siteId)
 			).build(),
 			siteId, portletName, null);
 	}
@@ -923,11 +924,12 @@ public abstract class BaseWikiNodeResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(wikiNodeId);
 		String resourceName = getPermissionCheckerResourceName(wikiNodeId);
 		Long resourceId = getPermissionCheckerResourceId(wikiNodeId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(wikiNodeId), resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -963,21 +965,20 @@ public abstract class BaseWikiNodeResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(wikiNodeId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getWikiNodePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getWikiNodePermissionsPage", null, resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putWikiNodePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putWikiNodePermissionsPage", null, resourceName, groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

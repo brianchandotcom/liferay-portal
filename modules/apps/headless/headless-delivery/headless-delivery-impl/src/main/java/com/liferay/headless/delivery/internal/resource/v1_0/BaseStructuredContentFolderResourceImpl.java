@@ -382,15 +382,15 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryStructuredContentFolderPermissionsPage",
-					portletName, assetLibraryId)
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getStructuredContentFolderAssetLibraryPermissionsPage",
+					null, portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryStructuredContentFolderPermissionsPage",
-					portletName, assetLibraryId)
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putStructuredContentFolderAssetLibraryPermissionsPage",
+					null, portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
 	}
@@ -603,15 +603,13 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteStructuredContentFolderPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteStructuredContentFolderPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -809,28 +807,28 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(structuredContentFolderId);
 		String resourceName = getPermissionCheckerResourceName(
 			structuredContentFolderId);
 		Long resourceId = getPermissionCheckerResourceId(
 			structuredContentFolderId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(structuredContentFolderId),
-			resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getStructuredContentFolderPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getStructuredContentFolderPermissionsPage", null,
+					resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putStructuredContentFolderPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putStructuredContentFolderPermissionsPage", null,
+					resourceName, groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -1556,15 +1554,15 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
+					ActionKeys.PERMISSIONS, assetLibraryId,
 					"getAssetLibraryStructuredContentFolderPermissionsPage",
-					portletName, assetLibraryId)
+					null, portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
+					ActionKeys.PERMISSIONS, assetLibraryId,
 					"putAssetLibraryStructuredContentFolderPermissionsPage",
-					portletName, assetLibraryId)
+					null, portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, null);
 	}
@@ -1695,14 +1693,14 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteStructuredContentFolderPermissionsPage",
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteStructuredContentFolderPermissionsPage", null,
 					portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteStructuredContentFolderPermissionsPage",
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteStructuredContentFolderPermissionsPage", null,
 					portletName, siteId)
 			).build(),
 			siteId, portletName, null);
@@ -1832,14 +1830,14 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(structuredContentFolderId);
 		String resourceName = getPermissionCheckerResourceName(
 			structuredContentFolderId);
 		Long resourceId = getPermissionCheckerResourceId(
 			structuredContentFolderId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(structuredContentFolderId),
-			resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -1875,23 +1873,22 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(structuredContentFolderId),
-			resourceName, String.valueOf(resourceId), modelPermissions);
+			contextCompany.getCompanyId(), groupId, resourceName,
+			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getStructuredContentFolderPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getStructuredContentFolderPermissionsPage", null,
+					resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putStructuredContentFolderPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putStructuredContentFolderPermissionsPage", null,
+					resourceName, groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

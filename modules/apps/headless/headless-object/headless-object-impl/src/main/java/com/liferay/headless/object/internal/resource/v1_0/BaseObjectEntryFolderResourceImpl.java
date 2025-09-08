@@ -324,27 +324,27 @@ public abstract class BaseObjectEntryFolderResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(objectEntryFolderId);
 		String resourceName = getPermissionCheckerResourceName(
 			objectEntryFolderId);
 		Long resourceId = getPermissionCheckerResourceId(objectEntryFolderId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(objectEntryFolderId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getObjectEntryFolderPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getObjectEntryFolderPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putObjectEntryFolderPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putObjectEntryFolderPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -976,13 +976,13 @@ public abstract class BaseObjectEntryFolderResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(objectEntryFolderId);
 		String resourceName = getPermissionCheckerResourceName(
 			objectEntryFolderId);
 		Long resourceId = getPermissionCheckerResourceId(objectEntryFolderId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(objectEntryFolderId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -1018,23 +1018,22 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(objectEntryFolderId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getObjectEntryFolderPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getObjectEntryFolderPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putObjectEntryFolderPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putObjectEntryFolderPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

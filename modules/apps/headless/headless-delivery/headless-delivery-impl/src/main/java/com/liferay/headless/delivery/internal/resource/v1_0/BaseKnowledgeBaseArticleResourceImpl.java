@@ -495,28 +495,28 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(knowledgeBaseArticleId);
 		String resourceName = getPermissionCheckerResourceName(
 			knowledgeBaseArticleId);
 		Long resourceId = getPermissionCheckerResourceId(
 			knowledgeBaseArticleId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(knowledgeBaseArticleId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getKnowledgeBaseArticlePermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getKnowledgeBaseArticlePermissionsPage", null,
+					resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putKnowledgeBaseArticlePermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putKnowledgeBaseArticlePermissionsPage", null,
+					resourceName, groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -733,15 +733,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteKnowledgeBaseArticlePermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteKnowledgeBaseArticlePermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -1566,14 +1564,14 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(knowledgeBaseArticleId);
 		String resourceName = getPermissionCheckerResourceName(
 			knowledgeBaseArticleId);
 		Long resourceId = getPermissionCheckerResourceId(
 			knowledgeBaseArticleId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(knowledgeBaseArticleId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -1609,23 +1607,22 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(knowledgeBaseArticleId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getKnowledgeBaseArticlePermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getKnowledgeBaseArticlePermissionsPage", null,
+					resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putKnowledgeBaseArticlePermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putKnowledgeBaseArticlePermissionsPage", null,
+					resourceName, groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -1825,15 +1822,15 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteKnowledgeBaseArticlePermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteKnowledgeBaseArticlePermissionsPage", null,
+					portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteKnowledgeBaseArticlePermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteKnowledgeBaseArticlePermissionsPage", null,
+					portletName, siteId)
 			).build(),
 			siteId, portletName, null);
 	}

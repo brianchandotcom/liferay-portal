@@ -352,25 +352,27 @@ public abstract class BaseDataDefinitionResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(dataDefinitionId);
 		String resourceName = getPermissionCheckerResourceName(
 			dataDefinitionId);
 		Long resourceId = getPermissionCheckerResourceId(dataDefinitionId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(dataDefinitionId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getDataDefinitionPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getDataDefinitionPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putDataDefinitionPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putDataDefinitionPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -858,13 +860,13 @@ public abstract class BaseDataDefinitionResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(dataDefinitionId);
 		String resourceName = getPermissionCheckerResourceName(
 			dataDefinitionId);
 		Long resourceId = getPermissionCheckerResourceId(dataDefinitionId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(dataDefinitionId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -900,21 +902,22 @@ public abstract class BaseDataDefinitionResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(dataDefinitionId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getDataDefinitionPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getDataDefinitionPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putDataDefinitionPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putDataDefinitionPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

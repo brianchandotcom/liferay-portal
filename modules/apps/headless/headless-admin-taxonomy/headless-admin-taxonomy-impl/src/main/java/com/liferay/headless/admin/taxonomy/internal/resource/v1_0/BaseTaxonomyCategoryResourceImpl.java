@@ -823,27 +823,27 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(taxonomyCategoryId);
 		String resourceName = getPermissionCheckerResourceName(
 			taxonomyCategoryId);
 		Long resourceId = getPermissionCheckerResourceId(taxonomyCategoryId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(taxonomyCategoryId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getTaxonomyCategoryPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getTaxonomyCategoryPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putTaxonomyCategoryPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putTaxonomyCategoryPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -2175,13 +2175,13 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(taxonomyCategoryId);
 		String resourceName = getPermissionCheckerResourceName(
 			taxonomyCategoryId);
 		Long resourceId = getPermissionCheckerResourceId(taxonomyCategoryId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(taxonomyCategoryId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -2217,23 +2217,22 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(taxonomyCategoryId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getTaxonomyCategoryPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getTaxonomyCategoryPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putTaxonomyCategoryPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putTaxonomyCategoryPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

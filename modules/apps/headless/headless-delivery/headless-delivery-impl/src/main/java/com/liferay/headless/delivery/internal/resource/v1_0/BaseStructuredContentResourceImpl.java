@@ -401,14 +401,14 @@ public abstract class BaseStructuredContentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryStructuredContentPermissionsPage",
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getStructuredContentAssetLibraryPermissionsPage", null,
 					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryStructuredContentPermissionsPage",
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putStructuredContentAssetLibraryPermissionsPage", null,
 					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -805,15 +805,13 @@ public abstract class BaseStructuredContentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteStructuredContentPermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteStructuredContentPermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -1138,27 +1136,27 @@ public abstract class BaseStructuredContentResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(structuredContentId);
 		String resourceName = getPermissionCheckerResourceName(
 			structuredContentId);
 		Long resourceId = getPermissionCheckerResourceId(structuredContentId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(structuredContentId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getStructuredContentPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getStructuredContentPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putStructuredContentPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putStructuredContentPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -2217,14 +2215,14 @@ public abstract class BaseStructuredContentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryStructuredContentPermissionsPage",
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getAssetLibraryStructuredContentPermissionsPage", null,
 					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryStructuredContentPermissionsPage",
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putAssetLibraryStructuredContentPermissionsPage", null,
 					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, null);
@@ -2352,15 +2350,15 @@ public abstract class BaseStructuredContentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteStructuredContentPermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteStructuredContentPermissionsPage", null,
+					portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteStructuredContentPermissionsPage", portletName,
-					siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteStructuredContentPermissionsPage", null,
+					portletName, siteId)
 			).build(),
 			siteId, portletName, null);
 	}
@@ -2518,13 +2516,13 @@ public abstract class BaseStructuredContentResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(structuredContentId);
 		String resourceName = getPermissionCheckerResourceName(
 			structuredContentId);
 		Long resourceId = getPermissionCheckerResourceId(structuredContentId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(structuredContentId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -2560,23 +2558,22 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(structuredContentId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getStructuredContentPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getStructuredContentPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putStructuredContentPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putStructuredContentPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

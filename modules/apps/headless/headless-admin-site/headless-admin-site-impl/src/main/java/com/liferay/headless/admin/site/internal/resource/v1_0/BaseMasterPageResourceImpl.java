@@ -13,6 +13,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -174,26 +175,28 @@ public abstract class BaseMasterPageResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
 		String resourceName = getPermissionCheckerResourceName(
 			siteExternalReferenceCode, masterPageExternalReferenceCode);
 		Long resourceId = getPermissionCheckerResourceId(
 			siteExternalReferenceCode, masterPageExternalReferenceCode);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(siteExternalReferenceCode),
-			resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteMasterPagePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getSiteMasterPagePermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteMasterPagePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putSiteMasterPagePermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -572,14 +575,14 @@ public abstract class BaseMasterPageResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
 		String resourceName = getPermissionCheckerResourceName(
 			siteExternalReferenceCode, masterPageExternalReferenceCode);
 		Long resourceId = getPermissionCheckerResourceId(
 			siteExternalReferenceCode, masterPageExternalReferenceCode);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(siteExternalReferenceCode),
-			resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -615,21 +618,22 @@ public abstract class BaseMasterPageResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(siteExternalReferenceCode),
-			resourceName, String.valueOf(resourceId), modelPermissions);
+			contextCompany.getCompanyId(), groupId, resourceName,
+			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteMasterPagePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getSiteMasterPagePermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteMasterPagePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putSiteMasterPagePermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -787,15 +791,18 @@ public abstract class BaseMasterPageResourceImpl
 		return null;
 	}
 
-	protected Long getPermissionCheckerGroupId(String siteExternalReferenceCode)
+	protected Long getPermissionCheckerGroupId(
+			String groupExternalReferenceCode)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			groupExternalReferenceCode, contextCompany.getCompanyId());
+
+		return group.getGroupId();
 	}
 
 	protected Long getPermissionCheckerResourceId(
-			String siteExternalReferenceCode, String externalReferenceCode)
+			String groupExternalReferenceCode, String externalReferenceCode)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -803,7 +810,7 @@ public abstract class BaseMasterPageResourceImpl
 	}
 
 	protected String getPermissionCheckerResourceName(
-			String siteExternalReferenceCode, String externalReferenceCode)
+			String groupExternalReferenceCode, String externalReferenceCode)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

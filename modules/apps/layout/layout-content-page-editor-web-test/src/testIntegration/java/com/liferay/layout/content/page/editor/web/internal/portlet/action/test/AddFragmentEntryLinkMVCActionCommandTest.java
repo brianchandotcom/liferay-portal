@@ -276,7 +276,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		Assert.assertEquals(
 			_fragmentRenderer.getKey(), fragmentEntryLink.getRendererKey());
 
-		Assert.assertEquals("", fragmentEntryLink.getHtml());
+		Assert.assertEquals(StringPool.BLANK, fragmentEntryLink.getHtml());
 	}
 
 	private FragmentEntry _addFragmentEntry(String html) throws Exception {

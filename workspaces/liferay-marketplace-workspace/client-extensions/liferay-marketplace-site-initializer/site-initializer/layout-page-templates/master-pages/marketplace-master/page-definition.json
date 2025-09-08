@@ -443,7 +443,7 @@
 															},
 															{
 																"definition": {
-																	"customCSS": ".[$FRAGMENT_CLASS$] a {\ncolor: #272833 !important;\ntext-decoration: none !important;\nfont-size:30px !important;\n}",
+																	"customCSS": ".[$FRAGMENT_CLASS$] a {\ncolor: #272833 !important;\ntext-decoration: none !important;\nfont-size:24KsSpx !important;\n}",
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-heading"
 																	},

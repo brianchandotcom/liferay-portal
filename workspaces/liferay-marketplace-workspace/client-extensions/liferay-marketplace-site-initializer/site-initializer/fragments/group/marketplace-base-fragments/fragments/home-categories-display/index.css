@@ -32,7 +32,7 @@
     inset: 0;
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask-composite: exclude;
-    padding: 2px;
+    padding: 3px;
     position: absolute;
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 }

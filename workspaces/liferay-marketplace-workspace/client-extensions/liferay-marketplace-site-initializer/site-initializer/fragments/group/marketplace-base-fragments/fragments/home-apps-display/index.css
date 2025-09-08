@@ -1,16 +1,24 @@
 .home-apps-display .app-card-description {
-    font-size: 13px;
-    font-weight: 400;
-    height: 60px;
-    letter-spacing: 0%;
-    line-height: 20px;
+	  -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+        display: -webkit-box;
+      font-size: 13px;
+      font-weight: 400;
+      height: 60px;
+      letter-spacing: 0%;
+      line-height: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
 }
 
 .home-apps-display .app-name {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+	  display: -webkit-box;
     font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 0%;
     line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .home-apps-display .app-search-image {
@@ -105,9 +113,18 @@
     vertical-align: middle;
 }
 
+.home-apps-display .section-container h1 {
+	font-size: 36px
+}
+
 .home-apps-display .small {
     height: 90px;
     padding: 16px;
+}
+
+.home-apps-display .small .app-name { 
+	font-size: 16px;
+	margin-bottom: 0 !important;
 }
 
 .home-apps-display .stars {

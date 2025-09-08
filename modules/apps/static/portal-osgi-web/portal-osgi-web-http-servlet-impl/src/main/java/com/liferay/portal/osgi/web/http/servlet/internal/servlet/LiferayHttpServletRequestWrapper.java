@@ -86,140 +86,124 @@ public class LiferayHttpServletRequestWrapper
 		DispatcherType dispatcherType =
 			currentLiferayDispatchTargets.getDispatcherType();
 
-		if ((dispatcherType != DispatcherType.ASYNC) &&
-			(dispatcherType != DispatcherType.REQUEST) &&
-			attributeName.startsWith("jakarta.servlet.")) {
-
-			Map<String, Object> specialOverrides =
-				currentLiferayDispatchTargets.getSpecialOverides();
-
-			boolean hasServletName = false;
-
-			if (currentLiferayDispatchTargets.getServletName() != null) {
-				hasServletName = true;
-			}
-
-			boolean dispatcherAttribute = _dispatcherAttributes.contains(
-				attributeName);
-
-			if (dispatcherType == DispatcherType.ERROR) {
-				if (dispatcherAttribute &&
-					!attributeName.startsWith("javax.servlet.error.")) {
-
-					return null;
-				}
-			}
-			else if (dispatcherType == DispatcherType.INCLUDE) {
-				if (hasServletName &&
-					attributeName.startsWith("javax.servlet.include")) {
-
-					return null;
-				}
-
-				if (dispatcherAttribute) {
-					Object specialOveride = specialOverrides.get(attributeName);
-
-					if (specialOveride == _NULL_PLACEHOLDER) {
-						return null;
-					}
-
-					Object attributeValue = super.getAttribute(attributeName);
-
-					if (attributeValue != null) {
-						return attributeValue;
-					}
-				}
-
-				if (attributeName.equals(
-						RequestDispatcher.INCLUDE_CONTEXT_PATH)) {
-
-					LiferayContextController liferayContextController =
-						currentLiferayDispatchTargets.getContextController();
-
-					return liferayContextController.getContextPath();
-				}
-
-				if (attributeName.equals(RequestDispatcher.INCLUDE_PATH_INFO)) {
-					return currentLiferayDispatchTargets.getPathInfo();
-				}
-
-				if (attributeName.equals(
-						RequestDispatcher.INCLUDE_QUERY_STRING)) {
-
-					return currentLiferayDispatchTargets.getQueryString();
-				}
-
-				if (attributeName.equals(
-						RequestDispatcher.INCLUDE_REQUEST_URI)) {
-
-					return currentLiferayDispatchTargets.getRequestURI();
-				}
-
-				if (attributeName.equals(
-						RequestDispatcher.INCLUDE_SERVLET_PATH)) {
-
-					return currentLiferayDispatchTargets.getServletPath();
-				}
-
-				if (dispatcherAttribute) {
-					return null;
-				}
-			}
-			else if (dispatcherType == DispatcherType.FORWARD) {
-				if (hasServletName &&
-					attributeName.startsWith("javax.servlet.forward")) {
-
-					return null;
-				}
-
-				if (dispatcherAttribute) {
-					Object specialOveride = specialOverrides.get(attributeName);
-
-					if (specialOveride == _NULL_PLACEHOLDER) {
-						return null;
-					}
-				}
-
-				if (attributeName.equals(
-						RequestDispatcher.FORWARD_CONTEXT_PATH)) {
-
-					LiferayContextController liferayContextController =
-						currentLiferayDispatchTargets.getContextController();
-
-					return liferayContextController.getContextPath();
-				}
-
-				LiferayDispatchTargets originalLiferayDispatchTargets =
-					_liferayDispatchTargetsDeque.getLast();
-
-				if (attributeName.equals(RequestDispatcher.FORWARD_PATH_INFO)) {
-					return originalLiferayDispatchTargets.getPathInfo();
-				}
-
-				if (attributeName.equals(
-						RequestDispatcher.FORWARD_QUERY_STRING)) {
-
-					return originalLiferayDispatchTargets.getQueryString();
-				}
-
-				if (attributeName.equals(
-						RequestDispatcher.FORWARD_REQUEST_URI)) {
-
-					return originalLiferayDispatchTargets.getRequestURI();
-				}
-
-				if (attributeName.equals(
-						RequestDispatcher.FORWARD_SERVLET_PATH)) {
-
-					return originalLiferayDispatchTargets.getServletPath();
-				}
-
-				if (dispatcherAttribute) {
-					return null;
-				}
-			}
+		if ((dispatcherType == DispatcherType.ASYNC) ||
+			(dispatcherType == DispatcherType.REQUEST) ||
+			!attributeName.startsWith("jakarta.servlet.")) {
 
 			return _httpServletRequest.getAttribute(attributeName);
+		}
+
+		Map<String, Object> specialOverrides =
+			currentLiferayDispatchTargets.getSpecialOverides();
+
+		boolean hasServletName = false;
+
+		if (currentLiferayDispatchTargets.getServletName() != null) {
+			hasServletName = true;
+		}
+
+		boolean dispatcherAttribute = _dispatcherAttributes.contains(
+			attributeName);
+
+		if (dispatcherType == DispatcherType.ERROR) {
+			if (dispatcherAttribute &&
+				!attributeName.startsWith("javax.servlet.error.")) {
+
+				return null;
+			}
+		}
+		else if (dispatcherType == DispatcherType.INCLUDE) {
+			if (hasServletName &&
+				attributeName.startsWith("javax.servlet.include")) {
+
+				return null;
+			}
+
+			if (dispatcherAttribute) {
+				Object specialOveride = specialOverrides.get(attributeName);
+
+				if (specialOveride == _NULL_PLACEHOLDER) {
+					return null;
+				}
+
+				Object attributeValue = super.getAttribute(attributeName);
+
+				if (attributeValue != null) {
+					return attributeValue;
+				}
+			}
+
+			if (attributeName.equals(RequestDispatcher.INCLUDE_CONTEXT_PATH)) {
+				LiferayContextController liferayContextController =
+					currentLiferayDispatchTargets.getContextController();
+
+				return liferayContextController.getContextPath();
+			}
+
+			if (attributeName.equals(RequestDispatcher.INCLUDE_PATH_INFO)) {
+				return currentLiferayDispatchTargets.getPathInfo();
+			}
+
+			if (attributeName.equals(RequestDispatcher.INCLUDE_QUERY_STRING)) {
+				return currentLiferayDispatchTargets.getQueryString();
+			}
+
+			if (attributeName.equals(RequestDispatcher.INCLUDE_REQUEST_URI)) {
+				return currentLiferayDispatchTargets.getRequestURI();
+			}
+
+			if (attributeName.equals(RequestDispatcher.INCLUDE_SERVLET_PATH)) {
+				return currentLiferayDispatchTargets.getServletPath();
+			}
+
+			if (dispatcherAttribute) {
+				return null;
+			}
+		}
+		else if (dispatcherType == DispatcherType.FORWARD) {
+			if (hasServletName &&
+				attributeName.startsWith("javax.servlet.forward")) {
+
+				return null;
+			}
+
+			if (dispatcherAttribute) {
+				Object specialOveride = specialOverrides.get(attributeName);
+
+				if (specialOveride == _NULL_PLACEHOLDER) {
+					return null;
+				}
+			}
+
+			if (attributeName.equals(RequestDispatcher.FORWARD_CONTEXT_PATH)) {
+				LiferayContextController liferayContextController =
+					currentLiferayDispatchTargets.getContextController();
+
+				return liferayContextController.getContextPath();
+			}
+
+			LiferayDispatchTargets originalLiferayDispatchTargets =
+				_liferayDispatchTargetsDeque.getLast();
+
+			if (attributeName.equals(RequestDispatcher.FORWARD_PATH_INFO)) {
+				return originalLiferayDispatchTargets.getPathInfo();
+			}
+
+			if (attributeName.equals(RequestDispatcher.FORWARD_QUERY_STRING)) {
+				return originalLiferayDispatchTargets.getQueryString();
+			}
+
+			if (attributeName.equals(RequestDispatcher.FORWARD_REQUEST_URI)) {
+				return originalLiferayDispatchTargets.getRequestURI();
+			}
+
+			if (attributeName.equals(RequestDispatcher.FORWARD_SERVLET_PATH)) {
+				return originalLiferayDispatchTargets.getServletPath();
+			}
+
+			if (dispatcherAttribute) {
+				return null;
+			}
 		}
 
 		return _httpServletRequest.getAttribute(attributeName);

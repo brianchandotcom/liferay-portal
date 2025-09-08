@@ -31,6 +31,7 @@ import com.liferay.portal.upgrade.data.cleanup.DDMStructureDataCleanupPreupgrade
 import com.liferay.portal.upgrade.data.cleanup.DLFileEntryDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.DataCleanupPreupgradeProcessSuite;
 import com.liferay.portal.upgrade.data.cleanup.GroupDataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.data.cleanup.JournalDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.NullUnicodeContentDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.UserDataCleanupPreupgradeProcess;
@@ -143,6 +144,10 @@ public class DataRemovalExecutor {
 
 		if (clazz.equals(GroupDataCleanupPreupgradeProcess.class)) {
 			return dataRemovalConfiguration.removeGroupOrphanData();
+		}
+
+		if (clazz.equals(JournalDataCleanupPreupgradeProcess.class)) {
+			return dataRemovalConfiguration.removeJournalOrphanData();
 		}
 
 		if (clazz.equals(

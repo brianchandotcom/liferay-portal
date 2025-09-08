@@ -106,7 +106,13 @@ export default function AllFDSPropsTransformer({
 			/>
 		),
 		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'download') {
+			if (action?.data?.id === 'default-permissions') {
+				return {
+					...action,
+					isVisible: () => Boolean(false),
+				};
+			}
+			else if (action?.data?.id === 'download') {
 				return {
 					...action,
 					isVisible: (item: any) =>

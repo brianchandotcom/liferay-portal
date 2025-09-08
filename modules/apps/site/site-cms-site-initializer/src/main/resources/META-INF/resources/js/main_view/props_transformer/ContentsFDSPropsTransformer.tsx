@@ -9,6 +9,7 @@ import React from 'react';
 
 import formatActionURL from '../../common/utils/formatActionURL';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
+import PermissionModal from '../default_permission/DefaultPermissionModalContent';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
@@ -41,6 +42,7 @@ export default function ContentFDSPropsTransformer({
 		autocompleteURL: string;
 		cmsGroupId?: number;
 		collaboratorURLs: Record<string, string>;
+		defaultPermissionAdditionalProps?: any;
 		fileMimeTypeCssClasses: Record<string, string>;
 		fileMimeTypeIcons: Record<string, string>;
 		objectDefinitionCssClasses: Record<string, string>;
@@ -111,6 +113,16 @@ export default function ContentFDSPropsTransformer({
 						),
 				};
 			}
+			else if (action?.data?.id === 'default-permissions') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(
+							item?.entryClassName ===
+								OBJECT_ENTRY_FOLDER_CLASS_NAME
+						),
+				};
+			}
 			else if (action?.data?.id === 'view-file') {
 				return {
 					...action,
@@ -129,7 +141,28 @@ export default function ContentFDSPropsTransformer({
 			event: Event;
 			itemData: any;
 		}) => {
-			if (
+			if (action?.data?.id === 'default-permissions') {
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						PermissionModal({
+							...(additionalProps.defaultPermissionAdditionalProps ||
+								{}),
+							classExternalReferenceCode:
+								itemData.embedded.externalReferenceCode,
+							className: itemData.entryClassName,
+							closeModal,
+						}),
+					size: 'full-screen',
+				});
+			}
+			else if (
 				action?.data?.id === 'export-for-translation' ||
 				action?.data?.id === 'import-translation'
 			) {

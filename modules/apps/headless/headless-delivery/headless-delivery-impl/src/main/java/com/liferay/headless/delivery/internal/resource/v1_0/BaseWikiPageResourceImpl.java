@@ -426,23 +426,24 @@ public abstract class BaseWikiPageResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(wikiPageId);
 		String resourceName = getPermissionCheckerResourceName(wikiPageId);
 		Long resourceId = getPermissionCheckerResourceId(wikiPageId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(wikiPageId), resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getWikiPagePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getWikiPagePermissionsPage", null, resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putWikiPagePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putWikiPagePermissionsPage", null, resourceName, groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -854,11 +855,12 @@ public abstract class BaseWikiPageResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(wikiPageId);
 		String resourceName = getPermissionCheckerResourceName(wikiPageId);
 		Long resourceId = getPermissionCheckerResourceId(wikiPageId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(wikiPageId), resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -894,21 +896,20 @@ public abstract class BaseWikiPageResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(wikiPageId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getWikiPagePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getWikiPagePermissionsPage", null, resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putWikiPagePermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putWikiPagePermissionsPage", null, resourceName, groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

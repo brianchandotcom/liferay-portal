@@ -390,14 +390,14 @@ public abstract class BaseDocumentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryDocumentPermissionsPage", portletName,
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getDocumentAssetLibraryPermissionsPage", null, portletName,
 					assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryDocumentPermissionsPage", portletName,
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putDocumentAssetLibraryPermissionsPage", null, portletName,
 					assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -748,23 +748,24 @@ public abstract class BaseDocumentResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(documentId);
 		String resourceName = getPermissionCheckerResourceName(documentId);
 		Long resourceId = getPermissionCheckerResourceId(documentId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(documentId), resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getDocumentPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getDocumentPermissionsPage", null, resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putDocumentPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putDocumentPermissionsPage", null, resourceName, groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -933,13 +934,13 @@ public abstract class BaseDocumentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteDocumentPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteDocumentPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -1797,14 +1798,14 @@ public abstract class BaseDocumentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryDocumentPermissionsPage", portletName,
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getAssetLibraryDocumentPermissionsPage", null, portletName,
 					assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryDocumentPermissionsPage", portletName,
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putAssetLibraryDocumentPermissionsPage", null, portletName,
 					assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, null);
@@ -1955,11 +1956,12 @@ public abstract class BaseDocumentResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(documentId);
 		String resourceName = getPermissionCheckerResourceName(documentId);
 		Long resourceId = getPermissionCheckerResourceId(documentId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(documentId), resourceName, resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -1995,21 +1997,20 @@ public abstract class BaseDocumentResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(documentId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getDocumentPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getDocumentPermissionsPage", null, resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putDocumentPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putDocumentPermissionsPage", null, resourceName, groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -2133,13 +2134,13 @@ public abstract class BaseDocumentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteDocumentPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteDocumentPermissionsPage", null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteDocumentPermissionsPage",
-					portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteDocumentPermissionsPage", null, portletName, siteId)
 			).build(),
 			siteId, portletName, null);
 	}

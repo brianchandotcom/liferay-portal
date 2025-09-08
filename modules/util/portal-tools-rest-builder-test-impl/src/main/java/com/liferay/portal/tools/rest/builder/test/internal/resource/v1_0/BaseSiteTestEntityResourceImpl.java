@@ -340,25 +340,27 @@ public abstract class BaseSiteTestEntityResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(siteTestEntityId);
 		String resourceName = getPermissionCheckerResourceName(
 			siteTestEntityId);
 		Long resourceId = getPermissionCheckerResourceId(siteTestEntityId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(siteTestEntityId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteTestEntityPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getSiteTestEntityPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteTestEntityPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putSiteTestEntityPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -822,13 +824,13 @@ public abstract class BaseSiteTestEntityResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(siteTestEntityId);
 		String resourceName = getPermissionCheckerResourceName(
 			siteTestEntityId);
 		Long resourceId = getPermissionCheckerResourceId(siteTestEntityId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(siteTestEntityId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -864,21 +866,22 @@ public abstract class BaseSiteTestEntityResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(siteTestEntityId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getSiteTestEntityPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getSiteTestEntityPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putSiteTestEntityPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putSiteTestEntityPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

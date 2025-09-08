@@ -365,28 +365,28 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(dataRecordCollectionId);
 		String resourceName = getPermissionCheckerResourceName(
 			dataRecordCollectionId);
 		Long resourceId = getPermissionCheckerResourceId(
 			dataRecordCollectionId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(dataRecordCollectionId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getDataRecordCollectionPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getDataRecordCollectionPermissionsPage", null,
+					resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putDataRecordCollectionPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putDataRecordCollectionPermissionsPage", null,
+					resourceName, groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -733,14 +733,14 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(dataRecordCollectionId);
 		String resourceName = getPermissionCheckerResourceName(
 			dataRecordCollectionId);
 		Long resourceId = getPermissionCheckerResourceId(
 			dataRecordCollectionId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(dataRecordCollectionId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -776,23 +776,22 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(dataRecordCollectionId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getDataRecordCollectionPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getDataRecordCollectionPermissionsPage", null,
+					resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putDataRecordCollectionPermissionsPage", resourceName,
-					resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putDataRecordCollectionPermissionsPage", null,
+					resourceName, groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}

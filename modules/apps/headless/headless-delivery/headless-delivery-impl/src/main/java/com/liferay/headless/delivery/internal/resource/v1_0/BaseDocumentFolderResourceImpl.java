@@ -301,15 +301,15 @@ public abstract class BaseDocumentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryDocumentFolderPermissionsPage", portletName,
-					assetLibraryId)
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getDocumentFolderAssetLibraryPermissionsPage", null,
+					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryDocumentFolderPermissionsPage", portletName,
-					assetLibraryId)
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putDocumentFolderAssetLibraryPermissionsPage", null,
+					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
 	}
@@ -673,25 +673,27 @@ public abstract class BaseDocumentFolderResourceImpl
 			String roleNames)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(documentFolderId);
 		String resourceName = getPermissionCheckerResourceName(
 			documentFolderId);
 		Long resourceId = getPermissionCheckerResourceId(documentFolderId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(documentFolderId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getDocumentFolderPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getDocumentFolderPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putDocumentFolderPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putDocumentFolderPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
@@ -752,13 +754,13 @@ public abstract class BaseDocumentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteDocumentFolderPermissionsPage", portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
+					null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteDocumentFolderPermissionsPage", portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
+					null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}
@@ -1529,15 +1531,15 @@ public abstract class BaseDocumentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getAssetLibraryDocumentFolderPermissionsPage", portletName,
-					assetLibraryId)
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"getAssetLibraryDocumentFolderPermissionsPage", null,
+					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putAssetLibraryDocumentFolderPermissionsPage", portletName,
-					assetLibraryId)
+					ActionKeys.PERMISSIONS, assetLibraryId,
+					"putAssetLibraryDocumentFolderPermissionsPage", null,
+					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, null);
 	}
@@ -1693,13 +1695,13 @@ public abstract class BaseDocumentFolderResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
+		Long groupId = getPermissionCheckerGroupId(documentFolderId);
 		String resourceName = getPermissionCheckerResourceName(
 			documentFolderId);
 		Long resourceId = getPermissionCheckerResourceId(documentFolderId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(documentFolderId), resourceName,
-			resourceId);
+			groupId, resourceName, resourceId);
 
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
@@ -1735,21 +1737,22 @@ public abstract class BaseDocumentFolderResourceImpl
 		}
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(documentFolderId), resourceName,
+			contextCompany.getCompanyId(), groupId, resourceName,
 			String.valueOf(resourceId), modelPermissions);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, "getDocumentFolderPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"getDocumentFolderPermissionsPage", null, resourceName,
+					groupId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, "putDocumentFolderPermissionsPage",
-					resourceName, resourceId)
+					ActionKeys.PERMISSIONS, resourceId,
+					"putDocumentFolderPermissionsPage", null, resourceName,
+					groupId)
 			).build(),
 			resourceId, resourceName, null);
 	}
@@ -1889,13 +1892,15 @@ public abstract class BaseDocumentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"getSiteDocumentFolderPermissionsPage", portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteDocumentFolderPermissionsPage", null, portletName,
+					siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS,
-					"putSiteDocumentFolderPermissionsPage", portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteDocumentFolderPermissionsPage", null, portletName,
+					siteId)
 			).build(),
 			siteId, portletName, null);
 	}

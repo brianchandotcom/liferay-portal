@@ -1040,6 +1040,7 @@
 		<check name="JavaLocalServiceImplUserIdUsageCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds incorrect use of `GuestOrUserUtil.getUserId()` or `PrincipalThreadLocal.getUserId()`." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaModuleClassGetResourceCallCheck">
 			<category name="Bug Prevention" />

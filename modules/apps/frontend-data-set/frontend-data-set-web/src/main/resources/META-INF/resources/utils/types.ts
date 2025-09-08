@@ -127,6 +127,7 @@ export interface ICreationActionItem {
 }
 
 export interface IItemsActions {
+	className?: string;
 	data?: IItemActionsData;
 	disabled?: boolean;
 	href?: string;

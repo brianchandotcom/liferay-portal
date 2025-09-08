@@ -40,7 +40,7 @@ interface BasicInfoTabProps {
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	learnResources: ILearnResourceContext;
 	modelBuilder?: boolean;
-	objectDefinition?: ObjectDefinition;
+	objectDefinition?: ObjectDefinition | ObjectDefinitionNodeData;
 	objectFieldBusinessTypes: ObjectFieldBusinessType[];
 	objectRelationshipId: number;
 	onSubmit?: (editedObjectField?: Partial<ObjectField>) => void;

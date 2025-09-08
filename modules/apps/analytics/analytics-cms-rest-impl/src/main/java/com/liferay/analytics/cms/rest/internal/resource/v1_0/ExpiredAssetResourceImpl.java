@@ -10,6 +10,7 @@ import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.internal.resource.v1_0.util.ObjectEntryVersionTitleExpressionUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.ExpiredAssetResource;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersionTable;
@@ -98,8 +99,8 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 						});
 					expiredAsset.setUsages(
 						() -> _getUsages(
-							String.valueOf(objects[0]), groupIds,
-							(Long)objects[2], objectEntryId));
+							String.valueOf(objects[0]), (Long)objects[2],
+							objectEntryId));
 
 					return expiredAsset;
 				}),
@@ -210,8 +211,7 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 	}
 
 	private int _getUsages(
-			String className, Long[] groupIds, long objectDefinitionId,
-			long objectEntryId)
+			String className, long objectDefinitionId, long objectEntryId)
 		throws PortalException {
 
 		int usages =
@@ -223,18 +223,27 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 			_objectRelationshipLocalService.
 				getObjectRelationshipsByObjectDefinitionId2(objectDefinitionId);
 
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectRelatedModelsProvider objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						className, contextCompany.getCompanyId(),
-						objectRelationship.getType());
+		boolean skipObjectEntryResourcePermission =
+			ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission();
 
-			for (long groupId : groupIds) {
+		try {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							className, contextCompany.getCompanyId(),
+							objectRelationship.getType());
+
 				usages += objectRelatedModelsProvider.getRelatedModelsCount(
-					groupId, objectRelationship.getObjectRelationshipId(), null,
+					0, objectRelationship.getObjectRelationshipId(), null,
 					objectEntryId, null);
 			}
+		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+				skipObjectEntryResourcePermission);
 		}
 
 		return usages;

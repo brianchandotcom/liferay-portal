@@ -6,11 +6,11 @@
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.cms.rest.dto.v1_0.AssetDeletionOverview;
-import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.AssetDeletionOverviewResource;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
@@ -116,9 +116,6 @@ public class AssetDeletionOverviewResourceImpl
 				() -> _getUsages(
 					_portal.getClassNameId(objectDefinition.getClassName()),
 					objectDefinition.getClassName(),
-					DepotEntryUtil.getGroupIds(
-						DepotEntryUtil.getDepotEntries(
-							contextCompany.getCompanyId(), null)),
 					objectDefinition.getObjectDefinitionId(),
 					objectEntry.getObjectEntryId()));
 
@@ -171,8 +168,8 @@ public class AssetDeletionOverviewResourceImpl
 	}
 
 	private int _getUsages(
-			long classNameId, String entryClassName, Long[] groupIds,
-			long objectDefinitionId, long objectEntryId)
+			long classNameId, String entryClassName, long objectDefinitionId,
+			long objectEntryId)
 		throws PortalException {
 
 		int usages =
@@ -183,18 +180,27 @@ public class AssetDeletionOverviewResourceImpl
 			_objectRelationshipLocalService.
 				getObjectRelationshipsByObjectDefinitionId2(objectDefinitionId);
 
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectRelatedModelsProvider objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						entryClassName, contextCompany.getCompanyId(),
-						objectRelationship.getType());
+		boolean skipObjectEntryResourcePermission =
+			ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission();
 
-			for (long groupId : groupIds) {
+		try {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							entryClassName, contextCompany.getCompanyId(),
+							objectRelationship.getType());
+
 				usages += objectRelatedModelsProvider.getRelatedModelsCount(
-					groupId, objectRelationship.getObjectRelationshipId(), null,
+					0, objectRelationship.getObjectRelationshipId(), null,
 					objectEntryId, null);
 			}
+		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+				skipObjectEntryResourcePermission);
 		}
 
 		return usages;

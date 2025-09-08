@@ -78,6 +78,7 @@ public interface LayoutPageTemplateCollectionLocalService
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 		LayoutPageTemplateCollection layoutPageTemplateCollection);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			String externalReferenceCode, long userId, long groupId,
 			long parentLayoutPageTemplateCollectionId,
@@ -419,10 +420,12 @@ public interface LayoutPageTemplateCollectionLocalService
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 		LayoutPageTemplateCollection layoutPageTemplateCollection);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
 			String description)

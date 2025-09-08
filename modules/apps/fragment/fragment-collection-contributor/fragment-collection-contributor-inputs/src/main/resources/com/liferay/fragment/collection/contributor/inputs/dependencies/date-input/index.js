@@ -8,7 +8,8 @@ if (inputElement) {
 			}
 		});
 	}
-	else if (layoutMode === 'edit') {
+
+	if (layoutMode === 'edit') {
 		inputElement.setAttribute('disabled', true);
 	}
 	else {

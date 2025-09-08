@@ -43,278 +43,258 @@ else {
 			}
 		});
 	}
-	else {
-		const inputContainer = document.getElementById(
-			`${fragmentEntryLinkNamespace}-rich-text-input`
-		);
 
-		const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+	const inputContainer = document.getElementById(
+		`${fragmentEntryLinkNamespace}-rich-text-input`
+	);
 
-		let currentLanguageId = defaultLanguageId;
+	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
-		import('@liferay/fragment-impl/api').then(
-			({
-				getTranslationInput,
-				registerLocalizedInput,
-				registerUnlocalizedInput,
-			}) => {
-				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+	let currentLanguageId = defaultLanguageId;
 
-				if (input.localizable) {
-					const {onChange} = registerLocalizedInput({
-						changeTextDirection: false,
-						defaultLanguageId,
-						initialValues: input.valueI18n,
-						inputElement: wrapper,
-						inputName: input.name,
-						localizationInputsContainer: inputContainer,
-						namespace: fragmentNamespace,
-						onAutoTranslate: ({languageId, value}) => {
-							editorPromise.then((editor) => {
-								changeLanguageDirection(editor, languageId);
+	import('@liferay/fragment-impl/api').then(
+		({
+			getTranslationInput,
+			registerLocalizedInput,
+			registerUnlocalizedInput,
+		}) => {
+			const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
-								editor.setData(value);
-							});
+			if (input.localizable) {
+				const {onChange} = registerLocalizedInput({
+					changeTextDirection: false,
+					defaultLanguageId,
+					initialValues: input.valueI18n,
+					inputElement: wrapper,
+					inputName: input.name,
+					localizationInputsContainer: inputContainer,
+					namespace: fragmentNamespace,
+					onAutoTranslate: ({languageId, value}) => {
+						editorPromise.then((editor) => {
+							changeLanguageDirection(editor, languageId);
 
-							const translationInput = getTranslationInput({
-								inputId: wrapper.id,
-								inputName: input.name,
-								languageId,
-								localizationInputsContainer: wrapper.parentNode,
-								namespace: fragmentNamespace,
-							});
+							editor.setData(value);
+						});
 
-							translationInput.value = value;
-						},
-						onLocaleChange: ({languageId, value}) => {
-							currentLanguageId = languageId;
+						const translationInput = getTranslationInput({
+							inputId: wrapper.id,
+							inputName: input.name,
+							languageId,
+							localizationInputsContainer: wrapper.parentNode,
+							namespace: fragmentNamespace,
+						});
 
-							editorPromise.then((editor) => {
-								changeLanguageDirection(editor, languageId);
+						translationInput.value = value;
+					},
+					onLocaleChange: ({languageId, value}) => {
+						currentLanguageId = languageId;
 
-								editor.setData(value);
-							});
-						},
-						onMarkAsTranslated: () => {
-							const defaultLanguageInput = getTranslationInput({
-								inputId: wrapper.id,
-								inputName: input.name,
-								languageId: defaultLanguageId,
-								localizationInputsContainer: wrapper.parentNode,
-								namespace: fragmentNamespace,
-							});
+						editorPromise.then((editor) => {
+							changeLanguageDirection(editor, languageId);
 
-							editorPromise.then((editor) =>
-								editor.setData(defaultLanguageInput.value)
-							);
+							editor.setData(value);
+						});
+					},
+					onMarkAsTranslated: () => {
+						const defaultLanguageInput = getTranslationInput({
+							inputId: wrapper.id,
+							inputName: input.name,
+							languageId: defaultLanguageId,
+							localizationInputsContainer: wrapper.parentNode,
+							namespace: fragmentNamespace,
+						});
 
-							const translationInput = getTranslationInput({
-								inputId: wrapper.id,
-								inputName: input.name,
-								languageId: currentLanguageId,
-								localizationInputsContainer: wrapper.parentNode,
-								namespace: fragmentNamespace,
-							});
+						editorPromise.then((editor) =>
+							editor.setData(defaultLanguageInput.value)
+						);
 
-							translationInput.value = defaultLanguageInput.value;
-						},
-						onResetTranslation: () => {
-							const defaultLanguageInput = getTranslationInput({
-								inputId: wrapper.id,
-								inputName: input.name,
-								languageId: defaultLanguageId,
-								localizationInputsContainer: wrapper.parentNode,
-								namespace: fragmentNamespace,
-							});
+						const translationInput = getTranslationInput({
+							inputId: wrapper.id,
+							inputName: input.name,
+							languageId: currentLanguageId,
+							localizationInputsContainer: wrapper.parentNode,
+							namespace: fragmentNamespace,
+						});
 
-							editorPromise.then((editor) =>
-								editor.setData(defaultLanguageInput.value)
-							);
+						translationInput.value = defaultLanguageInput.value;
+					},
+					onResetTranslation: () => {
+						const defaultLanguageInput = getTranslationInput({
+							inputId: wrapper.id,
+							inputName: input.name,
+							languageId: defaultLanguageId,
+							localizationInputsContainer: wrapper.parentNode,
+							namespace: fragmentNamespace,
+						});
 
-							const translationInput = getTranslationInput({
-								inputId: wrapper.id,
-								inputName: input.name,
-								languageId: currentLanguageId,
-								localizationInputsContainer: wrapper.parentNode,
-								namespace: fragmentNamespace,
-							});
+						editorPromise.then((editor) =>
+							editor.setData(defaultLanguageInput.value)
+						);
 
-							translationInput.removeAttribute('value');
-						},
-					});
+						const translationInput = getTranslationInput({
+							inputId: wrapper.id,
+							inputName: input.name,
+							languageId: currentLanguageId,
+							localizationInputsContainer: wrapper.parentNode,
+							namespace: fragmentNamespace,
+						});
 
-					editorPromise.then((editor) => {
-						changeLanguageDirection(editor, defaultLanguageId);
+						translationInput.removeAttribute('value');
+					},
+				});
 
-						const updateData = () => {
-							const value = editor.getData();
+				editorPromise.then((editor) => {
+					changeLanguageDirection(editor, defaultLanguageId);
 
-							onChange(value);
-						};
+					const updateData = () => {
+						const value = editor.getData();
 
-						if (Liferay.FeatureFlags['LPD-11235']) {
-							editor.model.document.on(
-								'change:data',
-								(event, source) => {
-									if (
-										source?.isTyping ||
-										source?.isUndoable
-									) {
-										updateData();
-									}
+						onChange(value);
+					};
+
+					if (Liferay.FeatureFlags['LPD-11235']) {
+						editor.model.document.on(
+							'change:data',
+							(event, source) => {
+								if (source?.isTyping || source?.isUndoable) {
+									updateData();
 								}
-							);
-						}
-						else {
-							editor.on('change', () => {
-								updateData();
-							});
-						}
-					});
-				}
-				else {
-					registerUnlocalizedInput({
-						changeTextDirection: false,
-						customLocaleChangeHandler: true,
-						defaultLanguageId,
-						onLocaleChange: (languageId) => {
-							editorPromise.then((editor) => {
-								let editorElement = null;
-								let iframe = null;
-								let label = null;
+							}
+						);
+					}
+					else {
+						editor.on('change', () => {
+							updateData();
+						});
+					}
+				});
+			}
+			else {
+				registerUnlocalizedInput({
+					changeTextDirection: false,
+					customLocaleChangeHandler: true,
+					defaultLanguageId,
+					onLocaleChange: (languageId) => {
+						editorPromise.then((editor) => {
+							let editorElement = null;
+							let iframe = null;
+							let label = null;
 
-								if (Liferay.FeatureFlags['LPD-11235']) {
-									editorElement =
-										wrapper.querySelector(editorClass);
+							if (Liferay.FeatureFlags['LPD-11235']) {
+								editorElement =
+									wrapper.querySelector(editorClass);
 
-									label = wrapper.querySelector('label');
-								}
-								else {
-									editorElement = document.getElementById(
-										`cke_${editorName}`
-									);
-
-									iframe =
-										editorElement.querySelector('iframe');
-
-									label = document.querySelector(
-										`label[for="${editorName}"]`
-									);
-								}
-
-								const isReadOnly =
-									input.attributes.unlocalizedFieldsState ===
-									'read-only';
-
-								changeLanguageDirection(
-									editor,
-									languageId,
-									() => editor.setData(editor.getData())
+								label = wrapper.querySelector('label');
+							}
+							else {
+								editorElement = document.getElementById(
+									`cke_${editorName}`
 								);
 
-								if (languageId === defaultLanguageId) {
-									if (Liferay.FeatureFlags['LPD-11235']) {
-										editor.disableReadOnlyMode('read-only');
-									}
-									else {
-										editor.setReadOnly(false);
-									}
+								iframe = editorElement.querySelector('iframe');
 
-									if (isReadOnly) {
-										label.innerHTML = input.label;
-									}
-									else {
-										editorElement.classList.remove(
-											'rich-text-input--disabled'
-										);
-
-										if (
-											!Liferay.FeatureFlags['LPD-11235']
-										) {
-											iframe.setAttribute(
-												'tabindex',
-												'0'
-											);
-
-											iframe.contentDocument.body.removeAttribute(
-												'aria-disabled'
-											);
-										}
-									}
-								}
-								else {
-									if (Liferay.FeatureFlags['LPD-11235']) {
-										editor.enableReadOnlyMode('read-only');
-									}
-									else {
-										editor.setReadOnly(true);
-									}
-
-									if (isReadOnly) {
-										label.innerHTML =
-											inputContainer.dataset.readonlyLabel;
-									}
-									else {
-										editorElement.classList.add(
-											'rich-text-input--disabled'
-										);
-
-										if (
-											!Liferay.FeatureFlags['LPD-11235']
-										) {
-											iframe.setAttribute(
-												'tabindex',
-												'-1'
-											);
-
-											iframe.contentDocument.body.setAttribute(
-												'aria-disabled',
-												'true'
-											);
-										}
-									}
-								}
-							});
-						},
-						unlocalizedFieldsState:
-							input.attributes.unlocalizedFieldsState,
-						unlocalizedMessageContainer: document.getElementById(
-							`${fragmentNamespace}-unlocalized-info`
-						),
-					});
-
-					editorPromise.then((editor) => {
-						changeLanguageDirection(editor, defaultLanguageId);
-
-						if (Liferay.FeatureFlags['LPD-11235']) {
-							const hiddenInput = document.createElement('input');
-
-							hiddenInput.type = 'hidden';
-							hiddenInput.name = input.name;
-
-							if (input.value) {
-								hiddenInput.value = input.value;
+								label = document.querySelector(
+									`label[for="${editorName}"]`
+								);
 							}
 
-							inputContainer.appendChild(hiddenInput);
+							const isReadOnly =
+								input.attributes.unlocalizedFieldsState ===
+								'read-only';
 
-							editor.model.document.on(
-								'change:data',
-								(event, source) => {
-									if (
-										source?.isTyping ||
-										source?.isUndoable
-									) {
-										hiddenInput.value = editor.getData();
+							changeLanguageDirection(editor, languageId, () =>
+								editor.setData(editor.getData())
+							);
+
+							if (languageId === defaultLanguageId) {
+								if (Liferay.FeatureFlags['LPD-11235']) {
+									editor.disableReadOnlyMode('read-only');
+								}
+								else {
+									editor.setReadOnly(false);
+								}
+
+								if (isReadOnly) {
+									label.innerHTML = input.label;
+								}
+								else {
+									editorElement.classList.remove(
+										'rich-text-input--disabled'
+									);
+
+									if (!Liferay.FeatureFlags['LPD-11235']) {
+										iframe.setAttribute('tabindex', '0');
+
+										iframe.contentDocument.body.removeAttribute(
+											'aria-disabled'
+										);
 									}
 								}
-							);
+							}
+							else {
+								if (Liferay.FeatureFlags['LPD-11235']) {
+									editor.enableReadOnlyMode('read-only');
+								}
+								else {
+									editor.setReadOnly(true);
+								}
+
+								if (isReadOnly) {
+									label.innerHTML =
+										inputContainer.dataset.readonlyLabel;
+								}
+								else {
+									editorElement.classList.add(
+										'rich-text-input--disabled'
+									);
+
+									if (!Liferay.FeatureFlags['LPD-11235']) {
+										iframe.setAttribute('tabindex', '-1');
+
+										iframe.contentDocument.body.setAttribute(
+											'aria-disabled',
+											'true'
+										);
+									}
+								}
+							}
+						});
+					},
+					unlocalizedFieldsState:
+						input.attributes.unlocalizedFieldsState,
+					unlocalizedMessageContainer: document.getElementById(
+						`${fragmentNamespace}-unlocalized-info`
+					),
+				});
+
+				editorPromise.then((editor) => {
+					changeLanguageDirection(editor, defaultLanguageId);
+
+					if (Liferay.FeatureFlags['LPD-11235']) {
+						const hiddenInput = document.createElement('input');
+
+						hiddenInput.type = 'hidden';
+						hiddenInput.name = input.name;
+
+						if (input.value) {
+							hiddenInput.value = input.value;
 						}
-					});
-				}
+
+						inputContainer.appendChild(hiddenInput);
+
+						editor.model.document.on(
+							'change:data',
+							(event, source) => {
+								if (source?.isTyping || source?.isUndoable) {
+									hiddenInput.value = editor.getData();
+								}
+							}
+						);
+					}
+				});
 			}
-		);
-	}
+		}
+	);
 }
 
 function changeLanguageDirection(editor, languageId, onChange) {

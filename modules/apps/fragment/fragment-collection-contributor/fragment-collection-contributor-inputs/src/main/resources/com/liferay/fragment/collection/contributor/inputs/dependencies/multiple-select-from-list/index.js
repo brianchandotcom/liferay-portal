@@ -31,7 +31,8 @@ if (input.attributes?.readOnly) {
 		input.addEventListener('click', preventClick);
 	});
 }
-else if (layoutMode === 'edit') {
+
+if (layoutMode === 'edit') {
 	allInputs.forEach((input) => {
 		input.setAttribute('disabled', true);
 	});

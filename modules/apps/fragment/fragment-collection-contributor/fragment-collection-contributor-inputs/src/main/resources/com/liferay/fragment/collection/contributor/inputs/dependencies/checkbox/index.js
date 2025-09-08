@@ -6,7 +6,8 @@ if (inputElement) {
 	if (input.readOnly) {
 		inputElement.addEventListener('click', preventClick);
 	}
-	else if (layoutMode === 'edit') {
+
+	if (layoutMode === 'edit') {
 		inputElement.setAttribute('disabled', true);
 	}
 	else {

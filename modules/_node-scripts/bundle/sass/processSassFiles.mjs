@@ -207,8 +207,8 @@ async function processSassFile(filePath, includePaths, timestamp) {
 
 	// Remove leftovers
 
-	await fs.unlink(outFilePath);
-	await fs.unlink(`${outFilePath}.map`);
+	await safeUnlink(outFilePath);
+	await safeUnlink(`${outFilePath}.map`);
 
 	// Apply timestamps to CSS
 
@@ -234,4 +234,15 @@ async function processSassFile(filePath, includePaths, timestamp) {
 		fs.writeFile(`${finalOutFilePath}.map`, map, 'utf-8'),
 		fs.writeFile(finalOutRtlFilePath, rtlTimestampedCss, 'utf-8'),
 	]);
+}
+
+async function safeUnlink(filePath) {
+	try {
+		await fs.unlink(filePath);
+	}
+	catch (error) {
+		if (error.code !== 'ENOENT') {
+			throw error;
+		}
+	}
 }

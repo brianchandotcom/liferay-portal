@@ -7,6 +7,7 @@ package com.liferay.site.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupKeyException;
@@ -57,28 +58,25 @@ public class GroupLocalServiceTest {
 	public void testAddGroup() throws Exception {
 		String groupName = RandomTestUtil.randomString();
 
-		GroupTestUtil.addGroup(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, groupName,
-			ServiceContextTestUtil.getServiceContext());
+		Group group1 = _addGroup(groupName);
 
-		try {
-			_addGroup(groupName);
+		AssertUtils.assertFailure(
+			DuplicateGroupException.class,
+			StringBundler.concat(
+				"{companyId=", group1.getCompanyId(), ", groupId=",
+				group1.getGroupId(), ", groupKey=", group1.getGroupKey(), "}"),
+			() -> _addGroup(groupName));
 
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(exception instanceof DuplicateGroupException);
-		}
+		AssertUtils.assertFailure(
+			GroupKeyException.class, null, () -> _addGroup("null"));
+		AssertUtils.assertFailure(
+			GroupKeyException.class, null, () -> _addGroup("*"));
+		AssertUtils.assertFailure(
+			GroupKeyException.class, null, () -> _addGroup("test*"));
+		AssertUtils.assertFailure(
+			GroupKeyException.class, null, () -> _addGroup("22222"));
 
-		_assertAddGroupFailure("null");
-
-		_assertAddGroupFailure("*");
-
-		_assertAddGroupFailure("test*");
-
-		_assertAddGroupFailure("22222");
-
-		Group group1 = GroupTestUtil.addGroup();
+		group1 = GroupTestUtil.addGroup();
 
 		Group group2 = GroupTestUtil.addGroup(group1.getGroupId());
 
@@ -134,8 +132,8 @@ public class GroupLocalServiceTest {
 		Assert.assertTrue(groups.toString(), groups.isEmpty());
 	}
 
-	private void _addGroup(String name) throws Exception {
-		_groupLocalService.addGroup(
+	private Group _addGroup(String name) throws Exception {
+		return _groupLocalService.addGroup(
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			null, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			HashMapBuilder.put(
@@ -148,14 +146,6 @@ public class GroupLocalServiceTest {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name), true,
 			true, ServiceContextTestUtil.getServiceContext());
-	}
-
-	private void _assertAddGroupFailure(String groupName) {
-		AssertUtils.assertFailure(
-			GroupKeyException.class, null,
-			() -> GroupTestUtil.addGroup(
-				GroupConstants.DEFAULT_PARENT_GROUP_ID, groupName,
-				ServiceContextTestUtil.getServiceContext()));
 	}
 
 	private void _assertDescendantGroups(

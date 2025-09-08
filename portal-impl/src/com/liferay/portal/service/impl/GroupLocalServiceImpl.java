@@ -5081,7 +5081,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			throw new DuplicateGroupException(
 				StringBundler.concat(
-					"{companyId=", companyId, ", groupId=", groupId,
+					"{companyId=", companyId, ", groupId=", group.getGroupId(),
 					", groupKey=", groupKey, "}"));
 		}
 

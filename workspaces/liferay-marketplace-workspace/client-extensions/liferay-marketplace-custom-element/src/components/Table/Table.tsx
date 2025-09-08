@@ -14,6 +14,7 @@ type TableProps<T = any> = {
 	Actions?: React.FC<{row: T}>;
 	className?: string;
 	columns: TableColumn<T>[];
+	hasHover?: boolean;
 	hasKebabButton?: boolean;
 	hasPagination?: boolean;
 	kebabClassName?: string;
@@ -53,6 +54,7 @@ const Table: React.FC<TableProps> = ({
 	Actions,
 	className,
 	columns,
+	hasHover = true,
 	hasKebabButton,
 	hasPagination,
 	kebabClassName = '',
@@ -62,7 +64,7 @@ const Table: React.FC<TableProps> = ({
 }) => {
 	return (
 		<>
-			<ClayTable borderless className={className} striped={false}>
+			<ClayTable borderless className={className} striped={false} hover={hasHover}>
 				<ClayTable.Head>
 					<ClayTable.Row className="border-bottom header-row">
 						{columns.map((column, index) => (

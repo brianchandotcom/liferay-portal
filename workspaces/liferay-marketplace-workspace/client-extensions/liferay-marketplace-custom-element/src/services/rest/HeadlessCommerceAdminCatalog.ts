@@ -142,12 +142,6 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	static async getSpecifications(searchParams = new URLSearchParams()) {
-		return fetcher<APIResponse>(
-			`/o/headless-commerce-admin-catalog/v1.0/specifications?${searchParams}`
-		);
-	}
-
 	static async getOptions() {
 		return fetcher<APIResponse<CommerceOption>>(
 			'/o/headless-commerce-admin-catalog/v1.0/options'
@@ -218,6 +212,18 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 
 		return (response?.items ?? []) as ProductSpecification[];
+	}
+
+	static async getSku(skuId: number, searchParams = new URLSearchParams()) {
+		return fetcher<SKU>(
+			`o/headless-commerce-admin-catalog/v1.0/skus/${skuId}${searchParams}`
+		);
+	}
+
+	static async getSpecifications(searchParams = new URLSearchParams()) {
+		return fetcher<APIResponse>(
+			`/o/headless-commerce-admin-catalog/v1.0/specifications?${searchParams}`
+		);
 	}
 
 	static async updateProductByExternalReferenceCode(

@@ -15,13 +15,16 @@ const paymentStatusLabel = {
 	[PaymentStatusCode.PENDING]: 'Unpaid',
 	[PaymentStatusCode.PAYMENT_PENDING]: 'Unpaid',
 	[PaymentStatusCode.FAILED]: 'Failed',
+	[PaymentStatusCode.CANCELLED]: 'Canceled',
 };
 
 const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
 	<div>
 		<ClayIcon
 			className={classNames('mr-2 payment-status-icon', {
-				'text-danger': paymentStatus === PaymentStatusCode.FAILED,
+				'text-danger':
+					paymentStatus === PaymentStatusCode.FAILED ||
+					paymentStatus === PaymentStatusCode.CANCELLED,
 				'text-success': paymentStatus === PaymentStatusCode.PAID,
 				'payment-icon-warning':
 					paymentStatus === PaymentStatusCode.PAYMENT_PENDING ||
@@ -29,7 +32,7 @@ const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
 			})}
 			symbol="circle"
 		/>
-		<span className="secondary-text">
+		<span className="finance-dashboard-text-secondary">
 			{paymentStatusLabel[paymentStatus as PaymentStatusCode]}
 		</span>
 	</div>

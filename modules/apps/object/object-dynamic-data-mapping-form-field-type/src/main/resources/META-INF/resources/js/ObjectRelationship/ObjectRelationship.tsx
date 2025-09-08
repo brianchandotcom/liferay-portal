@@ -405,7 +405,11 @@ export default function ObjectRelationship({
 				{loading && <ClayAutocomplete.LoadingIndicator />}
 			</ClayAutocomplete>
 
-			<input name={name} type="hidden" value={selected?.id} />
+			<input
+				name={name}
+				type="hidden"
+				value={selected?.[valueKey] ?? selected?.id}
+			/>
 		</FieldBase>
 	);
 }

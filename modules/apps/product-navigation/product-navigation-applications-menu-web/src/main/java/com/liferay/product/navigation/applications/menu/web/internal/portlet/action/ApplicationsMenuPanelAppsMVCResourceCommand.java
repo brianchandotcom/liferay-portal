@@ -163,7 +163,8 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 
 		Page<AssetLibrary> assetLibrariesPage =
 			assetLibraryResource.getAssetLibrariesPage(
-				null, null, null, Pagination.of(1, 5), null);
+				null, null, assetLibraryResource.toFilter("type eq 'Space'"),
+				Pagination.of(1, 5), null);
 
 		return Page.of(
 			assetLibrariesPage.getActions(),

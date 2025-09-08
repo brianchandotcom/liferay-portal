@@ -30,7 +30,7 @@ export class EditAccountRolePage {
 		);
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.titleInput = page.getByLabel('Title');
+		this.titleInput = page.getByLabel('Title').first();
 	}
 
 	async addRole({name = getRandomString()}: {name?: string}) {

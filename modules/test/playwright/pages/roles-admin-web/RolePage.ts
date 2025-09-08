@@ -35,7 +35,7 @@ export class RolePage {
 		);
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.titleInput = page.getByLabel('Title');
+		this.titleInput = page.getByLabel('Title').first();
 		this.uniqueNameError = page.getByText('Please enter a unique name');
 	}
 

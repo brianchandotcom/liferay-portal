@@ -412,9 +412,9 @@ public abstract class Base${schemaName}ResourceImpl
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
 					<#assign generateGetPermissionCheckerMethods = true />
 
-					Long groupId = getPermissionCheckerGroupId(${schemaVarName + "Id"});
-					String resourceName = getPermissionCheckerResourceName(${schemaVarName + "Id"});
-					Long resourceId = getPermissionCheckerResourceId(${schemaVarName + "Id"});
+					Long groupId = getPermissionCheckerGroupId(${schemaVarName}Id);
+					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
+					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
 
 					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
 
@@ -476,7 +476,7 @@ public abstract class Base${schemaName}ResourceImpl
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
 					<#assign generateGetPermissionCheckerMethods = true />
 
-					Long groupId = getPermissionCheckerGroupId(${schemaVarName + "Id"});
+					Long groupId = getPermissionCheckerGroupId(${schemaVarName}Id);
 					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
 					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
 

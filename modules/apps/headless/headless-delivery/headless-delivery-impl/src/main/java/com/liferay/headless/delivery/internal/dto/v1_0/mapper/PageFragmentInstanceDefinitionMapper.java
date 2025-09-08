@@ -361,7 +361,8 @@ public class PageFragmentInstanceDefinitionMapper {
 				for (String curKey : jsonObject.keySet()) {
 					duplicatedJSONObject.put(
 						StringUtil.replace(
-							curKey, fragmentEntryLinkNamespace, "[namespace]"),
+							curKey, fragmentEntryLinkNamespace,
+							"[$NAMESPACE$]"),
 						jsonObject.get(curKey));
 				}
 

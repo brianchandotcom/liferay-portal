@@ -1,5 +1,11 @@
 {
 	"name": "Supported",
+	"name_i18n": {
+		"en_US": "Supported",
+		"es-ES": "Soportado",
+		"ja-JP": "サポート範囲",
+		"pt-BR": "Suportado"
+	},
 	"taxonomyCategoryProperties": [
 		{
 			"key": "background-image",

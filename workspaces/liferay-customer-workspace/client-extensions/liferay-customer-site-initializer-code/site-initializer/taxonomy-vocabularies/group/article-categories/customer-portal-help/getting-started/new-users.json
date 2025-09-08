@@ -1,5 +1,11 @@
 {
 	"name": "New Users",
+	"name_i18n": {
+		"en_US": "New Users",
+		"es-ES": "Nuevos usuarios",
+		"ja-JP": "新規ユーザー",
+		"pt-BR": "Novos Usuários"
+	},
 	"taxonomyCategoryProperties": [
 		{
 			"key": "subtitle",

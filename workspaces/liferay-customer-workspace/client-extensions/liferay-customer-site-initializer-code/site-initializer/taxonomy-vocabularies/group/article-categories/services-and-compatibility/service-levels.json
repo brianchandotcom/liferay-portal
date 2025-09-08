@@ -1,5 +1,11 @@
 {
 	"name": "Service Levels",
+	"name_i18n": {
+		"en_US": "Service Levels",
+		"es-ES": "Niveles de servicio",
+		"ja-JP": "サービスレベル",
+		"pt-BR": "Níveis de serviço"
+	},
 	"taxonomyCategoryProperties": [
 		{
 			"key": "subtitle",

@@ -1,5 +1,11 @@
 {
 	"name": "Liferay Cloud Platform",
+	"name_i18n": {
+		"en_US": "Liferay Cloud Platform",
+		"es-ES": "Plataforma de Liferay Cloud",
+		"ja-JP": "Liferay Cloud Platform",
+		"pt-BR": "Plataforma Liferay Cloud"
+	},
 	"taxonomyCategoryProperties": [
 		{
 			"key": "visible",

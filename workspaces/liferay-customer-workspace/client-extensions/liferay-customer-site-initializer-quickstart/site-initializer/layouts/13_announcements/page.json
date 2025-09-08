@@ -2,7 +2,10 @@
 	"friendlyURL": "/announcements",
 	"hidden": true,
 	"name_i18n": {
-		"en_US": "Announcements"
+		"en_US": "Announcements",
+		"es_ES": "Anuncios",
+		"ja_JP": "アナウンスメント",
+		"pt_BR": "Avisos"
 	},
 	"permissions": [
 		{

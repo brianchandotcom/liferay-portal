@@ -2,7 +2,10 @@
 	{
 		"key": "a-setup-guide-to-empower-yourself-and-your-team",
 		"value": {
-			"en-US": "A setup guide to empower yourself and your team."
+			"en-US": "A setup guide to empower yourself and your team",
+			"es-ES": "Una guía de configuración para capacitaros a tu equipo y a ti",
+			"ja-JP": "自分自身とチームを強化するためのセットアップガイド",
+			"pt-BR": "Um guia de configuração para capacitar você e sua equipe"
 		}
 	},
 	{
@@ -17,13 +20,19 @@
 	{
 		"key": "activate-your-liferay-saas-liferay-paas-or-liferay-self-hosted-instance",
 		"value": {
-			"en-US": "Activate your Liferay SaaS, Liferay PaaS, or Liferay Self-hosted Instance."
+			"en-US": "Activate your Liferay SaaS, Liferay PaaS, or Liferay Self-hosted Instance",
+			"es-ES": "Activa tu instancia de Liferay SaaS, Liferay PaaS o Liferay Self-Hosted",
+			"ja-JP": "Liferay SaaS、Liferay PaaS、またはLiferay Self-Hostedインスタンスをアクティベートする",
+			"pt-BR": "Ativar sua instância do Liferay SaaS, Liferay PaaS ou Liferay Self-hosted"
 		}
 	},
 	{
 		"key": "activation",
 		"value": {
-			"en-US": "Activation"
+			"en-US": "Activation",
+			"es-ES": "Activación",
+			"ja-JP": "アクティベーション",
+			"pt-BR": "Ativação"
 		}
 	},
 	{
@@ -48,24 +57,27 @@
 		"key": "alphabetical-a-z",
 		"value": {
 			"en-US": "Alphabetical (A-Z)",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Orden alfabético (A-Z)",
+			"ja-JP": "アルファベット順（A-Z）",
+			"pt-BR": "Ordem Alfabética (A-Z)"
 		}
 	},
 	{
 		"key": "alphabetical-z-a",
 		"value": {
 			"en-US": "Alphabetical (Z-A)",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Orden alfabético (Z-A)",
+			"ja-JP": "アルファベット順（Z-A）",
+			"pt-BR": "Ordem Alfabética (Z-A)"
 		}
 	},
 	{
 		"key": "benefits-included-with-each-subscription-service-level",
 		"value": {
-			"en-US": "Benefits included with each subscription service level."
+			"en-US": "Benefits included with each subscription service level",
+			"es-ES": "Beneficios incluidos en cada nivel de servicio de suscripción",
+			"ja-JP": "各サブスクリプションサービスレベルに含まれる特典",
+			"pt-BR": "Benefícios incluídos em cada nível de serviço de assinatura"
 		}
 	},
 	{
@@ -104,13 +116,19 @@
 	{
 		"key": "customer-portal-first-steps-for-non-admin-and-non-partner-users",
 		"value": {
-			"en-US": "Customer Portal first steps for non-admin and non-partner users."
+			"en-US": "Customer Portal first steps for non-admin and non-partner users",
+			"es-ES": "Primeros pasos en el Portal del cliente para usuarios que no son administradores o partners",
+			"ja-JP": "非管理者および非パートナー・ユーザーのためのカスタマー・ポータル・ファースト・ステップ",
+			"pt-BR": "Primeiros passos no Portal do Cliente para usuários que não são administradores nem parceiros"
 		}
 	},
 	{
 		"key": "designated-languages-and-channels-for-liferay-support",
 		"value": {
-			"en-US": "Designated languages and channels for Liferay Support."
+			"en-US": "Designated languages and channels for Liferay Support",
+			"es-ES": "Idiomas y canales designados para el soporte de Liferay",
+			"ja-JP": "Liferayサポートの指定言語とチャンネル",
+			"pt-BR": "Idiomas e canais designados para o Suporte Liferay"
 		}
 	},
 	{
@@ -260,13 +278,19 @@
 	{
 		"key": "quick-answers-and-resources-to-common-support-questions",
 		"value": {
-			"en-US": "Quick answers and resources to common support questions."
+			"en-US": "Quick answers and resources to common support questions",
+			"es-ES": "Respuestas rápidas y recursos a preguntas comunes sobre soporte",
+			"ja-JP": "サポートに関する一般的な質問のクイック回答とリソース",
+			"pt-BR": "Respostas rápidas e recursos para as dúvidas mais comuns de suporte"
 		}
 	},
 	{
 		"key": "search-engine-compatibility-by-product-and-version",
 		"value": {
-			"en-US": "Search engine compatibility by product and version."
+			"en-US": "Search engine compatibility by product and version",
+			"es-ES": "Compatibilidad de motores de búsqueda por producto y versión",
+			"ja-JP": "製品およにバージョン別の検索エンジンの互換性",
+			"pt-BR": "Compatibilidade do mecanismo de busca por produto e versão"
 		}
 	},
 	{
@@ -341,7 +365,10 @@
 	{
 		"key": "supported-configurations-for-major-liferay-products-and-releases",
 		"value": {
-			"en-US": "Supported configurations for major Liferay products and releases."
+			"en-US": "Supported configurations for major Liferay products and releases.",
+			"es-ES": "Configuraciones soportadas para productos y versiones principales de Liferay",
+			"ja-JP": "主要なLiferay製品およびリリースでサポートされている構成",
+			"pt-BR": "Configurações suportadas para os principais produtos e versões do Liferay"
 		}
 	},
 	{
@@ -356,7 +383,10 @@
 	{
 		"key": "team-setup-and-activation-management-for-you-and-your-customers",
 		"value": {
-			"en-US": "Team setup and activation management for you and your customers."
+			"en-US": "Team setup and activation management for you and your customers",
+			"es-ES": "Configuración del equipo y gestión de activaciones para tus clientes y tú",
+			"ja-JP": "チーム・セットアップとアクティベーション管理",
+			"pt-BR": "Configuração da equipe e gerenciamento de ativações para você e seus clientes"
 		}
 	},
 	{

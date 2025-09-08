@@ -1,5 +1,11 @@
 {
 	"name": "Support FAQ",
+	"name_i18n": {
+		"en_US": "Support FAQ",
+		"es-ES": "Preguntas más frecuentes sobre soporte",
+		"ja-JP": "サポートFAQ",
+		"pt-BR": "Perguntas Frequentes sobre Suporte"
+	},
 	"taxonomyCategoryProperties": [
 		{
 			"key": "subtitle",

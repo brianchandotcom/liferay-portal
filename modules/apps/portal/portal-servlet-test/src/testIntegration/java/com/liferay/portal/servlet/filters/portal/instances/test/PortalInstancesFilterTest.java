@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.portal.instances.PortalInstancesFilter;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -102,6 +105,15 @@ public class PortalInstancesFilterTest {
 		}
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "Unknown Virtual Hostname:",
+				expectedType = ExpectedType.CONTAINS
+			)
+		},
+		level = "ERROR", loggerClass = PortalInstancesFilter.class
+	)
 	@Test
 	public void testNonexistingVirtualHostWithStrictAccessEnabled()
 		throws Exception {

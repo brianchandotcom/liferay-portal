@@ -484,7 +484,8 @@ public class PortalInstances {
 		long companyId = _getCompanyIdByHost(host, httpServletRequest);
 
 		if (strict && (companyId == 0)) {
-			throw new NoSuchVirtualHostException(host);
+			throw new NoSuchVirtualHostException(
+				"Unknown Virtual Hostname: " + host);
 		}
 
 		return companyId;

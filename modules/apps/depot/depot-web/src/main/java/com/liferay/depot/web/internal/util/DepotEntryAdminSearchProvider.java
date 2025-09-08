@@ -10,6 +10,7 @@ import com.liferay.depot.item.selector.DepotGroupItemSelectorCriterion;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.search.DepotEntrySearch;
 import com.liferay.depot.service.DepotEntryService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.search.GroupSearch;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
@@ -69,6 +71,30 @@ public class DepotEntryAdminSearchProvider {
 
 		return _getDepotEntrySearch(
 			depotEntryType, portletRequest, portletResponse, portletURL);
+	}
+
+	public GroupSearch getGroupSearch(
+			DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion,
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			PortletURL portletURL)
+		throws PortalException {
+
+		DepotEntrySearch depotEntrySearch = _getDepotEntrySearch(
+			depotGroupItemSelectorCriterion.getDepotEntryType(),
+			portletRequest, portletResponse, portletURL);
+
+		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
+
+		groupSearch.setEmptyResultsMessage(
+			depotEntrySearch.getEmptyResultsMessage());
+
+		groupSearch.setResultsAndTotal(
+			() -> TransformUtil.transform(
+				depotEntrySearch.getResults(),
+				depotEntry -> depotEntry.getGroup()),
+			depotEntrySearch.getTotal());
+
+		return groupSearch;
 	}
 
 	private DepotEntrySearch _getDepotEntrySearch(

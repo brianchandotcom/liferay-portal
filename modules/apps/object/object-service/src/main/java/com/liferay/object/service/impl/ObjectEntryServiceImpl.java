@@ -563,11 +563,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				ActionKeys.ADD_ENTRY);
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
 		PortletResourcePermission portletResourcePermission =
 			_getPortletResourcePermission(objectDefinitionId);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		ObjectEntry rootObjectEntry = _getRootObjectEntry(
 			objectDefinition, values);

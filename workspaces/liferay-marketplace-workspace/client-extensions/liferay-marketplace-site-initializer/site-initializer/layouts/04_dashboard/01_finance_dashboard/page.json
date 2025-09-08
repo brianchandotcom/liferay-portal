@@ -10,15 +10,15 @@
 	"permissions": [
 		{
 			"actionIds": [
+				"VIEW"
 			],
-			"roleName": "Guest",
+			"roleName": "Finance Administrator",
 			"scope": 4
 		},
 		{
 			"actionIds": [
-				"VIEW"
 			],
-			"roleName": "Finance Administrator",
+			"roleName": "Guest",
 			"scope": 4
 		},
 		{

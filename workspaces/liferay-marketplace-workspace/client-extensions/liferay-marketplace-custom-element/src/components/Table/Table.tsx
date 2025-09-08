@@ -64,7 +64,12 @@ const Table: React.FC<TableProps> = ({
 }) => {
 	return (
 		<>
-			<ClayTable borderless className={className} striped={false} hover={hasHover}>
+			<ClayTable
+				borderless
+				className={className}
+				hover={hasHover}
+				striped={false}
+			>
 				<ClayTable.Head>
 					<ClayTable.Row className="border-bottom header-row">
 						{columns.map((column, index) => (

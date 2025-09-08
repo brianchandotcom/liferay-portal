@@ -223,6 +223,16 @@ public class ObjectEntryLocalServiceTest {
 				role.getRoleId(), ActionKeys.VIEW));
 	}
 
+	private void _deleteFile(Bundle bundle, String fileName) {
+		File file = bundle.getDataFile(
+			".com.liferay.site.initializer.cms.internal.batch." + fileName +
+				".batch.engine.data.json.0.processed");
+
+		if ((file != null) && file.exists()) {
+			file.delete();
+		}
+	}
+
 	private String _getObjectFolderExternalReferenceCode() {
 		if (RandomTestUtil.randomBoolean()) {
 			return ObjectFolderConstants.
@@ -243,16 +253,6 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		return false;
-	}
-
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
 	}
 
 	@Inject

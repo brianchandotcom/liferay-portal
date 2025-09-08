@@ -10,7 +10,8 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import getRandomString from '../../../utils/getRandomString';
-import {localizationPagesTest} from '../../site-admin-web/main/fixtures/localizationPagesTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {localizationPagesTest} from './fixtures/localizationPagesTest';
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -121,3 +122,79 @@ test(
 		await page.getByRole('button', {name: 'Save'}).click();
 	}
 );
+
+test('Add site name translation in site settings', async ({
+	apiHelpers,
+	page,
+	site,
+	siteSettingsPage,
+}) => {
+	await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
+	await siteSettingsPage.goToSiteSetting(
+		'Site Configuration',
+		null,
+		site.friendlyUrlPath
+	);
+
+	await page.waitForTimeout(300);
+
+	await page
+		.locator(
+			'[id="_com_liferay_site_admin_web_portlet_SiteSettingsPortlet__com_liferay_site_admin_web_portlet_SiteSettingsPortlet_nameMenu"]'
+		)
+		.click();
+
+	await page.getByRole('menuitem', {name: 'Spanish'}).click();
+
+	const localizedSiteName = getRandomString();
+
+	await page.getByLabel('Name').fill(localizedSiteName);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForAlert(page);
+
+	await page.goto(`/es/web${site.friendlyUrlPath}`);
+
+	await expect(page.getByText(localizedSiteName).first()).toBeVisible();
+
+	await page.goto(`/en/web${site.friendlyUrlPath}`);
+
+	await expect(page.getByText(site.name).first()).toBeVisible();
+});
+
+test('Cannot remove the site default language in instance settings', async ({
+	localizationInstanceSettingsPage,
+	page,
+	site,
+	siteSettingsLocalizationPage,
+}) => {
+	await siteSettingsLocalizationPage.setCustomDefaultLanguage(
+		'Spanish (Spain)',
+		site.friendlyUrlPath
+	);
+
+	await localizationInstanceSettingsPage.goto('Language');
+
+	await page.waitForTimeout(500);
+	await page
+		.getByLabel('Current', {exact: true})
+		.selectOption('Spanish (Spain)');
+	await page
+		.getByRole('button', {
+			name: 'Move selected items from Current to Available',
+		})
+		.click({force: true});
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForAlert(page, 'Your request failed to complete', {
+		type: 'danger',
+	});
+
+	await expect(page.getByText(site.name)).toBeVisible();
+});

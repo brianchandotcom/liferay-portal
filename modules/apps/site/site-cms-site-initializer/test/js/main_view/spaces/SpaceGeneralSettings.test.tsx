@@ -133,6 +133,11 @@ describe('SpaceGeneralSettings', () => {
 		await userEvent.clear(descriptionField);
 		await userEvent.type(descriptionField, 'My space description');
 
+		const ercField = screen.getByRole('textbox', {name: /erc/});
+
+		await userEvent.clear(ercField);
+		await userEvent.type(ercField, 'My New ERC');
+
 		await userEvent.click(
 			screen.getByRole('button', {
 				name: 'save',
@@ -147,7 +152,7 @@ describe('SpaceGeneralSettings', () => {
 				{
 					...space,
 					description: 'My space description',
-					externalReferenceCode,
+					externalReferenceCode: 'My New ERC',
 					name: 'My Space',
 				}
 			);

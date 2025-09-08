@@ -65,6 +65,7 @@ function buildObjectDefinitionNodeMock({
 			defaultLanguageId: 'en_US',
 			enableCategorization: true,
 			enableComments: false,
+			enableFormContainer: false,
 			enableFriendlyURLCustomization: false,
 			enableIndexSearch: false,
 			enableLocalization: false,

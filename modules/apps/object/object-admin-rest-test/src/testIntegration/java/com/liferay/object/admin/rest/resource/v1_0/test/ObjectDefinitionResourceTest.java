@@ -1163,7 +1163,7 @@ public class ObjectDefinitionResourceTest
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 		}
 
-		// WorkflowDefinitionLink company scope
+		// Workflow definition link with company scope
 
 		WorkflowDefinition workflowDefinition1 =
 			_workflowDefinitionManager.getWorkflowDefinition(
@@ -1194,7 +1194,7 @@ public class ObjectDefinitionResourceTest
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
 
-		// WorkflowDefinitionLink site scope
+		// Workflow definition link with site scope
 
 		postObjectDefinition = randomObjectDefinition();
 

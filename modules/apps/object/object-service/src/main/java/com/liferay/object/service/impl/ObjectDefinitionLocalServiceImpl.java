@@ -1351,12 +1351,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_addOrUpdateObjectDefinitionSettings(
 			objectDefinition, objectDefinitionSettings);
-		_addOrUpdateWorkflowDefinitionLinks(
-			objectDefinition, workflowDefinitionLinks);
 
 		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
 			objectDefinitionId, objectDefinition.getObjectFolderId(),
 			oldObjectFolderId);
+
+		_addOrUpdateWorkflowDefinitionLinks(
+			objectDefinition, workflowDefinitionLinks);
 
 		return objectDefinition;
 	}
@@ -1594,8 +1595,6 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition);
 		}
 
-		_addOrUpdateWorkflowDefinitionLinks(
-			objectDefinition, workflowDefinitionLinks);
 		_addSystemObjectFields(
 			dbTableName, objectDefinition, pkObjectFieldName, userId);
 
@@ -1644,6 +1643,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = _updateTitleObjectFieldId(
 			objectDefinition, titleObjectFieldName);
+
+		_addOrUpdateWorkflowDefinitionLinks(
+			objectDefinition, workflowDefinitionLinks);
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			_createTable(

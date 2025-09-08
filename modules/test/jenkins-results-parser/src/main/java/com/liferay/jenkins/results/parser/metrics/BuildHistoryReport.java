@@ -134,8 +134,8 @@ public class BuildHistoryReport {
 				buildIdentifier);
 			BuildJSONObject buildJSONObject = entry.getValue();
 
-			String awsTestrayBuildUrl = awsBuildJSONObject.getTestrayBuildUrl();
-			String testrayBuildUrl = buildJSONObject.getTestrayBuildUrl();
+			String awsTestrayBuildUrl = awsBuildJSONObject.getTestrayBuildURL();
+			String testrayBuildUrl = buildJSONObject.getTestrayBuildURL();
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(awsTestrayBuildUrl) ||
 				JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildUrl)) {

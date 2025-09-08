@@ -656,10 +656,10 @@ public class BuildHistoryProcessor {
 				return "[Unknown]";
 			}
 
-			String topLevelBuildURL = buildJSONObject.getTopLevelBuildURL();
+			String topLevelBuildUrl = buildJSONObject.getTopLevelBuildURL();
 
-			if (_topLevelBuildTestSuiteMap.containsKey(topLevelBuildURL)) {
-				return _topLevelBuildTestSuiteMap.get(topLevelBuildURL);
+			if (_topLevelBuildTestSuiteMap.containsKey(topLevelBuildUrl)) {
+				return _topLevelBuildTestSuiteMap.get(topLevelBuildUrl);
 			}
 
 			return "[Unknown]";

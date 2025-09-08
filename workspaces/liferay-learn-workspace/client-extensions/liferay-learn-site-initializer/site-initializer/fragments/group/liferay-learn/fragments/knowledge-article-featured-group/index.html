@@ -1,11 +1,11 @@
 [#setting url_escaping_charset='UTF-8']
 
-<div class="article-section_container">
-	<div class="article-section_banner">
-	<div class="article-section_banner-title" data-lfr-editable-id="banner-title" data-lfr-editable-type="text">
-	</div>
+<div class="article-section-container">
+	<div class="article-section-banner">
+	<div class="article-section-banner-title" data-lfr-editable-id="banner-title" data-lfr-editable-type="text">
+		</div>
 
-		<div class="article-section_banner-image">
+		<div class="article-section-banner-image">
 			<svg fill="none" height="80" viewBox="0 0 253 80" width="253" xmlns="http://www.w3.org/2000/svg">
 				<g clip-path="url(#clip0_1740_6367)">
 					<path d="M56.6089 49.1652C-8.67365 117.432 -24.2892 220.123 56.1881 303.619C136.665 387.116 232.222 337.998 294.238 273.147C359.521 204.881 353.535 99.3754 285.02 33.8534C216.505 -31.6687 121.891 -19.1012 56.6089 49.1652Z" fill="url(#paint0_linear_1740_6367)" />
@@ -38,12 +38,12 @@
 		</div>
 	</div>
 
-	<div class="article-entries_container">
+	<div>
 		[#if configuration.mostRecentArticleGroup]
 			[#assign
 				queryParams = {
 					"fields": "description,id,title",
-					"filter": "status eq 0",
+					"filter": "(status eq 0) and (title ne '')",
 					"page": "1",
 					"pageSize": "5",
 					"sort": "dateModified:desc"
@@ -53,24 +53,26 @@
 
 			[#list queryParams?keys as key]
 				[#assign
-					queryParam = queryParams[key]
+					value = queryParams[key]
 
-					queryParts = queryParts + ["${key?url}=${queryParam?url}"]
+					queryParts = queryParts + ["${key?url}=${value?url}"]
 				/]
 			[/#list]
 
-			[#assign knowledgeArticles = restClient.get("/c/p2s3knowledgearticles/?" + queryParts?join('&')) /]
+			[#assign recentArticles = restClient.get("/c/p2s3knowledgearticles/?" + queryParts?join('&')) /]
 
-			[#if (knowledgeArticles.totalCount)?has_content]
-				[#list knowledgeArticles.items as knowledgeArticle]
-					<a class="article-entry" href="${themeDisplay.getCDNBaseURL()}/l/${knowledgeArticle.id}/">
-						<div class="article-entry_title">
-							${knowledgeArticle.title}
+			[#if (recentArticles.totalCount)?has_content]
+				[#list recentArticles.items as recentArticle]
+					<a class="article-entry" href="${themeDisplay.getCDNBaseURL()}/l/${recentArticle.id}/">
+						<div class="article-entry-title">
+							${recentArticle.title}
 						</div>
 
-						<div class="article-entry_description">
-							${knowledgeArticle.description}
-						</div>
+						[#if recentArticle.description?has_content]
+							<div class="article-entry-description">
+								${recentArticle.description}
+							</div>
+						[/#if]
 					</a>
 				[/#list]
 			[/#if]

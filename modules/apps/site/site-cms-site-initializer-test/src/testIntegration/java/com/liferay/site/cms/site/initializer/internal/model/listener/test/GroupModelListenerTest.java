@@ -122,7 +122,7 @@ public class GroupModelListenerTest {
 		Assert.assertTrue(
 			jsonObject.has(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES));
-		Assert.assertTrue(jsonObject.has("OBJECT_ENTRY_FOLDER"));
+		Assert.assertTrue(jsonObject.has("OBJECT_ENTRY_FOLDERS"));
 	}
 
 	@FeatureFlag("LPD-17564")

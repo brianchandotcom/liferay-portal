@@ -118,7 +118,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 						resourceAction -> resourceAction.getActionId(),
 						String.class))
 			).put(
-				"OBJECT_ENTRY_FOLDER",
+				"OBJECT_ENTRY_FOLDERS",
 				JSONUtil.put(
 					RoleConstants.CMS_ADMINISTRATOR,
 					JSONUtil.putAll(

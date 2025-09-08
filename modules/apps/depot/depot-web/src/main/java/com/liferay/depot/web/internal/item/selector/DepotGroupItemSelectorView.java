@@ -6,14 +6,12 @@
 package com.liferay.depot.web.internal.item.selector;
 
 import com.liferay.depot.item.selector.DepotGroupItemSelectorCriterion;
-import com.liferay.depot.search.DepotEntrySearch;
 import com.liferay.depot.web.internal.util.DepotEntryAdminSearchProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.site.search.GroupSearch;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
@@ -244,24 +241,9 @@ public class DepotGroupItemSelectorView
 					(PortletResponse)_httpServletRequest.getAttribute(
 						JavaConstants.JAKARTA_PORTLET_RESPONSE);
 
-				DepotEntrySearch depotEntrySearch =
-					_depotEntryAdminSearchProvider.getDepotEntrySearch(
-						_depotGroupItemSelectorCriterion, portletRequest,
-						portletResponse, _portletURL);
-
-				GroupSearch groupSearch = new GroupSearch(
-					portletRequest, _portletURL);
-
-				groupSearch.setEmptyResultsMessage(
-					depotEntrySearch.getEmptyResultsMessage());
-
-				groupSearch.setResultsAndTotal(
-					() -> TransformUtil.transform(
-						depotEntrySearch.getResults(),
-						depotEntry -> depotEntry.getGroup()),
-					depotEntrySearch.getTotal());
-
-				return groupSearch;
+				return _depotEntryAdminSearchProvider.getGroupSearch(
+					_depotGroupItemSelectorCriterion, portletRequest,
+					portletResponse, _portletURL);
 			}
 			catch (PortalException portalException) {
 				return ReflectionUtil.throwException(portalException);

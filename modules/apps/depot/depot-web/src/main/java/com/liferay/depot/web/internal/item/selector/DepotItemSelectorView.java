@@ -6,7 +6,6 @@
 package com.liferay.depot.web.internal.item.selector;
 
 import com.liferay.depot.item.selector.DepotGroupItemSelectorCriterion;
-import com.liferay.depot.search.DepotEntrySearch;
 import com.liferay.depot.web.internal.application.list.DepotPanelAppController;
 import com.liferay.depot.web.internal.util.DepotEntryAdminSearchProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -15,7 +14,6 @@ import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -167,24 +165,9 @@ public class DepotItemSelectorView
 		@Override
 		public GroupSearch getGroupSearch() {
 			try {
-				GroupSearch groupSearch = new GroupSearch(
-					getPortletRequest(), _portletURL);
-
-				DepotEntrySearch depotEntrySearch =
-					_depotEntryAdminSearchProvider.getDepotEntrySearch(
-						_depotGroupItemSelectorCriterion, getPortletRequest(),
-						getPortletResponse(), getPortletURL());
-
-				groupSearch.setEmptyResultsMessage(
-					depotEntrySearch.getEmptyResultsMessage());
-
-				groupSearch.setResultsAndTotal(
-					() -> TransformUtil.transform(
-						depotEntrySearch.getResults(),
-						depotEntry -> depotEntry.getGroup()),
-					depotEntrySearch.getTotal());
-
-				return groupSearch;
+				return _depotEntryAdminSearchProvider.getGroupSearch(
+					_depotGroupItemSelectorCriterion, getPortletRequest(),
+					getPortletResponse(), getPortletURL());
 			}
 			catch (PortalException portalException) {
 				return ReflectionUtil.throwException(portalException);

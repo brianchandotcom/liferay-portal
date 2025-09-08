@@ -59,6 +59,13 @@ public interface OAuthClientEntryLocalService
 			String tokenRequestParametersJSON)
 		throws PortalException;
 
+	public OAuthClientEntry addOAuthClientEntry(
+			long userId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String customClaimsJSON,
+			String infoJSON, long metadataCacheTime,
+			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+		throws PortalException;
+
 	/**
 	 * Adds the o auth client entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -284,6 +291,13 @@ public interface OAuthClientEntryLocalService
 			String authServerWellKnownURI, String infoJSON,
 			long metadataCacheTime, String oidcUserInfoMapperJSON,
 			String tokenRequestParametersJSON)
+		throws PortalException;
+
+	public OAuthClientEntry updateOAuthClientEntry(
+			long oAuthClientEntryId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String customClaimsJSON,
+			String infoJSON, long metadataCacheTime,
+			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
 		throws PortalException;
 
 	/**

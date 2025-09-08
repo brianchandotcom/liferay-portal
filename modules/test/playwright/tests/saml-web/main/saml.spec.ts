@@ -3571,4 +3571,26 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 	// Verify user is redirected back to restricted resource
 
 	expect(await spInstancePage.url()).toContain(spNewPageUrl);
+
+	// IdP initiated SLO
+
+	await spInstancePage.goto(DEFAULT_IDP_URL);
+
+	await spInstancePage.getByTitle('User Profile Menu').click();
+
+	await spInstancePage.getByRole('menuitem', {name: 'Sign Out'}).click();
+
+	await spInstancePage.waitForTimeout(8000);
+
+	// Both SPs should also be logged out after IdP initiated SLO
+
+	for (const spUrl of [DEFAULT_SP_URL, SECONDARY_SP_URL]) {
+		await spInstancePage.goto(spUrl);
+
+		const signInButton = await spInstancePage.getByRole('button', {
+			name: 'Sign In',
+		});
+
+		expect(await signInButton).toBeVisible();
+	}
 });

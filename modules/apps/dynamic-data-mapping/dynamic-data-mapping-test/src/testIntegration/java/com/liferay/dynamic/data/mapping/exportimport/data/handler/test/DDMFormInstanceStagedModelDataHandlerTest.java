@@ -299,7 +299,8 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), "text")));
+						RandomTestUtil.randomString(), "text")),
+				Collections.emptyList());
 
 		objectDefinition.setExternalReferenceCode(externalReferenceCode);
 

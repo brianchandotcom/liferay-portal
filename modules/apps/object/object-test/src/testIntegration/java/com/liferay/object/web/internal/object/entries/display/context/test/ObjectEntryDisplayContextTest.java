@@ -245,7 +245,8 @@ public class ObjectEntryDisplayContextTest {
 						RandomTestUtil.randomLocaleStringMap()
 					).name(
 						"textObjectFieldName"
-					).build()));
+					).build()),
+				Collections.emptyList());
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),

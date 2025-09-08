@@ -145,7 +145,8 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
+						RandomTestUtil.randomString(), StringUtil.randomId())),
+				Collections.emptyList());
 
 		systemObjectDefinition =
 			_objectDefinitionLocalService.publishSystemObjectDefinition(

@@ -39,6 +39,7 @@ data:
         {{- .Values.portalProperties | nindent 8 }}
         {{- end }}
         {{- range $k, $v := .Values.dependencies }}
+
         {{- if $v.portalProperties }}
         {{- $v.portalProperties | nindent 8 }}
         {{- end }}
@@ -46,11 +47,14 @@ data:
         configuration.override.com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration_blacklistBundleSymbolicNames=[\
             {{- $PREFIX := "" }}
             {{- range $bundle := .Values.portalBundleDenyList }}
+
             {{ $PREFIX }}{{ $bundle | quote }}\
             {{- $PREFIX = "," -}}
             {{- end }}
             {{- range $k, $v := .Values.dependencies }}
+
             {{- range $bundle := $v.portalBundleDenyList }}
+
             {{ $PREFIX }}{{ $bundle | quote }}\
             {{- $PREFIX = "," -}}
             {{- end }}
@@ -59,11 +63,14 @@ data:
         configuration.override.com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration_blacklistComponentNames=[\
             {{- $PREFIX := "" }}
             {{- range $component := .Values.portalComponentDenyList }}
+
             {{ $PREFIX }}{{ $component | quote }}\
             {{- $PREFIX = "," }}
             {{- end }}
             {{- range $k, $v := .Values.dependencies }}
+
             {{- range $component := $v.portalComponentDenyList }}
+
             {{ $PREFIX }}{{ $component | quote }}\
             {{- $PREFIX = "," }}
             {{- end }}

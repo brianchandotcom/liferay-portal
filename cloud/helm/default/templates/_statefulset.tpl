@@ -37,6 +37,7 @@ spec:
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customEnv }}
+
                         {{- toYaml $v | nindent 22 }}
                         {{- end }}
                     {{- end }}
@@ -46,6 +47,7 @@ spec:
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customEnvFrom }}
+
                         {{- toYaml $v | nindent 22 }}
                         {{- end }}
                     {{- end }}
@@ -62,6 +64,7 @@ spec:
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customPorts }}
+
                         {{- toYaml $v | nindent 22 }}
                         {{- end }}
                     {{- end }}
@@ -87,6 +90,7 @@ spec:
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customVolumeMounts }}
+
                         {{- toYaml $v | nindent 22 }}
                         {{- end }}
                     {{- end }}
@@ -96,6 +100,7 @@ spec:
                 {{- toYaml . | nindent 16 }}
                 {{- end }}
                 {{- range $k, $v := .statefulset.customPullSecrets }}
+
                 {{- toYaml $v | nindent 16 }}
                 {{- end }}
             {{- end }}
@@ -111,12 +116,12 @@ spec:
                 {{- end }}
                 {{- end }}
                 {{- range $k, $v := .statefulset.customInitContainers }}
-                {{- range $entry := $v }}
-                {{- if $entry.containerTemplate }}
-                {{- tpl $entry.containerTemplate $statefulset | nindent 16 }}
+
+                {{- if $v.containerTemplate }}
+                {{- tpl $v.containerTemplate $statefulset | nindent 16 }}
                 {{- else }}
                 -   #
-                    {{- toYaml $entry | nindent 18 }}
+                    {{- toYaml $v | nindent 18 }}
                 {{- end }}
                 {{- end }}
                 {{- end }}
@@ -144,6 +149,7 @@ spec:
                 {{- toYaml . | nindent 16 }}
                 {{- end }}
                 {{- range $k, $v := .statefulset.customVolumes }}
+
                 {{- toYaml $v | nindent 16 }}
                 {{- end }}
             {{- end }}
@@ -157,6 +163,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- range $k, $v := .statefulset.customVolumeClaimTemplates }}
+
         {{- toYaml $v | nindent 8 }}
         {{- end }}
     {{- end }}
@@ -180,6 +187,7 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     {{- range $k, $v := .statefulset.customServicePorts }}
+
         {{- toYaml $v | nindent 8 }}
     {{- end }}
     {{- end }}

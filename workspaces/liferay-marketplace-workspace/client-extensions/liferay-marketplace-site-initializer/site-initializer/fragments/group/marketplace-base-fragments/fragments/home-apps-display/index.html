@@ -13,7 +13,7 @@
 				</a>
 			</div>
 
-			<p class="text-black-50 mb-4">${configuration.sectionDescription}</p>
+			<p class="text-black-50 mb-5">${configuration.sectionDescription}</p>
 		</div>
 
 		[#if configuration.specificationFilterValue?has_content]
@@ -55,7 +55,7 @@
 							[#assign productDescription=stringUtil.shorten(htmlUtil.stripHtml(product.description!""), 140, "...") /]
 
 							<a class="product-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none [#if configuration.cardSize == 'large'] large [/#if] [#if configuration.cardSize == 'medium'] medium [/#if] [#if configuration.cardSize == 'small'] small [/#if]" href="p/${product.slug}" target="_self">
-								<div class="align-items-center card-image-title-container d-flex">
+								<div class="card-image-title-container d-flex">
 									<div class="image-container mr-2 rounded">
 										<img alt="${product.name}" class="app-search-image" draggable="false" height="56" src="${(product.urlImage?replace('https://', 'http://'))?js_string}" width="56" />
 									</div>
@@ -105,14 +105,14 @@
 
 								<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
 									[#if configuration.cardSize != 'small']
-										<div class="app-card-description font-weight-normal mb-3 mt-3">
+										<div class="app-card-description font-weight-normal my-3">
 											${productDescription}
 										</div>
 									[/#if]
 
 									[#if configuration.cardSize == 'large']
 										<div class="d-flex flex-column">
-											<div class="font-weight-semi-bold text-capitalize">
+											<div class="font-weight-semi-bold mb-3 text-capitalize">
 												${getSpecificationValue("price-model")}
 											</div>
 
@@ -127,8 +127,8 @@
 											[#if principalCategory?has_content]
 												[#assign tagName=stringUtil.shorten(htmlUtil.stripHtml(principalCategory.name!""), 100, "...") /]
 
-												<div>
-													<span class="mb-1 mr-3 product-tag px-2 py-1 rounded text-nowrap" title="${principalCategory.name}">
+												<div class="my-1">
+													<span class="mr-3 product-tag px-2 py-1 rounded text-nowrap" title="${principalCategory.name}">
 														${tagName}
 													</span>
 
@@ -141,7 +141,7 @@
 											[/#if]
 
 											[#if configuration.hideRatingInfo == false]
-												<div class="d-flex flex-row justify-content-between mt-3">
+												<div class="d-flex flex-row justify-content-between mt-2">
 													<div class="align-items-center d-flex justify-content-center">
 														<span class="stars">
 															[@clay["icon"] symbol="star" /]

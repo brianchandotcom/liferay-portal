@@ -24,7 +24,7 @@
 								"definition": {
 									"fragmentStyle": {
 										"marginBottom": "7",
-										"marginTop": "7"
+										"marginTop": "40px"
 									},
 									"indexed": true,
 									"layout": {

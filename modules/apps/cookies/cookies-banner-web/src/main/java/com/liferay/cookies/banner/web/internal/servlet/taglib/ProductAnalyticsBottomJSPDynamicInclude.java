@@ -7,6 +7,7 @@ package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.ProductAnalyticsConfiguration;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -45,7 +46,9 @@ public class ProductAnalyticsBottomJSPDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (LiferayWindowState.isPopUp(httpServletRequest)) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-51356") ||
+			LiferayWindowState.isPopUp(httpServletRequest)) {
+
 			return;
 		}
 

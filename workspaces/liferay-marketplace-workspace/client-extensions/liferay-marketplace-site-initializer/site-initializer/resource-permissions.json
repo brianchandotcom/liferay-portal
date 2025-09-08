@@ -19,6 +19,33 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CommerceCatalog",
+		"roleName": "Finance Administrator",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.model.CommerceOrderType",
+		"roleName": "Finance Administrator",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"MANAGE_ORDER_PRICES"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.model.CommerceOrder",
+		"roleName": "Finance Administrator",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"UPDATE",
 			"VIEW"
 		],

@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import {FormikHelpers, FormikTouched, useFormik} from 'formik';
 import {openToast, useId} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {FieldText} from '../../common/components/forms';
 import {
@@ -49,6 +49,10 @@ export default function SpaceGeneralSettings({
 	setSpace?: React.Dispatch<React.SetStateAction<any>>;
 	space: Space;
 }) {
+	const [originalERC, setOriginalERC] = useState(
+		space?.externalReferenceCode
+	);
+
 	const id = useId();
 	const mimeTypeLimits = space.settings?.mimeTypeLimits;
 	const mimeTypeLimitsWithIds = mimeTypeLimits?.length
@@ -72,7 +76,7 @@ export default function SpaceGeneralSettings({
 	} = useFormik({
 		initialValues: {
 			description: space.description,
-			erc: space.externalReferenceCode,
+			erc: originalERC,
 			logoColor: space.settings?.logoColor as LogoColor,
 			mimeTypeLimits: mimeTypeLimitsWithIds,
 			name: space.name,
@@ -88,7 +92,7 @@ export default function SpaceGeneralSettings({
 				sharingEnabled,
 			} = values;
 
-			const {data, error} = await SpaceService.updateSpace(erc, {
+			const {data, error} = await SpaceService.updateSpace(originalERC, {
 				description,
 				externalReferenceCode: erc,
 				name,
@@ -120,8 +124,11 @@ export default function SpaceGeneralSettings({
 					type: 'success',
 				});
 
+				const updatedSpace = data as Space;
+
 				if (setSpace) {
-					setSpace(data);
+					setSpace(updatedSpace);
+					setOriginalERC(updatedSpace.externalReferenceCode);
 				}
 			}
 		},

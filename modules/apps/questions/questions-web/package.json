@@ -37,6 +37,9 @@
 		"react-router-dom": "^5.0.1"
 	},
 	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.ts"
+		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/helpers.es.js"
 		]

@@ -36,6 +36,9 @@
 	"jest": {
 		"modulePathIgnorePatterns": [
 			"/__mock__/"
+		],
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.ts"
 		]
 	},
 	"main": "js/index.js",

@@ -73,6 +73,7 @@ describe('TrafficChannels', () => {
 
 	it('checks the accessibility of the share content', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
+
 		const {container} = render(<TrafficChannels />);
 
 		await checkAccessibility({bestPractices: true, context: container});

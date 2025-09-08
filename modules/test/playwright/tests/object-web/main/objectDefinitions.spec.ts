@@ -21,11 +21,12 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {generateObjectFields} from './utils/generateObjectFields';
 
-export const test = mergeTests(
+const test = mergeTests(
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
@@ -37,6 +38,14 @@ export const test = mergeTests(
 	loginTest(),
 	objectPagesTest,
 	pageEditorPagesTest
+);
+
+const cmsTest = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-17564': {enabled: true},
+		'LPS-178052': {enabled: true},
+	})
 );
 
 test.describe('Manage object definitions through Model Builder', () => {
@@ -851,4 +860,81 @@ test.describe('Manage object definitions through a Page', () => {
 				.getByRole('menuitem', {name: objectDefinition.name})
 		).toBeVisible();
 	});
+});
+
+cmsTest.describe('Manage enableFormContainer configuration', () => {
+	cmsTest(
+		'can see object definition on form container list when configuration is enabled and cannot when it is disabled',
+		{tag: ['@LPD-64249']},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const objectField = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					enableFormContainer: true,
+					label: {
+						en_US: 'ObjectDefinitionLabel' + getRandomInt(),
+					},
+					name: 'ObjectDefinitionName' + getRandomInt(),
+					objectFields: objectField,
+					pluralLabel: {
+						en_US: 'ObjectDefinitionsLabel' + getRandomInt(),
+					},
+					scope: 'company',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFormContainerDefinition({
+						id: getRandomString(),
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			const formContainerSelect = page.getByLabel('Content Type');
+
+			await formContainerSelect.selectOption(
+				objectDefinition.label['en_US']
+			);
+
+			await expect(
+				page.frameLocator('iframe').getByRole('cell', {
+					exact: true,
+					name: objectField[0].label['en_US'],
+				})
+			).toBeVisible();
+
+			await page.getByRole('button', {name: 'Cancel'}).click();
+
+			await objectDefinitionAPIClient.patchObjectDefinition(
+				objectDefinition.id,
+				{
+					enableFormContainer: false,
+				}
+			);
+
+			await page.reload();
+
+			await expect(
+				formContainerSelect.getByRole('option', {
+					name: objectDefinition.name,
+				})
+			).not.toBeAttached();
+		}
+	);
 });

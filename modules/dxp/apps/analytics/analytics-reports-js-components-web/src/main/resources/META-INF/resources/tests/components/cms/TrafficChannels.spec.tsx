@@ -60,12 +60,12 @@ describe('TrafficChannels', () => {
 	it('renders', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
 
-		const {getByText} = render(<TrafficChannels />);
+		render(<TrafficChannels />);
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
 		expect(
-			getByText(
+			screen.getByText(
 				'this-metric-calculates-the-top-five-traffic-channels-that-generated-the-highest-number-of-views-for-the-asset'
 			)
 		).toBeTruthy();
@@ -81,6 +81,7 @@ describe('TrafficChannels', () => {
 
 	it('renders 5 traffic channels and others', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
+
 		render(<TrafficChannels />);
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
@@ -88,6 +89,42 @@ describe('TrafficChannels', () => {
 		const trafficChannelItem = screen.queryAllByRole('row');
 
 		expect(trafficChannelItem).toHaveLength(7);
+	});
+
+	it('renders an empty state', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
+				items: [],
+				totalCount: 0,
+			},
+			error: null,
+		});
+
+		render(<TrafficChannels />);
+
+		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+
+		expect(
+			screen.getByText('views-by-traffic-channels')
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByText(
+				'this-metric-calculates-the-top-five-traffic-channels-that-generated-the-highest-number-of-views-for-the-asset'
+			)
+		).toBeInTheDocument();
+
+		expect(screen.getByText('no-data-available-yet')).toBeInTheDocument();
+
+		expect(
+			screen.getByText(
+				'there-is-no-data-available-for-the-applied-filters-or-from-the-data-source'
+			)
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByText('learn-more-about-asset-performance')
+		).toBeInTheDocument();
 	});
 
 	it('calculates the percentage correctly', async () => {
@@ -132,12 +169,12 @@ describe('TrafficChannels', () => {
 
 		const expectedPercentage = ((10 / 60) * 100).toFixed(2);
 
-		const {getByText} = render(<TrafficChannels />);
+		render(<TrafficChannels />);
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
 		const trafficChannelItem =
-			getByText(/direct/).parentElement?.parentElement;
+			screen.getByText(/direct/).parentElement?.parentElement;
 
 		expect(trafficChannelItem?.textContent).toContain(expectedPercentage);
 	});

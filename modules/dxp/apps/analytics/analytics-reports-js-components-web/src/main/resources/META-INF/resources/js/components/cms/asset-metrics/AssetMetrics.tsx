@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useState} from 'react';
 
@@ -13,6 +14,7 @@ import {Context} from '../../../Context';
 import useFetch from '../../../hooks/useFetch';
 import {MetricName, MetricType} from '../../../types/global';
 import {buildQueryString} from '../../../utils/buildQueryString';
+import EmptyState from '../../EmptyState';
 import {RangeSelectors} from '../../RangeSelectorsDropdown';
 import {AssetMetricsChart} from './AssetMetricsChart';
 import {AssetMetricsTableView} from './AssetMetricsTableView';
@@ -102,13 +104,10 @@ const AssetMetrics = () => {
 		`/o/analytics-cms-rest/v1.0/object-entry-histogram-metric${queryParams}`
 	);
 
-	if (loading) {
-		<ClayLoadingIndicator />;
-	}
-
-	if (!data) {
-		return null;
-	}
+	const histogram = data?.histograms.find(
+		({metricName: currentMetricName}) =>
+			currentMetricName === metricName[filters.metric]
+	);
 
 	return (
 		<>
@@ -121,12 +120,13 @@ const AssetMetrics = () => {
 
 				<ClayDropdown
 					active={dropdownActive}
-					closeOnClickOutside={true}
+					closeOnClickOutside
+					data-testid="btn-change-view"
 					onActiveChange={setDropdownActive}
 					trigger={
 						<ClayButton
 							aria-label={selectedItem.name}
-							borderless={true}
+							borderless
 							displayType="secondary"
 							onClick={() => {
 								setDropdownActive(!dropdownActive);
@@ -160,18 +160,68 @@ const AssetMetrics = () => {
 				</ClayDropdown>
 			</div>
 
-			<main className="mt-3">
-				{selectedItem.renderer({
-					histogram: data.histograms.find(
-						({metricName: currentMetricName}) =>
-							currentMetricName === metricName[filters.metric]
-					) as Histogram,
-					metricName: metricName[filters.metric] as MetricName,
-					metricType: filters.metric,
-					rangeSelector: filters.rangeSelector.rangeKey,
-					title: metricTitle[filters.metric] as string,
-				})}
-			</main>
+			{loading && (
+				<ClayLoadingIndicator className="my-6" data-testid="loading" />
+			)}
+
+			{!loading && (
+				<>
+					{histogram?.metrics.length === 0 ? (
+						selectedItem.value === 'chart' ? (
+							<main className="mt-3">
+								{selectedItem.renderer({
+									histogram,
+									metricName: metricName[
+										filters.metric
+									] as MetricName,
+									metricType: filters.metric,
+									rangeSelector:
+										filters.rangeSelector.rangeKey,
+									title: metricTitle[
+										filters.metric
+									] as string,
+								})}
+							</main>
+						) : (
+							<EmptyState
+								className="pb-6"
+								description={Liferay.Language.get(
+									'there-is-no-data-available-for-the-applied-filters-or-from-the-data-source'
+								)}
+								maxWidth={320}
+								title={Liferay.Language.get(
+									'no-data-available-yet'
+								)}
+							>
+								<ClayLink target="_blank">
+									<span className="mr-1">
+
+										{/* TODO: Add link to the documentation when it is done. */}
+
+										{Liferay.Language.get(
+											'learn-more-about-asset-performance'
+										)}
+									</span>
+
+									<ClayIcon fontSize={12} symbol="shortcut" />
+								</ClayLink>
+							</EmptyState>
+						)
+					) : (
+						<main className="mt-3">
+							{selectedItem.renderer({
+								histogram: histogram as Histogram,
+								metricName: metricName[
+									filters.metric
+								] as MetricName,
+								metricType: filters.metric,
+								rangeSelector: filters.rangeSelector.rangeKey,
+								title: metricTitle[filters.metric] as string,
+							})}
+						</main>
+					)}
+				</>
+			)}
 		</>
 	);
 };

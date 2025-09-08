@@ -4,6 +4,7 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import classNames from 'classnames';
 import React from 'react';
 
 interface IEmptyStateProps extends React.HTMLAttributes<HTMLElement> {
@@ -13,20 +14,25 @@ interface IEmptyStateProps extends React.HTMLAttributes<HTMLElement> {
 		style: object;
 	};
 	imgSrc?: string;
+	maxWidth?: number;
 	title: string;
 }
 
 const EmptyState: React.FC<IEmptyStateProps> = ({
 	children,
+	className,
 	description,
 	externalImage,
 	imgSrc,
+	maxWidth = 268,
 	title,
 }) => (
-	<div className="d-flex justify-content-center pt-6">
+	<div
+		className={classNames('d-flex justify-content-center pt-6', className)}
+	>
 		<div
 			className="align-items-center d-flex flex-column justify-content-center text-center"
-			style={{maxWidth: 268}}
+			style={{maxWidth}}
 		>
 			{externalImage && (
 				<div style={{...externalImage.style}}>

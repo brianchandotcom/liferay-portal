@@ -6,6 +6,8 @@
  */
 
 import {Text} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
@@ -13,6 +15,7 @@ import React, {useContext} from 'react';
 import {Context} from '../../Context';
 import useFetch from '../../hooks/useFetch';
 import {buildQueryString} from '../../utils/buildQueryString';
+import EmptyState from '../EmptyState';
 import Title from '../Title';
 
 type TrafficChannelsData = {
@@ -43,75 +46,113 @@ const trafficChannelsNames: Record<string, string> = {
 	'social': Liferay.Language.get('social'),
 };
 
-function mapData(data: TrafficChannelsApiResponse): TrafficChannelsData[] {
-	const {items} = data;
+const TrafficChannelsContent = ({data}: {data: TrafficChannelsApiResponse}) => {
+	const formattedItems = data.items.map((channel) => ({
+		count: channel.count,
+		name: channel.name,
+		percentage: channel.percentage * 100,
+	}));
 
-	return data
-		? items.map((channel) => ({
-				count: channel.count,
-				name: channel.name,
-				percentage: channel.percentage * 100,
-			}))
-		: [];
-}
-
-const TrafficChannelsEntry = ({
-	name,
-	percentage,
-	volume,
-}: {
-	name: string;
-	percentage: number;
-	volume: number;
-}) => {
 	return (
-		<div
-			aria-label={`${Liferay.Language.get('traffic-channel')}: ${trafficChannelsNames[name]}`}
-			className="d-flex flex-row py-3 tab-focus traffic-channel-item"
-			role="row"
+		<main
+			aria-label={Liferay.Language.get('traffic-channel')}
+			className="tab-focus traffic-channels-table"
+			role="table"
 			tabIndex={0}
 		>
-			<div
-				aria-label={trafficChannelsNames[name]}
-				className="tab-focus traffic-channel-item__name"
-				role="cell"
-				style={{width: '35%'}}
-			>
-				<Text size={3} weight="semi-bold">
-					{trafficChannelsNames[name]}
-				</Text>
-			</div>
-
-			<div
-				aria-label={`${Liferay.Language.get('volume')}: ${volume}`}
-				className="d-flex flex-row tab-focus traffic-channel-item__chart"
-				role="cell"
-				style={{width: '40%'}}
+			<header
+				className="d-flex flex-row justify-content-between py-3"
+				role="row"
 			>
 				<div
-					aria-hidden="true"
-					className="traffic-channel-item__chart__bar"
-					style={{width: `${percentage}%`}}
-				/>
-
-				<div className="traffic-channel-item__chart__value">
-					<Text size={3} weight="semi-bold">
-						{volume}
+					aria-label={Liferay.Language.get('traffic-channel')}
+					role="columnheader"
+					style={{width: '35%'}}
+				>
+					<Text color="secondary" size={3} weight="semi-bold">
+						{Liferay.Language.get('traffic-channel')}
 					</Text>
 				</div>
-			</div>
 
-			<div
-				aria-label={`Percentage: ${percentage.toFixed(2)}%`}
-				className="d-flex justify-content-end tab-focus traffic-channel-item__percentage"
-				role="cell"
-				style={{width: '25%'}}
-			>
-				<Text size={3} weight="semi-bold">
-					{`${percentage.toFixed(2)}%`}
-				</Text>
-			</div>
-		</div>
+				<div
+					aria-label={Liferay.Language.get('views')}
+					role="columnheader"
+					style={{width: '35%'}}
+				>
+					<Text color="secondary" size={3} weight="semi-bold">
+						{Liferay.Language.get('views')}
+					</Text>
+				</div>
+
+				<div
+					aria-label={sub(Liferay.Language.get('x-of-x'), [
+						'%',
+						Liferay.Language.get('views'),
+					])}
+					className="d-flex justify-content-end"
+					role="columnheader"
+					style={{width: '30%'}}
+				>
+					<Text color="secondary" size={3} weight="semi-bold">
+						{sub(Liferay.Language.get('x-of-x'), [
+							'%',
+							Liferay.Language.get('views'),
+						])}
+					</Text>
+				</div>
+			</header>
+
+			{formattedItems.map(({count, name, percentage}, index) => (
+				<div
+					aria-label={`${Liferay.Language.get('traffic-channel')}: ${trafficChannelsNames[name]}`}
+					className="d-flex flex-row py-3 tab-focus traffic-channel-item"
+					key={name}
+					role="row"
+					tabIndex={0}
+				>
+					<div
+						aria-label={trafficChannelsNames[name]}
+						className="tab-focus traffic-channel-item__name"
+						role="cell"
+						style={{width: '35%'}}
+					>
+						<Text size={3} weight="semi-bold">
+							{trafficChannelsNames[name]}
+						</Text>
+					</div>
+
+					<div
+						aria-label={`${Liferay.Language.get('volume')}: ${count}`}
+						className="d-flex flex-row tab-focus traffic-channel-item__chart"
+						role="cell"
+						style={{width: '40%'}}
+					>
+						<div
+							aria-hidden="true"
+							className="traffic-channel-item__chart__bar"
+							style={{width: `${percentage}%`}}
+						/>
+
+						<div className="traffic-channel-item__chart__value">
+							<Text size={3} weight="semi-bold">
+								{count}
+							</Text>
+						</div>
+					</div>
+
+					<div
+						aria-label={`Percentage: ${percentage.toFixed(2)}%`}
+						className="d-flex justify-content-end tab-focus traffic-channel-item__percentage"
+						role="cell"
+						style={{width: '25%'}}
+					>
+						<Text size={3} weight="semi-bold">
+							{`${percentage.toFixed(2)}%`}
+						</Text>
+					</div>
+				</div>
+			))}
+		</main>
 	);
 };
 
@@ -123,19 +164,9 @@ export function TrafficChannels() {
 		rangeKey: filters.rangeSelector.rangeKey,
 	});
 
-	const endpoint = `/o/analytics-cms-rest/v1.0/object-entry-acquisition-channels${queryParams}`;
-
-	const {data, loading} = useFetch<TrafficChannelsApiResponse>(endpoint);
-
-	if (loading) {
-		return <ClayLoadingIndicator data-testid="loading" />;
-	}
-
-	if (!data) {
-		return null;
-	}
-
-	const mappedData = mapData(data);
+	const {data, loading} = useFetch<TrafficChannelsApiResponse>(
+		`/o/analytics-cms-rest/v1.0/object-entry-acquisition-channels${queryParams}`
+	);
 
 	return (
 		<section
@@ -143,85 +174,51 @@ export function TrafficChannels() {
 			className="mt-3 tab-focus"
 			tabIndex={0}
 		>
-			<header
-				className="py-2 text-uppercase w-100"
-				style={{borderBottom: '1px solid #dfe0e7'}}
-			>
-				<Title
-					value={Liferay.Language.get('views-by-traffic-channels')}
-				/>
-			</header>
+			<Title
+				section
+				value={Liferay.Language.get('views-by-traffic-channels')}
+			/>
 
-			<section
+			<Text
 				aria-labelledby={Liferay.Language.get(
 					'this-metric-calculates-the-top-five-traffic-channels-that-generated-the-highest-number-of-views-for-the-asset'
 				)}
-				className="pt-3"
+				color="secondary"
+				size={3}
+				weight="normal"
 			>
-				<Text color="secondary" size={3} weight="normal">
-					{Liferay.Language.get(
-						'this-metric-calculates-the-top-five-traffic-channels-that-generated-the-highest-number-of-views-for-the-asset'
+				{Liferay.Language.get(
+					'this-metric-calculates-the-top-five-traffic-channels-that-generated-the-highest-number-of-views-for-the-asset'
+				)}
+			</Text>
+
+			{loading ? (
+				<ClayLoadingIndicator className="my-6" data-testid="loading" />
+			) : data?.totalCount ? (
+				<TrafficChannelsContent data={data} />
+			) : (
+				<EmptyState
+					className="pb-6"
+					description={Liferay.Language.get(
+						'there-is-no-data-available-for-the-applied-filters-or-from-the-data-source'
 					)}
-				</Text>
-			</section>
-
-			<main
-				aria-label={Liferay.Language.get('traffic-channel')}
-				className="tab-focus traffic-channels-table"
-				role="table"
-				tabIndex={0}
-			>
-				<header
-					className="d-flex flex-row justify-content-between py-3"
-					role="row"
+					maxWidth={320}
+					title={Liferay.Language.get('no-data-available-yet')}
 				>
-					<div
-						aria-label={Liferay.Language.get('traffic-channel')}
-						role="columnheader"
-						style={{width: '35%'}}
-					>
-						<Text color="secondary" size={3} weight="semi-bold">
-							{Liferay.Language.get('traffic-channel')}
-						</Text>
-					</div>
+					<ClayLink target="_blank">
+						<span className="mr-1">
 
-					<div
-						aria-label={Liferay.Language.get('views')}
-						role="columnheader"
-						style={{width: '35%'}}
-					>
-						<Text color="secondary" size={3} weight="semi-bold">
-							{Liferay.Language.get('views')}
-						</Text>
-					</div>
+							{/* TODO: Add link to the documentation when it is done. */}
 
-					<div
-						aria-label={sub(Liferay.Language.get('x-of-x'), [
-							'%',
-							Liferay.Language.get('views'),
-						])}
-						className="d-flex justify-content-end"
-						role="columnheader"
-						style={{width: '30%'}}
-					>
-						<Text color="secondary" size={3} weight="semi-bold">
-							{sub(Liferay.Language.get('x-of-x'), [
-								'%',
-								Liferay.Language.get('views'),
-							])}
-						</Text>
-					</div>
-				</header>
+							{Liferay.Language.get(
+								'learn-more-about-asset-performance'
+							)}
+						</span>
 
-				{mappedData.map(({count, name, percentage}) => (
-					<TrafficChannelsEntry
-						key={name}
-						name={name}
-						percentage={percentage}
-						volume={count}
-					/>
-				))}
-			</main>
+						<ClayIcon fontSize={12} symbol="shortcut" />
+					</ClayLink>
+				</EmptyState>
+			)}
 		</section>
 	);
 }

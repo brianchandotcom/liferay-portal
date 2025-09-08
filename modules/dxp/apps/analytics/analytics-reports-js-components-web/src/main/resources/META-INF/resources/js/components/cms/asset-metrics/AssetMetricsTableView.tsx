@@ -39,7 +39,7 @@ const AssetMetricsTableView: React.FC<ICommonProps> = ({
 	const displayedItems = formattedData.slice(startIndex, startIndex + delta);
 
 	return (
-		<div>
+		<div data-testid="asset-metric-table">
 			<ClayTable hover={false} responsive>
 				<ClayTable.Head>
 					<ClayTable.Row>

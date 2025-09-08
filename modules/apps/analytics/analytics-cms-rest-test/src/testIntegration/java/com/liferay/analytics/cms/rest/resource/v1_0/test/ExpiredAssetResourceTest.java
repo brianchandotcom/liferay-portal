@@ -78,48 +78,10 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	public void setupCMSContext() throws Exception {
-		Bundle testBundle = FrameworkUtil.getBundle(OverviewResourceTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.site.initializer.cms")) {
-
-				_deleteFile(bundle, "01.object.folder");
-				_deleteFile(bundle, "02.object.definition");
-
-				CompletableFuture<Void> completableFuture =
-					_batchEngineUnitProcessor.processBatchEngineUnits(
-						_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-				completableFuture.join();
-
-				break;
-			}
-		}
-
-		testGroup.setType(GroupConstants.TYPE_DEPOT);
-
-		testGroup = _groupLocalService.updateGroup(testGroup);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			testGroup.getGroupId(), TestPropsValues.getUserId());
-
-		_serviceContext.setAttribute("staging", Boolean.TRUE);
-
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			testGroup, _serviceContext);
-
-		_themeDisplay = _getThemeDisplay();
-	}
-
 	@Override
 	@Test
 	public void testGetExpiredAssetsPage() throws Exception {
-		setupCMSContext();
+		_setUpCMSContext();
 
 		Page<ExpiredAsset> page = expiredAssetResource.getExpiredAssetsPage(
 			null, null, Pagination.of(1, 10));
@@ -158,7 +120,7 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 	@Override
 	@Test
 	public void testGetExpiredAssetsPageWithPagination() throws Exception {
-		setupCMSContext();
+		_setUpCMSContext();
 
 		super.testGetExpiredAssetsPageWithPagination();
 	}
@@ -261,6 +223,44 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 		themeDisplay.setUser(testCompany.getGuestUser());
 
 		return themeDisplay;
+	}
+
+	private void _setUpCMSContext() throws Exception {
+		Bundle testBundle = FrameworkUtil.getBundle(OverviewResourceTest.class);
+
+		BundleContext bundleContext = testBundle.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					"com.liferay.site.initializer.cms")) {
+
+				_deleteFile(bundle, "01.object.folder");
+				_deleteFile(bundle, "02.object.definition");
+
+				CompletableFuture<Void> completableFuture =
+					_batchEngineUnitProcessor.processBatchEngineUnits(
+						_batchEngineUnitReader.getBatchEngineUnits(bundle));
+
+				completableFuture.join();
+
+				break;
+			}
+		}
+
+		testGroup.setType(GroupConstants.TYPE_DEPOT);
+
+		testGroup = _groupLocalService.updateGroup(testGroup);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_serviceContext.setAttribute("staging", Boolean.TRUE);
+
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			testGroup, _serviceContext);
+
+		_themeDisplay = _getThemeDisplay();
 	}
 
 	@Inject

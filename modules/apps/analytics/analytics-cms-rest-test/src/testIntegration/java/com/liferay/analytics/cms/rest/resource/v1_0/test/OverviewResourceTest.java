@@ -73,46 +73,10 @@ import org.osgi.framework.FrameworkUtil;
 @RunWith(Arquillian.class)
 public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 
-	public void setupCMSContext() throws Exception {
-		Bundle testBundle = FrameworkUtil.getBundle(OverviewResourceTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.site.initializer.cms")) {
-
-				_deleteFile(bundle, "01.object.folder");
-				_deleteFile(bundle, "02.object.definition");
-
-				CompletableFuture<Void> completableFuture =
-					_batchEngineUnitProcessor.processBatchEngineUnits(
-						_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-				completableFuture.join();
-
-				break;
-			}
-		}
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			testGroup.getGroupId(), TestPropsValues.getUserId());
-
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
-	}
-
 	@Override
 	@Test
 	public void testGetContentOverview() throws Exception {
-		setupCMSContext();
+		_setUpCMSContext();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
@@ -190,7 +154,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 	@Override
 	@Test
 	public void testGetFileOverview() throws Exception {
-		setupCMSContext();
+		_setUpCMSContext();
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_depotEntry.getGroupId());
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
@@ -243,6 +207,42 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 		if ((file != null) && file.exists()) {
 			file.delete();
 		}
+	}
+
+	private void _setUpCMSContext() throws Exception {
+		Bundle testBundle = FrameworkUtil.getBundle(OverviewResourceTest.class);
+
+		BundleContext bundleContext = testBundle.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					"com.liferay.site.initializer.cms")) {
+
+				_deleteFile(bundle, "01.object.folder");
+				_deleteFile(bundle, "02.object.definition");
+
+				CompletableFuture<Void> completableFuture =
+					_batchEngineUnitProcessor.processBatchEngineUnits(
+						_batchEngineUnitReader.getBatchEngineUnits(bundle));
+
+				completableFuture.join();
+
+				break;
+			}
+		}
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
 	}
 
 	@DeleteAfterTestRun

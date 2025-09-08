@@ -263,33 +263,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSiteNameTranslationsPG(textIconList = null, siteNameList = null, localeList = null) {
-		var list1 = ListUtil.newListFromString(${localeList});
-		var list2 = ListUtil.newListFromString(${siteNameList});
-		var list3 = ListUtil.newListFromString(${textIconList});
-		var size = ListUtil.size(${list1});
-		var i = 0;
-
-		while (${i} != ${size}) {
-			var locale = ListUtil.get(${list1}, ${i});
-			var siteName = ListUtil.get(${list2}, ${i});
-			var textIcon = ListUtil.get(${list3}, ${i});
-
-			LanguagePortlet.selectLanguagePG(
-				locale = ${locale},
-				textIcon = ${textIcon});
-
-			AssertTextEquals(
-				locator1 = "Home#SITE_NAME",
-				value1 = ${siteName});
-
-			var i = ${i} + 1;
-
-			var i = StringUtil.valueOf(${i});
-		}
-	}
-
-	@summary = "Default summary"
 	macro viewSpecificPG(pageNameList = null) {
 		for (var pageName : list ${pageNameList}) {
 			var key_pageName = ${pageName};

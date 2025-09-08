@@ -1,20 +1,20 @@
 .home-apps-display .app-card-description {
-	  -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-        display: -webkit-box;
-      font-size: 13px;
-      font-weight: 400;
-      height: 60px;
-      letter-spacing: 0%;
-      line-height: 20px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    font-size: 13px;
+    font-weight: 400;
+    height: 60px;
+    letter-spacing: 0%;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .home-apps-display .app-name {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-	  display: -webkit-box;
+    display: -webkit-box;
     font-size: 18px;
     line-height: 20px;
     overflow: hidden;
@@ -41,7 +41,7 @@
     font-size: 13px;
     font-weight: 400;
     letter-spacing: 0%;
-    line-height: 16px;
+    line-height: 12px;
 }
 
 .home-apps-display .image-container .app-search-image {
@@ -114,7 +114,7 @@
 }
 
 .home-apps-display .section-container h1 {
-	font-size: 36px
+    font-size: 36px
 }
 
 .home-apps-display .small {
@@ -124,7 +124,11 @@
 
 .home-apps-display .small .app-name { 
 	font-size: 16px;
-	margin-bottom: 0 !important;
+	margin-bottom: 2px !important;
+}
+
+.home-apps-display .small .catalog-name { 
+	margin-bottom: 2px !important;
 }
 
 .home-apps-display .stars {

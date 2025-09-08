@@ -235,7 +235,6 @@
 .main-image-wrapper img {
 	border-radius: 8px;
 	max-height: 100%;
-	width: 100%;
 }
 
 .main-image-wrapper:hover .nav-button {

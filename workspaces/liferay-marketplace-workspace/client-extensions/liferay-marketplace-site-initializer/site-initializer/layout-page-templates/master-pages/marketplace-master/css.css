@@ -93,7 +93,7 @@
 }
 
 .lfr-nav-item.nav-item .nav-link {
-	border-bottom: transparent solid 3px !important;
+	padding: 14px 18px;
 }
 
 .lfr-nav-item.nav-item:hover {
@@ -103,13 +103,11 @@
 
 .lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected)
 	.nav-link {
-	border-bottom: #004ad7 solid 3px !important;
 	color: #0053f0 !important;
 	font-weight: 600;
 }
 
 .lfr-nav-item.nav-item.selected.active .nav-link {
-	border-bottom: #004ad7 solid 3px !important;
 	color: #0053f0 !important;
 	font-weight: 600;
 }

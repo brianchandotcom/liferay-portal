@@ -1036,6 +1036,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			httpServletRequest, httpServletResponse,
 			SamlWebKeys.SAML_SSO_SESSION_ID,
 			samlSsoRequestContext.getSamlSsoSessionId());
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		httpSession.setAttribute(
+			SamlWebKeys.SAML_SSO_SESSION_ID,
+			samlSsoRequestContext.getSamlSsoSessionId());
 	}
 
 	private Decrypter _createDecrypter() {

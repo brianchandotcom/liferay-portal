@@ -18,7 +18,7 @@ import {
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import {Action} from '../../../../utils/constants';
-import {formatDate} from '../../../../utils/date';
+import {formatDate, formatDateTime} from '../../../../utils/date';
 import {safeJSONParse} from '../../../../utils/util';
 import {useSSADashboardOutlet} from '../../SSADashboardOutlet';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
@@ -145,7 +145,7 @@ export default function TrialListView({
 							id: 'createDate',
 							name: 'End Date',
 							render: (_, {customFields}) =>
-								formatDate(
+								formatDateTime(
 									customFields[
 										OrderCustomFields.TRIAL_END_DATE
 									],

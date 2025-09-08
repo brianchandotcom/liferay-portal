@@ -49,7 +49,7 @@ describe('ContentEditorSidePanel', () => {
 		renderComponent();
 
 		['general', 'comments', 'schedule', 'categorization'].forEach((name) =>
-			expect(screen.getByLabelText(name)).toBeInTheDocument()
+			expect(screen.getByTitle(name)).toBeInTheDocument()
 		);
 	});
 

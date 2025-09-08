@@ -143,11 +143,10 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 			return null;
 		}
 
-		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(
-				groupId, fragmentEntryKey);
+				ParamUtil.getLong(resourceRequest, "groupId"),
+				fragmentEntryKey);
 
 		if (fragmentEntry == null) {
 			fragmentEntry =

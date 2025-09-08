@@ -71,7 +71,6 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 
 		String fragmentEntryKey = ParamUtil.getString(
 			actionRequest, "fragmentEntryKey");
-
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 
@@ -96,11 +95,10 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				fragmentRenderer.getType(), serviceContext);
 		}
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLinkManager.getFragmentEntry(
-				groupId, fragmentEntryKey, serviceContext.getLocale());
+				ParamUtil.getLong(actionRequest, "groupId"), fragmentEntryKey,
+				serviceContext.getLocale());
 
 		if ((fragmentEntry == null) && (fragmentRenderer == null)) {
 			throw new NoSuchEntryException();

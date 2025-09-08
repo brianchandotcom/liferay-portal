@@ -69,15 +69,14 @@ public class AddFragmentEntryLinkMVCActionCommand
 
 		String fragmentEntryKey = ParamUtil.getString(
 			actionRequest, "fragmentEntryKey");
-
-		FragmentRenderer fragmentRenderer =
-			_fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
-
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
 
 		if (fragmentRenderer != null) {
 			DefaultFragmentRendererContext defaultFragmentRendererContext =
@@ -94,11 +93,10 @@ public class AddFragmentEntryLinkMVCActionCommand
 				fragmentRenderer.getType(), serviceContext);
 		}
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLinkManager.getFragmentEntry(
-				groupId, fragmentEntryKey, serviceContext.getLocale());
+				ParamUtil.getLong(actionRequest, "groupId"), fragmentEntryKey,
+				serviceContext.getLocale());
 
 		if ((fragmentEntry == null) && (fragmentRenderer == null)) {
 			throw new NoSuchEntryException();

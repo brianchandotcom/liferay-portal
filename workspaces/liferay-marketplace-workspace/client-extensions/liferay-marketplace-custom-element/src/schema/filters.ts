@@ -344,8 +344,8 @@ const filterSchema = {
 			},
 			overrides(baseFilters.status, {
 				label: 'Trial Status',
-				name: 'orderStatusInfo/code',
-				operator: 'eq',
+				name: 'orderStatus',
+				operator: 'lambda',
 				options: [
 					{
 						label: i18n.translate('active'),

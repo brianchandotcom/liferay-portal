@@ -11,12 +11,28 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 	year: 'numeric',
 };
 
+function normalize(date: Date | string) {
+	return typeof date === 'string' ? new Date(date) : date;
+}
+
 export function formatDate(date: Date | string, fallback = 'N/A') {
 	try {
 		return new Intl.DateTimeFormat(
 			Liferay.ThemeDisplay.getBCP47LanguageId(),
 			dateOptions
-		).format(typeof date === 'string' ? new Date(date) : date);
+		).format(normalize(date));
+	}
+	catch {
+		return fallback;
+	}
+}
+
+export function formatDateTime(date: Date | string, fallback = 'N/A') {
+	try {
+		return new Intl.DateTimeFormat(
+			Liferay.ThemeDisplay.getBCP47LanguageId(),
+			{...dateOptions, hour: 'numeric', minute: 'numeric'}
+		).format(normalize(date));
 	}
 	catch {
 		return fallback;

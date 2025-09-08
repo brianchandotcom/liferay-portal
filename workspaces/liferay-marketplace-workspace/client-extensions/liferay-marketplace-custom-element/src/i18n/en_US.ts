@@ -120,6 +120,7 @@ export default {
 		'Cloud apps must state resource requirements. If your app has no additional CPU or Ram requirements please enter 0',
 	'cloud-compatible': 'Cloud Compatible?',
 	'cloud-license-usage-type': 'Cloud License Usage Type',
+	'cloud-project': 'Cloud Project',
 	'cloud-provisioning': 'Cloud Provisioning',
 	'cloud-upload': 'Cloud Upload',
 	'columns': 'Columns',

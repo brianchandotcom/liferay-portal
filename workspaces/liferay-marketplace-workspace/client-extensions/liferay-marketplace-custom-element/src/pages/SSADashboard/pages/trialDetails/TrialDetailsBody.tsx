@@ -8,11 +8,12 @@ import DOMPurify from 'dompurify';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import ExternalLink from '../../../../components/ExternalLink';
 import QATable, {Orientation} from '../../../../components/QATable';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import MarketplaceDeliveryOrder from '../../../../entity/MarketplaceDeliveryOrder';
 import {MarketplaceDeliveryProduct} from '../../../../entity/MarketplaceDeliveryProduct';
 import {OrderWorkflowStatusCode} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
-import {formatDate} from '../../../../utils/date';
+import {formatDate, formatDateTime} from '../../../../utils/date';
 import {useSSADashboardOutlet} from '../../SSADashboardOutlet';
 import ExtensionStatus from '../../components/ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../../components/TrialStatus/TrialStatus';
@@ -31,6 +32,10 @@ const TrialDetailsBody: React.FC<TrialDetailsBodyProps> = ({
 	placedOrder,
 	projectId,
 }) => {
+	const {properties} = useMarketplaceContext();
+
+	const ssaProject = `${properties.ssaProjectPrefix}-ext${projectId}`;
+
 	const {ssaTrialExtend} = useSSADashboardOutlet();
 
 	const extensionStatus =
@@ -137,7 +142,7 @@ const TrialDetailsBody: React.FC<TrialDetailsBodyProps> = ({
 						items={[
 							{
 								title: i18n.translate('trial-start-date'),
-								value: formatDate(
+								value: formatDateTime(
 									marketplaceOrder.customFields
 										.TRIAL_START_DATE
 								),
@@ -145,7 +150,7 @@ const TrialDetailsBody: React.FC<TrialDetailsBodyProps> = ({
 							},
 							{
 								title: i18n.translate('trial-end-date'),
-								value: formatDate(
+								value: formatDateTime(
 									marketplaceOrder.customFields.TRIAL_END_DATE
 								),
 								visible: !marketplaceOrder.isCancelled,
@@ -167,6 +172,17 @@ const TrialDetailsBody: React.FC<TrialDetailsBodyProps> = ({
 								visible:
 									OrderWorkflowStatusCode.IN_PROGRESS ===
 									placedOrder?.orderStatusInfo?.code,
+							},
+							{
+								title: i18n.translate('cloud-project'),
+								value: (
+									<ExternalLink
+										className="h5"
+										href={`${properties.cloudConsoleURL}/projects/${ssaProject}`}
+									>
+										{ssaProject}
+									</ExternalLink>
+								),
 							},
 							{
 								title: i18n.translate('trial-status'),

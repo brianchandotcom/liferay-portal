@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -1437,7 +1438,10 @@ public abstract class Base${schemaName}ResourceImpl
 
 	<#if generateGetPermissionCheckerMethodsByExternalReferenceCode>
 		protected Long getPermissionCheckerGroupId(String groupExternalReferenceCode) throws Exception {
-			throw new UnsupportedOperationException("This method needs to be implemented");
+			Group group = groupLocalService.getGroupByExternalReferenceCode(
+				groupExternalReferenceCode, contextCompany.getCompanyId());
+
+			return group.getGroupId();
 		}
 
 		protected Long getPermissionCheckerResourceId(String groupExternalReferenceCode, String externalReferenceCode) throws Exception {

@@ -35,11 +35,11 @@ public class FeatureFlagsBag {
 	}
 
 	public List<FeatureFlag> getFeatureFlags(Predicate<FeatureFlag> predicate) {
-		List<FeatureFlag> featureFlags = new ArrayList<>();
-
 		if (predicate == null) {
-			predicate = featureFlag -> true;
+			return new ArrayList<>(_featureFlagsMap.values());
 		}
+
+		List<FeatureFlag> featureFlags = new ArrayList<>();
 
 		for (FeatureFlag featureFlag : _featureFlagsMap.values()) {
 			if (predicate.test(featureFlag)) {

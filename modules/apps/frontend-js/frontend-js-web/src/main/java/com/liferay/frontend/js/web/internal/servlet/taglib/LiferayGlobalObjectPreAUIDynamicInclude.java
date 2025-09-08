@@ -405,7 +405,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 		for (FeatureFlag featureFlag :
 				_featureFlagManager.getFeatureFlags(
-					themeDisplay.getCompanyId(), featureFlag -> true)) {
+					themeDisplay.getCompanyId(), null)) {
 
 			sb.append(StringPool.APOSTROPHE);
 			sb.append(featureFlag.getKey());

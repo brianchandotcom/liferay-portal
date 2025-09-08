@@ -35,6 +35,12 @@ public class BaseNotificationSenderTest {
 
 	@Test
 	public void testGetNotificationRecipientsMap() throws Exception {
+		ExecutionContext executionContext = Mockito.mock(
+			ExecutionContext.class);
+
+		BaseNotificationSender baseNotificationSender = Mockito.spy(
+			BaseNotificationSender.class);
+
 		List<KaleoNotificationRecipient> kaleoNotificationRecipients =
 			new ArrayList<>();
 
@@ -54,12 +60,6 @@ public class BaseNotificationSenderTest {
 		);
 
 		kaleoNotificationRecipients.add(kaleoNotificationRecipient);
-
-		ExecutionContext executionContext = Mockito.mock(
-			ExecutionContext.class);
-
-		BaseNotificationSender baseNotificationSender = Mockito.spy(
-			BaseNotificationSender.class);
 
 		Map<NotificationReceptionType, Set<NotificationRecipient>>
 			notificationRecipientsMap =

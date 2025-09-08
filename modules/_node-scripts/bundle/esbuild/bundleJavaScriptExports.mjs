@@ -6,10 +6,10 @@
 import path from 'path';
 import Sonda from 'sonda/esbuild';
 
+import getProjectAlias from '../../configuration/getProjectAlias.mjs';
 import {
 	BUILD_MAIN_EXPORTS_PATH,
 	BUNDLE_REPORTS_PATH,
-	SRC_PATH,
 } from '../../util/constants.mjs';
 import getFlatName from '../../util/getFlatName.mjs';
 import getEntryPoint from './getEntryPoint.mjs';
@@ -50,9 +50,12 @@ async function bundle(
 	projectWebContextPath,
 	moduleName
 ) {
+	const projectAlias = await getProjectAlias();
+
 	const entryPoint = getEntryPoint(moduleName);
 
 	const esbuildConfig = {
+		alias: projectAlias,
 		bundle: true,
 		entryPoints: [entryPoint],
 		format: 'esm',
@@ -65,15 +68,6 @@ async function bundle(
 		sourcemap: true,
 		target: ['es2022'],
 	};
-
-	if (moduleName === 'ckeditor5') {
-		esbuildConfig.alias = {
-			'@ckeditor/ckeditor5-icons/dist/index.js': path.resolve(
-				SRC_PATH,
-				'./js/ckeditor5/icons.ts'
-			),
-		};
-	}
 
 	if (process.env.CREATE_BUNDLE_REPORTS) {
 		esbuildConfig.plugins.push(

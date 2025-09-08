@@ -6,9 +6,9 @@
 package com.liferay.depot.web.internal.item.selector.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.item.selector.DepotGroupItemSelectorCriterion;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -42,31 +42,35 @@ public class DepotItemSelectorViewTest {
 
 	@Test
 	public void testIsVisibleForAnUnsupportedApplication() {
-		GroupItemSelectorCriterion groupItemSelectorCriterion =
-			new GroupItemSelectorCriterion();
+		DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion =
+			new DepotGroupItemSelectorCriterion();
 
-		groupItemSelectorCriterion.setPortletId(RandomTestUtil.randomString());
+		depotGroupItemSelectorCriterion.setPortletId(
+			RandomTestUtil.randomString());
 
 		Assert.assertFalse(
-			_depotItemSelectorView.isVisible(groupItemSelectorCriterion, null));
+			_depotItemSelectorView.isVisible(
+				depotGroupItemSelectorCriterion, null));
 	}
 
 	@Test
 	public void testIsVisibleForASupportedApplication() {
-		GroupItemSelectorCriterion groupItemSelectorCriterion =
-			new GroupItemSelectorCriterion();
+		DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion =
+			new DepotGroupItemSelectorCriterion();
 
-		groupItemSelectorCriterion.setPortletId(
+		depotGroupItemSelectorCriterion.setPortletId(
 			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 
 		Assert.assertTrue(
-			_depotItemSelectorView.isVisible(groupItemSelectorCriterion, null));
+			_depotItemSelectorView.isVisible(
+				depotGroupItemSelectorCriterion, null));
 	}
 
 	@Inject(
 		filter = "component.name=com.liferay.depot.web.internal.item.selector.DepotItemSelectorView"
 	)
-	private ItemSelectorView<GroupItemSelectorCriterion> _depotItemSelectorView;
+	private ItemSelectorView<DepotGroupItemSelectorCriterion>
+		_depotItemSelectorView;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

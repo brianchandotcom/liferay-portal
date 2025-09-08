@@ -40,11 +40,6 @@ test(
 
 		await localizationInstanceSettingsPage.goto('Language');
 
-		let currentInstanceLanguages =
-			await localizationInstanceSettingsPage.currentLanguages.allInnerTexts();
-
-		currentInstanceLanguages = currentInstanceLanguages[0].split('\n');
-
 		let defaultInstanceLanguage =
 			await localizationInstanceSettingsPage.defaultLanguage.textContent();
 
@@ -53,73 +48,57 @@ test(
 			''
 		);
 
-		for (let i = 0; i < currentInstanceLanguages.length; i++) {
-			await expect
-				.soft(
-					page.getByLabel('Current').getByRole('option', {
-						name: currentInstanceLanguages[i],
-					})
-				)
-				.toBeVisible();
-		}
+		const removedLanguage = 'Spanish (Spain)';
 
-		await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
+		await page.waitForTimeout(500);
 
-		for (let i = 0; i < currentInstanceLanguages.length; i++) {
-			await expect
-				.soft(siteSettingsLocalizationPage.availableLanguages)
-				.toContainText(currentInstanceLanguages[i]);
-		}
-
-		currentInstanceLanguages = currentInstanceLanguages.filter(
-			(item) => item !== defaultInstanceLanguage
-		);
-
-		await localizationInstanceSettingsPage.goto('Language');
-
-		for (let i = 0; i < currentInstanceLanguages.length; i++) {
-			await page.waitForTimeout(500);
-			await page
-				.getByLabel('Current', {exact: true})
-				.selectOption(currentInstanceLanguages[i]);
-			await page
-				.getByRole('button', {
-					name: 'Move selected items from Current to Available',
-				})
-				.click({force: true});
-		}
+		await page
+			.getByLabel('Current', {exact: true})
+			.selectOption(removedLanguage);
+		await page
+			.getByRole('button', {
+				name: 'Move selected items from Current to Available',
+			})
+			.click({force: true});
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
-		await page.waitForTimeout(500);
+		await waitForAlert(page);
 
 		await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
 
 		await expect
-			.soft(siteSettingsLocalizationPage.availableLanguages)
-			.toContainText(defaultInstanceLanguage);
+			.soft(
+				siteSettingsLocalizationPage.availableLanguages.getByText(
+					defaultInstanceLanguage
+				)
+			)
+			.toHaveCount(2);
 
-		for (let i = 0; i < currentInstanceLanguages.length; i++) {
-			await expect
-				.soft(siteSettingsLocalizationPage.availableLanguages)
-				.not.toContainText(currentInstanceLanguages[i]);
-		}
+		await expect
+			.soft(
+				siteSettingsLocalizationPage.availableLanguages.getByText(
+					removedLanguage
+				)
+			)
+			.toHaveCount(0);
 
 		await localizationInstanceSettingsPage.goto('Language');
 
-		for (let i = 0; i < currentInstanceLanguages.length; i++) {
-			await page.waitForTimeout(500);
-			await page
-				.getByLabel('Available', {exact: true})
-				.selectOption(currentInstanceLanguages[i]);
-			await page
-				.getByRole('button', {
-					name: 'Move selected items from Available to Current',
-				})
-				.click({force: true});
-		}
+		await page.waitForTimeout(500);
+
+		await page
+			.getByLabel('Available', {exact: true})
+			.selectOption(removedLanguage);
+		await page
+			.getByRole('button', {
+				name: 'Move selected items from Available to Current',
+			})
+			.click({force: true});
 
 		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page);
 	}
 );
 

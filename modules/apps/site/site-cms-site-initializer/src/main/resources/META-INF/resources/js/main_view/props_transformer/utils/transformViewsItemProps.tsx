@@ -10,7 +10,7 @@ import React from 'react';
 import dateFormat from '../../../common/utils/dateFormat';
 import formatActionURL from '../../../common/utils/formatActionURL';
 
-import '../../../../css/props_transformer/ObjectDefinitionsIcons.scss';
+import '../../../../css/props_transformer/TransformViewsItemProps.scss';
 
 type Card = React.ComponentProps<typeof Card> & {
 	actions: {data: {id: string}; href?: string}[];

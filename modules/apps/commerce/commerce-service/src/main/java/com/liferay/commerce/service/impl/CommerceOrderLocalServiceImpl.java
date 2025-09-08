@@ -2525,22 +2525,31 @@ public class CommerceOrderLocalServiceImpl
 			CommerceOrderTable.INSTANCE.groupId.eq(groupId)
 		);
 
-		if (ArrayUtil.isNotEmpty(commerceAccountIds)) {
-			predicate = predicate.and(
-				CommerceOrderTable.INSTANCE.commerceAccountId.in(
-					ArrayUtil.toArray(commerceAccountIds)));
-		}
-
-		if (ArrayUtil.isNotEmpty(orderStatuses)) {
-			Predicate orderStatusPredicate =
-				CommerceOrderTable.INSTANCE.orderStatus.in(
-					ArrayUtil.toArray(orderStatuses));
-
-			if (excludeOrderStatus) {
-				predicate = predicate.and(orderStatusPredicate.not());
+		if (commerceAccountIds != null) {
+			if (commerceAccountIds.length == 0) {
+				predicate = predicate.and(
+					CommerceOrderTable.INSTANCE.commerceAccountId.isNull());
 			}
 			else {
-				predicate = predicate.and(orderStatusPredicate);
+				predicate = predicate.and(
+					CommerceOrderTable.INSTANCE.commerceAccountId.in(
+						ArrayUtil.toArray(commerceAccountIds)));
+			}
+		}
+
+		if (orderStatuses != null) {
+			if (orderStatuses.length == 0) {
+				predicate = predicate.and(
+					CommerceOrderTable.INSTANCE.orderStatus.isNull());
+			}
+			else {
+				Predicate orderStatusPredicate =
+					CommerceOrderTable.INSTANCE.orderStatus.in(
+						ArrayUtil.toArray(orderStatuses));
+
+				predicate = predicate.and(
+					excludeOrderStatus ? orderStatusPredicate.not() :
+						orderStatusPredicate);
 			}
 		}
 

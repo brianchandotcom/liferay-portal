@@ -33,10 +33,7 @@ import isFileDropEnabled from './utils/isFileDropEnabled';
 
 import './styles/main.scss';
 import DnDContext from './DnDContext';
-import FrontendDataSetContext, {
-	IDataSetData,
-	TRenderer,
-} from './FrontendDataSetContext';
+import FrontendDataSetContext from './FrontendDataSetContext';
 import useFDSDrop from './dnd/useFDSDrop';
 import useFileUploader from './dnd/useFileUploader';
 import EmptyState from './empty_state/EmptyState';
@@ -71,6 +68,7 @@ import {writeStateInURL} from './utils/stateInURL';
 import {
 	EStateInURLKeys,
 	EStateInURLSettings,
+	IDataSetData,
 	IField,
 	IFrontendDataSetProps,
 	IModalConfig,
@@ -78,6 +76,7 @@ import {
 	IStateInURL,
 	ISuccessNotification,
 	IView,
+	TRenderer,
 	TSort,
 } from './utils/types';
 import useGetStateFromURL from './utils/useGetStateFromURL';

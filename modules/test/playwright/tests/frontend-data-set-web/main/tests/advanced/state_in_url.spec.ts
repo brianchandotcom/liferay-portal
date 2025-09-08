@@ -24,8 +24,8 @@ const test = mergeTests(
 	fdsSamplePageTest,
 	frontendSPAInfrastructureConfigurationTest,
 	featureFlagsTest({
-		'LPS-178052': {enabled: true},
 		'LPD-22473': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest()
@@ -97,18 +97,18 @@ const changeDelta = async (
 
 const spaConfigurations = [
 	{
-		name: 'SPA is disabled',
 		configure: async ({frontendSPAInfrastructureConfigurationPage}) => {
 			await frontendSPAInfrastructureConfigurationPage.goto();
 			await frontendSPAInfrastructureConfigurationPage.disableSPA();
 		},
+		name: 'SPA is disabled',
 	},
 	{
-		name: 'SPA is enabled',
 		configure: async ({frontendSPAInfrastructureConfigurationPage}) => {
 			await frontendSPAInfrastructureConfigurationPage.goto();
 			await frontendSPAInfrastructureConfigurationPage.enableSPA();
 		},
+		name: 'SPA is enabled',
 	},
 ];
 
@@ -193,7 +193,7 @@ for (const spaConfiguration of spaConfigurations) {
 		test(
 			'URL in state, push history, view name',
 			{tag: '@LPD-20947'},
-			async ({fdsSamplePage, page}, testData) => {
+			async ({fdsSamplePage, page}) => {
 				const checkView = (visualizationMode: EFDSVisualizationMode) =>
 					assertView(
 						'advanced',
@@ -265,7 +265,7 @@ for (const spaConfiguration of spaConfigurations) {
 		test(
 			'URL in state, replace history',
 			{tag: '@LPD-20947'},
-			async ({fdsSamplePage, page}, testData) => {
+			async ({fdsSamplePage, page}) => {
 				const checkDelta = (delta) =>
 					assertDelta(
 						delta,
@@ -325,7 +325,7 @@ for (const spaConfiguration of spaConfigurations) {
 		test(
 			'URL in state is turned off by default',
 			{tag: '@LPD-20947'},
-			async ({fdsSamplePage, page}, testData) => {
+			async ({fdsSamplePage, page}) => {
 				await test.step('Change to single selection tab', async () => {
 					await fdsSamplePage.selectTab('Single Selection');
 					await waitForFDS({

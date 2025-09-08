@@ -30,7 +30,7 @@ public class BuildJSONObject extends JSONObject {
 	public BuildJSONObject(String source) {
 		super(source);
 
-		_topLevelBuildURL = _getTopLevelBuildURL();
+		_topLevelBuildUrl = _getTopLevelBuildURL();
 	}
 
 	public long getDuration() {
@@ -82,12 +82,12 @@ public class BuildJSONObject extends JSONObject {
 		return optLong("startTime");
 	}
 
-	public String getTestrayBuildUrl() {
+	public String getTestrayBuildURL() {
 		return optString("testrayBuildURL");
 	}
 
 	public String getTopLevelBuildURL() {
-		return _topLevelBuildURL;
+		return _topLevelBuildUrl;
 	}
 
 	public String getURL() {
@@ -155,6 +155,6 @@ public class BuildJSONObject extends JSONObject {
 			"(?<jobName>[\\w\\-\\(\\)]+)\\/(?<buildNumber>[\\d]+)"));
 
 	private String _startDateString;
-	private final String _topLevelBuildURL;
+	private final String _topLevelBuildUrl;
 
 }

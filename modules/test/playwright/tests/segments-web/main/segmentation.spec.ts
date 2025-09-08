@@ -1677,7 +1677,7 @@ test(
 			options: {type: 'content'},
 			title: getRandomString(),
 		});
-		
+
 		const mockAddress = '?mockIPGeocoderRemoteAddr=57.78.128.0';
 
 		const segmentName = 'IP Geocoder Country Segment';
@@ -1707,11 +1707,20 @@ test(
 
 			await pageEditorPage.createExperience('Experience Content Page');
 
-			await expect(page.getByLabel('Experience: Experience Content Page')).toBeVisible();
+			await expect(
+				page.getByLabel('Experience: Experience Content Page')
+			).toBeVisible();
 
-			await pageEditorPage.editExperienceSegment('Experience Content Page', 'IP Geocoder Country Segment');
+			await pageEditorPage.editExperienceSegment(
+				'Experience Content Page',
+				'IP Geocoder Country Segment'
+			);
 
-			await pageEditorPage.editTextEditable(headingId, 'element-text', 'Spanish Segment Heading');
+			await pageEditorPage.editTextEditable(
+				headingId,
+				'element-text',
+				'Spanish Segment Heading'
+			);
 		});
 
 		await test.step('Prioritize experience and publish', async () => {
@@ -1729,9 +1738,13 @@ test(
 		});
 
 		await test.step('Validate correct experience is displayed using a spanish IP address', async () => {
-			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}${mockAddress}`);
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyURL}${mockAddress}`
+			);
 
-			await expect(page.getByText('Spanish Segment Heading')).toBeVisible();
+			await expect(
+				page.getByText('Spanish Segment Heading')
+			).toBeVisible();
 		});
 	}
 );

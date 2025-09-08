@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
 		`.${configuration.targetWrapper} h1, .${configuration.targetWrapper} h2, .${configuration.targetWrapper} h3`
 	);
 
-	if (headers.length === 0) {
+	if (!headers.length) {
 		return;
 	}
 

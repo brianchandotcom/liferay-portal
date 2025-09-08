@@ -1,5 +1,5 @@
 .cp-article-side-panel {
-	.active .panel-header-link, .active.cp-article-side-panel-item, .cp-article-side-panel-item:hover, .panel-header-link:hover {
+	.active > .panel-header-link, .active.cp-article-side-panel-item, .cp-article-side-panel-item:hover, .panel-header-link:hover {
 		background-color: var(--color-action-primary-active-lighten, #E6EDFB);
 		color: var(--color-action-primary-active, #004AD7);
 	}

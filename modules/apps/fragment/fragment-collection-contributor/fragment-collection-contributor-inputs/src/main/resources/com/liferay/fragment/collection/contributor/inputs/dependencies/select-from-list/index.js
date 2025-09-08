@@ -467,6 +467,7 @@ function filterRemoteOptions(query, abortController) {
 
 	const url = new URL(input.attributes.relationshipURL);
 	url.searchParams.set('search', query);
+	url.searchParams.set('pageSize', 0);
 
 	return Liferay.Util.fetch(url, {
 		headers: new Headers({

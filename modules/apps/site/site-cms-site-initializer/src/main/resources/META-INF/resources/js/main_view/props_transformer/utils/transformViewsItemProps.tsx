@@ -72,7 +72,7 @@ const getFileMimeTypeObjectDefinitionStickerValue = (
 	objectDefinitionValues: Record<string, string>
 ) => {
 	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
-		return '';
+		return 'folder';
 	}
 
 	const objectDefinitionExternalReferenceCode =

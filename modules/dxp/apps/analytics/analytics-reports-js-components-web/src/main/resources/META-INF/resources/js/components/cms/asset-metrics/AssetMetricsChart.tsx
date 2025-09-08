@@ -165,7 +165,7 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({
 	];
 
 	return (
-		<>
+		<div data-testid="asset-metric-chart">
 			<span className="text-3 text-nowrap text-secondary">
 				{MetricsTitle[histogram.metricName as MetricName]}
 			</span>
@@ -264,7 +264,7 @@ const AssetMetricsChart: React.FC<ICommonProps> = ({
 				)}
 				data-testid="metrics-chart-data"
 			/>
-		</>
+		</div>
 	);
 };
 

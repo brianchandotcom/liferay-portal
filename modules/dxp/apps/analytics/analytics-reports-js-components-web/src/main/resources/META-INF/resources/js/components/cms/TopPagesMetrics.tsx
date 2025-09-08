@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Text} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTable from '@clayui/table';
@@ -14,6 +16,7 @@ import useFetch from '../../hooks/useFetch';
 import {MetricType} from '../../types/global';
 import {buildQueryString} from '../../utils/buildQueryString';
 import {getPercentage, toThousands} from '../../utils/math';
+import EmptyState from '../EmptyState';
 import Title from '../Title';
 
 export type Metric = {
@@ -53,65 +56,50 @@ const TopPagesMetricsTable: React.FC<TopPagesMetricsTableProps> = ({data}) => {
 	}));
 
 	return (
-		<div className="align-items-center justify-content-around mt-3">
-			<Title
-				section
-				value={Liferay.Language.get('top-pages-asset-appears-on')}
-			/>
+		<ClayTable hover={false} responsive>
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell headingCell noWrap>
+						<span>{Liferay.Language.get('page-title')}</span>
+					</ClayTable.Cell>
 
-			<div className="mb-3">
-				<span className="text-3 text-secondary">
-					{Liferay.Language.get(
-						'this-metric-calculates-the-top-three-pages-that-generated-the-highest-number-of-views-for-the-asset'
-					)}
-				</span>
-			</div>
+					<ClayTable.Cell headingCell>
+						{Liferay.Language.get('views')}
+					</ClayTable.Cell>
 
-			<ClayTable hover={false} responsive>
-				<ClayTable.Head>
-					<ClayTable.Row>
-						<ClayTable.Cell headingCell noWrap>
-							<span>{Liferay.Language.get('page-title')}</span>
+					<ClayTable.Cell headingCell>
+						{sub(Liferay.Language.get('x-of-x'), [
+							'%',
+							Liferay.Language.get('views'),
+						])}
+					</ClayTable.Cell>
+				</ClayTable.Row>
+			</ClayTable.Head>
+
+			<ClayTable.Body>
+				{formattedData.map((row) => (
+					<ClayTable.Row key={row.page}>
+						<ClayTable.Cell>
+							<ClayLink
+								displayType="tertiary"
+								href={row.link}
+								weight="semi-bold"
+							>
+								{row.page}
+							</ClayLink>
 						</ClayTable.Cell>
 
-						<ClayTable.Cell headingCell>
-							{Liferay.Language.get('views')}
+						<ClayTable.Cell align="right">
+							{row.count}
 						</ClayTable.Cell>
 
-						<ClayTable.Cell headingCell>
-							{sub(Liferay.Language.get('x-of-x'), [
-								'%',
-								Liferay.Language.get('views'),
-							])}
+						<ClayTable.Cell align="right">
+							{row.percentage}
 						</ClayTable.Cell>
 					</ClayTable.Row>
-				</ClayTable.Head>
-
-				<ClayTable.Body>
-					{formattedData.map((row) => (
-						<ClayTable.Row key={row.page}>
-							<ClayTable.Cell>
-								<ClayLink
-									displayType="tertiary"
-									href={row.link}
-									weight="semi-bold"
-								>
-									{row.page}
-								</ClayLink>
-							</ClayTable.Cell>
-
-							<ClayTable.Cell align="right">
-								{row.count}
-							</ClayTable.Cell>
-
-							<ClayTable.Cell align="right">
-								{row.percentage}
-							</ClayTable.Cell>
-						</ClayTable.Row>
-					))}
-				</ClayTable.Body>
-			</ClayTable>
-		</div>
+				))}
+			</ClayTable.Body>
+		</ClayTable>
 	);
 };
 
@@ -128,15 +116,55 @@ const TopPagesMetrics: React.FC = () => {
 		`/o/analytics-cms-rest/v1.0/object-entry-top-pages${queryString}`
 	);
 
-	if (loading) {
-		return <ClayLoadingIndicator className="my-5" />;
-	}
+	return (
+		<section className="mt-3 tab-focus" tabIndex={0}>
+			<Title
+				section
+				value={Liferay.Language.get('top-pages-asset-appears-on')}
+			/>
 
-	if (!data) {
-		return null;
-	}
+			<Text
+				aria-labelledby={Liferay.Language.get(
+					'this-metric-calculates-the-top-three-pages-that-generated-the-highest-number-of-views-for-the-asset'
+				)}
+				color="secondary"
+				size={3}
+				weight="normal"
+			>
+				{Liferay.Language.get(
+					'this-metric-calculates-the-top-three-pages-that-generated-the-highest-number-of-views-for-the-asset'
+				)}
+			</Text>
 
-	return <TopPagesMetricsTable data={data} />;
+			{loading ? (
+				<ClayLoadingIndicator className="my-6" data-testid="loading" />
+			) : data?.totalCount ? (
+				<TopPagesMetricsTable data={data} />
+			) : (
+				<EmptyState
+					className="pb-6"
+					description={Liferay.Language.get(
+						'there-is-no-data-available-for-the-applied-filters-or-from-the-data-source'
+					)}
+					maxWidth={320}
+					title={Liferay.Language.get('no-data-available-yet')}
+				>
+					<ClayLink target="_blank">
+						<span className="mr-1">
+
+							{/* TODO: Add link to the documentation when it is done. */}
+
+							{Liferay.Language.get(
+								'learn-more-about-asset-performance'
+							)}
+						</span>
+
+						<ClayIcon fontSize={12} symbol="shortcut" />
+					</ClayLink>
+				</EmptyState>
+			)}
+		</section>
+	);
 };
 
-export {TopPagesMetrics, TopPagesMetricsTable};
+export {TopPagesMetrics};

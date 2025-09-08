@@ -241,11 +241,6 @@ test('Check space selection via modal in autocomplete input', async ({
 			type: 'Space',
 		});
 
-	apiHelpers.data.push({
-		id: assetLibrary.id,
-		type: 'assetLibrary',
-	});
-
 	const inputGroupLabel =
 		'Item selector pops up modal on button click autocomplete (Spaces)';
 
@@ -281,11 +276,6 @@ test('Check space selection via modal in multiselect input', async ({
 			settings: {},
 			type: 'Space',
 		});
-
-	apiHelpers.data.push({
-		id: assetLibrary.id,
-		type: 'assetLibrary',
-	});
 
 	const inputGroupLabel =
 		'Multiple Select Item selector pops up modal on button click (Spaces)';

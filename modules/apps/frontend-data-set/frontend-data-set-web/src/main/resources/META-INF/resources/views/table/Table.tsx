@@ -22,7 +22,6 @@ import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
-	TRenderer,
 } from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
@@ -36,7 +35,13 @@ import {
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
 import {getInputRendererById} from '../../utils/renderer';
-import {IItemsActions, ITableSchema, IView, TSort} from '../../utils/types';
+import {
+	IItemsActions,
+	ITableSchema,
+	IView,
+	TRenderer,
+	TSort,
+} from '../../utils/types';
 import ViewsContext, {
 	IViewsContext,
 	TViewsContextDispatch,

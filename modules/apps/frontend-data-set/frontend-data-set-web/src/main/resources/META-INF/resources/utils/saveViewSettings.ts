@@ -8,18 +8,31 @@ import {fetch} from 'frontend-js-web';
 
 import {logError} from './logError';
 
-export function saveViewSettings({appURL, id, portletId, settings}) {
+export function saveViewSettings({
+	appURL,
+	id,
+	portletId,
+	settings,
+}: {
+	appURL?: string;
+	id?: string;
+	portletId?: string;
+	settings: any;
+}) {
 	if (!appURL) {
 		return;
 	}
 
 	const url = new URL(`${appURL}/data-set/${id}/save-active-view-settings`);
 
-	url.searchParams.append('groupId', Liferay.ThemeDisplay.getScopeGroupId());
-	url.searchParams.append('plid', Liferay.ThemeDisplay.getPlid());
-	url.searchParams.append('portletId', portletId);
+	url.searchParams.append(
+		'groupId',
+		String(Liferay.ThemeDisplay.getScopeGroupId())
+	);
+	url.searchParams.append('plid', String(Liferay.ThemeDisplay.getPlid()));
+	url.searchParams.append('portletId', portletId ?? '');
 
-	return fetch(url, {
+	return fetch(url.toString(), {
 		body: JSON.stringify(settings),
 		headers: {
 			'Accept': 'application/json',

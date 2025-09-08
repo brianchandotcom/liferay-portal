@@ -652,7 +652,7 @@
 			"enableComments": false,
 			"enableFriendlyURLCustomization": false,
 			"enableIndexSearch": false,
-			"enableLocalization": false,
+			"enableLocalization": true,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
 			"enableObjectEntryVersioning": false,
@@ -660,7 +660,7 @@
 			"label": {
 				"en_US": "CMS Default Permission"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "CMSDefaultPermission",
 			"objectActions": [
 			],

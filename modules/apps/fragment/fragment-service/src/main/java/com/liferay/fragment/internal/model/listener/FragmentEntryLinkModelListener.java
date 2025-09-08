@@ -13,13 +13,10 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.util.InfoFieldUtil;
-import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -42,7 +39,11 @@ public class FragmentEntryLinkModelListener
 	public void onBeforeCreate(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
-		_processInfoFields(fragmentEntryLink);
+		List<InfoField<?>> infoFields = _getInfoFields(fragmentEntryLink);
+
+		fragmentEntryLink.setEditableValues(
+			_escapeTextEditableValues(
+				fragmentEntryLink.getEditableValuesJSONObject(), infoFields));
 	}
 
 	@Override
@@ -58,7 +59,11 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
-		_processInfoFields(fragmentEntryLink);
+		List<InfoField<?>> infoFields = _getInfoFields(fragmentEntryLink);
+
+		fragmentEntryLink.setEditableValues(
+			_escapeTextEditableValues(
+				fragmentEntryLink.getEditableValuesJSONObject(), infoFields));
 	}
 
 	private String _escapeTextEditableValues(
@@ -139,47 +144,15 @@ public class FragmentEntryLinkModelListener
 	}
 
 	private List<InfoField<?>> _getInfoFields(
-			FragmentEntryLink fragmentEntryLink)
-		throws Exception {
+		FragmentEntryLink fragmentEntryLink) {
 
 		List<InfoField<?>> infoFields = new ArrayList<>();
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			fragmentEntryLink.getPlid());
-
-		if (layout == null) {
-			return infoFields;
-		}
-
-		try (AutoCloseable autoCloseable =
-				_layoutServiceContextHelper.getServiceContextAutoCloseable(
-					layout)) {
-
-			InfoFieldUtil.forEachInfoField(
-				fragmentEntryLink, _fragmentRendererController,
-				(name, infoField, unsafeSupplier) -> infoFields.add(infoField));
-		}
+		InfoFieldUtil.forEachInfoField(
+			fragmentEntryLink, _fragmentRendererController,
+			(name, infoField, unsafeSupplier) -> infoFields.add(infoField));
 
 		return infoFields;
-	}
-
-	private void _processInfoFields(FragmentEntryLink fragmentEntryLink) {
-		List<InfoField<?>> infoFields;
-
-		try {
-			infoFields = _getInfoFields(fragmentEntryLink);
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
-
-		if (infoFields.isEmpty()) {
-			return;
-		}
-
-		fragmentEntryLink.setEditableValues(
-			_escapeTextEditableValues(
-				fragmentEntryLink.getEditableValuesJSONObject(), infoFields));
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
@@ -191,11 +164,5 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 }

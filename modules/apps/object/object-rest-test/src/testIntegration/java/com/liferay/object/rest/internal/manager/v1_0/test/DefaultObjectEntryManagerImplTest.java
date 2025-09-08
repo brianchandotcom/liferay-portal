@@ -3061,7 +3061,12 @@ public class DefaultObjectEntryManagerImplTest
 		_enableObjectEntryVersioning();
 
 		ObjectEntry objectEntry = _updateObjectEntryVersion(
-			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			_objectDefinition1,
+			_addObjectEntry(
+				_objectDefinition1,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, 1),
 			2);
 
 		ObjectEntry copyObjectEntry1 =
@@ -3083,7 +3088,12 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectEntry = _updateObjectEntryVersion(
 			_objectDefinition4,
-			_addObjectEntry(_objectDefinition4, _group.getGroupKey(), 1), 2);
+			_addObjectEntry(
+				_objectDefinition4,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				_group.getGroupKey(), 1),
+			2);
 
 		ObjectEntry copyObjectEntry2 =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
@@ -3378,7 +3388,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_enableObjectEntryVersioning();
 
-		ObjectEntry objectEntry1 = _addObjectEntry(_objectDefinition1, null, 1);
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			_objectDefinition1,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, 1);
 
 		AssertUtils.assertFailure(
 			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
@@ -3417,7 +3430,9 @@ public class DefaultObjectEntryManagerImplTest
 		// Site scope
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
-			_objectDefinition4, _group.getGroupKey(), 1);
+			_objectDefinition4,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			_group.getGroupKey(), 1);
 
 		AssertUtils.assertFailure(
 			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
@@ -3894,7 +3909,12 @@ public class DefaultObjectEntryManagerImplTest
 		_enableObjectEntryVersioning();
 
 		ObjectEntry objectEntry = _updateObjectEntryVersion(
-			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			_objectDefinition1,
+			_addObjectEntry(
+				_objectDefinition1,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, 1),
 			2);
 
 		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
@@ -3929,7 +3949,12 @@ public class DefaultObjectEntryManagerImplTest
 		_enableObjectEntryVersioning();
 
 		ObjectEntry objectEntry = _updateObjectEntryVersion(
-			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			_objectDefinition1,
+			_addObjectEntry(
+				_objectDefinition1,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, 1),
 			2);
 
 		_assertObjectEntryStatus(
@@ -3955,7 +3980,12 @@ public class DefaultObjectEntryManagerImplTest
 			WorkflowConstants.STATUS_APPROVED, status.getCode());
 
 		objectEntry = _updateObjectEntryVersion(
-			_objectDefinition1, _addObjectEntry(_objectDefinition1, null, 1),
+			_objectDefinition1,
+			_addObjectEntry(
+				_objectDefinition1,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, 1),
 			2);
 
 		_assertObjectEntryStatus(
@@ -3984,7 +4014,12 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectEntry = _updateObjectEntryVersion(
 			_objectDefinition4,
-			_addObjectEntry(_objectDefinition4, _group.getGroupKey(), 1), 2);
+			_addObjectEntry(
+				_objectDefinition4,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				_group.getGroupKey(), 1),
+			2);
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_EXPIRED,
@@ -4011,7 +4046,12 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectEntry = _updateObjectEntryVersion(
 			_objectDefinition4,
-			_addObjectEntry(_objectDefinition4, _group.getGroupKey(), 1), 2);
+			_addObjectEntry(
+				_objectDefinition4,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				_group.getGroupKey(), 1),
+			2);
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_EXPIRED,
@@ -5560,7 +5600,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_enableObjectEntryVersioning();
 
-		ObjectEntry objectEntry = _addObjectEntry(_objectDefinition1, null, 1);
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition1,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, 1);
 
 		_assertObjectEntry(
 			objectEntry,
@@ -5578,7 +5621,9 @@ public class DefaultObjectEntryManagerImplTest
 		// Site scope
 
 		objectEntry = _addObjectEntry(
-			_objectDefinition4, _group.getGroupKey(), 1);
+			_objectDefinition4,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			_group.getGroupKey(), 1);
 
 		_assertObjectEntry(
 			objectEntry,
@@ -6034,7 +6079,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_enableObjectEntryVersioning();
 
-		ObjectEntry objectEntry1 = _addObjectEntry(_objectDefinition1, null, 1);
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			_objectDefinition1,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, 1);
 
 		Page<ObjectEntry> page =
 			_defaultObjectEntryManager.getVersionedObjectEntries(
@@ -6068,7 +6116,9 @@ public class DefaultObjectEntryManagerImplTest
 		// Site scope
 
 		objectEntry1 = _addObjectEntry(
-			_objectDefinition4, _group.getGroupKey(), 1);
+			_objectDefinition4,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			_group.getGroupKey(), 1);
 
 		page = _defaultObjectEntryManager.getVersionedObjectEntries(
 			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
@@ -6104,7 +6154,10 @@ public class DefaultObjectEntryManagerImplTest
 	public void testMoveObjectEntryToTrash() throws Exception {
 		_enableObjectEntryVersioning();
 
-		ObjectEntry objectEntry = _addObjectEntry(_objectDefinition1, null, 1);
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition1,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, 1);
 
 		_updateObjectEntryVersion(_objectDefinition1, objectEntry, 2);
 
@@ -6144,7 +6197,7 @@ public class DefaultObjectEntryManagerImplTest
 	public void testPartialUpdateObjectEntry() throws Exception {
 		LocalDateTime nowLocalDateTime = LocalDateTime.now();
 
-		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+		ObjectEntry objectEntry1 = _defaultObjectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
@@ -6229,7 +6282,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.partialUpdateObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition2,
-				objectEntry.getId(),
+				objectEntry1.getId(),
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>putAll(
@@ -6264,7 +6317,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.partialUpdateObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition2,
-				objectEntry.getId(),
+				objectEntry1.getId(),
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
@@ -6299,7 +6352,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.partialUpdateObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition2,
-				objectEntry.getId(),
+				objectEntry1.getId(),
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
@@ -6326,7 +6379,7 @@ public class DefaultObjectEntryManagerImplTest
 		assertEquals(
 			_defaultObjectEntryManager.partialUpdateObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition2,
-				objectEntry.getId(),
+				objectEntry1.getId(),
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
@@ -6347,6 +6400,58 @@ public class DefaultObjectEntryManagerImplTest
 						parentObjectEntry2.getExternalReferenceCode()
 					).put(
 						_objectRelationshipFieldName, parentObjectEntry2.getId()
+					).build();
+				}
+			});
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(_group.getGroupId());
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			_objectDefinition4, objectEntryFolder.getObjectEntryFolderId(),
+			_group.getGroupKey(), 1);
+
+		String textObjectFieldValue = RandomTestUtil.randomString();
+
+		assertEquals(
+			_defaultObjectEntryManager.partialUpdateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition4,
+				objectEntry2.getId(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", textObjectFieldValue
+						).build();
+					}
+				}),
+			new ObjectEntry() {
+				{
+					objectEntryFolderId =
+						objectEntryFolder.getObjectEntryFolderId();
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", textObjectFieldValue
+					).build();
+				}
+			});
+
+		assertEquals(
+			_defaultObjectEntryManager.partialUpdateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition4,
+				objectEntry2.getId(),
+				new ObjectEntry() {
+					{
+						objectEntryFolderId =
+							ObjectEntryFolderConstants.
+								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT;
+					}
+				}),
+			new ObjectEntry() {
+				{
+					objectEntryFolderId =
+						ObjectEntryFolderConstants.
+							PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT;
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", textObjectFieldValue
 					).build();
 				}
 			});
@@ -6616,7 +6721,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_enableObjectEntryVersioning();
 
-		ObjectEntry objectEntry1 = _addObjectEntry(_objectDefinition1, null, 1);
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			_objectDefinition1,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, 1);
 
 		_updateObjectEntryVersion(_objectDefinition1, objectEntry1, 2);
 
@@ -6647,7 +6755,9 @@ public class DefaultObjectEntryManagerImplTest
 		// Site scope
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
-			_objectDefinition4, _group.getGroupKey(), 1);
+			_objectDefinition4,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			_group.getGroupKey(), 1);
 
 		_updateObjectEntryVersion(_objectDefinition4, objectEntry2, 2);
 
@@ -6682,7 +6792,10 @@ public class DefaultObjectEntryManagerImplTest
 	public void testRestoreObjectEntryFromTrash() throws Exception {
 		_enableObjectEntryVersioning();
 
-		ObjectEntry objectEntry = _addObjectEntry(_objectDefinition1, null, 1);
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition1,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, 1);
 
 		_updateObjectEntryVersion(_objectDefinition1, objectEntry, 2);
 
@@ -7155,7 +7268,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testUpdateObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
@@ -7198,7 +7311,7 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"en_US", objectEntry.getId());
+			"en_US", objectEntry1.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
 				_localizedMultiselectPicklistObjectFieldName,
@@ -7226,7 +7339,7 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"pt_BR", objectEntry.getId());
+			"pt_BR", objectEntry1.getId());
 
 		_localizedObjectFieldI18nValues = HashMapBuilder.<String, Object>put(
 			"localizedLongTextObjectFieldName_i18n",
@@ -7243,7 +7356,7 @@ public class DefaultObjectEntryManagerImplTest
 		).build();
 
 		_updateLocalizedObjectEntryValues(
-			_objectDefinition2, objectEntry.getId(),
+			_objectDefinition2, objectEntry1.getId(),
 			_localizedObjectFieldI18nValues);
 
 		_localizedObjectFieldI18nValues.putAll(
@@ -7273,7 +7386,7 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"ar_SA", objectEntry.getId());
+			"ar_SA", objectEntry1.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
 				"localizedBooleanObjectFieldName", false
@@ -7289,7 +7402,7 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"en_US", objectEntry.getId());
+			"en_US", objectEntry1.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
 				"localizedBooleanObjectFieldName", false
@@ -7305,7 +7418,7 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"pt_BR", objectEntry.getId());
+			"pt_BR", objectEntry1.getId());
 
 		_localizedObjectFieldI18nValues = HashMapBuilder.<String, Object>put(
 			_localizedMultiselectPicklistObjectFieldName + "_i18n",
@@ -7372,7 +7485,7 @@ public class DefaultObjectEntryManagerImplTest
 		).build();
 
 		_updateLocalizedObjectEntryValues(
-			_objectDefinition2, objectEntry.getId(),
+			_objectDefinition2, objectEntry1.getId(),
 			_localizedObjectFieldI18nValues);
 
 		_localizedObjectFieldI18nValues.put(
@@ -7399,7 +7512,7 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"ar_SA", objectEntry.getId());
+			"ar_SA", objectEntry1.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
 				"localizedBooleanObjectFieldName", false
@@ -7418,7 +7531,7 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"ca_ES", objectEntry.getId());
+			"ca_ES", objectEntry1.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
 				_localizedMultiselectPicklistObjectFieldName,
@@ -7446,7 +7559,7 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"en_US", objectEntry.getId());
+			"en_US", objectEntry1.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
 				_localizedMultiselectPicklistObjectFieldName,
@@ -7474,7 +7587,41 @@ public class DefaultObjectEntryManagerImplTest
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
-			"pt_BR", objectEntry.getId());
+			"pt_BR", objectEntry1.getId());
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			_objectDefinition4,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			_group.getGroupKey(), 1);
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				objectEntry2.getScopeId());
+
+		String textObjectFieldValue = RandomTestUtil.randomString();
+
+		assertEquals(
+			_defaultObjectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition4,
+				objectEntry2.getId(),
+				new ObjectEntry() {
+					{
+						objectEntryFolderId =
+							objectEntryFolder.getObjectEntryFolderId();
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", textObjectFieldValue
+						).build();
+					}
+				}),
+			new ObjectEntry() {
+				{
+					objectEntryFolderId =
+						objectEntryFolder.getObjectEntryFolderId();
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", textObjectFieldValue
+					).build();
+				}
+			});
 	}
 
 	@Test
@@ -8443,30 +8590,33 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private ObjectEntry _addObjectEntry(
-			ObjectDefinition objectDefinition, String scopeKey,
-			int versionNumber)
+			ObjectDefinition objectDefinition, long objectEntryFolderId,
+			String scopeKey, int versionNumber)
 		throws Exception {
 
+		ObjectEntry objectEntry = new ObjectEntry() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				keywords = new String[] {RandomTestUtil.randomString()};
+				properties = HashMapBuilder.<String, Object>put(
+					"textObjectFieldName", RandomTestUtil.randomString()
+				).build();
+				systemProperties = new SystemProperties() {
+					{
+						version = new Version() {
+							{
+								number = versionNumber;
+							}
+						};
+					}
+				};
+			}
+		};
+
+		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
+
 		return _defaultObjectEntryManager.addObjectEntry(
-			_createDTOConverterContext(adminUser), objectDefinition,
-			new ObjectEntry() {
-				{
-					externalReferenceCode = RandomTestUtil.randomString();
-					keywords = new String[] {RandomTestUtil.randomString()};
-					properties = HashMapBuilder.<String, Object>put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-					systemProperties = new SystemProperties() {
-						{
-							version = new Version() {
-								{
-									number = versionNumber;
-								}
-							};
-						}
-					};
-				}
-			},
+			_simpleDTOConverterContext, objectDefinition, objectEntry,
 			scopeKey);
 	}
 

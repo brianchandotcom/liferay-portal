@@ -66,6 +66,11 @@ public interface DataRemovalConfiguration {
 	public boolean removeGroupOrphanData();
 
 	@Meta.AD(
+		deflt = "false", name = "remove-journal-orphan-data", required = false
+	)
+	public boolean removeJournalOrphanData();
+
+	@Meta.AD(
 		deflt = "false", name = "remove-null-unicode-content-data",
 		required = false
 	)

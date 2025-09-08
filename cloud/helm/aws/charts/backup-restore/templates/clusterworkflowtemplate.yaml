@@ -62,18 +62,18 @@ spec:
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.checkoutGitRepository" . | nindent 20 }}
                 {{- include "liferayAWSBackupRestore.gitCredentials.volumeMount" . | nindent 16 }}
-        -   name: {{ $templateCleanupS3Bucket }}
+        -   container:
+                args:
+                    -   "s3"
+                    -   "rm"
+                    -   "s3://{{ include "liferayAWSBackupRestore.argo.ref.taskInputParam" $paramS3BucketId }}/"
+                    -   "--recursive"
+                command: ["aws"]
+                image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
             inputs:
                 parameters:
                     -   name: {{ $paramS3BucketId }}
-            container:
-                args:
-                    - "s3"
-                    - "rm"
-                    - "s3://{{ include "liferayAWSBackupRestore.argo.ref.taskInputParam" $paramS3BucketId }}/"
-                    - "--recursive"
-                command: ["aws"]
-                image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
+            name: {{ $templateCleanupS3Bucket }}
         -   name: {{ $templateFindPeerRecoveryPoints }}
             outputs:
                 parameters:
@@ -115,19 +115,19 @@ spec:
                 workingDir: {{ $pathDependenciesModule }}
         -   container:
                 args:
-                    - rollout
-                    - restart
-                    - statefulset
-                    - "{{ .Values.liferayWorkload.name }}"
+                    -   rollout
+                    -   restart
+                    -   statefulset
+                    -   "{{ .Values.liferayWorkload.name }}"
                 image: "{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}"
             name: {{ $templateKubectlRolloutRestart }}
         -   container:
                 args:
-                    - rollout
-                    - status
-                    - statefulset
-                    - "{{ .Values.liferayWorkload.name }}"
-                    - --timeout=15m
+                    -   rollout
+                    -   status
+                    -   statefulset
+                    -   "{{ .Values.liferayWorkload.name }}"
+                    -   --timeout=15m
                 image: "{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}"
             name: {{ $templateKubectlRolloutStatus }}
         -   dag:
@@ -136,11 +136,11 @@ spec:
                         template: {{ $templateCheckoutGitRepository }}
                     -   arguments:
                             artifacts:
-                                -   name: {{ $artifactGitRepository }}
-                                    from: {{ $outputArtifactTerraformRepo }}
+                                -   from: {{ $outputArtifactTerraformRepo }}
+                                    name: {{ $artifactGitRepository }}
                             parameters:
                                 -   name: {{ $paramCommitMessage }}
-                                    value: "Clean up inactive RDS instance"
+                                    value: Clean up inactive RDS instance
                                 -   name: {{ $paramTfvarsContent }}
                                     value: |-
                                         {{ $tfvarDataActive }} = {{ $outputParamDataInactive }}
@@ -173,7 +173,7 @@ spec:
                                     name: {{ $artifactGitRepository }}
                             parameters:
                                 -   name: {{ $paramCommitMessage }}
-                                    value: "Provision inactive RDS instance from database snapshot identifier"
+                                    value: Provision inactive RDS instance from database snapshot identifier
                                 -   name: {{ $paramTfvarsContent }}
                                     value: |-
                                         {{ $tfvarDataActive }} = {{ $outputParamDataActive }}
@@ -197,7 +197,7 @@ spec:
                                     name: {{ $artifactGitRepository }}
                             parameters:
                                 -   name: {{ $paramCommitMessage }}
-                                    value: "Roll back failed restore"
+                                    value: Roll back failed restore
                                 -   name: {{ $paramTfvarsContent }}
                                     value: |-
                                         {{ $tfvarDataActive }} = {{ $outputParamDataActive }}
@@ -211,7 +211,7 @@ spec:
                                     name: {{ $artifactGitRepository }}
                             parameters:
                                 -   name: {{ $paramCommitMessage }}
-                                    value: "Update Liferay configuration to restored data plane"
+                                    value: Update Liferay configuration to restored data plane
                                 -   name: {{ $paramTfvarsContent }}
                                     value: |-
                                         {{ $tfvarDataActive }} = {{ $outputParamDataInactive }}
@@ -221,11 +221,11 @@ spec:
                         name: {{ $templateUpdateKubernetesSecret }}
                         template: {{ $templateTerraformApply }}
             name: {{ $templateMain }}
-        -   name: {{ $templateRestoreS3Bucket }}
-            inputs:
+        -   inputs:
                 parameters:
                     -   name: {{ $paramS3BucketId }}
                     -   name: {{ $paramS3RecoveryPointArn }}
+            name: {{ $templateRestoreS3Bucket }}
             script:
                 command: [{{ $containerCommandSh }}]
                 image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
@@ -237,14 +237,14 @@ spec:
                         template: {{ $templateKubectlRolloutRestart }}
                 -   -   name: {{ $templateKubectlRolloutStatus }}
                         template: {{ $templateKubectlRolloutStatus }}
-        -   name: {{ $templateTerraformApply }}
-            inputs:
+        -   inputs:
                 artifacts:
                     -   name: {{ $artifactGitRepository }}
                         path: {{ $pathSrc }}
                 parameters:
                     -   name: {{ $paramCommitMessage }}
                     -   name: {{ $paramTfvarsContent }}
+            name: {{ $templateTerraformApply }}
             script:
                 command: [{{ $containerCommandSh }}]
                 image: "{{ .Values.images.terraform.repository }}:{{ .Values.images.terraform.tag }}"

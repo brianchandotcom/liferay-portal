@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -47,8 +46,6 @@ public class FeatureFlagsBag {
 				featureFlags.add(featureFlag);
 			}
 		}
-
-		featureFlags.sort(Comparator.comparing(FeatureFlag::getKey));
 
 		return featureFlags;
 	}

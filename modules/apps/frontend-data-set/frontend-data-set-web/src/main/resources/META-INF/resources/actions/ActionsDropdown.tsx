@@ -9,6 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {LinkOrButton} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import classNames from 'classnames';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext, {
@@ -20,17 +21,25 @@ import {IActionsDropdown, IItemsActions} from '../utils/types';
 
 interface IDropdownItem {
 	action: IItemsActions;
+	className?: string;
 	closeMenu: Function;
 	onClick: Function;
 	setLoading: Function;
 	url: string | undefined;
 }
 
-function DropdownItem({action, closeMenu, onClick, url}: IDropdownItem) {
+function DropdownItem({
+	action,
+	className,
+	closeMenu,
+	onClick,
+	url,
+}: IDropdownItem) {
 	const {icon, label, target} = action;
 
 	return (
 		<ClayDropDown.Item
+			className={className}
 			disabled={action.disabled}
 			href={isLink(target, null) ? url : undefined}
 			onClick={(event) =>
@@ -151,7 +160,10 @@ function ActionsDropdown({
 		return (
 			<LinkOrButton
 				aria-label={action.label}
-				className="btn btn-secondary btn-sm"
+				className={classNames(
+					'btn btn-secondary btn-sm',
+					action.className
+				)}
 				disabled={action.disabled}
 				href={
 					isLink(
@@ -196,6 +208,7 @@ function ActionsDropdown({
 			return (
 				<DropdownItem
 					action={item}
+					className={item.className}
 					closeMenu={() =>
 						onMenuActiveChange && onMenuActiveChange(false)
 					}

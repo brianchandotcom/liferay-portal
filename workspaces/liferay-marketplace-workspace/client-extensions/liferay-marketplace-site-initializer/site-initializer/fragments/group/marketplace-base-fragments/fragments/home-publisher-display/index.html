@@ -17,7 +17,6 @@
 	</div>
 
 	[#if configuration.publisherDetailsObjectId?has_content]
-
 		[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1") /]
 
 		[#if channel?has_content]

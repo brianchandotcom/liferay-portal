@@ -135,7 +135,10 @@
 		"externalReferenceCode": "533d77b9-136f-c40b-a81c-dc799ad25a70",
 		"schemaVersion": "1.1",
 		"title_i18n": {
-			"en_US": "Announcements"
+			"en_US": "Announcements",
+			"es_ES": "Anuncios",
+			"ja_JP": "アナウンスメント",
+			"pt_BR": "Avisos"
 		}
 	},
 	{

@@ -1,4 +1,10 @@
 {
 	"name": "Before Opening",
+	"name_i18n": {
+		"en_US": "Before Opening",
+		"es-ES": "Antes de abrir",
+		"ja-JP": "開店前",
+		"pt-BR": "Antes de Abrir"
+	},
 	"viewableBy": "Anyone"
 }

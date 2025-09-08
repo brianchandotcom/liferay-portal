@@ -81,7 +81,10 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Getting Started"
+												"en_US": "Getting Started",
+												"es-ES": "Cómo empezar",
+												"ja-JP": "はじめに",
+												"pt-BR": "Primeiros passos"
 											}
 										}
 									}
@@ -275,7 +278,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "First steps and essential guidance for administrators, new users, and partners."
+																		"en_US": "First steps and essential guidance for administrators, new users, and partners",
+																		"es-ES": "Primeros pasos y guía básica para administradores, nuevos usuarios y partners",
+																		"ja-JP": "管理者、新規ユーザー、パートナーのためのファーストステップと重要なガイダンス",
+																		"pt-BR": "Primeiros passos e orientações essenciais para administradores, novos usuários e parceiros"
 																	}
 																}
 															}
@@ -432,7 +438,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Learn more about project administration within the Customer Portal."
+																		"en_US": "Learn more about project administration within the Customer Portal",
+																		"es-ES": "Lee más sobre la administración de projectos en el Portal del cliente",
+																		"ja-JP": "カスタマーポータルでのプロジェクト管理の詳細",
+																		"pt-BR": "Saiba mais sobre a administração de projetos dentro do Portal do Cliente"
 																	}
 																}
 															}
@@ -491,7 +500,10 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Help Resources"
+												"en_US": "Help Resources",
+												"es-ES": "Recursos de ayuda",
+												"ja-JP": "ヘルプ・リソース",
+												"pt-BR": "Recursos de ajuda"
 											}
 										}
 									}
@@ -644,7 +656,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Overview"
+																		"en_US": "Overview",
+																		"es-ES": "Visión general",
+																		"ja-JP": "概要",
+																		"pt-BR": "Visão geral"
 																	}
 																}
 															}
@@ -677,7 +692,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "The essential guide to Liferay Customer Portal."
+																		"en_US": "The essential guide to Liferay Customer Portal",
+																		"es-ES": "La guía básica para el Portal del cliente de Liferay",
+																		"ja-JP": "Liferayカスタマーポータルのエッセンシャルガイド",
+																		"pt-BR": "O guia essencial do Portal do Cliente Liferay"
 																	}
 																}
 															}
@@ -818,7 +836,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Details about Liferay DXP activation key usage and types."
+																		"en_US": "Details about Liferay DXP activation key usage and types",
+																		"es-ES": "Detalles sobre el uso y tipos de códigos de activación de Liferay DXP",
+																		"ja-JP": "Liferay DXPアクティベーションキーの使用方法と種類に関する詳細",
+																		"pt-BR": "Detalhes sobre o uso e os tipos de chaves de ativação do Liferay DXP"
 																	}
 																}
 															}

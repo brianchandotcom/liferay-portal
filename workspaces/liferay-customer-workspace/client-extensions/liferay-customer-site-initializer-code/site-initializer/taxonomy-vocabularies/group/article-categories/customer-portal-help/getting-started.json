@@ -3,5 +3,11 @@
 		"en_US": "<p>Whether you are part of a brand new project which is just starting or you are now joining an already existing project, this article is for you! Follow along to learn how to access, activate and make the most of your Liferay Support resources.</p>"
 	},
 	"name": "Getting Started",
+	"name_i18n": {
+		"en_US": "Getting Started",
+		"es-ES": "Cómo empezar",
+		"ja-JP": "はじめに",
+		"pt-BR": "Primeiros passos"
+	},
 	"viewableBy": "Anyone"
 }

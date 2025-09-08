@@ -1,5 +1,11 @@
 {
 	"name": "Admin",
+	"name_i18n": {
+		"en_US": "Admin",
+		"es-ES": "Admnistración",
+		"ja-JP": "管理者",
+		"pt-BR": "Administração"
+	},
 	"taxonomyCategoryProperties": [
 		{
 			"key": "subtitle",

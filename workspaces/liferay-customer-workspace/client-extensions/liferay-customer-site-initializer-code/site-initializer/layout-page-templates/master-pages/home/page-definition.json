@@ -488,7 +488,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Partners"
+																		"en_US": "Partners",
+																		"es-ES": "Partners",
+																		"ja-JP": "パートナー",
+																		"pt-BR": "Partners"
 																	}
 																}
 															}

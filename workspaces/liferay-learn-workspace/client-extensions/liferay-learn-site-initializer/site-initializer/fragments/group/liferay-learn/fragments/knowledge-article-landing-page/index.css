@@ -15,7 +15,11 @@
 
 .article-entry-description {
 	color: var(--color-neutral-10, #282934);
+	display: -webkit-box;
 	font-weight: 400;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 .article-entry-title {

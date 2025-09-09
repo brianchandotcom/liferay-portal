@@ -62,13 +62,13 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 	}
 
 	private void _addPortletResourcePermission(
-			long companyId, Role role, String resourceAction)
+			long companyId, Role role, String actionId)
 		throws PortalException {
 
 		_resourcePermissionLocalService.addResourcePermission(
 			companyId, CTPortletKeys.PUBLICATIONS,
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-			role.getRoleId(), resourceAction);
+			role.getRoleId(), actionId);
 	}
 
 	private void _checkPublicationsRegularRoles(Company company)

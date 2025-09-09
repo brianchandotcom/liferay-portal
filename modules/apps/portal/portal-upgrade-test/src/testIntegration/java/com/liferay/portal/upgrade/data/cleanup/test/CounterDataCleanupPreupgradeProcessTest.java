@@ -26,6 +26,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,6 +43,11 @@ public class CounterDataCleanupPreupgradeProcessTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		upgrade();
+	}
 
 	@Test
 	public void testUpgradeCompanyDoesNotAffectKernelCounter()

@@ -20,10 +20,13 @@ export class ExportImportPage {
 	readonly downloadButton: Locator;
 	readonly exportButton: Locator;
 	readonly exportPermissionsButton: Locator;
+	readonly exportSuccessLabel: (exportName: string) => Promise<Locator>;
 	readonly fileSelector: Locator;
 	readonly importButton: Locator;
+	readonly importEntryMenu: (importName: string) => Promise<Locator>;
 	readonly importModalButton: Locator;
 	readonly importPermissionsButton: Locator;
+	readonly importSuccessLabel: (importName: string) => Promise<Locator>;
 	readonly mirrorWithOverwritingRadioButton: Locator;
 	readonly newExportButton: Locator;
 	readonly newImportButton: Locator;
@@ -33,6 +36,8 @@ export class ExportImportPage {
 	readonly updateDataAlert: Locator;
 	readonly updateDataMirrorWarningLabel: Locator;
 	readonly useCurrentUserAsAuthorCheckbox: Locator;
+	readonly viewDetails: Locator;
+	readonly viewErrorDetails: Locator;
 	readonly warningHeader: Locator;
 
 	constructor(page: Page) {
@@ -55,12 +60,30 @@ export class ExportImportPage {
 		this.downloadButton = page.getByRole('button', {name: 'Download'});
 		this.exportButton = page.getByRole('button', {name: 'Export'});
 		this.exportPermissionsButton = page.getByLabel('Export Permissions');
+		this.exportSuccessLabel = async (exportName: string) => {
+			return page
+				.getByText(exportName)
+				.locator('../..')
+				.getByText('Successful');
+		};
 		this.fileSelector = page.getByRole('button', {name: 'Select File'});
 		this.importButton = page.getByRole('button', {name: 'Import'});
+		this.importEntryMenu = async (importName: string) => {
+			return page
+				.getByText(importName)
+				.locator('../../../../..')
+				.getByRole('button');
+		};
 		this.importModalButton = page
 			.getByLabel('Important Info About Your Import')
 			.getByRole('button', {name: 'Import'});
 		this.importPermissionsButton = page.getByLabel('Import Permissions');
+		this.importSuccessLabel = async (importName: string) => {
+			return page
+				.getByText(importName)
+				.locator('../../../../..')
+				.getByText('Successful');
+		};
 		this.mirrorWithOverwritingRadioButton = page.getByLabel(
 			'Mirror with overwriting'
 		);
@@ -81,6 +104,8 @@ export class ExportImportPage {
 		this.useCurrentUserAsAuthorCheckbox = page.getByLabel(
 			'Use the Current User as Author: Assign the current user as the author of all'
 		);
+		this.viewDetails = page.getByRole('menuitem', {name: 'View Details'});
+		this.viewErrorDetails = page.getByLabel('View');
 		this.warningHeader = page.getByRole('heading', {
 			name: 'Important Info About Your Import',
 		});
@@ -200,6 +225,14 @@ export class ExportImportPage {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.import}`
 		);
+	}
+
+	async goToImportDetails(exportName) {
+		await expect(await this.importSuccessLabel(exportName)).toBeVisible();
+
+		await (await this.importEntryMenu(exportName)).click();
+
+		await this.viewDetails.click();
 	}
 
 	async goToImportOptions(

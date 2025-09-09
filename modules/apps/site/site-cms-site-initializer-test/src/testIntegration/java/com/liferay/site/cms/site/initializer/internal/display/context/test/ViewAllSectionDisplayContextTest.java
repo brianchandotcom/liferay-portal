@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -51,33 +51,33 @@ public class ViewAllSectionDisplayContextTest
 	protected Map<String, String> getExpectedCreationMenuItems()
 		throws PortalException {
 
-		return HashMapBuilder.put(
-			"Basic Document",
+		return LinkedHashMapBuilder.put(
+			"basic-content",
+			getRedirect(
+				"L_BASIC_WEB_CONTENT",
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
+		).put(
+			"single-file",
 			getRedirect(
 				"L_BASIC_DOCUMENT",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)
 		).put(
-			"Basic Web Content",
-			getRedirect(
-				"L_BASIC_WEB_CONTENT",
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
+			"multiple-files", StringPool.BLANK
 		).put(
 			"Blog",
 			getRedirect(
 				"L_BLOG",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
 		).put(
-			"External Video",
-			getRedirect(
-				"L_EXTERNAL_VIDEO",
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)
-		).put(
 			"Knowledge Base",
 			getRedirect(
 				"L_KNOWLEDGE_BASE",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
 		).put(
-			"multiple-files", StringPool.BLANK
+			"external-video-shortcut",
+			getRedirect(
+				"L_EXTERNAL_VIDEO",
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)
 		).build();
 	}
 

@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.hashed.files;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,22 +17,28 @@ public class HashedFilesUtilTest {
 
 	@Test
 	public void testAddHash() {
+		String hash = RandomTestUtil.randomString(8);
+
 		Assert.assertEquals(
-			"/css/main.(HASH1234).css",
-			HashedFilesUtil.addHash("/css/main.css", "HASH1234"));
+			"/css/main.(" + hash + ").css",
+			HashedFilesUtil.addHash("/css/main.css", hash));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddHashWithIncorrectURI() {
-		HashedFilesUtil.addHash("/css/main.(HASH1234).css", "HASH1234");
+		String hash = RandomTestUtil.randomString(8);
+
+		HashedFilesUtil.addHash("/css/main.(" + hash + ").css", hash);
 	}
 
 	@Test
 	public void testAddNameSuffix() {
+		String hash = RandomTestUtil.randomString(8);
+
 		Assert.assertEquals(
-			"/css/main_a_suffix.(HASH1234).css",
+			"/css/main_a_suffix.(" + hash + ").css",
 			HashedFilesUtil.addNameSuffix(
-				"/css/main.(HASH1234).css", "_a_suffix"));
+				"/css/main.(" + hash + ").css", "_a_suffix"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -40,25 +48,31 @@ public class HashedFilesUtilTest {
 
 	@Test
 	public void testContainsHash() {
+		String hash = RandomTestUtil.randomString(8);
+
 		Assert.assertTrue(
-			HashedFilesUtil.containsHash("/css/main.(HASH1234).css"));
+			HashedFilesUtil.containsHash("/css/main.(" + hash + ").css"));
 
 		Assert.assertFalse(HashedFilesUtil.containsHash("/css/main.css"));
 	}
 
 	@Test
 	public void testGetHash() {
+		String hash = RandomTestUtil.randomString(8);
+
 		Assert.assertEquals(
-			"HASH1234", HashedFilesUtil.getHash("/css/main.(HASH1234).css"));
+			hash, HashedFilesUtil.getHash("/css/main.(" + hash + ").css"));
 
 		Assert.assertNull(HashedFilesUtil.getHash("/css/main.css"));
 	}
 
 	@Test
 	public void testRemoveHash() {
+		String hash = RandomTestUtil.randomString(8);
+
 		Assert.assertEquals(
 			"/css/main.css",
-			HashedFilesUtil.removeHash("/css/main.(HASH1234).css"));
+			HashedFilesUtil.removeHash("/css/main.(" + hash + ").css"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

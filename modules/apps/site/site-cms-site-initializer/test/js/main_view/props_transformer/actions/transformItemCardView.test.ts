@@ -47,8 +47,8 @@ describe('transformItemCardView', () => {
 
 	it('See stickerProps has empty className and empty icon because the item is a folder', () => {
 		assertStickerProps(
-			'',
-			'',
+			'folder',
+			'folder',
 			transformItemCardView(
 				{
 					entryClassName:

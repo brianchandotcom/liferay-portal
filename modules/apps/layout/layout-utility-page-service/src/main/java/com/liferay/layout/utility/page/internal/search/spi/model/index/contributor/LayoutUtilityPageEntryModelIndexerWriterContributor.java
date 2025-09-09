@@ -19,14 +19,14 @@ public class LayoutUtilityPageEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<LayoutUtilityPageEntry> {
 
 	public LayoutUtilityPageEntryModelIndexerWriterContributor(
-		LayoutUtilityPageEntryLocalService layoutUtilityPageEntryLocalService,
 		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+			dynamicQueryBatchIndexingActionableFactory,
+		LayoutUtilityPageEntryLocalService layoutUtilityPageEntryLocalService) {
 
-		_layoutUtilityPageEntryLocalService =
-			layoutUtilityPageEntryLocalService;
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
+		_layoutUtilityPageEntryLocalService =
+			layoutUtilityPageEntryLocalService;
 	}
 
 	@Override

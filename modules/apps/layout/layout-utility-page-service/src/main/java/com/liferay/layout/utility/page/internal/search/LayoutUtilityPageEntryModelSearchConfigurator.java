@@ -53,8 +53,8 @@ public class LayoutUtilityPageEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new LayoutUtilityPageEntryModelIndexerWriterContributor(
-				_layoutUtilityPageEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_dynamicQueryBatchIndexingActionableFactory,
+				_layoutUtilityPageEntryLocalService);
 	}
 
 	@Reference

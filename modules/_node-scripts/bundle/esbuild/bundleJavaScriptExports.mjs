@@ -6,7 +6,6 @@
 import path from 'path';
 import Sonda from 'sonda/esbuild';
 
-import getProjectAlias from '../../configuration/getProjectAlias.mjs';
 import {
 	BUILD_MAIN_EXPORTS_PATH,
 	BUNDLE_REPORTS_PATH,
@@ -23,6 +22,7 @@ import writeExportBridge from './writeExportBridge.mjs';
 export default async function bundleJavaScriptExports(
 	globalImports,
 	overridenPackageSymbols,
+	projectAlias,
 	projectExports,
 	projectWebContextPath
 ) {
@@ -37,6 +37,7 @@ export default async function bundleJavaScriptExports(
 				bundle(
 					globalImports,
 					overridenPackageSymbols,
+					projectAlias,
 					projectWebContextPath,
 					moduleName
 				)
@@ -47,11 +48,10 @@ export default async function bundleJavaScriptExports(
 async function bundle(
 	globalImports,
 	overridenPackageSymbols,
+	projectAlias,
 	projectWebContextPath,
 	moduleName
 ) {
-	const projectAlias = await getProjectAlias();
-
 	const entryPoint = getEntryPoint(moduleName);
 
 	const esbuildConfig = {

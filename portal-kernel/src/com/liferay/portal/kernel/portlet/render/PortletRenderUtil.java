@@ -390,11 +390,11 @@ public class PortletRenderUtil {
 			try {
 				content = StreamUtil.toString(resourceURL.openStream());
 			}
-			catch (IOException ioException) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Treating " + resourceURI + " as non tokenized",
-						ioException);
+						exception);
 				}
 
 				return false;

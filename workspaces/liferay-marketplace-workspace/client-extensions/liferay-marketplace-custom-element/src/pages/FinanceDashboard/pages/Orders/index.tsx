@@ -7,6 +7,7 @@ import {useNavigate} from 'react-router-dom';
 
 import ListView from '../../../../components/ListView';
 import Page from '../../../../components/Page';
+import SearchBuilder from '../../../../core/SearchBuilder';
 import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
@@ -28,12 +29,12 @@ const Orders = () => {
 		>
 			<ListView<Order>
 				defaultFilters={{
-					filter: 'totalAmount gt 0',
+					filter: SearchBuilder.gt('totalAmount', 0),
 				}}
 				emptyStateProps={{title: i18n.translate('no-orders-yet')}}
 				id="finance-dashboard-orders"
 				managementToolbarProps={{
-					filterSchema: 'financeOrders',
+					filterSchema: 'financeDashboardOrders',
 					searchVisible: true,
 					visible: true,
 				}}
@@ -42,12 +43,10 @@ const Orders = () => {
 					actions: [
 						{
 							disabled(item) {
-								return (
-									item.paymentStatus ===
-										PaymentStatusCode.PAID ||
-									item.paymentStatus ===
-										PaymentStatusCode.CANCELLED
-								);
+								return [
+									PaymentStatusCode.PAID,
+									PaymentStatusCode.CANCELED,
+								].includes(item.paymentStatus);
 							},
 							name: i18n.translate('mark-as-paid'),
 							onClick: async (order: Order, mutate) => {
@@ -63,13 +62,17 @@ const Orders = () => {
 										revalidate: true,
 									});
 									Liferay.Util.openToast({
-										message: 'Order marked as paid.',
+										message: i18n.translate(
+											'order-marked-as-paid'
+										),
 										type: 'success',
 									});
 								}
 								catch (error) {
 									Liferay.Util.openToast({
-										message: 'Oops! Something went wrong.',
+										message: i18n.translate(
+											'oops-something-went-wrong'
+										),
 										type: 'danger',
 									});
 								}
@@ -86,7 +89,7 @@ const Orders = () => {
 						{
 							clickable: true,
 							id: 'id',
-							name: 'ID',
+							name: i18n.translate('id'),
 							render: (id) => <b>{id}</b>,
 						},
 						{
@@ -116,31 +119,26 @@ const Orders = () => {
 						},
 						{
 							id: 'account',
-							name: 'Account',
+							name: i18n.translate('account'),
 							render: (account) => account?.name,
 						},
 						{
 							id: 'orderItems',
-							name: 'App',
+							name: i18n.translate('app'),
 							render: (orderItems) => orderItems[0].name?.en_US,
 						},
 						{
 							id: 'paymentStatusInfo',
-							name: 'Status',
-							render: (paymentStatus) => {
-
-								// this is where it should update
-
-								return (
-									<PaymentStatus
-										paymentStatus={paymentStatus.code}
-									/>
-								);
-							},
+							name: i18n.translate('payment-status'),
+							render: (paymentStatus) => (
+								<PaymentStatus
+									paymentStatus={paymentStatus.code}
+								/>
+							),
 						},
 						{
 							id: 'totalWithTaxAmountFormatted',
-							name: 'Total',
+							name: i18n.translate('total'),
 						},
 					],
 					navigateTo: (order) => `/order/${order.id}`,

@@ -5,6 +5,7 @@
 
 import useSWR, {SWRConfiguration} from 'swr';
 
+import SearchBuilder from '../core/SearchBuilder';
 import HeadlessCommerceAdminCatalog from '../services/rest/HeadlessCommerceAdminCatalog';
 import HeadlessCommerceAdminOrder from '../services/rest/HeadlessCommerceAdminOrder';
 import HeadlessCommerceAdminPayment from '../services/rest/HeadlessCommerceAdminPayment';
@@ -14,37 +15,32 @@ const useAdminOrderProduct = (
 	swrOptions?: SWRConfiguration
 ) => {
 	return useSWR(
-		`/placed-order/${orderId}`,
+		`/admin-order/${orderId}`,
 		async () => {
-			const order = await HeadlessCommerceAdminOrder.getOrder(
-				orderId,
-				new URLSearchParams({
-					nestedFields: 'orderItems,account,billingAddress',
-				})
+			const [order, payments] = await Promise.all([
+				HeadlessCommerceAdminOrder.getOrder(
+					orderId,
+					new URLSearchParams({
+						nestedFields: 'account,billingAddress,orderItems',
+					})
+				),
+				HeadlessCommerceAdminPayment.getPayment(
+					new URLSearchParams({
+						filter: new SearchBuilder()
+							.eq('relatedItemId', orderId, {unquote: true})
+							.build(),
+					})
+				),
+			]);
+
+			const sku = await HeadlessCommerceAdminCatalog.getSku(
+				order.orderItems[0].skuId
 			);
 
-			let payments;
-			let product;
-
-			try {
-				const sku = await HeadlessCommerceAdminCatalog.getSku(
-					order.orderItems[0].skuId
-				);
-
-				product = await HeadlessCommerceAdminCatalog.getProduct(
-					sku.productId,
-					new URLSearchParams({nestedFields: 'productSpecifications'})
-				);
-
-				payments = await HeadlessCommerceAdminPayment.getPayment(
-					new URLSearchParams({
-						filter: `relatedItemId eq ${orderId}`,
-					})
-				);
-			}
-			catch (error) {
-				console.error('Failed to fetch product:', error);
-			}
+			const product = await HeadlessCommerceAdminCatalog.getProduct(
+				sku.productId,
+				new URLSearchParams({nestedFields: 'productSpecifications'})
+			);
 
 			return {
 				order,

@@ -3,19 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Button from '@clayui/button';
+
 import BackLink from '../../../../components/BackLink';
 import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import PaymentStatus from './PaymentStatus/PaymentStatus';
 
 type OrderDetailsHeaderProps = {
-	MarkAsPaid: () => JSX.Element;
+	onClick: () => void;
 	orderId: string;
 	paymentStatusCode: number;
 };
 
 const OrderDetailsHeader = ({
-	MarkAsPaid,
+	onClick,
 	orderId,
 	paymentStatusCode,
 }: OrderDetailsHeaderProps) => {
@@ -31,9 +33,14 @@ const OrderDetailsHeader = ({
 				<PaymentStatus paymentStatus={paymentStatusCode} />
 			</div>
 
-			{(paymentStatusCode === PaymentStatusCode.PAYMENT_PENDING ||
-				paymentStatusCode === PaymentStatusCode.PENDING) && (
-				<MarkAsPaid />
+			{[
+				PaymentStatusCode.PAYMENT_PENDING,
+				PaymentStatusCode.PENDING,
+				PaymentStatusCode.FAILED,
+			].includes(paymentStatusCode) && (
+				<Button displayType="secondary" onClick={onClick}>
+					{i18n.translate('mark-as-paid')}
+				</Button>
 			)}
 		</div>
 	);

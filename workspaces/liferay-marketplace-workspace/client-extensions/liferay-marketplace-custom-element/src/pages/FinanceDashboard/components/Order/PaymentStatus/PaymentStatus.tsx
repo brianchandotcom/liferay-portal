@@ -9,30 +9,33 @@ import classNames from 'classnames';
 import {PaymentStatus as PaymentStatusCode} from '../../../../../enums/Order';
 
 import './index.scss';
+import i18n from '../../../../../i18n';
 
 const paymentStatusLabel = {
-	[PaymentStatusCode.PAID]: 'Paid',
-	[PaymentStatusCode.PENDING]: 'Unpaid',
-	[PaymentStatusCode.PAYMENT_PENDING]: 'Unpaid',
-	[PaymentStatusCode.FAILED]: 'Failed',
-	[PaymentStatusCode.CANCELLED]: 'Canceled',
+	[PaymentStatusCode.CANCELED]: i18n.translate('canceled'),
+	[PaymentStatusCode.FAILED]: i18n.translate('failed'),
+	[PaymentStatusCode.PAID]: i18n.translate('paid'),
+	[PaymentStatusCode.PAYMENT_PENDING]: i18n.translate('unpaid'),
+	[PaymentStatusCode.PENDING]: i18n.translate('unpaid'),
 };
 
 const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
 	<div>
 		<ClayIcon
 			className={classNames('mr-2 payment-status-icon', {
-				'payment-icon-warning':
-					paymentStatus === PaymentStatusCode.PAYMENT_PENDING ||
-					paymentStatus === PaymentStatusCode.PENDING,
-				'text-danger':
-					paymentStatus === PaymentStatusCode.FAILED ||
-					paymentStatus === PaymentStatusCode.CANCELLED,
+				'text-danger': [
+					PaymentStatusCode.FAILED,
+					PaymentStatusCode.CANCELED,
+				].includes(paymentStatus),
 				'text-success': paymentStatus === PaymentStatusCode.PAID,
+				'text-warning': [
+					PaymentStatusCode.PAYMENT_PENDING,
+					PaymentStatusCode.PENDING,
+				].includes(paymentStatus),
 			})}
 			symbol="circle"
 		/>
-		<span className="finance-dashboard-text-secondary">
+		<span className="finance-dashboard-secondary-text">
 			{paymentStatusLabel[paymentStatus as PaymentStatusCode]}
 		</span>
 	</div>

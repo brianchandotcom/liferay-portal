@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.144.1",
-		"@clayui/drop-down": "3.145.0",
+		"@clayui/drop-down": "3.146.0",
 		"@clayui/icon": "3.144.1",
 		"@clayui/tooltip": "3.145.0",
 		"classnames": "2.3.1",

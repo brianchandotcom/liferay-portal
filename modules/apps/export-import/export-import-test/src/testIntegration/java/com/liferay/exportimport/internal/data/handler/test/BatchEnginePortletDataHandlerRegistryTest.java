@@ -115,9 +115,6 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 					"batch.engine.task.item.delegate.class.name",
 					RandomTestUtil.randomString()
 				).put(
-					"batch.engine.task.item.delegate.item.class.name",
-					RandomTestUtil.randomString()
-				).put(
 					"batch.engine.task.item.delegate.name",
 					RandomTestUtil.randomString()
 				).build());
@@ -128,9 +125,6 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 					"batch.engine.task.item.delegate", "true"
 				).put(
 					"batch.engine.task.item.delegate.class.name",
-					RandomTestUtil.randomString()
-				).put(
-					"batch.engine.task.item.delegate.item.class.name",
 					RandomTestUtil.randomString()
 				).put(
 					"batch.engine.task.item.delegate.name",
@@ -194,6 +188,11 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 		@Override
 		public ExportImportDescriptor getExportImportDescriptor() {
 			return new ExportImportDescriptor() {
+
+				@Override
+				public String getItemClassName() {
+					return _itemClassName;
+				}
 
 				@Override
 				public String getPortletId() {
@@ -261,6 +260,8 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 		public void update(
 			Collection<Object> items, Map<String, Serializable> parameters) {
 		}
+
+		private static String _itemClassName = RandomTestUtil.randomString();
 
 		private final String _portletId;
 

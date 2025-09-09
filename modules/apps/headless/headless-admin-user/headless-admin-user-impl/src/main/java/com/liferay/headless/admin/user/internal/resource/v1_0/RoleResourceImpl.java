@@ -172,6 +172,11 @@ public class RoleResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getItemClassName() {
+				return com.liferay.portal.kernel.model.Role.class.getName();
+			}
+
+			@Override
 			public String getPortletId() {
 				return RolesAdminPortletKeys.ROLES_ADMIN;
 			}

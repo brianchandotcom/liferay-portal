@@ -148,6 +148,11 @@ public class TaxonomyCategoryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getItemClassName() {
+				return AssetCategory.class.getName();
+			}
+
+			@Override
 			public String getPortletId() {
 				return AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN;
 			}

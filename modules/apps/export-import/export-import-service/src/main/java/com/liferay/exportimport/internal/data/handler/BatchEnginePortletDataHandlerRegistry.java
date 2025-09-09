@@ -166,8 +166,7 @@ public class BatchEnginePortletDataHandlerRegistry {
 							"batch.engine.entity.class.name")),
 					_companyLocalService,
 					exportImportVulcanBatchEngineTaskItemDelegate,
-					(String)serviceReference.getProperty(
-						"batch.engine.task.item.delegate.item.class.name"),
+					exportImportDescriptor.getItemClassName(),
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"),
 					_userLocalService);
@@ -176,8 +175,7 @@ public class BatchEnginePortletDataHandlerRegistry {
 				PortletDataHandler.class, batchEnginePortletDataHandler,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"batch.engine.task.item.delegate.item.class.name",
-					(String)serviceReference.getProperty(
-						"batch.engine.task.item.delegate.item.class.name")
+					exportImportDescriptor.getItemClassName()
 				).put(
 					"company.id", () -> _companyId
 				).put(

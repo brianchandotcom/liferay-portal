@@ -22,6 +22,8 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public interface ExportImportDescriptor {
 
+		public String getItemClassName();
+
 		public default List<String> getNestedFields() {
 			return null;
 		}

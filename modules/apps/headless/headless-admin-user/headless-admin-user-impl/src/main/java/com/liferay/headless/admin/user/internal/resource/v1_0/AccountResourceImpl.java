@@ -319,6 +319,11 @@ public class AccountResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getItemClassName() {
+				return com.liferay.mail.kernel.model.Account.class.getName();
+			}
+
+			@Override
 			public List<String> getNestedFields() {
 				return List.of(
 					"accountGroupBriefs", "accountRoles", "keywords",

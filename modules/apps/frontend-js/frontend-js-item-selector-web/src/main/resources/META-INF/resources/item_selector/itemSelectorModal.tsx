@@ -102,6 +102,18 @@ function ItemSelectorModal<T extends Record<string, any>>({
 			<ClayModal.Body className="p-0">
 				<FrontendDataSet
 					{...fdsProps}
+					filters={[
+						{
+							apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
+							entityFieldType: 'collection',
+							id: 'groupIds',
+							itemKey: 'siteId',
+							itemLabel: 'name',
+							label: Liferay.Language.get('space'),
+							multiple: true,
+							type: 'selection',
+						},
+					]}
 					onSelect={({
 						selectedItems: newSelectedItems,
 					}: {

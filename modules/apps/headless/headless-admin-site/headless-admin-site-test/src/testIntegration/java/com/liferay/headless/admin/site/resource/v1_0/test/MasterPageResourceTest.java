@@ -146,13 +146,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteMasterPagePermissionsPage() throws Exception {
-		super.testGetSiteMasterPagePermissionsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGetSiteMasterPagesPageWithSortDateTime() throws Exception {
 		super.testGetSiteMasterPagesPageWithSortDateTime();
 	}
@@ -359,13 +352,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					null, masterPage.getExternalReferenceCode(), null)));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteMasterPagePermissionsPage() throws Exception {
-		super.testPutSiteMasterPagePermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -401,15 +387,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		return masterPage;
 	}
 
-	@Ignore
-	@Override
-	@Test
-	protected MasterPage testGetSiteMasterPagePermissionsPage_addMasterPage()
-		throws Exception {
-
-		return super.testGetSiteMasterPagePermissionsPage_addMasterPage();
-	}
-
 	@Override
 	protected MasterPage testGetSiteMasterPagesPage_addMasterPage(
 			String siteExternalReferenceCode, MasterPage masterPage)
@@ -434,15 +411,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		return testGetSiteMasterPagesPage_addMasterPage(
 			testGroup.getExternalReferenceCode(), masterPage);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected MasterPage testPutSiteMasterPagePermissionsPage_addMasterPage()
-		throws Exception {
-
-		return super.testPutSiteMasterPagePermissionsPage_addMasterPage();
 	}
 
 	private FileEntry _addPortletFileEntry(long folderId) throws Exception {

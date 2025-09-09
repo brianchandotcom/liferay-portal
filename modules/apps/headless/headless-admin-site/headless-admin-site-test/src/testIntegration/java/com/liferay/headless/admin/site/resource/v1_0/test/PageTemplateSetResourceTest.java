@@ -102,13 +102,6 @@ public class PageTemplateSetResourceTest
 		_testGetSitePageTemplateSet(pageTemplateSet);
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSitePageTemplateSetPermissionsPage() throws Exception {
-		super.testGetSitePageTemplateSetPermissionsPage();
-	}
-
 	@Override
 	@Test
 	public void testGetSitePageTemplateSetsPage() throws Exception {
@@ -300,13 +293,6 @@ public class PageTemplateSetResourceTest
 				pageTemplateSet.getExternalReferenceCode(), pageTemplateSet));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSitePageTemplateSetPermissionsPage() throws Exception {
-		super.testPutSitePageTemplateSetPermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "externalReferenceCode", "name"};
@@ -320,17 +306,6 @@ public class PageTemplateSetResourceTest
 		pageTemplateSet.setDateModified(new Date(System.currentTimeMillis()));
 
 		return pageTemplateSet;
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected PageTemplateSet
-			testGetSitePageTemplateSetPermissionsPage_addPageTemplateSet()
-		throws Exception {
-
-		return super.
-			testGetSitePageTemplateSetPermissionsPage_addPageTemplateSet();
 	}
 
 	@Override
@@ -361,17 +336,6 @@ public class PageTemplateSetResourceTest
 		return pageTemplateSetResource.putSitePageTemplateSet(
 			testGroup.getExternalReferenceCode(),
 			pageTemplateSet.getExternalReferenceCode(), pageTemplateSet);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected PageTemplateSet
-			testPutSitePageTemplateSetPermissionsPage_addPageTemplateSet()
-		throws Exception {
-
-		return super.
-			testPutSitePageTemplateSetPermissionsPage_addPageTemplateSet();
 	}
 
 	private void _assertProblemException(

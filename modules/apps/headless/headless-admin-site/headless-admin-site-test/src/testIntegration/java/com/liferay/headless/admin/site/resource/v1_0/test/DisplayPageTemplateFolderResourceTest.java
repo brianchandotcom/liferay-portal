@@ -346,15 +346,6 @@ public class DisplayPageTemplateFolderResourceTest
 						liveGroupDisplayPageTemplateFolder));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteDisplayPageTemplateFolderPermissionsPage()
-		throws Exception {
-
-		super.testPutSiteDisplayPageTemplateFolderPermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "externalReferenceCode", "name"};
@@ -384,17 +375,6 @@ public class DisplayPageTemplateFolderResourceTest
 		throws Exception {
 
 		return testGroup.getExternalReferenceCode();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected DisplayPageTemplateFolder
-			testGetSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		return super.
-			testGetSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
 	}
 
 	@Override
@@ -435,17 +415,6 @@ public class DisplayPageTemplateFolderResourceTest
 
 		return testGetSiteDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
 			testGroup.getExternalReferenceCode(), displayPageTemplateFolder);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected DisplayPageTemplateFolder
-			testPutSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		return super.
-			testPutSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
 	}
 
 	private static

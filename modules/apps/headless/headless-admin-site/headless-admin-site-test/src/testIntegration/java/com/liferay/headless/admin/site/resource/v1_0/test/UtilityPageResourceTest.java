@@ -175,13 +175,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		}
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteUtilityPagePermissionsPage() throws Exception {
-		super.testGetSiteUtilityPagePermissionsPage();
-	}
-
 	@Override
 	@Test
 	public void testGetSiteUtilityPagesPage() throws Exception {
@@ -444,13 +437,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		_testPutSiteUtilityPageWithPageSpecifications();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteUtilityPagePermissionsPage() throws Exception {
-		super.testPutSiteUtilityPagePermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -499,15 +485,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		return utilityPage;
 	}
 
-	@Ignore
-	@Override
-	@Test
-	protected UtilityPage testGetSiteUtilityPagePermissionsPage_addUtilityPage()
-		throws Exception {
-
-		return super.testGetSiteUtilityPagePermissionsPage_addUtilityPage();
-	}
-
 	@Override
 	protected UtilityPage testGetSiteUtilityPagesPage_addUtilityPage(
 			String siteExternalReferenceCode, UtilityPage utilityPage)
@@ -532,15 +509,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		return testGetSiteUtilityPagesPage_addUtilityPage(
 			testGroup.getExternalReferenceCode(), utilityPage);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected UtilityPage testPutSiteUtilityPagePermissionsPage_addUtilityPage()
-		throws Exception {
-
-		return super.testPutSiteUtilityPagePermissionsPage_addUtilityPage();
 	}
 
 	private FileEntry _addPortletFileEntry(long folderId) throws Exception {

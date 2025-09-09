@@ -202,13 +202,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					RandomTestUtil.randomString())));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSitePageTemplatePermissionsPage() throws Exception {
-		super.testGetSitePageTemplatePermissionsPage();
-	}
-
 	@Override
 	@Test
 	public void testGetSitePageTemplateSetPageTemplatesPage() throws Exception {
@@ -577,13 +570,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				}));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSitePageTemplatePermissionsPage() throws Exception {
-		super.testPutSitePageTemplatePermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -601,16 +587,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	@Override
 	protected PageTemplate randomPageTemplate() throws Exception {
 		return _getPageTemplate(testGroup);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected PageTemplate
-			testGetSitePageTemplatePermissionsPage_addPageTemplate()
-		throws Exception {
-
-		return super.testGetSitePageTemplatePermissionsPage_addPageTemplate();
 	}
 
 	@Override
@@ -685,16 +661,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		return pageTemplateResource.postSitePageTemplateSetPageTemplate(
 			testGroup.getExternalReferenceCode(),
 			pageTemplateSet.getExternalReferenceCode(), pageTemplate);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected PageTemplate
-			testPutSitePageTemplatePermissionsPage_addPageTemplate()
-		throws Exception {
-
-		return super.testPutSitePageTemplatePermissionsPage_addPageTemplate();
 	}
 
 	private static com.liferay.headless.admin.site.dto.v1_0.PageTemplate

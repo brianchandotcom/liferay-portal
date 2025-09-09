@@ -121,7 +121,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	private void _addBulkActionTaskItem(
 			long bulkActionTaskId, String classExternalReferenceCode,
-			Long classPK, String executionStatus, long importTaskID,
+			Long classPK, String executionStatus, long importTaskId,
 			String name, long objectDefinitionId, String type)
 		throws Exception {
 
@@ -136,7 +136,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).put(
 				"executionStatus", executionStatus
 			).put(
-				"importTaskID", importTaskID
+				"importTaskId", importTaskId
 			).put(
 				"name", name
 			).put(

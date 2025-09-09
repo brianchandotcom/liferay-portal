@@ -266,7 +266,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			values.get("classPK"));
 		Assert.assertEquals("BasicWebContent", values.get("type"));
 
-		_waitForFinish(GetterUtil.getLong(values.get("importTaskID")));
+		_waitForFinish(GetterUtil.getLong(values.get("importTaskId")));
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(

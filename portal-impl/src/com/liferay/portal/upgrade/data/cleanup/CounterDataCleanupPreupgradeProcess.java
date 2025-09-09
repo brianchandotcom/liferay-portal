@@ -137,8 +137,8 @@ public class CounterDataCleanupPreupgradeProcess
 
 		List<String> tableNames = dbInspector.getTableNames(null);
 
-		tableNames.remove("Company");
-		tableNames.remove("Counter");
+		tableNames.remove(dbInspector.normalizeName("Company"));
+		tableNames.remove(dbInspector.normalizeName("Counter"));
 		tableNames.removeAll(excludedTableNames);
 
 		long latestCounterValue = 0L;

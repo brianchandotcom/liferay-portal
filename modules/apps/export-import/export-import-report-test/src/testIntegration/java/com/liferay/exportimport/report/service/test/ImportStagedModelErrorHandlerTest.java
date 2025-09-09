@@ -45,6 +45,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alvaro Saugar
@@ -71,7 +72,7 @@ public class ImportStagedModelErrorHandlerTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		bundleContext.registerService(
+		ServiceRegistration<StagedModelDataHandler> serviceRegistration =  bundleContext.registerService(
 			StagedModelDataHandler.class,
 			new TestStagedModelDataHandler(),
 			MapUtil.singletonDictionary("companyId", _company.getCompanyId()));
@@ -99,6 +100,7 @@ public class ImportStagedModelErrorHandlerTest {
 		}
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
+			serviceRegistration.unregister();
 		}
 
 		long exportImportReportEntriesCount2 =

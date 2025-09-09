@@ -2298,7 +2298,12 @@ public abstract class BaseObjectEntryResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				objectEntryUnsafeFunction =
+					objectEntry -> patchByExternalReferenceCode(
+						objectEntry.getExternalReferenceCode(), objectEntry);
+			}
+			else if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 				objectEntryUnsafeFunction = objectEntry -> {
 					ObjectEntry persistedObjectEntry = null;
 

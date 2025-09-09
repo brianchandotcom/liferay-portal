@@ -166,11 +166,7 @@ public class DepotEntryAdminSearchProvider {
 			long classPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			DepotEntry depotEntry = _depotEntryService.getDepotEntry(classPK);
-
-			if (depotEntry != null) {
-				depotEntries.add(depotEntry);
-			}
+			depotEntries.add(_depotEntryService.getDepotEntry(classPK));
 		}
 
 		return depotEntries;

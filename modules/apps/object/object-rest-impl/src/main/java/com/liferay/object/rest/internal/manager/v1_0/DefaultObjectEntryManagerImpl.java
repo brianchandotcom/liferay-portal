@@ -2626,9 +2626,7 @@ public class DefaultObjectEntryManagerImpl
 		if (fileEntry.getFileBase64() != null) {
 			fileContent = _decode(fileEntry.getFileBase64());
 		}
-		else if ((fileEntry.getFileURL() != null) &&
-				 FeatureFlagManagerUtil.isEnabled("LPD-39967")) {
-
+		else if (fileEntry.getFileURL() != null) {
 			try {
 				URL url = _exportImportAttachmentManager.getURL(
 					fileEntry.getFileURL());

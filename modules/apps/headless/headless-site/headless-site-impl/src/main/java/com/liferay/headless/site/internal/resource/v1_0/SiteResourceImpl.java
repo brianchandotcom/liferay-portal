@@ -10,12 +10,14 @@ import com.liferay.headless.site.dto.v1_0.Site;
 import com.liferay.headless.site.resource.v1_0.SiteResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -399,7 +401,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		throws Exception {
 
 		Group group = _groupService.addGroup(
-			_getParentGroupId(site.getParentSiteKey()),
+			_getParentGroupId(
+				null, site.getParentSiteExternalReferenceCode(),
+				site.getParentSiteKey()),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, _getNameMap(site),
 			_getLocalizationMap(site.getDescription()),
 			_getType(site.getMembershipType()),
@@ -481,15 +485,45 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		).build();
 	}
 
-	private long _getParentGroupId(String parentSiteKey)
-		throws PortalException {
+	private long _getParentGroupId(
+		Group group, String parentSiteExternalReferenceCode,
+		String parentSiteKey) {
 
-		if (Validator.isNull(parentSiteKey)) {
+		if (Validator.isNull(parentSiteKey) &&
+			Validator.isNull(parentSiteExternalReferenceCode)) {
+
 			return GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		}
 
-		Group parentGroup = _groupLocalService.getGroup(
+		Group parentGroup = _groupLocalService.loadFetchGroup(
 			contextCompany.getCompanyId(), parentSiteKey);
+
+		if (parentGroup == null) {
+			parentGroup = _groupLocalService.fetchGroupByExternalReferenceCode(
+				parentSiteExternalReferenceCode, contextCompany.getCompanyId());
+
+			if (parentGroup == null) {
+				return GroupConstants.DEFAULT_PARENT_GROUP_ID;
+			}
+		}
+
+		if (!LazyReferencingThreadLocal.isEnabled()) {
+			return parentGroup.getGroupId();
+		}
+
+		if (group != null) {
+			Group currentParentGroup = group.getParentGroup();
+
+			if ((currentParentGroup != null) &&
+				Objects.equals(
+					currentParentGroup.getExternalReferenceCode(),
+					parentSiteExternalReferenceCode)) {
+
+				return currentParentGroup.getGroupId();
+			}
+
+			return GroupConstants.DEFAULT_PARENT_GROUP_ID;
+		}
 
 		return parentGroup.getGroupId();
 	}
@@ -651,6 +685,17 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				setName(() -> group.getName(LocaleUtil.getDefault()));
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(group.getNameMap()));
+				setParentSiteExternalReferenceCode(
+					() -> {
+						Group parentGroup = _groupLocalService.fetchGroup(
+							group.getParentGroupId());
+
+						if (parentGroup != null) {
+							return parentGroup.getExternalReferenceCode();
+						}
+
+						return StringPool.BLANK;
+					});
 				setTypeSettings(
 					() -> {
 						UnicodeProperties unicodeProperties =
@@ -676,7 +721,10 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					contextCompany, contextUser)) {
 
 			Group updatedGroup = _groupLocalService.updateGroup(
-				group.getGroupId(), _getParentGroupId(site.getParentSiteKey()),
+				group.getGroupId(),
+				_getParentGroupId(
+					group, site.getParentSiteExternalReferenceCode(),
+					site.getParentSiteKey()),
 				_getNameMap(site), _getLocalizationMap(site.getDescription()),
 				_getType(site.getMembershipType()),
 				_isManualMembership(site.getManualMembership()),

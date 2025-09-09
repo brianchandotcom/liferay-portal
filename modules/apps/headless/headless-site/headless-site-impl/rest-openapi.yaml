@@ -6,6 +6,10 @@ components:
             properties:
                 active:
                     type: boolean
+                description:
+                    additionalProperties:
+                        type: string
+                    type: object
                 externalReferenceCode:
                     description:
                         The site's external reference code.
@@ -33,7 +37,9 @@ components:
                         -   restricted
                     type: string
                 name:
-                    type: string
+                    additionalProperties:
+                        type: string
+                    type: object
                 parentSiteKey:
                     type: string
                     writeOnly: true

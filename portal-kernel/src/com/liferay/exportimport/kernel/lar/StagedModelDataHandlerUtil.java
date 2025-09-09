@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.kernel.lar;
 
+import com.liferay.exportimport.kernel.exception.ImportStagedModelExceptionHandler;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
@@ -385,10 +386,10 @@ public class StagedModelDataHandlerUtil {
 				portletDataContext, stagedModel);
 		}
 		catch (PortletDataException portletDataException) {
-			for (ImportStagedModelErrorHandler importStagedModelErrorHandler :
-					_importStagedModelErrorHandler) {
+			for (ImportStagedModelExceptionHandler importStagedModelExceptionHandler :
+				_serviceTrackerList) {
 
-				importStagedModelErrorHandler.addErrorImportReportEntry(
+				importStagedModelExceptionHandler.handle(
 					portletDataException, portletDataContext, stagedModel);
 			}
 		}
@@ -634,9 +635,9 @@ public class StagedModelDataHandlerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedModelDataHandlerUtil.class);
 
-	private static final ServiceTrackerList<ImportStagedModelErrorHandler>
-		_importStagedModelErrorHandler = ServiceTrackerListFactory.open(
+	private static final ServiceTrackerList<ImportStagedModelExceptionHandler>
+		_serviceTrackerList = ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(),
-			ImportStagedModelErrorHandler.class);
+			ImportStagedModelExceptionHandler.class);
 
 }

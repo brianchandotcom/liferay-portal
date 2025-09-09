@@ -6,7 +6,7 @@
 package com.liferay.exportimport.report.service.impl.handler;
 
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
-import com.liferay.exportimport.kernel.lar.ImportStagedModelErrorHandler;
+import com.liferay.exportimport.kernel.exception.ImportStagedModelExceptionHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
@@ -25,12 +25,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alvaro Saugar
  */
-@Component(service = ImportStagedModelErrorHandler.class)
-public class ImportStagedModelErrorHandlerImpl
-	implements ImportStagedModelErrorHandler {
+@Component(service = ImportStagedModelExceptionHandler.class)
+public class ImportStagedModelExceptionHandlerImpl
+	implements ImportStagedModelExceptionHandler {
 
 	@Override
-	public <T extends StagedModel> void addErrorImportReportEntry(
+	public <T extends StagedModel> void handle(
 		Exception exception1, PortletDataContext portletDataContext,
 		T stagedModel) {
 
@@ -77,7 +77,7 @@ public class ImportStagedModelErrorHandlerImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ImportStagedModelErrorHandlerImpl.class);
+		ImportStagedModelExceptionHandlerImpl.class);
 
 	@Reference
 	private ExportImportReportEntryLocalService

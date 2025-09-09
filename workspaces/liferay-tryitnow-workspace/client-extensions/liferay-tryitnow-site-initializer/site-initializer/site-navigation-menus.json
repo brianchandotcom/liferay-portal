@@ -8,8 +8,12 @@
 				"type": "layout"
 			},
 			{
-				"friendlyURL": "/view-tickets",
 				"menuItems": [
+					{
+						"friendlyURL": "/view-tickets",
+						"name": "View Tickets",
+						"type": "layout"
+					},
 					{
 						"friendlyURL": "/admin-tickets",
 						"name": "Admin View",
@@ -21,8 +25,12 @@
 						"type": "layout"
 					}
 				],
-				"name": "View Tickets",
-				"type": "layout"
+				"name": "Tickets",
+				"name_i18n": {
+					"en_US": "Tickets"
+				},
+				"title": "Tickets",				
+				"type": "node"
 			},
 			{
 				"menuItems": [

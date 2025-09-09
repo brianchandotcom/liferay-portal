@@ -464,6 +464,40 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).getString(
 				OBJECT_FIELD_NAME_TEXT_1
 			));
+
+		// With "updateStrategy" PARTIAL_UPDATE
+
+		String expectedFieldValue = RandomTestUtil.randomString();
+
+		objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT_1, expectedFieldValue);
+
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						OBJECT_FIELD_NAME_TEXT_2, RandomTestUtil.randomString()
+					).put(
+						"externalReferenceCode",
+						objectEntry.getExternalReferenceCode()
+					)
+				).toString(),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?createStrategy=UPSERT&taskItemDelegateName=",
+					objectDefinition.getName(),
+					"&updateStrategy=PARTIAL_UPDATE"),
+				Http.Method.POST));
+
+		Assert.assertEquals(
+			expectedFieldValue,
+			_getJSONObject(
+				objectEntry.getExternalReferenceCode()
+			).getString(
+				OBJECT_FIELD_NAME_TEXT_1
+			));
 	}
 
 	private int _getHttpCode(ObjectEntry objectEntry) throws Exception {

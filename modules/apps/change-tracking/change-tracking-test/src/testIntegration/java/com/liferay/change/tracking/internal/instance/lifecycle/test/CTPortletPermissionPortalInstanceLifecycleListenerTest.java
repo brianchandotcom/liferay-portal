@@ -91,9 +91,9 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 
 				role = _roleLocalService.fetchRole(
 					company.getCompanyId(), publicationsRegularRoleName);
-			}
 
-			Assert.assertNull(role);
+				Assert.assertNull(role);
+			}
 		}
 
 		_portalInstanceLifecycleListener.portalInstanceRegistered(company);

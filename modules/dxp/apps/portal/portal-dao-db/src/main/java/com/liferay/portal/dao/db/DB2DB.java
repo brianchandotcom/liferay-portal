@@ -232,8 +232,7 @@ public class DB2DB extends BaseDB {
 	@Override
 	public String getRecreateSQL(String databaseName) {
 		return StringBundler.concat(
-			"drop database ", databaseName, ";\n", "create database ",
-			databaseName,
+			"drop database ", databaseName, ";\ncreate database ", databaseName,
 			" pagesize 32768 temporary tablespace managed by automatic ",
 			"storage;\n");
 	}

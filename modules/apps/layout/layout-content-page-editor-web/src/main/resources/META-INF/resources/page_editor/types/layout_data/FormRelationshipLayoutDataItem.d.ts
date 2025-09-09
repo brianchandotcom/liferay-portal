@@ -8,6 +8,7 @@ import {BaseLayoutDataItem, CommonStyles} from './BaseLayoutDataItem';
 export type FormRelationshipLayoutDataItem = BaseLayoutDataItem<
 	'form-relationship',
 	CommonStyles & {
-		contentType: string;
+		buttonLabel: Liferay.Language.LocalizedValue<string>;
+		contentType: string | null;
 	}
 >;

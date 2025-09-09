@@ -5,7 +5,15 @@
 
 // @ts-ignore
 
+export {CommonStyles} from '../../page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/CommonStyles';
+
+// @ts-ignore
+
 export {default as useKeyboardNavigation} from '../../page_editor/plugins/fragments_and_widgets/hooks/useKeyboardNavigation';
+
+// @ts-ignore
+
+export {TextField} from './components/fragment_configuration_fields/TextField';
 
 // @ts-ignore
 

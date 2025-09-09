@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -125,14 +126,14 @@ public class ViewFilesSectionDisplayContextTest
 	protected Map<String, String> getExpectedCreationMenuItems()
 		throws PortalException {
 
-		return HashMapBuilder.put(
-			"Basic Document", getRedirect("L_BASIC_DOCUMENT")
+		return LinkedHashMapBuilder.put(
+			"single-file", getRedirect("L_BASIC_DOCUMENT")
 		).put(
-			"External Video", getRedirect("L_EXTERNAL_VIDEO")
+			"multiple-files", StringPool.BLANK
 		).put(
 			"folder", StringPool.BLANK
 		).put(
-			"multiple-files", StringPool.BLANK
+			"external-video-shortcut", getRedirect("L_EXTERNAL_VIDEO")
 		).build();
 	}
 

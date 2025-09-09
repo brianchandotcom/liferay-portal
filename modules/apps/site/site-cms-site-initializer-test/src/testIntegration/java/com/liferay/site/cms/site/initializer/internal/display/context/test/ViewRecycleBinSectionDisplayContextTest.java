@@ -11,7 +11,9 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -150,6 +152,13 @@ public class ViewRecycleBinSectionDisplayContextTest
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2), "restore", "restore", "restore",
 			"restore", "item");
+	}
+
+	@Override
+	protected CreationMenu getCreationMenu(ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

@@ -8,9 +8,9 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 export default function FormRelationshipAddButton({
-	addButtonLabel,
+	buttonLabel,
 }: {
-	addButtonLabel: string;
+	buttonLabel: string;
 }) {
 	return (
 		<ClayButton borderless displayType="primary" size="sm">
@@ -20,7 +20,7 @@ export default function FormRelationshipAddButton({
 				symbol="times-circle-full"
 			/>
 
-			{addButtonLabel}
+			{buttonLabel}
 		</ClayButton>
 	);
 }

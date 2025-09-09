@@ -375,6 +375,11 @@ public interface KaleoDefinitionLocalService
 	public int getKaleoDefinitionsCount(
 		String name, ServiceContext serviceContext);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoDefinition getOrAddEmptyKaleoDefinition(
+			String name, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

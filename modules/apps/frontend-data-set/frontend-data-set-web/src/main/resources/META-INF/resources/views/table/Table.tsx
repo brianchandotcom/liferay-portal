@@ -97,7 +97,7 @@ const Head = ({
 }: {
 	fields: Array<Field>;
 	items: Array<any>;
-	selectionType?: 'single' | 'multiple' | null;
+	selectionType?: 'single' | 'multiple';
 }) => {
 	const {selectable} = useContext(FrontendDataSetContext);
 
@@ -163,7 +163,7 @@ const Row = ({
 	items: any[];
 	itemsActions: Array<IItemsActions>;
 	onItemSelectionChange: Function;
-	selectionType?: 'single' | 'multiple' | null;
+	selectionType?: 'single' | 'multiple';
 }) => {
 	const {itemsChanges, selectedItemsKey, updateItem} = useContext(
 		FrontendDataSetContext
@@ -339,7 +339,7 @@ const Body = ({
 	items: Array<any>;
 	itemsActions: Array<IItemsActions>;
 	onItemSelectionChange: Function;
-	selectionType?: 'single' | 'multiple' | null;
+	selectionType?: 'single' | 'multiple';
 }) => {
 	const {
 		allItemsSelectedActive,

@@ -55,7 +55,12 @@ test.afterEach(async ({apiHelpers}) => {
 
 test.beforeEach(async ({apiHelpers}) => {
 	const objectFields = generateObjectFields({
-		objectFieldBusinessTypes: ['Text'],
+		objectFieldBusinessTypes: [
+			{
+				businessType: 'Text',
+				name: 'name',
+			},
+		],
 	});
 
 	const objectDefinitionAPIClient =

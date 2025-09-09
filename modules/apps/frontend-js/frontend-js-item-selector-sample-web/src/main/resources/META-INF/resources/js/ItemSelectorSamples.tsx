@@ -15,6 +15,7 @@ import React, {useState} from 'react';
 
 import {
 	assetLibraryViews,
+	cmsFileViews,
 	documentViews,
 	userViews,
 } from './utils/defaultViews';
@@ -49,6 +50,11 @@ type Document = {
 	encodingFormat: string;
 	fileName: string;
 	id: string;
+	title: string;
+};
+
+type CMSFile = {
+	id: number;
 	title: string;
 };
 
@@ -107,6 +113,21 @@ const userAccountsItemSelectorConfig = {
 	views: userViews,
 };
 
+const cmsFileItemSelectorConfig = {
+	apiURL: `${location.origin}/o/search/v1.0/search?${[
+		'emptySearch=true',
+		'nestedFields=embedded,file.thumbnailURL',
+		"filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))",
+	].join('&')}`,
+	locator: {
+		id: 'embedded.id',
+		label: 'embedded.title',
+		value: 'embedded.id',
+	},
+	type: Liferay.Language.get('file'),
+	views: cmsFileViews,
+};
+
 function getRandomId(): string {
 	return Math.random().toString(36).substring(2, 9);
 }
@@ -118,6 +139,7 @@ export default function ItemSelectorSamples() {
 	const [space2, setSpace2] = useState<Space | null>();
 	const [document, setDocument] = useState<Document | null>();
 	const [user, setUser] = useState<User | null>();
+	const [cmsFile, setCMSFile] = useState<CMSFile | null>(null);
 
 	const {
 		observer: documentItemSelectorObserver,
@@ -133,6 +155,11 @@ export default function ItemSelectorSamples() {
 		observer: userItemSelectorObserver,
 		onOpenChange: userItemSelectorOpenChange,
 		open: userItemSelectorOpen,
+	} = useModal();
+	const {
+		observer: cmsFileItemSelectorObserver,
+		onOpenChange: cmsFileItemSelectorOpenChange,
+		open: cmsFileItemSelectorOpen,
 	} = useModal();
 
 	return (
@@ -373,6 +400,29 @@ export default function ItemSelectorSamples() {
 					}}
 				/>
 
+				<ItemSelectorModal<CMSFile>
+					{...{
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							apiURL: cmsFileItemSelectorConfig.apiURL,
+							id: `itemSelectorModal-cms-files-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.CMS_FILES,
+							}),
+						},
+						items: cmsFile ? [cmsFile] : [],
+						locator: cmsFileItemSelectorConfig.locator,
+						observer: cmsFileItemSelectorObserver,
+						onItemsChange: (items: CMSFile[]) => {
+							setCMSFile(items[0]);
+						},
+						onOpenChange: cmsFileItemSelectorOpenChange,
+						open: cmsFileItemSelectorOpen,
+						type: cmsFileItemSelectorConfig.type,
+					}}
+				/>
+
 				<ClayButton.Group className="mb-3" spaced>
 					<ClayButton
 						displayType="primary"
@@ -400,6 +450,15 @@ export default function ItemSelectorSamples() {
 					>
 						Select User
 					</ClayButton>
+
+					<ClayButton
+						displayType="primary"
+						onClick={() => {
+							cmsFileItemSelectorOpenChange(true);
+						}}
+					>
+						Select CMS File
+					</ClayButton>
 				</ClayButton.Group>
 
 				{space2 && (
@@ -423,6 +482,14 @@ export default function ItemSelectorSamples() {
 						displayType="info"
 						symbol="user"
 						title={user.name}
+					/>
+				)}
+
+				{cmsFile && (
+					<ClayAlert
+						displayType="info"
+						symbol="file-template"
+						title={cmsFile.title}
 					/>
 				)}
 			</SampleContainer>

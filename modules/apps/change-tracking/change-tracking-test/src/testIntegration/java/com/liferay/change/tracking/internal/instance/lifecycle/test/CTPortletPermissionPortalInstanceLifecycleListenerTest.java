@@ -83,17 +83,19 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 			Role role = _roleLocalService.fetchRole(
 				company.getCompanyId(), publicationsRegularRoleName);
 
-			if (role != null) {
-				role.setName(
-					role.getName() + " " + RandomTestUtil.randomString());
-
-				_roleLocalService.updateRole(role);
-
-				role = _roleLocalService.fetchRole(
-					company.getCompanyId(), publicationsRegularRoleName);
-
-				Assert.assertNull(role);
+			if (role == null) {
+				continue;
 			}
+
+			role.setName(
+				role.getName() + " " + RandomTestUtil.randomString());
+
+			_roleLocalService.updateRole(role);
+
+			role = _roleLocalService.fetchRole(
+				company.getCompanyId(), publicationsRegularRoleName);
+
+			Assert.assertNull(role);
 		}
 
 		_portalInstanceLifecycleListener.portalInstanceRegistered(company);

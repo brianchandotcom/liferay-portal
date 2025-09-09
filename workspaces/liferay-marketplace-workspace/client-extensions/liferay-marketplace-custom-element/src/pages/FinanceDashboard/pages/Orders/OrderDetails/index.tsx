@@ -9,6 +9,7 @@ import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard'
 import {PageRenderer} from '../../../../../components/Page';
 import QATable, {Orientation} from '../../../../../components/QATable';
 import Table from '../../../../../components/Table/Table';
+import {CurrencyAbbreviation} from '../../../../../enums/CurrencyAbbreviation';
 import {PaymentStatus as PaymentStatusCode} from '../../../../../enums/Order';
 import {ProductSpecificationKey} from '../../../../../enums/Product';
 import useAdminOrderProduct from '../../../../../hooks/useAdminOrderProduct';
@@ -83,7 +84,7 @@ const OrderDetails = () => {
 
 	const {order, payments, product} = data || {};
 
-	const currencyCode = order?.currencyCode || 'USD';
+	const currencyCode = order?.currencyCode || CurrencyAbbreviation.USD;
 
 	return (
 		<PageRenderer
@@ -92,41 +93,35 @@ const OrderDetails = () => {
 			isLoading={isLoading}
 		>
 			<OrderDetailsHeader
-				onClick={async () => {
-					try {
-						const updatedOrder =
-							await HeadlessCommerceAdminOrder.patchOrder(
-								orderId as string,
+				onClick={async () =>
+					HeadlessCommerceAdminOrder.patchOrder(orderId as string, {
+						paymentStatus: PaymentStatusCode.PAID,
+					})
+						.then((updatedOrder) => {
+							mutate(
 								{
-									paymentStatus: PaymentStatusCode.PAID,
-								}
+									...data!,
+									order: {
+										...data!.order,
+										...updatedOrder,
+										paymentStatus: PaymentStatusCode.PAID,
+									},
+								},
+								{revalidate: false}
 							);
 
-						mutate(
-							{
-								...data!,
-								order: {
-									...data!.order,
-									paymentStatus: PaymentStatusCode.PAID,
-
-									...updatedOrder,
-								},
-							},
-							{revalidate: false}
-						);
-
-						Liferay.Util.openToast({
-							message: 'Order marked as paid.',
-							type: 'success',
-						});
-					}
-					catch (error) {
-						Liferay.Util.openToast({
-							message: 'Oops! Something went wrong.',
-							type: 'danger',
-						});
-					}
-				}}
+							Liferay.Util.openToast({
+								message: 'Order marked as paid.',
+								type: 'success',
+							});
+						})
+						.catch(() =>
+							Liferay.Util.openToast({
+								message: 'Oops! Something went wrong.',
+								type: 'danger',
+							})
+						)
+				}
 				orderId={orderId as string}
 				paymentStatusCode={order?.paymentStatusInfo.code as number}
 			/>

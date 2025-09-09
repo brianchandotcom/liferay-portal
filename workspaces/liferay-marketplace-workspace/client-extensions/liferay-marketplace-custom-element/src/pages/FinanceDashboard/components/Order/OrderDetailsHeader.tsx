@@ -34,9 +34,9 @@ const OrderDetailsHeader = ({
 			</div>
 
 			{[
+				PaymentStatusCode.FAILED,
 				PaymentStatusCode.PAYMENT_PENDING,
 				PaymentStatusCode.PENDING,
-				PaymentStatusCode.FAILED,
 			].includes(paymentStatusCode) && (
 				<Button displayType="secondary" onClick={onClick}>
 					{i18n.translate('mark-as-paid')}

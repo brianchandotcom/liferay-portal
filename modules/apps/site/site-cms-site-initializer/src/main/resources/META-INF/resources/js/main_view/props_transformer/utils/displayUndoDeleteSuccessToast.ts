@@ -6,15 +6,10 @@
 import {OpenToastProps, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import {
-	getFormattedLabel,
-	getFormattedLink,
-} from '../../../common/utils/getFormattedText';
 import restoreItemAction from '../actions/restoreItemAction';
 
 const recycleBinToastInfo = {
 	className: 'recycle-bin-link',
-	linkText: Liferay.Language.get('recycle-bin'),
 	url: '/cms/recycle-bin',
 };
 
@@ -24,20 +19,14 @@ export default function displayUndoDeleteSuccessToast(
 	method: string,
 	restoreURL: string
 ) {
-	const {className, linkText, url} = recycleBinToastInfo;
-
-	const formmatedRecycleBinLink = getFormattedLink(
-		className,
-		linkText,
-		Liferay.ThemeDisplay.getPathFriendlyURLPublic() + url
-	);
-	const formattedItemLabel = getFormattedLabel(label);
+	const {className, url} = recycleBinToastInfo;
 
 	const openToastSuccessProps: OpenToastProps = {
 		message: sub(
-			Liferay.Language.get('x-was-moved-to-the-x'),
-			formattedItemLabel,
-			formmatedRecycleBinLink
+			Liferay.Language.get('x-was-moved-to-the-x-recycle-bin-x'),
+			`<strong>${Liferay.Util.escapeHTML(label)}</strong>`,
+			`<strong><a href="${Liferay.ThemeDisplay.getPathFriendlyURLPublic() + url}" class=${className}><u>`,
+			'</u></a></strong>'
 		),
 		type: 'success',
 	};

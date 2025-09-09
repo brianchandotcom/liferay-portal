@@ -1,5 +1,6 @@
 #!/bin/bash
-export LC_ALL=C
+
+export LC_ALL=en_US.UTF-8
 
 function check_usage {
 	if [ ! "${#}" -eq 2 ]
@@ -21,10 +22,9 @@ function check_usage {
 		exit 1
 	fi
 
-	if [[ "$1" == *[A-Z]* ]]
+	if [[ ${1} == *[A-Z]* ]]
 	then
 		echo "Custom element name must not contain upper case letters."
-		echo ${1}
 
 		exit 1
 	fi
@@ -282,15 +282,15 @@ function main {
 	elif [ "${2}" == "react" ]
 	then
 		create_react_app
-	elif [ "${2}" == "react-vite" ]
+	elif [ "${2}" == "vite-react" ]
 	then
 		create_vite_react_app
-	elif [ "${2}" == "vue2" ]
-	then
-		create_vue_2_app
 	elif [ "${2}" == "vite-vue3" ]
 	then
 		create_vite_vue_3_app
+	elif [ "${2}" == "vue2" ]
+	then
+		create_vue_2_app
 	else
 		echo "Unknown JavaScript framework: ${2}."
 
@@ -319,6 +319,7 @@ function write_angular_client_extension {
 }
 
 function write_liferay_integration_files {
+
 	#
 	# common/services/liferay/api.js
 	#
@@ -557,48 +558,89 @@ export default HelloWorld;
 EOF
 }
 
-function write_react_app_vite_files {
-
-	#
-	# /src/main.jsx
-	#
-
-	cat << EOF > main.jsx
-import React, { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-
-import App from './App.jsx'
-import './index.css'
-
-class WebComponent extends HTMLElement {
-
-	connectedCallback() {
-		this.root = createRoot(this);
-
-		this.root.render(
-			<StrictMode>
-				<App />
-			</StrictMode>,
-			this
-		);
-	}
-
-	disconnectedCallback() {
-		this.root.unmount();
-
-		delete this.root;
-	}
+function write_react_client_extension {
+	echo "assemble:" > client-extension.yaml
+	echo "    - from: build/static" >> client-extension.yaml
+	echo "      into: static" >> client-extension.yaml
+	echo "${CUSTOM_ELEMENT_NAME}:" >> client-extension.yaml
+	echo "    cssURLs:" >> client-extension.yaml
+	echo "        - css/main.*.css" >> client-extension.yaml
+	echo "    friendlyURLMapping: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
+	echo "    htmlElementName: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
+	echo "    instanceable: false" >> client-extension.yaml
+	echo "    name: ${CUSTOM_ELEMENT_DISPLAY_NAME}" >> client-extension.yaml
+	echo "    portletCategoryName: category.client-extensions" >> client-extension.yaml
+	echo "    type: customElement" >> client-extension.yaml
+	echo "    urls:" >> client-extension.yaml
+	echo "        - js/main.*.js" >> client-extension.yaml
+	echo -n "    useESM: true" >> client-extension.yaml
 }
 
-const ELEMENT_ID = '${CUSTOM_ELEMENT_NAME}';
+function write_vite_react_app_files {
 
-if (!customElements.get(ELEMENT_ID)) {
-	customElements.define(ELEMENT_ID, WebComponent);
+	#
+	# common/styles/custom.scss
+	#
+
+	cat << EOF > common/styles/custom.scss
+.${CUSTOM_ELEMENT_NAME} {
+	h1 {
+		color: \$primary-color;
+		font-weight: bold;
+	}
 }
 EOF
 
 	#
-	# /src/App.css
+	# common/styles/index.scss
+	#
+
+	cat << EOF > common/styles/index.scss
+${CUSTOM_ELEMENT_NAME} {
+	@import 'variables';
+
+	@import 'custom';
+}
+EOF
+
+	#
+	# common/styles/variables.scss
+	#
+
+	cat << EOF > common/styles/variables.scss
+\$primary-color: #295ccc;
+EOF
+
+	#
+	# package.json
+	#
+
+	cat << EOF > ../package.json
+{
+	"dependencies": {
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.3.1",
+		"@types/react-dom": "^18.3.1",
+		"@vitejs/plugin-react": "^4.2.1",
+		"vite": "^4.4.5"
+	},
+	"name": "@liferay/liferay-coefrontend-custom-element-react-vite",
+	"private": true,
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite",
+		"preview": "vite preview"
+	},
+	"type": "module",
+	"version": "0.0.0"
+}
+EOF
+
+	#
+	# src/App.css
 	#
 
 	cat << EOF > App.css
@@ -649,7 +691,45 @@ ${CUSTOM_ELEMENT_NAME} {
 EOF
 
 	#
-	# /vite.config.js
+	# src/main.jsx
+	#
+
+	cat << EOF > main.jsx
+import React, { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import App from './App.jsx'
+import './index.css'
+
+class WebComponent extends HTMLElement {
+
+	connectedCallback() {
+		this.root = createRoot(this);
+
+		this.root.render(
+			<StrictMode>
+				<App />
+			</StrictMode>,
+			this
+		);
+	}
+
+	disconnectedCallback() {
+		this.root.unmount();
+
+		delete this.root;
+	}
+}
+
+const ELEMENT_ID = '${CUSTOM_ELEMENT_NAME}';
+
+if (!customElements.get(ELEMENT_ID)) {
+	customElements.define(ELEMENT_ID, WebComponent);
+}
+EOF
+
+	#
+	# vite.config.js
 	#
 
 	cat << EOF > ../vite.config.js
@@ -671,85 +751,6 @@ export default defineConfig({
 	}
 })
 EOF
-
-	#
-	# /package.json
-	#
-
-	cat << EOF > ../package.json
-{
-	"dependencies": {
-		"react": "18.2.0",
-		"react-dom": "18.2.0"
-	},
-	"devDependencies": {
-		"@types/react": "^18.3.1",
-		"@types/react-dom": "^18.3.1",
-		"@vitejs/plugin-react": "^4.2.1",
-		"vite": "^4.4.5"
-	},
-	"name": "@liferay/liferay-coefrontend-custom-element-react-vite",
-	"private": true,
-	"scripts": {
-		"build": "vite build",
-		"dev": "vite",
-		"preview": "vite preview"
-	},
-	"type": "module",
-	"version": "0.0.0"
-}
-EOF
-
-	#
-	# common/styles/custom.scss
-	#
-
-	cat << EOF > common/styles/custom.scss
-.${CUSTOM_ELEMENT_NAME} {
-	h1 {
-		color: \$primary-color;
-		font-weight: bold;
-	}
-}
-EOF
-
-	#
-	# common/styles/index.scss
-	#
-
-	cat << EOF > common/styles/index.scss
-${CUSTOM_ELEMENT_NAME} {
-	@import 'variables';
-
-	@import 'custom';
-}
-EOF
-
-	#
-	# common/styles/variables.scss
-	#
-
-	cat << EOF > common/styles/variables.scss
-\$primary-color: #295ccc;
-EOF
-}
-
-function write_react_client_extension {
-	echo "assemble:" > client-extension.yaml
-	echo "    - from: build/static" >> client-extension.yaml
-	echo "      into: static" >> client-extension.yaml
-	echo "${CUSTOM_ELEMENT_NAME}:" >> client-extension.yaml
-	echo "    cssURLs:" >> client-extension.yaml
-	echo "        - css/main.*.css" >> client-extension.yaml
-	echo "    friendlyURLMapping: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
-	echo "    htmlElementName: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
-	echo "    instanceable: false" >> client-extension.yaml
-	echo "    name: ${CUSTOM_ELEMENT_DISPLAY_NAME}" >> client-extension.yaml
-	echo "    portletCategoryName: category.client-extensions" >> client-extension.yaml
-	echo "    type: customElement" >> client-extension.yaml
-	echo "    urls:" >> client-extension.yaml
-	echo "        - js/main.*.js" >> client-extension.yaml
-	echo -n "    useESM: true" >> client-extension.yaml
 }
 
 main "${@}"

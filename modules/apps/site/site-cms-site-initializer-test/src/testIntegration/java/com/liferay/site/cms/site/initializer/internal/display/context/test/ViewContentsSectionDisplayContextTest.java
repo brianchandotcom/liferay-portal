@@ -14,7 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -109,12 +109,12 @@ public class ViewContentsSectionDisplayContextTest
 	protected Map<String, String> getExpectedCreationMenuItems()
 		throws PortalException {
 
-		return HashMapBuilder.put(
-			"Basic Web Content", getRedirect("L_BASIC_WEB_CONTENT")
+		return LinkedHashMapBuilder.put(
+			"folder", StringPool.BLANK
+		).put(
+			"basic-content", getRedirect("L_BASIC_WEB_CONTENT")
 		).put(
 			"Blog", getRedirect("L_BLOG")
-		).put(
-			"folder", StringPool.BLANK
 		).put(
 			"Knowledge Base", getRedirect("L_KNOWLEDGE_BASE")
 		).build();

@@ -8,7 +8,9 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -66,6 +68,13 @@ public class ViewRecycleBinSectionDisplayContextTest
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2), "restore", "restore", "restore",
 			"restore", "item");
+	}
+
+	@Override
+	protected CreationMenu getCreationMenu(ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

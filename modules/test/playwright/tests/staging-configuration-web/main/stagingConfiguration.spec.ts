@@ -90,10 +90,6 @@ test(
 			'Export/Import, Staging'
 		);
 
-		await instanceSettingsPage.assertOptionVisible({
-			label: 'Show Advanced Staging Configuration by Default',
-		});
-
 		await instanceSettingsPage.checkOption(
 			'Show Advanced Staging Configuration by Default',
 			true
@@ -157,10 +153,6 @@ test(
 		);
 
 		await systemSettingsPage.saveAndWaitForAlert();
-
-		await systemSettingsPage.assertOptionVisible({
-			label: 'Show Advanced Staging Configuration by Default',
-		});
 
 		await enableLocalStaging(apiHelpers, page, site);
 

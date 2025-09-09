@@ -272,4 +272,32 @@ test('Behavior of item actions', async ({fdsSamplePage, page}) => {
 
 		await waitForAlert(page);
 	});
+
+	await test.step('Check that Sample Delete action has custom className applied', async () => {
+		const tableItemActionButton =
+			fdsSamplePage.table.itemActionButtons.first();
+
+		await expect(tableItemActionButton).toBeVisible();
+
+		const dropdownId =
+			await tableItemActionButton.getAttribute('aria-controls');
+
+		await tableItemActionButton.click();
+
+		await page
+			.locator(`#${dropdownId}`)
+			.filter({has: page.getByRole('menu')})
+			.waitFor();
+
+		const sampleDeleteActionItem = page
+			.locator(`#${dropdownId}`)
+			.getByRole('menuitem')
+			.filter({hasText: 'Sample Delete'});
+
+		await expect(sampleDeleteActionItem).toBeVisible();
+
+		await expect(sampleDeleteActionItem).toHaveClass(/text-danger/);
+
+		await page.keyboard.press('Escape');
+	});
 });

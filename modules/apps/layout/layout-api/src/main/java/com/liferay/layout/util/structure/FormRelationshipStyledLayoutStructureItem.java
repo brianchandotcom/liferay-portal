@@ -65,7 +65,7 @@ public class FormRelationshipStyledLayoutStructureItem
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
 		return jsonObject.put(
-			"buttonLabelJSONObject", _buttonLabelJSONObject
+			"buttonLabel", _buttonLabelJSONObject
 		).put(
 			"contentType",
 			() -> {
@@ -100,9 +100,9 @@ public class FormRelationshipStyledLayoutStructureItem
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		super.updateItemConfig(itemConfigJSONObject);
 
-		if (itemConfigJSONObject.has("buttonLabelJSONObject")) {
+		if (itemConfigJSONObject.has("buttonLabel")) {
 			setButtonLabelJSONObject(
-				itemConfigJSONObject.getJSONObject("buttonLabelJSONObject"));
+				itemConfigJSONObject.getJSONObject("buttonLabel"));
 		}
 
 		if (itemConfigJSONObject.has("contentType")) {

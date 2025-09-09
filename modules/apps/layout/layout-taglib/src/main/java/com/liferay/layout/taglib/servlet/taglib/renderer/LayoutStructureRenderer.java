@@ -972,7 +972,7 @@ public class LayoutStructureRenderer {
 		_renderReactComponent(
 			"{FormRelationshipAddButton} from layout-taglib/render",
 			HashMapBuilder.<String, Object>put(
-				"addButtonLabel",
+				"buttonLabel",
 				() -> {
 					JSONObject buttonLabelJSONObject =
 						formRelationshipStyledLayoutStructureItem.

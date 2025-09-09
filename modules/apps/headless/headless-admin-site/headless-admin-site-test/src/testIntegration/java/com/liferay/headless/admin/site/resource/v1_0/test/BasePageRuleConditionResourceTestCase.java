@@ -18,9 +18,13 @@ import com.liferay.headless.admin.site.client.http.HttpInvoker;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.resource.v1_0.PageRuleConditionResource;
 import com.liferay.headless.admin.site.client.serdes.v1_0.PageRuleConditionSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -107,6 +111,16 @@ public abstract class BasePageRuleConditionResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -185,36 +199,31 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodePageRuleCondition()
-		throws Exception {
-
+	public void testDeleteSitePageRuleCondition() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PageRuleCondition pageRuleCondition =
-			testDeleteSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition();
+			testDeleteSitePageRuleCondition_addPageRuleCondition();
 
 		assertHttpResponseStatusCode(
 			204,
-			pageRuleConditionResource.
-				deleteSiteSiteByExternalReferenceCodePageRuleConditionHttpResponse(
-					testDeleteSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode(),
-					pageRuleCondition.getExternalReferenceCode()));
+			pageRuleConditionResource.deleteSitePageRuleConditionHttpResponse(
+				testDeleteSitePageRuleCondition_getSiteExternalReferenceCode(),
+				pageRuleCondition.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
-			pageRuleConditionResource.
-				getSiteSiteByExternalReferenceCodePageRuleConditionHttpResponse(
-					testDeleteSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode(),
-					pageRuleCondition.getExternalReferenceCode()));
+			pageRuleConditionResource.getSitePageRuleConditionHttpResponse(
+				testDeleteSitePageRuleCondition_getSiteExternalReferenceCode(),
+				pageRuleCondition.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			pageRuleConditionResource.
-				getSiteSiteByExternalReferenceCodePageRuleConditionHttpResponse(
-					testDeleteSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode(),
-					"-"));
+			pageRuleConditionResource.getSitePageRuleConditionHttpResponse(
+				testDeleteSitePageRuleCondition_getSiteExternalReferenceCode(),
+				"-"));
 	}
 
 	protected PageRuleCondition
-			testDeleteSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition()
+			testDeleteSitePageRuleCondition_addPageRuleCondition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -222,7 +231,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	protected String
-			testDeleteSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode()
+			testDeleteSitePageRuleCondition_getSiteExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -230,32 +239,123 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodePageRuleCondition()
+	public void testGraphQLDeleteSitePageRuleCondition() throws Exception {
+
+		// No namespace
+
+		PageRuleCondition pageRuleCondition1 =
+			testGraphQLDeleteSitePageRuleCondition_addPageRuleCondition();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePageRuleCondition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"pageRuleConditionExternalReferenceCode",
+									"\"" +
+										pageRuleCondition1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data", "Object/deletePageRuleCondition"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"pageRuleCondition",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"pageRuleConditionExternalReferenceCode",
+								"\"" +
+									pageRuleCondition1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					new GraphQLField("pageRuleConditionId"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		PageRuleCondition pageRuleCondition2 =
+			testGraphQLDeleteSitePageRuleCondition_addPageRuleCondition();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminSite_v1_0",
+						new GraphQLField(
+							"deletePageRuleCondition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"pageRuleConditionExternalReferenceCode",
+										"\"" +
+											pageRuleCondition2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
+				"Object/deletePageRuleCondition"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminSite_v1_0",
+					new GraphQLField(
+						"pageRuleCondition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"pageRuleConditionExternalReferenceCode",
+									"\"" +
+										pageRuleCondition2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						new GraphQLField("pageRuleConditionId")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected PageRuleCondition
+			testGraphQLDeleteSitePageRuleCondition_addPageRuleCondition()
 		throws Exception {
 
+		return testGraphQLPageRuleCondition_addPageRuleCondition();
+	}
+
+	@Test
+	public void testGetSitePageRuleCondition() throws Exception {
 		PageRuleCondition postPageRuleCondition =
-			testGetSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition();
+			testGetSitePageRuleCondition_addPageRuleCondition();
 
 		PageRuleCondition getPageRuleCondition =
-			pageRuleConditionResource.
-				getSiteSiteByExternalReferenceCodePageRuleCondition(
-					testGetSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode(),
-					postPageRuleCondition.getExternalReferenceCode());
+			pageRuleConditionResource.getSitePageRuleCondition(
+				testGetSitePageRuleCondition_getSiteExternalReferenceCode(),
+				postPageRuleCondition.getExternalReferenceCode());
 
 		assertEquals(postPageRuleCondition, getPageRuleCondition);
 		assertValid(getPageRuleCondition);
 	}
 
 	protected PageRuleCondition
-			testGetSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition()
+			testGetSitePageRuleCondition_addPageRuleCondition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode()
+	protected String testGetSitePageRuleCondition_getSiteExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -263,11 +363,9 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodePageRuleCondition()
-		throws Exception {
-
+	public void testGraphQLGetSitePageRuleCondition() throws Exception {
 		PageRuleCondition pageRuleCondition =
-			testGraphQLGetSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition();
+			testGraphQLGetSitePageRuleCondition_addPageRuleCondition();
 
 		// No namespace
 
@@ -278,13 +376,13 @@ public abstract class BasePageRuleConditionResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"siteByExternalReferenceCodePageRuleCondition",
+								"pageRuleCondition",
 								new HashMap<String, Object>() {
 									{
 										put(
 											"siteExternalReferenceCode",
 											"\"" +
-												testGraphQLGetSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode() +
+												testGraphQLGetSitePageRuleCondition_getSiteExternalReferenceCode() +
 													"\"");
 										put(
 											"pageRuleConditionExternalReferenceCode",
@@ -295,8 +393,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/siteByExternalReferenceCodePageRuleCondition"))));
+						"JSONObject/data", "Object/pageRuleCondition"))));
 
 		// Using the namespace headlessAdminSite_v1_0
 
@@ -309,13 +406,13 @@ public abstract class BasePageRuleConditionResourceTestCase {
 							new GraphQLField(
 								"headlessAdminSite_v1_0",
 								new GraphQLField(
-									"siteByExternalReferenceCodePageRuleCondition",
+									"pageRuleCondition",
 									new HashMap<String, Object>() {
 										{
 											put(
 												"siteExternalReferenceCode",
 												"\"" +
-													testGraphQLGetSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode() +
+													testGraphQLGetSitePageRuleCondition_getSiteExternalReferenceCode() +
 														"\"");
 											put(
 												"pageRuleConditionExternalReferenceCode",
@@ -327,11 +424,11 @@ public abstract class BasePageRuleConditionResourceTestCase {
 									},
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
-						"Object/siteByExternalReferenceCodePageRuleCondition"))));
+						"Object/pageRuleCondition"))));
 	}
 
 	protected String
-			testGraphQLGetSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode()
+			testGraphQLGetSitePageRuleCondition_getSiteExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -339,9 +436,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodePageRuleConditionNotFound()
-		throws Exception {
-
+	public void testGraphQLGetSitePageRuleConditionNotFound() throws Exception {
 		String irrelevantPageRuleConditionExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
 
@@ -352,7 +447,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"siteByExternalReferenceCodePageRuleCondition",
+						"pageRuleCondition",
 						new HashMap<String, Object>() {
 							{
 								put(
@@ -378,7 +473,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 					new GraphQLField(
 						"headlessAdminSite_v1_0",
 						new GraphQLField(
-							"siteByExternalReferenceCodePageRuleCondition",
+							"pageRuleCondition",
 							new HashMap<String, Object>() {
 								{
 									put(
@@ -398,30 +493,26 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	protected PageRuleCondition
-			testGraphQLGetSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition()
+			testGraphQLGetSitePageRuleCondition_addPageRuleCondition()
 		throws Exception {
 
 		return testGraphQLPageRuleCondition_addPageRuleCondition();
 	}
 
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage()
-		throws Exception {
-
+	public void testGetSitePageRulePageRuleConditionsPage() throws Exception {
 		String siteExternalReferenceCode =
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getSiteExternalReferenceCode();
+			testGetSitePageRulePageRuleConditionsPage_getSiteExternalReferenceCode();
 		String irrelevantSiteExternalReferenceCode =
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getIrrelevantSiteExternalReferenceCode();
+			testGetSitePageRulePageRuleConditionsPage_getIrrelevantSiteExternalReferenceCode();
 		String pageRuleExternalReferenceCode =
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getPageRuleExternalReferenceCode();
+			testGetSitePageRulePageRuleConditionsPage_getPageRuleExternalReferenceCode();
 		String irrelevantPageRuleExternalReferenceCode =
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getIrrelevantPageRuleExternalReferenceCode();
+			testGetSitePageRulePageRuleConditionsPage_getIrrelevantPageRuleExternalReferenceCode();
 
 		Page<PageRuleCondition> page =
-			pageRuleConditionResource.
-				getSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage(
-					siteExternalReferenceCode, pageRuleExternalReferenceCode,
-					null);
+			pageRuleConditionResource.getSitePageRulePageRuleConditionsPage(
+				siteExternalReferenceCode, pageRuleExternalReferenceCode, null);
 
 		long totalCount = page.getTotalCount();
 
@@ -429,16 +520,15 @@ public abstract class BasePageRuleConditionResourceTestCase {
 			(irrelevantPageRuleExternalReferenceCode != null)) {
 
 			PageRuleCondition irrelevantPageRuleCondition =
-				testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_addPageRuleCondition(
+				testGetSitePageRulePageRuleConditionsPage_addPageRuleCondition(
 					irrelevantSiteExternalReferenceCode,
 					irrelevantPageRuleExternalReferenceCode,
 					randomIrrelevantPageRuleCondition());
 
 			page =
-				pageRuleConditionResource.
-					getSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage(
-						irrelevantSiteExternalReferenceCode,
-						irrelevantPageRuleExternalReferenceCode, null);
+				pageRuleConditionResource.getSitePageRulePageRuleConditionsPage(
+					irrelevantSiteExternalReferenceCode,
+					irrelevantPageRuleExternalReferenceCode, null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -447,26 +537,23 @@ public abstract class BasePageRuleConditionResourceTestCase {
 				(List<PageRuleCondition>)page.getItems());
 			assertValid(
 				page,
-				testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getExpectedActions(
+				testGetSitePageRulePageRuleConditionsPage_getExpectedActions(
 					irrelevantSiteExternalReferenceCode,
 					irrelevantPageRuleExternalReferenceCode));
 		}
 
 		PageRuleCondition pageRuleCondition1 =
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_addPageRuleCondition(
+			testGetSitePageRulePageRuleConditionsPage_addPageRuleCondition(
 				siteExternalReferenceCode, pageRuleExternalReferenceCode,
 				randomPageRuleCondition());
 
 		PageRuleCondition pageRuleCondition2 =
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_addPageRuleCondition(
+			testGetSitePageRulePageRuleConditionsPage_addPageRuleCondition(
 				siteExternalReferenceCode, pageRuleExternalReferenceCode,
 				randomPageRuleCondition());
 
-		page =
-			pageRuleConditionResource.
-				getSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage(
-					siteExternalReferenceCode, pageRuleExternalReferenceCode,
-					null);
+		page = pageRuleConditionResource.getSitePageRulePageRuleConditionsPage(
+			siteExternalReferenceCode, pageRuleExternalReferenceCode, null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -476,12 +563,12 @@ public abstract class BasePageRuleConditionResourceTestCase {
 			pageRuleCondition2, (List<PageRuleCondition>)page.getItems());
 		assertValid(
 			page,
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getExpectedActions(
+			testGetSitePageRulePageRuleConditionsPage_getExpectedActions(
 				siteExternalReferenceCode, pageRuleExternalReferenceCode));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getExpectedActions(
+			testGetSitePageRulePageRuleConditionsPage_getExpectedActions(
 				String siteExternalReferenceCode,
 				String pageRuleExternalReferenceCode)
 		throws Exception {
@@ -492,7 +579,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	protected PageRuleCondition
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_addPageRuleCondition(
+			testGetSitePageRulePageRuleConditionsPage_addPageRuleCondition(
 				String siteExternalReferenceCode,
 				String pageRuleExternalReferenceCode,
 				PageRuleCondition pageRuleCondition)
@@ -503,21 +590,21 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	protected String
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getSiteExternalReferenceCode()
+			testGetSitePageRulePageRuleConditionsPage_getSiteExternalReferenceCode()
 		throws Exception {
 
 		return testGroup.getExternalReferenceCode();
 	}
 
 	protected String
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getIrrelevantSiteExternalReferenceCode()
+			testGetSitePageRulePageRuleConditionsPage_getIrrelevantSiteExternalReferenceCode()
 		throws Exception {
 
 		return irrelevantGroup.getExternalReferenceCode();
 	}
 
 	protected String
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getPageRuleExternalReferenceCode()
+			testGetSitePageRulePageRuleConditionsPage_getPageRuleExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -525,28 +612,25 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	protected String
-			testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage_getIrrelevantPageRuleExternalReferenceCode()
+			testGetSitePageRulePageRuleConditionsPage_getIrrelevantPageRuleExternalReferenceCode()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPatchSiteSiteByExternalReferenceCodePageRuleCondition()
-		throws Exception {
-
+	public void testPatchSitePageRuleCondition() throws Exception {
 		PageRuleCondition postPageRuleCondition =
-			testPatchSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition();
+			testPatchSitePageRuleCondition_addPageRuleCondition();
 
 		PageRuleCondition randomPatchPageRuleCondition =
 			randomPatchPageRuleCondition();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PageRuleCondition patchPageRuleCondition =
-			pageRuleConditionResource.
-				patchSiteSiteByExternalReferenceCodePageRuleCondition(
-					null, postPageRuleCondition.getExternalReferenceCode(),
-					randomPatchPageRuleCondition);
+			pageRuleConditionResource.patchSitePageRuleCondition(
+				null, postPageRuleCondition.getExternalReferenceCode(),
+				randomPatchPageRuleCondition);
 
 		PageRuleCondition expectedPatchPageRuleCondition =
 			postPageRuleCondition.clone();
@@ -555,16 +639,15 @@ public abstract class BasePageRuleConditionResourceTestCase {
 			randomPatchPageRuleCondition, expectedPatchPageRuleCondition);
 
 		PageRuleCondition getPageRuleCondition =
-			pageRuleConditionResource.
-				getSiteSiteByExternalReferenceCodePageRuleCondition(
-					null, patchPageRuleCondition.getExternalReferenceCode());
+			pageRuleConditionResource.getSitePageRuleCondition(
+				null, patchPageRuleCondition.getExternalReferenceCode());
 
 		assertEquals(expectedPatchPageRuleCondition, getPageRuleCondition);
 		assertValid(getPageRuleCondition);
 	}
 
 	protected PageRuleCondition
-			testPatchSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition()
+			testPatchSitePageRuleCondition_addPageRuleCondition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -572,13 +655,11 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteSiteByExternalReferenceCodePageRulePageRuleCondition()
-		throws Exception {
-
+	public void testPostSitePageRulePageRuleCondition() throws Exception {
 		PageRuleCondition randomPageRuleCondition = randomPageRuleCondition();
 
 		PageRuleCondition postPageRuleCondition =
-			testPostSiteSiteByExternalReferenceCodePageRulePageRuleCondition_addPageRuleCondition(
+			testPostSitePageRulePageRuleCondition_addPageRuleCondition(
 				randomPageRuleCondition);
 
 		assertEquals(randomPageRuleCondition, postPageRuleCondition);
@@ -586,7 +667,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	protected PageRuleCondition
-			testPostSiteSiteByExternalReferenceCodePageRulePageRuleCondition_addPageRuleCondition(
+			testPostSitePageRulePageRuleCondition_addPageRuleCondition(
 				PageRuleCondition pageRuleCondition)
 		throws Exception {
 
@@ -595,44 +676,39 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageRuleCondition()
-		throws Exception {
-
+	public void testPutSitePageRuleCondition() throws Exception {
 		PageRuleCondition postPageRuleCondition =
-			testPutSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition();
+			testPutSitePageRuleCondition_addPageRuleCondition();
 
 		PageRuleCondition randomPageRuleCondition = randomPageRuleCondition();
 
 		PageRuleCondition putPageRuleCondition =
-			pageRuleConditionResource.
-				putSiteSiteByExternalReferenceCodePageRuleCondition(
-					testPutSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode(),
-					postPageRuleCondition.getExternalReferenceCode(),
-					randomPageRuleCondition);
+			pageRuleConditionResource.putSitePageRuleCondition(
+				testPutSitePageRuleCondition_getSiteExternalReferenceCode(),
+				postPageRuleCondition.getExternalReferenceCode(),
+				randomPageRuleCondition);
 
 		assertEquals(randomPageRuleCondition, putPageRuleCondition);
 		assertValid(putPageRuleCondition);
 
 		PageRuleCondition getPageRuleCondition =
-			pageRuleConditionResource.
-				getSiteSiteByExternalReferenceCodePageRuleCondition(
-					testPutSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode(),
-					putPageRuleCondition.getExternalReferenceCode());
+			pageRuleConditionResource.getSitePageRuleCondition(
+				testPutSitePageRuleCondition_getSiteExternalReferenceCode(),
+				putPageRuleCondition.getExternalReferenceCode());
 
 		assertEquals(randomPageRuleCondition, getPageRuleCondition);
 		assertValid(getPageRuleCondition);
 	}
 
 	protected PageRuleCondition
-			testPutSiteSiteByExternalReferenceCodePageRuleCondition_addPageRuleCondition()
+			testPutSitePageRuleCondition_addPageRuleCondition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String
-			testPutSiteSiteByExternalReferenceCodePageRuleCondition_getSiteExternalReferenceCode()
+	protected String testPutSitePageRuleCondition_getSiteExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -641,7 +717,65 @@ public abstract class BasePageRuleConditionResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		Assert.assertTrue(true);
+		PageRuleCondition pageRuleCondition1 =
+			testBatchEngineDeleteImportTask_addSitePageRuleCondition();
+
+		testBatchEngineDeleteImportTask_deletePageRuleCondition(
+			200, pageRuleCondition1.getExternalReferenceCode(),
+			"siteExternalReferenceCode", testGroup.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(
+			404,
+			pageRuleConditionResource.getSitePageRuleConditionHttpResponse(
+				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
+				pageRuleCondition1.getExternalReferenceCode()));
+	}
+
+	protected PageRuleCondition
+			testBatchEngineDeleteImportTask_addSitePageRuleCondition()
+		throws Exception {
+
+		return testDeleteSitePageRuleCondition_addPageRuleCondition();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deletePageRuleCondition(
+			int expectedStatusCode, String externalReferenceCode,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).parameters(
+			parameters
+		).build();
+
+		HttpResponse httpResponse =
+			importTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.admin.site.dto.v1_0.PageRuleCondition",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
+	}
+
+	protected String
+			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected PageRuleCondition
@@ -1298,7 +1432,30 @@ public abstract class BasePageRuleConditionResourceTestCase {
 		return randomPageRuleCondition();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected PageRuleConditionResource pageRuleConditionResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

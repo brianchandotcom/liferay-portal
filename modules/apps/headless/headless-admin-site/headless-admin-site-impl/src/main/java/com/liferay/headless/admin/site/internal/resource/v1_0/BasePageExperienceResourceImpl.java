@@ -108,7 +108,7 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteSiteSiteByExternalReferenceCodePageExperience(
+	public void deleteSitePageExperience(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -163,7 +163,7 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageExperience getSiteSiteByExternalReferenceCodePageExperience(
+	public PageExperience getSitePageExperience(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -220,18 +220,15 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<PageExperience>
-			getSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-				String siteExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam(
-					"pageSpecificationExternalReferenceCode"
-				)
-				String pageSpecificationExternalReferenceCode)
+	public Page<PageExperience> getSitePageSpecificationPageExperiencesPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("pageSpecificationExternalReferenceCode")
+			String pageSpecificationExternalReferenceCode)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -281,7 +278,7 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageExperience patchSiteSiteByExternalReferenceCodePageExperience(
+	public PageExperience patchSitePageExperience(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -293,9 +290,8 @@ public abstract class BasePageExperienceResourceImpl
 			PageExperience pageExperience)
 		throws Exception {
 
-		PageExperience existingPageExperience =
-			getSiteSiteByExternalReferenceCodePageExperience(
-				siteExternalReferenceCode, pageExperienceExternalReferenceCode);
+		PageExperience existingPageExperience = getSitePageExperience(
+			siteExternalReferenceCode, pageExperienceExternalReferenceCode);
 
 		if (pageExperience.getExternalReferenceCode() != null) {
 			existingPageExperience.setExternalReferenceCode(
@@ -328,7 +324,7 @@ public abstract class BasePageExperienceResourceImpl
 
 		preparePatch(pageExperience, existingPageExperience);
 
-		return putSiteSiteByExternalReferenceCodePageExperience(
+		return putSitePageExperience(
 			siteExternalReferenceCode, pageExperienceExternalReferenceCode,
 			existingPageExperience);
 	}
@@ -377,19 +373,16 @@ public abstract class BasePageExperienceResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageExperience
-			postSiteSiteByExternalReferenceCodePageSpecificationPageExperience(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-				String siteExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam(
-					"pageSpecificationExternalReferenceCode"
-				)
-				String pageSpecificationExternalReferenceCode,
-				PageExperience pageExperience)
+	public PageExperience postSitePageSpecificationPageExperience(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("pageSpecificationExternalReferenceCode")
+			String pageSpecificationExternalReferenceCode,
+			PageExperience pageExperience)
 		throws Exception {
 
 		return new PageExperience();
@@ -439,7 +432,7 @@ public abstract class BasePageExperienceResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public PageExperience putSiteSiteByExternalReferenceCodePageExperience(
+	public PageExperience putSitePageExperience(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -471,8 +464,33 @@ public abstract class BasePageExperienceResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<PageExperience, PageExperience, Exception>
+			pageExperienceUnsafeFunction = pageExperience -> {
+				if (parameters.containsKey("siteExternalReferenceCode")) {
+					deleteSitePageExperience(
+						(String)parameters.get("siteExternalReferenceCode"),
+						pageExperience.getExternalReferenceCode());
+
+					return pageExperience;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				pageExperiences, pageExperienceUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				pageExperiences, pageExperienceUnsafeFunction::apply);
+		}
+		else {
+			for (PageExperience pageExperience : pageExperiences) {
+				pageExperienceUnsafeFunction.apply(pageExperience);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -54,6 +54,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import jakarta.validation.constraints.NotEmpty;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.function.BiFunction;
@@ -192,7 +193,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Deletes a specific display page template of a site."
 	)
-	public boolean deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+	public boolean deleteSiteDisplayPageTemplate(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("displayPageTemplateExternalReferenceCode") String
@@ -203,10 +204,9 @@ public class Mutation {
 			_displayPageTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			displayPageTemplateResource ->
-				displayPageTemplateResource.
-					deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-						siteExternalReferenceCode,
-						displayPageTemplateExternalReferenceCode));
+				displayPageTemplateResource.deleteSiteDisplayPageTemplate(
+					siteExternalReferenceCode,
+					displayPageTemplateExternalReferenceCode));
 
 		return true;
 	}
@@ -214,50 +214,62 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public DisplayPageTemplate
-			patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplateExternalReferenceCode") String
-					displayPageTemplateExternalReferenceCode,
-				@GraphQLName("displayPageTemplate") DisplayPageTemplate
-					displayPageTemplate)
+	public DisplayPageTemplate patchSiteDisplayPageTemplate(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("displayPageTemplateExternalReferenceCode") String
+				displayPageTemplateExternalReferenceCode,
+			@GraphQLName("displayPageTemplate") DisplayPageTemplate
+				displayPageTemplate)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_displayPageTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			displayPageTemplateResource ->
-				displayPageTemplateResource.
-					patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-						siteExternalReferenceCode,
-						displayPageTemplateExternalReferenceCode,
-						displayPageTemplate));
+				displayPageTemplateResource.patchSiteDisplayPageTemplate(
+					siteExternalReferenceCode,
+					displayPageTemplateExternalReferenceCode,
+					displayPageTemplate));
 	}
 
 	@GraphQLField(description = "Adds a new display page template")
-	public DisplayPageTemplate
-			createSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplate") DisplayPageTemplate
-					displayPageTemplate)
+	public DisplayPageTemplate createSiteDisplayPageTemplate(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("displayPageTemplate") DisplayPageTemplate
+				displayPageTemplate)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_displayPageTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			displayPageTemplateResource ->
-				displayPageTemplateResource.
-					postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-						siteExternalReferenceCode, displayPageTemplate));
+				displayPageTemplateResource.postSiteDisplayPageTemplate(
+					siteExternalReferenceCode, displayPageTemplate));
+	}
+
+	@GraphQLField
+	public Response createSiteDisplayPageTemplateBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateResource ->
+				displayPageTemplateResource.postSiteDisplayPageTemplateBatch(
+					siteExternalReferenceCode, callbackURL, object));
 	}
 
 	@GraphQLField(
 		description = "Adds a new display page template in draft status to a display page template folder."
 	)
 	public DisplayPageTemplate
-			createSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate(
+			createSiteDisplayPageTemplateFolderDisplayPageTemplate(
 				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 					siteExternalReferenceCode,
 				@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
@@ -271,7 +283,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			displayPageTemplateResource ->
 				displayPageTemplateResource.
-					postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate(
+					postSiteDisplayPageTemplateFolderDisplayPageTemplate(
 						siteExternalReferenceCode,
 						displayPageTemplateFolderExternalReferenceCode,
 						displayPageTemplate));
@@ -281,7 +293,7 @@ public class Mutation {
 		description = "Adds a new page specification in draft status to a display page template."
 	)
 	public ContentPageSpecification
-			createSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification(
+			createSiteDisplayPageTemplatePageSpecification(
 				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 					siteExternalReferenceCode,
 				@GraphQLName("displayPageTemplateExternalReferenceCode") String
@@ -295,10 +307,58 @@ public class Mutation {
 			this::_populateResourceContext,
 			displayPageTemplateResource ->
 				displayPageTemplateResource.
-					postSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification(
+					postSiteDisplayPageTemplatePageSpecification(
 						siteExternalReferenceCode,
 						displayPageTemplateExternalReferenceCode,
 						contentPageSpecification));
+	}
+
+	@GraphQLField
+	public Response createSiteDisplayPageTemplatesPageExportBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateResource ->
+				displayPageTemplateResource.
+					postSiteDisplayPageTemplatesPageExportBatch(
+						siteExternalReferenceCode, search,
+						_filterBiFunction.apply(
+							displayPageTemplateResource, filterString),
+						_sortsBiFunction.apply(
+							displayPageTemplateResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Updates the display page template with the given external reference code, or creates it if it does not exist."
+	)
+	public DisplayPageTemplate updateSiteDisplayPageTemplate(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("displayPageTemplateExternalReferenceCode") String
+				displayPageTemplateExternalReferenceCode,
+			@GraphQLName("displayPageTemplate") DisplayPageTemplate
+				displayPageTemplate)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateResource ->
+				displayPageTemplateResource.putSiteDisplayPageTemplate(
+					siteExternalReferenceCode,
+					displayPageTemplateExternalReferenceCode,
+					displayPageTemplate));
 	}
 
 	@GraphQLField
@@ -329,38 +389,13 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Updates the display page template with the given external reference code, or creates it if it does not exist."
-	)
-	public DisplayPageTemplate
-			updateSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplateExternalReferenceCode") String
-					displayPageTemplateExternalReferenceCode,
-				@GraphQLName("displayPageTemplate") DisplayPageTemplate
-					displayPageTemplate)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_displayPageTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			displayPageTemplateResource ->
-				displayPageTemplateResource.
-					putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-						siteExternalReferenceCode,
-						displayPageTemplateExternalReferenceCode,
-						displayPageTemplate));
-	}
-
-	@GraphQLField(
 		description = "Deletes a specific display page template folder of a site."
 	)
-	public boolean
-			deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
-					String displayPageTemplateFolderExternalReferenceCode)
+	public boolean deleteSiteDisplayPageTemplateFolder(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
+				String displayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -368,7 +403,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			displayPageTemplateFolderResource ->
 				displayPageTemplateFolderResource.
-					deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					deleteSiteDisplayPageTemplateFolder(
 						siteExternalReferenceCode,
 						displayPageTemplateFolderExternalReferenceCode));
 
@@ -378,14 +413,13 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public DisplayPageTemplateFolder
-			patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
-					String displayPageTemplateFolderExternalReferenceCode,
-				@GraphQLName("displayPageTemplateFolder")
-					DisplayPageTemplateFolder displayPageTemplateFolder)
+	public DisplayPageTemplateFolder patchSiteDisplayPageTemplateFolder(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
+				String displayPageTemplateFolderExternalReferenceCode,
+			@GraphQLName("displayPageTemplateFolder") DisplayPageTemplateFolder
+				displayPageTemplateFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -393,19 +427,18 @@ public class Mutation {
 			this::_populateResourceContext,
 			displayPageTemplateFolderResource ->
 				displayPageTemplateFolderResource.
-					patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					patchSiteDisplayPageTemplateFolder(
 						siteExternalReferenceCode,
 						displayPageTemplateFolderExternalReferenceCode,
 						displayPageTemplateFolder));
 	}
 
 	@GraphQLField(description = "Adds a new display page template folder.")
-	public DisplayPageTemplateFolder
-			createSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplateFolder")
-					DisplayPageTemplateFolder displayPageTemplateFolder)
+	public DisplayPageTemplateFolder createSiteDisplayPageTemplateFolder(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("displayPageTemplateFolder") DisplayPageTemplateFolder
+				displayPageTemplateFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -413,8 +446,74 @@ public class Mutation {
 			this::_populateResourceContext,
 			displayPageTemplateFolderResource ->
 				displayPageTemplateFolderResource.
-					postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					postSiteDisplayPageTemplateFolder(
 						siteExternalReferenceCode, displayPageTemplateFolder));
+	}
+
+	@GraphQLField
+	public Response createSiteDisplayPageTemplateFolderBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateFolderResource ->
+				displayPageTemplateFolderResource.
+					postSiteDisplayPageTemplateFolderBatch(
+						siteExternalReferenceCode, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteDisplayPageTemplateFoldersPageExportBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateFolderResource ->
+				displayPageTemplateFolderResource.
+					postSiteDisplayPageTemplateFoldersPageExportBatch(
+						siteExternalReferenceCode, search,
+						_filterBiFunction.apply(
+							displayPageTemplateFolderResource, filterString),
+						_sortsBiFunction.apply(
+							displayPageTemplateFolderResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Updates the display page template folder with the given external reference code, or creates it if it does not exist."
+	)
+	public DisplayPageTemplateFolder updateSiteDisplayPageTemplateFolder(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
+				String displayPageTemplateFolderExternalReferenceCode,
+			@GraphQLName("displayPageTemplateFolder") DisplayPageTemplateFolder
+				displayPageTemplateFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateFolderResource ->
+				displayPageTemplateFolderResource.
+					putSiteDisplayPageTemplateFolder(
+						siteExternalReferenceCode,
+						displayPageTemplateFolderExternalReferenceCode,
+						displayPageTemplateFolder));
 	}
 
 	@GraphQLField
@@ -445,33 +544,9 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Updates the display page template folder with the given external reference code, or creates it if it does not exist."
-	)
-	public DisplayPageTemplateFolder
-			updateSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
-					String displayPageTemplateFolderExternalReferenceCode,
-				@GraphQLName("displayPageTemplateFolder")
-					DisplayPageTemplateFolder displayPageTemplateFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_displayPageTemplateFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			displayPageTemplateFolderResource ->
-				displayPageTemplateFolderResource.
-					putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-						siteExternalReferenceCode,
-						displayPageTemplateFolderExternalReferenceCode,
-						displayPageTemplateFolder));
-	}
-
-	@GraphQLField(
 		description = "Deletes a specific fragment composition of a site."
 	)
-	public boolean deleteSiteSiteByExternalReferenceCodeFragmentComposition(
+	public boolean deleteSiteFragmentComposition(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("fragmentCompositionExternalReferenceCode") String
@@ -482,10 +557,9 @@ public class Mutation {
 			_fragmentCompositionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			fragmentCompositionResource ->
-				fragmentCompositionResource.
-					deleteSiteSiteByExternalReferenceCodeFragmentComposition(
-						siteExternalReferenceCode,
-						fragmentCompositionExternalReferenceCode));
+				fragmentCompositionResource.deleteSiteFragmentComposition(
+					siteExternalReferenceCode,
+					fragmentCompositionExternalReferenceCode));
 
 		return true;
 	}
@@ -493,38 +567,75 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public FragmentComposition
-			patchSiteSiteByExternalReferenceCodeFragmentComposition(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("fragmentCompositionExternalReferenceCode") String
-					fragmentCompositionExternalReferenceCode,
-				@GraphQLName("fragmentComposition") FragmentComposition
-					fragmentComposition)
+	public FragmentComposition patchSiteFragmentComposition(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("fragmentCompositionExternalReferenceCode") String
+				fragmentCompositionExternalReferenceCode,
+			@GraphQLName("fragmentComposition") FragmentComposition
+				fragmentComposition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_fragmentCompositionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			fragmentCompositionResource ->
-				fragmentCompositionResource.
-					patchSiteSiteByExternalReferenceCodeFragmentComposition(
-						siteExternalReferenceCode,
-						fragmentCompositionExternalReferenceCode,
-						fragmentComposition));
+				fragmentCompositionResource.patchSiteFragmentComposition(
+					siteExternalReferenceCode,
+					fragmentCompositionExternalReferenceCode,
+					fragmentComposition));
 	}
 
 	@GraphQLField(
 		description = "Adds a new fragment composition. If the page element of the fragment composition does not contain a definition property and contains an external reference code, the page element will be retrieved based on the externalReferenceCode and used for creating the fragment composition."
 	)
-	public FragmentComposition
-			createSiteSiteByExternalReferenceCodeFragmentComposition(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("saveInlineContent") Boolean saveInlineContent,
-				@GraphQLName("saveMapping") Boolean saveMapping,
-				@GraphQLName("fragmentComposition") FragmentComposition
-					fragmentComposition)
+	public FragmentComposition createSiteFragmentComposition(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("saveInlineContent") Boolean saveInlineContent,
+			@GraphQLName("saveMapping") Boolean saveMapping,
+			@GraphQLName("fragmentComposition") FragmentComposition
+				fragmentComposition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_fragmentCompositionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			fragmentCompositionResource ->
+				fragmentCompositionResource.postSiteFragmentComposition(
+					siteExternalReferenceCode, saveInlineContent, saveMapping,
+					fragmentComposition));
+	}
+
+	@GraphQLField
+	public Response createSiteFragmentCompositionBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("saveInlineContent") Boolean saveInlineContent,
+			@GraphQLName("saveMapping") Boolean saveMapping,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_fragmentCompositionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			fragmentCompositionResource ->
+				fragmentCompositionResource.postSiteFragmentCompositionBatch(
+					siteExternalReferenceCode, saveInlineContent, saveMapping,
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteFragmentCompositionsPageExportBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -532,37 +643,39 @@ public class Mutation {
 			this::_populateResourceContext,
 			fragmentCompositionResource ->
 				fragmentCompositionResource.
-					postSiteSiteByExternalReferenceCodeFragmentComposition(
-						siteExternalReferenceCode, saveInlineContent,
-						saveMapping, fragmentComposition));
+					postSiteFragmentCompositionsPageExportBatch(
+						siteExternalReferenceCode, search,
+						_filterBiFunction.apply(
+							fragmentCompositionResource, filterString),
+						_sortsBiFunction.apply(
+							fragmentCompositionResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
 		description = "Updates the fragment composition with the given external reference code, or creates it if it does not exist."
 	)
-	public FragmentComposition
-			updateSiteSiteByExternalReferenceCodeFragmentComposition(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("fragmentCompositionExternalReferenceCode") String
-					fragmentCompositionExternalReferenceCode,
-				@GraphQLName("fragmentComposition") FragmentComposition
-					fragmentComposition)
+	public FragmentComposition updateSiteFragmentComposition(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("fragmentCompositionExternalReferenceCode") String
+				fragmentCompositionExternalReferenceCode,
+			@GraphQLName("fragmentComposition") FragmentComposition
+				fragmentComposition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_fragmentCompositionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			fragmentCompositionResource ->
-				fragmentCompositionResource.
-					putSiteSiteByExternalReferenceCodeFragmentComposition(
-						siteExternalReferenceCode,
-						fragmentCompositionExternalReferenceCode,
-						fragmentComposition));
+				fragmentCompositionResource.putSiteFragmentComposition(
+					siteExternalReferenceCode,
+					fragmentCompositionExternalReferenceCode,
+					fragmentComposition));
 	}
 
 	@GraphQLField(description = "Deletes a specific master page of a site.")
-	public boolean deleteSiteSiteByExternalReferenceCodeMasterPage(
+	public boolean deleteSiteMasterPage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("masterPageExternalReferenceCode") String
@@ -572,11 +685,8 @@ public class Mutation {
 		_applyVoidComponentServiceObjects(
 			_masterPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			masterPageResource ->
-				masterPageResource.
-					deleteSiteSiteByExternalReferenceCodeMasterPage(
-						siteExternalReferenceCode,
-						masterPageExternalReferenceCode));
+			masterPageResource -> masterPageResource.deleteSiteMasterPage(
+				siteExternalReferenceCode, masterPageExternalReferenceCode));
 
 		return true;
 	}
@@ -584,7 +694,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public MasterPage patchSiteSiteByExternalReferenceCodeMasterPage(
+	public MasterPage patchSiteMasterPage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("masterPageExternalReferenceCode") String
@@ -595,15 +705,13 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_masterPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			masterPageResource ->
-				masterPageResource.
-					patchSiteSiteByExternalReferenceCodeMasterPage(
-						siteExternalReferenceCode,
-						masterPageExternalReferenceCode, masterPage));
+			masterPageResource -> masterPageResource.patchSiteMasterPage(
+				siteExternalReferenceCode, masterPageExternalReferenceCode,
+				masterPage));
 	}
 
 	@GraphQLField(description = "Adds a new master page.")
-	public MasterPage createSiteSiteByExternalReferenceCodeMasterPage(
+	public MasterPage createSiteMasterPage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("masterPage") MasterPage masterPage)
@@ -612,34 +720,86 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_masterPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			masterPageResource ->
-				masterPageResource.
-					postSiteSiteByExternalReferenceCodeMasterPage(
-						siteExternalReferenceCode, masterPage));
+			masterPageResource -> masterPageResource.postSiteMasterPage(
+				siteExternalReferenceCode, masterPage));
+	}
+
+	@GraphQLField
+	public Response createSiteMasterPageBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_masterPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			masterPageResource -> masterPageResource.postSiteMasterPageBatch(
+				siteExternalReferenceCode, callbackURL, object));
 	}
 
 	@GraphQLField(
 		description = "Adds a new page specification in draft status to a master page."
 	)
-	public ContentPageSpecification
-			createSiteSiteByExternalReferenceCodeMasterPagePageSpecification(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("masterPageExternalReferenceCode") String
-					masterPageExternalReferenceCode,
-				@GraphQLName("contentPageSpecification")
-					ContentPageSpecification contentPageSpecification)
+	public ContentPageSpecification createSiteMasterPagePageSpecification(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("masterPageExternalReferenceCode") String
+				masterPageExternalReferenceCode,
+			@GraphQLName("contentPageSpecification") ContentPageSpecification
+				contentPageSpecification)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_masterPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			masterPageResource ->
-				masterPageResource.
-					postSiteSiteByExternalReferenceCodeMasterPagePageSpecification(
-						siteExternalReferenceCode,
-						masterPageExternalReferenceCode,
-						contentPageSpecification));
+				masterPageResource.postSiteMasterPagePageSpecification(
+					siteExternalReferenceCode, masterPageExternalReferenceCode,
+					contentPageSpecification));
+	}
+
+	@GraphQLField
+	public Response createSiteMasterPagesPageExportBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_masterPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			masterPageResource ->
+				masterPageResource.postSiteMasterPagesPageExportBatch(
+					siteExternalReferenceCode, search,
+					_filterBiFunction.apply(masterPageResource, filterString),
+					_sortsBiFunction.apply(masterPageResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Updates the master page with the given external reference code, or creates it if it does not exist."
+	)
+	public MasterPage updateSiteMasterPage(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("masterPageExternalReferenceCode") String
+				masterPageExternalReferenceCode,
+			@GraphQLName("masterPage") MasterPage masterPage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_masterPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			masterPageResource -> masterPageResource.putSiteMasterPage(
+				siteExternalReferenceCode, masterPageExternalReferenceCode,
+				masterPage));
 	}
 
 	@GraphQLField
@@ -668,29 +828,9 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Updates the master page with the given external reference code, or creates it if it does not exist."
-	)
-	public MasterPage updateSiteSiteByExternalReferenceCodeMasterPage(
-			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-				siteExternalReferenceCode,
-			@GraphQLName("masterPageExternalReferenceCode") String
-				masterPageExternalReferenceCode,
-			@GraphQLName("masterPage") MasterPage masterPage)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_masterPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			masterPageResource ->
-				masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
-					siteExternalReferenceCode, masterPageExternalReferenceCode,
-					masterPage));
-	}
-
-	@GraphQLField(
 		description = "Deletes a page element within an experience of a specific page specification of a site page within a site."
 	)
-	public boolean deleteSiteSiteByExternalReferenceCodePageElement(
+	public boolean deleteSitePageSpecificationPageExperiencePageElement(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageSpecificationExternalReferenceCode") String
@@ -706,7 +846,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			pageElementResource ->
 				pageElementResource.
-					deleteSiteSiteByExternalReferenceCodePageElement(
+					deleteSitePageSpecificationPageExperiencePageElement(
 						siteExternalReferenceCode,
 						pageSpecificationExternalReferenceCode,
 						pageExperienceExternalReferenceCode,
@@ -718,7 +858,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates a page element within an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public PageElement patchSiteSiteByExternalReferenceCodePageElement(
+	public PageElement patchSitePageSpecificationPageExperiencePageElement(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageSpecificationExternalReferenceCode") String
@@ -735,7 +875,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			pageElementResource ->
 				pageElementResource.
-					patchSiteSiteByExternalReferenceCodePageElement(
+					patchSitePageSpecificationPageExperiencePageElement(
 						siteExternalReferenceCode,
 						pageSpecificationExternalReferenceCode,
 						pageExperienceExternalReferenceCode,
@@ -743,10 +883,34 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Adds a new page element to an experience in a page specification in draft status of a site page."
+	)
+	public PageElement createSitePageSpecificationPageExperiencePageElement(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageSpecificationExternalReferenceCode") String
+				pageSpecificationExternalReferenceCode,
+			@GraphQLName("pageExperienceExternalReferenceCode") String
+				pageExperienceExternalReferenceCode,
+			@GraphQLName("pageElement") PageElement pageElement)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageElementResource ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						siteExternalReferenceCode,
+						pageSpecificationExternalReferenceCode,
+						pageExperienceExternalReferenceCode, pageElement));
+	}
+
+	@GraphQLField(
 		description = "Adds a new fragment composition under a page element of an experience in a page specification of a site page. If successful, the response will contain the page element in which the fragment composition is converted."
 	)
 	public PageElement
-			createSiteSiteByExternalReferenceCodePageElementFragmentComposition(
+			createSitePageSpecificationPageExperiencePageElementFragmentComposition(
 				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 					siteExternalReferenceCode,
 				@GraphQLName("pageSpecificationExternalReferenceCode") String
@@ -765,7 +929,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			pageElementResource ->
 				pageElementResource.
-					postSiteSiteByExternalReferenceCodePageElementFragmentComposition(
+					postSitePageSpecificationPageExperiencePageElementFragmentComposition(
 						siteExternalReferenceCode,
 						pageSpecificationExternalReferenceCode,
 						pageExperienceExternalReferenceCode,
@@ -774,34 +938,9 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Adds a new page element to an experience in a page specification in draft status of a site page."
-	)
-	public PageElement
-			createSiteSiteByExternalReferenceCodePageExperiencePageElement(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageSpecificationExternalReferenceCode") String
-					pageSpecificationExternalReferenceCode,
-				@GraphQLName("pageExperienceExternalReferenceCode") String
-					pageExperienceExternalReferenceCode,
-				@GraphQLName("pageElement") PageElement pageElement)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageElementResource ->
-				pageElementResource.
-					postSiteSiteByExternalReferenceCodePageExperiencePageElement(
-						siteExternalReferenceCode,
-						pageSpecificationExternalReferenceCode,
-						pageExperienceExternalReferenceCode, pageElement));
-	}
-
-	@GraphQLField(
 		description = "Updates a page element within an experience of a specific page specification of a site page within a site."
 	)
-	public PageElement updateSiteSiteByExternalReferenceCodePageElement(
+	public PageElement updateSitePageSpecificationPageExperiencePageElement(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageSpecificationExternalReferenceCode") String
@@ -818,7 +957,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			pageElementResource ->
 				pageElementResource.
-					putSiteSiteByExternalReferenceCodePageElement(
+					putSitePageSpecificationPageExperiencePageElement(
 						siteExternalReferenceCode,
 						pageSpecificationExternalReferenceCode,
 						pageExperienceExternalReferenceCode,
@@ -828,7 +967,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Deletes an experience of a specific page specification of a site page within a site. The default experience cannot be deleted."
 	)
-	public boolean deleteSiteSiteByExternalReferenceCodePageExperience(
+	public boolean deleteSitePageExperience(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageExperienceExternalReferenceCode") String
@@ -839,10 +978,9 @@ public class Mutation {
 			_pageExperienceResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageExperienceResource ->
-				pageExperienceResource.
-					deleteSiteSiteByExternalReferenceCodePageExperience(
-						siteExternalReferenceCode,
-						pageExperienceExternalReferenceCode));
+				pageExperienceResource.deleteSitePageExperience(
+					siteExternalReferenceCode,
+					pageExperienceExternalReferenceCode));
 
 		return true;
 	}
@@ -850,7 +988,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public PageExperience patchSiteSiteByExternalReferenceCodePageExperience(
+	public PageExperience patchSitePageExperience(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageExperienceExternalReferenceCode") String
@@ -862,39 +1000,35 @@ public class Mutation {
 			_pageExperienceResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageExperienceResource ->
-				pageExperienceResource.
-					patchSiteSiteByExternalReferenceCodePageExperience(
-						siteExternalReferenceCode,
-						pageExperienceExternalReferenceCode, pageExperience));
+				pageExperienceResource.patchSitePageExperience(
+					siteExternalReferenceCode,
+					pageExperienceExternalReferenceCode, pageExperience));
 	}
 
 	@GraphQLField(
 		description = "Adds a new experience to a page specification of a site page."
 	)
-	public PageExperience
-			createSiteSiteByExternalReferenceCodePageSpecificationPageExperience(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageSpecificationExternalReferenceCode") String
-					pageSpecificationExternalReferenceCode,
-				@GraphQLName("pageExperience") PageExperience pageExperience)
+	public PageExperience createSitePageSpecificationPageExperience(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageSpecificationExternalReferenceCode") String
+				pageSpecificationExternalReferenceCode,
+			@GraphQLName("pageExperience") PageExperience pageExperience)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageExperienceResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageExperienceResource ->
-				pageExperienceResource.
-					postSiteSiteByExternalReferenceCodePageSpecificationPageExperience(
-						siteExternalReferenceCode,
-						pageSpecificationExternalReferenceCode,
-						pageExperience));
+				pageExperienceResource.postSitePageSpecificationPageExperience(
+					siteExternalReferenceCode,
+					pageSpecificationExternalReferenceCode, pageExperience));
 	}
 
 	@GraphQLField(
 		description = "Updates an experience of a specific page specification of a site page within a site."
 	)
-	public PageExperience updateSiteSiteByExternalReferenceCodePageExperience(
+	public PageExperience updateSitePageExperience(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageExperienceExternalReferenceCode") String
@@ -906,16 +1040,15 @@ public class Mutation {
 			_pageExperienceResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageExperienceResource ->
-				pageExperienceResource.
-					putSiteSiteByExternalReferenceCodePageExperience(
-						siteExternalReferenceCode,
-						pageExperienceExternalReferenceCode, pageExperience));
+				pageExperienceResource.putSitePageExperience(
+					siteExternalReferenceCode,
+					pageExperienceExternalReferenceCode, pageExperience));
 	}
 
 	@GraphQLField(
 		description = "Deletes a page rule within an experience of a specific page specification of a site page within a site."
 	)
-	public boolean deleteSiteSiteByExternalReferenceCodePageRule(
+	public boolean deleteSitePageRule(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageRuleExternalReferenceCode") String
@@ -925,9 +1058,8 @@ public class Mutation {
 		_applyVoidComponentServiceObjects(
 			_pageRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			pageRuleResource ->
-				pageRuleResource.deleteSiteSiteByExternalReferenceCodePageRule(
-					siteExternalReferenceCode, pageRuleExternalReferenceCode));
+			pageRuleResource -> pageRuleResource.deleteSitePageRule(
+				siteExternalReferenceCode, pageRuleExternalReferenceCode));
 
 		return true;
 	}
@@ -935,7 +1067,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates a page rule within an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public PageRule patchSiteSiteByExternalReferenceCodePageRule(
+	public PageRule patchSitePageRule(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageRuleExternalReferenceCode") String
@@ -946,16 +1078,15 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_pageRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			pageRuleResource ->
-				pageRuleResource.patchSiteSiteByExternalReferenceCodePageRule(
-					siteExternalReferenceCode, pageRuleExternalReferenceCode,
-					pageRule));
+			pageRuleResource -> pageRuleResource.patchSitePageRule(
+				siteExternalReferenceCode, pageRuleExternalReferenceCode,
+				pageRule));
 	}
 
 	@GraphQLField(
 		description = "Adds a new page rule to an experience in a page specification in draft status of a site page."
 	)
-	public PageRule createSiteSiteByExternalReferenceCodePageExperiencePageRule(
+	public PageRule createSitePageExperiencePageRule(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageExperienceExternalReferenceCode") String
@@ -966,17 +1097,15 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_pageRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			pageRuleResource ->
-				pageRuleResource.
-					postSiteSiteByExternalReferenceCodePageExperiencePageRule(
-						siteExternalReferenceCode,
-						pageExperienceExternalReferenceCode, pageRule));
+			pageRuleResource -> pageRuleResource.postSitePageExperiencePageRule(
+				siteExternalReferenceCode, pageExperienceExternalReferenceCode,
+				pageRule));
 	}
 
 	@GraphQLField(
 		description = "Updates a page rule within an experience of a specific page specification of a site page within a site."
 	)
-	public PageRule updateSiteSiteByExternalReferenceCodePageRule(
+	public PageRule updateSitePageRule(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageRuleExternalReferenceCode") String
@@ -987,16 +1116,15 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_pageRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			pageRuleResource ->
-				pageRuleResource.putSiteSiteByExternalReferenceCodePageRule(
-					siteExternalReferenceCode, pageRuleExternalReferenceCode,
-					pageRule));
+			pageRuleResource -> pageRuleResource.putSitePageRule(
+				siteExternalReferenceCode, pageRuleExternalReferenceCode,
+				pageRule));
 	}
 
 	@GraphQLField(
 		description = "Deletes a page rule action within a page rule of an experience of a specific page specification of a site page within a site."
 	)
-	public boolean deleteSiteSiteByExternalReferenceCodePageRuleAction(
+	public boolean deleteSitePageRuleAction(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageRuleActionExternalReferenceCode") String
@@ -1007,10 +1135,9 @@ public class Mutation {
 			_pageRuleActionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageRuleActionResource ->
-				pageRuleActionResource.
-					deleteSiteSiteByExternalReferenceCodePageRuleAction(
-						siteExternalReferenceCode,
-						pageRuleActionExternalReferenceCode));
+				pageRuleActionResource.deleteSitePageRuleAction(
+					siteExternalReferenceCode,
+					pageRuleActionExternalReferenceCode));
 
 		return true;
 	}
@@ -1018,7 +1145,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates a page rule action within a page rule of an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public PageRuleAction patchSiteSiteByExternalReferenceCodePageRuleAction(
+	public PageRuleAction patchSitePageRuleAction(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageRuleActionExternalReferenceCode") String
@@ -1030,38 +1157,35 @@ public class Mutation {
 			_pageRuleActionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageRuleActionResource ->
-				pageRuleActionResource.
-					patchSiteSiteByExternalReferenceCodePageRuleAction(
-						siteExternalReferenceCode,
-						pageRuleActionExternalReferenceCode, pageRuleAction));
+				pageRuleActionResource.patchSitePageRuleAction(
+					siteExternalReferenceCode,
+					pageRuleActionExternalReferenceCode, pageRuleAction));
 	}
 
 	@GraphQLField(
 		description = "Adds a new page rule action to a page rule in an experience in a page specification in draft status of a site page."
 	)
-	public PageRuleAction
-			createSiteSiteByExternalReferenceCodePageRulePageRuleAction(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageRuleExternalReferenceCode") String
-					pageRuleExternalReferenceCode,
-				@GraphQLName("pageRuleAction") PageRuleAction pageRuleAction)
+	public PageRuleAction createSitePageRulePageRuleAction(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageRuleExternalReferenceCode") String
+				pageRuleExternalReferenceCode,
+			@GraphQLName("pageRuleAction") PageRuleAction pageRuleAction)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageRuleActionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageRuleActionResource ->
-				pageRuleActionResource.
-					postSiteSiteByExternalReferenceCodePageRulePageRuleAction(
-						siteExternalReferenceCode,
-						pageRuleExternalReferenceCode, pageRuleAction));
+				pageRuleActionResource.postSitePageRulePageRuleAction(
+					siteExternalReferenceCode, pageRuleExternalReferenceCode,
+					pageRuleAction));
 	}
 
 	@GraphQLField(
 		description = "Updates a page rule action within a page rule of an experience of a specific page specification of a site page within a site."
 	)
-	public PageRuleAction updateSiteSiteByExternalReferenceCodePageRuleAction(
+	public PageRuleAction updateSitePageRuleAction(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageRuleActionExternalReferenceCode") String
@@ -1073,16 +1197,15 @@ public class Mutation {
 			_pageRuleActionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageRuleActionResource ->
-				pageRuleActionResource.
-					putSiteSiteByExternalReferenceCodePageRuleAction(
-						siteExternalReferenceCode,
-						pageRuleActionExternalReferenceCode, pageRuleAction));
+				pageRuleActionResource.putSitePageRuleAction(
+					siteExternalReferenceCode,
+					pageRuleActionExternalReferenceCode, pageRuleAction));
 	}
 
 	@GraphQLField(
 		description = "Deletes a page rule condition within a page rule of an experience of a specific page specification of a site page within a site."
 	)
-	public boolean deleteSiteSiteByExternalReferenceCodePageRuleCondition(
+	public boolean deleteSitePageRuleCondition(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageRuleConditionExternalReferenceCode") String
@@ -1093,10 +1216,9 @@ public class Mutation {
 			_pageRuleConditionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageRuleConditionResource ->
-				pageRuleConditionResource.
-					deleteSiteSiteByExternalReferenceCodePageRuleCondition(
-						siteExternalReferenceCode,
-						pageRuleConditionExternalReferenceCode));
+				pageRuleConditionResource.deleteSitePageRuleCondition(
+					siteExternalReferenceCode,
+					pageRuleConditionExternalReferenceCode));
 
 		return true;
 	}
@@ -1104,76 +1226,68 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates a page rule condition within a page rule of an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public PageRuleCondition
-			patchSiteSiteByExternalReferenceCodePageRuleCondition(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageRuleConditionExternalReferenceCode") String
-					pageRuleConditionExternalReferenceCode,
-				@GraphQLName("pageRuleCondition") PageRuleCondition
-					pageRuleCondition)
+	public PageRuleCondition patchSitePageRuleCondition(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageRuleConditionExternalReferenceCode") String
+				pageRuleConditionExternalReferenceCode,
+			@GraphQLName("pageRuleCondition") PageRuleCondition
+				pageRuleCondition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageRuleConditionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageRuleConditionResource ->
-				pageRuleConditionResource.
-					patchSiteSiteByExternalReferenceCodePageRuleCondition(
-						siteExternalReferenceCode,
-						pageRuleConditionExternalReferenceCode,
-						pageRuleCondition));
+				pageRuleConditionResource.patchSitePageRuleCondition(
+					siteExternalReferenceCode,
+					pageRuleConditionExternalReferenceCode, pageRuleCondition));
 	}
 
 	@GraphQLField(
 		description = "Adds a new page rule condition to a page rule in an experience in a page specification in draft status of a site page."
 	)
-	public PageRuleCondition
-			createSiteSiteByExternalReferenceCodePageRulePageRuleCondition(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageRuleExternalReferenceCode") String
-					pageRuleExternalReferenceCode,
-				@GraphQLName("pageRuleCondition") PageRuleCondition
-					pageRuleCondition)
+	public PageRuleCondition createSitePageRulePageRuleCondition(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageRuleExternalReferenceCode") String
+				pageRuleExternalReferenceCode,
+			@GraphQLName("pageRuleCondition") PageRuleCondition
+				pageRuleCondition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageRuleConditionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageRuleConditionResource ->
-				pageRuleConditionResource.
-					postSiteSiteByExternalReferenceCodePageRulePageRuleCondition(
-						siteExternalReferenceCode,
-						pageRuleExternalReferenceCode, pageRuleCondition));
+				pageRuleConditionResource.postSitePageRulePageRuleCondition(
+					siteExternalReferenceCode, pageRuleExternalReferenceCode,
+					pageRuleCondition));
 	}
 
 	@GraphQLField(
 		description = "Updates a page rule condition within a page rule of an experience of a specific page specification of a site page within a site."
 	)
-	public PageRuleCondition
-			updateSiteSiteByExternalReferenceCodePageRuleCondition(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageRuleConditionExternalReferenceCode") String
-					pageRuleConditionExternalReferenceCode,
-				@GraphQLName("pageRuleCondition") PageRuleCondition
-					pageRuleCondition)
+	public PageRuleCondition updateSitePageRuleCondition(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageRuleConditionExternalReferenceCode") String
+				pageRuleConditionExternalReferenceCode,
+			@GraphQLName("pageRuleCondition") PageRuleCondition
+				pageRuleCondition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageRuleConditionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageRuleConditionResource ->
-				pageRuleConditionResource.
-					putSiteSiteByExternalReferenceCodePageRuleCondition(
-						siteExternalReferenceCode,
-						pageRuleConditionExternalReferenceCode,
-						pageRuleCondition));
+				pageRuleConditionResource.putSitePageRuleCondition(
+					siteExternalReferenceCode,
+					pageRuleConditionExternalReferenceCode, pageRuleCondition));
 	}
 
 	@GraphQLField(description = "Deletes a page specification of a site page.")
-	public boolean deleteSiteSiteByExternalReferenceCodePageSpecification(
+	public boolean deleteSitePageSpecification(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageSpecificationExternalReferenceCode") String
@@ -1184,10 +1298,9 @@ public class Mutation {
 			_pageSpecificationResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageSpecificationResource ->
-				pageSpecificationResource.
-					deleteSiteSiteByExternalReferenceCodePageSpecification(
-						siteExternalReferenceCode,
-						pageSpecificationExternalReferenceCode));
+				pageSpecificationResource.deleteSitePageSpecification(
+					siteExternalReferenceCode,
+					pageSpecificationExternalReferenceCode));
 
 		return true;
 	}
@@ -1195,72 +1308,64 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates a page specification of a site page. Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public PageSpecification
-			patchSiteSiteByExternalReferenceCodePageSpecification(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageSpecificationExternalReferenceCode") String
-					pageSpecificationExternalReferenceCode,
-				@GraphQLName("pageSpecification") PageSpecification
-					pageSpecification)
+	public PageSpecification patchSitePageSpecification(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageSpecificationExternalReferenceCode") String
+				pageSpecificationExternalReferenceCode,
+			@GraphQLName("pageSpecification") PageSpecification
+				pageSpecification)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageSpecificationResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageSpecificationResource ->
-				pageSpecificationResource.
-					patchSiteSiteByExternalReferenceCodePageSpecification(
-						siteExternalReferenceCode,
-						pageSpecificationExternalReferenceCode,
-						pageSpecification));
+				pageSpecificationResource.patchSitePageSpecification(
+					siteExternalReferenceCode,
+					pageSpecificationExternalReferenceCode, pageSpecification));
 	}
 
 	@GraphQLField(
 		description = "Publishes a page specification in draft status of a site page."
 	)
-	public PageSpecification
-			createSiteSiteByExternalReferenceCodePageSpecificationPublish(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageSpecificationExternalReferenceCode") String
-					pageSpecificationExternalReferenceCode)
+	public PageSpecification createSitePageSpecificationPublish(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageSpecificationExternalReferenceCode") String
+				pageSpecificationExternalReferenceCode)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageSpecificationResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageSpecificationResource ->
-				pageSpecificationResource.
-					postSiteSiteByExternalReferenceCodePageSpecificationPublish(
-						siteExternalReferenceCode,
-						pageSpecificationExternalReferenceCode));
+				pageSpecificationResource.postSitePageSpecificationPublish(
+					siteExternalReferenceCode,
+					pageSpecificationExternalReferenceCode));
 	}
 
 	@GraphQLField(description = "Updates a page specification of a site page.")
-	public PageSpecification
-			updateSiteSiteByExternalReferenceCodePageSpecification(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageSpecificationExternalReferenceCode") String
-					pageSpecificationExternalReferenceCode,
-				@GraphQLName("pageSpecification") PageSpecification
-					pageSpecification)
+	public PageSpecification updateSitePageSpecification(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageSpecificationExternalReferenceCode") String
+				pageSpecificationExternalReferenceCode,
+			@GraphQLName("pageSpecification") PageSpecification
+				pageSpecification)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageSpecificationResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageSpecificationResource ->
-				pageSpecificationResource.
-					putSiteSiteByExternalReferenceCodePageSpecification(
-						siteExternalReferenceCode,
-						pageSpecificationExternalReferenceCode,
-						pageSpecification));
+				pageSpecificationResource.putSitePageSpecification(
+					siteExternalReferenceCode,
+					pageSpecificationExternalReferenceCode, pageSpecification));
 	}
 
 	@GraphQLField(description = "Deletes a specific page template of a site.")
-	public boolean deleteSiteSiteByExternalReferenceCodePageTemplate(
+	public boolean deleteSitePageTemplate(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageTemplateExternalReferenceCode") String
@@ -1270,11 +1375,8 @@ public class Mutation {
 		_applyVoidComponentServiceObjects(
 			_pageTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			pageTemplateResource ->
-				pageTemplateResource.
-					deleteSiteSiteByExternalReferenceCodePageTemplate(
-						siteExternalReferenceCode,
-						pageTemplateExternalReferenceCode));
+			pageTemplateResource -> pageTemplateResource.deleteSitePageTemplate(
+				siteExternalReferenceCode, pageTemplateExternalReferenceCode));
 
 		return true;
 	}
@@ -1282,7 +1384,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public PageTemplate patchSiteSiteByExternalReferenceCodePageTemplate(
+	public PageTemplate patchSitePageTemplate(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageTemplateExternalReferenceCode") String
@@ -1293,15 +1395,13 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_pageTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			pageTemplateResource ->
-				pageTemplateResource.
-					patchSiteSiteByExternalReferenceCodePageTemplate(
-						siteExternalReferenceCode,
-						pageTemplateExternalReferenceCode, pageTemplate));
+			pageTemplateResource -> pageTemplateResource.patchSitePageTemplate(
+				siteExternalReferenceCode, pageTemplateExternalReferenceCode,
+				pageTemplate));
 	}
 
 	@GraphQLField(description = "Adds a new page template")
-	public PageTemplate createSiteSiteByExternalReferenceCodePageTemplate(
+	public PageTemplate createSitePageTemplate(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageTemplate") PageTemplate pageTemplate)
@@ -1310,56 +1410,108 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_pageTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
+			pageTemplateResource -> pageTemplateResource.postSitePageTemplate(
+				siteExternalReferenceCode, pageTemplate));
+	}
+
+	@GraphQLField
+	public Response createSitePageTemplateBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
 			pageTemplateResource ->
-				pageTemplateResource.
-					postSiteSiteByExternalReferenceCodePageTemplate(
-						siteExternalReferenceCode, pageTemplate));
+				pageTemplateResource.postSitePageTemplateBatch(
+					siteExternalReferenceCode, callbackURL, object));
 	}
 
 	@GraphQLField(
 		description = "Adds a new page specification in draft status to a page template."
 	)
-	public ContentPageSpecification
-			createSiteSiteByExternalReferenceCodePageTemplatePageSpecification(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageTemplateExternalReferenceCode") String
-					pageTemplateExternalReferenceCode,
-				@GraphQLName("contentPageSpecification")
-					ContentPageSpecification contentPageSpecification)
+	public ContentPageSpecification createSitePageTemplatePageSpecification(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageTemplateExternalReferenceCode") String
+				pageTemplateExternalReferenceCode,
+			@GraphQLName("contentPageSpecification") ContentPageSpecification
+				contentPageSpecification)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageTemplateResource ->
-				pageTemplateResource.
-					postSiteSiteByExternalReferenceCodePageTemplatePageSpecification(
-						siteExternalReferenceCode,
-						pageTemplateExternalReferenceCode,
-						contentPageSpecification));
+				pageTemplateResource.postSitePageTemplatePageSpecification(
+					siteExternalReferenceCode,
+					pageTemplateExternalReferenceCode,
+					contentPageSpecification));
 	}
 
 	@GraphQLField(
 		description = "Adds a new page template in draft status to a page template set."
 	)
-	public PageTemplate
-			createSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("pageTemplateSetExternalReferenceCode") String
-					pageTemplateSetExternalReferenceCode,
-				@GraphQLName("pageTemplate") PageTemplate pageTemplate)
+	public PageTemplate createSitePageTemplateSetPageTemplate(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageTemplateSetExternalReferenceCode") String
+				pageTemplateSetExternalReferenceCode,
+			@GraphQLName("pageTemplate") PageTemplate pageTemplate)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_pageTemplateResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageTemplateResource ->
-				pageTemplateResource.
-					postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
-						siteExternalReferenceCode,
-						pageTemplateSetExternalReferenceCode, pageTemplate));
+				pageTemplateResource.postSitePageTemplateSetPageTemplate(
+					siteExternalReferenceCode,
+					pageTemplateSetExternalReferenceCode, pageTemplate));
+	}
+
+	@GraphQLField
+	public Response createSitePageTemplatesPageExportBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageTemplateResource ->
+				pageTemplateResource.postSitePageTemplatesPageExportBatch(
+					siteExternalReferenceCode, search,
+					_filterBiFunction.apply(pageTemplateResource, filterString),
+					_sortsBiFunction.apply(pageTemplateResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Updates the page template with the given external reference code, or creates it if it does not exist."
+	)
+	public PageTemplate updateSitePageTemplate(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageTemplateExternalReferenceCode") String
+				pageTemplateExternalReferenceCode,
+			@GraphQLName("pageTemplate") PageTemplate pageTemplate)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageTemplateResource -> pageTemplateResource.putSitePageTemplate(
+				siteExternalReferenceCode, pageTemplateExternalReferenceCode,
+				pageTemplate));
 	}
 
 	@GraphQLField
@@ -1388,30 +1540,9 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Updates the page template with the given external reference code, or creates it if it does not exist."
-	)
-	public PageTemplate updateSiteSiteByExternalReferenceCodePageTemplate(
-			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-				siteExternalReferenceCode,
-			@GraphQLName("pageTemplateExternalReferenceCode") String
-				pageTemplateExternalReferenceCode,
-			@GraphQLName("pageTemplate") PageTemplate pageTemplate)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageTemplateResource ->
-				pageTemplateResource.
-					putSiteSiteByExternalReferenceCodePageTemplate(
-						siteExternalReferenceCode,
-						pageTemplateExternalReferenceCode, pageTemplate));
-	}
-
-	@GraphQLField(
 		description = "Deletes a specific page template set of a site."
 	)
-	public boolean deleteSiteSiteByExternalReferenceCodePageTemplateSet(
+	public boolean deleteSitePageTemplateSet(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageTemplateSetExternalReferenceCode") String
@@ -1422,10 +1553,9 @@ public class Mutation {
 			_pageTemplateSetResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageTemplateSetResource ->
-				pageTemplateSetResource.
-					deleteSiteSiteByExternalReferenceCodePageTemplateSet(
-						siteExternalReferenceCode,
-						pageTemplateSetExternalReferenceCode));
+				pageTemplateSetResource.deleteSitePageTemplateSet(
+					siteExternalReferenceCode,
+					pageTemplateSetExternalReferenceCode));
 
 		return true;
 	}
@@ -1433,7 +1563,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public PageTemplateSet patchSiteSiteByExternalReferenceCodePageTemplateSet(
+	public PageTemplateSet patchSitePageTemplateSet(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageTemplateSetExternalReferenceCode") String
@@ -1445,14 +1575,13 @@ public class Mutation {
 			_pageTemplateSetResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageTemplateSetResource ->
-				pageTemplateSetResource.
-					patchSiteSiteByExternalReferenceCodePageTemplateSet(
-						siteExternalReferenceCode,
-						pageTemplateSetExternalReferenceCode, pageTemplateSet));
+				pageTemplateSetResource.patchSitePageTemplateSet(
+					siteExternalReferenceCode,
+					pageTemplateSetExternalReferenceCode, pageTemplateSet));
 	}
 
 	@GraphQLField(description = "Adds a new page template set")
-	public PageTemplateSet createSiteSiteByExternalReferenceCodePageTemplateSet(
+	public PageTemplateSet createSitePageTemplateSet(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("pageTemplateSet") PageTemplateSet pageTemplateSet)
@@ -1462,9 +1591,69 @@ public class Mutation {
 			_pageTemplateSetResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			pageTemplateSetResource ->
-				pageTemplateSetResource.
-					postSiteSiteByExternalReferenceCodePageTemplateSet(
-						siteExternalReferenceCode, pageTemplateSet));
+				pageTemplateSetResource.postSitePageTemplateSet(
+					siteExternalReferenceCode, pageTemplateSet));
+	}
+
+	@GraphQLField
+	public Response createSitePageTemplateSetBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageTemplateSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageTemplateSetResource ->
+				pageTemplateSetResource.postSitePageTemplateSetBatch(
+					siteExternalReferenceCode, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSitePageTemplateSetsPageExportBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageTemplateSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageTemplateSetResource ->
+				pageTemplateSetResource.postSitePageTemplateSetsPageExportBatch(
+					siteExternalReferenceCode, search,
+					_filterBiFunction.apply(
+						pageTemplateSetResource, filterString),
+					_sortsBiFunction.apply(
+						pageTemplateSetResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Updates the page template set with the given external reference code, or creates it if it does not exist."
+	)
+	public PageTemplateSet updateSitePageTemplateSet(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("pageTemplateSetExternalReferenceCode") String
+				pageTemplateSetExternalReferenceCode,
+			@GraphQLName("pageTemplateSet") PageTemplateSet pageTemplateSet)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageTemplateSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageTemplateSetResource ->
+				pageTemplateSetResource.putSitePageTemplateSet(
+					siteExternalReferenceCode,
+					pageTemplateSetExternalReferenceCode, pageTemplateSet));
 	}
 
 	@GraphQLField
@@ -1493,29 +1682,8 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField(
-		description = "Updates the page template set with the given external reference code, or creates it if it does not exist."
-	)
-	public PageTemplateSet updateSiteSiteByExternalReferenceCodePageTemplateSet(
-			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-				siteExternalReferenceCode,
-			@GraphQLName("pageTemplateSetExternalReferenceCode") String
-				pageTemplateSetExternalReferenceCode,
-			@GraphQLName("pageTemplateSet") PageTemplateSet pageTemplateSet)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageTemplateSetResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageTemplateSetResource ->
-				pageTemplateSetResource.
-					putSiteSiteByExternalReferenceCodePageTemplateSet(
-						siteExternalReferenceCode,
-						pageTemplateSetExternalReferenceCode, pageTemplateSet));
-	}
-
 	@GraphQLField(description = "Deletes a specific public page of a site.")
-	public boolean deleteSiteSiteByExternalReferenceCodeSitePage(
+	public boolean deleteSiteSitePage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("sitePageExternalReferenceCode") String
@@ -1525,9 +1693,8 @@ public class Mutation {
 		_applyVoidComponentServiceObjects(
 			_sitePageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			sitePageResource ->
-				sitePageResource.deleteSiteSiteByExternalReferenceCodeSitePage(
-					siteExternalReferenceCode, sitePageExternalReferenceCode));
+			sitePageResource -> sitePageResource.deleteSiteSitePage(
+				siteExternalReferenceCode, sitePageExternalReferenceCode));
 
 		return true;
 	}
@@ -1535,7 +1702,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public SitePage patchSiteSiteByExternalReferenceCodeSitePage(
+	public SitePage patchSiteSitePage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("sitePageExternalReferenceCode") String
@@ -1546,14 +1713,13 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_sitePageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			sitePageResource ->
-				sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
-					siteExternalReferenceCode, sitePageExternalReferenceCode,
-					sitePage));
+			sitePageResource -> sitePageResource.patchSiteSitePage(
+				siteExternalReferenceCode, sitePageExternalReferenceCode,
+				sitePage));
 	}
 
 	@GraphQLField(description = "Adds a new site page")
-	public SitePage createByExternalReferenceCodeSitePage(
+	public SitePage createSiteSitePage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("sitePage") SitePage sitePage)
@@ -1562,37 +1728,71 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_sitePageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			sitePageResource ->
-				sitePageResource.postByExternalReferenceCodeSitePage(
-					siteExternalReferenceCode, sitePage));
+			sitePageResource -> sitePageResource.postSiteSitePage(
+				siteExternalReferenceCode, sitePage));
+	}
+
+	@GraphQLField
+	public Response createSiteSitePageBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sitePageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sitePageResource -> sitePageResource.postSiteSitePageBatch(
+				siteExternalReferenceCode, callbackURL, object));
 	}
 
 	@GraphQLField(description = "Adds a new page specification to a site page.")
-	public ContentPageSpecification
-			createSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("sitePageExternalReferenceCode") String
-					sitePageExternalReferenceCode,
-				@GraphQLName("contentPageSpecification")
-					ContentPageSpecification contentPageSpecification)
+	public ContentPageSpecification createSiteSitePagePageSpecification(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("contentPageSpecification") ContentPageSpecification
+				contentPageSpecification)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_sitePageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sitePageResource ->
-				sitePageResource.
-					postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-						siteExternalReferenceCode,
-						sitePageExternalReferenceCode,
-						contentPageSpecification));
+				sitePageResource.postSiteSitePagePageSpecification(
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
+					contentPageSpecification));
+	}
+
+	@GraphQLField
+	public Response createSiteSitePagesPageExportBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sitePageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sitePageResource ->
+				sitePageResource.postSiteSitePagesPageExportBatch(
+					siteExternalReferenceCode, search,
+					_filterBiFunction.apply(sitePageResource, filterString),
+					_sortsBiFunction.apply(sitePageResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
 		description = "Updates the site page with the given external reference code, or creates it if it does not exist."
 	)
-	public SitePage updateSiteSiteByExternalReferenceCodeSitePage(
+	public SitePage updateSiteSitePage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("sitePageExternalReferenceCode") String
@@ -1603,10 +1803,9 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_sitePageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			sitePageResource ->
-				sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
-					siteExternalReferenceCode, sitePageExternalReferenceCode,
-					sitePage));
+			sitePageResource -> sitePageResource.putSiteSitePage(
+				siteExternalReferenceCode, sitePageExternalReferenceCode,
+				sitePage));
 	}
 
 	@GraphQLField
@@ -1635,7 +1834,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Deletes a specific utility page of a site.")
-	public boolean deleteSiteSiteByExternalReferenceCodeUtilityPage(
+	public boolean deleteSiteUtilityPage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("utilityPageExternalReferenceCode") String
@@ -1645,11 +1844,8 @@ public class Mutation {
 		_applyVoidComponentServiceObjects(
 			_utilityPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			utilityPageResource ->
-				utilityPageResource.
-					deleteSiteSiteByExternalReferenceCodeUtilityPage(
-						siteExternalReferenceCode,
-						utilityPageExternalReferenceCode));
+			utilityPageResource -> utilityPageResource.deleteSiteUtilityPage(
+				siteExternalReferenceCode, utilityPageExternalReferenceCode));
 
 		return true;
 	}
@@ -1657,7 +1853,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public UtilityPage patchSiteSiteByExternalReferenceCodeUtilityPage(
+	public UtilityPage patchSiteUtilityPage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("utilityPageExternalReferenceCode") String
@@ -1668,15 +1864,13 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_utilityPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			utilityPageResource ->
-				utilityPageResource.
-					patchSiteSiteByExternalReferenceCodeUtilityPage(
-						siteExternalReferenceCode,
-						utilityPageExternalReferenceCode, utilityPage));
+			utilityPageResource -> utilityPageResource.patchSiteUtilityPage(
+				siteExternalReferenceCode, utilityPageExternalReferenceCode,
+				utilityPage));
 	}
 
 	@GraphQLField(description = "Adds a new utility page")
-	public UtilityPage createSiteSiteByExternalReferenceCodeUtilityPage(
+	public UtilityPage createSiteUtilityPage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("utilityPage") UtilityPage utilityPage)
@@ -1685,40 +1879,73 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_utilityPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			utilityPageResource ->
-				utilityPageResource.
-					postSiteSiteByExternalReferenceCodeUtilityPage(
-						siteExternalReferenceCode, utilityPage));
+			utilityPageResource -> utilityPageResource.postSiteUtilityPage(
+				siteExternalReferenceCode, utilityPage));
+	}
+
+	@GraphQLField
+	public Response createSiteUtilityPageBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_utilityPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			utilityPageResource -> utilityPageResource.postSiteUtilityPageBatch(
+				siteExternalReferenceCode, callbackURL, object));
 	}
 
 	@GraphQLField(
 		description = "Adds a new page specification to a utility page."
 	)
-	public ContentPageSpecification
-			createSiteSiteByExternalReferenceCodeUtilityPagePageSpecification(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("utilityPageExternalReferenceCode") String
-					utilityPageExternalReferenceCode,
-				@GraphQLName("contentPageSpecification")
-					ContentPageSpecification contentPageSpecification)
+	public ContentPageSpecification createSiteUtilityPagePageSpecification(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("utilityPageExternalReferenceCode") String
+				utilityPageExternalReferenceCode,
+			@GraphQLName("contentPageSpecification") ContentPageSpecification
+				contentPageSpecification)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_utilityPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			utilityPageResource ->
-				utilityPageResource.
-					postSiteSiteByExternalReferenceCodeUtilityPagePageSpecification(
-						siteExternalReferenceCode,
-						utilityPageExternalReferenceCode,
-						contentPageSpecification));
+				utilityPageResource.postSiteUtilityPagePageSpecification(
+					siteExternalReferenceCode, utilityPageExternalReferenceCode,
+					contentPageSpecification));
+	}
+
+	@GraphQLField
+	public Response createSiteUtilityPagesPageExportBatch(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_utilityPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			utilityPageResource ->
+				utilityPageResource.postSiteUtilityPagesPageExportBatch(
+					siteExternalReferenceCode, search,
+					_filterBiFunction.apply(utilityPageResource, filterString),
+					_sortsBiFunction.apply(utilityPageResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
 		description = "Updates the utility page with the given external reference code, or creates it if it does not exist."
 	)
-	public UtilityPage updateSiteSiteByExternalReferenceCodeUtilityPage(
+	public UtilityPage updateSiteUtilityPage(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
 			@GraphQLName("utilityPageExternalReferenceCode") String
@@ -1729,11 +1956,9 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_utilityPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			utilityPageResource ->
-				utilityPageResource.
-					putSiteSiteByExternalReferenceCodeUtilityPage(
-						siteExternalReferenceCode,
-						utilityPageExternalReferenceCode, utilityPage));
+			utilityPageResource -> utilityPageResource.putSiteUtilityPage(
+				siteExternalReferenceCode, utilityPageExternalReferenceCode,
+				utilityPage));
 	}
 
 	@GraphQLField
@@ -1764,14 +1989,13 @@ public class Mutation {
 	@GraphQLField(
 		description = "Deletes a widget instance of a specific widget page or widget page template within a site."
 	)
-	public boolean
-			deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("sitePageExternalReferenceCode") String
-					sitePageExternalReferenceCode,
-				@GraphQLName("widgetInstanceExternalReferenceCode") String
-					widgetInstanceExternalReferenceCode)
+	public boolean deleteSiteSitePageWidgetInstance(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("widgetInstanceExternalReferenceCode") String
+				widgetInstanceExternalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1779,7 +2003,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			widgetPageWidgetInstanceResource ->
 				widgetPageWidgetInstanceResource.
-					deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
+					deleteSiteSitePageWidgetInstance(
 						siteExternalReferenceCode,
 						sitePageExternalReferenceCode,
 						widgetInstanceExternalReferenceCode));
@@ -1790,16 +2014,15 @@ public class Mutation {
 	@GraphQLField(
 		description = "Updates a widget instance of a widget page or widget page template within a site. Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public WidgetPageWidgetInstance
-			patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("sitePageExternalReferenceCode") String
-					sitePageExternalReferenceCode,
-				@GraphQLName("widgetInstanceExternalReferenceCode") String
-					widgetInstanceExternalReferenceCode,
-				@GraphQLName("widgetPageWidgetInstance")
-					WidgetPageWidgetInstance widgetPageWidgetInstance)
+	public WidgetPageWidgetInstance patchSiteSitePageWidgetInstance(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("widgetInstanceExternalReferenceCode") String
+				widgetInstanceExternalReferenceCode,
+			@GraphQLName("widgetPageWidgetInstance") WidgetPageWidgetInstance
+				widgetPageWidgetInstance)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1807,7 +2030,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			widgetPageWidgetInstanceResource ->
 				widgetPageWidgetInstanceResource.
-					patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
+					patchSiteSitePageWidgetInstance(
 						siteExternalReferenceCode,
 						sitePageExternalReferenceCode,
 						widgetInstanceExternalReferenceCode,
@@ -1815,52 +2038,46 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Adds a new widget instance to a widget page.")
-	public WidgetPageWidgetInstance
-			createSiteSiteByExternalReferenceCodeSitePageWidgetInstance(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("sitePageExternalReferenceCode") String
-					sitePageExternalReferenceCode,
-				@GraphQLName("widgetPageWidgetInstance")
-					WidgetPageWidgetInstance widgetPageWidgetInstance)
+	public WidgetPageWidgetInstance createSiteSitePageWidgetInstance(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("widgetPageWidgetInstance") WidgetPageWidgetInstance
+				widgetPageWidgetInstance)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_widgetPageWidgetInstanceResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			widgetPageWidgetInstanceResource ->
-				widgetPageWidgetInstanceResource.
-					postSiteSiteByExternalReferenceCodeSitePageWidgetInstance(
-						siteExternalReferenceCode,
-						sitePageExternalReferenceCode,
-						widgetPageWidgetInstance));
+				widgetPageWidgetInstanceResource.postSiteSitePageWidgetInstance(
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
+					widgetPageWidgetInstance));
 	}
 
 	@GraphQLField(
 		description = "Updates a widget instance of a widget page or widget page template within a site."
 	)
-	public WidgetPageWidgetInstance
-			updateSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
-				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
-					siteExternalReferenceCode,
-				@GraphQLName("sitePageExternalReferenceCode") String
-					sitePageExternalReferenceCode,
-				@GraphQLName("widgetInstanceExternalReferenceCode") String
-					widgetInstanceExternalReferenceCode,
-				@GraphQLName("widgetPageWidgetInstance")
-					WidgetPageWidgetInstance widgetPageWidgetInstance)
+	public WidgetPageWidgetInstance updateSiteSitePageWidgetInstance(
+			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("widgetInstanceExternalReferenceCode") String
+				widgetInstanceExternalReferenceCode,
+			@GraphQLName("widgetPageWidgetInstance") WidgetPageWidgetInstance
+				widgetPageWidgetInstance)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_widgetPageWidgetInstanceResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			widgetPageWidgetInstanceResource ->
-				widgetPageWidgetInstanceResource.
-					putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
-						siteExternalReferenceCode,
-						sitePageExternalReferenceCode,
-						widgetInstanceExternalReferenceCode,
-						widgetPageWidgetInstance));
+				widgetPageWidgetInstanceResource.putSiteSitePageWidgetInstance(
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
+					widgetInstanceExternalReferenceCode,
+					widgetPageWidgetInstance));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -2257,6 +2474,9 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction
+		<Object, String, com.liferay.portal.kernel.search.filter.Filter>
+			_filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;

@@ -164,616 +164,685 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate",
+						"mutation#deleteSiteDisplayPageTemplate",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate"));
+							"deleteSiteDisplayPageTemplate"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodeDisplayPageTemplate",
+						"mutation#patchSiteDisplayPageTemplate",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodeDisplayPageTemplate"));
+							"patchSiteDisplayPageTemplate"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeDisplayPageTemplate",
+						"mutation#createSiteDisplayPageTemplate",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeDisplayPageTemplate"));
+							"postSiteDisplayPageTemplate"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate",
+						"mutation#createSiteDisplayPageTemplateBatch",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate"));
+							"postSiteDisplayPageTemplateBatch"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification",
+						"mutation#createSiteDisplayPageTemplateFolderDisplayPageTemplate",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification"));
+							"postSiteDisplayPageTemplateFolderDisplayPageTemplate"));
+					put(
+						"mutation#createSiteDisplayPageTemplatePageSpecification",
+						new ObjectValuePair<>(
+							DisplayPageTemplateResourceImpl.class,
+							"postSiteDisplayPageTemplatePageSpecification"));
+					put(
+						"mutation#createSiteDisplayPageTemplatesPageExportBatch",
+						new ObjectValuePair<>(
+							DisplayPageTemplateResourceImpl.class,
+							"postSiteDisplayPageTemplatesPageExportBatch"));
+					put(
+						"mutation#updateSiteDisplayPageTemplate",
+						new ObjectValuePair<>(
+							DisplayPageTemplateResourceImpl.class,
+							"putSiteDisplayPageTemplate"));
 					put(
 						"mutation#updateSiteDisplayPageTemplatePermissionsPage",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
 							"putSiteDisplayPageTemplatePermissionsPage"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeDisplayPageTemplate",
-						new ObjectValuePair<>(
-							DisplayPageTemplateResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeDisplayPageTemplate"));
-					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder",
+						"mutation#deleteSiteDisplayPageTemplateFolder",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder"));
+							"deleteSiteDisplayPageTemplateFolder"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder",
+						"mutation#patchSiteDisplayPageTemplateFolder",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder"));
+							"patchSiteDisplayPageTemplateFolder"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder",
+						"mutation#createSiteDisplayPageTemplateFolder",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder"));
+							"postSiteDisplayPageTemplateFolder"));
+					put(
+						"mutation#createSiteDisplayPageTemplateFolderBatch",
+						new ObjectValuePair<>(
+							DisplayPageTemplateFolderResourceImpl.class,
+							"postSiteDisplayPageTemplateFolderBatch"));
+					put(
+						"mutation#createSiteDisplayPageTemplateFoldersPageExportBatch",
+						new ObjectValuePair<>(
+							DisplayPageTemplateFolderResourceImpl.class,
+							"postSiteDisplayPageTemplateFoldersPageExportBatch"));
+					put(
+						"mutation#updateSiteDisplayPageTemplateFolder",
+						new ObjectValuePair<>(
+							DisplayPageTemplateFolderResourceImpl.class,
+							"putSiteDisplayPageTemplateFolder"));
 					put(
 						"mutation#updateSiteDisplayPageTemplateFolderPermissionsPage",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
 							"putSiteDisplayPageTemplateFolderPermissionsPage"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder",
-						new ObjectValuePair<>(
-							DisplayPageTemplateFolderResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder"));
-					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodeFragmentComposition",
+						"mutation#deleteSiteFragmentComposition",
 						new ObjectValuePair<>(
 							FragmentCompositionResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodeFragmentComposition"));
+							"deleteSiteFragmentComposition"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodeFragmentComposition",
+						"mutation#patchSiteFragmentComposition",
 						new ObjectValuePair<>(
 							FragmentCompositionResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodeFragmentComposition"));
+							"patchSiteFragmentComposition"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeFragmentComposition",
+						"mutation#createSiteFragmentComposition",
 						new ObjectValuePair<>(
 							FragmentCompositionResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeFragmentComposition"));
+							"postSiteFragmentComposition"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeFragmentComposition",
+						"mutation#createSiteFragmentCompositionBatch",
 						new ObjectValuePair<>(
 							FragmentCompositionResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeFragmentComposition"));
+							"postSiteFragmentCompositionBatch"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodeMasterPage",
+						"mutation#createSiteFragmentCompositionsPageExportBatch",
+						new ObjectValuePair<>(
+							FragmentCompositionResourceImpl.class,
+							"postSiteFragmentCompositionsPageExportBatch"));
+					put(
+						"mutation#updateSiteFragmentComposition",
+						new ObjectValuePair<>(
+							FragmentCompositionResourceImpl.class,
+							"putSiteFragmentComposition"));
+					put(
+						"mutation#deleteSiteMasterPage",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodeMasterPage"));
+							"deleteSiteMasterPage"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodeMasterPage",
+						"mutation#patchSiteMasterPage",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodeMasterPage"));
+							"patchSiteMasterPage"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeMasterPage",
+						"mutation#createSiteMasterPage",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeMasterPage"));
+							"postSiteMasterPage"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeMasterPagePageSpecification",
+						"mutation#createSiteMasterPageBatch",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeMasterPagePageSpecification"));
+							"postSiteMasterPageBatch"));
+					put(
+						"mutation#createSiteMasterPagePageSpecification",
+						new ObjectValuePair<>(
+							MasterPageResourceImpl.class,
+							"postSiteMasterPagePageSpecification"));
+					put(
+						"mutation#createSiteMasterPagesPageExportBatch",
+						new ObjectValuePair<>(
+							MasterPageResourceImpl.class,
+							"postSiteMasterPagesPageExportBatch"));
+					put(
+						"mutation#updateSiteMasterPage",
+						new ObjectValuePair<>(
+							MasterPageResourceImpl.class, "putSiteMasterPage"));
 					put(
 						"mutation#updateSiteMasterPagePermissionsPage",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
 							"putSiteMasterPagePermissionsPage"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeMasterPage",
-						new ObjectValuePair<>(
-							MasterPageResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeMasterPage"));
-					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodePageElement",
+						"mutation#deleteSitePageSpecificationPageExperiencePageElement",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodePageElement"));
+							"deleteSitePageSpecificationPageExperiencePageElement"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodePageElement",
+						"mutation#patchSitePageSpecificationPageExperiencePageElement",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodePageElement"));
+							"patchSitePageSpecificationPageExperiencePageElement"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageElementFragmentComposition",
+						"mutation#createSitePageSpecificationPageExperiencePageElement",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageElementFragmentComposition"));
+							"postSitePageSpecificationPageExperiencePageElement"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageExperiencePageElement",
+						"mutation#createSitePageSpecificationPageExperiencePageElementFragmentComposition",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageExperiencePageElement"));
+							"postSitePageSpecificationPageExperiencePageElementFragmentComposition"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageElement",
+						"mutation#updateSitePageSpecificationPageExperiencePageElement",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageElement"));
+							"putSitePageSpecificationPageExperiencePageElement"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodePageExperience",
+						"mutation#deleteSitePageExperience",
 						new ObjectValuePair<>(
 							PageExperienceResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodePageExperience"));
+							"deleteSitePageExperience"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodePageExperience",
+						"mutation#patchSitePageExperience",
 						new ObjectValuePair<>(
 							PageExperienceResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodePageExperience"));
+							"patchSitePageExperience"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageSpecificationPageExperience",
+						"mutation#createSitePageSpecificationPageExperience",
 						new ObjectValuePair<>(
 							PageExperienceResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageSpecificationPageExperience"));
+							"postSitePageSpecificationPageExperience"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageExperience",
+						"mutation#updateSitePageExperience",
 						new ObjectValuePair<>(
 							PageExperienceResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageExperience"));
+							"putSitePageExperience"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodePageRule",
+						"mutation#deleteSitePageRule",
+						new ObjectValuePair<>(
+							PageRuleResourceImpl.class, "deleteSitePageRule"));
+					put(
+						"mutation#patchSitePageRule",
+						new ObjectValuePair<>(
+							PageRuleResourceImpl.class, "patchSitePageRule"));
+					put(
+						"mutation#createSitePageExperiencePageRule",
 						new ObjectValuePair<>(
 							PageRuleResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodePageRule"));
+							"postSitePageExperiencePageRule"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodePageRule",
+						"mutation#updateSitePageRule",
 						new ObjectValuePair<>(
-							PageRuleResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodePageRule"));
+							PageRuleResourceImpl.class, "putSitePageRule"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageExperiencePageRule",
-						new ObjectValuePair<>(
-							PageRuleResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageExperiencePageRule"));
-					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageRule",
-						new ObjectValuePair<>(
-							PageRuleResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageRule"));
-					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodePageRuleAction",
+						"mutation#deleteSitePageRuleAction",
 						new ObjectValuePair<>(
 							PageRuleActionResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodePageRuleAction"));
+							"deleteSitePageRuleAction"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodePageRuleAction",
+						"mutation#patchSitePageRuleAction",
 						new ObjectValuePair<>(
 							PageRuleActionResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodePageRuleAction"));
+							"patchSitePageRuleAction"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageRulePageRuleAction",
+						"mutation#createSitePageRulePageRuleAction",
 						new ObjectValuePair<>(
 							PageRuleActionResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageRulePageRuleAction"));
+							"postSitePageRulePageRuleAction"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageRuleAction",
+						"mutation#updateSitePageRuleAction",
 						new ObjectValuePair<>(
 							PageRuleActionResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageRuleAction"));
+							"putSitePageRuleAction"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodePageRuleCondition",
+						"mutation#deleteSitePageRuleCondition",
 						new ObjectValuePair<>(
 							PageRuleConditionResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodePageRuleCondition"));
+							"deleteSitePageRuleCondition"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodePageRuleCondition",
+						"mutation#patchSitePageRuleCondition",
 						new ObjectValuePair<>(
 							PageRuleConditionResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodePageRuleCondition"));
+							"patchSitePageRuleCondition"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageRulePageRuleCondition",
+						"mutation#createSitePageRulePageRuleCondition",
 						new ObjectValuePair<>(
 							PageRuleConditionResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageRulePageRuleCondition"));
+							"postSitePageRulePageRuleCondition"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageRuleCondition",
+						"mutation#updateSitePageRuleCondition",
 						new ObjectValuePair<>(
 							PageRuleConditionResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageRuleCondition"));
+							"putSitePageRuleCondition"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodePageSpecification",
+						"mutation#deleteSitePageSpecification",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodePageSpecification"));
+							"deleteSitePageSpecification"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodePageSpecification",
+						"mutation#patchSitePageSpecification",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodePageSpecification"));
+							"patchSitePageSpecification"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageSpecificationPublish",
+						"mutation#createSitePageSpecificationPublish",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageSpecificationPublish"));
+							"postSitePageSpecificationPublish"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageSpecification",
+						"mutation#updateSitePageSpecification",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageSpecification"));
+							"putSitePageSpecification"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodePageTemplate",
+						"mutation#deleteSitePageTemplate",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodePageTemplate"));
+							"deleteSitePageTemplate"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodePageTemplate",
+						"mutation#patchSitePageTemplate",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodePageTemplate"));
+							"patchSitePageTemplate"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageTemplate",
+						"mutation#createSitePageTemplate",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageTemplate"));
+							"postSitePageTemplate"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageTemplatePageSpecification",
+						"mutation#createSitePageTemplateBatch",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageTemplatePageSpecification"));
+							"postSitePageTemplateBatch"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate",
+						"mutation#createSitePageTemplatePageSpecification",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate"));
+							"postSitePageTemplatePageSpecification"));
+					put(
+						"mutation#createSitePageTemplateSetPageTemplate",
+						new ObjectValuePair<>(
+							PageTemplateResourceImpl.class,
+							"postSitePageTemplateSetPageTemplate"));
+					put(
+						"mutation#createSitePageTemplatesPageExportBatch",
+						new ObjectValuePair<>(
+							PageTemplateResourceImpl.class,
+							"postSitePageTemplatesPageExportBatch"));
+					put(
+						"mutation#updateSitePageTemplate",
+						new ObjectValuePair<>(
+							PageTemplateResourceImpl.class,
+							"putSitePageTemplate"));
 					put(
 						"mutation#updateSitePageTemplatePermissionsPage",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
 							"putSitePageTemplatePermissionsPage"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageTemplate",
-						new ObjectValuePair<>(
-							PageTemplateResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageTemplate"));
-					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodePageTemplateSet",
+						"mutation#deleteSitePageTemplateSet",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodePageTemplateSet"));
+							"deleteSitePageTemplateSet"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodePageTemplateSet",
+						"mutation#patchSitePageTemplateSet",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodePageTemplateSet"));
+							"patchSitePageTemplateSet"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageTemplateSet",
+						"mutation#createSitePageTemplateSet",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageTemplateSet"));
+							"postSitePageTemplateSet"));
+					put(
+						"mutation#createSitePageTemplateSetBatch",
+						new ObjectValuePair<>(
+							PageTemplateSetResourceImpl.class,
+							"postSitePageTemplateSetBatch"));
+					put(
+						"mutation#createSitePageTemplateSetsPageExportBatch",
+						new ObjectValuePair<>(
+							PageTemplateSetResourceImpl.class,
+							"postSitePageTemplateSetsPageExportBatch"));
+					put(
+						"mutation#updateSitePageTemplateSet",
+						new ObjectValuePair<>(
+							PageTemplateSetResourceImpl.class,
+							"putSitePageTemplateSet"));
 					put(
 						"mutation#updateSitePageTemplateSetPermissionsPage",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
 							"putSitePageTemplateSetPermissionsPage"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageTemplateSet",
+						"mutation#deleteSiteSitePage",
 						new ObjectValuePair<>(
-							PageTemplateSetResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageTemplateSet"));
+							SitePageResourceImpl.class, "deleteSiteSitePage"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodeSitePage",
+						"mutation#patchSiteSitePage",
+						new ObjectValuePair<>(
+							SitePageResourceImpl.class, "patchSiteSitePage"));
+					put(
+						"mutation#createSiteSitePage",
+						new ObjectValuePair<>(
+							SitePageResourceImpl.class, "postSiteSitePage"));
+					put(
+						"mutation#createSiteSitePageBatch",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodeSitePage"));
+							"postSiteSitePageBatch"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodeSitePage",
+						"mutation#createSiteSitePagePageSpecification",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodeSitePage"));
+							"postSiteSitePagePageSpecification"));
 					put(
-						"mutation#createByExternalReferenceCodeSitePage",
+						"mutation#createSiteSitePagesPageExportBatch",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
-							"postByExternalReferenceCodeSitePage"));
+							"postSiteSitePagesPageExportBatch"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeSitePagePageSpecification",
+						"mutation#updateSiteSitePage",
 						new ObjectValuePair<>(
-							SitePageResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeSitePagePageSpecification"));
-					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeSitePage",
-						new ObjectValuePair<>(
-							SitePageResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeSitePage"));
+							SitePageResourceImpl.class, "putSiteSitePage"));
 					put(
 						"mutation#updateSiteSitePagePermissionsPage",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
 							"putSiteSitePagePermissionsPage"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodeUtilityPage",
+						"mutation#deleteSiteUtilityPage",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodeUtilityPage"));
+							"deleteSiteUtilityPage"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodeUtilityPage",
+						"mutation#patchSiteUtilityPage",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodeUtilityPage"));
+							"patchSiteUtilityPage"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeUtilityPage",
+						"mutation#createSiteUtilityPage",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeUtilityPage"));
+							"postSiteUtilityPage"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeUtilityPagePageSpecification",
+						"mutation#createSiteUtilityPageBatch",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeUtilityPagePageSpecification"));
+							"postSiteUtilityPageBatch"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeUtilityPage",
+						"mutation#createSiteUtilityPagePageSpecification",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeUtilityPage"));
+							"postSiteUtilityPagePageSpecification"));
+					put(
+						"mutation#createSiteUtilityPagesPageExportBatch",
+						new ObjectValuePair<>(
+							UtilityPageResourceImpl.class,
+							"postSiteUtilityPagesPageExportBatch"));
+					put(
+						"mutation#updateSiteUtilityPage",
+						new ObjectValuePair<>(
+							UtilityPageResourceImpl.class,
+							"putSiteUtilityPage"));
 					put(
 						"mutation#updateSiteUtilityPagePermissionsPage",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
 							"putSiteUtilityPagePermissionsPage"));
 					put(
-						"mutation#deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
+						"mutation#deleteSiteSitePageWidgetInstance",
 						new ObjectValuePair<>(
 							WidgetPageWidgetInstanceResourceImpl.class,
-							"deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode"));
+							"deleteSiteSitePageWidgetInstance"));
 					put(
-						"mutation#patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
+						"mutation#patchSiteSitePageWidgetInstance",
 						new ObjectValuePair<>(
 							WidgetPageWidgetInstanceResourceImpl.class,
-							"patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode"));
+							"patchSiteSitePageWidgetInstance"));
 					put(
-						"mutation#createSiteSiteByExternalReferenceCodeSitePageWidgetInstance",
+						"mutation#createSiteSitePageWidgetInstance",
 						new ObjectValuePair<>(
 							WidgetPageWidgetInstanceResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodeSitePageWidgetInstance"));
+							"postSiteSitePageWidgetInstance"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
+						"mutation#updateSiteSitePageWidgetInstance",
 						new ObjectValuePair<>(
 							WidgetPageWidgetInstanceResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode"));
+							"putSiteSitePageWidgetInstance"));
 
+					put(
+						"query#displayPageTemplate",
+						new ObjectValuePair<>(
+							DisplayPageTemplateResourceImpl.class,
+							"getSiteDisplayPageTemplate"));
+					put(
+						"query#displayPageTemplateFolderDisplayPageTemplates",
+						new ObjectValuePair<>(
+							DisplayPageTemplateResourceImpl.class,
+							"getSiteDisplayPageTemplateFolderDisplayPageTemplatesPage"));
 					put(
 						"query#displayPageTemplatePermissions",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
 							"getSiteDisplayPageTemplatePermissionsPage"));
 					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplate",
+						"query#displayPageTemplates",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplate"));
+							"getSiteDisplayPageTemplatesPage"));
 					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplates",
+						"query#displayPageTemplateFolder",
 						new ObjectValuePair<>(
-							DisplayPageTemplateResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage"));
-					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplates",
-						new ObjectValuePair<>(
-							DisplayPageTemplateResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage"));
+							DisplayPageTemplateFolderResourceImpl.class,
+							"getSiteDisplayPageTemplateFolder"));
 					put(
 						"query#displayPageTemplateFolderPermissions",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
 							"getSiteDisplayPageTemplateFolderPermissionsPage"));
 					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplateFolder",
+						"query#displayPageTemplateFolders",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder"));
+							"getSiteDisplayPageTemplateFoldersPage"));
 					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplateFolders",
-						new ObjectValuePair<>(
-							DisplayPageTemplateFolderResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage"));
-					put(
-						"query#siteByExternalReferenceCodeFragmentComposition",
+						"query#fragmentComposition",
 						new ObjectValuePair<>(
 							FragmentCompositionResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeFragmentComposition"));
+							"getSiteFragmentComposition"));
 					put(
-						"query#siteByExternalReferenceCodeFragmentCompositions",
+						"query#fragmentCompositions",
 						new ObjectValuePair<>(
 							FragmentCompositionResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeFragmentCompositionsPage"));
+							"getSiteFragmentCompositionsPage"));
 					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory",
+						"query#displayPageTemplateFriendlyUrlHistory",
 						new ObjectValuePair<>(
 							FriendlyUrlHistoryResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory"));
+							"getSiteDisplayPageTemplateFriendlyUrlHistory"));
 					put(
-						"query#siteByExternalReferenceCodeSitePageFriendlyUrlHistory",
+						"query#sitePageFriendlyUrlHistory",
 						new ObjectValuePair<>(
 							FriendlyUrlHistoryResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory"));
+							"getSiteSitePageFriendlyUrlHistory"));
 					put(
-						"query#siteByExternalReferenceCodeUtilityPageFriendlyUrlHistory",
+						"query#utilityPageFriendlyUrlHistory",
 						new ObjectValuePair<>(
 							FriendlyUrlHistoryResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory"));
+							"getSiteUtilityPageFriendlyUrlHistory"));
+					put(
+						"query#masterPage",
+						new ObjectValuePair<>(
+							MasterPageResourceImpl.class, "getSiteMasterPage"));
 					put(
 						"query#masterPagePermissions",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
 							"getSiteMasterPagePermissionsPage"));
 					put(
-						"query#siteByExternalReferenceCodeMasterPage",
+						"query#masterPages",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeMasterPage"));
+							"getSiteMasterPagesPage"));
 					put(
-						"query#siteByExternalReferenceCodeMasterPages",
-						new ObjectValuePair<>(
-							MasterPageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeMasterPagesPage"));
-					put(
-						"query#siteByExternalReferenceCodePageElement",
+						"query#pageSpecificationPageExperiencePageElement",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageElement"));
+							"getSitePageSpecificationPageExperiencePageElement"));
 					put(
-						"query#siteByExternalReferenceCodePageElementPageElements",
+						"query#pageSpecificationPageExperiencePageElementPageElements",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageElementPageElementsPage"));
+							"getSitePageSpecificationPageExperiencePageElementPageElementsPage"));
 					put(
-						"query#siteByExternalReferenceCodePageExperiencePageElements",
+						"query#pageSpecificationPageExperiencePageElements",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage"));
+							"getSitePageSpecificationPageExperiencePageElementsPage"));
 					put(
-						"query#siteByExternalReferenceCodePageExperience",
+						"query#pageExperience",
 						new ObjectValuePair<>(
 							PageExperienceResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageExperience"));
+							"getSitePageExperience"));
 					put(
-						"query#siteByExternalReferenceCodePageSpecificationPageExperiences",
+						"query#pageSpecificationPageExperiences",
 						new ObjectValuePair<>(
 							PageExperienceResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage"));
+							"getSitePageSpecificationPageExperiencesPage"));
 					put(
-						"query#siteByExternalReferenceCodePageExperiencePageRules",
+						"query#pageExperiencePageRules",
 						new ObjectValuePair<>(
 							PageRuleResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageExperiencePageRulesPage"));
+							"getSitePageExperiencePageRulesPage"));
 					put(
-						"query#siteByExternalReferenceCodePageRule",
+						"query#pageRule",
 						new ObjectValuePair<>(
-							PageRuleResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageRule"));
+							PageRuleResourceImpl.class, "getSitePageRule"));
 					put(
-						"query#siteByExternalReferenceCodePageRuleAction",
-						new ObjectValuePair<>(
-							PageRuleActionResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageRuleAction"));
-					put(
-						"query#siteByExternalReferenceCodePageRulePageRuleActions",
+						"query#pageRuleAction",
 						new ObjectValuePair<>(
 							PageRuleActionResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageRulePageRuleActionsPage"));
+							"getSitePageRuleAction"));
 					put(
-						"query#siteByExternalReferenceCodePageRuleCondition",
+						"query#pageRulePageRuleActions",
+						new ObjectValuePair<>(
+							PageRuleActionResourceImpl.class,
+							"getSitePageRulePageRuleActionsPage"));
+					put(
+						"query#pageRuleCondition",
 						new ObjectValuePair<>(
 							PageRuleConditionResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageRuleCondition"));
+							"getSitePageRuleCondition"));
 					put(
-						"query#siteByExternalReferenceCodePageRulePageRuleConditions",
+						"query#pageRulePageRuleConditions",
 						new ObjectValuePair<>(
 							PageRuleConditionResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage"));
+							"getSitePageRulePageRuleConditionsPage"));
 					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplatePageSpecifications",
+						"query#displayPageTemplatePageSpecifications",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage"));
+							"getSiteDisplayPageTemplatePageSpecificationsPage"));
 					put(
-						"query#siteByExternalReferenceCodeMasterPagePageSpecifications",
+						"query#masterPagePageSpecifications",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage"));
+							"getSiteMasterPagePageSpecificationsPage"));
 					put(
-						"query#siteByExternalReferenceCodePageSpecification",
+						"query#pageSpecification",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageSpecification"));
+							"getSitePageSpecification"));
 					put(
-						"query#siteByExternalReferenceCodePageTemplatePageSpecifications",
+						"query#pageTemplatePageSpecifications",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage"));
+							"getSitePageTemplatePageSpecificationsPage"));
 					put(
-						"query#siteByExternalReferenceCodeSitePagePageSpecifications",
+						"query#sitePagePageSpecifications",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage"));
+							"getSiteSitePagePageSpecificationsPage"));
 					put(
-						"query#siteByExternalReferenceCodeUtilityPagePageSpecifications",
+						"query#utilityPagePageSpecifications",
 						new ObjectValuePair<>(
 							PageSpecificationResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage"));
+							"getSiteUtilityPagePageSpecificationsPage"));
+					put(
+						"query#pageTemplate",
+						new ObjectValuePair<>(
+							PageTemplateResourceImpl.class,
+							"getSitePageTemplate"));
 					put(
 						"query#pageTemplatePermissions",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
 							"getSitePageTemplatePermissionsPage"));
 					put(
-						"query#siteByExternalReferenceCodePageTemplate",
+						"query#pageTemplateSetPageTemplates",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageTemplate"));
+							"getSitePageTemplateSetPageTemplatesPage"));
 					put(
-						"query#siteByExternalReferenceCodePageTemplateSetPageTemplates",
+						"query#pageTemplates",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage"));
+							"getSitePageTemplatesPage"));
 					put(
-						"query#siteByExternalReferenceCodePageTemplates",
+						"query#pageTemplateSet",
 						new ObjectValuePair<>(
-							PageTemplateResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageTemplatesPage"));
+							PageTemplateSetResourceImpl.class,
+							"getSitePageTemplateSet"));
 					put(
 						"query#pageTemplateSetPermissions",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
 							"getSitePageTemplateSetPermissionsPage"));
 					put(
-						"query#siteByExternalReferenceCodePageTemplateSet",
+						"query#pageTemplateSets",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageTemplateSet"));
+							"getSitePageTemplateSetsPage"));
 					put(
-						"query#siteByExternalReferenceCodePageTemplateSets",
+						"query#sitePage",
 						new ObjectValuePair<>(
-							PageTemplateSetResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageTemplateSetsPage"));
-					put(
-						"query#siteByExternalReferenceCodeSitePage",
-						new ObjectValuePair<>(
-							SitePageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeSitePage"));
-					put(
-						"query#siteByExternalReferenceCodeSitePages",
-						new ObjectValuePair<>(
-							SitePageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeSitePagesPage"));
+							SitePageResourceImpl.class, "getSiteSitePage"));
 					put(
 						"query#sitePagePermissions",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
 							"getSiteSitePagePermissionsPage"));
 					put(
-						"query#siteByExternalReferenceCodeUtilityPage",
+						"query#sitePages",
 						new ObjectValuePair<>(
-							UtilityPageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeUtilityPage"));
+							SitePageResourceImpl.class,
+							"getSiteSitePagesPage"));
 					put(
-						"query#siteByExternalReferenceCodeUtilityPages",
+						"query#utilityPage",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeUtilityPagesPage"));
+							"getSiteUtilityPage"));
 					put(
 						"query#utilityPagePermissions",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
 							"getSiteUtilityPagePermissionsPage"));
 					put(
-						"query#siteByExternalReferenceCodeSitePageWidgetInstances",
+						"query#utilityPages",
 						new ObjectValuePair<>(
-							WidgetPageWidgetInstanceResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage"));
+							UtilityPageResourceImpl.class,
+							"getSiteUtilityPagesPage"));
 					put(
-						"query#siteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
+						"query#sitePageWidgetInstance",
 						new ObjectValuePair<>(
 							WidgetPageWidgetInstanceResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode"));
+							"getSiteSitePageWidgetInstance"));
+					put(
+						"query#sitePageWidgetInstances",
+						new ObjectValuePair<>(
+							WidgetPageWidgetInstanceResourceImpl.class,
+							"getSiteSitePageWidgetInstancesPage"));
 				}
 			};
 

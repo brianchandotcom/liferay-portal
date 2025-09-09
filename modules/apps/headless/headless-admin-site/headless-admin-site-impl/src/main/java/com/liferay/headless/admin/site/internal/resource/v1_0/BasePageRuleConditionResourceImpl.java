@@ -108,7 +108,7 @@ public abstract class BasePageRuleConditionResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteSiteSiteByExternalReferenceCodePageRuleCondition(
+	public void deleteSitePageRuleCondition(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -163,18 +163,15 @@ public abstract class BasePageRuleConditionResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageRuleCondition
-			getSiteSiteByExternalReferenceCodePageRuleCondition(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-				String siteExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam(
-					"pageRuleConditionExternalReferenceCode"
-				)
-				String pageRuleConditionExternalReferenceCode)
+	public PageRuleCondition getSitePageRuleCondition(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("pageRuleConditionExternalReferenceCode")
+			String pageRuleConditionExternalReferenceCode)
 		throws Exception {
 
 		return new PageRuleCondition();
@@ -227,19 +224,18 @@ public abstract class BasePageRuleConditionResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<PageRuleCondition>
-			getSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-				String siteExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("pageRuleExternalReferenceCode")
-				String pageRuleExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.ws.rs.QueryParam("flatten")
-				Boolean flatten)
+	public Page<PageRuleCondition> getSitePageRulePageRuleConditionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("pageRuleExternalReferenceCode")
+			String pageRuleExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("flatten")
+			Boolean flatten)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -289,25 +285,20 @@ public abstract class BasePageRuleConditionResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageRuleCondition
-			patchSiteSiteByExternalReferenceCodePageRuleCondition(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-				String siteExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam(
-					"pageRuleConditionExternalReferenceCode"
-				)
-				String pageRuleConditionExternalReferenceCode,
-				PageRuleCondition pageRuleCondition)
+	public PageRuleCondition patchSitePageRuleCondition(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("pageRuleConditionExternalReferenceCode")
+			String pageRuleConditionExternalReferenceCode,
+			PageRuleCondition pageRuleCondition)
 		throws Exception {
 
-		PageRuleCondition existingPageRuleCondition =
-			getSiteSiteByExternalReferenceCodePageRuleCondition(
-				siteExternalReferenceCode,
-				pageRuleConditionExternalReferenceCode);
+		PageRuleCondition existingPageRuleCondition = getSitePageRuleCondition(
+			siteExternalReferenceCode, pageRuleConditionExternalReferenceCode);
 
 		if (pageRuleCondition.getCondition() != null) {
 			existingPageRuleCondition.setCondition(
@@ -329,7 +320,7 @@ public abstract class BasePageRuleConditionResourceImpl
 
 		preparePatch(pageRuleCondition, existingPageRuleCondition);
 
-		return putSiteSiteByExternalReferenceCodePageRuleCondition(
+		return putSitePageRuleCondition(
 			siteExternalReferenceCode, pageRuleConditionExternalReferenceCode,
 			existingPageRuleCondition);
 	}
@@ -378,16 +369,15 @@ public abstract class BasePageRuleConditionResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageRuleCondition
-			postSiteSiteByExternalReferenceCodePageRulePageRuleCondition(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-				String siteExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.ws.rs.PathParam("pageRuleExternalReferenceCode")
-				String pageRuleExternalReferenceCode,
-				PageRuleCondition pageRuleCondition)
+	public PageRuleCondition postSitePageRulePageRuleCondition(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.PathParam("pageRuleExternalReferenceCode")
+			String pageRuleExternalReferenceCode,
+			PageRuleCondition pageRuleCondition)
 		throws Exception {
 
 		return new PageRuleCondition();
@@ -437,19 +427,16 @@ public abstract class BasePageRuleConditionResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public PageRuleCondition
-			putSiteSiteByExternalReferenceCodePageRuleCondition(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-				String siteExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam(
-					"pageRuleConditionExternalReferenceCode"
-				)
-				String pageRuleConditionExternalReferenceCode,
-				PageRuleCondition pageRuleCondition)
+	public PageRuleCondition putSitePageRuleCondition(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("pageRuleConditionExternalReferenceCode")
+			String pageRuleConditionExternalReferenceCode,
+			PageRuleCondition pageRuleCondition)
 		throws Exception {
 
 		return new PageRuleCondition();
@@ -472,8 +459,33 @@ public abstract class BasePageRuleConditionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<PageRuleCondition, PageRuleCondition, Exception>
+			pageRuleConditionUnsafeFunction = pageRuleCondition -> {
+				if (parameters.containsKey("siteExternalReferenceCode")) {
+					deleteSitePageRuleCondition(
+						(String)parameters.get("siteExternalReferenceCode"),
+						pageRuleCondition.getExternalReferenceCode());
+
+					return pageRuleCondition;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				pageRuleConditions, pageRuleConditionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				pageRuleConditions, pageRuleConditionUnsafeFunction::apply);
+		}
+		else {
+			for (PageRuleCondition pageRuleCondition : pageRuleConditions) {
+				pageRuleConditionUnsafeFunction.apply(pageRuleCondition);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

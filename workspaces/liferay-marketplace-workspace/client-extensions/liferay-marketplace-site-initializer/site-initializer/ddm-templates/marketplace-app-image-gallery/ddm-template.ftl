@@ -16,7 +16,7 @@
 			<span class = "lexicon-icon-overwide"> <@clay["icon"] symbol = "angle-left" /></span>
 		</button>
 
-		<img alt = "${productImages[1].title?html}" id = "main-image" src = "${(productImages[1].src?replace("https://", "http://"))}" />
+		<img alt = "${productImages[0].title?html}" id = "main-image" src = "${(productImages[0].src?replace("https://", "http://"))}" />
 
 		<button class="nav-button next" aria-label="Next Image">
 			<span class="lexicon-icon-overwide"> <@clay["icon"] symbol="angle-right" /></span>
@@ -73,7 +73,7 @@
 				alt: "${image.title?html?js_string}"
 			}<#if image_has_next>,</#if>
 			</#list>
-		].slice(1);
+		]
 	}
 
 	function renderThumbnails() {
@@ -121,7 +121,9 @@
 
 	function setupModalTriggers() {
 		carouselMainImage.addEventListener('click', () => openModalGallery(currentIndex));
-		viewFullGalleryBtn.addEventListener('click', () => openModalGallery(currentIndex));
+		if (viewFullGalleryBtn) {
+				viewFullGalleryBtn.addEventListener('click', () => openModalGallery(currentIndex));
+		}
 	}
 
 	function openModalGallery(startIndex) {
@@ -193,7 +195,6 @@
 <style ${nonceAttribute}>
 .carousel-container img {
 	cursor: pointer;
-	object-fit: contain;
 }
 
 .custom-gallery-modal button:disabled {

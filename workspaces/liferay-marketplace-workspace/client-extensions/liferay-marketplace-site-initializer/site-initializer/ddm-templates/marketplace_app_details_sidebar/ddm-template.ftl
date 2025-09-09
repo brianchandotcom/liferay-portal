@@ -9,13 +9,17 @@
 
 	catalogName = product.catalogName!""
 	categories = product.categories![]
+	createDate = product.createDatea!0
 	productSpecifications = product.productSpecifications![]
 
 	liferayVersions = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "liferay-version"))
-	platformOffering = categories?filter(item -> stringUtil.equals(item.vocabulary, "marketplace liferay platform offering"))
+	platformOffering = categories?filter(item -> stringUtil.equals(item.vocabulary?replace(" ", "-"), "marketplace-liferay-platform-offering"))
 >
 
-<#assign publisherDetailsResponse = restClient.get("/c/publisherdetailses?filter=publisherName eq '${catalogName}'") />
+<#assign
+	publisherDetailsResponse = restClient.get("/c/publisherdetailses?filter=publisherName eq '${catalogName}'")
+	redirectPath = "https://marketplace.liferay.com/e/publisher-details/29282497"
+/>
 
 <#if publisherDetailsResponse.items?has_content>
 	<#assign
@@ -34,16 +38,22 @@
 	type = getSpecificationValue("type")?lower_case
 >
 <@section title = languageUtil.get(locale, "developer")>
-	<a class = "bg-neutral-8" href = "/?developer-name=${developerName}">
-		${developerName}
-	</a>
+	<#if publisherDetails?has_content>
+		<a class = "bg-neutral-8" href = "${redirectPath}/${publisherDetails.id}">
+			${developerName}
+		</a>
+	<#else>
+		<a class = "bg-neutral-8" href = "/?developer-name=${developerName}">
+			${developerName}
+		</a>
+	</#if>
 </@section>
 
 <@section title = languageUtil.get(locale, "publisher-date", "Publisher Date")>
-	<#setting date_format = "MMMM d, yyyy">
+	<#if createDate?has_content>
+		<#assign parsedDate = createDate?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'") />
 
-	<#if CPDefinition_displayDate.getData()?has_content>
-		<p>${CPDefinition_displayDate.getData()}</p>
+		<p>${parsedDate?string("MMMM d, yyyy")}</p>
 	</#if>
 </@section>
 

@@ -76,8 +76,7 @@ function AppDropdownActions({placedOrder}: AppDropdownActionsProps) {
 						data-tooltip-align="left"
 						disabled={!isOrderCompleted}
 						onClick={() => {
-							navigate(`/order/${id}/cloud-provisioning`);
-
+							navigate(`/order/${id}/download`);
 							if (!virtualURL?.trim()) {
 								Analytics.track(
 									'VIRTUAL_URL_NOT_FOUND',

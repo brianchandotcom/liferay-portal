@@ -148,6 +148,7 @@ export default {
 	'content-media-type': 'Content Media Type',
 	'content-policy': 'Content Policy',
 	'continue': 'Continue',
+	'continue-to-download': 'Continue to Download',
 	'continue-to-install': 'Continue to Install',
 	'copied-x-to-the-clipboard': 'Copied {0} to the clipboard.',
 	'could-not-upload-the-file-a-package-with-this-filename-already-exists':
@@ -281,6 +282,7 @@ export default {
 	'go-to-app-provisioning': 'Go to App Provisioning',
 	'go-to-cloud-console': 'Go to Cloud Console',
 	'go-to-dashboard': 'Go to Dashboard',
+	'go-to-download': 'Go to Download',
 	'go-to-dxp': 'Go to DXP',
 	'go-to-marketplace': 'Go to Marketplace',
 	'go-to-my-apps': 'Go to My Apps',

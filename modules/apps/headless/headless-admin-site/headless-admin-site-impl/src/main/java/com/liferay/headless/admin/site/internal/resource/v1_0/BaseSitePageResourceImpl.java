@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -257,6 +258,14 @@ public abstract class BaseSitePageResourceImpl
 			resourceId, resourceName, roleNames);
 	}
 
+	protected abstract Page<SitePage> doGetSiteSitePagesPage(
+			String siteExternalReferenceCode, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -316,7 +325,7 @@ public abstract class BaseSitePageResourceImpl
 	@jakarta.ws.rs.Path("/sites/{siteExternalReferenceCode}/site-pages")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<SitePage> getSiteSitePagesPage(
+	public final Page<SitePage> getSiteSitePagesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -333,13 +342,35 @@ public abstract class BaseSitePageResourceImpl
 				sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<SitePage> sitePagesPage = doGetSiteSitePagesPage(
+			siteExternalReferenceCode, search, aggregation, filter, pagination,
+			sorts);
+
+		for (SitePage sitePage : sitePagesPage.getItems()) {
+			sitePage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionsPage =
+							getSiteSitePagePermissionsPage(
+								siteExternalReferenceCode,
+								sitePage.getExternalReferenceCode(), null);
+
+						Collection<Permission> permissions =
+							permissionsPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return sitePagesPage;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "name_i18n": ___, "pageSettings": ___, "pageSpecifications": ___, "parentSitePageExternalReferenceCode": ___, "taxonomyCategoryItemExternalReferences": ___, "type": ___, "uuid": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "name_i18n": ___, "pageSettings": ___, "pageSpecifications": ___, "parentSitePageExternalReferenceCode": ___, "permissions": ___, "taxonomyCategoryItemExternalReferences": ___, "type": ___, "uuid": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
@@ -433,6 +464,10 @@ public abstract class BaseSitePageResourceImpl
 				sitePage.getParentSitePageExternalReferenceCode());
 		}
 
+		if (sitePage.getPermissions() != null) {
+			existingSitePage.setPermissions(sitePage.getPermissions());
+		}
+
 		if (sitePage.getType() != null) {
 			existingSitePage.setType(sitePage.getType());
 		}
@@ -452,10 +487,14 @@ public abstract class BaseSitePageResourceImpl
 			existingSitePage);
 	}
 
+	protected abstract SitePage doPostSiteSitePage(
+			String siteExternalReferenceCode, SitePage sitePage)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "name_i18n": ___, "pageSettings": ___, "pageSpecifications": ___, "parentSitePageExternalReferenceCode": ___, "taxonomyCategoryItemExternalReferences": ___, "type": ___, "uuid": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "name_i18n": ___, "pageSettings": ___, "pageSpecifications": ___, "parentSitePageExternalReferenceCode": ___, "permissions": ___, "taxonomyCategoryItemExternalReferences": ___, "type": ___, "uuid": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Adds a new site page"
@@ -476,7 +515,7 @@ public abstract class BaseSitePageResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SitePage postSiteSitePage(
+	public final SitePage postSiteSitePage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -484,7 +523,29 @@ public abstract class BaseSitePageResourceImpl
 			SitePage sitePage)
 		throws Exception {
 
-		return new SitePage();
+		Permission[] permissions = sitePage.getPermissions();
+
+		SitePage postSitePage = doPostSiteSitePage(
+			siteExternalReferenceCode, sitePage);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage = putSiteSitePagePermissionsPage(
+				siteExternalReferenceCode,
+				postSitePage.getExternalReferenceCode(), permissions);
+
+			postSitePage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postSitePage;
 	}
 
 	/**
@@ -687,7 +748,7 @@ public abstract class BaseSitePageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "name_i18n": ___, "pageSettings": ___, "pageSpecifications": ___, "parentSitePageExternalReferenceCode": ___, "taxonomyCategoryItemExternalReferences": ___, "type": ___, "uuid": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "name_i18n": ___, "pageSettings": ___, "pageSpecifications": ___, "parentSitePageExternalReferenceCode": ___, "permissions": ___, "taxonomyCategoryItemExternalReferences": ___, "type": ___, "uuid": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the site page with the given external reference code, or creates it if it does not exist."

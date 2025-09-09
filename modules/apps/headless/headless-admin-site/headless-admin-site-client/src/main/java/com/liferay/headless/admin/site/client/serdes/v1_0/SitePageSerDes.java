@@ -250,6 +250,26 @@ public class SitePageSerDes {
 			sb.append("\"");
 		}
 
+		if (sitePage.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < sitePage.getPermissions().length; i++) {
+				sb.append(sitePage.getPermissions()[i]);
+
+				if ((i + 1) < sitePage.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (sitePage.getTaxonomyCategoryItemExternalReferences() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -462,6 +482,13 @@ public class SitePageSerDes {
 					sitePage.getParentSitePageExternalReferenceCode()));
 		}
 
+		if (sitePage.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put("permissions", String.valueOf(sitePage.getPermissions()));
+		}
+
 		if (sitePage.getTaxonomyCategoryItemExternalReferences() == null) {
 			map.put("taxonomyCategoryItemExternalReferences", null);
 		}
@@ -563,6 +590,9 @@ public class SitePageSerDes {
 						jsonParserFieldName,
 						"parentSitePageExternalReferenceCode")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -696,6 +726,26 @@ public class SitePageSerDes {
 				if (jsonParserFieldValue != null) {
 					sitePage.setParentSitePageExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.site.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.site.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.site.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					sitePage.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(

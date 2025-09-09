@@ -265,6 +265,35 @@ public class UtilityPage implements Cloneable, Serializable {
 
 	protected PageSpecification[] pageSpecifications;
 
+	public com.liferay.headless.admin.site.client.permission.Permission[]
+		getPermissions() {
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.headless.admin.site.client.permission.Permission[]
+			permissions) {
+
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.headless.admin.site.client.permission.Permission[],
+			 Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected com.liferay.headless.admin.site.client.permission.Permission[]
+		permissions;
+
 	public ItemExternalReference getThumbnail() {
 		return thumbnail;
 	}

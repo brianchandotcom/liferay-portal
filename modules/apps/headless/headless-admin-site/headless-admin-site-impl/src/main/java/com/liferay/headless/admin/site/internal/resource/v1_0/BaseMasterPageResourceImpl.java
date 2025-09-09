@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -257,6 +258,14 @@ public abstract class BaseMasterPageResourceImpl
 			resourceId, resourceName, roleNames);
 	}
 
+	protected abstract Page<MasterPage> doGetSiteMasterPagesPage(
+			String siteExternalReferenceCode, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -316,7 +325,7 @@ public abstract class BaseMasterPageResourceImpl
 	@jakarta.ws.rs.Path("/sites/{siteExternalReferenceCode}/master-pages")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<MasterPage> getSiteMasterPagesPage(
+	public final Page<MasterPage> getSiteMasterPagesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -333,13 +342,35 @@ public abstract class BaseMasterPageResourceImpl
 				sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<MasterPage> masterPagesPage = doGetSiteMasterPagesPage(
+			siteExternalReferenceCode, search, aggregation, filter, pagination,
+			sorts);
+
+		for (MasterPage masterPage : masterPagesPage.getItems()) {
+			masterPage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionsPage =
+							getSiteMasterPagePermissionsPage(
+								siteExternalReferenceCode,
+								masterPage.getExternalReferenceCode(), null);
+
+						Collection<Permission> permissions =
+							permissionsPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return masterPagesPage;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/master-pages/{masterPageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "key": ___, "keywords": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "taxonomyCategoryItemExternalReferences": ___, "thumbnail": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/master-pages/{masterPageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "key": ___, "keywords": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "permissions": ___, "taxonomyCategoryItemExternalReferences": ___, "thumbnail": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
@@ -432,6 +463,10 @@ public abstract class BaseMasterPageResourceImpl
 			existingMasterPage.setName(masterPage.getName());
 		}
 
+		if (masterPage.getPermissions() != null) {
+			existingMasterPage.setPermissions(masterPage.getPermissions());
+		}
+
 		if (masterPage.getUuid() != null) {
 			existingMasterPage.setUuid(masterPage.getUuid());
 		}
@@ -443,10 +478,14 @@ public abstract class BaseMasterPageResourceImpl
 			existingMasterPage);
 	}
 
+	protected abstract MasterPage doPostSiteMasterPage(
+			String siteExternalReferenceCode, MasterPage masterPage)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/master-pages' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "key": ___, "keywords": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "taxonomyCategoryItemExternalReferences": ___, "thumbnail": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/master-pages' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "key": ___, "keywords": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "permissions": ___, "taxonomyCategoryItemExternalReferences": ___, "thumbnail": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Adds a new master page."
@@ -467,7 +506,7 @@ public abstract class BaseMasterPageResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MasterPage postSiteMasterPage(
+	public final MasterPage postSiteMasterPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -475,7 +514,29 @@ public abstract class BaseMasterPageResourceImpl
 			MasterPage masterPage)
 		throws Exception {
 
-		return new MasterPage();
+		Permission[] permissions = masterPage.getPermissions();
+
+		MasterPage postMasterPage = doPostSiteMasterPage(
+			siteExternalReferenceCode, masterPage);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage = putSiteMasterPagePermissionsPage(
+				siteExternalReferenceCode,
+				postMasterPage.getExternalReferenceCode(), permissions);
+
+			postMasterPage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postMasterPage;
 	}
 
 	/**
@@ -680,7 +741,7 @@ public abstract class BaseMasterPageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/master-pages/{masterPageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "key": ___, "keywords": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "taxonomyCategoryItemExternalReferences": ___, "thumbnail": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/master-pages/{masterPageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "key": ___, "keywords": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "permissions": ___, "taxonomyCategoryItemExternalReferences": ___, "thumbnail": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the master page with the given external reference code, or creates it if it does not exist."

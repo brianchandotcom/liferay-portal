@@ -132,6 +132,18 @@ public abstract class BasePageTemplateResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		permissionsPageTemplateResource = PageTemplateResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
+		).build();
 	}
 
 	@After
@@ -469,6 +481,18 @@ public abstract class BasePageTemplateResourceTestCase {
 			page,
 			testGetSitePageTemplatesPage_getExpectedActions(
 				siteExternalReferenceCode));
+
+		for (PageTemplate pageTemplate : page.getItems()) {
+			Assert.assertNull(pageTemplate.getPermissions());
+		}
+
+		page = permissionsPageTemplateResource.getSitePageTemplatesPage(
+			siteExternalReferenceCode, null, null, null, Pagination.of(1, 10),
+			null);
+
+		for (PageTemplate pageTemplate : page.getItems()) {
+			Assert.assertNotNull(pageTemplate.getPermissions());
+		}
 	}
 
 	protected Map<String, Map<String, String>>
@@ -895,6 +919,24 @@ public abstract class BasePageTemplateResourceTestCase {
 		assertEquals(randomPageTemplate, postPageTemplate);
 		assertValid(postPageTemplate);
 
+		PageTemplate randomPermissionsPageTemplate1 =
+			randomPermissionsPageTemplate();
+
+		PageTemplate postPermissionsPageTemplate1 =
+			testPostSitePageTemplate_addPageTemplate(
+				randomPermissionsPageTemplate1);
+
+		Assert.assertNull(postPermissionsPageTemplate1.getPermissions());
+
+		PageTemplate randomPermissionsPageTemplate2 =
+			randomPermissionsPageTemplate();
+
+		PageTemplate postPermissionsPageTemplate2 =
+			testPostSitePageTemplate_addPermissionsPageTemplate(
+				randomPermissionsPageTemplate2);
+
+		Assert.assertNotNull(postPermissionsPageTemplate2.getPermissions());
+
 		ContentPageTemplate contentPageTemplate = new ContentPageTemplate() {
 			{
 				creatorExternalReferenceCode = StringUtil.toLowerCase(
@@ -946,6 +988,15 @@ public abstract class BasePageTemplateResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected PageTemplate testPostSitePageTemplate_addPermissionsPageTemplate(
+			PageTemplate pageTemplate)
+		throws Exception {
+
+		return permissionsPageTemplateResource.postSitePageTemplate(
+			testGetSitePageTemplatesPage_getSiteExternalReferenceCode(),
+			pageTemplate);
 	}
 
 	@Test
@@ -1349,6 +1400,14 @@ public abstract class BasePageTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (pageTemplate.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taxonomyCategoryItemExternalReferences",
 					additionalAssertFieldName)) {
@@ -1741,6 +1800,17 @@ public abstract class BasePageTemplateResourceTestCase {
 				if (!Objects.deepEquals(
 						pageTemplate1.getPageTemplateSettings(),
 						pageTemplate2.getPageTemplateSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						pageTemplate1.getPermissions(),
+						pageTemplate2.getPermissions())) {
 
 					return false;
 				}
@@ -2328,6 +2398,11 @@ public abstract class BasePageTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("taxonomyCategoryItemExternalReferences")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2493,6 +2568,25 @@ public abstract class BasePageTemplateResourceTestCase {
 		return randomPageTemplate();
 	}
 
+	protected PageTemplate randomPermissionsPageTemplate() throws Exception {
+		PageTemplate pageTemplate = randomPageTemplate();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		pageTemplate.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return pageTemplate;
+	}
+
 	protected ContentPageSpecification randomContentPageSpecification()
 		throws Exception {
 
@@ -2529,6 +2623,7 @@ public abstract class BasePageTemplateResourceTestCase {
 	protected PageTemplateResource pageTemplateResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected PageTemplateResource permissionsPageTemplateResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

@@ -189,6 +189,14 @@ public class PageTemplateSerDes {
 				String.valueOf(pageTemplate.getPageTemplateSettings()));
 		}
 
+		if (pageTemplate.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions", String.valueOf(pageTemplate.getPermissions()));
+		}
+
 		if (pageTemplate.getTaxonomyCategoryItemExternalReferences() == null) {
 			map.put("taxonomyCategoryItemExternalReferences", null);
 		}
@@ -273,6 +281,9 @@ public class PageTemplateSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "pageTemplateSettings")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -410,6 +421,26 @@ public class PageTemplateSerDes {
 					pageTemplate.setPageTemplateSettings(
 						PageTemplateSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.site.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.site.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.site.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					pageTemplate.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(

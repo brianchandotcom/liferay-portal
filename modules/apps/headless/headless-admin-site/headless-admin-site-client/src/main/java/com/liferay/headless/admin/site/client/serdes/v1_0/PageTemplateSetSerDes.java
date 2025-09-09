@@ -165,6 +165,26 @@ public class PageTemplateSetSerDes {
 			sb.append("\"");
 		}
 
+		if (pageTemplateSet.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageTemplateSet.getPermissions().length; i++) {
+				sb.append(pageTemplateSet.getPermissions()[i]);
+
+				if ((i + 1) < pageTemplateSet.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageTemplateSet.getUuid() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -270,6 +290,15 @@ public class PageTemplateSetSerDes {
 			map.put("name", String.valueOf(pageTemplateSet.getName()));
 		}
 
+		if (pageTemplateSet.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions",
+				String.valueOf(pageTemplateSet.getPermissions()));
+		}
+
 		if (pageTemplateSet.getUuid() == null) {
 			map.put("uuid", null);
 		}
@@ -321,6 +350,9 @@ public class PageTemplateSetSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {
@@ -383,6 +415,26 @@ public class PageTemplateSetSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					pageTemplateSet.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.site.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.site.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.site.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					pageTemplateSet.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {

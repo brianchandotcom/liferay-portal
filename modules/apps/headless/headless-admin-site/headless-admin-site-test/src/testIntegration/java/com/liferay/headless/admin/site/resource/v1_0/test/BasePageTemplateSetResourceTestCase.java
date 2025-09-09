@@ -128,6 +128,18 @@ public abstract class BasePageTemplateSetResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		permissionsPageTemplateSetResource = PageTemplateSetResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
+		).build();
 	}
 
 	@After
@@ -355,6 +367,18 @@ public abstract class BasePageTemplateSetResourceTestCase {
 			page,
 			testGetSitePageTemplateSetsPage_getExpectedActions(
 				siteExternalReferenceCode));
+
+		for (PageTemplateSet pageTemplateSet : page.getItems()) {
+			Assert.assertNull(pageTemplateSet.getPermissions());
+		}
+
+		page = permissionsPageTemplateSetResource.getSitePageTemplateSetsPage(
+			siteExternalReferenceCode, null, null, null, Pagination.of(1, 10),
+			null);
+
+		for (PageTemplateSet pageTemplateSet : page.getItems()) {
+			Assert.assertNotNull(pageTemplateSet.getPermissions());
+		}
 	}
 
 	protected Map<String, Map<String, String>>
@@ -805,6 +829,24 @@ public abstract class BasePageTemplateSetResourceTestCase {
 
 		assertEquals(randomPageTemplateSet, postPageTemplateSet);
 		assertValid(postPageTemplateSet);
+
+		PageTemplateSet randomPermissionsPageTemplateSet1 =
+			randomPermissionsPageTemplateSet();
+
+		PageTemplateSet postPermissionsPageTemplateSet1 =
+			testPostSitePageTemplateSet_addPageTemplateSet(
+				randomPermissionsPageTemplateSet1);
+
+		Assert.assertNull(postPermissionsPageTemplateSet1.getPermissions());
+
+		PageTemplateSet randomPermissionsPageTemplateSet2 =
+			randomPermissionsPageTemplateSet();
+
+		PageTemplateSet postPermissionsPageTemplateSet2 =
+			testPostSitePageTemplateSet_addPermissionsPageTemplateSet(
+				randomPermissionsPageTemplateSet2);
+
+		Assert.assertNotNull(postPermissionsPageTemplateSet2.getPermissions());
 	}
 
 	protected PageTemplateSet testPostSitePageTemplateSet_addPageTemplateSet(
@@ -813,6 +855,16 @@ public abstract class BasePageTemplateSetResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected PageTemplateSet
+			testPostSitePageTemplateSet_addPermissionsPageTemplateSet(
+				PageTemplateSet pageTemplateSet)
+		throws Exception {
+
+		return permissionsPageTemplateSetResource.postSitePageTemplateSet(
+			testGetSitePageTemplateSetsPage_getSiteExternalReferenceCode(),
+			pageTemplateSet);
 	}
 
 	@Test
@@ -1110,6 +1162,14 @@ public abstract class BasePageTemplateSetResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (pageTemplateSet.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("uuid", additionalAssertFieldName)) {
 				if (pageTemplateSet.getUuid() == null) {
 					valid = false;
@@ -1323,6 +1383,17 @@ public abstract class BasePageTemplateSetResourceTestCase {
 				if (!Objects.deepEquals(
 						pageTemplateSet1.getName(),
 						pageTemplateSet2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						pageTemplateSet1.getPermissions(),
+						pageTemplateSet2.getPermissions())) {
 
 					return false;
 				}
@@ -1742,6 +1813,11 @@ public abstract class BasePageTemplateSetResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("uuid")) {
 			Object object = pageTemplateSet.getUuid();
 
@@ -1861,6 +1937,27 @@ public abstract class BasePageTemplateSetResourceTestCase {
 		return randomPageTemplateSet();
 	}
 
+	protected PageTemplateSet randomPermissionsPageTemplateSet()
+		throws Exception {
+
+		PageTemplateSet pageTemplateSet = randomPageTemplateSet();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		pageTemplateSet.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return pageTemplateSet;
+	}
+
 	protected final JSONObject waitForFinish(
 			String expectedExecuteStatus, JSONObject jsonObject)
 		throws Exception {
@@ -1886,6 +1983,7 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	protected PageTemplateSetResource pageTemplateSetResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected PageTemplateSetResource permissionsPageTemplateSetResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

@@ -236,6 +236,28 @@ public class ContentPageTemplateSerDes {
 				String.valueOf(contentPageTemplate.getPageTemplateSettings()));
 		}
 
+		if (contentPageTemplate.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < contentPageTemplate.getPermissions().length;
+				 i++) {
+
+				sb.append(contentPageTemplate.getPermissions()[i]);
+
+				if ((i + 1) < contentPageTemplate.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (contentPageTemplate.getTaxonomyCategoryItemExternalReferences() !=
 				null) {
 
@@ -425,6 +447,15 @@ public class ContentPageTemplateSerDes {
 				String.valueOf(contentPageTemplate.getPageTemplateSettings()));
 		}
 
+		if (contentPageTemplate.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions",
+				String.valueOf(contentPageTemplate.getPermissions()));
+		}
+
 		if (contentPageTemplate.getTaxonomyCategoryItemExternalReferences() ==
 				null) {
 
@@ -512,6 +543,9 @@ public class ContentPageTemplateSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "pageTemplateSettings")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -625,6 +659,26 @@ public class ContentPageTemplateSerDes {
 					contentPageTemplate.setPageTemplateSettings(
 						PageTemplateSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.site.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.site.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.site.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					contentPageTemplate.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(

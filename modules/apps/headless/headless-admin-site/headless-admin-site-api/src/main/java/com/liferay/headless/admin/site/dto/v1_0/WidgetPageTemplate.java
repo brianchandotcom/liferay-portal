@@ -574,6 +574,29 @@ public class WidgetPageTemplate extends PageTemplate implements Serializable {
 			sb.append(String.valueOf(pageTemplateSettings));
 		}
 
+		com.liferay.portal.vulcan.permission.Permission[] permissions =
+			getPermissions();
+
+		if (permissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < permissions.length; i++) {
+				sb.append(permissions[i]);
+
+				if ((i + 1) < permissions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		ItemExternalReference[] taxonomyCategoryItemExternalReferences =
 			getTaxonomyCategoryItemExternalReferences();
 

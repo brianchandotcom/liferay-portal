@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -257,6 +258,14 @@ public abstract class BaseUtilityPageResourceImpl
 			resourceId, resourceName, roleNames);
 	}
 
+	protected abstract Page<UtilityPage> doGetSiteUtilityPagesPage(
+			String siteExternalReferenceCode, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -316,7 +325,7 @@ public abstract class BaseUtilityPageResourceImpl
 	@jakarta.ws.rs.Path("/sites/{siteExternalReferenceCode}/utility-pages")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<UtilityPage> getSiteUtilityPagesPage(
+	public final Page<UtilityPage> getSiteUtilityPagesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -333,13 +342,35 @@ public abstract class BaseUtilityPageResourceImpl
 				sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<UtilityPage> utilityPagesPage = doGetSiteUtilityPagesPage(
+			siteExternalReferenceCode, search, aggregation, filter, pagination,
+			sorts);
+
+		for (UtilityPage utilityPage : utilityPagesPage.getItems()) {
+			utilityPage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionsPage =
+							getSiteUtilityPagePermissionsPage(
+								siteExternalReferenceCode,
+								utilityPage.getExternalReferenceCode(), null);
+
+						Collection<Permission> permissions =
+							permissionsPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return utilityPagesPage;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/utility-pages/{utilityPageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "thumbnail": ___, "type": ___, "utilityPageSettings": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/utility-pages/{utilityPageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "permissions": ___, "thumbnail": ___, "type": ___, "utilityPageSettings": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
@@ -430,6 +461,10 @@ public abstract class BaseUtilityPageResourceImpl
 			existingUtilityPage.setName(utilityPage.getName());
 		}
 
+		if (utilityPage.getPermissions() != null) {
+			existingUtilityPage.setPermissions(utilityPage.getPermissions());
+		}
+
 		if (utilityPage.getType() != null) {
 			existingUtilityPage.setType(utilityPage.getType());
 		}
@@ -445,10 +480,14 @@ public abstract class BaseUtilityPageResourceImpl
 			existingUtilityPage);
 	}
 
+	protected abstract UtilityPage doPostSiteUtilityPage(
+			String siteExternalReferenceCode, UtilityPage utilityPage)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/utility-pages' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "thumbnail": ___, "type": ___, "utilityPageSettings": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/utility-pages' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "permissions": ___, "thumbnail": ___, "type": ___, "utilityPageSettings": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Adds a new utility page"
@@ -469,7 +508,7 @@ public abstract class BaseUtilityPageResourceImpl
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public UtilityPage postSiteUtilityPage(
+	public final UtilityPage postSiteUtilityPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -477,7 +516,30 @@ public abstract class BaseUtilityPageResourceImpl
 			UtilityPage utilityPage)
 		throws Exception {
 
-		return new UtilityPage();
+		Permission[] permissions = utilityPage.getPermissions();
+
+		UtilityPage postUtilityPage = doPostSiteUtilityPage(
+			siteExternalReferenceCode, utilityPage);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putSiteUtilityPagePermissionsPage(
+					siteExternalReferenceCode,
+					postUtilityPage.getExternalReferenceCode(), permissions);
+
+			postUtilityPage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postUtilityPage;
 	}
 
 	/**
@@ -683,7 +745,7 @@ public abstract class BaseUtilityPageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/utility-pages/{utilityPageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "thumbnail": ___, "type": ___, "utilityPageSettings": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/utility-pages/{utilityPageExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "datePublished": ___, "externalReferenceCode": ___, "friendlyUrlHistory": ___, "friendlyUrlPath_i18n": ___, "markedAsDefault": ___, "name": ___, "pageSpecifications": ___, "permissions": ___, "thumbnail": ___, "type": ___, "utilityPageSettings": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the utility page with the given external reference code, or creates it if it does not exist."

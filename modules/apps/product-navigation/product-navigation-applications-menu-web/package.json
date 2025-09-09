@@ -5,7 +5,7 @@
 		"@clayui/label": "3.144.1",
 		"@clayui/layout": "3.144.1",
 		"@clayui/modal": "3.145.0",
-		"@clayui/sticker": "3.144.1",
+		"@clayui/sticker": "3.147.0",
 		"@clayui/tabs": "3.145.0",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",

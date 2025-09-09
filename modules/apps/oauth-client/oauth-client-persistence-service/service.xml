@@ -57,6 +57,7 @@
 		<column name="metadataCacheTime" type="long" />
 		<column method-name="OIDCUserInfoMapperJSON" name="oidcUserInfoMapperJSON" type="String" />
 		<column name="tokenRequestParametersJSON" type="String" />
+		<column name="customClaimsJSON" type="String" />
 
 		<!-- Finder methods -->
 

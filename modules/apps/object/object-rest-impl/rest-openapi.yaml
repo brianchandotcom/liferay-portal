@@ -1,5 +1,15 @@
 components:
     schemas:
+        Assignee:
+            properties:
+                externalReferenceCode:
+                    type: string
+                name:
+                    type: string
+                type:
+                    enum: [Role, User]
+                    type: string
+            type: object
         AuditEvent:
             properties:
                 auditFieldChanges:

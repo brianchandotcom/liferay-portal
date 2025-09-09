@@ -173,6 +173,28 @@ public class PageTemplateSetResourceImpl
 					pageTemplateSet.getDescription()));
 	}
 
+	@Override
+	protected Long getPermissionCheckerResourceId(
+			String groupExternalReferenceCode, String externalReferenceCode)
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollection(
+					externalReferenceCode,
+					getPermissionCheckerGroupId(groupExternalReferenceCode));
+
+		return layoutPageTemplateCollection.getPrimaryKey();
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(
+			String groupExternalReferenceCode, String externalReferenceCode)
+		throws Exception {
+
+		return LayoutPageTemplateCollection.class.getName();
+	}
+
 	private PageTemplateSet _toPageTemplateSet(
 			LayoutPageTemplateCollection layoutPageTemplateCollection)
 		throws Exception {

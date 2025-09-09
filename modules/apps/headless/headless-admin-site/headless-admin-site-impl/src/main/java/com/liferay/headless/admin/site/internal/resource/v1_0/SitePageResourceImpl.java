@@ -257,6 +257,26 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
+	protected Long getPermissionCheckerResourceId(
+			String groupExternalReferenceCode, String externalReferenceCode)
+		throws Exception {
+
+		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
+			externalReferenceCode,
+			getPermissionCheckerGroupId(groupExternalReferenceCode));
+
+		return layout.getPrimaryKey();
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(
+			String groupExternalReferenceCode, String externalReferenceCode)
+		throws Exception {
+
+		return Layout.class.getName();
+	}
+
+	@Override
 	protected void preparePatch(SitePage sitePage, SitePage existingSitePage) {
 		if (sitePage.getPageSettings() != null) {
 			existingSitePage.setPageSettings(sitePage::getPageSettings);

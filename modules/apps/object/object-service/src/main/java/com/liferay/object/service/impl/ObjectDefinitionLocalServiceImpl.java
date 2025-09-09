@@ -183,7 +183,7 @@ import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -1799,7 +1799,7 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition.getClassName(), 0, 0, true);
 
 			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
+				_kaleoDefinitionService.getOrAddEmptyKaleoDefinition(
 					workflowDefinitionLink.getWorkflowDefinitionName(),
 					serviceContext);
 
@@ -3454,7 +3454,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_inactiveServiceRegistrationsMap = new ConcurrentHashMap<>();
 
 	@Reference
-	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+	private KaleoDefinitionService _kaleoDefinitionService;
 
 	@Reference
 	private Language _language;

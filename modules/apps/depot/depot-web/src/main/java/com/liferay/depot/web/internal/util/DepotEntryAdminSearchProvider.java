@@ -87,7 +87,6 @@ public class DepotEntryAdminSearchProvider {
 
 		groupSearch.setEmptyResultsMessage(
 			depotEntrySearch.getEmptyResultsMessage());
-
 		groupSearch.setResultsAndTotal(
 			() -> TransformUtil.transform(
 				depotEntrySearch.getResults(),
@@ -108,7 +107,6 @@ public class DepotEntryAdminSearchProvider {
 		depotEntrySearch.setEmptyResultsMessage(
 			_language.get(
 				portletRequest.getLocale(), "no-asset-libraries-were-found"));
-
 		depotEntrySearch.setResultsAndTotal(
 			() -> _getResults(depotEntryType, depotEntrySearch, portletRequest),
 			_getTotal(depotEntryType, portletRequest));
@@ -132,7 +130,6 @@ public class DepotEntryAdminSearchProvider {
 				portletRequest.getLocale(),
 				(depotEntryType == DepotConstants.TYPE_SPACE) ?
 					"no-spaces-were-found" : "no-asset-libraries-were-found"));
-
 		depotEntrySearch.setResultsAndTotal(
 			() -> _depotEntryService.getGroupConnectedDepotEntries(
 				themeDisplay.getScopeGroupId(), depotEntryType,

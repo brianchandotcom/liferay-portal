@@ -136,7 +136,6 @@ public class DepotAdminDisplayContext {
 		PortletRequest portletRequest =
 			(PortletRequest)_liferayPortletRequest.getAttribute(
 				JavaConstants.JAKARTA_PORTLET_REQUEST);
-
 		PortletResponse portletResponse =
 			(PortletResponse)_liferayPortletRequest.getAttribute(
 				JavaConstants.JAKARTA_PORTLET_RESPONSE);

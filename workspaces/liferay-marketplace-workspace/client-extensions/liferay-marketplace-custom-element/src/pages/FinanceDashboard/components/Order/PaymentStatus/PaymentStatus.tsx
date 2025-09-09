@@ -7,9 +7,9 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
 import {PaymentStatus as PaymentStatusCode} from '../../../../../enums/Order';
+import i18n from '../../../../../i18n';
 
 import './index.scss';
-import i18n from '../../../../../i18n';
 
 const paymentStatusLabel = {
 	[PaymentStatusCode.CANCELED]: i18n.translate('canceled'),
@@ -24,8 +24,8 @@ const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
 		<ClayIcon
 			className={classNames('mr-2 payment-status-icon', {
 				'text-danger': [
-					PaymentStatusCode.FAILED,
 					PaymentStatusCode.CANCELED,
+					PaymentStatusCode.FAILED,
 				].includes(paymentStatus),
 				'text-success': paymentStatus === PaymentStatusCode.PAID,
 				'text-warning': [
@@ -35,6 +35,7 @@ const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
 			})}
 			symbol="circle"
 		/>
+
 		<span className="finance-dashboard-secondary-text">
 			{paymentStatusLabel[paymentStatus as PaymentStatusCode]}
 		</span>

@@ -4,6 +4,7 @@
  */
 
 import {useNavigate} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import ListView from '../../../../components/ListView';
 import Page from '../../../../components/Page';
@@ -13,6 +14,29 @@ import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
 import PaymentStatus from '../../components/Order/PaymentStatus/PaymentStatus';
+
+async function onClickMarkAsPaid(order: Order, mutate: KeyedMutator<any>) {
+	try {
+		await HeadlessCommerceAdminOrder.patchOrder(order.id, {
+			paymentStatus: PaymentStatusCode.PAID,
+		});
+
+		mutate((response: Order) => response, {
+			revalidate: true,
+		});
+
+		Liferay.Util.openToast({
+			message: i18n.translate('order-marked-as-paid'),
+			type: 'success',
+		});
+	}
+	catch {
+		Liferay.Util.openToast({
+			message: i18n.translate('oops-something-went-wrong'),
+			type: 'danger',
+		});
+	}
+}
 
 const Orders = () => {
 	const navigate = useNavigate();
@@ -42,47 +66,18 @@ const Orders = () => {
 				tableProps={{
 					actions: [
 						{
-							disabled(item) {
+							disabled(order) {
 								return [
-									PaymentStatusCode.PAID,
 									PaymentStatusCode.CANCELED,
-								].includes(item.paymentStatus);
+									PaymentStatusCode.PAID,
+								].includes(order.paymentStatus);
 							},
 							name: i18n.translate('mark-as-paid'),
-							onClick: async (order: Order, mutate) => {
-								try {
-									await HeadlessCommerceAdminOrder.patchOrder(
-										order.id,
-										{
-											paymentStatus:
-												PaymentStatusCode.PAID,
-										}
-									);
-									mutate((response: Order) => response, {
-										revalidate: true,
-									});
-									Liferay.Util.openToast({
-										message: i18n.translate(
-											'order-marked-as-paid'
-										),
-										type: 'success',
-									});
-								}
-								catch (error) {
-									Liferay.Util.openToast({
-										message: i18n.translate(
-											'oops-something-went-wrong'
-										),
-										type: 'danger',
-									});
-								}
-							},
+							onClick: onClickMarkAsPaid,
 						},
 						{
 							name: i18n.translate('view-details'),
-							onClick: (order: Order) => {
-								navigate('/order/' + order.id);
-							},
+							onClick: (order) => navigate('/order/' + order.id),
 						},
 					],
 					columns: [
@@ -95,8 +90,8 @@ const Orders = () => {
 						{
 							id: 'orderDate',
 							name: 'Date',
-							render: (isoString) => {
-								const date = new Date(isoString as string);
+							render: (orderDate) => {
+								const date = new Date(orderDate as string);
 
 								return (
 									<div className="d-flex flex-column justify-content-center">
@@ -130,9 +125,9 @@ const Orders = () => {
 						{
 							id: 'paymentStatusInfo',
 							name: i18n.translate('payment-status'),
-							render: (paymentStatus) => (
+							render: (paymentStatusInfo) => (
 								<PaymentStatus
-									paymentStatus={paymentStatus.code}
+									paymentStatus={paymentStatusInfo.code}
 								/>
 							),
 						},

@@ -10,8 +10,10 @@
 	<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 </portlet:renderURL>
 
-<li>
-	<a class="dropdown-item" href="<%= importErrorsList %>">
-		<liferay-ui:message key="view-details" />
-	</a>
-</li>
+<c:if test="<%= !backgroundTask.isInProgress() %>">
+	<li>
+		<a class="dropdown-item" href="<%= importErrorsList %>">
+			<liferay-ui:message key="view-details" />
+		</a>
+	</li>
+</c:if>

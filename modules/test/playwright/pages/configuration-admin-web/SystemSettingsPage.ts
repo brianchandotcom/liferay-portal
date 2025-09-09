@@ -64,13 +64,7 @@ export class SystemSettingsPage {
 		}
 	}
 
-	async checkRadioSettingIsChecked(label?: string) {
-		const checkbox = this.page.getByLabel(label).first();
-		await expect(checkbox).toBeVisible();
-		await expect(checkbox).toBeChecked();
-	}
-
-	async configureRadioSetting(label: string, checked: boolean) {
+	async checkOption(label: string, checked: boolean) {
 		const checkbox = this.page.getByLabel(label).first();
 		await expect(checkbox).toBeVisible();
 		if (checked) {

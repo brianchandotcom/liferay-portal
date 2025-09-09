@@ -383,13 +383,13 @@ public abstract class BaseStructuredContentFolderResourceImpl
 				"get",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"getStructuredContentFolderAssetLibraryPermissionsPage",
+					"getAssetLibraryStructuredContentFolderPermissionsPage",
 					null, portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"putStructuredContentFolderAssetLibraryPermissionsPage",
+					"putAssetLibraryStructuredContentFolderPermissionsPage",
 					null, portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -603,13 +603,15 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteStructuredContentFolderPermissionsPage", null,
+					portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteStructuredContentFolderPermissionsPage", null,
+					portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}

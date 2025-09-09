@@ -347,13 +347,13 @@ public abstract class BaseKeywordResourceImpl
 				"get",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"getKeywordAssetLibraryPermissionsPage", null, portletName,
+					"getAssetLibraryKeywordPermissionsPage", null, portletName,
 					assetLibraryId)
 			).put(
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"putKeywordAssetLibraryPermissionsPage", null, portletName,
+					"putAssetLibraryKeywordPermissionsPage", null, portletName,
 					assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -690,13 +690,13 @@ public abstract class BaseKeywordResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteKeywordPermissionsPage", null, portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteKeywordPermissionsPage", null, portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}

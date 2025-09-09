@@ -320,13 +320,13 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 				"get",
 				addAction(
 					ActionKeys.PERMISSIONS, resourceId,
-					"getERCAssetLibraryTestEntityAssetLibraryERCAssetLibraryTestEntityPermissionsPage",
+					"getAssetLibraryERCAssetLibraryTestEntityPermissionsPage",
 					null, resourceName, groupId)
 			).put(
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS, resourceId,
-					"putERCAssetLibraryTestEntityAssetLibraryERCAssetLibraryTestEntityPermissionsPage",
+					"putAssetLibraryERCAssetLibraryTestEntityPermissionsPage",
 					null, resourceName, groupId)
 			).build(),
 			resourceId, resourceName, roleNames);

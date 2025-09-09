@@ -90,7 +90,7 @@ test(
 			'Export/Import, Staging'
 		);
 
-		await instanceSettingsPage.checkSettingVisibility({
+		await instanceSettingsPage.assertOptionVisible({
 			label: 'Show Advanced Staging Configuration by Default',
 		});
 
@@ -151,13 +151,16 @@ test(
 			'Export/Import, Staging'
 		);
 
-		
 		await systemSettingsPage.configureRadioSetting(
 			'Show Advanced Staging Configuration by Default',
 			true
 		);
 
 		await systemSettingsPage.saveAndWaitForAlert();
+
+		await systemSettingsPage.assertOptionVisible({
+			label: 'Show Advanced Staging Configuration by Default',
+		});
 
 		await enableLocalStaging(apiHelpers, page, site);
 
@@ -363,7 +366,7 @@ test(
 			true,
 			'Virtual Instance Scope'
 		);
-		await instanceSettingsPage.checkSettingVisibility({
+		await instanceSettingsPage.assertOptionVisible({
 			description:
 				'Specify characters that are not allowed in web content folder names.',
 			label: 'Single Asset Publish Process Includes Version History',
@@ -375,12 +378,12 @@ test(
 			true,
 			'Virtual Instance Scope'
 		);
-		await instanceSettingsPage.checkSettingVisibility({
+		await instanceSettingsPage.assertOptionVisible({
 			description:
 				'Uncheck to avoid deleting the temporary LAR during a failed staging publish process. In remote staging contexts, this only applies for the staging environment.',
 			label: 'Delete temporary LAR during a failed staging publish process.',
 		});
-		await instanceSettingsPage.checkSettingVisibility({
+		await instanceSettingsPage.assertOptionVisible({
 			description:
 				'Uncheck to avoid deleting the temporary LAR during a successful staging publish process. In remote staging contexts, this only applies for the staging environment.',
 			label: 'Delete temporary LAR during a successful staging publish process.',

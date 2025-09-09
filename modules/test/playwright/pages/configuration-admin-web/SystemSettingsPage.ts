@@ -42,7 +42,7 @@ export class SystemSettingsPage {
 			.click();
 	}
 
-	async checkSettingVisibility(options: {
+	async assertOptionVisible(options: {
 		customLocator?: Locator;
 		description?: string;
 		label?: string;

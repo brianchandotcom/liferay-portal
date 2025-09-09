@@ -980,8 +980,11 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryTable.INSTANCE.objectEntryId.eq(
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
 		).where(
-			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-				objectDefinitionId
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				ObjectEntryTable.INSTANCE.headObjectEntryId
+			).and(
+				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+					objectDefinitionId)
 			).and(
 				Predicate.withParentheses(predicate)
 			).and(
@@ -1169,6 +1172,10 @@ public class ObjectEntryLocalServiceImpl
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
+
+		predicate = predicate.and(
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				ObjectEntryTable.INSTANCE.headObjectEntryId));
 
 		if (!objectScopeProvider.isGroupAware()) {
 			return dslQueryCount(joinStep.where(predicate));
@@ -2379,7 +2386,10 @@ public class ObjectEntryLocalServiceImpl
 
 		Table<?> table = column.getTable();
 
-		if (tableNames.contains(table.getName())) {
+		if (tableNames.contains(table.getName()) ||
+			Objects.equals(
+				table.getName(), ObjectEntryTable.INSTANCE.getName())) {
+
 			return joinStep;
 		}
 
@@ -3484,6 +3494,14 @@ public class ObjectEntryLocalServiceImpl
 					relatedObjectDefinition));
 		}
 
+		joinStep = joinStep.innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(primaryKeyColumn));
+
+		predicate = predicate.and(
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				ObjectEntryTable.INSTANCE.headObjectEntryId));
+
 		return joinStep.where(predicate);
 	}
 
@@ -3961,8 +3979,11 @@ public class ObjectEntryLocalServiceImpl
 				dynamicObjectDefinitionLocalizationTable,
 				dynamicObjectDefinitionTable)
 		).where(
-			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-				objectDefinitionId
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				ObjectEntryTable.INSTANCE.headObjectEntryId
+			).and(
+				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+					objectDefinitionId)
 			).and(
 				ObjectEntryTable.INSTANCE.rootObjectEntryId.eq(
 					ObjectEntryTable.INSTANCE.objectEntryId
@@ -4068,6 +4089,9 @@ public class ObjectEntryLocalServiceImpl
 
 					return null;
 				}
+			).and(
+				ObjectEntryTable.INSTANCE.objectEntryId.eq(
+					ObjectEntryTable.INSTANCE.headObjectEntryId)
 			).and(
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectRelationship.getObjectDefinitionId2())

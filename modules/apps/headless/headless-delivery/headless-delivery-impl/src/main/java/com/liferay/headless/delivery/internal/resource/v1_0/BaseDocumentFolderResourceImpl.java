@@ -302,13 +302,13 @@ public abstract class BaseDocumentFolderResourceImpl
 				"get",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"getDocumentFolderAssetLibraryPermissionsPage", null,
+					"getAssetLibraryDocumentFolderPermissionsPage", null,
 					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"putDocumentFolderAssetLibraryPermissionsPage", null,
+					"putAssetLibraryDocumentFolderPermissionsPage", null,
 					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -754,13 +754,15 @@ public abstract class BaseDocumentFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteDocumentFolderPermissionsPage", null, portletName,
+					siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteDocumentFolderPermissionsPage", null, portletName,
+					siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}

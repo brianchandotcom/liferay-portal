@@ -520,13 +520,15 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteKnowledgeBaseFolderPermissionsPage", null,
+					portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteKnowledgeBaseFolderPermissionsPage", null,
+					portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}

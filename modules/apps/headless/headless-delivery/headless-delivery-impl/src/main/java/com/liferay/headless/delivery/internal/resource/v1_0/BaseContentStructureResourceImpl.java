@@ -146,13 +146,13 @@ public abstract class BaseContentStructureResourceImpl
 				"get",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"getContentStructureAssetLibraryPermissionsPage", null,
+					"getAssetLibraryContentStructurePermissionsPage", null,
 					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"putContentStructureAssetLibraryPermissionsPage", null,
+					"putAssetLibraryContentStructurePermissionsPage", null,
 					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -412,13 +412,15 @@ public abstract class BaseContentStructureResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteContentStructurePermissionsPage", null, portletName,
+					siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteContentStructurePermissionsPage", null, portletName,
+					siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}

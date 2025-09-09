@@ -496,13 +496,13 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				"get",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"getTaxonomyVocabularyAssetLibraryPermissionsPage", null,
+					"getAssetLibraryTaxonomyVocabularyPermissionsPage", null,
 					portletName, assetLibraryId)
 			).put(
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS, assetLibraryId,
-					"putTaxonomyVocabularyAssetLibraryPermissionsPage", null,
+					"putAssetLibraryTaxonomyVocabularyPermissionsPage", null,
 					portletName, assetLibraryId)
 			).build(),
 			assetLibraryId, portletName, roleNames);
@@ -747,13 +747,15 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "getSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"getSiteTaxonomyVocabularyPermissionsPage", null,
+					portletName, siteId)
 			).put(
 				"replace",
 				addAction(
-					ActionKeys.PERMISSIONS, siteId, "putSitePermissionsPage",
-					null, portletName, siteId)
+					ActionKeys.PERMISSIONS, siteId,
+					"putSiteTaxonomyVocabularyPermissionsPage", null,
+					portletName, siteId)
 			).build(),
 			siteId, portletName, roleNames);
 	}

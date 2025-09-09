@@ -212,19 +212,19 @@ public class GroupTestUtil {
 	}
 
 	public static Group addGroupWithType(int type) throws Exception {
-		return addGroupWithType(type, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		return addGroupWithType(GroupConstants.DEFAULT_PARENT_GROUP_ID, type);
 	}
 
-	public static Group addGroupWithType(int type, long parentGroupId)
+	public static Group addGroupWithType(long parentGroupId, int type)
 		throws Exception {
 
 		return addGroupWithType(
-			type, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			parentGroupId);
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			parentGroupId, type);
 	}
 
 	public static Group addGroupWithType(
-			int type, long companyId, long userId, long parentGroupId)
+			long companyId, long userId, long parentGroupId, int type)
 		throws Exception {
 
 		String name = RandomTestUtil.randomString(

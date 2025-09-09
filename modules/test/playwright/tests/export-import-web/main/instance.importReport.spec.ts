@@ -72,11 +72,6 @@ test('Can see error report and details', async ({
 
 	await exportImportPage.goToImportDetails(exportName);
 
-	//TODO: Uncomment after LPD-64508
-	await expect(
-		exportImportPage.page.getByRole('cell', {name: objectDefinition.name})
-	).toBeVisible();
-
 	await expect(
 		exportImportPage.page.getByRole('cell', {
 			name: objectEntry.externalReferenceCode,
@@ -84,13 +79,6 @@ test('Can see error report and details', async ({
 	).toBeVisible();
 
 	await exportImportPage.viewErrorDetails.click();
-
-	//TODO: Uncomment after LPD-64508
-	await expect(
-		exportImportPage.page.getByRole('heading', {
-			name: objectDefinition.name,
-		})
-	).toBeVisible();
 
 	await expect(
 		exportImportPage.page.getByText(

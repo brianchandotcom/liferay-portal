@@ -9,6 +9,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +25,15 @@ import java.util.Locale;
  */
 @ProviderType
 public interface FormManager {
+
+	public FragmentStyledLayoutStructureItem
+			addFragmentEntryLinksLayoutStructureItem(
+				FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+				String fragmentEntryKey, String infoFieldUniqueId,
+				Layout layout, LayoutStructure layoutStructure,
+				boolean readOnly, long segmentsExperienceId,
+				ServiceContext serviceContext)
+		throws PortalException;
 
 	public List<LayoutStructureItem> addFragmentEntryLinksLayoutStructureItems(
 			List<FragmentEntryLink> addedFragmentEntryLinks,

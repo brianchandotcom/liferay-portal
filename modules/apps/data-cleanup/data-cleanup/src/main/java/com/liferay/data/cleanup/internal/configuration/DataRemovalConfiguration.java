@@ -100,4 +100,7 @@ public interface DataRemovalConfiguration {
 	)
 	public boolean removeWidgetLayoutTypeSettings();
 
+	@Meta.AD(deflt = "false", name = "review-counter-values", required = false)
+	public boolean reviewCounterValues();
+
 }

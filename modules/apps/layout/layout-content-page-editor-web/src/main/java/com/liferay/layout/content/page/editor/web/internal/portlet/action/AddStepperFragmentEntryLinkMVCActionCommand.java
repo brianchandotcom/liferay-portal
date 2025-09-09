@@ -71,14 +71,15 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 
 		String fragmentEntryKey = ParamUtil.getString(
 			actionRequest, "fragmentEntryKey");
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
+
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
-
-		FragmentRenderer fragmentRenderer =
-			_fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
 
 		if (fragmentRenderer != null) {
 			DefaultFragmentRendererContext defaultFragmentRendererContext =

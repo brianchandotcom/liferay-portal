@@ -53,15 +53,25 @@ public class EditContentItemCommentStrutsAction implements StrutsAction {
 			_discussionPermission.checkUpdatePermission(
 				themeDisplay.getPermissionChecker(), commentId);
 
-			ClassName className = _classNameLocalService.getClassName(
-				ParamUtil.getLong(httpServletRequest, "classNameId"));
+			String className1 = ParamUtil.getString(
+				httpServletRequest, "className", null);
+
+			if (className1 == null) {
+				long classNameId = ParamUtil.getLong(
+					httpServletRequest, "classNameId");
+
+				ClassName className2 = _classNameLocalService.getClassName(
+					classNameId);
+
+				className1 = className2.getClassName();
+			}
+
 			long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 			String body = ParamUtil.getString(httpServletRequest, "body");
 
 			_commentManager.updateComment(
-				themeDisplay.getUserId(), className.getClassName(), classPK,
-				commentId, null, body,
-				new ServiceContextFunction(httpServletRequest));
+				themeDisplay.getUserId(), className1, classPK, commentId, null,
+				body, new ServiceContextFunction(httpServletRequest));
 
 			Comment comment = _commentManager.fetchComment(commentId);
 

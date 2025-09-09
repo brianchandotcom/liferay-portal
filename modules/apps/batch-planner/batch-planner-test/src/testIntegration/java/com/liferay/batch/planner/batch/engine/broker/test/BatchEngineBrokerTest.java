@@ -1319,7 +1319,7 @@ public class BatchEngineBrokerTest {
 							RandomTestUtil.randomString())
 					).name(
 						"testTextField"
-					).build()));
+					).build()), Collections.emptyList());
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(

@@ -575,7 +575,10 @@ public class MarketplaceCommandLineRunner
 		_patchReport(
 			new JSONObject(
 			).put(
-				"value", projectsUsingMarketplace.toString()
+				"value",
+				new JSONObject(
+					projectsUsingMarketplace
+				).toString()
 			).toString(),
 			"PROJECTS-USING-MARKETPLACE");
 

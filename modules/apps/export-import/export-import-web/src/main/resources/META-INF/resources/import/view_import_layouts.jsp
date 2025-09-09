@@ -69,11 +69,6 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 		</liferay-util:include>
 
-		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
-			<liferay-frontend:component
-				module="{setupExportImportMocks} from exportimport-web"
-			/>
-		</c:if>
 	</c:otherwise>
 </c:choose>
 

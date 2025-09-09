@@ -472,7 +472,6 @@ const ALLOWED_NON_GLOBAL_DEPENDENCIES = [
 	'lodash',
 	'mini-css-extract-plugin',
 	'minimist',
-	'msw',
 	'os-browserify',
 	'path-browserify',
 	'path-to-regexp',

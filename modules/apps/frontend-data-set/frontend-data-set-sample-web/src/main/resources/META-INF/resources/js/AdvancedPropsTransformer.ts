@@ -15,11 +15,13 @@ import type {
 	ICardSchema,
 	IFileDropSettings,
 	IInternalRenderer,
+	IItemsActions,
 	IView,
 } from '@liferay/frontend-data-set-web';
 
 export default function propsTransformer({
 	additionalProps: {greeting},
+	itemsActions,
 	selectedItemsKey,
 	...otherProps
 }: any) {
@@ -110,6 +112,18 @@ export default function propsTransformer({
 		},
 		fileDropSettings,
 		infoPanelComponent: SampleInfoPanel,
+		itemsActions: itemsActions.map((action: IItemsActions) => {
+			const key = action?.data?.id as string;
+
+			if (!key || key !== 'sampleDeleteMessage') {
+				return action;
+			}
+
+			return {
+				...action,
+				className: 'text-danger',
+			};
+		}),
 		onActionDropdownItemClick({
 			action,
 			itemData,

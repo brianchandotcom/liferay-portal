@@ -94,7 +94,7 @@ test(
 			label: 'Show Advanced Staging Configuration by Default',
 		});
 
-		await instanceSettingsPage.configureRadioSetting(
+		await instanceSettingsPage.checkOption(
 			'Show Advanced Staging Configuration by Default',
 			true
 		);
@@ -151,7 +151,7 @@ test(
 			'Export/Import, Staging'
 		);
 
-		await systemSettingsPage.configureRadioSetting(
+		await systemSettingsPage.checkOption(
 			'Show Advanced Staging Configuration by Default',
 			true
 		);
@@ -299,7 +299,7 @@ test(
 			'Export/Import, Staging'
 		);
 
-		await instanceSettingsPage.checkRadioSetting(
+		await instanceSettingsPage.assertOptionChecked(
 			'Include Thumbnails And Previews During Staging'
 		);
 

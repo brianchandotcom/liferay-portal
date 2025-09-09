@@ -567,6 +567,10 @@ components:
                     # @review
                     description:
                         The display page template's parent folder.
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 thumbnail:
                     $ref: "#/components/schemas/ItemExternalReference"
                     # @review
@@ -637,6 +641,10 @@ components:
                     description:
                         The parent display page template folder's external reference code.
                     type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 uuid:
                     # @review
                     description:
@@ -1816,6 +1824,10 @@ components:
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
                     description:
@@ -2324,6 +2336,10 @@ components:
                     # @review
                     description:
                         The settings of the page template.
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
                     description:
@@ -2394,6 +2410,10 @@ components:
                     description:
                         The page template set's name.
                     type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 uuid:
                     description:
                         A valid external identifier to reference this page template set.
@@ -2740,6 +2760,10 @@ components:
                     description:
                         The parent page external reference code or null if it is a top level page.
                     type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
                     description:
@@ -2914,6 +2938,10 @@ components:
                         default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
+                    type: array
+                permissions:
+                    items:
+                        type: permission
                     type: array
                 thumbnail:
                     $ref: "#/components/schemas/ItemExternalReference"

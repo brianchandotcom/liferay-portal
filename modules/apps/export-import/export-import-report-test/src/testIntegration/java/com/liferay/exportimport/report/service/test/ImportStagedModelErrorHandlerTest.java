@@ -15,16 +15,13 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.report.service.ExportImportReportEntryLocalServiceUtil;
-import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -55,14 +52,12 @@ public class ImportStagedModelErrorHandlerTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
 	}
 
 	@Test
@@ -72,24 +67,24 @@ public class ImportStagedModelErrorHandlerTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ServiceRegistration<StagedModelDataHandler> serviceRegistration =  bundleContext.registerService(
-			StagedModelDataHandler.class,
-			new TestStagedModelDataHandler(),
-			MapUtil.singletonDictionary("companyId", _company.getCompanyId()));
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				StagedModelDataHandler.class, new TestStagedModelDataHandler(),
+				MapUtil.singletonDictionary(
+					"companyId", _group.getCompanyId()));
 
 		TestStagedModel stagedModelDataHandler = new TestStagedModel();
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				_company.getCompanyId(), _group.getGroupId(), null, null, null,
+				_group.getCompanyId(), _group.getGroupId(), null, null, null,
 				null);
 
 		portletDataContext.setExportImportProcessId(
-			BaseStagedModelDataHandlerTestCase.class.getName());
-
+			RandomTestUtil.randomString());
 
 		long exportImportReportEntriesCount1 =
-			ExportImportReportEntryLocalServiceUtil.
+			_exportImportReportEntryLocalService.
 				getExportImportReportEntriesCount();
 
 		try {
@@ -103,19 +98,15 @@ public class ImportStagedModelErrorHandlerTest {
 			serviceRegistration.unregister();
 		}
 
-		long exportImportReportEntriesCount2 =
-			ExportImportReportEntryLocalServiceUtil.
-				getExportImportReportEntriesCount();
-
 		Assert.assertEquals(
 			exportImportReportEntriesCount1 + 1,
-			exportImportReportEntriesCount2);
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
 	}
 
-	private Company _company;
-
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -204,13 +195,13 @@ public class ImportStagedModelErrorHandlerTest {
 		};
 
 		@Override
-		public void deleteStagedModel(TestStagedModel stagedModel)
+		public void deleteStagedModel(
+				String uuid, long groupId, String className, String extraData)
 			throws PortalException {
 		}
 
 		@Override
-		public void deleteStagedModel(
-				String uuid, long groupId, String className, String extraData)
+		public void deleteStagedModel(TestStagedModel stagedModel)
 			throws PortalException {
 		}
 

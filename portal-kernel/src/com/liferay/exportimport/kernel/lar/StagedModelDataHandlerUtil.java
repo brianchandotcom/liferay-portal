@@ -386,8 +386,8 @@ public class StagedModelDataHandlerUtil {
 				portletDataContext, stagedModel);
 		}
 		catch (PortletDataException portletDataException) {
-			for (ImportStagedModelExceptionHandler importStagedModelExceptionHandler :
-				_serviceTrackerList) {
+			for (ImportStagedModelExceptionHandler
+					importStagedModelExceptionHandler : _serviceTrackerList) {
 
 				importStagedModelExceptionHandler.handle(
 					portletDataException, portletDataContext, stagedModel);

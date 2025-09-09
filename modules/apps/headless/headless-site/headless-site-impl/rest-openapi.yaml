@@ -260,5 +260,4 @@ paths:
                                 $ref: "#/components/schemas/Site"
                     description:
                         default response
-            # @review
             tags: ["Site"]

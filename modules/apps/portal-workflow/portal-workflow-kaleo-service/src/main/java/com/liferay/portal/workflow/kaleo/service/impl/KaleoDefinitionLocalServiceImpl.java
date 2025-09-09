@@ -5,6 +5,8 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -15,7 +17,9 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -58,6 +62,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
+		kaleoDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		kaleoDefinition = kaleoDefinitionPersistence.update(kaleoDefinition);
 
@@ -88,6 +93,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
+		kaleoDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		return kaleoDefinitionPersistence.update(kaleoDefinition);
 	}
@@ -106,6 +112,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
+		kaleoDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		return kaleoDefinitionPersistence.update(kaleoDefinition);
 	}
@@ -152,6 +159,13 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setVersion(version);
 		kaleoDefinition.setActive(false);
 
+		if (EmptyModelManagerUtil.isEmptyModel()) {
+			kaleoDefinition.setStatus(WorkflowConstants.STATUS_EMPTY);
+		}
+		else {
+			kaleoDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+
 		kaleoDefinition = kaleoDefinitionPersistence.update(kaleoDefinition);
 
 		// Kaleo definition version
@@ -175,6 +189,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(false);
+		kaleoDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		return kaleoDefinitionPersistence.update(kaleoDefinition);
 	}
@@ -311,6 +326,23 @@ public class KaleoDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public KaleoDefinition getOrAddEmptyKaleoDefinition(
+			String name, ServiceContext serviceContext)
+		throws PortalException {
+
+		return _emptyModelManager.getOrAddEmptyModel(
+			KaleoDefinition.class, serviceContext.getCompanyId(),
+			() -> kaleoDefinitionLocalService.addKaleoDefinition(
+				name, name, name, null, null,
+				WorkflowDefinitionConstants.SCOPE_ALL, 0, serviceContext),
+			name,
+			(externalReferenceCode, companyId) -> fetchKaleoDefinition(
+				name, serviceContext),
+			(externalReferenceCode, companyId) -> getKaleoDefinition(
+				name, serviceContext));
+	}
+
+	@Override
 	public List<KaleoDefinition> getScopeKaleoDefinitions(
 		String scope, boolean active, int start, int end,
 		OrderByComparator<KaleoDefinition> orderByComparator,
@@ -397,6 +429,9 @@ public class KaleoDefinitionLocalServiceImpl
 	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
+
+	@Reference
+	private EmptyModelManager _emptyModelManager;
 
 	@Reference
 	private KaleoConditionLocalService _kaleoConditionLocalService;

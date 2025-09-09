@@ -64,6 +64,15 @@ public class KaleoDefinitionServiceUtil {
 		return getService().getKaleoDefinition(name, serviceContext);
 	}
 
+	public static KaleoDefinition getOrAddEmptyKaleoDefinition(
+			String externalReferenceCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().getOrAddEmptyKaleoDefinition(
+			externalReferenceCode, serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

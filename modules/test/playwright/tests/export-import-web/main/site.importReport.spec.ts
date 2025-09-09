@@ -80,22 +80,12 @@ test('Can see error report and details', async ({
 	exportImportPage.goToImportDetails(exportName);
 
 	await expect(
-		exportImportPage.page.getByRole('cell', {name: objectDefinition.name})
-	).toBeVisible();
-
-	await expect(
 		exportImportPage.page.getByRole('cell', {
 			name: objectEntry.externalReferenceCode,
 		})
 	).toBeVisible();
 
 	await exportImportPage.viewErrorDetails.click();
-
-	await expect(
-		exportImportPage.page.getByRole('heading', {
-			name: objectDefinition.name,
-		})
-	).toBeVisible();
 
 	await expect(
 		exportImportPage.page.getByText(

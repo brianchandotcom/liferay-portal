@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurationDisplayContext = (OpenIdConnectProviderConfigurationDisplayContext)request.getAttribute("OPEN_ID_CONNECT_PROVIDER_CONFIGURATION_DISPLAY_CONTEXT");
+OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurationDisplayContext = (OpenIdConnectProviderConfigurationDisplayContext)request.getAttribute(OpenIdConnectWebKeys.OPEN_ID_CONNECT_PROVIDER_CONFIGURATION_DISPLAY_CONTEXT);
 %>
 
 <aui:input helpMessage="provider-name-help" id="providerName" label="provider-name" name="providerName" required="<%= true %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getProviderName() %>" />

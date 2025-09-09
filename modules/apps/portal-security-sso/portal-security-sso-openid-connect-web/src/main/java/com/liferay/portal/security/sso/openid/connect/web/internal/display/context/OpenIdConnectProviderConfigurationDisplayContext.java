@@ -97,7 +97,7 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 		_customClaimsValues = new String[_customClaimsIndexes.length];
 
 		for (int i = 0; i < _customClaimsIndexes.length; i++) {
-			String[] customClaim = customClaims[i].split("=");
+			String[] customClaim = customClaims[i].split(StringPool.EQUAL);
 
 			_customClaimsKeys[i] = customClaim[0];
 

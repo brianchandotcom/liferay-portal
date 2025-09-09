@@ -645,16 +645,16 @@ EOF
 
 	cat << EOF > App.css
 ${CUSTOM_ELEMENT_NAME} {
-	max-width: 1280px;
 	margin: 0 auto;
+	max-width: 1280px;
 	padding: 2rem;
 	text-align: center;
 
 	.logo {
 		height: 6em;
 		padding: 1.5em;
-		will-change: filter;
 		transition: filter 300ms;
+		will-change: filter;
 
 		&:hover {
 			filter: drop-shadow(0 0 2em #646cffaa);
@@ -695,8 +695,8 @@ EOF
 	#
 
 	cat << EOF > main.jsx
-import React, { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
 
 import App from './App.jsx'
 import './index.css'
@@ -733,23 +733,23 @@ EOF
 	#
 
 	cat << EOF > ../vite.config.js
-import { defineConfig } from 'vite'
+import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-	base: '/o/${CUSTOM_ELEMENT_NAME}',
-	plugins: [react()],
-	build: {
-		outDir: 'build/vite',
-		rollupOptions: {
-			external: [
-				'react',
-				'react-dom',
-			],
-		}
-	}
-})
+export default defineConfig(
+	{
+		base: '/o/${CUSTOM_ELEMENT_NAME}',
+		build: {
+			outDir: 'build/vite',
+			rollupOptions: {
+				external: [
+					'react',
+					'react-dom',
+				],
+			}
+		},
+		plugins: [react()]
+	})
 EOF
 }
 

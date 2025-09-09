@@ -7,8 +7,10 @@ package com.liferay.portal.security.sso.openid.connect.web.internal;
 
 import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.security.sso.openid.connect.web.internal.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.web.internal.display.context.OpenIdConnectProviderConfigurationDisplayContext;
 
 import jakarta.servlet.RequestDispatcher;
@@ -41,23 +43,25 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
-		int[] indexes = ParamUtil.getIntegerValues(
+		int[] customClaimsIndexes = ParamUtil.getIntegerValues(
 			httpServletRequest, "customClaimsIndexes");
 
-		String[] claims = new String[indexes.length];
+		String[] customClaims = new String[customClaimsIndexes.length];
 
-		for (int i = 0; i < indexes.length; i++) {
+		for (int i = 0; i < customClaimsIndexes.length; i++) {
 			String key = ParamUtil.getString(
-				httpServletRequest, "customClaimsKey-" + indexes[i]);
+				httpServletRequest,
+				"customClaimsKey-" + customClaimsIndexes[i]);
 
 			if (key.isEmpty()) {
-				claims[i] = "";
+				customClaims[i] = StringPool.BLANK;
 			}
 			else {
 				String value = ParamUtil.getString(
-					httpServletRequest, "customClaimsValue-" + indexes[i]);
+					httpServletRequest,
+					"customClaimsValue-" + customClaimsIndexes[i]);
 
-				claims[i] = key + "=" + value;
+				customClaims[i] = key + StringPool.EQUAL + value;
 			}
 		}
 
@@ -66,13 +70,13 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 			ParamUtil.getString(httpServletRequest, "authorizationEndPoint")
 		).put(
 			"customAuthorizationRequestParameters",
-			_populateParamValues(
+			_getParamRepeatedValues(
 				httpServletRequest, "customAuthorizationRequestParameters")
 		).put(
-			"customClaims", claims
+			"customClaims", customClaims
 		).put(
 			"customTokenRequestParameters",
-			_populateParamValues(
+			_getParamRepeatedValues(
 				httpServletRequest, "customTokenRequestParameters")
 		).put(
 			"discoveryEndPoint",
@@ -83,7 +87,8 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 				httpServletRequest, "discoveryEndPointCacheInMillis")
 		).put(
 			"idTokenSigningAlgValues",
-			_populateParamValues(httpServletRequest, "idTokenSigningAlgValues")
+			_getParamRepeatedValues(
+				httpServletRequest, "idTokenSigningAlgValues")
 		).put(
 			"issuerURL", ParamUtil.getString(httpServletRequest, "issuerURL")
 		).put(
@@ -105,7 +110,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 			"scopes", ParamUtil.getString(httpServletRequest, "scopes")
 		).put(
 			"subjectTypes",
-			_populateParamValues(httpServletRequest, "subjectTypes")
+			_getParamRepeatedValues(httpServletRequest, "subjectTypes")
 		).put(
 			"tokenConnectionTimeout",
 			ParamUtil.getInteger(httpServletRequest, "tokenConnectionTimeout")
@@ -132,7 +137,8 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 						httpServletRequest.getParameter("pid"));
 
 			httpServletRequest.setAttribute(
-				"OPEN_ID_CONNECT_PROVIDER_CONFIGURATION_DISPLAY_CONTEXT",
+				OpenIdConnectWebKeys.
+					OPEN_ID_CONNECT_PROVIDER_CONFIGURATION_DISPLAY_CONTEXT,
 				openIdConnectProviderConfigurationDisplayContext);
 
 			RequestDispatcher requestDispatcher =
@@ -149,7 +155,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		}
 	}
 
-	private String[] _populateParamValues(
+	private String[] _getParamRepeatedValues(
 		HttpServletRequest httpServletRequest, String paramName) {
 
 		int[] indexes = ParamUtil.getIntegerValues(
@@ -159,7 +165,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 
 		for (int i = 0; i < values.length; i++) {
 			values[i] = ParamUtil.getString(
-				httpServletRequest, paramName + "-" + indexes[i]);
+				httpServletRequest, paramName + StringPool.DASH + indexes[i]);
 		}
 
 		return values;

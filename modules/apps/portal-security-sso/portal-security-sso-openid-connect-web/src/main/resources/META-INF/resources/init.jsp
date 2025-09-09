@@ -13,6 +13,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.expando.kernel.model.ExpandoColumn" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.security.sso.openid.connect.web.internal.constants.OpenIdConnectWebKeys" %><%@
 page import="com.liferay.portal.security.sso.openid.connect.web.internal.display.context.OpenIdConnectProviderConfigurationDisplayContext" %>
 
 <%@ page import="java.util.Objects" %>

@@ -65,6 +65,10 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 		tokenRequestParametersJSON = createColumn(
 			"tokenRequestParametersJSON", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<OAuthClientEntryTable, String> customClaimsJSON =
+		createColumn(
+			"customClaimsJSON", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private OAuthClientEntryTable() {
 		super("OAuthClientEntry", OAuthClientEntryTable::new);

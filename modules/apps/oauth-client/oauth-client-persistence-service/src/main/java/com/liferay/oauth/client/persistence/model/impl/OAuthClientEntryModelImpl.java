@@ -70,7 +70,8 @@ public class OAuthClientEntryModelImpl
 		{"authServerWellKnownURI", Types.VARCHAR}, {"clientId", Types.VARCHAR},
 		{"infoJSON", Types.CLOB}, {"metadataCacheTime", Types.BIGINT},
 		{"oidcUserInfoMapperJSON", Types.VARCHAR},
-		{"tokenRequestParametersJSON", Types.VARCHAR}
+		{"tokenRequestParametersJSON", Types.VARCHAR},
+		{"customClaimsJSON", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -91,10 +92,11 @@ public class OAuthClientEntryModelImpl
 		TABLE_COLUMNS_MAP.put("metadataCacheTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("oidcUserInfoMapperJSON", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("tokenRequestParametersJSON", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("customClaimsJSON", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuthClientEntry (mvccVersion LONG default 0 not null,oAuthClientEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,authRequestParametersJSON VARCHAR(3999) null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(256) null,infoJSON TEXT null,metadataCacheTime LONG,oidcUserInfoMapperJSON VARCHAR(3999) null,tokenRequestParametersJSON VARCHAR(3999) null)";
+		"create table OAuthClientEntry (mvccVersion LONG default 0 not null,oAuthClientEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,authRequestParametersJSON VARCHAR(3999) null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(256) null,infoJSON TEXT null,metadataCacheTime LONG,oidcUserInfoMapperJSON VARCHAR(3999) null,tokenRequestParametersJSON VARCHAR(3999) null,customClaimsJSON VARCHAR(3999) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table OAuthClientEntry";
 
@@ -285,6 +287,8 @@ public class OAuthClientEntryModelImpl
 			attributeGetterFunctions.put(
 				"tokenRequestParametersJSON",
 				OAuthClientEntry::getTokenRequestParametersJSON);
+			attributeGetterFunctions.put(
+				"customClaimsJSON", OAuthClientEntry::getCustomClaimsJSON);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -359,6 +363,10 @@ public class OAuthClientEntryModelImpl
 				"tokenRequestParametersJSON",
 				(BiConsumer<OAuthClientEntry, String>)
 					OAuthClientEntry::setTokenRequestParametersJSON);
+			attributeSetterBiConsumers.put(
+				"customClaimsJSON",
+				(BiConsumer<OAuthClientEntry, String>)
+					OAuthClientEntry::setCustomClaimsJSON);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -672,6 +680,26 @@ public class OAuthClientEntryModelImpl
 		_tokenRequestParametersJSON = tokenRequestParametersJSON;
 	}
 
+	@JSON
+	@Override
+	public String getCustomClaimsJSON() {
+		if (_customClaimsJSON == null) {
+			return "";
+		}
+		else {
+			return _customClaimsJSON;
+		}
+	}
+
+	@Override
+	public void setCustomClaimsJSON(String customClaimsJSON) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_customClaimsJSON = customClaimsJSON;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -746,6 +774,7 @@ public class OAuthClientEntryModelImpl
 			getOIDCUserInfoMapperJSON());
 		oAuthClientEntryImpl.setTokenRequestParametersJSON(
 			getTokenRequestParametersJSON());
+		oAuthClientEntryImpl.setCustomClaimsJSON(getCustomClaimsJSON());
 
 		oAuthClientEntryImpl.resetOriginalValues();
 
@@ -784,6 +813,8 @@ public class OAuthClientEntryModelImpl
 			this.<String>getColumnOriginalValue("oidcUserInfoMapperJSON"));
 		oAuthClientEntryImpl.setTokenRequestParametersJSON(
 			this.<String>getColumnOriginalValue("tokenRequestParametersJSON"));
+		oAuthClientEntryImpl.setCustomClaimsJSON(
+			this.<String>getColumnOriginalValue("customClaimsJSON"));
 
 		return oAuthClientEntryImpl;
 	}
@@ -962,6 +993,14 @@ public class OAuthClientEntryModelImpl
 			oAuthClientEntryCacheModel.tokenRequestParametersJSON = null;
 		}
 
+		oAuthClientEntryCacheModel.customClaimsJSON = getCustomClaimsJSON();
+
+		String customClaimsJSON = oAuthClientEntryCacheModel.customClaimsJSON;
+
+		if ((customClaimsJSON != null) && (customClaimsJSON.length() == 0)) {
+			oAuthClientEntryCacheModel.customClaimsJSON = null;
+		}
+
 		return oAuthClientEntryCacheModel;
 	}
 
@@ -1039,6 +1078,7 @@ public class OAuthClientEntryModelImpl
 	private long _metadataCacheTime;
 	private String _oidcUserInfoMapperJSON;
 	private String _tokenRequestParametersJSON;
+	private String _customClaimsJSON;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<OAuthClientEntry, Object> function =
@@ -1086,6 +1126,7 @@ public class OAuthClientEntryModelImpl
 			"oidcUserInfoMapperJSON", _oidcUserInfoMapperJSON);
 		_columnOriginalValues.put(
 			"tokenRequestParametersJSON", _tokenRequestParametersJSON);
+		_columnOriginalValues.put("customClaimsJSON", _customClaimsJSON);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1126,6 +1167,8 @@ public class OAuthClientEntryModelImpl
 		columnBitmasks.put("oidcUserInfoMapperJSON", 4096L);
 
 		columnBitmasks.put("tokenRequestParametersJSON", 8192L);
+
+		columnBitmasks.put("customClaimsJSON", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

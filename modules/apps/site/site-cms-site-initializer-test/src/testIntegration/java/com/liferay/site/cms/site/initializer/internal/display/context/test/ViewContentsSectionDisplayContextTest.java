@@ -55,7 +55,7 @@ public class ViewContentsSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 13,
+			fdsActionDropdownItems.toString(), 15,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
@@ -98,7 +98,10 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(12), "password-policies", "permissions",
 			"permissions", "get", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(13), "trash", "delete", "delete",
+			fdsActionDropdownItems.get(13), "password-policies",
+			"default-permissions", "default-permissions", null, "item");
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(14), "trash", "delete", "delete",
 			"delete", "item");
 	}
 

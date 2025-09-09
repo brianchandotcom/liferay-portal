@@ -4389,6 +4389,19 @@
 	},
 	{
 		"classNames": [
+			"DefaultConfigurationAction"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-47432",
+		"methodsToFormat": [
+			{
+				"from": "regex:\\s*@Override\\s*@Reference\\s*\\(\\s*target\\s*=\\s*\\\"[^\\\"]*\\\",[\\s\\S]*?\\)\\s*public\\s+void\\s+setServletContext\\(ServletContext\\s+servletContext\\)\\s*\\{[\\s\\S]*?\\}",
+				"to": ""
+			}
+		]
+	},
+	{
+		"classNames": [
 			"PortletSharedSearchSettings"
 		],
 		"from": "getParameterValues71",

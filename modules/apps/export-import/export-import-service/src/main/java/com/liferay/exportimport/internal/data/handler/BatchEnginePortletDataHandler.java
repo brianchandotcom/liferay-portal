@@ -14,6 +14,7 @@ import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.engine.jaxrs.uri.BatchEngineUriInfo;
+import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
@@ -259,6 +260,16 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.addZipEntry(
 				_normalize(_fileName, portletDataContext.getScopeGroupId()),
 				result.getInputStream());
+
+			BatchEngineExportTask batchEngineExportTask =
+				result.getBatchEngineExportTask();
+
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			manifestSummary.addModelAdditionCount(
+				new StagedModelType(_itemClassName),
+				batchEngineExportTask.getProcessedItemsCount());
 
 			portletDataContext.setValidateExistingDataHandler(true);
 

@@ -72,7 +72,6 @@ import com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpaceLis
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -355,17 +354,50 @@ public class ActionUtil {
 		formStyledLayoutStructureItem.setClassNameId(
 			layoutPageTemplateEntry.getClassNameId());
 
-		Set<String> localizableInfoFieldIds = _getLocalizableInfoFieldIds(
-			layoutPageTemplateEntry.getClassNameId(), layout.getGroupId(),
+		InfoForm infoForm = _getInfoForm(
+			formStyledLayoutStructureItem.getClassNameId(), layout.getGroupId(),
 			infoItemServiceRegistry, infoSearchClassMapperRegistry);
+
+		InfoField<?> objectFriendlyURLInfoField = infoForm.getInfoField(
+			"objectEntryFriendlyURL");
+
+		Set<String> localizableInfoFieldIds = new HashSet<>();
+
+		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
+			if (infoField.isLocalizable() &&
+				!Objects.equals(
+					objectFriendlyURLInfoField.getName(),
+					infoField.getName())) {
+
+				localizableInfoFieldIds.add(infoField.getUniqueId());
+			}
+		}
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-		formManager.addFragmentEntryLinksLayoutStructureItems(
-			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
-			formStyledLayoutStructureItem, false, layout, layoutStructure,
-			LocaleUtil.getMostRelevantLocale(), true, segmentsExperienceId,
-			serviceContext, localizableInfoFieldIds.toArray(new String[0]));
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			formManager.addFragmentEntryLinksLayoutStructureItem(
+				formStyledLayoutStructureItem, "INPUTS-text-input",
+				objectFriendlyURLInfoField.getUniqueId(), layout,
+				layoutStructure, true, segmentsExperienceId, serviceContext);
+
+		fragmentStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put("styles", JSONUtil.put("marginBottom", "24px")));
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		if (fragmentEntryLink != null) {
+			addedFragmentEntryLinks.add(fragmentEntryLink);
+		}
+
+		List<LayoutStructureItem> layoutStructureItems =
+			formManager.addFragmentEntryLinksLayoutStructureItems(
+				addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
+				formStyledLayoutStructureItem, false, layout, layoutStructure,
+				LocaleUtil.getMostRelevantLocale(), true, segmentsExperienceId,
+				serviceContext, localizableInfoFieldIds.toArray(new String[0]));
 
 		FragmentEntryLink localizationSelectFragmentEntryLink =
 			_addFragmentEntryLink(
@@ -409,11 +441,30 @@ public class ActionUtil {
 			JSONUtil.put(
 				"cssClasses", JSONUtil.put("lfr-main-form-container")));
 
-		formManager.addFragmentEntryLinksLayoutStructureItems(
-			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
-			formStyledLayoutStructureItem, false, layout, layoutStructure,
-			LocaleUtil.getMostRelevantLocale(), false, segmentsExperienceId,
-			serviceContext, localizableInfoFieldIds.toArray(new String[0]));
+		fragmentStyledLayoutStructureItem =
+			formManager.addFragmentEntryLinksLayoutStructureItem(
+				formStyledLayoutStructureItem, "INPUTS-text-input",
+				objectFriendlyURLInfoField.getUniqueId(), layout,
+				layoutStructure, false, segmentsExperienceId, serviceContext);
+
+		fragmentStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put("styles", JSONUtil.put("marginBottom", "24px")));
+
+		fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		if (fragmentEntryLink != null) {
+			addedFragmentEntryLinks.add(fragmentEntryLink);
+		}
+
+		layoutStructureItems.addAll(
+			formManager.addFragmentEntryLinksLayoutStructureItems(
+				addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
+				formStyledLayoutStructureItem, false, layout, layoutStructure,
+				LocaleUtil.getMostRelevantLocale(), false, segmentsExperienceId,
+				serviceContext,
+				localizableInfoFieldIds.toArray(new String[0])));
 
 		localizationSelectFragmentEntryLink = _addFragmentEntryLink(
 			JSONUtil.toString(
@@ -440,6 +491,11 @@ public class ActionUtil {
 				JSONUtil.put("styles", JSONUtil.put("marginBottom", "5")));
 
 			addedFragmentEntryLinks.add(localizationSelectFragmentEntryLink);
+		}
+
+		for (LayoutStructureItem layoutStructureItem : layoutStructureItems) {
+			layoutStructureItem.updateItemConfig(
+				JSONUtil.put("styles", JSONUtil.put("marginBottom", "24px")));
 		}
 
 		LayoutPageTemplateStructureLocalServiceUtil.
@@ -905,31 +961,6 @@ public class ActionUtil {
 		}
 
 		return infoItemFormProvider.getInfoForm(StringPool.BLANK, groupId);
-	}
-
-	private static Set<String> _getLocalizableInfoFieldIds(
-			long classNameId, long groupId,
-			InfoItemServiceRegistry infoItemServiceRegistry,
-			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry)
-		throws Exception {
-
-		InfoForm infoForm = _getInfoForm(
-			classNameId, groupId, infoItemServiceRegistry,
-			infoSearchClassMapperRegistry);
-
-		if (infoForm == null) {
-			return Collections.emptySet();
-		}
-
-		Set<String> localizableInfoFieldIds = new HashSet<>();
-
-		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
-			if (infoField.isLocalizable()) {
-				localizableInfoFieldIds.add(infoField.getUniqueId());
-			}
-		}
-
-		return localizableInfoFieldIds;
 	}
 
 	private static Layout _getTranslateContentLayout(

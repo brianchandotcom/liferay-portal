@@ -210,7 +210,6 @@ public abstract class BaseSiteResourceTestCase {
 		site.setExternalReferenceCode(regex);
 		site.setFriendlyUrlPath(regex);
 		site.setKey(regex);
-		site.setName(regex);
 		site.setParentSiteKey(regex);
 		site.setTemplateKey(regex);
 
@@ -223,7 +222,6 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertEquals(regex, site.getExternalReferenceCode());
 		Assert.assertEquals(regex, site.getFriendlyUrlPath());
 		Assert.assertEquals(regex, site.getKey());
-		Assert.assertEquals(regex, site.getName());
 		Assert.assertEquals(regex, site.getParentSiteKey());
 		Assert.assertEquals(regex, site.getTemplateKey());
 	}
@@ -928,6 +926,14 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (site.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -1150,6 +1156,17 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)site1.getDescription(),
+						(Map)site2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -1225,7 +1242,7 @@ public abstract class BaseSiteResourceTestCase {
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(site1.getName(), site2.getName())) {
+				if (!equals((Map)site1.getName(), (Map)site2.getName())) {
 					return false;
 				}
 
@@ -1381,6 +1398,11 @@ public abstract class BaseSiteResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("active")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("description")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1545,49 +1567,8 @@ public abstract class BaseSiteResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			Object object = site.getName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("parentSiteKey")) {
@@ -1751,7 +1732,6 @@ public abstract class BaseSiteResourceTestCase {
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				manualMembership = RandomTestUtil.randomBoolean();
 				membershipRestriction = RandomTestUtil.randomInt();
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				parentSiteKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				templateKey = StringUtil.toLowerCase(

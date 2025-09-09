@@ -54,6 +54,16 @@ public class SiteSerDes {
 			sb.append(site.getActive());
 		}
 
+		if (site.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append(_toJSON(site.getDescription()));
+		}
+
 		if (site.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,11 +157,7 @@ public class SiteSerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(site.getName()));
-
-			sb.append("\"");
+			sb.append(_toJSON(site.getName()));
 		}
 
 		if (site.getParentSiteKey() != null) {
@@ -229,6 +235,13 @@ public class SiteSerDes {
 		}
 		else {
 			map.put("active", String.valueOf(site.getActive()));
+		}
+
+		if (site.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put("description", String.valueOf(site.getDescription()));
 		}
 
 		if (site.getExternalReferenceCode() == null) {
@@ -341,6 +354,9 @@ public class SiteSerDes {
 			if (Objects.equals(jsonParserFieldName, "active")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				return true;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
@@ -367,7 +383,7 @@ public class SiteSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
-				return false;
+				return true;
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentSiteKey")) {
 				return false;
@@ -393,6 +409,12 @@ public class SiteSerDes {
 			if (Objects.equals(jsonParserFieldName, "active")) {
 				if (jsonParserFieldValue != null) {
 					site.setActive((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					site.setDescription(
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -439,7 +461,7 @@ public class SiteSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					site.setName((String)jsonParserFieldValue);
+					site.setName((Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentSiteKey")) {

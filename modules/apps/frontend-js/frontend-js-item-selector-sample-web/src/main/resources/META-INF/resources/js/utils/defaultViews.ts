@@ -140,3 +140,49 @@ export const userViews = [
 		thumbnail: 'table',
 	},
 ];
+
+export const cmsFileViews = [
+	{
+		contentRenderer: 'cards',
+		label: Liferay.Language.get('cards'),
+		name: 'cards',
+		schema: {
+			description: 'description',
+			title: 'title',
+		},
+
+		setItemComponentProps: ({
+			item,
+			props,
+		}: {
+			item: {
+				embedded:
+					| {coverImage: {link: {href: string}}}
+					| {file: {thumbnailURL: string}};
+			};
+			props: object;
+		}) => {
+			const stickerProps = {
+				stickerProps: {
+					className: 'file-icon-color-5',
+					displayType: 'unstyled',
+				},
+			};
+
+			if ('file' in item.embedded) {
+				return {
+					...props,
+					imgProps: {src: item.embedded.file.thumbnailURL},
+					...stickerProps,
+				};
+			}
+
+			return {
+				...props,
+				...stickerProps,
+			};
+		},
+
+		thumbnail: 'cards2',
+	},
+];

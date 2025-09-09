@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Button from '@clayui/button';
 import {useParams} from 'react-router-dom';
 
 import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
@@ -21,22 +20,24 @@ import OrderDetailsHeader from '../../../components/Order/OrderDetailsHeader';
 import PaymentStatus from '../../../components/Order/PaymentStatus/PaymentStatus';
 
 function formatAddress(address: BillingAddress) {
-	if (address) {
-		if (!Object.keys(address).length) {
-			return '-';
-		}
-
-		const locale = Liferay.ThemeDisplay.getDefaultLanguageId().replace(
-			'_',
-			'-'
-		);
-
-		const countryNames = new Intl.DisplayNames([locale], {type: 'region'});
-
-		return `${address?.street1}, ${address?.city}, ${address?.regionISOCode} ${address?.zip} , ${countryNames.of(address?.countryISOCode)}`;
+	if (!address || !Object.keys(address).length) {
+		return '-';
 	}
 
-	return '-';
+	const displayNames = new Intl.DisplayNames(
+		[Liferay.ThemeDisplay.getBCP47LanguageId()],
+		{type: 'region'}
+	);
+
+	return [
+		address.street1,
+		address.city,
+		address.regionISOCode,
+		address.zip,
+		displayNames.of(address.countryISOCode),
+	]
+		.filter(Boolean)
+		.join(', ');
 }
 
 function formatCurrency(price: number, currencyCode: string) {
@@ -68,13 +69,11 @@ function formatDate(date: string | undefined) {
 }
 
 function textWrapper(content: string | undefined) {
-	let paragraph = '-';
-
-	if (content?.length && !!content) {
-		paragraph = content;
+	if (content?.length && !content) {
+		return '-';
 	}
 
-	return <p className="mb-2 mt-1">{paragraph}</p>;
+	return <p className="mb-2 mt-1">{content}</p>;
 }
 
 const OrderDetails = () => {
@@ -93,50 +92,41 @@ const OrderDetails = () => {
 			isLoading={isLoading}
 		>
 			<OrderDetailsHeader
-				MarkAsPaid={() => (
-					<Button
-						displayType="secondary"
-						onClick={async () => {
-							try {
-								const updatedOrder =
-									await HeadlessCommerceAdminOrder.patchOrder(
-										orderId as string,
-										{
-											paymentStatus:
-												PaymentStatusCode.PAID,
-										}
-									);
+				onClick={async () => {
+					try {
+						const updatedOrder =
+							await HeadlessCommerceAdminOrder.patchOrder(
+								orderId as string,
+								{
+									paymentStatus: PaymentStatusCode.PAID,
+								}
+							);
 
-								mutate(
-									{
-										...data!,
-										order: {
-											...data!.order,
-											paymentStatus:
-												PaymentStatusCode.PAID,
+						mutate(
+							{
+								...data!,
+								order: {
+									...data!.order,
+									paymentStatus: PaymentStatusCode.PAID,
 
-											...updatedOrder,
-										},
-									},
-									{revalidate: false}
-								);
+									...updatedOrder,
+								},
+							},
+							{revalidate: false}
+						);
 
-								Liferay.Util.openToast({
-									message: 'Order marked as paid.',
-									type: 'success',
-								});
-							}
-							catch (error) {
-								Liferay.Util.openToast({
-									message: 'Oops! Something went wrong.',
-									type: 'danger',
-								});
-							}
-						}}
-					>
-						{i18n.translate('mark-as-paid')}
-					</Button>
-				)}
+						Liferay.Util.openToast({
+							message: 'Order marked as paid.',
+							type: 'success',
+						});
+					}
+					catch (error) {
+						Liferay.Util.openToast({
+							message: 'Oops! Something went wrong.',
+							type: 'danger',
+						});
+					}
+				}}
 				orderId={orderId as string}
 				paymentStatusCode={order?.paymentStatusInfo.code as number}
 			/>
@@ -230,7 +220,10 @@ const OrderDetails = () => {
 							{
 								title: i18n.translate('error-details'),
 								value: payments?.items[0]?.errorMessages,
-								visible: !!payments?.items[0]?.errorMessages,
+								visible:
+									!!payments?.items[0]?.errorMessages &&
+									order?.paymentStatus ===
+										PaymentStatusCode.FAILED,
 							},
 							{
 								title: i18n.translate('paid-date'),

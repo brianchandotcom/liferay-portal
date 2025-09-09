@@ -235,12 +235,11 @@ test('Check space selection via modal in autocomplete input', async ({
 }) => {
 	const spaceName = `Space ${getRandomString()}`;
 
-	const assetLibrary =
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
-			name: spaceName,
-			settings: {},
-			type: 'Space',
-		});
+	await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		name: spaceName,
+		settings: {},
+		type: 'Space',
+	});
 
 	const inputGroupLabel =
 		'Item selector pops up modal on button click autocomplete (Spaces)';
@@ -271,12 +270,11 @@ test('Check space selection via modal in multiselect input', async ({
 }) => {
 	const spaceName = `Space ${getRandomString()}`;
 
-	const assetLibrary =
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
-			name: spaceName,
-			settings: {},
-			type: 'Space',
-		});
+	await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		name: spaceName,
+		settings: {},
+		type: 'Space',
+	});
 
 	const inputGroupLabel =
 		'Multiple Select Item selector pops up modal on button click (Spaces)';

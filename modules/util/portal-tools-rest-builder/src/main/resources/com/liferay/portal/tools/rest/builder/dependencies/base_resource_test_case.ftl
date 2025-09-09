@@ -2183,16 +2183,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 											put("pageSize", 10);
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, "search")>
 											put("${javaMethodParameter.parameterName}", null);
-										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
-											put("${javaMethodParameter.parameterName}", RandomTestUtil.nextDate());
-										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-											put("${javaMethodParameter.parameterName}", <@getQuotedString unquotedString = "RandomTestUtil.randomString()" />);
-										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "boolean")>
-											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomBoolean());
-										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "double")>
-											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomDouble());
-										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "long")>
-											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomLong());
 										<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 											<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 												put("siteKey", <@getQuotedString unquotedString="${javaMethodParameter.parameterName}" />);
@@ -2205,6 +2195,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 													</#if>
 												);
 											</#if>
+										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+											put("${javaMethodParameter.parameterName}", RandomTestUtil.nextDate());
+										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+											put("${javaMethodParameter.parameterName}", <@getQuotedString unquotedString = "RandomTestUtil.randomString()" />);
+										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "boolean")>
+											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomBoolean());
+										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "double")>
+											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomDouble());
+										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "long")>
+											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomLong());
 										</#if>
 									</#list>
 								}

@@ -1,12 +1,12 @@
 <#if (ObjectEntry_objectEntryId.getData())?? && ObjectEntry_objectEntryId.getData()?has_content>
-	<#assign 
-			assetId = ObjectEntry_objectEntryId.getData()?number 
+	<#assign
+		assetId = ObjectEntry_objectEntryId.getData()?number
 
-			response = restClient.get("/c/p2s3knowledgearticles/${assetId}?fields=status")
-		/>	
+		response = restClient.get("/c/p2s3knowledgearticles/${assetId}?fields=status")
+		/>
 </#if>
 
-<#if response?? && response.status?? && response.status.code?? && response.status.code == 0 >
+<#if response?? && response.status?? && response.status.code?? && response.status.code == 0>
 	<#if stringUtil.equals(locale, "en_US")>
 		<#assign createDate = ObjectEntry_createDate.getData()?datetime("M/d/yy h:mm a") />
 	<#else>
@@ -79,9 +79,10 @@
 								</div>
 
 								<div class="col paragraph">
-									<p class="disclaimer-how-to d-none">	
-										<@liferay_ui["message"] key="knowledge-article-header-disclaimer-how-to" />						
+									<p class="disclaimer-how-to d-none">
+										<@liferay_ui["message"] key="knowledge-article-header-disclaimer-how-to" />
 									</p>
+
 									<p class="disclaimer-default d-none">
 										<@liferay_ui["message"] key="knowledge-article-header-disclaimer" />
 									</p>
@@ -175,13 +176,10 @@
 				</div>
 			</div>
 		</div>
-	</div>  
+	</div>
 <#else>
-    <meta http-equiv="refresh" content="0; URL='/not-found'" />
+	<meta http-equiv="refresh" content="0; URL='/not-found'" />
 </#if>
-
-
-
 
 <script>
 	async function main() {
@@ -671,7 +669,7 @@
 	article h2 {
 		scroll-margin-top: 11rem;
 	}
-	
+
 	article h3 {
 		scroll-margin-top: 11rem;
 	}

@@ -48,7 +48,6 @@ const RoutineFormSelectModal: React.FC<RoutineFormSelectModalProps> = ({
 					initialContext: {selectedRows: selectedRoutineIds},
 					managementToolbarProps: {
 						applyFilters: false,
-						filterSchema: 'routines',
 						title: i18n.translate('routines'),
 					},
 					onContextChange: ({selectedRows}) => setState(selectedRows),

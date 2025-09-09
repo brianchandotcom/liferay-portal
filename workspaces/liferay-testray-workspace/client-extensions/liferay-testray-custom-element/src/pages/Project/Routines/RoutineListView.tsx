@@ -35,8 +35,7 @@ const RoutineListView: React.FC<RoutineListViewProps> = ({
 		<ListView
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
-				applyFilters: true,
-				filterSchema: 'routines',
+				applyFilters: false,
 				title: i18n.translate('routines'),
 			}}
 			resource={resource}

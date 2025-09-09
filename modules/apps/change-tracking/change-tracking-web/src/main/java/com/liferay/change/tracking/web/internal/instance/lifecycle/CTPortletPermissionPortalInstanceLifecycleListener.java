@@ -73,25 +73,25 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 	private void _checkPublicationsRegularRoles(Company company)
 		throws PortalException {
 
-		for (String publicationsRegularRole :
-				PublicationsRegularRolesUtil.PUBLICATIONS_REGULAR_ROLES) {
+		for (String publicationsRegularRoleName :
+				PublicationsRegularRolesUtil.PUBLICATIONS_REGULAR_ROLE_NAMES) {
 
 			Role role = _roleLocalService.fetchRole(
-				company.getCompanyId(), publicationsRegularRole);
+				company.getCompanyId(), publicationsRegularRoleName);
 
 			if (role == null) {
 				User guestUser = company.getGuestUser();
 
 				role = _roleLocalService.addRole(
 					null, guestUser.getUserId(), null, 0,
-					publicationsRegularRole, null,
+					publicationsRegularRoleName, null,
 					HashMapBuilder.put(
 						company.getLocale(),
 						PropsUtil.get(
 							StringBundler.concat(
 								"system.role.",
 								StringUtil.replace(
-									publicationsRegularRole, CharPool.SPACE,
+									publicationsRegularRoleName, CharPool.SPACE,
 									CharPool.PERIOD),
 								".description"))
 					).build(),
@@ -110,7 +110,7 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 
 			for (String actionId :
 					PublicationsRegularRolesUtil.getModelResourceActions(
-						publicationsRegularRole)) {
+						publicationsRegularRoleName)) {
 
 				_resourcePermissionLocalService.addResourcePermission(
 					company.getCompanyId(), CTCollection.class.getName(),

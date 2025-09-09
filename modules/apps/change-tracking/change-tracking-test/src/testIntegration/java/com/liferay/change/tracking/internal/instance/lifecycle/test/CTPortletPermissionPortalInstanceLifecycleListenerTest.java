@@ -75,15 +75,15 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 
 		Constructor<?> constructor = clazz.getConstructor();
 
-		String[] publicationsRegularRoles = ReflectionTestUtil.getFieldValue(
-			clazz, "PUBLICATIONS_REGULAR_ROLES");
+		String[] publicationsRegularRoleNames = ReflectionTestUtil.getFieldValue(
+			clazz, "PUBLICATIONS_REGULAR_ROLE_NAMES");
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		for (String publicationsRegularRole : publicationsRegularRoles) {
+		for (String publicationsRegularRoleName : publicationsRegularRoleNames) {
 			Role role = _roleLocalService.fetchRole(
-				company.getCompanyId(), publicationsRegularRole);
+				company.getCompanyId(), publicationsRegularRoleName);
 
 			if (role != null) {
 				role.setName(
@@ -92,7 +92,7 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 				_roleLocalService.updateRole(role);
 
 				role = _roleLocalService.fetchRole(
-					company.getCompanyId(), publicationsRegularRole);
+					company.getCompanyId(), publicationsRegularRoleName);
 			}
 
 			Assert.assertNull(role);
@@ -100,20 +100,20 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 
 		_portalInstanceLifecycleListener.portalInstanceRegistered(company);
 
-		for (String publicationsRegularRole : publicationsRegularRoles) {
+		for (String publicationsRegularRoleName : publicationsRegularRoleNames) {
 			Role role = _roleLocalService.fetchRole(
-				company.getCompanyId(), publicationsRegularRole);
+				company.getCompanyId(), publicationsRegularRoleName);
 
 			Assert.assertNotNull(role);
 
 			Method getModelResourceActionsMethod = clazz.getMethod(
 				"getModelResourceActions", String.class);
 
-			Object publicationsRegularRolesUtil = constructor.newInstance();
+			Object publicationsRegularRoleNamesUtil = constructor.newInstance();
 
 			String[] modelResourceActions =
 				(String[])getModelResourceActionsMethod.invoke(
-					publicationsRegularRolesUtil, publicationsRegularRole);
+					publicationsRegularRoleNamesUtil, publicationsRegularRoleName);
 
 			for (String actionId : modelResourceActions) {
 				Assert.assertTrue(

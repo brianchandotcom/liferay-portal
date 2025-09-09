@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -213,6 +214,16 @@ public class ObjectEntryVersionLocalServiceImpl
 				userId, objectEntry, objectEntryVersion.getVersion(),
 				serviceContext);
 		}
+	}
+
+	@Override
+	public ObjectEntryVersion fetchLatestApprovedObjectEntryVersion(
+		long objectEntryId,
+		OrderByComparator<ObjectEntryVersion> orderByComparator) {
+
+		return objectEntryVersionPersistence.fetchByOEI_S_First(
+			objectEntryId, WorkflowConstants.STATUS_APPROVED,
+			orderByComparator);
 	}
 
 	@Override

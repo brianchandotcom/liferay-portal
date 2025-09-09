@@ -34,6 +34,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.object.rest.dto.v1_0.AuditEvent;
 import com.liferay.object.rest.dto.v1_0.AuditFieldChange;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
@@ -74,10 +75,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -631,6 +634,51 @@ public class ObjectEntryDTOConverter
 		}
 	}
 
+	private Assignee _getAssignee(Map<String, Serializable> assigneeValueMap) {
+		if (assigneeValueMap.containsKey("externalReferenceCode")) {
+			return Assignee.toDTO(
+				_jsonFactory.looseSerializeDeep(assigneeValueMap));
+		}
+
+		String className = _portal.fetchClassName(
+			MapUtil.getLong(assigneeValueMap, "classNameId"));
+
+		if (StringUtil.equals(className, Role.class.getName())) {
+			Role role = _roleLocalService.fetchRole(
+				MapUtil.getLong(assigneeValueMap, "classPK"));
+
+			if (role == null) {
+				return new Assignee();
+			}
+
+			return new Assignee() {
+				{
+					setExternalReferenceCode(role::getExternalReferenceCode);
+					setName(role::getName);
+					setType(() -> Type.ROLE);
+				}
+			};
+		}
+		else if (StringUtil.equals(className, User.class.getName())) {
+			User user = _userLocalService.fetchUser(
+				MapUtil.getLong(assigneeValueMap, "classPK"));
+
+			if (user == null) {
+				return new Assignee();
+			}
+
+			return new Assignee() {
+				{
+					setExternalReferenceCode(user::getExternalReferenceCode);
+					setName(user::getFullName);
+					setType(() -> Type.USER);
+				}
+			};
+		}
+
+		return new Assignee();
+	}
+
 	private <T> T _getAttribute(
 		ObjectEntryVersion objectEntryVersion,
 		Function<ObjectEntryVersion, T> objectEntryVersionGetterFunction,
@@ -1027,7 +1075,19 @@ public class ObjectEntryDTOConverter
 		throws Exception {
 
 		if (objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+				ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE)) {
+
+			if (serializable instanceof Assignee) {
+				return serializable;
+			}
+			else if (serializable instanceof Map) {
+				return _getAssignee((Map<String, Serializable>)serializable);
+			}
+
+			return null;
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			if (serializable instanceof FileEntry) {
 				return serializable;
@@ -1544,6 +1604,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

@@ -4426,6 +4426,15 @@ public class OrganizationPersistenceImpl
 			return findByLogoId(logoId, start, end, orderByComparator);
 		}
 
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			isPermissionsInMemoryFilterEnabled()) {
+
+			return InlineSQLHelperUtil.filter(
+				findByLogoId(
+					logoId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					orderByComparator));
+		}
+
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
@@ -4783,6 +4792,14 @@ public class OrganizationPersistenceImpl
 	public int filterCountByLogoId(long logoId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByLogoId(logoId);
+		}
+
+		if (isPermissionsInMemoryFilterEnabled()) {
+			List<Organization> organizations = findByLogoId(logoId);
+
+			organizations = InlineSQLHelperUtil.filter(organizations);
+
+			return organizations.size();
 		}
 
 		StringBundler sb = new StringBundler(2);

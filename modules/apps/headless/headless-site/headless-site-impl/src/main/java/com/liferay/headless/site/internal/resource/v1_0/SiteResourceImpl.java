@@ -5,6 +5,7 @@
 
 package com.liferay.headless.site.internal.resource.v1_0;
 
+import com.liferay.google.places.constants.GooglePlacesWebKeys;
 import com.liferay.headless.site.dto.v1_0.Site;
 import com.liferay.headless.site.resource.v1_0.SiteResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -62,6 +64,8 @@ import jakarta.ws.rs.core.Response;
 import java.io.File;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -225,7 +229,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			group = _addGroup(externalReferenceCode, site);
 		}
 		else {
-			group = _updateGroup(group.getGroupId(), site);
+			group = _updateGroup(group, site);
 		}
 
 		return _toSite(group);
@@ -256,8 +260,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				ActionKeys.UPDATE);
 
 			group = _updateGroup(
-				group.getGroupId(),
-				multipartBody.getValueAsInstance("site", Site.class));
+				group, multipartBody.getValueAsInstance("site", Site.class));
 
 			return _toSite(group);
 		}
@@ -398,10 +401,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Group group = _groupService.addGroup(
 			_getParentGroupId(site.getParentSiteKey()),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), site.getName()
-			).build(),
-			null, _getType(site.getMembershipType()),
+			_getLocalizationMap(site.getName()),
+			_getLocalizationMap(site.getDescription()),
+			_getType(site.getMembershipType()),
 			_isManualMembership(site.getManualMembership()),
 			_getMembershipRestriction(site.getMembershipRestriction()),
 			site.getFriendlyUrlPath(), true, false, _isActive(site.getActive()),
@@ -414,18 +416,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 
 		if (Validator.isNotNull(site.getTypeSettings())) {
-			UnicodeProperties unicodeProperties =
-				UnicodePropertiesBuilder.putAll(
-					site.getTypeSettings()
-				).build();
-
-			unicodeProperties.putIfAbsent(
-				GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES,
-				String.valueOf(
-					!unicodeProperties.containsKey(PropsKeys.LOCALES)));
-
 			group = _groupService.updateGroup(
-				group.getGroupId(), unicodeProperties.toString());
+				group.getGroupId(),
+				_getTypeSettings(site.getTypeSettings(), null));
 		}
 
 		LiveUsers.joinGroup(
@@ -453,6 +446,22 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 
 		return group;
+	}
+
+	private Map<Locale, String> _getLocalizationMap(Map<String, String> map) {
+		if (map == null) {
+			return null;
+		}
+
+		return _localization.getLocalizationMap(
+			map.keySet(
+			).toArray(
+				new String[0]
+			),
+			map.values(
+			).toArray(
+				new String[0]
+			));
 	}
 
 	private int _getMembershipRestriction(Integer membershipRestriction) {
@@ -522,6 +531,34 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		return GroupConstants.TYPE_SITE_RESTRICTED;
 	}
 
+	private String _getTypeSettings(
+			Map<String, String> typeSettings,
+			UnicodeProperties oldUnicodeProperties)
+		throws Exception {
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.putAll(
+			typeSettings
+		).build();
+
+		unicodeProperties.putIfAbsent(
+			GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES,
+			String.valueOf(!unicodeProperties.containsKey(PropsKeys.LOCALES)));
+
+		if (oldUnicodeProperties == null) {
+			return unicodeProperties.toString();
+		}
+
+		for (String excludedTypeSetting : _EXCLUDED_TYPE_SETTINGS) {
+			if (oldUnicodeProperties.containsKey(excludedTypeSetting)) {
+				unicodeProperties.put(
+					excludedTypeSetting,
+					oldUnicodeProperties.get(excludedTypeSetting));
+			}
+		}
+
+		return unicodeProperties.toString();
+	}
+
 	private void _initThemeDisplay() throws Exception {
 		if (contextHttpServletRequest == null) {
 			return;
@@ -571,7 +608,26 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	private Site _toSite(Group group) {
 		return new Site() {
 			{
+				String[] availableLanguages = group.getAvailableLanguageIds();
+
 				setActive(group::getActive);
+				setDescription(
+					() -> {
+						Map<String, String> descriptionMap =
+							new LinkedHashMap<>();
+
+						for (String availableLanguage : availableLanguages) {
+							String description = group.getDescription(
+								availableLanguage, false);
+
+							if (Validator.isNotNull(description)) {
+								descriptionMap.put(
+									availableLanguage, description);
+							}
+						}
+
+						return descriptionMap;
+					});
 				setExternalReferenceCode(group::getExternalReferenceCode);
 				setFriendlyUrlPath(group::getFriendlyURL);
 				setId(group::getGroupId);
@@ -581,39 +637,61 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				setMembershipType(
 					() -> MembershipType.create(
 						GroupConstants.getTypeLabel(group.getType())));
-				setName(() -> group.getName(LocaleUtil.getDefault()));
+				setName(
+					() -> {
+						Map<String, String> nameMap = new LinkedHashMap<>();
+
+						for (String availableLanguage : availableLanguages) {
+							String name = group.getName(
+								availableLanguage, false);
+
+							if (Validator.isNotNull(name)) {
+								nameMap.put(availableLanguage, name);
+							}
+						}
+
+						return nameMap;
+					});
 				setTypeSettings(
-					() -> UnicodePropertiesBuilder.fastLoad(
-						group.getTypeSettings()
-					).build());
+					() -> {
+						UnicodeProperties unicodeProperties =
+							UnicodePropertiesBuilder.fastLoad(
+								group.getTypeSettings()
+							).build();
+
+						for (String excludedTypeSetting :
+								_EXCLUDED_TYPE_SETTINGS) {
+
+							unicodeProperties.remove(excludedTypeSetting);
+						}
+
+						return unicodeProperties;
+					});
 			}
 		};
 	}
 
-	private Group _updateGroup(long groupId, Site site) throws Exception {
+	private Group _updateGroup(Group group, Site site) throws Exception {
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					contextCompany, contextUser)) {
 
 			Group updatedGroup = _groupLocalService.updateGroup(
-				groupId, _getParentGroupId(site.getParentSiteKey()),
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), site.getName()
-				).build(),
-				null, _getType(site.getMembershipType()),
+				group.getGroupId(), _getParentGroupId(site.getParentSiteKey()),
+				_getLocalizationMap(site.getName()),
+				_getLocalizationMap(site.getDescription()),
+				_getType(site.getMembershipType()),
 				_isManualMembership(site.getManualMembership()),
 				_getMembershipRestriction(site.getMembershipRestriction()),
 				site.getFriendlyUrlPath(), false, _isActive(site.getActive()),
 				_getServiceContext());
 
 			if (Validator.isNotNull(site.getTypeSettings())) {
-				UnicodeProperties unicodeProperties =
-					UnicodePropertiesBuilder.putAll(
-						site.getTypeSettings()
-					).build();
-
 				updatedGroup = _groupService.updateGroup(
-					updatedGroup.getGroupId(), unicodeProperties.toString());
+					updatedGroup.getGroupId(),
+					_getTypeSettings(
+						site.getTypeSettings(),
+						group.getTypeSettingsProperties()));
 			}
 
 			LiveUsers.joinGroup(
@@ -632,6 +710,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 	}
 
+	private static final String[] _EXCLUDED_TYPE_SETTINGS = {
+		GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY, "defaultSiteRoleIds",
+		"defaultTeamIds", "googleMapsAPIKey"
+	};
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -643,6 +726,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

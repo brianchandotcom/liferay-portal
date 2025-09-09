@@ -627,7 +627,7 @@ EOF
 		"@vitejs/plugin-react": "^4.2.1",
 		"vite": "^4.4.5"
 	},
-	"name": "@liferay/liferay-coefrontend-custom-element-react-vite",
+	"name": "@liferay/TODOFIXTHISKEY",
 	"private": true,
 	"scripts": {
 		"build": "vite build",

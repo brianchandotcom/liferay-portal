@@ -19,6 +19,7 @@ import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuil
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -27,12 +28,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -41,6 +46,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,12 +58,17 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Marco Galluzzi
@@ -130,6 +141,9 @@ public abstract class BaseSectionDisplayContextTestCase
 				return collaboratorURL;
 			}
 		).put(
+			"defaultPermissionAdditionalProps",
+			_getDefaultPermissionAdditionalProps()
+		).put(
 			"objectDefinitionCssClasses",
 			HashMapBuilder.put(
 				"default", "content-icon-custom-structure"
@@ -174,8 +188,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Test
 	public void testGetAdditionalProps() throws Exception {
-		AssertUtils.assertEquals(
-			getBaseAdditionalProps(), getAdditionalProps());
+		_assertEquals(getBaseAdditionalProps(), getAdditionalProps());
 	}
 
 	@Test
@@ -536,6 +549,113 @@ public abstract class BaseSectionDisplayContextTestCase
 		Assert.assertNull(dropdownItemData);
 	}
 
+	private void _assertEquals(
+		Map<String, ?> expectedMap, Map<String, ?> actualMap) {
+
+		Assert.assertEquals(
+			"The maps have different sizes", expectedMap.size(),
+			actualMap.size());
+
+		JSONObject expectedJSONObject = _jsonFactory.createJSONObject(
+			expectedMap);
+		JSONObject actualJSONObject = _jsonFactory.createJSONObject(actualMap);
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toString(), actualJSONObject.toString(),
+			JSONCompareMode.STRICT);
+	}
+
+	private Map<String, Object> _getDefaultPermissionAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"actions",
+			() -> HashMapBuilder.put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+				() -> {
+					ObjectDefinition objectDefinition =
+						ObjectDefinitionLocalServiceUtil.
+							getObjectDefinitionByExternalReferenceCode(
+								"L_BASIC_WEB_CONTENT",
+								TestPropsValues.getCompanyId());
+
+					return TransformUtil.transformToArray(
+						ResourceActionsUtil.getResourceActions(
+							objectDefinition.getClassName()),
+						resourceAction -> HashMapBuilder.put(
+							"key", resourceAction
+						).put(
+							"label",
+							ResourceActionsUtil.getAction(
+								LocaleUtil.US, resourceAction)
+						).build(),
+						Map.class);
+				}
+			).put(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+				() -> {
+					ObjectDefinition objectDefinition =
+						ObjectDefinitionLocalServiceUtil.
+							getObjectDefinitionByExternalReferenceCode(
+								"L_BASIC_DOCUMENT",
+								TestPropsValues.getCompanyId());
+
+					return TransformUtil.transformToArray(
+						ResourceActionsUtil.getResourceActions(
+							objectDefinition.getClassName()),
+						resourceAction -> HashMapBuilder.put(
+							"key", resourceAction
+						).put(
+							"label",
+							ResourceActionsUtil.getAction(
+								LocaleUtil.US, resourceAction)
+						).build(),
+						Map.class);
+				}
+			).put(
+				"OBJECT_ENTRY_FOLDERS",
+				() -> TransformUtil.transformToArray(
+					ResourceActionsUtil.getResourceActions(
+						ObjectEntryFolder.class.getName()),
+					resourceAction -> HashMapBuilder.put(
+						"key", resourceAction
+					).put(
+						"label",
+						ResourceActionsUtil.getAction(
+							LocaleUtil.US, resourceAction)
+					).build(),
+					Map.class)
+			).build()
+		).put(
+			"roles",
+			() -> {
+				Set<String> excludedRoleNamesSet = new HashSet<String>() {
+					{
+						add(RoleConstants.ADMINISTRATOR);
+						add(RoleConstants.SITE_ADMINISTRATOR);
+						add(RoleConstants.SITE_OWNER);
+					}
+				};
+
+				return TransformUtil.transformToArray(
+					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+						TestPropsValues.getCompanyId(), null,
+						ListUtil.fromCollection(excludedRoleNamesSet), null,
+						null,
+						new int[] {
+							RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
+						},
+						0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					role -> HashMapBuilder.put(
+						"key", role.getName()
+					).put(
+						"name", role.getTitle(LocaleUtil.US)
+					).put(
+						"type", String.valueOf(role.getType())
+					).build(),
+					Map.class);
+			}
+		).build();
+	}
+
 	private JSONArray _getDepotEntriesJSONArray() {
 		return _getDepotEntriesJSONArray(
 			TransformUtil.transform(
@@ -707,6 +827,9 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

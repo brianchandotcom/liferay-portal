@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -256,6 +257,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-63068")
 	public void testAddFragmentEntryLinkWithFragmentRenderer()
 		throws Exception {
 

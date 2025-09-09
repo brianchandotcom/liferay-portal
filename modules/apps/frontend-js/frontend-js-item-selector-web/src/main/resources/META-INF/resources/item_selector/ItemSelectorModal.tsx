@@ -133,11 +133,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 									)
 								: sub(
 										Liferay.Language.get('x-selected'),
-										<strong>
-											{getSelectedItemLabel(
-												selectedItems[0]
-											)}
-										</strong>
+										getSelectedItemLabel(selectedItems[0])
 									)}
 
 							<ClayButton

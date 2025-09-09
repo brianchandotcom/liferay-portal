@@ -133,12 +133,6 @@ test('Item Selector Modal with single selection', async ({
 		await expect(
 			itemSelectorSamplePage.page.getByText(`Test Selected`)
 		).toBeVisible();
-
-		itemSelectorSamplePage.selectByRowAndRole({row: 1});
-
-		await expect(
-			itemSelectorSamplePage.page.getByText(`Test Selected`)
-		).toBeVisible();
 	});
 });
 

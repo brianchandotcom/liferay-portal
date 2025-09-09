@@ -67,7 +67,7 @@ export interface IFrontendDataSetContext {
 	selectedItems?: Array<any>;
 	selectedItemsKey: string;
 	selectedItemsValue?: Array<any>;
-	selectionType?: 'single' | 'multiple' | null;
+	selectionType?: 'single' | 'multiple';
 	setSearching: (value: boolean) => void;
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;

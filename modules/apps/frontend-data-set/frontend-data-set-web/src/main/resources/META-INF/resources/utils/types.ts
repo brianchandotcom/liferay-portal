@@ -317,7 +317,7 @@ export interface IFrontendDataSetProps {
 	portletId?: string;
 	selectedItems?: any[];
 	selectedItemsKey?: string | undefined;
-	selectionType?: 'single' | 'multiple' | null;
+	selectionType?: 'single' | 'multiple';
 	showBulkActionsManagementBar?: boolean;
 	showBulkActionsManagementBarActions?: boolean;
 	showManagementBar?: boolean;

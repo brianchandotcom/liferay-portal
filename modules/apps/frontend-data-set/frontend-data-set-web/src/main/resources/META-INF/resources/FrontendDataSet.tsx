@@ -123,7 +123,7 @@ const FrontendDataSetContent = ({
 	portletId,
 	selectedItems: externalSelectedItems,
 	selectedItemsKey = 'id',
-	selectionType = 'multiple',
+	selectionType,
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
 	showManagementBar = true,

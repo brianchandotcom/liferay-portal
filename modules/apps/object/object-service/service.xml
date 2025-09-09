@@ -420,6 +420,10 @@
 			<finder-column name="objectEntryId" />
 			<finder-column name="version" />
 		</finder>
+		<finder name="OEI_S" return-type="Collection">
+			<finder-column name="objectEntryId" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
 

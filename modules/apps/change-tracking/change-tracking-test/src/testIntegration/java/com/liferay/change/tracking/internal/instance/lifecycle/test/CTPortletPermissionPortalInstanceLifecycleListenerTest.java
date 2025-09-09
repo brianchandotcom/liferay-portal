@@ -101,10 +101,8 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 		_portalInstanceLifecycleListener.portalInstanceRegistered(company);
 
 		for (String publicationsRegularRoleName : publicationsRegularRoleNames) {
-			Role role = _roleLocalService.fetchRole(
+			Role role = _roleLocalService.getRole(
 				company.getCompanyId(), publicationsRegularRoleName);
-
-			Assert.assertNotNull(role);
 
 			Method method = clazz.getMethod(
 				"getModelResourceActions", String.class);
@@ -132,10 +130,8 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 
 		long companyId = company.getCompanyId();
 
-		Role role = _roleLocalService.fetchRole(
+		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.PUBLICATIONS_USER);
-
-		Assert.assertNotNull(role);
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(

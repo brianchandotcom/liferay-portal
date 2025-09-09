@@ -383,6 +383,11 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.formRelationship) {
 		panelsIds = {
+			[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
+			[PANEL_IDS.formAdvancedPanel]:
+				(canUpdateItemAdvancedConfiguration &&
+					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
+				canUpdateCSSAdvancedOptions,
 			[PANEL_IDS.formRelationshipGeneral]: true,
 		};
 	}

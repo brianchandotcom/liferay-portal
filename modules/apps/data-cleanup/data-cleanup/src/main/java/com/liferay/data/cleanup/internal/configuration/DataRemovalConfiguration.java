@@ -39,11 +39,8 @@ public interface DataRemovalConfiguration {
 	)
 	public boolean removeConfigurationOrphanData();
 
-	@Meta.AD(
-		deflt = "false", name = "remove-ddm-structure-orphan-data",
-		required = false
-	)
-	public boolean removeDDMStructureOrphanData();
+	@Meta.AD(deflt = "false", name = "remove-ddm-orphan-data", required = false)
+	public boolean removeDDMOrphanData();
 
 	@Meta.AD(
 		deflt = "false", name = "remove-dl-file-entry-orphan-data",

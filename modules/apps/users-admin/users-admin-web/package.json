@@ -3,6 +3,7 @@
 		"@clayui/button": "3.144.1",
 		"@clayui/form": "3.145.0",
 		"@liferay/address-web": "*",
+		"clipboard": "2.0.11",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0"

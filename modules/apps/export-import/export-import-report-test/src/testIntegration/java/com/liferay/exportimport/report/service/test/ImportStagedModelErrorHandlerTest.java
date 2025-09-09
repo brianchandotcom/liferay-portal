@@ -73,10 +73,10 @@ public class ImportStagedModelErrorHandlerTest {
 
 		bundleContext.registerService(
 			StagedModelDataHandler.class,
-			new ThrowExceptionStagedModelDataHandler(),
+			new TestStagedModelDataHandler(),
 			MapUtil.singletonDictionary("companyId", _company.getCompanyId()));
 
-		MockStagedModel stagedModelDataHandler = new MockStagedModel();
+		TestStagedModel stagedModelDataHandler = new TestStagedModel();
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
@@ -85,6 +85,7 @@ public class ImportStagedModelErrorHandlerTest {
 
 		portletDataContext.setExportImportProcessId(
 			BaseStagedModelDataHandlerTestCase.class.getName());
+
 
 		long exportImportReportEntriesCount1 =
 			ExportImportReportEntryLocalServiceUtil.
@@ -117,7 +118,7 @@ public class ImportStagedModelErrorHandlerTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private class MockStagedModel implements StagedModel {
+	private class TestStagedModel implements StagedModel {
 
 		@Override
 		public Object clone() {
@@ -141,12 +142,12 @@ public class ImportStagedModelErrorHandlerTest {
 
 		@Override
 		public Class<?> getModelClass() {
-			return MockStagedModel.class;
+			return TestStagedModel.class;
 		}
 
 		@Override
 		public String getModelClassName() {
-			return MockStagedModel.class.getName();
+			return TestStagedModel.class.getName();
 		}
 
 		@Override
@@ -162,8 +163,8 @@ public class ImportStagedModelErrorHandlerTest {
 		@Override
 		public StagedModelType getStagedModelType() {
 			return new StagedModelType(
-				PortalUtil.getClassNameId(MockStagedModel.class.getName()),
-				PortalUtil.getClassNameId(MockStagedModel.class.getName()));
+				PortalUtil.getClassNameId(TestStagedModel.class.getName()),
+				PortalUtil.getClassNameId(TestStagedModel.class.getName()));
 		}
 
 		@Override
@@ -193,15 +194,15 @@ public class ImportStagedModelErrorHandlerTest {
 
 	}
 
-	private class ThrowExceptionStagedModelDataHandler
-		extends BaseStagedModelDataHandler<MockStagedModel> {
+	private class TestStagedModelDataHandler
+		extends BaseStagedModelDataHandler<TestStagedModel> {
 
 		public static final String[] CLASS_NAMES = {
-			MockStagedModel.class.getName()
+			TestStagedModel.class.getName()
 		};
 
 		@Override
-		public void deleteStagedModel(MockStagedModel stagedModel)
+		public void deleteStagedModel(TestStagedModel stagedModel)
 			throws PortalException {
 		}
 
@@ -212,7 +213,7 @@ public class ImportStagedModelErrorHandlerTest {
 		}
 
 		@Override
-		public List<MockStagedModel> fetchStagedModelsByUuidAndCompanyId(
+		public List<TestStagedModel> fetchStagedModelsByUuidAndCompanyId(
 			String uuid, long companyId) {
 
 			return null;
@@ -226,7 +227,7 @@ public class ImportStagedModelErrorHandlerTest {
 		@Override
 		public void importStagedModel(
 				PortletDataContext portletDataContext,
-				MockStagedModel stagedModel)
+				TestStagedModel stagedModel)
 			throws PortletDataException {
 
 			throw new PortletDataException();
@@ -235,14 +236,14 @@ public class ImportStagedModelErrorHandlerTest {
 		@Override
 		protected void doExportStagedModel(
 				PortletDataContext portletDataContext,
-				MockStagedModel stagedModel)
+				TestStagedModel stagedModel)
 			throws Exception {
 		}
 
 		@Override
 		protected void doImportStagedModel(
 				PortletDataContext portletDataContext,
-				MockStagedModel stagedModel)
+				TestStagedModel stagedModel)
 			throws Exception {
 		}
 

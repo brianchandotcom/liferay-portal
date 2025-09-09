@@ -1251,7 +1251,7 @@ public class StructuredContentResourceTest
 				testCompany.getCompanyId(), testGroup.getGroupId(),
 				TestPropsValues.getUserId()));
 
-		StructuredContent structuredContent = super.randomStructuredContent();
+		StructuredContent structuredContent = randomStructuredContent();
 
 		structuredContent.setContentFields(
 			_randomContentFields(dlFileEntryId, journalArticle, localizable));
@@ -1505,7 +1505,7 @@ public class StructuredContentResourceTest
 	private StructuredContent _randomStructuredContent(Locale locale)
 		throws Exception {
 
-		StructuredContent structuredContent = super.randomStructuredContent();
+		StructuredContent structuredContent = randomStructuredContent();
 
 		String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
 

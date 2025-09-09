@@ -77,40 +77,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
-	}
-
-	@Override
-	public MasterPage getSiteMasterPage(
-			String siteExternalReferenceCode,
-			String masterPageExternalReferenceCode)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.
-				getLayoutPageTemplateEntryByExternalReferenceCode(
-					masterPageExternalReferenceCode,
-					GroupUtil.getGroupId(
-						true, contextCompany.getCompanyId(),
-						siteExternalReferenceCode));
-
-		if (!Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-				layoutPageTemplateEntry.getType())) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		return _masterPageDTOConverter.toDTO(layoutPageTemplateEntry);
-	}
-
-	@Override
-	public Page<MasterPage> getSiteMasterPagesPage(
+	public Page<MasterPage> doGetSiteMasterPagesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -147,7 +114,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
-	public MasterPage postSiteMasterPage(
+	public MasterPage doPostSiteMasterPage(
 			String siteExternalReferenceCode, MasterPage masterPage)
 		throws Exception {
 
@@ -160,6 +127,39 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode),
 			masterPage);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	@Override
+	public MasterPage getSiteMasterPage(
+			String siteExternalReferenceCode,
+			String masterPageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					masterPageExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		if (!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				layoutPageTemplateEntry.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return _masterPageDTOConverter.toDTO(layoutPageTemplateEntry);
 	}
 
 	@Override

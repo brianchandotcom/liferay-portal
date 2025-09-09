@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -59,7 +58,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -96,6 +94,58 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			GroupUtil.getGroupId(
 				true, false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
+	}
+
+	@Override
+	public Page<PageTemplate> doGetSitePageTemplatesPage(
+			String siteExternalReferenceCode, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = GroupUtil.getGroupId(
+			true, true, contextCompany.getCompanyId(),
+			siteExternalReferenceCode);
+
+		return Page.of(
+			transform(
+				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
+					groupId,
+					new int[] {
+						LayoutPageTemplateEntryTypeConstants.BASIC,
+						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE
+					},
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				layoutPageTemplateEntry -> _pageTemplateDTOConverter.toDTO(
+					layoutPageTemplateEntry)),
+			pagination,
+			_layoutPageTemplateEntryService.getLayoutPageTemplateEntriesCount(
+				groupId,
+				new int[] {
+					LayoutPageTemplateEntryTypeConstants.BASIC,
+					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE
+				}));
+	}
+
+	@Override
+	public PageTemplate doPostSitePageTemplate(
+			String siteExternalReferenceCode, PageTemplate pageTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _addPageTemplate(
+			GroupUtil.getGroupId(
+				_isTypeWidgetPageTemplate(pageTemplate), false,
+				contextCompany.getCompanyId(), siteExternalReferenceCode),
+			pageTemplate);
 	}
 
 	@Override
@@ -168,62 +218,6 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 				layoutPageTemplateEntry -> _pageTemplateDTOConverter.toDTO(
 					layoutPageTemplateEntry)));
-	}
-
-	@Override
-	public Page<PageTemplate> getSitePageTemplatesPage(
-			String siteExternalReferenceCode, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		long groupId = GroupUtil.getGroupId(
-			true, true, contextCompany.getCompanyId(),
-			siteExternalReferenceCode);
-
-		return SearchUtil.search(
-			Collections.emptyMap(),
-			booleanQuery -> {
-			},
-			filter, LayoutPageTemplateEntry.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					"types",
-					new String[] {
-						String.valueOf(
-							LayoutPageTemplateEntryTypeConstants.BASIC),
-						String.valueOf(
-							LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)
-					});
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {groupId});
-			},
-			sorts,
-			document -> _pageTemplateDTOConverter.toDTO(
-				_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
-	}
-
-	@Override
-	public PageTemplate postSitePageTemplate(
-			String siteExternalReferenceCode, PageTemplate pageTemplate)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _addPageTemplate(
-			GroupUtil.getGroupId(
-				_isTypeWidgetPageTemplate(pageTemplate), false,
-				contextCompany.getCompanyId(), siteExternalReferenceCode),
-			pageTemplate);
 	}
 
 	@Override

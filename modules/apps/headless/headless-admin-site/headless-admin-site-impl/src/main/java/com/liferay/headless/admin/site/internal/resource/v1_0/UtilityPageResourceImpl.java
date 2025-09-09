@@ -78,31 +78,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
-	}
-
-	@Override
-	public UtilityPage getSiteUtilityPage(
-			String siteExternalReferenceCode,
-			String utilityPageExternalReferenceCode)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _utilityPageDTOConverter.toDTO(
-			_layoutUtilityPageEntryService.
-				getLayoutUtilityPageEntryByExternalReferenceCode(
-					utilityPageExternalReferenceCode,
-					GroupUtil.getGroupId(
-						true, contextCompany.getCompanyId(),
-						siteExternalReferenceCode)));
-	}
-
-	@Override
-	public Page<UtilityPage> getSiteUtilityPagesPage(
+	public Page<UtilityPage> doGetSiteUtilityPagesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -133,7 +109,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	@Override
-	public UtilityPage postSiteUtilityPage(
+	public UtilityPage doPostSiteUtilityPage(
 			String siteExternalReferenceCode, UtilityPage utilityPage)
 		throws Exception {
 
@@ -146,6 +122,30 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode),
 			utilityPage);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	@Override
+	public UtilityPage getSiteUtilityPage(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _utilityPageDTOConverter.toDTO(
+			_layoutUtilityPageEntryService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPageExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
 	}
 
 	@Override

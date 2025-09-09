@@ -95,28 +95,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public SitePage getSiteSitePage(
-			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				true, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
-
-		_validateSitePageLayout(layout);
-
-		return _toSitePage(layout);
-	}
-
-	@Override
-	public Page<SitePage> getSiteSitePagesPage(
+	public Page<SitePage> doGetSiteSitePagesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -153,7 +132,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public SitePage postSiteSitePage(
+	public SitePage doPostSiteSitePage(
 			String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception {
 
@@ -168,6 +147,27 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					false, contextCompany.getCompanyId(),
 					siteExternalReferenceCode),
 				sitePage));
+	}
+
+	@Override
+	public SitePage getSiteSitePage(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		_validateSitePageLayout(layout);
+
+		return _toSitePage(layout);
 	}
 
 	@Override

@@ -61,31 +61,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
-	}
-
-	@Override
-	public PageTemplateSet getSitePageTemplateSet(
-			String siteExternalReferenceCode,
-			String pageTemplateSetExternalReferenceCode)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _toPageTemplateSet(
-			_layoutPageTemplateCollectionService.
-				getLayoutPageTemplateCollection(
-					pageTemplateSetExternalReferenceCode,
-					GroupUtil.getGroupId(
-						true, contextCompany.getCompanyId(),
-						siteExternalReferenceCode)));
-	}
-
-	@Override
-	public Page<PageTemplateSet> getSitePageTemplateSetsPage(
+	public Page<PageTemplateSet> doGetSitePageTemplateSetsPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -123,7 +99,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet postSitePageTemplateSet(
+	public PageTemplateSet doPostSitePageTemplateSet(
 			String siteExternalReferenceCode, PageTemplateSet pageTemplateSet)
 		throws Exception {
 
@@ -137,6 +113,30 @@ public class PageTemplateSetResourceImpl
 					false, contextCompany.getCompanyId(),
 					siteExternalReferenceCode),
 				contextHttpServletRequest, pageTemplateSet));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	@Override
+	public PageTemplateSet getSitePageTemplateSet(
+			String siteExternalReferenceCode,
+			String pageTemplateSetExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _toPageTemplateSet(
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollection(
+					pageTemplateSetExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
 	}
 
 	@Override

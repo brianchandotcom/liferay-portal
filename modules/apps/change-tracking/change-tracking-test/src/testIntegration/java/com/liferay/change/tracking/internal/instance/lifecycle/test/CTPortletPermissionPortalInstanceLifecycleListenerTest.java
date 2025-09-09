@@ -76,10 +76,13 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 			"com.liferay.change.tracking.web.internal.util." +
 				"PublicationsRegularRolesUtil");
 
-		String[] publicationsRegularRoleNames = ReflectionTestUtil.getFieldValue(
-			clazz, "PUBLICATIONS_REGULAR_ROLE_NAMES");
+		String[] publicationsRegularRoleNames =
+			ReflectionTestUtil.getFieldValue(
+				clazz, "PUBLICATIONS_REGULAR_ROLE_NAMES");
 
-		for (String publicationsRegularRoleName : publicationsRegularRoleNames) {
+		for (String publicationsRegularRoleName :
+				publicationsRegularRoleNames) {
+
 			Role role = _roleLocalService.fetchRole(
 				company.getCompanyId(), publicationsRegularRoleName);
 
@@ -87,8 +90,7 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 				continue;
 			}
 
-			role.setName(
-				role.getName() + " " + RandomTestUtil.randomString());
+			role.setName(role.getName() + " " + RandomTestUtil.randomString());
 
 			_roleLocalService.updateRole(role);
 
@@ -100,7 +102,9 @@ public class CTPortletPermissionPortalInstanceLifecycleListenerTest {
 
 		_portalInstanceLifecycleListener.portalInstanceRegistered(company);
 
-		for (String publicationsRegularRoleName : publicationsRegularRoleNames) {
+		for (String publicationsRegularRoleName :
+				publicationsRegularRoleNames) {
+
 			Role role = _roleLocalService.getRole(
 				company.getCompanyId(), publicationsRegularRoleName);
 

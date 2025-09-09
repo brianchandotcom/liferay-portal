@@ -5,20 +5,19 @@
 
 package com.liferay.exportimport.report.service.impl.handler;
 
-import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.exception.ImportStagedModelExceptionHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.lang.reflect.Method;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,22 +31,19 @@ public class ImportStagedModelExceptionHandlerImpl
 
 	@Override
 	public <T extends StagedModel> void handle(
-		PortletDataException portletDataException, PortletDataContext portletDataContext,
-		T stagedModel) {
+		PortletDataException portletDataException,
+		PortletDataContext portletDataContext, T stagedModel) {
 
 		String externalReferenceCode = null;
 
-		Class<?> clase = stagedModel.getModelClass();
+		Class<?> clazz = stagedModel.getModelClass();
 
-		try {
-			Method metodo = clase.getMethod("getExternalReferenceCode");
+		if (stagedModel instanceof ExternalReferenceCodeModel) {
+			ExternalReferenceCodeModel externalReferenceCodeModel =
+				(ExternalReferenceCodeModel)stagedModel;
 
-			externalReferenceCode = (String)metodo.invoke(stagedModel);
-		}
-		catch (Exception exception2) {
-			_log.warn(
-				"This class does not have ExternalReferenceCode: " +
-					clase.toString());
+			externalReferenceCode =
+				externalReferenceCodeModel.getExternalReferenceCode();
 		}
 
 		try {
@@ -63,17 +59,18 @@ public class ImportStagedModelExceptionHandlerImpl
 					ExportImportClassedModelUtil.getClassPK(stagedModel),
 					GetterUtil.getLong(
 						portletDataContext.getExportImportProcessId()),
-					portletDataException.getMessage(), portletDataException.toString(),
-					ExportImportReportEntryUtil.getModelName(clase),
+					portletDataException.getMessage(),
+					portletDataException.toString(),
+					ExportImportReportEntryUtil.getModelName(clazz),
 					ExportImportReportEntryUtil.getOrigin(),
 					ExportImportReportEntryUtil.getScope(group),
 					ExportImportReportEntryUtil.getScopeKey(groupId));
 		}
-		catch (Exception exception2) {
+		catch (Exception exception) {
 			_log.error(
 				"Error adding ErrorExportImportReportEntry with the " +
 					"externalReferenceCode: " + externalReferenceCode);
-			_log.error(exception2);
+			_log.error(exception);
 		}
 	}
 

@@ -16,23 +16,23 @@ User selectedUser = userDisplayContext.getSelectedUser();
 %>
 
 <div>
-	<react:component module="{WebdavInputCopyButton} from users-admin-web" props='<%=
-		HashMapBuilder.<String, Object>put(
-			"label", LanguageUtil.get(request, "web-dav-username")
-		).put(
-			"value", selectedUser.getUserId()
-		).build()
-		%>'
-	/>
-</div>
-
-<div>
-	<react:component module="{WebdavInputCopyButton} from users-admin-web" props='<%=
-		HashMapBuilder.<String, Object>put(
-			"label", LanguageUtil.get(request, "web-dav-password")
-		).put(
-			"value", renderRequest.getParameter("webDAVPassword")
-		).build()
+	<react:component
+		module="{WebdavInputCopyButton} from users-admin-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"fields",
+				Arrays.asList(
+					HashMapBuilder.<String, Object>put(
+						"label", LanguageUtil.get(request, "web-dav-username")
+					).put(
+						"value", selectedUser.getUserId()
+					).build(),
+					HashMapBuilder.<String, Object>put(
+						"label", LanguageUtil.get(request, "web-dav-password")
+					).put(
+						"value", renderRequest.getParameter("webDAVPassword")
+					).build())
+			).build()
 		%>'
 	/>
 </div>

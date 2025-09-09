@@ -8,68 +8,82 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClipboardJS from 'clipboard';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useId, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
-const WebdavInputCopyButton = ({label, value}) => {
-	const id = useId();
-	const inputRef = useRef();
+const WebdavInputCopyButton = ({fields}) => {
+	const inputRefs = useRef([]);
 
 	useEffect(() => {
-		const clipboard = new ClipboardJS(inputRef.current, {
-			text: () => value,
-		});
+		const clipboards = inputRefs.current.map((input, index) => {
+			if (!input) {
+				return null;
+			}
 
-		clipboard.on('success', () => {
-			openToast({
-				message: Liferay.Language.get('copied-link-to-the-clipboard'),
+			const clipboard = new ClipboardJS(input, {
+				text: () => fields[index].value,
 			});
-		});
 
-		clipboard.on('error', () => {
-			openToast({
-				message: Liferay.Language.get('an-error-occurred'),
-				title: Liferay.Language.get('error'),
-				type: 'warning',
+			clipboard.on('success', () => {
+				openToast({
+					message: Liferay.Language.get(
+						'copied-link-to-the-clipboard'
+					),
+					type: 'success',
+				});
 			});
+
+			clipboard.on('error', () => {
+				openToast({
+					message: Liferay.Language.get('an-error-occurred'),
+					title: Liferay.Language.get('error'),
+					type: 'warning',
+				});
+			});
+
+			return clipboard;
 		});
 
-		return () => clipboard.destroy();
-	}, [id, value]);
+		return () => {
+			clipboards.forEach((clipboard) => clipboard?.destroy());
+		};
+	}, [fields]);
 
 	return (
 		<>
-			<label htmlFor={id}>{label}</label>
+			{fields.map(({label, value}, index) => (
+				<div key={index}>
+					<ClayForm.Group>
+						<label htmlFor="`webdav-input-id-${index}`">
+							{label}
+						</label>
 
-			<div className="webdav-url-copy-button">
-				<ClayForm.Group>
-					<ClayInput.Group>
-						<ClayInput.GroupItem prepend>
-							<ClayInput
-								disabled
-								id={id}
-								type="text"
-								value={value}
-							/>
-						</ClayInput.GroupItem>
+						<ClayInput.Group>
+							<ClayInput.GroupItem prepend>
+								<ClayInput
+									disabled
+									id="`webdav-input-id-${index}`"
+									type="text"
+									value={value}
+								/>
+							</ClayInput.GroupItem>
 
-						<ClayInput.GroupItem append shrink>
-							<ClayButtonWithIcon
-								aria-label={sub(
-									Liferay.Language.get('copy-x'),
-									label
-								)}
-								displayType="secondary"
-								ref={inputRef}
-								symbol="paste"
-								title={sub(
-									Liferay.Language.get('copy-x'),
-									label
-								)}
-							/>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-				</ClayForm.Group>
-			</div>
+							<ClayInput.GroupItem append shrink>
+								<ClayButtonWithIcon
+									displayType="secondary"
+									ref={(element) => {
+										inputRefs.current[index] = element;
+									}}
+									symbol="paste"
+									title={sub(
+										Liferay.Language.get('copy-x'),
+										label
+									)}
+								/>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</ClayForm.Group>
+				</div>
+			))}
 		</>
 	);
 };

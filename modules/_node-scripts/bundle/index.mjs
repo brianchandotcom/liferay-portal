@@ -56,6 +56,7 @@ export default async function main() {
 			globalImports,
 			languageJSON,
 			overridenPackageSymbols,
+			projectAlias,
 			projectDescription,
 			projectEntryPoints,
 			projectWebContextPath

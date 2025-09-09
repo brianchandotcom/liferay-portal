@@ -32,7 +32,9 @@ const renderComponent = ({isSubscribed = false} = {}) => {
 			deleteCommentURL="deleteCommentURL"
 			editCommentURL="editCommentURL"
 			editorConfig={{}}
+			entryClassName=""
 			expirationDate={EXPIRATION_DATE}
+			getCommentsURL="getCommentsURL"
 			groupId="21000"
 			id="contentId"
 			isSubscribed={isSubscribed}

@@ -7,6 +7,8 @@ import {objectToFormData} from 'frontend-js-web';
 
 import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 
+export type Comments = Comment[];
+
 export type Comment = {
 	author: {
 		fullName: string;
@@ -67,8 +69,17 @@ async function editComment({
 	);
 }
 
+async function getComments({
+	url,
+}: {
+	url: string;
+}): Promise<RequestResult<Comments>> {
+	return await ApiHelper.get(url);
+}
+
 export default {
 	addComment,
 	deleteComment,
 	editComment,
+	getComments,
 };

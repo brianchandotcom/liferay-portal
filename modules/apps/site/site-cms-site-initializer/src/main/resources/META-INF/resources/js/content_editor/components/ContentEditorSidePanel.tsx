@@ -31,7 +31,9 @@ type Props = {
 	deleteCommentURL: string;
 	editCommentURL: string;
 	editorConfig: LiferayEditorConfig;
+	entryClassName: string;
 	expirationDate: string;
+	getCommentsURL: string;
 	groupId: string;
 	id: string;
 	isSubscribed: boolean;

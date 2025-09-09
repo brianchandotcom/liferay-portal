@@ -102,6 +102,11 @@ public class BatchTestEntityResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getItemClassName() {
+				return BatchTestEntity.class.getName();
+			}
+
+			@Override
 			public List<String> getNestedFields() {
 				return Arrays.asList("nestedField", "relatedCompanyTestEntity");
 			}

@@ -361,6 +361,11 @@ public class ObjectEntryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getItemClassName() {
+				return _objectDefinition.getClassName();
+			}
+
+			@Override
 			public List<String> getNestedFields() {
 				return transform(
 					_objectRelationshipLocalService.

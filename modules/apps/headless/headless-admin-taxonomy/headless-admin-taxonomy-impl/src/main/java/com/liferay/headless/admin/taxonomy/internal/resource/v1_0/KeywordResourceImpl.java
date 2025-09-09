@@ -158,6 +158,11 @@ public class KeywordResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getItemClassName() {
+				return AssetTag.class.getName();
+			}
+
+			@Override
 			public String getPortletId() {
 				return AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN;
 			}

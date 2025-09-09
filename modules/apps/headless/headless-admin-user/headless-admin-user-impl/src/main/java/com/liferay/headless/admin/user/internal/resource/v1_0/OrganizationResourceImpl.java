@@ -301,6 +301,12 @@ public class OrganizationResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getItemClassName() {
+				return com.liferay.portal.kernel.model.Organization.class.
+					getName();
+			}
+
+			@Override
 			public List<String> getNestedFields() {
 				return List.of(
 					"accountBriefs", "imageBase64", "roleBriefs",

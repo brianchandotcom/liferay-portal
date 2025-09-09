@@ -1295,7 +1295,9 @@ public class ResourceOpenAPIParser {
 			return "Site";
 		}
 
-		basePath = basePath.replaceAll("\\{parent(.*)\\}", "{$1}");
+		basePath = basePath.replaceAll("\\{parent([^}]*)\\}", "{$1}");
+		basePath = basePath.replaceAll(
+			"\\{[^}]*ExternalReferenceCode\\}", "{externalReferenceCode}");
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			PathItem pathItem = entry.getValue();

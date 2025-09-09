@@ -59,13 +59,18 @@ public class GroupFragmentEntryLinkDisplayContext {
 		return _fragmentCollectionId;
 	}
 
-	public FragmentEntry getFragmentEntry() throws PortalException {
+	public FragmentEntry getFragmentEntry() {
 		if (_fragmentEntry != null) {
 			return _fragmentEntry;
 		}
 
-		_fragmentEntry = FragmentEntryLocalServiceUtil.getFragmentEntry(
-			getFragmentEntryId());
+		try {
+			_fragmentEntry = FragmentEntryLocalServiceUtil.getFragmentEntry(
+				getFragmentEntryId());
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 
 		return _fragmentEntry;
 	}
@@ -175,6 +180,16 @@ public class GroupFragmentEntryLinkDisplayContext {
 			return _groupFragmentEntryUsages;
 		}
 
+		Group group;
+
+		try {
+			group = GroupLocalServiceUtil.getGroup(
+				getFragmentEntry().getGroupId());
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
 		Map<Group, Integer> groupFragmentEntryUsages = new HashMap<>();
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
@@ -182,8 +197,18 @@ public class GroupFragmentEntryLinkDisplayContext {
 		).from(
 			FragmentEntryLinkTable.INSTANCE
 		).where(
-			FragmentEntryLinkTable.INSTANCE.fragmentEntryId.eq(
-				getFragmentEntryId())
+			FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+				getFragmentEntry().getExternalReferenceCode()
+			).and(
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
+					group.getExternalReferenceCode())
+			).or(
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull(
+				).and(
+					FragmentEntryLinkTable.INSTANCE.groupId.eq(
+						getFragmentEntry().getGroupId())
+				)
+			)
 		);
 
 		List<Long> groupIds = FragmentEntryLinkLocalServiceUtil.dslQuery(

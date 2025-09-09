@@ -8,6 +8,8 @@ package com.liferay.fragment.service.impl;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.exception.NoSuchEntryException;
+import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
@@ -28,6 +30,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
@@ -37,11 +40,13 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -49,7 +54,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -61,7 +65,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -101,6 +104,9 @@ public class FragmentEntryLinkLocalServiceImpl
 		FragmentEntryLink fragmentEntryLink =
 			fragmentEntryLinkPersistence.create(fragmentEntryLinkId);
 
+		ResultERC resultERC = _getResultERC(
+			groupId, fragmentEntryId, originalFragmentEntryLinkId);
+
 		fragmentEntryLink.setUuid(serviceContext.getUuid());
 		fragmentEntryLink.setExternalReferenceCode(externalReferenceCode);
 		fragmentEntryLink.setGroupId(groupId);
@@ -111,9 +117,11 @@ public class FragmentEntryLinkLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		fragmentEntryLink.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		fragmentEntryLink.setOriginalFragmentEntryLinkId(
-			originalFragmentEntryLinkId);
-		fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
+		fragmentEntryLink.setOriginalFragmentEntryLinkERC(
+			resultERC.getOriginalFragmentEntryLinkERC());
+		fragmentEntryLink.setFragmentEntryERC(resultERC.getFragmentEntryERC());
+		fragmentEntryLink.setFragmentEntryScopeERC(
+			resultERC.getFragmentEntryScopeERC());
 		fragmentEntryLink.setSegmentsExperienceId(segmentsExperienceId);
 		fragmentEntryLink.setClassNameId(_portal.getClassNameId(Layout.class));
 		fragmentEntryLink.setClassPK(plid);
@@ -243,8 +251,23 @@ public class FragmentEntryLinkLocalServiceImpl
 	public void deleteFragmentEntryLinksByFragmentEntryId(
 		long fragmentEntryId) {
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			fragmentEntryLinkPersistence.findByFragmentEntryId(fragmentEntryId);
+		ResultERC resultERC = _getResultERC(fragmentEntryId);
+
+		List<FragmentEntryLink> fragmentEntryLinks;
+
+		if (resultERC.isFragmentEntryScopeGlobal()) {
+			fragmentEntryLinks =
+				fragmentEntryLinkPersistence.findByFEERC_FESERC(
+					resultERC.getFragmentEntryERC(),
+					resultERC.getFragmentEntryScopeERC());
+		}
+		else {
+			fragmentEntryLinks =
+				fragmentEntryLinkPersistence.findByG_FEERC_FESERC(
+					resultERC.getFragmentEntryGroupId(),
+					resultERC.getFragmentEntryERC(),
+					resultERC.getFragmentEntryScopeERC());
+		}
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
@@ -256,8 +279,23 @@ public class FragmentEntryLinkLocalServiceImpl
 	public void deleteFragmentEntryLinksByFragmentEntryId(
 		long fragmentEntryId, boolean deleted) {
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			fragmentEntryLinkPersistence.findByF_D(fragmentEntryId, deleted);
+		ResultERC resultERC = _getResultERC(fragmentEntryId);
+
+		List<FragmentEntryLink> fragmentEntryLinks;
+
+		if (resultERC.isFragmentEntryScopeGlobal()) {
+			fragmentEntryLinks =
+				fragmentEntryLinkPersistence.findByFEERC_FESERC_D(
+					resultERC.getFragmentEntryERC(),
+					resultERC.getFragmentEntryScopeERC(), deleted);
+		}
+		else {
+			fragmentEntryLinks =
+				fragmentEntryLinkPersistence.findByG_FEERC_FESERC_D(
+					resultERC.getFragmentEntryGroupId(),
+					resultERC.getFragmentEntryERC(),
+					resultERC.getFragmentEntryScopeERC(), deleted);
+		}
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
@@ -340,13 +378,28 @@ public class FragmentEntryLinkLocalServiceImpl
 		long groupId, long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		return fragmentEntryLinkFinder.findByG_F(
-			groupId, fragmentEntryId, start, end, orderByComparator);
+		ResultERC resultERC = _getResultERC(groupId, fragmentEntryId, 0);
+
+		return fragmentEntryLinkFinder.findByG_FEERC_FESERC(
+			groupId, resultERC.getFragmentEntryERC(),
+			resultERC.getFragmentEntryScopeERC(), start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public int getAllFragmentEntryLinksCountByFragmentEntryId(
 		long groupId, long fragmentEntryId) {
+
+		ResultERC resultERC = _getResultERC(groupId, fragmentEntryId, 0);
+
+		Predicate fragmentEntryScopeERCPredicate =
+			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
+				resultERC.getFragmentEntryScopeERC());
+
+		if (resultERC.getFragmentEntryScopeERC() == null) {
+			fragmentEntryScopeERCPredicate =
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull();
+		}
 
 		return fragmentEntryLinkPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
@@ -360,8 +413,10 @@ public class FragmentEntryLinkLocalServiceImpl
 					FragmentEntryLinkTable.INSTANCE.groupId.eq(
 						groupId
 					).and(
-						FragmentEntryLinkTable.INSTANCE.fragmentEntryId.eq(
-							fragmentEntryId)
+						FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+							resultERC.getFragmentEntryERC())
+					).and(
+						fragmentEntryScopeERCPredicate
 					).and(
 						FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
 					)
@@ -388,8 +443,18 @@ public class FragmentEntryLinkLocalServiceImpl
 	public FragmentEntryLink getFragmentEntryLink(
 		long groupId, long originalFragmentEntryLinkId, long plid) {
 
-		return fragmentEntryLinkPersistence.fetchByG_OFELI_P_First(
-			groupId, originalFragmentEntryLinkId, plid, null);
+		FragmentEntryLink originalFragmentEntryLink = _getFragmentEntryLink(
+			originalFragmentEntryLinkId);
+
+		String originalFragmentEntryLinkERC = null;
+
+		if (originalFragmentEntryLink != null) {
+			originalFragmentEntryLinkERC =
+				originalFragmentEntryLink.getExternalReferenceCode();
+		}
+
+		return fragmentEntryLinkPersistence.fetchByG_OFELERC_P_First(
+			groupId, originalFragmentEntryLinkERC, plid, null);
 	}
 
 	@Override
@@ -397,17 +462,8 @@ public class FragmentEntryLinkLocalServiceImpl
 		int type, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntry> fragmentEntries =
-			_fragmentEntryPersistence.findByType(type);
-
-		if (fragmentEntries.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		return fragmentEntryLinkPersistence.findByFragmentEntryId(
-			ListUtil.toLongArray(
-				fragmentEntries, FragmentEntry.FRAGMENT_ENTRY_ID_ACCESSOR),
-			start, end, orderByComparator);
+		return fragmentEntryLinkPersistence.findByType(
+			type, start, end, orderByComparator);
 	}
 
 	/**
@@ -446,15 +502,36 @@ public class FragmentEntryLinkLocalServiceImpl
 	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryId(
 		long fragmentEntryId) {
 
-		return fragmentEntryLinkPersistence.findByFragmentEntryId(
-			fragmentEntryId);
+		ResultERC resultERC = _getResultERC(fragmentEntryId);
+
+		if (resultERC.isFragmentEntryScopeGlobal()) {
+			return fragmentEntryLinkPersistence.findByFEERC_FESERC(
+				resultERC.getFragmentEntryERC(),
+				resultERC.getFragmentEntryScopeERC());
+		}
+
+		return fragmentEntryLinkPersistence.findByG_FEERC_FESERC(
+			resultERC.getFragmentEntryGroupId(),
+			resultERC.getFragmentEntryERC(),
+			resultERC.getFragmentEntryScopeERC());
 	}
 
 	@Override
 	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryId(
 		long fragmentEntryId, boolean deleted) {
 
-		return fragmentEntryLinkPersistence.findByF_D(fragmentEntryId, deleted);
+		ResultERC resultERC = _getResultERC(fragmentEntryId);
+
+		if (resultERC.isFragmentEntryScopeGlobal()) {
+			return fragmentEntryLinkPersistence.findByFEERC_FESERC_D(
+				resultERC.getFragmentEntryERC(),
+				resultERC.getFragmentEntryScopeERC(), deleted);
+		}
+
+		return fragmentEntryLinkPersistence.findByG_FEERC_FESERC_D(
+			resultERC.getFragmentEntryGroupId(),
+			resultERC.getFragmentEntryERC(),
+			resultERC.getFragmentEntryScopeERC(), deleted);
 	}
 
 	@Override
@@ -510,24 +587,53 @@ public class FragmentEntryLinkLocalServiceImpl
 	public int getFragmentEntryLinksCountByFragmentEntryId(
 		long fragmentEntryId) {
 
-		return fragmentEntryLinkPersistence.countByFragmentEntryId(
-			fragmentEntryId);
+		ResultERC resultERC = _getResultERC(fragmentEntryId);
+
+		if (resultERC.isFragmentEntryScopeGlobal()) {
+			return fragmentEntryLinkPersistence.countByFEERC_FESERC(
+				resultERC.getFragmentEntryERC(),
+				resultERC.getFragmentEntryScopeERC());
+		}
+
+		return fragmentEntryLinkPersistence.countByG_FEERC_FESERC(
+			resultERC.getFragmentEntryGroupId(),
+			resultERC.getFragmentEntryERC(),
+			resultERC.getFragmentEntryScopeERC());
 	}
 
 	@Override
 	public int getFragmentEntryLinksCountByFragmentEntryId(
 		long fragmentEntryId, boolean deleted) {
 
-		return fragmentEntryLinkPersistence.countByF_D(
-			fragmentEntryId, deleted);
+		ResultERC resultERC = _getResultERC(fragmentEntryId);
+
+		if (resultERC.isFragmentEntryScopeGlobal()) {
+			return fragmentEntryLinkPersistence.countByFEERC_FESERC_D(
+				resultERC.getFragmentEntryERC(),
+				resultERC.getFragmentEntryScopeERC(), deleted);
+		}
+
+		return fragmentEntryLinkPersistence.countByG_FEERC_FESERC_D(
+			resultERC.getFragmentEntryGroupId(),
+			resultERC.getFragmentEntryERC(),
+			resultERC.getFragmentEntryScopeERC(), deleted);
 	}
 
 	@Override
 	public int getFragmentEntryLinksCountByFragmentEntryId(
 		long groupId, long fragmentEntryId, boolean deleted) {
 
-		return fragmentEntryLinkPersistence.countByG_F_D(
-			groupId, fragmentEntryId, deleted);
+		ResultERC resultERC = _getResultERC(groupId, fragmentEntryId, 0);
+
+		if (resultERC.isFragmentEntryScopeGlobal()) {
+			return fragmentEntryLinkPersistence.countByG_FEERC_FESERC_D(
+				groupId, resultERC.getFragmentEntryERC(),
+				resultERC.getFragmentEntryScopeERC(), deleted);
+		}
+
+		return fragmentEntryLinkPersistence.countByG_FEERC_FESERC_D(
+			groupId, resultERC.getFragmentEntryERC(),
+			resultERC.getFragmentEntryScopeERC(), deleted);
 	}
 
 	@Override
@@ -540,13 +646,19 @@ public class FragmentEntryLinkLocalServiceImpl
 		long groupId, long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		return fragmentEntryLinkFinder.findByG_F_P_L(
-			groupId, fragmentEntryId, -1, start, end, orderByComparator);
+		ResultERC resultERC = _getResultERC(groupId, fragmentEntryId, 0);
+
+		return fragmentEntryLinkFinder.findByG_FEERC_FESERC_P_L(
+			groupId, resultERC.getFragmentEntryERC(),
+			resultERC.getFragmentEntryScopeERC(), -1, start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public int getLayoutFragmentEntryLinksCountByFragmentEntryId(
 		long groupId, long fragmentEntryId) {
+
+		ResultERC resultERC = _getResultERC(groupId, fragmentEntryId, 0);
 
 		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
 			LayoutTable.INSTANCE.plid
@@ -566,6 +678,15 @@ public class FragmentEntryLinkLocalServiceImpl
 			"tempLayoutTable", LayoutTable.INSTANCE
 		);
 
+		Predicate fragmentEntryScopeERCPredicate =
+			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
+				resultERC.getFragmentEntryScopeERC());
+
+		if (resultERC.getFragmentEntryScopeERC() == null) {
+			fragmentEntryScopeERCPredicate =
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull();
+		}
+
 		return fragmentEntryLinkPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
 				FragmentEntryLinkTable.INSTANCE.plid
@@ -579,8 +700,10 @@ public class FragmentEntryLinkLocalServiceImpl
 				FragmentEntryLinkTable.INSTANCE.groupId.eq(
 					groupId
 				).and(
-					FragmentEntryLinkTable.INSTANCE.fragmentEntryId.eq(
-						fragmentEntryId)
+					FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+						resultERC.getFragmentEntryERC())
+				).and(
+					fragmentEntryScopeERCPredicate
 				).and(
 					FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
 				)
@@ -594,14 +717,19 @@ public class FragmentEntryLinkLocalServiceImpl
 			int start, int end,
 			OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		return fragmentEntryLinkFinder.findByG_F_P_L(
-			groupId, fragmentEntryId, layoutPageTemplateType, start, end,
-			orderByComparator);
+		ResultERC resultERC = _getResultERC(groupId, fragmentEntryId, 0);
+
+		return fragmentEntryLinkFinder.findByG_FEERC_FESERC_P_L(
+			groupId, resultERC.getFragmentEntryERC(),
+			resultERC.getFragmentEntryScopeERC(), layoutPageTemplateType, start,
+			end, orderByComparator);
 	}
 
 	@Override
 	public int getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId(
 		long groupId, long fragmentEntryId, int layoutPageTemplateType) {
+
+		ResultERC resultERC = _getResultERC(groupId, fragmentEntryId, 0);
 
 		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
 			LayoutTable.INSTANCE.plid
@@ -622,6 +750,15 @@ public class FragmentEntryLinkLocalServiceImpl
 			"tempLayoutTable", LayoutTable.INSTANCE
 		);
 
+		Predicate fragmentEntryScopeERCPredicate =
+			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
+				resultERC.getFragmentEntryScopeERC());
+
+		if (resultERC.getFragmentEntryScopeERC() == null) {
+			fragmentEntryScopeERCPredicate =
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull();
+		}
+
 		return fragmentEntryLinkPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
 				FragmentEntryLinkTable.INSTANCE.plid
@@ -635,8 +772,10 @@ public class FragmentEntryLinkLocalServiceImpl
 				FragmentEntryLinkTable.INSTANCE.groupId.eq(
 					groupId
 				).and(
-					FragmentEntryLinkTable.INSTANCE.fragmentEntryId.eq(
-						fragmentEntryId)
+					FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+						resultERC.getFragmentEntryERC())
+				).and(
+					fragmentEntryScopeERCPredicate
 				).and(
 					FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
 				)
@@ -705,13 +844,19 @@ public class FragmentEntryLinkLocalServiceImpl
 		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
 			fragmentEntryLinkId);
 
+		ResultERC resultERC = _getResultERC(
+			fragmentEntryLink.getGroupId(), fragmentEntryId,
+			originalFragmentEntryLinkId);
+
 		fragmentEntryLink.setUserId(user.getUserId());
 		fragmentEntryLink.setUserName(user.getFullName());
 		fragmentEntryLink.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		fragmentEntryLink.setOriginalFragmentEntryLinkId(
-			originalFragmentEntryLinkId);
-		fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
+		fragmentEntryLink.setOriginalFragmentEntryLinkERC(
+			resultERC.getOriginalFragmentEntryLinkERC());
+		fragmentEntryLink.setFragmentEntryERC(resultERC.getFragmentEntryERC());
+		fragmentEntryLink.setFragmentEntryScopeERC(
+			resultERC.getFragmentEntryScopeERC());
 		fragmentEntryLink.setClassNameId(_portal.getClassNameId(Layout.class));
 		fragmentEntryLink.setClassPK(plid);
 		fragmentEntryLink.setPlid(plid);
@@ -882,6 +1027,46 @@ public class FragmentEntryLinkLocalServiceImpl
 		}
 	}
 
+	private FragmentEntry _getFragmentEntry(long fragmentEntryId) {
+		FragmentEntry fragmentEntry = null;
+
+		if (fragmentEntryId == 0) {
+			return fragmentEntry;
+		}
+
+		try {
+			fragmentEntry = _fragmentEntryPersistence.findByPrimaryKey(
+				fragmentEntryId);
+		}
+		catch (NoSuchEntryException noSuchEntryException) {
+			throw new RuntimeException(
+				"Unable to get fragment entry id " + fragmentEntryId,
+				noSuchEntryException);
+		}
+
+		return fragmentEntry;
+	}
+
+	private FragmentEntryLink _getFragmentEntryLink(long fragmentEntryLinkId) {
+		FragmentEntryLink fragmentEntryLink = null;
+
+		if (fragmentEntryLinkId == 0) {
+			return fragmentEntryLink;
+		}
+
+		try {
+			fragmentEntryLink = fragmentEntryLinkPersistence.findByPrimaryKey(
+				fragmentEntryLinkId);
+		}
+		catch (NoSuchEntryLinkException noSuchEntryLinkException) {
+			throw new RuntimeException(
+				"Unable to get fragment entry link id " + fragmentEntryLinkId,
+				noSuchEntryLinkException);
+		}
+
+		return fragmentEntryLink;
+	}
+
 	private String _getProcessedHTML(
 			FragmentEntryLink fragmentEntryLink, ServiceContext serviceContext)
 		throws PortalException {
@@ -905,6 +1090,54 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return _fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 			fragmentEntryLink, fragmentEntryProcessorContext);
+	}
+
+	private ResultERC _getResultERC(long fragmentEntryId) {
+		FragmentEntry fragmentEntry = _getFragmentEntry(fragmentEntryId);
+
+		if (fragmentEntry == null) {
+			return new ResultERC(null, 0, null, false, null);
+		}
+
+		return _getResultERC(fragmentEntry.getGroupId(), fragmentEntryId, 0);
+	}
+
+	private ResultERC _getResultERC(
+		long groupId, long fragmentEntryId, long originalFragmentEntryLinkId) {
+
+		FragmentEntryLink fragmentEntryLinkOriginal = _getFragmentEntryLink(
+			originalFragmentEntryLinkId);
+
+		String originalFragmentEntryLinkERC = null;
+
+		if (fragmentEntryLinkOriginal != null) {
+			originalFragmentEntryLinkERC =
+				fragmentEntryLinkOriginal.getExternalReferenceCode();
+		}
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(fragmentEntryId);
+
+		if (fragmentEntry == null) {
+			return new ResultERC(
+				null, 0, null, false, originalFragmentEntryLinkERC);
+		}
+
+		Group fragmentEntryGroup = _groupLocalService.fetchGroup(
+			fragmentEntry.getGroupId());
+
+		String fragmentEntryScopeERC = null;
+
+		if (!Objects.equals(groupId, fragmentEntry.getGroupId()) ||
+			fragmentEntryGroup.isCompany()) {
+
+			fragmentEntryScopeERC =
+				fragmentEntryGroup.getExternalReferenceCode();
+		}
+
+		return new ResultERC(
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getGroupId(), fragmentEntryScopeERC,
+			fragmentEntryGroup.isCompany(), originalFragmentEntryLinkERC);
 	}
 
 	private String _mergeEditableValues(
@@ -1068,6 +1301,9 @@ public class FragmentEntryLinkLocalServiceImpl
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -1081,5 +1317,47 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static final class ResultERC {
+
+		public ResultERC(
+			String fragmentEntryERC, long fragmentEntryGroupId,
+			String fragmentEntryScopeERC, boolean fragmentEntryScopeGlobal,
+			String originalFragmentEntryLinkERC) {
+
+			_fragmentEntryERC = fragmentEntryERC;
+			_fragmentEntryGroupId = fragmentEntryGroupId;
+			_fragmentEntryScopeERC = fragmentEntryScopeERC;
+			_fragmentEntryScopeGlobal = fragmentEntryScopeGlobal;
+			_originalFragmentEntryLinkERC = originalFragmentEntryLinkERC;
+		}
+
+		public String getFragmentEntryERC() {
+			return _fragmentEntryERC;
+		}
+
+		public long getFragmentEntryGroupId() {
+			return _fragmentEntryGroupId;
+		}
+
+		public String getFragmentEntryScopeERC() {
+			return _fragmentEntryScopeERC;
+		}
+
+		public String getOriginalFragmentEntryLinkERC() {
+			return _originalFragmentEntryLinkERC;
+		}
+
+		public boolean isFragmentEntryScopeGlobal() {
+			return _fragmentEntryScopeGlobal;
+		}
+
+		private final String _fragmentEntryERC;
+		private final long _fragmentEntryGroupId;
+		private final String _fragmentEntryScopeERC;
+		private final boolean _fragmentEntryScopeGlobal;
+		private final String _originalFragmentEntryLinkERC;
+
+	}
 
 }

@@ -229,15 +229,6 @@ public class DisplayPageTemplateResourceTest
 		_testGetSiteDisplayPageTemplateWithNestedFields(displayPageTemplate);
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteDisplayPageTemplatePermissionsPage()
-		throws Exception {
-
-		super.testGetSiteDisplayPageTemplatePermissionsPage();
-	}
-
 	@Override
 	@Test
 	public void testGetSiteDisplayPageTemplatesPage() throws Exception {
@@ -491,15 +482,6 @@ public class DisplayPageTemplateResourceTest
 				displayPageTemplate));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteDisplayPageTemplatePermissionsPage()
-		throws Exception {
-
-		super.testPutSiteDisplayPageTemplatePermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -565,17 +547,6 @@ public class DisplayPageTemplateResourceTest
 			irrelevantGroup.getGroupId());
 	}
 
-	@Ignore
-	@Override
-	@Test
-	protected DisplayPageTemplate
-			testGetSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate()
-		throws Exception {
-
-		return super.
-			testGetSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate();
-	}
-
 	@Override
 	protected DisplayPageTemplate
 			testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
@@ -603,17 +574,6 @@ public class DisplayPageTemplateResourceTest
 
 		return testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
 			testGroup.getExternalReferenceCode(), displayPageTemplate);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected DisplayPageTemplate
-			testPutSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate()
-		throws Exception {
-
-		return super.
-			testPutSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate();
 	}
 
 	private static com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate

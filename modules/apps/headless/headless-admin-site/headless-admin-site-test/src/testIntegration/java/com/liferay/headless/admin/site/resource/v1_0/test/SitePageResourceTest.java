@@ -184,13 +184,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				serviceContext));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSitePagePermissionsPage() throws Exception {
-		super.testGetSiteSitePagePermissionsPage();
-	}
-
 	@Override
 	@Test
 	public void testPatchSiteSitePage() throws Exception {
@@ -315,13 +308,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				serviceContext));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSitePagePermissionsPage() throws Exception {
-		super.testPutSiteSitePagePermissionsPage();
-	}
-
 	@Override
 	protected boolean equals(SitePage sitePage1, SitePage sitePage2) {
 		super.equals(sitePage1, sitePage2);
@@ -365,15 +351,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return _getRandomSitePage(_getRandomType(_types));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	protected SitePage testGetSiteSitePagePermissionsPage_addSitePage()
-		throws Exception {
-
-		return super.testGetSiteSitePagePermissionsPage_addSitePage();
-	}
-
 	@Override
 	protected SitePage testGetSiteSitePagesPage_addSitePage(
 			String siteExternalReferenceCode, SitePage sitePage)
@@ -409,15 +386,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		return sitePageResource.postSiteSitePage(
 			testGroup.getExternalReferenceCode(), sitePage);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected SitePage testPutSiteSitePagePermissionsPage_addSitePage()
-		throws Exception {
-
-		return super.testPutSiteSitePagePermissionsPage_addSitePage();
 	}
 
 	private Layout _addLayout(

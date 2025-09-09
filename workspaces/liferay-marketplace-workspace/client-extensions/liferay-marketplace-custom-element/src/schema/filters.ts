@@ -8,7 +8,11 @@ import {Params} from 'react-router-dom';
 import SearchBuilder, {Operators} from '../core/SearchBuilder';
 import {AccountType} from '../enums/Account';
 import {MarketplaceCategory} from '../enums/Categories';
-import {OrderTypes, OrderWorkflowStatusCode} from '../enums/Order';
+import {
+	OrderTypes,
+	OrderWorkflowStatusCode,
+	PaymentStatus,
+} from '../enums/Order';
 import {ProductType, ProductWorkflowStatusCode} from '../enums/Product';
 import i18n from '../i18n';
 import {LIFERAY_VERSION_PICKLIST} from '../pages/PublisherDashboard/pages/NewAppFlow/constants';
@@ -395,7 +399,7 @@ const filterSchema = {
 		],
 		name: 'administratorSolutions',
 	},
-	financeOrders: {
+	financeDashboardOrders: {
 		fields: [
 			baseFilters.dateCreated,
 			overrides(baseFilters.dateCreated, {
@@ -407,20 +411,52 @@ const filterSchema = {
 				name: 'paymentStatusInfo/code',
 				options: [
 					{
-						label: 'Unpaid',
-						value: "'1'",
+						label: i18n.translate('canceled'),
+						value: `${PaymentStatus.CANCELED}`,
 					},
 					{
-						label: 'Paid',
-						value: "'0'",
+						label: i18n.translate('failed'),
+						value: `${PaymentStatus.FAILED}`,
 					},
 					{
-						label: 'Failed',
-						value: '4',
+						label: i18n.translate('paid'),
+						value: `${PaymentStatus.PAID}`,
 					},
 					{
-						label: 'Cancelled',
-						value: '8',
+						label: i18n.translate('unpaid'),
+						value: `${PaymentStatus.PENDING}`,
+					},
+				],
+				removeQuoteMark: true,
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.status, {
+				label: i18n.translate('order-status'),
+				name: 'orderStatus',
+				options: [
+					{
+						label: i18n.translate('canceled'),
+						value: `${OrderWorkflowStatusCode.CANCELLED}`,
+					},
+					{
+						label: i18n.translate('completed'),
+						value: `${OrderWorkflowStatusCode.COMPLETED}`,
+					},
+					{
+						label: i18n.translate('in-progress'),
+						value: `${OrderWorkflowStatusCode.IN_PROGRESS}`,
+					},
+					{
+						label: i18n.translate('on-hold'),
+						value: `${OrderWorkflowStatusCode.ON_HOLD}`,
+					},
+					{
+						label: i18n.translate('pending'),
+						value: `${OrderWorkflowStatusCode.PENDING}`,
+					},
+					{
+						label: i18n.translate('processing'),
+						value: `${OrderWorkflowStatusCode.PROCESSING}`,
 					},
 				],
 				removeQuoteMark: true,

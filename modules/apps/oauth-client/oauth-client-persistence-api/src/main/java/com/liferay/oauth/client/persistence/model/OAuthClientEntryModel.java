@@ -282,6 +282,21 @@ public interface OAuthClientEntryModel
 	public void setTokenRequestParametersJSON(
 		String tokenRequestParametersJSON);
 
+	/**
+	 * Returns the custom claims json of this o auth client entry.
+	 *
+	 * @return the custom claims json of this o auth client entry
+	 */
+	@AutoEscape
+	public String getCustomClaimsJSON();
+
+	/**
+	 * Sets the custom claims json of this o auth client entry.
+	 *
+	 * @param customClaimsJSON the custom claims json of this o auth client entry
+	 */
+	public void setCustomClaimsJSON(String customClaimsJSON);
+
 	@Override
 	public OAuthClientEntry cloneWithOriginalValues();
 

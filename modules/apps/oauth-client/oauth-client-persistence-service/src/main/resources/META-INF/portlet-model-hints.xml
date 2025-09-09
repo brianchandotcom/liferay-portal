@@ -43,5 +43,8 @@
 		<field name="tokenRequestParametersJSON" type="String">
 			<hint name="max-length">3999</hint>
 		</field>
+		<field name="customClaimsJSON" type="String">
+			<hint name="max-length">3999</hint>
+		</field>
 	</model>
 </model-hints>

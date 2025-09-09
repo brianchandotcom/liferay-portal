@@ -49,6 +49,7 @@ public class OAuthClientEntryWrapper
 		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
 		attributes.put(
 			"tokenRequestParametersJSON", getTokenRequestParametersJSON());
+		attributes.put("customClaimsJSON", getCustomClaimsJSON());
 
 		return attributes;
 	}
@@ -142,6 +143,12 @@ public class OAuthClientEntryWrapper
 		if (tokenRequestParametersJSON != null) {
 			setTokenRequestParametersJSON(tokenRequestParametersJSON);
 		}
+
+		String customClaimsJSON = (String)attributes.get("customClaimsJSON");
+
+		if (customClaimsJSON != null) {
+			setCustomClaimsJSON(customClaimsJSON);
+		}
 	}
 
 	@Override
@@ -197,6 +204,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the custom claims json of this o auth client entry.
+	 *
+	 * @return the custom claims json of this o auth client entry
+	 */
+	@Override
+	public String getCustomClaimsJSON() {
+		return model.getCustomClaimsJSON();
 	}
 
 	/**
@@ -367,6 +384,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the custom claims json of this o auth client entry.
+	 *
+	 * @param customClaimsJSON the custom claims json of this o auth client entry
+	 */
+	@Override
+	public void setCustomClaimsJSON(String customClaimsJSON) {
+		model.setCustomClaimsJSON(customClaimsJSON);
 	}
 
 	/**

@@ -8,6 +8,8 @@ package com.liferay.site.cms.site.initializer.internal.struts;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionService;
@@ -50,6 +52,7 @@ public class EditContentItemStrutsAction implements StrutsAction {
 			_formManager, _fragmentEntryLinkListenerRegistry,
 			_fragmentEntryLinkService, _fragmentRendererRegistry,
 			httpServletRequest, String.valueOf(objectEntry.getObjectEntryId()),
+			_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
 			_objectDefinitionService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId()));
 
@@ -99,6 +102,12 @@ public class EditContentItemStrutsAction implements StrutsAction {
 
 	@Reference
 	private FragmentRendererRegistry _fragmentRendererRegistry;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;

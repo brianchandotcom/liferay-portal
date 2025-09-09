@@ -10,6 +10,8 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -81,7 +83,8 @@ public class RegenerateStructureDisplayPageStrutsAction
 
 		ActionUtil.generateEditContentLayoutStructure(
 			_formManager, _fragmentEntryLinkListenerRegistry,
-			_fragmentEntryLinkService, _fragmentRendererRegistry, layout,
+			_fragmentEntryLinkService, _fragmentRendererRegistry,
+			_infoItemServiceRegistry, _infoSearchClassMapperRegistry, layout,
 			layoutPageTemplateEntry,
 			ServiceContextFactory.getInstance(httpServletRequest));
 
@@ -117,6 +120,12 @@ public class RegenerateStructureDisplayPageStrutsAction
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

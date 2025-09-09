@@ -13,7 +13,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -28,6 +30,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
@@ -36,7 +39,9 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
@@ -70,6 +75,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -81,8 +87,10 @@ public class ActionUtil {
 			FormManager formManager,
 			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
 			FragmentEntryLinkService fragmentEntryLinkService,
-			FragmentRendererRegistry fragmentRendererRegistry, Layout layout,
-			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			FragmentRendererRegistry fragmentRendererRegistry,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
+			Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -136,20 +144,6 @@ public class ActionUtil {
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-		FragmentEntryLink spaceListFragmentEntryLink = _addFragmentEntryLink(
-			StringPool.BLANK, fragmentEntryLinkService,
-			fragmentRendererRegistry,
-			SpaceListComponentSectionFragmentRenderer.class.getName(), layout,
-			segmentsExperienceId, serviceContext);
-
-		if (spaceListFragmentEntryLink != null) {
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				spaceListFragmentEntryLink.getFragmentEntryLinkId(),
-				childContainerStyledLayoutStructureItem.getItemId(), 0);
-
-			addedFragmentEntryLinks.add(spaceListFragmentEntryLink);
-		}
-
 		FragmentEntryLink localizationSelectFragmentEntryLink =
 			_addFragmentEntryLink(
 				JSONUtil.toString(
@@ -174,11 +168,115 @@ public class ActionUtil {
 			addedFragmentEntryLinks.add(localizationSelectFragmentEntryLink);
 		}
 
-		formManager.addFragmentEntryLinksLayoutStructureItems(
-			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
-			formStyledLayoutStructureItem, false, layout, layoutStructure,
-			LocaleUtil.getMostRelevantLocale(), false, segmentsExperienceId,
-			serviceContext, null);
+		InfoForm infoForm = _getInfoForm(
+			layoutPageTemplateEntry.getClassNameId(), layout.getGroupId(),
+			infoItemServiceRegistry, infoSearchClassMapperRegistry);
+
+		InfoField<?> titleInfoField = infoForm.getInfoField("title");
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			formManager.addFragmentEntryLinksLayoutStructureItem(
+				formStyledLayoutStructureItem, "INPUTS-inline-text-input",
+				titleInfoField.getUniqueId(), layout, layoutStructure, false,
+				segmentsExperienceId, serviceContext);
+
+		fragmentStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"marginBottom", "5"
+				).put(
+					"marginLeft", "-16px"
+				)));
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		jsonObject.put(
+			"placeholder",
+			JSONUtil.put(
+				LocaleUtil.US.toString(),
+				LanguageUtil.format(
+					serviceContext.getLocale(), "new-x",
+					infoForm.getLabel(serviceContext.getLocale()))));
+
+		fragmentEntryLink =
+			FragmentEntryLinkServiceUtil.updateFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				editableValuesJSONObject.toString());
+
+		if (fragmentEntryLink != null) {
+			addedFragmentEntryLinks.add(fragmentEntryLink);
+		}
+
+		FragmentEntryLink spaceListFragmentEntryLink = _addFragmentEntryLink(
+			StringPool.BLANK, fragmentEntryLinkService,
+			fragmentRendererRegistry,
+			SpaceListComponentSectionFragmentRenderer.class.getName(), layout,
+			segmentsExperienceId, serviceContext);
+
+		if (spaceListFragmentEntryLink != null) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					spaceListFragmentEntryLink.getFragmentEntryLinkId(),
+					formStyledLayoutStructureItem.getItemId(), -1);
+
+			layoutStructureItem.updateItemConfig(
+				JSONUtil.put("styles", JSONUtil.put("marginBottom", "16px")));
+
+			addedFragmentEntryLinks.add(spaceListFragmentEntryLink);
+		}
+
+		InfoField<?> objectFriendlyURLInfoField = infoForm.getInfoField(
+			"objectEntryFriendlyURL");
+
+		fragmentStyledLayoutStructureItem =
+			formManager.addFragmentEntryLinksLayoutStructureItem(
+				formStyledLayoutStructureItem, "INPUTS-friendly-url-input",
+				objectFriendlyURLInfoField.getUniqueId(), layout,
+				layoutStructure, false, segmentsExperienceId, serviceContext);
+
+		fragmentStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put("styles", JSONUtil.put("marginBottom", "5")));
+
+		fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		if (fragmentEntryLink != null) {
+			addedFragmentEntryLinks.add(fragmentEntryLink);
+		}
+
+		Set<String> uniqueInfoFieldIds = new HashSet<>();
+
+		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
+			if (!Objects.equals(infoField.getName(), "title") &&
+				!Objects.equals(
+					infoField.getName(), "objectEntryFriendlyURL")) {
+
+				uniqueInfoFieldIds.add(infoField.getUniqueId());
+			}
+		}
+
+		List<LayoutStructureItem> layoutStructureItems =
+			formManager.addFragmentEntryLinksLayoutStructureItems(
+				addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
+				formStyledLayoutStructureItem, false, layout, layoutStructure,
+				LocaleUtil.getMostRelevantLocale(), false, segmentsExperienceId,
+				serviceContext, uniqueInfoFieldIds.toArray(new String[0]));
+
+		for (LayoutStructureItem layoutStructureItem : layoutStructureItems) {
+			layoutStructureItem.updateItemConfig(
+				JSONUtil.put("styles", JSONUtil.put("marginBottom", "16px")));
+		}
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
@@ -407,6 +505,8 @@ public class ActionUtil {
 		FragmentEntryLinkService fragmentEntryLinkService,
 		FragmentRendererRegistry fragmentRendererRegistry,
 		HttpServletRequest httpServletRequest,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ObjectDefinition objectDefinition) {
 
 		try {
@@ -420,6 +520,7 @@ public class ActionUtil {
 				fragmentEntryLinkService, fragmentRendererRegistry,
 				GroupLocalServiceUtil.getGroup(
 					themeDisplay.getCompanyId(), GroupConstants.CMS),
+				infoItemServiceRegistry, infoSearchClassMapperRegistry,
 				objectDefinition,
 				ServiceContextFactory.getInstance(httpServletRequest));
 
@@ -452,6 +553,8 @@ public class ActionUtil {
 		FragmentEntryLinkService fragmentEntryLinkService,
 		FragmentRendererRegistry fragmentRendererRegistry,
 		HttpServletRequest httpServletRequest, String id,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ObjectDefinition objectDefinition) {
 
 		try {
@@ -468,6 +571,7 @@ public class ActionUtil {
 			Layout layout = _getEditContentLayout(
 				classNameId, formManager, fragmentEntryLinkListenerRegistry,
 				fragmentEntryLinkService, fragmentRendererRegistry, group,
+				infoItemServiceRegistry, infoSearchClassMapperRegistry,
 				objectDefinition,
 				ServiceContextFactory.getInstance(httpServletRequest));
 
@@ -597,6 +701,8 @@ public class ActionUtil {
 					fragmentEntryLinkListenerRegistry,
 				FragmentEntryLinkService fragmentEntryLinkService,
 				FragmentRendererRegistry fragmentRendererRegistry, long groupId,
+				InfoItemServiceRegistry infoItemServiceRegistry,
+				InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 				String name, ServiceContext serviceContext)
 		throws Exception {
 
@@ -614,7 +720,8 @@ public class ActionUtil {
 
 		generateEditContentLayoutStructure(
 			formManager, fragmentEntryLinkListenerRegistry,
-			fragmentEntryLinkService, fragmentRendererRegistry, draftLayout,
+			fragmentEntryLinkService, fragmentRendererRegistry,
+			infoItemServiceRegistry, infoSearchClassMapperRegistry, draftLayout,
 			layoutPageTemplateEntry, serviceContext);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -747,6 +854,8 @@ public class ActionUtil {
 			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
 			FragmentEntryLinkService fragmentEntryLinkService,
 			FragmentRendererRegistry fragmentRendererRegistry, Group group,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 			ObjectDefinition objectDefinition, ServiceContext serviceContext)
 		throws Exception {
 
@@ -760,7 +869,8 @@ public class ActionUtil {
 				_addEditContentDefaultLayoutPageTemplateEntry(
 					classNameId, formManager, fragmentEntryLinkListenerRegistry,
 					fragmentEntryLinkService, fragmentRendererRegistry,
-					group.getGroupId(), objectDefinition.getName(),
+					group.getGroupId(), infoItemServiceRegistry,
+					infoSearchClassMapperRegistry, objectDefinition.getName(),
 					serviceContext);
 		}
 
@@ -768,7 +878,7 @@ public class ActionUtil {
 			layoutPageTemplateEntry.getPlid());
 	}
 
-	private static Set<String> _getLocalizableInfoFieldIds(
+	private static InfoForm _getInfoForm(
 			long classNameId, long groupId,
 			InfoItemServiceRegistry infoItemServiceRegistry,
 			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry)
@@ -791,13 +901,27 @@ public class ActionUtil {
 						itemClassName);
 			}
 
+			return null;
+		}
+
+		return infoItemFormProvider.getInfoForm(StringPool.BLANK, groupId);
+	}
+
+	private static Set<String> _getLocalizableInfoFieldIds(
+			long classNameId, long groupId,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry)
+		throws Exception {
+
+		InfoForm infoForm = _getInfoForm(
+			classNameId, groupId, infoItemServiceRegistry,
+			infoSearchClassMapperRegistry);
+
+		if (infoForm == null) {
 			return Collections.emptySet();
 		}
 
 		Set<String> localizableInfoFieldIds = new HashSet<>();
-
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			StringPool.BLANK, groupId);
 
 		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
 			if (infoField.isLocalizable()) {

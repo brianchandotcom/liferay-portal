@@ -84,7 +84,7 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 						ObjectFieldUtil.createObjectField(
 							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 							ObjectFieldConstants.DB_TYPE_STRING,
-							OBJECT_FIELD_NAME_TEXT)),
+							OBJECT_FIELD_NAME_TEXT_1)),
 					ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
 
 			_testPostExportTask("FAILED", null, objectDefinition2);
@@ -114,7 +114,7 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 		// With "batchNestedFields" query parameter
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT_1, "TestObject");
 
 		JSONObject jsonObject1 = _testPostExportTask(
 			"COMPLETED", "batchNestedFields=permissions", objectDefinition);
@@ -158,10 +158,10 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 	@TestInfo("LPD-60157")
 	public void testPostExportTaskWithFieldNames() throws Exception {
 		ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT_1, "TestObject");
 
 		JSONObject jsonObject = _testPostExportTask(
-			"COMPLETED", "fieldNames=status.code," + OBJECT_FIELD_NAME_TEXT,
+			"COMPLETED", "fieldNames=status.code," + OBJECT_FIELD_NAME_TEXT_1,
 			objectDefinition);
 
 		Assert.assertEquals(1, jsonObject.getInt("processedItemsCount"));
@@ -169,7 +169,7 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					OBJECT_FIELD_NAME_TEXT, "TestObject"
+					OBJECT_FIELD_NAME_TEXT_1, "TestObject"
 				).put(
 					"status", JSONUtil.put("code", 0)
 				)
@@ -183,15 +183,15 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 	@Test
 	public void testPostExportTaskWithFilter() throws Exception {
 		ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "Object3");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT_1, "Object3");
 
 		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject1");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT_1, "TestObject1");
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject2");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT_1, "TestObject2");
 
 		String filterString =
-			"contains(" + OBJECT_FIELD_NAME_TEXT + ", 'Test')";
+			"contains(" + OBJECT_FIELD_NAME_TEXT_1 + ", 'Test')";
 
 		JSONObject jsonObject = _testPostExportTask(
 			"COMPLETED", "filter=" + URLCodec.encodeURL(filterString),

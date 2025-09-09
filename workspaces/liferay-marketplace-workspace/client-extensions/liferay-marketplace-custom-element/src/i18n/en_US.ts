@@ -287,6 +287,7 @@ export default {
 	'go-to-marketplace': 'Go to Marketplace',
 	'go-to-my-apps': 'Go to My Apps',
 	'go-to-ssa-trial-listing': 'Go to SSA Trial Listing',
+	'go-to-the-catalog': 'Go to the Catalog',
 	'go-to-trial': 'Go to Trial',
 	'got-it': 'Got it',
 	'header': 'Header',

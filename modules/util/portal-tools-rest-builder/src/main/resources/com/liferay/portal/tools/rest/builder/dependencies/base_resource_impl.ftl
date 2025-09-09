@@ -435,7 +435,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
 
-					return toPermissionPage(${getActions("groupId", "resourceId", "resourceName", schemaName + "AssetLibrary" + schemaName)}, resourceId, resourceName, roleNames);
+					return toPermissionPage(${getActions("groupId", "resourceId", "resourceName", "AssetLibrary" + schemaName)}, resourceId, resourceName, roleNames);
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, "assetLibraryId")>
 					<#assign generateGetPermissionCheckerMethods = true />
 
@@ -443,7 +443,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					PermissionServiceUtil.checkPermission(assetLibraryId, portletName, assetLibraryId);
 
-					return toPermissionPage(${getActions("assetLibraryId", "assetLibraryId", "portletName", schemaName + "AssetLibrary")}, assetLibraryId, portletName, roleNames);
+					return toPermissionPage(${getActions("assetLibraryId", "assetLibraryId", "portletName", "AssetLibrary" + schemaName)}, assetLibraryId, portletName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -468,7 +468,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					PermissionServiceUtil.checkPermission(siteId, portletName, siteId);
 
-					return toPermissionPage(${getActions("siteId", "siteId", "portletName", "Site")}, siteId, portletName, roleNames);
+					return toPermissionPage(${getActions("siteId", "siteId", "portletName", "Site" + schemaName)}, siteId, portletName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>

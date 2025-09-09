@@ -3,11 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/**
- * Returns current languageId
- * @param {object} state
- * @return {string}
- */
-export default function selectLanguageId(state) {
+import {State} from '../../types/State';
+
+export default function selectLanguageId(state: State) {
 	return state.languageId;
 }

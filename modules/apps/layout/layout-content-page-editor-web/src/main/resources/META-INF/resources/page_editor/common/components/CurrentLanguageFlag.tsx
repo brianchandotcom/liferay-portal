@@ -11,7 +11,7 @@ import {config} from '../../app/config/index';
 import {useSelector} from '../../app/contexts/StoreContext';
 import selectLanguageId from '../../app/selectors/selectLanguageId';
 
-export default function CurrentLanguageFlag({className}) {
+export default function CurrentLanguageFlag({className}: {className?: string}) {
 	const languageId = useSelector(selectLanguageId);
 	const language = config.availableLanguages[languageId];
 

@@ -144,30 +144,30 @@ const OrderDetails = () => {
 			<div className="d-flex mt-5">
 				<DetailedCard
 					cardIconAltText="order-form-pencil"
-					cardTitle="Account Details"
+					cardTitle={i18n.translate('account-details')}
 					className="mr-5 w-100"
 					clayIcon="order-form-pencil"
 				>
 					<QATable
 						items={[
 							{
-								title: 'Account Name',
+								title: i18n.translate('account-name'),
 								value: textWrapper(order?.account?.name),
 							},
 							{
-								title: 'Liferay User Email',
+								title: i18n.translate('liferay-user-email'),
 								value: textWrapper(order?.creatorEmailAddress),
 							},
 							{
-								title: 'Billing Email',
+								title: i18n.translate('billing-email'),
 								value: '-',
 							},
 							{
-								title: 'Project',
+								title: i18n.translate('project'),
 								value: textWrapper(order?.projectName),
 							},
 							{
-								title: 'Address',
+								title: i18n.translate('address'),
 								value: textWrapper(
 									formatAddress(
 										order?.billingAddress as BillingAddress
@@ -175,7 +175,7 @@ const OrderDetails = () => {
 								),
 							},
 							{
-								title: 'VAT Number',
+								title: i18n.translate('vat-number'),
 								value: textWrapper(order?.account?.taxId),
 							},
 						]}
@@ -185,20 +185,20 @@ const OrderDetails = () => {
 
 				<DetailedCard
 					cardIconAltText="change-list"
-					cardTitle="Transaction Details"
+					cardTitle={i18n.translate('transaction-details')}
 					className="w-100"
 					clayIcon="change-list"
 				>
 					<QATable
 						items={[
 							{
-								title: 'Purchase Date',
+								title: i18n.translate('purchase-date'),
 								value: textWrapper(
 									formatDate(order?.createDate)
 								),
 							},
 							{
-								title: 'Payment Method',
+								title: i18n.translate('payment-method'),
 								value: textWrapper(
 									order?.paymentMethod ===
 										'paypal-integration'
@@ -207,17 +207,17 @@ const OrderDetails = () => {
 								),
 							},
 							{
-								title: 'Transaction ID',
+								title: i18n.translate('transaction-id'),
 								value: textWrapper(order?.transactionId),
 							},
 							{
-								title: 'Fulfillment Date',
+								title: i18n.translate('fulfillment-date'),
 								value: textWrapper(
 									formatDate(order?.orderDate)
 								),
 							},
 							{
-								title: 'Status',
+								title: i18n.translate('payment-status'),
 								value: (
 									<PaymentStatus
 										paymentStatus={
@@ -228,12 +228,12 @@ const OrderDetails = () => {
 								),
 							},
 							{
-								title: 'Error Reason',
+								title: i18n.translate('error-details'),
 								value: payments?.items[0]?.errorMessages,
 								visible: !!payments?.items[0]?.errorMessages,
 							},
 							{
-								title: 'Paid Date',
+								title: i18n.translate('paid-date'),
 								value: textWrapper(
 									formatDate(payments?.items?.[0]?.createDate)
 								),
@@ -249,7 +249,7 @@ const OrderDetails = () => {
 
 			<DetailedCard
 				cardIconAltText="order-form"
-				cardTitle="Order Details"
+				cardTitle={i18n.translate('order-details')}
 				className="mt-5 pb-0 w-100"
 				clayIcon="order-form"
 			>
@@ -282,7 +282,7 @@ const OrderDetails = () => {
 									</div>
 								);
 							},
-							title: 'App Name',
+							title: i18n.translate('app-name'),
 						},
 						{
 							bodyClass: 'order-item-display',
@@ -295,12 +295,12 @@ const OrderDetails = () => {
 											ProductSpecificationKey.APP_DEVELOPER_NAME
 									)?.value.en_US || ''
 								),
-							title: 'Publisher',
+							title: i18n.translate('publisher'),
 						},
 						{
 							bodyClass: 'order-item-display',
 							key: 'quantity',
-							title: 'Quantity',
+							title: i18n.translate('quantity'),
 						},
 						{
 							bodyClass: 'order-item-display',
@@ -309,7 +309,7 @@ const OrderDetails = () => {
 								textWrapper(
 									formatCurrency(finalPrice, currencyCode)
 								),
-							title: 'Net Price',
+							title: i18n.translate('net-price'),
 						},
 						{
 							bodyClass: 'order-item-display',
@@ -321,7 +321,7 @@ const OrderDetails = () => {
 										currencyCode
 									)
 								),
-							title: 'VAT',
+							title: i18n.translate('vat'),
 						},
 						{
 							bodyClass: 'order-item-display',
@@ -333,7 +333,7 @@ const OrderDetails = () => {
 										currencyCode
 									)
 								),
-							title: 'Total',
+							title: i18n.translate('total'),
 						},
 					]}
 					hasHover={false}

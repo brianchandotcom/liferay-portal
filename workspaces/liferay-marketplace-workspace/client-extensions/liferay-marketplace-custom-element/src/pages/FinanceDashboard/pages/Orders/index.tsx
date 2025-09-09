@@ -116,7 +116,7 @@ const Orders = () => {
 						},
 						{
 							id: 'account',
-							name: 'Date',
+							name: 'Account',
 							render: (account) => account?.name,
 						},
 						{

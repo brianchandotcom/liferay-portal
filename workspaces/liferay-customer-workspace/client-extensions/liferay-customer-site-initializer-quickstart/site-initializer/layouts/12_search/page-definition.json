@@ -53,7 +53,10 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Search Results"
+														"en_US": "Search Results",
+														"es_ES": "Resultados de búsqueda",
+														"ja_JP": "検索結果",
+														"pt_BR": "Resultados da Pesquisa"
 													}
 												}
 											}

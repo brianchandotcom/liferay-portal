@@ -82,9 +82,9 @@
 										"text": {
 											"value_i18n": {
 												"en_US": "Getting Started",
-												"es-ES": "Cómo empezar",
-												"ja-JP": "はじめに",
-												"pt-BR": "Primeiros passos"
+												"es_ES": "Cómo empezar",
+												"ja_JP": "はじめに",
+												"pt_BR": "Primeiros passos"
 											}
 										}
 									}
@@ -279,9 +279,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "First steps and essential guidance for administrators, new users, and partners",
-																		"es-ES": "Primeros pasos y guía básica para administradores, nuevos usuarios y partners",
-																		"ja-JP": "管理者、新規ユーザー、パートナーのためのファーストステップと重要なガイダンス",
-																		"pt-BR": "Primeiros passos e orientações essenciais para administradores, novos usuários e parceiros"
+																		"es_ES": "Primeros pasos y guía básica para administradores, nuevos usuarios y partners",
+																		"ja_JP": "管理者、新規ユーザー、パートナーのためのファーストステップと重要なガイダンス",
+																		"pt_BR": "Primeiros passos e orientações essenciais para administradores, novos usuários e parceiros"
 																	}
 																}
 															}
@@ -439,9 +439,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Learn more about project administration within the Customer Portal",
-																		"es-ES": "Lee más sobre la administración de projectos en el Portal del cliente",
-																		"ja-JP": "カスタマーポータルでのプロジェクト管理の詳細",
-																		"pt-BR": "Saiba mais sobre a administração de projetos dentro do Portal do Cliente"
+																		"es_ES": "Lee más sobre la administración de projectos en el Portal del cliente",
+																		"ja_JP": "カスタマーポータルでのプロジェクト管理の詳細",
+																		"pt_BR": "Saiba mais sobre a administração de projetos dentro do Portal do Cliente"
 																	}
 																}
 															}
@@ -501,9 +501,9 @@
 										"text": {
 											"value_i18n": {
 												"en_US": "Help Resources",
-												"es-ES": "Recursos de ayuda",
-												"ja-JP": "ヘルプ・リソース",
-												"pt-BR": "Recursos de ajuda"
+												"es_ES": "Recursos de ayuda",
+												"ja_JP": "ヘルプ・リソース",
+												"pt_BR": "Recursos de ajuda"
 											}
 										}
 									}
@@ -657,9 +657,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Overview",
-																		"es-ES": "Visión general",
-																		"ja-JP": "概要",
-																		"pt-BR": "Visão geral"
+																		"es_ES": "Visión general",
+																		"ja_JP": "概要",
+																		"pt_BR": "Visão geral"
 																	}
 																}
 															}
@@ -693,9 +693,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "The essential guide to Liferay Customer Portal",
-																		"es-ES": "La guía básica para el Portal del cliente de Liferay",
-																		"ja-JP": "Liferayカスタマーポータルのエッセンシャルガイド",
-																		"pt-BR": "O guia essencial do Portal do Cliente Liferay"
+																		"es_ES": "La guía básica para el Portal del cliente de Liferay",
+																		"ja_JP": "Liferayカスタマーポータルのエッセンシャルガイド",
+																		"pt_BR": "O guia essencial do Portal do Cliente Liferay"
 																	}
 																}
 															}
@@ -837,9 +837,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Details about Liferay DXP activation key usage and types",
-																		"es-ES": "Detalles sobre el uso y tipos de códigos de activación de Liferay DXP",
-																		"ja-JP": "Liferay DXPアクティベーションキーの使用方法と種類に関する詳細",
-																		"pt-BR": "Detalhes sobre o uso e os tipos de chaves de ativação do Liferay DXP"
+																		"es_ES": "Detalles sobre el uso y tipos de códigos de activación de Liferay DXP",
+																		"ja_JP": "Liferay DXPアクティベーションキーの使用方法と種類に関する詳細",
+																		"pt_BR": "Detalhes sobre o uso e os tipos de chaves de ativação do Liferay DXP"
 																	}
 																}
 															}
@@ -980,7 +980,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Learn more about roles, support seats and Incident Contacts."
+																		"en_US": "Learn more about roles, support seats and Incident Contacts",
+																		"es_ES": "Lee más sobre roles, plazas de soporte y contactos de incidencias",
+																		"ja_JP": "役割、サポートシート、インシデント・コンタクトの詳細",
+																		"pt_BR": "Saiba mais sobre funções, vagas de suporte e Contatos de Incidentes"
 																	}
 																}
 															}

@@ -48,9 +48,9 @@
 		"key": "active",
 		"value": {
 			"en-US": "Active",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Activo",
+			"ja-JP": "有効",
+			"pt-BR": "Ativo"
 		}
 	},
 	{
@@ -108,9 +108,9 @@
 		"key": "contact-support",
 		"value": {
 			"en-US": "Contact Support",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Contacta con Soporte",
+			"ja-JP": "サポートにお問い合わせ",
+			"pt-BR": "Contato com o Suporte"
 		}
 	},
 	{
@@ -135,27 +135,27 @@
 		"key": "ended-on",
 		"value": {
 			"en-US": "Ended on",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Finalizó el",
+			"ja-JP": "終了",
+			"pt-BR": "Finalizado em"
 		}
 	},
 	{
 		"key": "ends-on",
 		"value": {
 			"en-US": "Ends on",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Finaliza el",
+			"ja-JP": "終了",
+			"pt-BR": "Termina em"
 		}
 	},
 	{
 		"key": "expired",
 		"value": {
 			"en-US": "Expired",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Vencido",
+			"ja-JP": "期限切れ",
+			"pt-BR": "Expirado"
 		}
 	},
 	{
@@ -171,9 +171,9 @@
 		"key": "future",
 		"value": {
 			"en-US": "Future",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Futuro",
+			"ja-JP": "未来",
+			"pt-BR": "Futuro"
 		}
 	},
 	{
@@ -270,9 +270,9 @@
 		"key": "on-this-page",
 		"value": {
 			"en-US": "On this page",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "En esta página",
+			"ja-JP": "このページで",
+			"pt-BR": "Nesta página"
 		}
 	},
 	{
@@ -306,18 +306,18 @@
 		"key": "sign-in",
 		"value": {
 			"en-US": "Sign in",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Inicia sesión",
+			"ja-JP": "ログイン",
+			"pt-BR": "Entrar"
 		}
 	},
 	{
 		"key": "sign-in-to-access-the-customer-portal-features",
 		"value": {
 			"en-US": "Sign in to access the Customer Portal features",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Inicia sesión para acceder a las funcionalidades del Portal del cliente",
+			"ja-JP": "サインインしてカスタマーポータルの機能にアクセスする",
+			"pt-BR": "Faça login para acessar os recursos do Portal do Cliente"
 		}
 	},
 	{
@@ -402,9 +402,9 @@
 		"key": "view-all",
 		"value": {
 			"en-US": "View All",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Ver todos",
+			"ja-JP": "全てを見る",
+			"pt-BR": "Ver tudo"
 		}
 	},
 	{
@@ -429,18 +429,18 @@
 		"key": "you-dont-have-any-projects-on-customer-portal",
 		"value": {
 			"en-US": "You don't have any projects on Customer Portal.",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "No tienes ningún proyecto en el Portal del cliente",
+			"ja-JP": "カスタマーポータルにプロジェクトがありません。",
+			"pt-BR": "Você não tem nenhum projeto no Portal do Cliente."
 		}
 	},
 	{
 		"key": "your-project",
 		"value": {
 			"en-US": "Your Project",
-			"es-ES": "",
-			"ja-JP": "",
-			"pt-BR": ""
+			"es-ES": "Tu proyecto",
+			"ja-JP": "プロジェクト",
+			"pt-BR": "Seu projeto"
 		}
 	}
 ]

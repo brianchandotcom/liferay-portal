@@ -166,7 +166,7 @@
 			[#if parentCategory?has_content]
 				<a class="border border-neutral-3 border-radius-lg cp-article-side-panel-back-link cp-article-side-panel-item cp-article-side-panel-link mb-0 p-3" href="${baseURL}/v/${parentCategory.id}">
 					[@clay["icon"] symbol="angle-left-small" /]
-					<span>Back to ${htmlUtil.escape(parentCategory.name)}</span>
+					<span>${languageUtil.format(locale, "back-to-x", htmlUtil.escape(parentCategory.name))}</span>
 				</a>
 			[/#if]
 		[/#if]

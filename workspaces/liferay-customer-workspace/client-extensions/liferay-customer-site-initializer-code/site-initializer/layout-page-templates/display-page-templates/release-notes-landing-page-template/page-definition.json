@@ -208,9 +208,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Liferay DXP",
-																		"es-ES": "Liferay DXP",
-																		"ja-JP": "Liferay DXP",
-																		"pt-BR": "Liferay DXP"
+																		"es_ES": "Liferay DXP",
+																		"ja_JP": "Liferay DXP",
+																		"pt_BR": "Liferay DXP"
 																	}
 																}
 															}
@@ -244,9 +244,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Reference the latest changes for Liferay DXP",
-																		"es-ES": "Consulta los últimos cambios de Liferay DXP",
-																		"ja-JP": "Liferay DXPの最新の変更点を参照してください。",
-																		"pt-BR": "Consulte as alterações mais recentes do Liferay DXP"
+																		"es_ES": "Consulta los últimos cambios de Liferay DXP",
+																		"ja_JP": "Liferay DXPの最新の変更点を参照してください。",
+																		"pt_BR": "Consulte as alterações mais recentes do Liferay DXP"
 																	}
 																}
 															}
@@ -393,9 +393,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Reference the latest changes for Liferay Cloud Services and the Liferay Cloud Platform",
-																		"es-ES": "Consulta los últimos cambios de los servicios y plataform de Liferay Cloud",
-																		"ja-JP": "Liferay Cloud Services と Liferay Cloud Platform の最新の変更点を参照してください。",
-																		"pt-BR": "Consulte as alterações mais recentes dos Serviços Liferay Cloud e da Plataforma Liferay Cloud"
+																		"es_ES": "Consulta los últimos cambios de los servicios y plataform de Liferay Cloud",
+																		"ja_JP": "Liferay Cloud Services と Liferay Cloud Platform の最新の変更点を参照してください。",
+																		"pt_BR": "Consulte as alterações mais recentes dos Serviços Liferay Cloud e da Plataforma Liferay Cloud"
 																	}
 																}
 															}
@@ -496,9 +496,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Version Comparison Tool",
-																		"es-ES": "Herramienta de comparación de versiones",
-																		"ja-JP": "バージョン比較ツール",
-																		"pt-BR": "Ferramenta de Comparação de Versões"
+																		"es_ES": "Herramienta de comparación de versiones",
+																		"ja_JP": "バージョン比較ツール",
+																		"pt_BR": "Ferramenta de Comparação de Versões"
 																	}
 																}
 															}
@@ -532,9 +532,9 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Reference detailed changes between two Liferay DXP versions",
-																		"es-ES": "Consulta los cambios pormenorizados entre dos versiones de Liferay DXP",
-																		"ja-JP": "Liferay DXPの2つのバージョン間の詳細な変更点を参照してください。",
-																		"pt-BR": "Consulte as mudanças detalhadas entre duas versões do Liferay DXP"
+																		"es_ES": "Consulta los cambios pormenorizados entre dos versiones de Liferay DXP",
+																		"ja_JP": "Liferay DXPの2つのバージョン間の詳細な変更点を参照してください。",
+																		"pt_BR": "Consulte as mudanças detalhadas entre duas versões do Liferay DXP"
 																	}
 																}
 															}

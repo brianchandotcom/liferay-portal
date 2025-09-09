@@ -180,9 +180,9 @@
 												"text": {
 													"value_i18n": {
 														"en_US": "Back to Announcements",
-														"es-ES": "Volver a los anuncios",
-														"ja-JP": "アナウンスメントに戻る",
-														"pt-BR": "Voltar para Avisos"
+														"es_ES": "Volver a los anuncios",
+														"ja_JP": "アナウンスメントに戻る",
+														"pt_BR": "Voltar para Avisos"
 													}
 												}
 											}

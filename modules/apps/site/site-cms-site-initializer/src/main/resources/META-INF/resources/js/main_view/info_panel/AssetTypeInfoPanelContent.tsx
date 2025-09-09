@@ -17,7 +17,7 @@ import '../../../css/components/AssetTypeInfoPanel.scss';
 import {getBaseAssetInformation} from './util';
 
 const AssetTypeInfoPanelContent = ({
-	additionalProps: {cmsGroupId},
+	additionalProps: {cmsGroupId, commentsProps},
 	items: objectEntries,
 }: {
 	additionalProps: any;
@@ -34,6 +34,7 @@ const AssetTypeInfoPanelContent = ({
 				value={
 					{
 						cmsGroupId,
+						commentsProps,
 						objectEntries,
 						...assetInfo,
 					} as IAssetTypeInfoPanelContext

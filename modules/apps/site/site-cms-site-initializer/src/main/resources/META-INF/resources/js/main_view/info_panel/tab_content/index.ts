@@ -4,6 +4,7 @@
  */
 
 import CategorizationTabContent from './CategorizationTabContent';
+import CommentsTabContent from './CommentsTabContent';
 import DetailsTabContent from './DetailsTabContent';
 import PerformanceTabContent from './PerformanceTabContent';
 import VersionsTabContent from './VersionsTabContent';
@@ -13,6 +14,11 @@ export const TABS = {
 		component: CategorizationTabContent,
 		id: 'categorization',
 		name: Liferay.Language.get('categorization'),
+	},
+	COMMENTS: {
+		component: CommentsTabContent,
+		id: 'comments',
+		name: Liferay.Language.get('comments'),
 	},
 	DETAILS: {
 		component: DetailsTabContent,

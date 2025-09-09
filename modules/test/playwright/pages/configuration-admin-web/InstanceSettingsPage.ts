@@ -36,11 +36,7 @@ export class InstanceSettingsPage {
 	async checkOption(label: string, checked: boolean) {
 		const checkbox = this.page.getByLabel(label).first();
 		await expect(checkbox).toBeVisible();
-		if (checked) {
-			await checkbox.check();
-		} else {
-			await checkbox.uncheck();
-		}
+		checked ? await checkbox.check() : await checkbox.uncheck();
 	}
 
 	async assertOptionVisible(options: {

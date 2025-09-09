@@ -30,18 +30,18 @@ public class SXPBlueprintCollectionProviderUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		AtomicBoolean foundEnabledFeatureFlag = new AtomicBoolean(false);
+		AtomicBoolean hasFeatureFlag = new AtomicBoolean(false);
 
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
 				if (FeatureFlagManagerUtil.isEnabled(companyId, "LPS-129412")) {
-					foundEnabledFeatureFlag.set(true);
+					hasFeatureFlag.set(true);
 
 					_upgradeSXPBlueprints(companyId);
 				}
 			});
 
-		if (!foundEnabledFeatureFlag.get()) {
+		if (!hasFeatureFlag.get()) {
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
 						StringBundler.concat(

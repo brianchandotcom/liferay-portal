@@ -26,6 +26,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -65,16 +66,14 @@ public class TrialRestController extends BaseRestController {
 	public void delete(@PathVariable long orderId) throws Exception {
 		Order order = _marketplaceService.getOrder(orderId);
 
-		Map<String, String> customFields =
-			(Map<String, String>)order.getCustomFields();
-
 		JSONObject trialProvisioningContextJSONObject =
-			_getTrialProvisioningContextJSONObject(
-				order.getOrderTypeExternalReferenceCode());
+			_getTrialProvisioningContextJSONObject(order);
 
 		_consoleService.deleteProject(
-			orderId,
-			trialProvisioningContextJSONObject.getString("projectPrefix"));
+			trialProvisioningContextJSONObject.getString("projectName"));
+
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
 
 		_deletePortalInstance(
 			orderId, trialProvisioningContextJSONObject,
@@ -89,7 +88,7 @@ public class TrialRestController extends BaseRestController {
 
 		Page<PortalInstance> page = _getPortalInstancesPage(
 			_getTrialProvisioningContextJSONObject(
-				orderTypeExternalReferenceCode));
+				_getRawOrder(orderTypeExternalReferenceCode)));
 
 		return new JSONObject(
 		).put(
@@ -109,7 +108,7 @@ public class TrialRestController extends BaseRestController {
 		throws Exception {
 
 		JSONObject jsonObject = _getTrialProvisioningContextJSONObject(
-			orderTypeExternalReferenceCode);
+			_getRawOrder(orderTypeExternalReferenceCode));
 
 		String virtualHost =
 			projectPrefix + "." + jsonObject.getString("domain");
@@ -132,6 +131,10 @@ public class TrialRestController extends BaseRestController {
 
 	@PostMapping("expire/{orderId}")
 	public void postExpire(@PathVariable long orderId) throws Exception {
+		if (_log.isInfoEnabled()) {
+			_log.info("Expired trial " + orderId);
+		}
+
 		_marketplaceService.updateOrder(
 			null, orderId, MarketplaceConstants.ORDER_STATUS_PENDING);
 
@@ -142,14 +145,14 @@ public class TrialRestController extends BaseRestController {
 			null, orderId, MarketplaceConstants.ORDER_STATUS_COMPLETED);
 
 		delete(orderId);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Expired trial " + orderId);
-		}
 	}
 
 	@PostMapping("extend/{id}")
 	public void postExtend(@PathVariable long id) throws Exception {
+		if (_log.isInfoEnabled()) {
+			_log.info("Extend Trial " + id);
+		}
+
 		JSONObject trialExtensionRequestJSONObject = new JSONObject(
 			get(
 				_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -209,6 +212,10 @@ public class TrialRestController extends BaseRestController {
 
 	@PostMapping("notify-end/{orderId}")
 	public void postNotifyEnd(@PathVariable long orderId) throws Exception {
+		if (_log.isInfoEnabled()) {
+			_log.info("Notify End " + orderId);
+		}
+
 		Order order = _marketplaceService.getOrder(orderId);
 
 		UserAccount userAccount = _marketplaceService.getUserAccount(
@@ -256,8 +263,7 @@ public class TrialRestController extends BaseRestController {
 		Order order = _marketplaceService.getOrder(orderId);
 
 		JSONObject trialProvisioningContextJSONObject =
-			_getTrialProvisioningContextJSONObject(
-				order.getOrderTypeExternalReferenceCode());
+			_getTrialProvisioningContextJSONObject(order);
 
 		Page<PortalInstance> portalInstancesPage = _getPortalInstancesPage(
 			trialProvisioningContextJSONObject);
@@ -287,19 +293,14 @@ public class TrialRestController extends BaseRestController {
 		UserAccount userAccount = _marketplaceService.getUserAccount(
 			order.getCreatorEmailAddress());
 
-		Map<String, String> customFields =
-			(Map<String, String>)order.getCustomFields();
-
-		JSONObject trialSettingsJSONObject = new JSONObject(
-			customFields.getOrDefault("trial-settings", "{}"));
+		JSONObject trialSettingsJSONObject = _getTrialSettingsJSONObject(order);
 
 		boolean sendNotificationEmail = trialSettingsJSONObject.optBoolean(
 			"sendNotificationEmail", true);
 
 		if (sendNotificationEmail) {
 			_marketplaceService.postNotificationQueueEntry(
-				modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-				"TRIAL-PROCESSING-ORDER",
+				order.getCreatorEmailAddress(), "TRIAL-PROCESSING-ORDER",
 				new HashMapBuilder<String, Object>().put(
 					"[%COMMERCEORDER_AUTHOR_FIRST_NAME%]",
 					userAccount.getGivenName()
@@ -310,11 +311,12 @@ public class TrialRestController extends BaseRestController {
 
 		PortalInstance portalInstance = null;
 
+		String projectId = trialSettingsJSONObject.optString(
+			"projectId", String.valueOf(orderId));
+
 		try {
 			portalInstance = _postPortalInstance(
-				jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-				trialSettingsJSONObject.optString(
-					"projectId", String.valueOf(orderId)),
+				jwt, order.getCreatorEmailAddress(), projectId,
 				trialSettingsJSONObject.optString("siteInitializerKey", null),
 				trialProvisioningContextJSONObject);
 		}
@@ -333,13 +335,13 @@ public class TrialRestController extends BaseRestController {
 			_consoleService.setUpProject(
 				trialProvisioningContextJSONObject.getString("cluster"),
 				trialProvisioningContextJSONObject.getBoolean("deployable"),
-				trialProvisioningContextJSONObject.getString("projectUid"),
+				trialProvisioningContextJSONObject.getString("dxpProjectUid"),
 				portalInstance.getVirtualHost(),
 				_toStringArray(
 					trialSettingsJSONObject.optJSONArray(
 						"consoleInviteEmailAddresses", new JSONArray())),
 				orderId,
-				trialProvisioningContextJSONObject.getString("projectPrefix"));
+				trialProvisioningContextJSONObject.getString("projectName"));
 
 			_marketplaceService.updateOrder(
 				HashMapBuilder.put(
@@ -363,11 +365,9 @@ public class TrialRestController extends BaseRestController {
 
 			if (sendNotificationEmail) {
 				_marketplaceService.postNotificationQueueEntry(
-					modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-					"TRIAL-COMPLETED-ORDER",
+					order.getCreatorEmailAddress(), "TRIAL-COMPLETED-ORDER",
 					new HashMapBuilder<String, Object>().put(
-						"%EMAIL%",
-						modelDTOOrderJSONObject.getString("creatorEmailAddress")
+						"%EMAIL%", order.getCreatorEmailAddress()
 					).put(
 						"%NAME%", userAccount.getGivenName()
 					).put(
@@ -464,10 +464,28 @@ public class TrialRestController extends BaseRestController {
 		return portalInstanceResource.getPortalInstancesPage(true);
 	}
 
-	private JSONObject _getTrialProvisioningContextJSONObject(
-		String orderTypeExternalReferenceCode) {
+	private Order _getRawOrder(String orderTypeExternalReferenceCode) {
+		Order order = new Order();
 
-		if (Objects.equals(orderTypeExternalReferenceCode, "SOLUTIONS7")) {
+		order.setCustomFields(() -> new HashMap<>());
+
+		order.setOrderTypeExternalReferenceCode(
+			() -> orderTypeExternalReferenceCode);
+
+		return order;
+	}
+
+	private JSONObject _getTrialProvisioningContextJSONObject(Order order) {
+		JSONObject trialSettingsJSONObject = _getTrialSettingsJSONObject(order);
+
+		String projectId = trialSettingsJSONObject.optString(
+			"projectId", String.valueOf(order.getId()));
+
+		String extProjectName = "-ext" + projectId;
+
+		if (Objects.equals(
+				order.getOrderTypeExternalReferenceCode(), "SOLUTIONS7")) {
+
 			return new JSONObject(
 			).put(
 				"cluster", _consoleTrialCluster
@@ -476,9 +494,9 @@ public class TrialRestController extends BaseRestController {
 			).put(
 				"domain", _trialDXPDomain
 			).put(
-				"projectPrefix", _consoleTrialProjectPrefix
+				"dxpProjectUid", _consoleTrialProjectUid
 			).put(
-				"projectUid", _consoleTrialProjectUid
+				"projectName", _consoleTrialProjectPrefix + extProjectName
 			).put(
 				"trialAuthorizationERC", "external-trial"
 			).put(
@@ -486,7 +504,9 @@ public class TrialRestController extends BaseRestController {
 			);
 		}
 
-		if (Objects.equals(orderTypeExternalReferenceCode, "SSA_SAAS")) {
+		if (Objects.equals(
+				order.getOrderTypeExternalReferenceCode(), "SSA_SAAS")) {
+
 			return new JSONObject(
 			).put(
 				"cluster", _consoleSSACluster
@@ -495,9 +515,9 @@ public class TrialRestController extends BaseRestController {
 			).put(
 				"domain", _trialSSADXPDomain
 			).put(
-				"projectPrefix", _consoleSSAProjectPrefix
+				"dxpProjectUid", _consoleSSAProjectUid
 			).put(
-				"projectUid", _consoleSSAProjectUid
+				"projectName", _consoleSSAProjectPrefix + extProjectName
 			).put(
 				"trialAuthorizationERC", "external-ssa"
 			).put(
@@ -506,7 +526,16 @@ public class TrialRestController extends BaseRestController {
 		}
 
 		throw new IllegalArgumentException(
-			"Unsupported order type: " + orderTypeExternalReferenceCode);
+			"Unsupported order type: " +
+				order.getOrderTypeExternalReferenceCode());
+	}
+
+	private JSONObject _getTrialSettingsJSONObject(Order order) {
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		return new JSONObject(
+			customFields.getOrDefault("trial-settings", "{}"));
 	}
 
 	private PortalInstance _postPortalInstance(

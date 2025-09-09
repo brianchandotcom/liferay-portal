@@ -945,10 +945,12 @@ public class ObjectFieldLocalServiceImpl
 	private void _addObjectFieldColumn(
 		String dbTableName, ObjectField objectField) {
 
-		runSQL(
-			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-				dbTableName, objectField.getBusinessType(),
-				objectField.getDBColumnName(), objectField.getDBType()));
+		for (String dbColumnName : objectField.getDBColumnNames()) {
+			runSQL(
+				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
+					dbTableName, objectField.getBusinessType(), dbColumnName,
+					objectField.getDBType()));
+		}
 
 		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
@@ -1234,8 +1236,9 @@ public class ObjectFieldLocalServiceImpl
 			return objectField;
 		}
 
-		_alterTableDropColumn(
-			objectField.getDBTableName(), objectField.getDBColumnName());
+		for (String dbColumnName : objectField.getDBColumnNames()) {
+			_alterTableDropColumn(objectField.getDBTableName(), dbColumnName);
+		}
 
 		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {

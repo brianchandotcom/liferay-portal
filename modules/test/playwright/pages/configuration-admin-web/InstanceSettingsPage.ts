@@ -43,7 +43,7 @@ export class InstanceSettingsPage {
 		}
 	}
 
-	async checkSettingVisibility(options: {
+	async assertOptionVisible(options: {
 		customLocator?: Locator;
 		description?: string;
 		label?: string;

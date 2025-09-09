@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {ClaySelectWithOption} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React from 'react';
 
 import {FormLayoutDataItem} from '../../../types/layout_data/FormLayoutDataItem';
@@ -18,8 +21,13 @@ import {
 	ObjectFields,
 	useObjectFields,
 } from '../../contexts/ObjectDataContext';
-import {useDispatch, useSelectorCallback} from '../../contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorCallback,
+} from '../../contexts/StoreContext';
 import {ContainerWithControls} from '../../js-index';
+import selectLanguageId from '../../selectors/selectLanguageId';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
 import FormRelationship from './FormRelationship';
@@ -110,7 +118,13 @@ function FormRelationshipWithControls({
 	}
 
 	return (
-		<MappedFormRelationship item={item}>{children}</MappedFormRelationship>
+		<>
+			<MappedFormRelationship item={item}>
+				{children}
+			</MappedFormRelationship>
+
+			<AddButton label={item.config.buttonLabel} />
+		</>
 	);
 }
 
@@ -197,4 +211,32 @@ function MappedFormRelationship({
 	}
 
 	return <FormRelationship item={item}>{children}</FormRelationship>;
+}
+
+function AddButton({label}: {label: Liferay.Language.LocalizedValue<string>}) {
+	const languageId = useSelector(selectLanguageId);
+
+	const value =
+		label?.[languageId] ??
+		label?.[config.defaultLanguageId] ??
+		Liferay.Language.get('add-new');
+
+	return (
+		<ClayButton
+			aria-label={value ? '' : Liferay.Language.get('add-new')}
+			borderless
+			displayType="primary"
+			size="sm"
+		>
+			<ClayIcon
+				className={classNames('text-primary', {
+					'mr-2': value,
+				})}
+				style={{transform: 'rotate(45deg)'}}
+				symbol="times-circle-full"
+			/>
+
+			{value}
+		</ClayButton>
+	);
 }

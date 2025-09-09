@@ -70,6 +70,7 @@ const renderComponent = () => {
 			deleteCommentURL="deleteCommentURL"
 			editCommentURL="editCommentURL"
 			editorConfig={{}}
+			getCommentsURL="getCommentsURL"
 		/>
 	);
 };

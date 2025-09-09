@@ -5,22 +5,35 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React from 'react';
 
 export default function FormRelationshipAddButton({
-	buttonLabel,
+	label,
 }: {
-	buttonLabel: string;
+	label: Record<Liferay.Language.Locale, string>;
 }) {
+	const value =
+		label?.[Liferay.ThemeDisplay.getLanguageId()] ??
+		label?.[Liferay.ThemeDisplay.getDefaultLanguageId()] ??
+		Liferay.Language.get('add-new');
+
 	return (
-		<ClayButton borderless displayType="primary" size="sm">
+		<ClayButton
+			aria-label={value ? '' : Liferay.Language.get('add-new')}
+			borderless
+			displayType="primary"
+			size="sm"
+		>
 			<ClayIcon
-				className="mr-2 text-primary"
+				className={classNames('text-primary', {
+					'mr-2': value,
+				})}
 				style={{transform: 'rotate(45deg)'}}
 				symbol="times-circle-full"
 			/>
 
-			{buttonLabel}
+			{value}
 		</ClayButton>
 	);
 }

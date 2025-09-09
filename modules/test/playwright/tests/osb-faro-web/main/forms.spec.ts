@@ -18,16 +18,16 @@ import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
 
 export const test = mergeTests(
-    apiHelpersTest,
-    dataApiHelpersTest,
-    assetPublisherPagesTest,
-    pageEditorPagesTest,
-    featureFlagsTest({
-        'LPD-39304': {enabled: true},
-        'LPS-178052': {enabled: true},
-    }),
-    loginAnalyticsCloudTest(),
-    loginTest()
+	apiHelpersTest,
+	dataApiHelpersTest,
+	assetPublisherPagesTest,
+	pageEditorPagesTest,
+	featureFlagsTest({
+		'LPD-39304': {enabled: true},
+		'LPS-178052': {enabled: true},
+	}),
+	loginAnalyticsCloudTest(),
+	loginTest()
 );
 
 const randomString = getRandomString();
@@ -39,32 +39,32 @@ let channel;
 let project;
 
 test.beforeEach(async ({apiHelpers}) => {
-    const result = await createChannel({
-        apiHelpers,
-        channelName,
-    });
+	const result = await createChannel({
+		apiHelpers,
+		channelName,
+	});
 
-    channel = result.channel;
-    project = result.project;
+	channel = result.channel;
+	project = result.project;
 });
 
 test.afterEach(async ({apiHelpers}) => {
-    await test.step('Delete channel and delete site on the DXP side', async () => {
-        await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-            `[${channel.id}]`,
-            project.groupId
-        );
-    });
+	await test.step('Delete channel and delete site on the DXP side', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('Forms visitor behavior card shows expected amount of views', async ({
-    apiHelpers,
-    page,
+	apiHelpers,
+	page,
 }) => {
-    await test.step('Create form events to appear within the Last 24 hours period in AC', async () => {
-        const date1 = new Date();
+	await test.step('Create form events to appear within the Last 24 hours period in AC', async () => {
+		const date1 = new Date();
 
-        await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
 			{
 				applicationId: 'Form',
 				assetId: '1',
@@ -76,7 +76,7 @@ test('Forms visitor behavior card shows expected amount of views', async ({
 				title: pageTitle,
 				userId: '1',
 			},
-            {
+			{
 				applicationId: 'Form',
 				assetId: '1',
 				assetTitle: 'My Form 1',
@@ -87,7 +87,7 @@ test('Forms visitor behavior card shows expected amount of views', async ({
 				title: pageTitle,
 				userId: '1',
 			},
-            {
+			{
 				applicationId: 'Form',
 				assetId: '1',
 				assetTitle: 'My Form 1',
@@ -98,7 +98,7 @@ test('Forms visitor behavior card shows expected amount of views', async ({
 				title: pageTitle,
 				userId: '1',
 			},
-            {
+			{
 				applicationId: 'Form',
 				assetId: '1',
 				assetTitle: 'My Form 1',
@@ -108,59 +108,56 @@ test('Forms visitor behavior card shows expected amount of views', async ({
 				eventId: 'formViewed',
 				title: pageTitle,
 				userId: '1',
-			}
-        ]);
+			},
+		]);
 
-        await test.step('Go to Analytics Cloud asset page', async () => {
-            navigateToACPageViaURL({
-                acPage: ACPage.assetPage,
-                channelID: channel.id,
-                page,
-                projectID: project.groupId,
-            });
-        });
+		await test.step('Go to Analytics Cloud asset page', async () => {
+			navigateToACPageViaURL({
+				acPage: ACPage.assetPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
 
-        await test.step('Go to Forms session', async () => {
-            await page
-                .locator('.navbar-collapse')
-                .getByText('Forms')
-                .click();
-        });
-    
-        await test.step('Change the time filter to Last 24 hours', async () => {
-            await changeTimeFilter({
-                page,
-                timeFilterPeriod: 'Last 24 hours',
-            });
-        });
+		await test.step('Go to Forms session', async () => {
+			await page.locator('.navbar-collapse').getByText('Forms').click();
+		});
 
-        let formTitles;
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
 
-        await test.step('Assert the form is appearing in the list', async () => {
-            formTitles = await page.locator('.forms-root .table-title').all();
-    
-            expect(formTitles.length).toBe(1);
-        });
+		let formTitles;
 
-        await test.step('Go into form Visitors Behavior metrics', async () => {
-            await formTitles[0].click();
-    
-            await expect(page.getByText('Visitors Behavior')).toBeVisible();
+		await test.step('Assert the form is appearing in the list', async () => {
+			formTitles = await page.locator('.forms-root .table-title').all();
 
-            await page
-                .locator('.analytics-metrics-tabs .card-tab')
-                .getByText('Views')
-                .click();
-    
-            const metricTabs = await page
-                .locator('.analytics-metrics-tabs .card-tab')
-                .all();
+			expect(formTitles.length).toBe(1);
+		});
 
-            const viewMetricTab = metricTabs[1];
+		await test.step('Go into form Visitors Behavior metrics', async () => {
+			await formTitles[0].click();
 
-            expect(
-                await viewMetricTab.locator('.metric-value').textContent()
-            ).toBe('4');
-        });
-    });
+			await expect(page.getByText('Visitors Behavior')).toBeVisible();
+
+			await page
+				.locator('.analytics-metrics-tabs .card-tab')
+				.getByText('Views')
+				.click();
+
+			const metricTabs = await page
+				.locator('.analytics-metrics-tabs .card-tab')
+				.all();
+
+			const viewMetricTab = metricTabs[1];
+
+			expect(
+				await viewMetricTab.locator('.metric-value').textContent()
+			).toBe('4');
+		});
+	});
 });

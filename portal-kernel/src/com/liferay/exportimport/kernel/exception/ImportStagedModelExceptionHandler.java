@@ -6,6 +6,7 @@
 package com.liferay.exportimport.kernel.exception;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.model.StagedModel;
 
 /**
@@ -14,7 +15,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 public interface ImportStagedModelExceptionHandler {
 
 	public <T extends StagedModel> void handle(
-		Exception exception, PortletDataContext portletDataContext,
+		PortletDataException portletDataException, PortletDataContext portletDataContext,
 		T stagedModel);
 
 }

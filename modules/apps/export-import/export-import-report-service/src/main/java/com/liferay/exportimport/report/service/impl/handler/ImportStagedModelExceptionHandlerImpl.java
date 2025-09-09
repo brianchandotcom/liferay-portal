@@ -8,6 +8,7 @@ package com.liferay.exportimport.report.service.impl.handler;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.exception.ImportStagedModelExceptionHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -31,7 +32,7 @@ public class ImportStagedModelExceptionHandlerImpl
 
 	@Override
 	public <T extends StagedModel> void handle(
-		Exception exception1, PortletDataContext portletDataContext,
+		PortletDataException portletDataException, PortletDataContext portletDataContext,
 		T stagedModel) {
 
 		String externalReferenceCode = null;
@@ -62,7 +63,7 @@ public class ImportStagedModelExceptionHandlerImpl
 					ExportImportClassedModelUtil.getClassPK(stagedModel),
 					GetterUtil.getLong(
 						portletDataContext.getExportImportProcessId()),
-					exception1.getMessage(), exception1.toString(),
+					portletDataException.getMessage(), portletDataException.toString(),
 					ExportImportReportEntryUtil.getModelName(clase),
 					ExportImportReportEntryUtil.getOrigin(),
 					ExportImportReportEntryUtil.getScope(group),

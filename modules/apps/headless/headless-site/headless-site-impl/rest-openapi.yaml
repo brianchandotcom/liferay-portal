@@ -42,6 +42,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                parentSiteExternalReferenceCode:
+                    type: string
                 parentSiteKey:
                     type: string
                     writeOnly: true

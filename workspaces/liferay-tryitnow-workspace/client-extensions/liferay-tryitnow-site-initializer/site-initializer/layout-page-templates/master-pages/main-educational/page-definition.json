@@ -257,23 +257,21 @@
 												"type": "Fragment"
 											},
 											{
- 												"definition":{
-												"fragment":{
-													"key":"tryitnow-user-personal-bar",
-													"siteKey":"Guest"
+												"definition": {
+													"fragment": {
+														"key": "tryitnow-user-personal-bar",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"marginLeft": "4"
+													},
+													"indexed": true
 												},
-												"fragmentConfig":{
-												
-												},
-												"fragmentFields":[
-												
-												],
-												"fragmentStyle":{
-													"marginLeft":"4"
-												},
-												"indexed":true
-												},
-											"type":"Fragment"
+												"type": "Fragment"
 											}
 										],
 										"type": "Section"

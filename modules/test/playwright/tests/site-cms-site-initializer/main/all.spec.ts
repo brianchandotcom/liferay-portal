@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, Page, expect, mergeTests} from '@playwright/test';
 import {readFileSync} from 'fs';
 import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -70,14 +72,65 @@ test(
 );
 
 test(
-	'Can view Delete confirmation modal for added content',
+	'Info Panel Comments and view Delete confirmation modal for added content',
 	{tag: '@LPD-62554'},
-	async ({apiHelpers, assetsPage, page}) => {
-		const applicationName = 'cms/knowledge-bases';
+	async ({apiHelpers, assetsPage, infoPanelPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
 		const spaceName = 'Default';
 		let objectEntry1;
 
 		const file1Title = `title ${getRandomString()}`;
+
+		const addComment = async ({
+			content = 'New Comment',
+			page,
+			parentComment,
+		}: {
+			content?: string;
+			page: Page;
+			parentComment?: Locator;
+		}) => {
+			const rootComment = parentComment || page;
+
+			const editor = rootComment.getByLabel('Add Comment.');
+
+			await expect(editor).toBeVisible();
+
+			await editor.scrollIntoViewIfNeeded();
+
+			await editor.click();
+
+			await page.keyboard.type(content);
+
+			const saveButton = rootComment.getByRole('button', {name: 'Save'});
+
+			await expect(saveButton).toBeEnabled();
+
+			await saveButton.click();
+
+			await waitForAlert(page, 'Success:Your comment has been posted.', {
+				autoClose: true,
+			});
+
+			if (parentComment) {
+				await expect(saveButton).not.toBeAttached();
+				await expect(editor).not.toBeAttached();
+			}
+			else {
+				await expect(saveButton).toBeEnabled();
+				await expect(editor).not.toContainText(content);
+			}
+
+			const comment = rootComment.locator('article');
+
+			await expect(comment.filter({hasText: content})).toBeAttached();
+
+			if (parentComment) {
+				await expect(comment.getByText('Reply')).not.toBeAttached();
+			}
+
+			return {comment, editor};
+		};
 
 		try {
 			objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
@@ -89,18 +142,115 @@ test(
 				spaceName
 			);
 
-			await assetsPage.gotoAll();
+			await test.step('Go to All Assets and open the Info Panel Comments', async () => {
+				await assetsPage.gotoAll();
 
-			await assetsPage.table.bodyRows
-				.filter({hasText: file1Title})
-				.locator('input[title="Select Item"]')
-				.check();
+				await assetsPage.execItemAction({
+					action: 'Show Details',
+					filter: file1Title,
+				});
 
-			await assetsPage.execBulkItemAction('Delete');
+				await expect(
+					page.getByRole('heading', {name: file1Title})
+				).toBeVisible();
 
-			await expect(page.locator('.modal-title')).toContainText(
-				'Delete Entry'
-			);
+				await infoPanelPage.selectTab('More').click();
+				await infoPanelPage.dropdownTab('Comments').click();
+				await infoPanelPage.selectTab('More').click();
+			});
+
+			await test.step('Add, edit and delete comments in the info Panel Comments', async () => {
+				const parentCommentContent = 'New Comment';
+
+				const {comment, editor} = await addComment({
+					content: parentCommentContent,
+					page,
+				});
+
+				await editor.click({force: true});
+
+				await page.keyboard.type('New comment to cancel');
+
+				await page.getByRole('button', {name: 'Cancel'}).click();
+
+				await expect(editor).not.toContainText('New comment to cancel');
+
+				await comment.getByText('Reply').click();
+
+				const {comment: childComment} = await addComment({
+					content: 'New child comment',
+					page,
+					parentComment: comment,
+				});
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page
+						.getByRole('menuitem')
+						.filter({hasText: 'edit'}),
+					trigger: page.getByTitle('actions').first(),
+				});
+
+				await page.getByText(parentCommentContent).selectText();
+
+				await page.keyboard.type('Editing the comment');
+
+				await comment.getByRole('button', {name: 'Save'}).click();
+
+				await waitForAlert(
+					page,
+					'Success:Your comment has been edited.',
+					{
+						autoClose: true,
+					}
+				);
+
+				await expect(comment.first()).toContainText(
+					'Editing the comment'
+				);
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page
+						.getByRole('menuitem')
+						.filter({hasText: 'edit'}),
+					trigger: page.getByTitle('actions').nth(1),
+				});
+
+				await page.getByText('New child comment').selectText();
+
+				await page.keyboard.type('Editing the child comment');
+
+				await childComment.getByRole('button', {name: 'Save'}).click();
+
+				await expect(childComment).toContainText(
+					'Editing the child comment'
+				);
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page
+						.getByRole('menuitem')
+						.filter({hasText: 'delete'}),
+					trigger: page.getByTitle('actions').nth(1),
+				});
+
+				await waitForAlert(
+					page,
+					'Success:Your comment has been deleted.',
+					{
+						autoClose: true,
+					}
+				);
+			});
+
+			await test.step('view Delete confirmation modal', async () => {
+				await assetsPage.execBulkItemAction('Delete');
+
+				await expect(page.locator('.modal-title')).toContainText(
+					'Delete Entry'
+				);
+			});
 		}
 		finally {
 			await apiHelpers.objectEntry.deleteObjectEntry(

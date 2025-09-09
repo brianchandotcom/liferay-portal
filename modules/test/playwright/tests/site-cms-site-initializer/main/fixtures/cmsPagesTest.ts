@@ -10,6 +10,7 @@ import {ContentsPage} from '../pages/ContentsPage';
 import {EditVocabularyPage} from '../pages/EditVocabularyPage';
 import {FolderPage} from '../pages/FolderPage';
 import {HomePage} from '../pages/HomePage';
+import {InfoPanelPage} from '../pages/InfoPanelPage';
 import {PicklistBuilderPage} from '../pages/PicklistBuilderPage';
 import {RecycleBinPage} from '../pages/RecycleBinPage';
 import {SpaceSummaryPage} from '../pages/SpaceSummaryPage';
@@ -23,6 +24,7 @@ const cmsPagesTest = test.extend<{
 	editVocabularyPage: EditVocabularyPage;
 	folderPage: FolderPage;
 	homePage: HomePage;
+	infoPanelPage: InfoPanelPage;
 	picklistBuilderPage: PicklistBuilderPage;
 	recycleBinPage: RecycleBinPage;
 	spaceSummaryPage: SpaceSummaryPage;
@@ -44,6 +46,9 @@ const cmsPagesTest = test.extend<{
 	},
 	homePage: async ({page}, use) => {
 		await use(new HomePage(page));
+	},
+	infoPanelPage: async ({page}, use) => {
+		await use(new InfoPanelPage(page));
 	},
 	picklistBuilderPage: async ({page}, use) => {
 		await use(new PicklistBuilderPage(page));

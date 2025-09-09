@@ -42,6 +42,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -94,14 +95,13 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			return;
 		}
 
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager(_objectDefinition.getName());
+
 		if (Objects.equals(
 				deletionType,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
-
-			SystemObjectDefinitionManager systemObjectDefinitionManager =
-				_systemObjectDefinitionManagerRegistry.
-					getSystemObjectDefinitionManager(
-						_objectDefinition.getName());
 
 			for (BaseModel<T> baseModel : relatedModels) {
 				systemObjectDefinitionManager.deleteBaseModel(baseModel);
@@ -115,9 +115,16 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				objectRelationship.getObjectFieldId2());
 
 			for (BaseModel<T> baseModel : relatedModels) {
+				Map<String, Object> modelAttributes =
+					baseModel.getModelAttributes();
+
+				Column<?, Long> primaryKeyColumn =
+					systemObjectDefinitionManager.getPrimaryKeyColumn();
+
 				_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 					userId, objectRelationship.getObjectDefinitionId2(),
-					GetterUtil.getLong(baseModel.getPrimaryKeyObj()),
+					GetterUtil.getLong(
+						modelAttributes.get(primaryKeyColumn.getName())),
 					HashMapBuilder.<String, Serializable>put(
 						objectField.getName(), 0
 					).build());

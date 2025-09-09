@@ -214,10 +214,12 @@ public class JiraService extends BaseService {
 
 				String issueKey = issueJSONObject.getString("key");
 
-				String ticketURL = _jiraSupportHCPortalURL + "/" + issueKey;
+				String ticketURL =
+					_jiraSupportHCPortalURL + StringPool.SLASH + issueKey;
 
 				if (issueKey.startsWith(_jiraSupportFLSProject)) {
-					ticketURL = _jiraSupportFLSPortalURL + "/" + issueKey;
+					ticketURL =
+						_jiraSupportFLSPortalURL + StringPool.SLASH + issueKey;
 				}
 
 				JiraSupportIssue jiraSupportIssue = new JiraSupportIssue(
@@ -374,66 +376,65 @@ public class JiraService extends BaseService {
 		return _transformSearchResults(jsonObject);
 	}
 
-	public JSONObject searchAccountByExternalKey(String externalKey) {
-		StringBundler sb = new StringBundler(4);
+	public void updateAccountObject(
+			String koroneikiAccountKey, String businessEvents)
+		throws Exception {
 
-		sb.append("objectSchema = \"Koroneiki\" and objectType = \"Account\" ");
-		sb.append("and \"External Key\" = \"");
-		sb.append(externalKey);
-		sb.append("\"");
+		JSONObject accountResponseJSONObject = _searchAccountByExternalKey(
+			koroneikiAccountKey);
+
+		JSONArray valuesJSONArray = accountResponseJSONObject.getJSONArray(
+			"values");
+
+		if (valuesJSONArray == null) {
+			throw new Exception(
+				"Unable to find account with key " + koroneikiAccountKey);
+		}
+
+		String businessEventsAttributeId = _getObjectTypeAttributeId(
+			accountResponseJSONObject.getJSONArray("objectTypeAttributes"),
+			"Business Events");
 
 		JSONObject jsonObject = new JSONObject(
 		).put(
-			"qlQuery", sb.toString()
+			"attributes",
+			new JSONArray(
+			).put(
+				new JSONObject(
+				).put(
+					"objectTypeAttributeId", businessEventsAttributeId
+				).put(
+					"objectAttributeValues",
+					new JSONArray(
+					).put(
+						new JSONObject(
+						).put(
+							"value", businessEvents
+						)
+					)
+				)
+			)
 		);
 
-		return new JSONObject(
-			post(
-				jsonObject.toString(),
-				HashMapBuilder.put(
-					HttpHeaders.AUTHORIZATION, _getCredentials()
-				).put(
-					HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-				).build(),
-				UriComponentsBuilder.fromUriString(
-					StringBundler.concat(
-						_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
-						_jiraWorkspaceId, "/v1/object/aql")
-				).build(
-				).toUri()));
+		JSONObject accountJSONObject = valuesJSONArray.getJSONObject(0);
+
+		put(
+			jsonObject.toString(),
+			HashMapBuilder.put(
+				HttpHeaders.AUTHORIZATION, _getCredentials()
+			).put(
+				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+			).build(),
+			UriComponentsBuilder.fromUriString(
+				StringBundler.concat(
+					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
+					_jiraWorkspaceId, "/v1/object/",
+					accountJSONObject.getString("id"))
+			).build(
+			).toUri());
 	}
 
-	public void updateAccountObject(String externalKey, String businessEvents) {
-		JSONObject accountJSONObject = searchAccountByExternalKey(externalKey);
-
-		JSONArray valuesJSONArray = accountJSONObject.getJSONArray("values");
-
-		JSONObject valueJSONObject = valuesJSONArray.getJSONObject(0);
-
-		String objectId = valueJSONObject.getString("id");
-
-		JSONArray objectTypeAttributesJSONArray =
-			accountJSONObject.getJSONArray("objectTypeAttributes");
-
-		for (int i = 0; i < objectTypeAttributesJSONArray.length(); i++) {
-			JSONObject objectTypeAttributeJSONObject =
-				objectTypeAttributesJSONArray.getJSONObject(i);
-
-			String name = objectTypeAttributeJSONObject.getString("name");
-
-			if (!name.equals("Business Events")) {
-				continue;
-			}
-
-			String objectTypeAttributeId =
-				objectTypeAttributeJSONObject.getString("id");
-
-			_updateAccountObjectAttributeValues(
-				objectId, objectTypeAttributeId, businessEvents);
-		}
-	}
-
-	public void updateJiraIssue(
+	public void updateIssue(
 		String issueKey, String businessEvents, String[] addLabels,
 		String[] removeLabels) {
 
@@ -549,6 +550,23 @@ public class JiraService extends BaseService {
 		return null;
 	}
 
+	private String _getObjectTypeAttributeId(
+		JSONArray objectTypeAttributesJSONArray, String attributeName) {
+
+		for (int i = 0; i < objectTypeAttributesJSONArray.length(); i++) {
+			JSONObject objectTypeAttributeJSONObject =
+				objectTypeAttributesJSONArray.getJSONObject(i);
+
+			String name = objectTypeAttributeJSONObject.getString("name");
+
+			if (name.equals(attributeName)) {
+				return objectTypeAttributeJSONObject.getString("id");
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private JSONObject _search(
 			String jql, int maxResults, String nextPageToken,
 			String[] returnFields, int startAt)
@@ -591,6 +609,35 @@ public class JiraService extends BaseService {
 
 		return _search(
 			jql, maxResults, StringPool.BLANK, returnFields, startAt);
+	}
+
+	private JSONObject _searchAccountByExternalKey(String externalKey) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("objectSchema = \"Koroneiki\" and objectType = \"Account\" ");
+		sb.append("and \"External Key\" = \"");
+		sb.append(externalKey);
+		sb.append("\"");
+
+		JSONObject jsonObject = new JSONObject(
+		).put(
+			"qlQuery", sb.toString()
+		);
+
+		return new JSONObject(
+			post(
+				jsonObject.toString(),
+				HashMapBuilder.put(
+					HttpHeaders.AUTHORIZATION, _getCredentials()
+				).put(
+					HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+				).build(),
+				UriComponentsBuilder.fromUriString(
+					StringBundler.concat(
+						_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
+						_jiraWorkspaceId, "/v1/object/aql")
+				).build(
+				).toUri()));
 	}
 
 	private JSONArray _transformADFTextArea(String text) {
@@ -766,45 +813,6 @@ public class JiraService extends BaseService {
 		).put(
 			"total", resultsJSONObject.getInt("total")
 		);
-	}
-
-	private void _updateAccountObjectAttributeValues(
-		String objectId, String objectTypeAttributeId, String value) {
-
-		JSONObject jsonObject = new JSONObject(
-		).put(
-			"attributes",
-			new JSONArray(
-			).put(
-				new JSONObject(
-				).put(
-					"objectTypeAttributeId", objectTypeAttributeId
-				).put(
-					"objectAttributeValues",
-					new JSONArray(
-					).put(
-						new JSONObject(
-						).put(
-							"value", value
-						)
-					)
-				)
-			)
-		);
-
-		put(
-			jsonObject.toString(),
-			HashMapBuilder.put(
-				HttpHeaders.AUTHORIZATION, _getCredentials()
-			).put(
-				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-			).build(),
-			UriComponentsBuilder.fromUriString(
-				StringBundler.concat(
-					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
-					_jiraWorkspaceId, "/v1/object/", objectId)
-			).build(
-			).toUri());
 	}
 
 	private static final String _FIELD_AFFECTED_VERSION = "affectedVersion";

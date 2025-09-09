@@ -83,18 +83,21 @@ public class AccountsSyncBusinessEventsRestController
 
 			JSONObject jsonObject = new JSONObject(json);
 
-			JSONArray jsonArray = jsonObject.getJSONArray("businessEvents");
+			JSONArray businessEventsJSONArray = jsonObject.getJSONArray(
+				"businessEvents");
 
 			if (_featureFlagLRSD_8280) {
 				_updateJSM(
-					externalReferenceCode, _getBusinessEventsSummary(jsonArray),
-					_getJSMAssociatedTicketsHeatTags(jsonArray));
+					externalReferenceCode,
+					_getBusinessEventsSummary(businessEventsJSONArray),
+					_getJSMAssociatedTicketsHeatTags(businessEventsJSONArray));
 			}
 			else {
 				_updateZendesk(
 					_fetchZendeskOrganizationId(externalReferenceCode),
-					_getBusinessEventsSummary(jsonArray),
-					_getZendeskAssociatedTicketsHeatTags(jsonArray));
+					_getBusinessEventsSummary(businessEventsJSONArray),
+					_getZendeskAssociatedTicketsHeatTags(
+						businessEventsJSONArray));
 			}
 
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -196,15 +199,18 @@ public class AccountsSyncBusinessEventsRestController
 				).toUri()));
 	}
 
-	private String _getBusinessEventsSummary(JSONArray jsonArray) {
+	private String _getBusinessEventsSummary(
+		JSONArray businessEventsJSONArray) {
+
 		List<String> businessEvents = new ArrayList<>();
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < businessEventsJSONArray.length(); i++) {
+			JSONObject businessEventsJSONObject =
+				businessEventsJSONArray.getJSONObject(i);
 
 			List<String> businessEventFieldValues = new ArrayList<>();
 
-			Iterator<String> iterator = jsonObject.keys();
+			Iterator<String> iterator = businessEventsJSONObject.keys();
 
 			while (iterator.hasNext()) {
 				String key = iterator.next();
@@ -214,14 +220,17 @@ public class AccountsSyncBusinessEventsRestController
 				}
 
 				if (key.equals("eventType")) {
-					JSONObject typeJSONObject = jsonObject.optJSONObject(key);
+					JSONObject typeJSONObject =
+						businessEventsJSONObject.optJSONObject(key);
 
 					businessEventFieldValues.add(
 						"type: " + typeJSONObject.getString("name"));
 				}
-				else if (Validator.isNotNull(jsonObject.optString(key))) {
+				else if (Validator.isNotNull(
+							businessEventsJSONObject.optString(key))) {
+
 					businessEventFieldValues.add(
-						key + ": " + jsonObject.getString(key));
+						key + ": " + businessEventsJSONObject.getString(key));
 				}
 			}
 
@@ -235,17 +244,18 @@ public class AccountsSyncBusinessEventsRestController
 	}
 
 	private Map<String, String> _getJSMAssociatedTicketsHeatTags(
-		JSONArray jsonArray) {
+		JSONArray businessEventsJSONArray) {
 
 		Map<String, String> associatedTicketsHeatTags = new HashMap<>();
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < businessEventsJSONArray.length(); i++) {
+			JSONObject businessEventsJSONObject =
+				businessEventsJSONArray.getJSONObject(i);
 
-			String heatTag = _getJSMHeatTag(jsonObject);
+			String heatTag = _getJSMHeatTag(businessEventsJSONObject);
 
 			JSONArray associatedTicketIdsJSONArray = new JSONArray(
-				jsonObject.getString("associatedTickets"));
+				businessEventsJSONObject.getString("associatedTickets"));
 
 			for (int j = 0; j < associatedTicketIdsJSONArray.length(); j++) {
 				String associatedTicketId =
@@ -266,16 +276,17 @@ public class AccountsSyncBusinessEventsRestController
 		return associatedTicketsHeatTags;
 	}
 
-	private String _getJSMHeatTag(JSONObject jsonObject) {
+	private String _getJSMHeatTag(JSONObject businessEventsJSONObject) {
 		JSONArray associatedTicketIdsJSONArray = new JSONArray(
-			jsonObject.getString("associatedTickets"));
+			businessEventsJSONObject.getString("associatedTickets"));
 
 		if (associatedTicketIdsJSONArray.length() == 0) {
 			return StringPool.BLANK;
 		}
 
-		JSONObject eventTypeJSONObject = jsonObject.getJSONObject("eventType");
-		String targetGoLiveDateTime = jsonObject.getString(
+		JSONObject eventTypeJSONObject = businessEventsJSONObject.getJSONObject(
+			"eventType");
+		String targetGoLiveDateTime = businessEventsJSONObject.getString(
 			"targetGoLiveDateTime");
 
 		return HeatTagConstants.getHeatTag(
@@ -285,8 +296,8 @@ public class AccountsSyncBusinessEventsRestController
 				LocalDate.parse(targetGoLiveDateTime.substring(0, 10))));
 	}
 
-	private String _getTicketHeatTag(String[] labels) {
-		for (String label : labels) {
+	private String _getJSMHeatTag(String[] issueLabels) {
+		for (String label : issueLabels) {
 			if (ArrayUtil.contains(
 					HeatTagConstants.SUPPORT_ISSUE_LABELS, label)) {
 
@@ -298,17 +309,18 @@ public class AccountsSyncBusinessEventsRestController
 	}
 
 	private Map<Long, String> _getZendeskAssociatedTicketsHeatTags(
-		JSONArray jsonArray) {
+		JSONArray businessEventsJSONArray) {
 
 		Map<Long, String> associatedTicketsHeatTags = new HashMap<>();
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < businessEventsJSONArray.length(); i++) {
+			JSONObject businessEventsJSONObject =
+				businessEventsJSONArray.getJSONObject(i);
 
-			String heatTag = _getZendeskHeatTag(jsonObject);
+			String heatTag = _getZendeskHeatTag(businessEventsJSONObject);
 
 			JSONArray associatedTicketIdsJSONArray = new JSONArray(
-				jsonObject.getString("associatedTickets"));
+				businessEventsJSONObject.getString("associatedTickets"));
 
 			for (int j = 0; j < associatedTicketIdsJSONArray.length(); j++) {
 				long associatedTicketId = associatedTicketIdsJSONArray.getLong(
@@ -329,16 +341,17 @@ public class AccountsSyncBusinessEventsRestController
 		return associatedTicketsHeatTags;
 	}
 
-	private String _getZendeskHeatTag(JSONObject jsonObject) {
+	private String _getZendeskHeatTag(JSONObject businessEventsJSONObject) {
 		JSONArray associatedTicketIdsJSONArray = new JSONArray(
-			jsonObject.getString("associatedTickets"));
+			businessEventsJSONObject.getString("associatedTickets"));
 
 		if (associatedTicketIdsJSONArray.length() == 0) {
 			return StringPool.BLANK;
 		}
 
-		JSONObject eventTypeJSONObject = jsonObject.getJSONObject("eventType");
-		String targetGoLiveDateTime = jsonObject.getString(
+		JSONObject eventTypeJSONObject = businessEventsJSONObject.getJSONObject(
+			"eventType");
+		String targetGoLiveDateTime = businessEventsJSONObject.getString(
 			"targetGoLiveDateTime");
 
 		return ZendeskHeatTagConstants.getHeatTag(
@@ -410,8 +423,7 @@ public class AccountsSyncBusinessEventsRestController
 
 				addLabels.add("impacting_business_event");
 
-				String heatTag = _getTicketHeatTag(
-					jiraSupportIssue.getLabels());
+				String heatTag = _getJSMHeatTag(jiraSupportIssue.getLabels());
 
 				String highestHeatTag = associatedTicketsHeatTags.get(
 					jiraSupportIssue.getKey());
@@ -420,16 +432,15 @@ public class AccountsSyncBusinessEventsRestController
 						HeatTagConstants.getScore(highestHeatTag)) &&
 					!heatTag.equals(highestHeatTag)) {
 
-					String jsmAutomationHeatTagLabel = highestHeatTag + "_be";
-
-					addLabels.add(jsmAutomationHeatTagLabel);
+					addLabels.add(
+						highestHeatTag + _JSM_AUTOMATION_HEAT_TAG_SUFFIX);
 				}
 			}
 			else {
 				removeLabels.add("impacting_business_event");
 			}
 
-			_jiraService.updateJiraIssue(
+			_jiraService.updateIssue(
 				jiraSupportIssue.getKey(), businessEvents,
 				addLabels.toArray(new String[0]),
 				removeLabels.toArray(new String[0]));
@@ -461,7 +472,7 @@ public class AccountsSyncBusinessEventsRestController
 				continue;
 			}
 
-			String heatTag = _getTicketHeatTag(jiraSupportIssue.getLabels());
+			String heatTag = _getJSMHeatTag(jiraSupportIssue.getLabels());
 
 			String highestHeatTag = associatedTicketsHeatTags.get(
 				jiraSupportIssue.getKey());
@@ -473,15 +484,10 @@ public class AccountsSyncBusinessEventsRestController
 				continue;
 			}
 
-			List<String> addLabels = new ArrayList<>();
-
-			String jsmAutomationHeatTagLabel = highestHeatTag + "_be";
-
-			addLabels.add(jsmAutomationHeatTagLabel);
-
-			_jiraService.updateJiraIssue(
+			_jiraService.updateIssue(
 				jiraSupportIssue.getKey(), null,
-				addLabels.toArray(new String[0]), new String[0]);
+				new String[] {highestHeatTag + _JSM_AUTOMATION_HEAT_TAG_SUFFIX},
+				new String[0]);
 		}
 	}
 
@@ -602,6 +608,8 @@ public class AccountsSyncBusinessEventsRestController
 			page = searchHits.getNextPage();
 		}
 	}
+
+	private static final String _JSM_AUTOMATION_HEAT_TAG_SUFFIX = "_be";
 
 	private static final Log _log = LogFactory.getLog(
 		AccountsSyncBusinessEventsRestController.class);

@@ -108,6 +108,12 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				TestPropsValues.getCompanyId());
 
 			if (group != null) {
+				List<Group> childGroups = group.getChildren(true);
+
+				for (Group childGroup : childGroups) {
+					_groupLocalService.deleteGroup(childGroup);
+				}
+
 				_groupLocalService.deleteGroup(group);
 			}
 		}
@@ -200,7 +206,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteFailureDuplicateName();
 		_testPostSiteFailureInvalidKey();
 		_testPostSiteFailureNoName();
-		_testPostSiteFailureParentSiteNotFound();
 		_testPostSiteFailureSiteInitializerInactive();
 		_testPostSiteFailureSiteInitializerNotFound();
 		_testPostSiteFailureSiteTemplateInactive();
@@ -214,6 +219,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteWithLocalizedDescription();
 		_testPostSiteWithLocalizedName();
 		_testPostSiteWithNondefaultLocales();
+		_testPostSiteWithParentSiteExternalReferenceCode();
 		_testPostSiteWithTypeSettings();
 		_testPostSiteWithoutAuthentication();
 	}
@@ -225,7 +231,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		super.testPutSite();
 
 		_testPutSiteBatch();
+		_testPutSiteBatchWithParentSiteExternalReferenceCode();
 		_testPutSiteWithExcludedTypeSettings();
+		_testPutSiteWithParentSiteExternalReferenceCode();
 	}
 
 	@Override
@@ -269,6 +277,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				membershipType = MembershipType.create(
 					GroupConstants.getTypeLabel(GroupConstants.TYPE_SITE_OPEN));
 				name = RandomTestUtil.randomString();
+				parentSiteExternalReferenceCode = StringPool.BLANK;
 				typeSettings = LinkedHashMapBuilder.put(
 					RandomTestUtil.randomString(), RandomTestUtil.randomString()
 				).build();
@@ -609,25 +618,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		}
 	}
 
-	private void _testPostSiteFailureParentSiteNotFound() throws Exception {
-		Site randomSite = randomSite();
-
-		randomSite.setParentSiteKey(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-		try {
-			_testPostSite_addSite(randomSite);
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
-	}
-
 	private void _testPostSiteFailureSiteInitializerInactive()
 		throws Exception {
 
@@ -823,6 +813,25 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Group parentGroup = group.getParentGroup();
 
 		Assert.assertEquals(parentSite.getKey(), parentGroup.getGroupKey());
+
+		parentSite = _testPostSite_addSite(randomSite());
+
+		randomSite = randomSite();
+
+		randomSite.setParentSiteExternalReferenceCode(
+			parentSite.getExternalReferenceCode());
+
+		postSite = _testPostSiteSuccess(randomSite);
+
+		group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			postSite.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
+
+		parentGroup = group.getParentGroup();
+
+		Assert.assertEquals(
+			parentSite.getExternalReferenceCode(),
+			parentGroup.getExternalReferenceCode());
 	}
 
 	private void _testPostSiteSuccessMembershipTypePrivate() throws Exception {
@@ -964,6 +973,58 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		}
 	}
 
+	private void _testPostSiteWithParentSiteExternalReferenceCode()
+		throws Exception {
+
+		Site postParentSite = testPostSite_addSite(randomSite());
+
+		Site randomSite = randomSite();
+
+		randomSite.setParentSiteExternalReferenceCode(
+			postParentSite.getExternalReferenceCode());
+
+		Site postSite = siteResource.postSite(randomSite);
+
+		Assert.assertEquals(
+			randomSite.getParentSiteExternalReferenceCode(),
+			postSite.getParentSiteExternalReferenceCode());
+		assertEquals(randomSite, postSite);
+		assertValid(postSite);
+
+		randomSite = randomSite();
+
+		randomSite.setParentSiteExternalReferenceCode(StringPool.BLANK);
+
+		postSite = siteResource.postSite(randomSite);
+
+		Assert.assertNotNull(postSite.getParentSiteExternalReferenceCode());
+		assertEquals(randomSite, postSite);
+		assertValid(postSite);
+
+		randomSite = randomSite();
+
+		randomSite.setParentSiteExternalReferenceCode(
+			RandomTestUtil.randomString());
+
+		postSite = siteResource.postSite(randomSite);
+
+		Assert.assertEquals(
+			StringPool.BLANK, postSite.getParentSiteExternalReferenceCode());
+		assertEquals(randomSite, postSite);
+		assertValid(postSite);
+
+		randomSite = randomSite();
+
+		randomSite.setParentSiteExternalReferenceCode(StringPool.BLANK);
+
+		postSite = siteResource.postSite(randomSite);
+
+		Assert.assertEquals(
+			StringPool.BLANK, postSite.getParentSiteExternalReferenceCode());
+		assertEquals(randomSite, postSite);
+		assertValid(postSite);
+	}
+
 	private void _testPostSiteWithTypeSettings() throws Exception {
 		Site randomSite = randomSite();
 
@@ -1040,6 +1101,97 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				updatedSite.getExternalReferenceCode()));
 	}
 
+	private void _testPutSiteBatchWithParentSiteExternalReferenceCode()
+		throws Exception {
+
+		Site postParentSite = testPutSite_addSite();
+
+		Site postSite = testPutSite_addSite();
+
+		Site site = randomSite();
+
+		site.setExternalReferenceCode(postSite.getExternalReferenceCode());
+
+		site.setParentSiteExternalReferenceCode(
+			postParentSite.getExternalReferenceCode());
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_jsonFactory.createJSONObject(site.toString())
+				).toString(),
+				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, group.getParentGroupId());
+
+		site.setParentSiteExternalReferenceCode(RandomTestUtil.randomString());
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_jsonFactory.createJSONObject(site.toString())
+				).toString(),
+				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+
+		group = _groupLocalService.getGroupByExternalReferenceCode(
+			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, group.getParentGroupId());
+
+		site.setParentSiteExternalReferenceCode(StringPool.BLANK);
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_jsonFactory.createJSONObject(site.toString())
+				).toString(),
+				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+
+		group = _groupLocalService.getGroupByExternalReferenceCode(
+			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, group.getParentGroupId());
+
+		site = randomSite();
+
+		site.setParentSiteExternalReferenceCode(
+			postParentSite.getExternalReferenceCode());
+
+		postSite = siteResource.postSite(site);
+
+		site = randomSite();
+
+		site.setExternalReferenceCode(postSite.getExternalReferenceCode());
+		site.setParentSiteExternalReferenceCode(
+			postSite.getParentSiteExternalReferenceCode());
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_jsonFactory.createJSONObject(site.toString())
+				).toString(),
+				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+
+		group = _groupLocalService.getGroupByExternalReferenceCode(
+			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
+
+		Group parentGroup = _groupLocalService.getGroupByExternalReferenceCode(
+			site.getParentSiteExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(parentGroup.getGroupId(), group.getParentGroupId());
+	}
+
 	private void _testPutSiteWithExcludedTypeSettings() throws Exception {
 		Site postSite = testPutSite_addSite();
 
@@ -1103,6 +1255,30 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				putSiteUnicodeProperties.get(randomSiteTypeSetting.getKey()),
 				randomSiteTypeSetting.getValue());
 		}
+	}
+
+	private void _testPutSiteWithParentSiteExternalReferenceCode()
+		throws Exception {
+
+		Site postParentSite = testPutSite_addSite();
+
+		Site randomSite = randomSite();
+
+		randomSite.setParentSiteExternalReferenceCode(
+			postParentSite.getExternalReferenceCode());
+
+		Site putSite = siteResource.putSite(randomSite);
+
+		Assert.assertEquals(
+			postParentSite.getExternalReferenceCode(),
+			putSite.getParentSiteExternalReferenceCode());
+
+		randomSite.setParentSiteExternalReferenceCode(StringPool.BLANK);
+
+		putSite = siteResource.putSite(randomSite);
+
+		Assert.assertEquals(
+			StringPool.BLANK, putSite.getParentSiteExternalReferenceCode());
 	}
 
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =

@@ -358,7 +358,7 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "To access the platform and start exploring your Pre-Built Trial, you must be logged in using the super user credentials sent to you in your welcome email. Without these credentials you won't be able to enter the environment or experience its full capabilities.&nbsp;"
+																						"en_US": "You must be logged in using the super user credentials sent to you in your welcome email to access the platform and start exploring your Pre-Built Trial. Without these credentials, you won't be able to enter the environment or experience its full capabilities."
 																					}
 																				}
 																			}

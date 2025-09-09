@@ -9,65 +9,20 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
 
-import {FormLayoutDataItem} from '../../../types/layout_data/FormLayoutDataItem';
 import {FormRelationshipLayoutDataItem} from '../../../types/layout_data/FormRelationshipLayoutDataItem';
-import {
-	LayoutData,
-	LayoutDataItem,
-} from '../../../types/layout_data/LayoutData';
+import {LayoutData} from '../../../types/layout_data/LayoutData';
 import {config} from '../../config/index';
-import {
-	ObjectFieldSet,
-	ObjectFields,
-	useObjectFields,
-} from '../../contexts/ObjectDataContext';
 import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
 } from '../../contexts/StoreContext';
+import useFormRelationshipFieldSets from '../../hooks/useFormRelationshipFieldSets';
 import {ContainerWithControls} from '../../js-index';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
 import FormRelationship from './FormRelationship';
-
-function getParent(
-	item: LayoutDataItem,
-	layoutData: LayoutData
-): FormLayoutDataItem | FormRelationshipLayoutDataItem {
-	const parent = layoutData.items[item.parentId];
-
-	if (parent.type === 'form' || parent.type === 'form-relationship') {
-		return parent;
-	}
-
-	return getParent(parent, layoutData);
-}
-
-function getFieldSets(
-	fields: ObjectFields,
-	parent: LayoutDataItem
-): ObjectFieldSet[] {
-
-	// Take relationship fieldSets directly if parent is a form relationship
-
-	if (parent.type === 'form-relationship') {
-		return fields.filter(
-			(fieldSet) => 'relationship' in fieldSet && fieldSet.relationship
-		) as ObjectFieldSet[];
-	}
-
-	// Ignore Basic Information fieldSet if parent is a form
-
-	const fieldSet = fields.find(
-		({name}) => name && name !== 'basic-information'
-	) as ObjectFieldSet;
-
-	return fieldSet.fields.filter(
-		(fieldSet) => 'relationship' in fieldSet && fieldSet.relationship
-	) as ObjectFieldSet[];
-}
 
 export default React.forwardRef<
 	HTMLDivElement,
@@ -76,12 +31,10 @@ export default React.forwardRef<
 		item: FormRelationshipLayoutDataItem;
 		layoutData: LayoutData;
 	}
->(({children, item, layoutData, ...rest}, ref) => {
-	const parent = getParent(item, layoutData);
-
+>(({children, item, ...rest}, ref) => {
 	return (
 		<ContainerWithControls {...rest} item={item} ref={ref}>
-			<FormRelationshipWithControls item={item} parent={parent}>
+			<FormRelationshipWithControls item={item}>
 				{children}
 			</FormRelationshipWithControls>
 		</ContainerWithControls>
@@ -91,30 +44,14 @@ export default React.forwardRef<
 function FormRelationshipWithControls({
 	children,
 	item,
-	parent,
 }: {
 	children: React.ReactNode;
 	item: FormRelationshipLayoutDataItem;
-	parent: FormRelationshipLayoutDataItem | FormLayoutDataItem;
 }) {
-	const fields = useObjectFields(
-		parent.type === 'form'
-			? {
-					classNameId: parent.config.classNameId,
-					classTypeId: parent.config.classTypeId,
-				}
-			: {name: parent.config.contentType}
-	);
-
 	const isMapped = Boolean(item.config.contentType);
 
 	if (!isMapped) {
-		return (
-			<UnmappedFormRelationship
-				fieldSets={getFieldSets(fields, parent)}
-				item={item}
-			/>
-		);
+		return <UnmappedFormRelationship item={item} />;
 	}
 
 	return (
@@ -129,18 +66,13 @@ function FormRelationshipWithControls({
 }
 
 function UnmappedFormRelationship({
-	fieldSets,
 	item,
 }: {
-	fieldSets: ObjectFieldSet[];
 	item: FormRelationshipLayoutDataItem;
 }) {
 	const dispatch = useDispatch();
 
-	const options = fieldSets.map(({label, name}) => ({
-		label,
-		value: name,
-	}));
+	const fieldSets = useFormRelationshipFieldSets(item);
 
 	return (
 		<div className="align-items-center bg-lighter d-flex flex-column page-editor__form-unmapped-state page-editor__no-fragments-state">
@@ -171,7 +103,10 @@ function UnmappedFormRelationship({
 							label: Liferay.Language.get('none'),
 							value: '0',
 						},
-						...options,
+						...fieldSets.map(({label, name}) => ({
+							label,
+							value: name,
+						})),
 					]}
 					sizing="sm"
 				/>

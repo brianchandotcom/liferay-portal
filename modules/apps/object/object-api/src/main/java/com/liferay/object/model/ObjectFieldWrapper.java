@@ -289,6 +289,11 @@ public class ObjectFieldWrapper
 		return model.getDBColumnName();
 	}
 
+	@Override
+	public String[] getDBColumnNames() {
+		return model.getDBColumnNames();
+	}
+
 	/**
 	 * Returns the db table name of this object field.
 	 *

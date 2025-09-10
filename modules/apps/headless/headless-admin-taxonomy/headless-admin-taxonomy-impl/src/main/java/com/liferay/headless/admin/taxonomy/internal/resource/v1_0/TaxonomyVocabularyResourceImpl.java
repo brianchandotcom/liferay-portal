@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -17,6 +18,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
@@ -92,7 +94,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = TaxonomyVocabularyResource.class
 )
 public class TaxonomyVocabularyResourceImpl
-	extends BaseTaxonomyVocabularyResourceImpl {
+	extends BaseTaxonomyVocabularyResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate
+		<TaxonomyVocabulary> {
 
 	@Override
 	public void deleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
@@ -132,6 +136,38 @@ public class TaxonomyVocabularyResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+		getExportImportDescriptor() {
+
+		return new ExportImportVulcanBatchEngineTaskItemDelegate.
+			ExportImportDescriptor() {
+
+			@Override
+			public String getItemClassName() {
+				return AssetVocabulary.class.getName();
+			}
+
+			@Override
+			public String getLabel() {
+				return "vocabularies";
+			}
+
+			@Override
+			public String getPortletId() {
+				return AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN;
+			}
+
+			@Override
+			public ExportImportVulcanBatchEngineTaskItemDelegate.Scope
+				getScope() {
+
+				return ExportImportVulcanBatchEngineTaskItemDelegate.Scope.SITE;
+			}
+
+		};
 	}
 
 	@Override

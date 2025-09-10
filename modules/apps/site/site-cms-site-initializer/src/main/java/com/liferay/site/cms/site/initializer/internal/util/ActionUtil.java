@@ -38,6 +38,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -494,6 +495,33 @@ public class ActionUtil {
 			StringPool.SLASH);
 	}
 
+	public static DropdownItem getBasicDocumentDropdown(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, "upload", "single-file", "L_BASIC_DOCUMENT",
+			objectEntryFolderExternalReferenceCode);
+	}
+
+	public static DropdownItem getBasicWebContentDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, "forms", "basic-content", "L_BASIC_WEB_CONTENT",
+			objectEntryFolderExternalReferenceCode);
+	}
+
+	public static DropdownItem getBlogDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, "blogs", null, "L_BLOG",
+			objectEntryFolderExternalReferenceCode);
+	}
+
 	public static DropdownItem getCreateFolderDropdownItem(
 		HttpServletRequest httpServletRequest,
 		String parentObjectEntryFolderExternalReferenceCode) {
@@ -622,6 +650,24 @@ public class ActionUtil {
 		return StringPool.BLANK;
 	}
 
+	public static DropdownItem getExternalVideoShortcutDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, "video", "external-video-shortcut",
+			"L_EXTERNAL_VIDEO", objectEntryFolderExternalReferenceCode);
+	}
+
+	public static DropdownItem getKnowledgeBaseDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, "wiki", null, "L_KNOWLEDGE_BASE",
+			objectEntryFolderExternalReferenceCode);
+	}
+
 	public static String getRecycleBinURL(ThemeDisplay themeDisplay) {
 		return StringBundler.concat(
 			themeDisplay.getPathFriendlyURLPublic(),
@@ -682,6 +728,30 @@ public class ActionUtil {
 				return LanguageUtil.get(httpServletRequest, labelKey);
 			}
 		).build();
+	}
+
+	public static DropdownItem getStructuredContentDropdownItem(
+		HttpServletRequest httpServletRequest, String icon, String labelKey,
+		String objectDefinitionExternalReferenceCode,
+		String objectEntryFolderExternalReferenceCode) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					themeDisplay.getCompanyId());
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, icon, labelKey, objectDefinition,
+			objectEntryFolderExternalReferenceCode);
 	}
 
 	public static String getTranslateURL(

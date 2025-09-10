@@ -4,6 +4,29 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" package-path="com.liferay.saml.persistence">
 	<author>Mika Koivisto</author>
 	<namespace>Saml</namespace>
+	<entity local-service="true" name="SamlIbSloMessage" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="samlIbSloMessageId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="logoutRequestXml" type="String" />
+		<column name="samlIdpEntityId" type="String" />
+		<column name="samlIdpSessionIndex" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="SamlIdpSessionIndex" return-type="SamlIbSloMessage">
+			<finder-column name="samlIdpSessionIndex" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="SamlIdpSpConnection" remote-service="false">
 
 		<!-- PK fields -->

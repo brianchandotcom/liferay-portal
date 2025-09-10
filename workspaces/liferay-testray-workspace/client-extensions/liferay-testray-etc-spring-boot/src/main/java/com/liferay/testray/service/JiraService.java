@@ -237,7 +237,7 @@ public class JiraService extends BaseService {
 				_getNestedKey(jsonObject, "fields", "issuetype", "name")),
 			" ");
 
-		if (!ArrayUtil.contains(_ALLOWEDISSUETYPES, issueType)) {
+		if (!ArrayUtil.contains(_ALLOWED_ISSUE_TYPES, issueType)) {
 			issueType = "UNDEFINED";
 		}
 
@@ -282,7 +282,7 @@ public class JiraService extends BaseService {
 		return map;
 	}
 
-	private static final String[] _ALLOWEDISSUETYPES = {
+	private static final String[] _ALLOWED_ISSUE_TYPES = {
 		"BUG", "EPIC", "IMPEDIBUG", "INITIATIVE", "STORY", "TASK",
 		"TECHNICALTASK"
 	};

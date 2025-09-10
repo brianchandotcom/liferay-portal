@@ -467,13 +467,12 @@ public class BatchEnginePortletDataHandlerTest {
 		_importLayouts(
 			false, true, larFile, group2.getGroupId(), objectDefinition);
 
-		List<ObjectEntry> objectEntriesList =
+		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
 				group2.getGroupId(), objectDefinition.getObjectDefinitionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(
-			objectEntriesList.toString(), 0, objectEntriesList.size());
+		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 	}
 
 	@Test

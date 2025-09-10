@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -304,7 +305,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 			_bundleContext.registerService(
 				InfoItemObjectProvider.class,
 				new SystemObjectEntryInfoItemObjectProvider(
-					_dtoConverterRegistry, systemObjectDefinitionManager),
+					_groupLocalService, _dtoConverterRegistry,
+					systemObjectDefinitionManager),
 				HashMapDictionaryBuilder.<String, Object>put(
 					Constants.SERVICE_RANKING, 100
 				).put(
@@ -312,7 +314,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				).put(
 					"info.item.identifier",
 					new String[] {
-						"com.liferay.info.item.ClassPKInfoItemIdentifier"
+						"com.liferay.info.item.ClassPKInfoItemIdentifier",
+						"com.liferay.info.item.ERCInfoItemIdentifier"
 					}
 				).put(
 					"item.class.name", itemClassName
@@ -417,6 +420,9 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider

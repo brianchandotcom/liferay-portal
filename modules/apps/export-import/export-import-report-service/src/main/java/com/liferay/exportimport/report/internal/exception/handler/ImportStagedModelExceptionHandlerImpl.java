@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
@@ -46,6 +47,8 @@ public class ImportStagedModelExceptionHandlerImpl
 				externalReferenceCodeModel.getExternalReferenceCode();
 		}
 
+		String modelName = ExportImportReportEntryUtil.getModelName(clazz);
+
 		try {
 			long groupId = portletDataContext.getGroupId();
 
@@ -60,17 +63,18 @@ public class ImportStagedModelExceptionHandlerImpl
 					GetterUtil.getLong(
 						portletDataContext.getExportImportProcessId()),
 					portletDataException.getMessage(),
-					portletDataException.toString(),
-					ExportImportReportEntryUtil.getModelName(clazz),
+					portletDataException.toString(), modelName,
 					ExportImportReportEntryUtil.getOrigin(),
 					ExportImportReportEntryUtil.getScope(group),
 					ExportImportReportEntryUtil.getScopeKey(group));
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Error adding ErrorExportImportReportEntry with the " +
-					"externalReferenceCode: " + externalReferenceCode);
-			_log.error(exception);
+				StringBundler.concat(
+					"Error adding ErrorExportImportReportEntry with ",
+					"externalReferenceCode: ", externalReferenceCode,
+					" and modelName ", modelName),
+				exception);
 		}
 	}
 

@@ -86,7 +86,7 @@ public class AccountsSyncBusinessEventsRestController
 			JSONArray businessEventsJSONArray = jsonObject.getJSONArray(
 				"businessEvents");
 
-			if (_featureFlagLRSD_8280) {
+			if (_jiraSupportEnabled) {
 				_updateJSM(
 					externalReferenceCode,
 					_getBusinessEventsSummary(businessEventsJSONArray),
@@ -374,7 +374,7 @@ public class AccountsSyncBusinessEventsRestController
 					externalReferenceCode, "'"),
 				page, 500, "targetGoLiveDateTime:asc");
 
-			if (_featureFlagLRSD_8280) {
+			if (_jiraSupportEnabled) {
 				_updateJSMTickets(
 					externalReferenceCode,
 					_getJSMAssociatedTicketsHeatTags(
@@ -617,11 +617,11 @@ public class AccountsSyncBusinessEventsRestController
 	@Autowired
 	private BusinessEventPermission _businessEventPermission;
 
-	@Value("${liferay.customer.feature.flag.LRSD-8280}")
-	private boolean _featureFlagLRSD_8280;
-
 	@Autowired
 	private JiraService _jiraService;
+
+	@Value("${liferay.customer.jira.support.enabled}")
+	private boolean _jiraSupportEnabled;
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

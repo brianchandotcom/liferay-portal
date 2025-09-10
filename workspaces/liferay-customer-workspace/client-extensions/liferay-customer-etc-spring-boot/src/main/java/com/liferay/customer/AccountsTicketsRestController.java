@@ -60,7 +60,7 @@ public class AccountsTicketsRestController extends BaseRestController {
 				ticketIds)
 		throws Exception {
 
-		if (_featureFlagLRSD_8280) {
+		if (_jiraSupportEnabled) {
 			return _getJSMTickets(jwt, externalReferenceCode, ticketIds);
 		}
 
@@ -194,11 +194,11 @@ public class AccountsTicketsRestController extends BaseRestController {
 	@Autowired
 	private BusinessEventPermission _businessEventPermission;
 
-	@Value("${liferay.customer.feature.flag.LRSD-8280}")
-	private boolean _featureFlagLRSD_8280;
-
 	@Autowired
 	private JiraService _jiraService;
+
+	@Value("${liferay.customer.jira.support.enabled}")
+	private boolean _jiraSupportEnabled;
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

@@ -191,15 +191,15 @@ export default function FolderFDSPropsTransformer({
 						className: '',
 					},
 					contentComponent: ({
-										   closeModal,
-									   }: {
+						closeModal,
+					}: {
 						closeModal: () => void;
 					}) =>
 						DefaultPermissionModalContent({
 							...(additionalProps.defaultPermissionAdditionalProps ||
 								{}),
 							classExternalReferenceCode:
-							itemData.embedded.externalReferenceCode,
+								itemData.embedded.externalReferenceCode,
 							className: itemData.entryClassName,
 							closeModal,
 						}),

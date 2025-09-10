@@ -38,6 +38,7 @@ export const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-20379': {enabled: true},
+		'LPD-58472': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	pageEditorPagesTest,
@@ -3318,5 +3319,28 @@ test(
 		await commerceLayoutsPage.accountSelectorButton(account.name).click();
 
 		await expect(commerceLayoutsPage.createNewOrderButton).toBeDisabled();
+	}
+);
+
+test(
+	'Account selector orchestrating fragment is visible',
+	{tag: '@LPD-63175'},
+	async ({apiHelpers, applicationsMenuPage, page, site}) => {
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'COMMERCE_ACCOUNT_SELECTOR_FRAGMENTS-account-selector-fragment',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await expect(page.locator('.account-selector-container')).toHaveCount(
+			1
+		);
 	}
 );

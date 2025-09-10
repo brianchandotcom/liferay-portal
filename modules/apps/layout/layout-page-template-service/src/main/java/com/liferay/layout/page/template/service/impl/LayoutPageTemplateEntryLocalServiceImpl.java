@@ -52,6 +52,8 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -122,6 +124,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			company.getGroupId(), layoutPrototype);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long userId, long groupId,
@@ -344,6 +347,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				targetPreviewFileEntry.getFileEntryId());
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public LayoutPageTemplateEntry deleteLayoutPageTemplateEntry(
@@ -754,6 +758,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
@@ -781,6 +786,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long userId, long layoutPageTemplateEntryId, String name,
@@ -815,6 +821,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name)
@@ -885,6 +892,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return layoutPageTemplateEntry;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPageTemplateEntry updateStatus(
 			long userId, long layoutPageTemplateEntryId, int status)

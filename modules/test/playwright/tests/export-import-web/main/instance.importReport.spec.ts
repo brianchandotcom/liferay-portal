@@ -67,8 +67,7 @@ test('Can see error report and details', async ({
 
 	await companyExportImportPage.import(exportFilePath, true);
 
-	const lastSlashIndex = exportFilePath.lastIndexOf('/');
-	const exportName = exportFilePath.slice(lastSlashIndex + 1);
+	const exportName = exportFilePath.slice(exportFilePath.lastIndexOf('/') + 1);
 
 	await exportImportPage.goToImportDetails(exportName);
 

@@ -87,21 +87,18 @@ public class CounterDataCleanupPreupgradeProcess
 						clazz.getAnnotation(ImplementationClassName.class);
 
 					if (implementationClassName == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Unable find model for " + clazz);
-						}
-
-						continue;
+						tableName = StringUtil.extractLast(counterName, '.');
 					}
+					else {
+						clazz = classLoader.loadClass(
+							implementationClassName.value());
 
-					clazz = classLoader.loadClass(
-						implementationClassName.value());
-
-					tableName = (String)clazz.getField(
-						"TABLE_NAME"
-					).get(
-						null
-					);
+						tableName = (String)clazz.getField(
+							"TABLE_NAME"
+						).get(
+							null
+						);
+					}
 				}
 				catch (ClassNotFoundException classNotFoundException) {
 					if (_log.isDebugEnabled()) {

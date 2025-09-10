@@ -106,6 +106,9 @@ public class ConvertEmptyLayoutMVCActionCommand
 					layout.getMasterLayoutPlid(), serviceContext);
 			}
 			else {
+				long masterLayoutPlid = ParamUtil.getLong(
+					actionRequest, "masterLayoutPlid");
+
 				String externalReferenceCode = GetterUtil.getString(
 					serviceContext.getAttribute(
 						"defaultSegmentsExperienceExternalReferenceCode"),
@@ -132,8 +135,8 @@ public class ConvertEmptyLayoutMVCActionCommand
 						layout.getPlid(), nameMap, layout.getTitleMap(),
 						layout.getDescriptionMap(), layout.getKeywordsMap(),
 						layout.getRobotsMap(), type, layout.getTypeSettings(),
-						true, true, Collections.emptyMap(),
-						layout.getMasterLayoutPlid(), serviceContext);
+						true, true, Collections.emptyMap(), masterLayoutPlid,
+						serviceContext);
 				}
 
 				layout = _layoutLocalService.updateLayout(
@@ -143,8 +146,8 @@ public class ConvertEmptyLayoutMVCActionCommand
 					layout.getKeywordsMap(), layout.getRobotsMap(), type, false,
 					layout.getFriendlyURLMap(), layout.isIconImage(), null,
 					layout.getStyleBookEntryId(),
-					layout.getFaviconFileEntryId(),
-					layout.getMasterLayoutPlid(), serviceContext);
+					layout.getFaviconFileEntryId(), masterLayoutPlid,
+					serviceContext);
 
 				_layoutLocalService.updateStatus(
 					layout.getUserId(), layout.getPlid(),

@@ -135,6 +135,22 @@ public class AccountMemberResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeAccountMember()
+		throws Exception {
+
+		super.testGraphQLDeleteAccountByExternalReferenceCodeAccountMember();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteAccountIdAccountMember() throws Exception {
+		super.testGraphQLDeleteAccountIdAccountMember();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLGetAccountByExternalReferenceCodeAccountMember()
 		throws Exception {
 

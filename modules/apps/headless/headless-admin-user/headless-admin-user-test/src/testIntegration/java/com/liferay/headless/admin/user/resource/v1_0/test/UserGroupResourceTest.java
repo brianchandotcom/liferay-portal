@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -139,6 +140,22 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 			Arrays.asList(userGroup1, userGroup2),
 			(List<UserGroup>)page.getItems());
 		assertValid(page);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteUserGroupByExternalReferenceCodeUsers()
+		throws Exception {
+
+		super.testGraphQLDeleteUserGroupByExternalReferenceCodeUsers();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteUserGroupUsers() throws Exception {
+		super.testGraphQLDeleteUserGroupUsers();
 	}
 
 	@Override

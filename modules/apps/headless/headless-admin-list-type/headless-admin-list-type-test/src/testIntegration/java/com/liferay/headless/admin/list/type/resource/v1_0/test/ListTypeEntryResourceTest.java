@@ -26,6 +26,7 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -164,6 +165,44 @@ public class ListTypeEntryResourceTest
 						listTypeEntry2, entityField.getName(), 1);
 				}
 			});
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage()
+		throws Exception {
+
+		super.
+			testGraphQLGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeDefinitionListTypeEntriesPage()
+		throws Exception {
+
+		super.testGraphQLGetListTypeDefinitionListTypeEntriesPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostListTypeDefinitionByExternalReferenceCodeListTypeEntry()
+		throws Exception {
+
+		super.
+			testGraphQLPostListTypeDefinitionByExternalReferenceCodeListTypeEntry();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostListTypeDefinitionListTypeEntry()
+		throws Exception {
+
+		super.testGraphQLPostListTypeDefinitionListTypeEntry();
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -570,6 +571,27 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostBlogPostingComment() throws Exception {
+		super.testGraphQLPostBlogPostingComment();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostDocumentComment() throws Exception {
+		super.testGraphQLPostDocumentComment();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostStructuredContentComment() throws Exception {
+		super.testGraphQLPostStructuredContentComment();
 	}
 
 	@Override

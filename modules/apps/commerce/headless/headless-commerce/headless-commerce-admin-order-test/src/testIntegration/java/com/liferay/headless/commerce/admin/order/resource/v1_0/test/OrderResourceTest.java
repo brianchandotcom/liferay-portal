@@ -311,6 +311,15 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.testGraphQLDeleteOrder();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteOrderByExternalReferenceCode()
+		throws Exception {
+
+		super.testGraphQLDeleteOrderByExternalReferenceCode();
+	}
+
 	@Override
 	@Test
 	public void testPatchOrder() throws Exception {

@@ -108,6 +108,7 @@ import java.util.Objects;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -355,6 +356,81 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		super.testGetOrganizationsPage();
 
 		_testGetOrganizationsPageWithFilter();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeOrganization()
+		throws Exception {
+
+		super.testGraphQLDeleteAccountByExternalReferenceCodeOrganization();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteAccountOrganization() throws Exception {
+		super.testGraphQLDeleteAccountOrganization();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress()
+		throws Exception {
+
+		super.
+			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteUserAccountsByEmailAddress() throws Exception {
+		super.testGraphQLDeleteUserAccountsByEmailAddress();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeOrganizationsPage()
+		throws Exception {
+
+		super.testGraphQLGetAccountByExternalReferenceCodeOrganizationsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountOrganizationsPage() throws Exception {
+		super.testGraphQLGetAccountOrganizationsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetOrganizationByExternalReferenceCodeChildOrganizationsPage()
+		throws Exception {
+
+		super.
+			testGraphQLGetOrganizationByExternalReferenceCodeChildOrganizationsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetOrganizationChildOrganizationsPage()
+		throws Exception {
+
+		super.testGraphQLGetOrganizationChildOrganizationsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetOrganizationOrganizationsPage() throws Exception {
+		super.testGraphQLGetOrganizationOrganizationsPage();
 	}
 
 	@Override

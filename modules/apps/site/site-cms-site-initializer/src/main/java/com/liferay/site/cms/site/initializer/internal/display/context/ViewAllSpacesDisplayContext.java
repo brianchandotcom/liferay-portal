@@ -89,7 +89,7 @@ public class ViewAllSpacesDisplayContext {
 						GroupConstants.CMS_FRIENDLY_URL, "/new-space"));
 				dropdownItem.setIcon("forms");
 				dropdownItem.setLabel(
-					_language.get(_httpServletRequest, "space"));
+					_language.get(_httpServletRequest, "new"));
 			}
 		).build();
 	}

@@ -29,10 +29,12 @@ import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
+import com.liferay.saml.persistence.model.SamlIbSloMessage;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.persistence.service.SamlIbSloMessageLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService;
@@ -54,7 +56,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.Writer;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -574,7 +575,8 @@ public class SingleLogoutProfileImpl
 		}
 		else {
 			_sendAsyncLogoutRequest(
-				messageContext, samlSloContext, httpServletResponse);
+				messageContext, samlSloContext.getSamlSsoSessionId(),
+				httpServletResponse);
 		}
 	}
 
@@ -678,36 +680,34 @@ public class SingleLogoutProfileImpl
 
 		_addSessionIndex(logoutRequest, samlSpSession.getSessionIndex());
 
+		if (samlProviderConfigurationHelper.isRoleIb() &&
+			(Validator.isNotNull(CookiesManagerUtil.getCookieValue(SamlWebKeys.SAML_SSO_SESSION_ID, httpServletRequest)))) {
+
+			List<SamlIdpSpSession> samlIdpSpSessions = _getIbSamlIdpSpSessions(
+				samlSpSession.getSessionIndex());
+
+			_samlIbSloMessageLocalService.addSamlIbSloMessage(
+				samlSpSession.getCompanyId(),
+				OpenSamlUtil.marshall(logoutRequest),
+				samlPeerEntityContext.getEntityId(),
+				samlSpSession.getSessionIndex());
+
+			SamlIdpSpSession samlIdpSpSession =
+				_samlIdpSpSessionLocalService.deleteSamlIdpSpSession(
+					samlIdpSpSessions.get(0));
+
+			_sendIbLogoutRequest(
+				httpServletRequest, httpServletResponse, samlIdpSpSession,
+				samlSpSession.getSessionIndex());
+
+			return;
+		}
+
 		SAMLEndpointContext samlPeerEndpointSubcontext =
 			samlPeerEntityContext.getSubcontext(
 				SAMLEndpointContext.class, true);
 
 		samlPeerEndpointSubcontext.setEndpoint(singleLogoutService);
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		String samlIdpSsoSessionKey = (String)httpSession.getAttribute(
-			SamlWebKeys.SAML_SSO_SESSION_ID);
-
-		if (samlProviderConfigurationHelper.isRoleIb() &&
-			(samlIdpSsoSessionKey != null)) {
-
-			SamlIdpSsoSession samlIdpSsoSession =
-				_samlIdpSsoSessionLocalService.fetchSamlIdpSso(
-					samlIdpSsoSessionKey);
-
-			SamlSloContext ibSamlSloContext = new SamlSloContext(
-				samlIdpSsoSession, null);
-
-			httpSession.setAttribute("IB_SAML_SLO_CONTEXT", ibSamlSloContext);
-
-			httpSession.setAttribute(
-				"LOGOUT_REQUEST_MESSAGE_CONTEXT", messageContext);
-
-			_sendIbLogoutRequest(httpServletRequest, httpServletResponse);
-
-			return;
-		}
 
 		sendSamlMessage(messageContext, httpServletResponse);
 	}
@@ -725,6 +725,21 @@ public class SingleLogoutProfileImpl
 			sessionIndexString);
 
 		sessionIndexes.add(sessionIndex);
+	}
+
+	private List<SamlIdpSpSession> _getIbSamlIdpSpSessions(
+		String idpSessionIndex) {
+
+		SamlSpSession samlSpSession =
+			samlSpSessionLocalService.fetchSamlSpSessionBySessionIndex(
+				CompanyThreadLocal.getCompanyId(), idpSessionIndex);
+
+		SamlIdpSsoSession samlIdpSsoSession =
+			_samlIdpSsoSessionLocalService.fetchSamlIdpSsoByUserId(
+				samlSpSession.getUserId());
+
+		return _samlIdpSpSessionLocalService.getSamlIdpSpSessions(
+			samlIdpSsoSession.getSamlIdpSsoSessionId());
 	}
 
 	private SamlSloContext _getSamlSloContext(
@@ -948,46 +963,202 @@ public class SingleLogoutProfileImpl
 			MessageContext<?> messageContext)
 		throws Exception {
 
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		SamlSloContext ibSamlSloContext =
-			(SamlSloContext)httpSession.getAttribute("IB_SAML_SLO_CONTEXT");
+		String idpSessionIndex = ParamUtil.getString(
+			httpServletRequest, "RelayState");
 
 		if (samlProviderConfigurationHelper.isRoleIb() &&
-			(ibSamlSloContext != null)) {
+			Validator.isNotNull(idpSessionIndex)) {
 
-			Set<SamlSloRequestInfo> samlSloRequestInfos =
-				ibSamlSloContext.getSamlSloRequestInfos();
+			List<SamlIdpSpSession> samlIdpSpSessions = _getIbSamlIdpSpSessions(
+				idpSessionIndex);
 
-			Iterator<SamlSloRequestInfo> samlSloRequestInfoIterator =
-				samlSloRequestInfos.iterator();
+			if (!samlIdpSpSessions.isEmpty()) {
+				SamlIdpSpSession samlIdpSpSession =
+					_samlIdpSpSessionLocalService.deleteSamlIdpSpSession(
+						samlIdpSpSessions.get(0));
 
-			if (samlSloRequestInfoIterator.hasNext()) {
-				_sendIbLogoutRequest(httpServletRequest, httpServletResponse);
+				_sendIbLogoutRequest(
+					httpServletRequest, httpServletResponse, samlIdpSpSession,
+					idpSessionIndex);
 			}
 			else {
-				MessageContext<LogoutRequest> logoutRequestMessageContext =
-					(MessageContext<LogoutRequest>)httpSession.getAttribute(
-						"LOGOUT_REQUEST_MESSAGE_CONTEXT");
+				SamlIbSloMessage samlIbSloMessage =
+					_samlIbSloMessageLocalService.
+						getSamlIbSloMessageByIdpSessionIndex(
+							idpSessionIndex);
 
-				InOutOperationContext<LogoutRequest, LogoutResponse>
-					inOutOperationContext =
+				LogoutRequest logoutRequest =
+					(LogoutRequest)OpenSamlUtil.unmarshall(
+						samlIbSloMessage.getLogoutRequestXml());
+
+				Issuer issuer = logoutRequest.getIssuer();
+
+				if (!Objects.equals(
+						issuer.getValue(),
+					samlIbSloMessage.getSamlIdpEntityId())) {
+
+					MessageContext<?> logoutRequestMessageContext =
+						getMessageContext(
+							httpServletRequest, httpServletResponse,
+							samlIbSloMessage.getSamlIdpEntityId());
+
+					InOutOperationContext<?, LogoutRequest>
+						inOutOperationContext = new InOutOperationContext(
+							new MessageContext(), new MessageContext());
+
+					logoutRequestMessageContext.addSubcontext(
+						inOutOperationContext);
+
+					MessageContext<LogoutRequest> outboundMessageContext =
+						inOutOperationContext.getOutboundMessageContext();
+
+					SAMLBindingContext samlBindingContext =
+						outboundMessageContext.getSubcontext(
+							SAMLBindingContext.class, true);
+
+					samlBindingContext.setRelayState(
+						portal.getPortalURL(httpServletRequest));
+
+					outboundMessageContext.setMessage(logoutRequest);
+
+					SAMLPeerEntityContext samlPeerEntityContext =
 						logoutRequestMessageContext.getSubcontext(
-							InOutOperationContext.class);
+							SAMLPeerEntityContext.class);
 
-				MessageContext<LogoutRequest> inboundMessageContext =
-					inOutOperationContext.getInboundMessageContext();
+					outboundMessageContext.addSubcontext(samlPeerEntityContext);
 
-				if (inboundMessageContext.getMessage() == null) {
+					SAMLMetadataContext samlPeerMetadataContext =
+						samlPeerEntityContext.getSubcontext(
+							SAMLMetadataContext.class, true);
+
+					IDPSSODescriptor idpSSODescriptor =
+						(IDPSSODescriptor)
+							samlPeerMetadataContext.getRoleDescriptor();
+
+					SingleLogoutService singleLogoutService =
+						SamlUtil.resolveSingleLogoutService(
+							idpSSODescriptor,
+							SAMLConstants.SAML2_POST_BINDING_URI);
+
+					DateTime issueInstantDateTime = new DateTime(
+						DateTimeZone.UTC);
+
+					logoutRequest.setIssueInstant(issueInstantDateTime);
+
+					SAMLSelfEntityContext samlSelfEntityContext =
+						messageContext.getSubcontext(
+							SAMLSelfEntityContext.class);
+
+					outboundMessageContext.addSubcontext(samlSelfEntityContext);
+
+					SecurityParametersContext securityParametersContext =
+						outboundMessageContext.getSubcontext(
+							SecurityParametersContext.class, true);
+
+					OpenSamlUtil.prepareSecurityParametersContext(
+						getSigningCredential(), securityParametersContext,
+						idpSSODescriptor);
+
+					SAMLEndpointContext samlPeerEndpointSubcontext =
+						samlPeerEntityContext.getSubcontext(
+							SAMLEndpointContext.class, true);
+
+					samlPeerEndpointSubcontext.setEndpoint(singleLogoutService);
+
 					sendSamlMessage(
 						logoutRequestMessageContext, httpServletResponse);
+
+					_samlIbSloMessageLocalService.deleteSamlIbSloMessage(samlIbSloMessage);
 
 					return;
 				}
 
-				_sendLogoutResponse(
-					httpServletResponse, logoutRequestMessageContext,
+				MessageContext<?> logoutResponseMessageContext =
+					getMessageContext(
+						httpServletRequest, httpServletResponse,
+						samlIbSloMessage.getSamlIdpEntityId());
+
+				InOutOperationContext<LogoutRequest, LogoutResponse>
+					inOutOperationContext = new InOutOperationContext(
+						new MessageContext(), new MessageContext());
+
+				logoutResponseMessageContext.addSubcontext(
+					inOutOperationContext);
+
+				SAMLPeerEntityContext samlPeerEntityContext =
+					logoutResponseMessageContext.getSubcontext(
+						SAMLPeerEntityContext.class);
+
+				MessageContext<LogoutResponse> outboundMessageContext =
+					inOutOperationContext.getOutboundMessageContext();
+
+				SecurityParametersContext securityParametersContext =
+					outboundMessageContext.getSubcontext(
+						SecurityParametersContext.class, true);
+
+				SAMLMetadataContext samlPeerMetadataContext =
+					samlPeerEntityContext.getSubcontext(
+						SAMLMetadataContext.class);
+
+				SSODescriptor ssoDescriptor =
+					(SSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
+
+				OpenSamlUtil.prepareSecurityParametersContext(
+					getSigningCredential(), securityParametersContext,
+					ssoDescriptor);
+
+				LogoutResponse logoutResponse =
+					OpenSamlUtil.buildLogoutResponse();
+
+				outboundMessageContext.setMessage(logoutResponse);
+
+				logoutResponse.setID(generateIdentifier(20));
+				logoutResponse.setInResponseTo(logoutRequest.getID());
+				logoutResponse.setIssueInstant(new DateTime(DateTimeZone.UTC));
+
+				SAMLSelfEntityContext samlSelfEntityContext =
+					logoutResponseMessageContext.getSubcontext(
+						SAMLSelfEntityContext.class);
+
+				logoutResponse.setIssuer(
+					OpenSamlUtil.buildIssuer(
+						samlSelfEntityContext.getEntityId()));
+
+				StatusCode statusCode = OpenSamlUtil.buildStatusCode(
 					StatusCode.SUCCESS);
+
+				logoutResponse.setStatus(OpenSamlUtil.buildStatus(statusCode));
+
+				logoutResponse.setVersion(SAMLVersion.VERSION_20);
+
+				SAMLBindingContext samlBindingContext =
+					logoutResponseMessageContext.getSubcontext(
+						SAMLBindingContext.class);
+
+				samlBindingContext.setBindingUri(
+					SAMLConstants.SAML2_REDIRECT_BINDING_URI);
+
+				SingleLogoutService singleLogoutService =
+					SamlUtil.resolveSingleLogoutService(
+						ssoDescriptor, samlBindingContext.getBindingUri());
+
+				SAMLEndpointContext samlPeerEndpointContext =
+					samlPeerEntityContext.getSubcontext(
+						SAMLEndpointContext.class, true);
+
+				samlPeerEndpointContext.setEndpoint(singleLogoutService);
+
+				logoutResponse.setDestination(
+					singleLogoutService.getLocation());
+
+				outboundMessageContext.addSubcontext(samlBindingContext);
+				outboundMessageContext.addSubcontext(samlPeerEntityContext);
+				outboundMessageContext.addSubcontext(samlSelfEntityContext);
+
+				sendSamlMessage(
+					logoutResponseMessageContext, httpServletResponse);
+
+				_samlIbSloMessageLocalService.deleteSamlIbSloMessage(samlIbSloMessage);
 			}
 
 			return;
@@ -1130,30 +1301,81 @@ public class SingleLogoutProfileImpl
 		if (Objects.equals(statusCodeURI, StatusCode.SUCCESS) &&
 			samlProviderConfigurationHelper.isRoleIb()) {
 
-			SamlSpSession samlSpSession =
-				samlSpSessionLocalService.fetchSamlSpSessionBySessionIndex(
-					CompanyThreadLocal.getCompanyId(), sessionIndexes.get(0));
+			List<SamlIdpSpSession> samlIdpSpSessions = _getIbSamlIdpSpSessions(
+				sessionIndexes.get(0));
 
-			SamlIdpSsoSession samlIdpSsoSession =
-				_samlIdpSsoSessionLocalService.fetchSamlIdpSsoByUserId(
-					samlSpSession.getUserId());
+			SamlIdpSpSession samlIdpSpSession =
+				_samlIdpSpSessionLocalService.deleteSamlIdpSpSession(
+					samlIdpSpSessions.get(0));
 
-			SamlSloContext ibSamlSloContext = new SamlSloContext(
-				samlIdpSsoSession, null);
+			_samlIbSloMessageLocalService.addSamlIbSloMessage(
+				samlIdpSpSession.getCompanyId(),
+				OpenSamlUtil.marshall(logoutRequest),
+				samlPeerEntityContext.getEntityId(), sessionIndexes.get(0));
 
-			HttpSession httpSession = httpServletRequest.getSession();
-
-			httpSession.setAttribute("IB_SAML_SLO_CONTEXT", ibSamlSloContext);
-
-			httpSession.setAttribute(
-				"LOGOUT_REQUEST_MESSAGE_CONTEXT", messageContext);
-
-			_sendIbLogoutRequest(httpServletRequest, httpServletResponse);
+			_sendIbLogoutRequest(
+				httpServletRequest, httpServletResponse, samlIdpSpSession,
+				sessionIndexes.get(0));
 
 			return;
 		}
 
-		_sendLogoutResponse(httpServletResponse, messageContext, statusCodeURI);
+		MessageContext<LogoutResponse> outboundMessageContext =
+			inOutOperationContext.getOutboundMessageContext();
+
+		SecurityParametersContext securityParametersContext =
+			outboundMessageContext.getSubcontext(
+				SecurityParametersContext.class, true);
+
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		SSODescriptor ssoDescriptor =
+			(SSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
+
+		OpenSamlUtil.prepareSecurityParametersContext(
+			getSigningCredential(), securityParametersContext, ssoDescriptor);
+
+		LogoutResponse logoutResponse = OpenSamlUtil.buildLogoutResponse();
+
+		outboundMessageContext.setMessage(logoutResponse);
+
+		logoutResponse.setID(generateIdentifier(20));
+		logoutResponse.setInResponseTo(logoutRequest.getID());
+		logoutResponse.setIssueInstant(new DateTime(DateTimeZone.UTC));
+
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
+		logoutResponse.setIssuer(
+			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
+
+		StatusCode statusCode = OpenSamlUtil.buildStatusCode(statusCodeURI);
+
+		logoutResponse.setStatus(OpenSamlUtil.buildStatus(statusCode));
+
+		logoutResponse.setVersion(SAMLVersion.VERSION_20);
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		SingleLogoutService singleLogoutService =
+			SamlUtil.resolveSingleLogoutService(
+				ssoDescriptor, samlBindingContext.getBindingUri());
+
+		SAMLEndpointContext samlPeerEndpointContext =
+			samlPeerEntityContext.getSubcontext(
+				SAMLEndpointContext.class, true);
+
+		samlPeerEndpointContext.setEndpoint(singleLogoutService);
+
+		logoutResponse.setDestination(singleLogoutService.getLocation());
+
+		outboundMessageContext.addSubcontext(samlBindingContext);
+		outboundMessageContext.addSubcontext(samlPeerEntityContext);
+		outboundMessageContext.addSubcontext(samlSelfEntityContext);
+
+		sendSamlMessage(messageContext, httpServletResponse);
 	}
 
 	private void _processSpLogoutResponse(
@@ -1192,8 +1414,7 @@ public class SingleLogoutProfileImpl
 
 	private void _sendAsyncLogoutRequest(
 			MessageContext<LogoutRequest> messageContext,
-			SamlSloContext samlSloContext,
-			HttpServletResponse httpServletResponse)
+			String samlSsoSessionId, HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		SAMLPeerEntityContext samlPeerEntityContext =
@@ -1226,7 +1447,7 @@ public class SingleLogoutProfileImpl
 
 		logoutRequest.setVersion(SAMLVersion.VERSION_20);
 
-		_addSessionIndex(logoutRequest, samlSloContext.getSamlSsoSessionId());
+		_addSessionIndex(logoutRequest, samlSsoSessionId);
 
 		messageContext.setMessage(logoutRequest);
 
@@ -1271,32 +1492,24 @@ public class SingleLogoutProfileImpl
 
 	private void _sendIbLogoutRequest(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletResponse httpServletResponse,
+			SamlIdpSpSession samlIdpSpSession, String idpSessionIndex)
 		throws Exception {
 
-		HttpSession httpSession = httpServletRequest.getSession();
+		SamlPeerBinding samlPeerBinding =
+			_samlPeerBindingLocalService.getSamlPeerBinding(
+				samlIdpSpSession.getSamlPeerBindingId());
 
-		SamlSloContext ibSamlSloContext =
-			(SamlSloContext)httpSession.getAttribute("IB_SAML_SLO_CONTEXT");
-
-		Set<SamlSloRequestInfo> samlSloRequestInfos =
-			ibSamlSloContext.getSamlSloRequestInfos();
-
-		Iterator<SamlSloRequestInfo> samlSloRequestInfoIterator =
-			samlSloRequestInfos.iterator();
-
-		SamlSloRequestInfo samlSloRequestInfo =
-			samlSloRequestInfoIterator.next();
-
-		String entityId = samlSloRequestInfo.getEntityId();
-
-		ibSamlSloContext.removeSamlSloRequestInfo(entityId);
-
-		httpSession.setAttribute("IB_SAML_SLO_CONTEXT", ibSamlSloContext);
+		String entityId = samlPeerBinding.getSamlPeerEntityId();
 
 		MessageContext<LogoutRequest> messageContext =
 			(MessageContext<LogoutRequest>)getMessageContext(
 				httpServletRequest, httpServletResponse, entityId);
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		samlBindingContext.setRelayState(idpSessionIndex);
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
@@ -1317,13 +1530,6 @@ public class SingleLogoutProfileImpl
 
 		samlPeerEndpointContext.setEndpoint(singleLogoutService);
 
-		SamlIdpSpSession samlIdpSpSession =
-			samlSloRequestInfo.getSamlIdpSpSession();
-
-		SamlPeerBinding samlPeerBinding =
-			_samlPeerBindingLocalService.getSamlPeerBinding(
-				samlIdpSpSession.getSamlPeerBindingId());
-
 		NameID nameID = OpenSamlUtil.buildNameId(
 			samlPeerBinding.getSamlNameIdFormat(),
 			samlPeerBinding.getSamlNameIdValue());
@@ -1334,12 +1540,13 @@ public class SingleLogoutProfileImpl
 
 		samlSubjectNameIdentifierContext.setSubjectNameIdentifier(nameID);
 
-		samlSloRequestInfo.setInitiateTime(new DateTime(DateTimeZone.UTC));
-		samlSloRequestInfo.setStatus(
-			SamlSloRequestInfo.REQUEST_STATUS_INITIATED);
+		SamlIdpSsoSession samlIdpSsoSession =
+			_samlIdpSsoSessionLocalService.fetchSamlIdpSsoSession(
+				samlIdpSpSession.getSamlIdpSsoSessionId());
 
 		_sendAsyncLogoutRequest(
-			messageContext, ibSamlSloContext, httpServletResponse);
+			messageContext, samlIdpSsoSession.getSamlIdpSsoSessionKey(),
+			httpServletResponse);
 	}
 
 	private void _sendIdpLogoutResponse(
@@ -1433,81 +1640,6 @@ public class SingleLogoutProfileImpl
 
 			logout(httpServletRequest, httpServletResponse);
 		}
-
-		sendSamlMessage(messageContext, httpServletResponse);
-	}
-
-	private void _sendLogoutResponse(
-			HttpServletResponse httpServletResponse,
-			MessageContext<?> messageContext, String statusCodeURI)
-		throws Exception {
-
-		InOutOperationContext<LogoutRequest, LogoutResponse>
-			inOutOperationContext = messageContext.getSubcontext(
-				InOutOperationContext.class);
-
-		MessageContext<LogoutRequest> inboundMessageContext =
-			inOutOperationContext.getInboundMessageContext();
-
-		LogoutRequest logoutRequest = inboundMessageContext.getMessage();
-
-		SAMLPeerEntityContext samlPeerEntityContext =
-			messageContext.getSubcontext(SAMLPeerEntityContext.class);
-
-		MessageContext<LogoutResponse> outboundMessageContext =
-			inOutOperationContext.getOutboundMessageContext();
-
-		SecurityParametersContext securityParametersContext =
-			outboundMessageContext.getSubcontext(
-				SecurityParametersContext.class, true);
-
-		SAMLMetadataContext samlPeerMetadataContext =
-			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
-
-		SSODescriptor ssoDescriptor =
-			(SSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
-
-		OpenSamlUtil.prepareSecurityParametersContext(
-			getSigningCredential(), securityParametersContext, ssoDescriptor);
-
-		LogoutResponse logoutResponse = OpenSamlUtil.buildLogoutResponse();
-
-		outboundMessageContext.setMessage(logoutResponse);
-
-		logoutResponse.setID(generateIdentifier(20));
-		logoutResponse.setInResponseTo(logoutRequest.getID());
-		logoutResponse.setIssueInstant(new DateTime(DateTimeZone.UTC));
-
-		SAMLSelfEntityContext samlSelfEntityContext =
-			messageContext.getSubcontext(SAMLSelfEntityContext.class);
-
-		logoutResponse.setIssuer(
-			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
-
-		StatusCode statusCode = OpenSamlUtil.buildStatusCode(statusCodeURI);
-
-		logoutResponse.setStatus(OpenSamlUtil.buildStatus(statusCode));
-
-		logoutResponse.setVersion(SAMLVersion.VERSION_20);
-
-		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
-			SAMLBindingContext.class);
-
-		SingleLogoutService singleLogoutService =
-			SamlUtil.resolveSingleLogoutService(
-				ssoDescriptor, samlBindingContext.getBindingUri());
-
-		SAMLEndpointContext samlPeerEndpointContext =
-			samlPeerEntityContext.getSubcontext(
-				SAMLEndpointContext.class, true);
-
-		samlPeerEndpointContext.setEndpoint(singleLogoutService);
-
-		logoutResponse.setDestination(singleLogoutService.getLocation());
-
-		outboundMessageContext.addSubcontext(samlBindingContext);
-		outboundMessageContext.addSubcontext(samlPeerEntityContext);
-		outboundMessageContext.addSubcontext(samlSelfEntityContext);
 
 		sendSamlMessage(messageContext, httpServletResponse);
 	}
@@ -1701,6 +1833,9 @@ public class SingleLogoutProfileImpl
 
 	@Reference
 	private SamlHttpRequestHelper _samlHttpRequestHelper;
+
+	@Reference
+	private SamlIbSloMessageLocalService _samlIbSloMessageLocalService;
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

@@ -67,6 +67,14 @@ public class AssigneeObjectFieldBusinessType
 	}
 
 	@Override
+	public Object getDisplayContextValue(
+			ObjectField objectField, long userId, Map<String, Object> values)
+		throws PortalException {
+
+		return values.get(objectField.getName());
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(

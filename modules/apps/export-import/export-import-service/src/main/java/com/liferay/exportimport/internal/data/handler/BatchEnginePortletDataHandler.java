@@ -362,7 +362,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		batchEngineTaskItemDelegate.setLanguageId(user.getLanguageId());
 
 		Page<?> page = batchEngineTaskItemDelegate.read(
-			null, Pagination.of(0, 0), null, parameters, null);
+			null, Pagination.of(1, 1), null, parameters, null);
 
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();

@@ -282,13 +282,6 @@ public class DisplayPageTemplateResourceTest
 		super.testGetSiteDisplayPageTemplatesPageWithSortString();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteDisplayPageTemplate() throws Exception {
-		super.testGraphQLGetSiteDisplayPageTemplate();
-	}
-
 	@Override
 	@Test
 	public void testPatchSiteDisplayPageTemplate() throws Exception {

@@ -20,7 +20,6 @@ import com.liferay.exportimport.report.constants.ExportImportReportEntryConstant
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -122,7 +121,7 @@ public class AssetTagsPortletDataHandlerTest
 	@Test
 	public void testExportImportAssetTag() throws Exception {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			CompanyConstants.SYSTEM, true, "LPD-35914");
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		AssetTag assetTag = _addTag();
 
@@ -142,7 +141,7 @@ public class AssetTagsPortletDataHandlerTest
 				stagingGroup.getGroupId()));
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			CompanyConstants.SYSTEM, false, "LPD-35914");
+			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@Override

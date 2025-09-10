@@ -758,7 +758,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
@@ -786,7 +785,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long userId, long layoutPageTemplateEntryId, String name,
@@ -892,7 +890,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return layoutPageTemplateEntry;
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPageTemplateEntry updateStatus(
 			long userId, long layoutPageTemplateEntryId, int status)

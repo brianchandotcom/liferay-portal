@@ -209,12 +209,13 @@ function isCookieTypesAccepted(cookieTypes) {
 
 function setBannerVisibility(productAnalyticsBanner) {
 	const cookieBanner = document.querySelector('.cookies-banner');
+
 	if (getCookie(productAnalyticsConfiguredCookieName)) {
 		productAnalyticsBanner.style.display = 'none';
-		if(cookieBanner) {
+
+		if (cookieBanner) {
 			if (getCookie(userConfigCookieName)) {
 				cookieBanner.style.display = 'none';
-
 			}
 			else {
 				cookieBanner.style.display = 'block';
@@ -223,7 +224,8 @@ function setBannerVisibility(productAnalyticsBanner) {
 	}
 	else {
 		productAnalyticsBanner.style.display = 'block';
-		if(cookieBanner) {
+
+		if (cookieBanner) {
 			cookieBanner.style.display = 'none';
 		}
 	}

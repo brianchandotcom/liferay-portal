@@ -45,13 +45,13 @@ test(
             const datePickerDialog = page.getByRole('dialog', {name: 'Aukeratu data'});
             await expect(datePickerDialog).toBeVisible();
 
-            await expect(datePickerDialog.getByText('al')).toBeVisible();
-            await expect(datePickerDialog.getByText('ar')).toBeVisible();
-            await expect(datePickerDialog.getByText('az')).toBeVisible();
-            await expect(datePickerDialog.getByText('og')).toBeVisible();
-            await expect(datePickerDialog.getByText('ol')).toBeVisible();
-            await expect(datePickerDialog.getByText('lr')).toBeVisible();
-            await expect(datePickerDialog.getByText('ig')).toBeVisible();
+            await expect(datePickerDialog.getByText('al', {exact: true})).toBeVisible();
+            await expect(datePickerDialog.getByText('ar', {exact: true})).toBeVisible();
+            await expect(datePickerDialog.getByText('az', {exact: true})).toBeVisible();
+            await expect(datePickerDialog.getByText('og', {exact: true})).toBeVisible();
+            await expect(datePickerDialog.getByText('or', {exact: true})).toBeVisible();
+            await expect(datePickerDialog.getByText('lr', {exact: true})).toBeVisible();
+            await expect(datePickerDialog.getByText('ig', {exact: true})).toBeVisible();
 		});
 	}
 );

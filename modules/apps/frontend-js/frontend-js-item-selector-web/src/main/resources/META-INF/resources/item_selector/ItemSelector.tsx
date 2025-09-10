@@ -36,21 +36,23 @@ interface HeadlessPage<T = unknown> {
 	page: number;
 }
 
-function ItemSelectorModalButton({
-	itemSelectorModalProps,
-	items,
-	locator,
-	setItems,
-}: {
-	itemSelectorModalProps: IItemSelectorModalProps<any>;
-	items: any[];
+interface IItemSelectorModalTriggerProps<T extends Record<string, any>> {
+	itemSelectorModalProps: IItemSelectorModalProps<T>;
+	items: T[];
 	locator: {
 		id: string;
 		label: string;
 		value: string;
 	};
-	setItems: InternalDispatch<any>;
-}) {
+	setItems: InternalDispatch<T[]>;
+}
+
+function ItemSelectorModalTrigger<T extends Record<string, any>>({
+	itemSelectorModalProps,
+	items,
+	locator,
+	setItems,
+}: IItemSelectorModalTriggerProps<T>) {
 	return (
 		<>
 			<ClayInput.GroupItem shrink>
@@ -347,7 +349,7 @@ function ItemSelector<T extends Record<string, any>>({
 				</ClayInput.GroupItem>
 
 				{itemSelectorModalProps && (
-					<ItemSelectorModalButton
+					<ItemSelectorModalTrigger
 						itemSelectorModalProps={itemSelectorModalProps}
 						items={items}
 						locator={locator}
@@ -411,7 +413,7 @@ function ItemSelector<T extends Record<string, any>>({
 			</ClayInput.GroupItem>
 
 			{itemSelectorModalProps && (
-				<ItemSelectorModalButton
+				<ItemSelectorModalTrigger
 					itemSelectorModalProps={itemSelectorModalProps}
 					items={items}
 					locator={locator}

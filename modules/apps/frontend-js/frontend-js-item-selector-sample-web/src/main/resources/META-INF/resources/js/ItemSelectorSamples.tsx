@@ -150,7 +150,8 @@ export default function ItemSelectorSamples() {
 	>([]);
 	const [user2, setUser2] = useState<User | null>();
 	const [space3, setSpace3] = useState<Space | null>();
-	const [spacesMultiselect, setSpacesMultiselect] = useState<Space[]>([]);
+	const [spacesMultiSelect, setSpacesMultiSelect] = useState<Space[]>([]);
+	const [usersMultiSelect, setUsersMultiSelect] = useState<User[]>([]);
 
 	const {
 		observer: documentItemSelectorObserver,
@@ -171,24 +172,26 @@ export default function ItemSelectorSamples() {
 		observer: cmsFileItemSelectorObserver,
 		onOpenChange: cmsFileItemSelectorOpenChange,
 		open: cmsFileItemSelectorOpen,
-		observer: itemSelectorModalObserver,
-		onOpenChange: itemSelectorModalOpenChange,
-		open: itemSelectorModalOpen,
 	} = useModal();
 	const {
-		observer: itemSelectorSpaceModalObserver,
-		onOpenChange: itemSelectorSpaceModalOpenChange,
-		open: itemSelectorSpaceModalOpen,
+		observer: user2ItemSelectorModalObserver,
+		onOpenChange: user2ItemSelectorModalOpenChange,
+		open: user2ItemSelectorModalOpen,
 	} = useModal();
 	const {
-		observer: itemSelectorMultiSelectModalObserver,
-		onOpenChange: itemSelectorMultiSelectModalOpenChange,
-		open: itemSelectorMultiSelectModalOpen,
+		observer: space2ItemSelectorModalObserver,
+		onOpenChange: space2ItemSelectorModalOpenChange,
+		open: space2ItemSelectorModalOpen,
 	} = useModal();
 	const {
-		observer: itemSelectorSpacesMultiSelectModalObserver,
-		onOpenChange: itemSelectorSpacesMultiSelectModalOpenChange,
-		open: itemSelectorSpacesMultiSelectModalOpen,
+		observer: userMultiSelectItemSelectorModalObserver,
+		onOpenChange: userMultiSelectItemSelectorModalOpenChange,
+		open: userMultiSelectItemSelectorModalOpen,
+	} = useModal();
+	const {
+		observer: spacesMultiSelectItemSelectorModalObserver,
+		onOpenChange: spacesMultiSelectItemSelectorModalOpenChange,
+		open: spacesMultiSelectItemSelectorModalOpen,
 	} = useModal();
 
 	return (
@@ -306,10 +309,10 @@ export default function ItemSelectorSamples() {
 							}),
 						},
 						items: user2 ? [user2] : [],
-						observer: itemSelectorModalObserver,
+						observer: user2ItemSelectorModalObserver,
 						onItemsChange: (items: User[]) => setUser2(items[0]),
-						onOpenChange: itemSelectorModalOpenChange,
-						open: itemSelectorModalOpen,
+						onOpenChange: user2ItemSelectorModalOpenChange,
+						open: user2ItemSelectorModalOpen,
 						type: userAccountsItemSelectorConfig.type,
 					}}
 					locator={{
@@ -340,16 +343,17 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
 							}),
 						},
-						items: usersMultiselect,
-						observer: itemSelectorMultiSelectModalObserver,
+						items: usersMultiSelect,
+						observer: userMultiSelectItemSelectorModalObserver,
 						onItemsChange: (items: User[]) => {
-							setUsersMultiselect([
-								...usersMultiselect,
+							setUsersMultiSelect([
+								...usersMultiSelect,
 								...items,
 							]);
 						},
-						onOpenChange: itemSelectorMultiSelectModalOpenChange,
-						open: itemSelectorMultiSelectModalOpen,
+						onOpenChange:
+							userMultiSelectItemSelectorModalOpenChange,
+						open: userMultiSelectItemSelectorModalOpen,
 						type: userAccountsItemSelectorConfig.type,
 					}}
 					locator={{
@@ -382,10 +386,10 @@ export default function ItemSelectorSamples() {
 							}),
 						},
 						items: space3 ? [space3] : [],
-						observer: itemSelectorSpaceModalObserver,
+						observer: space2ItemSelectorModalObserver,
 						onItemsChange: (items: Space[]) => setSpace3(items[0]),
-						onOpenChange: itemSelectorSpaceModalOpenChange,
-						open: itemSelectorSpaceModalOpen,
+						onOpenChange: space2ItemSelectorModalOpenChange,
+						open: space2ItemSelectorModalOpen,
 						type: assetLibrariesItemSelectorConfig.type,
 					}}
 					locator={{
@@ -416,17 +420,17 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
 							}),
 						},
-						items: spacesMultiselect,
-						observer: itemSelectorSpacesMultiSelectModalObserver,
+						items: spacesMultiSelect,
+						observer: spacesMultiSelectItemSelectorModalObserver,
 						onItemsChange: (items: Space[]) => {
-							setSpacesMultiselect([
-								...spacesMultiselect,
+							setSpacesMultiSelect([
+								...spacesMultiSelect,
 								...items,
 							]);
 						},
 						onOpenChange:
-							itemSelectorSpacesMultiSelectModalOpenChange,
-						open: itemSelectorSpacesMultiSelectModalOpen,
+							spacesMultiSelectItemSelectorModalOpenChange,
+						open: spacesMultiSelectItemSelectorModalOpen,
 						type: assetLibrariesItemSelectorConfig.type,
 					}}
 					locator={{

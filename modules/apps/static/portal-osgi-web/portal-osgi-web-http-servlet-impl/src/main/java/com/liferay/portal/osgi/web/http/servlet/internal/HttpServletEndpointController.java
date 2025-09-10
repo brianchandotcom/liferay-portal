@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContextImpl;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
 
 import jakarta.servlet.ServletContext;
 
@@ -345,7 +345,7 @@ public class HttpServletEndpointController {
 
 				return new LiferayContextController(
 					_bundleContext, serviceReference,
-					new ServletContextHelperDataContextImpl(
+					new ServletContextHelperDataContext(
 						contextName, _parentServletContext,
 						_parentServletContextTempDir),
 					HttpServletEndpointController.this, contextName,

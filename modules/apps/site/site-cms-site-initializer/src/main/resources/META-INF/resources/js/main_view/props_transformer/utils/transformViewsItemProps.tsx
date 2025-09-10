@@ -156,15 +156,15 @@ export function transformItemCardView(
 		stickerProps: {
 			className: getFileMimeTypeObjectDefinitionStickerValue(
 				fileMimeTypeCssClasses,
-				item,
-				objectDefinitionCssClasses
+				objectDefinitionCssClasses,
+				item
 			),
 			content: (
 				<ClayIcon
 					symbol={getFileMimeTypeObjectDefinitionStickerValue(
 						fileMimeTypeIcons,
-						item,
-						objectDefinitionIcons
+						objectDefinitionIcons,
+						item
 					)}
 				/>
 			),

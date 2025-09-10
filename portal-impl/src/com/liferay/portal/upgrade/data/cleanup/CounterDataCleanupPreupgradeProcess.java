@@ -150,7 +150,8 @@ public class CounterDataCleanupPreupgradeProcess
 				continue;
 			}
 
-			long maxCounterValue = _getMaxCounterValue(columnName, tableName);
+			long maxCounterValue = _getMaxCounterValue(
+				columnName, dbInspector, tableName);
 
 			if (maxCounterValue > latestCounterValue) {
 				latestCounterValue = maxCounterValue;
@@ -240,7 +241,8 @@ public class CounterDataCleanupPreupgradeProcess
 			return;
 		}
 
-		long maxCounterValue = _getMaxCounterValue(columnName, tableName);
+		long maxCounterValue = _getMaxCounterValue(
+			columnName, dbInspector, tableName);
 
 		if (counterValue >= maxCounterValue) {
 			return;
@@ -256,10 +258,11 @@ public class CounterDataCleanupPreupgradeProcess
 		}
 	}
 
-	private long _getMaxCounterValue(String columnName, String tableName)
+	private long _getMaxCounterValue(
+			String columnName, DBInspector dbInspector, String tableName)
 		throws Exception {
 
-		if (StringUtil.equalsIgnoreCase(tableName, "DLFileEntry")) {
+		if (!dbInspector.isNumeric(tableName, columnName)) {
 			long maxValue = 0;
 
 			try (PreparedStatement preparedStatement1 =

@@ -2350,7 +2350,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									"Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
 					</#if>
 				<#else>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				</#if>
 			}
 

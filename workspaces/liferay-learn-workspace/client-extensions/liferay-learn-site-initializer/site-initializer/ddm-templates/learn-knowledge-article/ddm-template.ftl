@@ -1,12 +1,8 @@
 <#if (ObjectEntry_objectEntryId.getData())?? && ObjectEntry_objectEntryId.getData()?has_content>
-	<#assign
-		assetId = ObjectEntry_objectEntryId.getData()?number
-
-		response = restClient.get("/c/p2s3knowledgearticles/${assetId}?fields=status")
-		/>
+	<#assign assetId = ObjectEntry_objectEntryId.getData()?number />
 </#if>
 
-<#if response?? && response.status?? && response.status.code?? && response.status.code == 0>
+<#if ObjectEntry_status.getData()?? && ObjectEntry_status.getData() == 'approved' >
 	<#if stringUtil.equals(locale, "en_US")>
 		<#assign createDate = ObjectEntry_createDate.getData()?datetime("M/d/yy h:mm a") />
 	<#else>

@@ -56,6 +56,12 @@ public class ImportErrorsDisplayContext {
 		).buildString();
 	}
 
+	public String getReportEntryAPIURL(String errorId) {
+		return StringBundler.concat(
+			"/o/export-import/v1.0/report-entry/", errorId,
+			"?nestedFields=errorStacktrace");
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;
 

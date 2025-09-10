@@ -21,7 +21,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "error-details"));
 	module="{ViewImportErrorDetail} from exportimport-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"apiURL", PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/export-import/v1.0/report-entry/" + errorId + "?nestedFields=errorStacktrace"
+			"apiURL", importErrorsDisplayContext.getReportEntryAPIURL(errorId)
 		).put(
 			"backURL", portletDisplay.getURLBack()
 		).build()

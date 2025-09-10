@@ -64,6 +64,7 @@ import {config as frontendDataSetAdminWebConfig} from './tests/frontend-data-set
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/main/config';
 import {config as frontendEditorAlloyEditorWebConfig} from './tests/frontend-editor-alloyeditor-web/main/config';
 import {config as frontendEditorCKEditorWebConfig} from './tests/frontend-editor-ckeditor-web/main/config';
+import {config as frontendJsAuiWebConfig} from './tests/frontend-js-aui-web/main/config';
 import {config as frontendJsBootstrapSupportWebConfig} from './tests/frontend-js-bootstrap-support-web/main/config';
 import {config as frontendJsComponentsWebConfig} from './tests/frontend-js-components-web/main/config';
 import {config as frontendJsItemSelectorWebConfig} from './tests/frontend-js-item-selector-web/main/config';
@@ -231,6 +232,7 @@ export default defineConfig({
 		frontendDataSetWebConfig,
 		frontendEditorAlloyEditorWebConfig,
 		frontendEditorCKEditorWebConfig,
+		frontendJsAuiWebConfig,
 		frontendJsBootstrapSupportWebConfig,
 		frontendJsComponentsWebConfig,
 		frontendJsItemSelectorWebConfig,

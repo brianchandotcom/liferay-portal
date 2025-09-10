@@ -147,6 +147,8 @@ public class LayoutPageTemplateCollectionIndexerReindexTest {
 			_searchRequestBuilderFactory.builder(
 			).companyId(
 				TestPropsValues.getCompanyId()
+			).groupIds(
+				TestPropsValues.getGroupId()
 			).fields(
 				StringPool.STAR
 			).modelIndexerClasses(

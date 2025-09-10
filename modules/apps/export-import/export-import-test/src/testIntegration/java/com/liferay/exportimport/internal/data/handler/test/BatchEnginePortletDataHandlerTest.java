@@ -1116,6 +1116,9 @@ public class BatchEnginePortletDataHandlerTest {
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
+			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
+			new String[] {Boolean.FALSE.toString()}
+		).put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {Boolean.TRUE.toString()}
 		).build();

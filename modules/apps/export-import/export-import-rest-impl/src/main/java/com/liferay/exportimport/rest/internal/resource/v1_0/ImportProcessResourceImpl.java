@@ -54,7 +54,9 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-35914")) {
+
 			throw new NotFoundException();
 		}
 
@@ -73,7 +75,9 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 	public ImportProcess getImportProcess(Long importProcessId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-35914")) {
+
 			throw new NotFoundException();
 		}
 
@@ -100,7 +104,9 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-35914")) {
+
 			throw new NotFoundException();
 		}
 
@@ -122,7 +128,9 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-35914")) {
+
 			throw new NotFoundException();
 		}
 

@@ -12,10 +12,12 @@ export class ObjectRelationshipsPage {
 	readonly addObjectRelationshipButton: Locator;
 	readonly cancelButton: Locator;
 	readonly deleteObjectRelationshipOption: Locator;
+	readonly editObjectRelationshipOption: Locator;
 	readonly inheritanceModalHeader: Locator;
 	readonly inheritanceModalDisableButton: Locator;
 	readonly inheritanceCheckbox: Locator;
 	readonly inheritanceWarningMessage: Locator;
+	readonly multipleParentInheritanceErrorMessage: Locator;
 	readonly relationshipTabItem: Locator;
 	readonly saveObjectRelationshipButton: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
@@ -28,6 +30,9 @@ export class ObjectRelationshipsPage {
 		this.cancelButton = page.frameLocator('iframe').getByText('Cancel');
 		this.deleteObjectRelationshipOption = page.getByRole('menuitem', {
 			name: 'Delete',
+		});
+		this.editObjectRelationshipOption = page.getByRole('menuitem', {
+			name: 'Edit',
 		});
 		this.inheritanceModalHeader = page.getByRole('heading', {
 			name: 'Disable Inheritance Confirmation',
@@ -42,6 +47,11 @@ export class ObjectRelationshipsPage {
 			.frameLocator('iframe')
 			.getByText(
 				'Error:Unable to bind the object definitions when the child object definition is bound to another object definition'
+			);
+		this.multipleParentInheritanceErrorMessage = page
+			.frameLocator('iframe')
+			.getByText(
+				'Error:You cannot enable inheritance because there are already child entries in the regular relationship.'
 			);
 		this.relationshipTabItem = page.getByRole('link', {
 			name: 'Relationships',

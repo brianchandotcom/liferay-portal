@@ -128,8 +128,8 @@ public class CounterDataCleanupPreupgradeProcess
 	}
 
 	private void _checkKernelCounter(
-			String kernelCounterName, long counterValue,
-			DBInspector dbInspector, List<String> excludedTableNames)
+			String counterName, long counterValue, DBInspector dbInspector,
+			List<String> excludedTableNames)
 		throws Exception {
 
 		List<String> tableNames = dbInspector.getTableNames(null);
@@ -158,14 +158,13 @@ public class CounterDataCleanupPreupgradeProcess
 		}
 
 		if (counterValue < latestCounterValue) {
-			CounterLocalServiceUtil.reset(
-				kernelCounterName, latestCounterValue);
+			CounterLocalServiceUtil.reset(counterName, latestCounterValue);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Counter ", kernelCounterName,
-						" has been reset to value ", latestCounterValue));
+						"Counter ", counterName, " has been reset to value ",
+						latestCounterValue));
 			}
 		}
 	}

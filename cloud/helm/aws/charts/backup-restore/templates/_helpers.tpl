@@ -1,19 +1,3 @@
-{{- define "liferayAWSBackupRestore.argo.ref.taskInputParam" -}}
-{{- "{{" }}inputs.parameters.{{ . }}}}
-{{- end -}}
-
-{{- define "liferayAWSBackupRestore.argo.ref.taskOutputArtifact" -}}
-{{- "{{" }}tasks.{{ .task }}.outputs.artifacts.{{ .artifact }}}}
-{{- end -}}
-
-{{- define "liferayAWSBackupRestore.argo.ref.taskOutputParam" -}}
-{{- "{{" }}tasks.{{ .task }}.outputs.parameters.{{ .parameter }}}}
-{{- end -}}
-
-{{- define "liferayAWSBackupRestore.argo.ref.workflowParam" -}}
-{{- "{{" }}workflow.parameters.{{ . }}}}
-{{- end -}}
-
 {{- define "liferayAWSBackupRestore.artifactRepositoryConfigMapName" -}}
 {{- printf "%s-art-repo" (include "liferayAWSBackupRestore.name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

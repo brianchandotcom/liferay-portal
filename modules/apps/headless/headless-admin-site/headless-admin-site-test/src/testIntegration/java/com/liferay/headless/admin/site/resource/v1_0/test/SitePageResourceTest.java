@@ -262,14 +262,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		PageSpecificationsTestUtil.
-			testPostSiteSiteByExternalReferenceCodePageSpecification(
-				layout, sitePage.getPageSpecifications(), serviceContext,
-				contentPageSpecification ->
-					sitePageResource.postSiteSitePagePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						layout.getExternalReferenceCode(),
-						contentPageSpecification));
+		PageSpecificationsTestUtil.testPostSitePageSpecification(
+			layout, sitePage.getPageSpecifications(), serviceContext,
+			contentPageSpecification ->
+				sitePageResource.postSiteSitePagePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode(),
+					contentPageSpecification));
 
 		_assertPostSiteSitePagePageSpecificationProblemException(
 			LayoutTestUtil.addTypePortletLayout(testGroup));

@@ -305,16 +305,14 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		PageSpecificationsTestUtil.
-			testPostSiteSiteByExternalReferenceCodePageSpecification(
-				_layoutLocalService.getLayout(
-					layoutPageTemplateEntry.getPlid()),
-				masterPage.getPageSpecifications(), serviceContext,
-				contentPageSpecification ->
-					masterPageResource.postSiteMasterPagePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						masterPage.getExternalReferenceCode(),
-						contentPageSpecification));
+		PageSpecificationsTestUtil.testPostSitePageSpecification(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			masterPage.getPageSpecifications(), serviceContext,
+			contentPageSpecification ->
+				masterPageResource.postSiteMasterPagePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					masterPage.getExternalReferenceCode(),
+					contentPageSpecification));
 
 		_assertPostSiteMasterPagePageSpecificationProblemException(
 			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
@@ -574,8 +572,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).build();
 	}
 
-	private MasterPage
-			_postByExternalReferenceCodeMasterPageWithPageSpecificationsWithCustomFields()
+	private MasterPage _postMasterPageWithPageSpecificationsWithCustomFields()
 		throws Exception {
 
 		MasterPage randomMasterPage = randomMasterPage();
@@ -734,7 +731,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					PageSpecificationsTestUtil.getExpandoTableAutoCloseable()) {
 
 			MasterPage postMasterPage =
-				_postByExternalReferenceCodeMasterPageWithPageSpecificationsWithCustomFields();
+				_postMasterPageWithPageSpecificationsWithCustomFields();
 
 			MasterPageResource masterPageResource = _getMasterPageResource();
 
@@ -814,7 +811,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				expandoTableAutoCloseable =
 					PageSpecificationsTestUtil.getExpandoTableAutoCloseable()) {
 
-			_postByExternalReferenceCodeMasterPageWithPageSpecificationsWithCustomFields();
+			_postMasterPageWithPageSpecificationsWithCustomFields();
 		}
 	}
 
@@ -980,7 +977,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					PageSpecificationsTestUtil.getExpandoTableAutoCloseable()) {
 
 			MasterPage postMasterPage =
-				_postByExternalReferenceCodeMasterPageWithPageSpecificationsWithCustomFields();
+				_postMasterPageWithPageSpecificationsWithCustomFields();
 
 			MasterPageResource masterPageResource = _getMasterPageResource();
 

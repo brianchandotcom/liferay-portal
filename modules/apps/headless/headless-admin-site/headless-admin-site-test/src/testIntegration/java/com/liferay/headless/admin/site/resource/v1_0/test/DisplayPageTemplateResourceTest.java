@@ -444,17 +444,15 @@ public class DisplayPageTemplateResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		PageSpecificationsTestUtil.
-			testPostSiteSiteByExternalReferenceCodePageSpecification(
-				_layoutLocalService.getLayout(
-					layoutPageTemplateEntry.getPlid()),
-				displayPageTemplate.getPageSpecifications(), serviceContext,
-				contentPageSpecification ->
-					displayPageTemplateResource.
-						postSiteDisplayPageTemplatePageSpecification(
-							testGroup.getExternalReferenceCode(),
-							displayPageTemplate.getExternalReferenceCode(),
-							contentPageSpecification));
+		PageSpecificationsTestUtil.testPostSitePageSpecification(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			displayPageTemplate.getPageSpecifications(), serviceContext,
+			contentPageSpecification ->
+				displayPageTemplateResource.
+					postSiteDisplayPageTemplatePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						displayPageTemplate.getExternalReferenceCode(),
+						contentPageSpecification));
 
 		_assertPostSiteDisplayPageTemplatePageSpecificationProblemException(
 			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(

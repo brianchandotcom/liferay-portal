@@ -463,13 +463,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return _draftLayout.getExternalReferenceCode();
 	}
 
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageElementPageElementsPage_getPageExperienceExternalReferenceCode()
-		throws Exception {
-
-		return testGetSitePageSpecificationPageExperiencePageElementPageElementsPage_getPageExperienceExternalReferenceCode();
-	}
-
 	@Override
 	protected PageElement
 			testPostSitePageSpecificationPageExperiencePageElement_addPageElement(

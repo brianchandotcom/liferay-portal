@@ -382,17 +382,16 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					utilityPage.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
-		PageSpecificationsTestUtil.
-			testPostSiteSiteByExternalReferenceCodePageSpecification(
-				_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()),
-				utilityPage.getPageSpecifications(),
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId(), TestPropsValues.getUserId()),
-				contentPageSpecification ->
-					utilityPageResource.postSiteUtilityPagePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						utilityPage.getExternalReferenceCode(),
-						contentPageSpecification));
+		PageSpecificationsTestUtil.testPostSitePageSpecification(
+			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()),
+			utilityPage.getPageSpecifications(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()),
+			contentPageSpecification ->
+				utilityPageResource.postSiteUtilityPagePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					utilityPage.getExternalReferenceCode(),
+					contentPageSpecification));
 	}
 
 	@Override

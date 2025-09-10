@@ -430,16 +430,14 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		PageSpecificationsTestUtil.
-			testPostSiteSiteByExternalReferenceCodePageSpecification(
-				_layoutLocalService.getLayout(
-					layoutPageTemplateEntry.getPlid()),
-				pageTemplate.getPageSpecifications(), serviceContext,
-				contentPageSpecification ->
-					pageTemplateResource.postSitePageTemplatePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						pageTemplate.getExternalReferenceCode(),
-						contentPageSpecification));
+		PageSpecificationsTestUtil.testPostSitePageSpecification(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			pageTemplate.getPageSpecifications(), serviceContext,
+			contentPageSpecification ->
+				pageTemplateResource.postSitePageTemplatePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					pageTemplate.getExternalReferenceCode(),
+					contentPageSpecification));
 
 		PageTemplate widgetPageTemplate =
 			pageTemplateResource.postSitePageTemplate(
@@ -1572,6 +1570,48 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			});
 	}
 
+	private void _testPutSiteContentPageTemplateWithPageSpecifications(
+			PageSpecification.Status newDraftLayoutStatus,
+			PageSpecification.Status newPublishedLayoutStatus,
+			PageSpecification.Status oldDraftLayoutStatus,
+			PageSpecification.Status oldPublishedLayoutStatus)
+		throws Exception {
+
+		PageTemplateResource pageTemplateResource = _getPageTemplateResource();
+
+		PageTemplate pageTemplate = _getContentPageTemplate(testGroup);
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, oldDraftLayoutStatus);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				oldPublishedLayoutStatus);
+
+		pageTemplate.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
+
+		_assertPageSpecifications(
+			draftContentPageSpecification, publishedContentPageSpecification,
+			pageTemplateResource.putSitePageTemplate(
+				testGroup.getExternalReferenceCode(),
+				pageTemplate.getExternalReferenceCode(), pageTemplate));
+
+		draftContentPageSpecification.setStatus(newDraftLayoutStatus);
+
+		publishedContentPageSpecification.setStatus(newPublishedLayoutStatus);
+
+		_assertPageSpecifications(
+			draftContentPageSpecification, publishedContentPageSpecification,
+			pageTemplateResource.putSitePageTemplate(
+				testGroup.getExternalReferenceCode(),
+				pageTemplate.getExternalReferenceCode(), pageTemplate));
+	}
+
 	private void _testPutSitePageTemplate(
 			PageTemplate pageTemplate, String siteExternalReferenceCode)
 		throws Exception {
@@ -1662,19 +1702,19 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	private void _testPutSitePageTemplateWithPageSpecifications()
 		throws Exception {
 
-		_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
+		_testPutSiteContentPageTemplateWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED);
-		_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
+		_testPutSiteContentPageTemplateWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.DRAFT);
-		_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
+		_testPutSiteContentPageTemplateWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
-		_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
+		_testPutSiteContentPageTemplateWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 		_testPutSitePageTemplateWidgetPageTemplateWithPageSpecifications();
@@ -1718,49 +1758,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 						pageTemplate.getExternalReferenceCode(),
 						_toPageTemplate(pageTemplate)));
 			});
-	}
-
-	private void
-			_testPutSiteSiteByExternalReferenceCodeContentPageTemplateWithPageSpecifications(
-				PageSpecification.Status newDraftLayoutStatus,
-				PageSpecification.Status newPublishedLayoutStatus,
-				PageSpecification.Status oldDraftLayoutStatus,
-				PageSpecification.Status oldPublishedLayoutStatus)
-		throws Exception {
-
-		PageTemplateResource pageTemplateResource = _getPageTemplateResource();
-
-		PageTemplate pageTemplate = _getContentPageTemplate(testGroup);
-
-		ContentPageSpecification draftContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
-
-		ContentPageSpecification publishedContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
-
-		pageTemplate.setPageSpecifications(
-			() -> new PageSpecification[] {
-				publishedContentPageSpecification, draftContentPageSpecification
-			});
-
-		_assertPageSpecifications(
-			draftContentPageSpecification, publishedContentPageSpecification,
-			pageTemplateResource.putSitePageTemplate(
-				testGroup.getExternalReferenceCode(),
-				pageTemplate.getExternalReferenceCode(), pageTemplate));
-
-		draftContentPageSpecification.setStatus(newDraftLayoutStatus);
-
-		publishedContentPageSpecification.setStatus(newPublishedLayoutStatus);
-
-		_assertPageSpecifications(
-			draftContentPageSpecification, publishedContentPageSpecification,
-			pageTemplateResource.putSitePageTemplate(
-				testGroup.getExternalReferenceCode(),
-				pageTemplate.getExternalReferenceCode(), pageTemplate));
 	}
 
 	private void _withCompanyGroupWidgetPageTemplate(

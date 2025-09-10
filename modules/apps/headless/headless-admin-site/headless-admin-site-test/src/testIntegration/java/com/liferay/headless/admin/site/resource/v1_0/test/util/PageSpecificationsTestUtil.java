@@ -560,7 +560,7 @@ public class PageSpecificationsTestUtil {
 		};
 	}
 
-	public static void testPostSiteSiteByExternalReferenceCodePageSpecification(
+	public static void testPostSitePageSpecification(
 			Layout layout, PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext,
 			UnsafeFunction

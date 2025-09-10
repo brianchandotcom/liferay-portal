@@ -261,6 +261,7 @@ JavaJSImportMapsContributorCheck | [Bug Prevention](bug_prevention_checks.md#bug
 JavaJSPDynamicIncludeCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on `*JSPDynamicInclude` class. |
 [JavaLocalSensitiveComparisonCheck](check/java_local_sensitive_comparison_check.md#javalocalsensitivecomparisoncheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that `java.text.Collator` is used when comparing localized values. |
 JavaLocalServiceImplErcUsageCheck | [Productivity](productivity_checks.md#productivity-checks) | .java | Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method. |
+[JavaLocalServiceImplUserIdUsageCheck](check/java_local_service_impl_user_id_usage_check.md#javalocalserviceimpluseridusagecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds incorrect use of `GuestOrUserUtil.getUserId()` or `PrincipalThreadLocal.getUserId()`. |
 JavaLogClassNameCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks the name of the class that is passed in `LogFactoryUtil.getLog`. |
 [JavaLogLevelCheck](check/java_log_level_check.md#javaloglevelcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that the correct log messages are printed. |
 JavaLongLinesCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds lines that are longer than the specified maximum line length. |

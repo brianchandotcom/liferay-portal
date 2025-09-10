@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.kernel.lar;
 
-import com.liferay.exportimport.kernel.exception.ImportStagedModelExceptionHandler;
+import com.liferay.exportimport.kernel.exception.handler.ImportStagedModelExceptionHandler;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
@@ -390,7 +390,7 @@ public class StagedModelDataHandlerUtil {
 					importStagedModelExceptionHandler : _serviceTrackerList) {
 
 				importStagedModelExceptionHandler.handle(
-					portletDataException, portletDataContext, stagedModel);
+					portletDataContext, portletDataException, stagedModel);
 			}
 		}
 

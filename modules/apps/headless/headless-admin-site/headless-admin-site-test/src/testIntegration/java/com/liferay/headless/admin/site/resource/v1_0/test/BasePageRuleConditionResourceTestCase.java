@@ -24,7 +24,6 @@ import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -239,101 +238,6 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLDeleteSitePageRuleCondition() throws Exception {
-
-		// No namespace
-
-		PageRuleCondition pageRuleCondition1 =
-			testGraphQLDeleteSitePageRuleCondition_addPageRuleCondition();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePageRuleCondition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"pageRuleConditionExternalReferenceCode",
-									"\"" +
-										pageRuleCondition1.
-											getExternalReferenceCode() + "\"");
-							}
-						})),
-				"JSONObject/data", "Object/deletePageRuleCondition"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"pageRuleCondition",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"pageRuleConditionExternalReferenceCode",
-								"\"" +
-									pageRuleCondition1.
-										getExternalReferenceCode() + "\"");
-						}
-					},
-					new GraphQLField("pageRuleConditionId"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		PageRuleCondition pageRuleCondition2 =
-			testGraphQLDeleteSitePageRuleCondition_addPageRuleCondition();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminSite_v1_0",
-						new GraphQLField(
-							"deletePageRuleCondition",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"pageRuleConditionExternalReferenceCode",
-										"\"" +
-											pageRuleCondition2.
-												getExternalReferenceCode() +
-													"\"");
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
-				"Object/deletePageRuleCondition"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminSite_v1_0",
-					new GraphQLField(
-						"pageRuleCondition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"pageRuleConditionExternalReferenceCode",
-									"\"" +
-										pageRuleCondition2.
-											getExternalReferenceCode() + "\"");
-							}
-						},
-						new GraphQLField("pageRuleConditionId")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected PageRuleCondition
-			testGraphQLDeleteSitePageRuleCondition_addPageRuleCondition()
-		throws Exception {
-
-		return testGraphQLPageRuleCondition_addPageRuleCondition();
-	}
-
-	@Test
 	public void testGetSitePageRuleCondition() throws Exception {
 		PageRuleCondition postPageRuleCondition =
 			testGetSitePageRuleCondition_addPageRuleCondition();
@@ -360,143 +264,6 @@ public abstract class BasePageRuleConditionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSitePageRuleCondition() throws Exception {
-		PageRuleCondition pageRuleCondition =
-			testGraphQLGetSitePageRuleCondition_addPageRuleCondition();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				pageRuleCondition,
-				PageRuleConditionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"pageRuleCondition",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteExternalReferenceCode",
-											"\"" +
-												testGraphQLGetSitePageRuleCondition_getSiteExternalReferenceCode() +
-													"\"");
-										put(
-											"pageRuleConditionExternalReferenceCode",
-											"\"" +
-												pageRuleCondition.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/pageRuleCondition"))));
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		Assert.assertTrue(
-			equals(
-				pageRuleCondition,
-				PageRuleConditionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminSite_v1_0",
-								new GraphQLField(
-									"pageRuleCondition",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"siteExternalReferenceCode",
-												"\"" +
-													testGraphQLGetSitePageRuleCondition_getSiteExternalReferenceCode() +
-														"\"");
-											put(
-												"pageRuleConditionExternalReferenceCode",
-												"\"" +
-													pageRuleCondition.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
-						"Object/pageRuleCondition"))));
-	}
-
-	protected String
-			testGraphQLGetSitePageRuleCondition_getSiteExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSitePageRuleConditionNotFound() throws Exception {
-		String irrelevantPageRuleConditionExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"pageRuleCondition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteExternalReferenceCode",
-									"\"" +
-										irrelevantGroup.
-											getExternalReferenceCode() + "\"");
-								put(
-									"pageRuleConditionExternalReferenceCode",
-									irrelevantPageRuleConditionExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminSite_v1_0",
-						new GraphQLField(
-							"pageRuleCondition",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"siteExternalReferenceCode",
-										"\"" +
-											irrelevantGroup.
-												getExternalReferenceCode() +
-													"\"");
-									put(
-										"pageRuleConditionExternalReferenceCode",
-										irrelevantPageRuleConditionExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected PageRuleCondition
-			testGraphQLGetSitePageRuleCondition_addPageRuleCondition()
-		throws Exception {
-
-		return testGraphQLPageRuleCondition_addPageRuleCondition();
 	}
 
 	@Test
@@ -772,14 +539,6 @@ public abstract class BasePageRuleConditionResourceTestCase {
 
 	protected String
 			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected PageRuleCondition
-			testGraphQLPageRuleCondition_addPageRuleCondition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

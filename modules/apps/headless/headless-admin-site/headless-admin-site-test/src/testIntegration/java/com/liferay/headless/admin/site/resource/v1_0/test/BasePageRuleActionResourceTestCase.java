@@ -24,7 +24,6 @@ import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -235,101 +234,6 @@ public abstract class BasePageRuleActionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLDeleteSitePageRuleAction() throws Exception {
-
-		// No namespace
-
-		PageRuleAction pageRuleAction1 =
-			testGraphQLDeleteSitePageRuleAction_addPageRuleAction();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePageRuleAction",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"pageRuleActionExternalReferenceCode",
-									"\"" +
-										pageRuleAction1.
-											getExternalReferenceCode() + "\"");
-							}
-						})),
-				"JSONObject/data", "Object/deletePageRuleAction"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"pageRuleAction",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"pageRuleActionExternalReferenceCode",
-								"\"" +
-									pageRuleAction1.getExternalReferenceCode() +
-										"\"");
-						}
-					},
-					new GraphQLField("pageRuleActionId"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		PageRuleAction pageRuleAction2 =
-			testGraphQLDeleteSitePageRuleAction_addPageRuleAction();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminSite_v1_0",
-						new GraphQLField(
-							"deletePageRuleAction",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"pageRuleActionExternalReferenceCode",
-										"\"" +
-											pageRuleAction2.
-												getExternalReferenceCode() +
-													"\"");
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
-				"Object/deletePageRuleAction"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminSite_v1_0",
-					new GraphQLField(
-						"pageRuleAction",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"pageRuleActionExternalReferenceCode",
-									"\"" +
-										pageRuleAction2.
-											getExternalReferenceCode() + "\"");
-							}
-						},
-						new GraphQLField("pageRuleActionId")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected PageRuleAction
-			testGraphQLDeleteSitePageRuleAction_addPageRuleAction()
-		throws Exception {
-
-		return testGraphQLPageRuleAction_addPageRuleAction();
-	}
-
-	@Test
 	public void testGetSitePageRuleAction() throws Exception {
 		PageRuleAction postPageRuleAction =
 			testGetSitePageRuleAction_addPageRuleAction();
@@ -355,143 +259,6 @@ public abstract class BasePageRuleActionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSitePageRuleAction() throws Exception {
-		PageRuleAction pageRuleAction =
-			testGraphQLGetSitePageRuleAction_addPageRuleAction();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				pageRuleAction,
-				PageRuleActionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"pageRuleAction",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteExternalReferenceCode",
-											"\"" +
-												testGraphQLGetSitePageRuleAction_getSiteExternalReferenceCode() +
-													"\"");
-										put(
-											"pageRuleActionExternalReferenceCode",
-											"\"" +
-												pageRuleAction.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/pageRuleAction"))));
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		Assert.assertTrue(
-			equals(
-				pageRuleAction,
-				PageRuleActionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminSite_v1_0",
-								new GraphQLField(
-									"pageRuleAction",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"siteExternalReferenceCode",
-												"\"" +
-													testGraphQLGetSitePageRuleAction_getSiteExternalReferenceCode() +
-														"\"");
-											put(
-												"pageRuleActionExternalReferenceCode",
-												"\"" +
-													pageRuleAction.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
-						"Object/pageRuleAction"))));
-	}
-
-	protected String
-			testGraphQLGetSitePageRuleAction_getSiteExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSitePageRuleActionNotFound() throws Exception {
-		String irrelevantPageRuleActionExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"pageRuleAction",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteExternalReferenceCode",
-									"\"" +
-										irrelevantGroup.
-											getExternalReferenceCode() + "\"");
-								put(
-									"pageRuleActionExternalReferenceCode",
-									irrelevantPageRuleActionExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminSite_v1_0",
-						new GraphQLField(
-							"pageRuleAction",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"siteExternalReferenceCode",
-										"\"" +
-											irrelevantGroup.
-												getExternalReferenceCode() +
-													"\"");
-									put(
-										"pageRuleActionExternalReferenceCode",
-										irrelevantPageRuleActionExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected PageRuleAction
-			testGraphQLGetSitePageRuleAction_addPageRuleAction()
-		throws Exception {
-
-		return testGraphQLPageRuleAction_addPageRuleAction();
 	}
 
 	@Test
@@ -760,13 +527,6 @@ public abstract class BasePageRuleActionResourceTestCase {
 
 	protected String
 			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected PageRuleAction testGraphQLPageRuleAction_addPageRuleAction()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

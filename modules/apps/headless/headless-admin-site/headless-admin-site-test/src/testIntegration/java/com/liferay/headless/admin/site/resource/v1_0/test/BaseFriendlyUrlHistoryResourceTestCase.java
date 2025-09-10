@@ -180,55 +180,13 @@ public abstract class BaseFriendlyUrlHistoryResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteDisplayPageTemplateFriendlyUrlHistory()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteDisplayPageTemplateFriendlyUrlHistoryNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetSiteSitePageFriendlyUrlHistory() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetSiteSitePageFriendlyUrlHistory()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSitePageFriendlyUrlHistoryNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetSiteUtilityPageFriendlyUrlHistory() throws Exception {
 		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetSiteUtilityPageFriendlyUrlHistory()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteUtilityPageFriendlyUrlHistoryNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
 	}
 
 	protected void assertContains(

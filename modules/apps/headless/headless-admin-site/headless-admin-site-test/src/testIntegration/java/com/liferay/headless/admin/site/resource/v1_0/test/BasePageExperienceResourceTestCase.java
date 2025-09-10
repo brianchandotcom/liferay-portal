@@ -24,7 +24,6 @@ import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -237,101 +236,6 @@ public abstract class BasePageExperienceResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLDeleteSitePageExperience() throws Exception {
-
-		// No namespace
-
-		PageExperience pageExperience1 =
-			testGraphQLDeleteSitePageExperience_addPageExperience();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePageExperience",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"pageExperienceExternalReferenceCode",
-									"\"" +
-										pageExperience1.
-											getExternalReferenceCode() + "\"");
-							}
-						})),
-				"JSONObject/data", "Object/deletePageExperience"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"pageExperience",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"pageExperienceExternalReferenceCode",
-								"\"" +
-									pageExperience1.getExternalReferenceCode() +
-										"\"");
-						}
-					},
-					new GraphQLField("pageExperienceId"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		PageExperience pageExperience2 =
-			testGraphQLDeleteSitePageExperience_addPageExperience();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminSite_v1_0",
-						new GraphQLField(
-							"deletePageExperience",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"pageExperienceExternalReferenceCode",
-										"\"" +
-											pageExperience2.
-												getExternalReferenceCode() +
-													"\"");
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
-				"Object/deletePageExperience"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminSite_v1_0",
-					new GraphQLField(
-						"pageExperience",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"pageExperienceExternalReferenceCode",
-									"\"" +
-										pageExperience2.
-											getExternalReferenceCode() + "\"");
-							}
-						},
-						new GraphQLField("pageExperienceId")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected PageExperience
-			testGraphQLDeleteSitePageExperience_addPageExperience()
-		throws Exception {
-
-		return testGraphQLPageExperience_addPageExperience();
-	}
-
-	@Test
 	public void testGetSitePageExperience() throws Exception {
 		PageExperience postPageExperience =
 			testGetSitePageExperience_addPageExperience();
@@ -357,143 +261,6 @@ public abstract class BasePageExperienceResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSitePageExperience() throws Exception {
-		PageExperience pageExperience =
-			testGraphQLGetSitePageExperience_addPageExperience();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				pageExperience,
-				PageExperienceSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"pageExperience",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteExternalReferenceCode",
-											"\"" +
-												testGraphQLGetSitePageExperience_getSiteExternalReferenceCode() +
-													"\"");
-										put(
-											"pageExperienceExternalReferenceCode",
-											"\"" +
-												pageExperience.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/pageExperience"))));
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		Assert.assertTrue(
-			equals(
-				pageExperience,
-				PageExperienceSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminSite_v1_0",
-								new GraphQLField(
-									"pageExperience",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"siteExternalReferenceCode",
-												"\"" +
-													testGraphQLGetSitePageExperience_getSiteExternalReferenceCode() +
-														"\"");
-											put(
-												"pageExperienceExternalReferenceCode",
-												"\"" +
-													pageExperience.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
-						"Object/pageExperience"))));
-	}
-
-	protected String
-			testGraphQLGetSitePageExperience_getSiteExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSitePageExperienceNotFound() throws Exception {
-		String irrelevantPageExperienceExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"pageExperience",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteExternalReferenceCode",
-									"\"" +
-										irrelevantGroup.
-											getExternalReferenceCode() + "\"");
-								put(
-									"pageExperienceExternalReferenceCode",
-									irrelevantPageExperienceExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminSite_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminSite_v1_0",
-						new GraphQLField(
-							"pageExperience",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"siteExternalReferenceCode",
-										"\"" +
-											irrelevantGroup.
-												getExternalReferenceCode() +
-													"\"");
-									put(
-										"pageExperienceExternalReferenceCode",
-										irrelevantPageExperienceExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected PageExperience
-			testGraphQLGetSitePageExperience_addPageExperience()
-		throws Exception {
-
-		return testGraphQLPageExperience_addPageExperience();
 	}
 
 	@Test
@@ -770,13 +537,6 @@ public abstract class BasePageExperienceResourceTestCase {
 
 	protected String
 			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected PageExperience testGraphQLPageExperience_addPageExperience()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

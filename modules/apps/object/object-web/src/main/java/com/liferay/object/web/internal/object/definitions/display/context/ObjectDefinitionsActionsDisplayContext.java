@@ -241,8 +241,10 @@ public class ObjectDefinitionsActionsDisplayContext
 			if ((StringUtil.equals(
 					objectActionTrigger.getKey(),
 					ObjectActionTriggerConstants.KEY_ON_AFTER_LOGIN) &&
-				 !StringUtil.equals(
-					 objectDefinition.getClassName(), User.class.getName())) ||
+				 (!FeatureFlagManagerUtil.isEnabled("LPD-59081") ||
+				  !StringUtil.equals(
+					  objectDefinition.getClassName(),
+					  User.class.getName()))) ||
 				(StringUtil.equals(
 					objectActionTrigger.getKey(),
 					ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE) &&

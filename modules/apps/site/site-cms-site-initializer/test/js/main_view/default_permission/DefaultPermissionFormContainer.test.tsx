@@ -521,7 +521,9 @@ describe('DefaultPermissionFormContainer', () => {
 		expect(guestUpdateCheckbox).not.toBeChecked();
 		expect(guestViewCheckbox).not.toBeChecked();
 
-		adminViewCheckbox.click();
+		await waitFor(() => {
+			adminViewCheckbox.click();
+		});
 
 		await waitFor(() => {
 			expect(onChangeFn).toHaveBeenCalledTimes(1);
@@ -533,7 +535,9 @@ describe('DefaultPermissionFormContainer', () => {
 			});
 		});
 
-		guestUpdateCheckbox.click();
+		await waitFor(() => {
+			guestUpdateCheckbox.click();
+		});
 
 		await waitFor(() => {
 			expect(onChangeFn).toHaveBeenCalledTimes(2);
@@ -546,7 +550,9 @@ describe('DefaultPermissionFormContainer', () => {
 			});
 		});
 
-		screen.getByRole('tab', {name: /file/i}).click();
+		await waitFor(() => {
+			screen.getByRole('tab', {name: /file/i}).click();
+		});
 
 		await waitFor(() => {
 			expect(screen.getByRole('tab', {name: /file/i})).toHaveClass(
@@ -554,7 +560,9 @@ describe('DefaultPermissionFormContainer', () => {
 			);
 		});
 
-		guestViewCheckbox.click();
+		await waitFor(() => {
+			guestViewCheckbox.click();
+		});
 
 		await waitFor(() => {
 			expect(onChangeFn).toHaveBeenCalledTimes(3);

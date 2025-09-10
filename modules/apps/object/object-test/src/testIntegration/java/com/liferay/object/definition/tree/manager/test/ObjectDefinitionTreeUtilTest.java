@@ -816,9 +816,8 @@ public class ObjectDefinitionTreeUtilTest {
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
-			"There must be no related object entries that are root " +
-				"descendant nodes so that the object relationship can be an " +
-					"edge to a root context",
+			"You cannot enable inheritance because there are already child " +
+				"entries in the regular relationship",
 			() -> TreeTestUtil.bind(
 				_objectRelationshipLocalService,
 				List.of(objectRelationshipB_AA)));

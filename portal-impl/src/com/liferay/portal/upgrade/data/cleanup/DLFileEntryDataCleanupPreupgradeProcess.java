@@ -6,7 +6,9 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.processor.RawMetadataProcessor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
@@ -116,6 +118,21 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				"name = '" + DLFileShortcut.class.getName() + "'", "primKeyId",
 				"ResourcePermission", "fileShortcutId", "DLFileShortcut"));
+
+		// Then delete DLFileEntryMetadata related data (as some
+		// DLFileEntryMetadata could be deleted in the previous set of cleanups
+
+		upgrade(
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				StringBundler.concat(
+					"exists (select 1 from DDMStructure where ",
+					"DDMStorageLink.structureId = DDMStructure.structureId ",
+					"and DDMStructure.classNameId in (select classNameId from ",
+					"ClassName_ where value in ('",
+					DLFileEntryMetadata.class.getName(), "', '",
+					RawMetadataProcessor.class.getName(), "')))"),
+				"classPK", "DDMStorageLink", "DDMStorageId",
+				"DLFileEntryMetadata"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

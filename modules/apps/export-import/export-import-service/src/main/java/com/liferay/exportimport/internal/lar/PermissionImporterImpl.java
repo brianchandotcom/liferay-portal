@@ -15,11 +15,9 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -248,18 +246,6 @@ public class PermissionImporterImpl implements PermissionImporter {
 				continue;
 			}
 
-			Group group = _groupLocalService.getGroup(groupId);
-
-			if (!group.isLayoutPrototype() && !group.isLayoutSetPrototype() &&
-				layout.isPrivateLayout()) {
-
-				String roleName = role.getName();
-
-				if (roleName.equals(RoleConstants.GUEST)) {
-					continue;
-				}
-			}
-
 			List<String> actions = _getActions(roleElement);
 
 			importedRoleIdsToActionIds.put(
@@ -278,9 +264,6 @@ public class PermissionImporterImpl implements PermissionImporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionImporterImpl.class);
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	private CentralizedThreadLocal<LayoutCache> _layoutCacheThreadLocal;
 

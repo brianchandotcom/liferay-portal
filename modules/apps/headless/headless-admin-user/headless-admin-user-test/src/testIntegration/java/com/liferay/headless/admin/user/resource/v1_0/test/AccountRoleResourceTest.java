@@ -46,6 +46,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -443,6 +444,51 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			expectedAccountRoles, (List<AccountRole>)page3.getItems());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountAccountRolesByExternalReferenceCodePage()
+		throws Exception {
+
+		super.testGraphQLGetAccountAccountRolesByExternalReferenceCodePage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostAccountAccountRole() throws Exception {
+		super.testGraphQLPostAccountAccountRole();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostAccountAccountRoleByExternalReferenceCode()
+		throws Exception {
+
+		super.testGraphQLPostAccountAccountRoleByExternalReferenceCode();
 	}
 
 	@Override

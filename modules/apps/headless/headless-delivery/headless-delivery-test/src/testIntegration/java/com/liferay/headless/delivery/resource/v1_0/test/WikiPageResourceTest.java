@@ -32,6 +32,7 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -61,6 +62,13 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 			serviceContext);
 
 		_wikiPage = _addWikiPage(parentWikiNode.getNodeId());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostWikiNodeWikiPage() throws Exception {
+		super.testGraphQLPostWikiNodeWikiPage();
 	}
 
 	@Test

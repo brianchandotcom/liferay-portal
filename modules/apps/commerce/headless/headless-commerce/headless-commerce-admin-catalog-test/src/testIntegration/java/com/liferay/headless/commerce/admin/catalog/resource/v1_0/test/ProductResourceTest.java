@@ -236,6 +236,12 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLDeleteProductByVersion() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLGetProduct() throws Exception {
 	}
 

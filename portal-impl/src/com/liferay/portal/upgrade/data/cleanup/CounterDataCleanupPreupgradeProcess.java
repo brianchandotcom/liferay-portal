@@ -150,11 +150,10 @@ public class CounterDataCleanupPreupgradeProcess
 				continue;
 			}
 
-			long maxCounterValue = _getMaxCounterValue(
-				columnName, dbInspector, tableName);
+			long maxValue = _getMaxValue(columnName, dbInspector, tableName);
 
-			if (maxCounterValue > latestCounterValue) {
-				latestCounterValue = maxCounterValue;
+			if (maxValue > latestCounterValue) {
+				latestCounterValue = maxValue;
 			}
 		}
 
@@ -241,24 +240,23 @@ public class CounterDataCleanupPreupgradeProcess
 			return;
 		}
 
-		long maxCounterValue = _getMaxCounterValue(
-			columnName, dbInspector, tableName);
+		long maxValue = _getMaxValue(columnName, dbInspector, tableName);
 
-		if (counterValue >= maxCounterValue) {
+		if (counterValue >= maxValue) {
 			return;
 		}
 
-		CounterLocalServiceUtil.reset(counterName, maxCounterValue);
+		CounterLocalServiceUtil.reset(counterName, maxValue);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
 					"Counter ", counterName, " has been reset to value ",
-					maxCounterValue));
+					maxValue));
 		}
 	}
 
-	private long _getMaxCounterValue(
+	private long _getMaxValue(
 			String columnName, DBInspector dbInspector, String tableName)
 		throws Exception {
 

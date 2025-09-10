@@ -69,7 +69,9 @@
 										<@liferay_ui["message"] key="written-by" />
 
 										<p class="author">
-											${ObjectEntry_author.getData()}
+											<#if (ObjectField_authorName.getData())??>
+												${ObjectField_authorName.getData()}
+											</#if>
 										</p>
 									</div>
 								</div>

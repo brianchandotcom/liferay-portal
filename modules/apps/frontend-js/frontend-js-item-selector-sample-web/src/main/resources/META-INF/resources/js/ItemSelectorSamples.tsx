@@ -294,11 +294,11 @@ export default function ItemSelectorSamples() {
 
 			<SampleContainer label="Item selector pops up modal on button click autocomplete (Users)">
 				<ItemSelector
-					apiURL={`${location.origin}/o/headless-admin-user/v1.0/user-accounts`}
+					apiURL={userAccountsItemSelectorConfig.apiURL}
 					itemSelectorModalProps={{
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
+							apiURL: userAccountsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-users-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -329,11 +329,11 @@ export default function ItemSelectorSamples() {
 
 			<SampleContainer label="Multiple Select Item selector pops up modal on button click (Users)">
 				<ItemSelector
-					apiURL={`${location.origin}/o/headless-admin-user/v1.0/user-accounts`}
+					apiURL={userAccountsItemSelectorConfig.apiURL}
 					itemSelectorModalProps={{
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
+							apiURL: userAccountsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-documents-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:

@@ -25,7 +25,6 @@ import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextAttributeListener;
 import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequestAttributeListener;
 import jakarta.servlet.ServletRequestListener;
 import jakarta.servlet.http.HttpSession;
@@ -204,32 +203,6 @@ public class LiferayContextController {
 				_servletContextHelperServiceId));
 
 		_servletServiceTracker.open(true);
-	}
-
-	public FilterRegistration addFilterRegistration(
-			ServiceReference<Filter> serviceReference)
-		throws ServletException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	public EventListenerRegistration addListenerRegistration(
-		ServiceReference<EventListener> serviceReference) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	public ResourceRegistration addResourceRegistration(
-		ServiceReference<?> serviceReference) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	public ServletRegistration addServletRegistration(
-			ServiceReference<Servlet> serviceReference)
-		throws ServletException {
-
-		throw new UnsupportedOperationException();
 	}
 
 	public void checkShutdown() {

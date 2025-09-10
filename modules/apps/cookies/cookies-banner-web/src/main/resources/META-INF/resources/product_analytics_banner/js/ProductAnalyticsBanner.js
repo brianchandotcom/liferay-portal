@@ -13,6 +13,7 @@ import {
 	productAnalyticsConfiguredCookieName,
 	setCookie,
 	setProductAnalyticsConfigCookie,
+	userConfigCookieName,
 } from '../../js/CookiesUtil';
 
 let openProductAnalyticsConsentModal = () => {
@@ -68,6 +69,7 @@ export default function ({
 			);
 
 			setProductAnalyticsConfigCookie();
+			setBannerVisibility(productAnalyticsBanner);
 		});
 
 		openProductAnalyticsConsentModal = ({
@@ -174,6 +176,7 @@ export default function ({
 				);
 
 				setProductAnalyticsConfigCookie();
+				setBannerVisibility(productAnalyticsBanner);
 			});
 		}
 	}
@@ -205,11 +208,24 @@ function isCookieTypesAccepted(cookieTypes) {
 }
 
 function setBannerVisibility(productAnalyticsBanner) {
+	const cookieBanner = document.querySelector('.cookies-banner');
 	if (getCookie(productAnalyticsConfiguredCookieName)) {
 		productAnalyticsBanner.style.display = 'none';
+		if(cookieBanner) {
+			if (getCookie(userConfigCookieName)) {
+				cookieBanner.style.display = 'none';
+
+			}
+			else {
+				cookieBanner.style.display = 'block';
+			}
+		}
 	}
 	else {
 		productAnalyticsBanner.style.display = 'block';
+		if(cookieBanner) {
+			cookieBanner.style.display = 'none';
+		}
 	}
 }
 

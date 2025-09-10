@@ -48,7 +48,7 @@ test('Can see error report and details', async ({
 
 	await exportImportPage.goToExport();
 
-	const exportName = 'MyExport-' + getRandomString();
+	const exportName = `MyExport-${getRandomString()}`;
 
 	await exportImportPage.export(exportName, 'Tests 1 Items');
 

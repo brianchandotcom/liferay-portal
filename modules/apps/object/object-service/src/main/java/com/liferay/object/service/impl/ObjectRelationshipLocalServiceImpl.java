@@ -1785,13 +1785,11 @@ public class ObjectRelationshipLocalServiceImpl
 
 				if (relatedRootDescendantNodeObjectEntriesCount > 0) {
 					throw new ObjectRelationshipEdgeException(
-						"There must be no related object entries that are " +
-							"root descendant nodes so that the object " +
-								"relationship can be an edge to a root context",
-						StringBundler.concat(
-							"there-must-be-no-related-object-entries-that-are-",
-							"root-descendant-nodes-so-that-the-object-",
-							"relationship-can-be-an-edge-to-a-root-context"));
+						"You cannot enable inheritance because there are " +
+							"already child entries in the regular relationship",
+						"you-cannot-enable-inheritance-because-there-are-" +
+							"already-child-entries-in-the-regular-" +
+								"relationship");
 				}
 			}
 

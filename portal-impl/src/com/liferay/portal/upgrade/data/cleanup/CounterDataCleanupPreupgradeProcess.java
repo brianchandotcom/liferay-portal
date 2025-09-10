@@ -141,17 +141,16 @@ public class CounterDataCleanupPreupgradeProcess
 		long latestCounterValue = 0L;
 
 		for (String tableName : tableNames) {
-			String primaryKeyColumnName = _getPrimaryKeyColumnName(
+			String columnName = _getPrimaryKeyColumnName(
 				dbInspector, tableName);
 
-			if ((primaryKeyColumnName == null) ||
-				!dbInspector.isNumeric(tableName, primaryKeyColumnName)) {
+			if ((columnName == null) ||
+				!dbInspector.isNumeric(tableName, columnName)) {
 
 				continue;
 			}
 
-			long maxCounterValue = _getMaxCounterValue(
-				primaryKeyColumnName, tableName);
+			long maxCounterValue = _getMaxCounterValue(columnName, tableName);
 
 			if (maxCounterValue > latestCounterValue) {
 				latestCounterValue = maxCounterValue;
@@ -232,19 +231,17 @@ public class CounterDataCleanupPreupgradeProcess
 			String tableName)
 		throws Exception {
 
-		String primaryKeyColumnName = _getPrimaryKeyColumnName(
-			dbInspector, tableName);
+		String columnName = _getPrimaryKeyColumnName(dbInspector, tableName);
 
 		if (counterName.equals(DLFileEntry.class.getName())) {
-			primaryKeyColumnName = "name";
+			columnName = "name";
 		}
 
-		if (primaryKeyColumnName == null) {
+		if (columnName == null) {
 			return;
 		}
 
-		long maxCounterValue = _getMaxCounterValue(
-			primaryKeyColumnName, tableName);
+		long maxCounterValue = _getMaxCounterValue(columnName, tableName);
 
 		if (counterValue >= maxCounterValue) {
 			return;
@@ -260,8 +257,7 @@ public class CounterDataCleanupPreupgradeProcess
 		}
 	}
 
-	private long _getMaxCounterValue(
-			String primaryKeyColumnName, String tableName)
+	private long _getMaxCounterValue(String columnName, String tableName)
 		throws Exception {
 
 		if (StringUtil.equalsIgnoreCase(tableName, "DLFileEntry")) {
@@ -270,8 +266,7 @@ public class CounterDataCleanupPreupgradeProcess
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
 						StringBundler.concat(
-							"select ", primaryKeyColumnName, " from ",
-							tableName));
+							"select ", columnName, " from ", tableName));
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {
@@ -297,7 +292,7 @@ public class CounterDataCleanupPreupgradeProcess
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select max(", primaryKeyColumnName, ") from ", tableName));
+					"select max(", columnName, ") from ", tableName));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			if (resultSet.next()) {

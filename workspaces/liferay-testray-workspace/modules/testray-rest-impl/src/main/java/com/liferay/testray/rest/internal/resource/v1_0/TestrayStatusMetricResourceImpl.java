@@ -406,7 +406,7 @@ public class TestrayStatusMetricResourceImpl
 			testrayJiraIssue.get("issueType")
 		).toLowerCase();
 
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("select i.c_jiraissueid_, i.issuetype_, i.title_, ");
 		sb.append("oe.externalreferencecode, blocked, failed, incomplete,");
@@ -794,7 +794,10 @@ public class TestrayStatusMetricResourceImpl
 	private final Map<String, String[]> _objectRelationshipNames =
 		HashMapBuilder.put(
 			"epic",
-			new String[] {"c_jiraissueid_", "r_story_c_jiraissueid", "r_task_c_jiraissueid"}
+			new String[] {
+				"c_jiraissueid_", "r_story_c_jiraissueid",
+				"r_task_c_jiraissueid"
+			}
 		).put(
 			"initiative", new String[] {"r_epic_c_jiraissueid"}
 		).put(

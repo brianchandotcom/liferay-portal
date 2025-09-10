@@ -218,13 +218,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		super.testGetSiteUtilityPagesPageWithSortString();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteUtilityPage() throws Exception {
-		super.testGraphQLGetSiteUtilityPage();
-	}
-
 	@Override
 	@Test
 	public void testPatchSiteUtilityPage() throws Exception {

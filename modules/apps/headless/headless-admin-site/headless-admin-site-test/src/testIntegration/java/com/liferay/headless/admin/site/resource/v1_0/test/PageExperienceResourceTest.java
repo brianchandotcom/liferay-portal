@@ -120,13 +120,6 @@ public class PageExperienceResourceTest
 		}
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSitePageExperience() throws Exception {
-		super.testGraphQLGetSitePageExperience();
-	}
-
 	@Override
 	@Test
 	public void testPatchSitePageExperience() throws Exception {

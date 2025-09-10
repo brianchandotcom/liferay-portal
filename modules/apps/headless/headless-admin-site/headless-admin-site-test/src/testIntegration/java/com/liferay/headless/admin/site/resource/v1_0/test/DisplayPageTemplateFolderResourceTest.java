@@ -191,40 +191,6 @@ public class DisplayPageTemplateFolderResourceTest
 		super.testGetSiteDisplayPageTemplateFolderPermissionsPage();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLDeleteSiteDisplayPageTemplateFolder()
-		throws Exception {
-
-		super.testGraphQLDeleteSiteDisplayPageTemplateFolder();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteDisplayPageTemplateFolder() throws Exception {
-		super.testGraphQLGetSiteDisplayPageTemplateFolder();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteDisplayPageTemplateFoldersPage()
-		throws Exception {
-
-		super.testGraphQLGetSiteDisplayPageTemplateFoldersPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLPostSiteDisplayPageTemplateFolder()
-		throws Exception {
-
-		super.testGraphQLGetSiteDisplayPageTemplateFolder();
-	}
-
 	@Override
 	@Test
 	public void testPatchSiteDisplayPageTemplateFolder() throws Exception {
@@ -425,14 +391,6 @@ public class DisplayPageTemplateFolderResourceTest
 		throws Exception {
 
 		return Collections.emptyMap();
-	}
-
-	@Override
-	protected String
-			testGraphQLGetSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
 	}
 
 	@Override

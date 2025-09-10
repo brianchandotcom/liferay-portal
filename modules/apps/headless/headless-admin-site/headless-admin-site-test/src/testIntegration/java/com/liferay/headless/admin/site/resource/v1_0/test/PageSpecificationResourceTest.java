@@ -291,13 +291,6 @@ public class PageSpecificationResourceTest
 						layoutUtilityPageEntry.getExternalReferenceCode()));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSitePageSpecification() throws Exception {
-		super.testGraphQLGetSitePageSpecification();
-	}
-
 	@Override
 	@Test
 	public void testPatchSitePageSpecification() throws Exception {

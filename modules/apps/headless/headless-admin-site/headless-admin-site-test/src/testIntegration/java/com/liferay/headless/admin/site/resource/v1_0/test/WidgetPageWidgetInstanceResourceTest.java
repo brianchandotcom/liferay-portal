@@ -125,22 +125,6 @@ public class WidgetPageWidgetInstanceResourceTest
 		}
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteSitePageWidgetInstance() throws Exception {
-		super.testGraphQLGetSiteSitePageWidgetInstance();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteSitePageWidgetInstanceNotFound()
-		throws Exception {
-
-		super.testGraphQLGetSiteSitePageWidgetInstanceNotFound();
-	}
-
 	@Override
 	@Test
 	public void testPatchSiteSitePageWidgetInstance() throws Exception {

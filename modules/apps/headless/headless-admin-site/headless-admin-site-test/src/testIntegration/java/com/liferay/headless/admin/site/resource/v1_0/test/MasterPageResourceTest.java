@@ -176,13 +176,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		super.testGetSiteMasterPagesPageWithSortString();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteMasterPage() throws Exception {
-		super.testGraphQLGetSiteMasterPage();
-	}
-
 	@Override
 	@Test
 	public void testPatchSiteMasterPage() throws Exception {

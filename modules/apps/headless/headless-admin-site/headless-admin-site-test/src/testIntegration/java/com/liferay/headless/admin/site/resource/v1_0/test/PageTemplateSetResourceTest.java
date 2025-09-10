@@ -171,13 +171,6 @@ public class PageTemplateSetResourceTest
 		super.testGetSitePageTemplateSetsPageWithPagination();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSitePageTemplateSet() throws Exception {
-		super.testGraphQLGetSitePageTemplateSet();
-	}
-
 	@Override
 	@Test
 	public void testPatchSitePageTemplateSet() throws Exception {

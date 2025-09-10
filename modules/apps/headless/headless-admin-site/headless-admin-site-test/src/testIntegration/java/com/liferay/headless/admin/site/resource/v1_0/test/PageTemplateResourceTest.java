@@ -273,13 +273,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		super.testGetSitePageTemplatesPageWithSortInteger();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSitePageTemplate() throws Exception {
-		super.testGraphQLGetSitePageTemplate();
-	}
-
 	@Override
 	@Test
 	public void testPatchSitePageTemplate() throws Exception {

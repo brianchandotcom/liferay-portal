@@ -48,7 +48,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Alvaro Saugar
  */
 @RunWith(Arquillian.class)
-public class ImportStagedModelErrorHandlerTest {
+public class ImportStagedModelExceptionHandlerTest {
 
 	@ClassRule
 	@Rule
@@ -63,7 +63,7 @@ public class ImportStagedModelErrorHandlerTest {
 	@Test
 	public void testErrorEntryIsAddedWhenExceptionIsThrown() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			ImportStagedModelErrorHandlerTest.class);
+			ImportStagedModelExceptionHandlerTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

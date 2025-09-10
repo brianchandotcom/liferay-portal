@@ -82,7 +82,7 @@ public class BuildJSONObject extends JSONObject {
 		return optLong("startTime");
 	}
 
-	public String getTestrayBuildUrl() {
+	public String getTestrayBuildURL() {
 		return optString("testrayBuildURL");
 	}
 

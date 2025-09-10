@@ -243,19 +243,17 @@ test(
 	'Key add-category display instead of label in Message Board',
 	{tag: '@LPD-64817'},
 	async ({messageBoardsWidgetPage, page, site}) => {
-		const layout = await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+		const layout =
+			await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
 
-		await page.goto(
-			`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-			);
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-		await page.getByRole('link', { name: 'Add Category' }).click();
+		await page.getByRole('link', {name: 'Add Category'}).click();
 
 		const heading = page.getByRole('heading', {
 			name: 'Add Category',
-			});
+		});
 
 		await expect(heading).toHaveText('Add Category');
-
 	}
 );

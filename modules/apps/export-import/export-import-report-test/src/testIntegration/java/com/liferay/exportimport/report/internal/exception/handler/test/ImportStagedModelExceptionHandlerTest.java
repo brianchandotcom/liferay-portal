@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -62,11 +63,21 @@ public class ImportStagedModelExceptionHandlerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
 		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
-	public void testErrorEntryIsAddedWhenExceptionIsThrown() throws Exception {
+	public void test() throws Exception {
+		_test(0L, "company", _companyGroup);
+		_test(_group.getGroupId(), "site", _group);
+	}
+
+	private void _test(long expectedGroupId, String expectedScope, Group group)
+		throws Exception {
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			ImportStagedModelExceptionHandlerTest.class);
 
@@ -78,12 +89,11 @@ public class ImportStagedModelExceptionHandlerTest {
 			bundleContext.registerService(
 				StagedModelDataHandler.class,
 				new TestStagedModelDataHandler(errorMessage),
-				MapUtil.singletonDictionary(
-					"companyId", _group.getCompanyId()));
+				MapUtil.singletonDictionary("companyId", group.getCompanyId()));
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				_group.getCompanyId(), _group.getGroupId(), null, null, null,
+				group.getCompanyId(), group.getGroupId(), null, null, null,
 				null);
 
 		long importProcessId = RandomTestUtil.randomLong();
@@ -135,7 +145,7 @@ public class ImportStagedModelExceptionHandlerTest {
 			exportImportReportEntries.get(0);
 
 		Assert.assertEquals(
-			_group.getGroupId(), exportImportReportEntry.getGroupId());
+			expectedGroupId, exportImportReportEntry.getGroupId());
 		Assert.assertEquals(
 			TestPropsValues.getCompanyId(),
 			exportImportReportEntry.getCompanyId());
@@ -157,14 +167,16 @@ public class ImportStagedModelExceptionHandlerTest {
 		Assert.assertEquals(
 			ExportImportReportEntryConstants.ORIGIN_STAGING,
 			exportImportReportEntry.getOrigin());
-		Assert.assertEquals("site", exportImportReportEntry.getScope());
+		Assert.assertEquals(expectedScope, exportImportReportEntry.getScope());
 		Assert.assertEquals(
-			_group.getExternalReferenceCode(),
+			group.getExternalReferenceCode(),
 			exportImportReportEntry.getScopeKey());
 	}
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private Group _companyGroup;
 
 	@Inject
 	private ExportImportReportEntryLocalService
@@ -172,6 +184,9 @@ public class ImportStagedModelExceptionHandlerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private class TestStagedModel
 		implements ExternalReferenceCodeModel, StagedModel {

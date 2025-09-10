@@ -528,7 +528,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				return StringPool.BLANK;
 			}
 
-			StringBundler sb = new StringBundler(valuesJSONObject.length() * 6);
+			StringBundler sb = new StringBundler(valuesJSONObject.length() * 5);
 
 			DDMFormFieldOptions columnsDDMFormFieldOptions =
 				(DDMFormFieldOptions)ddmFormField.getProperty("columns");
@@ -564,8 +564,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 						_getGridLabelString(
 							columnLabel, columnOption, locale)));
 
-				sb.append(StringPool.CLOSE_CURLY_BRACE);
-				sb.append(StringPool.COMMA_AND_SPACE);
+				sb.append("}, ");
 			}
 
 			if (sb.index() > 0) {

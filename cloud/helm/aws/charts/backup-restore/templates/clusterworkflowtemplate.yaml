@@ -13,6 +13,21 @@ spec:
         configMap: {{ include "liferayAWSBackupRestore.artifactRepositoryConfigMapName" . }}
     entrypoint: main
     templates:
+        -   inputs:
+                artifacts:
+                    -   name: git-repository
+                        path: /src
+                parameters:
+                    -   name: commit-message
+                    -   name: tfvars-content
+            name: apply-terraform-dependencies-module
+            script:
+                command: [ sh ]
+                image: "{{ .Values.images.terraform.repository }}:{{ .Values.images.terraform.tag }}"
+                source: |-
+                    {{- include "liferayAWSBackupRestore.script.applyTerraformModule" . | nindent 20 }}
+                {{- include "liferayAWSBackupRestore.gitCredentials.volumeMount" . | nindent 16 }}
+                workingDir: {{ printf "/src/%s" .Values.git.repository.paths.dependenciesModule }}
         -   name: checkout-git-repository
             outputs:
                 artifacts:
@@ -109,7 +124,7 @@ spec:
                                         is_restoring = false
                         depends: restart-liferay
                         name: cleanup-rds-instance
-                        template: terraform-apply
+                        template: apply-terraform-dependencies-module
                     -   arguments:
                             parameters:
                                 -   name: s3-bucket-id
@@ -143,7 +158,7 @@ spec:
                                         is_restoring = true
                         depends: find-peer-recovery-points && get-dependencies-module-outputs
                         name: restore-rds-instance
-                        template: terraform-apply
+                        template: apply-terraform-dependencies-module
                     -   arguments:
                             parameters:
                                 -   name: s3-recovery-point-arn
@@ -166,7 +181,7 @@ spec:
                                         is_restoring = false
                         depends: restore-rds-instance.Succeeded && !restart-liferay.Succeeded
                         name: roll-back-failed-restore
-                        template: terraform-apply
+                        template: apply-terraform-dependencies-module
                     -   arguments:
                             artifacts:
                                 -   from: {{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}
@@ -181,7 +196,7 @@ spec:
                                         is_restoring = true
                         depends: restore-rds-instance && restore-s3-bucket
                         name: update-kubernetes-secret
-                        template: terraform-apply
+                        template: apply-terraform-dependencies-module
             name: main
         -   inputs:
                 parameters:
@@ -199,21 +214,6 @@ spec:
                         template: kubectl-rollout-restart
                 -   -   name: kubectl-rollout-status
                         template: kubectl-rollout-status
-        -   inputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
-                parameters:
-                    -   name: commit-message
-                    -   name: tfvars-content
-            name: terraform-apply
-            script:
-                command: [sh]
-                image: "{{ .Values.images.terraform.repository }}:{{ .Values.images.terraform.tag }}"
-                source: |-
-                    {{- include "liferayAWSBackupRestore.script.terraformApply" . | nindent 20 }}
-                {{- include "liferayAWSBackupRestore.gitCredentials.volumeMount" . | nindent 16 }}
-                workingDir: {{ printf "/src/%s" .Values.git.repository.paths.dependenciesModule }}
     {{- if and .Values.git.credentials.token .Values.git.credentials.username }}
     volumes:
         -   name: git-credentials

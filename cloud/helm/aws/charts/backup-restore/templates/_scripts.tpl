@@ -1,3 +1,37 @@
+{{- define "liferayAWSBackupRestore.script.applyTerraformModule" -}}
+#!/bin/sh
+
+set -eu
+
+function main {
+	cp /mnt/.git-credentials /tmp/.git-credentials
+
+    git config --global credential.helper 'store --file /tmp/.git-credentials'
+
+    git config --global user.email "{{ .Values.git.user.emailAddress }}"
+	git config --global user.name "{{ .Values.git.user.name }}"
+
+    git pull origin {{ .Values.git.repository.branch }}
+
+    echo '{{ "{{" }}inputs.parameters.tfvars-content}}' > {{ .Values.tfvarsOverrideFileName }}
+
+    git add {{ .Values.tfvarsOverrideFileName }}
+
+    if ! git diff --staged --quiet
+    then
+        git commit --message "{{ "{{" }}inputs.parameters.commit-message}}"
+
+        git push origin HEAD:{{ .Values.git.repository.branch }}
+    fi
+
+    terraform init -input=false
+
+    terraform apply -auto-approve -input=false
+}
+
+main
+{{- end -}}
+
 {{- define "liferayAWSBackupRestore.script.checkoutGitRepository" -}}
 #!/bin/sh
 

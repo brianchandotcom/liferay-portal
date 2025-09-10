@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +54,15 @@ public class ImportStagedModelExceptionHandlerImpl
 		try {
 			long groupId = portletDataContext.getGroupId();
 
-			Group group = _groupLocalService.getGroup(groupId);
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			String scope = ExportImportReportEntryUtil.getScope(group);
+
+			if (StringUtil.equals(
+					scope, ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+				groupId = 0L;
+			}
 
 			_exportImportReportEntryLocalService.
 				addErrorExportImportReportEntry(
@@ -64,8 +74,7 @@ public class ImportStagedModelExceptionHandlerImpl
 						portletDataContext.getExportImportProcessId()),
 					portletDataException.getMessage(),
 					portletDataException.toString(), modelName,
-					ExportImportReportEntryUtil.getOrigin(),
-					ExportImportReportEntryUtil.getScope(group),
+					ExportImportReportEntryUtil.getOrigin(), scope,
 					ExportImportReportEntryUtil.getScopeKey(group));
 		}
 		catch (Exception exception) {

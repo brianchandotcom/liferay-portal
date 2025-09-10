@@ -56,6 +56,10 @@ public class JiraService extends BaseService {
 			).toUri());
 	}
 
+	public int calculateStartAt(int page, int pageSize) {
+		return (page - 1) * pageSize;
+	}
+
 	@Cacheable("affectedVersions")
 	public JSONArray getAffectedVersionsJSONArray() throws Exception {
 		try {
@@ -77,20 +81,22 @@ public class JiraService extends BaseService {
 					_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
 			sb.append(" <= now()");
 
-			String jql = sb.toString();
+			String nextPageToken = StringPool.BLANK;
 
-			for (int i = 0; true; i += 100) {
-				JSONObject jsonObject = _search(jql, 100, issueFields, i);
+			while (true) {
+				JSONObject jsonObject = _search(
+					sb.toString(), 100, nextPageToken, issueFields,
+					calculateStartAt(1, 100));
 
-				JSONArray issuesJSONArray = jsonObject.getJSONArray("issues");
-
-				if (issuesJSONArray.length() <= 0) {
+				if (jsonObject == null) {
 					break;
 				}
 
-				for (int j = 0; j < issuesJSONArray.length(); j++) {
+				JSONArray issuesJSONArray = jsonObject.getJSONArray("issues");
+
+				for (int i = 0; i < issuesJSONArray.length(); i++) {
 					JSONObject issueJSONObject = issuesJSONArray.getJSONObject(
-						j);
+						i);
 
 					JSONObject fieldsJSONObject = issueJSONObject.getJSONObject(
 						"fields");
@@ -98,13 +104,19 @@ public class JiraService extends BaseService {
 					JSONArray versionsJSONArray = fieldsJSONObject.getJSONArray(
 						"versions");
 
-					for (int k = 0; k < versionsJSONArray.length(); k++) {
+					for (int j = 0; j < versionsJSONArray.length(); j++) {
 						JSONObject versionJSONObject =
-							versionsJSONArray.getJSONObject(k);
+							versionsJSONArray.getJSONObject(j);
 
 						affectedVersions.add(
 							versionJSONObject.optString("name"));
 					}
+				}
+
+				nextPageToken = jsonObject.optString("nextPageToken");
+
+				if (Validator.isNull(nextPageToken)) {
+					break;
 				}
 			}
 
@@ -186,7 +198,7 @@ public class JiraService extends BaseService {
 		throws Exception {
 
 		JSONObject jsonObject = _search(
-			jql, pageSize, returnFields, _calculateStartAt(page, pageSize));
+			jql, pageSize, returnFields, calculateStartAt(page, pageSize));
 
 		return _transformSearchResults(jsonObject);
 	}
@@ -201,7 +213,7 @@ public class JiraService extends BaseService {
 		while (true) {
 			JSONObject jsonObject = _search(
 				jql, 100, nextPageToken, returnFields,
-				_calculateStartAt(1, 100));
+				calculateStartAt(1, 100));
 
 			if (jsonObject == null) {
 				break;
@@ -239,11 +251,11 @@ public class JiraService extends BaseService {
 	}
 
 	@Cacheable("issues")
-	public JSONObject search(
+	public List<JSONObject> search(
 			String[] filterAffectedVersions, String[] filterCategories,
 			String[] filterClassifications, String[] filterFixVersions,
-			String[] filterSeverities, String keywords, int page, int pageSize,
-			String sortOrder, boolean hasEarlyPublishAccess)
+			String[] filterSeverities, String keywords, String sortOrder,
+			boolean hasEarlyPublishAccess)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(49);
@@ -369,11 +381,34 @@ public class JiraService extends BaseService {
 			_jiraSecurityVulnerabilityFieldSeverity
 		};
 
-		JSONObject jsonObject = _search(
-			sb.toString(), pageSize, securityVulnerabilitiesIssueFields,
-			_calculateStartAt(page, pageSize));
+		List<JSONObject> jsonObjects = new ArrayList<>();
 
-		return _transformSearchResults(jsonObject);
+		String nextPageToken = StringPool.BLANK;
+
+		while (true) {
+			JSONObject jsonObject = _search(
+				sb.toString(), 100, nextPageToken,
+				securityVulnerabilitiesIssueFields, calculateStartAt(1, 100));
+
+			if (jsonObject == null) {
+				break;
+			}
+
+			JSONArray issuesJSONArray = jsonObject.getJSONArray("issues");
+
+			for (int i = 0; i < issuesJSONArray.length(); i++) {
+				jsonObjects.add(
+					_transformIssue(issuesJSONArray.getJSONObject(i)));
+			}
+
+			nextPageToken = jsonObject.optString("nextPageToken");
+
+			if (Validator.isNull(nextPageToken)) {
+				break;
+			}
+		}
+
+		return jsonObjects;
 	}
 
 	public void updateAccountObject(
@@ -487,10 +522,6 @@ public class JiraService extends BaseService {
 
 	private int _calculatePage(int startAt, int maxResults) {
 		return (startAt / maxResults) + 1;
-	}
-
-	private int _calculateStartAt(int page, int pageSize) {
-		return (page - 1) * pageSize;
 	}
 
 	private JSONArray _flattenJSONArray(JSONArray jsonArray) {

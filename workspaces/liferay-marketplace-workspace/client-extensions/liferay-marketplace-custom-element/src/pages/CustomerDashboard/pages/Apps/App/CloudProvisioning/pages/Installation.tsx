@@ -42,7 +42,7 @@ const statuses = {
 	},
 	[Statuses.LOADING]: {
 		bodyMessage: i18n.translate(
-			'the-installation-process-is-ongoing-and-may-take-some-time'
+			'the-installation-process-is-ongoing-and-may-take-some-time-navigating-to-other-sections-will-not-cancel-the-process'
 		),
 		icon: <Loading displayType="primary" shape="squares" size="lg" />,
 		title: i18n.translate('installation-in-progress'),

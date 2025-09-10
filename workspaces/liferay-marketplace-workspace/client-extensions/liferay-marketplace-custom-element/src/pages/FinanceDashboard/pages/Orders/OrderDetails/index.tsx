@@ -70,7 +70,7 @@ function formatDate(date: string | undefined) {
 }
 
 function textWrapper(content: string | undefined) {
-	if (content?.length && !content) {
+	if (!content) {
 		return '-';
 	}
 
@@ -264,7 +264,7 @@ const OrderDetails = () => {
 												{product?.name.en_US}
 											</strong>
 											<p className="finance-dashboard-text-secondary text-capitalize">
-												{skuOption.skuOptionValueKey}
+												{skuOption?.skuOptionValueKey}
 											</p>
 										</span>
 									</div>

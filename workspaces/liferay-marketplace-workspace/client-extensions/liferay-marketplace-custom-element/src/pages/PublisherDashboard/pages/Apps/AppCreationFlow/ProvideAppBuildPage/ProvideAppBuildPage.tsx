@@ -647,7 +647,7 @@ export function ProvideAppBuildPage({
 					<Section
 						description={i18n.translate(
 							appType.value === ProductType.DXP
-								? 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
+								? 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-the-compatibility-range'
 								: 'select-a-local-file-to-upload'
 						)}
 						label={i18n.translate(

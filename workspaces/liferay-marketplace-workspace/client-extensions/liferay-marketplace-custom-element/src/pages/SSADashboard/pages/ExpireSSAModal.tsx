@@ -35,7 +35,7 @@ const ExpireSSAModal: React.FC<ExpireSSAModalProps> = ({
 
 			<p>
 				{i18n.translate(
-					'are-you-sure-you-want-to-expire-this-trial-this-action-imply-the-end-of-the-test-environment-permanently'
+					'are-you-sure-you-want-to-expire-this-trial-this-action-implies-the-permanent-end-of-the-test-environment'
 				)}
 			</p>
 
@@ -75,7 +75,7 @@ const ExpireSSAModal: React.FC<ExpireSSAModalProps> = ({
 						catch {
 							Liferay.Util.openToast({
 								message: i18n.translate(
-									'failed-to-expire-trial'
+									'failed-to-expire-the-trial'
 								),
 								type: 'danger',
 							});

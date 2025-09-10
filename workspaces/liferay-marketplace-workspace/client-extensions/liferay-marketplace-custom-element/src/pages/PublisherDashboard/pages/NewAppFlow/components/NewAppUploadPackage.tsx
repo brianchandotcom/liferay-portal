@@ -97,7 +97,7 @@ export function NewAppUploadAppPackagesComponent({
 		) {
 			Liferay.Util.openToast({
 				message: i18n.translate(
-					'could-not-upload-the-file-package-with-this-filename-already-exists'
+					'could-not-upload-the-file-a-package-with-this-filename-already-exists'
 				),
 				type: 'danger',
 			});
@@ -146,7 +146,7 @@ export function NewAppUploadAppPackagesComponent({
 									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 								)
 							: i18n.translate(
-									'only-zip-files-are-allowed-max-file-size-is-500-mb'
+									'only-zip-files-are-allowed-max-file-size-is-500mb'
 								)
 					}
 					maxFiles={1}

@@ -154,7 +154,7 @@ export const COMPATIBLE_OFFERING_CARDS = [
 		tooltip: ReactDOMServer.renderToString(
 			<span>
 				{i18n.translate(
-					'the-app-submission-is-compatible-with-liferay-experience-cloud-and'
+					'the-app-submission-is-compatible-with-liferay-saas-and'
 				)}
 				<a href={LearnLinks.CLIENT_EXTENSIONS} target="_blank">
 					{i18n.translate('client-extensions')}
@@ -171,7 +171,7 @@ export const COMPATIBLE_OFFERING_CARDS = [
 		icon: 'times-circle',
 		title: i18n.translate('no'),
 		tooltip: i18n.translate(
-			'the-app-submission-is-integrates-with-liferay-dxp-version-7-4-or-later'
+			'the-app-submission-integrates-with-liferay-dxp-version-7-4-or-later'
 		),
 		value: false,
 	},

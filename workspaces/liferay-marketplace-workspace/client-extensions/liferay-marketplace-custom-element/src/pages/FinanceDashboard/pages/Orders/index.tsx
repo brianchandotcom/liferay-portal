@@ -8,7 +8,6 @@ import {KeyedMutator} from 'swr';
 
 import ListView from '../../../../components/ListView';
 import Page from '../../../../components/Page';
-import SearchBuilder from '../../../../core/SearchBuilder';
 import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
@@ -52,9 +51,6 @@ const Orders = () => {
 			title={i18n.translate('last-orders')}
 		>
 			<ListView<Order>
-				defaultFilters={{
-					filter: SearchBuilder.gt('totalAmount', 0),
-				}}
 				emptyStateProps={{title: i18n.translate('no-orders-yet')}}
 				id="finance-dashboard-orders"
 				managementToolbarProps={{

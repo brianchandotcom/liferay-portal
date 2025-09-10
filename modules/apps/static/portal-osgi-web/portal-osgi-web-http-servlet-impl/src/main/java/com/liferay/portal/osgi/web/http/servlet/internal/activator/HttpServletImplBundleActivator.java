@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.activator;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
@@ -87,17 +88,18 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 		return TransformUtil.transformToArray(
 			servletRegistration.getMappings(),
 			mapping -> {
-				if (mapping.indexOf('/') != 0) {
+				if (mapping.indexOf(CharPool.SLASH) != 0) {
 					return null;
 				}
 
-				if (mapping.charAt(mapping.length() - 1) == '*') {
+				if (mapping.charAt(mapping.length() - 1) == CharPool.STAR) {
 					mapping = mapping.substring(0, mapping.length() - 2);
 
 					if ((mapping.length() > 1) &&
-						(mapping.charAt(mapping.length() - 1) != '/')) {
+						(mapping.charAt(mapping.length() - 1) !=
+							CharPool.SLASH)) {
 
-						mapping += '/';
+						mapping += CharPool.SLASH;
 					}
 				}
 

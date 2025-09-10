@@ -8,6 +8,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -193,7 +194,7 @@ public class HttpServletEndpointController {
 	private List<LiferayContextController> _getLiferayContextControllers(
 		String requestURI) {
 
-		int index = requestURI.lastIndexOf('/');
+		int index = requestURI.lastIndexOf(CharPool.SLASH);
 
 		while (true) {
 			List<LiferayContextController> liferayContextControllers =
@@ -220,7 +221,7 @@ public class HttpServletEndpointController {
 
 			requestURI = requestURI.substring(0, index);
 
-			index = requestURI.lastIndexOf('/');
+			index = requestURI.lastIndexOf(CharPool.SLASH);
 		}
 
 		return null;
@@ -237,7 +238,7 @@ public class HttpServletEndpointController {
 
 		requestURI = requestURI.substring(contextPath.length());
 
-		int index = requestURI.lastIndexOf('/');
+		int index = requestURI.lastIndexOf(CharPool.SLASH);
 
 		String servletPath = requestURI;
 
@@ -270,7 +271,7 @@ public class HttpServletEndpointController {
 
 			pathInfo = requestURI.substring(index);
 
-			index = servletPath.lastIndexOf('/');
+			index = servletPath.lastIndexOf(CharPool.SLASH);
 		}
 
 		return null;

@@ -8,6 +8,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.trac
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -188,7 +189,8 @@ public class ServletServiceTrackerCustomizer
 				StringBundler.concat(
 					"One of the service properties ",
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE,
-					", ", HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+					StringPool.COMMA_AND_SPACE,
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
 					", and ",
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 					" must contain a value"));

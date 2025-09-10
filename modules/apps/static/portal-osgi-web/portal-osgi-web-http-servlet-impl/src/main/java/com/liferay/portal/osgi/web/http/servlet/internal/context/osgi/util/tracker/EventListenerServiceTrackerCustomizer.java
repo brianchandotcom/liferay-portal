@@ -8,6 +8,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.trac
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -88,8 +89,8 @@ public class EventListenerServiceTrackerCustomizer
 
 				throw new HttpWhiteboardFailureException(
 					StringBundler.concat(
-						HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER, "=",
-						listenerObject, " is not valid"),
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER,
+						StringPool.EQUAL, listenerObject, " is not valid"),
 					DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 			}
 

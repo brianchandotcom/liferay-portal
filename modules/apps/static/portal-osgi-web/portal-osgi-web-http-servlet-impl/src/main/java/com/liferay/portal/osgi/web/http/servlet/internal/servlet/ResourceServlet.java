@@ -154,7 +154,8 @@ public class ResourceServlet extends HttpServlet {
 
 		if ((lastModified != -1L) && (contentLength != -1)) {
 			etag = StringBundler.concat(
-				"W/\"", contentLength, "-", lastModified, "\"");
+				"W/\"", contentLength, StringPool.DASH, lastModified,
+				StringPool.QUOTE);
 		}
 
 		String ifNoneMatch = httpServletRequest.getHeader(_IF_NONE_MATCH);

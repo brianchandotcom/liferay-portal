@@ -5,6 +5,8 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
+import com.liferay.petra.string.CharPool;
+
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 
@@ -36,7 +38,7 @@ public abstract class MatchableRegistration<S, D extends DTO>
 			pattern = pattern.substring(1);
 		}
 
-		if (pattern.charAt(0) == '/') {
+		if (pattern.charAt(0) == CharPool.SLASH) {
 			if ((match == Match.DEFAULT_SERVLET) && (pattern.length() == 1)) {
 				return true;
 			}

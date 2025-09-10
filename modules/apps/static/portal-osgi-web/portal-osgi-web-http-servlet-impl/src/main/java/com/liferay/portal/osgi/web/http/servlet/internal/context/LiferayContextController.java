@@ -5,6 +5,8 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
@@ -323,7 +325,7 @@ public class LiferayContextController {
 		}
 
 		if (requestURI != null) {
-			int index = requestURI.lastIndexOf('.');
+			int index = requestURI.lastIndexOf(CharPool.PERIOD);
 
 			if (index != -1) {
 				extension = requestURI.substring(index + 1);
@@ -372,7 +374,7 @@ public class LiferayContextController {
 
 		String defaultHttpServiceEndpoint = httpServiceEndpoints.get(0);
 
-		if (defaultHttpServiceEndpoint.endsWith("/")) {
+		if (defaultHttpServiceEndpoint.endsWith(StringPool.SLASH)) {
 			defaultHttpServiceEndpoint = defaultHttpServiceEndpoint.substring(
 				0, defaultHttpServiceEndpoint.length() - 1);
 		}
@@ -487,7 +489,7 @@ public class LiferayContextController {
 	private LiferayDispatchTargets _getLiferayDispatchTargets(
 		String requestURI, String extension, String queryString, Match match) {
 
-		int index = requestURI.lastIndexOf('/');
+		int index = requestURI.lastIndexOf(CharPool.SLASH);
 
 		String servletPath = requestURI;
 
@@ -515,7 +517,7 @@ public class LiferayContextController {
 
 			pathInfo = requestURI.substring(index);
 
-			index = servletPath.lastIndexOf('/');
+			index = servletPath.lastIndexOf(CharPool.SLASH);
 		}
 
 		return null;

@@ -531,6 +531,14 @@ public class CPDefinitionLocalServiceWrapper
 		return _cpDefinitionLocalService.getCPDefinition(CPDefinitionId);
 	}
 
+	@Override
+	public CPDefinition getCPDefinitionByCProductId(long cProductId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLocalService.getCPDefinitionByCProductId(
+			cProductId);
+	}
+
 	/**
 	 * Returns the cp definition matching the UUID and group.
 	 *

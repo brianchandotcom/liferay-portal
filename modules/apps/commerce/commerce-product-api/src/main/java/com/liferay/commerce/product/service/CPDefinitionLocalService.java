@@ -387,6 +387,10 @@ public interface CPDefinitionLocalService
 	public CPDefinition getCPDefinition(long CPDefinitionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinition getCPDefinitionByCProductId(long cProductId)
+		throws PortalException;
+
 	/**
 	 * Returns the cp definition matching the UUID and group.
 	 *

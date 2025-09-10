@@ -889,51 +889,42 @@ public class TaxonomyCategoryResourceImpl
 
 		Long taxonomyVocabularyId = taxonomyCategory.getTaxonomyVocabularyId();
 
-		if (_assetVocabularyService.fetchVocabulary(taxonomyVocabularyId) ==
-				null) {
+		if ((taxonomyVocabularyId != null) &&
+			(_assetVocabularyService.fetchVocabulary(taxonomyVocabularyId) !=
+				null)) {
 
-			taxonomyVocabularyId = null;
+			return taxonomyVocabularyId;
 		}
 
 		String taxonomyVocabularyExternalReferenceCode = StringPool.BLANK;
 
-		if (taxonomyVocabularyId == null) {
-			ParentTaxonomyVocabulary parentTaxonomyVocabulary =
-				taxonomyCategory.getParentTaxonomyVocabulary();
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			taxonomyCategory.getParentTaxonomyVocabulary();
 
-			if (parentTaxonomyVocabulary != null) {
-				taxonomyVocabularyExternalReferenceCode =
-					parentTaxonomyVocabulary.getExternalReferenceCode();
-			}
-
-			if (Validator.isNotNull(taxonomyVocabularyExternalReferenceCode)) {
-				if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-					AssetVocabulary assetVocabulary =
-						_assetVocabularyService.
-							getAssetVocabularyByExternalReferenceCode(
-								groupId,
-								taxonomyVocabularyExternalReferenceCode);
-
-					taxonomyVocabularyId = assetVocabulary.getVocabularyId();
-				}
-				else {
-					AssetVocabulary assetVocabulary =
-						_assetVocabularyService.getOrAddEmptyVocabulary(
-							taxonomyVocabularyExternalReferenceCode, groupId);
-
-					taxonomyVocabularyId = assetVocabulary.getVocabularyId();
-				}
-			}
+		if (parentTaxonomyVocabulary != null) {
+			taxonomyVocabularyExternalReferenceCode =
+				parentTaxonomyVocabulary.getExternalReferenceCode();
 		}
 
-		if ((taxonomyVocabularyId == null) &&
-			Validator.isBlank(taxonomyVocabularyExternalReferenceCode)) {
-
+		if (Validator.isBlank(taxonomyVocabularyExternalReferenceCode)) {
 			throw new BadRequestException(
 				"No Taxonomy Vocabulary reference code provided");
 		}
 
-		return taxonomyVocabularyId;
+		AssetVocabulary assetVocabulary = null;
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			assetVocabulary =
+				_assetVocabularyService.
+					getAssetVocabularyByExternalReferenceCode(
+						groupId, taxonomyVocabularyExternalReferenceCode);
+		}
+		else {
+			assetVocabulary = _assetVocabularyService.getOrAddEmptyVocabulary(
+				taxonomyVocabularyExternalReferenceCode, groupId);
+		}
+
+		return assetVocabulary.getVocabularyId();
 	}
 
 	private long _getTotalCount(Long siteId) {

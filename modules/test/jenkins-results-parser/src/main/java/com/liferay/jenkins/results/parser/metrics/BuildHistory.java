@@ -53,8 +53,8 @@ public class BuildHistory {
 		return _topLevelBuildURLs.contains(url);
 	}
 
-	public Map<String, BuildJSONObject> getBuildIdentifiersMap() {
-		return _buildIdentifiersMap;
+	public Map<String, BuildJSONObject> getBuildJSONObjectsMap() {
+		return _buildJSONObjectsMap;
 	}
 
 	public Map<String, Long> getDailyInvokedBuilds() {
@@ -149,7 +149,7 @@ public class BuildHistory {
 			setStartTime(buildHistory.getStartTime());
 		}
 
-		_buildIdentifiersMap.putAll(buildHistory.getBuildIdentifiersMap());
+		_buildJSONObjectsMap.putAll(buildHistory.getBuildJSONObjectsMap());
 		_topLevelBuildURLs.addAll(buildHistory.getTopLevelBuildURLs());
 	}
 
@@ -504,7 +504,7 @@ public class BuildHistory {
 				buildJSONObject.getURL(), buildJSONObject);
 
 			if (buildIdentifier != null) {
-				_buildIdentifiersMap.put(buildIdentifier, buildJSONObject);
+				_buildJSONObjectsMap.put(buildIdentifier, buildJSONObject);
 			}
 
 			_addData(_dailyInvokedTopLevelBuilds, dateString, 1L);
@@ -664,7 +664,7 @@ public class BuildHistory {
 		"https?://(?<masterHostname>test-\\d+-\\d+)(\\.liferay\\.com)?/job/" +
 			"(?<jobName>[^/]+)/?");
 
-	private final Map<String, BuildJSONObject> _buildIdentifiersMap =
+	private final Map<String, BuildJSONObject> _buildJSONObjectsMap =
 		new TreeMap<>();
 	private final Map<String, Long> _dailyInvokedBuilds = new TreeMap<>();
 	private final Map<String, Long> _dailyInvokedTopLevelBuilds =

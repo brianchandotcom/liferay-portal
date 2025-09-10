@@ -72,6 +72,7 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 					</span>
 				</ClayTooltipProvider>
 			</ClayInput.GroupItem>
+
 			<ItemSelectorModal
 				{...itemSelectorModalProps}
 				items={items}
@@ -293,70 +294,72 @@ function ItemSelector<T extends Record<string, any>>({
 	);
 
 	if (multiSelect && displaySelectedItems) {
-		return (
-			<ClayInput.Group>
-				<ClayInput.GroupItem>
-					<ClayMultiSelect
-						{...otherProps}
-						items={items}
-						locator={{
-							id: (item: T) => {
-								return getObjectValueFromPath({
-									object: item,
-									path: locator.id,
-								});
-							},
-							label: (item: T) => {
-								return getObjectValueFromPath({
-									object: item,
-									path: locator.label,
-								});
-							},
-							value: (item: T) => {
-								return getObjectValueFromPath({
-									object: item,
-									path: locator.value,
-								});
-							},
-						}}
-						messages={{
-							hotkeys: Liferay.Language.get(
-								'press-backspace-to-delete-the-current-row'
-							),
-							labelAdded: Liferay.Language.get(
-								'label-x-was-added-to-the-list'
-							),
-							labelRemoved: Liferay.Language.get(
-								'label-x-was-removed-from-the-list'
-							),
-							listCount: Liferay.Language.get(
-								'there-is-x-option-available'
-							),
-							listCountPlural: Liferay.Language.get(
-								'there-are-x-options-available'
-							),
-							loading: Liferay.Language.get('loading...'),
-							notFound: Liferay.Language.get('no-results-found'),
-						}}
-						onChange={setValue}
-						onItemsChange={setItems}
-						onLoadMore={async () => loadMore()}
-						sourceItems={sourceItems}
-						value={value}
-					>
-						{children}
-					</ClayMultiSelect>
-				</ClayInput.GroupItem>
+		const multiSelectBlock = (
+			<ClayMultiSelect
+				{...otherProps}
+				items={items}
+				locator={{
+					id: (item: T) => {
+						return getObjectValueFromPath({
+							object: item,
+							path: locator.id,
+						});
+					},
+					label: (item: T) => {
+						return getObjectValueFromPath({
+							object: item,
+							path: locator.label,
+						});
+					},
+					value: (item: T) => {
+						return getObjectValueFromPath({
+							object: item,
+							path: locator.value,
+						});
+					},
+				}}
+				messages={{
+					hotkeys: Liferay.Language.get(
+						'press-backspace-to-delete-the-current-row'
+					),
+					labelAdded: Liferay.Language.get(
+						'label-x-was-added-to-the-list'
+					),
+					labelRemoved: Liferay.Language.get(
+						'label-x-was-removed-from-the-list'
+					),
+					listCount: Liferay.Language.get(
+						'there-is-x-option-available'
+					),
+					listCountPlural: Liferay.Language.get(
+						'there-are-x-options-available'
+					),
+					loading: Liferay.Language.get('loading...'),
+					notFound: Liferay.Language.get('no-results-found'),
+				}}
+				onChange={setValue}
+				onItemsChange={setItems}
+				onLoadMore={async () => loadMore()}
+				sourceItems={sourceItems}
+				value={value}
+			>
+				{children}
+			</ClayMultiSelect>
+		);
 
-				{itemSelectorModalProps && (
-					<ItemSelectorModalTrigger
-						itemSelectorModalProps={itemSelectorModalProps}
-						items={items}
-						locator={locator}
-						setItems={setItems}
-					/>
-				)}
+		return itemSelectorModalProps ? (
+			<ClayInput.Group>
+				<ClayInput.GroupItem>{multiSelectBlock}</ClayInput.GroupItem>
+
+				<ItemSelectorModalTrigger
+					itemSelectorModalProps={itemSelectorModalProps}
+					items={items}
+					locator={locator}
+					setItems={setItems}
+				/>
 			</ClayInput.Group>
+		) : (
+			multiSelectBlock
 		);
 	}
 
@@ -376,51 +379,53 @@ function ItemSelector<T extends Record<string, any>>({
 		}
 	};
 
-	return (
+	const autoCompleteBlock = (
+		<ClayAutocomplete<T>
+			{...otherProps}
+			active={active}
+			filterKey={(item: T) => {
+				return getObjectValueFromPath({
+					object: item,
+					path: locator.label,
+				});
+			}}
+			items={sourceItems}
+			loadingState={networkStatus}
+			menuTrigger="focus"
+			messages={{
+				listCount: Liferay.Language.get('x-list-option'),
+				listCountPlural: Liferay.Language.get('x-list-options'),
+				loading: Liferay.Language.get('loading...'),
+				notFound: Liferay.Language.get('no-results-found'),
+			}}
+			onActiveChange={setActive}
+			onChange={(value: string) => {
+				if (!value.length) {
+					setItems([]);
+				}
+
+				setValue(value);
+			}}
+			onLoadMore={async () => loadMore()}
+			value={value}
+		>
+			{memoizedChildren}
+		</ClayAutocomplete>
+	);
+
+	return itemSelectorModalProps ? (
 		<ClayInput.Group>
-			<ClayInput.GroupItem>
-				<ClayAutocomplete<T>
-					{...otherProps}
-					active={active}
-					filterKey={(item: T) => {
-						return getObjectValueFromPath({
-							object: item,
-							path: locator.label,
-						});
-					}}
-					items={sourceItems}
-					loadingState={networkStatus}
-					menuTrigger="focus"
-					messages={{
-						listCount: Liferay.Language.get('x-list-option'),
-						listCountPlural: Liferay.Language.get('x-list-options'),
-						loading: Liferay.Language.get('loading...'),
-						notFound: Liferay.Language.get('no-results-found'),
-					}}
-					onActiveChange={setActive}
-					onChange={(value: string) => {
-						if (!value.length) {
-							setItems([]);
-						}
+			<ClayInput.GroupItem>{autoCompleteBlock}</ClayInput.GroupItem>
 
-						setValue(value);
-					}}
-					onLoadMore={async () => loadMore()}
-					value={value}
-				>
-					{memoizedChildren}
-				</ClayAutocomplete>
-			</ClayInput.GroupItem>
-
-			{itemSelectorModalProps && (
-				<ItemSelectorModalTrigger
-					itemSelectorModalProps={itemSelectorModalProps}
-					items={items}
-					locator={locator}
-					setItems={handleModalItemsChange}
-				/>
-			)}
+			<ItemSelectorModalTrigger
+				itemSelectorModalProps={itemSelectorModalProps}
+				items={items}
+				locator={locator}
+				setItems={handleModalItemsChange}
+			/>
 		</ClayInput.Group>
+	) : (
+		autoCompleteBlock
 	);
 }
 

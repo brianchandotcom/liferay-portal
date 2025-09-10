@@ -46,13 +46,14 @@ public class CommerceOrderInfoItemDetailsProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
+		Group group = _groupLocalService.fetchGroup(
+			TestPropsValues.getGroupId());
 
 		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(_group.getCompanyId());
+			CommerceCurrencyTestUtil.addCommerceCurrency(group.getCompanyId());
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_group.getGroupId(), commerceCurrency.getCode());
+			group.getGroupId(), commerceCurrency.getCode());
 
 		AccountEntry accountEntry =
 			CommerceAccountTestUtil.getPersonAccountEntry(
@@ -80,8 +81,11 @@ public class CommerceOrderInfoItemDetailsProviderTest {
 				_commerceOrder.getCommerceOrderId()),
 			infoItemDetails.getInfoItemReference());
 
+		Group group = _groupLocalService.fetchGroup(
+			_commerceOrder.getGroupId());
+
 		infoItemDetails = infoItemDetailsProvider.getInfoItemDetails(
-			0, ERCInfoItemIdentifier.class, _commerceOrder);
+			group.getGroupId(), ERCInfoItemIdentifier.class, _commerceOrder);
 
 		Assert.assertEquals(
 			CommerceOrder.class.getName(), infoItemDetails.getClassName());
@@ -98,10 +102,6 @@ public class CommerceOrderInfoItemDetailsProviderTest {
 
 		Assert.assertEquals(
 			CommerceOrder.class.getName(), infoItemDetails.getClassName());
-
-		Group group = _groupLocalService.fetchGroup(
-			_commerceOrder.getGroupId());
-
 		Assert.assertEquals(
 			new InfoItemReference(
 				CommerceOrder.class.getName(),
@@ -115,8 +115,6 @@ public class CommerceOrderInfoItemDetailsProviderTest {
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
-
-	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

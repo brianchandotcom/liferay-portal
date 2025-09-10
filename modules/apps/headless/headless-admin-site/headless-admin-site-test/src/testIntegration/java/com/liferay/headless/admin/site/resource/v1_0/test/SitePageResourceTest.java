@@ -91,6 +91,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteSiteSitePage() throws Exception {

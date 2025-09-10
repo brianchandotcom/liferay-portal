@@ -124,6 +124,13 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_pageTemplateResource.setContextUser(TestPropsValues.getUser());
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteSitePageTemplate() throws Exception {

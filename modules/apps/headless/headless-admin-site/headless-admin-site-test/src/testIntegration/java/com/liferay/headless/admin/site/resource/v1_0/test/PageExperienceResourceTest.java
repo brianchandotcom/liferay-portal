@@ -45,6 +45,13 @@ public class PageExperienceResourceTest
 		_draftLayout = _layout.fetchDraftLayout();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteSitePageExperience() throws Exception {

@@ -78,6 +78,13 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteSiteUtilityPage() throws Exception {

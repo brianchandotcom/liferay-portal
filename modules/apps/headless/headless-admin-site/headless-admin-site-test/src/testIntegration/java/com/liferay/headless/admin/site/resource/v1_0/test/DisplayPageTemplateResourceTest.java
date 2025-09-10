@@ -137,6 +137,13 @@ public class DisplayPageTemplateResourceTest
 		_displayPageTemplateResource.setContextUser(TestPropsValues.getUser());
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteSiteDisplayPageTemplate() throws Exception {

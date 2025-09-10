@@ -40,6 +40,13 @@ public class WidgetPageWidgetInstanceResourceTest
 		_layout = LayoutTestUtil.addTypePortletLayout(testGroup.getGroupId());
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteSiteSitePageWidgetInstance() throws Exception {

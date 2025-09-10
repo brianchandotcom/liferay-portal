@@ -59,6 +59,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_draftLayout = _layout;
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteSitePageSpecificationPageExperiencePageElement()

@@ -9632,13 +9632,16 @@ war.path=${app.server.portal.dir}/</echo>
 					<then>
 						<var name="database.index" value="1" />
 
-						<echo file="create.sql">drop database if exists lportal;
+						<echo file="create.sql">
+drop database if exists lportal;
+
 create database lportal character set utf8;</echo>
 
 						<antelope:repeat count="${databases.size}">
 							<echo append="true" file="create.sql">
 
 drop database if exists lportal${database.index};
+
 create database lportal${database.index} character set utf8;</echo>
 
 							<math
@@ -9660,11 +9663,13 @@ create database lportal${database.index} character set utf8;</echo>
 						<then>
 							<echo file="create.sql">
 drop database if exists lportal;
+
 create database lportal encoding = 'UNICODE';</echo>
 
 							<echo append="true" file="create.sql">
 
 drop database if exists lportal${databases.size};
+
 create database lportal${databases.size} encoding = 'UNICODE';</echo>
 						</then>
 					</elseif>
@@ -9721,12 +9726,12 @@ create database lportal${databases.size} encoding = 'UNICODE';</echo>
 					<isset property="configure.read.write.database" />
 					<then>
 						<echo append="true" file="create.sql">
-							<![CDATA[
-								create user 'read_only_user'@'%' identified BY 'password';
-								grant select ON *.* TO 'read_only_user'@'%';
-								flush privileges;
-							]]>
-						</echo>
+
+create user 'read_only_user'@'%' identified BY 'password';
+
+grant select ON *.* TO 'read_only_user'@'%';
+
+flush privileges;</echo>
 					</then>
 				</if>
 
@@ -9749,7 +9754,9 @@ create database lportal${databases.size} encoding = 'UNICODE';</echo>
 						>
 							<replacetoken>connect to lportal;</replacetoken>
 							<replacevalue>update db cfg for lportal using logprimary 2;
+
 update db cfg for lportal using logsecond 254;
+
 connect to lportal;</replacevalue>
 						</replace>
 						<replace
@@ -9765,8 +9772,11 @@ connect to lportal;</replacevalue>
 								<echo append="true" file="create.sql">
 
 disconnect lportal;
+
 create database lportal${databases.size} pagesize 32768 temporary tablespace managed by automatic storage;
+
 update db cfg for lportal${databases.size} using logprimary 2;
+
 update db cfg for lportal${databases.size} using logsecond 254;</echo>
 							</then>
 						</if>
@@ -9801,9 +9811,13 @@ update db cfg for lportal${databases.size} using logsecond 254;</echo>
 
 									<echo append="true" file="create.sql">
 	drop user lportal1 cascade;
+
 	create user lportal1 identified by lportal1;
+
 	grant connect,resource to lportal1;
+
 	grant unlimited tablespace to lportal1;
+
 	quit</echo>
 								</then>
 							</if>
@@ -9824,9 +9838,11 @@ go</replacetoken>
 go
 
 alter database lportal set allow_snapshot_isolation on;
+
 go
 
 alter database lportal set read_committed_snapshot on;
+
 go]]></replacevalue>
 								</replacefilter>
 							</replace>
@@ -9836,12 +9852,15 @@ go]]></replacevalue>
 								<then>
 									<echo append="true" file="create.sql">
 create database lportal${databases.size};
+
 go
 
 alter database lportal${databases.size} set allow_snapshot_isolation on;
+
 go
 
 alter database lportal${databases.size} set read_committed_snapshot on;
+
 go</echo>
 								</then>
 							</if>
@@ -9889,6 +9908,7 @@ go</echo>
 							<echo append="true" file="create.sql">
 
 drop database if exists lportal${database.index};
+
 create database lportal${database.index} character set utf8;</echo>
 
 							<math
@@ -9911,6 +9931,7 @@ create database lportal${database.index} character set utf8;</echo>
 							<echo append="true" file="create.sql">
 
 drop database if exists lportal${databases.size};
+
 create database lportal${databases.size} encoding = 'UNICODE';</echo>
 						</then>
 					</elseif>
@@ -9971,7 +9992,9 @@ create database lportal${databases.size} encoding = 'UNICODE';</echo>
 						>
 							<replacetoken>connect to lportal;</replacetoken>
 							<replacevalue>update db cfg for lportal using logprimary 2;
+
 update db cfg for lportal using logsecond 254;
+
 connect to lportal;</replacevalue>
 						</replace>
 						<replace
@@ -9987,8 +10010,11 @@ connect to lportal;</replacevalue>
 								<echo append="true" file="create.sql">
 
 disconnect lportal;
+
 create database lportal${databases.size} pagesize 32768 temporary tablespace managed by automatic storage;
+
 update db cfg for lportal${databases.size} using logprimary 2;
+
 update db cfg for lportal${databases.size} using logsecond 254;</echo>
 							</then>
 						</if>
@@ -10001,7 +10027,7 @@ update db cfg for lportal${databases.size} using logsecond 254;</echo>
 							>
 								<replacetoken>grant connect,resource to &amp;1;</replacetoken>
 								<replacevalue>grant connect,resource to &amp;1;
-	grant unlimited tablespace to &amp;1;</replacevalue>
+grant unlimited tablespace to &amp;1;</replacevalue>
 							</replace>
 
 							<if>
@@ -10011,7 +10037,7 @@ update db cfg for lportal${databases.size} using logsecond 254;</echo>
 										file="create.sql"
 									>
 										<replacetoken>grant connect,resource to &amp;1;
-	grant unlimited tablespace to &amp;1;</replacetoken>
+grant unlimited tablespace to &amp;1;</replacetoken>
 										<replacevalue>grant all privileges to &amp;1;</replacevalue>
 									</replace>
 									<replace
@@ -10022,11 +10048,16 @@ update db cfg for lportal${databases.size} using logsecond 254;</echo>
 									</replace>
 
 									<echo append="true" file="create.sql">
-	drop user lportal1 cascade;
-	create user lportal1 identified by lportal1;
-	grant connect,resource to lportal1;
-	grant unlimited tablespace to lportal1;
-	quit</echo>
+
+drop user lportal1 cascade;
+
+create user lportal1 identified by lportal1;
+
+grant connect,resource to lportal1;
+
+grant unlimited tablespace to lportal1;
+
+quit</echo>
 								</then>
 							</if>
 						</then>
@@ -10046,9 +10077,11 @@ go</replacetoken>
 go
 
 alter database lportal set allow_snapshot_isolation on;
+
 go
 
 alter database lportal set read_committed_snapshot on;
+
 go]]></replacevalue>
 								</replacefilter>
 							</replace>
@@ -10058,12 +10091,15 @@ go]]></replacevalue>
 								<then>
 									<echo append="true" file="create.sql">
 create database lportal${databases.size};
+
 go
 
 alter database lportal${databases.size} set allow_snapshot_isolation on;
+
 go
 
 alter database lportal${databases.size} set read_committed_snapshot on;
+
 go</echo>
 								</then>
 							</if>

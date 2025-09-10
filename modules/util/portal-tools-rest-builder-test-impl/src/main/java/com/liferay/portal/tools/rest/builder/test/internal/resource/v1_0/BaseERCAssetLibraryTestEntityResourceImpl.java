@@ -10,7 +10,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -882,8 +881,9 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 			String groupExternalReferenceCode)
 		throws Exception {
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			groupExternalReferenceCode, contextCompany.getCompanyId());
+		com.liferay.portal.kernel.model.Group group =
+			groupLocalService.getGroupByExternalReferenceCode(
+				groupExternalReferenceCode, contextCompany.getCompanyId());
 
 		return group.getGroupId();
 	}

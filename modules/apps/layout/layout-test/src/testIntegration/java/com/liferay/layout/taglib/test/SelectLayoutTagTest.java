@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -91,19 +89,7 @@ public class SelectLayoutTagTest {
 
 	@Test
 	public void testEmptyLayouts() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
-		LayoutLocalServiceUtil.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, false, StringPool.BLANK,
-			serviceContext);
+		LayoutTestUtil.addTypeEmptyLayout(_group);
 
 		SelectLayoutTag selectLayoutTag = new SelectLayoutTag();
 

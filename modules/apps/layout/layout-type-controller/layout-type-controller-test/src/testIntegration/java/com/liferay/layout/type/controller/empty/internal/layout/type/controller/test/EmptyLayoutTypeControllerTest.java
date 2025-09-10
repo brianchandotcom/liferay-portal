@@ -6,6 +6,7 @@
 package com.liferay.layout.type.controller.empty.internal.layout.type.controller.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
@@ -19,12 +20,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -63,19 +60,7 @@ public class EmptyLayoutTypeControllerTest {
 	public void setUp() throws Exception {
 		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getCompanyId(), _group.getGroupId(),
-			TestPropsValues.getUserId());
-
-		_serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
-		_layout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, false, StringPool.BLANK,
-			_serviceContext);
+		_layout = LayoutTestUtil.addTypeEmptyLayout(_group);
 
 		_layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
@@ -170,12 +155,8 @@ public class EmptyLayoutTypeControllerTest {
 	private Layout _layout;
 
 	@Inject
-	private LayoutLocalService _layoutLocalService;
-
-	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	private LayoutTypeController _layoutTypeController;
-	private ServiceContext _serviceContext;
 
 }

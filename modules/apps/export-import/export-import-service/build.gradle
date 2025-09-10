@@ -22,7 +22,6 @@ dependencies {
 	compileOnly project(":apps:expando:expando-api")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:export-import:export-import-changeset-api")
-	compileOnly project(":apps:export-import:export-import-report-api")
 	compileOnly project(":apps:fragment:fragment-api")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-set-prototype-api")

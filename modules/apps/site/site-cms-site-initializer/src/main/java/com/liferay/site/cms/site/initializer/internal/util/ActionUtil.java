@@ -16,6 +16,8 @@ import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -492,6 +494,30 @@ public class ActionUtil {
 			StringPool.SLASH);
 	}
 
+	public static DropdownItem getCreateFolderDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String parentObjectEntryFolderExternalReferenceCode) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return DropdownItemBuilder.putData(
+			"action", "createFolder"
+		).putData(
+			"baseAssetLibraryViewURL", getBaseSpaceURL(themeDisplay)
+		).putData(
+			"baseFolderViewURL", getBaseViewFolderURL(themeDisplay)
+		).putData(
+			"parentObjectEntryFolderExternalReferenceCode",
+			parentObjectEntryFolderExternalReferenceCode
+		).setIcon(
+			"folder"
+		).setLabel(
+			LanguageUtil.get(httpServletRequest, "folder")
+		).build();
+	}
+
 	public static String getDisplayPageEditURL(
 		FormManager formManager,
 		FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
@@ -618,6 +644,46 @@ public class ActionUtil {
 		return getBaseSpaceURL(themeDisplay) + classPK;
 	}
 
+	public static DropdownItem getStructuredContentDropdownItem(
+		HttpServletRequest httpServletRequest, String icon, String labelKey,
+		ObjectDefinition objectDefinition,
+		String objectEntryFolderExternalReferenceCode) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return DropdownItemBuilder.putData(
+			"action", "createAsset"
+		).putData(
+			"objectDefinitionId",
+			String.valueOf(objectDefinition.getObjectDefinitionId())
+		).putData(
+			"redirect",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/add_structured_content_item?objectDefinitionId=",
+				objectDefinition.getObjectDefinitionId(),
+				"&objectEntryFolderExternalReferenceCode=",
+				objectEntryFolderExternalReferenceCode, "&plid=",
+				themeDisplay.getPlid(), "&redirect=",
+				themeDisplay.getURLCurrent())
+		).putData(
+			"title", objectDefinition.getLabel(themeDisplay.getLocale())
+		).setIcon(
+			icon
+		).setLabel(
+			() -> {
+				if (Validator.isNull(labelKey)) {
+					return objectDefinition.getLabel(themeDisplay.getLocale());
+				}
+
+				return LanguageUtil.get(httpServletRequest, labelKey);
+			}
+		).build();
+	}
+
 	public static String getTranslateURL(
 		FormManager formManager,
 		FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
@@ -672,6 +738,22 @@ public class ActionUtil {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public static DropdownItem getUploadMultipleFilesDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String parentObjectEntryFolderExternalReferenceCode) {
+
+		return DropdownItemBuilder.putData(
+			"action", "uploadMultipleFiles"
+		).putData(
+			"parentObjectEntryFolderExternalReferenceCode",
+			parentObjectEntryFolderExternalReferenceCode
+		).setIcon(
+			"upload-multiple"
+		).setLabel(
+			LanguageUtil.get(httpServletRequest, "multiple-files")
+		).build();
 	}
 
 	public static String getViewFolderRecycleBinURL(

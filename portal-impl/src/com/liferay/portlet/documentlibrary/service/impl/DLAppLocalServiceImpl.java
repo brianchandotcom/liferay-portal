@@ -583,10 +583,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	@Override
 	public FileEntry fetchFileEntry(long fileEntryId) throws PortalException {
-		LocalRepository localRepository =
-			RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
+		try {
+			LocalRepository localRepository =
+				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
 
-		return localRepository.fetchFileEntry(fileEntryId);
+			return localRepository.fetchFileEntry(fileEntryId);
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFileEntryException);
+			}
+
+			return null;
+		}
 	}
 
 	/**

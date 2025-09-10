@@ -6,12 +6,17 @@
 import {test} from '@playwright/test';
 
 import {ProductAnalyticsBannerPage} from '../pages/cookies-banner-web/ProductAnalyticsBannerPage';
+import {ProductAnalyticsConsentPanelPage} from '../pages/cookies-banner-web/ProductAnalyticsConsentPanelPage';
 
 const productAnalyticsPagesTest = test.extend<{
 	productAnalyticsBannerPage: ProductAnalyticsBannerPage;
+	productAnalyticsConsentPanelPage: ProductAnalyticsConsentPanelPage;
 }>({
 	productAnalyticsBannerPage: async ({page}, use) => {
 		await use(new ProductAnalyticsBannerPage(page));
+	},
+	productAnalyticsConsentPanelPage: async ({page}, use) => {
+		await use(new ProductAnalyticsConsentPanelPage(page));
 	},
 });
 

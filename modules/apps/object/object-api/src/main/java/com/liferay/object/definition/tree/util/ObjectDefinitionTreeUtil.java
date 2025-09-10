@@ -251,26 +251,33 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1());
 
-		if (objectDefinition1.isRootDescendantNode()) {
-			objectDefinition1 = objectDefinitionPersistence.findByPrimaryKey(
-				objectDefinition1.getRootObjectDefinitionId());
+		long[] actualObjectDefinition1RootObjectDefinitionIds =
+			objectDefinition1.getRootObjectDefinitionIds();
+
+		long count = objectRelationshipPersistence.countByODI1_E(
+			objectDefinition1.getObjectDefinitionId(), true);
+
+		if ((count == 0) &&
+			Arrays.equals(
+				actualObjectDefinition1RootObjectDefinitionIds,
+				new long[] {objectDefinition1.getObjectDefinitionId()})) {
+
+			_setRootObjectDefinitionIds(
+				new long[0], objectDefinition1,
+				objectDefinitionSettingLocalService,
+				actualObjectDefinition1RootObjectDefinitionIds);
+
+			if (objectDefinition1.isApproved()) {
+				objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition1);
+			}
 		}
-
-		long oldRootObjectDefinitionId1 =
-			objectDefinition1.getRootObjectDefinitionId();
-		long newRootObjectDefinitionId1 = _getRootObjectDefinitionId(
-			objectDefinition1, objectRelationshipPersistence);
-
-		_updateRootObjectDefinitionId(
-			objectDefinition1, objectDefinitionLocalService,
-			objectDefinitionSettingLocalService, oldRootObjectDefinitionId1,
-			newRootObjectDefinitionId1);
 
 		_updateObjectEntries(
 			objectDefinition1, objectEntryLocalService,
-			oldRootObjectDefinitionId1, newRootObjectDefinitionId1);
+			actualObjectDefinition1RootObjectDefinitionIds);
 
-		if (newRootObjectDefinitionId1 == 0) {
+		if (ArrayUtil.isEmpty(objectDefinition1.getRootObjectDefinitionIds())) {
 			for (ObjectAction objectAction :
 					objectActionPersistence.findByO_A_OATK(
 						objectDefinition1.getObjectDefinitionId(), true,
@@ -289,30 +296,58 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
 
-		long oldRootObjectDefinitionId2 =
-			objectDefinition2.getRootObjectDefinitionId();
-		long newRootObjectDefinitionId2 = _getRootObjectDefinitionId(
-			objectDefinition2, objectRelationshipPersistence);
+		long[] addRootObjectDefinitionIds = new long[0];
+		long[] removeRootObjectDefinitionIds =
+			actualObjectDefinition1RootObjectDefinitionIds;
 
-		_updateRootObjectDefinitionId(
-			objectDefinition2, objectDefinitionLocalService,
-			objectDefinitionSettingLocalService, oldRootObjectDefinitionId2,
-			newRootObjectDefinitionId2);
+		count = objectRelationshipPersistence.countByODI1_E(
+			objectDefinition2.getObjectDefinitionId(), true);
+
+		if ((count > 0) &&
+			Arrays.equals(
+				actualObjectDefinition1RootObjectDefinitionIds,
+				objectDefinition2.getRootObjectDefinitionIds())) {
+
+			addRootObjectDefinitionIds = new long[] {
+				objectDefinition2.getObjectDefinitionId()
+			};
+		}
+		else if ((count == 0) &&
+				 (objectDefinition1.isApproved() !=
+					 objectDefinition2.isApproved())) {
+
+			removeRootObjectDefinitionIds = ArrayUtil.append(
+				actualObjectDefinition1RootObjectDefinitionIds,
+				new long[] {objectDefinition2.getObjectDefinitionId()});
+		}
+
+		long[] actualObjectDefinition2RootObjectDefinitionIds =
+			objectDefinition2.getRootObjectDefinitionIds();
+
+		_setRootObjectDefinitionIds(
+			addRootObjectDefinitionIds, objectDefinition2,
+			objectDefinitionSettingLocalService, removeRootObjectDefinitionIds);
+
+		if (objectDefinition2.isApproved()) {
+			objectDefinitionLocalService.deployObjectDefinition(
+				objectDefinition2);
+		}
 
 		_updateObjectEntries(
 			objectDefinition2, objectEntryLocalService,
-			oldRootObjectDefinitionId2, newRootObjectDefinitionId2);
+			actualObjectDefinition2RootObjectDefinitionIds);
 
 		_updateObjectDefinitionTree(
 			objectDefinition2, objectDefinitionLocalService,
 			objectDefinitionPersistence, objectDefinitionSettingLocalService,
 			objectEntryLocalService, objectFieldPersistence,
 			objectRelationshipLocalService, objectRelationshipPersistence,
-			oldRootObjectDefinitionId2, newRootObjectDefinitionId2);
+			actualObjectDefinition1RootObjectDefinitionIds,
+			addRootObjectDefinitionIds);
 
-		if (objectDefinition2.isRootNode()) {
-			_deployObjectDefinition(
-				objectDefinition2, objectDefinitionLocalService);
+		if (objectDefinition2.isRootNode() && objectDefinition2.isApproved()) {
+			objectDefinitionLocalService.deployObjectDefinition(
+				objectDefinition2);
 		}
 	}
 
@@ -338,31 +373,6 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence, objectDefinitionSettingLocalService,
 			objectRelationshipLocalService, objectRelationshipPersistence,
 			oldRootObjectDefinitionIds);
-	}
-
-	private static void _deployObjectDefinition(
-		ObjectDefinition objectDefinition,
-		ObjectDefinitionLocalService objectDefinitionLocalService) {
-
-		if (!objectDefinition.isApproved()) {
-			return;
-		}
-
-		objectDefinitionLocalService.deployObjectDefinition(objectDefinition);
-	}
-
-	private static long _getRootObjectDefinitionId(
-		ObjectDefinition objectDefinition,
-		ObjectRelationshipPersistence objectRelationshipPersistence) {
-
-		long count = objectRelationshipPersistence.countByODI1_E(
-			objectDefinition.getObjectDefinitionId(), true);
-
-		if (count == 0) {
-			return 0;
-		}
-
-		return objectDefinition.getObjectDefinitionId();
 	}
 
 	private static void _performActions(
@@ -544,12 +554,9 @@ public class ObjectDefinitionTreeUtil {
 			ObjectFieldPersistence objectFieldPersistence,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			ObjectRelationshipPersistence objectRelationshipPersistence,
-			long oldRootObjectDefinitionId, long newRootObjectDefinitionId)
+			long[] removeRootObjectDefinitionIds,
+			long[] addRootObjectDefinitionIds)
 		throws PortalException {
-
-		if (newRootObjectDefinitionId == 0) {
-			return;
-		}
 
 		for (ObjectRelationship objectRelationship :
 				objectRelationshipLocalService.getObjectRelationships(
@@ -559,18 +566,15 @@ public class ObjectDefinitionTreeUtil {
 				objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId2());
 
-			if (oldRootObjectDefinitionId !=
-					objectDefinition2.getRootObjectDefinitionId()) {
-
-				continue;
-			}
-
-			_updateRootObjectDefinitionId(
-				objectDefinition2, objectDefinitionLocalService,
-				objectDefinitionSettingLocalService, oldRootObjectDefinitionId,
-				newRootObjectDefinitionId);
+			_setRootObjectDefinitionIds(
+				addRootObjectDefinitionIds, objectDefinition2,
+				objectDefinitionSettingLocalService,
+				removeRootObjectDefinitionIds);
 
 			if (objectDefinition2.isApproved()) {
+				objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition2);
+
 				ObjectField objectField =
 					objectFieldPersistence.findByPrimaryKey(
 						objectRelationship.getObjectFieldId2());
@@ -607,19 +611,21 @@ public class ObjectDefinitionTreeUtil {
 				objectDefinitionPersistence,
 				objectDefinitionSettingLocalService, objectEntryLocalService,
 				objectFieldPersistence, objectRelationshipLocalService,
-				objectRelationshipPersistence, oldRootObjectDefinitionId,
-				newRootObjectDefinitionId);
+				objectRelationshipPersistence, removeRootObjectDefinitionIds,
+				addRootObjectDefinitionIds);
 		}
 	}
 
 	private static void _updateObjectEntries(
 			ObjectDefinition objectDefinition,
 			ObjectEntryLocalService objectEntryLocalService,
-			long oldRootObjectDefinitionId, long newRootObjectDefinitionId)
+			long[] oldRootObjectDefinitionIds)
 		throws PortalException {
 
 		if (!objectDefinition.isApproved() ||
-			(oldRootObjectDefinitionId == newRootObjectDefinitionId)) {
+			Arrays.equals(
+				oldRootObjectDefinitionIds,
+				objectDefinition.getRootObjectDefinitionIds())) {
 
 			return;
 		}
@@ -628,7 +634,9 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinition.getObjectDefinitionId(), objectEntryLocalService,
 			false,
 			(ObjectEntry objectEntry) -> {
-				if (newRootObjectDefinitionId == 0) {
+				if (ArrayUtil.isEmpty(
+						objectDefinition.getRootObjectDefinitionIds())) {
+
 					objectEntry.setRootObjectEntryId(0);
 				}
 				else {
@@ -638,42 +646,6 @@ public class ObjectDefinitionTreeUtil {
 
 				objectEntryLocalService.updateObjectEntry(objectEntry);
 			});
-	}
-
-	private static void _updateRootObjectDefinitionId(
-			ObjectDefinition objectDefinition,
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			ObjectDefinitionSettingLocalService
-				objectDefinitionSettingLocalService,
-			long oldRootObjectDefinitionId, long newRootObjectDefinitionId)
-		throws PortalException {
-
-		if (oldRootObjectDefinitionId == newRootObjectDefinitionId) {
-			_deployObjectDefinition(
-				objectDefinition, objectDefinitionLocalService);
-
-			return;
-		}
-
-		long[] addRootObjectDefinitionIds = new long[0];
-
-		if (newRootObjectDefinitionId != 0) {
-			addRootObjectDefinitionIds = new long[] {newRootObjectDefinitionId};
-		}
-
-		long[] removeRootObjectDefinitionIds = new long[0];
-
-		if (oldRootObjectDefinitionId != 0) {
-			removeRootObjectDefinitionIds = new long[] {
-				oldRootObjectDefinitionId
-			};
-		}
-
-		_setRootObjectDefinitionIds(
-			addRootObjectDefinitionIds, objectDefinition,
-			objectDefinitionSettingLocalService, removeRootObjectDefinitionIds);
-
-		_deployObjectDefinition(objectDefinition, objectDefinitionLocalService);
 	}
 
 	private static long[] _updateRootObjectDefinitionIds(

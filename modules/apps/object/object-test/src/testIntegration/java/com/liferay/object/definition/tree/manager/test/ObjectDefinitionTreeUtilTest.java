@@ -1122,12 +1122,11 @@ public class ObjectDefinitionTreeUtilTest {
 	public void testUnbindObjectDefinitions() throws Exception {
 		_testUnbindObjectDefinitions();
 		_testUnbindObjectDefinitionsWithDescendantNode();
-		_testUnbindObjectDefinitionsWithSiblingNode();
-
-		_testUnbindObjectDefinitionsWithParentNodes();
-		_testUnbindObjectDefinitionsWithGrandParentNodes();
-		_testUnbindObjectDefinitionsWithDescendantNodeAndParentNodes();
 		_testUnbindObjectDefinitionsWithDescendantNodeAndGrandParentNodes();
+		_testUnbindObjectDefinitionsWithDescendantNodeAndParentNodes();
+		_testUnbindObjectDefinitionsWithGrandParentNodes();
+		_testUnbindObjectDefinitionsWithParentNodes();
+		_testUnbindObjectDefinitionsWithSiblingNode();
 	}
 
 	@Test

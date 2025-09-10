@@ -31,8 +31,8 @@ public class ImportStagedModelExceptionHandlerImpl
 
 	@Override
 	public <T extends StagedModel> void handle(
-		PortletDataException portletDataException,
-		PortletDataContext portletDataContext, T stagedModel) {
+		PortletDataContext portletDataContext,
+		PortletDataException portletDataException, T stagedModel) {
 
 		String externalReferenceCode = null;
 

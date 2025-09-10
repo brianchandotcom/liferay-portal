@@ -217,7 +217,7 @@ export class FDSSamplePage {
 			.click();
 	}
 
-	async checkDropdownMenuIconsAreVisible(itemActionButton: Locator) {
+	async getDropdownId(itemActionButton: Locator) {
 		await itemActionButton.click();
 
 		const dropdownId = await itemActionButton.getAttribute('aria-controls');
@@ -225,6 +225,12 @@ export class FDSSamplePage {
 		const dropdownMenu = this.page.locator(`#${dropdownId}`);
 
 		await dropdownMenu.filter({has: this.page.getByRole('menu')}).waitFor();
+
+		return dropdownMenu;
+	}
+
+	async checkDropdownMenuIconsAreVisible(itemActionButton: Locator) {
+		const dropdownMenu = await this.getDropdownId(itemActionButton);
 
 		const menuItems = dropdownMenu.getByRole('menuitem');
 

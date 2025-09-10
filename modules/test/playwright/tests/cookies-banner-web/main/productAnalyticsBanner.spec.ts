@@ -54,6 +54,32 @@ test.afterEach(async ({systemSettingsPage}) => {
 			});
 		}
 	});
+
+	await test.step('Reset Cookies System Settings if needed', async () => {
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
+
+		await systemSettingsPage.page
+			.getByRole('heading', {
+				name: 'Cookie Manager',
+			})
+			.waitFor();
+
+		if (
+			await systemSettingsPage.page
+				.getByRole('button', {name: 'Actions'})
+				.isVisible()
+		) {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: systemSettingsPage.page.getByRole('menuitem', {
+					name: 'Reset Default Values',
+				}),
+				trigger: systemSettingsPage.page.getByRole('button', {
+					name: 'Actions',
+				}),
+			});
+		}
+	});
 });
 
 test(
@@ -145,6 +171,116 @@ test(
 			await expect(
 				await productAnalyticsBannerPage.bannerLocator
 			).not.toBeVisible();
+		});
+	}
+);
+
+test(
+	'AC1: After opting-in in Product Analytics Banner, cookies banner shows up when cookie config is enabled',
+	{tag: '@LPD-60005'},
+	async ({page, productAnalyticsBannerPage, systemSettingsPage}) => {
+		await test.step('Enable Preference Handling Cookies', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				'Privacy',
+				'Cookie Manager'
+			);
+
+			const enabledButton = page.getByLabel('Enabled');
+			const isChecked = await enabledButton.isChecked();
+
+			if (!isChecked) {
+				await enabledButton.click();
+			}
+
+			await page
+				.getByRole('button', {name: 'Save'})
+				.dispatchEvent('click');
+			await waitForAlert(page);
+
+			await expect(enabledButton).toBeChecked();
+		});
+
+		await page.goto('/');
+
+		await test.step('Verify Product Analytics Banner is present', async () => {
+			await expect(
+				await productAnalyticsBannerPage.bannerLocator
+			).toBeVisible();
+		});
+
+		const acceptAll = page.getByRole('button', {name: 'Accept All'});
+
+		await acceptAll.waitFor({state: 'visible'});
+
+		await acceptAll.click();
+
+		await test.step('Verify Product Analytics Banner is no longer present', async () => {
+			await expect(
+				await productAnalyticsBannerPage.bannerLocator
+			).not.toBeVisible();
+		});
+
+		await test.step('Verify Cookies Banner shows up', async () => {
+			await expect(
+				await page.locator(
+					'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
+				)
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'AC2: After opting-out in Product Analytics Banner, cookies banner shows up when cookie config is enabled',
+	{tag: '@LPD-60005'},
+	async ({page, productAnalyticsBannerPage, systemSettingsPage}) => {
+		await test.step('Enable Preference Handling Cookies', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				'Privacy',
+				'Cookie Manager'
+			);
+
+			const enabledButton = page.getByLabel('Enabled');
+			const isChecked = await enabledButton.isChecked();
+
+			if (!isChecked) {
+				await enabledButton.click();
+			}
+
+			await page
+				.getByRole('button', {name: 'Save'})
+				.dispatchEvent('click');
+			await waitForAlert(page);
+
+			await expect(enabledButton).toBeChecked();
+		});
+
+		await page.goto('/');
+
+		await test.step('Verify Product Analytics Banner is present', async () => {
+			await expect(
+				await productAnalyticsBannerPage.bannerLocator
+			).toBeVisible();
+		});
+
+		const acceptAll = page.getByRole('button', {name: 'Decline All'});
+
+		await acceptAll.waitFor({state: 'visible'});
+
+		await acceptAll.click();
+
+		await test.step('Verify Product Analytics Banner is no longer present', async () => {
+			await expect(
+				await productAnalyticsBannerPage.bannerLocator
+			).not.toBeVisible();
+		});
+
+		await test.step('Verify Cookies Banner shows up', async () => {
+			await expect(
+				await page.locator(
+					'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
+				)
+			).toBeVisible();
 		});
 	}
 );

@@ -70,6 +70,7 @@
 	--badge-color: #7785ff;
 	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+	src: url(/documents/d/marketplace/sourcesans3-regular-ttf);
 }
 
 .card.main-image {
@@ -79,6 +80,11 @@
 .child-menu.dropdown-menu {
 	border-radius: 8px !important;
 	padding: 0px !important;
+}
+
+.lfr-cookie-banner-text {
+	font-size: 13px;
+	margin-bottom: 6px;
 }
 
 .lfr-layout-structure-item-com-liferay-portal-search-web-category-facet-portlet-categoryfacetportlet,
@@ -103,12 +109,14 @@
 
 .lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected)
 	.nav-link {
-	color: #0053f0 !important;
+	border-bottom: #004AD7 solid 3px !important;
+	color: #0053F0 !important;
 	font-weight: 600;
 }
 
 .lfr-nav-item.nav-item.selected.active .nav-link {
-	color: #0053f0 !important;
+	border-bottom: #004AD7 solid 3px !important;
+	color: #0053F0 !important;
 	font-weight: 600;
 }
 

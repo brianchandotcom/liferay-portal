@@ -4,7 +4,11 @@
 	font-family: 'Source Sans 3';
 	font-style: normal;
 	font-weight: 400;
-	src: url('/documents/d/marketplace/sourcesans3-regular-ttf');
+	src: url(/documents/d/marketplace/sourcesans3-regular-ttf);
+}
+
+.card.main-image {
+	border-radius: 10px !important;
 }
 
 /* ---------- Marketplace app tags ---------- */
@@ -72,8 +76,8 @@
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
 }
 
-.card.main-image {
-	border-radius: 10px !important;
+.lfr-cookie-banner-text {
+	font-size: 13px;
 }
 
 .child-menu.dropdown-menu {
@@ -103,12 +107,14 @@
 
 .lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected)
 	.nav-link {
-	color: #0053f0 !important;
+	border-bottom: #004AD7 solid 3px !important;
+	color: #0053F0 !important;
 	font-weight: 600;
 }
 
 .lfr-nav-item.nav-item.selected.active .nav-link {
-	color: #0053f0 !important;
+	border-bottom: #004AD7 solid 3px !important;
+	color: #0053F0 !important;
 	font-weight: 600;
 }
 

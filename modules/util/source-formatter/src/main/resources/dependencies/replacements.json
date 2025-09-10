@@ -53,6 +53,23 @@
 		"to": "fetchCommerceCatalogByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
+		"classNames": [
+			"BaseProductResourceImpl"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-7753",
+		"methodsToFormat": [
+			{
+				"from": "@Override\n\tpublic Response deleteProduct(Long id)",
+				"to": "@Override\n\tpublic void deleteProduct(Long id)"
+			},
+			{
+				"from": "@Override\n\tpublic Response deleteProductByExternalReferenceCode(\n\t\t\tString externalReferenceCode)",
+				"to": "@Override\n\tpublic void deleteProductByExternalReferenceCode(\n\t\t\tString externalReferenceCode)"
+			}
+		]
+	},
+	{
 		"from": "regex:serviceLocator[\\n\\s]*\\.[\\n\\s]*findService\\([\\n\\s]*\"com\\.liferay\\.dynamic\\.data\\.mapping\\.storage\\.StorageEngine\"\\)",
 		"issueKey": "LPD-7762",
 		"skipParametersValidation": true,

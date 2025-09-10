@@ -31,13 +31,13 @@ import reactor.util.retry.Retry;
 @Component
 public class ConsoleService extends BaseService {
 
-	public void deleteProject(String projectName) throws Exception {
+	public void deleteProject(String projectId) throws Exception {
 		delete(
 			getAuthorization(), "",
 			UriComponentsBuilder.fromUriString(
 				_consoleAuthURL
 			).path(
-				"/projects/" + projectName
+				"/projects/" + projectId
 			).build(
 			).toUri());
 	}
@@ -158,13 +158,13 @@ public class ConsoleService extends BaseService {
 	public void setUpProject(
 			String cluster, boolean deployable, String dxpProjectUid,
 			String dxpVirtualInstanceId, String[] emailAddresses, long orderId,
-			String projectName)
+			String projectId)
 		throws Exception {
 
-		JSONObject jsonObject = _postProject(cluster, projectName);
+		JSONObject jsonObject = _postProject(cluster, projectId);
 
 		for (String emailAddress : emailAddresses) {
-			_inviteProject(emailAddress, projectName);
+			_inviteProject(emailAddress, projectId);
 		}
 
 		_linkDXPWithProject(
@@ -172,7 +172,7 @@ public class ConsoleService extends BaseService {
 
 		if (deployable) {
 			deployApp(
-				_consoleAuthEmailAddress, String.valueOf(orderId), projectName);
+				_consoleAuthEmailAddress, String.valueOf(orderId), projectId);
 		}
 	}
 

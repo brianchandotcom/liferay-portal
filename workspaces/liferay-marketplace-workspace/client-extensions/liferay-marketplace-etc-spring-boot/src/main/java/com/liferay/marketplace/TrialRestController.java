@@ -70,7 +70,7 @@ public class TrialRestController extends BaseRestController {
 			_getTrialProvisioningContextJSONObject(order);
 
 		_consoleService.deleteProject(
-			trialProvisioningContextJSONObject.getString("projectName"));
+			trialProvisioningContextJSONObject.getString("projectId"));
 
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
@@ -311,12 +311,11 @@ public class TrialRestController extends BaseRestController {
 
 		PortalInstance portalInstance = null;
 
-		String projectId = trialSettingsJSONObject.optString(
-			"projectId", String.valueOf(orderId));
-
 		try {
 			portalInstance = _postPortalInstance(
-				jwt, order.getCreatorEmailAddress(), projectId,
+				jwt, order.getCreatorEmailAddress(),
+				trialSettingsJSONObject.optString(
+					"projectId", String.valueOf(orderId)),
 				trialSettingsJSONObject.optString("siteInitializerKey", null),
 				trialProvisioningContextJSONObject);
 		}
@@ -341,7 +340,7 @@ public class TrialRestController extends BaseRestController {
 					trialSettingsJSONObject.optJSONArray(
 						"consoleInviteEmailAddresses", new JSONArray())),
 				orderId,
-				trialProvisioningContextJSONObject.getString("projectName"));
+				trialProvisioningContextJSONObject.getString("projectId"));
 
 			_marketplaceService.updateOrder(
 				HashMapBuilder.put(
@@ -481,7 +480,7 @@ public class TrialRestController extends BaseRestController {
 		String projectId = trialSettingsJSONObject.optString(
 			"projectId", String.valueOf(order.getId()));
 
-		String extProjectName = "-ext" + projectId;
+		String extProjectId = "-ext" + projectId;
 
 		if (Objects.equals(
 				order.getOrderTypeExternalReferenceCode(), "SOLUTIONS7")) {
@@ -496,7 +495,7 @@ public class TrialRestController extends BaseRestController {
 			).put(
 				"dxpProjectUid", _consoleTrialProjectUid
 			).put(
-				"projectName", _consoleTrialProjectPrefix + extProjectName
+				"projectId", _consoleTrialProjectPrefix + extProjectId
 			).put(
 				"trialAuthorizationERC", "external-trial"
 			).put(
@@ -517,7 +516,7 @@ public class TrialRestController extends BaseRestController {
 			).put(
 				"dxpProjectUid", _consoleSSAProjectUid
 			).put(
-				"projectName", _consoleSSAProjectPrefix + extProjectName
+				"projectId", _consoleSSAProjectPrefix + extProjectId
 			).put(
 				"trialAuthorizationERC", "external-ssa"
 			).put(

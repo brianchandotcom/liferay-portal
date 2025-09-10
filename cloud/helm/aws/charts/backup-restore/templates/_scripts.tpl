@@ -1,3 +1,32 @@
+{{- define "liferayAWSBackupRestore.script.checkoutGitRepository" -}}
+#!/bin/sh
+
+set -eu
+
+function main {
+    cp /mnt/.git-credentials /tmp/.git-credentials
+
+    git config --global credential.helper 'store --file /tmp/.git-credentials'
+
+    git \
+    	clone \
+    	--branch "{{ .Values.git.repository.branch }}" \
+    	--depth 1 \
+    	--filter blob:none \
+    	--no-checkout \
+    	"{{ .Values.git.repository.url }}" \
+    	/src
+
+    cd /src
+
+    git sparse-checkout set --no-cone "{{ .Values.git.repository.paths.sparseCheckout }}"
+
+    git checkout
+}
+
+main
+{{- end -}}
+
 {{- define "liferayAWSBackupRestore.script.getDependenciesModuleOutputs" -}}
 #!/bin/sh
 

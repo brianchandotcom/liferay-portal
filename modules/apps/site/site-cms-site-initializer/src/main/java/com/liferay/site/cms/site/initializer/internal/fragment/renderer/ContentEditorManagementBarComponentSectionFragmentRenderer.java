@@ -9,16 +9,19 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -105,30 +108,58 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 
 				ObjectEntry objectEntry = (ObjectEntry)displayObject;
 
-				if (Objects.equals(
-						WorkflowConstants.STATUS_APPROVED,
-						objectEntry.getStatus())) {
+				Layout layout = themeDisplay.getLayout();
+
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+				String layoutPageTemplateEntryKey =
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
+
+				String title = _getTitle(
+					objectEntry, layoutDisplayPageObjectProvider, themeDisplay);
+
+				if (layoutPageTemplateEntryKey.startsWith(
+						"LFR_CMS_TRANSLATION_")) {
 
 					return language.format(
-						themeDisplay.getLocale(), "edit-x",
-						layoutDisplayPageObjectProvider.getTitle(
-							themeDisplay.getLocale()));
+						themeDisplay.getLocale(), "translate-x", title);
 				}
 
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				if (objectDefinition == null) {
-					return StringPool.BLANK;
+				if (objectEntry.getVersion() > 0) {
+					return language.format(
+						themeDisplay.getLocale(), "edit-x", title);
 				}
 
 				return language.format(
-					themeDisplay.getLocale(), "new-x",
-					objectDefinition.getLabel(themeDisplay.getLocale()));
+					themeDisplay.getLocale(), "new-x", title);
 			}
 		).build();
 	}
+
+	private String _getTitle(
+		ObjectEntry objectEntry,
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+		ThemeDisplay themeDisplay) {
+
+		String title = layoutDisplayPageObjectProvider.getTitle(
+			themeDisplay.getLocale());
+
+		if (Validator.isNull(title)) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectEntry.getObjectDefinitionId());
+
+			return objectDefinition.getLabel(themeDisplay.getLocale());
+		}
+
+		return title;
+	}
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

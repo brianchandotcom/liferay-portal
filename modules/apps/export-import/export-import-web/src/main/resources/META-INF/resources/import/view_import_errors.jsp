@@ -21,8 +21,6 @@ BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(ba
 renderResponse.setTitle(backgroundTask.getName());
 
 GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
-
-ImportErrorsDisplayContext importErrorsDisplayContext = new ImportErrorsDisplayContext(request, renderResponse);
 %>
 
 <clay:navigation-bar

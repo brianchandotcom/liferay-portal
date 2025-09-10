@@ -240,14 +240,13 @@ public class GroupTestUtil {
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getDefault(), name
 		).build();
-
+		boolean manualMembership = true;
+		int membershipRestriction =
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 		boolean site = true;
 		boolean active = true;
-		boolean manualMembership = true;
-		int membershipRestriction =
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 
 		return GroupLocalServiceUtil.addGroup(
 			userId, parentGroupId, null, 0,

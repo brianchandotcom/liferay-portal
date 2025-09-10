@@ -4432,6 +4432,19 @@
 	},
 	{
 		"classNames": [
+			"RawMetadataProcessor"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-47852",
+		"methodsToFormat": [
+			{
+				"from": "@Override\n\tpublic Map<String, Set<String>> getFieldNames()",
+				"to": "@Override\n\tpublic Set<String> getFieldNames()"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"PortletSharedSearchSettings"
 		],
 		"from": "getParameterValues71",

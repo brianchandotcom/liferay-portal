@@ -56,25 +56,25 @@ public class ViewAllSpacesDisplayContextTest
 			_getToolbarProps());
 	}
 
-	private Object _getSectionDisplayContext(
+	private Object _getViewAllSpacesDisplayContext(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		_fragmentRenderer.render(
 			null, httpServletRequest, new MockHttpServletResponse());
 
-		Object allSpacesDisplayContext = httpServletRequest.getAttribute(
+		Object viewAllSpacesDisplayContext = httpServletRequest.getAttribute(
 			"com.liferay.site.cms.site.initializer.internal.display.context." +
 				"ViewAllSpacesDisplayContext");
 
-		Assert.assertNotNull(allSpacesDisplayContext);
+		Assert.assertNotNull(viewAllSpacesDisplayContext);
 
-		return allSpacesDisplayContext;
+		return viewAllSpacesDisplayContext;
 	}
 
 	private HashMap<String, Object> _getToolbarProps() throws Exception {
 		return ReflectionTestUtil.invoke(
-			_getSectionDisplayContext(getMockHttpServletRequest()),
+			_getViewAllSpacesDisplayContext(getMockHttpServletRequest()),
 			"getToolbarProps", new Class<?>[0]);
 	}
 

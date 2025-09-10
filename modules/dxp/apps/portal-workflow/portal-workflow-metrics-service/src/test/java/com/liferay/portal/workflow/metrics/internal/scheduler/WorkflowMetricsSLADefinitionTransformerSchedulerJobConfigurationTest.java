@@ -134,7 +134,7 @@ public class
 			).getSize());
 	}
 
-	private static String _originalIndexSearchLimit;
+	private String _originalIndexSearchLimit;
 
 	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
 		IndexNameBuilder.class);

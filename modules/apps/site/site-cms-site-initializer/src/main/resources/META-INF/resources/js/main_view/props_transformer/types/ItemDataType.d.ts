@@ -13,7 +13,7 @@ interface ItemData {
 		update: Action;
 	};
     entryClassName: string;
-	embedded: {content: string; file?: any, id: number, objectEntryFolderId: number; title: string; creator: {
+	embedded: {content: string; externalReferenceCode: string; file?: any, id: number, objectEntryFolderId: number; title: string; creator: {
 		contentType: string;
 		id: number;
 		image?: string;

@@ -9,7 +9,7 @@ import React from 'react';
 
 import formatActionURL from '../../common/utils/formatActionURL';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
-import PermissionModal from '../default_permission/DefaultPermissionModalContent';
+import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
@@ -157,15 +157,15 @@ export default function ContentFDSPropsTransformer({
 						className: '',
 					},
 					contentComponent: ({
-										   closeModal,
-									   }: {
+						closeModal,
+					}: {
 						closeModal: () => void;
 					}) =>
-						PermissionModal({
+						DefaultPermissionModalContent({
 							...(additionalProps.defaultPermissionAdditionalProps ||
 								{}),
 							classExternalReferenceCode:
-							itemData.embedded.externalReferenceCode,
+								itemData.embedded.externalReferenceCode,
 							className: itemData.entryClassName,
 							closeModal,
 						}),

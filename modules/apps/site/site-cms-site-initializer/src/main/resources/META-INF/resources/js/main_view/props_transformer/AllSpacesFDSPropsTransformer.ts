@@ -7,7 +7,7 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import PermissionModal from '../default_permission/DefaultPermissionModalContent';
+import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import deleteEntryAction from './actions/deleteEntryAction';
 import manageMembersAction, {
 	ManageMembersData,
@@ -103,7 +103,7 @@ export default function AllSpacesFDSPropsTransformer({
 					}: {
 						closeModal: () => void;
 					}) =>
-						PermissionModal({
+						DefaultPermissionModalContent({
 							...(additionalProps.defaultPermissionAdditionalProps ||
 								{}),
 							classExternalReferenceCode:

@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -141,6 +143,9 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	@Reference
 	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
+	private final Map<String, BatchEnginePortletDataHandler>
+		_batchEnginePortletDataHandlers = new HashMap<>();
+
 	@Reference
 	private BatchEngineTaskItemDelegateRegistry
 		_batchEngineTaskItemDelegateRegistry;
@@ -184,27 +189,46 @@ public class BatchEnginePortletDataHandlerRegistrar {
 					exportImportVulcanBatchEngineTaskItemDelegate.
 						getExportImportDescriptor();
 
+			String portletId = exportImportDescriptor.getPortletId();
+
+			BatchEnginePortletDataHandler
+				previousBatchEnginePortletDataHandler =
+					_batchEnginePortletDataHandlers.get(portletId);
+
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
-				new BatchEnginePortletDataHandler(
-					_batchEngineExportTaskExecutor,
-					_batchEngineExportTaskLocalService,
-					_batchEngineImportTaskExecutor,
-					_batchEngineImportTaskService,
-					_batchEngineTaskItemDelegateRegistry,
+				previousBatchEnginePortletDataHandler;
+
+			if (previousBatchEnginePortletDataHandler == null) {
+				batchEnginePortletDataHandler =
+					new BatchEnginePortletDataHandler(
+						_batchEngineExportTaskExecutor,
+						_batchEngineExportTaskLocalService,
+						_batchEngineImportTaskExecutor,
+						_batchEngineImportTaskService,
+						_batchEngineTaskItemDelegateRegistry,
+						_companyLocalService, _userLocalService);
+
+				batchEnginePortletDataHandler.setPortletId(
+					exportImportDescriptor.getPortletId());
+
+				_batchEnginePortletDataHandlers.put(
+					portletId, batchEnginePortletDataHandler);
+			}
+
+			batchEnginePortletDataHandler.
+				registerExportImportVulcanBatchEngineTaskItemDelegate(
 					GetterUtil.getObject(
 						(String)serviceReference.getProperty(
 							"batch.engine.task.item.delegate.class.name"),
 						() -> (String)serviceReference.getProperty(
 							"batch.engine.entity.class.name")),
-					_companyLocalService,
-					exportImportVulcanBatchEngineTaskItemDelegate,
-					exportImportDescriptor.getItemClassName(),
+					exportImportDescriptor,
 					(String)serviceReference.getProperty(
-						"batch.engine.task.item.delegate.name"),
-					_userLocalService);
+						"batch.engine.task.item.delegate.name"));
 
-			batchEnginePortletDataHandler.setPortletId(
-				exportImportDescriptor.getPortletId());
+			if (previousBatchEnginePortletDataHandler != null) {
+				return null;
+			}
 
 			return _bundleContext.registerService(
 				PortletDataHandler.class, batchEnginePortletDataHandler,
@@ -232,6 +256,19 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			ServiceReference<VulcanBatchEngineTaskItemDelegate>
 				serviceReference,
 			ServiceRegistration<PortletDataHandler> serviceRegistration) {
+
+			PortletDataHandler portletDataHandler = _bundleContext.getService(
+				serviceRegistration.getReference());
+
+			if (portletDataHandler instanceof
+					BatchEnginePortletDataHandler
+						batchEnginePortletDataHandler) {
+
+				// TODO remove only if empty
+
+				_batchEnginePortletDataHandlers.remove(
+					batchEnginePortletDataHandler.getPortletId());
+			}
 
 			serviceRegistration.unregister();
 		}

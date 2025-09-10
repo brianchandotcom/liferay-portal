@@ -111,19 +111,19 @@ public class WorkflowDefinitionLinkDisplayContext {
 	public String getDefaultWorkflowDefinitionLabel(String className)
 		throws PortalException {
 
-		if (isControlPanelPortlet()) {
+		WorkflowDefinition defaultWorkflowDefinition =
+			fetchDefaultWorkflowDefinition(className);
+
+		if ((defaultWorkflowDefinition == null) || isControlPanelPortlet()) {
 			return LanguageUtil.get(
 				_workflowDefinitionLinkRequestHelper.getRequest(),
 				"no-workflow");
 		}
 
-		WorkflowDefinition defaultWorkflowDefinition =
-			fetchDefaultWorkflowDefinition(className);
-
-		if (defaultWorkflowDefinition == null) {
-			return LanguageUtil.get(
-				_workflowDefinitionLinkRequestHelper.getRequest(),
-				"no-workflow");
+		if (!defaultWorkflowDefinition.isActive()) {
+			return defaultWorkflowDefinition.getTitle(
+				LanguageUtil.getLanguageId(
+					_workflowDefinitionLinkRequestHelper.getLocale()));
 		}
 
 		return LanguageUtil.format(
@@ -332,6 +332,29 @@ public class WorkflowDefinitionLinkDisplayContext {
 	public boolean isControlPanelPortlet() {
 		return Objects.equals(
 			_getPortletName(), WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW);
+	}
+
+	public boolean isWorkflowDefinitionActive(
+			WorkflowDefinitionLinkSearchEntry workflowDefinitionLinkSearchEntry)
+		throws PortalException {
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+				_workflowDefinitionLinkRequestHelper.getCompanyId(),
+				getGroupId(), workflowDefinitionLinkSearchEntry.getClassName(),
+				0, 0, true);
+
+		if (workflowDefinitionLink == null) {
+			return true;
+		}
+
+		WorkflowDefinition workflowDefinition =
+			WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
+				_workflowDefinitionLinkRequestHelper.getCompanyId(),
+				workflowDefinitionLink.getWorkflowDefinitionName(),
+				workflowDefinitionLink.getWorkflowDefinitionVersion());
+
+		return workflowDefinition.isActive();
 	}
 
 	public boolean isWorkflowDefinitionEquals(

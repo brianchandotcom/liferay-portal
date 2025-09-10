@@ -67,7 +67,9 @@ test('Can see error report and details', async ({
 
 	await companyExportImportPage.import(exportFilePath, true);
 
-	const exportName = exportFilePath.slice(exportFilePath.lastIndexOf('/') + 1);
+	const exportName = exportFilePath.slice(
+		exportFilePath.lastIndexOf('/') + 1
+	);
 
 	await exportImportPage.goToImportDetails(exportName);
 
@@ -77,7 +79,9 @@ test('Can see error report and details', async ({
 		})
 	).toBeVisible();
 
-	await exportImportPage.viewErrorDetails.click();
+	await exportImportPage.goToImportErrorDetails(
+		objectEntry.externalReferenceCode
+	);
 
 	await expect(
 		exportImportPage.page.getByText(

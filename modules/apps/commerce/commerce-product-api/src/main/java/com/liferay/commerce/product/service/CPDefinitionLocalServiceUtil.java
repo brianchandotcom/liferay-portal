@@ -490,6 +490,12 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinition(CPDefinitionId);
 	}
 
+	public static CPDefinition getCPDefinitionByCProductId(long cProductId)
+		throws PortalException {
+
+		return getService().getCPDefinitionByCProductId(cProductId);
+	}
+
 	/**
 	 * Returns the cp definition matching the UUID and group.
 	 *

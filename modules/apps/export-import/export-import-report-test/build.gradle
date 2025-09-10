@@ -1,5 +1,6 @@
 dependencies {
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationImplementation project(":apps:export-import:export-import-report-api")
+	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -2196,15 +2196,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 												);
 											</#if>
 										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
-											put("${javaMethodParameter.parameterName}", RandomTestUtil.nextDate());
+											put("${javaMethodParameter.parameterName}", getGraphQLValue(RandomTestUtil.nextDate()));
 										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-											put("${javaMethodParameter.parameterName}", <@getQuotedString unquotedString = "RandomTestUtil.randomString()" />);
+											put("${javaMethodParameter.parameterName}", getGraphQLValue(RandomTestUtil.randomString()));
 										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "boolean")>
-											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomBoolean());
+											put("${javaMethodParameter.parameterName}", getGraphQLValue(RandomTestUtil.randomBoolean()));
 										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "double")>
-											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomDouble());
+											put("${javaMethodParameter.parameterName}", getGraphQLValue(RandomTestUtil.randomDouble()));
 										<#elseif stringUtil.equals(javaMethodParameter.parameterType, "long")>
-											put("${javaMethodParameter.parameterName}", RandomTestUtil.randomLong());
+											put("${javaMethodParameter.parameterName}", getGraphQLValue(RandomTestUtil.randomLong()));
 										</#if>
 									</#list>
 								}

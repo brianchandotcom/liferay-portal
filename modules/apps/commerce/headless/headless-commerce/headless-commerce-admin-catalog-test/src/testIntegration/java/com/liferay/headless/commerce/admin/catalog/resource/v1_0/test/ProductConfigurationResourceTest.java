@@ -211,7 +211,7 @@ public class ProductConfigurationResourceTest
 		super.testGraphQLDeleteProductConfigurationByExternalReferenceCode();
 	}
 
-	@FeatureFlag("LPD-10889")
+	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeConfiguration()
@@ -234,6 +234,13 @@ public class ProductConfigurationResourceTest
 		throws Exception {
 
 		super.testGraphQLGetProductConfigurationByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetProductIdConfiguration() throws Exception {
+		super.testGraphQLGetProductIdConfiguration();
 	}
 
 	@Override

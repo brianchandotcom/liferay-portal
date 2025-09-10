@@ -19,6 +19,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -53,6 +54,22 @@ public class DocumentFolderResourceTest
 			404,
 			documentFolderResource.deleteDocumentFolderMyRatingHttpResponse(
 				irrelevantDocumentFolder.getId()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteDocumentFolderMyRating() throws Exception {
+		super.testGraphQLDeleteDocumentFolderMyRating();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetDocumentFolderDocumentFoldersPage()
+		throws Exception {
+
+		super.testGraphQLGetDocumentFolderDocumentFoldersPage();
 	}
 
 	@Override

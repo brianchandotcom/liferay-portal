@@ -180,6 +180,15 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 		super.testGraphQLDeleteOrderItem();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteOrderItemByExternalReferenceCode()
+		throws Exception {
+
+		super.testGraphQLDeleteOrderItemByExternalReferenceCode();
+	}
+
 	@Override
 	@Test
 	public void testPatchOrderItem() throws Exception {

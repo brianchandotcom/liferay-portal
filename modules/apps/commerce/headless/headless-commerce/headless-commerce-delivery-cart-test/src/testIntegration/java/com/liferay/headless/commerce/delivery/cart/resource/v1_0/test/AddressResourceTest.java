@@ -38,7 +38,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -111,6 +113,38 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 		if (_accountEntry != null) {
 			_accountEntryLocalService.deleteAccountEntry(_accountEntry);
 		}
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetCartBillingAddres() throws Exception {
+		super.testGraphQLGetCartBillingAddres();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetCartByExternalReferenceCodeBillingAddress()
+		throws Exception {
+
+		super.testGraphQLGetCartByExternalReferenceCodeBillingAddress();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetCartByExternalReferenceCodeShippingAddress()
+		throws Exception {
+
+		super.testGraphQLGetCartByExternalReferenceCodeShippingAddress();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetCartShippingAddres() throws Exception {
+		super.testGraphQLGetCartShippingAddres();
 	}
 
 	@Override

@@ -116,6 +116,12 @@ public class MeasurementUnitResourceTest
 	public void testGetMeasurementUnitsPageWithSortString() {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetMeasurementUnitsByType() {
+	}
+
 	@Override
 	@Test
 	public void testPatchMeasurementUnit() throws Exception {

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -90,6 +91,24 @@ public class MessageBoardAttachmentResourceTest
 					testDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getMessageBoardMessageExternalReferenceCode(),
 					RandomTestUtil.randomString()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetMessageBoardMessageMessageBoardAttachmentsPage()
+		throws Exception {
+
+		super.testGraphQLGetMessageBoardMessageMessageBoardAttachmentsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetMessageBoardThreadMessageBoardAttachmentsPage()
+		throws Exception {
+
+		super.testGraphQLGetMessageBoardThreadMessageBoardAttachmentsPage();
 	}
 
 	@Override

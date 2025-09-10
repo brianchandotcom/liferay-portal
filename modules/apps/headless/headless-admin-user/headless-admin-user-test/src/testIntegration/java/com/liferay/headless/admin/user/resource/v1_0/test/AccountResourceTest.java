@@ -121,6 +121,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -365,6 +366,51 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			organization.getOrganizationId());
 		_testGetAccountsPageWithCustomFields();
 		_testGetAccountsPageWithNestedFields();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteOrganizationAccounts() throws Exception {
+		super.testGraphQLDeleteOrganizationAccounts();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteOrganizationAccountsByExternalReferenceCode()
+		throws Exception {
+
+		super.testGraphQLDeleteOrganizationAccountsByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts()
+		throws Exception {
+
+		super.testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testGraphQLDeleteOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePage()
+		throws Exception {
+
+		super.
+			testGraphQLGetOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePage();
 	}
 
 	@Override

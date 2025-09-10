@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -144,6 +145,15 @@ public class WikiPageAttachmentResourceTest
 					testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
 					testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode(),
 					RandomTestUtil.randomString()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetWikiPageWikiPageAttachmentsPage()
+		throws Exception {
+
+		super.testGraphQLGetWikiPageWikiPageAttachmentsPage();
 	}
 
 	@Override

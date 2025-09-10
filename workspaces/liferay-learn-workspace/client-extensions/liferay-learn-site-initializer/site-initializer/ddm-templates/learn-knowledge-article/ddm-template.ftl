@@ -176,7 +176,7 @@
 		</div>
 	</div>
 <#else>
-	<meta http-equiv="refresh" content="0; URL='/not-found'" />
+	<meta content="0; URL='/not-found'" http-equiv="refresh" />
 </#if>
 
 <script>

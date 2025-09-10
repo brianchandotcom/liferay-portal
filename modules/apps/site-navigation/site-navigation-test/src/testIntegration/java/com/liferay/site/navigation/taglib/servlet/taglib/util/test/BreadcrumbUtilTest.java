@@ -8,10 +8,12 @@ package com.liferay.site.navigation.taglib.servlet.taglib.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -20,12 +22,16 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -71,6 +77,40 @@ public class BreadcrumbUtilTest {
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 		_locale = _portal.getSiteDefaultLocale(_group);
+	}
+
+	@Test
+	public void testGetEmptyLayoutBreadcrumbEntries() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getCompanyId(), _group.getGroupId(),
+				TestPropsValues.getUserId());
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		Layout layout = LayoutLocalServiceUtil.addLayout(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_EMPTY, false, StringPool.BLANK,
+			serviceContext);
+
+		_setUpThemeDisplay(_group, layout);
+
+		List<BreadcrumbEntry> breadcrumbEntries =
+			BreadcrumbUtil.getLayoutBreadcrumbEntries(
+				_mockHttpServletRequest, _themeDisplay);
+
+		Assert.assertEquals(
+			breadcrumbEntries.toString(), 1, breadcrumbEntries.size());
+
+		BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(0);
+
+		Assert.assertFalse(breadcrumbEntry.isBrowsable());
+
+		Assert.assertEquals(
+			layout.getName(_locale), breadcrumbEntry.getTitle());
 	}
 
 	@Test

@@ -146,13 +146,11 @@ public class EventListenerRegistration
 			try (SafeCloseable safeCloseable =
 					ThreadContextClassLoaderUtil.swap(_classLoader)) {
 
-				try {
-					return method.invoke(
-						EventListenerRegistration.super.getService(), args);
-				}
-				catch (InvocationTargetException invocationTargetException) {
-					throw invocationTargetException.getCause();
-				}
+				return method.invoke(
+					EventListenerRegistration.super.getService(), args);
+			}
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getCause();
 			}
 		}
 

@@ -56,9 +56,7 @@ public class HttpServletEndpointServlet extends HttpServlet {
 		}
 
 		LiferayDispatchTargets liferayDispatchTargets =
-			(LiferayDispatchTargets)
-				_httpServletEndpointController.getDispatchTargets(
-					dispatchPathInfo);
+			_httpServletEndpointController.getDispatchTargets(dispatchPathInfo);
 
 		if ((liferayDispatchTargets != null) &&
 			liferayDispatchTargets.doDispatch(

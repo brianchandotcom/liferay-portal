@@ -68,18 +68,18 @@ public abstract class MatchableRegistration<S, D extends DTO>
 	protected boolean isPathWildcardMatch(String pattern, String servletPath) {
 		int cpl = pattern.length() - 2;
 
-		if (pattern.endsWith(Const.SLASH_STAR) &&
-			servletPath.regionMatches(0, pattern, 0, cpl)) {
-
-			if ((pattern.length() > 2) && !pattern.startsWith(servletPath)) {
-				return false;
-			}
-
-			if (servletPath.length() == cpl) {
-				return true;
-			}
+		if (!pattern.endsWith(Const.SLASH_STAR) ||
+			!servletPath.regionMatches(0, pattern, 0, cpl)) {
 
 			return false;
+		}
+
+		if ((pattern.length() > 2) && !pattern.startsWith(servletPath)) {
+			return false;
+		}
+
+		if (servletPath.length() == cpl) {
+			return true;
 		}
 
 		return false;

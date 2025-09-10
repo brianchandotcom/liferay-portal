@@ -8,6 +8,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
@@ -247,7 +248,7 @@ public class FilterRegistration
 		String extensionWithPrefixMatch = null;
 
 		if ((extensionMatchIndex >= 0) &&
-			(pattern.lastIndexOf(47) == extensionMatchIndex)) {
+			(pattern.lastIndexOf(CharPool.SLASH) == extensionMatchIndex)) {
 
 			extensionWithPrefixMatch = pattern.substring(
 				extensionMatchIndex + 3);
@@ -255,7 +256,7 @@ public class FilterRegistration
 			pattern = pattern.substring(0, extensionMatchIndex + 2);
 		}
 
-		if (pattern.charAt(0) == '/') {
+		if (pattern.charAt(0) == CharPool.SLASH) {
 			if (isPathWildcardMatch(path, pattern)) {
 				if (extensionWithPrefixMatch != null) {
 					return extensionWithPrefixMatch.equals(extension);
@@ -286,7 +287,7 @@ public class FilterRegistration
 			}
 
 			if ((path.length() <= pathPatternLength) ||
-				(path.charAt(pathPatternLength) == '/')) {
+				(path.charAt(pathPatternLength) == CharPool.SLASH)) {
 
 				return true;
 			}

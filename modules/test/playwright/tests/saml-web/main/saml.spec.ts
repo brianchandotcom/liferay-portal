@@ -3571,6 +3571,100 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 	// Verify user is redirected back to restricted resource
 
 	expect(await spInstancePage.url()).toContain(spNewPageUrl);
+});
+
+test('LPD-62689: IdP initiated SLO is propagated correctly from Identity Brokers', async ({
+	browser,
+}) => {
+	const localhostAdminPage = await browser.newPage();
+
+	await performLogin(localhostAdminPage, 'test');
+
+	const ibAdminPage = await createIdentityBrokerVirtualInstance(
+		browser,
+		localhostAdminPage,
+		SECONDARY_IDP_NAME
+	);
+
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	// Clear default connections and make new ones with the both IdP and SP instance
+
+	const serviceProviderConnectionsPage = new ServiceProviderConnectionsPage(
+		idpAdminPage
+	);
+
+	await serviceProviderConnectionsPage.goTo();
+
+	await serviceProviderConnectionsPage.deleteServiceProviderConnections();
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		ibAdminPage,
+		SECONDARY_IDP_NAME
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	const identityProviderConnectionsPage = new IdentityProviderConnectionsPage(
+		spAdminPage
+	);
+
+	await identityProviderConnectionsPage.goTo();
+
+	await identityProviderConnectionsPage.deleteIdentityProviderConnections();
+
+	await connectSpAndIdp(
+		ibAdminPage,
+		SECONDARY_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	const secondarySpAdminPage = await createServiceProviderVirtualInstance(
+		browser,
+		SECONDARY_SP_NAME,
+		SECONDARY_SP_NAME,
+		localhostAdminPage
+	);
+
+	await connectSpAndIdp(
+		ibAdminPage,
+		SECONDARY_IDP_NAME,
+		secondarySpAdminPage,
+		SECONDARY_SP_NAME
+	);
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	const spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL
+	);
+
+	expect(await spInstancePage.url()).toContain(DEFAULT_SP_URL);
+
+	await expect(
+		await spInstancePage.getByTitle('User Profile Menu')
+	).toBeVisible();
+
+	await spInstancePage.goto(SECONDARY_SP_URL);
+
+	await clickSignInButton(spInstancePage);
+
+	await spInstancePage
+		.getByTitle('User Profile Menu')
+		.waitFor({timeout: 30 * 1000});
 
 	// IdP initiated SLO
 
@@ -3593,4 +3687,12 @@ test('LPD-37323 AC2/AC4 TC2: User switches between apps. When already logged in 
 
 		expect(await signInButton).toBeVisible();
 	}
+
+	// Delete newly created virtual instance, and remove from afterAll deletion
+
+	await deleteVirtualInstance(SECONDARY_SP_NAME, localhostAdminPage);
+
+	await deleteAfterTestProviderConnections.delete(SECONDARY_SP_NAME);
+
+	await deleteAfterTestVirtualInstances.delete(SECONDARY_SP_NAME);
 });

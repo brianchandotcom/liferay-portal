@@ -98,9 +98,9 @@ public class AssetLibraryDTOConverter
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getNameMap()));
-				setNumberOfSites(
+				setNumberOfConnectedSites(
 					() -> NestedFieldsSupplier.supply(
-						"numberOfSites",
+						"numberOfConnectedSites",
 						nestedField ->
 							_depotEntryGroupRelLocalService.
 								getDepotEntryGroupRelsCount(depotEntry)));

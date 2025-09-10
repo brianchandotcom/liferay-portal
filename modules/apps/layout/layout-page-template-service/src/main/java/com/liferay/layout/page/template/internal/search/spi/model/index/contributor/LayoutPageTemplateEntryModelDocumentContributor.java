@@ -26,9 +26,9 @@ public class LayoutPageTemplateEntryModelDocumentContributor
 	public void contribute(
 		Document document, LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		document.addKeyword(Field.TYPE, layoutPageTemplateEntry.getType());
-		document.addNumber(Field.STATUS, layoutPageTemplateEntry.getStatus());
 		document.addText(Field.NAME, layoutPageTemplateEntry.getName());
+		document.addNumber(Field.STATUS, layoutPageTemplateEntry.getStatus());
+		document.addKeyword(Field.TYPE, layoutPageTemplateEntry.getType());
 	}
 
 }

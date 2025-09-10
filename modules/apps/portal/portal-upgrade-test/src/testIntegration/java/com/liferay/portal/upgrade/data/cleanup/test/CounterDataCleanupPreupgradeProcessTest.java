@@ -72,7 +72,8 @@ public class CounterDataCleanupPreupgradeProcessTest
 					companyId + ")"),
 			(UnsafeConsumer<List<String>, Exception>)messages -> {
 				if (PropsValues.COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED) {
-					Assert.assertEquals(1, messages.size());
+					Assert.assertEquals(
+						messages.toString(), 1, messages.size());
 					Assert.assertTrue(
 						messages.contains(
 							StringBundler.concat(
@@ -117,7 +118,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 					"fileEntryId, name) values (0, 0,", fileEntryId, ", '",
 					name, "')")),
 			(UnsafeConsumer<List<String>, Exception>)messages -> {
-				Assert.assertEquals(1, messages.size());
+				Assert.assertEquals(messages.toString(), 1, messages.size());
 				Assert.assertTrue(
 					messages.contains(
 						StringBundler.concat(
@@ -142,7 +143,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 					"fileEntryId, name) values (0, 0,", fileEntryId, ", '",
 					name, "')")),
 			(UnsafeConsumer<List<String>, Exception>)messages -> {
-				Assert.assertEquals(1, messages.size());
+				Assert.assertEquals(messages.toString(), 1, messages.size());
 				Assert.assertTrue(
 					messages.contains(
 						StringBundler.concat(
@@ -164,7 +165,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 					"insert into Role_ (mvccVersion, ctCollectionId, roleId) ",
 					"values (0, 0,", roleId, ")")),
 			(UnsafeConsumer<List<String>, Exception>)messages -> {
-				Assert.assertEquals(1, messages.size());
+				Assert.assertEquals(messages.toString(), 1, messages.size());
 				Assert.assertTrue(
 					messages.contains(
 						StringBundler.concat(
@@ -236,7 +237,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 					"insert into Region (mvccVersion, ctCollectionId, ",
 					"regionId) values (0, 0,", regionId, ")")),
 			(UnsafeConsumer<List<String>, Exception>)messages -> {
-				Assert.assertEquals(1, messages.size());
+				Assert.assertEquals(messages.toString(), 1, messages.size());
 				Assert.assertTrue(
 					messages.contains(
 						StringBundler.concat(

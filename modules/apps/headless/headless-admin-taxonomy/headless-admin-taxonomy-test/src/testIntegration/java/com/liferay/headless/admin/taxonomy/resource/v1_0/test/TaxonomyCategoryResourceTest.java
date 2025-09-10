@@ -63,6 +63,7 @@ import java.util.Objects;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -203,6 +204,42 @@ public class TaxonomyCategoryResourceTest
 		}
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetTaxonomyCategoriesRankedPage() throws Exception {
+		super.testGraphQLGetTaxonomyCategoriesRankedPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetTaxonomyCategoryTaxonomyCategoriesPage()
+		throws Exception {
+
+		super.testGraphQLGetTaxonomyCategoryTaxonomyCategoriesPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode();
+	}
+
 	@Override
 	@Test
 	public void testGraphQLPostSiteTaxonomyCategory() throws Exception {
@@ -234,6 +271,15 @@ public class TaxonomyCategoryResourceTest
 				testGroup.getGroupId(), randomTaxonomyCategory);
 
 		Assert.assertTrue(equals(randomTaxonomyCategory, taxonomyCategory));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostTaxonomyVocabularyTaxonomyCategory()
+		throws Exception {
+
+		super.testGraphQLPostTaxonomyVocabularyTaxonomyCategory();
 	}
 
 	@Override

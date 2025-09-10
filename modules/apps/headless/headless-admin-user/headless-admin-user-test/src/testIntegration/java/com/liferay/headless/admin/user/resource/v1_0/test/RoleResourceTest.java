@@ -636,11 +636,26 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	protected Role
+			testGraphQLDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
+		throws Exception {
+
+		return _addRole(true, RoleConstants.TYPE_SITE);
+	}
+
+	@Override
 	protected Long
 			testGraphQLDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId()
 		throws Exception {
 
 		return _user.getUserId();
+	}
+
+	@Override
+	protected Role testGraphQLDeleteSiteRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		return _addRole(true, RoleConstants.TYPE_SITE);
 	}
 
 	@Override
@@ -716,18 +731,6 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	protected Role testPostSiteRoleUserAccountAssociation_addRole()
-		throws Exception {
-
-		return _addRole(true, RoleConstants.TYPE_SITE);
-	}
-	@Override
-	protected Role testGraphQLDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
-		throws Exception {
-
-		return _addRole(true, RoleConstants.TYPE_SITE);
-	}
-	@Override
-	protected Role testGraphQLDeleteSiteRoleUserAccountAssociation_addRole()
 		throws Exception {
 
 		return _addRole(true, RoleConstants.TYPE_SITE);

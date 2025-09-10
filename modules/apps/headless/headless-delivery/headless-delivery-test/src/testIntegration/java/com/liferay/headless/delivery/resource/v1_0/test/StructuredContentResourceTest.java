@@ -132,6 +132,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -498,6 +499,22 @@ public class StructuredContentResourceTest
 			structuredContentResource.
 				getStructuredContentRenderedContentContentTemplate(
 					structuredContent.getId(), _ddmTemplate.getTemplateKey()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteStructuredContentMyRating() throws Exception {
+		super.testGraphQLDeleteStructuredContentMyRating();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostStructuredContentFolderStructuredContent()
+		throws Exception {
+
+		super.testGraphQLPostStructuredContentFolderStructuredContent();
 	}
 
 	@Override

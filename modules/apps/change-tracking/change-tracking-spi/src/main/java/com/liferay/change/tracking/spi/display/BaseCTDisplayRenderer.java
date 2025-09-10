@@ -538,30 +538,31 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			Set<String> rowOptions = rowsDDMFormFieldOptions.getOptionsValues();
 
 			for (String rowOption : rowOptions) {
-				if (valuesJSONObject.has(rowOption)) {
-					String columnOption = valuesJSONObject.getString(rowOption);
-
-					LocalizedValue rowLabel =
-						rowsDDMFormFieldOptions.getOptionLabels(rowOption);
-					LocalizedValue columnLabel =
-						columnsDDMFormFieldOptions.getOptionLabels(
-							columnOption);
-
-					sb.append(StringPool.OPEN_CURLY_BRACE);
-					sb.append(
-						StringUtil.quote(
-							_getGridLabelString(rowLabel, rowOption, locale)));
-
-					sb.append(": ");
-
-					sb.append(
-						StringUtil.quote(
-							_getGridLabelString(
-								columnLabel, columnOption, locale)));
-					sb.append(StringPool.CLOSE_CURLY_BRACE);
-
-					sb.append(StringPool.COMMA_AND_SPACE);
+				if (!valuesJSONObject.has(rowOption)) {
+					continue;
 				}
+
+				String columnOption = valuesJSONObject.getString(rowOption);
+
+				LocalizedValue rowLabel =
+					rowsDDMFormFieldOptions.getOptionLabels(rowOption);
+				LocalizedValue columnLabel =
+					columnsDDMFormFieldOptions.getOptionLabels(columnOption);
+
+				sb.append(StringPool.OPEN_CURLY_BRACE);
+				sb.append(
+					StringUtil.quote(
+						_getGridLabelString(rowLabel, rowOption, locale)));
+
+				sb.append(": ");
+
+				sb.append(
+					StringUtil.quote(
+						_getGridLabelString(
+							columnLabel, columnOption, locale)));
+				sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 
 			if (sb.index() > 0) {

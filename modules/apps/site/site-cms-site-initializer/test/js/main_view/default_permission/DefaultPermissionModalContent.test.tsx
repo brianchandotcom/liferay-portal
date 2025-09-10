@@ -20,6 +20,8 @@ describe('DefaultPermissionModalContent', () => {
 	let apiPatchSpy: jest.SpyInstance;
 
 	beforeEach(() => {
+		jest.useFakeTimers();
+
 		apiGetSpy = jest.spyOn(ApiHelper, 'get').mockResolvedValue({
 			data: {
 				items: [
@@ -52,6 +54,8 @@ describe('DefaultPermissionModalContent', () => {
 	afterEach(() => {
 		apiGetSpy.mockRestore();
 		apiPatchSpy.mockRestore();
+
+		jest.useRealTimers();
 	});
 
 	it('Display modal elements', async () => {

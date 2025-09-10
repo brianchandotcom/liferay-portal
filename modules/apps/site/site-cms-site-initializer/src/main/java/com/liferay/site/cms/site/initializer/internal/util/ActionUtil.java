@@ -171,50 +171,24 @@ public class ActionUtil {
 			layoutPageTemplateEntry.getClassNameId(), layout.getGroupId(),
 			infoItemServiceRegistry, infoSearchClassMapperRegistry);
 
-		InfoField<?> titleInfoField = infoForm.getInfoField("title");
-
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
-			formManager.addFragmentEntryLinksLayoutStructureItem(
-				formStyledLayoutStructureItem, "INPUTS-inline-text-input",
-				titleInfoField.getUniqueId(), layout, layoutStructure, false,
-				segmentsExperienceId, serviceContext);
-
-		fragmentStyledLayoutStructureItem.updateItemConfig(
+		_addInputFragmentEntryLink(
+			addedFragmentEntryLinks,
 			JSONUtil.put(
-				"styles",
+				"placeholder",
 				JSONUtil.put(
-					"marginBottom", "5"
-				).put(
-					"marginLeft", "-16px"
-				)));
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-		JSONObject editableValuesJSONObject =
-			fragmentEntryLink.getEditableValuesJSONObject();
-
-		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
-			FragmentEntryProcessorConstants.
-				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-		jsonObject.put(
-			"placeholder",
+					LocaleUtil.US.toString(),
+					LanguageUtil.format(
+						serviceContext.getLocale(), "new-x",
+						infoForm.getLabel(serviceContext.getLocale())))),
+			formStyledLayoutStructureItem, formManager,
+			"INPUTS-inline-text-input", layout, layoutStructure,
+			infoForm.getInfoField("title"), false, segmentsExperienceId,
+			serviceContext,
 			JSONUtil.put(
-				LocaleUtil.US.toString(),
-				LanguageUtil.format(
-					serviceContext.getLocale(), "new-x",
-					infoForm.getLabel(serviceContext.getLocale()))));
-
-		fragmentEntryLink =
-			FragmentEntryLinkServiceUtil.updateFragmentEntryLink(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				editableValuesJSONObject.toString());
-
-		if (fragmentEntryLink != null) {
-			addedFragmentEntryLinks.add(fragmentEntryLink);
-		}
+				"marginBottom", "5"
+			).put(
+				"marginLeft", "-16px"
+			));
 
 		FragmentEntryLink spaceListFragmentEntryLink = _addFragmentEntryLink(
 			StringPool.BLANK, fragmentEntryLinkService,
@@ -234,25 +208,12 @@ public class ActionUtil {
 			addedFragmentEntryLinks.add(spaceListFragmentEntryLink);
 		}
 
-		InfoField<?> objectFriendlyURLInfoField = infoForm.getInfoField(
-			"objectEntryFriendlyURL");
-
-		fragmentStyledLayoutStructureItem =
-			formManager.addFragmentEntryLinksLayoutStructureItem(
-				formStyledLayoutStructureItem, "INPUTS-friendly-url-input",
-				objectFriendlyURLInfoField.getUniqueId(), layout,
-				layoutStructure, false, segmentsExperienceId, serviceContext);
-
-		fragmentStyledLayoutStructureItem.updateItemConfig(
-			JSONUtil.put("styles", JSONUtil.put("marginBottom", "5")));
-
-		fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-		if (fragmentEntryLink != null) {
-			addedFragmentEntryLinks.add(fragmentEntryLink);
-		}
+		_addInputFragmentEntryLink(
+			addedFragmentEntryLinks, null, formStyledLayoutStructureItem,
+			formManager, "INPUTS-friendly-url-input", layout, layoutStructure,
+			infoForm.getInfoField("objectEntryFriendlyURL"), false,
+			segmentsExperienceId, serviceContext,
+			JSONUtil.put("marginBottom", "5"));
 
 		Set<String> uniqueInfoFieldIds = new HashSet<>();
 
@@ -358,38 +319,24 @@ public class ActionUtil {
 			formStyledLayoutStructureItem.getClassNameId(), layout.getGroupId(),
 			infoItemServiceRegistry, infoSearchClassMapperRegistry);
 
-		InfoField<?> objectFriendlyURLInfoField = infoForm.getInfoField(
-			"objectEntryFriendlyURL");
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+
+		_addInputFragmentEntryLink(
+			addedFragmentEntryLinks, null, formStyledLayoutStructureItem,
+			formManager, "INPUTS-text-input", layout, layoutStructure,
+			infoForm.getInfoField("objectEntryFriendlyURL"), true,
+			segmentsExperienceId, serviceContext,
+			JSONUtil.put("marginBottom", "24px"));
 
 		Set<String> localizableInfoFieldIds = new HashSet<>();
 
 		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
 			if (infoField.isLocalizable() &&
 				!Objects.equals(
-					objectFriendlyURLInfoField.getName(),
-					infoField.getName())) {
+					infoField.getName(), "objectEntryFriendlyURL")) {
 
 				localizableInfoFieldIds.add(infoField.getUniqueId());
 			}
-		}
-
-		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
-
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
-			formManager.addFragmentEntryLinksLayoutStructureItem(
-				formStyledLayoutStructureItem, "INPUTS-text-input",
-				objectFriendlyURLInfoField.getUniqueId(), layout,
-				layoutStructure, true, segmentsExperienceId, serviceContext);
-
-		fragmentStyledLayoutStructureItem.updateItemConfig(
-			JSONUtil.put("styles", JSONUtil.put("marginBottom", "24px")));
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-		if (fragmentEntryLink != null) {
-			addedFragmentEntryLinks.add(fragmentEntryLink);
 		}
 
 		List<LayoutStructureItem> layoutStructureItems =
@@ -441,22 +388,12 @@ public class ActionUtil {
 			JSONUtil.put(
 				"cssClasses", JSONUtil.put("lfr-main-form-container")));
 
-		fragmentStyledLayoutStructureItem =
-			formManager.addFragmentEntryLinksLayoutStructureItem(
-				formStyledLayoutStructureItem, "INPUTS-text-input",
-				objectFriendlyURLInfoField.getUniqueId(), layout,
-				layoutStructure, false, segmentsExperienceId, serviceContext);
-
-		fragmentStyledLayoutStructureItem.updateItemConfig(
-			JSONUtil.put("styles", JSONUtil.put("marginBottom", "24px")));
-
-		fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-		if (fragmentEntryLink != null) {
-			addedFragmentEntryLinks.add(fragmentEntryLink);
-		}
+		_addInputFragmentEntryLink(
+			addedFragmentEntryLinks, null, formStyledLayoutStructureItem,
+			formManager, "INPUTS-text-input", layout, layoutStructure,
+			infoForm.getInfoField("objectEntryFriendlyURL"), false,
+			segmentsExperienceId, serviceContext,
+			JSONUtil.put("marginBottom", "24px"));
 
 		layoutStructureItems.addAll(
 			formManager.addFragmentEntryLinksLayoutStructureItems(
@@ -846,6 +783,60 @@ public class ActionUtil {
 					defaultFragmentRendererContext)),
 			editableValues, StringPool.BLANK, 0, fragmentEntryKey,
 			fragmentRenderer.getType(), serviceContext);
+	}
+
+	private static void _addInputFragmentEntryLink(
+			List<FragmentEntryLink> addedFragmentEntryLinks,
+			JSONObject configurationJSONObject,
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			FormManager formManager, String fragmentEntryKey, Layout layout,
+			LayoutStructure layoutStructure, InfoField<?> infoField,
+			boolean readOnly, long segmentsExperienceId,
+			ServiceContext serviceContext, JSONObject stylesJSONObject)
+		throws Exception {
+
+		if (infoField == null) {
+			return;
+		}
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			formManager.addFragmentEntryLinksLayoutStructureItem(
+				formStyledLayoutStructureItem, fragmentEntryKey,
+				infoField.getUniqueId(), layout, layoutStructure, readOnly,
+				segmentsExperienceId, serviceContext);
+
+		if (fragmentStyledLayoutStructureItem == null) {
+			return;
+		}
+
+		fragmentStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put("styles", stylesJSONObject));
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		if (configurationJSONObject != null) {
+			JSONObject editableValuesJSONObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
+
+			JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+			for (String key : configurationJSONObject.keySet()) {
+				jsonObject.put(key, configurationJSONObject.get(key));
+			}
+
+			fragmentEntryLink =
+				FragmentEntryLinkServiceUtil.updateFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					editableValuesJSONObject.toString());
+		}
+
+		if (fragmentEntryLink != null) {
+			addedFragmentEntryLinks.add(fragmentEntryLink);
+		}
 	}
 
 	private static LayoutPageTemplateEntry

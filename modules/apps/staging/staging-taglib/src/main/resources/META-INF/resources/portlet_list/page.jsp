@@ -101,35 +101,33 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			}
 			%>
 
-			<c:if test="<%= !stagingGroupHelper.isCompanyGroup(group) %>">
-				<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getPortletId() %>">
-					<li>
-						<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>"></span>
+			<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getPortletId() %>">
+				<li>
+					<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>"></span>
 
-						<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
-							<clay:button
-								cssClass="content-link modify-link pr-1"
-								data-portletid="<%= portletId %>"
-								data-portlettitle="<%= portletTitle %>"
-								displayType="link"
-								id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getPortletId() %>'
-								label="change"
+					<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
+						<clay:button
+							cssClass="content-link modify-link pr-1"
+							data-portletid="<%= portletId %>"
+							data-portlettitle="<%= portletTitle %>"
+							displayType="link"
+							id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getPortletId() %>'
+							label="change"
+						/>
+
+						<span id="<portlet:namespace />rightContentArrow_<%= portlet.getPortletId() %>">
+							<clay:icon
+								symbol="angle-right-small"
 							/>
-
-							<span id="<portlet:namespace />rightContentArrow_<%= portlet.getPortletId() %>">
-								<clay:icon
-									symbol="angle-right-small"
-								/>
-							</span>
-							<span class="hide" id="<portlet:namespace />downContentArrow_<%= portlet.getPortletId() %>">
-								<clay:icon
-									symbol="angle-down-small"
-								/>
-							</span>
 						</span>
-					</li>
-				</ul>
-			</c:if>
+						<span class="hide" id="<portlet:namespace />downContentArrow_<%= portlet.getPortletId() %>">
+							<clay:icon
+								symbol="angle-down-small"
+							/>
+						</span>
+					</span>
+				</li>
+			</ul>
 
 			<div class="<%= (disableInputs && showPortletDataInput) ? StringPool.BLANK : "hide " %>" id="<portlet:namespace />content_<%= portlet.getPortletId() %>">
 				<ul class="lfr-tree list-unstyled">

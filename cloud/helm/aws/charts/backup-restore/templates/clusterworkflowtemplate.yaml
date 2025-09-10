@@ -51,20 +51,6 @@ spec:
                 parameters:
                     -   name: s3-bucket-id
             name: clean-up-s3-bucket
-        -   name: find-peer-recovery-points
-            outputs:
-                parameters:
-                    -   name: rds-snapshot-id
-                        valueFrom:
-                            path: /tmp/rds-snapshot-id.txt
-                    -   name: s3-recovery-point-arn
-                        valueFrom:
-                            path: /tmp/s3-recovery-point-arn.txt
-            script:
-                command: [sh]
-                image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
-                source: |-
-                    {{- include "liferayAWSBackupRestore.script.findPeerRecoveryPoints" . | nindent 20 }}
         -   inputs:
                 artifacts:
                     -   name: git-repository
@@ -90,6 +76,20 @@ spec:
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.getDependenciesModuleOutputs" . | nindent 20 }}
                 workingDir: {{ printf "/src/%s" .Values.git.repository.paths.dependenciesModule }}
+        -   name: get-peer-recovery-points
+            outputs:
+                parameters:
+                    -   name: rds-snapshot-id
+                        valueFrom:
+                            path: /tmp/rds-snapshot-id.txt
+                    -   name: s3-recovery-point-arn
+                        valueFrom:
+                            path: /tmp/s3-recovery-point-arn.txt
+            script:
+                command: [sh]
+                image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
+                source: |-
+                    {{- include "liferayAWSBackupRestore.script.getPeerRecoveryPoints" . | nindent 20 }}
         -   container:
                 args:
                     -   rollout
@@ -132,8 +132,6 @@ spec:
                         depends: restart-liferay
                         name: clean-up-s3-bucket
                         template: clean-up-s3-bucket
-                    -   name: find-peer-recovery-points
-                        template: find-peer-recovery-points
                     -   arguments:
                             artifacts:
                                 -   from: {{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}
@@ -141,6 +139,8 @@ spec:
                         depends: checkout-git-repository
                         name: get-dependencies-module-outputs
                         template: get-dependencies-module-outputs
+                    -   name: get-peer-recovery-points
+                        template: get-peer-recovery-points
                     -   depends: update-kubernetes-secret
                         name: restart-liferay
                         template: restart-liferay
@@ -154,18 +154,18 @@ spec:
                                 -   name: tfvars-content
                                     value: |-
                                         data_active = "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-active}}"
-                                        db_restore_snapshot_identifier = "{{ "{{" }}tasks.find-peer-recovery-points.outputs.parameters.rds-snapshot-id}}"
+                                        db_restore_snapshot_identifier = "{{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.rds-snapshot-id}}"
                                         is_restoring = true
-                        depends: find-peer-recovery-points && get-dependencies-module-outputs
+                        depends: get-dependencies-module-outputs && get-peer-recovery-points
                         name: restore-rds-instance
                         template: apply-terraform-dependencies-module
                     -   arguments:
                             parameters:
                                 -   name: s3-recovery-point-arn
-                                    value: {{ "{{" }}tasks.find-peer-recovery-points.outputs.parameters.s3-recovery-point-arn}}
+                                    value: {{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.s3-recovery-point-arn}}
                                 -   name: s3-bucket-id
                                     value: {{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.s3-bucket-id-inactive}}
-                        depends: find-peer-recovery-points && get-dependencies-module-outputs
+                        depends: get-dependencies-module-outputs && get-peer-recovery-points
                         name: restore-s3-bucket
                         template: restore-s3-bucket
                     -   arguments:

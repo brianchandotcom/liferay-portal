@@ -15,13 +15,18 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -67,9 +72,12 @@ public class ImportStagedModelExceptionHandlerTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		String errorMessage = RandomTestUtil.randomString();
+
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
-				StagedModelDataHandler.class, new TestStagedModelDataHandler(),
+				StagedModelDataHandler.class,
+				new TestStagedModelDataHandler(errorMessage),
 				MapUtil.singletonDictionary(
 					"companyId", _group.getCompanyId()));
 
@@ -78,18 +86,31 @@ public class ImportStagedModelExceptionHandlerTest {
 				_group.getCompanyId(), _group.getGroupId(), null, null, null,
 				null);
 
-		portletDataContext.setExportImportProcessId(
-			RandomTestUtil.randomString());
+		long importProcessId = RandomTestUtil.randomLong();
 
-		long exportImportReportEntriesCount1 =
+		portletDataContext.setExportImportProcessId(
+			String.valueOf(importProcessId));
+
+		long exportImportReportEntriesCount =
 			_exportImportReportEntryLocalService.
 				getExportImportReportEntriesCount();
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long id = RandomTestUtil.randomLong();
+
 		try {
+			ExportImportThreadLocal.setExportImportConfigurationId(id);
 			ExportImportThreadLocal.setPortletImportInProcess(true);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, new TestStagedModel());
+				portletDataContext,
+				new TestStagedModel(externalReferenceCode, id));
+
+			Assert.fail();
+		}
+		catch (PortletDataException portletDataException) {
+			Assert.assertEquals(
+				errorMessage, portletDataException.getMessage());
 		}
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
@@ -98,10 +119,52 @@ public class ImportStagedModelExceptionHandlerTest {
 		}
 
 		Assert.assertEquals(
-			exportImportReportEntriesCount1 + 1,
+			exportImportReportEntriesCount + 1,
 			_exportImportReportEntryLocalService.
 				getExportImportReportEntriesCount());
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				TestPropsValues.getCompanyId(), importProcessId);
+
+		Assert.assertEquals(
+			exportImportReportEntries.toString(), 1,
+			exportImportReportEntries.size());
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntries.get(0);
+
+		Assert.assertEquals(
+			_group.getGroupId(), exportImportReportEntry.getGroupId());
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(),
+			exportImportReportEntry.getCompanyId());
+		Assert.assertEquals(
+			importProcessId,
+			exportImportReportEntry.getExportImportConfigurationId());
+		Assert.assertEquals(
+			externalReferenceCode,
+			exportImportReportEntry.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			_classNameLocalService.getClassNameId(TestStagedModel.class),
+			exportImportReportEntry.getClassNameId());
+		Assert.assertEquals(id, exportImportReportEntry.getClassPK());
+		Assert.assertEquals(errorMessage, exportImportReportEntry.getError());
+		Assert.assertNotNull(exportImportReportEntry.getErrorStacktrace());
+		Assert.assertEquals(
+			TestStagedModel.class.getName(),
+			exportImportReportEntry.getModelName());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.ORIGIN_STAGING,
+			exportImportReportEntry.getOrigin());
+		Assert.assertEquals("site", exportImportReportEntry.getScope());
+		Assert.assertEquals(
+			_group.getExternalReferenceCode(),
+			exportImportReportEntry.getScopeKey());
 	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private ExportImportReportEntryLocalService
@@ -110,7 +173,13 @@ public class ImportStagedModelExceptionHandlerTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private class TestStagedModel implements StagedModel {
+	private class TestStagedModel
+		implements ExternalReferenceCodeModel, StagedModel {
+
+		public TestStagedModel(String externalReferenceCode, long id) {
+			_externalReferenceCode = externalReferenceCode;
+			_id = id;
+		}
 
 		@Override
 		public Object clone() {
@@ -133,6 +202,11 @@ public class ImportStagedModelExceptionHandlerTest {
 		}
 
 		@Override
+		public String getExternalReferenceCode() {
+			return _externalReferenceCode;
+		}
+
+		@Override
 		public Class<?> getModelClass() {
 			return TestStagedModel.class;
 		}
@@ -149,7 +223,7 @@ public class ImportStagedModelExceptionHandlerTest {
 
 		@Override
 		public Serializable getPrimaryKeyObj() {
-			return null;
+			return _id;
 		}
 
 		@Override
@@ -173,6 +247,10 @@ public class ImportStagedModelExceptionHandlerTest {
 		}
 
 		@Override
+		public void setExternalReferenceCode(String externalReferenceCode) {
+		}
+
+		@Override
 		public void setModifiedDate(Date date) {
 		}
 
@@ -184,6 +262,9 @@ public class ImportStagedModelExceptionHandlerTest {
 		public void setUuid(String uuid) {
 		}
 
+		private final String _externalReferenceCode;
+		private final long _id;
+
 	}
 
 	private class TestStagedModelDataHandler
@@ -192,6 +273,10 @@ public class ImportStagedModelExceptionHandlerTest {
 		public static final String[] CLASS_NAMES = {
 			TestStagedModel.class.getName()
 		};
+
+		public TestStagedModelDataHandler(String errorMessage) {
+			_errorMessage = errorMessage;
+		}
 
 		@Override
 		public void deleteStagedModel(
@@ -222,7 +307,7 @@ public class ImportStagedModelExceptionHandlerTest {
 				TestStagedModel stagedModel)
 			throws PortletDataException {
 
-			throw new PortletDataException();
+			throw new PortletDataException(_errorMessage);
 		}
 
 		@Override
@@ -238,6 +323,8 @@ public class ImportStagedModelExceptionHandlerTest {
 				TestStagedModel stagedModel)
 			throws Exception {
 		}
+
+		private final String _errorMessage;
 
 	}
 

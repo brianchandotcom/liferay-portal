@@ -528,12 +528,13 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				return StringPool.BLANK;
 			}
 
-			DDMFormFieldOptions rowsDDMFormFieldOptions =
-				(DDMFormFieldOptions)ddmFormField.getProperty("rows");
+			StringBundler sb = new StringBundler(valuesJSONObject.length() * 6);
+
 			DDMFormFieldOptions columnsDDMFormFieldOptions =
 				(DDMFormFieldOptions)ddmFormField.getProperty("columns");
 
-			StringBundler sb = new StringBundler(valuesJSONObject.length() * 6);
+			DDMFormFieldOptions rowsDDMFormFieldOptions =
+				(DDMFormFieldOptions)ddmFormField.getProperty("rows");
 
 			Set<String> rowOptions = rowsDDMFormFieldOptions.getOptionsValues();
 
@@ -542,26 +543,28 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 					continue;
 				}
 
-				String columnOption = valuesJSONObject.getString(rowOption);
+				sb.append(StringPool.OPEN_CURLY_BRACE);
 
 				LocalizedValue rowLabel =
 					rowsDDMFormFieldOptions.getOptionLabels(rowOption);
-				LocalizedValue columnLabel =
-					columnsDDMFormFieldOptions.getOptionLabels(columnOption);
 
-				sb.append(StringPool.OPEN_CURLY_BRACE);
 				sb.append(
 					StringUtil.quote(
 						_getGridLabelString(rowLabel, rowOption, locale)));
 
 				sb.append(": ");
 
+				String columnOption = valuesJSONObject.getString(rowOption);
+
+				LocalizedValue columnLabel =
+					columnsDDMFormFieldOptions.getOptionLabels(columnOption);
+
 				sb.append(
 					StringUtil.quote(
 						_getGridLabelString(
 							columnLabel, columnOption, locale)));
-				sb.append(StringPool.CLOSE_CURLY_BRACE);
 
+				sb.append(StringPool.CLOSE_CURLY_BRACE);
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 

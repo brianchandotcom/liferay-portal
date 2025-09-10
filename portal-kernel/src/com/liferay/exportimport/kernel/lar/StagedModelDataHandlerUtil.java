@@ -392,6 +392,8 @@ public class StagedModelDataHandlerUtil {
 				importStagedModelExceptionHandler.handle(
 					portletDataContext, portletDataException, stagedModel);
 			}
+
+			throw portletDataException;
 		}
 
 		LastSessionRecorderHelperUtil.syncLastSessionState();

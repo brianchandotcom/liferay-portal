@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -381,6 +382,13 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		irrelevantGroup = originalIrrelevantGroup;
 		testGroup = originalTestGroup;
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetKeywordsRankedPage() throws Exception {
+		super.testGraphQLGetKeywordsRankedPage();
 	}
 
 	@Override

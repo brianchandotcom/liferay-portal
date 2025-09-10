@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.List;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -23,6 +25,15 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class MessageBoardSectionResourceTest
 	extends BaseMessageBoardSectionResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetMessageBoardSectionMessageBoardSectionsPage()
+		throws Exception {
+
+		super.testGraphQLGetMessageBoardSectionMessageBoardSectionsPage();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

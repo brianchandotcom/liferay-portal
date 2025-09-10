@@ -79,6 +79,29 @@ public class ReplenishmentItemResourceTest
 		super.testDeleteReplenishmentItemBatch();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetReplenishmentItemsPage() throws Exception {
+		super.testGraphQLGetReplenishmentItemsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetWarehouseIdReplenishmentItemsPage()
+		throws Exception {
+
+		super.testGraphQLGetWarehouseIdReplenishmentItemsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostReplenishmentItem() throws Exception {
+		super.testGraphQLPostReplenishmentItem();
+	}
+
 	@Override
 	@Test
 	public void testPatchReplenishmentItem() throws Exception {

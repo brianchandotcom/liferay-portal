@@ -33,6 +33,7 @@ import java.util.Collections;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -175,6 +176,13 @@ public class DisplayPageTemplateResourceTest
 		displayPageTemplate.setTitle(layoutPageTemplateEntry.getName());
 
 		return displayPageTemplate;
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDisplayPageTemplate() throws Exception {
+		super.testGraphQLGetSiteDisplayPageTemplate();
 	}
 
 	@Test

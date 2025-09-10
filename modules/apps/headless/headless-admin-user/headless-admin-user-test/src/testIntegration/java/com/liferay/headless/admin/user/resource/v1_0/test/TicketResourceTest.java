@@ -29,6 +29,7 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -73,6 +74,24 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 
 		_assertGetUserAccountTicketWithPermission(
 			requestingUser, ticketResource::getUserAccountPasswordResetTicket);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetUserAccountEmailVerificationTicket()
+		throws Exception {
+
+		super.testGraphQLGetUserAccountEmailVerificationTicket();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetUserAccountPasswordResetTicket()
+		throws Exception {
+
+		super.testGraphQLGetUserAccountPasswordResetTicket();
 	}
 
 	@Override

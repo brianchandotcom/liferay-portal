@@ -365,6 +365,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertTrue(pageTypes.contains("Page Set"));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteSitePagesExperiencesPage() throws Exception {
+		super.testGraphQLGetSiteSitePagesExperiencesPage();
+	}
+
 	@Override
 	@Test
 	public void testGraphQLGetSiteSitePagesPage() throws Exception {

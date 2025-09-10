@@ -257,6 +257,9 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItemPersistence.update(childCommerceOrderItem);
 		}
 
+		commerceOrder = commerceOrderLocalService.getCommerceOrder(
+			commerceOrderId);
+
 		if (commerceOrder.isManuallyAdjusted() && commerceOrder.isOpen()) {
 			commerceOrder.setManuallyAdjusted(false);
 		}

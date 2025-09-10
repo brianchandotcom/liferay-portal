@@ -94,11 +94,11 @@ public class BuildHistoryReport {
 					_getStartTime(startDateString)),
 				"aws");
 
-		Map<String, BuildJSONObject> awsBuildIdentifierMap =
-			awsBuildHistory.getBuildIdentifiersMap();
+		Map<String, BuildJSONObject> awsBuildJSONObjectsMap =
+			awsBuildHistory.getBuildJSONObjectsMap();
 
-		Map<String, BuildJSONObject> buildIdentifierMap =
-			buildHistory.getBuildIdentifiersMap();
+		Map<String, BuildJSONObject> buildJSONObjectsMap =
+			buildHistory.getBuildJSONObjectsMap();
 
 		List<List<Object>> rows = new ArrayList<>();
 
@@ -122,15 +122,15 @@ public class BuildHistoryReport {
 			});
 
 		for (Map.Entry<String, BuildJSONObject> entry :
-				buildIdentifierMap.entrySet()) {
+				buildJSONObjectsMap.entrySet()) {
 
 			String buildIdentifier = entry.getKey();
 
-			if (!awsBuildIdentifierMap.containsKey(buildIdentifier)) {
+			if (!awsBuildJSONObjectsMap.containsKey(buildIdentifier)) {
 				continue;
 			}
 
-			BuildJSONObject awsBuildJSONObject = awsBuildIdentifierMap.get(
+			BuildJSONObject awsBuildJSONObject = awsBuildJSONObjectsMap.get(
 				buildIdentifier);
 			BuildJSONObject buildJSONObject = entry.getValue();
 

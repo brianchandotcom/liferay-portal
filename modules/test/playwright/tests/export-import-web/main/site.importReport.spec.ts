@@ -85,7 +85,9 @@ test('Can see error report and details', async ({
 		})
 	).toBeVisible();
 
-	await exportImportPage.viewErrorDetails.click();
+	await exportImportPage.goToImportErrorDetails(
+		objectEntry.externalReferenceCode
+	);
 
 	await expect(
 		exportImportPage.page.getByText(

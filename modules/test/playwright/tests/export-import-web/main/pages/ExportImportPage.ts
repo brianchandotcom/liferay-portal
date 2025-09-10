@@ -37,7 +37,6 @@ export class ExportImportPage {
 	readonly updateDataMirrorWarningLabel: Locator;
 	readonly useCurrentUserAsAuthorCheckbox: Locator;
 	readonly viewDetails: Locator;
-	readonly viewErrorDetails: Locator;
 	readonly warningHeader: Locator;
 
 	constructor(page: Page) {
@@ -105,7 +104,6 @@ export class ExportImportPage {
 			'Use the Current User as Author: Assign the current user as the author of all'
 		);
 		this.viewDetails = page.getByRole('menuitem', {name: 'View Details'});
-		this.viewErrorDetails = page.getByLabel('View');
 		this.warningHeader = page.getByRole('heading', {
 			name: 'Important Info About Your Import',
 		});
@@ -262,5 +260,17 @@ export class ExportImportPage {
 
 		await this.continueButton.click();
 		await this.page.getByText('File Summary');
+	}
+
+	async goToImportErrorDetails(externalReferenceCode: string) {
+		await this.page
+			.getByRole('cell', {
+				name: externalReferenceCode,
+			})
+			.locator('..')
+			.getByLabel('view')
+			.click();
+
+		expect(this.page.getByText('Error Details').first()).toBeVisible();
 	}
 }

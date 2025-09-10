@@ -161,10 +161,7 @@ public class CounterDataCleanupPreupgradeProcess
 			CounterLocalServiceUtil.reset(counterName, latestCounterValue);
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Counter ", counterName, " has been reset to value ",
-						latestCounterValue));
+				_log.info(_getLogMessage(counterName, latestCounterValue));
 			}
 		}
 	}
@@ -216,10 +213,7 @@ public class CounterDataCleanupPreupgradeProcess
 				CounterLocalServiceUtil.reset(counterName, maxValue);
 
 				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Counter ", counterName,
-							" has been reset to value ", maxValue));
+					_log.info(_getLogMessage(counterName, maxValue));
 				}
 			}
 		}
@@ -249,11 +243,13 @@ public class CounterDataCleanupPreupgradeProcess
 		CounterLocalServiceUtil.reset(counterName, maxValue);
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Counter ", counterName, " has been reset to value ",
-					maxValue));
+			_log.info(_getLogMessage(counterName, maxValue));
 		}
+	}
+
+	private String _getLogMessage(String counterName, long countervalue) {
+		return StringBundler.concat(
+			"Counter ", counterName, " has been reset to value ", countervalue);
 	}
 
 	private long _getMaxValue(

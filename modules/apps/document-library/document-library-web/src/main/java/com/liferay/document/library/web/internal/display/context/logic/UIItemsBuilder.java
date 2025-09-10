@@ -417,6 +417,8 @@ public class UIItemsBuilder {
 			"imageURL",
 			_dlURLHelper.getPreviewURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK)
+		).putData(
+			"mimeType", HtmlUtil.escapeAttribute(_fileEntry.getMimeType())
 		).setKey(
 			DLUIItemKeys.EDIT_IMAGE
 		).setLabel(

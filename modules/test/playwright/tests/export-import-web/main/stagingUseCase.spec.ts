@@ -158,6 +158,10 @@ test('staging only approved content goes to live', async ({
 	await stagingPage.publish();
 
 	await pageEditorPage.goto(layout1, site.friendlyUrlPath);
+	await reloadUntilVisible({
+		myLocator: page.getByText(webcontentContent1, {exact: true}),
+		page,
+	});
 	await expect(
 		page.getByText(webcontentContent1, {exact: true})
 	).toBeVisible();

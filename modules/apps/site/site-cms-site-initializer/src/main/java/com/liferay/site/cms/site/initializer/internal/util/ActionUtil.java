@@ -36,9 +36,11 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectDefinitionServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -522,6 +524,37 @@ public class ActionUtil {
 			objectEntryFolderExternalReferenceCode);
 	}
 
+	public static List<DropdownItem> getContentsCustomDropdownItems(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<DropdownItem> dropdownItems = new ArrayList<>();
+
+		for (ObjectDefinition objectDefinition :
+				ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
+					themeDisplay.getCompanyId(),
+					new String[] {
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
+					})) {
+
+			if (objectDefinition.isSystem()) {
+				continue;
+			}
+
+			dropdownItems.add(
+				getStructuredContentDropdownItem(
+					httpServletRequest, "web-content", null, objectDefinition,
+					objectEntryFolderExternalReferenceCode));
+		}
+
+		return dropdownItems;
+	}
+
 	public static DropdownItem getCreateFolderDropdownItem(
 		HttpServletRequest httpServletRequest,
 		String parentObjectEntryFolderExternalReferenceCode) {
@@ -657,6 +690,36 @@ public class ActionUtil {
 		return getStructuredContentDropdownItem(
 			httpServletRequest, "video", "external-video-shortcut",
 			"L_EXTERNAL_VIDEO", objectEntryFolderExternalReferenceCode);
+	}
+
+	public static List<DropdownItem> getFilesCustomDropdownItems(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<DropdownItem> dropdownItems = new ArrayList<>();
+
+		for (ObjectDefinition objectDefinition :
+				ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
+					themeDisplay.getCompanyId(),
+					new String[] {
+						ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+					})) {
+
+			if (objectDefinition.isSystem()) {
+				continue;
+			}
+
+			dropdownItems.add(
+				getStructuredContentDropdownItem(
+					httpServletRequest, "document-default", null,
+					objectDefinition, objectEntryFolderExternalReferenceCode));
+		}
+
+		return dropdownItems;
 	}
 
 	public static DropdownItem getKnowledgeBaseDropdownItem(

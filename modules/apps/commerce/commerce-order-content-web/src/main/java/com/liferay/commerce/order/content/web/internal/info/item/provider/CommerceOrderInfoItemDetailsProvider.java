@@ -75,7 +75,7 @@ public class CommerceOrderInfoItemDetailsProvider
 
 		String scopeExternalReferenceCode = null;
 
-		if ((groupId > 0) && (groupId != commerceOrder.getGroupId())) {
+		if (groupId != commerceOrder.getGroupId()) {
 			Group group = _groupLocalService.fetchGroup(
 				commerceOrder.getGroupId());
 

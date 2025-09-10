@@ -27,7 +27,12 @@ export default React.forwardRef<
 	}
 >(({children, item, ...rest}, ref) => {
 	return (
-		<ContainerWithControls {...rest} item={item} ref={ref}>
+		<ContainerWithControls
+			className="page-editor__form-relationship"
+			{...rest}
+			item={item}
+			ref={ref}
+		>
 			<FormRelationshipWithControls item={item}>
 				{children}
 			</FormRelationshipWithControls>

@@ -254,6 +254,26 @@
 	cursor: pointer;
 }
 
+.cke_enable_context_menu .keyboard-message.popover {
+	left: inherit;
+	padding: 0.25rem 0.5rem;
+	right: 4px;
+	top: 4px;
+	transition: padding ease-out 200ms;
+
+	&:not(:hover) {
+		padding: 0;
+
+		.c-kbd-sm:not(.c-kbd) {
+			display: none;
+		}
+
+		.c-kbd-light {
+			font-size: 65%;
+		}
+	}
+}
+
 .cke_panel.cke_combopanel {
 	width: 220px;
 }
@@ -333,25 +353,5 @@
 		background: #f9f9f9;
 		border: 1px solid #777;
 		padding: 0.5em;
-	}
-}
-
-.keyboard-message.popover {
-	left: inherit;
-	padding: 0.25rem 0.5rem;
-	right: 4px;
-	top: 4px;
-	transition: padding ease-out 200ms;
-
-	&:not(:hover) {
-		padding: 0;
-
-		.c-kbd-sm:not(.c-kbd) {
-			display: none;
-		}
-
-		.c-kbd-light {
-			font-size: 65%;
-		}
 	}
 }

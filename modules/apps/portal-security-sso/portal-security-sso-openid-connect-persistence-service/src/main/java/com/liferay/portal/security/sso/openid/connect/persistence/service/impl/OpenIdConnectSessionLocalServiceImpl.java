@@ -45,13 +45,11 @@ public class OpenIdConnectSessionLocalServiceImpl
 	}
 
 	@Override
-	public OpenIdConnectSession fetchCurrentOpenIdConnectSession(long userId) {
+	public OpenIdConnectSession fetchCurrentOpenIdConnectSession() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if ((serviceContext == null) ||
-			(serviceContext.getUserId() != userId)) {
-
+		if (serviceContext == null) {
 			return null;
 		}
 

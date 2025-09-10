@@ -43,8 +43,8 @@ public class OpenIdConnectSessionLocalServiceTest {
 		_addOpenIdConnectSession();
 
 		Assert.assertNull(
-			_openIdConnectSessionLocalService.fetchCurrentOpenIdConnectSession(
-				TestPropsValues.getUserId()));
+			_openIdConnectSessionLocalService.
+				fetchCurrentOpenIdConnectSession());
 
 		try {
 			ServiceContext serviceContext = new ServiceContext();
@@ -64,20 +64,15 @@ public class OpenIdConnectSessionLocalServiceTest {
 			mockHttpServletRequest.setSession(mockHttpSession);
 
 			serviceContext.setRequest(mockHttpServletRequest);
+
 			serviceContext.setUserId(TestPropsValues.getUserId());
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			Assert.assertNull(
-				_openIdConnectSessionLocalService.
-					fetchCurrentOpenIdConnectSession(
-						RandomTestUtil.randomInt()));
-
 			Assert.assertEquals(
 				openIdConnectSession,
 				_openIdConnectSessionLocalService.
-					fetchCurrentOpenIdConnectSession(
-						TestPropsValues.getUserId()));
+					fetchCurrentOpenIdConnectSession());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

@@ -64,7 +64,7 @@ public class ImportStagedModelExceptionHandlerImpl
 					ExportImportReportEntryUtil.getModelName(clazz),
 					ExportImportReportEntryUtil.getOrigin(),
 					ExportImportReportEntryUtil.getScope(group),
-					ExportImportReportEntryUtil.getScopeKey(groupId));
+					ExportImportReportEntryUtil.getScopeKey(group));
 		}
 		catch (Exception exception) {
 			_log.error(

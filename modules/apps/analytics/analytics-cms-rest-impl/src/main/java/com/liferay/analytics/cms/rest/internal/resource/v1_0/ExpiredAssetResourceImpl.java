@@ -219,15 +219,16 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 				getLayoutClassedModelUsagesCount(
 					_portal.getClassNameId(className), objectEntryId);
 
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.
-				getObjectRelationshipsByObjectDefinitionId2(objectDefinitionId);
-
 		boolean skipObjectEntryResourcePermission =
 			ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission();
 
 		try {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
+			List<ObjectRelationship> objectRelationships =
+				_objectRelationshipLocalService.
+					getObjectRelationshipsByObjectDefinitionId2(
+						objectDefinitionId);
 
 			for (ObjectRelationship objectRelationship : objectRelationships) {
 				ObjectRelatedModelsProvider objectRelatedModelsProvider =

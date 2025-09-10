@@ -114,7 +114,6 @@ public class AssetDeletionOverviewResourceImpl
 
 			assetDeletionOverview.setUsages(
 				() -> _getUsages(
-					_portal.getClassNameId(objectDefinition.getClassName()),
 					objectDefinition.getClassName(),
 					objectDefinition.getObjectDefinitionId(),
 					objectEntry.getObjectEntryId()));
@@ -168,17 +167,13 @@ public class AssetDeletionOverviewResourceImpl
 	}
 
 	private int _getUsages(
-			long classNameId, String entryClassName, long objectDefinitionId,
-			long objectEntryId)
+			String className, long objectDefinitionId, long objectEntryId)
 		throws PortalException {
 
 		int usages =
 			_layoutClassedModelUsageLocalService.
-				getLayoutClassedModelUsagesCount(classNameId, objectEntryId);
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.
-				getObjectRelationshipsByObjectDefinitionId2(objectDefinitionId);
+				getLayoutClassedModelUsagesCount(
+					_portal.getClassNameId(className), objectEntryId);
 
 		boolean skipObjectEntryResourcePermission =
 			ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission();
@@ -186,11 +181,16 @@ public class AssetDeletionOverviewResourceImpl
 		try {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
+			List<ObjectRelationship> objectRelationships =
+				_objectRelationshipLocalService.
+					getObjectRelationshipsByObjectDefinitionId2(
+						objectDefinitionId);
+
 			for (ObjectRelationship objectRelationship : objectRelationships) {
 				ObjectRelatedModelsProvider objectRelatedModelsProvider =
 					_objectRelatedModelsProviderRegistry.
 						getObjectRelatedModelsProvider(
-							entryClassName, contextCompany.getCompanyId(),
+							className, contextCompany.getCompanyId(),
 							objectRelationship.getType());
 
 				usages += objectRelatedModelsProvider.getRelatedModelsCount(

@@ -73,8 +73,6 @@ public class ImportStagedModelExceptionHandlerTest {
 				MapUtil.singletonDictionary(
 					"companyId", _group.getCompanyId()));
 
-		TestStagedModel stagedModelDataHandler = new TestStagedModel();
-
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
 				_group.getCompanyId(), _group.getGroupId(), null, null, null,
@@ -91,10 +89,11 @@ public class ImportStagedModelExceptionHandlerTest {
 			ExportImportThreadLocal.setPortletImportInProcess(true);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, stagedModelDataHandler);
+				portletDataContext, new TestStagedModel());
 		}
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
+
 			serviceRegistration.unregister();
 		}
 

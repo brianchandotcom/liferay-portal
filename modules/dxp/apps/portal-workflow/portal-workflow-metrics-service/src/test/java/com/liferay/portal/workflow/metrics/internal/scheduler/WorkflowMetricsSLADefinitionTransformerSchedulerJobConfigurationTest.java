@@ -119,18 +119,18 @@ public class
 			_workflowMetricsSLADefinitionTransformerSchedulerJobConfiguration,
 			companyId);
 
-		ArgumentCaptor<SearchSearchRequest> searchCaptor =
+		ArgumentCaptor<SearchSearchRequest> argumentCaptor =
 			ArgumentCaptor.forClass(SearchSearchRequest.class);
 
 		Mockito.verify(
 			_searchEngineAdapter
 		).execute(
-			searchCaptor.capture()
+			argumentCaptor.capture()
 		);
 
 		Assert.assertEquals(
 			indexSearchLimit,
-			searchCaptor.getValue(
+			argumentCaptor.getValue(
 			).getSize());
 	}
 

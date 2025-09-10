@@ -18,15 +18,12 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
-
 /**
  * @author Dante Wang
  */
-public class ServletContextHelperDataContextImpl
-	implements ServletContextHelperDataContext {
+public class ServletContextHelperDataContext {
 
-	public ServletContextHelperDataContextImpl(
+	public ServletContextHelperDataContext(
 		String contextName, ServletContext parentServletContext,
 		File parentServletContextTempDir) {
 
@@ -48,19 +45,16 @@ public class ServletContextHelperDataContextImpl
 			_servletContextTempDir);
 	}
 
-	@Override
 	public void destroy() {
 		if (_servletContextTempDir != null) {
 			FileUtil.deltree(_servletContextTempDir);
 		}
 	}
 
-	@Override
 	public Dictionary<String, Object> getContextAttributes() {
 		return _attributesDictionary;
 	}
 
-	@Override
 	public ServletContext getServletContext() {
 		return _parentServletContext;
 	}

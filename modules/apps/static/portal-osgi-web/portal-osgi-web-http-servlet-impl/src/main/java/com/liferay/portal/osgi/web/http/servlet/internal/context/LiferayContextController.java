@@ -52,7 +52,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;

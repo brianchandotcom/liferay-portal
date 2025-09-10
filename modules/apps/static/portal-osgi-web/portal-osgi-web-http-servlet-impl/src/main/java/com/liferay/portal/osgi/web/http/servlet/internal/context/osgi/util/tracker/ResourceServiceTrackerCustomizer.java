@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ResourceRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServiceHolder;
@@ -27,7 +28,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
-import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 
 import org.osgi.framework.Bundle;

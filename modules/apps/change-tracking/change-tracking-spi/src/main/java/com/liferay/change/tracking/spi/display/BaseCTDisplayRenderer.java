@@ -506,14 +506,15 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		}
 	}
 
-	private String _getGridLabel(
-		LocalizedValue localizedValue, String defaultLabel, Locale locale) {
+	private String _getGridLabelString(
+		LocalizedValue localizedValue, String defaultLabelString,
+		Locale locale) {
 
 		if (localizedValue != null) {
 			return HtmlUtil.escape(localizedValue.getString(locale));
 		}
 
-		return defaultLabel;
+		return defaultLabelString;
 	}
 
 	private String _getGridOptionValues(
@@ -532,8 +533,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			DDMFormFieldOptions columns =
 				(DDMFormFieldOptions)ddmFormField.getProperty("columns");
 
-			StringBundler sb = new StringBundler(
-				valuesJSONObject.length() * 11);
+			StringBundler sb = new StringBundler(valuesJSONObject.length() * 6);
 
 			Set<String> rowOptions = rows.getOptionsValues();
 
@@ -546,16 +546,16 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 						columnOption);
 
 					sb.append(StringPool.OPEN_CURLY_BRACE);
-					sb.append(StringPool.QUOTE);
-					sb.append(_getGridLabel(rowLabel, rowOption, locale));
-					sb.append(StringPool.QUOTE);
+					sb.append(
+						StringUtil.quote(
+							_getGridLabelString(rowLabel, rowOption, locale)));
 
-					sb.append(StringPool.COLON);
-					sb.append(StringPool.SPACE);
+					sb.append(": ");
 
-					sb.append(StringPool.QUOTE);
-					sb.append(_getGridLabel(columnLabel, columnOption, locale));
-					sb.append(StringPool.QUOTE);
+					sb.append(
+						StringUtil.quote(
+							_getGridLabelString(
+								columnLabel, columnOption, locale)));
 					sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 					sb.append(StringPool.COMMA_AND_SPACE);
@@ -603,7 +603,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				return StringPool.BLANK;
 			}
 
-			StringBundler sb = new StringBundler((3 * jsonArray.length()) + 1);
+			StringBundler sb = new StringBundler(jsonArray.length() + 1);
 
 			sb.append(StringPool.OPEN_BRACKET);
 
@@ -621,9 +621,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				LocalizedValue localizedValue =
 					ddmFormFieldOptions.getOptionLabels(optionValueString);
 
-				sb.append(StringPool.QUOTE);
-				sb.append(localizedValue.getString(locale));
-				sb.append(StringPool.QUOTE);
+				sb.append(StringUtil.quote(localizedValue.getString(locale)));
 			}
 
 			sb.append(StringPool.CLOSE_BRACKET);

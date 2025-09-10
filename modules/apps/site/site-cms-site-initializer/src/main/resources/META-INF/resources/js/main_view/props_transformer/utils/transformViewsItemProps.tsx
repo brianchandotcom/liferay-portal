@@ -66,7 +66,7 @@ function isMultimediaMimeType(mimeType: string): boolean {
 	return MULTIMEDIA_TYPES.some((prefix) => mimeType.startsWith(prefix));
 }
 
-export function getFileMimeTypeValue(
+export function getFileMimeTypeObjectDefinitionStickerValue(
 	fileMimeTypeValues: Record<string, string> | undefined,
 	objectDefinitionValues: Record<string, string>,
 	item: any

@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import formatActionURL from '../../../common/utils/formatActionURL';
-import {getFileMimeTypeValue} from '../utils/transformViewsItemProps';
+import {getFileMimeTypeObjectDefinitionStickerValue} from '../utils/transformViewsItemProps';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -69,7 +69,7 @@ export default function SimpleActionLinkRenderer({
 					'inline-item-before',
 					isFolder
 						? 'file-icon-color-0'
-						: getFileMimeTypeValue(
+						: getFileMimeTypeObjectDefinitionStickerValue(
 								additionalProps.fileMimeTypeCssClasses,
 								additionalProps.objectDefinitionCssClasses,
 								itemData
@@ -80,7 +80,7 @@ export default function SimpleActionLinkRenderer({
 					symbol={
 						isFolder
 							? 'folder'
-							: getFileMimeTypeValue(
+							: getFileMimeTypeObjectDefinitionStickerValue(
 									additionalProps.fileMimeTypeIcons,
 									additionalProps.objectDefinitionIcons,
 									itemData

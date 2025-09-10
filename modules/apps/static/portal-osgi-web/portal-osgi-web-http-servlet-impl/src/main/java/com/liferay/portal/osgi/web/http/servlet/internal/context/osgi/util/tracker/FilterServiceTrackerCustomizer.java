@@ -25,7 +25,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.error.RegisteredFilterException;
 import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
@@ -190,7 +189,7 @@ public class FilterServiceTrackerCustomizer
 		}
 
 		for (String filterPattern : filterPatterns) {
-			ContextController.checkPattern(filterPattern);
+			checkPattern(filterPattern);
 		}
 
 		String[] filterDispatcherTypes = ArrayUtil.toStringArray(

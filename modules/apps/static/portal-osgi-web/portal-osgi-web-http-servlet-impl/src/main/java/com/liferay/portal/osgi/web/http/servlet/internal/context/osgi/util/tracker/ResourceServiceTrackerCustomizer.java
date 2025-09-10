@@ -27,7 +27,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 
 import org.osgi.framework.Bundle;
@@ -122,7 +121,7 @@ public class ResourceServiceTrackerCustomizer
 		}
 
 		for (String resourcePattern : resourcePatterns) {
-			ContextController.checkPattern(resourcePattern);
+			checkPattern(resourcePattern);
 		}
 
 		Bundle bundle = serviceReference.getBundle();

@@ -31,7 +31,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
 import org.osgi.framework.BundleContext;
@@ -196,7 +195,7 @@ public class ServletServiceTrackerCustomizer
 		}
 
 		for (String servletPattern : servletPatterns) {
-			ContextController.checkPattern(servletPattern);
+			checkPattern(servletPattern);
 		}
 
 		ServletDTO servletDTO = new ServletDTO();

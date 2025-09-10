@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
@@ -57,6 +58,21 @@ public abstract class BaseServiceTrackerCustomizer
 
 		if (registration != null) {
 			registration.destroy();
+		}
+	}
+
+	protected void checkPattern(String pattern) {
+		if (pattern == null) {
+			throw new IllegalArgumentException("Pattern must not be null");
+		}
+		else if (pattern.indexOf("*.") != 0) {
+			if (!pattern.startsWith(StringPool.SLASH) ||
+				(pattern.endsWith(StringPool.SLASH) &&
+				 !pattern.equals(StringPool.SLASH))) {
+
+				throw new IllegalArgumentException(
+					"Invalid pattern '" + pattern + "'");
+			}
 		}
 	}
 

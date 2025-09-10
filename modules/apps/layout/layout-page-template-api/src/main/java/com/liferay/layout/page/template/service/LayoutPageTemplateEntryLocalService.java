@@ -87,6 +87,7 @@ public interface LayoutPageTemplateEntryLocalService
 			LayoutPrototype layoutPrototype)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long layoutPageTemplateCollectionId,
@@ -491,19 +492,23 @@ public interface LayoutPageTemplateEntryLocalService
 			long layoutPageTemplateEntryId, long previewFileEntryId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long userId, long layoutPageTemplateEntryId, String name,
 			int status)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateEntry updateStatus(
 			long userId, long layoutPageTemplateEntryId, int status)
 		throws PortalException;

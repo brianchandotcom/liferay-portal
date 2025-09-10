@@ -134,19 +134,19 @@ public class BuildHistoryReport {
 				buildIdentifier);
 			BuildJSONObject buildJSONObject = entry.getValue();
 
-			String awsTestrayBuildUrl = awsBuildJSONObject.getTestrayBuildUrl();
-			String testrayBuildUrl = buildJSONObject.getTestrayBuildUrl();
+			String awsTestrayBuildURL = awsBuildJSONObject.getTestrayBuildURL();
+			String testrayBuildURL = buildJSONObject.getTestrayBuildURL();
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(awsTestrayBuildUrl) ||
-				JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildUrl)) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(awsTestrayBuildURL) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildURL)) {
 
 				continue;
 			}
 
 			TestrayBuild awsTestrayBuild = TestrayFactory.newTestrayBuild(
-				_getURL(awsTestrayBuildUrl));
+				_getURL(awsTestrayBuildURL));
 			TestrayBuild testrayBuild = TestrayFactory.newTestrayBuild(
-				_getURL(testrayBuildUrl));
+				_getURL(testrayBuildURL));
 
 			TestrayRun awsTestrayRun = awsTestrayBuild.getTestrayRun(
 				TestrayRun.getDefaultRunIDString());
@@ -173,8 +173,8 @@ public class BuildHistoryReport {
 						add(testrayRunComparison.getNewUntestedTestCount());
 						add(buildJSONObject.getURL());
 						add(awsBuildJSONObject.getURL());
-						add(testrayBuildUrl);
-						add(awsTestrayBuildUrl);
+						add(testrayBuildURL);
+						add(awsTestrayBuildURL);
 						add(buildJSONObject.getStartTime());
 						add(awsBuildJSONObject.getStartTime());
 						add(buildJSONObject.getDuration());

@@ -69,9 +69,12 @@ public class PortalInstancesFilterTest {
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			virtualHost.getLayoutSetId());
 
-		_test(virtualHost.getCompanyId(), hostName, layoutSet, null);
-
-		_virtualHostLocalService.deleteVirtualHost(virtualHost);
+		try {
+			_test(virtualHost.getCompanyId(), hostName, layoutSet, null);
+		}
+		finally {
+			_virtualHostLocalService.deleteVirtualHost(virtualHost);
+		}
 	}
 
 	@Test

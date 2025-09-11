@@ -15,6 +15,9 @@ import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {utilityPagesPage} from '../../login-web/main/fixtures/utilityPageTest';
 import {openIdConfig} from './config';
 import {openIdSettingsPagesTest} from './fixtures/openIdSettingsPagesTest';
+import { customFieldsPagesTest } from '../../../fixtures/customFieldsPagesTest';
+import { TCustomField } from '../../../helpers/CustomFieldTypesHelper';
+import { CustomClaim } from './helpers/CustomClaimsHelper';
 
 let providerName: string;
 let site: Site;
@@ -26,11 +29,13 @@ const test = mergeTests(
 		'LPD-6378': {enabled: true},
 	}),
 	loginTest(),
-	utilityPagesPage
+	utilityPagesPage,
+	customFieldsPagesTest
 );
 
 async function setupOpenIdConnection(
-	openIDInstanceSettingsPage: OpenIdInstanceSettingsPage
+	openIDInstanceSettingsPage: OpenIdInstanceSettingsPage,
+	customClaim?: CustomClaim
 ) {
 	await openIDInstanceSettingsPage.goto();
 
@@ -40,7 +45,8 @@ async function setupOpenIdConnection(
 
 	await openIDInstanceSettingsPage.AddOpenIDConnectProviderConnectionConfiguration(
 		providerName,
-		openIdConfig.openIdProvider
+		openIdConfig.openIdProvider,
+		customClaim
 	);
 }
 
@@ -129,4 +135,33 @@ test.describe('OpenID connect link', () => {
 
 		await expect(page.getByText(openIdConfig.openIdLink)).toBeHidden();
 	});
+});
+
+
+test.describe('OpenID Connect custom claims', () => {
+	test('can set custom claims for the oidc configuration', async ({
+	 addCustomFieldPage,
+	 openIDInstanceSettingsPage,
+	 viewAttributesPage
+	}) => {
+		
+		const expandoColumnName =  getRandomString();
+
+		const customField: TCustomField = {
+			fieldName: expandoColumnName,
+			fieldType: 'inputField',
+			resource: 'User',
+		};
+		
+		await addCustomFieldPage.addCustomField(customField);
+
+		const customClaim: CustomClaim = {
+			expandoColumnName,
+			oidcProviderCustomClaim: getRandomString()
+		}
+		
+		await setupOpenIdConnection(openIDInstanceSettingsPage, customClaim);
+
+		await viewAttributesPage.deleteCustomField(expandoColumnName, 'User');
+	})
 });

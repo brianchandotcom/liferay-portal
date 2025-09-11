@@ -404,8 +404,8 @@ test(
 		await page.getByRole('link', {name: 'Page 2'}).click();
 
 		// Assert redirection is going to the right page
-
 		// Assert page 2 headers
+
 		const headers = page.locator('tr th');
 		await expect(headers).toHaveText(['Name', 'Type', 'Instance ID']);
 	}

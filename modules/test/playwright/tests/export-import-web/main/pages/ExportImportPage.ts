@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
 
@@ -20,18 +21,17 @@ export class ExportImportPage {
 	readonly downloadButton: Locator;
 	readonly exportButton: Locator;
 	readonly exportPermissionsButton: Locator;
-	readonly exportSuccessLabel: (exportName: string) => Promise<Locator>;
 	readonly fileSelector: Locator;
 	readonly importButton: Locator;
-	readonly importEntryMenu: (importName: string) => Promise<Locator>;
 	readonly importModalButton: Locator;
 	readonly importPermissionsButton: Locator;
-	readonly importSuccessLabel: (importName: string) => Promise<Locator>;
 	readonly mirrorWithOverwritingRadioButton: Locator;
 	readonly newExportButton: Locator;
 	readonly newImportButton: Locator;
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
+	readonly taskMenu: (taskName: string) => Locator;
+	readonly taskSuccessLabel: (taskName: string) => Locator;
 	readonly title: Locator;
 	readonly updateDataAlert: Locator;
 	readonly updateDataMirrorWarningLabel: Locator;
@@ -59,30 +59,12 @@ export class ExportImportPage {
 		this.downloadButton = page.getByRole('button', {name: 'Download'});
 		this.exportButton = page.getByRole('button', {name: 'Export'});
 		this.exportPermissionsButton = page.getByLabel('Export Permissions');
-		this.exportSuccessLabel = async (exportName: string) => {
-			return page
-				.getByText(exportName)
-				.locator('../..')
-				.getByText('Successful');
-		};
 		this.fileSelector = page.getByRole('button', {name: 'Select File'});
 		this.importButton = page.getByRole('button', {name: 'Import'});
-		this.importEntryMenu = async (importName: string) => {
-			return page
-				.getByText(importName)
-				.locator('../../../../..')
-				.getByRole('button');
-		};
 		this.importModalButton = page
 			.getByLabel('Important Info About Your Import')
 			.getByRole('button', {name: 'Import'});
 		this.importPermissionsButton = page.getByLabel('Import Permissions');
-		this.importSuccessLabel = async (importName: string) => {
-			return page
-				.getByText(importName)
-				.locator('../../../../..')
-				.getByText('Successful');
-		};
 		this.mirrorWithOverwritingRadioButton = page.getByLabel(
 			'Mirror with overwriting'
 		);
@@ -90,6 +72,18 @@ export class ExportImportPage {
 		this.newImportButton = page.getByRole('link', {name: 'Import'});
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
+		this.taskMenu = (taskName: string) =>
+			this.page
+				.locator('[data-qa-id="row"]', {
+					hasText: taskName,
+				})
+				.getByRole('button');
+		this.taskSuccessLabel = (taskName: string) =>
+			this.page
+				.locator('[data-qa-id="row"]', {
+					hasText: taskName,
+				})
+				.getByText('Successful');
 		this.title = page.getByPlaceholder('Enter the name of the process');
 		this.updateDataAlert = page.locator('[role="alert"]', {
 			hasText:
@@ -225,12 +219,14 @@ export class ExportImportPage {
 		);
 	}
 
-	async goToImportDetails(exportName) {
-		await expect(await this.importSuccessLabel(exportName)).toBeVisible();
+	async goToImportDetails(exportName: string) {
+		await expect(this.taskSuccessLabel(exportName)).toBeVisible();
 
-		await (await this.importEntryMenu(exportName)).click();
-
-		await this.viewDetails.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.viewDetails,
+			trigger: this.taskMenu(exportName),
+		});
 	}
 
 	async goToImportOptions(
@@ -259,15 +255,12 @@ export class ExportImportPage {
 		await fileChooser.setFiles(folderPath);
 
 		await this.continueButton.click();
-		await this.page.getByText('File Summary');
+		this.page.getByText('File Summary');
 	}
 
 	async goToImportErrorDetails(externalReferenceCode: string) {
 		await this.page
-			.getByRole('cell', {
-				name: externalReferenceCode,
-			})
-			.locator('..')
+			.getByRole('row', {name: externalReferenceCode})
 			.getByLabel('view')
 			.click();
 

@@ -52,9 +52,7 @@ test('Can see error report and details', async ({
 
 	await exportImportPage.export(exportName, 'Tests 1 Items');
 
-	await expect(
-		await exportImportPage.exportSuccessLabel(exportName)
-	).toBeVisible();
+	await expect(exportImportPage.taskSuccessLabel(exportName)).toBeVisible();
 
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(exportName);
@@ -77,7 +75,7 @@ test('Can see error report and details', async ({
 
 	await exportImportPage.import(exportFilePath);
 
-	exportImportPage.goToImportDetails(exportName);
+	await exportImportPage.goToImportDetails(exportName);
 
 	await expect(
 		exportImportPage.page.getByRole('cell', {

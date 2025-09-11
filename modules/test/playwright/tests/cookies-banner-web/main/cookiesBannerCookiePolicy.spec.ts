@@ -59,6 +59,15 @@ test.afterEach(async ({systemSettingsPage}) => {
 			}
 		}
 	});
+
+	await test.step('Clear Consent Cookies if present', async () => {
+		await systemSettingsPage.page
+			.context()
+			.clearCookies({name: /^CONSENT_TYPE_/});
+		await systemSettingsPage.page
+			.context()
+			.clearCookies({name: 'USER_CONSENT_CONFIGURED'});
+	});
 });
 
 test('LPD-30561 Cookie Banner Cookie Policy Page', async ({

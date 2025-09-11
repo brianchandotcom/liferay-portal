@@ -117,7 +117,9 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
 			List<String> values = entry.getValue();
 
-			if (values.size() > 1) {
+			if ((values.size() > 1) && (sb.length() > 0) &&
+				!StringUtil.endsWith(sb.toString(), "\n\n")) {
+
 				sb.append("\n");
 			}
 
@@ -277,7 +279,10 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 				else {
 					value = line;
 
-					if (value.endsWith(",\\")) {
+					if (value.endsWith(",")) {
+						value = value.substring(0, value.length() - 1);
+					}
+					else if (value.endsWith(",\\")) {
 						value = value.substring(0, value.length() - 2);
 					}
 
@@ -359,7 +364,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			sb.append("\n\n");
 		}
 
-		String newContent = StringUtil.trimTrailing(sb.toString());
+		String newContent = StringUtil.trim(sb.toString());
 
 		if (!StringUtil.equals(content, newContent)) {
 			return newContent;

@@ -374,7 +374,7 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
-    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/sites/by-external-reference-code/{siteExternalReferenceCode}":
+    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/connected-sites/by-external-reference-code/{connectedSiteExternalReferenceCode}":
         delete:
             description:
                 Disconnects the site with the given external reference code from the asset library.
@@ -386,7 +386,7 @@ paths:
                     schema:
                         type: string
                 -   in: path
-                    name: siteExternalReferenceCode
+                    name: connectedSiteExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -409,7 +409,7 @@ paths:
                     schema:
                         type: string
                 -   in: path
-                    name: siteExternalReferenceCode
+                    name: connectedSiteExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -436,7 +436,7 @@ paths:
                     schema:
                         type: string
                 -   in: path
-                    name: siteExternalReferenceCode
+                    name: connectedSiteExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -906,7 +906,7 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
-    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/sites":
+    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/connected-sites":
         get:
             description:
                 Get the asset library's with the provided external reference code connected sites. Results can be
@@ -1210,7 +1210,7 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
-    "/asset-libraries/{assetLibraryId}/sites":
+    "/asset-libraries/{assetLibraryId}/connected-sites":
         get:
             description:
                 Get the asset library's connected sites. Results can be paginated.
@@ -1249,8 +1249,8 @@ paths:
                                 type: array
                     description:
                         default response
-            tags: ["Site"]
-    "/asset-libraries/{assetLibraryId}/sites/{siteId}":
+            tags: ["ConnectedSite"]
+    "/asset-libraries/{assetLibraryId}/connected-sites/{connectedSiteId}":
         delete:
             description:
                 Disconnects the site from the asset library.
@@ -1263,7 +1263,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: siteId
+                    name: connectedSiteId
                     required: true
                     schema:
                         format: int64
@@ -1288,7 +1288,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: siteId
+                    name: connectedSiteId
                     required: true
                     schema:
                         format: int64
@@ -1317,7 +1317,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: siteId
+                    name: connectedSiteId
                     required: true
                     schema:
                         format: int64

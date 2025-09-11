@@ -88,7 +88,7 @@ test(
 		await test.step('Create a Basic Document', async () => {
 			await assetsPage.gotoFiles();
 
-			await assetsPage.createContent('Basic Document');
+			await assetsPage.createContent('Single File');
 		});
 
 		await test.step('Check the Space selector dialog', async () => {
@@ -135,7 +135,7 @@ test(
 		await test.step('Create a Basic Document', async () => {
 			await assetsPage.gotoFiles();
 
-			await assetsPage.createContent('Basic Document');
+			await assetsPage.createContent('Single File');
 		});
 
 		await test.step('Check the Space selector dialog', async () => {
@@ -206,7 +206,7 @@ test(
 		});
 
 		await test.step('Create a Basic Document', async () => {
-			await assetsPage.createContent('Basic Document');
+			await assetsPage.createContent('Single File');
 		});
 
 		await test.step('Check the Space selector dialog', async () => {

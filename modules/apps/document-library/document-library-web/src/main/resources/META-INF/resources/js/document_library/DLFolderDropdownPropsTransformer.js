@@ -19,15 +19,6 @@ const ACTIONS = {
 					webDavURL={webDavURL}
 				/>
 			),
-			onOpen() {
-				const webdavURLInput = document.getElementById(
-					`${portletNamespace}webDavURL`
-				);
-
-				if (webdavURLInput) {
-					webdavURLInput.focus();
-				}
-			},
 		});
 	},
 

@@ -56,6 +56,12 @@ public class ViewAllSpacesDisplayContextTest
 			_getToolbarProps());
 	}
 
+	private HashMap<String, Object> _getToolbarProps() throws Exception {
+		return ReflectionTestUtil.invoke(
+			_getViewAllSpacesDisplayContext(getMockHttpServletRequest()),
+			"getToolbarProps", new Class<?>[0]);
+	}
+
 	private Object _getViewAllSpacesDisplayContext(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -70,12 +76,6 @@ public class ViewAllSpacesDisplayContextTest
 		Assert.assertNotNull(viewAllSpacesDisplayContext);
 
 		return viewAllSpacesDisplayContext;
-	}
-
-	private HashMap<String, Object> _getToolbarProps() throws Exception {
-		return ReflectionTestUtil.invoke(
-			_getViewAllSpacesDisplayContext(getMockHttpServletRequest()),
-			"getToolbarProps", new Class<?>[0]);
 	}
 
 	@Inject(

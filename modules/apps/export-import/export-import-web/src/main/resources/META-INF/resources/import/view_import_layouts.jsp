@@ -68,7 +68,6 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 		</liferay-util:include>
-
 	</c:otherwise>
 </c:choose>
 

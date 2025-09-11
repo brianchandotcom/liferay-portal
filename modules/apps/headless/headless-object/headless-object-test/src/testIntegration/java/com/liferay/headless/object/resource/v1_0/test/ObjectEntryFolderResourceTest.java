@@ -253,9 +253,9 @@ public class ObjectEntryFolderResourceTest
 		super.
 			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeSubscribe();
 
-		String originalName = PrincipalThreadLocal.getName();
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
 
 		User user = UserTestUtil.addUser();
 
@@ -308,9 +308,9 @@ public class ObjectEntryFolderResourceTest
 		super.
 			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeUnsubscribe();
 
-		String originalName = PrincipalThreadLocal.getName();
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
 
 		User user = UserTestUtil.addUser();
 

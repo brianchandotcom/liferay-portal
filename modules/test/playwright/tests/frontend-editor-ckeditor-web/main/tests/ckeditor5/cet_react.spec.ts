@@ -10,7 +10,7 @@ import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import {waitForEditor} from '../../../../../utils/waitFor';
-import {ckeditorSamplePageTest} from './../../fixtures/ckeditorSamplePageTest';
+import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
 import {classicPageTest} from './fixtures/classicPageTest';
 
 export const test = mergeTests(
@@ -35,20 +35,20 @@ test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 });
 
 test(
-	'Assert editor is rendered with features based on default configuration and Client Extension additions',
+	'Editor configuration is applied, merging existing and client extension customizations',
 	{tag: '@LPD-11235'},
-	async ({classicPage, page}) => {
-		await expect(
-			page.getByText('Lorem ipsum dolor sit amet')
-		).toBeVisible();
-
+	async ({classicPage}) => {
 		const expectedButtons = [
 			'Accessibility help',
 			'Undo',
 			'Redo',
-			'A dropdown with a custom icon',
 			'Text alignment',
+			'Text formatting',
 			'Lists',
+			'Bookmark',
+			'Timestamp',
+			'Enter fullscreen mode',
+			'Hello',
 		];
 
 		const availableButtons =

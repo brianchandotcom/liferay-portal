@@ -14,14 +14,20 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -35,6 +41,8 @@ import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -158,6 +166,54 @@ public class GroupModelListenerTest {
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT));
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testUpdateDepotEntry() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry("name", "description");
+
+		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+		ObjectEntry objectEntry1 = CMSDefaultPermissionUtil.fetchObjectEntry(
+			group.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), depotEntry.getModelClassName(),
+			_filterFactory);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			RandomTestUtil.randomString(), group.getCompanyId(),
+			TestPropsValues.getUserId(), externalReferenceCode,
+			depotEntry.getModelClassName(),
+			JSONUtil.put(
+				"L_BASIC_WEB_CONTENT",
+				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
+
+		ObjectEntry objectEntry2 = CMSDefaultPermissionUtil.fetchObjectEntry(
+			group.getCompanyId(), TestPropsValues.getUserId(),
+			externalReferenceCode, depotEntry.getModelClassName(),
+			_filterFactory);
+
+		Assert.assertNotEquals(objectEntry1, objectEntry2);
+	}
+
+	private DepotEntry _addDepotEntry(String name, String description)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), name
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), description
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntries.add(depotEntry);
+
+		return depotEntry;
+	}
+
 	private void _deleteFile(Bundle bundle, String fileName) {
 		File file = bundle.getDataFile(
 			".com.liferay.site.initializer.cms.internal.batch." + fileName +
@@ -187,6 +243,9 @@ public class GroupModelListenerTest {
 	@Inject
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
+	@DeleteAfterTestRun
+	private final List<DepotEntry> _depotEntries = new ArrayList<>();
+
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
@@ -194,6 +253,9 @@ public class GroupModelListenerTest {
 		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 	)
 	private FilterFactory<Predicate> _filterFactory;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

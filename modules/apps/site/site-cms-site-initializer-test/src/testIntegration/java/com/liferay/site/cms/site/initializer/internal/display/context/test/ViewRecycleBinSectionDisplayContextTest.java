@@ -6,13 +6,27 @@
 package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
+import com.liferay.headless.asset.library.dto.v1_0.Settings;
+import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -25,11 +39,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -47,6 +63,72 @@ public class ViewRecycleBinSectionDisplayContextTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		AssetLibraryResource.Builder builder =
+			_assetLibraryResourceFactory.create();
+
+		_assetLibraryResource = builder.user(
+			UserTestUtil.getAdminUser(group.getCompanyId())
+		).build();
+	}
+
+	@Test
+	public void testGetCMSSectionFilterString() throws Exception {
+		AssetLibrary assetLibrary = _addAssetLibrary();
+
+		Settings settings = assetLibrary.getSettings();
+
+		settings.setTrashEnabled(true);
+
+		assetLibrary.setSettings(settings);
+
+		Object displayContext = getSectionDisplayContext(
+			getMockHttpServletRequest());
+
+		String filter = ReflectionTestUtil.invoke(
+			displayContext, "getCMSSectionFilterString", new Class<?>[0],
+			new Object[0]);
+
+		Group defaultGroup = _groupLocalService.loadGetGroup(
+			group.getCompanyId(), "Default");
+
+		Assert.assertTrue(
+			filter.contains(
+				StringBundler.concat(
+					"groupIds/any(g:g in (", defaultGroup.getGroupId(), ",",
+					assetLibrary.getSiteId())));
+
+		assetLibrary.getSettings(
+		).setTrashEnabled(
+			false
+		);
+
+		assetLibrary.setCreatorUserId(defaultGroup.getCreatorUserId());
+
+		Group assetLibraryGroup = _groupLocalService.getGroup(
+			assetLibrary.getSiteId());
+
+		UnicodeProperties unicodeProperties =
+			assetLibraryGroup.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty("trashEnabled", "false");
+
+		assetLibraryGroup.setTypeSettingsProperties(unicodeProperties);
+
+		_groupLocalService.updateGroup(assetLibraryGroup);
+
+		filter = ReflectionTestUtil.invoke(
+			displayContext, "getCMSSectionFilterString", new Class<?>[0],
+			new Object[0]);
+
+		Assert.assertTrue(
+			filter.contains(
+				"groupIds/any(g:g in (" + defaultGroup.getGroupId() + "))"));
+	}
 
 	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
@@ -73,6 +155,12 @@ public class ViewRecycleBinSectionDisplayContextTest
 		throws PortalException {
 
 		return Collections.emptyMap();
+	}
+
+	protected MockHttpServletRequest getMockHttpServletRequest()
+		throws Exception {
+
+		return getMockHttpServletRequest(null);
 	}
 
 	@Override
@@ -111,9 +199,38 @@ public class ViewRecycleBinSectionDisplayContextTest
 		return viewRecycleBinSectionDisplayContext;
 	}
 
+	private AssetLibrary _addAssetLibrary() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, DepotConstants.TYPE_SPACE,
+			new ServiceContext() {
+				{
+					setCompanyId(group.getCompanyId());
+					setUserId(
+						UserTestUtil.getAdminUser(
+							group.getCompanyId()
+						).getUserId());
+				}
+			});
+
+		return _assetLibraryResource.getAssetLibrary(depotEntry.getGroupId());
+	}
+
+	private AssetLibraryResource _assetLibraryResource;
+
+	@Inject
+	private AssetLibraryResource.Factory _assetLibraryResourceFactory;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
 	@Inject(
 		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewRecycleBinJSPSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 }

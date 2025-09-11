@@ -79,8 +79,9 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 		upgrade(
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(
-					"classNameId = (select classNameId from ClassName_ where ",
-					"value = '", FileEntry.class.getName(), "')"),
+					"classNameId in (select classNameId from ClassName_ where ",
+					"value in ('", FileEntry.class.getName(), "', '",
+					DLFileEntry.class.getName(), "'))"),
 				new String[] {"classNameId"}, "classPK",
 				new String[] {"fileEntryId"}, "DLFileEntry"));
 		upgrade(

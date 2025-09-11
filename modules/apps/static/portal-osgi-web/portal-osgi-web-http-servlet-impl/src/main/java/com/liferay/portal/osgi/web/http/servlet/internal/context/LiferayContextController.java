@@ -14,6 +14,8 @@ import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.track
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.FilterServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.ResourceServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.ServletServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.exception.IllegalContextNameException;
+import com.liferay.portal.osgi.web.http.servlet.internal.exception.IllegalContextPathException;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListenerRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListeners;
@@ -52,8 +54,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
-import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 import org.eclipse.equinox.http.servlet.internal.util.Path;

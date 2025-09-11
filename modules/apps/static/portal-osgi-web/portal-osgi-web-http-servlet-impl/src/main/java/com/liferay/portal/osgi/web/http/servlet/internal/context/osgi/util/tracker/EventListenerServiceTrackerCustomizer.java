@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
+import com.liferay.portal.osgi.web.http.servlet.internal.exception.HttpWhiteboardFailureException;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListenerRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EventListeners;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServiceHolder;
@@ -35,8 +36,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
-
-import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;

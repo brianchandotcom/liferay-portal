@@ -20,13 +20,12 @@ import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextW
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
+import jakarta.servlet.ServletException;
 
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import jakarta.servlet.ServletException;
-import org.eclipse.equinox.http.servlet.internal.error.RegisteredFilterException;
 import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
 import org.osgi.framework.BundleContext;

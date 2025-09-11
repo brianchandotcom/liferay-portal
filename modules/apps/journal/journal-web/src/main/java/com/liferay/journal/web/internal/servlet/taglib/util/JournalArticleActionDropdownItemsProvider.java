@@ -316,15 +316,10 @@ public class JournalArticleActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
-			() -> !JournalArticleLocalServiceUtil.isLatestVersion(
-				_article.getGroupId(), _article.getArticleId(),
-				_article.getVersion()),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> JournalArticlePermission.contains(
-							_themeDisplay.getPermissionChecker(), _article,
-							ActionKeys.DELETE),
+						this::_isDeleteActionAvailable,
 						_getDeleteArticleAction(
 							articleId, _themeDisplay.getURLCurrent())
 					).build());
@@ -1095,6 +1090,24 @@ public class JournalArticleActionDropdownItemsProvider {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isDeleteActionAvailable() throws PortalException {
+		if (!JournalArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), _article,
+				ActionKeys.DELETE)) {
+
+			return false;
+		}
+
+		int versionsCount = JournalArticleLocalServiceUtil.getArticlesCount(
+			_article.getGroupId(), _article.getArticleId());
+
+		if (versionsCount > 1) {
+			return true;
 		}
 
 		return false;

@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
@@ -103,6 +104,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -115,6 +117,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -142,6 +145,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
@@ -730,6 +736,62 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_objectFolderLocalService.deleteObjectFolder(objectFolder);
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testAddObjectDefinitionWithMissingWorkflowDefinitionReference()
+		throws Exception {
+
+		// Lazy referencing disabled
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.createWorkflowDefinitionLink(
+				0L);
+
+		workflowDefinitionLink.setUserId(TestPropsValues.getUserId());
+		workflowDefinitionLink.setWorkflowDefinitionName(
+			RandomTestUtil.randomString());
+
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			Collections.singletonList(workflowDefinitionLink);
+
+		String randomObjectDefinitionName =
+			ObjectDefinitionTestUtil.getRandomName();
+
+		AssertUtils.assertFailure(
+			NoSuchDefinitionException.class,
+			StringBundler.concat(
+				"No KaleoDefinition exists with the key {companyId=",
+				TestPropsValues.getCompanyId(), ", name=",
+				workflowDefinitionLink.getWorkflowDefinitionName(), "}"),
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				randomObjectDefinitionName, workflowDefinitionLinks));
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					randomObjectDefinitionName, workflowDefinitionLinks);
+
+			workflowDefinitionLink =
+				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
+					TestPropsValues.getCompanyId(), 0,
+					objectDefinition.getClassName(), 0, 0, true);
+
+			Assert.assertNotNull(workflowDefinitionLink);
+
+			KaleoDefinition kaleoDefinition =
+				_kaleoDefinitionLocalService.getKaleoDefinition(
+					workflowDefinitionLink.getWorkflowDefinitionName(),
+					ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, kaleoDefinition.getStatus());
+		}
 	}
 
 	@Test
@@ -3924,6 +3986,9 @@ public class ObjectDefinitionLocalServiceTest {
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Inject
 	private MessageBus _messageBus;
 
 	@Inject
@@ -3965,5 +4030,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

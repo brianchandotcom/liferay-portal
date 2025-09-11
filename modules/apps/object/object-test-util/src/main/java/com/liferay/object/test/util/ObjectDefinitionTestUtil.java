@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -93,6 +94,26 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return addCustomObjectDefinition(name, TestPropsValues.getUserId());
+	}
+
+	public static ObjectDefinition addCustomObjectDefinition(
+			String name, List<WorkflowDefinitionLink> workflowDefinitionLinks)
+		throws Exception {
+
+		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+			TestPropsValues.getUserId(), 0, null, false, false, true, false,
+			false, false, false, false, false, null,
+			LocalizedMapUtil.getLocalizedMap(name), name, null, null,
+			LocalizedMapUtil.getLocalizedMap(name), true,
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			Collections.emptyList(),
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), StringUtil.randomId())),
+			workflowDefinitionLinks);
 	}
 
 	public static ObjectDefinition addCustomObjectDefinition(

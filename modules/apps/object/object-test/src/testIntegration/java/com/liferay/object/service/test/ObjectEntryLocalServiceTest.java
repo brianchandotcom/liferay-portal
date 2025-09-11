@@ -1724,6 +1724,41 @@ public class ObjectEntryLocalServiceTest {
 				ObjectFieldUtil.getCounterName(objectField)));
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testAddObjectEntryWithEmptyWorkflowDefinition()
+		throws Exception {
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.createWorkflowDefinitionLink(
+				0L);
+
+		workflowDefinitionLink.setUserId(TestPropsValues.getUserId());
+		workflowDefinitionLink.setWorkflowDefinitionName(
+			RandomTestUtil.randomString());
+
+		ObjectDefinition objectDefinition = null;
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			objectDefinition =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					ObjectDefinitionTestUtil.getRandomName(),
+					List.of(workflowDefinitionLink));
+		}
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(), Map.of());
+
+		Assert.assertTrue(objectEntry.isApproved());
+	}
+
 	@Test
 	public void testAddObjectEntryWithEncryptedObjectField() throws Exception {
 		String key = ObjectFieldTestUtil.generateKey("AES");

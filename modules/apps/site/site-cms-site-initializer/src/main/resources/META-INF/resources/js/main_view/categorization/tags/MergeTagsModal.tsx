@@ -253,7 +253,6 @@ export default function MergeTagsModalContent({
 								setSelectedTags(setTag);
 							}}
 							selectedItemsKey="id"
-							selectionType="multiple"
 							views={[
 								{
 									contentRenderer: 'table',

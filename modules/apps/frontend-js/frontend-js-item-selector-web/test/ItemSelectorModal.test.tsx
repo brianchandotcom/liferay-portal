@@ -261,15 +261,7 @@ describe('ItemSelectorModal component', () => {
 
 		expect(selectedMessage).toBeInTheDocument();
 
-		expect(sub).toHaveBeenLastCalledWith(
-			'x-selected',
-			expect.objectContaining({
-				props: {
-					children: mockFirstItem.name,
-				},
-				type: 'strong',
-			})
-		);
+		expect(sub).toHaveBeenLastCalledWith('x-selected', mockFirstItem.name);
 	});
 
 	it('shows selected items when they are provided', async () => {
@@ -294,15 +286,7 @@ describe('ItemSelectorModal component', () => {
 
 		expect(selectedMessage).toBeInTheDocument();
 
-		expect(sub).toHaveBeenLastCalledWith(
-			'x-selected',
-			expect.objectContaining({
-				props: {
-					children: mockSecondItem.name,
-				},
-				type: 'strong',
-			})
-		);
+		expect(sub).toHaveBeenLastCalledWith('x-selected', mockSecondItem.name);
 
 		const select = await within(modal).findByRole('button', {
 			name: 'select',
@@ -507,14 +491,6 @@ describe('ItemSelectorModal component', () => {
 
 		expect(selectedMessage).toBeInTheDocument();
 
-		expect(sub).toHaveBeenLastCalledWith(
-			'x-selected',
-			expect.objectContaining({
-				props: {
-					children: mockFirstItem.name,
-				},
-				type: 'strong',
-			})
-		);
+		expect(sub).toHaveBeenLastCalledWith('x-selected', mockFirstItem.name);
 	});
 });

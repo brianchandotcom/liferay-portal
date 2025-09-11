@@ -91,6 +91,7 @@ export default function PicklistOptions() {
 				}) => {
 					removeOptions(selectedData.keyValues);
 				}}
+				selectionType="multiple"
 				style="fluid"
 				views={[
 					{

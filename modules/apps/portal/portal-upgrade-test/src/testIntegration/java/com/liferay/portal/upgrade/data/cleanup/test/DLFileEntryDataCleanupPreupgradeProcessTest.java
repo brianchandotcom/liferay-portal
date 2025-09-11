@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
@@ -186,9 +185,8 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 		dlFileEntryMetadata.setFileEntryId(dlFileEntry.getFileEntryId());
 		dlFileEntryMetadata.setFileVersionId(dlFileVersion.getFileVersionId());
 
-		dlFileEntryMetadata =
-			_dlFileEntryMetadataLocalService.addDLFileEntryMetadata(
-				dlFileEntryMetadata);
+		_dlFileEntryMetadataLocalService.addDLFileEntryMetadata(
+			dlFileEntryMetadata);
 
 		runSQL(
 			"delete from DLFileEntry where fileEntryId = " +
@@ -201,9 +199,6 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 		_ddmFieldLocalService.deleteDDMFields(
 			ddmStructureVersion.getStructureId());
-
-		_ddmStorageLinkLocalService.deleteClassStorageLink(
-			dlFileEntryMetadata.getDDMStorageId());
 
 		_ddmStructureLocalService.deleteStructure(ddmStructure);
 	}
@@ -270,9 +265,6 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private DDMStorageEngineManager _ddmStorageEngineManager;
-
-	@Inject
-	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

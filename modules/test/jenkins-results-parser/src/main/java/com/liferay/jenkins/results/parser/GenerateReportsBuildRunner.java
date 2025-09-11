@@ -149,17 +149,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private void _copyArchivedBuildData(
-		long durationDays, String startDateString) {
-
-		_copyArchivedBuildData(
-			durationDays, startDateString,
-			new File(_ARCHIVE_BASE_DIR_PATH + "/data"),
-			new File(_TMP_BASE_DIR_PATH + "/builds"));
-	}
-
-	private void _copyArchivedBuildData(
-		long durationDays, String startDateString, File archivedDataDir,
-		File outputDir) {
+		File archivedDataDir, long durationDays, File outputDir,
+		String startDateString) {
 
 		String[] dateStrings = JenkinsResultsParserUtil.getDateStrings(
 			durationDays, LocalDate.parse(startDateString, _dateTimeFormatter));
@@ -202,6 +193,14 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		catch (TimeoutException timeoutException) {
 			throw new RuntimeException(timeoutException);
 		}
+	}
+
+	private void _copyArchivedBuildData(
+		long durationDays, String startDateString) {
+
+		_copyArchivedBuildData(
+			new File(_ARCHIVE_BASE_DIR_PATH + "/data"), durationDays,
+			new File(_TMP_BASE_DIR_PATH + "/builds"), startDateString);
 	}
 
 	private void _copyArchivedNodeData(
@@ -345,9 +344,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_copyArchivedBuildData(reportDurationDays, startDateString);
 
 		_copyArchivedBuildData(
-			reportDurationDays, startDateString,
-			new File(_ARCHIVE_BASE_DIR_PATH + "/aws/data"),
-			new File(_TMP_BASE_DIR_PATH + "/aws/builds"));
+			new File(_ARCHIVE_BASE_DIR_PATH + "/aws/data"), reportDurationDays,
+			new File(_TMP_BASE_DIR_PATH + "/aws/builds"), startDateString);
 
 		String filePath = _getReportFilePath(reportName);
 

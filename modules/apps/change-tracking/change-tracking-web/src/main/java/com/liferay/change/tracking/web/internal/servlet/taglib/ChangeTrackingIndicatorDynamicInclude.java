@@ -308,10 +308,21 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		).build();
 
 		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (ctCollection != null) {
+		boolean cMS = false;
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-17564") &&
+			scopeGroup.isCMS()) {
+
+			cMS = true;
+		}
+
+		if ((ctCollection != null) && !cMS) {
 			ctCollectionId = ctCollection.getCtCollectionId();
 
+			data.put("disableDropdown", "false");
 			data.put("iconClass", "change-tracking-indicator-icon-publication");
 			data.put("iconName", "radio-button");
 
@@ -377,6 +388,13 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 		else {
+			if (cMS) {
+				data.put("disableDropdown", "true");
+			}
+			else {
+				data.put("disableDropdown", "false");
+			}
+
 			data.put("iconClass", "change-tracking-indicator-icon-production");
 			data.put("iconName", "simple-circle");
 			data.put(

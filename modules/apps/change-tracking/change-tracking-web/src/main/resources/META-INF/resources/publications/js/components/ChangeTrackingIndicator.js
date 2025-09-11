@@ -42,6 +42,7 @@ export default function ChangeTrackingIndicator({
 	checkoutDropdownItem,
 	contextChangeButtons,
 	createDropdownItem,
+	disableDropdown,
 	getConflictInfoURL,
 	getSelectPublicationsURL,
 	iconClass,
@@ -465,6 +466,10 @@ export default function ChangeTrackingIndicator({
 	};
 
 	const renderDropdown = () => {
+		if (disableDropdown === 'true') {
+			return renderTrigger;
+		}
+
 		return (
 			<ClayDropDownWithItems
 				alignmentPosition={Align.BottomCenter}
@@ -691,7 +696,9 @@ export default function ChangeTrackingIndicator({
 
 			<span className="change-tracking-indicator-title">{title}</span>
 
-			<ClayIcon symbol="caret-bottom" />
+			{disableDropdown === 'false' ? (
+				<ClayIcon symbol="caret-bottom" />
+			) : null}
 		</button>
 	);
 

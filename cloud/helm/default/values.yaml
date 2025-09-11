@@ -164,12 +164,13 @@ initContainers:
                 imagePullPolicy: IfNotPresent
                 name: liferay-wait-on-services
 livenessProbe:
-    failureThreshold: 2
+    failureThreshold: 3
     httpGet:
         path: /c/portal/robots
         port: http
-    initialDelaySeconds: 10
-    periodSeconds: 5
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    timeoutSeconds: 5
 nameOverride: ""
 nodeSelector: {}
 podAnnotations: {}
@@ -200,8 +201,9 @@ readinessProbe:
     httpGet:
         path: /c/portal/robots
         port: http
-    initialDelaySeconds: 10
-    periodSeconds: 5
+    initialDelaySeconds: 0
+    periodSeconds: 10
+    timeoutSeconds: 5
 replicaCount: 1
 resources: {}
 schedulingGates: []
@@ -237,12 +239,13 @@ serviceAccount:
                 verbs:
                     -   "*"
 startupProbe:
-    failureThreshold: 30
+    failureThreshold: 90
     httpGet:
         path: /c/portal/robots
         port: http
-    initialDelaySeconds: 20
-    periodSeconds: 5
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
 tolerations: []
 updateStrategy:
     type: RollingUpdate

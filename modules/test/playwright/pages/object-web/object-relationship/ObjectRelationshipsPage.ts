@@ -13,9 +13,10 @@ export class ObjectRelationshipsPage {
 	readonly cancelButton: Locator;
 	readonly deleteObjectRelationshipOption: Locator;
 	readonly editObjectRelationshipOption: Locator;
-	readonly inheritanceModalHeader: Locator;
-	readonly inheritanceModalDisableButton: Locator;
 	readonly inheritanceCheckbox: Locator;
+	readonly inheritanceModalConfirmationMessage: Locator;
+	readonly inheritanceModalDisableButton: Locator;
+	readonly inheritanceModalHeader: Locator;
 	readonly inheritanceWarningMessage: Locator;
 	readonly multipleParentInheritanceErrorMessage: Locator;
 	readonly relationshipTabItem: Locator;
@@ -34,15 +35,18 @@ export class ObjectRelationshipsPage {
 		this.editObjectRelationshipOption = page.getByRole('menuitem', {
 			name: 'Edit',
 		});
-		this.inheritanceModalHeader = page.getByRole('heading', {
-			name: 'Disable Inheritance Confirmation',
-		});
-		this.inheritanceModalDisableButton = page.getByRole('button', {
-			name: 'Disable',
-		});
 		this.inheritanceCheckbox = page
 			.frameLocator('iframe')
 			.getByRole('checkbox');
+		this.inheritanceModalConfirmationMessage = page.getByText(
+			`When you disable inheritance, the regular relationship is restored. New child object entries' permissions, workflow, API structure, and application UI are defined by the child object definition.`
+		);
+		this.inheritanceModalDisableButton = page.getByRole('button', {
+			name: 'Disable',
+		});
+		this.inheritanceModalHeader = page.getByRole('heading', {
+			name: 'Disable Inheritance Confirmation',
+		});
 		this.inheritanceWarningMessage = page
 			.frameLocator('iframe')
 			.getByText(

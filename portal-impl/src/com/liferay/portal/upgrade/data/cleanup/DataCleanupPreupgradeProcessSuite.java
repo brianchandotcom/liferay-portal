@@ -98,7 +98,8 @@ public class DataCleanupPreupgradeProcessSuite {
 
 			// Company, then user, then group, and then the rest for optimal
 			// performance since cleaning companies will remove its users,
-			// groups, and related data.
+			// groups, and related data. Journal related data must be last
+			// because DDMStructure needs it.
 
 			new CompanyDataCleanupPreupgradeProcess(),
 

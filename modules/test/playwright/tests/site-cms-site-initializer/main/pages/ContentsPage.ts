@@ -40,14 +40,16 @@ export class ContentsPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.newButton = page.getByLabel('New');
+		this.newButton = page.locator('.nav-item').getByLabel('New');
 		this.publishButton = page.getByText('Publish', {exact: true});
 	}
 
 	async goto() {
-		await this.page.goto(PORTLET_URLS.cmsContents);
+		await expect(async () => {
+			await this.page.goto(PORTLET_URLS.cmsContents);
 
-		await this.newButton.waitFor({state: 'visible'});
+			await this.newButton.waitFor({state: 'visible', timeout: 3000});
+		}).toPass();
 	}
 
 	async closeSidePanel() {

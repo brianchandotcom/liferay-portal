@@ -113,7 +113,7 @@ spec:
                         template: checkout-git-repository
                     -   arguments:
                             artifacts:
-                                -   from: {{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}
+                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
                                     name: git-repository
                             parameters:
                                 -   name: commit-message
@@ -128,13 +128,13 @@ spec:
                     -   arguments:
                             parameters:
                                 -   name: s3-bucket-id
-                                    value: {{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.s3-bucket-id-active}}
+                                    value: "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.s3-bucket-id-active}}"
                         depends: restart-liferay
                         name: clean-up-s3-bucket
                         template: clean-up-s3-bucket
                     -   arguments:
                             artifacts:
-                                -   from: {{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}
+                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
                                     name: git-repository
                         depends: checkout-git-repository
                         name: get-dependencies-module-outputs
@@ -146,7 +146,7 @@ spec:
                         template: restart-liferay
                     -   arguments:
                             artifacts:
-                                -   from: {{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}
+                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
                                     name: git-repository
                             parameters:
                                 -   name: commit-message
@@ -162,15 +162,15 @@ spec:
                     -   arguments:
                             parameters:
                                 -   name: s3-recovery-point-arn
-                                    value: {{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.s3-recovery-point-arn}}
+                                    value: "{{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.s3-recovery-point-arn}}"
                                 -   name: s3-bucket-id
-                                    value: {{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.s3-bucket-id-inactive}}
+                                    value: "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.s3-bucket-id-inactive}}"
                         depends: get-dependencies-module-outputs && get-peer-recovery-points
                         name: restore-s3-bucket
                         template: restore-s3-bucket
                     -   arguments:
                             artifacts:
-                                -   from: {{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}
+                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
                                     name: git-repository
                             parameters:
                                 -   name: commit-message
@@ -184,7 +184,7 @@ spec:
                         template: apply-terraform-dependencies-module
                     -   arguments:
                             artifacts:
-                                -   from: {{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}
+                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
                                     name: git-repository
                             parameters:
                                 -   name: commit-message

@@ -12,6 +12,8 @@ public class CMSSpaceConstants {
 
 	public static final String SPACE_STICKER_LG = "lg";
 
+	public static final String SPACE_STICKER_MD = "md";
+
 	public static final String SPACE_STICKER_SM = "sm";
 
 	public static final int SPACE_SUMMARY_PAGE = 1;

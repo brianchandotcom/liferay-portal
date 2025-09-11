@@ -50,7 +50,7 @@ public class BreadcrumbComponentSectionFragmentRenderer
 		BreadcrumbDisplayContext breadcrumbDisplayContext =
 			new BreadcrumbDisplayContext(
 				InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
-				httpServletRequest, CMSSpaceConstants.SPACE_STICKER_LG);
+				httpServletRequest, CMSSpaceConstants.SPACE_STICKER_MD);
 
 		return breadcrumbDisplayContext.getProps();
 	}

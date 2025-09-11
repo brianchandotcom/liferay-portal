@@ -49,7 +49,6 @@
 					"label": {
 						"en_US": "File"
 					},
-					"localized": false,
 					"name": "file",
 					"objectFieldSettings": [
 						{
@@ -252,7 +251,6 @@
 					"label": {
 						"en_US": "Cover Image"
 					},
-					"localized": false,
 					"name": "coverImage",
 					"objectFieldSettings": [
 						{
@@ -337,6 +335,7 @@
 			"titleObjectFieldName": "title"
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#P4T1",
 			"enableCategorization": true,
 			"externalReferenceCode": "L_BULK_ACTION_TASK",
 			"label": {
@@ -369,7 +368,6 @@
 					"label": {
 						"en_US": "Completion Date"
 					},
-					"localized": false,
 					"name": "completionDate",
 					"objectFieldSettings": [
 						{
@@ -384,7 +382,8 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Text",
+					"businessType": "Picklist",
+					"defaultValue": "initial",
 					"externalReferenceCode": "EXECUTION_STATUS",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -392,10 +391,10 @@
 					"label": {
 						"en_US": "Execution Status"
 					},
-					"localized": false,
+					"listTypeDefinitionExternalReferenceCode": "L_BULK_ACTION_TASK_EXECUTION_STATUSES",
 					"name": "executionStatus",
-					"required": false,
-					"state": false,
+					"required": true,
+					"state": true,
 					"system": true,
 					"type": "String"
 				},
@@ -408,7 +407,6 @@
 					"label": {
 						"en_US": "Number of Items"
 					},
-					"localized": false,
 					"name": "numberOfItems",
 					"objectFieldSettings": [
 						{
@@ -427,6 +425,38 @@
 					"type": "String"
 				},
 				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "NUMBER_OF_FAILED_ITEMS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Number of Failed Items"
+					},
+					"name": "numberOfFailedItems",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "NUMBER_OF_SUCCESSFUL_ITEMS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Number of Successful Items"
+					},
+					"name": "numberOfSuccessfulItems",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Integer"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "TYPE",
@@ -436,7 +466,6 @@
 					"label": {
 						"en_US": "Type"
 					},
-					"localized": false,
 					"name": "type",
 					"required": false,
 					"state": false,
@@ -468,7 +497,6 @@
 						"label": {
 							"en_US": "Bulk Action Task to Bulk Action Task Items"
 						},
-						"localized": false,
 						"name": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskId",
 						"objectFieldSettings": [
 							{
@@ -507,6 +535,7 @@
 			"titleObjectFieldName": "id"
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#S8R3",
 			"enableCategorization": true,
 			"externalReferenceCode": "L_BULK_ACTION_TASK_ITEM",
 			"label": {
@@ -525,7 +554,6 @@
 					"label": {
 						"en_US": "Class External Reference Code"
 					},
-					"localized": false,
 					"name": "classExternalReferenceCode",
 					"required": false,
 					"state": false,
@@ -541,7 +569,6 @@
 					"label": {
 						"en_US": "Class PK"
 					},
-					"localized": false,
 					"name": "classPK",
 					"required": false,
 					"state": false,
@@ -549,8 +576,8 @@
 					"type": "Long"
 				},
 				{
-					"DBType": "String",
-					"businessType": "Text",
+					"DBType": "Clob",
+					"businessType": "LongText",
 					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -558,16 +585,16 @@
 					"label": {
 						"en_US": "Description"
 					},
-					"localized": false,
 					"name": "description",
 					"required": false,
 					"state": false,
 					"system": true,
-					"type": "String"
+					"type": "Clob"
 				},
 				{
 					"DBType": "String",
-					"businessType": "Text",
+					"businessType": "Picklist",
+					"defaultValue": "initial",
 					"externalReferenceCode": "EXECUTION_STATUS",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -575,10 +602,10 @@
 					"label": {
 						"en_US": "Execution Status"
 					},
-					"localized": false,
+					"listTypeDefinitionExternalReferenceCode": "L_BULK_ACTION_TASK_ITEM_EXECUTION_STATUSES",
 					"name": "executionStatus",
-					"required": false,
-					"state": false,
+					"required": true,
+					"state": true,
 					"system": true,
 					"type": "String"
 				},
@@ -591,7 +618,6 @@
 					"label": {
 						"en_US": "Import Task ID"
 					},
-					"localized": false,
 					"name": "importTaskId",
 					"required": false,
 					"state": false,
@@ -608,7 +634,6 @@
 					"label": {
 						"en_US": "Name"
 					},
-					"localized": false,
 					"name": "name",
 					"required": false,
 					"state": false,
@@ -625,7 +650,6 @@
 					"label": {
 						"en_US": "Type"
 					},
-					"localized": false,
 					"name": "type",
 					"required": false,
 					"state": false,
@@ -676,7 +700,6 @@
 					"label": {
 						"en_US": "Class External Reference Code"
 					},
-					"localized": false,
 					"name": "classExternalReferenceCode",
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
@@ -697,7 +720,6 @@
 					"label": {
 						"en_US": "Class Name"
 					},
-					"localized": false,
 					"name": "className",
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
@@ -718,7 +740,6 @@
 					"label": {
 						"en_US": "Default Permissions"
 					},
-					"localized": false,
 					"name": "defaultPermissions",
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",

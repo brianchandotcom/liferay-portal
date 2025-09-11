@@ -6,7 +6,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {openToast} from 'frontend-js-components-web';
-
 import React from 'react';
 
 import WebdavURLCopyButton from '../../../src/main/resources/META-INF/resources/js/document_library/WebdavURLCopyButton';

@@ -123,7 +123,7 @@ spec:
                                         data_active = "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-inactive}}"
                                         is_restoring = false
                         depends: restart-liferay
-                        name: cleanup-rds-instance
+                        name: clean-up-rds-instance
                         template: apply-terraform-dependencies-module
                     -   arguments:
                             parameters:

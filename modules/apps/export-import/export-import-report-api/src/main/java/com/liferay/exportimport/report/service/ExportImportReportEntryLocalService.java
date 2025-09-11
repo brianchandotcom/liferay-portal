@@ -59,6 +59,7 @@ public interface ExportImportReportEntryLocalService
 		int origin, String scope, String scopeKey);
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long classPK, long exportImportConfigurationId,

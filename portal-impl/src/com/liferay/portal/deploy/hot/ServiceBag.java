@@ -6,6 +6,8 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
@@ -36,18 +38,16 @@ public class ServiceBag<V> {
 		if (!(previousService instanceof ServiceWrapper)) {
 			Class<?> previousServiceClass = previousService.getClass();
 
-			ClassLoader previousServiceAggregateClassLoader =
-				AggregateClassLoader.getAggregateClassLoader(
-					previousServiceClass.getClassLoader(),
-					IdentifiableOSGiService.class.getClassLoader());
+			ClassLoader classLoader = _getClassLoader(
+				previousServiceClass.getClassLoader(),
+				IdentifiableOSGiService.class);
 
 			previousService = ProxyUtil.newProxyInstance(
-				previousServiceAggregateClassLoader,
+				classLoader,
 				new Class<?>[] {
 					serviceTypeClass, IdentifiableOSGiService.class
 				},
-				new ClassLoaderBeanHandler(
-					previousService, previousServiceAggregateClassLoader));
+				new ClassLoaderBeanHandler(previousService, classLoader));
 
 			serviceWrapper.setWrappedService((V)previousService);
 		}
@@ -55,9 +55,9 @@ public class ServiceBag<V> {
 		Class<?> clazz = serviceWrapper.getClass();
 
 		Object nextTarget = ProxyUtil.newProxyInstance(
-			AggregateClassLoader.getAggregateClassLoader(
+			_getClassLoader(
 				serviceTypeClass.getClassLoader(),
-				IdentifiableOSGiService.class.getClassLoader()),
+				IdentifiableOSGiService.class),
 			new Class<?>[] {
 				serviceTypeClass, ServiceWrapper.class,
 				IdentifiableOSGiService.class
@@ -138,6 +138,30 @@ public class ServiceBag<V> {
 			_bundleContext.ungetService(_serviceReference);
 		}
 	}
+
+	private ClassLoader _getClassLoader(
+		ClassLoader classLoader, Class<?> clazz) {
+
+		try {
+			if ((classLoader == clazz.getClassLoader()) ||
+				(clazz == classLoader.loadClass(clazz.getName()))) {
+
+				return classLoader;
+			}
+		}
+		catch (ClassNotFoundException classNotFoundException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					classLoader + " can not load " + clazz,
+					classNotFoundException);
+			}
+		}
+
+		return AggregateClassLoader.getAggregateClassLoader(
+			classLoader, clazz.getClassLoader());
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ServiceBag.class);
 
 	private final AopInvocationHandler _aopInvocationHandler;
 	private final BundleContext _bundleContext;

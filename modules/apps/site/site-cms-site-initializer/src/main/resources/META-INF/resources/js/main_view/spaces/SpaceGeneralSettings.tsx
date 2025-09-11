@@ -49,9 +49,7 @@ export default function SpaceGeneralSettings({
 	setSpace?: React.Dispatch<React.SetStateAction<any>>;
 	space: Space;
 }) {
-	const [originalERC, setOriginalERC] = useState(
-		space?.externalReferenceCode
-	);
+	const [initialERC, setInitialERC] = useState(space.externalReferenceCode);
 
 	const id = useId();
 	const mimeTypeLimits = space.settings?.mimeTypeLimits;
@@ -76,7 +74,7 @@ export default function SpaceGeneralSettings({
 	} = useFormik({
 		initialValues: {
 			description: space.description,
-			erc: originalERC,
+			erc: initialERC,
 			logoColor: space.settings?.logoColor as LogoColor,
 			mimeTypeLimits: mimeTypeLimitsWithIds,
 			name: space.name,
@@ -92,7 +90,7 @@ export default function SpaceGeneralSettings({
 				sharingEnabled,
 			} = values;
 
-			const {data, error} = await SpaceService.updateSpace(originalERC, {
+			const {data, error} = await SpaceService.updateSpace(initialERC, {
 				description,
 				externalReferenceCode: erc,
 				name,
@@ -128,7 +126,7 @@ export default function SpaceGeneralSettings({
 
 				if (setSpace) {
 					setSpace(updatedSpace);
-					setOriginalERC(updatedSpace.externalReferenceCode);
+					setInitialERC(updatedSpace.externalReferenceCode);
 				}
 			}
 		},

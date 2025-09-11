@@ -97,8 +97,8 @@ public abstract class Registration<S, D extends DTO> {
 					_condition.signalAll();
 				}
 				finally {
-					_writeLock.unlock();
 					_readLock.lock();
+					_writeLock.unlock();
 				}
 			}
 		}

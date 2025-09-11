@@ -6,7 +6,7 @@ set -eu
 function main {
 	cp /mnt/.git-credentials /tmp/.git-credentials
 
-    git config --global credential.helper 'store --file /tmp/.git-credentials'
+    git config --global credential.helper "store --file /tmp/.git-credentials"
     git config --global user.email "{{ .Values.git.user.emailAddress }}"
 	git config --global user.name "{{ .Values.git.user.name }}"
 
@@ -39,7 +39,7 @@ set -eu
 function main {
     cp /mnt/.git-credentials /tmp/.git-credentials
 
-    git config --global credential.helper 'store --file /tmp/.git-credentials'
+    git config --global credential.helper "store --file /tmp/.git-credentials"
 
     git \
     	clone \
@@ -119,7 +119,7 @@ function get_recovery_point_arn_by_type {
 
     local filtered_recovery_points_length
 
-    filtered_recovery_points_length=$(echo "${filtered_recovery_points_json}" | jq 'length')
+    filtered_recovery_points_length=$(echo "${filtered_recovery_points_json}" | jq "length")
 
     if [ "${filtered_recovery_points_length}" -ne 1 ]
     then
@@ -143,7 +143,7 @@ function main {
 
     local creation_date
 
-    creation_date=$(echo "${recovery_point_details}" | jq --raw-output '.CreationDate')
+    creation_date=$(echo "${recovery_point_details}" | jq --raw-output ".CreationDate")
 
     if [ -z "${creation_date}" ] || [ "${creation_date}" = "null" ]
     then
@@ -173,7 +173,7 @@ function main {
 			--backup-vault-name "{{ .Values.awsBackupService.vaultName }}" \
 			--by-created-after "${by_created_after}" \
 			--by-created-before "${by_created_before}" \
-			| jq --arg creation_date "${creation_date}" '[.RecoveryPoints[] | select(.CreationDate == $creation_date)]')
+			| jq --arg creation_date "${creation_date}" "[.RecoveryPoints[] | select(.CreationDate == \$creation_date)]")
 
     local rds_recovery_point_arn
 
@@ -184,7 +184,7 @@ function main {
     rds_snapshot_id=$( \
     	echo \
 			"${rds_recovery_point_arn}" \
-			| awk --field-separator "snapshot:" '{print $2}')
+			| awk --field-separator "snapshot:" "{print \$2}")
 
     if [ -z "${rds_snapshot_id}" ]
     then
@@ -221,7 +221,7 @@ function main {
 			--metadata "DestinationBucketName={{ "{{" }}inputs.parameters.s3-bucket-id}},NewBucket=false" \
 			--recovery-point-arn "{{ "{{" }}inputs.parameters.recovery-point-arn}}" \
 			--resource-type "S3" \
-			| jq --raw-output '.RestoreJobId')
+			| jq --raw-output ".RestoreJobId")
 
     local timeout
 
@@ -239,7 +239,7 @@ function main {
 
         local restore_job_status
 
-    	restore_job_status=$(echo "${restore_job_status_json}" | jq --raw-output '.Status')
+    	restore_job_status=$(echo "${restore_job_status_json}" | jq --raw-output ".Status")
 
         if [ "${restore_job_status}" = "ABORTED" ] || [ "${restore_job_status}" = "FAILED" ]
         then
@@ -248,7 +248,7 @@ function main {
             restore_job_status_message=$( \
                 echo \
                     "${restore_job_status_json}" \
-                    | jq --raw-output '.StatusMessage')
+                    | jq --raw-output ".StatusMessage")
 
             echo "The restore job \"${restore_job_id}\" failed with status \"${restore_job_status}\": ${restore_job_status_message}." >&2
 

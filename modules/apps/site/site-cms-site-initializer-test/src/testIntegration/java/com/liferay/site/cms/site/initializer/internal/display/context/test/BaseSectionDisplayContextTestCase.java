@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,13 +55,12 @@ import com.liferay.portal.test.rule.Inject;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -625,33 +623,26 @@ public abstract class BaseSectionDisplayContextTestCase
 			).build()
 		).put(
 			"roles",
-			() -> {
-				Set<String> excludedRoleNamesSet = new HashSet<String>() {
-					{
-						add(RoleConstants.ADMINISTRATOR);
-						add(RoleConstants.SITE_ADMINISTRATOR);
-						add(RoleConstants.SITE_OWNER);
-					}
-				};
-
-				return TransformUtil.transformToArray(
-					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-						TestPropsValues.getCompanyId(), null,
-						ListUtil.fromCollection(excludedRoleNamesSet), null,
-						null,
-						new int[] {
-							RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
-						},
-						0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					role -> HashMapBuilder.put(
-						"key", role.getName()
-					).put(
-						"name", role.getTitle(LocaleUtil.US)
-					).put(
-						"type", String.valueOf(role.getType())
-					).build(),
-					Map.class);
-			}
+			() -> TransformUtil.transformToArray(
+				RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+					TestPropsValues.getCompanyId(), null,
+					Arrays.asList(
+						RoleConstants.ADMINISTRATOR,
+						RoleConstants.SITE_ADMINISTRATOR,
+						RoleConstants.SITE_OWNER),
+					null, null,
+					new int[] {
+						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
+					},
+					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				role -> HashMapBuilder.put(
+					"key", role.getName()
+				).put(
+					"name", role.getTitle(LocaleUtil.US)
+				).put(
+					"type", String.valueOf(role.getType())
+				).build(),
+				Map.class)
 		).build();
 	}
 

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import java.util.Arrays;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -645,19 +646,13 @@ public abstract class BaseSectionDisplayContext {
 			).build()
 		).put(
 			"roles",
-			() -> {
-				Set<String> excludedRoleNamesSet = new HashSet<String>() {
-					{
-						add(RoleConstants.ADMINISTRATOR);
-						add(RoleConstants.SITE_ADMINISTRATOR);
-						add(RoleConstants.SITE_OWNER);
-					}
-				};
-
-				return TransformUtil.transformToArray(
+			() -> TransformUtil.transformToArray(
 					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
 						themeDisplay.getCompanyId(), null,
-						ListUtil.fromCollection(excludedRoleNamesSet), null,
+						Arrays.asList(
+							RoleConstants.ADMINISTRATOR,
+							RoleConstants.SITE_ADMINISTRATOR,
+							RoleConstants.SITE_OWNER), null,
 						null,
 						new int[] {
 							RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
@@ -670,8 +665,7 @@ public abstract class BaseSectionDisplayContext {
 					).put(
 						"type", String.valueOf(role.getType())
 					).build(),
-					Map.class);
-			}
+					Map.class)
 		).build();
 	}
 

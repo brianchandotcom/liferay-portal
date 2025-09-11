@@ -48,9 +48,9 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 /**
  * @author Dante Wang
  */
-public class EventListenerServiceTrackerCustomizer
+public class EventListenerServiceTrackerCustomizer<S extends EventListener>
 	extends BaseServiceTrackerCustomizer
-		<EventListener, EventListenerRegistration,
+		<S, EventListenerRegistration,
 		 AtomicReference<EventListenerRegistration>> {
 
 	public EventListenerServiceTrackerCustomizer(
@@ -68,7 +68,7 @@ public class EventListenerServiceTrackerCustomizer
 
 	@Override
 	public AtomicReference<EventListenerRegistration> addingService(
-		ServiceReference<EventListener> serviceReference) {
+		ServiceReference<S> serviceReference) {
 
 		Object listenerObject = serviceReference.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER);
@@ -109,11 +109,11 @@ public class EventListenerServiceTrackerCustomizer
 	}
 
 	private EventListenerRegistration _addListenerRegistration(
-		ServiceReference<EventListener> serviceReference) {
+		ServiceReference<S> serviceReference) {
 
 		liferayContextController.checkShutdown();
 
-		ServiceHolder<EventListener> serviceHolder = new ServiceHolder<>(
+		ServiceHolder<S> serviceHolder = new ServiceHolder<>(
 			bundleContext.getServiceObjects(serviceReference));
 
 		EventListener eventListener = serviceHolder.get();
@@ -155,7 +155,7 @@ public class EventListenerServiceTrackerCustomizer
 			listenerRegistration = new EventListenerRegistration(
 				eventListenerClasses, liferayContextController,
 				_createListenerDTO(eventListenerClasses, serviceReference),
-				serviceHolder, servletContext);
+				(ServiceHolder<EventListener>)serviceHolder, servletContext);
 
 			if (eventListenerClasses.contains(ServletContextListener.class)) {
 				ServletContextListener servletContextListener =
@@ -183,7 +183,7 @@ public class EventListenerServiceTrackerCustomizer
 
 	private ListenerDTO _createListenerDTO(
 		List<Class<? extends EventListener>> eventListenerClasses,
-		ServiceReference<EventListener> serviceReference) {
+		ServiceReference<S> serviceReference) {
 
 		ListenerDTO listenerDTO = new ListenerDTO();
 
@@ -197,7 +197,7 @@ public class EventListenerServiceTrackerCustomizer
 	}
 
 	private List<Class<? extends EventListener>> _getEventListenerClasses(
-		ServiceReference<EventListener> serviceReference) {
+		ServiceReference<S> serviceReference) {
 
 		List<Class<? extends EventListener>> eventListenerClasses =
 			new ArrayList<>();

@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -124,9 +124,10 @@ public class ObjectDefinitionTreeUtilTest {
 		ObjectDefinition objectDefinitionAAA =
 			_addAndPublishCustomObjectDefinition("AAA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionAA.getObjectDefinitionId(),
-			objectDefinitionAAA.getObjectDefinitionId());
+			objectDefinitionAAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		_testBindObjectDefinitions(
 			objectDefinitionAAA,
@@ -261,17 +262,19 @@ public class ObjectDefinitionTreeUtilTest {
 		objectDefinitionAA = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			"AA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId());
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		objectDefinitionAAA = _addAndPublishCustomObjectDefinition("AAA");
 		ObjectDefinition objectDefinitionAAAA =
 			_addAndPublishCustomObjectDefinition("AAAA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionAAA.getObjectDefinitionId(),
-			objectDefinitionAAAA.getObjectDefinitionId());
+			objectDefinitionAAAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		_testBindObjectDefinitions(
 			objectDefinitionAA, objectDefinitionAAA,
@@ -313,9 +316,10 @@ public class ObjectDefinitionTreeUtilTest {
 		objectDefinitionAA = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			"AA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId());
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		_testBindObjectDefinitions(
 			objectDefinitionAA, _addAndPublishCustomObjectDefinition("AAA"),
@@ -420,18 +424,20 @@ public class ObjectDefinitionTreeUtilTest {
 		objectDefinitionAA = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			"AA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId());
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		objectDefinitionAAA =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("AAA");
 		ObjectDefinition objectDefinitionAAAA =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("AAAA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionAAA.getObjectDefinitionId(),
-			objectDefinitionAAAA.getObjectDefinitionId());
+			objectDefinitionAAAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		_testBindObjectDefinitions(
 			objectDefinitionAA, objectDefinitionAAA,
@@ -568,9 +574,10 @@ public class ObjectDefinitionTreeUtilTest {
 			ObjectRelationshipEdgeException.class,
 			"The object relationship cannot be an edge in the root context " +
 				"because it would exceed the tree's maximum height",
-			() -> _bindObjectDefinitions(
+			() -> TreeTestUtil.bind(
 				objectDefinitionAAAAA.getObjectDefinitionId(),
-				objectDefinitionAAAAAA.getObjectDefinitionId()));
+				objectDefinitionAAAAAA.getObjectDefinitionId(),
+				_objectRelationshipLocalService));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -616,9 +623,10 @@ public class ObjectDefinitionTreeUtilTest {
 			ObjectRelationshipEdgeException.class,
 			"The object relationship cannot be an edge in the root context " +
 				"because it would exceed the tree's maximum height",
-			() -> _bindObjectDefinitions(
+			() -> TreeTestUtil.bind(
 				objectDefinitionAAA.getObjectDefinitionId(),
-				objectDefinitionAAAA.getObjectDefinitionId()));
+				objectDefinitionAAAA.getObjectDefinitionId(),
+				_objectRelationshipLocalService));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -935,9 +943,10 @@ public class ObjectDefinitionTreeUtilTest {
 		ObjectDefinition objectDefinitionAAA =
 			_addAndPublishCustomObjectDefinition("AAA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionAA.getObjectDefinitionId(),
-			objectDefinitionAAA.getObjectDefinitionId());
+			objectDefinitionAAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		ObjectDefinition objectDefinitionAAAA =
 			_addAndPublishCustomObjectDefinition("AAAA");
@@ -997,16 +1006,18 @@ public class ObjectDefinitionTreeUtilTest {
 			_addAndPublishCustomObjectDefinition("A");
 		objectDefinitionAA = _addAndPublishCustomObjectDefinition("AA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId());
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		objectDefinitionAAA = _addAndPublishCustomObjectDefinition("AAA");
 		objectDefinitionAAAA = _addAndPublishCustomObjectDefinition("AAAA");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionAAA.getObjectDefinitionId(),
-			objectDefinitionAAAA.getObjectDefinitionId());
+			objectDefinitionAAAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		_testBindObjectDefinitions(
 			objectDefinitionAA, objectDefinitionAAA,
@@ -1080,9 +1091,10 @@ public class ObjectDefinitionTreeUtilTest {
 						"scope",
 				objectDefinitionB.getShortName(),
 				siteObjectDefinition.getShortName()),
-			() -> _bindObjectDefinitions(
+			() -> TreeTestUtil.bind(
 				objectDefinitionB.getObjectDefinitionId(),
-				siteObjectDefinition.getObjectDefinitionId()));
+				siteObjectDefinition.getObjectDefinitionId(),
+				_objectRelationshipLocalService));
 
 		// Unable to bind the object definitions because the object relationship
 		// must not create a circular reference in a root context
@@ -1090,26 +1102,29 @@ public class ObjectDefinitionTreeUtilTest {
 		ObjectDefinition objectDefinitionBBB =
 			_addAndPublishCustomObjectDefinition("BBB");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionBB.getObjectDefinitionId(),
-			objectDefinitionBBB.getObjectDefinitionId());
+			objectDefinitionBBB.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
 			"The object relationship must not create a circular reference in " +
 				"a root context",
-			() -> _bindObjectDefinitions(
+			() -> TreeTestUtil.bind(
 				objectDefinitionBBB.getObjectDefinitionId(),
-				objectDefinitionB.getObjectDefinitionId()));
+				objectDefinitionB.getObjectDefinitionId(),
+				_objectRelationshipLocalService));
 
 		ObjectDefinition objectDefinitionC =
 			_addAndPublishCustomObjectDefinition("C");
 		ObjectDefinition objectDefinitionCC =
 			_addAndPublishCustomObjectDefinition("CC");
 
-		_bindObjectDefinitions(
+		TreeTestUtil.bind(
 			objectDefinitionC.getObjectDefinitionId(),
-			objectDefinitionCC.getObjectDefinitionId());
+			objectDefinitionCC.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -1157,100 +1172,11 @@ public class ObjectDefinitionTreeUtilTest {
 	public void testUnbindObjectDefinitionsWithObjectEntries()
 		throws Exception {
 
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionAAA =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipAA_AAA = TreeTestUtil.bind(
-			objectDefinitionAA.getObjectDefinitionId(),
-			objectDefinitionAAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectEntry objectEntryA = _addObjectEntry(
-			objectDefinitionA, Collections.emptyMap());
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), objectDefinitionA.getClassName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(objectEntryA.getObjectEntryId()), role.getRoleId(),
-			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectRelationshipA_AA.getObjectFieldId2());
-
-		ObjectEntry objectEntryAA1 = _addObjectEntry(
-			objectDefinitionAA,
-			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntryA.getObjectEntryId()
-			).build());
-		ObjectEntry objectEntryAA2 = _addObjectEntry(
-			objectDefinitionAA,
-			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntryA.getObjectEntryId()
-			).build());
-
-		objectField = _objectFieldLocalService.fetchObjectField(
-			objectRelationshipAA_AAA.getObjectFieldId2());
-
-		ObjectEntry objectEntryAAA1 = _addObjectEntry(
-			objectDefinitionAAA,
-			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntryAA1.getObjectEntryId()
-			).build());
-		ObjectEntry objectEntryAAA2 = _addObjectEntry(
-			objectDefinitionAAA,
-			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntryAA2.getObjectEntryId()
-			).build());
-
-		TreeTestUtil.unbind(
-			objectRelationshipA_AA, _objectRelationshipLocalService);
-
-		_entityCache.clearCache();
-
-		_assertRootObjectEntryId(0, objectEntryA.getObjectEntryId());
-		_assertRootObjectEntryId(
-			objectEntryAA1.getObjectEntryId(),
-			objectEntryAA1.getObjectEntryId());
-		_assertRootObjectEntryId(
-			objectEntryAA1.getObjectEntryId(),
-			objectEntryAAA1.getObjectEntryId());
-		_assertRootObjectEntryId(
-			objectEntryAA2.getObjectEntryId(),
-			objectEntryAA2.getObjectEntryId());
-		_assertRootObjectEntryId(
-			objectEntryAA2.getObjectEntryId(),
-			objectEntryAAA2.getObjectEntryId());
-
-		_assertHasResourcePermission(true, objectEntryA, role);
-		_assertHasResourcePermission(false, objectEntryAA1, role);
-		_assertHasResourcePermission(false, objectEntryAA2, role);
-		_assertHasResourcePermission(false, objectEntryAAA1, role);
-		_assertHasResourcePermission(false, objectEntryAAA2, role);
-
-		TreeTestUtil.unbind(
-			objectRelationshipAA_AAA, _objectRelationshipLocalService);
-
-		_entityCache.clearCache();
-
-		_assertRootObjectEntryId(0, objectEntryAA1.getObjectEntryId());
-		_assertRootObjectEntryId(0, objectEntryAA2.getObjectEntryId());
-		_assertRootObjectEntryId(0, objectEntryAAA1.getObjectEntryId());
-		_assertRootObjectEntryId(0, objectEntryAAA2.getObjectEntryId());
-
-		_assertHasResourcePermission(false, objectEntryAAA1, role);
-		_assertHasResourcePermission(false, objectEntryAAA2, role);
+		_testUnbindObjectDefinitionsWithObjectEntries();
+		_testUnbindObjectDefinitionsWithObjectEntriesWithDescendantAndParentNodes();
+		_testUnbindObjectDefinitionsWithObjectEntriesWithDescendantNode();
+		_testUnbindObjectDefinitionsWithObjectEntriesWithParentNode();
+		_testUnbindObjectDefinitionsWithObjectEntriesWithParentNodes();
 	}
 
 	@Test
@@ -1982,31 +1908,6 @@ public class ObjectDefinitionTreeUtilTest {
 			null, values, ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _assertHasResourcePermission(
-			boolean expectedHasResourcePermission, ObjectEntry objectEntry,
-			Role role)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		Assert.assertEquals(
-			expectedHasResourcePermission,
-			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(objectEntry.getObjectEntryId()),
-				role.getRoleId(), ActionKeys.UPDATE));
-		Assert.assertEquals(
-			expectedHasResourcePermission,
-			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(objectEntry.getObjectEntryId()),
-				role.getRoleId(), ActionKeys.VIEW));
-	}
-
 	private void _assertRootObjectDefinitionIdIsZero(
 			String objectDefinitionShortName)
 		throws Exception {
@@ -2019,14 +1920,21 @@ public class ObjectDefinitionTreeUtilTest {
 		Assert.assertEquals(0, objectDefinition.getRootObjectDefinitionId());
 	}
 
-	private void _assertRootObjectEntryId(
-		long expectedRootObjectEntryId, long objectEntryId) {
+	private void _assertRootObjectEntryIds(Map<ObjectEntry, Long> expectedMap)
+		throws Exception {
 
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			objectEntryId);
+		_entityCache.clearCache();
 
-		Assert.assertEquals(
-			expectedRootObjectEntryId, objectEntry.getRootObjectEntryId());
+		for (Map.Entry<ObjectEntry, Long> entry : expectedMap.entrySet()) {
+			ObjectEntry objectEntry = entry.getKey();
+
+			objectEntry = _objectEntryLocalService.getObjectEntry(
+				objectEntry.getObjectEntryId());
+
+			Assert.assertEquals(
+				GetterUtil.getLong(entry.getValue()),
+				objectEntry.getRootObjectEntryId());
+		}
 	}
 
 	private void _assertScreenNavigationCategories(
@@ -2045,43 +1953,6 @@ public class ObjectDefinitionTreeUtilTest {
 		Assert.assertEquals(
 			screenNavigationCategories.toString(), expectedSize,
 			screenNavigationCategories.size());
-	}
-
-	private void _assertWorkflowDefinitionLink(String objectDefinitionName)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), objectDefinitionName);
-
-		List<WorkflowDefinitionLink> workflowDefinitionLinks =
-			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getClassName());
-
-		Assert.assertEquals(
-			workflowDefinitionLinks.toString(), 1,
-			workflowDefinitionLinks.size());
-
-		WorkflowDefinitionLink workflowDefinitionLink =
-			workflowDefinitionLinks.get(0);
-
-		Assert.assertEquals(
-			"Single Approver",
-			workflowDefinitionLink.getWorkflowDefinitionName());
-	}
-
-	private ObjectRelationship _bindObjectDefinitions(
-			long objectDefinitionId1, long objectDefinitionId2)
-		throws Exception {
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			StringUtil.randomId(), TestPropsValues.getUserId(),
-			objectDefinitionId1, objectDefinitionId2, 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 	private void _completeWorkflowTask(String className, long classPK)
@@ -2125,9 +1996,10 @@ public class ObjectDefinitionTreeUtilTest {
 				biConsumer)
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _bindObjectDefinitions(
+		ObjectRelationship objectRelationship = TreeTestUtil.bind(
 			objectDefinition1.getObjectDefinitionId(),
-			objectDefinition2.getObjectDefinitionId());
+			objectDefinition2.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		Assert.assertTrue(objectRelationship.isEdge());
 		Assert.assertEquals(
@@ -2450,6 +2322,478 @@ public class ObjectDefinitionTreeUtilTest {
 		Assert.assertFalse(objectAction.isActive());
 	}
 
+	private void _testUnbindObjectDefinitionsWithObjectEntries()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			_addAndPublishCustomObjectDefinition();
+		ObjectDefinition objectDefinitionAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectEntry objectEntryA1 = _addObjectEntry(
+			objectDefinitionA, Map.of());
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA1 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(objectField.getName(), objectEntryA1.getObjectEntryId()));
+
+		ObjectEntry objectEntryA2 = _addObjectEntry(
+			objectDefinitionA, Map.of());
+
+		ObjectEntry objectEntryAA2 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(objectField.getName(), objectEntryA2.getObjectEntryId()));
+
+		ObjectEntry objectEntryAA3 = _addObjectEntry(
+			objectDefinitionAA, Map.of());
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryAA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAA3, 0L
+			).build());
+
+		TreeTestUtil.unbind(
+			objectRelationshipA_AA, _objectRelationshipLocalService);
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA1, 0L
+			).put(
+				objectEntryA2, 0L
+			).put(
+				objectEntryAA1, 0L
+			).put(
+				objectEntryAA2, 0L
+			).put(
+				objectEntryAA3, 0L
+			).build());
+	}
+
+	private void _testUnbindObjectDefinitionsWithObjectEntriesWithDescendantAndParentNodes()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			_addAndPublishCustomObjectDefinition();
+		ObjectDefinition objectDefinitionAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectDefinition objectDefinitionAAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipAA_AAA = TreeTestUtil.bind(
+			objectDefinitionAA.getObjectDefinitionId(),
+			objectDefinitionAAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectDefinition objectDefinitionB =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipB_AA = TreeTestUtil.bind(
+			objectDefinitionB.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectEntry objectEntryA = _addObjectEntry(objectDefinitionA, Map.of());
+
+		ObjectField objectRelationshipA_AAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA1 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(
+				objectRelationshipA_AAObjectField.getName(),
+				objectEntryA.getObjectEntryId()));
+
+		ObjectField objectRelationshipAA_AAAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipAA_AAA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAAA1 = _addObjectEntry(
+			objectDefinitionAAA,
+			Map.of(
+				objectRelationshipAA_AAAObjectField.getName(),
+				objectEntryAA1.getObjectEntryId()));
+
+		ObjectEntry objectEntryB = _addObjectEntry(objectDefinitionB, Map.of());
+
+		ObjectField objectRelationshipB_AAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipB_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA2 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(
+				objectRelationshipB_AAObjectField.getName(),
+				objectEntryB.getObjectEntryId()));
+
+		ObjectEntry objectEntryAAA2 = _addObjectEntry(
+			objectDefinitionAAA,
+			Map.of(
+				objectRelationshipAA_AAAObjectField.getName(),
+				objectEntryAA2.getObjectEntryId()));
+
+		ObjectEntry objectEntryAA3 = _addObjectEntry(
+			objectDefinitionAA, Map.of());
+
+		ObjectEntry objectEntryAAA3 = _addObjectEntry(
+			objectDefinitionAAA, Map.of());
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAA1, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAA2, objectEntryB.getObjectEntryId()
+			).put(
+				objectEntryAA3, 0L
+			).put(
+				objectEntryAAA1, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAAA2, objectEntryB.getObjectEntryId()
+			).put(
+				objectEntryAAA3, 0L
+			).put(
+				objectEntryB, objectEntryB.getObjectEntryId()
+			).build());
+
+		TreeTestUtil.unbind(
+			objectRelationshipB_AA, _objectRelationshipLocalService);
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAA1, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAA2, 0L
+			).put(
+				objectEntryAA3, 0L
+			).put(
+				objectEntryAAA1, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAAA2, 0L
+			).put(
+				objectEntryAAA3, 0L
+			).put(
+				objectEntryB, 0L
+			).build());
+	}
+
+	private void _testUnbindObjectDefinitionsWithObjectEntriesWithDescendantNode()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			_addAndPublishCustomObjectDefinition();
+		ObjectDefinition objectDefinitionAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectDefinition objectDefinitionAAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipAA_AAA = TreeTestUtil.bind(
+			objectDefinitionAA.getObjectDefinitionId(),
+			objectDefinitionAAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectEntry objectEntryA1 = _addObjectEntry(
+			objectDefinitionA, Map.of());
+
+		ObjectField objectRelationshipA_AAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA1 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(
+				objectRelationshipA_AAObjectField.getName(),
+				objectEntryA1.getObjectEntryId()));
+
+		ObjectField objectRelationshipAA_AAAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipAA_AAA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAAA1 = _addObjectEntry(
+			objectDefinitionAAA,
+			Map.of(
+				objectRelationshipAA_AAAObjectField.getName(),
+				objectEntryAA1.getObjectEntryId()));
+
+		ObjectEntry objectEntryA2 = _addObjectEntry(
+			objectDefinitionA, Map.of());
+
+		ObjectEntry objectEntryAA2 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(
+				objectRelationshipA_AAObjectField.getName(),
+				objectEntryA2.getObjectEntryId()));
+
+		ObjectEntry objectEntryAA3 = _addObjectEntry(
+			objectDefinitionAA, Map.of());
+
+		ObjectEntry objectEntryAAA2 = _addObjectEntry(
+			objectDefinitionAAA,
+			Map.of(
+				objectRelationshipAA_AAAObjectField.getName(),
+				objectEntryAA2.getObjectEntryId()));
+
+		ObjectEntry objectEntryAAA3 = _addObjectEntry(
+			objectDefinitionAAA, Map.of());
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryAA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAA3, 0L
+			).put(
+				objectEntryAAA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryAAA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAAA3, 0L
+			).build());
+
+		TreeTestUtil.unbind(
+			objectRelationshipA_AA, _objectRelationshipLocalService);
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA1, 0L
+			).put(
+				objectEntryA2, 0L
+			).put(
+				objectEntryAA1, objectEntryAA1.getObjectEntryId()
+			).put(
+				objectEntryAA2, objectEntryAA2.getObjectEntryId()
+			).put(
+				objectEntryAA3, 0L
+			).put(
+				objectEntryAAA1, objectEntryAA1.getObjectEntryId()
+			).put(
+				objectEntryAAA2, objectEntryAA2.getObjectEntryId()
+			).put(
+				objectEntryAAA3, 0L
+			).build());
+	}
+
+	private void _testUnbindObjectDefinitionsWithObjectEntriesWithParentNode()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			_addAndPublishCustomObjectDefinition();
+		ObjectDefinition objectDefinitionAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectDefinition objectDefinitionAAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipAA_AAA = TreeTestUtil.bind(
+			objectDefinitionAA.getObjectDefinitionId(),
+			objectDefinitionAAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectEntry objectEntryA1 = _addObjectEntry(
+			objectDefinitionA, Map.of());
+
+		ObjectField objectRelationshipA_AAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA1 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(
+				objectRelationshipA_AAObjectField.getName(),
+				objectEntryA1.getObjectEntryId()));
+
+		ObjectField objectRelationshipAA_AAAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipAA_AAA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAAA1 = _addObjectEntry(
+			objectDefinitionAAA,
+			Map.of(
+				objectRelationshipAA_AAAObjectField.getName(),
+				objectEntryAA1.getObjectEntryId()));
+
+		ObjectEntry objectEntryA2 = _addObjectEntry(
+			objectDefinitionA, Map.of());
+
+		ObjectEntry objectEntryAA2 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(
+				objectRelationshipA_AAObjectField.getName(),
+				objectEntryA2.getObjectEntryId()));
+
+		ObjectEntry objectEntryAA3 = _addObjectEntry(
+			objectDefinitionAA, Map.of());
+
+		ObjectEntry objectEntryAAA2 = _addObjectEntry(
+			objectDefinitionAAA,
+			Map.of(
+				objectRelationshipAA_AAAObjectField.getName(),
+				objectEntryAA2.getObjectEntryId()));
+
+		ObjectEntry objectEntryAAA3 = _addObjectEntry(
+			objectDefinitionAAA, Map.of());
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryAA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAA3, 0L
+			).put(
+				objectEntryAAA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryAAA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAAA3, 0L
+			).build());
+
+		TreeTestUtil.unbind(
+			objectRelationshipAA_AAA, _objectRelationshipLocalService);
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAA1, objectEntryA1.getObjectEntryId()
+			).put(
+				objectEntryAA2, objectEntryA2.getObjectEntryId()
+			).put(
+				objectEntryAA3, 0L
+			).put(
+				objectEntryAAA1, 0L
+			).put(
+				objectEntryAAA2, 0L
+			).put(
+				objectEntryAAA3, 0L
+			).build());
+	}
+
+	private void _testUnbindObjectDefinitionsWithObjectEntriesWithParentNodes()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			_addAndPublishCustomObjectDefinition();
+		ObjectDefinition objectDefinitionAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectDefinition objectDefinitionB =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationshipB_AA = TreeTestUtil.bind(
+			objectDefinitionB.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectEntry objectEntryA = _addObjectEntry(objectDefinitionA, Map.of());
+
+		ObjectField objectRelationshipA_AAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA1 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(
+				objectRelationshipA_AAObjectField.getName(),
+				objectEntryA.getObjectEntryId()));
+
+		ObjectEntry objectEntryB = _addObjectEntry(objectDefinitionB, Map.of());
+
+		ObjectField objectRelationshipB_AAObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationshipB_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA2 = _addObjectEntry(
+			objectDefinitionAA,
+			Map.of(
+				objectRelationshipB_AAObjectField.getName(),
+				objectEntryB.getObjectEntryId()));
+
+		ObjectEntry objectEntryAA3 = _addObjectEntry(
+			objectDefinitionAA, Map.of());
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAA1, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAA2, objectEntryB.getObjectEntryId()
+			).put(
+				objectEntryAA3, 0L
+			).put(
+				objectEntryB, objectEntryB.getObjectEntryId()
+			).build());
+
+		TreeTestUtil.unbind(
+			objectRelationshipB_AA, _objectRelationshipLocalService);
+
+		_assertRootObjectEntryIds(
+			LinkedHashMapBuilder.put(
+				objectEntryA, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAA1, objectEntryA.getObjectEntryId()
+			).put(
+				objectEntryAA2, 0L
+			).put(
+				objectEntryAA3, 0L
+			).put(
+				objectEntryB, 0L
+			).build());
+	}
+
 	private void _testUnbindObjectDefinitionsWithParentNodes()
 		throws Exception {
 
@@ -2575,7 +2919,21 @@ public class ObjectDefinitionTreeUtilTest {
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
 			objectDefinition.getClassName(), 0, 0, "Single Approver", 1);
 
-		_assertWorkflowDefinitionLink(objectDefinitionName);
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName());
+
+		Assert.assertEquals(
+			workflowDefinitionLinks.toString(), 1,
+			workflowDefinitionLinks.size());
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			workflowDefinitionLinks.get(0);
+
+		Assert.assertEquals(
+			"Single Approver",
+			workflowDefinitionLink.getWorkflowDefinitionName());
 	}
 
 	@Inject

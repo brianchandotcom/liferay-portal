@@ -147,7 +147,7 @@ function main {
 
     if [ -z "${creation_date}" ] || [ "${creation_date}" = "null" ]
     then
-        echo "The provided recovery point ARN has no CreationDate." >&2
+        echo "The provided recovery point ARN has no creation date." >&2
 
         return 1
     fi
@@ -157,9 +157,11 @@ function main {
     creation_date_timestamp=$(date --date "${creation_date}" +%s)
 
     local by_created_after
-    local by_created_before
 
     by_created_after=$(date --date @$((creation_date_timestamp - 1)) --iso-8601=seconds)
+
+    local by_created_before
+
     by_created_before=$(date --date @$((creation_date_timestamp + 1)) --iso-8601=seconds)
 
     local peer_recovery_points
@@ -174,10 +176,8 @@ function main {
 			| jq --arg creation_date "${creation_date}" '[.RecoveryPoints[] | select(.CreationDate == $creation_date)]')
 
     local rds_recovery_point_arn
-    local s3_recovery_point_arn
 
     rds_recovery_point_arn=$(get_recovery_point_arn_by_type "RDS" "${peer_recovery_points}")
-    s3_recovery_point_arn=$(get_recovery_point_arn_by_type "S3" "${peer_recovery_points}")
 
     local rds_snapshot_id
 
@@ -188,12 +188,17 @@ function main {
 
     if [ -z "${rds_snapshot_id}" ]
     then
-        echo "The RDS snapshot id could not be parsed from ${rds_recovery_point_arn}." >&2
+        echo "The RDS snapshot ID could not be parsed from ${rds_recovery_point_arn}." >&2
 
         exit 1
     fi
 
     echo "${rds_snapshot_id}" > /tmp/rds-snapshot-id.txt
+
+    local s3_recovery_point_arn
+
+    s3_recovery_point_arn=$(get_recovery_point_arn_by_type "S3" "${peer_recovery_points}")
+
     echo "${s3_recovery_point_arn}" > /tmp/s3-recovery-point-arn.txt
 }
 

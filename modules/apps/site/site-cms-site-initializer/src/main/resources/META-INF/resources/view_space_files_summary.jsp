@@ -28,7 +28,7 @@ ViewSpaceFilesSummarySectionDisplayContext viewSpaceFilesSummarySectionDisplayCo
 			fdsActionDropdownItems="<%= viewSpaceFilesSummarySectionDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CMSSiteInitializerFDSNames.SPACE_FILES_SUMMARY_SECTION %>"
-			propsTransformer="{FilesFDSPropsTransformer} from site-cms-site-initializer"
+			propsTransformer="{AssetsFDSPropsTransformer} from site-cms-site-initializer"
 			showManagementBar="<%= false %>"
 			showPagination="<%= false %>"
 			showSearch="<%= false %>"

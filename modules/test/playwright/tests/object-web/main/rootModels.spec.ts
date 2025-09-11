@@ -1311,6 +1311,95 @@ test.describe('Manage root models elements through Objects Admin', () => {
 			}
 		}
 	});
+
+	test('shows modal with warning message before disabling inheritance', async ({
+		apiHelpers,
+		objectRelationshipsPage,
+	}) => {
+		const objectRelationships: ObjectRelationship[] = [];
+
+		try {
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			pushToApiHelpersData(
+				apiHelpers,
+				[objectDefinition1.id, objectDefinition2.id],
+				'objectDefinition'
+			);
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode,
+					{
+						edge: true,
+						label: {
+							en_US: 'objectRelationshipLabel' + getRandomInt(),
+						},
+						name:
+							'objectRelationshipName' +
+							Math.floor(Math.random() * 99),
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: 'oneToMany',
+					}
+				);
+
+			objectRelationships.push(objectRelationship);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await objectRelationshipsPage.goto(
+				objectDefinition1.label['en_US']
+			);
+
+			await objectRelationshipsPage.actionsButton.click();
+
+			await objectRelationshipsPage.editObjectRelationshipOption.click();
+
+			await objectRelationshipsPage.inheritanceCheckbox.click();
+
+			await expect(
+				objectRelationshipsPage.inheritanceModalHeader
+			).toBeVisible();
+
+			await expect(
+				objectRelationshipsPage.inheritanceModalConfirmationMessage
+			).toBeVisible();
+		}
+		finally {
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			for (const objectRelationship of objectRelationships) {
+				await objectRelationshipAPIClient.putObjectRelationship(
+					objectRelationship.id,
+					{
+						...objectRelationship,
+						edge: false,
+					}
+				);
+			}
+		}
+	});
 });
 
 test.describe('Manage root models elements through Model Builder', () => {

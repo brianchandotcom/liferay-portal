@@ -435,10 +435,10 @@ public class ObjectEntryFolderResourceImpl
 				serviceBuilderObjectEntryFolder)
 		throws Exception {
 
-		Group group = groupLocalService.getGroup(
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
 			serviceBuilderObjectEntryFolder.getGroupId());
 
-		if (group.isDepot() &&
+		if ((depotEntry != null) &&
 			_trashHelper.isTrashEnabled(
 				serviceBuilderObjectEntryFolder.getGroupId()) &&
 			(serviceBuilderObjectEntryFolder.getStatus() !=

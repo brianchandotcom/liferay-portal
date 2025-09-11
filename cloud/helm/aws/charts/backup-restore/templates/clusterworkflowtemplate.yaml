@@ -22,7 +22,7 @@ spec:
                     -   name: tfvars-content
             name: apply-terraform-dependencies-module
             script:
-                command: [ sh ]
+                command: [sh]
                 image: "{{ .Values.images.terraform.repository }}:{{ .Values.images.terraform.tag }}"
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.applyTerraformModule" . | nindent 20 }}

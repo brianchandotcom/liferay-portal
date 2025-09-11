@@ -1103,8 +1103,18 @@ public class ObjectEntryDTOConverter
 				return serializable;
 			}
 
+			String key = null;
+
+			if (serializable instanceof Map) {
+				key = MapUtil.getString(
+					(Map<String, String>)serializable, "key");
+			}
+			else if (serializable instanceof String) {
+				key = (String)serializable;
+			}
+
 			return _getListEntry(
-				dtoConverterContext, (String)serializable,
+				dtoConverterContext, key,
 				objectField.getListTypeDefinitionId());
 		}
 

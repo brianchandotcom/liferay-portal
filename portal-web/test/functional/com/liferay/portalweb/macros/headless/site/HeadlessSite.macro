@@ -27,7 +27,7 @@ definition {
 			membershipType = ${membershipType},
 			parentSiteKey = ${parentSiteKey},
 			portalURL = ${portalURL},
-			siteName = ${siteName},
+			siteName = '''{"en_US":"${siteName}"}''',
 			templateKey = ${templateKey},
 			templateType = ${templateType},
 			userEmailAddress = ${userEmailAddress},

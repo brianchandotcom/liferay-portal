@@ -98,7 +98,9 @@ public class DataCleanupPreupgradeProcessSuite {
 
 			// Company, then user, then group, and then the rest for optimal
 			// performance since cleaning companies will remove its users,
-			// groups, and related data.
+			// groups, and related data. As DDMStructure cleanup can delete
+			// journal article entries, we need to execute the cleanup for
+			// journal articles related data at the very end.
 
 			new CompanyDataCleanupPreupgradeProcess(),
 

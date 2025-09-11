@@ -1452,7 +1452,7 @@ public class DefaultObjectEntryManagerImpl
 					Map<String, Object> nestedObjectEntry =
 						(Map<String, Object>)item;
 
-					long nestedObjectEntryId;
+					long nestedObjectEntryId = 0;
 
 					try {
 						nestedObjectEntryId =

@@ -73,7 +73,6 @@ public class AccountEntrySystemObjectDefinitionManagerTest
 				",ADD_ACCOUNT_ENTRY permission for null "),
 			() -> systemObjectDefinitionManager.getOrAddEmptyBaseModel(
 				RandomTestUtil.randomString(), user));
-
 		AssertUtils.assertFailure(
 			PortalException.class,
 			StringBundler.concat(

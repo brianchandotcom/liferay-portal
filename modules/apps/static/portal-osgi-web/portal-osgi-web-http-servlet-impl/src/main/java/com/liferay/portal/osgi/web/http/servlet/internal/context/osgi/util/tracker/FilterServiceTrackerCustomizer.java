@@ -25,6 +25,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
+import jakarta.servlet.ServletException;
 import org.eclipse.equinox.http.servlet.internal.error.RegisteredFilterException;
 import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
@@ -126,7 +127,8 @@ public class FilterServiceTrackerCustomizer
 					if (Objects.equals(
 							curFilterRegistration.getService(), filter)) {
 
-						throw new RegisteredFilterException(filter);
+						throw new ServletException(
+							"Filter has already been registered: " + filter);
 					}
 				}
 

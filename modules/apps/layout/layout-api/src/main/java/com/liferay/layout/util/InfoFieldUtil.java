@@ -166,8 +166,9 @@ public class InfoFieldUtil {
 	}
 
 	private static boolean _isTextFieldType(String type) {
-		if (type.equals("html") || type.equals("link") ||
-			type.equals("rich-text") || type.equals("text")) {
+		if (type.equals("action") || type.equals("html") ||
+			type.equals("link") || type.equals("rich-text") ||
+			type.equals("text")) {
 
 			return true;
 		}

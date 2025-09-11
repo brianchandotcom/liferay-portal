@@ -91,7 +91,9 @@ public class FragmentEntryLinkModelListener
 			FragmentEntryLink fragmentEntryLink, String type, String value)
 		throws SanitizerException {
 
-		if (Objects.equals(type, "text")) {
+		if (Objects.equals(type, "action") || Objects.equals(type, "link") ||
+			Objects.equals(type, "text")) {
+
 			value = HtmlUtil.unescape(value);
 			value = HtmlUtil.escape(value);
 		}
@@ -130,7 +132,9 @@ public class FragmentEntryLinkModelListener
 
 				String type = infoFieldObjectValuePair.getValue();
 
-				if (!(Objects.equals(type, "text") ||
+				if (!(Objects.equals(type, "action") ||
+					  Objects.equals(type, "link") ||
+					  Objects.equals(type, "text") ||
 					  Objects.equals(type, "rich-text"))) {
 
 					continue;

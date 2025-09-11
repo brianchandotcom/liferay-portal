@@ -500,8 +500,7 @@ public class BuildHistory {
 		if (buildJSONObject.isTopLevelBuild()) {
 			_topLevelBuildURLs.add(buildJSONObject.getURL());
 
-			String buildIdentifier = _getBuildIdentifier(
-				buildJSONObject.getURL(), buildJSONObject);
+			String buildIdentifier = _getBuildIdentifier(buildJSONObject);
 
 			if (buildIdentifier != null) {
 				_buildJSONObjectsMap.put(buildIdentifier, buildJSONObject);
@@ -527,12 +526,10 @@ public class BuildHistory {
 		dataMap.put(key, dataMap.get(key) + value);
 	}
 
-	private String _getBuildIdentifier(
-		String topLevelBuildURL, BuildJSONObject buildJSONObject) {
-
+	private String _getBuildIdentifier(BuildJSONObject buildJSONObject) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_getJobName(topLevelBuildURL));
+		sb.append(_getJobName(buildJSONObject.getURL()));
 
 		sb.append("/");
 

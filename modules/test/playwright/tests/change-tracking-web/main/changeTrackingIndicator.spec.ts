@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
@@ -16,6 +17,9 @@ export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
 	featureFlagPagesTest,
+	featureFlagsTest({
+		'LPD-17564': {enabled: true},
+	}),
 	loginTest()
 );
 
@@ -156,4 +160,44 @@ test('LPD-44274 Assert cursor type is pointer when hover over a not selected pub
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
 		ctCollection2.body.id
 	);
+});
+
+test('LPD-64065 Assert publication bar dropdown is disabled for CMS site', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await page.goto(`/web/cms`);
+
+	await expect(
+		page.locator('.change-tracking-indicator-icon-production')
+	).toBeVisible();
+
+	const changeTrackingIndicatorButtonProduction = page
+		.locator('.change-tracking-indicator-button')
+		.filter({hasText: 'Production'});
+
+	await expect(changeTrackingIndicatorButtonProduction).toBeVisible();
+
+	await changeTrackingIndicatorButtonProduction.click();
+
+	const selectPublicationMenuItem = page.getByRole('menuitem', {
+		name: 'Select a Publication',
+	});
+
+	await expect(selectPublicationMenuItem).not.toBeVisible();
+
+	await page.goto('/');
+
+	const changeTrackingIndicatorButtonPublication = page
+		.locator('.change-tracking-indicator-button')
+		.filter({hasText: ctCollection.body.name});
+
+	await expect(changeTrackingIndicatorButtonPublication).toBeVisible();
+
+	await changeTrackingIndicatorButtonPublication.click();
+
+	await expect(selectPublicationMenuItem).toBeVisible();
 });

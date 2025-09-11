@@ -2,7 +2,7 @@
 	<#assign assetId = ObjectEntry_objectEntryId.getData()?number />
 </#if>
 
-<#if ObjectEntry_status.getData()?? && ObjectEntry_status.getData() == 'approved' >
+<#if ObjectEntry_status.getData()?? && ObjectEntry_status.getData() == 'approved'>
 	<#if stringUtil.equals(locale, "en_US")>
 		<#assign createDate = ObjectEntry_createDate.getData()?datetime("M/d/yy h:mm a") />
 	<#else>

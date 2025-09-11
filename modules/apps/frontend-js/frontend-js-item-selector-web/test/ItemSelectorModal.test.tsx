@@ -33,42 +33,7 @@ jest.mock('frontend-js-web', () => {
 
 	return {
 		...actualPackage,
-		fetch: jest.fn((url: string | URL) => {
-			const finalUrl =
-				typeof url === 'string' && url.startsWith('/')
-					? `http://localhost:8080${url}`
-					: url;
-
-			if (
-				new URL(finalUrl).pathname.endsWith(
-					'/o/headless-asset-library/v1.0/asset-libraries'
-				)
-			) {
-				const headers = new Headers();
-				headers.set('Content-Type', 'application/json');
-
-				return Promise.resolve({
-					headers,
-					json: () =>
-						Promise.resolve({
-							items: [
-								{
-									name: 'Space A',
-									siteId: 34656,
-								},
-								{
-									name: 'Space B',
-									siteId: 34666,
-								},
-							],
-							lastPage: 1,
-							page: 1,
-						}),
-					ok: true,
-					status: 200,
-				});
-			}
-
+		fetch: jest.fn(() => {
 			const headers = new Headers();
 			headers.set('Content-Type', 'application/json');
 
@@ -201,46 +166,6 @@ describe('ItemSelectorModal component', () => {
 		expect(select).toBeInTheDocument();
 
 		expect(select).toBeDisabled();
-	});
-
-	it('renders an item selector modal with spaces filter and mapped options', async () => {
-		const user = userEvent.setup();
-
-		const {findAllByRole, findByRole} = render(
-			<ItemSelectorModalWrapper
-				defaultOpen={true}
-				onItemsChange={jest.fn()}
-				selectedItems={[]}
-			/>
-		);
-
-		const modal = await findByRole('dialog');
-
-		const filter = await within(modal).findByRole('button', {
-			name: 'filter',
-		});
-
-		expect(filter).toBeInTheDocument();
-
-		await user.click(filter);
-
-		const spaceFilter = await findByRole('menuitem', {
-			name: 'space',
-		});
-
-		expect(spaceFilter).toBeInTheDocument();
-
-		await user.click(spaceFilter);
-
-		const spaceOptions = await findAllByRole('checkbox');
-
-		expect(spaceOptions[0]).toHaveAttribute('aria-label', 'Space A');
-
-		expect(spaceOptions[0]).toHaveAttribute('value', '34656');
-
-		expect(spaceOptions[1]).toHaveAttribute('aria-label', 'Space B');
-
-		expect(spaceOptions[1]).toHaveAttribute('value', '34666');
 	});
 
 	it('renders items with radio for single selection type', async () => {

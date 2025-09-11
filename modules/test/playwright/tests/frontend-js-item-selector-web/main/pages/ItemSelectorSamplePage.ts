@@ -15,8 +15,11 @@ export class ItemSelectorSamplePage {
 		selectButton: Locator;
 	};
 	readonly page: Page;
+	readonly filtersButton: Locator;
 	readonly publishPageButton: Locator;
 	readonly samplePageHeader: Locator;
+	readonly selectCMSFileButton: Locator;
+	readonly selectCMSFileModalHeader: Locator;
 	readonly selectDocumentButton: Locator;
 	readonly selectDocumentModalHeader: Locator;
 	readonly selectUserButton: Locator;
@@ -45,12 +48,23 @@ export class ItemSelectorSamplePage {
 			}),
 		};
 		this.page = page;
+		this.filtersButton = page.getByRole('button', {
+			name: 'Filter',
+		});
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',
 		});
 		this.samplePageHeader = page.getByRole('heading', {
 			exact: true,
 			name: 'Item Selector Samples',
+		});
+		this.selectCMSFileButton = page.getByRole('button', {
+			exact: true,
+			name: 'Select CMS File',
+		});
+		this.selectCMSFileModalHeader = page.getByRole('heading', {
+			exact: true,
+			name: 'Select File',
 		});
 		this.selectDocumentButton = page.getByRole('button', {
 			exact: true,

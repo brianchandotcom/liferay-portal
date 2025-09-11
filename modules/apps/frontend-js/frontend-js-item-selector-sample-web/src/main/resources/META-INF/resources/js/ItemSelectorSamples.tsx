@@ -411,6 +411,19 @@ export default function ItemSelectorSamples() {
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
 							apiURL: cmsFileItemSelectorConfig.apiURL,
+							filters: [
+								{
+									apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
+									entityFieldType: 'collection',
+									id: 'groupIds',
+									itemKey: 'siteId',
+									itemLabel: 'name',
+									label: Liferay.Language.get('space'),
+									multiple: true,
+									type: 'selection',
+								},
+							],
+
 							id: `itemSelectorModal-cms-files-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:

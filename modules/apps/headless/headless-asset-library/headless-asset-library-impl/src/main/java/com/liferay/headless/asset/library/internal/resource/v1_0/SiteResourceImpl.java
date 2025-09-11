@@ -41,7 +41,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
 				String siteExternalReferenceCode)
 		throws Exception {
@@ -57,12 +57,13 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Group siteGroup = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		deleteAssetLibrarySite(
+		deleteAssetLibraryConnectedSite(
 			assetLibraryGroup.getGroupId(), siteGroup.getGroupId());
 	}
 
 	@Override
-	public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public void deleteAssetLibraryConnectedSite(
+			Long assetLibraryId, Long siteId)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -83,7 +84,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public Site
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
 				String siteExternalReferenceCode)
 		throws Exception {
@@ -99,12 +100,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Group siteGroup = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		return getAssetLibrarySite(
+		return getAssetLibraryConnectedSite(
 			assetLibraryGroup.getGroupId(), siteGroup.getGroupId());
 	}
 
 	@Override
-	public Page<Site> getAssetLibraryByExternalReferenceCodeSitesPage(
+	public Page<Site> getAssetLibraryByExternalReferenceCodeConnectedSitesPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
@@ -115,11 +116,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
 
-		return getAssetLibrarySitesPage(group.getGroupId(), pagination);
+		return getAssetLibraryConnectedSitesPage(
+			group.getGroupId(), pagination);
 	}
 
 	@Override
-	public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public Site getAssetLibraryConnectedSite(Long assetLibraryId, Long siteId)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -139,8 +141,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@NestedField(parentClass = AssetLibrary.class, value = "sites")
 	@Override
-	public Page<Site> getAssetLibrarySitesPage(
-			@NestedFieldId("siteId") Long assetLibraryId, Pagination pagination)
+	public Page<Site> getAssetLibraryConnectedSitesPage(
+			@NestedFieldId("assetLibraryId") Long assetLibraryId,
+			Pagination pagination)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -162,7 +165,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public Site
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
 				String siteExternalReferenceCode, Site site)
 		throws Exception {
@@ -178,12 +181,13 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Group siteGroup = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		return putAssetLibrarySite(
+		return putAssetLibraryConnectedSite(
 			assetLibraryGroup.getGroupId(), siteGroup.getGroupId(), site);
 	}
 
 	@Override
-	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId, Site site)
+	public Site putAssetLibraryConnectedSite(
+			Long assetLibraryId, Long siteId, Site site)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {

@@ -436,6 +436,16 @@ public class TrialRestController extends BaseRestController {
 		}
 	}
 
+	private Order _getOrder(String orderTypeExternalReferenceCode) {
+		Order order = new Order();
+
+		order.setCustomFields(() -> new HashMap<>());
+		order.setOrderTypeExternalReferenceCode(
+			() -> orderTypeExternalReferenceCode);
+
+		return order;
+	}
+
 	private PortalInstanceResource _getPortalInstanceResource(
 			JSONObject trialProvisioningContextJSONObject)
 		throws Exception {
@@ -461,16 +471,6 @@ public class TrialRestController extends BaseRestController {
 			_getPortalInstanceResource(trialProvisioningContextJSONObject);
 
 		return portalInstanceResource.getPortalInstancesPage(true);
-	}
-
-	private Order _getOrder(String orderTypeExternalReferenceCode) {
-		Order order = new Order();
-
-		order.setCustomFields(() -> new HashMap<>());
-		order.setOrderTypeExternalReferenceCode(
-			() -> orderTypeExternalReferenceCode);
-
-		return order;
 	}
 
 	private JSONObject _getTrialProvisioningContextJSONObject(Order order) {

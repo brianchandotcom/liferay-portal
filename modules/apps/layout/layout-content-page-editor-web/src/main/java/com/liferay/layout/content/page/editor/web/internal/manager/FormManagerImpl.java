@@ -276,11 +276,17 @@ public class FormManagerImpl implements FormManager {
 				ServiceContext serviceContext)
 		throws PortalException {
 
+		String uniqueId = null;
+
+		if (infoField != null) {
+			uniqueId = infoField.getUniqueId();
+		}
+
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
 			_addFragmentEntryLink(
-				formStyledLayoutStructureItem, fragmentEntry,
-				infoField.getUniqueId(), layout, layoutStructure, readOnly,
-				segmentsExperienceId, serviceContext);
+				formStyledLayoutStructureItem, fragmentEntry, uniqueId, layout,
+				layoutStructure, readOnly, segmentsExperienceId,
+				serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(

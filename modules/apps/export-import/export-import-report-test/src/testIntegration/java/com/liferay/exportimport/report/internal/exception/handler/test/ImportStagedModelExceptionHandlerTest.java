@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -111,13 +114,23 @@ public class ImportStagedModelExceptionHandlerTest {
 			ExportImportThreadLocal.setExportImportConfigurationId(id);
 			ExportImportThreadLocal.setPortletImportInProcess(true);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext,
-				new TestStagedModel(externalReferenceCode, id));
+			TransactionInvokerUtil.invoke(
+				TransactionConfig.Factory.create(
+					Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+				() -> {
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext,
+						new TestStagedModel(externalReferenceCode, id));
+
+					return null;
+				});
 
 			Assert.fail();
 		}
-		catch (PortletDataException portletDataException) {
+		catch (Throwable throwable) {
+			PortletDataException portletDataException =
+				(PortletDataException)throwable;
+
 			Assert.assertEquals(
 				errorMessage, portletDataException.getMessage());
 		}

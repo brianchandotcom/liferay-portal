@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -12,6 +13,7 @@ import FormRelationshipMappingOptions from '../../../plugins/browser/components/
 import {FormRelationshipLayoutDataItem} from '../../../types/layout_data/FormRelationshipLayoutDataItem';
 import {LayoutData} from '../../../types/layout_data/LayoutData';
 import {config} from '../../config/index';
+import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
 import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import {ContainerWithControls} from '../../js-index';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -47,6 +49,12 @@ function FormRelationshipWithControls({
 	children: React.ReactNode;
 	item: FormRelationshipLayoutDataItem;
 }) {
+	const localConfig = useItemLocalConfig(item.itemId);
+
+	if (localConfig.loading) {
+		return <LoadingState />;
+	}
+
 	const isMapped = Boolean(item.config.contentType);
 
 	if (!isMapped) {
@@ -117,6 +125,20 @@ function MappedFormRelationship({
 	}
 
 	return <FormRelationship item={item}>{children}</FormRelationship>;
+}
+
+function LoadingState() {
+	return (
+		<div className="bg-lighter page-editor__no-fragments-state">
+			<ClayLoadingIndicator />
+
+			<p className="m-0 page-editor__no-fragments-state__message">
+				{Liferay.Language.get(
+					'your-form-relationship-is-being-loaded.-this-may-take-some-time'
+				)}
+			</p>
+		</div>
+	);
 }
 
 function AddButton({label}: {label: Liferay.Language.LocalizedValue<string>}) {

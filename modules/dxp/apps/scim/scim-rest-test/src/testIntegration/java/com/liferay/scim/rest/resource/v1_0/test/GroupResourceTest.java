@@ -225,17 +225,17 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		_assertListResponse(
 			groupResource.getV2Groups(
 				5, null, 0,
-				"displayName eq \"" + group1.getDisplayName() + "\""),
-			1, 1, group1);
-		_assertListResponse(
-			groupResource.getV2Groups(
-				5, null, 0,
 				"displayName eq \"" + RandomTestUtil.randomString() + "\""),
 			0, 0);
 		_assertListResponse(
 			groupResource.getV2Groups(
 				5, null, 0, "displayName eq \"" + _PREFIX + "\""),
 			0, 0);
+		_assertListResponse(
+			groupResource.getV2Groups(
+				5, null, 0,
+				"displayName eq \"" + group1.getDisplayName() + "\""),
+			1, 1, group1);
 
 		assertHttpResponseStatusCode(
 			400,

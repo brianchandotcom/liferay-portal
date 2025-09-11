@@ -39,7 +39,6 @@ import java.net.URISyntaxException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EventListener;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -135,8 +134,8 @@ public class LiferayContextController {
 		_filterServiceTracker.open(true);
 
 		_httpSessionAttributeListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, HttpSessionAttributeListener.class.getName(),
-			new EventListenerServiceTrackerCustomizer(
+			bundleContext, HttpSessionAttributeListener.class,
+			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				_servletContextHelperServiceId));
@@ -144,8 +143,8 @@ public class LiferayContextController {
 		_httpSessionAttributeListenerServiceTracker.open(true);
 
 		_httpSessionListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, HttpSessionListener.class.getName(),
-			new EventListenerServiceTrackerCustomizer(
+			bundleContext, HttpSessionListener.class,
+			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				_servletContextHelperServiceId));
@@ -162,8 +161,8 @@ public class LiferayContextController {
 		_resourceServiceTracker.open(true);
 
 		_servletContextAttributeListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, ServletContextAttributeListener.class.getName(),
-			new EventListenerServiceTrackerCustomizer(
+			bundleContext, ServletContextAttributeListener.class,
+			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				_servletContextHelperServiceId));
@@ -171,8 +170,8 @@ public class LiferayContextController {
 		_servletContextAttributeListenerServiceTracker.open(true);
 
 		_servletContextListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, ServletContextListener.class.getName(),
-			new EventListenerServiceTrackerCustomizer(
+			bundleContext, ServletContextListener.class,
+			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				_servletContextHelperServiceId));
@@ -180,8 +179,8 @@ public class LiferayContextController {
 		_servletContextListenerServiceTracker.open(true);
 
 		_servletRequestAttributeListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, ServletRequestAttributeListener.class.getName(),
-			new EventListenerServiceTrackerCustomizer(
+			bundleContext, ServletRequestAttributeListener.class,
+			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				_servletContextHelperServiceId));
@@ -189,8 +188,8 @@ public class LiferayContextController {
 		_servletRequestAttributeListenerServiceTracker.open(true);
 
 		_servletRequestListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, ServletRequestListener.class.getName(),
-			new EventListenerServiceTrackerCustomizer(
+			bundleContext, ServletRequestListener.class,
+			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
 				_servletContextHelperServiceId));
@@ -545,29 +544,32 @@ public class LiferayContextController {
 		_filterServiceTracker;
 	private final HttpServletEndpointController _httpServletEndpointController;
 	private final ServiceTracker
-		<EventListener, AtomicReference<EventListenerRegistration>>
+		<HttpSessionAttributeListener,
+		 AtomicReference<EventListenerRegistration>>
 			_httpSessionAttributeListenerServiceTracker;
 	private final ServiceTracker
-		<EventListener, AtomicReference<EventListenerRegistration>>
+		<HttpSessionListener, AtomicReference<EventListenerRegistration>>
 			_httpSessionListenerServiceTracker;
 	private final ServiceTracker<Object, AtomicReference<ResourceRegistration>>
 		_resourceServiceTracker;
 	private final ServiceReference<ServletContextHelper> _serviceReference;
 	private final ServiceTracker
-		<EventListener, AtomicReference<EventListenerRegistration>>
+		<ServletContextAttributeListener,
+		 AtomicReference<EventListenerRegistration>>
 			_servletContextAttributeListenerServiceTracker;
 	private final ServletContextHelperDataContext
 		_servletContextHelperDataContext;
 	private final long _servletContextHelperServiceId;
 	private final Map<String, String> _servletContextInitParams;
 	private final ServiceTracker
-		<EventListener, AtomicReference<EventListenerRegistration>>
+		<ServletContextListener, AtomicReference<EventListenerRegistration>>
 			_servletContextListenerServiceTracker;
 	private final ServiceTracker
-		<EventListener, AtomicReference<EventListenerRegistration>>
+		<ServletRequestAttributeListener,
+		 AtomicReference<EventListenerRegistration>>
 			_servletRequestAttributeListenerServiceTracker;
 	private final ServiceTracker
-		<EventListener, AtomicReference<EventListenerRegistration>>
+		<ServletRequestListener, AtomicReference<EventListenerRegistration>>
 			_servletRequestListenerServiceTracker;
 	private final ServiceTracker<Servlet, AtomicReference<ServletRegistration>>
 		_servletServiceTracker;

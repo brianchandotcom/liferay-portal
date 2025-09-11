@@ -187,41 +187,9 @@
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
-														"iconBackgroundColor": "#5FC584",
-														"iconColor": "var(--color-neutral-0)",
-														"menuItemUrl": "https://help.liferay.com/"
-													},
-													"fragmentFields": [
-														{
-															"id": "menuItemText",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Help Center"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"fontWeight": "fontWeightBold"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "navigation-menu-item",
-														"siteKey": "[$GROUP_KEY$]"
-													},
-													"fragmentConfig": {
 														"iconBackgroundColor": "#ED8F9F",
 														"iconColor": "var(--color-neutral-0)",
-														"menuItemUrl": "https://help.liferay.com/"
+														"menuItemUrl": "https://support.liferay.com/"
 													},
 													"fragmentFields": [
 														{

@@ -382,13 +382,32 @@ test(
 
 		// Assert usages between page created and payload
 
-		await expect(layout.externalReferenceCode).toEqual(
+		expect(layout.externalReferenceCode).toEqual(
 			customPayload.externalReferenceCode
 		);
 
 		await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
 
-		await templatesPage.viewUsagesPage(breadcrumbWidgetTemplateName, page);
+		// Assert number of usages
+
+		await expect(
+			page
+				.locator('tr')
+				.filter({hasText: breadcrumbWidgetTemplateName})
+				.locator('.lfr-usages-column')
+		).toHaveText('21');
+
+		await templatesPage.goToViewUsages(breadcrumbWidgetTemplateName);
+
+		// Testing pagination
+
+		await page.getByRole('link', {name: 'Page 2'}).click();
+
+		// Assert redirection is going to the right page
+
+		// Assert page 2 headers
+		const headers = page.locator('tr th');
+		await expect(headers).toHaveText(['Name', 'Type', 'Instance ID']);
 	}
 );
 

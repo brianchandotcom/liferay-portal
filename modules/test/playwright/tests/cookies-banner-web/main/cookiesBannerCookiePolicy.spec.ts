@@ -32,6 +32,10 @@ test.afterEach(async ({systemSettingsPage}) => {
 
 	await test.step('In reverse order, reset each configuration if previously set. We use reverse order since the latter entries will be hidden if the first "Preference Handling" entry is reset.', async () => {
 		for (const menuItem of menuItems.reverse()) {
+			if (await menuItem.getByText('Product Analytics').isVisible()) {
+				continue;
+			}
+
 			await menuItem.click();
 
 			await systemSettingsPage.page.waitForTimeout(1000);
@@ -105,14 +109,10 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 		});
 
 		if (await saveButton.isVisible()) {
-			await page
-				.getByRole('button', {name: 'Save'})
-				.dispatchEvent('click');
+			await saveButton.click();
 		}
 		else if (await updateButton.isVisible()) {
-			await page
-				.getByRole('button', {name: 'Update'})
-				.dispatchEvent('click');
+			await updateButton.click();
 		}
 
 		await waitForAlert(page);
@@ -120,12 +120,6 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 
 	await test.step('Go to Cookie Policy page', async () => {
 		await page.goto('/');
-
-		const acceptAll = page.getByRole('button', {name: 'Accept All'});
-
-		await acceptAll.waitFor({state: 'visible'});
-
-		await acceptAll.click();
 
 		await page
 			.locator(
@@ -194,31 +188,10 @@ test(
 
 			await enabledButton.check();
 
-			const updateButton = page.getByRole('button', {
-				name: 'Update',
-			});
+			await page.getByRole('button', {name: 'Save'}).click();
 
-			const saveButton = page.getByRole('button', {
-				name: 'Save',
-			});
-
-			if (await saveButton.isVisible()) {
-				await page
-					.getByRole('button', {name: 'Save'})
-					.dispatchEvent('click');
-			}
-			else if (await updateButton.isVisible()) {
-				await page
-					.getByRole('button', {name: 'Update'})
-					.dispatchEvent('click');
-			}
+			await waitForAlert(page);
 		});
-
-		const acceptAll = page.getByRole('button', {name: 'Accept All'});
-
-		await acceptAll.waitFor({state: 'visible'});
-
-		await acceptAll.click();
 
 		const cookiesBanner = await page.locator(
 			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'

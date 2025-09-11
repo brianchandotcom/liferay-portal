@@ -90,6 +90,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:frontend-editor:frontend-editor-api")
 	compileOnly project(":apps:frontend-editor:frontend-editor-taglib")
+	compileOnly project(":apps:frontend-js:frontend-js-importmaps-extender-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")

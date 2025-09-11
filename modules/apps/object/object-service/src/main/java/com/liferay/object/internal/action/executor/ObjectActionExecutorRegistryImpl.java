@@ -135,29 +135,37 @@ public class ObjectActionExecutorRegistryImpl
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ObjectActionExecutor.class, null,
 			(serviceReference, emitter) -> {
-				ObjectActionExecutor objectActionExecutor =
-					bundleContext.getService(serviceReference);
+				try {
+					ObjectActionExecutor objectActionExecutor =
+						bundleContext.getService(serviceReference);
 
-				String key = objectActionExecutor.getKey();
+					String key = objectActionExecutor.getKey();
 
-				if (objectActionExecutor instanceof CompanyScoped) {
-					CompanyScoped objectActionExecutorCompanyScoped =
-						(CompanyScoped)objectActionExecutor;
+					if (objectActionExecutor instanceof CompanyScoped) {
+						CompanyScoped objectActionExecutorCompanyScoped =
+							(CompanyScoped)objectActionExecutor;
 
-					key = _getCompanyScopedKey(
-						key,
-						objectActionExecutorCompanyScoped.
-							getAllowedCompanyId());
+						key = _getCompanyScopedKey(
+							key,
+							objectActionExecutorCompanyScoped.
+								getAllowedCompanyId());
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Registering object action executor with key ",
+								key, " and class ",
+								objectActionExecutor.getClass()));
+					}
+
+					emitter.emit(key);
 				}
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Registering object action executor with key ", key,
-							" and class ", objectActionExecutor.getClass()));
+				catch (Exception exception) {
+					_log.error(
+						"Unable to get object action executor service",
+						exception);
 				}
-
-				emitter.emit(key);
 			});
 	}
 

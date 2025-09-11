@@ -43,6 +43,43 @@ public class ObjectActionExecutorRegistryImplTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testFailingObjectActionExecutorDoesNotBreakRegistry() {
+		ServiceRegistration<ObjectActionExecutor>
+			objectActionExecutorServiceRegistration1 = null;
+		ServiceRegistration<ObjectActionExecutor>
+			objectActionExecutorServiceRegistration2 = null;
+
+		try {
+			TestObjectActionExecutor failingTestObjectActionExecutor =
+				new TestObjectActionExecutor(1, Collections.emptyList(), true);
+
+			objectActionExecutorServiceRegistration1 = _register(
+				failingTestObjectActionExecutor);
+
+			TestObjectActionExecutor testObjectActionExecutor =
+				new TestObjectActionExecutor(1, Collections.emptyList(), false);
+
+			objectActionExecutorServiceRegistration2 = _register(
+				testObjectActionExecutor);
+
+			List<ObjectActionExecutor> objectActionExecutors =
+				_objectActionExecutorRegistry.getObjectActionExecutors(
+					1, StringUtil.randomId());
+
+			Assert.assertFalse(
+				objectActionExecutors.contains(
+					failingTestObjectActionExecutor));
+
+			Assert.assertTrue(
+				objectActionExecutors.contains(testObjectActionExecutor));
+		}
+		finally {
+			_unregister(objectActionExecutorServiceRegistration1);
+			_unregister(objectActionExecutorServiceRegistration2);
+		}
+	}
+
+	@Test
 	public void testShouldNotReturnObjectActionExecutorScopedByAnotherCompany() {
 		ServiceRegistration<ObjectActionExecutor>
 			objectActionExecutorServiceRegistration1 = null;
@@ -104,8 +141,16 @@ public class ObjectActionExecutorRegistryImplTest {
 		public TestObjectActionExecutor(
 			long allowedCompanyId, List<String> allowedObjectDefinitionNames) {
 
+			this(allowedCompanyId, allowedObjectDefinitionNames, false);
+		}
+
+		public TestObjectActionExecutor(
+			long allowedCompanyId, List<String> allowedObjectDefinitionNames,
+			boolean fail) {
+
 			_allowedCompanyId = allowedCompanyId;
 			_allowedObjectDefinitionNames = allowedObjectDefinitionNames;
+			_fail = fail;
 		}
 
 		@Override
@@ -128,11 +173,16 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		@Override
 		public String getKey() {
+			if (_fail) {
+				throw new RuntimeException("Fail!");
+			}
+
 			return "test";
 		}
 
 		private final long _allowedCompanyId;
 		private final List<String> _allowedObjectDefinitionNames;
+		private final boolean _fail;
 
 	}
 

@@ -8,10 +8,9 @@ package com.liferay.portal.upgrade.data.cleanup.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
-import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
@@ -37,6 +36,8 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -53,9 +54,8 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.data.cleanup.DLFileEntryDataCleanupPreupgradeProcess;
-
-import java.io.ByteArrayInputStream;
 
 import java.sql.Connection;
 
@@ -84,6 +84,11 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	@Rule
+	public static final PermissionCheckerMethodTestRule
+		permissionCheckerTestRule = PermissionCheckerMethodTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -130,26 +135,23 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	public void testUpgrade() throws Exception {
 		long groupId = TestPropsValues.getGroupId();
 
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), groupId, groupId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, null, null, null,
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId()));
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, null, 0, null, null, null,
+			ServiceContextTestUtil.getServiceContext(groupId));
 
 		_dlFileShortcutLocalService.addFileShortcut(
 			null, TestPropsValues.getUserId(), groupId, groupId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			dlFileEntry.getFileEntryId(),
+			fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext());
 
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		_dlFileVersionPreviewLocalService.addDLFileVersionPreview(
-			dlFileVersion.getFileEntryId(), dlFileVersion.getFileVersionId(),
+			fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 			DLFileVersionPreviewConstants.STATUS_SUCCESS);
 
 		DLFileEntryMetadata dlFileEntryMetadata =
@@ -178,19 +180,19 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 		dlFileEntryMetadata.setDDMStorageId(
 			_ddmStorageEngineManager.create(
-				dlFileVersion.getCompanyId(), ddmStructure.getStructureId(),
+				fileVersion.getCompanyId(), ddmStructure.getStructureId(),
 				ddmFormValues, ServiceContextTestUtil.getServiceContext()));
 		dlFileEntryMetadata.setDDMStructureId(ddmStructure.getStructureId());
 
-		dlFileEntryMetadata.setFileEntryId(dlFileEntry.getFileEntryId());
-		dlFileEntryMetadata.setFileVersionId(dlFileVersion.getFileVersionId());
+		dlFileEntryMetadata.setFileEntryId(fileEntry.getFileEntryId());
+		dlFileEntryMetadata.setFileVersionId(fileVersion.getFileVersionId());
 
 		_dlFileEntryMetadataLocalService.addDLFileEntryMetadata(
 			dlFileEntryMetadata);
 
 		runSQL(
 			"delete from DLFileEntry where fileEntryId = " +
-				dlFileEntry.getFileEntryId());
+				fileEntry.getFileEntryId());
 
 		upgrade();
 
@@ -268,6 +270,9 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private DLAppService _dlAppService;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;

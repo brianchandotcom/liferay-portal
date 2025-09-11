@@ -4910,6 +4910,14 @@
 		"to": "getHelperUtilities(param#1#)"
 	},
 	{
+		"from": "Liferay.Notice",
+		"hasMessage": true,
+		"issueKey": "LPD-56577",
+		"validExtensions": [
+			"jsp"
+		]
+	},
+	{
 		"classNames": [
 			"SitemapManager"
 		],

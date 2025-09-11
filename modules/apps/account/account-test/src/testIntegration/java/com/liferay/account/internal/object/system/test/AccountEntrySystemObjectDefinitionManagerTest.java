@@ -69,8 +69,8 @@ public class AccountEntrySystemObjectDefinitionManagerTest
 			PortalException.class,
 			StringBundler.concat(
 				"User ", user.getUserId(), " must have ", PortletKeys.PORTAL,
-				",", PortletKeys.PORTAL,
-				",ADD_ACCOUNT_ENTRY permission for null "),
+				", ", PortletKeys.PORTAL,
+				", ADD_ACCOUNT_ENTRY permission for null "),
 			() -> systemObjectDefinitionManager.getOrAddEmptyBaseModel(
 				RandomTestUtil.randomString(), user));
 		AssertUtils.assertFailure(

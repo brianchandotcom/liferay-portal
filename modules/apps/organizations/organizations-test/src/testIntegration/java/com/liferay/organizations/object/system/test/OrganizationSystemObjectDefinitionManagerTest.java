@@ -227,8 +227,8 @@ public class OrganizationSystemObjectDefinitionManagerTest
 			PortalException.class,
 			StringBundler.concat(
 				"User ", user.getUserId(), " must have ", PortletKeys.PORTAL,
-				",", PortletKeys.PORTAL,
-				",ADD_ORGANIZATION permission for null "),
+				", ", PortletKeys.PORTAL,
+				", ADD_ORGANIZATION permission for null "),
 			() -> systemObjectDefinitionManager.getOrAddEmptyBaseModel(
 				RandomTestUtil.randomString(), user));
 

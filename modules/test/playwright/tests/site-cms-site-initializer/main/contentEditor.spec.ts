@@ -518,7 +518,7 @@ test.describe('Schedule Panel', () => {
 
 			await contentsPage.goto();
 
-			await contentsPage.createContent('Basic Web Content');
+			await contentsPage.createContent('Basic Content');
 
 			await contentsPage.openSidePanel('Schedule');
 
@@ -609,7 +609,7 @@ test.describe('Categorization Panel', () => {
 
 			await contentsPage.goto();
 
-			await contentsPage.createContent('Basic Web Content');
+			await contentsPage.createContent('Basic Content');
 
 			await contentsPage.openSidePanel('Categorization');
 

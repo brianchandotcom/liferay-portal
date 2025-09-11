@@ -7,27 +7,30 @@ import {Site} from '../types/Site';
 import ApiHelper from './ApiHelper';
 
 async function connectSiteToSpace(
-	groupId: string,
-	siteId: string,
+	externalReferenceCode: string,
+	siteExternalReferenceCode: string,
 	searchable?: string
 ) {
 	return await ApiHelper.put<Site>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/connected-sites/${siteId}`,
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}/connected-sites/by-external-reference-code/${siteExternalReferenceCode}`,
 		{
 			searchable: searchable ? searchable : 'true',
 		}
 	);
 }
 
-async function disconnectSiteFromSpace(groupId: string, siteId: string) {
+async function disconnectSiteFromSpace(
+	externalReferenceCode: string,
+	siteExternalReferenceCode: string
+) {
 	return await ApiHelper.delete(
-		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/connected-sites/${siteId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}/connected-sites/by-external-reference-code/${siteExternalReferenceCode}`
 	);
 }
 
-async function getConnectedSitesFromSpace(groupId: string) {
+async function getConnectedSitesFromSpace(externalReferenceCode: string) {
 	return await ApiHelper.get<{items: Site[]}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/connected-sites`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}/connected-sites`
 	);
 }
 

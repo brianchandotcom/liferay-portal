@@ -33,7 +33,7 @@ describe('manageSitesAction', () => {
 			'is called with hasConnectSitesPermission=%s and loadData=%s',
 			(hasConnectSitesPermission, loadData) => {
 				const data: ManageSitesData = {
-					groupId: 'lib-456',
+					externalReferenceCode: 'lib-456',
 					hasConnectSitesPermission,
 				};
 
@@ -52,7 +52,7 @@ describe('manageSitesAction', () => {
 				Content();
 
 				expect(mockSpaceSitesModal).toHaveBeenCalledWith({
-					groupId: data.groupId,
+					externalReferenceCode: data.externalReferenceCode,
 					hasConnectSitesPermission: data.hasConnectSitesPermission,
 				});
 			}

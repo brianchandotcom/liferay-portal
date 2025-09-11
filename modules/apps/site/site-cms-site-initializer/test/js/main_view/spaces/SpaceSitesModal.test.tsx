@@ -71,7 +71,7 @@ const mockUnconnectedSite: Site = {
 };
 
 const DEFAULT_PROPS = {
-	groupId: '123',
+	externalReferenceCode: 'ERC',
 	hasConnectSitesPermission: true,
 };
 
@@ -117,7 +117,7 @@ describe('SpaceSitesModal', () => {
 		});
 
 		mockConnectSiteToSpace.mockImplementation(
-			async (_groupId, siteId, searchable) => ({
+			async (_externalReferenceCode, siteId, searchable) => ({
 				data: {
 					externalReferenceCode:
 						mockUnconnectedSite.externalReferenceCode,
@@ -158,7 +158,7 @@ describe('SpaceSitesModal', () => {
 
 		await waitFor(() => {
 			expect(mockGetConnectedSitesFromSpace).toHaveBeenCalledWith(
-				DEFAULT_PROPS.groupId
+				DEFAULT_PROPS.externalReferenceCode
 			);
 		});
 
@@ -204,7 +204,7 @@ describe('SpaceSitesModal', () => {
 
 			await waitFor(() => {
 				expect(mockConnectSiteToSpace).toHaveBeenCalledWith(
-					DEFAULT_PROPS.groupId,
+					DEFAULT_PROPS.externalReferenceCode,
 					mockUnconnectedSite.id
 				);
 			});
@@ -261,7 +261,7 @@ describe('SpaceSitesModal', () => {
 
 			await waitFor(() => {
 				expect(mockDisconnectSiteFromSpace).toHaveBeenCalledWith(
-					DEFAULT_PROPS.groupId,
+					DEFAULT_PROPS.externalReferenceCode,
 					'1'
 				);
 			});
@@ -315,7 +315,7 @@ describe('SpaceSitesModal', () => {
 
 			await waitFor(() => {
 				expect(mockConnectSiteToSpace).toHaveBeenCalledWith(
-					DEFAULT_PROPS.groupId,
+					DEFAULT_PROPS.externalReferenceCode,
 					'1',
 					'false'
 				);

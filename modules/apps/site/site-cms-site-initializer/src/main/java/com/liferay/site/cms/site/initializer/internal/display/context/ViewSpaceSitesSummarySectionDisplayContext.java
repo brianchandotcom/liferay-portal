@@ -36,11 +36,13 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 	public ViewSpaceSitesSummarySectionDisplayContext(
 		DepotEntryService depotEntryService,
 		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
-		long groupId, HttpServletRequest httpServletRequest, Language language,
+		String externalReferenceCode, long groupId,
+		HttpServletRequest httpServletRequest, Language language,
 		ModelResourcePermission<User> userModelResourcePermission) {
 
 		_depotEntryService = depotEntryService;
 		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
+		_externalReferenceCode = externalReferenceCode;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
@@ -52,7 +54,8 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 
 	public String getAPIURL() {
 		return StringBundler.concat(
-			"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
+			"/o/headless-asset-library/v1.0/asset-libraries",
+			"/by-external-reference-code/", _externalReferenceCode,
 			"/connected-sites?page=", CMSSpaceConstants.SPACE_SUMMARY_PAGE,
 			"&pageSize=", CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
 	}
@@ -61,6 +64,8 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "connectSites");
+				dropdownItem.putData(
+					"externalReferenceCode", _externalReferenceCode);
 				dropdownItem.putData("groupId", _groupId);
 				dropdownItem.putData("title", _getSpaceSitesHeaderTitle());
 				dropdownItem.setLabel(
@@ -87,8 +92,10 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 			_getSearchableFDSActionDropdownItem(false),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
-					"/connected-sites/{id}"),
+					"/o/headless-asset-library/v1.0/asset-libraries",
+					"/by-external-reference-code/", _externalReferenceCode,
+					"/connected-sites/by-external-reference-code",
+					"/{externalReferenceCode}"),
 				null, "delete",
 				_language.get(_httpServletRequest, "disconnect"), "delete",
 				null, "headless"));
@@ -104,6 +111,8 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 				"action", "open-sites-modal"
 			).put(
 				"assetLibraryId", String.valueOf(_groupId)
+			).put(
+				"externalReferenceCode", _externalReferenceCode
 			).build(),
 			_getSpaceSitesHeaderTitle(), StringPool.BLANK);
 	}
@@ -113,8 +122,10 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 
 		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
 			StringBundler.concat(
-				"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
-				"/connected-sites/{id}"),
+				"/o/headless-asset-library/v1.0/asset-libraries",
+				"/by-external-reference-code/", _externalReferenceCode,
+				"/connected-sites/by-external-reference-code",
+				"/{externalReferenceCode}"),
 			null, searchable ? "make-searchable" : "make-unsearchable",
 			_language.get(
 				_httpServletRequest,
@@ -145,6 +156,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 	private final DepotEntryGroupRelLocalService
 		_depotEntryGroupRelLocalService;
 	private final DepotEntryService _depotEntryService;
+	private final String _externalReferenceCode;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;

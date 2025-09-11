@@ -39,6 +39,7 @@ jest.mock(
 
 describe('SpaceMembersWithList', () => {
 	const testSpace = {
+		externalReferenceCode: 'ERC',
 		id: '123',
 		name: 'Test Space',
 	};
@@ -107,6 +108,7 @@ describe('SpaceMembersWithList', () => {
 	const props: SpaceMembersWithListProps = {
 		assetLibraryCreatorUserId: testUsers[0].id,
 		assetLibraryId: testSpace.id,
+		externalReferenceCode: testSpace.externalReferenceCode,
 		hasAssignMembersPermission: true,
 	};
 
@@ -215,6 +217,7 @@ describe('SpaceMembersWithList', () => {
 		const moreUsers = [
 			{
 				emailAddress: 'user3@example.com',
+				externalReferenceCode: 'ERC_3',
 				id: '3',
 				name: 'User Three',
 				roles: [{id: 1, name: 'Admin'}],
@@ -273,7 +276,12 @@ describe('SpaceMembersWithList', () => {
 
 	it('loads more user groups when scrolling down', async () => {
 		const moreGroups = [
-			{id: '3', name: 'Group Three', roles: [{id: 1, name: 'Admin'}]},
+			{
+				id: '3',
+				externalReferenceCode: 'ERC_3',
+				name: 'Group Three',
+				roles: [{id: 1, name: 'Admin'}],
+			},
 		];
 		const moreGroupsResponse = {
 			items: moreGroups,

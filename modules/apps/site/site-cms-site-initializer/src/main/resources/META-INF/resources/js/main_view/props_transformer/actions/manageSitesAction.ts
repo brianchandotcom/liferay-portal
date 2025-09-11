@@ -8,7 +8,7 @@ import {openModal} from 'frontend-js-components-web';
 import SpaceSitesModal from '../../spaces/SpaceSitesModal';
 
 export interface ManageSitesData {
-	groupId: string;
+	externalReferenceCode: string;
 	hasConnectSitesPermission: boolean;
 }
 

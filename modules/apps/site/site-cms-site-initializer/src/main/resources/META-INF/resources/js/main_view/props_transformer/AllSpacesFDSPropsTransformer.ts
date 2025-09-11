@@ -141,10 +141,12 @@ export default function AllSpacesFDSPropsTransformer({
 					action.data.permissionKey === 'assign-members';
 				const assetLibraryCreatorUserId = itemData.creatorUserId;
 				const assetLibraryId = itemData.id;
+				const externalReferenceCode = itemData.externalReferenceCode;
 
 				const data: ManageMembersData = {
 					assetLibraryCreatorUserId,
 					assetLibraryId,
+					externalReferenceCode,
 					hasAssignMembersPermission,
 					title: Liferay.Language.get('all-members'),
 				};
@@ -156,7 +158,7 @@ export default function AllSpacesFDSPropsTransformer({
 					action.data.permissionKey === 'connect-sites';
 
 				const data: ManageSitesData = {
-					groupId: itemData.siteId,
+					externalReferenceCode: itemData.externalReferenceCode,
 					hasConnectSitesPermission,
 				};
 

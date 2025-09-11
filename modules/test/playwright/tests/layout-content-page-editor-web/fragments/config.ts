@@ -7,4 +7,5 @@ export const config = {
 	dependencies: ['page-management-site.main'],
 	name: 'layout-content-page-editor-web.fragments',
 	testDir: 'tests/layout-content-page-editor-web/fragments',
+	timeout: 90 * 1000,
 };

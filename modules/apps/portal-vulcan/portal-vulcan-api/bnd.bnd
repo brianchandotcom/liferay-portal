@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.dto.action,\
 	com.liferay.portal.vulcan.dto.converter,\
 	com.liferay.portal.vulcan.dto.converter.util,\
+	com.liferay.portal.vulcan.exportimport.report.helper,\
 	com.liferay.portal.vulcan.extension,\
 	com.liferay.portal.vulcan.extension.util,\
 	com.liferay.portal.vulcan.extension.validation,\

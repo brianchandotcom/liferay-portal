@@ -73,6 +73,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -654,6 +655,14 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		return pageTemplateResource.postSitePageTemplate(
 			siteExternalReferenceCode, pageTemplate);
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+		testGetSitePageTemplatesPage_getExpectedActions(
+			String siteExternalReferenceCode) {
+
+		return new HashMap<>();
 	}
 
 	@Override

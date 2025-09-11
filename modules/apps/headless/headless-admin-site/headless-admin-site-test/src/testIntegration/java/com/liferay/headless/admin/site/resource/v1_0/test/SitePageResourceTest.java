@@ -384,6 +384,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	@Override
+	protected Map<String, Map<String, String>>
+		testGetSiteSitePagesPage_getExpectedActions(
+			String siteExternalReferenceCode) {
+
+		return new HashMap<>();
+	}
+
+	@Override
 	protected String
 		testGetSiteSitePagesPage_getIrrelevantSiteExternalReferenceCode() {
 

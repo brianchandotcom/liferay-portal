@@ -588,6 +588,14 @@ public class DisplayPageTemplateResourceTest
 	}
 
 	@Override
+	protected Map<String, Map<String, String>>
+		testGetSiteDisplayPageTemplatesPage_getExpectedActions(
+			String siteExternalReferenceCode) {
+
+		return new HashMap<>();
+	}
+
+	@Override
 	protected DisplayPageTemplate
 			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
 				DisplayPageTemplate displayPageTemplate)

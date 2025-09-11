@@ -1172,6 +1172,22 @@ public class LayoutsAdminDisplayContext {
 				"selPlid", selPlid
 			).buildPortletURL();
 
+		if (selPlid != LayoutConstants.DEFAULT_PLID) {
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(selPlid);
+
+			if ((layout != null) && layout.isTypeEmpty()) {
+				selectLayoutPageTemplateEntryURL.setParameter(
+					"initialType", LayoutConstants.TYPE_EMPTY);
+				selectLayoutPageTemplateEntryURL.setParameter(
+					"editAction",
+					String.valueOf(
+						ParamUtil.getBoolean(
+							httpServletRequest, "editAction")));
+				selectLayoutPageTemplateEntryURL.setParameter(
+					"externalReferenceCode", layout.getExternalReferenceCode());
+			}
+		}
+
 		if (layoutPageTemplateCollectionId > 0) {
 			selectLayoutPageTemplateEntryURL.setParameter(
 				"layoutPageTemplateCollectionId",

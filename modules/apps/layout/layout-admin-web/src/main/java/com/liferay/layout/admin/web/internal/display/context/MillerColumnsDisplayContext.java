@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -216,9 +217,12 @@ public class MillerColumnsDisplayContext {
 							return null;
 						}
 
-						return _layoutsAdminDisplayContext.
-							getSelectLayoutPageTemplateEntryURL(
-								0, layout.getPlid(), layout.isPrivateLayout());
+						return HttpComponentsUtil.addParameter(
+							_layoutsAdminDisplayContext.
+								getSelectLayoutPageTemplateEntryURL(
+									0, layout.getPlid(),
+									layout.isPrivateLayout()),
+							"editAction", Boolean.FALSE);
 					}
 				).put(
 					"bulkActions",
@@ -438,8 +442,10 @@ public class MillerColumnsDisplayContext {
 					return null;
 				}
 
-				return _layoutsAdminDisplayContext.
-					getSelectLayoutPageTemplateEntryURL(privatePages);
+				return HttpComponentsUtil.addParameter(
+					_layoutsAdminDisplayContext.
+						getSelectLayoutPageTemplateEntryURL(privatePages),
+					"editAction", Boolean.FALSE);
 			}
 		).put(
 			"hasChild", true

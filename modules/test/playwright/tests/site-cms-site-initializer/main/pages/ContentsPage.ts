@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
@@ -36,10 +37,11 @@ export class ContentsPage {
 
 	readonly newButton: Locator;
 	readonly publishButton: Locator;
-
+	readonly apiHelpers: ApiHelpers;
 	constructor(page: Page) {
 		this.page = page;
 
+		this.apiHelpers = new ApiHelpers(page);
 		this.newButton = page.locator('.nav-item').getByLabel('New');
 		this.publishButton = page.getByText('Publish', {exact: true});
 	}
@@ -65,12 +67,29 @@ export class ContentsPage {
 		}
 	}
 
-	async createContent(type: string) {
+	async createContent(type: string, space: string = 'Default') {
+		const assetLibraries =
+			await this.apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
+				encodeURIComponent("type eq 'Space'")
+			);
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: type}),
 			trigger: this.newButton,
 		});
+
+		if (assetLibraries.length > 1) {
+			await this.page.getByRole('dialog').waitFor();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('option', {name: space}),
+				trigger: this.page.getByRole('dialog').getByLabel('Space'),
+			});
+
+			await this.page.getByRole('button', {name: 'Save'}).click();
+		}
 
 		await this.page.getByRole('tab', {name: 'General'}).waitFor();
 	}

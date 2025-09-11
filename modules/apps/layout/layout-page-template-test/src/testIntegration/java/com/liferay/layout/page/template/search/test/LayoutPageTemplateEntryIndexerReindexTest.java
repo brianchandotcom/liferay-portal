@@ -79,7 +79,6 @@ public class LayoutPageTemplateEntryIndexerReindexTest {
 					String.valueOf(
 						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)
 				}));
-
 		_assertNoFieldValues(
 			name,
 			Collections.singletonMap(

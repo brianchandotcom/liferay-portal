@@ -235,6 +235,14 @@ public class WidgetPageWidgetInstanceResourceTest
 	}
 
 	@Override
+	protected String
+			testGetSiteSitePageWidgetInstancesPage_getSitePageExternalReferenceCode()
+		throws Exception {
+
+		return _layout.getExternalReferenceCode();
+	}
+
+	@Override
 	protected WidgetPageWidgetInstance
 			testPostSiteSitePageWidgetInstance_addWidgetPageWidgetInstance(
 				WidgetPageWidgetInstance widgetPageWidgetInstance)

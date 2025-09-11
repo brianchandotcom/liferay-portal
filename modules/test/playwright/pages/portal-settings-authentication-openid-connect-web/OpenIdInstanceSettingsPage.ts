@@ -9,12 +9,15 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
+import { CustomClaim } from '../../tests/openid-link/main/helpers/CustomClaimsHelper';
 
 export class OpenIdInstanceSettingsPage {
 	readonly page: Page;
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly openIdConnectMenuItem: Locator;
 	readonly enabledCheckbox: Locator;
+	readonly expandoColumnSelect: Locator;
+	readonly oidcProviderCustomClaimField: Locator;
 	readonly saveButton: Locator;
 	readonly openIDConnectProviderConnection: Locator;
 	readonly addButton: Locator;
@@ -44,6 +47,8 @@ export class OpenIdInstanceSettingsPage {
 		this.openIDConnectClientSecret = page.getByLabel(
 			'OpenID Connect Client Secret'
 		);
+		this.expandoColumnSelect = page.getByLabel('Expando Column');
+		this.oidcProviderCustomClaimField = page.getByLabel('OIDC Provider Custom Claim');
 	}
 
 	async goto() {
@@ -74,7 +79,8 @@ export class OpenIdInstanceSettingsPage {
 
 	async AddOpenIDConnectProviderConnectionConfiguration(
 		providerName: string,
-		openIdProvider: string
+		openIdProvider: string,
+		customClaim?: CustomClaim
 	) {
 		await this.clickOpenIDConnectProviderConnectionMenuItem();
 		await this.addButton.click();
@@ -82,6 +88,12 @@ export class OpenIdInstanceSettingsPage {
 		await this.discoveryEndpointField.fill(openIdProvider);
 		await this.openIDConnectClientIDField.fill(getRandomString());
 		await this.openIDConnectClientSecret.fill(getRandomString());
+
+		if(customClaim) {
+			await this.expandoColumnSelect.selectOption({label : customClaim.expandoColumnName});
+			await this.oidcProviderCustomClaimField.fill(customClaim.oidcProviderCustomClaim);
+		}
+
 		await this.saveButton.click();
 		await waitForAlert(this.page);
 	}

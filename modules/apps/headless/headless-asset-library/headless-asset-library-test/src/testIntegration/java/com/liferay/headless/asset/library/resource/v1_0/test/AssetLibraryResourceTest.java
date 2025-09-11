@@ -7,7 +7,6 @@ package com.liferay.headless.asset.library.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.headless.asset.library.client.dto.v1_0.AssetLibrary;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -571,9 +568,6 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	}
 
 	@Inject
-	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
-
-	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
@@ -584,11 +578,5 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	@Inject
 	private Language _language;
-
-	@Inject
-	private UserGroupLocalService _userGroupLocalService;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

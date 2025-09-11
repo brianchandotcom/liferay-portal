@@ -30,7 +30,7 @@ ViewAllSectionDisplayContext viewAllSectionDisplayContext = (ViewAllSectionDispl
 			formName="fm"
 			id="<%= CMSSiteInitializerFDSNames.ALL_SECTION %>"
 			itemsPerPage="<%= 20 %>"
-			propsTransformer="{AllFDSPropsTransformer} from site-cms-site-initializer"
+			propsTransformer="{AssetsFDSPropsTransformer} from site-cms-site-initializer"
 			selectedItemsKey="embedded.id"
 			selectionType="multiple"
 			showSelectAll="<%= true %>"

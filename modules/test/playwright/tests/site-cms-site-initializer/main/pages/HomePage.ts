@@ -11,21 +11,41 @@ import {waitForAlert} from '../../../../utils/waitForAlert';
 export class HomePage {
 	readonly page: Page;
 
-	readonly workflowTaskFilterButton: Locator;
 	readonly assignedToMeMenuItem: Locator;
 	readonly assignedToMyRolesMenuItem: Locator;
+	readonly basicDocumentButton: Locator;
+	readonly basicWebContentButton: Locator;
+	readonly blogButton: Locator;
+	readonly knowledgeBaseButton: Locator;
+	readonly vocabularyButton: Locator;
+	readonly workflowTaskFilterButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.workflowTaskFilterButton = page.getByRole('button', {
-			name: 'Assigned to',
-		});
 		this.assignedToMeMenuItem = page.getByRole('menuitem', {
 			name: 'Assigned to Me',
 		});
 		this.assignedToMyRolesMenuItem = page.getByRole('menuitem', {
 			name: 'Assigned to My Roles',
+		});
+		this.basicDocumentButton = page.getByRole('button', {
+			name: 'Basic Document',
+		});
+		this.basicWebContentButton = page.getByRole('button', {
+			name: 'Basic Web Content',
+		});
+		this.blogButton = page.getByRole('button', {
+			name: 'Blog',
+		});
+		this.knowledgeBaseButton = page.getByRole('button', {
+			name: 'Knowledge Base',
+		});
+		this.vocabularyButton = page.getByRole('button', {
+			name: 'Vocabulary',
+		});
+		this.workflowTaskFilterButton = page.getByRole('button', {
+			name: 'Assigned to',
 		});
 	}
 
@@ -92,6 +112,30 @@ export class HomePage {
 			this.page,
 			`Success:Your request completed successfully.`
 		);
+	}
+
+	async selectSpace(name: string) {
+		const selectButton: Locator = this.page.getByText('Select a Space');
+
+		await selectButton.waitFor({state: 'visible'});
+
+		await selectButton.click();
+
+		const dropdown = this.page.getByRole('listbox');
+
+		await dropdown.waitFor({state: 'visible'});
+
+		const spaceButton: Locator = this.page.getByRole('option', {
+			name,
+		});
+
+		await spaceButton.click();
+
+		const saveButton: Locator = this.page.getByRole('button', {
+			name: 'Save',
+		});
+
+		await saveButton.click();
 	}
 
 	async updateDueDate(date: string, name: string) {

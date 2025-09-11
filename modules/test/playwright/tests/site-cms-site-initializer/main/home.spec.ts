@@ -9,7 +9,9 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import getRandomString from '../../../utils/getRandomString';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
+import {DataSetPage} from './pages/DataSetPage';
 
 const test = mergeTests(
 	cmsPagesTest,
@@ -140,5 +142,182 @@ test(
 				dueDate
 			);
 		});
+	}
+);
+
+test(
+	'Can see Recent Assets',
+	{tag: '@LPD-58792'},
+	async ({apiHelpers, homePage, page}) => {
+		const applicationName = 'cms/knowledge-bases';
+		const spaceName = 'Default';
+		let objectEntry1;
+		let objectEntry2;
+
+		const file1Title = `title ${getRandomString()}`;
+
+		try {
+			objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: file1Title,
+				},
+				applicationName,
+				spaceName
+			);
+
+			objectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: `some content ${getRandomString()}`,
+				},
+				applicationName,
+				spaceName
+			);
+
+			await homePage.goto();
+
+			const dataSetFragmentPage: DataSetPage = new DataSetPage(page);
+
+			const row = dataSetFragmentPage.table.bodyRows.filter({
+				hasText: file1Title,
+			});
+
+			await expect(row.getByText(file1Title)).toBeVisible();
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry1.id)
+			);
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry2.id)
+			);
+		}
+	}
+);
+
+test(
+	'Can use Quick Actions to create new content',
+	{tag: '@LPD-58793'},
+	async ({apiHelpers, homePage, page}) => {
+		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			name: `Space ${getRandomString()}`,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		await test.step('Check redirection after clicking New Basic Web Content button', async () => {
+			await homePage.goto();
+
+			await homePage.basicWebContentButton.click();
+
+			await homePage.selectSpace('Default');
+
+			await expect(
+				page.getByPlaceholder('New Basic Web Content')
+			).toBeVisible();
+		});
+
+		await test.step('Check redirection after clicking Blog button', async () => {
+			await homePage.goto();
+
+			await homePage.blogButton.click();
+
+			await homePage.selectSpace('Default');
+
+			await expect(page.getByPlaceholder('New Blog')).toBeVisible();
+		});
+
+		await test.step('Check redirection after clicking Knowledge Base button', async () => {
+			await homePage.goto();
+
+			await homePage.knowledgeBaseButton.click();
+
+			await homePage.selectSpace('Default');
+
+			await expect(
+				page.getByPlaceholder('New Knowledge Base')
+			).toBeVisible();
+		});
+
+		await test.step('Check redirection after clicking Basic Document button', async () => {
+			await homePage.goto();
+
+			await homePage.basicDocumentButton.click();
+
+			await homePage.selectSpace('Default');
+
+			await expect(
+				page.getByPlaceholder('New Basic Document')
+			).toBeVisible();
+		});
+
+		await test.step('Check redirection after clicking Vocabulary button', async () => {
+			await homePage.goto();
+
+			await homePage.vocabularyButton.click();
+
+			await expect(page.getByText('Basic Info')).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Can use Search Bar to search for content',
+	{tag: '@LPD-61220'},
+	async ({apiHelpers, assetsPage, homePage, page}) => {
+		const applicationName = 'cms/knowledge-bases';
+		const spaceName = 'Default';
+		let objectEntry1;
+		let objectEntry2;
+
+		const file1Title = `title ${getRandomString()}`;
+
+		try {
+			objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: file1Title,
+				},
+				applicationName,
+				spaceName
+			);
+
+			objectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: `some content ${getRandomString()}`,
+				},
+				applicationName,
+				spaceName
+			);
+
+			await homePage.goto();
+
+			const searchInput = await page.getByPlaceholder('Search');
+
+			await searchInput.fill('title');
+
+			await searchInput.press('Enter');
+
+			const row = assetsPage.table.bodyRows.filter({hasText: file1Title});
+
+			await expect(row.getByText(file1Title)).toBeVisible();
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry1.id)
+			);
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry2.id)
+			);
+		}
 	}
 );

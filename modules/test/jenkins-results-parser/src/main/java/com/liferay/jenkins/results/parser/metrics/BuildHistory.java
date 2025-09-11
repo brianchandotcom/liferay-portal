@@ -537,14 +537,11 @@ public class BuildHistory {
 
 		String portalUpstreamSHA = parametersMap.get("PORTAL_GIT_COMMIT");
 
-		String portalSenderSHA = null;
+		String portalSenderSHA = portalUpstreamSHA;
 
-		if (portalUpstreamSHA != null) {
-			portalSenderSHA = portalUpstreamSHA;
-		}
-		else {
-			portalUpstreamSHA = parametersMap.get("GITHUB_UPSTREAM_BRANCH_SHA");
+		if (portalUpstreamSHA == null) {
 			portalSenderSHA = parametersMap.get("GITHUB_SENDER_BRANCH_SHA");
+			portalUpstreamSHA = parametersMap.get("GITHUB_UPSTREAM_BRANCH_SHA");
 		}
 
 		if ((portalSenderSHA == null) || (portalUpstreamSHA == null)) {
@@ -555,13 +552,13 @@ public class BuildHistory {
 			portalUpstreamSHA = portalUpstreamSHA.substring(0, 7);
 		}
 
-		if (portalSenderSHA.length() > 8) {
-			portalSenderSHA = portalSenderSHA.substring(0, 7);
-		}
-
 		sb.append(portalUpstreamSHA);
 
 		sb.append("/");
+
+		if (portalSenderSHA.length() > 8) {
+			portalSenderSHA = portalSenderSHA.substring(0, 7);
+		}
 
 		sb.append(portalSenderSHA);
 

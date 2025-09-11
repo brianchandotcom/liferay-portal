@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '8d79980a735c8659e0682e35da75ebfc98591ae7d6b5dd9864f78351a4ab296a',
+	hash: '772706fa41f1ee672712c1fff8e726bd60ebefbd7518cd8e94ace353a8963eef',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -445,6 +445,7 @@ module.exports = {
 			'EditorConfig',
 			'Essentials',
 			'Font',
+			'Fullscreen',
 			'GeneralHtmlSupport',
 			'Heading',
 			'HorizontalLine',
@@ -473,7 +474,6 @@ module.exports = {
 			'TableProperties',
 			'TableToolbar',
 			'Underline',
-			'icons',
 		],
 		'clipboard': ['*', 'default'],
 		'cropperjs': ['*', 'default'],

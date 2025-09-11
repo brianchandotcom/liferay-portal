@@ -28,6 +28,7 @@ module.exports = {
 			'EditorConfig',
 			'Essentials',
 			'Font',
+			'Fullscreen',
 			'GeneralHtmlSupport',
 			'Heading',
 			'HorizontalLine',
@@ -56,7 +57,6 @@ module.exports = {
 			'TableProperties',
 			'TableToolbar',
 			'Underline',
-			'icons',
 		],
 	},
 };

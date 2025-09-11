@@ -219,7 +219,7 @@ function main {
 			start-restore-job \
 			--iam-role-arn "{{ .Values.awsBackupService.assumedIamRoleArn }}" \
 			--metadata "DestinationBucketName={{ "{{" }}inputs.parameters.s3-bucket-id}},NewBucket=false" \
-			--recovery-point-arn "{{ "{{" }}inputs.parameters.recovery-point-arn}}" \
+			--recovery-point-arn "{{ "{{" }}inputs.parameters.s3-recovery-point-arn}}" \
 			--resource-type "S3" \
 			| jq --raw-output ".RestoreJobId")
 

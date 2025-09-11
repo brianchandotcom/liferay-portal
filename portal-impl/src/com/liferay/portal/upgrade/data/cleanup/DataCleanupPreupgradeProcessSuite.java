@@ -88,6 +88,9 @@ public class DataCleanupPreupgradeProcessSuite {
 			new ConfigurationDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess ddmDataCleanupPreupgradeProcess =
 			new DDMDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess
+			ddmStorageLinkDataCleanupPreupgradeProcess =
+				new DDMStorageLinkDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess dlFileEntryDataCleanupPreupgradeProcess =
 			new DLFileEntryDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess groupDataCleanupPreupgradeProcess =
@@ -133,6 +136,7 @@ public class DataCleanupPreupgradeProcessSuite {
 					companyDataCleanupPreupgradeProcess,
 					configurationDataCleanupPreupgradeProcess,
 					ddmDataCleanupPreupgradeProcess,
+					ddmStorageLinkDataCleanupPreupgradeProcess,
 					dlFileEntryDataCleanupPreupgradeProcess,
 					groupDataCleanupPreupgradeProcess,
 					journalDataCleanupPreupgradeProcess,
@@ -144,6 +148,12 @@ public class DataCleanupPreupgradeProcessSuite {
 			ddmDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
 					groupDataCleanupPreupgradeProcess)
+			).put(
+				ddmStorageLinkDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					ddmDataCleanupPreupgradeProcess,
+					dlFileEntryDataCleanupPreupgradeProcess,
+					journalDataCleanupPreupgradeProcess)
 			).put(
 				dlFileEntryDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(

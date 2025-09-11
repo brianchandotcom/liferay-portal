@@ -8,6 +8,8 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -94,6 +96,36 @@ public class ConvertEmptyLayoutMVCActionCommand
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
+			long layoutPageTemplateEntryId = ParamUtil.getLong(
+				actionRequest, "layoutPageTemplateEntryId");
+
+			long masterLayoutPlid = ParamUtil.getLong(
+				actionRequest, "masterLayoutPlid",
+				LayoutConstants.DEFAULT_PLID);
+
+			Layout layoutPageTemplateEntryLayout = null;
+
+			if (layoutPageTemplateEntryId > 0) {
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+
+				if (layoutPageTemplateEntry.getLayoutPrototypeId() > 0) {
+					type = LayoutConstants.TYPE_PORTLET;
+				}
+				else {
+					type = LayoutConstants.TYPE_CONTENT;
+				}
+
+				layoutPageTemplateEntryLayout = _layoutLocalService.fetchLayout(
+					layoutPageTemplateEntry.getPlid());
+
+				if (layoutPageTemplateEntryLayout != null) {
+					masterLayoutPlid =
+						layoutPageTemplateEntryLayout.getMasterLayoutPlid();
+				}
+			}
+
 			if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 				layout = _layoutLocalService.updateLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),
@@ -102,31 +134,15 @@ public class ConvertEmptyLayoutMVCActionCommand
 					layout.getKeywordsMap(), layout.getRobotsMap(), type, false,
 					layout.getFriendlyURLMap(), layout.isIconImage(), null,
 					layout.getStyleBookEntryId(),
-					layout.getFaviconFileEntryId(),
-					layout.getMasterLayoutPlid(), serviceContext);
+					layout.getFaviconFileEntryId(), masterLayoutPlid,
+					serviceContext);
+
+				if (layoutPageTemplateEntryLayout != null) {
+					_layoutLocalService.copyLayoutContent(
+						layoutPageTemplateEntryLayout, layout);
+				}
 			}
 			else {
-				long masterLayoutPlid = ParamUtil.getLong(
-					actionRequest, "masterLayoutPlid");
-
-				String externalReferenceCode = GetterUtil.getString(
-					serviceContext.getAttribute(
-						"defaultSegmentsExperienceExternalReferenceCode"),
-					null);
-
-				SegmentsExperience segmentsExperience =
-					_segmentsExperienceLocalService.
-						addDefaultSegmentsExperience(
-							externalReferenceCode, layout.getUserId(),
-							layout.getPlid(), serviceContext);
-
-				_layoutPageTemplateStructureLocalService.
-					addLayoutPageTemplateStructure(
-						layout.getUserId(), layout.getGroupId(),
-						layout.getPlid(),
-						segmentsExperience.getSegmentsExperienceId(),
-						_generateContentLayoutStructure(), serviceContext);
-
 				if (draftLayout == null) {
 					draftLayout = _layoutLocalService.addLayout(
 						null, layout.getUserId(), layout.getGroupId(),
@@ -137,6 +153,30 @@ public class ConvertEmptyLayoutMVCActionCommand
 						layout.getRobotsMap(), type, layout.getTypeSettings(),
 						true, true, Collections.emptyMap(), masterLayoutPlid,
 						serviceContext);
+				}
+
+				if (layoutPageTemplateEntryLayout != null) {
+					_layoutLocalService.copyLayoutContent(
+						layoutPageTemplateEntryLayout, draftLayout);
+				}
+				else {
+					String externalReferenceCode = GetterUtil.getString(
+						serviceContext.getAttribute(
+							"defaultSegmentsExperienceExternalReferenceCode"),
+						null);
+
+					SegmentsExperience segmentsExperience =
+						_segmentsExperienceLocalService.
+							addDefaultSegmentsExperience(
+								externalReferenceCode, layout.getUserId(),
+								layout.getPlid(), serviceContext);
+
+					_layoutPageTemplateStructureLocalService.
+						addLayoutPageTemplateStructure(
+							layout.getUserId(), layout.getGroupId(),
+							layout.getPlid(),
+							segmentsExperience.getSegmentsExperienceId(),
+							_generateContentLayoutStructure(), serviceContext);
 				}
 
 				layout = _layoutLocalService.updateLayout(
@@ -237,6 +277,10 @@ public class ConvertEmptyLayoutMVCActionCommand
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

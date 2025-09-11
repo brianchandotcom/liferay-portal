@@ -579,7 +579,10 @@
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
-														"en_US": "https://help.liferay.com/hc/en-us/articles/8714747922445-About-the-Overview-Page-Video-Tutorial"
+														"en_US": "https://help.liferay.com/hc/en-us/articles/8714747922445-About-the-Overview-Page-Video-Tutorial",
+														"es_ES": "https://help.liferay.com/hc/en-us/articles/8714747922445-About-the-Overview-Page-Video-Tutorial",
+														"ja_JP": "https://help.liferay.com/hc/en-us/articles/8714747922445-About-the-Overview-Page-Video-Tutorial",
+														"pt_BR": "https://help.liferay.com/hc/en-us/articles/8714747922445-About-the-Overview-Page-Video-Tutorial"
 													}
 												}
 											},

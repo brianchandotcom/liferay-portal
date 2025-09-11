@@ -125,7 +125,10 @@
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
-														"en_US": "/release-notes"
+														"en_US": "/release-notes",
+														"es_ES": "/release-notes",
+														"ja_JP": "/release-notes",
+														"pt_BR": "/release-notes"
 													}
 												}
 											},
@@ -418,7 +421,10 @@
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
-														"en_US": "https://customer.liferay.com/en/dxp-release-notes"
+														"en_US": "https://customer.liferay.com/en/dxp-release-notes",
+														"es_ES": "https://customer.liferay.com/en/dxp-release-notes",
+														"ja_JP": "https://customer.liferay.com/en/dxp-release-notes",
+														"pt_BR": "https://customer.liferay.com/en/dxp-release-notes"
 													}
 												}
 											},

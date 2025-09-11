@@ -79,7 +79,7 @@ public class BuildHistoryProcessor {
 
 			};
 
-		return _getBuildHistories(duration, null, null, biConsumer, startTime);
+		return _getBuildHistories(biConsumer, duration, null, null, startTime);
 	}
 
 	public static Collection<BuildHistory> newDefaultJobHistories(
@@ -100,7 +100,7 @@ public class BuildHistoryProcessor {
 
 			};
 
-		return _getBuildHistories(duration, null, null, biConsumer, startTime);
+		return _getBuildHistories(biConsumer, duration, null, null, startTime);
 	}
 
 	public static Collection<BuildHistory> newTestSuiteJobHistories(
@@ -163,7 +163,7 @@ public class BuildHistoryProcessor {
 			};
 
 		return _getBuildHistories(
-			duration, null, jobNamePattern, biConsumer, startTime);
+			biConsumer, duration, null, jobNamePattern, startTime);
 	}
 
 	public static Collection<BuildHistory> newTopLevelBuildHistories(
@@ -193,7 +193,7 @@ public class BuildHistoryProcessor {
 
 			};
 
-		return _getBuildHistories(duration, null, null, biConsumer, startTime);
+		return _getBuildHistories(biConsumer, duration, null, null, startTime);
 	}
 
 	public static Collection<BuildHistory> newUtilizationBuildHistories(
@@ -214,7 +214,7 @@ public class BuildHistoryProcessor {
 
 			};
 
-		return _getBuildHistories(duration, null, null, biConsumer, startTime);
+		return _getBuildHistories(biConsumer, duration, null, null, startTime);
 	}
 
 	public static Collection<BuildHistory> newUtilizationTestTypeBuildHistories(
@@ -235,7 +235,7 @@ public class BuildHistoryProcessor {
 
 			};
 
-		return _getBuildHistories(duration, null, null, biConsumer, startTime);
+		return _getBuildHistories(biConsumer, duration, null, null, startTime);
 	}
 
 	public static void setBaseDir(File baseDir) {
@@ -268,11 +268,10 @@ public class BuildHistoryProcessor {
 	}
 
 	private static Collection<BuildHistory> _getBuildHistories(
-		long duration, Pattern jobNameExcludesPattern,
-		Pattern jobNameIncludesPattern,
 		BiConsumer<Set<BuildJSONObject>, Map<String, BuildHistory>>
 			buildHistoryBiConsumer,
-		long startTime) {
+		long duration, Pattern jobNameExcludesPattern,
+		Pattern jobNameIncludesPattern, long startTime) {
 
 		Map<String, BuildHistory> buildHistoriesMap = new HashMap<>();
 

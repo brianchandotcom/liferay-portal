@@ -191,7 +191,7 @@
 			"Http",
 			"HttpUtil"
 		],
-		"from": "regex:(\\w+)\\.(?<methodName>addParameter|decodePath|decodeURL|encodeParameters|encodePath|fixPath|getCompleteURL|getDomain|getIpAddress|getParameter|getParameterMap|getPath|getProtocol|getQueryString|getRequestURL|getURI|hasDomain|hasProtocol|isForwarded|isSecure|normalizePath|parameterMapFromString|protocolize|removeDomain|removeParameter|removePathParameters|removeProtocol|sanitizeHeader|setParameter|shortenURL)",
+		"from": "regex:(\\w+)\\.(?<methodName>addParameter|decodePath|decodeURL|encodeParameters|encodePath|fixPath|getCompleteURL|getDomain|getIpAddress|getParameter|getParameterMap|getPath|getProtocol|getQueryString|getRequestURL|getURI|hasDomain|hasProtocol|isForwarded|isSecure|normalizePath|parameterMapFromString|parameterMapToString|protocolize|removeDomain|removeParameter|removePathParameters|removeProtocol|sanitizeHeader|setParameter|shortenURL)",
 		"issueKey": "LPD-8040",
 		"newImports": [
 			"com.liferay.portal.kernel.util.HttpComponentsUtil"

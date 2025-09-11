@@ -19,6 +19,7 @@ import HeadlessCommerceAdminOrder from '../../../../../services/rest/HeadlessCom
 import {safeJSONParse} from '../../../../../utils/util';
 import OrderDetailsHeader from '../../../components/Order/OrderDetailsHeader';
 import PaymentStatus from '../../../components/Order/PaymentStatus/PaymentStatus';
+import Label from '@clayui/label';
 
 function formatAddress(address: BillingAddress) {
 	if (!address || !Object.keys(address).length) {
@@ -84,6 +85,15 @@ const OrderDetails = () => {
 
 	const {order, payments, product} = data || {};
 
+	const kProjectsArray = safeJSONParse(
+		order?.customFields!!['Project Name']!!,
+		[]
+	);
+
+	const projectNames = kProjectsArray.map(
+		(project: {name: string}) => project?.name
+	);
+
 	const currencyCode = order?.currencyCode || CurrencyAbbreviation.USD;
 
 	return (
@@ -140,16 +150,14 @@ const OrderDetails = () => {
 								value: textWrapper(order?.account?.name),
 							},
 							{
-								title: i18n.translate('liferay-user-email'),
+								title: i18n.translate('user-email'),
 								value: textWrapper(order?.creatorEmailAddress),
 							},
 							{
-								title: i18n.translate('billing-email'),
-								value: '-',
-							},
-							{
 								title: i18n.translate('project'),
-								value: textWrapper(order?.projectName),
+								value: projectNames[0]?.length
+									? projectNames.join(', ')
+									: '-',
 							},
 							{
 								title: i18n.translate('address'),

@@ -121,7 +121,7 @@ const Orders = () => {
 						{
 							id: 'paymentStatusInfo',
 							name: i18n.translate('payment-status'),
-							render: (paymentStatusInfo) => (
+							render: (paymentStatusInfo, _) => (
 								<PaymentStatus
 									paymentStatus={paymentStatusInfo.code}
 								/>

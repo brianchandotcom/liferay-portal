@@ -346,7 +346,6 @@ export default {
 	'liferay-s': 'Liferay’s',
 	'liferay-saas': 'Liferay SaaS',
 	'liferay-self-hosted': 'Liferay Self-Hosted',
-	'liferay-user-email': 'Liferay User Email',
 	'liferay-version': 'Liferay Version',
 	'limit-reached': 'Limit Reached',
 	'list-with-latest-published-apps': 'List with latest published apps',
@@ -671,6 +670,7 @@ export default {
 	'use-one-of-the-following-methods-to-provide-your-app-builds':
 		'Use one of the following methods to provide your app builds.',
 	'user-account': 'User Account',
+	'user-email': 'User Email',
 	'users-requests-to-become-a-publisher':
 		'Users requests to become a publisher',
 	'value-between-1-and-60': 'Value between 1 and 60.',

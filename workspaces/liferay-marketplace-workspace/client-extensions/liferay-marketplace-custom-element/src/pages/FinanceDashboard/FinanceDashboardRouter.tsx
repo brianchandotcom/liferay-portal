@@ -7,8 +7,8 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import withProviders from '../../hoc/withProviders';
 import FinanceDashboardOutlet from './FinanceDashboardOutlet';
-import Orders from './pages/Orders';
 import OrderDetails from './pages/Orders/OrderDetails';
+import Orders from './pages/Orders/Orders';
 
 import './index.scss';
 

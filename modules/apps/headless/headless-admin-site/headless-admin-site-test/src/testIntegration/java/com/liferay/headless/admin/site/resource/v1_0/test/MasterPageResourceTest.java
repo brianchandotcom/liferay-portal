@@ -51,6 +51,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.Sites;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -415,6 +417,14 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		return masterPageResource.postSiteMasterPage(
 			siteExternalReferenceCode, masterPage);
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+		testGetSiteMasterPagesPage_getExpectedActions(
+			String siteExternalReferenceCode) {
+
+		return new HashMap<>();
 	}
 
 	@Override

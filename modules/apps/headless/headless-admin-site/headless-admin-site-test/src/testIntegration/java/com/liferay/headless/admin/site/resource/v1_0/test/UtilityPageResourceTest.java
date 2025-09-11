@@ -518,6 +518,14 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	}
 
 	@Override
+	protected Map<String, Map<String, String>>
+		testGetSiteUtilityPagesPage_getExpectedActions(
+			String siteExternalReferenceCode) {
+
+		return new HashMap<>();
+	}
+
+	@Override
 	protected UtilityPage testPostSiteUtilityPage_addUtilityPage(
 			UtilityPage utilityPage)
 		throws Exception {

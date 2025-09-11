@@ -24,6 +24,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -309,6 +312,14 @@ public class PageTemplateSetResourceTest
 		return pageTemplateSetResource.putSitePageTemplateSet(
 			siteExternalReferenceCode,
 			pageTemplateSet.getExternalReferenceCode(), pageTemplateSet);
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+		testGetSitePageTemplateSetsPage_getExpectedActions(
+			String siteExternalReferenceCode) {
+
+		return new HashMap<>();
 	}
 
 	@Override

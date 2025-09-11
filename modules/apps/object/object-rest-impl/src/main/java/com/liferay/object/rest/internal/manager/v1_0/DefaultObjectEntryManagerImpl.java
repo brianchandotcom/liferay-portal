@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryModel;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -1780,10 +1781,10 @@ public class DefaultObjectEntryManagerImpl
 			objectDefinition, serviceBuilderObjectEntry);
 		_checkRootDescendantNode(serviceBuilderObjectEntry, false);
 
-		Group group = groupLocalService.getGroup(
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
 			serviceBuilderObjectEntry.getGroupId());
 
-		if (group.isDepot() &&
+		if ((depotEntry != null) &&
 			_trashHelper.isTrashEnabled(
 				serviceBuilderObjectEntry.getGroupId()) &&
 			(serviceBuilderObjectEntry.getStatus() !=

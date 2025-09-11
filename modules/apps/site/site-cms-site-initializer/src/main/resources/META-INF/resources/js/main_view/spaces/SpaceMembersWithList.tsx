@@ -31,6 +31,7 @@ export interface SpaceMembersWithListProps {
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
 	className?: string;
+	externalReferenceCode: string;
 	hasAssignMembersPermission: boolean;
 	onHasSelectedMembersChange?: (hasSelectedMembers: boolean) => void;
 	pageSize?: number;
@@ -41,6 +42,7 @@ const DEFAULT_PAGE_SIZE = 20;
 export function SpaceMembersWithList({
 	assetLibraryCreatorUserId,
 	assetLibraryId,
+	externalReferenceCode,
 	hasAssignMembersPermission,
 	className,
 	onHasSelectedMembersChange,

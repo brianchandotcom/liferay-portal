@@ -55,6 +55,7 @@ describe('SpaceSummaryHeader', () => {
 				action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
 				assetLibraryCreatorUserId: '1',
 				assetLibraryId: '2',
+				externalReferenceCode: '3',
 			},
 		};
 
@@ -84,6 +85,7 @@ describe('SpaceSummaryHeader', () => {
 					action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
 					assetLibraryCreatorUserId: '123',
 					assetLibraryId: '456',
+					externalReferenceCode: '789',
 				};
 
 				const props = {
@@ -112,6 +114,8 @@ describe('SpaceSummaryHeader', () => {
 						assetLibraryCreatorUserId:
 							spaceModalProps.assetLibraryCreatorUserId,
 						assetLibraryId: spaceModalProps.assetLibraryId,
+						externalReferenceCode:
+							spaceModalProps.externalReferenceCode,
 						hasAssignMembersPermission:
 							expectedHasAssignMembersPermission,
 						title: defaultProps.title,
@@ -137,6 +141,7 @@ describe('SpaceSummaryHeader', () => {
 					action: SpaceSummaryHeaderActions.OPEN_SITES_MODAL,
 					assetLibraryCreatorUserId: '123',
 					assetLibraryId: '456',
+					externalReferenceCode: '789',
 				};
 
 				const props = {
@@ -162,7 +167,8 @@ describe('SpaceSummaryHeader', () => {
 				expect(manageSitesAction).toHaveBeenCalledTimes(1);
 				expect(manageSitesAction).toHaveBeenCalledWith(
 					{
-						groupId: spaceModalProps.assetLibraryId,
+						externalReferenceCode:
+							spaceModalProps.externalReferenceCode,
 						hasConnectSitesPermission:
 							expectedHasConnectSitesPermission,
 					},
@@ -179,6 +185,7 @@ describe('SpaceSummaryHeader', () => {
 				action: 'some-other-action' as any,
 				assetLibraryCreatorUserId: '1',
 				assetLibraryId: '2',
+				externalReferenceCode: '3',
 			},
 		};
 

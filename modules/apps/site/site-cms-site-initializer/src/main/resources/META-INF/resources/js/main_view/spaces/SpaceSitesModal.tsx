@@ -22,12 +22,12 @@ const showErrorMessage = (message: string) => {
 };
 
 const SiteActions = ({
-	groupId,
+	externalReferenceCode,
 	onSiteChange,
 	onSiteDisconnected,
 	site,
 }: {
-	groupId: string;
+	externalReferenceCode: string;
 	onSiteChange: (site: Site) => void;
 	onSiteDisconnected: (site: Site) => void;
 	site: Site;
@@ -36,8 +36,8 @@ const SiteActions = ({
 
 	const disconnectSite = async () => {
 		const {error} = await SiteService.disconnectSiteFromSpace(
-			groupId,
-			site.id
+			externalReferenceCode,
+			site.externalReferenceCode
 		);
 
 		if (error) {
@@ -51,8 +51,8 @@ const SiteActions = ({
 
 	const changeSearchable = async () => {
 		const {data, error} = await SiteService.connectSiteToSpace(
-			groupId,
-			site.id,
+			externalReferenceCode,
+			site.externalReferenceCode,
 			String(!searchable)
 		);
 
@@ -103,10 +103,10 @@ const SiteActions = ({
 };
 
 const SitesSelector = ({
-	groupId,
+	externalReferenceCode,
 	onSiteConnected,
 }: {
-	groupId: string;
+	externalReferenceCode: string;
 	onSiteConnected: (site: Site) => void;
 }) => {
 	const [value, setValue] = useState('');
@@ -116,8 +116,8 @@ const SitesSelector = ({
 	const connectSiteToSpace = async () => {
 		if (siteSelected) {
 			const {data, error} = await SiteService.connectSiteToSpace(
-				groupId,
-				siteSelected.id
+				externalReferenceCode,
+				siteSelected.externalReferenceCode
 			);
 
 			if (data) {
@@ -184,10 +184,10 @@ const SitesSelector = ({
 };
 
 export default function SpaceSitesModal({
-	groupId,
+	externalReferenceCode,
 	hasConnectSitesPermission = true,
 }: {
-	groupId: string;
+	externalReferenceCode: string;
 	hasConnectSitesPermission?: boolean;
 }) {
 	const [connectedSites, setConnectedSites] = useState<Site[]>([]);
@@ -195,8 +195,9 @@ export default function SpaceSitesModal({
 
 	useEffect(() => {
 		const fetchConnectedSitesToSpace = async () => {
-			const {data} =
-				await SiteService.getConnectedSitesFromSpace(groupId);
+			const {data} = await SiteService.getConnectedSitesFromSpace(
+				externalReferenceCode
+			);
 
 			if (data) {
 				setConnectedSites(data.items);
@@ -204,7 +205,7 @@ export default function SpaceSitesModal({
 		};
 
 		fetchConnectedSitesToSpace();
-	}, [groupId]);
+	}, [externalReferenceCode]);
 
 	const onSiteConnected = (site: Site) => {
 		setConnectedSites((currentConnectedSites) => {
@@ -245,7 +246,7 @@ export default function SpaceSitesModal({
 			{hasConnectSitesPermission && (
 				<ClayModal.Item>
 					<SitesSelector
-						groupId={groupId}
+						externalReferenceCode={externalReferenceCode}
 						onSiteConnected={onSiteConnected}
 					/>
 				</ClayModal.Item>
@@ -300,7 +301,9 @@ export default function SpaceSitesModal({
 
 											{hasConnectSitesPermission && (
 												<SiteActions
-													groupId={groupId}
+													externalReferenceCode={
+														externalReferenceCode
+													}
 													onSiteChange={onSiteChange}
 													onSiteDisconnected={
 														onSiteDisconnected

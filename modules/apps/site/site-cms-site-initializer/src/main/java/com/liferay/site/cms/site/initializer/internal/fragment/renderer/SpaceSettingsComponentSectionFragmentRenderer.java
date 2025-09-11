@@ -7,10 +7,13 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -49,8 +52,9 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 
 	@Override
 	protected Map<String, Object> getProps(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -71,16 +75,23 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 				));
 		}
 
+		long groupId = InfoItemUtil.getGroupId(httpServletRequest);
+
+		Group group = _groupLocalService.getGroup(groupId);
+
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
 		).put(
 			"companyAvailableLanguages", jsonArray
 		).put(
-			"depotEntryId", InfoItemUtil.getDepotEntryId(httpServletRequest)
+			"externalReferenceCode", group.getExternalReferenceCode()
 		).put(
-			"groupId", InfoItemUtil.getGroupId(httpServletRequest)
+			"groupId", groupId
 		).build();
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

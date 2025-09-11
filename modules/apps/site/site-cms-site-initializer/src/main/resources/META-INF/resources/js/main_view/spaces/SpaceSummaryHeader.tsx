@@ -28,6 +28,7 @@ type SpaceModalPropsType = {
 	action: SpaceSummaryHeaderActions;
 	assetLibraryCreatorUserId: string;
 	assetLibraryId: string;
+	externalReferenceCode: string;
 };
 
 interface SpaceSummaryHeaderProps {
@@ -48,11 +49,16 @@ export default function SpaceSummaryHeader({
 	const loadData = () => window.location.reload();
 
 	const openMembersModal = (props: SpaceModalPropsType) => {
-		const {assetLibraryCreatorUserId, assetLibraryId} = props;
+		const {
+			assetLibraryCreatorUserId,
+			assetLibraryId,
+			externalReferenceCode,
+		} = props;
 
 		const data: ManageMembersData = {
 			assetLibraryCreatorUserId,
 			assetLibraryId,
+			externalReferenceCode,
 			hasAssignMembersPermission: Boolean(
 				permissions?.hasAssignMembersPermission
 			),
@@ -74,7 +80,7 @@ export default function SpaceSummaryHeader({
 			SpaceSummaryHeaderActions.OPEN_SITES_MODAL
 		) {
 			const data: ManageSitesData = {
-				groupId: spaceModalProps.assetLibraryId,
+				externalReferenceCode: spaceModalProps.externalReferenceCode,
 				hasConnectSitesPermission: Boolean(
 					permissions?.hasConnectSitesPermission
 				),

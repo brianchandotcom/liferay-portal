@@ -27,6 +27,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:commerce:commerce-product-type-simple")
 	testIntegrationImplementation project(":apps:commerce:commerce-service")
 	testIntegrationImplementation project(":apps:commerce:commerce-shipping-engine-fixed-api")
+	testIntegrationImplementation project(":apps:commerce:commerce-shop-by-diagram-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-tax-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-tax-engine-fixed-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-term-api")

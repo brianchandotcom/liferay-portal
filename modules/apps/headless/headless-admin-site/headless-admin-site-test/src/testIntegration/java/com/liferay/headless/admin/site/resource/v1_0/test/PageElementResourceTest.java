@@ -400,6 +400,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	protected String
+			testGetSitePageSpecificationPageExperiencePageElementPageElementsPage_getPageExperienceExternalReferenceCode()
+		throws Exception {
+
+		return testGetSitePageSpecificationPageExperiencePageElementsPage_getPageExperienceExternalReferenceCode();
+	}
+
+	@Override
+	protected String
 			testGetSitePageSpecificationPageExperiencePageElementPageElementsPage_getPageSpecificationExternalReferenceCode()
 		throws Exception {
 

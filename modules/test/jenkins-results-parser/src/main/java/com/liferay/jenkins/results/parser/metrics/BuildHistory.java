@@ -528,11 +528,11 @@ public class BuildHistory {
 	}
 
 	private String _getBuildIdentifier(
-		String topLevelBuildUrl, BuildJSONObject buildJSONObject) {
+		String topLevelBuildURL, BuildJSONObject buildJSONObject) {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_getJobName(topLevelBuildUrl));
+		sb.append(_getJobName(topLevelBuildURL));
 
 		sb.append("/");
 
@@ -575,8 +575,8 @@ public class BuildHistory {
 		return sb.toString();
 	}
 
-	private String _getJobName(String buildUrl) {
-		Matcher matcher = _jobURLPattern.matcher(String.valueOf(buildUrl));
+	private String _getJobName(String buildURL) {
+		Matcher matcher = _jobURLPattern.matcher(String.valueOf(buildURL));
 
 		if (matcher.find()) {
 			return matcher.group("jobName");

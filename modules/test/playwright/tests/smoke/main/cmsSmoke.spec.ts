@@ -45,7 +45,7 @@ test('CMS loads and sections are shown', async ({
 		await expect(contentsPage.newButton).toBeVisible({timeout: 2000});
 	}).toPass();
 
-	await contentsPage.createContent('Basic Web Content');
+	await contentsPage.createContent('Basic Content');
 
 	const title = getRandomString();
 

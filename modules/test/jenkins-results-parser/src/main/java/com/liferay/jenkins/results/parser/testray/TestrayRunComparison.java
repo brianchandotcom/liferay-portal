@@ -73,10 +73,39 @@ public class TestrayRunComparison {
 		_testrayRunA = testrayRunA;
 		_testrayRunB = testrayRunB;
 
-		_calculateTestResultCounts();
+		_initializeTestResultCounts();
 	}
 
-	private void _calculateTestResultCounts() {
+	private JSONObject _getRunComparisonsJSONObject() {
+		if (_jsonObject != null) {
+			return _jsonObject;
+		}
+
+		try {
+			StringBuilder sb = new StringBuilder();
+
+			TestrayBuild testrayBuild = _testrayRunA.getTestrayBuild();
+
+			TestrayServer testrayServer = testrayBuild.getTestrayServer();
+
+			sb.append(testrayServer.getURL());
+
+			sb.append("/o/testray-rest/v1.0/testray-run-comparisons/");
+			sb.append(_testrayRunA.getID());
+			sb.append("/");
+			sb.append(_testrayRunB.getID());
+			sb.append("/runs");
+
+			_jsonObject = JenkinsResultsParserUtil.toJSONObject(sb.toString());
+
+			return _jsonObject;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private void _initializeTestResultCounts() {
 		JSONObject jsonObject = _getRunComparisonsJSONObject();
 
 		JSONArray resultsJSONArray = jsonObject.optJSONArray("results");
@@ -157,35 +186,6 @@ public class TestrayRunComparison {
 
 				_newFailureTestCount += testCount;
 			}
-		}
-	}
-
-	private JSONObject _getRunComparisonsJSONObject() {
-		if (_jsonObject != null) {
-			return _jsonObject;
-		}
-
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			TestrayBuild testrayBuild = _testrayRunA.getTestrayBuild();
-
-			TestrayServer testrayServer = testrayBuild.getTestrayServer();
-
-			sb.append(testrayServer.getURL());
-
-			sb.append("/o/testray-rest/v1.0/testray-run-comparisons/");
-			sb.append(_testrayRunA.getID());
-			sb.append("/");
-			sb.append(_testrayRunB.getID());
-			sb.append("/runs");
-
-			_jsonObject = JenkinsResultsParserUtil.toJSONObject(sb.toString());
-
-			return _jsonObject;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
 		}
 	}
 

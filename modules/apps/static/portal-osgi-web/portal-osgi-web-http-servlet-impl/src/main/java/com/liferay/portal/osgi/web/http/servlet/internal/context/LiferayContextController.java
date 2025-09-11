@@ -105,7 +105,6 @@ public class LiferayContextController {
 			throw illegalContextPathException;
 		}
 
-		_bundleContext = bundleContext;
 		_serviceReference = serviceReference;
 		_servletContextHelperDataContext = servletContextHelperDataContext;
 		_httpServletEndpointController = httpServletEndpointController;
@@ -117,19 +116,20 @@ public class LiferayContextController {
 
 		_contextPath = contextPath;
 
-		_servletContextHelperServiceId = (long)serviceReference.getProperty(
-			Constants.SERVICE_ID);
 		_servletContextInitParams = ServiceProperties.parseInitParams(
 			serviceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX,
 			servletContextHelperDataContext.getServletContext());
+
+		long servletContextHelperServiceId = (long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
 
 		_filterServiceTracker = new ServiceTracker<>(
 			bundleContext, Filter.class,
 			new FilterServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_filterServiceTracker.open(true);
 
@@ -138,7 +138,7 @@ public class LiferayContextController {
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_httpSessionAttributeListenerServiceTracker.open(true);
 
@@ -147,7 +147,7 @@ public class LiferayContextController {
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_httpSessionListenerServiceTracker.open(true);
 
@@ -156,7 +156,7 @@ public class LiferayContextController {
 			new ResourceServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_resourceServiceTracker.open(true);
 
@@ -165,7 +165,7 @@ public class LiferayContextController {
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_servletContextAttributeListenerServiceTracker.open(true);
 
@@ -174,7 +174,7 @@ public class LiferayContextController {
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_servletContextListenerServiceTracker.open(true);
 
@@ -183,7 +183,7 @@ public class LiferayContextController {
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_servletRequestAttributeListenerServiceTracker.open(true);
 
@@ -192,7 +192,7 @@ public class LiferayContextController {
 			new EventListenerServiceTrackerCustomizer<>(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_servletRequestListenerServiceTracker.open(true);
 
@@ -201,7 +201,7 @@ public class LiferayContextController {
 			new ServletServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this,
 				_servletContextHelperDataContext,
-				_servletContextHelperServiceId));
+				servletContextHelperServiceId));
 
 		_servletServiceTracker.open(true);
 	}
@@ -530,7 +530,6 @@ public class LiferayContextController {
 
 	private final ConcurrentMap<String, HttpSessionWrapper>
 		_activeHttpSessionWrappersMap = new ConcurrentHashMap<>();
-	private final BundleContext _bundleContext;
 	private final String _contextName;
 	private final String _contextPath;
 	private final Set<EndpointRegistration<?>> _endpointRegistrations =
@@ -559,7 +558,6 @@ public class LiferayContextController {
 			_servletContextAttributeListenerServiceTracker;
 	private final ServletContextHelperDataContext
 		_servletContextHelperDataContext;
-	private final long _servletContextHelperServiceId;
 	private final Map<String, String> _servletContextInitParams;
 	private final ServiceTracker
 		<ServletContextListener, AtomicReference<EventListenerRegistration>>

@@ -27,7 +27,9 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws IOException {
-		return getFileNames(new String[0], getIncludes());
+		return getFileNames(
+			new String[] {"**/cloud/helm/**/templates/_scripts.tpl"},
+			getIncludes());
 	}
 
 	@Override
@@ -130,7 +132,7 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = {
-		"**/templates/*.tpl", "**/*.yaml", "**/*.yml"
+		"**/cloud/helm/**/templates/*.tpl", "**/*.yaml", "**/*.yml"
 	};
 
 	private static final Pattern _dashPattern1 = Pattern.compile("( +- +)(.+)");

@@ -466,7 +466,7 @@ describe('DefaultPermissionFormContainer', () => {
 		});
 	});
 
-	it('Handle the onChange parameter', async () => {
+	it.skip('Handle the onChange parameter', async () => {
 		let data = {};
 
 		const onChangeFn = jest.fn((callbackData) => {

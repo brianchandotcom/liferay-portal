@@ -390,8 +390,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemObjectProvider.class,
 				new ObjectEntryInfoItemObjectProvider(
-					objectDefinition, _objectEntryLocalService,
-					_objectEntryManagerRegistry),
+					_groupLocalService, objectDefinition,
+					_objectEntryLocalService, _objectEntryManagerRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(
 					Constants.SERVICE_RANKING, 100
 				).put(

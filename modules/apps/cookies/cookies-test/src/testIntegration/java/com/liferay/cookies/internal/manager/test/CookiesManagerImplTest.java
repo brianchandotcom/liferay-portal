@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -56,6 +57,12 @@ public class CookiesManagerImplTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"enabled", true
 			).build());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(
+			CookiesPreferenceHandlingConfiguration.class.getName());
 	}
 
 	@Test

@@ -53,8 +53,8 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 	public String getAPIURL() {
 		return StringBundler.concat(
 			"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
-			"/sites?page=", CMSSpaceConstants.SPACE_SUMMARY_PAGE, "&pageSize=",
-			CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
+			"/connected-sites?page=", CMSSpaceConstants.SPACE_SUMMARY_PAGE,
+			"&pageSize=", CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -88,7 +88,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
-					"/sites/{id}"),
+					"/connected-sites/{id}"),
 				null, "delete",
 				_language.get(_httpServletRequest, "disconnect"), "delete",
 				null, "headless"));
@@ -114,7 +114,7 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
 			StringBundler.concat(
 				"/o/headless-asset-library/v1.0/asset-libraries/", _groupId,
-				"/sites/{id}"),
+				"/connected-sites/{id}"),
 			null, searchable ? "make-searchable" : "make-unsearchable",
 			_language.get(
 				_httpServletRequest,

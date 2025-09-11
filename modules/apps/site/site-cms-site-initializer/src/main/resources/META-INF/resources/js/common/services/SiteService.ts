@@ -12,7 +12,7 @@ async function connectSiteToSpace(
 	searchable?: string
 ) {
 	return await ApiHelper.put<Site>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/sites/${siteId}`,
+		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/connected-sites/${siteId}`,
 		{
 			searchable: searchable ? searchable : 'true',
 		}
@@ -21,13 +21,13 @@ async function connectSiteToSpace(
 
 async function disconnectSiteFromSpace(groupId: string, siteId: string) {
 	return await ApiHelper.delete(
-		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/sites/${siteId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/connected-sites/${siteId}`
 	);
 }
 
 async function getConnectedSitesFromSpace(groupId: string) {
 	return await ApiHelper.get<{items: Site[]}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/sites`
+		`/o/headless-asset-library/v1.0/asset-libraries/${groupId}/connected-sites`
 	);
 }
 

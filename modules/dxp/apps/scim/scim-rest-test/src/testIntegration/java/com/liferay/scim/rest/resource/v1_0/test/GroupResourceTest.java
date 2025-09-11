@@ -232,6 +232,10 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				5, null, 0,
 				"displayName eq \"" + RandomTestUtil.randomString() + "\""),
 			0, 0);
+		_assertListResponse(
+			groupResource.getV2Groups(
+				5, null, 0, "displayName eq \"" + _PREFIX + "\""),
+			0, 0);
 
 		assertHttpResponseStatusCode(
 			400,
@@ -574,6 +578,15 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	}
 
 	@Override
+	protected Group randomGroup() throws Exception {
+		Group group = super.randomGroup();
+
+		group.setDisplayName(_PREFIX + group.getDisplayName());
+
+		return group;
+	}
+
+	@Override
 	protected Group testDeleteV2Group_addGroup() throws Exception {
 		Group group = randomGroup();
 
@@ -754,6 +767,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		return _getGroup(userGroupId);
 	}
+
+	private static final String _PREFIX = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

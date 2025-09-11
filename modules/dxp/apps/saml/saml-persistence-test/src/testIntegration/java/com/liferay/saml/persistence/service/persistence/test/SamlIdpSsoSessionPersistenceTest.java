@@ -158,6 +158,13 @@ public class SamlIdpSsoSessionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUserId() throws Exception {
+		_persistence.countByUserId(RandomTestUtil.nextLong());
+
+		_persistence.countByUserId(0L);
+	}
+
+	@Test
 	public void testCountByLtCreateDate() throws Exception {
 		_persistence.countByLtCreateDate(RandomTestUtil.nextDate());
 
@@ -171,13 +178,6 @@ public class SamlIdpSsoSessionPersistenceTest {
 		_persistence.countBySamlIdpSsoSessionKey("null");
 
 		_persistence.countBySamlIdpSsoSessionKey((String)null);
-	}
-
-	@Test
-	public void testCountByUserId() throws Exception {
-		_persistence.countByUserId(RandomTestUtil.nextLong());
-
-		_persistence.countByUserId(0L);
 	}
 
 	@Test
@@ -484,16 +484,16 @@ public class SamlIdpSsoSessionPersistenceTest {
 
 	private void _assertOriginalValues(SamlIdpSsoSession samlIdpSsoSession) {
 		Assert.assertEquals(
-			samlIdpSsoSession.getSamlIdpSsoSessionKey(),
-			ReflectionTestUtil.invoke(
-				samlIdpSsoSession, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "samlIdpSsoSessionKey"));
-
-		Assert.assertEquals(
 			Long.valueOf(samlIdpSsoSession.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
 				samlIdpSsoSession, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "userId"));
+
+		Assert.assertEquals(
+			samlIdpSsoSession.getSamlIdpSsoSessionKey(),
+			ReflectionTestUtil.invoke(
+				samlIdpSsoSession, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "samlIdpSsoSessionKey"));
 	}
 
 	protected SamlIdpSsoSession addSamlIdpSsoSession() throws Exception {

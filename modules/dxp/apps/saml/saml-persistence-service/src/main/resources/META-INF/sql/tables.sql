@@ -1,3 +1,12 @@
+create table SamlIbSloMessage (
+	samlIbSloMessageId LONG not null primary key,
+	companyId LONG,
+	createDate DATE null,
+	logoutRequestXml TEXT null,
+	samlIdpEntityId VARCHAR(1024) null,
+	samlIdpSessionIndex VARCHAR(200) null
+);
+
 create table SamlIdpSpConnection (
 	samlIdpSpConnectionId LONG not null primary key,
 	companyId LONG,

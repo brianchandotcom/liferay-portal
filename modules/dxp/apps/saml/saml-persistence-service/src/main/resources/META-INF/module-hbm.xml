@@ -2,6 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.saml.persistence.model.SamlIbSloMessage" />
 	<import class="com.liferay.saml.persistence.model.SamlIdpSpConnection" />
 	<import class="com.liferay.saml.persistence.model.SamlIdpSpSession" />
 	<import class="com.liferay.saml.persistence.model.SamlIdpSsoSession" />
@@ -10,6 +11,16 @@
 	<import class="com.liferay.saml.persistence.model.SamlSpIdpConnection" />
 	<import class="com.liferay.saml.persistence.model.SamlSpMessage" />
 	<import class="com.liferay.saml.persistence.model.SamlSpSession" />
+	<class name="com.liferay.saml.persistence.model.impl.SamlIbSloMessageImpl" table="SamlIbSloMessage">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="samlIbSloMessageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="logoutRequestXml" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="samlIdpEntityId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="samlIdpSessionIndex" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
 	<class name="com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl" table="SamlIdpSpConnection">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="samlIdpSpConnectionId" type="long">
 			<generator class="assigned" />

@@ -166,12 +166,6 @@
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
-										"fontSize": "24px",
-										"fontWeight": "600",
-										"marginBottom": "4",
-										"marginLeft": "4",
-										"marginRight": "4",
-										"marginTop": "5"
 									},
 									"indexed": true
 								},

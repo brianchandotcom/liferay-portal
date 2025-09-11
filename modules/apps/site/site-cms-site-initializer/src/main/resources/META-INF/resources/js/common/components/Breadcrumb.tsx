@@ -114,10 +114,10 @@ export default function Breadcrumb({
 	return (
 		<Nav
 			aria-label={Liferay.Language.get('breadcrumb')}
-			className="autofit-row autofit-row-center ml-3 mt-3"
+			className="autofit-row autofit-row-center p-4"
 		>
 			{!hideSpace && (
-				<div className="autofit-col mr-1">
+				<div className="autofit-col mr-3">
 					<SpaceSticker
 						displayType={displayType}
 						hideName
@@ -128,7 +128,7 @@ export default function Breadcrumb({
 			)}
 
 			<div className="autofit-col cms-breadcrumb">
-				<ClayBreadcrumb items={breadcrumbItems} />
+				<ClayBreadcrumb className="p-0" items={breadcrumbItems} />
 			</div>
 
 			{actionItems && (

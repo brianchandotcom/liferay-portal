@@ -261,11 +261,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				_normalize(_fileName, portletDataContext.getScopeGroupId()),
 				result.getInputStream());
 
-			BatchEngineExportTask batchEngineExportTask =
-				result.getBatchEngineExportTask();
-
 			ManifestSummary manifestSummary =
 				portletDataContext.getManifestSummary();
+
+			BatchEngineExportTask batchEngineExportTask =
+				result.getBatchEngineExportTask();
 
 			manifestSummary.addModelAdditionCount(
 				new StagedModelType(_itemClassName),

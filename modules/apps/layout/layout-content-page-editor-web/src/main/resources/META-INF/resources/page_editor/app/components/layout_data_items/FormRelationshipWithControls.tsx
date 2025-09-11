@@ -4,23 +4,17 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
 
+import FormRelationshipMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormRelationshipMappingOptions';
 import {FormRelationshipLayoutDataItem} from '../../../types/layout_data/FormRelationshipLayoutDataItem';
 import {LayoutData} from '../../../types/layout_data/LayoutData';
 import {config} from '../../config/index';
-import {
-	useDispatch,
-	useSelector,
-	useSelectorCallback,
-} from '../../contexts/StoreContext';
-import useFormRelationshipFieldSets from '../../hooks/useFormRelationshipFieldSets';
+import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import {ContainerWithControls} from '../../js-index';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import updateItemConfig from '../../thunks/updateItemConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
 import FormRelationship from './FormRelationship';
 
@@ -70,10 +64,6 @@ function UnmappedFormRelationship({
 }: {
 	item: FormRelationshipLayoutDataItem;
 }) {
-	const dispatch = useDispatch();
-
-	const fieldSets = useFormRelationshipFieldSets(item);
-
 	return (
 		<div className="align-items-center bg-lighter d-flex flex-column page-editor__form-unmapped-state page-editor__no-fragments-state">
 			<p className="page-editor__no-fragments-state__title">
@@ -85,31 +75,7 @@ function UnmappedFormRelationship({
 			</p>
 
 			<div className="cadmin">
-				<ClaySelectWithOption
-					aria-label={Liferay.Language.get('select-a-content-type')}
-					onChange={(event) => {
-						dispatch(
-							updateItemConfig({
-								itemConfig: {
-									...item.config,
-									contentType: event.target.value,
-								},
-								itemIds: [item.itemId],
-							})
-						);
-					}}
-					options={[
-						{
-							label: Liferay.Language.get('none'),
-							value: '0',
-						},
-						...fieldSets.map(({label, name}) => ({
-							label,
-							value: name,
-						})),
-					]}
-					sizing="sm"
-				/>
+				<FormRelationshipMappingOptions item={item} showLabel={false} />
 			</div>
 		</div>
 	);

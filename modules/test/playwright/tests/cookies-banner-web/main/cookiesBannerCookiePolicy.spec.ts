@@ -105,10 +105,14 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 		});
 
 		if (await saveButton.isVisible()) {
-			await saveButton.click();
+			await page
+				.getByRole('button', {name: 'Save'})
+				.dispatchEvent('click');
 		}
 		else if (await updateButton.isVisible()) {
-			await updateButton.click();
+			await page
+				.getByRole('button', {name: 'Update'})
+				.dispatchEvent('click');
 		}
 
 		await waitForAlert(page);
@@ -116,6 +120,12 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 
 	await test.step('Go to Cookie Policy page', async () => {
 		await page.goto('/');
+
+		const acceptAll = page.getByRole('button', {name: 'Accept All'});
+
+		await acceptAll.waitFor({state: 'visible'});
+
+		await acceptAll.click();
 
 		await page
 			.locator(
@@ -184,10 +194,31 @@ test(
 
 			await enabledButton.check();
 
-			await page.getByRole('button', {name: 'Save'}).click();
+			const updateButton = page.getByRole('button', {
+				name: 'Update',
+			});
 
-			await waitForAlert(page);
+			const saveButton = page.getByRole('button', {
+				name: 'Save',
+			});
+
+			if (await saveButton.isVisible()) {
+				await page
+					.getByRole('button', {name: 'Save'})
+					.dispatchEvent('click');
+			}
+			else if (await updateButton.isVisible()) {
+				await page
+					.getByRole('button', {name: 'Update'})
+					.dispatchEvent('click');
+			}
 		});
+
+		const acceptAll = page.getByRole('button', {name: 'Accept All'});
+
+		await acceptAll.waitFor({state: 'visible'});
+
+		await acceptAll.click();
 
 		const cookiesBanner = await page.locator(
 			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'

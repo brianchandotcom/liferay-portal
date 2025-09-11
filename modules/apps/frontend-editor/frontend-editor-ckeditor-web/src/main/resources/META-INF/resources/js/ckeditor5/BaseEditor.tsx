@@ -59,9 +59,11 @@ const BaseEditor = ({
 		loadEditorClientExtensions({
 			config: editorConfig,
 			onLoad: ({transformedConfig}: any) => {
+				const cxExtraPlugins = transformedConfig.extraPlugins ?? [];
+
 				setEditorConfig(() => ({
 					...transformedConfig,
-					extraPlugins,
+					extraPlugins: [...(extraPlugins ?? []), ...cxExtraPlugins],
 					licenseKey,
 					plugins,
 				}));

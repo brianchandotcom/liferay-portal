@@ -1033,7 +1033,8 @@ public class StructuredContentResourceImpl
 			}
 			else {
 				throw new BadRequestException(
-					"Please enter a valid expiration date");
+					"Expiration date must be either empty or a date in the " +
+						"future");
 			}
 		}
 

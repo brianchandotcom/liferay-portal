@@ -66,15 +66,6 @@ DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAcce
 
 				Liferay.Util.openModal({
 					bodyHTML: html,
-					onOpen: function (event) {
-						var webdavURLInput = document.getElementById(
-							'<portlet:namespace /><%= webDavURLInputId %>'
-						);
-
-						if (webdavURLInput) {
-							webdavURLInput.focus();
-						}
-					},
 					title: '<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
 				});
 			}

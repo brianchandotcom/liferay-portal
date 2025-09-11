@@ -36,33 +36,37 @@ public class ServiceBag<V> {
 		Object previousService = serviceWrapper.getWrappedService();
 
 		if (!(previousService instanceof ServiceWrapper)) {
-			Class<?> previousServiceClass = previousService.getClass();
+			if (!_isLiferayOwned(previousService)) {
+				Class<?> previousServiceClass = previousService.getClass();
 
-			ClassLoader classLoader = _getClassLoader(
-				previousServiceClass.getClassLoader(),
-				IdentifiableOSGiService.class);
+				ClassLoader classLoader = _getClassLoader(
+					previousServiceClass.getClassLoader(),
+					IdentifiableOSGiService.class);
 
-			previousService = ProxyUtil.newProxyInstance(
-				classLoader,
-				new Class<?>[] {
-					serviceTypeClass, IdentifiableOSGiService.class
-				},
-				new ClassLoaderBeanHandler(previousService, classLoader));
+				previousService = ProxyUtil.newProxyInstance(
+					classLoader,
+					new Class<?>[] {
+						serviceTypeClass, IdentifiableOSGiService.class
+					},
+					new ClassLoaderBeanHandler(previousService, classLoader));
+			}
 
 			serviceWrapper.setWrappedService((V)previousService);
 		}
 
-		Class<?> clazz = serviceWrapper.getClass();
+		Object nextTarget = serviceWrapper;
 
-		Object nextTarget = ProxyUtil.newProxyInstance(
-			_getClassLoader(
-				serviceTypeClass.getClassLoader(),
-				IdentifiableOSGiService.class),
-			new Class<?>[] {
-				serviceTypeClass, ServiceWrapper.class,
-				IdentifiableOSGiService.class
-			},
-			new ClassLoaderBeanHandler(serviceWrapper, clazz.getClassLoader()));
+		if (!_isLiferayOwned(nextTarget)) {
+			Class<?> clazz = serviceWrapper.getClass();
+
+			nextTarget = ProxyUtil.newProxyInstance(
+				_getClassLoader(
+					serviceTypeClass.getClassLoader(),
+					IdentifiableOSGiService.class),
+				new Class<?>[] {serviceTypeClass, ServiceWrapper.class},
+				new ClassLoaderBeanHandler(
+					serviceWrapper, clazz.getClassLoader()));
+		}
 
 		_aopInvocationHandler.setTarget(nextTarget);
 
@@ -159,6 +163,31 @@ public class ServiceBag<V> {
 
 		return AggregateClassLoader.getAggregateClassLoader(
 			classLoader, clazz.getClassLoader());
+	}
+
+	private boolean _isLiferayOwned(Object object) {
+		Class<?> clazz = object.getClass();
+
+		String className = clazz.getName();
+
+		if (className.startsWith("com.liferay.")) {
+			return true;
+		}
+
+		InvocationHandler invocationHandler = ProxyUtil.fetchInvocationHandler(
+			object, InvocationHandler.class);
+
+		if (invocationHandler != null) {
+			clazz = invocationHandler.getClass();
+
+			className = clazz.getName();
+
+			if (className.startsWith("com.liferay.")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ServiceBag.class);

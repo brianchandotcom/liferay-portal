@@ -47,9 +47,9 @@ export class HeadlessAssetLibraryApiHelper {
 		return assetLibrary;
 	}
 
-	async getAssetLibrariesPage() {
+	async getAssetLibrariesPage(filter?: string) {
 		const response = await this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries`
+			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries${filter ? `?filter=${filter}` : ''}`
 		);
 
 		return response?.items;

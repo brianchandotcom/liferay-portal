@@ -515,6 +515,47 @@ public class ObjectDefinition implements Serializable {
 	private Supplier<Boolean> _enableCommentsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getEnableFormContainer() {
+		if (_enableFormContainerSupplier != null) {
+			enableFormContainer = _enableFormContainerSupplier.get();
+
+			_enableFormContainerSupplier = null;
+		}
+
+		return enableFormContainer;
+	}
+
+	public void setEnableFormContainer(Boolean enableFormContainer) {
+		this.enableFormContainer = enableFormContainer;
+
+		_enableFormContainerSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEnableFormContainer(
+		UnsafeSupplier<Boolean, Exception> enableFormContainerUnsafeSupplier) {
+
+		_enableFormContainerSupplier = () -> {
+			try {
+				return enableFormContainerUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableFormContainer;
+
+	@JsonIgnore
+	private Supplier<Boolean> _enableFormContainerSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEnableFriendlyURLCustomization() {
 		if (_enableFriendlyURLCustomizationSupplier != null) {
 			enableFriendlyURLCustomization =
@@ -2180,6 +2221,18 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableComments\": ");
 
 			sb.append(enableComments);
+		}
+
+		Boolean enableFormContainer = getEnableFormContainer();
+
+		if (enableFormContainer != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableFormContainer\": ");
+
+			sb.append(enableFormContainer);
 		}
 
 		Boolean enableFriendlyURLCustomization =

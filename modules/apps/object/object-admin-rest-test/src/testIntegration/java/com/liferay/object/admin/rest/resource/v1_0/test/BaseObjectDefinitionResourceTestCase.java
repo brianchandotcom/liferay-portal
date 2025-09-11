@@ -1722,6 +1722,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"enableFormContainer", additionalAssertFieldName)) {
+
+				if (objectDefinition.getEnableFormContainer() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"enableFriendlyURLCustomization",
 					additionalAssertFieldName)) {
 
@@ -2288,6 +2298,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getEnableComments(),
 						objectDefinition2.getEnableComments())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"enableFormContainer", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getEnableFormContainer(),
+						objectDefinition2.getEnableFormContainer())) {
 
 					return false;
 				}
@@ -3059,6 +3082,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("enableFormContainer")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("enableFriendlyURLCustomization")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3746,6 +3774,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 					RandomTestUtil.randomString());
 				enableCategorization = RandomTestUtil.randomBoolean();
 				enableComments = RandomTestUtil.randomBoolean();
+				enableFormContainer = RandomTestUtil.randomBoolean();
 				enableFriendlyURLCustomization = RandomTestUtil.randomBoolean();
 				enableIndexSearch = RandomTestUtil.randomBoolean();
 				enableLocalization = RandomTestUtil.randomBoolean();

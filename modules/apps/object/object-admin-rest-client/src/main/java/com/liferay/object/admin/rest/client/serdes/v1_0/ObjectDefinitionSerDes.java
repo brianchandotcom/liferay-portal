@@ -199,6 +199,16 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getEnableComments());
 		}
 
+		if (objectDefinition.getEnableFormContainer() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableFormContainer\": ");
+
+			sb.append(objectDefinition.getEnableFormContainer());
+		}
+
 		if (objectDefinition.getEnableFriendlyURLCustomization() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -835,6 +845,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getEnableComments()));
 		}
 
+		if (objectDefinition.getEnableFormContainer() == null) {
+			map.put("enableFormContainer", null);
+		}
+		else {
+			map.put(
+				"enableFormContainer",
+				String.valueOf(objectDefinition.getEnableFormContainer()));
+		}
+
 		if (objectDefinition.getEnableFriendlyURLCustomization() == null) {
 			map.put("enableFriendlyURLCustomization", null);
 		}
@@ -1201,6 +1220,11 @@ public class ObjectDefinitionSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "enableFormContainer")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName,
 						"enableFriendlyURLCustomization")) {
 
@@ -1415,6 +1439,14 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "enableComments")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setEnableComments(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "enableFormContainer")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setEnableFormContainer(
 						(Boolean)jsonParserFieldValue);
 				}
 			}

@@ -31,6 +31,7 @@
 			"defaultLanguageId"?: string;
 			"enableCategorization"?: boolean;
 			"enableComments"?: boolean;
+			"enableFormContainer"?: boolean;
 			"enableFriendlyURLCustomization"?: boolean;
 			"enableIndexSearch"?: boolean;
 			"enableLocalization"?: boolean;
@@ -127,6 +128,11 @@
 		{
 			baseName: "enableComments",
 			name: "enableComments",
+			type: "boolean",
+		},
+		{
+			baseName: "enableFormContainer",
+			name: "enableFormContainer",
 			type: "boolean",
 		},
 		{

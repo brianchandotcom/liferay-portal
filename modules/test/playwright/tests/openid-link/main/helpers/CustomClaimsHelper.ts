@@ -4,6 +4,6 @@
  */
 
 export type CustomClaim = {
-    expandoColumnName: string;
-    oidcProviderCustomClaim: string;
-}
+	expandoColumnName: string;
+	oidcProviderCustomClaim: string;
+};

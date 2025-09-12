@@ -54,27 +54,24 @@ describe('ViewImportErrorDetail', () => {
 
 	it('renders error details when loaded', async () => {
 		mockData({
-			actions: {},
+			classExternalReferenceCode: '',
+			classPK: 123,
 			creator: {
 				name: 'John Doe',
 			},
 			dateCreated: '2025-06-05T08:51:54Z',
 			dateModified: '2025-06-05T08:51:54Z',
-			entityExternalReferenceCode: 'ERC-1001',
-			entityId: 1001,
-			entityScope: 'global',
-			entitySite: 'default-site',
-			entityType: 'Employees',
-			errorId: 12345,
-			errorMessage: `An essential process has failed to complete successfully.`,
-			errorStackTrace: `Error stack trace details...`,
-			errorType: 'An unexpected error occurred',
-			externalReferenceCode: 'ERC-1',
-			id: 51949,
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Approved',
+			errorMessage: 'Error message',
+			errorStacktrace: 'Error stack trace',
+			id: 456,
+			modelName: 'ModelName',
+			scope: {
+				label: 'Scope label',
+				type: 'Scope Type',
+			},
+			type: {
+				code: 1,
+				label: 'Type label',
 			},
 		});
 

@@ -29,8 +29,8 @@ const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 	return (
 		<>
 			<Breadcrumb
-				hideSpace
 				breadcrumbItems={[{label: Liferay.Language.get('dashboard')}]}
+				hideSpace
 			/>
 
 			<ViewDashboardContextProvider value={{constants}}>

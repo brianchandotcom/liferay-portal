@@ -16,6 +16,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -117,6 +119,20 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		}
 
 		return super.getAPIURL();
+	}
+
+	public Map<String, Object> getBreadcrumbProps() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		addBreadcrumbItem(
+			jsonArray, false, null,
+			LanguageUtil.get(httpServletRequest, "all"));
+
+		return HashMapBuilder.<String, Object>put(
+			"breadcrumbItems", jsonArray
+		).put(
+			"hideSpace", true
+		).build();
 	}
 
 	@Override

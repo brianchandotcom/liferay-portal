@@ -14,8 +14,8 @@ ViewAllSectionDisplayContext viewAllSectionDisplayContext = (ViewAllSectionDispl
 <div>
 	<div>
 		<react:component
-			module="{Toolbar} from site-cms-site-initializer"
-			props="<%= viewAllSectionDisplayContext.getToolbarProps() %>"
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewAllSectionDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
 

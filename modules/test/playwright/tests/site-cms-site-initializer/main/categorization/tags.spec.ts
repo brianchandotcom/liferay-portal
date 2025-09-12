@@ -205,6 +205,7 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await expect(
 		page
+			.locator('.categorization-section')
 			.locator('.fds table')
 			.locator('tbody tr')
 			.filter({hasText: tagName1})
@@ -212,6 +213,7 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await expect(
 		page
+			.locator('.categorization-section')
 			.locator('.fds table')
 			.locator('tbody tr')
 			.filter({hasText: tagName2})
@@ -224,10 +226,18 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 		selectors: ['.merge-tags'],
 	});
 
-	await page.getByRole('row', {name: tagName1}).getByLabel('').click();
-	await page.getByRole('row', {name: tagName2}).getByLabel('').click();
+	await page
+		.locator('.categorization-section')
+		.getByRole('row', {name: tagName1})
+		.getByLabel('')
+		.click();
+	await page
+		.locator('.categorization-section')
+		.getByRole('row', {name: tagName2})
+		.getByLabel('')
+		.click();
 
-	await page.getByRole('button', {name: 'Done'}).click();
+	await page.locator('.modal').getByRole('button', {name: 'Done'}).click();
 
 	await clickAndExpectToBeVisible({
 		target: page.getByRole('heading', {name: 'Confirm Merge Tags'}),

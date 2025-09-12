@@ -66,7 +66,7 @@ public class AccountCreationRequestProcessorService extends BaseService {
 			).getTokenValue();
 
 			String authorizationHeader = "Bearer " + token;
-			
+
 			String baseUrl = lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
 
 			JSONObject jsonObject = new JSONObject(
@@ -81,11 +81,11 @@ public class AccountCreationRequestProcessorService extends BaseService {
 			String accountName = propertiesJSONObject.getString("businessName");
 			String accountEmailAddress = propertiesJSONObject.getString(
 				"applicantEmailAddress");
-
-			String accountExternalReferenceCode =
-				"ACCOUNT_" +
-					StringUtils.replace(
+			String standardAccountName = StringUtils.replace(
 						StringUtil.toUpperCase(accountName), " ", "_");
+
+			String accountExternalReferenceCode = "ACCOUNT_" + standardAccountName;
+					
 
 			post(
 				authorizationHeader,
@@ -106,8 +106,8 @@ public class AccountCreationRequestProcessorService extends BaseService {
 				authorizationHeader, "",
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
-						baseUrl, "/o/headless-admin-user/v1.0/",
-						"accounts/by-external-reference-code/",
+						baseUrl, "/o/headless-admin-user/v1.0/accounts",
+						"/by-external-reference-code/",
 						accountExternalReferenceCode,
 						"/user-accounts/by-email-address/", accountEmailAddress)
 				).build(

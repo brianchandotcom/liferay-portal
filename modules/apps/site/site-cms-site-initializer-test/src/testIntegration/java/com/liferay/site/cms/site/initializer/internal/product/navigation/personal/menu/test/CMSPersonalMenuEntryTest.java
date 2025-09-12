@@ -84,7 +84,6 @@ public class CMSPersonalMenuEntryTest {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
-
 		_group = _getGroup();
 	}
 

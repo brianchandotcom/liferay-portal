@@ -15,20 +15,20 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -36,10 +36,10 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -98,7 +98,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		}
 
 		Group group = _getGroup(assetLibraryExternalReferenceCode);
-		User user = _userService.getUserByExternalReferenceCode(
+		User user = _userLocalService.getUserByExternalReferenceCode(
 			userAccountExternalReferenceCode, contextCompany.getCompanyId());
 
 		return getAssetLibraryUserAccount(group.getGroupId(), user.getUserId());
@@ -130,9 +130,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		User user = _userService.getUserById(userAccountId);
+		User user = _userLocalService.getUserById(userAccountId);
 
-		if (!_groupService.hasUserGroup(user.getUserId(), assetLibraryId)) {
+		if (!_userLocalService.hasGroupUser(assetLibraryId, user.getUserId())) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
 					"User ", userAccountId, " is not associated to group ",
@@ -205,7 +205,14 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			Long groupId, String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"usersGroups", groupId
+			).put(
+				"isUseCustomSQL", true
+			).build();
+
+		return Page.of(
 			HashMapBuilder.put(
 				"create",
 				addAction(
@@ -220,22 +227,21 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			).put(
 				"get",
 				addAction(
-					ActionKeys.VIEW, 0L, "getAssetLibraryUserAccountsPage",
+					ActionKeys.VIEW_MEMBERS, groupId,
+					"getAssetLibraryUserAccountsPage",
 					_groupModelResourcePermission)
 			).build(),
-			booleanQuery -> booleanQuery.add(
-				new TermQueryImpl("groupIds", String.valueOf(groupId)),
-				BooleanClauseOccur.MUST),
-			null, User.class.getName(), keywords, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
-			sorts,
-			document -> _toUserAccount(
-				groupId,
-				_userService.getUserById(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+			transform(
+				_userLocalService.search(
+					contextCompany.getCompanyId(), keywords,
+					WorkflowConstants.STATUS_APPROVED, params,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					(OrderByComparator<User>)null),
+				user -> _toUserAccount(groupId, user)),
+			pagination,
+			_userLocalService.searchCount(
+				contextCompany.getCompanyId(), keywords,
+				WorkflowConstants.STATUS_APPROVED, params));
 	}
 
 	private long[] _getUserGroupIds(
@@ -332,6 +338,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		target = "(component.name=com.liferay.headless.asset.library.internal.dto.v1_0.converter.UserAccountDTOConverter)"
 	)
 	private DTOConverter<User, UserAccount> _userAccountDTOConverter;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.User)"

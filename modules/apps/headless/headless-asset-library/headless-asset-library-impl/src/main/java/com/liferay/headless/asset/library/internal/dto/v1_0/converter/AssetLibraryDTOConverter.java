@@ -10,6 +10,7 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
+import com.liferay.headless.asset.library.dto.v1_0.ConnectedSite;
 import com.liferay.headless.asset.library.dto.v1_0.MimeTypeLimit;
 import com.liferay.headless.asset.library.dto.v1_0.Settings;
 import com.liferay.headless.asset.library.internal.resource.v1_0.BaseAssetLibraryResourceImpl;
@@ -78,6 +79,7 @@ public class AssetLibraryDTOConverter
 			{
 				setActions(dtoConverterContext::getActions);
 				setAssetLibraryKey(group::getGroupKey);
+				setConnectedSiteId(group::getGroupId);
 				setCreatorUserId(group::getCreatorUserId);
 				setDateCreated(depotEntry::getCreateDate);
 				setDateModified(
@@ -116,7 +118,6 @@ public class AssetLibraryDTOConverter
 							_userGroupLocalService.getGroupUserGroupsCount(
 								group.getGroupId())));
 				setSettings(() -> _toSettings(group));
-				setSiteId(group::getGroupId);
 				setType(
 					() -> AssetLibraryUtil.getAssetLibraryType(
 						depotEntry.getType()));

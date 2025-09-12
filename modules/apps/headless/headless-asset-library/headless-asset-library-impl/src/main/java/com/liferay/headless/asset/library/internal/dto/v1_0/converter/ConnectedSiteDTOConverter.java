@@ -7,8 +7,8 @@ package com.liferay.headless.asset.library.internal.dto.v1_0.converter;
 
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
-import com.liferay.headless.asset.library.dto.v1_0.Site;
-import com.liferay.headless.asset.library.internal.resource.v1_0.BaseSiteResourceImpl;
+import com.liferay.headless.asset.library.dto.v1_0.ConnectedSite;
+import com.liferay.headless.asset.library.internal.resource.v1_0.BaseConnectedSiteResourceImpl;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -28,23 +28,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = DTOConverter.class)
-public class SiteDTOConverter
-	implements DTOConverter<DepotEntryGroupRel, Site> {
+public class ConnectedSiteDTOConverter
+	implements DTOConverter<DepotEntryGroupRel, ConnectedSite> {
 
 	@Override
 	public String getContentType() {
-		return Site.class.getSimpleName();
+		return ConnectedSite.class.getSimpleName();
 	}
 
 	@Override
 	public String getJaxRsLink(long classPK, UriInfo uriInfo) {
 		return JaxRsLinkUtil.getJaxRsLink(
-			"headless-asset-library", BaseSiteResourceImpl.class,
+			"headless-asset-library", BaseConnectedSiteResourceImpl.class,
 			"getAssetLibrarySite", uriInfo, classPK);
 	}
 
 	@Override
-	public Site toDTO(DTOConverterContext dtoConverterContext)
+	public ConnectedSite toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
 		DepotEntryGroupRel depotEntryGroupRel =
@@ -54,7 +54,7 @@ public class SiteDTOConverter
 		Group group = _groupLocalService.getGroup(
 			depotEntryGroupRel.getToGroupId());
 
-		return new Site() {
+		return new ConnectedSite() {
 			{
 				setExternalReferenceCode(group::getExternalReferenceCode);
 				setId(group::getGroupId);

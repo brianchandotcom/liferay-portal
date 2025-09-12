@@ -21,6 +21,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatch
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
 import com.liferay.portal.osgi.web.http.servlet.internal.exception.IllegalContextNameException;
 import com.liferay.portal.osgi.web.http.servlet.internal.exception.IllegalContextPathException;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.Path;
 
 import jakarta.servlet.ServletContext;
 
@@ -33,8 +34,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.eclipse.equinox.http.servlet.internal.util.Path;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

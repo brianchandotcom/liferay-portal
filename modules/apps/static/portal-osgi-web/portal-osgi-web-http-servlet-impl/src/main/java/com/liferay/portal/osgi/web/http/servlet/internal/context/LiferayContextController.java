@@ -24,6 +24,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegi
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ResourceRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpSessionWrapper;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.Path;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.ServicePropertiesUtil;
 
 import jakarta.servlet.Filter;
@@ -55,8 +56,6 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.eclipse.equinox.http.servlet.internal.util.Path;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

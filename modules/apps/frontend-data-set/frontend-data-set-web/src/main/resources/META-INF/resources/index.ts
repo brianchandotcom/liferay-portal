@@ -35,6 +35,7 @@ export {
 	IInternalRenderer,
 	IItemsActions,
 	IItemActionsData,
+	IItemSelectorModalFDSProps,
 	IView,
 	TOnFileDrop,
 } from './utils/types';

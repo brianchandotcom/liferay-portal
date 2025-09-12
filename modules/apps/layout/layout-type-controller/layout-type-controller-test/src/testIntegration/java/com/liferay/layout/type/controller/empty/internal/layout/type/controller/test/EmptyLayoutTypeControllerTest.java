@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -78,6 +79,16 @@ public class EmptyLayoutTypeControllerTest {
 					_getMockHttpServletRequest(
 						_layout.getFriendlyURL(), TestPropsValues.getUser()),
 					new MockHttpServletResponse(), _layout));
+
+			Assert.assertFalse(
+				_layoutTypeController.includeLayoutContent(
+					_getMockHttpServletRequest(
+						_layout.getFriendlyURL(),
+						_userLocalService.getGuestUser(
+							TestPropsValues.getCompanyId())),
+					new MockHttpServletResponse(), _layout));
+
+			Assert.fail();
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
 			if (_log.isDebugEnabled()) {
@@ -161,5 +172,8 @@ public class EmptyLayoutTypeControllerTest {
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	private LayoutTypeController _layoutTypeController;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

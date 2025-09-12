@@ -7,13 +7,15 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {FetchPolicy, useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
+import {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import {InternalDispatch, useControlledState} from '@clayui/shared';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {IItemSelectorModalFDSProps} from '@liferay/frontend-data-set-web';
 import {fetch, getObjectValueFromPath} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import ItemSelectorModal, {IItemSelectorModalProps} from './itemSelectorModal';
+import ItemSelectorModal from './ItemSelectorModal';
 
 const NETWORK_STATUS_UNUSED = 4;
 
@@ -37,7 +39,7 @@ interface HeadlessPage<T = unknown> {
 }
 
 interface IItemSelectorModalTriggerProps<T extends Record<string, any>> {
-	itemSelectorModalProps: IItemSelectorModalProps<T>;
+	fdsProps: IItemSelectorModalFDSProps;
 	items: T[];
 	locator: {
 		id: string;
@@ -45,14 +47,18 @@ interface IItemSelectorModalTriggerProps<T extends Record<string, any>> {
 		value: string;
 	};
 	setItems: InternalDispatch<T[]>;
+	type?: string;
 }
 
 function ItemSelectorModalTrigger<T extends Record<string, any>>({
-	itemSelectorModalProps,
+	fdsProps,
 	items,
 	locator,
 	setItems,
+	type = 'Item',
 }: IItemSelectorModalTriggerProps<T>) {
+	const {observer, onOpenChange, open} = useModal();
+
 	return (
 		<>
 			<ClayInput.GroupItem shrink>
@@ -64,9 +70,7 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('select-items')}
 							displayType="secondary"
-							onClick={() =>
-								itemSelectorModalProps.onOpenChange(true)
-							}
+							onClick={() => onOpenChange(true)}
 							symbol="search-experiences"
 						/>
 					</span>
@@ -74,10 +78,14 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 			</ClayInput.GroupItem>
 
 			<ItemSelectorModal
-				{...itemSelectorModalProps}
+				fdsProps={fdsProps}
 				items={items}
 				locator={locator}
+				observer={observer}
 				onItemsChange={setItems}
+				onOpenChange={onOpenChange}
+				open={open}
+				type={type}
 			/>
 		</>
 	);
@@ -127,7 +135,7 @@ export interface IItemSelectorProps<T>
 	/**
 	 * Props passed to the ItemSelectorModal component.
 	 */
-	itemSelectorModalProps?: IItemSelectorModalProps<T>;
+	fdsProps?: IItemSelectorModalFDSProps;
 
 	/**
 	 * Items that are currently selected (controlled).
@@ -161,6 +169,11 @@ export interface IItemSelectorProps<T>
 	onItemsChange?: InternalDispatch<T[]>;
 
 	/**
+	 * Used to render ItemSelectorModal placeholder
+	 */
+	type?: string;
+
+	/**
 	 * The current value of the input (controlled).
 	 */
 	value?: string;
@@ -182,7 +195,8 @@ function ItemSelector<T extends Record<string, any>>({
 	defaultValue,
 	defaultItems,
 	displaySelectedItems = true,
-	itemSelectorModalProps,
+	fdsProps,
+	type,
 	...otherProps
 }: IItemSelectorProps<T>) {
 	useEffect(() => {
@@ -293,8 +307,11 @@ function ItemSelector<T extends Record<string, any>>({
 		[children, items, multiSelect, setItems, setValue]
 	);
 
+	let itemSelectorComponent;
+	let handleModalItemsChange: InternalDispatch<T[]> = setItems;
+
 	if (multiSelect && displaySelectedItems) {
-		const multiSelectBlock = (
+		itemSelectorComponent = (
 			<ClayMultiSelect
 				{...otherProps}
 				items={items}
@@ -346,86 +363,73 @@ function ItemSelector<T extends Record<string, any>>({
 				{children}
 			</ClayMultiSelect>
 		);
-
-		return itemSelectorModalProps ? (
-			<ClayInput.Group>
-				<ClayInput.GroupItem>{multiSelectBlock}</ClayInput.GroupItem>
-
-				<ItemSelectorModalTrigger
-					itemSelectorModalProps={itemSelectorModalProps}
-					items={items}
-					locator={locator}
-					setItems={setItems}
-				/>
-			</ClayInput.Group>
-		) : (
-			multiSelectBlock
-		);
 	}
+	else {
+		itemSelectorComponent = (
+			<ClayAutocomplete<T>
+				{...otherProps}
+				active={active}
+				filterKey={(item: T) => {
+					return getObjectValueFromPath({
+						object: item,
+						path: locator.label,
+					});
+				}}
+				items={sourceItems}
+				loadingState={networkStatus}
+				menuTrigger="focus"
+				messages={{
+					listCount: Liferay.Language.get('x-list-option'),
+					listCountPlural: Liferay.Language.get('x-list-options'),
+					loading: Liferay.Language.get('loading...'),
+					notFound: Liferay.Language.get('no-results-found'),
+				}}
+				onActiveChange={setActive}
+				onChange={(value: string) => {
+					if (!value.length) {
+						setItems([]);
+					}
 
-	const handleModalItemsChange = (selectedItems: T[]) => {
-		setItems(selectedItems);
+					setValue(value);
+				}}
+				onLoadMore={async () => loadMore()}
+				value={value}
+			>
+				{memoizedChildren}
+			</ClayAutocomplete>
+		);
 
-		if (selectedItems.length) {
-			const firstItemLabel = getObjectValueFromPath({
-				object: selectedItems[0],
-				path: locator.label,
-			});
+		handleModalItemsChange = (selectedItems: T[]) => {
+			setItems(selectedItems);
 
-			setValue(firstItemLabel);
-		}
-		else {
-			setValue('');
-		}
-	};
-
-	const autoCompleteBlock = (
-		<ClayAutocomplete<T>
-			{...otherProps}
-			active={active}
-			filterKey={(item: T) => {
-				return getObjectValueFromPath({
-					object: item,
+			if (selectedItems.length) {
+				const firstItemLabel = getObjectValueFromPath({
+					object: selectedItems[0],
 					path: locator.label,
 				});
-			}}
-			items={sourceItems}
-			loadingState={networkStatus}
-			menuTrigger="focus"
-			messages={{
-				listCount: Liferay.Language.get('x-list-option'),
-				listCountPlural: Liferay.Language.get('x-list-options'),
-				loading: Liferay.Language.get('loading...'),
-				notFound: Liferay.Language.get('no-results-found'),
-			}}
-			onActiveChange={setActive}
-			onChange={(value: string) => {
-				if (!value.length) {
-					setItems([]);
-				}
 
-				setValue(value);
-			}}
-			onLoadMore={async () => loadMore()}
-			value={value}
-		>
-			{memoizedChildren}
-		</ClayAutocomplete>
-	);
+				setValue(firstItemLabel);
+			}
+			else {
+				setValue('');
+			}
+		};
+	}
 
-	return itemSelectorModalProps ? (
+	return fdsProps ? (
 		<ClayInput.Group>
-			<ClayInput.GroupItem>{autoCompleteBlock}</ClayInput.GroupItem>
+			<ClayInput.GroupItem>{itemSelectorComponent}</ClayInput.GroupItem>
 
 			<ItemSelectorModalTrigger
-				itemSelectorModalProps={itemSelectorModalProps}
+				fdsProps={fdsProps}
 				items={items}
 				locator={locator}
 				setItems={handleModalItemsChange}
+				type={type}
 			/>
 		</ClayInput.Group>
 	) : (
-		autoCompleteBlock
+		itemSelectorComponent
 	);
 }
 

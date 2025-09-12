@@ -145,9 +145,6 @@ export default function ItemSelectorSamples() {
 		User[]
 	>([]);
 	const [cmsFile, setCMSFile] = useState<CMSFile | null>(null);
-	const [usersMultiselect, setUsersMultiselect] = useState<
-		User[]
-	>([]);
 	const [user2, setUser2] = useState<User | null>();
 	const [space3, setSpace3] = useState<Space | null>();
 	const [spacesMultiSelect, setSpacesMultiSelect] = useState<Space[]>([]);
@@ -172,26 +169,6 @@ export default function ItemSelectorSamples() {
 		observer: cmsFileItemSelectorObserver,
 		onOpenChange: cmsFileItemSelectorOpenChange,
 		open: cmsFileItemSelectorOpen,
-	} = useModal();
-	const {
-		observer: user2ItemSelectorModalObserver,
-		onOpenChange: user2ItemSelectorModalOpenChange,
-		open: user2ItemSelectorModalOpen,
-	} = useModal();
-	const {
-		observer: space2ItemSelectorModalObserver,
-		onOpenChange: space2ItemSelectorModalOpenChange,
-		open: space2ItemSelectorModalOpen,
-	} = useModal();
-	const {
-		observer: userMultiSelectItemSelectorModalObserver,
-		onOpenChange: userMultiSelectItemSelectorModalOpenChange,
-		open: userMultiSelectItemSelectorModalOpen,
-	} = useModal();
-	const {
-		observer: spacesMultiSelectItemSelectorModalObserver,
-		onOpenChange: spacesMultiSelectItemSelectorModalOpenChange,
-		open: spacesMultiSelectItemSelectorModalOpen,
 	} = useModal();
 
 	return (
@@ -298,29 +275,24 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Item selector pops up modal on button click autocomplete (Users)">
 				<ItemSelector
 					apiURL={userAccountsItemSelectorConfig.apiURL}
-					itemSelectorModalProps={{
-						fdsProps: {
-							...FDS_DEFAULT_PROPS,
-							apiURL: userAccountsItemSelectorConfig.apiURL,
-							id: `itemSelectorModal-users-${getRandomId()}`,
-							views: getDefaultItemSelectorModalViews({
-								viewsConfig:
-									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
-							}),
-						},
-						items: user2 ? [user2] : [],
-						observer: user2ItemSelectorModalObserver,
-						onItemsChange: (items: User[]) => setUser2(items[0]),
-						onOpenChange: user2ItemSelectorModalOpenChange,
-						open: user2ItemSelectorModalOpen,
-						type: userAccountsItemSelectorConfig.type,
+					fdsProps={{
+						...FDS_DEFAULT_PROPS,
+						apiURL: userAccountsItemSelectorConfig.apiURL,
+						id: `itemSelectorModal-users-${getRandomId()}`,
+						views: getDefaultItemSelectorModalViews({
+							viewsConfig:
+								EItemSelectorModalViewsConfig.USER_ACCOUNTS,
+						}),
 					}}
+					items={user2 ? [user2] : []}
 					locator={{
 						id: 'id',
 						label: 'name',
 						value: 'id',
 					}}
+					onItemsChange={(items: User[]) => setUser2(items[0])}
 					placeholder="Select an User"
+					type={userAccountsItemSelectorConfig.type}
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>
@@ -333,36 +305,27 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Multiple Select Item selector pops up modal on button click (Users)">
 				<ItemSelector
 					apiURL={userAccountsItemSelectorConfig.apiURL}
-					itemSelectorModalProps={{
-						fdsProps: {
-							...FDS_DEFAULT_PROPS,
-							apiURL: userAccountsItemSelectorConfig.apiURL,
-							id: `itemSelectorModal-documents-${getRandomId()}`,
-							views: getDefaultItemSelectorModalViews({
-								viewsConfig:
-									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
-							}),
-						},
-						items: usersMultiSelect,
-						observer: userMultiSelectItemSelectorModalObserver,
-						onItemsChange: (items: User[]) => {
-							setUsersMultiSelect([
-								...usersMultiSelect,
-								...items,
-							]);
-						},
-						onOpenChange:
-							userMultiSelectItemSelectorModalOpenChange,
-						open: userMultiSelectItemSelectorModalOpen,
-						type: userAccountsItemSelectorConfig.type,
+					fdsProps={{
+						...FDS_DEFAULT_PROPS,
+						apiURL: userAccountsItemSelectorConfig.apiURL,
+						id: `itemSelectorModal-documents-${getRandomId()}`,
+						views: getDefaultItemSelectorModalViews({
+							viewsConfig:
+								EItemSelectorModalViewsConfig.USER_ACCOUNTS,
+						}),
 					}}
+					items={usersMultiSelect}
 					locator={{
 						id: 'id',
 						label: 'name',
 						value: 'id',
 					}}
 					multiSelect
+					onItemsChange={(items: User[]) => {
+						setUsersMultiSelect(items);
+					}}
 					placeholder="Select an User"
+					type={userAccountsItemSelectorConfig.type}
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>
@@ -375,29 +338,24 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Item selector pops up modal on button click autocomplete (Spaces)">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
-					itemSelectorModalProps={{
-						fdsProps: {
-							...FDS_DEFAULT_PROPS,
-							apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
-							id: `itemSelectorModal-spaces-${getRandomId()}`,
-							views: getDefaultItemSelectorModalViews({
-								viewsConfig:
-									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
-							}),
-						},
-						items: space3 ? [space3] : [],
-						observer: space2ItemSelectorModalObserver,
-						onItemsChange: (items: Space[]) => setSpace3(items[0]),
-						onOpenChange: space2ItemSelectorModalOpenChange,
-						open: space2ItemSelectorModalOpen,
-						type: assetLibrariesItemSelectorConfig.type,
+					fdsProps={{
+						...FDS_DEFAULT_PROPS,
+						apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
+						id: `itemSelectorModal-spaces-${getRandomId()}`,
+						views: getDefaultItemSelectorModalViews({
+							viewsConfig:
+								EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
+						}),
 					}}
+					items={space3 ? [space3] : []}
 					locator={{
 						id: 'id',
 						label: 'name',
 						value: 'id',
 					}}
+					onItemsChange={(items: Space[]) => setSpace3(items[0])}
 					placeholder="Select an Space"
+					type={assetLibrariesItemSelectorConfig.type}
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>
@@ -410,36 +368,27 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Multiple Select Item selector pops up modal on button click (Spaces)">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
-					itemSelectorModalProps={{
-						fdsProps: {
-							...FDS_DEFAULT_PROPS,
-							apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
-							id: `itemSelectorModal-spaces-${getRandomId()}`,
-							views: getDefaultItemSelectorModalViews({
-								viewsConfig:
-									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
-							}),
-						},
-						items: spacesMultiSelect,
-						observer: spacesMultiSelectItemSelectorModalObserver,
-						onItemsChange: (items: Space[]) => {
-							setSpacesMultiSelect([
-								...spacesMultiSelect,
-								...items,
-							]);
-						},
-						onOpenChange:
-							spacesMultiSelectItemSelectorModalOpenChange,
-						open: spacesMultiSelectItemSelectorModalOpen,
-						type: assetLibrariesItemSelectorConfig.type,
+					fdsProps={{
+						...FDS_DEFAULT_PROPS,
+						apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
+						id: `itemSelectorModal-spaces-${getRandomId()}`,
+						views: getDefaultItemSelectorModalViews({
+							viewsConfig:
+								EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
+						}),
 					}}
+					items={spacesMultiSelect}
 					locator={{
 						id: 'id',
 						label: 'name',
 						value: 'id',
 					}}
 					multiSelect
+					onItemsChange={(items: Space[]) => {
+						setSpacesMultiSelect(items);
+					}}
 					placeholder="Select an Space"
+					type={assetLibrariesItemSelectorConfig.type}
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>

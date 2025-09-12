@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
@@ -21,7 +22,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServiceHol
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletConfigImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
-import com.liferay.portal.osgi.web.http.servlet.internal.util.ServiceProperties;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.ServicePropertiesUtil;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
@@ -201,13 +202,14 @@ public class ServletServiceTrackerCustomizer
 
 		ServletDTO servletDTO = new ServletDTO();
 
-		servletDTO.asyncSupported = ServiceProperties.parseBoolean(
-			serviceReference,
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED);
-		servletDTO.initParams = ServiceProperties.parseInitParams(
+		servletDTO.asyncSupported = GetterUtil.getBoolean(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED));
+		servletDTO.initParams = ServicePropertiesUtil.parseInitParams(
 			serviceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
-		servletDTO.name = ServiceProperties.parseName(servletName, servlet);
+		servletDTO.name = ServicePropertiesUtil.parseName(servletName, servlet);
 		servletDTO.patterns = sort(servletPatterns);
 		servletDTO.serviceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);

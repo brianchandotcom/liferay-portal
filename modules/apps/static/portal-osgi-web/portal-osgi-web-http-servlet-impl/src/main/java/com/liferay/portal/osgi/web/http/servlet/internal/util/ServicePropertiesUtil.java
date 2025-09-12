@@ -5,8 +5,6 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.util;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-
 import jakarta.servlet.ServletContext;
 
 import java.util.Collections;
@@ -19,13 +17,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Dante Wang
  */
-public class ServiceProperties {
-
-	public static boolean parseBoolean(
-		ServiceReference<?> serviceReference, String property) {
-
-		return GetterUtil.getBoolean(serviceReference.getProperty(property));
-	}
+public class ServicePropertiesUtil {
 
 	public static Map<String, String> parseInitParams(
 		ServiceReference<?> serviceReference, String prefix) {

@@ -325,6 +325,37 @@ public class ObjectEntryLocalServiceImpl
 	extends ObjectEntryLocalServiceBaseImpl {
 
 	@Override
+	public ObjectEntry addLatestApprovedObjectEntry(
+			String externalReferenceCode, long groupId, long userId,
+			long headObjectEntryId, ObjectDefinition objectDefinition,
+			long objectEntryFolderId, String defaultLanguageId, int version,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			externalReferenceCode, groupId, userId, headObjectEntryId,
+			objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
+			defaultLanguageId, version, WorkflowConstants.STATUS_APPROVED);
+
+		_addResourcePermissions(objectDefinition, objectEntry);
+
+		_insertIntoLocalizationTable(
+			new HashMap<>(), objectDefinition, objectEntry.getObjectEntryId(),
+			null, false, values);
+
+		_insertIntoTable(
+			_getDynamicObjectDefinitionTable(
+				objectDefinition.getObjectDefinitionId()),
+			new HashMap<>(), objectEntry.getObjectEntryId(), false, values);
+		_insertIntoTable(
+			_getExtensionDynamicObjectDefinitionTable(
+				objectDefinition.getObjectDefinitionId()),
+			new HashMap<>(), objectEntry.getObjectEntryId(), false, values);
+
+		return objectEntry;
+	}
+
+	@Override
 	public ObjectEntry addObjectEntry(
 			long groupId, long userId, long objectDefinitionId,
 			long objectEntryFolderId, String defaultLanguageId,
@@ -491,9 +522,9 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		return _addObjectEntry(
-			externalReferenceCode, groupId, userId,
-			objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
-			WorkflowConstants.STATUS_DRAFT);
+			externalReferenceCode, groupId, userId, 0,
+			objectDefinition.getObjectDefinitionId(), objectEntryFolderId, null,
+			0, WorkflowConstants.STATUS_DRAFT);
 	}
 
 	@Override
@@ -1273,10 +1304,10 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry objectEntry = _emptyModelManager.getOrAddEmptyModel(
 			objectDefinition.getClassName(), objectDefinition.getCompanyId(),
 			() -> _addObjectEntry(
-				externalReferenceCode, groupId, userId, objectDefinitionId,
+				externalReferenceCode, groupId, userId, 0, objectDefinitionId,
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				WorkflowConstants.STATUS_EMPTY),
+				null, 0, WorkflowConstants.STATUS_EMPTY),
 			externalReferenceCode,
 			(_externalReferenceCode, _groupId) -> fetchObjectEntry(
 				_externalReferenceCode, _groupId, objectDefinitionId),
@@ -2421,7 +2452,9 @@ public class ObjectEntryLocalServiceImpl
 
 	private ObjectEntry _addObjectEntry(
 			String externalReferenceCode, long groupId, long userId,
-			long objectDefinitionId, long objectEntryFolderId, int status)
+			long headObjectEntryId, long objectDefinitionId,
+			long objectEntryFolderId, String defaultLanguageId, int version,
+			int status)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(
@@ -2436,9 +2469,14 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setUserId(user.getUserId());
 		objectEntry.setUserName(user.getFullName());
 
+		objectEntry.setHeadObjectEntryId(
+			(headObjectEntryId == 0) ? objectEntry.getObjectEntryId() :
+				headObjectEntryId);
 		objectEntry.setObjectDefinitionId(objectDefinitionId);
 		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
+		objectEntry.setDefaultLanguageId(defaultLanguageId);
 		objectEntry.setTreePath(objectEntry.buildTreePath());
+		objectEntry.setVersion(version);
 		objectEntry.setStatus(status);
 		objectEntry.setStatusDate(new Date());
 

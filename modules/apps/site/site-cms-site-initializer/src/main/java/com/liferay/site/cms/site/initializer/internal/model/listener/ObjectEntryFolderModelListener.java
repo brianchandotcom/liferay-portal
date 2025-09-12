@@ -19,7 +19,9 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -35,11 +37,14 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
+import java.util.Iterator;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
+ * @author Stefano Motta
  */
 @Component(service = ModelListener.class)
 public class ObjectEntryFolderModelListener
@@ -69,7 +74,7 @@ public class ObjectEntryFolderModelListener
 		}
 	}
 
-	private void _addOrUpdateCMSDefaultPermissionObjectEntry(
+	private JSONObject _getCMSDefaultPermissionJSONObject(
 			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
@@ -80,7 +85,7 @@ public class ObjectEntryFolderModelListener
 					objectEntryFolder.getCompanyId());
 
 		if (cmsDefaultPermissionObjectDefinition == null) {
-			return;
+			return null;
 		}
 
 		if (objectEntryFolder.getParentObjectEntryFolderId() != 0) {
@@ -94,34 +99,18 @@ public class ObjectEntryFolderModelListener
 				parentObjectEntryFolder.getExternalReferenceCode(),
 				parentObjectEntryFolder.getModelClassName(), _filterFactory);
 
-			if (jsonObject != null) {
-				CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-					null, objectEntryFolder.getCompanyId(),
-					objectEntryFolder.getUserId(),
-					objectEntryFolder.getExternalReferenceCode(),
-					objectEntryFolder.getModelClassName(), jsonObject);
-
-				return;
+			if ((jsonObject != null) && !JSONUtil.isEmpty(jsonObject)) {
+				return jsonObject;
 			}
 		}
 
 		Group group = _groupLocalService.getGroup(
 			objectEntryFolder.getGroupId());
 
-		JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
+		return CMSDefaultPermissionUtil.getJSONObject(
 			group.getCompanyId(), group.getCreatorUserId(),
 			group.getExternalReferenceCode(), DepotEntry.class.getName(),
 			_filterFactory);
-
-		if (jsonObject == null) {
-			return;
-		}
-
-		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-			null, objectEntryFolder.getCompanyId(),
-			objectEntryFolder.getUserId(),
-			objectEntryFolder.getExternalReferenceCode(),
-			objectEntryFolder.getModelClassName(), jsonObject);
 	}
 
 	private Role _getOrAddCMSAdministratorRole(long companyId, long userId)
@@ -149,20 +138,72 @@ public class ObjectEntryFolderModelListener
 			return;
 		}
 
-		Role role = _getOrAddCMSAdministratorRole(
+		Role cmsAdministratorRole = _getOrAddCMSAdministratorRole(
 			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId());
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			objectEntryFolder.getCompanyId(), ObjectEntryFolder.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
-			role.getRoleId(),
+			cmsAdministratorRole.getRoleId(),
 			TransformUtil.transformToArray(
 				_resourceActionLocalService.getResourceActions(
 					ObjectEntryFolder.class.getName()),
 				ResourceAction::getActionId, String.class));
 
-		_addOrUpdateCMSDefaultPermissionObjectEntry(objectEntryFolder);
+		if (objectEntryFolder.getParentObjectEntryFolderId() == 0) {
+			return;
+		}
+
+		JSONObject defaultPermissionsJSONObject =
+			_getCMSDefaultPermissionJSONObject(objectEntryFolder);
+
+		if ((defaultPermissionsJSONObject == null) ||
+			JSONUtil.isEmpty(defaultPermissionsJSONObject)) {
+
+			return;
+		}
+
+		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
+			null, objectEntryFolder.getCompanyId(),
+			objectEntryFolder.getUserId(),
+			objectEntryFolder.getExternalReferenceCode(),
+			objectEntryFolder.getModelClassName(),
+			defaultPermissionsJSONObject);
+
+		JSONObject objectEntryFoldersJSONObject =
+			defaultPermissionsJSONObject.getJSONObject("OBJECT_ENTRY_FOLDERS");
+
+		if (objectEntryFoldersJSONObject == null) {
+			return;
+		}
+
+		Iterator<String> iterator = objectEntryFoldersJSONObject.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			JSONArray jsonArray = objectEntryFoldersJSONObject.getJSONArray(
+				key);
+
+			if ((jsonArray == null) || JSONUtil.isEmpty(jsonArray)) {
+				continue;
+			}
+
+			Role role = _roleLocalService.fetchRole(
+				objectEntryFolder.getCompanyId(), key);
+
+			if (role == null) {
+				continue;
+			}
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				objectEntryFolder.getCompanyId(),
+				ObjectEntryFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+				role.getRoleId(), JSONUtil.toStringArray(jsonArray));
+		}
 	}
 
 	private void _onAfterRemove(ObjectEntryFolder objectEntryFolder)

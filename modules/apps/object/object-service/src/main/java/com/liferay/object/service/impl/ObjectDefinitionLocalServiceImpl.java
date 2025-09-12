@@ -205,6 +205,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -2166,17 +2167,39 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL("DROP_TABLE_IF_EXISTS(" + dbTableName + ")");
 	}
 
+	private ObjectDefinition _fetchObjectDefinitionByClassName(
+		String className) {
+
+		AtomicReference<ObjectDefinition> objectDefinitionAtomicReference =
+			new AtomicReference<>();
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionPersistence.fetchByClassName(className);
+
+				if (objectDefinition != null) {
+					objectDefinitionAtomicReference.set(objectDefinition);
+				}
+			});
+
+		return objectDefinitionAtomicReference.get();
+	}
+
 	private String _getClassName(
 		String className, boolean modifiable, boolean system) {
 
-		ObjectDefinition existingObjectDefinition =
-			objectDefinitionPersistence.fetchByClassName(className);
-
-		if ((Validator.isNotNull(className) &&
-			 (existingObjectDefinition == null)) ||
-			_isUnmodifiableSystemObject(modifiable, system)) {
-
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
 			return className;
+		}
+
+		if (Validator.isNotNull(className)) {
+			ObjectDefinition existingObjectDefinition =
+				_fetchObjectDefinitionByClassName(className);
+
+			if (existingObjectDefinition == null) {
+				return className;
+			}
 		}
 
 		while (true) {
@@ -2194,17 +2217,13 @@ public class ObjectDefinitionLocalServiceImpl
 			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
 			sb.append(threadLocalRandom.nextInt(10));
 
-			existingObjectDefinition =
-				objectDefinitionPersistence.fetchByClassName(sb.toString());
+			ObjectDefinition existingObjectDefinition =
+				_fetchObjectDefinitionByClassName(sb.toString());
 
 			if (existingObjectDefinition == null) {
-				className = sb.toString();
-
-				break;
+				return sb.toString();
 			}
 		}
-
-		return className;
 	}
 
 	private String _getDBTableName(

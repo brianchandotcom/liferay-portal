@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.Match;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
@@ -27,8 +28,6 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
-
-import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
 import org.osgi.service.http.context.ServletContextHelper;
 

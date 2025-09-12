@@ -10,6 +10,7 @@ import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
+import com.liferay.portal.osgi.web.http.servlet.internal.Match;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
 import jakarta.servlet.Servlet;
@@ -23,8 +24,6 @@ import java.io.IOException;
 
 import java.util.Objects;
 import java.util.Set;
-
-import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
 import org.osgi.dto.DTO;
 import org.osgi.service.http.context.ServletContextHelper;

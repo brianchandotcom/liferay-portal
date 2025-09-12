@@ -5,11 +5,10 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
+import com.liferay.portal.osgi.web.http.servlet.internal.Match;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
 import jakarta.servlet.Servlet;
-
-import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.ErrorPageDTO;

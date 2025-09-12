@@ -6,8 +6,8 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.osgi.web.http.servlet.internal.Match;
 
-import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 
 import org.osgi.dto.DTO;

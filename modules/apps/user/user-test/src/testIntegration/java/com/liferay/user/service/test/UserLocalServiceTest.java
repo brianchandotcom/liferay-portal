@@ -17,7 +17,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -1421,12 +1420,8 @@ public class UserLocalServiceTest {
 		ServiceWrapper<UserLocalService> serviceWrapper =
 			(ServiceWrapper<UserLocalService>)aopInvocationHandler.getTarget();
 
-		ClassLoaderBeanHandler classLoaderBeanHandler =
-			(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
-				serviceWrapper.getWrappedService());
-
 		UserLocalServiceImpl userLocalServiceImpl =
-			(UserLocalServiceImpl)classLoaderBeanHandler.getBean();
+			(UserLocalServiceImpl)serviceWrapper.getWrappedService();
 
 		user.setLoginDate(new Date());
 		user.setLastLoginDate(new Date());

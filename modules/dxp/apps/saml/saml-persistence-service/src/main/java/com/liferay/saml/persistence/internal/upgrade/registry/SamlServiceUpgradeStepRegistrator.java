@@ -13,6 +13,7 @@ import com.liferay.portal.upgrade.release.ReleaseRenamingUpgradeStep;
 import com.liferay.saml.persistence.internal.upgrade.v2_4_0.util.SamlPeerBindingTable;
 import com.liferay.saml.persistence.internal.upgrade.v3_0_1.SamlSpIdpConnectionDataUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v3_0_2.SamlPeerBindingUpgradeProcess;
+import com.liferay.saml.persistence.internal.upgrade.v3_2_0.util.SamlIbSloMessageTable;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -158,6 +159,8 @@ public class SamlServiceUpgradeStepRegistrator
 			"3.0.4", "3.1.0",
 			UpgradeProcessFactory.addColumns(
 				"SamlSpAuthRequest", "samlRelayState VARCHAR(2048) null"));
+
+		registry.register("3.1.0", "3.2.0", SamlIbSloMessageTable.create());
 	}
 
 	@Reference

@@ -104,7 +104,7 @@ spec:
                     -   status
                     -   statefulset
                     -   "{{ .Values.liferayWorkload.name }}"
-                    -   --timeout=15m
+                    -   --timeout={{ .Values.liferayWorkload.rolloutTimeout }}
                 image: "{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}"
             name: kubectl-rollout-status
         -   dag:

@@ -33,6 +33,7 @@ images:
 liferayWorkload:
     managedSecretName: managed-service-details
     name: liferay-default
+    rolloutTimeout: 15m
 nameOverride: ""
 serviceAccountAnnotations: {}
 tfvarsOverrideFileName: zz-backup-restore.auto.tfvars

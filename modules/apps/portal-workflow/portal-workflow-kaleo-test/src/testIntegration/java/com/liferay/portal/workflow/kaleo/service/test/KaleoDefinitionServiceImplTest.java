@@ -118,7 +118,7 @@ public class KaleoDefinitionServiceImplTest {
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _companyAdminUser.getUserId(), " must have ",
-				WorkflowConstants.RESOURCE_NAME, ",ADD_DEFINITION permission ",
+				WorkflowConstants.RESOURCE_NAME, ", ADD_DEFINITION permission ",
 				"for null "),
 			this::_addKaleoDefinition);
 
@@ -211,7 +211,7 @@ public class KaleoDefinitionServiceImplTest {
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _companyAdminUser.getUserId(), " must have ",
-				WorkflowConstants.RESOURCE_NAME, ",ADD_DEFINITION permission ",
+				WorkflowConstants.RESOURCE_NAME, ", ADD_DEFINITION permission ",
 				"for null "),
 			() -> _kaleoDefinitionService.updateKaleoDefinition(
 				kaleoDefinition.getExternalReferenceCode(),

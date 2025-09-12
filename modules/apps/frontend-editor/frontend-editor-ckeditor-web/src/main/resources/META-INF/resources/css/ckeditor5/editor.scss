@@ -49,6 +49,10 @@
 		}
 	}
 
+	&.ck-content {
+		min-height: 265px;
+	}
+
 	&.ck-dropdown {
 		.ck-button.ck-dropdown__button.ck-off:active:focus,
 		.ck-button.ck-dropdown__button.ck-on:active:focus {

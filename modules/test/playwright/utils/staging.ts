@@ -3,16 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 
 import {DataApiHelpers} from '../helpers/ApiHelpers';
-import {reloadUntilVisible} from './reloadUntilVisible';
 
 export async function enableLocalStaging(
 	apiHelpers: DataApiHelpers,
 	page: Page,
-	site: any,
-	parameters?: any
+	site: Site,
+	parameters?: {branchingPrivate?: boolean; branchingPublic?: boolean}
 ) {
 	await page.goto(`/web${site.friendlyUrlPath}`);
 
@@ -21,10 +20,6 @@ export async function enableLocalStaging(
 		...parameters,
 	});
 
-	await reloadUntilVisible({
-		myLocator: page
-			.getByLabel('Control Menu')
-			.getByRole('link', {name: 'Staging'}),
-		page,
-	});
+	await page.reload();
+	await expect(page.getByText('An initial staging publish')).toBeHidden();
 }

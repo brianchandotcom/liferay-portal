@@ -53,7 +53,7 @@ export const test = mergeTests(
 	uiElementsPageTest
 );
 
-test('staging only approved content goes to live', async ({
+test('Staging only approved content goes to live', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -63,7 +63,7 @@ test('staging only approved content goes to live', async ({
 	workflowTasksPage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
-		name: 'site-' + getRandomString(),
+		name: `site-${getRandomString()}`,
 	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});

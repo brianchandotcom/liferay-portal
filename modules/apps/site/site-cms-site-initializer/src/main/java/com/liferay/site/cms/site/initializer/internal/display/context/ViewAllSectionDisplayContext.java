@@ -121,20 +121,6 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		return super.getAPIURL();
 	}
 
-	public Map<String, Object> getBreadcrumbProps() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		addBreadcrumbItem(
-			jsonArray, false, null,
-			LanguageUtil.get(httpServletRequest, "all"));
-
-		return HashMapBuilder.<String, Object>put(
-			"breadcrumbItems", jsonArray
-		).put(
-			"hideSpace", true
-		).build();
-	}
-
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		List<DropdownItem> fdsBulkActionDropdownItems =

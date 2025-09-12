@@ -247,6 +247,18 @@ public abstract class BaseSectionDisplayContext {
 		return sb.toString();
 	}
 
+	public Map<String, Object> getBreadcrumbProps() throws PortalException {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		addBreadcrumbItem(jsonArray, false, null, _getLayoutName());
+
+		return HashMapBuilder.<String, Object>put(
+			"breadcrumbItems", jsonArray
+		).put(
+			"hideSpace", true
+		).build();
+	}
+
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -765,6 +777,16 @@ public abstract class BaseSectionDisplayContext {
 		).put(
 			"name", group.getName(themeDisplay.getLocale())
 		);
+	}
+
+	private String _getLayoutName() {
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout == null) {
+			return null;
+		}
+
+		return layout.getName(themeDisplay.getLocale(), true);
 	}
 
 	private ObjectEntryFolder _getObjectEntryFolder(

@@ -66,6 +66,7 @@ public class AccountCreationRequestProcessorService extends BaseService {
 			).getTokenValue();
 
 			String authorizationHeader = "Bearer " + token;
+			
 			String baseUrl = lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
 
 			JSONObject jsonObject = new JSONObject(
@@ -105,8 +106,7 @@ public class AccountCreationRequestProcessorService extends BaseService {
 				authorizationHeader, "",
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
-						baseUrl,
-						"/o/headless-admin-user/v1.0/",
+						baseUrl, "/o/headless-admin-user/v1.0/",
 						"accounts/by-external-reference-code/",
 						accountExternalReferenceCode,
 						"/user-accounts/by-email-address/", accountEmailAddress)
@@ -118,9 +118,8 @@ public class AccountCreationRequestProcessorService extends BaseService {
 					authorizationHeader,
 					UriComponentsBuilder.fromUriString(
 						StringBundler.concat(
-							baseUrl,
-							"/o/headless-admin-user/v1.0",
-							"/accounts/by-external-reference-code/",
+							baseUrl, "/o/headless-admin-user/v1.0/accounts",
+							"/by-external-reference-code/",
 							accountExternalReferenceCode, "/account-roles",
 							"?filter=name eq 'Account Administrator'")
 					).build(
@@ -137,9 +136,8 @@ public class AccountCreationRequestProcessorService extends BaseService {
 				authorizationHeader, "",
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
-						baseUrl,
-						"/o/headless-admin-user/v1.0",
-						"/accounts/by-external-reference-code/",
+						baseUrl, "/o/headless-admin-user/v1.0/accounts",
+						"/by-external-reference-code/",
 						accountExternalReferenceCode, "/account-roles/",
 						adminAccountRoleId, "/user-accounts/by-email-address/",
 						accountEmailAddress)

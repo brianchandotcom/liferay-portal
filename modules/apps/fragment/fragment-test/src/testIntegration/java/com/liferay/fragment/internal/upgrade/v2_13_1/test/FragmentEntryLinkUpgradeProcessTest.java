@@ -87,7 +87,10 @@ public class FragmentEntryLinkUpgradeProcessTest
 	@Test
 	public void testUpgrade() throws Exception {
 		String editableValues = StringUtil.replace(
-			_read("editable_values.json"), "${", "}",
+			new String(
+				FileUtil.getBytes(
+					getClass(), "dependencies/editable_values.json")),
+			"${", "}",
 			HashMapBuilder.put(
 				"CLASS_NAME_ID",
 				String.valueOf(
@@ -243,11 +246,6 @@ public class FragmentEntryLinkUpgradeProcessTest
 				String.valueOf(expectedClassNameId),
 				jsonObject.getString("classNameId"));
 		}
-	}
-
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	@Inject(

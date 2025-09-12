@@ -38,9 +38,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.eclipse.equinox.http.servlet.internal.util.Params;
 
 /**
  * @author Dante Wang
@@ -95,7 +94,7 @@ public class LiferayDispatchTargets {
 
 			parsedParameterMap.put(
 				entry.getKey(),
-				Params.append(
+				_append(
 					parsedParameterMap.get(entry.getKey()), entry.getValue()));
 		}
 
@@ -291,6 +290,46 @@ public class LiferayDispatchTargets {
 		return value;
 	}
 
+	private String[] _append(String[] params, String value) {
+		if (params.length == 0) {
+			return new String[] {value};
+		}
+
+		String[] newParams = new String[params.length + 1];
+
+		System.arraycopy(params, 0, newParams, 0, params.length);
+
+		newParams[params.length] = Objects.requireNonNullElse(
+			value, StringPool.BLANK);
+
+		return newParams;
+	}
+
+	private String[] _append(String[] params, String... values) {
+		if (values == null) {
+			values = new String[1];
+		}
+
+		String[] newParams = values;
+
+		int length = 0;
+
+		if (params != null) {
+			length = params.length;
+
+			newParams = new String[params.length + values.length];
+
+			System.arraycopy(params, 0, newParams, 0, params.length);
+		}
+
+		for (int i = 0; i < values.length; ++i) {
+			newParams[length + i] = Objects.requireNonNullElse(
+				values[i], StringPool.BLANK);
+		}
+
+		return newParams;
+	}
+
 	private Map<String, String[]> _parseParameterMap(String queryString) {
 		if ((queryString == null) || queryString.isEmpty()) {
 			return new HashMap<>();
@@ -325,7 +364,7 @@ public class LiferayDispatchTargets {
 						parameter.substring(index + 1), StringPool.UTF8);
 				}
 
-				values = Params.append(values, value);
+				values = _append(values, value);
 
 				parameterMap.put(name, values);
 			}

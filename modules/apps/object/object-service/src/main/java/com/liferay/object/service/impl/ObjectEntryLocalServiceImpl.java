@@ -395,6 +395,7 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setUserId(user.getUserId());
 		objectEntry.setUserName(user.getFullName());
 		objectEntry.setCreateDate(new Date());
+		objectEntry.setHeadObjectEntryId(objectEntryId);
 		objectEntry.setObjectDefinitionId(objectDefinitionId);
 		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
 		objectEntry.setDefaultLanguageId(defaultLanguageId);

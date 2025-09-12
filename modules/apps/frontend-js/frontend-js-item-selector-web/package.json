@@ -1,13 +1,13 @@
 {
 	"dependencies": {
-		"@clayui/breadcrumb": "*",
-		"@clayui/layout": "*",
-		"@clayui/link": "*",
 		"@clayui/autocomplete": "3.146.0",
+		"@clayui/breadcrumb": "3.144.1",
 		"@clayui/button": "3.144.1",
 		"@clayui/core": "3.146.0",
 		"@clayui/data-provider": "3.145.0",
 		"@clayui/form": "3.145.0",
+		"@clayui/layout": "3.144.1",
+		"@clayui/link": "3.144.1",
 		"@clayui/modal": "3.145.0",
 		"@clayui/multi-select": "3.147.0",
 		"@clayui/shared": "3.145.0",

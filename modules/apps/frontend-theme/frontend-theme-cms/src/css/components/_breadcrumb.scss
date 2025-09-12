@@ -1,0 +1,5 @@
+.cms-breadcrumb .breadcrumb-item {
+	.breadcrumb-link:not([href]) {
+		text-decoration: none;
+	}
+}

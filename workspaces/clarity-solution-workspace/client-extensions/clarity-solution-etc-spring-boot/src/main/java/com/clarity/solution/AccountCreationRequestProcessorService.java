@@ -81,7 +81,7 @@ public class AccountCreationRequestProcessorService extends BaseService {
 			String accountName = propertiesJSONObject.getString("businessName");
 			String accountEmailAddress = propertiesJSONObject.getString(
 				"applicantEmailAddress");
-				
+
 			String standardAccountName = StringUtils.replace(
 				StringUtil.toUpperCase(accountName), " ", "_");
 

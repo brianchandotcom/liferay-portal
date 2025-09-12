@@ -5,7 +5,7 @@
 
 package com.liferay.headless.asset.library.resource.v1_0;
 
-import com.liferay.headless.asset.library.dto.v1_0.Site;
+import com.liferay.headless.asset.library.dto.v1_0.ConnectedSite;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -44,46 +44,52 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface SiteResource {
+public interface ConnectedSiteResource {
 
 	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String connectedSiteExternalReferenceCode)
 		throws Exception;
 
-	public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public void deleteAssetLibraryConnectedSite(
+			Long assetLibraryId, Long connectedSiteId)
 		throws Exception;
 
-	public Site
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+	public ConnectedSite
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String connectedSiteExternalReferenceCode)
 		throws Exception;
 
-	public Page<Site> getAssetLibraryByExternalReferenceCodeSitesPage(
-			String externalReferenceCode, Pagination pagination)
+	public Page<ConnectedSite>
+			getAssetLibraryByExternalReferenceCodeConnectedSitesPage(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public ConnectedSite getAssetLibraryConnectedSite(
+			Long assetLibraryId, Long connectedSiteId)
 		throws Exception;
 
-	public Page<Site> getAssetLibrarySitesPage(
+	public Page<ConnectedSite> getAssetLibraryConnectedSitesPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
-	public Response postAssetLibrarySitesPageExportBatch(
+	public Response postAssetLibraryConnectedSitesPageExportBatch(
 			Long assetLibraryId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
-	public Site
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+	public ConnectedSite
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode, Site site)
+				String connectedSiteExternalReferenceCode,
+				ConnectedSite connectedSite)
 		throws Exception;
 
-	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId, Site site)
+	public ConnectedSite putAssetLibraryConnectedSite(
+			Long assetLibraryId, Long connectedSiteId,
+			ConnectedSite connectedSite)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -156,7 +162,7 @@ public interface SiteResource {
 	@ProviderType
 	public interface Builder {
 
-		public SiteResource build();
+		public ConnectedSiteResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

@@ -70,6 +70,49 @@ public class AssetLibrary implements Cloneable, Serializable {
 
 	protected String assetLibraryKey;
 
+	public Long getConnectedSiteId() {
+		return connectedSiteId;
+	}
+
+	public void setConnectedSiteId(Long connectedSiteId) {
+		this.connectedSiteId = connectedSiteId;
+	}
+
+	public void setConnectedSiteId(
+		UnsafeSupplier<Long, Exception> connectedSiteIdUnsafeSupplier) {
+
+		try {
+			connectedSiteId = connectedSiteIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long connectedSiteId;
+
+	public ConnectedSite[] getConnectedSites() {
+		return connectedSites;
+	}
+
+	public void setConnectedSites(ConnectedSite[] connectedSites) {
+		this.connectedSites = connectedSites;
+	}
+
+	public void setConnectedSites(
+		UnsafeSupplier<ConnectedSite[], Exception>
+			connectedSitesUnsafeSupplier) {
+
+		try {
+			connectedSites = connectedSitesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ConnectedSite[] connectedSites;
+
 	public Long getCreatorUserId() {
 		return creatorUserId;
 	}
@@ -257,26 +300,27 @@ public class AssetLibrary implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
-	public Integer getNumberOfSites() {
-		return numberOfSites;
+	public Integer getNumberOfConnectedSites() {
+		return numberOfConnectedSites;
 	}
 
-	public void setNumberOfSites(Integer numberOfSites) {
-		this.numberOfSites = numberOfSites;
+	public void setNumberOfConnectedSites(Integer numberOfConnectedSites) {
+		this.numberOfConnectedSites = numberOfConnectedSites;
 	}
 
-	public void setNumberOfSites(
-		UnsafeSupplier<Integer, Exception> numberOfSitesUnsafeSupplier) {
+	public void setNumberOfConnectedSites(
+		UnsafeSupplier<Integer, Exception>
+			numberOfConnectedSitesUnsafeSupplier) {
 
 		try {
-			numberOfSites = numberOfSitesUnsafeSupplier.get();
+			numberOfConnectedSites = numberOfConnectedSitesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Integer numberOfSites;
+	protected Integer numberOfConnectedSites;
 
 	public Integer getNumberOfUserAccounts() {
 		return numberOfUserAccounts;
@@ -340,48 +384,6 @@ public class AssetLibrary implements Cloneable, Serializable {
 	}
 
 	protected Settings settings;
-
-	public Long getSiteId() {
-		return siteId;
-	}
-
-	public void setSiteId(Long siteId) {
-		this.siteId = siteId;
-	}
-
-	public void setSiteId(
-		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
-
-		try {
-			siteId = siteIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long siteId;
-
-	public Site[] getSites() {
-		return sites;
-	}
-
-	public void setSites(Site[] sites) {
-		this.sites = sites;
-	}
-
-	public void setSites(
-		UnsafeSupplier<Site[], Exception> sitesUnsafeSupplier) {
-
-		try {
-			sites = sitesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Site[] sites;
 
 	public Type getType() {
 		return type;

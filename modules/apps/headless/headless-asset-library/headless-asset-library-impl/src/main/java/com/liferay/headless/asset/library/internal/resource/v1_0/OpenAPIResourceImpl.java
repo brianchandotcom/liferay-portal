@@ -87,9 +87,9 @@ public class OpenAPIResourceImpl {
 		{
 			add(AssetLibraryResourceImpl.class);
 
-			add(RoleResourceImpl.class);
+			add(ConnectedSiteResourceImpl.class);
 
-			add(SiteResourceImpl.class);
+			add(RoleResourceImpl.class);
 
 			add(UserAccountResourceImpl.class);
 

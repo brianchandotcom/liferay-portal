@@ -6,7 +6,7 @@
 package com.liferay.headless.asset.library.internal.resource.v1_0.factory;
 
 import com.liferay.headless.asset.library.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.headless.asset.library.resource.v1_0.SiteResource;
+import com.liferay.headless.asset.library.resource.v1_0.ConnectedSiteResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,28 +55,29 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/headless-asset-library/v1.0/Site",
-	service = SiteResource.Factory.class
+	property = "resource.locator.key=/headless-asset-library/v1.0/ConnectedSite",
+	service = ConnectedSiteResource.Factory.class
 )
 @Generated("")
-public class SiteResourceFactoryImpl implements SiteResource.Factory {
+public class ConnectedSiteResourceFactoryImpl
+	implements ConnectedSiteResource.Factory {
 
 	@Override
-	public SiteResource.Builder create() {
-		return new SiteResource.Builder() {
+	public ConnectedSiteResource.Builder create() {
+		return new ConnectedSiteResource.Builder() {
 
 			@Override
-			public SiteResource build() {
+			public ConnectedSiteResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, SiteResource>
-					siteResourceProxyProviderFunction =
+				Function<InvocationHandler, ConnectedSiteResource>
+					connectedSiteResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_siteResourceProxyProviderFunction;
+							_connectedSiteResourceProxyProviderFunction;
 
-				return siteResourceProxyProviderFunction.apply(
+				return connectedSiteResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -84,7 +85,7 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 			}
 
 			@Override
-			public SiteResource.Builder checkPermissions(
+			public ConnectedSiteResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -93,7 +94,7 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 			}
 
 			@Override
-			public SiteResource.Builder httpServletRequest(
+			public ConnectedSiteResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -102,7 +103,7 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 			}
 
 			@Override
-			public SiteResource.Builder httpServletResponse(
+			public ConnectedSiteResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -111,7 +112,7 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 			}
 
 			@Override
-			public SiteResource.Builder preferredLocale(
+			public ConnectedSiteResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -120,14 +121,14 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 			}
 
 			@Override
-			public SiteResource.Builder uriInfo(UriInfo uriInfo) {
+			public ConnectedSiteResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public SiteResource.Builder user(User user) {
+			public ConnectedSiteResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -143,15 +144,16 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 		};
 	}
 
-	private static Function<InvocationHandler, SiteResource>
+	private static Function<InvocationHandler, ConnectedSiteResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SiteResource.class.getClassLoader(), SiteResource.class);
+			ConnectedSiteResource.class.getClassLoader(),
+			ConnectedSiteResource.class);
 
 		try {
-			Constructor<SiteResource> constructor =
-				(Constructor<SiteResource>)proxyClass.getConstructor(
+			Constructor<ConnectedSiteResource> constructor =
+				(Constructor<ConnectedSiteResource>)proxyClass.getConstructor(
 					InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -193,36 +195,39 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 				new LiberalPermissionChecker(user));
 		}
 
-		SiteResource siteResource = _componentServiceObjects.getService();
+		ConnectedSiteResource connectedSiteResource =
+			_componentServiceObjects.getService();
 
-		siteResource.setContextAcceptLanguage(
+		connectedSiteResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		siteResource.setContextCompany(company);
+		connectedSiteResource.setContextCompany(company);
 
-		siteResource.setContextHttpServletRequest(httpServletRequest);
-		siteResource.setContextHttpServletResponse(httpServletResponse);
-		siteResource.setContextUriInfo(uriInfo);
-		siteResource.setContextUser(user);
-		siteResource.setExpressionConvert(_expressionConvert);
-		siteResource.setFilterParserProvider(_filterParserProvider);
-		siteResource.setGroupLocalService(_groupLocalService);
-		siteResource.setResourceActionLocalService(_resourceActionLocalService);
-		siteResource.setResourcePermissionLocalService(
+		connectedSiteResource.setContextHttpServletRequest(httpServletRequest);
+		connectedSiteResource.setContextHttpServletResponse(
+			httpServletResponse);
+		connectedSiteResource.setContextUriInfo(uriInfo);
+		connectedSiteResource.setContextUser(user);
+		connectedSiteResource.setExpressionConvert(_expressionConvert);
+		connectedSiteResource.setFilterParserProvider(_filterParserProvider);
+		connectedSiteResource.setGroupLocalService(_groupLocalService);
+		connectedSiteResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		connectedSiteResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		siteResource.setRoleLocalService(_roleLocalService);
-		siteResource.setSortParserProvider(_sortParserProvider);
+		connectedSiteResource.setRoleLocalService(_roleLocalService);
+		connectedSiteResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(siteResource, arguments);
+			return method.invoke(connectedSiteResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(siteResource);
+			_componentServiceObjects.ungetService(connectedSiteResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -234,7 +239,8 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SiteResource> _componentServiceObjects;
+	private ComponentServiceObjects<ConnectedSiteResource>
+		_componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
@@ -267,8 +273,9 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 
 	private static class ResourceProxyProviderFunctionHolder {
 
-		private static final Function<InvocationHandler, SiteResource>
-			_siteResourceProxyProviderFunction = _getProxyProviderFunction();
+		private static final Function<InvocationHandler, ConnectedSiteResource>
+			_connectedSiteResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 	}
 

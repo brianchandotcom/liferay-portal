@@ -35,21 +35,23 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "Represents a site.", value = "Site")
+@GraphQLName(
+	description = "Represents a connected site.", value = "ConnectedSite"
+)
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Site")
-public class Site implements Serializable {
+@XmlRootElement(name = "ConnectedSite")
+public class ConnectedSite implements Serializable {
 
-	public static Site toDTO(String json) {
-		return ObjectMapperUtil.readValue(Site.class, json);
+	public static ConnectedSite toDTO(String json) {
+		return ObjectMapperUtil.readValue(ConnectedSite.class, json);
 	}
 
-	public static Site unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Site.class, json);
+	public static ConnectedSite unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ConnectedSite.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The site's external reference code."
+		description = "The connected site's external reference code."
 	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
@@ -84,14 +86,16 @@ public class Site implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The site's external reference code.")
+	@GraphQLField(description = "The connected site's external reference code.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "The site's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The connected site's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -123,7 +127,7 @@ public class Site implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The site's ID.")
+	@GraphQLField(description = "The connected site's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -131,7 +135,7 @@ public class Site implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The site's logo."
+		description = "The connected site's logo."
 	)
 	public String getLogo() {
 		if (_logoSupplier != null) {
@@ -164,7 +168,7 @@ public class Site implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The site's logo.")
+	@GraphQLField(description = "The connected site's logo.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String logo;
 
@@ -172,7 +176,7 @@ public class Site implements Serializable {
 	private Supplier<String> _logoSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The site's name."
+		description = "The connected site's name."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -205,7 +209,7 @@ public class Site implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The site's name.")
+	@GraphQLField(description = "The connected site's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -302,13 +306,13 @@ public class Site implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Site)) {
+		if (!(object instanceof ConnectedSite)) {
 			return false;
 		}
 
-		Site site = (Site)object;
+		ConnectedSite connectedSite = (ConnectedSite)object;
 
-		return Objects.equals(toString(), site.toString());
+		return Objects.equals(toString(), connectedSite.toString());
 	}
 
 	@Override
@@ -414,7 +418,7 @@ public class Site implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.asset.library.dto.v1_0.Site",
+		defaultValue = "com.liferay.headless.asset.library.dto.v1_0.ConnectedSite",
 		name = "x-class-name"
 	)
 	public String xClassName;

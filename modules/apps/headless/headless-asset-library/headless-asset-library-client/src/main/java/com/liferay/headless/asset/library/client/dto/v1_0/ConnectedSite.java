@@ -6,7 +6,7 @@
 package com.liferay.headless.asset.library.client.dto.v1_0;
 
 import com.liferay.headless.asset.library.client.function.UnsafeSupplier;
-import com.liferay.headless.asset.library.client.serdes.v1_0.SiteSerDes;
+import com.liferay.headless.asset.library.client.serdes.v1_0.ConnectedSiteSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -20,10 +20,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class Site implements Cloneable, Serializable {
+public class ConnectedSite implements Cloneable, Serializable {
 
-	public static Site toDTO(String json) {
-		return SiteSerDes.toDTO(json);
+	public static ConnectedSite toDTO(String json) {
+		return ConnectedSiteSerDes.toDTO(json);
 	}
 
 	public String getExternalReferenceCode() {
@@ -148,8 +148,8 @@ public class Site implements Cloneable, Serializable {
 	protected Boolean searchable;
 
 	@Override
-	public Site clone() throws CloneNotSupportedException {
-		return (Site)super.clone();
+	public ConnectedSite clone() throws CloneNotSupportedException {
+		return (ConnectedSite)super.clone();
 	}
 
 	@Override
@@ -158,13 +158,13 @@ public class Site implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Site)) {
+		if (!(object instanceof ConnectedSite)) {
 			return false;
 		}
 
-		Site site = (Site)object;
+		ConnectedSite connectedSite = (ConnectedSite)object;
 
-		return Objects.equals(toString(), site.toString());
+		return Objects.equals(toString(), connectedSite.toString());
 	}
 
 	@Override
@@ -175,7 +175,7 @@ public class Site implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return SiteSerDes.toJSON(this);
+		return ConnectedSiteSerDes.toJSON(this);
 	}
 
 }

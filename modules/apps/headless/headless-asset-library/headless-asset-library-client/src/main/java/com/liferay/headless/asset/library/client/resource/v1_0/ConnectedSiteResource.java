@@ -5,12 +5,12 @@
 
 package com.liferay.headless.asset.library.client.resource.v1_0;
 
-import com.liferay.headless.asset.library.client.dto.v1_0.Site;
+import com.liferay.headless.asset.library.client.dto.v1_0.ConnectedSite;
 import com.liferay.headless.asset.library.client.http.HttpInvoker;
 import com.liferay.headless.asset.library.client.pagination.Page;
 import com.liferay.headless.asset.library.client.pagination.Pagination;
 import com.liferay.headless.asset.library.client.problem.Problem;
-import com.liferay.headless.asset.library.client.serdes.v1_0.SiteSerDes;
+import com.liferay.headless.asset.library.client.serdes.v1_0.ConnectedSiteSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -28,95 +28,104 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface SiteResource {
+public interface ConnectedSiteResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
 	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String connectedSiteExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String connectedSiteExternalReferenceCode)
 		throws Exception;
 
-	public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public void deleteAssetLibraryConnectedSite(
+			Long assetLibraryId, Long connectedSiteId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteAssetLibrarySiteHttpResponse(
-			Long assetLibraryId, Long siteId)
+	public HttpInvoker.HttpResponse deleteAssetLibraryConnectedSiteHttpResponse(
+			Long assetLibraryId, Long connectedSiteId)
 		throws Exception;
 
-	public Site
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+	public ConnectedSite
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String connectedSiteExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+				String connectedSiteExternalReferenceCode)
 		throws Exception;
 
-	public Page<Site> getAssetLibraryByExternalReferenceCodeSitesPage(
-			String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getAssetLibraryByExternalReferenceCodeSitesPageHttpResponse(
+	public Page<ConnectedSite>
+			getAssetLibraryByExternalReferenceCodeConnectedSitesPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public HttpInvoker.HttpResponse
+			getAssetLibraryByExternalReferenceCodeConnectedSitesPageHttpResponse(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAssetLibrarySiteHttpResponse(
-			Long assetLibraryId, Long siteId)
+	public ConnectedSite getAssetLibraryConnectedSite(
+			Long assetLibraryId, Long connectedSiteId)
 		throws Exception;
 
-	public Page<Site> getAssetLibrarySitesPage(
+	public HttpInvoker.HttpResponse getAssetLibraryConnectedSiteHttpResponse(
+			Long assetLibraryId, Long connectedSiteId)
+		throws Exception;
+
+	public Page<ConnectedSite> getAssetLibraryConnectedSitesPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAssetLibrarySitesPageHttpResponse(
-			Long assetLibraryId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getAssetLibraryConnectedSitesPageHttpResponse(
+				Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
-	public void postAssetLibrarySitesPageExportBatch(
+	public void postAssetLibraryConnectedSitesPageExportBatch(
 			Long assetLibraryId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAssetLibrarySitesPageExportBatchHttpResponse(
+			postAssetLibraryConnectedSitesPageExportBatchHttpResponse(
 				Long assetLibraryId, String callbackURL, String contentType,
 				String fieldNames)
 		throws Exception;
 
-	public Site
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+	public ConnectedSite
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode, Site site)
+				String connectedSiteExternalReferenceCode,
+				ConnectedSite connectedSite)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode, Site site)
+				String connectedSiteExternalReferenceCode,
+				ConnectedSite connectedSite)
 		throws Exception;
 
-	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId, Site site)
+	public ConnectedSite putAssetLibraryConnectedSite(
+			Long assetLibraryId, Long connectedSiteId,
+			ConnectedSite connectedSite)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putAssetLibrarySiteHttpResponse(
-			Long assetLibraryId, Long siteId, Site site)
+	public HttpInvoker.HttpResponse putAssetLibraryConnectedSiteHttpResponse(
+			Long assetLibraryId, Long connectedSiteId,
+			ConnectedSite connectedSite)
 		throws Exception;
 
 	public static class Builder {
@@ -132,8 +141,8 @@ public interface SiteResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public SiteResource build() {
-			return new SiteResourceImpl(this);
+		public ConnectedSiteResource build() {
+			return new ConnectedSiteResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -225,18 +234,19 @@ public interface SiteResource {
 
 	}
 
-	public static class SiteResourceImpl implements SiteResource {
+	public static class ConnectedSiteResourceImpl
+		implements ConnectedSiteResource {
 
 		public void
-				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode)
+					String connectedSiteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 					assetLibraryExternalReferenceCode,
-					siteExternalReferenceCode);
+					connectedSiteExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -298,9 +308,9 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+				deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode)
+					String connectedSiteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -327,13 +337,14 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/sites/by-external-reference-code/{siteExternalReferenceCode}");
+						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/connected-sites/by-external-reference-code/{connectedSiteExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
 				assetLibraryExternalReferenceCode);
 			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
+				"connectedSiteExternalReferenceCode",
+				connectedSiteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -343,11 +354,13 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
+		public void deleteAssetLibraryConnectedSite(
+				Long assetLibraryId, Long connectedSiteId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAssetLibrarySiteHttpResponse(assetLibraryId, siteId);
+				deleteAssetLibraryConnectedSiteHttpResponse(
+					assetLibraryId, connectedSiteId);
 
 			String content = httpResponse.getContent();
 
@@ -408,8 +421,9 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse deleteAssetLibrarySiteHttpResponse(
-				Long assetLibraryId, Long siteId)
+		public HttpInvoker.HttpResponse
+				deleteAssetLibraryConnectedSiteHttpResponse(
+					Long assetLibraryId, Long connectedSiteId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -436,10 +450,10 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites/{siteId}");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/connected-sites/{connectedSiteId}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path("connectedSiteId", connectedSiteId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -449,16 +463,16 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Site
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+		public ConnectedSite
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode)
+					String connectedSiteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 					assetLibraryExternalReferenceCode,
-					siteExternalReferenceCode);
+					connectedSiteExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -508,7 +522,7 @@ public interface SiteResource {
 			}
 
 			try {
-				return SiteSerDes.toDTO(content);
+				return ConnectedSiteSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -520,9 +534,9 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode)
+					String connectedSiteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -549,13 +563,14 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/sites/by-external-reference-code/{siteExternalReferenceCode}");
+						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/connected-sites/by-external-reference-code/{connectedSiteExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
 				assetLibraryExternalReferenceCode);
 			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
+				"connectedSiteExternalReferenceCode",
+				connectedSiteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -565,12 +580,13 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Site> getAssetLibraryByExternalReferenceCodeSitesPage(
-				String externalReferenceCode, Pagination pagination)
+		public Page<ConnectedSite>
+				getAssetLibraryByExternalReferenceCodeConnectedSitesPage(
+					String externalReferenceCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryByExternalReferenceCodeSitesPageHttpResponse(
+				getAssetLibraryByExternalReferenceCodeConnectedSitesPageHttpResponse(
 					externalReferenceCode, pagination);
 
 			String content = httpResponse.getContent();
@@ -621,7 +637,7 @@ public interface SiteResource {
 			}
 
 			try {
-				return Page.of(content, SiteSerDes::toDTO);
+				return Page.of(content, ConnectedSiteSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -633,7 +649,7 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAssetLibraryByExternalReferenceCodeSitesPageHttpResponse(
+				getAssetLibraryByExternalReferenceCodeConnectedSitesPageHttpResponse(
 					String externalReferenceCode, Pagination pagination)
 			throws Exception {
 
@@ -668,7 +684,7 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}/sites");
+						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}/connected-sites");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -680,11 +696,13 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
+		public ConnectedSite getAssetLibraryConnectedSite(
+				Long assetLibraryId, Long connectedSiteId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibrarySiteHttpResponse(assetLibraryId, siteId);
+				getAssetLibraryConnectedSiteHttpResponse(
+					assetLibraryId, connectedSiteId);
 
 			String content = httpResponse.getContent();
 
@@ -734,7 +752,7 @@ public interface SiteResource {
 			}
 
 			try {
-				return SiteSerDes.toDTO(content);
+				return ConnectedSiteSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -745,8 +763,9 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getAssetLibrarySiteHttpResponse(
-				Long assetLibraryId, Long siteId)
+		public HttpInvoker.HttpResponse
+				getAssetLibraryConnectedSiteHttpResponse(
+					Long assetLibraryId, Long connectedSiteId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -773,10 +792,10 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites/{siteId}");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/connected-sites/{connectedSiteId}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path("connectedSiteId", connectedSiteId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -786,12 +805,12 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Site> getAssetLibrarySitesPage(
+		public Page<ConnectedSite> getAssetLibraryConnectedSitesPage(
 				Long assetLibraryId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibrarySitesPageHttpResponse(
+				getAssetLibraryConnectedSitesPageHttpResponse(
 					assetLibraryId, pagination);
 
 			String content = httpResponse.getContent();
@@ -842,7 +861,7 @@ public interface SiteResource {
 			}
 
 			try {
-				return Page.of(content, SiteSerDes::toDTO);
+				return Page.of(content, ConnectedSiteSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -853,8 +872,9 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getAssetLibrarySitesPageHttpResponse(
-				Long assetLibraryId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getAssetLibraryConnectedSitesPageHttpResponse(
+					Long assetLibraryId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -888,7 +908,7 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/connected-sites");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 
@@ -900,13 +920,13 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAssetLibrarySitesPageExportBatch(
+		public void postAssetLibraryConnectedSitesPageExportBatch(
 				Long assetLibraryId, String callbackURL, String contentType,
 				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAssetLibrarySitesPageExportBatchHttpResponse(
+				postAssetLibraryConnectedSitesPageExportBatchHttpResponse(
 					assetLibraryId, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
@@ -958,7 +978,7 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAssetLibrarySitesPageExportBatchHttpResponse(
+				postAssetLibraryConnectedSitesPageExportBatchHttpResponse(
 					Long assetLibraryId, String callbackURL, String contentType,
 					String fieldNames)
 			throws Exception {
@@ -1003,7 +1023,7 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites/export-batch");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/connected-sites/export-batch");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 
@@ -1015,16 +1035,17 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Site
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+		public ConnectedSite
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
 					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode, Site site)
+					String connectedSiteExternalReferenceCode,
+					ConnectedSite connectedSite)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 					assetLibraryExternalReferenceCode,
-					siteExternalReferenceCode, site);
+					connectedSiteExternalReferenceCode, connectedSite);
 
 			String content = httpResponse.getContent();
 
@@ -1074,7 +1095,7 @@ public interface SiteResource {
 			}
 
 			try {
-				return SiteSerDes.toDTO(content);
+				return ConnectedSiteSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1086,14 +1107,15 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCodeHttpResponse(
 					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode, Site site)
+					String connectedSiteExternalReferenceCode,
+					ConnectedSite connectedSite)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(site.toString(), "application/json");
+			httpInvoker.body(connectedSite.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1117,13 +1139,14 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/sites/by-external-reference-code/{siteExternalReferenceCode}");
+						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/connected-sites/by-external-reference-code/{connectedSiteExternalReferenceCode}");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
 				assetLibraryExternalReferenceCode);
 			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
+				"connectedSiteExternalReferenceCode",
+				connectedSiteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1133,12 +1156,14 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Site putAssetLibrarySite(
-				Long assetLibraryId, Long siteId, Site site)
+		public ConnectedSite putAssetLibraryConnectedSite(
+				Long assetLibraryId, Long connectedSiteId,
+				ConnectedSite connectedSite)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibrarySiteHttpResponse(assetLibraryId, siteId, site);
+				putAssetLibraryConnectedSiteHttpResponse(
+					assetLibraryId, connectedSiteId, connectedSite);
 
 			String content = httpResponse.getContent();
 
@@ -1188,7 +1213,7 @@ public interface SiteResource {
 			}
 
 			try {
-				return SiteSerDes.toDTO(content);
+				return ConnectedSiteSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1199,13 +1224,15 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putAssetLibrarySiteHttpResponse(
-				Long assetLibraryId, Long siteId, Site site)
+		public HttpInvoker.HttpResponse
+				putAssetLibraryConnectedSiteHttpResponse(
+					Long assetLibraryId, Long connectedSiteId,
+					ConnectedSite connectedSite)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(site.toString(), "application/json");
+			httpInvoker.body(connectedSite.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1229,10 +1256,10 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites/{siteId}");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/connected-sites/{connectedSiteId}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path("connectedSiteId", connectedSiteId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1242,12 +1269,12 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		private SiteResourceImpl(Builder builder) {
+		private ConnectedSiteResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			SiteResource.class.getName());
+			ConnectedSiteResource.class.getName());
 
 		private Builder _builder;
 

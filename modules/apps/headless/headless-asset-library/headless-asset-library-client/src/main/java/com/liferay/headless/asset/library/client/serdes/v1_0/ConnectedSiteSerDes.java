@@ -5,7 +5,7 @@
 
 package com.liferay.headless.asset.library.client.serdes.v1_0;
 
-import com.liferay.headless.asset.library.client.dto.v1_0.Site;
+import com.liferay.headless.asset.library.client.dto.v1_0.ConnectedSite;
 import com.liferay.headless.asset.library.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,22 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class SiteSerDes {
+public class ConnectedSiteSerDes {
 
-	public static Site toDTO(String json) {
-		SiteJSONParser siteJSONParser = new SiteJSONParser();
+	public static ConnectedSite toDTO(String json) {
+		ConnectedSiteJSONParser connectedSiteJSONParser =
+			new ConnectedSiteJSONParser();
 
-		return siteJSONParser.parseToDTO(json);
+		return connectedSiteJSONParser.parseToDTO(json);
 	}
 
-	public static Site[] toDTOs(String json) {
-		SiteJSONParser siteJSONParser = new SiteJSONParser();
+	public static ConnectedSite[] toDTOs(String json) {
+		ConnectedSiteJSONParser connectedSiteJSONParser =
+			new ConnectedSiteJSONParser();
 
-		return siteJSONParser.parseToDTOs(json);
+		return connectedSiteJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Site site) {
-		if (site == null) {
+	public static String toJSON(ConnectedSite connectedSite) {
+		if (connectedSite == null) {
 			return "null";
 		}
 
@@ -44,7 +46,7 @@ public class SiteSerDes {
 
 		sb.append("{");
 
-		if (site.getExternalReferenceCode() != null) {
+		if (connectedSite.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -53,22 +55,22 @@ public class SiteSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(site.getExternalReferenceCode()));
+			sb.append(_escape(connectedSite.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
 
-		if (site.getId() != null) {
+		if (connectedSite.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(site.getId());
+			sb.append(connectedSite.getId());
 		}
 
-		if (site.getLogo() != null) {
+		if (connectedSite.getLogo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -77,12 +79,12 @@ public class SiteSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(site.getLogo()));
+			sb.append(_escape(connectedSite.getLogo()));
 
 			sb.append("\"");
 		}
 
-		if (site.getName() != null) {
+		if (connectedSite.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -91,29 +93,29 @@ public class SiteSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(site.getName()));
+			sb.append(_escape(connectedSite.getName()));
 
 			sb.append("\"");
 		}
 
-		if (site.getName_i18n() != null) {
+		if (connectedSite.getName_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"name_i18n\": ");
 
-			sb.append(_toJSON(site.getName_i18n()));
+			sb.append(_toJSON(connectedSite.getName_i18n()));
 		}
 
-		if (site.getSearchable() != null) {
+		if (connectedSite.getSearchable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"searchable\": ");
 
-			sb.append(site.getSearchable());
+			sb.append(connectedSite.getSearchable());
 		}
 
 		sb.append("}");
@@ -122,75 +124,78 @@ public class SiteSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SiteJSONParser siteJSONParser = new SiteJSONParser();
+		ConnectedSiteJSONParser connectedSiteJSONParser =
+			new ConnectedSiteJSONParser();
 
-		return siteJSONParser.parseToMap(json);
+		return connectedSiteJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Site site) {
-		if (site == null) {
+	public static Map<String, String> toMap(ConnectedSite connectedSite) {
+		if (connectedSite == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (site.getExternalReferenceCode() == null) {
+		if (connectedSite.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
-				String.valueOf(site.getExternalReferenceCode()));
+				String.valueOf(connectedSite.getExternalReferenceCode()));
 		}
 
-		if (site.getId() == null) {
+		if (connectedSite.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(site.getId()));
+			map.put("id", String.valueOf(connectedSite.getId()));
 		}
 
-		if (site.getLogo() == null) {
+		if (connectedSite.getLogo() == null) {
 			map.put("logo", null);
 		}
 		else {
-			map.put("logo", String.valueOf(site.getLogo()));
+			map.put("logo", String.valueOf(connectedSite.getLogo()));
 		}
 
-		if (site.getName() == null) {
+		if (connectedSite.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(site.getName()));
+			map.put("name", String.valueOf(connectedSite.getName()));
 		}
 
-		if (site.getName_i18n() == null) {
+		if (connectedSite.getName_i18n() == null) {
 			map.put("name_i18n", null);
 		}
 		else {
-			map.put("name_i18n", String.valueOf(site.getName_i18n()));
+			map.put("name_i18n", String.valueOf(connectedSite.getName_i18n()));
 		}
 
-		if (site.getSearchable() == null) {
+		if (connectedSite.getSearchable() == null) {
 			map.put("searchable", null);
 		}
 		else {
-			map.put("searchable", String.valueOf(site.getSearchable()));
+			map.put(
+				"searchable", String.valueOf(connectedSite.getSearchable()));
 		}
 
 		return map;
 	}
 
-	public static class SiteJSONParser extends BaseJSONParser<Site> {
+	public static class ConnectedSiteJSONParser
+		extends BaseJSONParser<ConnectedSite> {
 
 		@Override
-		protected Site createDTO() {
-			return new Site();
+		protected ConnectedSite createDTO() {
+			return new ConnectedSite();
 		}
 
 		@Override
-		protected Site[] createDTOArray(int size) {
-			return new Site[size];
+		protected ConnectedSite[] createDTOArray(int size) {
+			return new ConnectedSite[size];
 		}
 
 		@Override
@@ -219,38 +224,40 @@ public class SiteSerDes {
 
 		@Override
 		protected void setField(
-			Site site, String jsonParserFieldName,
+			ConnectedSite connectedSite, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				if (jsonParserFieldValue != null) {
-					site.setExternalReferenceCode((String)jsonParserFieldValue);
+					connectedSite.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					site.setId(Long.valueOf((String)jsonParserFieldValue));
+					connectedSite.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "logo")) {
 				if (jsonParserFieldValue != null) {
-					site.setLogo((String)jsonParserFieldValue);
+					connectedSite.setLogo((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					site.setName((String)jsonParserFieldValue);
+					connectedSite.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				if (jsonParserFieldValue != null) {
-					site.setName_i18n(
+					connectedSite.setName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "searchable")) {
 				if (jsonParserFieldValue != null) {
-					site.setSearchable((Boolean)jsonParserFieldValue);
+					connectedSite.setSearchable((Boolean)jsonParserFieldValue);
 				}
 			}
 		}

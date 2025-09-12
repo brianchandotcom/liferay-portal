@@ -148,6 +148,94 @@ public class AssetLibrary implements Serializable {
 	private Supplier<String> _assetLibraryKeySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's connected site ID."
+	)
+	public Long getConnectedSiteId() {
+		if (_connectedSiteIdSupplier != null) {
+			connectedSiteId = _connectedSiteIdSupplier.get();
+
+			_connectedSiteIdSupplier = null;
+		}
+
+		return connectedSiteId;
+	}
+
+	public void setConnectedSiteId(Long connectedSiteId) {
+		this.connectedSiteId = connectedSiteId;
+
+		_connectedSiteIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setConnectedSiteId(
+		UnsafeSupplier<Long, Exception> connectedSiteIdUnsafeSupplier) {
+
+		_connectedSiteIdSupplier = () -> {
+			try {
+				return connectedSiteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's connected site ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long connectedSiteId;
+
+	@JsonIgnore
+	private Supplier<Long> _connectedSiteIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's connected sites."
+	)
+	@Valid
+	public ConnectedSite[] getConnectedSites() {
+		if (_connectedSitesSupplier != null) {
+			connectedSites = _connectedSitesSupplier.get();
+
+			_connectedSitesSupplier = null;
+		}
+
+		return connectedSites;
+	}
+
+	public void setConnectedSites(ConnectedSite[] connectedSites) {
+		this.connectedSites = connectedSites;
+
+		_connectedSitesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setConnectedSites(
+		UnsafeSupplier<ConnectedSite[], Exception>
+			connectedSitesUnsafeSupplier) {
+
+		_connectedSitesSupplier = () -> {
+			try {
+				return connectedSitesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's connected sites.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected ConnectedSite[] connectedSites;
+
+	@JsonIgnore
+	private Supplier<ConnectedSite[]> _connectedSitesSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The asset library's creator user ID."
 	)
 	public Long getCreatorUserId() {
@@ -537,31 +625,32 @@ public class AssetLibrary implements Serializable {
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The number of this asset library's sites."
+		description = "The number of this asset library's connected sites."
 	)
-	public Integer getNumberOfSites() {
-		if (_numberOfSitesSupplier != null) {
-			numberOfSites = _numberOfSitesSupplier.get();
+	public Integer getNumberOfConnectedSites() {
+		if (_numberOfConnectedSitesSupplier != null) {
+			numberOfConnectedSites = _numberOfConnectedSitesSupplier.get();
 
-			_numberOfSitesSupplier = null;
+			_numberOfConnectedSitesSupplier = null;
 		}
 
-		return numberOfSites;
+		return numberOfConnectedSites;
 	}
 
-	public void setNumberOfSites(Integer numberOfSites) {
-		this.numberOfSites = numberOfSites;
+	public void setNumberOfConnectedSites(Integer numberOfConnectedSites) {
+		this.numberOfConnectedSites = numberOfConnectedSites;
 
-		_numberOfSitesSupplier = null;
+		_numberOfConnectedSitesSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setNumberOfSites(
-		UnsafeSupplier<Integer, Exception> numberOfSitesUnsafeSupplier) {
+	public void setNumberOfConnectedSites(
+		UnsafeSupplier<Integer, Exception>
+			numberOfConnectedSitesUnsafeSupplier) {
 
-		_numberOfSitesSupplier = () -> {
+		_numberOfConnectedSitesSupplier = () -> {
 			try {
-				return numberOfSitesUnsafeSupplier.get();
+				return numberOfConnectedSitesUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -572,12 +661,14 @@ public class AssetLibrary implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The number of this asset library's sites.")
+	@GraphQLField(
+		description = "The number of this asset library's connected sites."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer numberOfSites;
+	protected Integer numberOfConnectedSites;
 
 	@JsonIgnore
-	private Supplier<Integer> _numberOfSitesSupplier;
+	private Supplier<Integer> _numberOfConnectedSitesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of this asset library's associated users."
@@ -712,93 +803,6 @@ public class AssetLibrary implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library's site ID."
-	)
-	public Long getSiteId() {
-		if (_siteIdSupplier != null) {
-			siteId = _siteIdSupplier.get();
-
-			_siteIdSupplier = null;
-		}
-
-		return siteId;
-	}
-
-	public void setSiteId(Long siteId) {
-		this.siteId = siteId;
-
-		_siteIdSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSiteId(
-		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
-
-		_siteIdSupplier = () -> {
-			try {
-				return siteIdUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The asset library's site ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long siteId;
-
-	@JsonIgnore
-	private Supplier<Long> _siteIdSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library's connected sites."
-	)
-	@Valid
-	public Site[] getSites() {
-		if (_sitesSupplier != null) {
-			sites = _sitesSupplier.get();
-
-			_sitesSupplier = null;
-		}
-
-		return sites;
-	}
-
-	public void setSites(Site[] sites) {
-		this.sites = sites;
-
-		_sitesSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSites(
-		UnsafeSupplier<Site[], Exception> sitesUnsafeSupplier) {
-
-		_sitesSupplier = () -> {
-			try {
-				return sitesUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The asset library's connected sites.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Site[] sites;
-
-	@JsonIgnore
-	private Supplier<Site[]> _sitesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("type")
@@ -998,6 +1002,40 @@ public class AssetLibrary implements Serializable {
 			sb.append("\"");
 		}
 
+		Long connectedSiteId = getConnectedSiteId();
+
+		if (connectedSiteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"connectedSiteId\": ");
+
+			sb.append(connectedSiteId);
+		}
+
+		ConnectedSite[] connectedSites = getConnectedSites();
+
+		if (connectedSites != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"connectedSites\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < connectedSites.length; i++) {
+				sb.append(String.valueOf(connectedSites[i]));
+
+				if ((i + 1) < connectedSites.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Long creatorUserId = getCreatorUserId();
 
 		if (creatorUserId != null) {
@@ -1126,16 +1164,16 @@ public class AssetLibrary implements Serializable {
 			sb.append(_toJSON(name_i18n));
 		}
 
-		Integer numberOfSites = getNumberOfSites();
+		Integer numberOfConnectedSites = getNumberOfConnectedSites();
 
-		if (numberOfSites != null) {
+		if (numberOfConnectedSites != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"numberOfSites\": ");
+			sb.append("\"numberOfConnectedSites\": ");
 
-			sb.append(numberOfSites);
+			sb.append(numberOfConnectedSites);
 		}
 
 		Integer numberOfUserAccounts = getNumberOfUserAccounts();
@@ -1172,40 +1210,6 @@ public class AssetLibrary implements Serializable {
 			sb.append("\"settings\": ");
 
 			sb.append(String.valueOf(settings));
-		}
-
-		Long siteId = getSiteId();
-
-		if (siteId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"siteId\": ");
-
-			sb.append(siteId);
-		}
-
-		Site[] sites = getSites();
-
-		if (sites != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sites\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < sites.length; i++) {
-				sb.append(String.valueOf(sites[i]));
-
-				if ((i + 1) < sites.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		Type type = getType();

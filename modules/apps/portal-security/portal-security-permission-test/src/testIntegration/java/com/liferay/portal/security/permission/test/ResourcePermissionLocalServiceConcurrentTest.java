@@ -6,7 +6,6 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -96,14 +95,10 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 				(ServiceWrapper<ResourcePermissionLocalService>)
 					aopInvocationHandler.getTarget();
 
-		ClassLoaderBeanHandler classLoaderBeanHandler =
-			(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
-				resourcePermissionLocalServiceWrapper.getWrappedService());
-
 		final ResourcePermissionLocalServiceImpl
 			resourcePermissionLocalServiceImpl =
 				(ResourcePermissionLocalServiceImpl)
-					classLoaderBeanHandler.getBean();
+					resourcePermissionLocalServiceWrapper.getWrappedService();
 
 		final ResourcePermissionPersistence resourcePermissionPersistence =
 			resourcePermissionLocalServiceImpl.

@@ -8,7 +8,7 @@ import ClayModal from '@clayui/modal';
 import {InternalDispatch} from '@clayui/shared';
 import {
 	FrontendDataSet,
-	IFrontendDataSetProps,
+	IItemSelectorModalFDSProps,
 } from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {getObjectValueFromPath, sub} from 'frontend-js-web';
@@ -19,7 +19,7 @@ export interface IItemSelectorModalProps<T> {
 	/**
 	 * Configuration properties of the Frontend Data Set used to display data.
 	 */
-	fdsProps: Omit<IFrontendDataSetProps, 'selectedItems' | 'selectedItemsKey'>;
+	fdsProps: IItemSelectorModalFDSProps;
 
 	/**
 	 * Items that are currently selected (controlled).

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,6 +40,8 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -135,6 +139,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		_checkAssetLibraryUser(assetLibraryId);
+
 		User user = _userLocalService.getUserById(userAccountId);
 
 		if (!_userLocalService.hasGroupUser(assetLibraryId, user.getUserId())) {
@@ -157,6 +163,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
+
+		_checkAssetLibraryUser(assetLibraryId);
 
 		return _getUserAccountsPage(
 			assetLibraryId, keywords, pagination, sorts);
@@ -191,6 +199,21 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		return _toUserAccount(
 			assetLibraryId, _updateUser(assetLibraryId, userAccountId, true));
+	}
+
+	private void _checkAssetLibraryUser(long assetLibraryId) throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker.isGroupAdmin(assetLibraryId)) {
+			return;
+		}
+
+		if (!_userService.hasGroupUser(
+				assetLibraryId, contextUser.getUserId())) {
+
+			throw new NotFoundException();
+		}
 	}
 
 	private Group _getGroup(String externalReferenceCode) throws Exception {

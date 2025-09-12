@@ -8,6 +8,7 @@ import {openModal} from 'frontend-js-components-web';
 
 import formatActionURL from '../../common/utils/formatActionURL';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
+import deleteItemAction from './actions/deleteItemAction';
 import shareAction from './actions/shareAction';
 import AssetRenderer from './cell_renderers/AssetRenderer';
 
@@ -62,15 +63,21 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 
 			return action;
 		}),
-		onActionDropdownItemClick: ({
+		async onActionDropdownItemClick({
 			action,
 			event,
 			itemData,
+			loadData,
 		}: {
 			action: any;
 			event: Event;
 			itemData: any;
-		}) => {
+			loadData: () => {};
+		}) {
+			if (action?.data?.id === 'delete') {
+				await deleteItemAction(itemData, loadData);
+			}
+
 			if (
 				action?.data?.id === 'export-for-translation' ||
 				action?.data?.id === 'import-translation'

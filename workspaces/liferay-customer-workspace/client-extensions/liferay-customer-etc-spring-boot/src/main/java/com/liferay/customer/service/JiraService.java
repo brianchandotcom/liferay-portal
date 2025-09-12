@@ -258,6 +258,10 @@ public class JiraService extends BaseService {
 			boolean hasEarlyPublishAccess)
 		throws Exception {
 
+		List<JSONObject> jsonObjects = new ArrayList<>();
+
+		String nextPageToken = StringPool.BLANK;
+
 		StringBundler sb = new StringBundler(49);
 
 		sb.append("project = '");
@@ -380,10 +384,6 @@ public class JiraService extends BaseService {
 			_jiraSecurityVulnerabilityFieldPublishingStatus,
 			_jiraSecurityVulnerabilityFieldSeverity
 		};
-
-		List<JSONObject> jsonObjects = new ArrayList<>();
-
-		String nextPageToken = StringPool.BLANK;
 
 		while (true) {
 			JSONObject jsonObject = _search(

@@ -26,6 +26,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * Processes account creation requests.
  *
  * @author dnebing
+ * @author Mumen Tayyem
  */
 @Service
 public class AccountCreationRequestProcessorService extends BaseService {

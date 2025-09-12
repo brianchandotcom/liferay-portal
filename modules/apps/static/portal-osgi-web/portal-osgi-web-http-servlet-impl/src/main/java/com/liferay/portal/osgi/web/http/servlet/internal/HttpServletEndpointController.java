@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.constants.Const;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
@@ -33,7 +34,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.equinox.http.servlet.internal.util.Const;
 import org.eclipse.equinox.http.servlet.internal.util.Path;
 import org.eclipse.equinox.http.servlet.internal.util.StringPlus;
 

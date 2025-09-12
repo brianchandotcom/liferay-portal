@@ -47,9 +47,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 import org.apache.felix.configurator.impl.json.BinUtil;
@@ -162,21 +166,37 @@ public class AgentPortalK8sConfigMapModifier
 	public Result modifyConfigMap(
 		Consumer<ConfigMapModel> configMapModelConsumer, String configMapName) {
 
-		Result result = _modifyConfigMap(configMapModelConsumer, configMapName);
+		if (_portalK8sAgentConfiguration.debounceDelayMillis() <= 0) {
+			return _modifyConfigMap(configMapModelConsumer, configMapName);
+		}
+
+		_configMapBufferedUpdateMap.merge(
+			configMapName, configMapModelConsumer, Consumer::andThen);
+
+		_scheduleConfigMapUpdate(configMapName);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				StringBundler.concat(
-					"Config map ", configMapName, " ", result));
+				"Buffered request for modifying config map " + configMapName);
 		}
 
-		return result;
+		return Result.BUFFERED;
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		if (_log.isInfoEnabled()) {
 			_log.info("Deactivating K8s agent");
+		}
+
+		if (!_configMapBufferedUpdateMap.isEmpty()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Flushing all pending ConfigMap updates");
+			}
+
+			for (String configMapName : _configMapBufferedUpdateMap.keySet()) {
+				_flushBufferedUpdates(configMapName);
+			}
 		}
 
 		_sharedIndexInformer.close();
@@ -261,6 +281,35 @@ public class AgentPortalK8sConfigMapModifier
 		}
 	}
 
+	private Result _flushBufferedUpdates(String configMapName) {
+		Consumer<ConfigMapModel> bufferedConsumer =
+			_configMapBufferedUpdateMap.remove(configMapName);
+
+		if (bufferedConsumer == null) {
+			_scheduledUpdatesMap.remove(configMapName);
+
+			return Result.UNCHANGED;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Quiet period ended. Flushing changes for " + configMapName);
+		}
+
+		Result result = _modifyConfigMap(bufferedConsumer, configMapName);
+
+		_scheduledUpdatesMap.remove(configMapName);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Flushed config map ", configMapName, " with result: ",
+					result));
+		}
+
+		return result;
+	}
+
 	private Configuration _getConfiguration(String pid) throws Exception {
 		if (pid.endsWith(_FILE_EXTENSION)) {
 			pid = pid.substring(0, pid.length() - _FILE_EXTENSION.length());
@@ -312,9 +361,7 @@ public class AgentPortalK8sConfigMapModifier
 	}
 
 	private Result _modifyConfigMap(
-		Consumer<PortalK8sConfigMapModifier.ConfigMapModel>
-			configMapModelConsumer,
-		String configMapName) {
+		Consumer<ConfigMapModel> configMapModelConsumer, String configMapName) {
 
 		if (_clusterMasterExecutor.isEnabled()) {
 			if (_log.isDebugEnabled()) {
@@ -720,6 +767,43 @@ public class AgentPortalK8sConfigMapModifier
 		}
 	}
 
+	private Future<Result> _scheduleConfigMapUpdate(String configMapName) {
+		_schedulingConfigMapUpdateLock.lock();
+
+		try {
+			Future<Result> scheduledUpdate = _scheduledUpdatesMap.remove(
+				configMapName);
+
+			if (scheduledUpdate != null) {
+				scheduledUpdate.cancel(false);
+			}
+
+			scheduledUpdate = _scheduledExecutorService.schedule(
+				() -> {
+					try {
+						return _flushBufferedUpdates(configMapName);
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to flush buffered updates for " +
+								configMapName,
+							exception);
+
+						return Result.UNCHANGED;
+					}
+				},
+				_portalK8sAgentConfiguration.debounceDelayMillis(),
+				TimeUnit.MILLISECONDS);
+
+			_scheduledUpdatesMap.put(configMapName, scheduledUpdate);
+
+			return scheduledUpdate;
+		}
+		finally {
+			_schedulingConfigMapUpdateLock.unlock();
+		}
+	}
+
 	private Config _toConfig(
 		PortalK8sAgentConfiguration portalK8sAgentConfiguration) {
 
@@ -961,12 +1045,17 @@ public class AgentPortalK8sConfigMapModifier
 	private final Bundle _bundle;
 	private final ClusterExecutor _clusterExecutor;
 	private final ClusterMasterExecutor _clusterMasterExecutor;
+	private final Map<String, Consumer<ConfigMapModel>>
+		_configMapBufferedUpdateMap = new ConcurrentHashMap<>();
 	private final ConfigurationAdmin _configurationAdmin;
 	private final KubernetesClient _kubernetesClient;
 	private final PortalK8sAgentConfiguration _portalK8sAgentConfiguration;
 	private final List<PortalK8sConfigurationPropertiesMutator>
 		_portalK8sConfigurationPropertiesMutators;
 	private final ScheduledExecutorService _scheduledExecutorService;
+	private final Map<String, Future<Result>> _scheduledUpdatesMap =
+		new ConcurrentHashMap<>();
+	private final Lock _schedulingConfigMapUpdateLock = new ReentrantLock();
 	private final SharedIndexInformer<ConfigMap> _sharedIndexInformer;
 
 }

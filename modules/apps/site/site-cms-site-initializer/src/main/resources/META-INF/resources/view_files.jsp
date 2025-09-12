@@ -14,8 +14,8 @@ ViewFilesSectionDisplayContext viewFilesSectionDisplayContext = (ViewFilesSectio
 <div class="cms-section custom-empty-state">
 	<div>
 		<react:component
-			module="{Toolbar} from site-cms-site-initializer"
-			props="<%= viewFilesSectionDisplayContext.getToolbarProps() %>"
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewFilesSectionDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
 

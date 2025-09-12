@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -78,6 +79,12 @@ public abstract class BaseFilesSectionDisplayContext
 				null));
 
 		return fdsBulkActionDropdownItems;
+	}
+
+	@Override
+	public List<DropdownItem> getCreationMenuDropdownItems() {
+		return ActionUtil.getFilesSectionCreationMenuDropdownItems(
+			httpServletRequest, null);
 	}
 
 	@Override

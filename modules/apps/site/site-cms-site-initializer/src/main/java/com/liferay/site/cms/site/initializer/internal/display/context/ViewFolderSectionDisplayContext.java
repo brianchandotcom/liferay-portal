@@ -152,6 +152,20 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
+	public List<DropdownItem> getCreationMenuDropdownItems() {
+		if (Objects.equals(
+				getRootObjectEntryFolderExternalReferenceCode(),
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)) {
+
+			return ActionUtil.getContentsSectionCreationMenuDropdownItems(
+				httpServletRequest, objectEntryFolder);
+		}
+
+		return ActionUtil.getFilesSectionCreationMenuDropdownItems(
+			httpServletRequest, objectEntryFolder);
+	}
+
+	@Override
 	public Map<String, Object> getEmptyState() {
 		String rootObjectEntryFolderExternalReferenceCode =
 			getRootObjectEntryFolderExternalReferenceCode();

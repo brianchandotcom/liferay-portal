@@ -338,12 +338,12 @@ public class ObjectDefinitionTreeUtil {
 			actualObjectDefinition2RootObjectDefinitionIds);
 
 		_updateObjectDefinitionTree(
-			objectDefinition2, objectDefinitionLocalService,
-			objectDefinitionPersistence, objectDefinitionSettingLocalService,
-			objectEntryLocalService, objectFieldPersistence,
-			objectRelationshipLocalService, objectRelationshipPersistence,
-			actualObjectDefinition1RootObjectDefinitionIds,
-			addRootObjectDefinitionIds);
+			addRootObjectDefinitionIds, objectDefinition2,
+			objectDefinitionLocalService, objectDefinitionPersistence,
+			objectDefinitionSettingLocalService, objectEntryLocalService,
+			objectFieldPersistence, objectRelationshipLocalService,
+			objectRelationshipPersistence,
+			actualObjectDefinition1RootObjectDefinitionIds);
 
 		if (objectDefinition2.isRootNode() && objectDefinition2.isApproved()) {
 			objectDefinitionLocalService.deployObjectDefinition(
@@ -545,6 +545,7 @@ public class ObjectDefinitionTreeUtil {
 	}
 
 	private static void _updateObjectDefinitionTree(
+			long[] addRootObjectDefinitionIds,
 			ObjectDefinition objectDefinition1,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
@@ -554,8 +555,7 @@ public class ObjectDefinitionTreeUtil {
 			ObjectFieldPersistence objectFieldPersistence,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			ObjectRelationshipPersistence objectRelationshipPersistence,
-			long[] removeRootObjectDefinitionIds,
-			long[] addRootObjectDefinitionIds)
+			long[] removeRootObjectDefinitionIds)
 		throws PortalException {
 
 		for (ObjectRelationship objectRelationship :
@@ -607,12 +607,11 @@ public class ObjectDefinitionTreeUtil {
 			}
 
 			_updateObjectDefinitionTree(
-				objectDefinition2, objectDefinitionLocalService,
-				objectDefinitionPersistence,
+				addRootObjectDefinitionIds, objectDefinition2,
+				objectDefinitionLocalService, objectDefinitionPersistence,
 				objectDefinitionSettingLocalService, objectEntryLocalService,
 				objectFieldPersistence, objectRelationshipLocalService,
-				objectRelationshipPersistence, removeRootObjectDefinitionIds,
-				addRootObjectDefinitionIds);
+				objectRelationshipPersistence, removeRootObjectDefinitionIds);
 		}
 	}
 

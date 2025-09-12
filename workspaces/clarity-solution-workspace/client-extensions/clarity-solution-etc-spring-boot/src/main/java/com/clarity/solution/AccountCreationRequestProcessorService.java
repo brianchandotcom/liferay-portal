@@ -31,12 +31,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class AccountCreationRequestProcessorService extends BaseService {
 
-	/**
-	 * Constructs a new AccountCreationRequestProcessorService.
-	 *
-	 * @param queueManager the queue manager
-	 * @param taskExecutor the task executor
-	 */
 	@Autowired
 	public AccountCreationRequestProcessorService(
 		AccountCreationRequestQueueManager queueManager,
@@ -54,11 +48,6 @@ public class AccountCreationRequestProcessorService extends BaseService {
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	protected String lxcDXPServerProtocol;
 
-	/**
-	 * Processes an account creation request.
-	 *
-	 * @param accountCreationRequest the account creation request in JSON format
-	 */
 	private void _processRequest(
 		AccountCreationRequest accountCreationRequest) {
 

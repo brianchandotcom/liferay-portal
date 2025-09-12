@@ -1,5 +1,8 @@
 {
 	"dependencies": {
+		"@clayui/breadcrumb": "*",
+		"@clayui/layout": "*",
+		"@clayui/link": "*",
 		"@clayui/autocomplete": "3.146.0",
 		"@clayui/button": "3.144.1",
 		"@clayui/core": "3.146.0",
@@ -13,7 +16,8 @@
 		"classnames": "2.3.1",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"uuid": "9.0.0"
 	},
 	"main": "index.ts",
 	"name": "frontend-js-item-selector-web",

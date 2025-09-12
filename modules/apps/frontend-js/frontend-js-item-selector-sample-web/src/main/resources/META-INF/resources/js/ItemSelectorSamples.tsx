@@ -9,8 +9,11 @@ import {ClayInput} from '@clayui/form';
 import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
-import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
-import {ItemSelector, ItemSelectorModal} from 'frontend-js-item-selector-web';
+import {
+	CMSFilesItemSelectorModal,
+	ItemSelector,
+	ItemSelectorModal,
+} from 'frontend-js-item-selector-web';
 import React, {useState} from 'react';
 
 import {
@@ -72,14 +75,6 @@ type User = {
 	}[];
 };
 
-const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
-	pagination: {
-		deltas: [{label: 20}, {label: 40}, {label: 60}],
-		initialDelta: 20,
-	},
-	selectionType: 'single',
-};
-
 const assetLibrariesItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
 	itemTypeLabel: Liferay.Language.get('space'),
@@ -136,6 +131,7 @@ export default function ItemSelectorSamples() {
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [space, setSpace] = useState<Space>();
 
+	const [cmsFile, setCMSFile] = useState<CMSFile | null>(null);
 	const [documentsItemSelectorModal, setDocumentsItemSelectorModal] =
 		useState<Document[]>([]);
 	const [spacesItemSelectorModal, setSpacesItemSelectorModal] = useState<
@@ -144,7 +140,6 @@ export default function ItemSelectorSamples() {
 	const [usersItemSelectorModal, setUsersItemSelectorModal] = useState<
 		User[]
 	>([]);
-	const [cmsFile, setCMSFile] = useState<CMSFile | null>(null);
 	const [user2, setUser2] = useState<User | null>();
 	const [space3, setSpace3] = useState<Space | null>();
 	const [spacesMultiSelect, setSpacesMultiSelect] = useState<Space[]>([]);
@@ -474,6 +469,18 @@ export default function ItemSelectorSamples() {
 			</SampleContainer>
 
 			<SampleContainer label="Item Selector Modal">
+				<CMSFilesItemSelectorModal
+					{...{
+						items: cmsFile ? [cmsFile] : [],
+						observer: cmsFileItemSelectorObserver,
+						onItemsChange: (items: any) => {
+							setCMSFile(items[0]);
+						},
+						onOpenChange: cmsFileItemSelectorOpenChange,
+						open: cmsFileItemSelectorOpen,
+					}}
+				/>
+
 				<ItemSelectorModal<Document>
 					{...{
 						apiURL: documentsItemSelectorConfig.apiURL,
@@ -564,7 +571,6 @@ export default function ItemSelectorSamples() {
 									type: 'selection',
 								},
 							],
-
 							id: `itemSelectorModal-cms-files-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:

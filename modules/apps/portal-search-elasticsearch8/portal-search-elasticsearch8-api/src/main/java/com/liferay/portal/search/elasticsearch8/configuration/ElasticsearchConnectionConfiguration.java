@@ -20,7 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration",
+	id = "com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConnectionConfiguration",
 	localization = "content/Language",
 	name = "elasticsearch-connection-configuration-name"
 )

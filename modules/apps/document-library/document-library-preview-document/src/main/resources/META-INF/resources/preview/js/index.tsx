@@ -8,7 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import '@liferay/document-library-preview-css';
 
@@ -50,7 +50,7 @@ const DocumentPreviewer = ({
 	const [currentPage, setCurrentPage] = useState(initialPage);
 	const [currentPageLoading, setCurrentPageLoading] = useState(false);
 	const [expanded, setExpanded] = useState(false);
-	const [loadedPages] = useState<Record<number, LoadedPage>>({
+	const [loadedPages, setLoadedPages] = useState<Record<number, LoadedPage>>({
 		[currentPage]: {
 			loaded: true,
 			pagePromise: Promise.resolve(),
@@ -82,43 +82,55 @@ const DocumentPreviewer = ({
 		}
 	}, [showPageInput, isMounted]);
 
-	const createImageURL = (page: number): string => {
-		const imageURL = new URL(baseImageURL);
-		imageURL.searchParams.set('previewFileIndex', String(page));
+	const createImageURL = useCallback(
+		(page: number) => {
+			const imageURL = new URL(baseImageURL);
+			imageURL.searchParams.set('previewFileIndex', String(page));
 
-		return imageURL.toString();
-	};
+			return imageURL.toString();
+		},
+		[baseImageURL]
+	);
 
-	const loadPage = (page: number): Promise<void> => {
-		let pagePromise = loadedPages[page]?.pagePromise;
+	const loadPage = useCallback(
+		(page: number): Promise<void> => {
+			let pagePromise = loadedPages[page]?.pagePromise;
 
-		if (!pagePromise) {
-			const image = new Image();
-			image.src = createImageURL(page);
+			if (!pagePromise) {
+				const image = new Image();
+				image.src = createImageURL(page);
 
-			pagePromise = image.decode().then(() => {
-				loadedPages[page].loaded = true;
-			});
+				pagePromise = image.decode().then(() => {
+					setLoadedPages((prev) => ({
+						...prev,
+						[page]: {...prev[page], loaded: true},
+					}));
+				});
 
-			loadedPages[page] = {
-				loaded: false,
-				pagePromise,
-			};
-		}
-
-		return pagePromise;
-	};
-
-	const loadAdjacentPages = (page: number, adjacentPageCount = 2) => {
-		for (let i = 1; i <= adjacentPageCount; i++) {
-			if (page + i <= totalPages) {
-				loadPage(page + i);
+				setLoadedPages((prev) => ({
+					...prev,
+					[page]: {loaded: false, pagePromise},
+				}));
 			}
-			if (page - i > 1) {
-				loadPage(page - i);
+
+			return pagePromise;
+		},
+		[createImageURL, loadedPages]
+	);
+
+	const loadAdjacentPages = useCallback(
+		(page: number, adjacentPageCount = 2) => {
+			for (let i = 1; i <= adjacentPageCount; i++) {
+				if (page + i <= totalPages) {
+					loadPage(page + i);
+				}
+				if (page - i > 1) {
+					loadPage(page - i);
+				}
 			}
-		}
-	};
+		},
+		[totalPages, loadPage]
+	);
 
 	const loadCurrentPage = debounce((page: number) => {
 		loadPage(page)
@@ -192,9 +204,7 @@ const DocumentPreviewer = ({
 
 	useEffect(() => {
 		loadAdjacentPages(initialPage);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [initialPage, loadAdjacentPages]);
 
 	return (
 		<div className="preview-file">

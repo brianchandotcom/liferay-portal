@@ -30,7 +30,7 @@ ViewFilesSectionDisplayContext viewFilesSectionDisplayContext = (ViewFilesSectio
 			formName="fm"
 			id="<%= CMSSiteInitializerFDSNames.FILES_SECTION %>"
 			itemsPerPage="<%= 20 %>"
-			propsTransformer="{AssetsFDSPropsTransformer} from site-cms-site-initializer"
+			propsTransformer="{AssetsFilesDropFDSPropsTransformer} from site-cms-site-initializer"
 			selectedItemsKey="embedded.id"
 			selectionType="multiple"
 			showSelectAll="<%= true %>"

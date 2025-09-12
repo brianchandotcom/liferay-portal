@@ -29,6 +29,7 @@ export {default as ViewWorkflowTasks} from './main_view/home/ViewWorkflowTasks';
 export {default as AssetTypeInfoPanelContent} from './main_view/info_panel/AssetTypeInfoPanelContent';
 export {default as AllSpacesFDSPropsTransformer} from './main_view/props_transformer/AllSpacesFDSPropsTransformer';
 export {default as AssetsFDSPropsTransformer} from './main_view/props_transformer/AssetsFDSPropsTransformer';
+export {default as AssetsFilesDropFDSPropsTransformer} from './main_view/props_transformer/AssetsFilesDropFDSPropsTransformer';
 export {default as CategoryFDSPropsTransformer} from './main_view/props_transformer/CategoryFDSPropsTransformer';
 export {default as CategoryUsagesFDSPropsTransformer} from './main_view/props_transformer/CategoryUsagesFDSPropsTransformer';
 export {default as HomeRecentAssetsFDSPropsTransformer} from './main_view/props_transformer/HomeRecentAssetsFDSPropsTransformer';

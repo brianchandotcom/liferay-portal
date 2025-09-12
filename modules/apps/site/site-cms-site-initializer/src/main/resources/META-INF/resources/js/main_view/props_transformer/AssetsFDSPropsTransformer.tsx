@@ -35,6 +35,18 @@ const ACTIONS = {
 	uploadMultipleFiles: multipleFilesUploadAction,
 };
 
+export type AdditionalProps = {
+	autocompleteURL: string;
+	baseFolderViewURL: string;
+	cmsGroupId?: number;
+	collaboratorURLs: Record<string, string>;
+	fileMimeTypeCssClasses: Record<string, string>;
+	fileMimeTypeIcons: Record<string, string>;
+	objectDefinitionCssClasses: Record<string, string>;
+	objectDefinitionIcons: Record<string, string>;
+	redirect: string;
+};
+
 export default function AssetsFDSPropsTransformer({
 	additionalProps,
 	creationMenu,
@@ -42,15 +54,7 @@ export default function AssetsFDSPropsTransformer({
 	views,
 	...otherProps
 }: {
-	additionalProps: {
-		autocompleteURL: string;
-		cmsGroupId?: number;
-		collaboratorURLs: Record<string, string>;
-		fileMimeTypeCssClasses: Record<string, string>;
-		fileMimeTypeIcons: Record<string, string>;
-		objectDefinitionCssClasses: Record<string, string>;
-		objectDefinitionIcons: Record<string, string>;
-	};
+	additionalProps: AdditionalProps;
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;

@@ -14,15 +14,15 @@ public class AccountCreationRequest {
 		_jwt = jwt;
 	}
 
-	public Jwt getJwt() {
-		return _jwt;
-	}
-
 	public String getAccountJSON() {
 		return _accountJSON;
 	}
 
-	private final Jwt _jwt;
+	public Jwt getJwt() {
+		return _jwt;
+	}
+
 	private final String _accountJSON;
+	private final Jwt _jwt;
 
 }

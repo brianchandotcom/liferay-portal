@@ -21,7 +21,8 @@ public class TaskExecutorConfig {
 		threadPoolTaskExecutor.setCorePoolSize(0);
 		threadPoolTaskExecutor.setMaxPoolSize(10);
 		threadPoolTaskExecutor.setQueueCapacity(100);
-		threadPoolTaskExecutor.setThreadNamePrefix("CreateAccountTaskExecutor-");
+		threadPoolTaskExecutor.setThreadNamePrefix(
+			"CreateAccountTaskExecutor-");
 
 		threadPoolTaskExecutor.initialize();
 

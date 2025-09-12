@@ -2,8 +2,8 @@ package com.clarity.solution;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringBundler;
-import org.apache.commons.lang3.StringUtils;
 
+import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONObject;
 
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -36,6 +35,7 @@ public class AccountCreationRequestProcessorService extends BaseService {
 	public AccountCreationRequestProcessorService(
 		AccountCreationRequestQueueManager queueManager,
 		@Qualifier("CreateAccountTaskExecutor") TaskExecutor taskExecutor) {
+
 		_queueManager = queueManager;
 		_taskExecutor = taskExecutor;
 
@@ -53,81 +53,93 @@ public class AccountCreationRequestProcessorService extends BaseService {
 	 *
 	 * @param accountCreationRequest the account creation request in JSON format
 	 */
-	private void _processRequest(AccountCreationRequest accountCreationRequest) {
-		try {
-			String authorizationHeader = "Bearer " + accountCreationRequest.getJwt().getTokenValue();
-			String baseUrl = lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
-			JSONObject jsonObject = new JSONObject(accountCreationRequest.getAccountJSON());
+	private void _processRequest(
+		AccountCreationRequest accountCreationRequest) {
 
-			JSONObject propertiesJSONObject =
-					jsonObject.getJSONObject("objectEntryDTOU3A2DistributorApplication")
-							.getJSONObject("properties");
+		try {
+			String authorizationHeader =
+				"Bearer " +
+					accountCreationRequest.getJwt(
+					).getTokenValue();
+			String baseUrl = lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
+			JSONObject jsonObject = new JSONObject(
+				accountCreationRequest.getAccountJSON());
+
+			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+				"objectEntryDTOU3A2DistributorApplication"
+			).getJSONObject(
+				"properties"
+			);
 
 			String accountName = propertiesJSONObject.getString("businessName");
 			String accountEmailAddress = propertiesJSONObject.getString(
 				"applicantEmailAddress");
 
-			String accountExternalReferenceCode = "ACCOUNT_" + StringUtils.replace(
-					accountName.toUpperCase()," ", "_");
+			String accountExternalReferenceCode =
+				"ACCOUNT_" +
+					StringUtils.replace(accountName.toUpperCase(), " ", "_");
 
-			post(authorizationHeader,
-					new JSONObject()
-							.put("externalReferenceCode", accountExternalReferenceCode)
-							.put("name", accountName)
-							.put("type","business")
-							.toString(),
-					UriComponentsBuilder.fromUriString(baseUrl + "/o/headless-admin-user/v1.0/accounts")
-							.build()
-							.toUri()
-			);
+			post(
+				authorizationHeader,
+				new JSONObject(
+				).put(
+					"externalReferenceCode", accountExternalReferenceCode
+				).put(
+					"name", accountName
+				).put(
+					"type", "business"
+				).toString(),
+				UriComponentsBuilder.fromUriString(
+					baseUrl + "/o/headless-admin-user/v1.0/accounts"
+				).build(
+				).toUri());
 
-			post(authorizationHeader,
-					"",
+			post(
+				authorizationHeader, "",
+				UriComponentsBuilder.fromUriString(
+					StringBundler.concat(
+						baseUrl,
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
+						accountExternalReferenceCode,
+						"/user-accounts/by-email-address/", accountEmailAddress)
+				).build(
+				).toUri());
+
+			long adminAccountRoleId = new JSONObject(
+				get(
+					authorizationHeader,
 					UriComponentsBuilder.fromUriString(
-									StringBundler.concat(
-											baseUrl,
-											"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
-											accountExternalReferenceCode,
-											"/user-accounts/by-email-address/",
-											accountEmailAddress
-									)
-							)
-							.build()
-							.toUri()
+						StringBundler.concat(
+							baseUrl,
+							"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
+							accountExternalReferenceCode, "/account-roles",
+							"?filter=name eq 'Account Administrator'")
+					).build(
+					).toUri())
+			).getJSONArray(
+				"items"
+			).getJSONObject(
+				0
+			).getLong(
+				"id"
 			);
 
-			long adminAccountRoleId =
-					new JSONObject(
-							get(
-									authorizationHeader,
-									UriComponentsBuilder.fromUriString(
-											StringBundler.concat(
-													baseUrl,
-													"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
-													accountExternalReferenceCode,
-													"/account-roles",
-													"?filter=name eq 'Account Administrator'"
-											)).build().toUri())
-					).getJSONArray("items")
-							.getJSONObject(0)
-							.getLong("id");
-
-
-			post(authorizationHeader,
-					"",UriComponentsBuilder.fromUriString(
-							StringBundler.concat(
-									baseUrl,
-									"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
-									accountExternalReferenceCode,
-									"/account-roles/",
-									Long.toString(adminAccountRoleId),
-									"/user-accounts/by-email-address/",
-									accountEmailAddress
-							)).build().toUri());
+			post(
+				authorizationHeader, "",
+				UriComponentsBuilder.fromUriString(
+					StringBundler.concat(
+						baseUrl,
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
+						accountExternalReferenceCode, "/account-roles/",
+						adminAccountRoleId, "/user-accounts/by-email-address/",
+						accountEmailAddress)
+				).build(
+				).toUri());
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Failed to process account: {}", accountCreationRequest.getAccountJSON(), exception);
+				"Failed to process account: {}",
+				accountCreationRequest.getAccountJSON(), exception);
 		}
 	}
 
@@ -160,9 +172,10 @@ public class AccountCreationRequestProcessorService extends BaseService {
 			});
 	}
 
-	private final AccountCreationRequestQueueManager _queueManager;
 	private static final Logger _log = LoggerFactory.getLogger(
 		AccountCreationRequestProcessorService.class);
+
+	private final AccountCreationRequestQueueManager _queueManager;
 	private final TaskExecutor _taskExecutor;
 
 }

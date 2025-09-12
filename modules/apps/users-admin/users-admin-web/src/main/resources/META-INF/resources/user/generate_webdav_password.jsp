@@ -23,11 +23,15 @@ User selectedUser = userDisplayContext.getSelectedUser();
 				"fields",
 				Arrays.asList(
 					HashMapBuilder.<String, Object>put(
+						"id", liferayPortletResponse.getNamespace() + "webDAVUusername"
+					).put(
 						"label", LanguageUtil.get(request, "web-dav-username")
 					).put(
 						"value", selectedUser.getUserId()
 					).build(),
 					HashMapBuilder.<String, Object>put(
+						"id", liferayPortletResponse.getNamespace() + "webDAVPassword"
+					).put(
 						"label", LanguageUtil.get(request, "web-dav-password")
 					).put(
 						"value", renderRequest.getParameter("webDAVPassword")

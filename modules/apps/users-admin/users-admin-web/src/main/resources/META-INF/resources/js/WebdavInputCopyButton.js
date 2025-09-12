@@ -50,18 +50,16 @@ const WebdavInputCopyButton = ({fields}) => {
 
 	return (
 		<>
-			{fields.map(({label, value}, index) => (
+			{fields.map(({id, label, value}, index) => (
 				<div key={index}>
 					<ClayForm.Group>
-						<label htmlFor="`webdav-input-id-${index}`">
-							{label}
-						</label>
+						<label htmlFor={id}>{label}</label>
 
 						<ClayInput.Group>
 							<ClayInput.GroupItem prepend>
 								<ClayInput
 									disabled
-									id="`webdav-input-id-${index}`"
+									id={id}
 									type="text"
 									value={value}
 								/>

@@ -76,7 +76,7 @@ public class EmptyLayoutTypeControllerTest {
 			Assert.assertFalse(
 				_layoutTypeController.includeLayoutContent(
 					_getMockHttpServletRequest(
-						TestPropsValues.getUser(), _layout.getFriendlyURL()),
+						_layout.getFriendlyURL(), TestPropsValues.getUser()),
 					new MockHttpServletResponse(), _layout));
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
@@ -89,12 +89,12 @@ public class EmptyLayoutTypeControllerTest {
 			StringPool.BLANK,
 			_layoutTypeController.includeEditContent(
 				_getMockHttpServletRequest(
-					TestPropsValues.getUser(), _layout.getFriendlyURL()),
+					_layout.getFriendlyURL(), TestPropsValues.getUser()),
 				new MockHttpServletResponse(), _layout));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-			User user, String currentURL)
+			String currentURL, User user)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =

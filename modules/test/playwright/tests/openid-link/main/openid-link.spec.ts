@@ -5,9 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
 import {liferayConfig} from '../../../liferay.config';
 import {OpenIdInstanceSettingsPage} from '../../../pages/portal-settings-authentication-openid-connect-web/OpenIdInstanceSettingsPage';
 import getRandomString from '../../../utils/getRandomString';
@@ -15,9 +17,7 @@ import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {utilityPagesPage} from '../../login-web/main/fixtures/utilityPageTest';
 import {openIdConfig} from './config';
 import {openIdSettingsPagesTest} from './fixtures/openIdSettingsPagesTest';
-import { customFieldsPagesTest } from '../../../fixtures/customFieldsPagesTest';
-import { TCustomField } from '../../../helpers/CustomFieldTypesHelper';
-import { CustomClaim } from './helpers/CustomClaimsHelper';
+import {CustomClaim} from './helpers/CustomClaimsHelper';
 
 let providerName: string;
 let site: Site;
@@ -137,31 +137,29 @@ test.describe('OpenID connect link', () => {
 	});
 });
 
-
 test.describe('OpenID Connect custom claims', () => {
 	test('can set custom claims for the oidc configuration', async ({
-	 addCustomFieldPage,
-	 openIDInstanceSettingsPage,
-	 viewAttributesPage
+		addCustomFieldPage,
+		openIDInstanceSettingsPage,
+		viewAttributesPage,
 	}) => {
-		
-		const expandoColumnName =  getRandomString();
+		const expandoColumnName = getRandomString();
 
 		const customField: TCustomField = {
 			fieldName: expandoColumnName,
 			fieldType: 'inputField',
 			resource: 'User',
 		};
-		
+
 		await addCustomFieldPage.addCustomField(customField);
 
 		const customClaim: CustomClaim = {
 			expandoColumnName,
-			oidcProviderCustomClaim: getRandomString()
-		}
-		
+			oidcProviderCustomClaim: getRandomString(),
+		};
+
 		await setupOpenIdConnection(openIDInstanceSettingsPage, customClaim);
 
 		await viewAttributesPage.deleteCustomField(expandoColumnName, 'User');
-	})
+	});
 });

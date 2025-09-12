@@ -52,8 +52,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />idTokenSigningAlgValuesContentBox',
-		fieldIndexes:
-				'<portlet:namespace />idTokenSigningAlgValuesIndexes',
+		fieldIndexes: '<portlet:namespace />idTokenSigningAlgValuesIndexes',
 		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>
@@ -85,8 +84,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />subjectTypesContentBox',
-		fieldIndexes:
-				'<portlet:namespace />subjectTypesIndexes ',
+		fieldIndexes: '<portlet:namespace />subjectTypesIndexes ',
 		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>
@@ -129,9 +127,10 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />customAuthorizationRequestParametersContentBox',
+		contentBox:
+			'#<portlet:namespace />customAuthorizationRequestParametersContentBox',
 		fieldIndexes:
-				'<portlet:namespace />customAuthorizationRequestParametersIndexes',
+			'<portlet:namespace />customAuthorizationRequestParametersIndexes',
 		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>
@@ -163,8 +162,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />customTokenRequestParametersContentBox',
-		fieldIndexes:
-				'<portlet:namespace />customTokenRequestParametersIndexes',
+		fieldIndexes: '<portlet:namespace />customTokenRequestParametersIndexes',
 		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>
@@ -215,8 +213,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />customClaimsContentBox',
-		fieldIndexes:
-				'<portlet:namespace />customClaimsIndexes',
+		fieldIndexes: '<portlet:namespace />customClaimsIndexes',
 		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>

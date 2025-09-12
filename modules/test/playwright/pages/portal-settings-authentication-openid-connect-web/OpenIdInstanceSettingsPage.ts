@@ -5,11 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {CustomClaim} from '../../tests/openid-link/main/helpers/CustomClaimsHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
-import { CustomClaim } from '../../tests/openid-link/main/helpers/CustomClaimsHelper';
 
 export class OpenIdInstanceSettingsPage {
 	readonly page: Page;
@@ -40,7 +40,9 @@ export class OpenIdInstanceSettingsPage {
 		});
 		this.addButton = page.getByRole('link', {name: 'Add'});
 		this.providerNameField = page.getByLabel('Provider Name');
-		this.discoveryEndpointField = page.getByLabel('Discovery Endpoint Set the');
+		this.discoveryEndpointField = page.getByLabel(
+			'Discovery Endpoint Set the'
+		);
 		this.openIDConnectClientIDField = page.getByLabel(
 			'OpenID Connect Client ID'
 		);
@@ -48,7 +50,9 @@ export class OpenIdInstanceSettingsPage {
 			'OpenID Connect Client Secret'
 		);
 		this.expandoColumnSelect = page.getByLabel('Expando Column');
-		this.oidcProviderCustomClaimField = page.getByLabel('OIDC Provider Custom Claim');
+		this.oidcProviderCustomClaimField = page.getByLabel(
+			'OIDC Provider Custom Claim'
+		);
 	}
 
 	async goto() {
@@ -89,9 +93,13 @@ export class OpenIdInstanceSettingsPage {
 		await this.openIDConnectClientIDField.fill(getRandomString());
 		await this.openIDConnectClientSecret.fill(getRandomString());
 
-		if(customClaim) {
-			await this.expandoColumnSelect.selectOption({label : customClaim.expandoColumnName});
-			await this.oidcProviderCustomClaimField.fill(customClaim.oidcProviderCustomClaim);
+		if (customClaim) {
+			await this.expandoColumnSelect.selectOption({
+				label: customClaim.expandoColumnName,
+			});
+			await this.oidcProviderCustomClaimField.fill(
+				customClaim.oidcProviderCustomClaim
+			);
 		}
 
 		await this.saveButton.click();

@@ -134,8 +134,8 @@ public class ObjectEntryLocalServiceTest {
 		ObjectDefinition systemObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				null, TestPropsValues.getUserId(),
-				objectFolder.getObjectFolderId(), null, null, false, false,
-				true, true, false, false, false, false, null,
+				objectFolder.getObjectFolderId(), null, null, false, true,
+				false, true, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, "Test", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

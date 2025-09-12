@@ -14,6 +14,9 @@ import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,6 +58,18 @@ public class ViewStructuresDisplayContext {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 			"' or objectFolderExternalReferenceCode eq '",
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES, "')");
+	}
+
+	public Map<String, Object> getBreadcrumbProps() throws PortalException {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		addBreadcrumbItem(jsonArray, false, null, _getLayoutName());
+
+		return HashMapBuilder.<String, Object>put(
+			"breadcrumbItems", jsonArray
+		).put(
+			"hideSpace", true
+		).build();
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
@@ -161,23 +176,17 @@ public class ViewStructuresDisplayContext {
 				"delete", null));
 	}
 
-	public Map<String, Object> getToolbarProps() throws PortalException {
-		return HashMapBuilder.<String, Object>put(
-			"title",
-			() -> {
-				Layout layout = _themeDisplay.getLayout();
+	protected void addBreadcrumbItem(
+		JSONArray jsonArray, boolean active, String friendlyURL, String label) {
 
-				if (layout == null) {
-					return null;
-				}
-
-				return layout.getName(_themeDisplay.getLocale(), true);
-			}
-		).put(
-			"toolbarClassName", "section-toolbar tbar-light"
-		).put(
-			"toolbarTitleClassName", "section-toolbar-title"
-		).build();
+		jsonArray.put(
+			JSONUtil.put(
+				"active", active
+			).put(
+				"href", friendlyURL
+			).put(
+				"label", label
+			));
 	}
 
 	private String _getHref(String objectFolderExternalReferenceCode) {
@@ -196,6 +205,16 @@ public class ViewStructuresDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getLayoutName() {
+		Layout layout = _themeDisplay.getLayout();
+
+		if (layout == null) {
+			return null;
+		}
+
+		return layout.getName(_themeDisplay.getLocale(), true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -14,8 +14,8 @@ ViewStructuresDisplayContext viewStructuresDisplayContext = (ViewStructuresDispl
 <div class="cms-section">
 	<div>
 		<react:component
-			module="{Toolbar} from site-cms-site-initializer"
-			props="<%= viewStructuresDisplayContext.getToolbarProps() %>"
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewStructuresDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
 

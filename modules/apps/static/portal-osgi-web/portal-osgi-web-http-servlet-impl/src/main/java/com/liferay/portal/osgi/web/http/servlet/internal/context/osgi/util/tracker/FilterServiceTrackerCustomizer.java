@@ -126,7 +126,7 @@ public class FilterServiceTrackerCustomizer
 							curFilterRegistration.getService(), filter)) {
 
 						throw new ServletException(
-							"Filter has already been registered: " + filter);
+							"Filter " + filter + " is already registered");
 					}
 				}
 

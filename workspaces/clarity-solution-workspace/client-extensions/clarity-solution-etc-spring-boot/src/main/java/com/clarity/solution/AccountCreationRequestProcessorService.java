@@ -81,11 +81,12 @@ public class AccountCreationRequestProcessorService extends BaseService {
 			String accountName = propertiesJSONObject.getString("businessName");
 			String accountEmailAddress = propertiesJSONObject.getString(
 				"applicantEmailAddress");
+				
 			String standardAccountName = StringUtils.replace(
-						StringUtil.toUpperCase(accountName), " ", "_");
+				StringUtil.toUpperCase(accountName), " ", "_");
 
-			String accountExternalReferenceCode = "ACCOUNT_" + standardAccountName;
-					
+			String accountExternalReferenceCode =
+				"ACCOUNT_" + standardAccountName;
 
 			post(
 				authorizationHeader,

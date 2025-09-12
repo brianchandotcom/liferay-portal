@@ -3,7 +3,7 @@ dependencies {
 }
 
 liferay {
-	deployDir = file("../../../../tools/sdk/dependencies/com.liferay.portal.search.elasticsearch7.sidecar.agent/lib")
+	deployDir = file("../../../../tools/sdk/dependencies/com.liferay.portal.search.elasticsearch8.sidecar.agent/lib")
 }
 
 liferayOSGi {

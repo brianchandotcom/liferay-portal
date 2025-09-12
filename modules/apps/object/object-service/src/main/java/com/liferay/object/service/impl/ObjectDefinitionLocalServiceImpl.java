@@ -448,6 +448,15 @@ public class ObjectDefinitionLocalServiceImpl
 			List<WorkflowDefinitionLink> workflowDefinitionLinks)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				user.getCompanyId(), "LPD-17564") &&
+			!modifiable) {
+
+			enableFormContainer = false;
+		}
+
 		return _addObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
 			dbTableName, enableComments, enableFormContainer,
@@ -1479,12 +1488,7 @@ public class ObjectDefinitionLocalServiceImpl
 			StringUtil.equals(
 				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 		objectDefinition.setEnableComments(enableComments);
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				user.getCompanyId(), "LPD-17564")) {
-
-			objectDefinition.setEnableFormContainer(enableFormContainer);
-		}
+		objectDefinition.setEnableFormContainer(enableFormContainer);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
 			objectDefinition.setEnableFriendlyURLCustomization(
@@ -2598,12 +2602,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			objectDefinition.setEnableFormContainer(enableFormContainer);
-		}
+		objectDefinition.setEnableFormContainer(enableFormContainer);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
 			objectDefinition.setEnableFriendlyURLCustomization(

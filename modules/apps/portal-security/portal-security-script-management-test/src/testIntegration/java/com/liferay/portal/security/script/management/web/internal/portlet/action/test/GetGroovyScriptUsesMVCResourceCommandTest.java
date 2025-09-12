@@ -273,8 +273,8 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				userId, 0, null, false, false, true, false, false, false, false,
-				false, null,
+				userId, 0, null, false, true, false, true, false, false, false,
+				false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

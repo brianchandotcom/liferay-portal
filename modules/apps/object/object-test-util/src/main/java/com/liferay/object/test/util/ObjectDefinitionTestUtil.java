@@ -78,7 +78,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			userId, objectFolderId, null, false, false, false, true,
+			userId, objectFolderId, null, false, true, false, true,
 			enableLocalization, false, false, false, false,
 			FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -123,7 +123,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-			null, userId, 0, null, dbTableName, false, false, false, true,
+			null, userId, 0, null, dbTableName, false, true, false, true,
 			enableLocalization, false, false, false, false, null, labelMap,
 			true, name, null, null, pkObjectFieldDBColumnName,
 			pkObjectFieldName, pluralLabelMap, false, scope,
@@ -168,7 +168,7 @@ public class ObjectDefinitionTestUtil {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				userId, objectFolderId, null, false, false, false, true,
+				userId, objectFolderId, null, false, true, false, true,
 				localized, false, false, enableObjectEntrySubscription,
 				enableObjectEntryVersioning, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

@@ -326,8 +326,8 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());*/
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			user.getUserId(), 0, null, false, false, true, false, false, false,
-			false, false, null,
+			user.getUserId(), 0, null, false, true, false, true, false, false,
+			false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -350,7 +350,8 @@ public class ObjectDefinitionServiceTest {
 
 		return _objectDefinitionService.addSystemObjectDefinition(
 			RandomTestUtil.randomString(), user.getUserId(), objectFolderId,
-			null, false, false, true, false, false, false, false, false, null,
+			null, false, true, false, true, false, false, false, false, false,
+			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"Test", null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -381,8 +382,8 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
-					objectFolderId, null, false, false, true, false, false,
-					false, false, false, null,
+					objectFolderId, null, false, true, false, true, false,
+					false, false, false, false, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -518,10 +519,10 @@ public class ObjectDefinitionServiceTest {
 				_objectDefinitionService.updateCustomObjectDefinition(
 					null, objectDefinition.getObjectDefinitionId(), 0, 0,
 					objectFolderId, 0, false, objectDefinition.isActive(), null,
-					true, false, false, true, false, false, false, false, false,
-					false, null, LocalizedMapUtil.getLocalizedMap("Able"),
-					"Able", null, null, false,
-					LocalizedMapUtil.getLocalizedMap("Ables"),
+					true, false, true, false, true, false, false, false, false,
+					false, false, null,
+					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
+					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition.getScope(), objectDefinition.getStatus(),
 					Collections.emptyList(), Collections.emptyList());
 		}

@@ -49,27 +49,27 @@ public class ObjectEntryInfoPermissionProviderTest {
 
 	@Test
 	public void testHasViewPermission() throws Exception {
-		_testHasViewPermissionForCustomObjectDefinition(true, true);
 		_testHasViewPermissionForCustomObjectDefinition(false, true);
-		_testHasViewPermissionForModifiableSystemObjectDefinition(true, false);
+		_testHasViewPermissionForCustomObjectDefinition(true, true);
 		_testHasViewPermissionForModifiableSystemObjectDefinition(false, false);
-		_testHasViewPermissionForUnmodifiableSystemObjectDefinition(true);
+		_testHasViewPermissionForModifiableSystemObjectDefinition(true, false);
 		_testHasViewPermissionForUnmodifiableSystemObjectDefinition(false);
+		_testHasViewPermissionForUnmodifiableSystemObjectDefinition(true);
 	}
 
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testHasViewPermissionWithFF() throws Exception {
-		_testHasViewPermissionForCustomObjectDefinition(true, true);
 		_testHasViewPermissionForCustomObjectDefinition(false, false);
-		_testHasViewPermissionForModifiableSystemObjectDefinition(true, true);
+		_testHasViewPermissionForCustomObjectDefinition(true, true);
 		_testHasViewPermissionForModifiableSystemObjectDefinition(false, false);
-		_testHasViewPermissionForUnmodifiableSystemObjectDefinition(true);
+		_testHasViewPermissionForModifiableSystemObjectDefinition(true, true);
 		_testHasViewPermissionForUnmodifiableSystemObjectDefinition(false);
+		_testHasViewPermissionForUnmodifiableSystemObjectDefinition(true);
 	}
 
 	private void _testHasViewPermissionForCustomObjectDefinition(
-			boolean enableFormContainer, boolean expectedHasViewPermission)
+			boolean enableFormContainer, boolean expectedResult)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -101,7 +101,7 @@ public class ObjectEntryInfoPermissionProviderTest {
 			Assert.assertNotNull(infoPermissionProvider);
 
 			Assert.assertEquals(
-				expectedHasViewPermission,
+				expectedResult,
 				infoPermissionProvider.hasViewPermission(
 					PermissionThreadLocal.getPermissionChecker()));
 		}
@@ -112,7 +112,7 @@ public class ObjectEntryInfoPermissionProviderTest {
 	}
 
 	private void _testHasViewPermissionForModifiableSystemObjectDefinition(
-			boolean enableFormContainer, boolean expectedHasViewPermission)
+			boolean enableFormContainer, boolean expectedResult)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -146,7 +146,7 @@ public class ObjectEntryInfoPermissionProviderTest {
 			Assert.assertNotNull(infoPermissionProvider);
 
 			Assert.assertEquals(
-				expectedHasViewPermission,
+				expectedResult,
 				infoPermissionProvider.hasViewPermission(
 					PermissionThreadLocal.getPermissionChecker()));
 		}

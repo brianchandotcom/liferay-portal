@@ -251,8 +251,8 @@ public class BaseNotificationTypeTest {
 	public void setUp() throws Exception {
 		childObjectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
-				user1.getUserId(), 0, null, false, false, true, true, false,
-				false, false, false, null,
+				user1.getUserId(), 0, null, false, true, false, true, true,
+				false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -382,8 +382,8 @@ public class BaseNotificationTypeTest {
 
 		parentObjectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
-				user1.getUserId(), 0, null, false, false, true, false, false,
-				false, false, false, null,
+				user1.getUserId(), 0, null, false, true, false, true, false,
+				false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"ParentObjectDefinition", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

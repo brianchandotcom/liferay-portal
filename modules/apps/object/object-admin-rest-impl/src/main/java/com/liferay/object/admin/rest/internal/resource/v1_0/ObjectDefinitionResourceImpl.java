@@ -274,9 +274,7 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getClassName(),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
-						objectDefinition.getEnableFormContainer(),
-						FeatureFlagManagerUtil.isEnabled(
-							contextUser.getCompanyId(), "LPD-17564")),
+						objectDefinition.getEnableFormContainer(), true),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableFriendlyURLCustomization()),
 					GetterUtil.getBoolean(
@@ -325,9 +323,7 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getClassName(),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
-						objectDefinition.getEnableFormContainer(),
-						FeatureFlagManagerUtil.isEnabled(
-							contextUser.getCompanyId(), "LPD-17564")),
+						objectDefinition.getEnableFormContainer(), true),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableFriendlyURLCustomization()),
 					GetterUtil.getBoolean(
@@ -621,10 +617,7 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableCategorization(), true),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
-						objectDefinition.getEnableFormContainer(),
-						FeatureFlagManagerUtil.isEnabled(
-							serviceBuilderObjectDefinition.getCompanyId(),
-							"LPD-17564")),
+						objectDefinition.getEnableFormContainer(), true),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableFriendlyURLCustomization()),
 					GetterUtil.getBoolean(

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -37,9 +39,12 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -236,7 +241,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 					contextCompany.getCompanyId(), keywords,
 					WorkflowConstants.STATUS_APPROVED, params,
 					pagination.getStartPosition(), pagination.getEndPosition(),
-					(OrderByComparator<User>)null),
+					_toOrderByComparator(sorts)),
 				user -> _toUserAccount(groupId, user)),
 			pagination,
 			_userLocalService.searchCount(
@@ -261,6 +266,36 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		}
 
 		return ArrayUtil.toLongArray(groupIds);
+	}
+
+	private OrderByComparator<User> _toOrderByComparator(Sort[] sorts) {
+		if (ArrayUtil.isEmpty(sorts)) {
+			return null;
+		}
+
+		List<Object> objects = new ArrayList<>();
+
+		for (Sort sort : sorts) {
+			if (Objects.equals(sort.getFieldName(), "externalReferenceCode")) {
+				objects.add(sort.getFieldName());
+				objects.add(!sort.isReverse());
+			}
+			else if (Objects.equals(sort.getFieldName(), "id")) {
+				objects.add("userId");
+				objects.add(!sort.isReverse());
+			}
+			else if (Objects.equals(sort.getFieldName(), "name")) {
+				objects.add("firstName");
+				objects.add(!sort.isReverse());
+				objects.add("middleName");
+				objects.add(!sort.isReverse());
+				objects.add("lastName");
+				objects.add(!sort.isReverse());
+			}
+		}
+
+		return OrderByComparatorFactoryUtil.create(
+			UserTable.INSTANCE.getTableName(), objects.toArray());
 	}
 
 	private UserAccount _toUserAccount(long assetLibraryId, User user)

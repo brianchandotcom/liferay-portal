@@ -14,8 +14,8 @@ ViewContentsSectionDisplayContext viewContentsSectionDisplayContext = (ViewConte
 <div>
 	<div>
 		<react:component
-			module="{Toolbar} from site-cms-site-initializer"
-			props="<%= viewContentsSectionDisplayContext.getToolbarProps() %>"
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewContentsSectionDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
 

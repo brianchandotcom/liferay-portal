@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.Match;
-import com.liferay.portal.osgi.web.http.servlet.internal.constants.Const;
+import com.liferay.portal.osgi.web.http.servlet.internal.constants.HttpServletConstants;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.FilterChainImpl;
 
@@ -239,11 +239,12 @@ public class FilterRegistration
 			String extension, String path, String pattern)
 		throws IllegalArgumentException {
 
-		if (pattern.indexOf(Const.SLASH_STAR_DOT) == 0) {
+		if (pattern.indexOf(HttpServletConstants.SLASH_STAR_DOT) == 0) {
 			pattern = pattern.substring(1);
 		}
 
-		int extensionMatchIndex = pattern.indexOf(Const.SLASH_STAR_DOT);
+		int extensionMatchIndex = pattern.indexOf(
+			HttpServletConstants.SLASH_STAR_DOT);
 
 		String extensionWithPrefixMatch = null;
 
@@ -279,7 +280,7 @@ public class FilterRegistration
 		if (path == null) {
 			return false;
 		}
-		else if (pattern.endsWith(Const.SLASH_STAR)) {
+		else if (pattern.endsWith(HttpServletConstants.SLASH_STAR)) {
 			int pathPatternLength = pattern.length() - 2;
 
 			if (!path.regionMatches(0, pattern, 0, pathPatternLength)) {

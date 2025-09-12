@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.osgi.web.http.servlet.internal.constants.Const;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
@@ -96,7 +95,7 @@ public class HttpServletEndpointController {
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME
 			).put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
-				Const.SLASH
+				StringPool.SLASH
 			).put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
 				"(http.servlet.endpoint.id=" +

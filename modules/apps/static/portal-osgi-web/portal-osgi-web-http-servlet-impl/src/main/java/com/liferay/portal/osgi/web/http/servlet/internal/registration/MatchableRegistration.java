@@ -6,8 +6,9 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.osgi.web.http.servlet.internal.Match;
-import com.liferay.portal.osgi.web.http.servlet.internal.constants.Const;
+import com.liferay.portal.osgi.web.http.servlet.internal.constants.HttpServletConstants;
 
 import org.osgi.dto.DTO;
 
@@ -33,7 +34,7 @@ public abstract class MatchableRegistration<S, D extends DTO>
 			return pattern.equals(servletPath);
 		}
 
-		if (pattern.indexOf(Const.SLASH_STAR_DOT) == 0) {
+		if (pattern.indexOf(HttpServletConstants.SLASH_STAR_DOT) == 0) {
 			pattern = pattern.substring(1);
 		}
 
@@ -50,16 +51,16 @@ public abstract class MatchableRegistration<S, D extends DTO>
 		}
 
 		if (match == Match.EXTENSION) {
-			int index = pattern.lastIndexOf(Const.STAR_DOT);
+			int index = pattern.lastIndexOf(HttpServletConstants.STAR_DOT);
 
-			String patternPrefix = Const.BLANK;
+			String patternPrefix = StringPool.BLANK;
 
 			if (index > 0) {
 				patternPrefix = pattern.substring(0, index - 1);
 			}
 
 			if ((index != -1) && servletPath.equals(patternPrefix)) {
-				return pattern.endsWith(Const.DOT + extension);
+				return pattern.endsWith(StringPool.PERIOD + extension);
 			}
 		}
 
@@ -69,7 +70,7 @@ public abstract class MatchableRegistration<S, D extends DTO>
 	protected boolean isPathWildcardMatch(String pattern, String servletPath) {
 		int cpl = pattern.length() - 2;
 
-		if (!pattern.endsWith(Const.SLASH_STAR) ||
+		if (!pattern.endsWith(HttpServletConstants.SLASH_STAR) ||
 			!servletPath.regionMatches(0, pattern, 0, cpl)) {
 
 			return false;

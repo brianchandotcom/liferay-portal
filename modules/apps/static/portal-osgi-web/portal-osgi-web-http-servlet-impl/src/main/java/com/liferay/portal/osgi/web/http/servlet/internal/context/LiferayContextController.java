@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
 import com.liferay.portal.osgi.web.http.servlet.internal.Match;
-import com.liferay.portal.osgi.web.http.servlet.internal.constants.Const;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.EventListenerServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.FilterServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker.ResourceServiceTrackerCustomizer;
@@ -92,7 +91,7 @@ public class LiferayContextController {
 		}
 
 		try {
-			new URI(Const.HTTP, Const.LOCALHOST, contextPath, null);
+			new URI("http", "localhost", contextPath, null);
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			IllegalContextPathException illegalContextPathException =
@@ -110,8 +109,8 @@ public class LiferayContextController {
 		_httpServletEndpointController = httpServletEndpointController;
 		_contextName = contextName;
 
-		if (contextPath.equals(Const.SLASH)) {
-			contextPath = Const.BLANK;
+		if (contextPath.equals(StringPool.SLASH)) {
+			contextPath = StringPool.BLANK;
 		}
 
 		_contextPath = contextPath;
@@ -456,7 +455,7 @@ public class LiferayContextController {
 			return true;
 		}
 
-		if (!contextSelect.startsWith(Const.OPEN_PAREN)) {
+		if (!contextSelect.startsWith(StringPool.OPEN_PARENTHESIS)) {
 			return false;
 		}
 
@@ -496,7 +495,7 @@ public class LiferayContextController {
 
 		if (match == Match.DEFAULT_SERVLET) {
 			pathInfo = servletPath;
-			servletPath = Const.SLASH;
+			servletPath = StringPool.SLASH;
 		}
 
 		while (true) {

@@ -6,12 +6,12 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.context.osgi.util.tracker;
 
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointController;
-import com.liferay.portal.osgi.web.http.servlet.internal.constants.Const;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
@@ -103,8 +103,8 @@ public class ResourceServiceTrackerCustomizer
 			throw new IllegalArgumentException("Prefix is null");
 		}
 
-		if (resourcePrefix.endsWith(Const.SLASH) &&
-			!resourcePrefix.equals(Const.SLASH)) {
+		if (resourcePrefix.endsWith(StringPool.SLASH) &&
+			!resourcePrefix.equals(StringPool.SLASH)) {
 
 			throw new IllegalArgumentException(
 				"Invalid prefix \"" + resourcePrefix + "\"");

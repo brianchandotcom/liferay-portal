@@ -284,7 +284,7 @@ public class PublicationsDisplayContext {
 			"sharePublicationLink",
 			() -> _publicationHelper.getShareURL(ctCollectionId, _renderRequest)
 		).put(
-			"showShareLinkTab", true
+			"showShareLinkTab", !publicationTemplate
 		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(

@@ -62,7 +62,6 @@ public class AccountCreationRequestProcessorService extends BaseService {
 		AccountCreationRequest accountCreationRequest) {
 
 		try {
-
 			String token = accountCreationRequest.getJwt(
 			).getTokenValue();
 
@@ -84,7 +83,8 @@ public class AccountCreationRequestProcessorService extends BaseService {
 
 			String accountExternalReferenceCode =
 				"ACCOUNT_" +
-					StringUtils.replace(StringUtil.toUpperCase(accountName), " ", "_");
+					StringUtils.replace(
+						StringUtil.toUpperCase(accountName), " ", "_");
 
 			post(
 				authorizationHeader,
@@ -106,7 +106,8 @@ public class AccountCreationRequestProcessorService extends BaseService {
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
 						baseUrl,
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
+						"/o/headless-admin-user/v1.0/",
+						"accounts/by-external-reference-code/",
 						accountExternalReferenceCode,
 						"/user-accounts/by-email-address/", accountEmailAddress)
 				).build(
@@ -118,7 +119,8 @@ public class AccountCreationRequestProcessorService extends BaseService {
 					UriComponentsBuilder.fromUriString(
 						StringBundler.concat(
 							baseUrl,
-							"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
+							"/o/headless-admin-user/v1.0",
+							"/accounts/by-external-reference-code/",
 							accountExternalReferenceCode, "/account-roles",
 							"?filter=name eq 'Account Administrator'")
 					).build(
@@ -136,7 +138,8 @@ public class AccountCreationRequestProcessorService extends BaseService {
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
 						baseUrl,
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/",
+						"/o/headless-admin-user/v1.0",
+						"/accounts/by-external-reference-code/",
 						accountExternalReferenceCode, "/account-roles/",
 						adminAccountRoleId, "/user-accounts/by-email-address/",
 						accountEmailAddress)

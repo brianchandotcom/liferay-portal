@@ -667,6 +667,13 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<Layout, Layout> fetchDraftLayouts(
+		java.util.List<Layout> layouts) {
+
+		return _layoutLocalService.fetchDraftLayouts(layouts);
+	}
+
+	@Override
 	public Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 

@@ -636,6 +636,10 @@ public class LayoutLocalServiceUtil {
 		return getService().fetchDraftLayout(plid);
 	}
 
+	public static Map<Layout, Layout> fetchDraftLayouts(List<Layout> layouts) {
+		return getService().fetchDraftLayouts(layouts);
+	}
+
 	public static Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 

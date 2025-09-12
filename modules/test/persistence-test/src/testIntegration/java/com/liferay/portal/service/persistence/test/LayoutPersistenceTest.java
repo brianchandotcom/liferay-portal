@@ -448,6 +448,13 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_CArrayable() throws Exception {
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByG_P_L() throws Exception {
 		_persistence.countByG_P_L(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),

@@ -44,7 +44,8 @@ public class LayoutPageTemplateEntryModelPreFilterContributor
 			searchContext.getAttribute(Field.STATUS),
 			new int[] {
 				WorkflowConstants.STATUS_APPROVED,
-				WorkflowConstants.STATUS_DRAFT
+				WorkflowConstants.STATUS_DRAFT,
+				WorkflowConstants.STATUS_INACTIVE
 			});
 
 		if (!ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {

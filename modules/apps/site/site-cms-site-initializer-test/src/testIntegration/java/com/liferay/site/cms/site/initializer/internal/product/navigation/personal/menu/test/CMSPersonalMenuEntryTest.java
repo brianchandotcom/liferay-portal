@@ -146,6 +146,7 @@ public class CMSPersonalMenuEntryTest {
 						bundle.getSymbolicName(),
 						"com.liferay.site.initializer.cms")) {
 
+					_deleteFile(bundle, "00.list.type.definition");
 					_deleteFile(bundle, "01.object.folder");
 					_deleteFile(bundle, "02.object.definition");
 

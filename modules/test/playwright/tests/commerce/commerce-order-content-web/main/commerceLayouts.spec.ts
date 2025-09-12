@@ -3323,14 +3323,18 @@ test(
 );
 
 test(
-	'Account selector orchestrating fragment is visible',
-	{tag: '@LPD-63175'},
+	'Account selector fragments are visible',
+	{tag: ['@LPD-63173', '@LPD-63175']},
 	async ({apiHelpers, applicationsMenuPage, page, site}) => {
 		await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([
 				getFragmentDefinition({
 					id: getRandomString(),
 					key: 'COMMERCE_ACCOUNT_SELECTOR_FRAGMENTS-account-selector-fragment',
+				}),
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'COMMERCE_ACCOUNT_SELECTOR_FRAGMENTS-account-selector-panel',
 				}),
 			]),
 			siteId: site.id,
@@ -3342,5 +3346,8 @@ test(
 		await expect(page.locator('.account-selector-container')).toHaveCount(
 			1
 		);
+		await expect(
+			page.locator('.account-selector-panel-drop-zone-container')
+		).toHaveCount(1);
 	}
 );

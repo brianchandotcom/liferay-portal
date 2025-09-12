@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.osgi.web.http.servlet.internal.Match;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayDispatchTargets;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContext;
@@ -36,8 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
-
-import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;

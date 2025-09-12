@@ -5760,7 +5760,7 @@ public interface KBArticlePersistence
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_ERC_ST(
+	public java.util.List<KBArticle> findByG_ERC_S(
 		long groupId, String externalReferenceCode, int status);
 
 	/**
@@ -5777,7 +5777,7 @@ public interface KBArticlePersistence
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_ERC_ST(
+	public java.util.List<KBArticle> findByG_ERC_S(
 		long groupId, String externalReferenceCode, int status, int start,
 		int end);
 
@@ -5796,7 +5796,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_ERC_ST(
+	public java.util.List<KBArticle> findByG_ERC_S(
 		long groupId, String externalReferenceCode, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -5818,7 +5818,7 @@ public interface KBArticlePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_ERC_ST(
+	public java.util.List<KBArticle> findByG_ERC_S(
 		long groupId, String externalReferenceCode, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -5835,7 +5835,7 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_ERC_ST_First(
+	public KBArticle findByG_ERC_S_First(
 			long groupId, String externalReferenceCode, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -5850,7 +5850,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_ERC_ST_First(
+	public KBArticle fetchByG_ERC_S_First(
 		long groupId, String externalReferenceCode, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -5865,7 +5865,7 @@ public interface KBArticlePersistence
 	 * @return the last matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_ERC_ST_Last(
+	public KBArticle findByG_ERC_S_Last(
 			long groupId, String externalReferenceCode, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -5880,7 +5880,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_ERC_ST_Last(
+	public KBArticle fetchByG_ERC_S_Last(
 		long groupId, String externalReferenceCode, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -5896,7 +5896,7 @@ public interface KBArticlePersistence
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] findByG_ERC_ST_PrevAndNext(
+	public KBArticle[] findByG_ERC_S_PrevAndNext(
 			long kbArticleId, long groupId, String externalReferenceCode,
 			int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -5911,7 +5911,7 @@ public interface KBArticlePersistence
 	 * @param status the status
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_ERC_ST(
+	public java.util.List<KBArticle> filterFindByG_ERC_S(
 		long groupId, String externalReferenceCode, int status);
 
 	/**
@@ -5928,7 +5928,7 @@ public interface KBArticlePersistence
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_ERC_ST(
+	public java.util.List<KBArticle> filterFindByG_ERC_S(
 		long groupId, String externalReferenceCode, int status, int start,
 		int end);
 
@@ -5947,7 +5947,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_ERC_ST(
+	public java.util.List<KBArticle> filterFindByG_ERC_S(
 		long groupId, String externalReferenceCode, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -5964,7 +5964,7 @@ public interface KBArticlePersistence
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] filterFindByG_ERC_ST_PrevAndNext(
+	public KBArticle[] filterFindByG_ERC_S_PrevAndNext(
 			long kbArticleId, long groupId, String externalReferenceCode,
 			int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -5978,7 +5978,7 @@ public interface KBArticlePersistence
 	 * @param externalReferenceCode the external reference code
 	 * @param status the status
 	 */
-	public void removeByG_ERC_ST(
+	public void removeByG_ERC_S(
 		long groupId, String externalReferenceCode, int status);
 
 	/**
@@ -5989,7 +5989,7 @@ public interface KBArticlePersistence
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_ERC_ST(
+	public int countByG_ERC_S(
 		long groupId, String externalReferenceCode, int status);
 
 	/**
@@ -6000,7 +6000,7 @@ public interface KBArticlePersistence
 	 * @param status the status
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_ERC_ST(
+	public int filterCountByG_ERC_S(
 		long groupId, String externalReferenceCode, int status);
 
 	/**
@@ -12992,7 +12992,7 @@ public interface KBArticlePersistence
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> findByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status);
 
 	/**
@@ -13010,7 +13010,7 @@ public interface KBArticlePersistence
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> findByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status, int start,
 		int end);
 
@@ -13030,7 +13030,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> findByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -13053,7 +13053,7 @@ public interface KBArticlePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> findByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -13071,7 +13071,7 @@ public interface KBArticlePersistence
 	 * @return the first matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_KBFI_UT_ST_First(
+	public KBArticle findByG_KBFI_UT_S_First(
 			long groupId, long kbFolderId, String urlTitle, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -13087,7 +13087,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_KBFI_UT_ST_First(
+	public KBArticle fetchByG_KBFI_UT_S_First(
 		long groupId, long kbFolderId, String urlTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -13103,7 +13103,7 @@ public interface KBArticlePersistence
 	 * @return the last matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_KBFI_UT_ST_Last(
+	public KBArticle findByG_KBFI_UT_S_Last(
 			long groupId, long kbFolderId, String urlTitle, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -13119,7 +13119,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_KBFI_UT_ST_Last(
+	public KBArticle fetchByG_KBFI_UT_S_Last(
 		long groupId, long kbFolderId, String urlTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -13136,7 +13136,7 @@ public interface KBArticlePersistence
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] findByG_KBFI_UT_ST_PrevAndNext(
+	public KBArticle[] findByG_KBFI_UT_S_PrevAndNext(
 			long kbArticleId, long groupId, long kbFolderId, String urlTitle,
 			int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -13152,7 +13152,7 @@ public interface KBArticlePersistence
 	 * @param status the status
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> filterFindByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status);
 
 	/**
@@ -13170,7 +13170,7 @@ public interface KBArticlePersistence
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> filterFindByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status, int start,
 		int end);
 
@@ -13190,7 +13190,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> filterFindByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -13208,7 +13208,7 @@ public interface KBArticlePersistence
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] filterFindByG_KBFI_UT_ST_PrevAndNext(
+	public KBArticle[] filterFindByG_KBFI_UT_S_PrevAndNext(
 			long kbArticleId, long groupId, long kbFolderId, String urlTitle,
 			int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -13224,7 +13224,7 @@ public interface KBArticlePersistence
 	 * @param statuses the statuses
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> filterFindByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses);
 
 	/**
@@ -13242,7 +13242,7 @@ public interface KBArticlePersistence
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> filterFindByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses,
 		int start, int end);
 
@@ -13262,7 +13262,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> filterFindByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -13281,7 +13281,7 @@ public interface KBArticlePersistence
 	 * @param statuses the statuses
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> findByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses);
 
 	/**
@@ -13299,7 +13299,7 @@ public interface KBArticlePersistence
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> findByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses,
 		int start, int end);
 
@@ -13319,7 +13319,7 @@ public interface KBArticlePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> findByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -13342,7 +13342,7 @@ public interface KBArticlePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_KBFI_UT_ST(
+	public java.util.List<KBArticle> findByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
@@ -13357,7 +13357,7 @@ public interface KBArticlePersistence
 	 * @param urlTitle the url title
 	 * @param status the status
 	 */
-	public void removeByG_KBFI_UT_ST(
+	public void removeByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status);
 
 	/**
@@ -13369,7 +13369,7 @@ public interface KBArticlePersistence
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_KBFI_UT_ST(
+	public int countByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status);
 
 	/**
@@ -13381,7 +13381,7 @@ public interface KBArticlePersistence
 	 * @param statuses the statuses
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_KBFI_UT_ST(
+	public int countByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses);
 
 	/**
@@ -13393,7 +13393,7 @@ public interface KBArticlePersistence
 	 * @param status the status
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_KBFI_UT_ST(
+	public int filterCountByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int status);
 
 	/**
@@ -13405,7 +13405,7 @@ public interface KBArticlePersistence
 	 * @param statuses the statuses
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_KBFI_UT_ST(
+	public int filterCountByG_KBFI_UT_S(
 		long groupId, long kbFolderId, String urlTitle, int[] statuses);
 
 	/**

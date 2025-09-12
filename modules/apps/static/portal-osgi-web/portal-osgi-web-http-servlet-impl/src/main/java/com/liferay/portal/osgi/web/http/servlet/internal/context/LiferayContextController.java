@@ -24,7 +24,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegi
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ResourceRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpSessionWrapper;
-import com.liferay.portal.osgi.web.http.servlet.internal.util.ServiceProperties;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.ServicePropertiesUtil;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.Servlet;
@@ -115,7 +115,7 @@ public class LiferayContextController {
 
 		_contextPath = contextPath;
 
-		_servletContextInitParams = ServiceProperties.parseInitParams(
+		_servletContextInitParams = ServicePropertiesUtil.parseInitParams(
 			serviceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX,
 			servletContextHelperDataContext.getServletContext());

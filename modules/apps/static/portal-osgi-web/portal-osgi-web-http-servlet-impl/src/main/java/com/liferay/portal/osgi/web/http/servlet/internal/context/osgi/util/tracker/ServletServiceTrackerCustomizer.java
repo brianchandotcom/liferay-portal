@@ -21,6 +21,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServiceHol
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletConfigImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.ServiceProperties;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
@@ -31,8 +32,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
-
-import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;

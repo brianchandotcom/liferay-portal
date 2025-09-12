@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -102,7 +101,8 @@ public class LayoutInfoItemLanguagesProviderTest {
 
 		String[] availableLanguages = {"en_US"};
 
-		UnicodeProperties typeSettingsUnicodeProperties =
+		_group = _groupLocalService.updateGroup(
+			_group.getGroupId(),
 			UnicodePropertiesBuilder.create(
 				true
 			).fastLoad(
@@ -111,10 +111,7 @@ public class LayoutInfoItemLanguagesProviderTest {
 				PropsKeys.LOCALES, StringUtil.merge(availableLanguages)
 			).put(
 				"inheritLocales", Boolean.FALSE.toString()
-			).build();
-
-		_group = _groupLocalService.updateGroup(
-			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
+			).buildString());
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(

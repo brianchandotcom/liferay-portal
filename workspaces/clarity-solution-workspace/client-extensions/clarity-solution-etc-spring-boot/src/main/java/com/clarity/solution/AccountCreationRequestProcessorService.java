@@ -62,6 +62,7 @@ public class AccountCreationRequestProcessorService extends BaseService {
 		AccountCreationRequest accountCreationRequest) {
 
 		try {
+			
 			String token = accountCreationRequest.getJwt(
 			).getTokenValue();
 

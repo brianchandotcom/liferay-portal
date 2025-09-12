@@ -7,9 +7,6 @@ package com.clarity.solution;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,9 +46,6 @@ public class ObjectActionAccountRestController extends BaseRestController {
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
-
-	private static final Log _log = LogFactory.getLog(
-		ObjectActionAccountRestController.class);
 
 	private final AccountCreationRequestQueueManager _queueManager;
 

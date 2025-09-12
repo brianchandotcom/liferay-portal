@@ -46,12 +46,15 @@ public class WorkflowActionApplicationRestController
 		).getString(
 			"key"
 		);
+		
+		String transitionName = "auto-approve";
 
-		String transitionName =
-			StringUtils.equals(applicationStateKey, "approved") ||
-			StringUtils.equals(applicationStateKey, "denied") ? "review" :
-				"auto-approve";
+		if (StringUtils.equals(applicationStateKey, "approved") ||
+			StringUtils.equals(applicationStateKey, "denied")) {
 
+			transitionName = "review";
+		}
+		
 		post(
 			"Bearer " + jwt.getTokenValue(),
 			new JSONObject(

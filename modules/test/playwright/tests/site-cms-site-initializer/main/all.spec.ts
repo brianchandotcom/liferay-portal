@@ -261,44 +261,47 @@ test(
 	}
 );
 
-test('Dragging and dropping files into the data set opens upload modal', async ({
-	assetsPage,
-	page,
-}) => {
-	await assetsPage.gotoAll();
+test(
+	'Dragging and dropping files into the data set opens upload modal',
+	{tag: '@LPD-58618'},
+	async ({assetsPage, page}) => {
+		await assetsPage.gotoAll();
 
-	const dataSetWrapper = page.locator('div.data-set-wrapper').first();
-	const dataTransfer = await page.evaluateHandle(
-		(data) => {
-			const dt = new DataTransfer();
+		const dataSetWrapper = page.locator('div.data-set-wrapper').first();
+		const dataTransfer = await page.evaluateHandle(
+			(data) => {
+				const dt = new DataTransfer();
 
-			const file = new File(
-				[data.toString('hex')],
-				'file_upload_image_1.jpeg',
-				{
-					type: 'image/jpg',
-				}
-			);
-			dt.items.add(file);
+				const file = new File(
+					[data.toString('hex')],
+					'file_upload_image_1.jpeg',
+					{
+						type: 'image/jpg',
+					}
+				);
+				dt.items.add(file);
 
-			return dt;
-		},
-		readFileSync(
-			path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
-		)
-	);
+				return dt;
+			},
+			readFileSync(
+				path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
+			)
+		);
 
-	await dataSetWrapper.dispatchEvent('dragstart', {dataTransfer});
-	await dataSetWrapper.dispatchEvent('dragenter', {dataTransfer});
-	await dataSetWrapper.dispatchEvent('dragover', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragstart', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragenter', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragover', {dataTransfer});
 
-	await dataSetWrapper.dispatchEvent('drop', {dataTransfer});
-	await dataSetWrapper.dispatchEvent('dragend', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('drop', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragend', {dataTransfer});
 
-	await expect(assetsPage.modal.container).toBeVisible();
+		await expect(assetsPage.modal.container).toBeVisible();
 
-	await expect(assetsPage.modal.title).toContainText('Upload Multiple Files');
-	await expect(assetsPage.modal.body).toContainText(
-		'file_upload_image_1.jpeg'
-	);
-});
+		await expect(assetsPage.modal.title).toContainText(
+			'Upload Multiple Files'
+		);
+		await expect(assetsPage.modal.body).toContainText(
+			'file_upload_image_1.jpeg'
+		);
+	}
+);

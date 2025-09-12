@@ -6433,7 +6433,6 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			});
-
 		assertEquals(
 			_defaultObjectEntryManager.partialUpdateObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition4,
@@ -9115,12 +9114,12 @@ public class DefaultObjectEntryManagerImplTest
 
 		Node node = tree.getRootNode();
 
-		com.liferay.object.model.ObjectEntry objectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.getObjectEntry(node.getPrimaryKey());
 
 		_objectEntryLocalService.updateObjectEntry(
-			adminUser.getUserId(), objectEntry.getPrimaryKey(),
-			objectEntry.getObjectEntryFolderId(),
+			adminUser.getUserId(), serviceBuilderObjectEntry.getPrimaryKey(),
+			serviceBuilderObjectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					ObjectField objectField =

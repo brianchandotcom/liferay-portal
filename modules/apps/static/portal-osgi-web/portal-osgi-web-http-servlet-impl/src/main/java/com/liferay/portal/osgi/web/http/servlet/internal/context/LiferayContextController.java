@@ -24,6 +24,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegi
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ResourceRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpSessionWrapper;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.ServiceProperties;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.Servlet;
@@ -56,7 +57,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.equinox.http.servlet.internal.util.Path;
-import org.eclipse.equinox.http.servlet.internal.util.ServiceProperties;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

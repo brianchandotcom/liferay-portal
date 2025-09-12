@@ -8,6 +8,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -34,7 +35,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.equinox.http.servlet.internal.util.Path;
-import org.eclipse.equinox.http.servlet.internal.util.StringPlus;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -150,7 +150,7 @@ public class HttpServletEndpointController {
 	}
 
 	public List<String> getHttpServiceEndpoints() {
-		return StringPlus.from(
+		return StringPlus.asList(
 			_attributesMap.get(
 				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT));
 	}

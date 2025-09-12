@@ -95,7 +95,7 @@ components:
                     description:
                         The asset library's connected sites.
                     items:
-                        $ref: "#/components/schemas/Site"
+                        $ref: "#/components/schemas/ConnectedSite"
                     readOnly: true
                     type: array
                 type:
@@ -185,29 +185,29 @@ components:
                 useCustomLanguages:
                     default: false
                     type: boolean
-        Site:
+        ConnectedSite:
             description:
-                Represents a site.
+                Represents a connected site.
             properties:
                 externalReferenceCode:
                     description:
-                        The site's external reference code.
+                        The connected site's external reference code.
                     readOnly: true
                     type: string
                 id:
                     description:
-                        The site's ID.
+                        The connected site's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 logo:
                     description:
-                        The site's logo.
+                        The connected site's logo.
                     readOnly: true
                     type: string
                 name:
                     description:
-                        The site's name.
+                        The connected site's name.
                     readOnly: true
                     type: string
                 name_i18n:
@@ -397,7 +397,7 @@ paths:
                         application/xml: {}
                     description:
                         default response
-            tags: ["Site"]
+            tags: ["ConnectedSite"]
         get:
             description:
                 Gets a site from the asset library using the provided external reference codes.
@@ -418,13 +418,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Site"
+                                $ref: "#/components/schemas/ConnectedSite"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/Site"
+                                $ref: "#/components/schemas/ConnectedSite"
                     description:
                         default response
-            tags: ["Site"]
+            tags: ["ConnectedSite"]
         put:
             description:
                 Connects the site with the given external reference code to the asset library.
@@ -444,22 +444,22 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Site"
+                            $ref: "#/components/schemas/ConnectedSite"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/Site"
+                            $ref: "#/components/schemas/ConnectedSite"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Site"
+                                $ref: "#/components/schemas/ConnectedSite"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/Site"
+                                $ref: "#/components/schemas/ConnectedSite"
                     description:
                         default response
-            tags: ["Site"]
+            tags: ["ConnectedSite"]
     "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}":
         delete:
             description:
@@ -936,16 +936,16 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Site"
+                                    $ref: "#/components/schemas/ConnectedSite"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Site"
+                                    $ref: "#/components/schemas/ConnectedSite"
                                 type: array
                     description:
                         default response
-            tags: ["Site"]
+            tags: ["ConnectedSite"]
     "/asset-libraries/by-external-reference-code/{externalReferenceCode}/user-accounts":
         get:
             description:
@@ -1240,12 +1240,12 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Site"
+                                    $ref: "#/components/schemas/ConnectedSite"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Site"
+                                    $ref: "#/components/schemas/ConnectedSite"
                                 type: array
                     description:
                         default response
@@ -1275,7 +1275,7 @@ paths:
                         application/xml: {}
                     description:
                         default response
-            tags: ["Site"]
+            tags: ["ConnectedSite"]
         get:
             description:
                 Gets a site connected to the asset library.
@@ -1298,13 +1298,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Site"
+                                $ref: "#/components/schemas/ConnectedSite"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/Site"
+                                $ref: "#/components/schemas/ConnectedSite"
                     description:
                         default response
-            tags: ["Site"]
+            tags: ["ConnectedSite"]
         put:
             description:
                 Connects the site to the asset library.
@@ -1326,22 +1326,22 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Site"
+                            $ref: "#/components/schemas/ConnectedSite"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/Site"
+                            $ref: "#/components/schemas/ConnectedSite"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Site"
+                                $ref: "#/components/schemas/ConnectedSite"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/Site"
+                                $ref: "#/components/schemas/ConnectedSite"
                     description:
                         default response
-            tags: ["Site"]
+            tags: ["ConnectedSite"]
     "/asset-libraries/{assetLibraryId}/user-accounts":
         get:
             description:

@@ -203,7 +203,9 @@ public class TestrayRunComparison {
 	}
 
 	private boolean _isUntestedStatus(String status) {
-		if (status.equals(_STATUS_DID_NOT_RUN) || status.equals(_STATUS_UNTESTED)) {
+		if (status.equals(_STATUS_DID_NOT_RUN) ||
+			status.equals(_STATUS_UNTESTED)) {
+
 			return true;
 		}
 
@@ -218,15 +220,16 @@ public class TestrayRunComparison {
 
 	private static final String _STATUS_PASSED = "PASSED";
 
-	private static final String[] _STATUSES;
-
 	private static final String _STATUS_TEST_FIX = "TESTFIX";
 
 	private static final String _STATUS_UNTESTED = "UNTESTED";
 
+	private static final String[] _STATUSES;
+
 	static {
 		_STATUSES = new String[] {
-			_STATUS_BLOCKED, _STATUS_DID_NOT_RUN, _STATUS_FAILED, _STATUS_PASSED, _STATUS_TEST_FIX, _STATUS_UNTESTED
+			_STATUS_BLOCKED, _STATUS_DID_NOT_RUN, _STATUS_FAILED,
+			_STATUS_PASSED, _STATUS_TEST_FIX, _STATUS_UNTESTED
 		};
 	}
 

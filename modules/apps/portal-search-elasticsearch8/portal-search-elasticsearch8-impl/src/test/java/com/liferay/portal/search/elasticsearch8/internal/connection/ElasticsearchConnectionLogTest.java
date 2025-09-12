@@ -6,7 +6,7 @@
 package com.liferay.portal.search.elasticsearch8.internal.connection;
 
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
+import com.liferay.portal.search.elasticsearch8.configuration.RESTClientLoggerLevel;
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch8.internal.helper.SearchLogHelper;
 import com.liferay.portal.search.elasticsearch8.internal.helper.SearchLogHelperImpl;

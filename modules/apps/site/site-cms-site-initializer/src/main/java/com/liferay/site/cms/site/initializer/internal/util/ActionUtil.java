@@ -67,7 +67,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
-import com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpaceListComponentSectionFragmentRenderer;
+import com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpacesComponentSectionFragmentRenderer;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -190,22 +190,22 @@ public class ActionUtil {
 				"marginLeft", "-16px"
 			));
 
-		FragmentEntryLink spaceListFragmentEntryLink = _addFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			StringPool.BLANK, fragmentEntryLinkService,
 			fragmentRendererRegistry,
-			SpaceListComponentSectionFragmentRenderer.class.getName(), layout,
+			SpacesComponentSectionFragmentRenderer.class.getName(), layout,
 			segmentsExperienceId, serviceContext);
 
-		if (spaceListFragmentEntryLink != null) {
+		if (fragmentEntryLink != null) {
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.addFragmentStyledLayoutStructureItem(
-					spaceListFragmentEntryLink.getFragmentEntryLinkId(),
+					fragmentEntryLink.getFragmentEntryLinkId(),
 					formStyledLayoutStructureItem.getItemId(), -1);
 
 			layoutStructureItem.updateItemConfig(
 				JSONUtil.put("styles", JSONUtil.put("marginBottom", "16px")));
 
-			addedFragmentEntryLinks.add(spaceListFragmentEntryLink);
+			addedFragmentEntryLinks.add(fragmentEntryLink);
 		}
 
 		_addInputFragmentEntryLink(

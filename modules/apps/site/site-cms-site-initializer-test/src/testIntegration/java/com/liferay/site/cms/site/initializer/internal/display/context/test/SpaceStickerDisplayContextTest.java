@@ -152,7 +152,7 @@ public class SpaceStickerDisplayContextTest extends BaseDisplayContextTestCase {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, 0,
 			"com.liferay.site.cms.site.initializer.internal.fragment." +
-				"renderer.SpaceListComponentSectionFragmentRenderer",
+				"renderer.SpacesComponentSectionFragmentRenderer",
 			FragmentConstants.TYPE_COMPONENT,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
@@ -260,7 +260,7 @@ public class SpaceStickerDisplayContextTest extends BaseDisplayContextTestCase {
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpaceListComponentSectionFragmentRenderer"
+		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpacesComponentSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
 

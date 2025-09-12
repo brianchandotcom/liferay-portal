@@ -11,7 +11,7 @@ export {default as Toolbar} from './common/components/Toolbar';
 
 export {default as ContentEditorManagementBar} from './content_editor/components/ContentEditorManagementBar';
 export {default as ContentEditorSidePanel} from './content_editor/components/ContentEditorSidePanel';
-export {default as SpaceList} from './content_editor/components/SpaceList';
+export {default as Spaces} from './content_editor/components/Spaces';
 
 export {default as CategorizationToolbar} from './main_view/categorization/CategorizationToolbar';
 export {default as EditCategoryPage} from './main_view/categorization/categories/EditCategoryPage';

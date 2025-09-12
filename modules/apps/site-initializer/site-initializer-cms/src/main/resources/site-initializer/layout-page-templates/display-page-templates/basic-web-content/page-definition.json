@@ -87,7 +87,7 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpaceListComponentSectionFragmentRenderer"
+												"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpacesComponentSectionFragmentRenderer"
 											},
 											"fragmentConfig": {
 											},

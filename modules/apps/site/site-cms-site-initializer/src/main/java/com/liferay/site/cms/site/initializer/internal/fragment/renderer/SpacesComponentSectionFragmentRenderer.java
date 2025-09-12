@@ -22,22 +22,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Georgel Pop
  */
 @Component(service = FragmentRenderer.class)
-public class SpaceListComponentSectionFragmentRenderer
+public class SpacesComponentSectionFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "space-list";
+		return "spaces";
 	}
 
 	@Override
 	protected String getLabelKey() {
-		return "space-list";
+		return "spaces";
 	}
 
 	@Override
 	protected String getModuleName() {
-		return "SpaceList";
+		return "Spaces";
 	}
 
 	@Override

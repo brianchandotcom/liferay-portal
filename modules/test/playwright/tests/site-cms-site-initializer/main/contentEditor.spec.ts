@@ -169,7 +169,7 @@ test(
 		await contentsPage.createContent(label);
 
 		const fragment = page.locator(
-			'[class*="spacelistcomponentsectionfragmentrenderer"]'
+			'[class*="spacescomponentsectionfragmentrenderer"]'
 		);
 
 		await fragment.waitFor();

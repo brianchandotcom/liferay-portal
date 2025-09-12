@@ -7,13 +7,13 @@ package com.clarity.solution;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONObject;
-
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -62,12 +62,13 @@ public class AccountCreationRequestProcessorService extends BaseService {
 		AccountCreationRequest accountCreationRequest) {
 
 		try {
+
 			String token = accountCreationRequest.getJwt(
 			).getTokenValue();
 
 			String authorizationHeader = "Bearer " + token;
 			String baseUrl = lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
-			
+
 			JSONObject jsonObject = new JSONObject(
 				accountCreationRequest.getAccountJSON());
 
@@ -83,7 +84,7 @@ public class AccountCreationRequestProcessorService extends BaseService {
 
 			String accountExternalReferenceCode =
 				"ACCOUNT_" +
-					StringUtils.replace(accountName.toUpperCase(), " ", "_");
+					StringUtils.replace(StringUtil.toUpperCase(accountName), " ", "_");
 
 			post(
 				authorizationHeader,

@@ -4139,7 +4139,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 >
 	<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
 		${schemaVarName}.getExternalReferenceCode()
-	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName) && !freeMarkerTool.isParameterNameScopeRelated(javaMethodParameter.parameterName)>
 		${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 		${schemaVarNameId}

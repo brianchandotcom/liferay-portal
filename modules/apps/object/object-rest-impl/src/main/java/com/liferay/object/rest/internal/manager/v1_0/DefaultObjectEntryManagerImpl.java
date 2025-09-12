@@ -1517,26 +1517,27 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey());
 					}
 
-					if (Objects.equals(
-							objectDefinition.getScope(),
-							ObjectDefinitionConstants.SCOPE_COMPANY) &&
-						!Objects.equals(
+					long groupId = 0;
+					String nestedScopeKey = scopeKey;
+
+					if (!Objects.equals(
 							relatedObjectDefinition.getScope(),
 							ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
-						scopeKey = MapUtil.getString(
-							nestedObjectEntry.getProperties(), "scopeKey",
-							null);
-					}
+						if (Objects.equals(
+								objectDefinition.getScope(),
+								ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
-					long groupId = 0;
+							nestedScopeKey = MapUtil.getString(
+								nestedObjectEntry.getProperties(), "scopeKey",
+								null);
 
-					if ((serviceBuilderObjectEntry.getGroupId() > 0) &&
-						Objects.equals(
-							relatedObjectDefinition.getScope(),
-							ObjectDefinitionConstants.SCOPE_SITE)) {
-
-						groupId = serviceBuilderObjectEntry.getGroupId();
+							groupId = getGroupId(
+								relatedObjectDefinition, nestedScopeKey);
+						}
+						else {
+							groupId = serviceBuilderObjectEntry.getGroupId();
+						}
 					}
 
 					if (LazyReferencingThreadLocal.isEnabled()) {
@@ -1555,7 +1556,7 @@ public class DefaultObjectEntryManagerImpl
 								dtoConverterContext,
 								nestedObjectEntry.getExternalReferenceCode(),
 								relatedObjectDefinition, nestedObjectEntry,
-								scopeKey);
+								nestedScopeKey);
 					}
 
 					if (!oneToManyObjectRelationship) {
@@ -1564,8 +1565,7 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey(),
 							nestedObjectEntry.getId(),
 							ServiceContextUtil.createServiceContext(
-								objectDefinition.getCompanyId(),
-								getGroupId(objectDefinition, scopeKey),
+								objectDefinition.getCompanyId(), groupId,
 								nestedObjectEntry,
 								dtoConverterContext.getUserId()));
 					}

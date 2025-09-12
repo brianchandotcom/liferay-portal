@@ -64,6 +64,8 @@ public class GetContentItemCommentStrutsAction implements StrutsAction {
 			return null;
 		}
 
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -75,8 +77,6 @@ public class GetContentItemCommentStrutsAction implements StrutsAction {
 		List<Comment> rootComments = _commentManager.getRootComments(
 			className1, classPK, WorkflowConstants.STATUS_ANY,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (Comment rootComment : rootComments) {
 			JSONObject commentJSONObject = CommentUtil.getCommentJSONObject(

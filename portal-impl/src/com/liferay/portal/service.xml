@@ -675,7 +675,7 @@
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
 		<finder name="G_P_L" return-type="Layout" unique="true">
 			<finder-column name="groupId" />

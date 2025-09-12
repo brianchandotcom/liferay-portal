@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountCreationRequestQueueManager {
+
 	public void awaitWork() throws InterruptedException {
 		_lock.lock();
 

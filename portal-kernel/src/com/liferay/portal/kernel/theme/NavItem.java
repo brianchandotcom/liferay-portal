@@ -51,7 +51,7 @@ public class NavItem implements Serializable {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		if (parentLayouts == null) {
+		if (ListUtil.isEmpty(parentLayouts)) {
 			return Collections.emptyList();
 		}
 
@@ -59,12 +59,16 @@ public class NavItem implements Serializable {
 			LayoutLocalServiceUtil.getLayoutChildLayouts(parentLayouts);
 
 		for (List<Layout> childLayouts : layoutChildLayouts.values()) {
+			Map<Layout, Layout> draftChildLayouts =
+				LayoutLocalServiceUtil.fetchDraftLayouts(childLayouts);
+
 			Iterator<Layout> iterator = childLayouts.iterator();
 
 			while (iterator.hasNext()) {
 				Layout childLayout = iterator.next();
 
-				if (_isContentLayoutDraft(childLayout) ||
+				if (_isContentLayoutDraft(
+						childLayout, draftChildLayouts.get(childLayout)) ||
 					!_isLayoutRevisionDisplayable(childLayout) ||
 					childLayout.isHidden() ||
 					!LayoutPermissionUtil.contains(
@@ -78,11 +82,15 @@ public class NavItem implements Serializable {
 
 		List<NavItem> navItems = new ArrayList<>(parentLayouts.size());
 
+		Map<Layout, Layout> draftParentLayouts =
+			LayoutLocalServiceUtil.fetchDraftLayouts(parentLayouts);
+
 		for (Layout parentLayout : parentLayouts) {
 			List<Layout> childLayouts = layoutChildLayouts.get(
 				parentLayout.getPlid());
 
-			if (_isContentLayoutDraft(parentLayout) ||
+			if (_isContentLayoutDraft(
+					parentLayout, draftParentLayouts.get(parentLayout)) ||
 				!_isLayoutRevisionDisplayable(parentLayout)) {
 
 				continue;
@@ -364,12 +372,12 @@ public class NavItem implements Serializable {
 			layout.getAncestorPlid());
 	}
 
-	private static boolean _isContentLayoutDraft(Layout layout) {
+	private static boolean _isContentLayoutDraft(
+		Layout layout, Layout draftLayout) {
+
 		if (!layout.isTypeContent()) {
 			return false;
 		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout != null) {
 			return !GetterUtil.getBoolean(

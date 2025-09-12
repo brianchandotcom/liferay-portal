@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -93,6 +94,16 @@ public class EmptyLayoutTypeControllerTest {
 					_getMockHttpServletRequest(
 						_layout.getFriendlyURL(), TestPropsValues.getUser()),
 					new MockHttpServletResponse(), _layout));
+
+			Assert.assertFalse(
+				_layoutTypeController.includeLayoutContent(
+					_getMockHttpServletRequest(
+						_layout.getFriendlyURL(),
+						_userLocalService.getGuestUser(
+							TestPropsValues.getCompanyId())),
+					new MockHttpServletResponse(), _layout));
+
+			Assert.fail();
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
 			if (_log.isDebugEnabled()) {
@@ -180,5 +191,8 @@ public class EmptyLayoutTypeControllerTest {
 
 	private LayoutTypeController _layoutTypeController;
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

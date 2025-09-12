@@ -14,11 +14,23 @@ const accountSelectorDropdownNextButton = fragmentElement.querySelector(
 const accountSelectorDropdownPrevButton = fragmentElement.querySelector(
 	`#${fragmentEntryLinkNamespace}-account-selector-dropdown-prev-button`
 );
+const accountSelectorPanelTitle = fragmentElement.querySelector(
+	`#${fragmentEntryLinkNamespace}-account-selector-panel-title`
+);
 const panels = Array.from(
 	fragmentElement.querySelectorAll('.account-selector-panel-content')
-).map((value, index) => ({index, value}));
+).map((value, index) => {
+	return {
+		index,
+		key: value.querySelector('.account-selector-panel-title')?.dataset
+			.accountSelectorKey,
+		value,
+	};
+});
 
 if (layoutMode !== 'edit') {
+	handleTitleChange(panels[0]);
+
 	const accountSelectorDropdownMenu = fragmentElement.querySelector(
 		`#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu`
 	);
@@ -39,6 +51,12 @@ if (layoutMode !== 'edit') {
 
 		handleNav(step, step - 1);
 	});
+}
+
+function handleTitleChange(panel) {
+	accountSelectorPanelTitle.innerHTML = panel.value.querySelector(
+		'.account-selector-panel-title'
+	)?.innerHTML;
 }
 
 function handleNav(step, nextStep) {
@@ -67,4 +85,6 @@ function handleNav(step, nextStep) {
 	panels[step].value.classList.add('d-none');
 
 	panel.value.classList.remove('d-none');
+
+	handleTitleChange(panel);
 }

@@ -8,6 +8,7 @@ import path from 'path';
 
 import {BUILD_NPM_EXPORTS_PATH} from '../../util/constants.mjs';
 import getFlatName from '../../util/getFlatName.mjs';
+import getCSSLoadJavaScript from '../util/getCSSLoadJavaScript.mjs';
 
 export default async function writeCSSExportsLoaderModules(
 	projectExports,
@@ -34,18 +35,12 @@ async function writeCSSExportLoaderModule(webContextPath, moduleName) {
 		`${flatModuleName}.js`
 	);
 
-	const source = `
-const link = document.createElement('link');
-link.setAttribute('rel','stylesheet');
-link.setAttribute('type','text/css');
-link.setAttribute('href', Liferay.ThemeDisplay.getPathContext() + '/o${webContextPath}/__liferay__/css/${flatModuleName}');
-if (Liferay.CSP) {
-	link.setAttribute('nonce', Liferay.CSP.nonce);
-}
-
-document.querySelector('head').appendChild(link);
-`;
-
 	await fs.mkdir(path.dirname(cssLoaderPath), {recursive: true});
-	await fs.writeFile(cssLoaderPath, source);
+	await fs.writeFile(
+		cssLoaderPath,
+		getCSSLoadJavaScript(
+			webContextPath,
+			`__liferay__/css/${flatModuleName}`
+		)
+	);
 }

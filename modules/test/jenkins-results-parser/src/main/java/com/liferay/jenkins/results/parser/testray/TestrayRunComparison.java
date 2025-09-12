@@ -224,14 +224,10 @@ public class TestrayRunComparison {
 
 	private static final String _STATUS_UNTESTED = "UNTESTED";
 
-	private static final String[] _STATUSES;
-
-	static {
-		_STATUSES = new String[] {
-			_STATUS_BLOCKED, _STATUS_DID_NOT_RUN, _STATUS_FAILED,
-			_STATUS_PASSED, _STATUS_TEST_FIX, _STATUS_UNTESTED
-		};
-	}
+	private static final String[] _STATUSES = {
+		_STATUS_BLOCKED, _STATUS_DID_NOT_RUN, _STATUS_FAILED, _STATUS_PASSED,
+		_STATUS_TEST_FIX, _STATUS_UNTESTED
+	};
 
 	private JSONObject _jsonObject;
 	private long _newFailureTestCount = 0L;

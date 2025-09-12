@@ -40,7 +40,6 @@ import com.liferay.trash.TrashHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -78,14 +77,22 @@ public class ViewRecycleBinSectionDisplayContext
 	}
 
 	public Map<String, Object> getBreadcrumbProps() {
-		if (objectEntryFolder == null) {
-			return Collections.emptyMap();
-		}
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		if (objectEntryFolder == null) {
+			addBreadcrumbItem(
+				jsonArray, false, null,
+				language.get(themeDisplay.getLocale(), "recycle-bin"));
+
+			return HashMapBuilder.<String, Object>put(
+				"breadcrumbItems", jsonArray
+			).put(
+				"hideSpace", true
+			).build();
+		}
+
 		addBreadcrumbItem(
-			jsonArray, false, ActionUtil.getRecycleBinURL(themeDisplay),
+			jsonArray, false, null,
 			language.get(themeDisplay.getLocale(), "recycle-bin"));
 
 		for (String objectEntryFolderId :
@@ -134,7 +141,7 @@ public class ViewRecycleBinSectionDisplayContext
 					unicodeProperties.get("logoColor"), "outline-0");
 			}
 		).put(
-			"size", "sm"
+			"size", "md"
 		).build();
 	}
 

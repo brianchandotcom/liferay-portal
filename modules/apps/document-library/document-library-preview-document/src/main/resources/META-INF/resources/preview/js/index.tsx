@@ -8,7 +8,6 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
 import '@liferay/document-library-preview-css';
@@ -20,7 +19,6 @@ const KEY_CODE_ESC = 27;
 /**
  * Valid list of keycodes
  * Includes backspace, tab, arrows, delete and numbers
- * @type {Array<number>}
  */
 const VALID_KEY_CODES = [
 	8, 9, 37, 38, 39, 40, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57,
@@ -28,57 +26,71 @@ const VALID_KEY_CODES = [
 
 /**
  * Milisecons between goToPage calls
- * @type {number}
  */
 const WAIT_BETWEEN_GO_TO_PAGE = 250;
 
-/**
- * Component that creates a pdf preview
- * @review
- */
+type DocumentPreviewerProps = {
+	alt: string;
+	baseImageURL: string;
+	initialPage: number;
+	totalPages: number;
+};
 
-const DocumentPreviewer = ({alt, baseImageURL, initialPage, totalPages}) => {
+type LoadedPage = {
+	loaded: boolean;
+	pagePromise: Promise<void>;
+};
+
+const DocumentPreviewer = ({
+	alt,
+	baseImageURL,
+	initialPage,
+	totalPages,
+}: DocumentPreviewerProps) => {
 	const [currentPage, setCurrentPage] = useState(initialPage);
 	const [currentPageLoading, setCurrentPageLoading] = useState(false);
 	const [expanded, setExpanded] = useState(false);
-	const [loadedPages] = useState({
+	const [loadedPages] = useState<Record<number, LoadedPage>>({
 		[currentPage]: {
 			loaded: true,
 			pagePromise: Promise.resolve(),
 		},
 	});
-	const [nextPageDisabled, setNextPageDisabled] = useState(
+	const [nextPageDisabled, setNextPageDisabled] = useState<boolean>(
 		currentPage === totalPages
 	);
-	const [previousPageDisabled, setPreviousPageDisabled] = useState(
+	const [previousPageDisabled, setPreviousPageDisabled] = useState<boolean>(
 		currentPage === 1
 	);
-	const [showPageInput, setShowPageInput] = useState(false);
+	const [showPageInput, setShowPageInput] = useState<boolean>(false);
 
-	const imageContainerRef = useRef();
-	const pageInputRef = useRef();
-	const showPageInputButtonRef = useRef();
+	const imageContainerRef = useRef<HTMLDivElement>(null);
+	const pageInputRef = useRef<HTMLInputElement>(null);
+	const showPageInputButtonRef = useRef<HTMLButtonElement>(null);
 
 	const isMounted = useIsMounted();
 
-	if (showPageInput) {
-		setTimeout(() => {
-			if (isMounted()) {
-				pageInputRef.current.focus();
-			}
-		}, 100);
-	}
+	useEffect(() => {
+		if (showPageInput) {
+			const timer = setTimeout(() => {
+				if (isMounted() && pageInputRef.current) {
+					pageInputRef.current.focus();
+				}
+			}, 100);
 
-	const createImageURL = (page) => {
+			return () => clearTimeout(timer);
+		}
+	}, [showPageInput, isMounted]);
+
+	const createImageURL = (page: number): string => {
 		const imageURL = new URL(baseImageURL);
-
-		imageURL.searchParams.set('previewFileIndex', page);
+		imageURL.searchParams.set('previewFileIndex', String(page));
 
 		return imageURL.toString();
 	};
 
-	const loadPage = (page) => {
-		let pagePromise = loadedPages[page] && loadedPages[page].pagePromise;
+	const loadPage = (page: number): Promise<void> => {
+		let pagePromise = loadedPages[page]?.pagePromise;
 
 		if (!pagePromise) {
 			const image = new Image();
@@ -97,23 +109,21 @@ const DocumentPreviewer = ({alt, baseImageURL, initialPage, totalPages}) => {
 		return pagePromise;
 	};
 
-	const loadAdjacentPages = (page, adjacentPageCount = 2) => {
+	const loadAdjacentPages = (page: number, adjacentPageCount = 2) => {
 		for (let i = 1; i <= adjacentPageCount; i++) {
 			if (page + i <= totalPages) {
 				loadPage(page + i);
 			}
-
 			if (page - i > 1) {
 				loadPage(page - i);
 			}
 		}
 	};
 
-	const loadCurrentPage = debounce((page) => {
+	const loadCurrentPage = debounce((page: number) => {
 		loadPage(page)
 			.then(() => {
 				loadAdjacentPages(page);
-
 				setCurrentPageLoading(false);
 			})
 			.catch(() => {
@@ -121,24 +131,24 @@ const DocumentPreviewer = ({alt, baseImageURL, initialPage, totalPages}) => {
 			});
 	}, WAIT_BETWEEN_GO_TO_PAGE);
 
-	const goToPage = (page) => {
+	const goToPage = (page: number) => {
 		setNextPageDisabled(page === totalPages);
 		setPreviousPageDisabled(page === 1);
 
 		if (!loadedPages[page] || !loadedPages[page].loaded) {
 			setCurrentPageLoading(true);
-
 			loadCurrentPage(page);
 		}
 
-		imageContainerRef.current.scrollTop = 0;
+		if (imageContainerRef.current) {
+			imageContainerRef.current.scrollTop = 0;
+		}
 
 		setCurrentPage(page);
 	};
 
-	const processPageInput = (value) => {
+	const processPageInput = (value: string) => {
 		let pageNumber = Number.parseInt(value, 10);
-
 		pageNumber = pageNumber
 			? Math.min(Math.max(1, pageNumber), totalPages)
 			: currentPage;
@@ -151,25 +161,25 @@ const DocumentPreviewer = ({alt, baseImageURL, initialPage, totalPages}) => {
 
 		if (returnFocus) {
 			setTimeout(() => {
-				if (isMounted()) {
+				if (isMounted() && showPageInputButtonRef.current) {
 					showPageInputButtonRef.current.focus();
 				}
 			}, 100);
 		}
 	};
 
-	const handleBlurPageInput = (event) => {
+	const handleBlurPageInput = (event: React.FocusEvent<HTMLInputElement>) => {
 		processPageInput(event.currentTarget.value);
-
 		hidePageInput(false);
 	};
 
-	const handleKeyDownPageInput = (event) => {
+	const handleKeyDownPageInput = (
+		event: React.KeyboardEvent<HTMLInputElement>
+	) => {
 		const code = event.keyCode || event.charCode;
 
 		if (code === KEY_CODE_ENTER) {
 			processPageInput(event.currentTarget.value);
-
 			hidePageInput();
 		}
 		else if (code === KEY_CODE_ESC) {
@@ -215,8 +225,11 @@ const DocumentPreviewer = ({alt, baseImageURL, initialPage, totalPages}) => {
 							}}
 							ref={showPageInputButtonRef}
 							title={
-								totalPages > 1 &&
-								Liferay.Language.get('click-to-jump-to-a-page')
+								totalPages > 1
+									? Liferay.Language.get(
+											'click-to-jump-to-a-page'
+										)
+									: undefined
 							}
 						>
 							{`${Liferay.Language.get(
@@ -272,7 +285,7 @@ const DocumentPreviewer = ({alt, baseImageURL, initialPage, totalPages}) => {
 						className="btn-floating-bar"
 						monospaced
 						onClick={() => {
-							setExpanded(!expanded);
+							setExpanded((expanded) => !expanded);
 						}}
 						title={
 							expanded
@@ -288,12 +301,6 @@ const DocumentPreviewer = ({alt, baseImageURL, initialPage, totalPages}) => {
 			</div>
 		</div>
 	);
-};
-
-DocumentPreviewer.propTypes = {
-	baseImageURL: PropTypes.string,
-	initialPage: PropTypes.number,
-	totalPages: PropTypes.number,
 };
 
 export {DocumentPreviewer};

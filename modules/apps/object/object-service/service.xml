@@ -249,6 +249,7 @@
 
 		<!-- Other fields -->
 
+		<column name="headObjectEntryId" type="long" />
 		<column name="objectDefinitionId" type="long" />
 		<column name="objectEntryFolderId" type="long" />
 		<column name="rootObjectEntryId" type="long" />
@@ -272,6 +273,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="HeadObjectEntryId" return-type="ObjectEntry" where="objectEntryId != headObjectEntryId">
+			<finder-column name="headObjectEntryId" />
+		</finder>
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 		</finder>

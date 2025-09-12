@@ -12,7 +12,7 @@ function main {
 
     git pull origin {{ .Values.git.repository.branch }}
 
-    echo '{{ "{{" }}inputs.parameters.tfvars-content}}' > {{ .Values.tfvarsOverrideFileName }}
+    echo "{{ "{{" }}inputs.parameters.tfvars-content}}" > {{ .Values.tfvarsOverrideFileName }}
 
     git add {{ .Values.tfvarsOverrideFileName }}
 

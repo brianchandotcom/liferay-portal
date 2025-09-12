@@ -120,7 +120,7 @@ spec:
                                     value: Clean up inactive RDS instance
                                 -   name: tfvars-content
                                     value: |-
-                                        data_active = "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-inactive}}"
+                                        data_active = \"{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-inactive}}\"
                                         is_restoring = false
                         depends: restart-liferay
                         name: clean-up-rds-instance
@@ -153,8 +153,8 @@ spec:
                                     value: Provision inactive RDS instance from database snapshot identifier
                                 -   name: tfvars-content
                                     value: |-
-                                        data_active = "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-active}}"
-                                        db_restore_snapshot_identifier = "{{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.rds-snapshot-id}}"
+                                        data_active = \"{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-active}}\"
+                                        db_restore_snapshot_identifier = \"{{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.rds-snapshot-id}}\"
                                         is_restoring = true
                         depends: get-dependencies-module-outputs && get-peer-recovery-points
                         name: restore-rds-instance
@@ -177,7 +177,7 @@ spec:
                                     value: Roll back failed restore
                                 -   name: tfvars-content
                                     value: |-
-                                        data_active = "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-active}}"
+                                        data_active = \"{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-active}}\"
                                         is_restoring = false
                         depends: restore-rds-instance.Succeeded && !restart-liferay.Succeeded
                         name: roll-back-failed-restore
@@ -191,7 +191,7 @@ spec:
                                     value: Update Liferay configuration to restored data plane
                                 -   name: tfvars-content
                                     value: |-
-                                        data_active = "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-inactive}}"
+                                        data_active = \"{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-inactive}}\"
                                         db_restore_snapshot_identifier = null
                                         is_restoring = true
                         depends: restore-rds-instance && restore-s3-bucket

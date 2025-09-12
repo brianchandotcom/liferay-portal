@@ -16,9 +16,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ExtendedObjectClassDefinition(category = "search")
 @Meta.OCD(
-	id = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
+	id = "com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration",
 	localization = "content/Language",
-	name = "elasticsearch7-configuration-name"
+	name = "elasticsearch8-configuration-name"
 )
 @ProviderType
 public interface ElasticsearchConfiguration {

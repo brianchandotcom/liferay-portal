@@ -12,8 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONObject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -62,12 +62,12 @@ public class AccountCreationRequestProcessorService extends BaseService {
 		AccountCreationRequest accountCreationRequest) {
 
 		try {
-			
 			String token = accountCreationRequest.getJwt(
 			).getTokenValue();
 
 			String authorizationHeader = "Bearer " + token;
 			String baseUrl = lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
+			
 			JSONObject jsonObject = new JSONObject(
 				accountCreationRequest.getAccountJSON());
 
@@ -178,7 +178,7 @@ public class AccountCreationRequestProcessorService extends BaseService {
 			});
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AccountCreationRequestProcessorService.class);
 
 	private final AccountCreationRequestQueueManager _queueManager;

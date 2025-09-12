@@ -69,7 +69,6 @@ public class HttpServletEndpointController {
 		if (parentServletContextTempDir != null) {
 			parentServletContextTempDir = new File(
 				parentServletContextTempDir,
-				org.eclipse.equinox.http.servlet.internal.
 					HttpServletEndpointController.class.getName() + hashCode());
 
 			_parentServletContextTempDir = parentServletContextTempDir;

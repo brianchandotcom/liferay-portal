@@ -17,6 +17,7 @@ import {SectionHeader} from './components/SectionHeader';
 import {SpacesDropdown} from './components/SpacesDropdown';
 
 import '../../../css/dashboard/Dashboard.scss';
+import Breadcrumb from '../../common/components/Breadcrumb';
 
 interface IViewDashboard {
 	constants: {
@@ -26,76 +27,77 @@ interface IViewDashboard {
 
 const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 	return (
-		<ViewDashboardContextProvider value={{constants}}>
-			<ClayLayout.Container className="p-5" fluid>
-				<ClayLayout.Row className="mb-5">
-					<ClayLayout.Col size={12}>
-						<Text size={7} weight="bold">
-							{Liferay.Language.get('dashboard')}
-						</Text>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
+		<>
+			<Breadcrumb
+				hideSpace
+				breadcrumbItems={[{label: Liferay.Language.get('dashboard')}]}
+			/>
 
-				<ClayLayout.Row className="mb-4">
-					<ClayLayout.Col size={12}>
-						<div className="d-flex">
-							<SpacesDropdown className="mr-3" />
+			<ViewDashboardContextProvider value={{constants}}>
+				<ClayLayout.Container className="px-4" fluid>
+					<ClayLayout.Row className="mb-4">
+						<ClayLayout.Col size={12}>
+							<div className="d-flex">
+								<SpacesDropdown className="mr-3" />
 
-							<LanguagesDropdown />
-						</div>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
+								<LanguagesDropdown />
+							</div>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 
-				<ClayLayout.Row className="mb-2">
-					<ClayLayout.Col size={12}>
-						<SectionHeader
-							icon="plus-squares"
-							title={Liferay.Language.get('what-is-new')}
-						/>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
+					<ClayLayout.Row className="mb-2">
+						<ClayLayout.Col size={12}>
+							<SectionHeader
+								icon="plus-squares"
+								title={Liferay.Language.get('what-is-new')}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 
-				<ClayLayout.Row className="mb-4">
-					<ClayLayout.Col className="mb-3" lg={12} xl={6}>
-						<ContentCard />
-					</ClayLayout.Col>
+					<ClayLayout.Row className="mb-4">
+						<ClayLayout.Col className="mb-3" lg={12} xl={6}>
+							<ContentCard />
+						</ClayLayout.Col>
 
-					<ClayLayout.Col className="mb-3" lg={12} xl={6}>
-						<FilesCard />
-					</ClayLayout.Col>
-				</ClayLayout.Row>
+						<ClayLayout.Col className="mb-3" lg={12} xl={6}>
+							<FilesCard />
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 
-				<ClayLayout.Row className="mb-2">
-					<ClayLayout.Col size={12}>
-						<SectionHeader
-							icon="diagram"
-							title={Liferay.Language.get('assets-distributions')}
-						/>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
+					<ClayLayout.Row className="mb-2">
+						<ClayLayout.Col size={12}>
+							<SectionHeader
+								icon="diagram"
+								title={Liferay.Language.get(
+									'assets-distributions'
+								)}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 
-				<ClayLayout.Row className="mb-4">
-					<ClayLayout.Col size={12}>
-						<InventoryAnalysisCard />
-					</ClayLayout.Col>
-				</ClayLayout.Row>
+					<ClayLayout.Row className="mb-4">
+						<ClayLayout.Col size={12}>
+							<InventoryAnalysisCard />
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 
-				<ClayLayout.Row className="mb-2">
-					<ClayLayout.Col size={12}>
-						<SectionHeader
-							icon="order-form-pencil"
-							title={Liferay.Language.get('health-and-usage')}
-						/>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
+					<ClayLayout.Row className="mb-2">
+						<ClayLayout.Col size={12}>
+							<SectionHeader
+								icon="order-form-pencil"
+								title={Liferay.Language.get('health-and-usage')}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 
-				<ClayLayout.Row className="mb-4">
-					<ClayLayout.Col size={12}>
-						<ExpiredAssetsCard />
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			</ClayLayout.Container>
-		</ViewDashboardContextProvider>
+					<ClayLayout.Row className="mb-4">
+						<ClayLayout.Col size={12}>
+							<ExpiredAssetsCard />
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				</ClayLayout.Container>
+			</ViewDashboardContextProvider>
+		</>
 	);
 };
 

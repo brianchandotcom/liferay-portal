@@ -205,6 +205,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -2095,6 +2096,16 @@ public class ObjectDefinitionLocalServiceImpl
 			).build());
 	}
 
+	private int _countObjectDefinitionByClassName(String className) {
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> atomicInteger.addAndGet(
+				objectDefinitionPersistence.countByClassName(className)));
+
+		return atomicInteger.get();
+	}
+
 	private void _createLocalizationTable(
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizedTable) {
@@ -2169,14 +2180,16 @@ public class ObjectDefinitionLocalServiceImpl
 	private String _getClassName(
 		String className, boolean modifiable, boolean system) {
 
-		ObjectDefinition existingObjectDefinition =
-			objectDefinitionPersistence.fetchByClassName(className);
-
-		if ((Validator.isNotNull(className) &&
-			 (existingObjectDefinition == null)) ||
-			_isUnmodifiableSystemObject(modifiable, system)) {
-
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
 			return className;
+		}
+
+		if (Validator.isNotNull(className)) {
+			int count = _countObjectDefinitionByClassName(className);
+
+			if (count == 0) {
+				return className;
+			}
 		}
 
 		while (true) {
@@ -2194,17 +2207,12 @@ public class ObjectDefinitionLocalServiceImpl
 			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
 			sb.append(threadLocalRandom.nextInt(10));
 
-			existingObjectDefinition =
-				objectDefinitionPersistence.fetchByClassName(sb.toString());
+			int count = _countObjectDefinitionByClassName(sb.toString());
 
-			if (existingObjectDefinition == null) {
-				className = sb.toString();
-
-				break;
+			if (count == 0) {
+				return sb.toString();
 			}
 		}
-
-		return className;
 	}
 
 	private String _getDBTableName(

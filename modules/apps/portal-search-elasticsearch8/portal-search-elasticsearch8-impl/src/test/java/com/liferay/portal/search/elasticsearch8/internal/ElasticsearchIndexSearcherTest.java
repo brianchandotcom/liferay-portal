@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.constants.SearchContextAttributes;
-import com.liferay.portal.search.elasticsearch7.constants.ElasticsearchSearchContextAttributes;
+import com.liferay.portal.search.elasticsearch8.constants.ElasticsearchSearchContextAttributes;
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;

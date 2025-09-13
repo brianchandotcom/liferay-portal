@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import java.util.Arrays;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -68,11 +67,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Marco Galluzzi
@@ -647,25 +644,25 @@ public abstract class BaseSectionDisplayContext {
 		).put(
 			"roles",
 			() -> TransformUtil.transformToArray(
-					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-						themeDisplay.getCompanyId(), null,
-						Arrays.asList(
-							RoleConstants.ADMINISTRATOR,
-							RoleConstants.SITE_ADMINISTRATOR,
-							RoleConstants.SITE_OWNER), null,
-						null,
-						new int[] {
-							RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
-						},
-						0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					role -> HashMapBuilder.put(
-						"key", role.getName()
-					).put(
-						"name", role.getTitle(themeDisplay.getLocale())
-					).put(
-						"type", String.valueOf(role.getType())
-					).build(),
-					Map.class)
+				RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+					themeDisplay.getCompanyId(), null,
+					Arrays.asList(
+						RoleConstants.ADMINISTRATOR,
+						RoleConstants.SITE_ADMINISTRATOR,
+						RoleConstants.SITE_OWNER),
+					null, null,
+					new int[] {
+						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
+					},
+					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				role -> HashMapBuilder.put(
+					"key", role.getName()
+				).put(
+					"name", role.getTitle(themeDisplay.getLocale())
+				).put(
+					"type", String.valueOf(role.getType())
+				).build(),
+				Map.class)
 		).build();
 	}
 

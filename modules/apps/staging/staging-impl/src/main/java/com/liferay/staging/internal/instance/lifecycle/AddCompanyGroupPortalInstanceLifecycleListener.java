@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -58,7 +59,8 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 			FeatureFlagListener.class,
 			(companyId, featureFlagKey, enabled) -> {
 				if (enabled) {
-					_addCompanyGroup(companyId);
+					_companyLocalService.forEachCompanyId(
+						this::_addCompanyGroup);
 				}
 			},
 			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));
@@ -110,6 +112,9 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddCompanyGroupPortalInstanceLifecycleListener.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

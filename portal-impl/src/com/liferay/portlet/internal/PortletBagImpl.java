@@ -262,21 +262,7 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public PortletDataHandler getPortletDataHandlerInstance(long companyId) {
-		Snapshot<PortletDataHandler> portletDataHandlerSnapshot =
-			new Snapshot<>(
-				PortletBagImpl.class, PortletDataHandler.class,
-				StringBundler.concat(
-					"(&", _filterString, "(company.id=", companyId, "))"),
-				true);
-
-		PortletDataHandler portletDataHandler =
-			portletDataHandlerSnapshot.get();
-
-		if (portletDataHandler != null) {
-			return portletDataHandler;
-		}
-
+	public PortletDataHandler getPortletDataHandlerInstance() {
 		return _portletDataHandlerSnapshot.get();
 	}
 

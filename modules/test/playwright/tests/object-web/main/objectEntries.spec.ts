@@ -19,6 +19,7 @@ import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTe
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -55,6 +56,7 @@ const test = mergeTests(
 	applicationsMenuPageTest,
 	apiHelpersTest,
 	collectionsPagesTest,
+	commercePagesTest,
 	dataApiHelpersTest,
 	isolatedSiteTest,
 	editObjectDefinitionPagesTest,
@@ -2031,6 +2033,142 @@ test.describe('Manage object entries through View Object Entries', () => {
 			page.locator('td').getByText('test 2', {exact: true})
 		).toBeVisible();
 	});
+
+	test(
+		'different versions of Commerce Products have same input values when used as relationship of an object entry',
+		{tag: '@LPD-65249'},
+		async ({
+			apiHelpers,
+			commerceCatalogSystemSettingsPage,
+			page,
+			viewObjectEntriesPage,
+		}) => {
+			const objectDefinitionLabel =
+				'ObjectDefinitionLabel' + getRandomInt();
+
+			const objectDefinitionName =
+				'ObjectDefinitionName' + getRandomInt();
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					label: {
+						en_US: objectDefinitionLabel,
+					},
+					name: objectDefinitionName,
+					objectFields,
+					pluralLabel: {
+						en_US: objectDefinitionLabel,
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipLabel =
+				'objectRelationshipLabel' + getRandomInt();
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				'L_COMMERCE_PRODUCT_DEFINITION',
+				{
+					label: {
+						en_US: objectRelationshipLabel,
+					},
+					name: 'objectRelationshipName',
+					objectDefinitionExternalReferenceCode1:
+						'L_COMMERCE_PRODUCT_DEFINITION',
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					type: 'oneToMany',
+				}
+			);
+
+			const catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+			const productVersion1 =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+				});
+
+			await commerceCatalogSystemSettingsPage.toggleProductVersioning();
+
+			await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
+				productVersion1.productId.toString()
+			);
+
+			const productVersion2 =
+				await apiHelpers.headlessCommerceAdminCatalog.getProductByVersion(
+					productVersion1.productId,
+					2
+				);
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.selectDropdownItemWithSearch(
+				productVersion1.name['en_US']
+			);
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+			const fieldContainer = page.locator(
+				'[data-field-name="r_objectRelationshipName_CProductId"]'
+			);
+
+			const productVersion1Value = await fieldContainer
+				.locator('input[type="hidden"][name]:not([name$="_edited"])')
+				.inputValue();
+
+			await viewObjectEntriesPage.selectDropdownItemWithSearch(
+				productVersion2.name['en_US']
+			);
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+			const productVersion2Value = await fieldContainer
+				.locator('input[type="hidden"][name]:not([name$="_edited"])')
+				.inputValue();
+
+			await expect(productVersion2Value).toEqual(productVersion1Value);
+
+			await apiHelpers.headlessCommerceAdminCatalog.deleteProductByVersion(
+				productVersion1.productId,
+				2
+			);
+
+			await apiHelpers.headlessCommerceAdminCatalog.deleteProductByVersion(
+				productVersion1.productId,
+				1
+			);
+
+			await commerceCatalogSystemSettingsPage.toggleProductVersioning();
+		}
+	);
 
 	test(
 		'error message is displayed when trying to view a deleted object entry with a user with view-only permissions',

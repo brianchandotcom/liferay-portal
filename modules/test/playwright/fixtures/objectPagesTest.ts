@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {SystemSettingsPage} from '../pages/configuration-admin-web/SystemSettingsPage';
 import {EditObjectDefinitionPage} from '../pages/object-web/EditObjectDefinitionPage';
 import {ModalAddObjectDefinitionPage} from '../pages/object-web/ModalAddObjectDefinitionPage';
@@ -30,6 +31,7 @@ import {ObjectViewPage} from '../pages/object-web/object-view/ObjectViewsPage';
 
 const objectPagesTest = test.extend<{
 	addNewObjectRelationshipModalPage: AddNewObjectRelationshipModalPage;
+	commerceCatalogSystemSettingsPage: CommerceCatalogSystemSettingsPage;
 	editObjectDefinitionPage: EditObjectDefinitionPage;
 	editObjectDetailsPage: EditObjectDetailsPage;
 	editObjectValidationPage: EditObjectValidationPage;

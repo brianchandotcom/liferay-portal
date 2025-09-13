@@ -405,6 +405,16 @@ public class DefaultObjectEntryManagerImplTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
 		listTypeDefinition =
 			listTypeDefinitionLocalService.addListTypeDefinition(
 				null, adminUser.getUserId(),
@@ -944,6 +954,31 @@ public class DefaultObjectEntryManagerImplTest
 		_objectDefinition5 =
 			objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition5);
+
+		_objectDefinition6 = _addObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinition6.setEnableObjectEntryVersioning(true);
+
+		_objectDefinition6 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition6);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			_objectDefinition6.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+			String.valueOf(_depotEntry.getGroupId()));
 
 		_accountAdministratorRole = _roleLocalService.getRole(
 			companyId,
@@ -5523,21 +5558,11 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testGetObjectEntriesWithScopeDepot() throws Exception {
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_ASSET_LIBRARY,
-			ServiceContextTestUtil.getServiceContext());
-
 		Group group = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), group.getGroupId());
+			_depotEntry.getDepotEntryId(), group.getGroupId());
 
 		_defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
@@ -5553,27 +5578,8 @@ public class DefaultObjectEntryManagerImplTest
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_objectDefinition2 = _addObjectDefinition(
-			Arrays.asList(
-				new TextObjectFieldBuilder(
-				).indexed(
-					true
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"textObjectFieldName"
-				).build()),
-			ObjectDefinitionConstants.SCOPE_DEPOT);
-
-		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-			TestPropsValues.getUserId(),
-			_objectDefinition2.getObjectDefinitionId(),
-			ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
-			String.valueOf(depotEntry.getGroupId()));
-
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition2,
+			_simpleDTOConverterContext, _objectDefinition6,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
@@ -5581,10 +5587,10 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			},
-			String.valueOf(depotEntry.getGroupId()));
+			String.valueOf(_depotEntry.getGroupId()));
 
 		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition2, group.getGroupKey(), null,
+			companyId, _objectDefinition6, group.getGroupKey(), null,
 			dtoConverterContext, StringPool.BLANK, null, StringPool.BLANK,
 			new Sort[] {SortFactoryUtil.create("createDate", false)});
 
@@ -10393,6 +10399,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	private Role _buyerRole;
 
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
 	@Inject
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
@@ -10448,6 +10457,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition5;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition6;
 
 	@Inject
 	private ObjectDefinitionSettingLocalService

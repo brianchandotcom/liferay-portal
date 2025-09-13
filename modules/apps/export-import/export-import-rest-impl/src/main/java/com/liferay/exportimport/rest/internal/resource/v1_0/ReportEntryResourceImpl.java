@@ -80,9 +80,7 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35914")) {
-
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			throw new NotFoundException();
 		}
 
@@ -127,9 +125,7 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 
 	@Override
 	public ReportEntry getReportEntry(Long reportEntryId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35914")) {
-
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			throw new NotFoundException();
 		}
 

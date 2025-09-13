@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -101,14 +101,13 @@ public class BatchEnginePortletDataHandlerRegistry {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private volatile ServiceRegistration<FeatureFlagListener>
-		_serviceRegistration;
+	private ServiceRegistration<FeatureFlagListener> _serviceRegistration;
 	private final Map
 		<Long,
 		 ServiceTracker
 			 <VulcanBatchEngineTaskItemDelegate,
 			  ServiceRegistration<PortletDataHandler>>> _serviceTrackers =
-				new ConcurrentHashMap<>();
+				new HashMap<>();
 
 	@Reference
 	private UserLocalService _userLocalService;

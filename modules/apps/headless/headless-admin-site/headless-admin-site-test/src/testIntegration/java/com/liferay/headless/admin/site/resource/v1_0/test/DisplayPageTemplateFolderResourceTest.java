@@ -39,6 +39,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -337,6 +338,10 @@ public class DisplayPageTemplateFolderResourceTest
 		DisplayPageTemplateFolder displayPageTemplateFolder =
 			super.randomDisplayPageTemplateFolder();
 
+		displayPageTemplateFolder.setDateCreated(
+			new Date(System.currentTimeMillis()));
+		displayPageTemplateFolder.setDateModified(
+			new Date(System.currentTimeMillis()));
 		displayPageTemplateFolder.
 			setParentDisplayPageTemplateFolderExternalReferenceCode(
 				(String)null);

@@ -292,6 +292,16 @@ public class PageTemplateSetResourceTest
 		return new String[] {"description", "externalReferenceCode", "name"};
 	}
 
+	@Override
+	protected PageTemplateSet randomPageTemplateSet() throws Exception {
+		PageTemplateSet pageTemplateSet = super.randomPageTemplateSet();
+
+		pageTemplateSet.setDateCreated(new Date(System.currentTimeMillis()));
+		pageTemplateSet.setDateModified(new Date(System.currentTimeMillis()));
+
+		return pageTemplateSet;
+	}
+
 	@Ignore
 	@Override
 	@Test

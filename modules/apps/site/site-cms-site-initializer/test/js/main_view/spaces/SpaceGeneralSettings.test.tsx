@@ -35,6 +35,8 @@ const SPACE: Partial<Space> = {
 		logoColor: 'outline-2',
 		mimeTypeLimits: [{maximumSize: 1024, mimeType: 'application/json'}],
 		sharingEnabled: true,
+		trashEnabled: true,
+		trashEntriesMaxAge: 0,
 	},
 };
 

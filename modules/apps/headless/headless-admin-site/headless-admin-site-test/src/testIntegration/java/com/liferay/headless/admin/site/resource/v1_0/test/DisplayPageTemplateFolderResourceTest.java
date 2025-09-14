@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
+import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -190,6 +192,33 @@ public class DisplayPageTemplateFolderResourceTest
 		throws Exception {
 
 		super.testGetSiteDisplayPageTemplateFolderPermissionsPage();
+	}
+
+	@Override
+	@Test
+	public void testGetSiteDisplayPageTemplateFoldersPage() throws Exception {
+		super.testGetSiteDisplayPageTemplateFoldersPage();
+
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			randomDisplayPageTemplateFolder();
+
+		displayPageTemplateFolder.setDateModified(
+			new Date(System.currentTimeMillis() - Time.DAY));
+
+		displayPageTemplateFolderResource.postSiteDisplayPageTemplateFolder(
+			testGroup.getExternalReferenceCode(), displayPageTemplateFolder);
+
+		Page<DisplayPageTemplateFolder> page =
+			displayPageTemplateFolderResource.
+				getSiteDisplayPageTemplateFoldersPage(
+					testGroup.getExternalReferenceCode(), null, null,
+					"dateModified le " +
+						new Date(
+							System.currentTimeMillis() - Time.DAY
+						).toInstant(),
+					null, null);
+
+		Assert.assertEquals(1, page.getTotalCount());
 	}
 
 	@Override

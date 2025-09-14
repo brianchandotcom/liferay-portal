@@ -291,6 +291,14 @@ export default function ObjectRelationship({
 			)) ??
 		searchTerm;
 
+	const isSelected = (value: unknown): value is SelectedItem => {
+		if (!value || typeof value !== 'object') {
+			return false;
+		}
+
+		return 'id' in value;
+	};
+
 	return (
 		<FieldBase
 			name={name}
@@ -408,7 +416,11 @@ export default function ObjectRelationship({
 			<input
 				name={name}
 				type="hidden"
-				value={selected?.[valueKey] ?? selected?.id}
+				value={
+					isSelected(selected)
+						? selected?.[valueKey] ?? selected.id
+						: undefined
+				}
 			/>
 		</FieldBase>
 	);
@@ -454,3 +466,8 @@ interface State {
 	selected?: Item;
 	url: string | null;
 }
+
+type SelectedItem = {
+	id: string | number;
+	[key: string]: string | number | undefined;
+};

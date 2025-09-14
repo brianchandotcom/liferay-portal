@@ -109,7 +109,7 @@ export default function SpaceGeneralSettings({
 						),
 					sharingEnabled,
 					trashEnabled,
-					trashEntriesMaxAge,
+					trashEntriesMaxAge: Number(trashEntriesMaxAge),
 				},
 			});
 

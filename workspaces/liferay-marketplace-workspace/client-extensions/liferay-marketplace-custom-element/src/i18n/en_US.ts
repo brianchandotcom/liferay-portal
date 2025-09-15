@@ -419,6 +419,7 @@ export default {
 	'order-id': 'Order ID',
 	'order-info': 'Order Info',
 	'order-marked-as-paid': 'Order marked as paid.',
+	'order-received': 'Order Received',
 	'order-status': 'Order Status',
 	'orders': 'Orders',
 	'other': 'Other',
@@ -483,7 +484,9 @@ export default {
 	'publishers': 'Publishers',
 	'purchase-and-install-new-apps-and-they-will-show-up-here':
 		'Purchase and install new apps and they will show up here.',
+	'purchase-completed': 'Purchase Completed',
 	'purchase-date': 'Purchase Date',
+	'purchase-failed': 'Purchase Failed',
 	'purchase-order-number': 'Purchase Order Number',
 	'purchased-by': 'Purchased by',
 	'qty': 'Qty',

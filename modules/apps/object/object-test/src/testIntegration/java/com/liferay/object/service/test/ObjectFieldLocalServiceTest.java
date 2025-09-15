@@ -512,8 +512,9 @@ public class ObjectFieldLocalServiceTest {
 		String[] reservedNames = {
 			"actions", "companyId", "createDate", "creator", "dateCreated",
 			"dateModified", "externalReferenceCode", "groupId", "id",
-			"lastPublishDate", "modifiedDate", "statusByUserId",
-			"statusByUserName", "statusDate", "userId", "userName"
+			"keywords", "lastPublishDate", "modifiedDate", "statusByUserId",
+			"statusByUserName", "statusDate", "taxonomycategoryids", "userId",
+			"userName"
 		};
 
 		for (String reservedName : reservedNames) {

@@ -229,6 +229,13 @@ const DocumentPreviewer = ({
 				<ClayButton.Group className="floating-bar">
 					<ClayButton.Group>
 						<ClayButton
+							aria-label={
+								totalPages > 1
+									? Liferay.Language.get(
+											'click-to-jump-to-a-page'
+										)
+									: undefined
+							}
 							className="btn-floating-bar btn-floating-bar-text"
 							disabled={totalPages === 1}
 							onClick={() => {
@@ -267,6 +274,7 @@ const DocumentPreviewer = ({
 					</ClayButton.Group>
 
 					<ClayButton
+						aria-label={Liferay.Language.get('page-above')}
 						className="btn-floating-bar"
 						disabled={previousPageDisabled}
 						monospaced
@@ -279,6 +287,7 @@ const DocumentPreviewer = ({
 					</ClayButton>
 
 					<ClayButton
+						aria-label={Liferay.Language.get('page-below')}
 						className="btn-floating-bar"
 						disabled={nextPageDisabled}
 						monospaced
@@ -293,6 +302,11 @@ const DocumentPreviewer = ({
 					<div className="separator-floating-bar"></div>
 
 					<ClayButton
+						aria-label={
+							expanded
+								? Liferay.Language.get('zoom-to-fit')
+								: Liferay.Language.get('expand')
+						}
 						className="btn-floating-bar"
 						monospaced
 						onClick={() => {

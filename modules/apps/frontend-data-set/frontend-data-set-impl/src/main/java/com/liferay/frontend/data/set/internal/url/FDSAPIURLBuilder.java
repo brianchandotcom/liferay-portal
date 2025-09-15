@@ -58,6 +58,10 @@ public class FDSAPIURLBuilder {
 	}
 
 	public String build() {
+		return build(true);
+	}
+
+	public String build(boolean interpolate) {
 		StringBundler sb = new StringBundler(
 			3 + (_queryStringItems.size() * 2));
 
@@ -69,10 +73,20 @@ public class FDSAPIURLBuilder {
 
 		_appendParameters(true, sb);
 
-		return _interpolateTokens(sb.toString());
+		String apiURL = sb.toString();
+
+		if (!interpolate) {
+			return apiURL;
+		}
+
+		return _interpolateTokens(apiURL);
 	}
 
 	public String buildQueryString() {
+		return buildQueryString(true);
+	}
+
+	public String buildQueryString(boolean interpolate) {
 		StringBundler sb = new StringBundler(_queryStringItems.size() * 2);
 
 		_appendParameters(false, sb);
@@ -81,6 +95,10 @@ public class FDSAPIURLBuilder {
 
 		if (Validator.isNull(query)) {
 			return null;
+		}
+
+		if (!interpolate) {
+			return query;
 		}
 
 		return _interpolateTokens(query);

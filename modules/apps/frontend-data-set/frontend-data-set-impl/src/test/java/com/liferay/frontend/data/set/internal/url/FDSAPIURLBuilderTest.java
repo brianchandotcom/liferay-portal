@@ -85,6 +85,34 @@ public class FDSAPIURLBuilderTest {
 	@Test
 	public void testBuild() throws Exception {
 
+		// No interpolation
+
+		ServiceRegistration<FDSAPIURLResolver> serviceRegistration1 =
+			_registerFDSAPIURLResolver(
+				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
+
+		Assert.assertEquals(
+			"/o/app/{siteId}/{foo}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/{foo}/endpoint", "schema"
+			).build(
+				false
+			));
+
+		Assert.assertEquals(
+			"/o/app/{siteId}/{foo}/{bob}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/{foo}/{bob}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("bob", "alice")
+			).build(
+				false
+			));
+
+		serviceRegistration1.unregister();
+
 		// No resolver
 
 		_testBuild(
@@ -131,9 +159,8 @@ public class FDSAPIURLBuilderTest {
 
 		// One resolver, one token
 
-		ServiceRegistration<FDSAPIURLResolver> serviceRegistration1 =
-			_registerFDSAPIURLResolver(
-				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
+		serviceRegistration1 = _registerFDSAPIURLResolver(
+			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		_testBuild(
 			"/o/app/12345/bar/endpoint", "/app", "/{siteId}/{foo}/endpoint",
@@ -229,6 +256,15 @@ public class FDSAPIURLBuilderTest {
 				"/{foo}/endpoint", "schema"
 			).setTokenResolutions(
 				JSONUtil.put("other", "baz")
+			).build());
+
+		Assert.assertEquals(
+			"/o/app/12345/bar/alice/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/{foo}/{bob}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("bob", "alice")
 			).build());
 
 		serviceRegistration1.unregister();

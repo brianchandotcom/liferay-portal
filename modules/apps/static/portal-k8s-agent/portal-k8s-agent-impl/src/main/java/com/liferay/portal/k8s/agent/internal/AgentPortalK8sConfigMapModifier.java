@@ -167,7 +167,16 @@ public class AgentPortalK8sConfigMapModifier
 		Consumer<ConfigMapModel> configMapModelConsumer, String configMapName) {
 
 		if (_portalK8sAgentConfiguration.debounceDelayMillis() <= 0) {
-			return _modifyConfigMap(configMapModelConsumer, configMapName);
+			Result result = _modifyConfigMap(
+				configMapModelConsumer, configMapName);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Config map ", configMapName, " ", result));
+			}
+
+			return result;
 		}
 
 		_configMapBufferedUpdateMap.merge(
@@ -191,7 +200,7 @@ public class AgentPortalK8sConfigMapModifier
 
 		if (!_configMapBufferedUpdateMap.isEmpty()) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Flushing all pending ConfigMap updates");
+				_log.info("Flushing all pending config map updates");
 			}
 
 			for (String configMapName : _configMapBufferedUpdateMap.keySet()) {

@@ -44,6 +44,7 @@ import com.liferay.object.exception.ObjectDefinitionSystemException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
+import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
@@ -200,6 +201,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService, _objectRelationshipLocalService);
 	}
 
+	@FeatureFlag("LPD-6233")
 	@Test
 	public void testAddCustomObjectDefinition() throws Exception {
 
@@ -378,9 +380,18 @@ public class ObjectDefinitionLocalServiceTest {
 				Collections.emptyList());
 
 		ObjectFieldUtil.addCustomObjectField(
-			new TextObjectFieldBuilder(
+			new AssigneeObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"assignee"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
 			).userId(
 				TestPropsValues.getUserId()
+			).build());
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap("Charlie")
 			).name(
@@ -389,6 +400,8 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinition.getObjectDefinitionId()
 			).required(
 				true
+			).userId(
+				TestPropsValues.getUserId()
 			).build());
 
 		// Custom object definition names are automatically prepended with
@@ -527,6 +540,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(
 			_hasColumn(objectDefinition.getDBTableName(), "able_"));
 		Assert.assertFalse(
+			_hasColumn(objectDefinition.getDBTableName(), "assignee_"));
+		Assert.assertFalse(
 			_hasColumn(objectDefinition.getDBTableName(), "baker"));
 		Assert.assertTrue(
 			_hasColumn(objectDefinition.getDBTableName(), "baker_"));
@@ -534,6 +549,11 @@ public class ObjectDefinitionLocalServiceTest {
 			_hasColumn(objectDefinition.getDBTableName(), "charlie"));
 		Assert.assertTrue(
 			_hasColumn(objectDefinition.getDBTableName(), "charlie_"));
+		Assert.assertTrue(
+			_hasColumn(
+				objectDefinition.getDBTableName(), "classNameId_assignee_"));
+		Assert.assertTrue(
+			_hasColumn(objectDefinition.getDBTableName(), "classPK_assignee_"));
 		Assert.assertFalse(
 			_hasColumn(objectDefinition.getExtensionDBTableName(), "dog"));
 		Assert.assertTrue(
@@ -541,6 +561,37 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(_hasTable(objectDefinition.getDBTableName()));
 		Assert.assertTrue(
 			_hasTable(objectDefinition.getExtensionDBTableName()));
+
+		_objectFieldLocalService.deleteObjectField(
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), "assignee"));
+
+		Assert.assertFalse(
+			_hasColumn(
+				objectDefinition.getDBTableName(), "classNameId_assignee_"));
+		Assert.assertFalse(
+			_hasColumn(objectDefinition.getDBTableName(), "classPK_assignee_"));
+
+		ObjectFieldUtil.addCustomObjectField(
+			new AssigneeObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"newAssignee"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		Assert.assertTrue(
+			_hasColumn(
+				objectDefinition.getExtensionDBTableName(),
+				"classNameId_newAssignee_"));
+		Assert.assertTrue(
+			_hasColumn(
+				objectDefinition.getExtensionDBTableName(),
+				"classPK_newAssignee_"));
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			tree.iterator(), _objectDefinitionLocalService,

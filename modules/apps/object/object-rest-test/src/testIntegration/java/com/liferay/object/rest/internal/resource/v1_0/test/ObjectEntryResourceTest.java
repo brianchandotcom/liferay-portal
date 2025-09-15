@@ -47,6 +47,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
@@ -8506,6 +8507,21 @@ public class ObjectEntryResourceTest {
 		Assert.assertNull(objectEntryJSONObject.get("permissions"));
 	}
 
+	@FeatureFlag("LPD-6233")
+	@Test
+	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAssigneeObjectField()
+		throws Exception {
+
+		_testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method.PATCH, _objectDefinition1, true);
+		_testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method.PUT, _objectDefinition1, true);
+		_testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method.PATCH, _siteScopedObjectDefinition1, true);
+		_testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method.PUT, _siteScopedObjectDefinition1, true);
+	}
+
 	@Test
 	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentObjectField()
 		throws Exception {
@@ -8536,6 +8552,21 @@ public class ObjectEntryResourceTest {
 			Http.Method.PATCH, jsonObject.getLong("id"));
 		_testPatchPutCustomObjectEntryExternalReferenceCode(
 			Http.Method.PUT, jsonObject.getLong("id"));
+	}
+
+	@FeatureFlag("LPD-6233")
+	@Test
+	public void testPatchPutCustomObjectEntryWithAssigneeObjectField()
+		throws Exception {
+
+		_testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method.PATCH, _objectDefinition1, false);
+		_testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method.PUT, _objectDefinition1, false);
+		_testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method.PATCH, _siteScopedObjectDefinition1, false);
+		_testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method.PUT, _siteScopedObjectDefinition1, false);
 	}
 
 	@Test
@@ -8659,6 +8690,16 @@ public class ObjectEntryResourceTest {
 					jsonObject.getString("externalReferenceCode"),
 			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
 			group.getGroupKey());
+	}
+
+	@FeatureFlag("LPD-6233")
+	@Test
+	public void testPostCustomObjectEntryWithAssigneeObjectField()
+		throws Exception {
+
+		_testPostCustomObjectEntryWithAssigneeObjectField(_objectDefinition1);
+		_testPostCustomObjectEntryWithAssigneeObjectField(
+			_siteScopedObjectDefinition1);
 	}
 
 	@Test
@@ -15379,6 +15420,41 @@ public class ObjectEntryResourceTest {
 			endpoint, httpMethod);
 	}
 
+	private JSONObject _postCustomObjectEntryWithAssigneeObjectField(
+			ObjectDefinition objectDefinition, User user)
+		throws Exception {
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), "assignee");
+
+		if (objectField == null) {
+			ObjectFieldUtil.addCustomObjectField(
+				new AssigneeObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"assignee"
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).userId(
+					TestPropsValues.getUserId()
+				).build());
+		}
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"assignee",
+				HashMapBuilder.put(
+					"externalReferenceCode", user.getExternalReferenceCode()
+				).put(
+					"type", "User"
+				).build()
+			).toString(),
+			_getEndpoint(objectDefinition, _testGroupId), Http.Method.POST);
+	}
+
 	private JSONObject _postCustomObjectEntryWithPermissions(
 			boolean nestedFields, JSONArray permissionsJSONArray)
 		throws Exception {
@@ -16409,6 +16485,57 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	private void _testPatchPutCustomObjectEntryWithAssigneeObjectField(
+			Http.Method httpMethod, ObjectDefinition objectDefinition,
+			boolean useExternalReferenceCode)
+		throws Exception {
+
+		JSONObject jsonObject = _postCustomObjectEntryWithAssigneeObjectField(
+			objectDefinition, UserTestUtil.addUser());
+
+		String endpoint =
+			objectDefinition.getRESTContextPath() + "/" +
+				jsonObject.getLong("id");
+
+		if (useExternalReferenceCode) {
+			endpoint =
+				_getEndpoint(objectDefinition, _testGroupId) +
+					"/by-external-reference-code/" +
+						jsonObject.getString("externalReferenceCode");
+		}
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"assignee",
+				HashMapBuilder.put(
+					"externalReferenceCode", role.getExternalReferenceCode()
+				).put(
+					"type", "Role"
+				).build()
+			).put(
+				"externalReferenceCode",
+				jsonObject.getString("externalReferenceCode")
+			).put(
+				"id", jsonObject.getLong("id")
+			).toString(),
+			endpoint, httpMethod);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", role.getExternalReferenceCode()
+			).put(
+				"name", role.getName()
+			).put(
+				"type", "Role"
+			).toString(),
+			String.valueOf(jsonObject.get("assignee")),
+			JSONCompareMode.LENIENT);
+	}
+
 	private void _testPatchPutCustomObjectEntryWithAttachmentField(
 			Http.Method httpMethod, ObjectDefinition objectDefinition,
 			boolean useExternalReferenceCode)
@@ -17041,6 +17168,27 @@ public class ObjectEntryResourceTest {
 					"externalReferenceCode", externalReferenceCode2
 				).toString(),
 				endpoint2 + externalReferenceCode1, httpMethod));
+	}
+
+	private void _testPostCustomObjectEntryWithAssigneeObjectField(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		JSONObject jsonObject = _postCustomObjectEntryWithAssigneeObjectField(
+			objectDefinition, user);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", user.getExternalReferenceCode()
+			).put(
+				"name", user.getFullName()
+			).put(
+				"type", "User"
+			).toString(),
+			String.valueOf(jsonObject.get("assignee")),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _testPostCustomObjectEntryWithAttachmentObjectField(

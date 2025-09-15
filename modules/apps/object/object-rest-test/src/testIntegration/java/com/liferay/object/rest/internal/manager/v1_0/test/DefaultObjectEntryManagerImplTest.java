@@ -59,6 +59,7 @@ import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
+import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
@@ -82,6 +83,7 @@ import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
@@ -5744,6 +5746,62 @@ public class DefaultObjectEntryManagerImplTest
 			_defaultObjectEntryManager.getObjectEntryByVersion(
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition4, _group.getGroupKey(), 2));
+	}
+
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-6233"), @FeatureFlag(value = "LPD-17564")
+		}
+	)
+	@Test
+	public void testGetObjectEntryByVersionWithAssigneeObjectField()
+		throws Exception {
+
+		_enableObjectEntryVersioning();
+
+		ObjectFieldUtil.addCustomObjectField(
+			new AssigneeObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"assignee"
+			).objectDefinitionId(
+				_objectDefinition1.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		User user = UserTestUtil.addUser();
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"assignee",
+						HashMapBuilder.put(
+							"externalReferenceCode",
+							user.getExternalReferenceCode()
+						).put(
+							"type", "User"
+						).build()
+					).build();
+				}
+			},
+			null);
+
+		objectEntry = _defaultObjectEntryManager.getObjectEntryByVersion(
+			dtoConverterContext, objectEntry.getId(), 1);
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		Assignee assignee = (Assignee)properties.get("assignee");
+
+		Assert.assertEquals(
+			user.getExternalReferenceCode(),
+			assignee.getExternalReferenceCode());
+		Assert.assertEquals(user.getFullName(), assignee.getName());
+		Assert.assertEquals("User", assignee.getTypeAsString());
 	}
 
 	@Test

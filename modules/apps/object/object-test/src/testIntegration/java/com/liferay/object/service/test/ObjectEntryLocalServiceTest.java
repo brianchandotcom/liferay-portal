@@ -62,6 +62,7 @@ import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
+import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.AutoIncrementObjectFieldBuilder;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
@@ -1398,6 +1399,43 @@ public class ObjectEntryLocalServiceTest {
 			_assetTagLocalService.fetchTag(group.getGroupId(), assetTagName));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@FeatureFlag("LPD-6233")
+	@Test
+	public void testAddObjectEntryWithAssigneeObjectField() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new AssigneeObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"assignee"
+					).build()));
+
+		Map<String, Long> assigneeValueMap = HashMapBuilder.put(
+			"classNameId", _portal.getClassNameId(User.class.getName())
+		).put(
+			"classPK",
+			() -> {
+				User user = UserTestUtil.addUser();
+
+				return user.getUserId();
+			}
+		).build();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				"assignee", (Serializable)assigneeValueMap
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(assigneeValueMap, values.get("assignee"));
 	}
 
 	@Test

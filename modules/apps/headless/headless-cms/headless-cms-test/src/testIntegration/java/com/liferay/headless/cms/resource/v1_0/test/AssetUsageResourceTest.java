@@ -6,14 +6,432 @@
 package com.liferay.headless.cms.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.headless.cms.client.dto.v1_0.AssetUsage;
+import com.liferay.headless.cms.client.pagination.Page;
+import com.liferay.headless.cms.client.pagination.Pagination;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.constants.TestDataConstants;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import org.junit.Ignore;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+
 /**
- * @author Crescenzo Rega
+ * @author Thiago Buarque
  */
-@Ignore
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-21926"),
+		@FeatureFlag("LPD-31149"), @FeatureFlag("LPD-34594"),
+		@FeatureFlag("LPS-179669")
+	}
+)
 @RunWith(Arquillian.class)
 public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		if (!_isCMSSiteInitialized()) {
+			Bundle testBundle = FrameworkUtil.getBundle(
+				BulkActionResourceTest.class);
+
+			BundleContext bundleContext = testBundle.getBundleContext();
+
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (Objects.equals(
+						bundle.getSymbolicName(),
+						"com.liferay.site.initializer.cms")) {
+
+					_deleteFile(bundle, "01.object.folder");
+					_deleteFile(bundle, "02.object.definition");
+
+					CompletableFuture<Void> completableFuture =
+						_batchEngineUnitProcessor.processBatchEngineUnits(
+							_batchEngineUnitReader.getBatchEngineUnits(bundle));
+
+					completableFuture.join();
+
+					break;
+				}
+			}
+		}
+
+		_documentObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_BASIC_DOCUMENT", testCompany.getCompanyId());
+
+		_serviceContext = new ServiceContext() {
+			{
+				setCompanyId(testGroup.getCompanyId());
+				setUserId(TestPropsValues.getUserId());
+			}
+		};
+
+		_serviceContext.setAttribute(
+			"friendlyUrlMap", new HashMap<String, String>());
+
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			null, DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
+
+		_objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					"L_FILES", _depotEntry.getGroupId(),
+					testCompany.getCompanyId());
+
+		_webContentObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
+	}
+
+	@Override
+	@Test
+	public void testGetAssetUsagesAssetPage() throws Exception {
+		_addObjectRelationship(
+			_documentObjectDefinition, _webContentObjectDefinition);
+
+		long assetId = testGetAssetUsagesAssetPage_getAssetId();
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			_depotEntry.getGroupId(), TestPropsValues.getUserId(),
+			_webContentObjectDefinition.getObjectDefinitionId(),
+			_objectEntryFolder.getObjectEntryFolderId(), null,
+			HashMapBuilder.<String, Serializable>put(
+				"title", RandomTestUtil.randomString()
+			).put(
+				_relationshipObjectField.getName(), assetId
+			).build(),
+			_serviceContext);
+
+		AssetUsage assetUsage1 = new AssetUsage();
+
+		assetUsage1.setName(() -> objectEntry.getTitleValue(_LANGUAGE_ID));
+		assetUsage1.setType(
+			() -> _webContentObjectDefinition.getLabel(_LANGUAGE_ID));
+
+		AssetUsage assetUsage2 = _addAssetLayoutUsage(
+			randomAssetUsage(), assetId,
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+
+		Page<AssetUsage> page = assetUsageResource.getAssetUsagesAssetPage(
+			assetId, null, Pagination.of(1, 10), "name:asc");
+
+		List<AssetUsage> items = ListUtil.fromCollection(page.getItems());
+
+		Assert.assertEquals(items.toString(), 2, items.size());
+
+		String name = assetUsage1.getName();
+
+		if (name.compareTo(assetUsage2.getName()) < 0) {
+			equals(assetUsage1, items.get(0));
+			equals(assetUsage2, items.get(1));
+		}
+		else {
+			equals(assetUsage1, items.get(1));
+			equals(assetUsage2, items.get(0));
+		}
+
+		page = assetUsageResource.getAssetUsagesAssetPage(
+			assetId, null, Pagination.of(1, 10), "name:desc");
+
+		items = ListUtil.fromCollection(page.getItems());
+
+		Assert.assertEquals(items.toString(), 2, items.size());
+
+		if (name.compareTo(assetUsage2.getName()) < 0) {
+			Assert.assertTrue(equals(assetUsage1, items.get(1)));
+			Assert.assertTrue(equals(assetUsage2, items.get(0)));
+		}
+		else {
+			Assert.assertTrue(equals(assetUsage1, items.get(0)));
+			Assert.assertTrue(equals(assetUsage2, items.get(1)));
+		}
+	}
+
+	@Override
+	@Test
+	public void testGetAssetUsagesAssetPageWithPagination() throws Exception {
+		Long assetId = testGetAssetUsagesAssetPage_getAssetId();
+
+		AssetUsage assetUsage1 = testGetAssetUsagesAssetPage_addAssetUsage(
+			assetId, randomAssetUsage());
+
+		AssetUsage assetUsage2 = testGetAssetUsagesAssetPage_addAssetUsage(
+			assetId, randomAssetUsage());
+
+		AssetUsage assetUsage3 = testGetAssetUsagesAssetPage_addAssetUsage(
+			assetId, randomAssetUsage());
+
+		Page<AssetUsage> page1 = assetUsageResource.getAssetUsagesAssetPage(
+			assetId, null, Pagination.of(1, 2), null);
+
+		List<AssetUsage> assetUsages1 = (List<AssetUsage>)page1.getItems();
+
+		Assert.assertEquals(assetUsages1.toString(), 2, assetUsages1.size());
+
+		Page<AssetUsage> page2 = assetUsageResource.getAssetUsagesAssetPage(
+			assetId, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<AssetUsage> assetUsages2 = (List<AssetUsage>)page2.getItems();
+
+		Assert.assertEquals(assetUsages2.toString(), 1, assetUsages2.size());
+
+		Page<AssetUsage> page3 = assetUsageResource.getAssetUsagesAssetPage(
+			assetId, null, Pagination.of(1, 3), null);
+
+		assertContains(assetUsage1, (List<AssetUsage>)page3.getItems());
+		assertContains(assetUsage2, (List<AssetUsage>)page3.getItems());
+		assertContains(assetUsage3, (List<AssetUsage>)page3.getItems());
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"name", "type"};
+	}
+
+	@Override
+	protected AssetUsage testGetAssetUsagesAssetPage_addAssetUsage(
+			Long assetId, AssetUsage assetUsage)
+		throws Exception {
+
+		return _addAssetLayoutUsage(
+			assetUsage, assetId,
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+	}
+
+	@Override
+	protected Long testGetAssetUsagesAssetPage_getAssetId() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_depotEntry.getGroupId());
+
+		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+			RandomTestUtil.randomString() + ".pdf",
+			ContentTypes.APPLICATION_PDF, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, new ByteArrayInputStream(bytes), bytes.length, null, null,
+			null,
+			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId()));
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			_depotEntry.getGroupId(), _depotEntry.getUserId(),
+			_documentObjectDefinition.getObjectDefinitionId(),
+			_objectEntryFolder.getObjectEntryFolderId(), _LANGUAGE_ID,
+			HashMapBuilder.<String, Serializable>put(
+				"file", String.valueOf(dlFileEntry.getFileEntryId())
+			).build(),
+			_serviceContext);
+
+		return objectEntry.getObjectEntryId();
+	}
+
+	private AssetUsage _addAssetLayoutUsage(
+			AssetUsage assetUsage, Long assetId, int type)
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(), 0,
+				null, 0, 0, name, type, 0, true, 0, 0, 0,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+			testGroup.getGroupId(), StringPool.BLANK,
+			_portal.getClassNameId(_documentObjectDefinition.getClassName()),
+			assetId, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+			layoutPageTemplateEntry.getPlid(), _serviceContext);
+
+		assetUsage.setName(name);
+
+		if (type == LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
+			assetUsage.setType("Display Page Template");
+		}
+		else if (type == LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
+			assetUsage.setType("Page Template");
+		}
+
+		return assetUsage;
+	}
+
+	private void _addObjectRelationship(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		_relationshipObjectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+	}
+
+	private void _deleteFile(Bundle bundle, String fileName) {
+		File file = bundle.getDataFile(
+			".com.liferay.site.initializer.cms.internal.batch." + fileName +
+				".batch.engine.data.json.0.processed");
+
+		if ((file != null) && file.exists()) {
+			file.delete();
+		}
+	}
+
+	private boolean _isCMSSiteInitialized() throws Exception {
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
+				TestPropsValues.getCompanyId());
+
+		if (objectFolder != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final String _LANGUAGE_ID = "en_US";
+
+	@Inject
+	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
+
+	@Inject
+	private BatchEngineUnitReader _batchEngineUnitReader;
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	private ObjectDefinition _documentObjectDefinition;
+
+	@Inject
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private ObjectEntryFolder _objectEntryFolder;
+
+	@Inject
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectFolderLocalService _objectFolderLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	private ObjectField _relationshipObjectField;
+	private ServiceContext _serviceContext;
+	private ObjectDefinition _webContentObjectDefinition;
+
 }

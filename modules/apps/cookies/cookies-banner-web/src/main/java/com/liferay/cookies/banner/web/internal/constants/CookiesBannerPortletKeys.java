@@ -17,11 +17,4 @@ public class CookiesBannerPortletKeys {
 		"com_liferay_cookies_banner_web_portlet_CookiesBannerConfiguration" +
 			"Portlet";
 
-	public static final String PRODUCT_ANALYTICS_BANNER =
-		"com_liferay_cookies_banner_web_portlet_ProductAnalyticsBannerPortlet";
-
-	public static final String PRODUCT_ANALYTICS_CONSENT_PANEL =
-		"com_liferay_cookies_banner_web_portlet_ProductAnalyticsConsentPanel" +
-			"Portlet";
-
 }

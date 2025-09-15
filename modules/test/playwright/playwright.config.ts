@@ -51,7 +51,6 @@ import {config as commerceWishListWebConfig} from './tests/commerce/commerce-wis
 import {config as configurationAdminWebConfig} from './tests/configuration-admin-web/main/config';
 import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/main/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/main/config';
-import {config as cookiesBannerWebProductAnalyticsConfig} from './tests/cookies-banner-web/product-analytics/config';
 import {config as depotWebConfig} from './tests/depot-web/main/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/main/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/main/config';
@@ -124,6 +123,7 @@ import {config as portalWorkflowKaleoFormsWebConfig} from './tests/portal-workfl
 import {config as portalWorkflowMetricsWebConfig} from './tests/portal-workflow-metrics-web/main/config';
 import {config as portalWorkflowTaskWebConfig} from './tests/portal-workflow-task-web/main/config';
 import {config as portletConfigurationCssWebConfig} from './tests/portlet-configuration-css-web/main/config';
+import {config as productAnalyticsWebConfig} from './tests/product-analytics-web/main/config';
 import {config as productNavigationControlMenuWeb} from './tests/product-navigation-control-menu-web/main/config';
 import {config as productNavigationProductMenuWeb} from './tests/product-navigation-product-menu-web/main/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/main/config';
@@ -220,7 +220,6 @@ export default defineConfig({
 		configurationAdminWebConfig,
 		contentDashboardWebConfig,
 		cookiesBannerWebConfig,
-		cookiesBannerWebProductAnalyticsConfig,
 		customerConfig,
 		depotWebConfig,
 		dispatchWebConfig,
@@ -296,6 +295,7 @@ export default defineConfig({
 		portalWorkflowMetricsWebConfig,
 		portalWorkflowTaskWebConfig,
 		portletConfigurationCssWebConfig,
+		productAnalyticsWebConfig,
 		productNavigationControlMenuWeb,
 		productNavigationProductMenuWeb,
 		productNavigationUserPersonalBarWebConfig,

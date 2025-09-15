@@ -59,6 +59,18 @@ export default function displayUndoDeleteSuccessToast(
 
 			closeToast();
 		}
+
+		if (
+			target instanceof HTMLElement &&
+			target
+				.closest('a')
+				?.classList.contains(recycleBinToastInfo.className)
+		) {
+
+			// @ts-ignore
+
+			closeToast();
+		}
 	};
 
 	openToast(openToastSuccessProps);

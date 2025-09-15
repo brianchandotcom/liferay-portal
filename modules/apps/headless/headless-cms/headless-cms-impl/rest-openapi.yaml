@@ -1,5 +1,11 @@
 components:
     schemas:
+        AssetUsage:
+            properties:
+                name:
+                    type: string
+                type:
+                    type: string
         BulkAction:
             discriminator:
                 mapping:
@@ -129,6 +135,46 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/asset-usages/{assetId}":
+        get:
+            operationId: getAssetUsagesAssetPage
+            parameters:
+                -   in: path
+                    name: assetId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetUsage"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetUsage"
+                                type: array
+            tags: ["AssetUsage"]
     "/bulk-action":
         post:
             description:

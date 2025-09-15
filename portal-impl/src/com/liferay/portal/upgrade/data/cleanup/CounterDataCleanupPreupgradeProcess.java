@@ -61,7 +61,8 @@ public class CounterDataCleanupPreupgradeProcess
 					continue;
 				}
 
-				Matcher matcher = _layoutPattern.matcher(counterName);
+				Matcher matcher = _layoutSpecificCounterNamePattern.matcher(
+					counterName);
 
 				if (matcher.matches()) {
 					long groupId = GetterUtil.getLong(matcher.group(2));
@@ -71,7 +72,7 @@ public class CounterDataCleanupPreupgradeProcess
 						"true"
 					);
 
-					_checkLayoutCounter(
+					_checkLayoutSpecificCounter(
 						counterName, counterValue, dbInspector, groupId,
 						privateLayout);
 
@@ -112,7 +113,7 @@ public class CounterDataCleanupPreupgradeProcess
 					continue;
 				}
 
-				_checkTableCounter(
+				_checkSpecificCounter(
 					counterName, counterValue, dbInspector, tableName);
 
 				if (!counterName.equals(DLFileEntry.class.getName())) {
@@ -166,7 +167,7 @@ public class CounterDataCleanupPreupgradeProcess
 		}
 	}
 
-	private void _checkLayoutCounter(
+	private void _checkLayoutSpecificCounter(
 			String counterName, long counterValue, DBInspector dbInspector,
 			long groupId, boolean privateLayout)
 		throws Exception {
@@ -219,7 +220,7 @@ public class CounterDataCleanupPreupgradeProcess
 		}
 	}
 
-	private void _checkTableCounter(
+	private void _checkSpecificCounter(
 			String counterName, long counterValue, DBInspector dbInspector,
 			String tableName)
 		throws Exception {
@@ -321,7 +322,7 @@ public class CounterDataCleanupPreupgradeProcess
 	private static final Log _log = LogFactoryUtil.getLog(
 		CounterDataCleanupPreupgradeProcess.class);
 
-	private static final Pattern _layoutPattern = Pattern.compile(
-		"^([a-zA-Z0-9_.]+)#(\\d+)#(true|false)$");
+	private static final Pattern _layoutSpecificCounterNamePattern =
+		Pattern.compile("^([a-zA-Z0-9_.]+)#(\\d+)#(true|false)$");
 
 }

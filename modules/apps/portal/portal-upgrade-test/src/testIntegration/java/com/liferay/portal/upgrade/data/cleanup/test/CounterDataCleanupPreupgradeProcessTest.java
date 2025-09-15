@@ -87,22 +87,6 @@ public class CounterDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
-	public void testUpgradeCounterNotMatchingAnyTable() throws Exception {
-		String counterName =
-			"com.liferay.portal.kernel." + RandomTestUtil.randomString();
-
-		_test(
-			(UnsafeRunnable<Exception>)() -> runSQL(
-				"delete from Counter where name = '" + counterName + "'"),
-			(UnsafeRunnable<Exception>)() -> runSQL(
-				"insert into Counter (name, currentId) values ('" +
-					counterName + "', 100 )"),
-			(UnsafeConsumer<List<String>, Exception>)
-				messages -> Assert.assertTrue(
-					messages.toString(), messages.isEmpty()));
-	}
-
-	@Test
 	public void testUpgradeDLFileEntryKernelCounter() throws Exception {
 		long fileEntryId =
 			CounterLocalServiceUtil.getCurrentId(Counter.class.getName()) + 10;
@@ -175,7 +159,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
-	public void testUpgradeLayoutCounterUnused() throws Exception {
+	public void testUpgradeLayoutSpecificCounterUnused() throws Exception {
 		String counterName = StringBundler.concat(
 			Layout.class.getName(), "#", RandomTestUtil.nextLong(), "#true");
 
@@ -193,7 +177,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
-	public void testUpgradeLayoutCounterUpdated() throws Exception {
+	public void testUpgradeLayoutSpecificCounterUpdated() throws Exception {
 		long groupId = RandomTestUtil.nextLong();
 
 		String counterName = StringBundler.concat(
@@ -225,7 +209,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
-	public void testUpgradeTableCounter() throws Exception {
+	public void testUpgradeSpecificCounter() throws Exception {
 		long regionId =
 			CounterLocalServiceUtil.getCurrentId(Region.class.getName()) + 10;
 
@@ -244,6 +228,24 @@ public class CounterDataCleanupPreupgradeProcessTest
 							"Counter ", Region.class.getName(),
 							" has been reset to value ", regionId)));
 			});
+	}
+
+	@Test
+	public void testUpgradeSpecificCounterNotMatchingAnyTable()
+		throws Exception {
+
+		String counterName =
+			"com.liferay.portal.kernel." + RandomTestUtil.randomString();
+
+		_test(
+			(UnsafeRunnable<Exception>)() -> runSQL(
+				"delete from Counter where name = '" + counterName + "'"),
+			(UnsafeRunnable<Exception>)() -> runSQL(
+				"insert into Counter (name, currentId) values ('" +
+					counterName + "', 100 )"),
+			(UnsafeConsumer<List<String>, Exception>)
+				messages -> Assert.assertTrue(
+					messages.toString(), messages.isEmpty()));
 	}
 
 	private void _test(

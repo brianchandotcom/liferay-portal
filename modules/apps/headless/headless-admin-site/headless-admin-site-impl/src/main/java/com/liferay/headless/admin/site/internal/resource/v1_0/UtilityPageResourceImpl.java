@@ -123,7 +123,6 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
-
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {groupId});
 			},
@@ -382,7 +381,6 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 
 	private static final EntityModel _entityModel =
 		new UtilityPageEntityModel();
-
 	private static final Map<UtilityPage.Type, String>
 		_externalToInternalValuesMap = HashMapBuilder.put(
 			UtilityPage.Type.COOKIE_POLICY,

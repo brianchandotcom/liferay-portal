@@ -5,52 +5,59 @@
 
 package com.liferay.frontend.js.dependencies.web.internal.js.importmaps.extender;
 
-import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.portal.url.builder.ESModuleAbsolutePortalURLBuilder;
 
-import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
+import java.io.IOException;
+import java.io.Writer;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = JSImportMapsContributor.class)
+@Component(service = DynamicJSImportMapsContributor.class)
 public class FrontendJSDependenciesWebJSImportMapsContributor
-	implements JSImportMapsContributor {
+	implements DynamicJSImportMapsContributor {
 
 	@Override
-	public JSONObject getImportMapsJSONObject() {
-		return _importMapsJSONObject;
+	public void writeGlobalImports(
+			HttpServletRequest httpServletRequest, Writer writer)
+		throws IOException {
+
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
+
+		ESModuleAbsolutePortalURLBuilder esModuleAbsolutePortalURLBuilder =
+			absolutePortalURLBuilder.forESModule(
+				"frontend-js-dependencies-web", "exports/@liferay$js-api.js");
+
+		writer.write("\"@liferay/frontend-js-api\" : \"");
+		writer.write(esModuleAbsolutePortalURLBuilder.build());
+		writer.write("\",");
+
+		esModuleAbsolutePortalURLBuilder = absolutePortalURLBuilder.forESModule(
+			"frontend-js-dependencies-web",
+			"exports/@liferay$js-api$data-set.js");
+
+		writer.write("\"@liferay/frontend-js-api/data-set\" : \"");
+		writer.write(esModuleAbsolutePortalURLBuilder.build());
+		writer.write(StringPool.QUOTE);
 	}
 
-	@Activate
-	protected void activate() {
-		_importMapsJSONObject = _jsonFactory.createJSONObject();
-
-		_importMapsJSONObject.put(
-			"@liferay/frontend-js-api",
-			_servletContext.getContextPath() +
-				"/__liferay__/exports/@liferay$js-api.js"
-		).put(
-			"@liferay/frontend-js-api/data-set",
-			_servletContext.getContextPath() +
-				"/__liferay__/exports/@liferay$js-api$data-set.js"
-		);
+	@Override
+	public void writeScopedImports(
+		HttpServletRequest httpServletRequest, Writer writer) {
 	}
-
-	private JSONObject _importMapsJSONObject;
 
 	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.js.dependencies.web)",
-		unbind = "-"
-	)
-	private ServletContext _servletContext;
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 }

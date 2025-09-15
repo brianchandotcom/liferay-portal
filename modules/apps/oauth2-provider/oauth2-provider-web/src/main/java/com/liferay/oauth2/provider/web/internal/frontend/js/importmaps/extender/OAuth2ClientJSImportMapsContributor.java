@@ -5,38 +5,51 @@
 
 package com.liferay.oauth2.provider.web.internal.frontend.js.importmaps.extender;
 
-import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.portal.url.builder.ESModuleAbsolutePortalURLBuilder;
 
-import org.osgi.service.component.annotations.Activate;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
+import java.io.Writer;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryce Osterhaus
  */
-@Component(service = JSImportMapsContributor.class)
+@Component(service = DynamicJSImportMapsContributor.class)
 public class OAuth2ClientJSImportMapsContributor
-	implements JSImportMapsContributor {
+	implements DynamicJSImportMapsContributor {
 
 	@Override
-	public JSONObject getImportMapsJSONObject() {
-		return _importMapsJSONObject;
+	public void writeGlobalImports(
+			HttpServletRequest httpServletRequest, Writer writer)
+		throws IOException {
+
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
+
+		ESModuleAbsolutePortalURLBuilder esModuleAbsolutePortalURLBuilder =
+			absolutePortalURLBuilder.forESModule(
+				"oauth2-provider-web", "client.js");
+
+		writer.write("\"@liferay/oauth2-provider-web/client\" : \"");
+		writer.write(esModuleAbsolutePortalURLBuilder.build());
+		writer.write(StringPool.QUOTE);
 	}
 
-	@Activate
-	protected void activate() {
-		_importMapsJSONObject = _jsonFactory.createJSONObject();
-
-		_importMapsJSONObject.put(
-			"@liferay/oauth2-provider-web/client",
-			"/o/oauth2-provider-web/__liferay__/client.js");
+	@Override
+	public void writeScopedImports(
+		HttpServletRequest httpServletRequest, Writer writer) {
 	}
-
-	private JSONObject _importMapsJSONObject;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 }

@@ -267,7 +267,7 @@ public class AgentPortalK8sConfigMapModifierTest {
 	@Test
 	public void testBufferedUpdatesSlow() throws Exception {
 		String serviceId = RandomTestUtil.randomString();
-		String randomData = RandomTestUtil.randomString();
+		String randomString = RandomTestUtil.randomString();
 
 		String configMapName = StringBundler.concat(
 			serviceId, StringPool.DASH, TestPropsValues.COMPANY_WEB_ID,
@@ -277,9 +277,9 @@ public class AgentPortalK8sConfigMapModifierTest {
 			configMapModel -> {
 				Map<String, String> data = configMapModel.data();
 
-				data.put("com.liferay.lxc.dxp.domains", randomData);
-				data.put("com.liferay.lxc.dxp.main.domain", randomData);
-				data.put("com.liferay.lxc.dxp.mainDomain", randomData);
+				data.put("com.liferay.lxc.dxp.domains", randomString);
+				data.put("com.liferay.lxc.dxp.main.domain", randomString);
+				data.put("com.liferay.lxc.dxp.mainDomain", randomString);
 
 				Map<String, String> labels = configMapModel.labels();
 
@@ -303,7 +303,7 @@ public class AgentPortalK8sConfigMapModifierTest {
 		Map<String, String> configMapData = configMap.getData();
 
 		Assert.assertEquals(
-			randomData, configMapData.get("com.liferay.lxc.dxp.main.domain"));
+			randomString, configMapData.get("com.liferay.lxc.dxp.main.domain"));
 
 		ObjectMeta objectMeta = configMap.getMetadata();
 

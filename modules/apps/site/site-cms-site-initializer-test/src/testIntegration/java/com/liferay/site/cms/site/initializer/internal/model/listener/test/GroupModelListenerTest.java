@@ -110,15 +110,7 @@ public class GroupModelListenerTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddDepotEntry() throws Exception {
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext());
+		DepotEntry depotEntry = _addDepotEntry();
 
 		Group group = depotEntry.getGroup();
 
@@ -139,15 +131,7 @@ public class GroupModelListenerTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testDeleteDepotEntry() throws Exception {
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext());
+		DepotEntry depotEntry = _addDepotEntry();
 
 		Group group = depotEntry.getGroup();
 
@@ -169,7 +153,7 @@ public class GroupModelListenerTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateDepotEntry() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry("name", "description");
+		DepotEntry depotEntry = _addDepotEntry();
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
@@ -196,17 +180,15 @@ public class GroupModelListenerTest {
 		Assert.assertNotEquals(objectEntry1, objectEntry2);
 	}
 
-	private DepotEntry _addDepotEntry(String name, String description)
-		throws Exception {
-
+	private DepotEntry _addDepotEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
-				LocaleUtil.getDefault(), name
+				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
 			HashMapBuilder.put(
-				LocaleUtil.getDefault(), description
+				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
-			DepotConstants.TYPE_ASSET_LIBRARY,
+			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
 
 		_depotEntries.add(depotEntry);

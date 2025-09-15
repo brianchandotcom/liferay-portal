@@ -73,7 +73,7 @@ public class TicketsTicketAttachmentsUploadAccessCheckRestController
 				jiraOrganizationNotFoundException);
 
 			return new ResponseEntity<>(
-				"ZENDESK_ORGANIZATION_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+				"JIRA_ORGANIZATION_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

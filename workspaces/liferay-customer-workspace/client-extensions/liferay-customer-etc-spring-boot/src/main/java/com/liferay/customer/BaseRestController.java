@@ -8,11 +8,9 @@ package com.liferay.customer;
 import com.liferay.customer.exception.JiraIssueClosedException;
 import com.liferay.customer.exception.JiraIssueNotFoundException;
 import com.liferay.customer.exception.JiraOrganizationNotFoundException;
+import com.liferay.customer.model.JiraSupportIssue;
 import com.liferay.customer.service.JiraService;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringUtil;
-
-import java.util.List;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,42 +30,44 @@ public class BaseRestController
 		try {
 			return _getAccountKey(jiraIssueKey);
 		}
-		catch (JiraOrganizationNotFoundException
-					jiraOrganizationNotFoundException) {
+		catch (JiraIssueClosedException jiraIssueClosedException) {
+			_log.error(jiraIssueClosedException, jiraIssueClosedException);
 
-			_log.error(
-				jiraOrganizationNotFoundException,
-				jiraOrganizationNotFoundException);
+			throw jiraIssueClosedException;
+		}
+		catch (JiraIssueNotFoundException jiraIssueNotFoundException) {
+			_log.error(jiraIssueNotFoundException, jiraIssueNotFoundException);
 
-			throw new JiraIssueNotFoundException();
+			throw jiraIssueNotFoundException;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new JiraOrganizationNotFoundException(exception);
 		}
 	}
 
 	private String _getAccountKey(String jiraIssueKey) throws Exception {
-		JSONObject jsonObject = _jiraService.getIssueJSONObject(jiraIssueKey);
+		JiraSupportIssue jiraSupportIssue = _jiraService.getJiraSupportIssue(
+			jiraIssueKey);
 
-		if (jsonObject == null) {
+		if (jiraSupportIssue == null) {
 			throw new JiraIssueNotFoundException();
 		}
 
-		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
-
-		String status = fieldsJSONObject.optString("status");
-
-		if (status.equals("Closed")) {
+		if (jiraSupportIssue.isClosed()) {
 			throw new JiraIssueClosedException();
 		}
 
-		List<String> organizationCompositeIdArray = StringUtil.split(
-			fieldsJSONObject.getString("organization"), CharPool.COLON);
+		String organizationId = jiraSupportIssue.getOrganizationId();
+		String workspaceId = jiraSupportIssue.getWorkspaceId();
 
-		JSONObject assetObjectJSONObject = _jiraService.getAssetObject(
-			organizationCompositeIdArray.get(0),
-			organizationCompositeIdArray.get(1));
-
-		if (assetObjectJSONObject == null) {
+		if (Validator.isNull(organizationId) || Validator.isNull(workspaceId)) {
 			throw new JiraOrganizationNotFoundException();
 		}
+
+		JSONObject assetObjectJSONObject = _jiraService.getAssetObject(
+			workspaceId, organizationId);
 
 		JSONArray jsonArray = assetObjectJSONObject.getJSONArray("attributes");
 
@@ -86,19 +86,16 @@ public class BaseRestController
 			JSONArray objectAttributeValuesJSONArray =
 				attributeJSONObject.getJSONArray("objectAttributeValues");
 
-			for (int j = 0; j < objectAttributeValuesJSONArray.length(); j++) {
-				JSONObject objectAttributeValuesJSONObject =
-					objectAttributeValuesJSONArray.getJSONObject(j);
+			JSONObject objectAttributeValuesJSONObject =
+				objectAttributeValuesJSONArray.getJSONObject(0);
 
-				return objectAttributeValuesJSONObject.getString("value");
-			}
+			return objectAttributeValuesJSONObject.getString("value");
 		}
 
 		throw new JiraOrganizationNotFoundException();
 	}
 
-	private static final Log _log = LogFactory.getLog(
-		TicketAttachmentsInitiateUploadRestController.class);
+	private static final Log _log = LogFactory.getLog(BaseRestController.class);
 
 	@Autowired
 	private JiraService _jiraService;

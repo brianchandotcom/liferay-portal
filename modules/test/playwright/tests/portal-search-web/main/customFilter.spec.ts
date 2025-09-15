@@ -91,11 +91,11 @@ test.describe('Custom filter configuration works as expected on content pages', 
 			);
 
 			await searchPage.modalIFrame
-				.getByLabel('Filter Field')
+				.getByLabel('Filter Field Set the name of')
 				.fill('title_en_US');
 
 			await searchPage.modalIFrame
-				.getByLabel('Filter Value')
+				.getByLabel('Filter Value The value to')
 				.fill('Portuguese');
 
 			await searchPage.savePortletConfiguration();
@@ -115,11 +115,11 @@ test.describe('Custom filter configuration works as expected on content pages', 
 			);
 
 			await searchPage.modalIFrame
-				.getByLabel('Filter Field')
+				.getByLabel('Filter Field Set the name of')
 				.fill('title_en_US');
 
 			await searchPage.modalIFrame
-				.getByLabel('Filter Value')
+				.getByLabel('Filter Value The value to')
 				.fill('English');
 
 			await searchPage.savePortletConfiguration();

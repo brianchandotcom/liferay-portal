@@ -1,5 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`document-library-preview-document renders a document previewer with alt attribute 1`] = `
+<DocumentFragment>
+  <div
+    class="preview-file"
+  >
+    <div
+      class="preview-file-container preview-file-max-height"
+    >
+      <img
+        alt="alt text"
+        class="preview-file-document preview-file-document-fit"
+        src="http://localhost/document-images/?previewFileIndex=1"
+      />
+    </div>
+    <div
+      class="preview-toolbar-container"
+    >
+      <div
+        class="floating-bar btn-group"
+        role="group"
+      >
+        <div
+          class="btn-group"
+          role="group"
+        >
+          <button
+            aria-label="click-to-jump-to-a-page"
+            class="btn-floating-bar btn-floating-bar-text btn btn-primary"
+            title="click-to-jump-to-a-page"
+            type="button"
+          >
+            page 1 / 10
+          </button>
+        </div>
+        <button
+          aria-label="page-above"
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          disabled=""
+          title="page-above"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-top"
+            role="presentation"
+          >
+            <use
+              href="#caret-top"
+            />
+          </svg>
+        </button>
+        <button
+          aria-label="page-below"
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          title="page-below"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom"
+            role="presentation"
+          >
+            <use
+              href="#caret-bottom"
+            />
+          </svg>
+        </button>
+        <div
+          class="separator-floating-bar"
+        />
+        <button
+          aria-label="expand"
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          title="expand"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-full-size"
+            role="presentation"
+          >
+            <use
+              href="#full-size"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`document-library-preview-document renders a document previewer with nineteen pages and the fifth page rendered 1`] = `
 <DocumentFragment>
   <div
@@ -25,6 +114,7 @@ exports[`document-library-preview-document renders a document previewer with nin
           role="group"
         >
           <button
+            aria-label="click-to-jump-to-a-page"
             class="btn-floating-bar btn-floating-bar-text btn btn-primary"
             title="click-to-jump-to-a-page"
             type="button"
@@ -33,6 +123,7 @@ exports[`document-library-preview-document renders a document previewer with nin
           </button>
         </div>
         <button
+          aria-label="page-above"
           class="btn-floating-bar btn btn-monospaced btn-primary"
           title="page-above"
           type="button"
@@ -47,6 +138,7 @@ exports[`document-library-preview-document renders a document previewer with nin
           </svg>
         </button>
         <button
+          aria-label="page-below"
           class="btn-floating-bar btn btn-monospaced btn-primary"
           title="page-below"
           type="button"
@@ -64,6 +156,7 @@ exports[`document-library-preview-document renders a document previewer with nin
           class="separator-floating-bar"
         />
         <button
+          aria-label="expand"
           class="btn-floating-bar btn btn-monospaced btn-primary"
           title="expand"
           type="button"
@@ -108,6 +201,7 @@ exports[`document-library-preview-document renders a document previewer with ten
           role="group"
         >
           <button
+            aria-label="click-to-jump-to-a-page"
             class="btn-floating-bar btn-floating-bar-text btn btn-primary"
             title="click-to-jump-to-a-page"
             type="button"
@@ -116,6 +210,7 @@ exports[`document-library-preview-document renders a document previewer with ten
           </button>
         </div>
         <button
+          aria-label="page-above"
           class="btn-floating-bar btn btn-monospaced btn-primary"
           disabled=""
           title="page-above"
@@ -131,6 +226,7 @@ exports[`document-library-preview-document renders a document previewer with ten
           </svg>
         </button>
         <button
+          aria-label="page-below"
           class="btn-floating-bar btn btn-monospaced btn-primary"
           title="page-below"
           type="button"
@@ -148,91 +244,7 @@ exports[`document-library-preview-document renders a document previewer with ten
           class="separator-floating-bar"
         />
         <button
-          class="btn-floating-bar btn btn-monospaced btn-primary"
-          title="expand"
-          type="button"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-full-size"
-            role="presentation"
-          >
-            <use
-              href="#full-size"
-            />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`document-library-preview-document renders a document previewer with alt attribute 1`] = `
-<DocumentFragment>
-  <div
-    class="preview-file"
-  >
-    <div
-      class="preview-file-container preview-file-max-height"
-    >
-      <img
-        alt="alt text"
-        class="preview-file-document preview-file-document-fit"
-        src="http://localhost/document-images/?previewFileIndex=1"
-      />
-    </div>
-    <div
-      class="preview-toolbar-container"
-    >
-      <div
-        class="floating-bar btn-group"
-        role="group"
-      >
-        <div
-          class="btn-group"
-          role="group"
-        >
-          <button
-            class="btn-floating-bar btn-floating-bar-text btn btn-primary"
-            title="click-to-jump-to-a-page"
-            type="button"
-          >
-            page 1 / 10
-          </button>
-        </div>
-        <button
-          class="btn-floating-bar btn btn-monospaced btn-primary"
-          disabled=""
-          title="page-above"
-          type="button"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-top"
-            role="presentation"
-          >
-            <use
-              href="#caret-top"
-            />
-          </svg>
-        </button>
-        <button
-          class="btn-floating-bar btn btn-monospaced btn-primary"
-          title="page-below"
-          type="button"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-bottom"
-            role="presentation"
-          >
-            <use
-              href="#caret-bottom"
-            />
-          </svg>
-        </button>
-        <div
-          class="separator-floating-bar"
-        />
-        <button
+          aria-label="expand"
           class="btn-floating-bar btn btn-monospaced btn-primary"
           title="expand"
           type="button"

@@ -48,19 +48,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected UserAccount randomIrrelevantUserAccount() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		return userAccountResource.putAssetLibraryUserAccount(
-			irrelevantDepotEntry.getGroupId(), user.getUserId());
-	}
-
-	@Override
 	protected UserAccount randomUserAccount() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		return userAccountResource.putAssetLibraryUserAccount(
-			testDepotEntry.getGroupId(), user.getUserId());
+		return new UserAccount() {
+			{
+				externalReferenceCode = user.getExternalReferenceCode();
+				id = user.getUserId();
+				name = user.getFullName();
+			}
+		};
 	}
 
 	@Override
@@ -144,6 +141,21 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		return userAccountResource.putAssetLibraryUserAccount(
 			assetLibraryId, userAccount.getId());
+	}
+
+	@Override
+	protected Long testGetAssetLibraryUserAccountsPage_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getGroupId();
+	}
+
+	@Override
+	protected Long
+			testGetAssetLibraryUserAccountsPage_getIrrelevantAssetLibraryId()
+		throws Exception {
+
+		return irrelevantDepotEntry.getGroupId();
 	}
 
 	@Override

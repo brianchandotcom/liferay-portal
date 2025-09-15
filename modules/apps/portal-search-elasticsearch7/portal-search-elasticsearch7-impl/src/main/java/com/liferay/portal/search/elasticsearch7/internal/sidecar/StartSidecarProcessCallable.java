@@ -20,7 +20,7 @@ import org.elasticsearch.http.HttpServerTransport;
  */
 public class StartSidecarProcessCallable implements ProcessCallable<String> {
 
-	public StartSidecarProcessCallable(SidecarServerArgs sidecarServerArgs) {
+	public StartSidecarProcessCallable(byte[] sidecarServerArgs) {
 		_sidecarServerArgs = sidecarServerArgs;
 	}
 
@@ -62,6 +62,6 @@ public class StartSidecarProcessCallable implements ProcessCallable<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	private final SidecarServerArgs _sidecarServerArgs;
+	private final byte[] _sidecarServerArgs;
 
 }

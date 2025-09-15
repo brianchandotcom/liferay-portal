@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.reflect.ReflectionUtil;
 
@@ -24,8 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.elasticsearch.cli.ExitCodes;
-import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
-import org.elasticsearch.common.io.stream.StreamOutput;
 
 /**
  * @author Tina Tian
@@ -47,29 +44,17 @@ public class ElasticsearchServerUtil {
 		_shutdownCountDownLatch.countDown();
 	}
 
-	public static Object start(SidecarServerArgs sidecarServerArgs)
+	public static Object start(byte[] sidecarServerArgs)
 		throws ProcessException {
 
-		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-			StreamOutput streamOutput = new OutputStreamStreamOutput(
-				unsyncByteArrayOutputStream)) {
+		InputStream originalSystemInInputStream = System.in;
 
-			sidecarServerArgs.writeTo(streamOutput);
+		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(sidecarServerArgs)) {
 
-			InputStream originalSystemInInputStream = System.in;
+			System.setIn(unsyncByteArrayInputStream);
 
-			try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-					new UnsyncByteArrayInputStream(
-						unsyncByteArrayOutputStream.toByteArray())) {
-
-				System.setIn(unsyncByteArrayInputStream);
-
-				_mainMethod.invoke(null, (Object)null);
-			}
-			finally {
-				System.setIn(originalSystemInInputStream);
-			}
+			_mainMethod.invoke(null, (Object)null);
 
 			System.setSecurityManager(null);
 
@@ -80,6 +65,9 @@ public class ElasticsearchServerUtil {
 		catch (Exception exception) {
 			throw new ProcessException(
 				"Unable to start elasticsearch server", exception);
+		}
+		finally {
+			System.setIn(originalSystemInInputStream);
 		}
 	}
 

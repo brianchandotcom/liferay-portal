@@ -182,7 +182,10 @@ PagesTree.propTypes = {
 
 function EmptyLabel() {
 	return (
-		<ClayLabel className="bg-transparent ml-2 mr-2" displayType="warning">
+		<ClayLabel
+			className="bg-transparent flex-shrink-0 ml-2 mr-2"
+			displayType="warning"
+		>
 			{Liferay.Language.get('empty')}
 		</ClayLabel>
 	);
@@ -264,10 +267,12 @@ function TreeItem({
 							target={item.target}
 						>
 							<span
-								className="d-flex flex-wrap icon-tooltip lfr-portal-tooltip text-truncate"
+								className="d-flex icon-tooltip lfr-portal-tooltip"
 								data-title={item.name}
 							>
-								{item.name}
+								<span className="text-truncate">
+									{item.name}
+								</span>
 
 								{item.type === LAYOUT_TYPE_EMPTY ? (
 									<EmptyLabel />
@@ -294,8 +299,8 @@ function TreeItem({
 							) : null}
 						</a>
 					) : (
-						<span className="d-flex flex-wrap" title={item.name}>
-							{item.name}
+						<span className="d-flex" title={item.name}>
+							<span className="text-truncate">{item.name}</span>
 
 							{item.type === LAYOUT_TYPE_EMPTY ? (
 								<EmptyLabel />
@@ -373,10 +378,12 @@ function TreeItem({
 									target={item.target}
 								>
 									<span
-										className="d-flex flex-wrap icon-tooltip lfr-portal-tooltip text-truncate"
+										className="d-flex icon-tooltip lfr-portal-tooltip"
 										data-title={item.name}
 									>
-										{item.name}
+										<span className="text-truncate">
+											{item.name}
+										</span>
 
 										{item.type === LAYOUT_TYPE_EMPTY ? (
 											<EmptyLabel />
@@ -403,11 +410,10 @@ function TreeItem({
 									) : null}
 								</a>
 							) : (
-								<span
-									className="d-flex flex-wrap"
-									title={item.name}
-								>
-									{item.name}
+								<span className="d-flex" title={item.name}>
+									<span className="text-truncate">
+										{item.name}
+									</span>
 
 									{item.type === LAYOUT_TYPE_EMPTY ? (
 										<EmptyLabel />

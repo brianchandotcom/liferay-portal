@@ -421,7 +421,7 @@ function ItemSelector<T extends Record<string, any>>({
 			<ClayInput.GroupItem>{itemSelectorComponent}</ClayInput.GroupItem>
 
 			<ItemSelectorModalTrigger
-				fdsProps={fdsProps}
+				fdsProps={{apiURL, ...fdsProps}}
 				items={items}
 				locator={locator}
 				setItems={handleModalItemsChange}

@@ -8,7 +8,6 @@ package com.liferay.site.cms.site.initializer.internal.model.listener;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.service.DepotEntryService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
@@ -202,8 +201,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		throws Exception {
 
 		if (group.isDepot()) {
-			DepotEntry depotEntry = _depotEntryService.fetchGroupDepotEntry(
-				group.getGroupId());
+			DepotEntry depotEntry =
+				_depotEntryLocalService.fetchGroupDepotEntry(
+					group.getGroupId());
 
 			if ((depotEntry == null) ||
 				!(depotEntry.getType() == DepotConstants.TYPE_SPACE) ||
@@ -271,9 +271,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private DepotEntryService _depotEntryService;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

@@ -669,7 +669,7 @@ public class PublishLayoutMVCActionCommandTest {
 			TestPropsValues.getUserId(),
 			GetterUtil.getLong(
 				fragmentEntryLinkJSONObject.getString("fragmentEntryLinkId")),
-			editableValuesJSONObject.toString());
+			editableValuesJSONObject.toString(), true);
 
 		Map<String, String> map = HashMapBuilder.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString()

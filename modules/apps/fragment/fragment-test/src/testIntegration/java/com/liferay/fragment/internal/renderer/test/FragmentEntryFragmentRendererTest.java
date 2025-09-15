@@ -553,7 +553,8 @@ public class FragmentEntryFragmentRendererTest {
 							"element-text",
 							JSONUtil.put(
 								LocaleUtil.toLanguageId(_locale), updatedText))
-					).toString()));
+					).toString(),
+					true));
 
 			String curContent =
 				_fragmentEntryLinkCache.getFragmentEntryLinkContent(

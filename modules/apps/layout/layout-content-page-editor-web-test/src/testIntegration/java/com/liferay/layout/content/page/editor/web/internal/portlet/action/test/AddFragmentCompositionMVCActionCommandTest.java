@@ -481,7 +481,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 						LocaleUtil.toLanguageId(
 							_portal.getSiteDefaultLocale(_group)),
 						RandomTestUtil.randomString()))
-			).toString());
+			).toString(),
+			true);
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 

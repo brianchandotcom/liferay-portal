@@ -179,7 +179,8 @@ public class FragmentEntryLinkUpgradeProcessTest
 				JSONUtil.put(
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString())
-			).toString());
+			).toString(),
+			true);
 	}
 
 	private DLFileEntry _addDLFileEntry() throws Exception {

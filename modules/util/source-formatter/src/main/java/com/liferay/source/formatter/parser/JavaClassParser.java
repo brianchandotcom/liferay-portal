@@ -461,9 +461,8 @@ public class JavaClassParser {
 	}
 
 	private static String _getJavaTermContent(
-			FileContents fileContents, Position startPosition,
-			Position endPosition)
-		throws ParseException {
+		FileContents fileContents, Position startPosition,
+		Position endPosition) {
 
 		int endLineNumber = endPosition.getLineNumber();
 		int startLineNumber = startPosition.getLineNumber();
@@ -541,7 +540,7 @@ public class JavaClassParser {
 		return startLineNumber;
 	}
 
-	private static JavaClass _parseExtendsImplementsPermits(
+	private static void _parseExtendsImplementsPermits(
 		JavaClass javaClass, DetailAST detailAST) {
 
 		DetailAST extendsClauseDetailAST = detailAST.findFirstToken(
@@ -571,8 +570,6 @@ public class JavaClassParser {
 
 			javaClass.addPermittedClassNames(permitsClassNames);
 		}
-
-		return javaClass;
 	}
 
 	private static JavaClass _parseJavaClass(

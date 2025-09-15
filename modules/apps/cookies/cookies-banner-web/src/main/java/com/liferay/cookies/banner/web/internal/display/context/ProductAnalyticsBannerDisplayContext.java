@@ -6,7 +6,6 @@
 package com.liferay.cookies.banner.web.internal.display.context;
 
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
-import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -17,7 +16,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
 
 import java.util.Locale;
 import java.util.Map;
@@ -29,29 +27,11 @@ public class ProductAnalyticsBannerDisplayContext
 	extends BaseProductAnalyticsDisplayContext {
 
 	public ProductAnalyticsBannerDisplayContext(
-		CookiesConfigurationProvider cookiesConfigurationProvider,
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest) {
 
-		super(
-			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
-			renderRequest, renderResponse);
-	}
-
-	public Object getConfigurationURL() {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(
-				PortalUtil.getLiferayPortletRequest(renderRequest));
-
-		return PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createRenderURL(
-				CookiesBannerPortletKeys.PRODUCT_ANALYTICS_CONSENT_PANEL)
-		).setMVCPath(
-			"/product_analytics_consent_panel/view.jsp"
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
+		super(layoutUtilityPageEntryLayoutProvider, renderRequest);
 	}
 
 	public Map<String, Object> getContext(Locale locale) {
@@ -59,7 +39,7 @@ public class ProductAnalyticsBannerDisplayContext
 			"configurationNamespace",
 			CookiesBannerPortletKeys.PRODUCT_ANALYTICS_CONSENT_PANEL
 		).put(
-			"configurationURL", getConfigurationURL()
+			"configurationURL", _getConfigurationURL()
 		).put(
 			"optionalConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())
@@ -70,6 +50,21 @@ public class ProductAnalyticsBannerDisplayContext
 			"title",
 			LanguageUtil.get(locale, "product-analytics-consent-panel-title")
 		).build();
+	}
+
+	private String _getConfigurationURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				PortalUtil.getLiferayPortletRequest(getRenderRequest()));
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				CookiesBannerPortletKeys.PRODUCT_ANALYTICS_CONSENT_PANEL)
+		).setMVCPath(
+			"/product_analytics_consent_panel/view.jsp"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 }

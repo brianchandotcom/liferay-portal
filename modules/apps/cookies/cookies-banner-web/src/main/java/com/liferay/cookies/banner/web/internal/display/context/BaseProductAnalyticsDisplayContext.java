@@ -6,12 +6,13 @@
 package com.liferay.cookies.banner.web.internal.display.context;
 
 import com.liferay.cookies.banner.web.internal.constants.ProductAnalyticsBannerCookiesConstants;
-import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.ConsentCookieType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -30,18 +30,16 @@ import java.util.List;
 /**
  * @author Christopher Kian
  */
-public class BaseProductAnalyticsDisplayContext
-	extends BaseCookiesBannerDisplayContext {
+public class BaseProductAnalyticsDisplayContext {
 
 	public BaseProductAnalyticsDisplayContext(
-		CookiesConfigurationProvider cookiesConfigurationProvider,
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest) {
 
-		super(
-			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
-			renderRequest, renderResponse);
+		_layoutUtilityPageEntryLayoutProvider =
+			layoutUtilityPageEntryLayoutProvider;
+		_renderRequest = renderRequest;
 	}
 
 	public String getCookieTitle(
@@ -51,7 +49,6 @@ public class BaseProductAnalyticsDisplayContext
 			httpServletRequest, "cookies-title[" + cookie + "]");
 	}
 
-	@Override
 	public List<ConsentCookieType> getOptionalConsentCookieTypes() {
 		if (_optionalConsentCookieTypes != null) {
 			return _optionalConsentCookieTypes;
@@ -83,11 +80,11 @@ public class BaseProductAnalyticsDisplayContext
 	}
 
 	public String getPrivacyPolicyLink() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Layout layout =
-			layoutUtilityPageEntryLayoutProvider.
+			_layoutUtilityPageEntryLayoutProvider.
 				getDefaultLayoutUtilityPageEntryLayout(
 					themeDisplay.getScopeGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_COOKIE_POLICY);
@@ -99,7 +96,6 @@ public class BaseProductAnalyticsDisplayContext
 		return StringPool.POUND;
 	}
 
-	@Override
 	public List<ConsentCookieType> getRequiredConsentCookieTypes() {
 		if (_requiredConsentCookieTypes != null) {
 			return _requiredConsentCookieTypes;
@@ -115,18 +111,38 @@ public class BaseProductAnalyticsDisplayContext
 		return _requiredConsentCookieTypes;
 	}
 
+	protected JSONArray getConsentCookieTypeNamesJSONArray(
+		List<ConsentCookieType> consentCookieTypes) {
+
+		JSONArray consentCookieTypeNamesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (ConsentCookieType consentCookieType : consentCookieTypes) {
+			consentCookieTypeNamesJSONArray.put(consentCookieType.getName());
+		}
+
+		return consentCookieTypeNamesJSONArray;
+	}
+
+	protected RenderRequest getRenderRequest() {
+		return _renderRequest;
+	}
+
 	private ConsentCookieType _getConsentCookieType(
 		boolean hideFromEndUser, String name, boolean prechecked) {
 
 		return new ConsentCookieType(
 			new LocalizedValuesMap(
 				LanguageUtil.get(
-					renderRequest.getLocale(),
+					_renderRequest.getLocale(),
 					"cookies-description[" + name + "]")),
 			hideFromEndUser, name, prechecked);
 	}
 
+	private final LayoutUtilityPageEntryLayoutProvider
+		_layoutUtilityPageEntryLayoutProvider;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
+	private final RenderRequest _renderRequest;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 
 }

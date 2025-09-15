@@ -338,11 +338,6 @@ export interface IInfoPanelComponent {
 	items?: Array<any>;
 }
 
-export type IItemSelectorModalFDSProps = Omit<
-	IFrontendDataSetProps,
-	'selectedItems' | 'selectedItemsKey'
->;
-
 export interface IModalConfig {
 	disableHeader: boolean;
 	size: string;

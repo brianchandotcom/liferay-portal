@@ -8,20 +8,23 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
 
+import java.io.Serializable;
+
 /**
  * @author Tina Tian
  */
-public class StartSidecarProcessCallable implements ProcessCallable<String> {
+public class StartSidecarProcessCallable
+	implements ProcessCallable<Serializable> {
 
 	public StartSidecarProcessCallable(byte[] sidecarServerArgs) {
 		_sidecarServerArgs = sidecarServerArgs;
 	}
 
 	@Override
-	public String call() throws ProcessException {
+	public Serializable call() throws ProcessException {
 		ElasticsearchServerUtil.start(_sidecarServerArgs);
 
-		return ElasticsearchServerUtil.getAddress();
+		return null;
 	}
 
 	private static final long serialVersionUID = 1L;

@@ -154,13 +154,29 @@ public class Sidecar {
 
 		_addFutureListener(processChannel, futureListener);
 
-		NoticeableFuture<String> noticeableFuture = processChannel.write(
+		NoticeableFuture<Serializable> noticeableFuture = processChannel.write(
 			new StartSidecarProcessCallable(_getSidecarServerArgs()));
+
+		try {
+			noticeableFuture.get();
+		}
+		catch (Exception exception) {
+			processChannel.write(new StopSidecarProcessCallable());
+
+			if (exception instanceof RuntimeException) {
+				throw (RuntimeException)exception;
+			}
+
+			throw new RuntimeException(exception);
+		}
+
+		NoticeableFuture<String> getAddressNoticeableFuture =
+			processChannel.write(new GetSidecarAddressProcessCallable());
 
 		String address = null;
 
 		try {
-			address = noticeableFuture.get();
+			address = getAddressNoticeableFuture.get();
 		}
 		catch (Exception exception) {
 			processChannel.write(new StopSidecarProcessCallable());

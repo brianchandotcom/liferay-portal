@@ -99,9 +99,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					"batch.engine.task.item.delegate.class.name",
 					RandomTestUtil.randomString()
 				).put(
-					"batch.engine.task.item.delegate.name",
-					RandomTestUtil.randomString()
-				).put(
 					"export.import.vulcan.batch.engine.task.item.delegate",
 					"true"
 				).build());
@@ -112,9 +109,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					"batch.engine.task.item.delegate", "true"
 				).put(
 					"batch.engine.task.item.delegate.class.name",
-					RandomTestUtil.randomString()
-				).put(
-					"batch.engine.task.item.delegate.name",
 					RandomTestUtil.randomString()
 				).put(
 					"export.import.vulcan.batch.engine.task.item.delegate",

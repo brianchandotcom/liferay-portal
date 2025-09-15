@@ -357,7 +357,8 @@ public class Sidecar {
 		arguments.add("-Dio.netty.noUnsafe=true");
 		arguments.add("-Dio.netty.recycler.maxCapacityPerThread=0");
 		arguments.add("-Djava.awt.headless=true");
-		arguments.add("-Djava.io.tmpdir=" + _sidecarTempDirPath);
+		arguments.add(
+			"-Djava.io.tmpdir=" + System.getProperty("java.io.tmpdir"));
 		arguments.add("-Djna.nosys=true");
 		arguments.add("-Dlog4j.shutdownHookEnabled=false");
 		arguments.add("-Dlog4j2.disable.jmx=true");

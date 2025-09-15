@@ -23,6 +23,7 @@ import {
 	AssetTypeIcons as _AssetTypeIcons,
 } from '../utils/assetTypes';
 import {BaseCard} from './BaseCard';
+import EmptyStateCard from './EmptyStateCard';
 import {Item} from './FilterDropdown';
 
 type ExpiredAsset = {
@@ -226,20 +227,26 @@ function ExpiredAssetsCard() {
 				</Body>
 			</Table>
 
-			<ClayPaginationBarWithBasicItems
-				activeDelta={pagination.delta}
-				className="mx-3"
-				ellipsisBuffer={3}
-				ellipsisProps={{
-					'aria-label': Liferay.Language.get('more'),
-					'title': Liferay.Language.get('more'),
-				}}
-				onActiveChange={(newPage: number) => handlePageChange(newPage)}
-				onDeltaChange={(newDelta: number) =>
-					handleDeltaChange(newDelta)
-				}
-				totalItems={expiredAssetsList?.totalCount || 0}
-			/>
+			{!expiredAssetsList || expiredAssetsList.totalCount === 0 ? (
+				<EmptyStateCard />
+			) : (
+				<ClayPaginationBarWithBasicItems
+					activeDelta={pagination.delta}
+					className="mx-3"
+					ellipsisBuffer={3}
+					ellipsisProps={{
+						'aria-label': Liferay.Language.get('more'),
+						'title': Liferay.Language.get('more'),
+					}}
+					onActiveChange={(newPage: number) =>
+						handlePageChange(newPage)
+					}
+					onDeltaChange={(newDelta: number) =>
+						handleDeltaChange(newDelta)
+					}
+					totalItems={expiredAssetsList?.totalCount || 0}
+				/>
+			)}
 		</BaseCard>
 	);
 }

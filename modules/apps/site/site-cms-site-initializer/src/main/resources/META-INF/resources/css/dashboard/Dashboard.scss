@@ -48,4 +48,12 @@
 			}
 		}
 	}
+
+	&__empty-state {
+		margin: 3.5rem auto 6rem;
+
+		.c-empty-state-title {
+			margin-top: 0;
+		}
+	}
 }

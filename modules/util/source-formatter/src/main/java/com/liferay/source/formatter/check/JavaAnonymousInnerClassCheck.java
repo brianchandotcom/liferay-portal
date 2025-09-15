@@ -40,7 +40,7 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 		String content = javaTerm.getContent();
 
 		List<JavaClass> anonymousClasses =
-			JavaClassParser.parseAnonymousClasses(content);
+			JavaClassParser.parseAnonymousClasses(fileName, fileContent);
 
 		if (anonymousClasses.isEmpty()) {
 			return content;

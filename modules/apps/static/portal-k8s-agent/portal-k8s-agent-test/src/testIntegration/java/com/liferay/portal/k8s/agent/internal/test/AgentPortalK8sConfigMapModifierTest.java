@@ -216,36 +216,33 @@ public class AgentPortalK8sConfigMapModifierTest {
 				},
 				configMapName);
 
-		Assert.assertEquals(
-			PortalK8sConfigMapModifier.Result.BUFFERED, result);
+		Assert.assertEquals(PortalK8sConfigMapModifier.Result.BUFFERED, result);
 
-		result =
-			_portalK8sConfigMapModifier.modifyConfigMap(
-				configMapModel -> {
-					Map<String, String> data = configMapModel.data();
+		result = _portalK8sConfigMapModifier.modifyConfigMap(
+			configMapModel -> {
+				Map<String, String> data = configMapModel.data();
 
-					data.put(
-						"com.liferay.lxc.dxp.domains",
-						TestPropsValues.COMPANY_WEB_ID);
-					data.put(
-						"com.liferay.lxc.dxp.main.domain",
-						TestPropsValues.COMPANY_WEB_ID);
-					data.put(
-						"com.liferay.lxc.dxp.mainDomain",
-						TestPropsValues.COMPANY_WEB_ID);
+				data.put(
+					"com.liferay.lxc.dxp.domains",
+					TestPropsValues.COMPANY_WEB_ID);
+				data.put(
+					"com.liferay.lxc.dxp.main.domain",
+					TestPropsValues.COMPANY_WEB_ID);
+				data.put(
+					"com.liferay.lxc.dxp.mainDomain",
+					TestPropsValues.COMPANY_WEB_ID);
 
-					Map<String, String> labels = configMapModel.labels();
+				Map<String, String> labels = configMapModel.labels();
 
-					labels.put("lxc.liferay.com/metadataType", "ext-init");
-					labels.put("ext.lxc.liferay.com/serviceId", serviceId);
-					labels.put(
-						"dxp.lxc.liferay.com/virtualInstanceId",
-						TestPropsValues.COMPANY_WEB_ID);
-				},
-				configMapName);
+				labels.put("lxc.liferay.com/metadataType", "ext-init");
+				labels.put("ext.lxc.liferay.com/serviceId", serviceId);
+				labels.put(
+					"dxp.lxc.liferay.com/virtualInstanceId",
+					TestPropsValues.COMPANY_WEB_ID);
+			},
+			configMapName);
 
-		Assert.assertEquals(
-			PortalK8sConfigMapModifier.Result.BUFFERED, result);
+		Assert.assertEquals(PortalK8sConfigMapModifier.Result.BUFFERED, result);
 
 		ConfigMap configMap = _kubernetesMockClient.configMaps(
 		).withName(

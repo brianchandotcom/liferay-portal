@@ -66,11 +66,13 @@ public class ViewCategoriesDisplayContext {
 		return getCategoriesByCategoryIdAPIURL();
 	}
 
-	public Map<String, Object> getBreadcrumbReactData() throws Exception {
+	public Map<String, Object> getBreadcrumbProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"breadcrumbItems",
 			CategorizationBreadcrumbUtil.getNavigationBreadcrumbsJSONArray(
 				getVocabularyId(), getCategoryId(), _themeDisplay)
+		).put(
+			"hideSpace", true
 		).build();
 	}
 

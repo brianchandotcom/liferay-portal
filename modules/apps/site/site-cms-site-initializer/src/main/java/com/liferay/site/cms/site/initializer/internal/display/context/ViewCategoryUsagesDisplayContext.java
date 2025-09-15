@@ -35,13 +35,15 @@ public class ViewCategoryUsagesDisplayContext {
 			")&nestedFields=embedded");
 	}
 
-	public Map<String, Object> getBreadcrumbReactData() throws Exception {
+	public Map<String, Object> getBreadcrumbProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"breadcrumbItems",
 			CategorizationBreadcrumbUtil.getUsagesBreadcrumbsJSONArray(
 				ParamUtil.getLong(_httpServletRequest, "categoryId"),
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY))
+		).put(
+			"hideSpace", true
 		).build();
 	}
 

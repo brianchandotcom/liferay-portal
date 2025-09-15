@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -125,11 +126,19 @@ public class Sidecar {
 					_sidecarHomePath);
 		}
 
+		URL bundleURL = _getBundleURL(Sidecar.class);
+
+		String bootstrapClassPath = _getBootstrapClassPath();
+
 		ProcessChannel<Serializable> processChannel = null;
 
 		try {
 			processChannel = _processExecutor.execute(
-				_createProcessConfig(),
+				_createProcessConfig(
+					_getJVMArguments(), bootstrapClassPath, _getEnvironment(),
+					StringBundler.concat(
+						bundleURL.getPath(), File.pathSeparator,
+						bootstrapClassPath)),
 				new SidecarMainProcessCallable(
 					_elasticsearchConfigurationWrapper.
 						sidecarHeartbeatInterval()));
@@ -271,22 +280,21 @@ public class Sidecar {
 		}
 	}
 
-	private ProcessConfig _createProcessConfig() {
+	private ProcessConfig _createProcessConfig(
+		List<String> arguments, String bootstrapClassPath,
+		Map<String, String> environment, String runtimeClassPath) {
+
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
-		URL bundleURL = _getBundleURL(Sidecar.class);
-
-		String bootstrapClassPath = _getBootstrapClassPath();
-
 		return builder.setArguments(
-			_getJVMArguments()
+			arguments
 		).setBootstrapClassPath(
 			bootstrapClassPath
 		).setEnvironment(
 			HashMapBuilder.putAll(
 				System.getenv()
 			).putAll(
-				_getEnvironment()
+				environment
 			).build()
 		).setJavaExecutable(
 			System.getProperty("java.home") + "/bin/java"
@@ -295,8 +303,7 @@ public class Sidecar {
 		).setReactClassLoader(
 			Sidecar.class.getClassLoader()
 		).setRuntimeClassPath(
-			StringBundler.concat(
-				bundleURL.getPath(), File.pathSeparator, bootstrapClassPath)
+			runtimeClassPath
 		).build();
 	}
 

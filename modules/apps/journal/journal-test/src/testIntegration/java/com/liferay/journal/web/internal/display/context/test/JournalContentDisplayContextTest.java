@@ -73,8 +73,8 @@ public class JournalContentDisplayContextTest {
 
 	@Test
 	public void testGetArticleGroupId() throws Exception {
-		_testGetArticleGroupIdFromRenderParam();
-		_testGetArticleGroupIdFromPortletPreferencesRenderParam();
+		_testGetArticleGroupIdFromRenderParameter();
+		_testGetArticleGroupIdFromPortletPreferencesRenderParameter();
 	}
 
 	private JournalArticle _getArticle(RenderRequest renderRequest)
@@ -145,7 +145,7 @@ public class JournalContentDisplayContextTest {
 		return mockLiferayPortletRenderRequest;
 	}
 
-	private void _testGetArticleGroupIdFromPortletPreferencesRenderParam()
+	private void _testGetArticleGroupIdFromPortletPreferencesRenderParameter()
 		throws Exception {
 
 		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
@@ -174,7 +174,7 @@ public class JournalContentDisplayContextTest {
 		}
 	}
 
-	private void _testGetArticleGroupIdFromRenderParam() throws Exception {
+	private void _testGetArticleGroupIdFromRenderParameter() throws Exception {
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =

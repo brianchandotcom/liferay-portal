@@ -154,51 +154,14 @@ public class AssetCategoryPortletDataHandlerTest
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext());
+		AssetVocabulary assetVocabulary = _addAssetVocabulary();
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(),
-							stagingGroup.getGroupId(), false, new long[0],
-							HashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_DATA,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									AssetCategoriesAdminPortletKeys.
-										ASSET_CATEGORIES_ADMIN,
-								new String[] {Boolean.TRUE.toString()}
-							).build())));
+		File larFile = _exportLayouts();
 
 		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
 
 		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							TestPropsValues.getUser(),
-							stagingGroup.getGroupId(), false, new long[0],
-							HashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_DATA,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									AssetCategoriesAdminPortletKeys.
-										ASSET_CATEGORIES_ADMIN,
-								new String[] {Boolean.TRUE.toString()}
-							).build()));
+			_setUpExportImportConfiguration();
 
 		_exportImportLocalService.importLayouts(
 			exportImportConfiguration, larFile);
@@ -223,61 +186,21 @@ public class AssetCategoryPortletDataHandlerTest
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext());
+		AssetVocabulary assetVocabulary = _addAssetVocabulary();
 
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
-			ServiceContextTestUtil.getServiceContext());
+		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
 
 		String originalExternalReferenceCode =
 			assetCategory.getExternalReferenceCode();
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(),
-							stagingGroup.getGroupId(), false, new long[0],
-							HashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_DATA,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									AssetCategoriesAdminPortletKeys.
-										ASSET_CATEGORIES_ADMIN,
-								new String[] {Boolean.TRUE.toString()}
-							).build())));
+		File larFile = _exportLayouts();
 
 		assetCategory.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		_assetCategoryLocalService.updateAssetCategory(assetCategory);
 
 		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							TestPropsValues.getUser(),
-							stagingGroup.getGroupId(), false, new long[0],
-							HashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_DATA,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									AssetCategoriesAdminPortletKeys.
-										ASSET_CATEGORIES_ADMIN,
-								new String[] {Boolean.TRUE.toString()}
-							).build()));
+			_setUpExportImportConfiguration();
 
 		_exportImportLocalService.importLayouts(
 			exportImportConfiguration, larFile);

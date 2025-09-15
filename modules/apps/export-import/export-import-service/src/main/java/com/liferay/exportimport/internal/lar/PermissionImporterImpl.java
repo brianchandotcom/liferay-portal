@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TeamLocalService;
@@ -94,8 +93,8 @@ public class PermissionImporterImpl implements PermissionImporter {
 				layout.getPlid(), portletId);
 
 			_importPermissions(
-				companyId, groupId, userId, layout, resourceName,
-				resourcePrimKey, permissionsElement);
+				companyId, groupId, userId, resourceName, resourcePrimKey,
+				permissionsElement);
 		}
 	}
 
@@ -226,9 +225,8 @@ public class PermissionImporterImpl implements PermissionImporter {
 	}
 
 	private void _importPermissions(
-			long companyId, long groupId, long userId, Layout layout,
-			String resourceName, String resourcePrimKey,
-			Element permissionsElement)
+			long companyId, long groupId, long userId, String resourceName,
+			String resourcePrimKey, Element permissionsElement)
 		throws Exception {
 
 		Map<Long, Set<String>> existingRoleIdsToActionIds =

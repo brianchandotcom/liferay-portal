@@ -123,4 +123,32 @@ describe('[CMS Dashboard] ExpiredAssetsCard', () => {
 
 		expect(viewModalButtons.length).toBe(3);
 	});
+
+	it('renders EmptyStateCard when there are no expired assets', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
+				items: [],
+				totalCount: 0,
+			},
+			error: null,
+		});
+
+		render(<ExpiredAssetsCard />);
+
+		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+
+		expect(screen.getByText('no-assets-yet')).toBeInTheDocument();
+
+		expect(
+			screen.getByText('no-content-has-been-created-in-the-cms-spaces')
+		).toBeInTheDocument();
+
+		const images = screen.getAllByRole('img');
+
+		const emptyStateImage = images.find((image) =>
+			image.getAttribute('src')?.includes('cms_empty_state.svg')
+		);
+
+		expect(emptyStateImage).toBeInTheDocument();
+	});
 });

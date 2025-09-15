@@ -151,7 +151,7 @@ export default function AllSpacesFDSPropsTransformer({
 
 				manageMembersAction(data, loadData);
 			}
-			else if (action.data.id === 'view-sites') {
+			else if (action.data.id === 'view-connected-sites') {
 				const hasConnectSitesPermission =
 					action.data.permissionKey === 'connect-sites';
 

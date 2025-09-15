@@ -46,6 +46,7 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,8 +147,6 @@ public class Sidecar {
 
 			_processChannel = null;
 		}
-
-		PathUtil.deleteDir(_sidecarTempDirPath);
 	}
 
 	private void _addFutureListener(
@@ -319,33 +318,38 @@ public class Sidecar {
 				_elasticsearchConfigurationWrapper.sidecarDebugSettings());
 		}
 
-		try {
-			_sidecarTempDirPath = Files.createTempDirectory("sidecar");
-		}
-		catch (IOException ioException) {
-			throw new IllegalStateException(
-				"Unable to create temp folder", ioException);
-		}
+		Path configPath = _elasticsearchInstancePaths.getConfigPath();
 
-		Path configFolder = _sidecarTempDirPath.resolve("config");
+		Path log4jPropertiesPath = configPath.resolve("log4j2.properties");
 
 		try {
-			Files.createDirectories(configFolder);
+			byte[] log4jProperties = _getLog4jProperties();
 
-			Files.write(
-				configFolder.resolve("log4j2.properties"),
-				_getLog4jProperties());
+			File log4jPropertiesFile = log4jPropertiesPath.toFile();
+
+			if (log4jPropertiesFile.exists() &&
+				!Arrays.equals(
+					log4jProperties, Files.readAllBytes(log4jPropertiesPath))) {
+
+				log4jPropertiesFile.delete();
+			}
+
+			if (!log4jPropertiesFile.exists()) {
+				Files.createDirectories(configPath);
+
+				Files.write(log4jPropertiesPath, log4jProperties);
+			}
 		}
 		catch (IOException ioException) {
 			_log.error(
-				"Unable to copy log4j2.properties to " + configFolder,
+				"Unable to copy log4j2.properties to " + configPath,
 				ioException);
 		}
 
 		arguments.add("-Des.distribution.type=tar");
 		arguments.add("-Des.networkaddress.cache.negative.ttl=10");
 		arguments.add("-Des.networkaddress.cache.ttl=60");
-		arguments.add("-Des.path.conf=" + configFolder);
+		arguments.add("-Des.path.conf=" + configPath);
 		arguments.add("-Dfile.encoding=UTF-8");
 		arguments.add("-Dio.netty.noKeySetOptimization=true");
 		arguments.add("-Dio.netty.noUnsafe=true");
@@ -492,7 +496,7 @@ public class Sidecar {
 		}
 
 		return new SidecarServerArgs(
-			String.valueOf(_sidecarTempDirPath.resolve("config")), false,
+			String.valueOf(_elasticsearchInstancePaths.getConfigPath()), false,
 			String.valueOf(_sidecarHomePath.resolve("logs")), null, false,
 			settingsMap);
 	}
@@ -617,7 +621,6 @@ public class Sidecar {
 	private FutureListener<Serializable> _restartFutureListener;
 	private final Path _sidecarHomePath;
 	private SidecarManager _sidecarManager;
-	private Path _sidecarTempDirPath;
 
 	private static class RestartFutureListener
 		implements FutureListener<Serializable> {

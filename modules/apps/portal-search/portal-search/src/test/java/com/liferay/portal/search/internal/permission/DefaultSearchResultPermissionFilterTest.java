@@ -23,16 +23,14 @@ import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.util.Arrays;
-import java.util.function.Function;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.mockito.Mockito;
+
+import java.util.Arrays;
+import java.util.function.Function;
 
 /**
  * @author Gustavo Lima
@@ -117,6 +115,16 @@ public class DefaultSearchResultPermissionFilterTest {
 
 		_assertPagination(
 			searchContext, defaultSearchResultPermissionFilter, 9, 9);
+	}
+
+	@Test
+	public void testSearchWithSizeZero() {
+		_groupAdmin = false;
+		_permissionFilteredSearchResultAccurateCountThreshold = 0;
+
+		_assertPagination(
+			_getSearchContext(0), _getDefaultSearchResultPermissionFilter(), 0,
+			_PRIVATE_DOCUMENTS + _PUBLIC_DOCUMENTS);
 	}
 
 	private void _assertPagination(

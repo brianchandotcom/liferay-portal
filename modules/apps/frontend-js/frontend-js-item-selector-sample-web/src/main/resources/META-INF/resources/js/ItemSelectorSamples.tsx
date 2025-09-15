@@ -277,7 +277,6 @@ export default function ItemSelectorSamples() {
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
-						apiURL: userAccountsItemSelectorConfig.apiURL,
 						id: `itemSelectorModal-users-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:
@@ -307,7 +306,6 @@ export default function ItemSelectorSamples() {
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
-						apiURL: userAccountsItemSelectorConfig.apiURL,
 						id: `itemSelectorModal-documents-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:
@@ -340,7 +338,6 @@ export default function ItemSelectorSamples() {
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
-						apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
 						id: `itemSelectorModal-spaces-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:
@@ -370,7 +367,6 @@ export default function ItemSelectorSamples() {
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
-						apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
 						id: `itemSelectorModal-spaces-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:

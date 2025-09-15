@@ -264,7 +264,7 @@ const RichText = ({
 		});
 	};
 
-	function sanitezeHTML(html) {
+	function sanitizeHTML(html) {
 		if (Liferay.FeatureFlags['LPD-31212']) {
 			return html;
 		}
@@ -392,7 +392,7 @@ const RichText = ({
 								if (editor.mode === 'source') {
 									const value = event.data.dataValue;
 
-									const sanitizedValue = sanitezeHTML(value);
+									const sanitizedValue = sanitizeHTML(value);
 
 									handleContentChange(sanitizedValue);
 

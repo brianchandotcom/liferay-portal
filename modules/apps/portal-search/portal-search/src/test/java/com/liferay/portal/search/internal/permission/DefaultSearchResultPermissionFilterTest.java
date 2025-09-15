@@ -23,14 +23,16 @@ import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Arrays;
+import java.util.function.Function;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import java.util.Arrays;
-import java.util.function.Function;
+import org.mockito.Mockito;
 
 /**
  * @author Gustavo Lima

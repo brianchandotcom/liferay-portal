@@ -824,10 +824,8 @@ public class DefaultSearchResultPermissionFilter
 				_start = start;
 				_end = end;
 
-				_delta = end - start;
-
-				_documents = new CircularFifoQueue<>(_delta);
-				_scores = new CircularFifoQueue<>(_delta);
+				_documents = new CircularFifoQueue<>(Math.max(1, end - start));
+				_scores = new CircularFifoQueue<>(Math.max(1, end - start));
 			}
 
 			public boolean add(Document document, Float score) {
@@ -869,7 +867,6 @@ public class DefaultSearchResultPermissionFilter
 				return _totalDocs;
 			}
 
-			private final int _delta;
 			private final CircularFifoQueue<Document> _documents;
 			private int _documentsDiscarded;
 			private final int _end;

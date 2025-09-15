@@ -13,6 +13,7 @@ export class RecycleBinPage {
 	readonly dataSetFragmentPage: DataSetPage;
 	readonly deleteButton: Locator;
 	readonly deleteItemConfirmationText: Locator;
+	readonly emptyRecycleBinButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -21,6 +22,9 @@ export class RecycleBinPage {
 		this.deleteItemConfirmationText = page.getByText(
 			'You are about to permanently'
 		);
+		this.emptyRecycleBinButton = page.getByRole('menuitem', {
+			name: 'Empty Recycle Bin',
+		});
 	}
 
 	async execItemAction({action, filter}: {action: string; filter: string}) {

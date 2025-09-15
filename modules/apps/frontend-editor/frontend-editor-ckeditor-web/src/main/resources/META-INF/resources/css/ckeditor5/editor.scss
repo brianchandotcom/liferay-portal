@@ -49,7 +49,8 @@
 		}
 	}
 
-	&.ck-content {
+	> .ck-source-editing-area,
+	> .ck-content[role='textbox'] {
 		min-height: 265px;
 	}
 

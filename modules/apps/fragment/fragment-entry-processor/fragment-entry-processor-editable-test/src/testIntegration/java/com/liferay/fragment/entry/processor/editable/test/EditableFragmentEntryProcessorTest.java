@@ -1167,7 +1167,7 @@ public class EditableFragmentEntryProcessorTest {
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			TestPropsValues.getUserId(),
-			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
+			fragmentEntryLink.getFragmentEntryLinkId(), editableValues, true);
 
 		int count =
 			_layoutClassedModelUsageLocalService.

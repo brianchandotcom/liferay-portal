@@ -67,6 +67,7 @@ data "aws_iam_policy_document" "liferay_backup_restore_policy_doc" {
 			"rds:RestoreDBInstanceFromDBSnapshot",
 			"s3:CreateBucket",
 			"s3:DeleteBucket",
+			"s3:DeleteObject",
 			"s3:GetAccelerateConfiguration",
 			"s3:GetBucket*",
 			"s3:GetEncryptionConfiguration",

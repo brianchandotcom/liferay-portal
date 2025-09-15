@@ -137,7 +137,7 @@ async function getSiteHomePageScreenshot(
 }
 
 testWithExportImportAtInstanceLevelFF(
-	'can export and import custom object entries at site level',
+	'Can export and import custom object entries at site level',
 	async ({apiHelpers, exportImportPage}) => {
 		const objectActionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -211,7 +211,7 @@ testWithExportImportAtInstanceLevelFF(
 );
 
 testWithExportImportAtInstanceLevelFF(
-	'cannot import an instance scoped lar file',
+	'Cannot import an instance scoped lar file',
 	async ({apiHelpers, companyExportImportPage, exportImportPage, page}) => {
 		const objectActionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -321,7 +321,7 @@ test(
 );
 
 test(
-	'can XSS with `searchContainerId` in Asset Libraries import',
+	'Can XSS with `searchContainerId` in Asset Libraries import',
 	{tag: '@LPS-195766'},
 	async ({apiHelpers, depotAdminPage, page}) => {
 		const depotName = getRandomString();
@@ -363,7 +363,7 @@ test(
 	}
 );
 
-test('can import a folder with document type restrictions and workflow', async ({
+test('Can import a folder with document type restrictions and workflow', async ({
 	apiHelpers,
 	documentLibraryEditFolderPage,
 	documentLibraryPage,
@@ -387,7 +387,7 @@ test('can import a folder with document type restrictions and workflow', async (
 	);
 });
 
-test('can import a lar file selecting some items to import', async ({
+test('Can import a lar file selecting some items to import', async ({
 	exportImportPage,
 }) => {
 	await exportImportPage.goToExport();
@@ -420,7 +420,7 @@ test('can import a lar file selecting some items to import', async ({
 });
 
 testWithExportImportAtInstanceLevelFF(
-	'can export and import a site created with clarity site initializer',
+	'Can export and import a site created with clarity site initializer',
 	{tag: '@LPD-64056'},
 	async ({
 		apiHelpers,
@@ -683,7 +683,7 @@ testWithExportImportAtInstanceLevelFF(
 	{name: 'com.liferay.site.initializer.masterclass', shouldFail: true},
 	{name: 'com.liferay.site.initializer.welcome'},
 ].forEach(({name, shouldFail}) => {
-	test(`site initializer ${name} can be exported and imported`, async ({
+	test(`Site initializer ${name} can be exported and imported`, async ({
 		apiHelpers,
 		page,
 		stagingPage,
@@ -721,7 +721,7 @@ testWithExportImportAtInstanceLevelFF(
 	});
 });
 
-test('can see corresponding elements at site level', async ({
+test('Can see corresponding elements at site level', async ({
 	apiHelpers,
 	exportImportPage,
 }) => {
@@ -784,7 +784,7 @@ test('can see corresponding elements at site level', async ({
 });
 
 testWithDeprecationFFDisabled(
-	"hide 'Delete Application Data' checkbox and 'Copy as New' radio button when deprecation FF is false",
+	"Hide 'Delete Application Data' checkbox and 'Copy as New' radio button when deprecation FF is false",
 	{tag: ['@LPD-44771', '@LPD-44307']},
 	async ({apiHelpers, exportImportPage}) => {
 		const objectActionAPIClient =
@@ -829,7 +829,7 @@ testWithDeprecationFFDisabled(
 );
 
 testWithDeprecationFF(
-	'show modal warning at site level',
+	'Show modal warning at site level',
 	{tag: ['@LPD-54835', '@LPD-54836']},
 	async ({apiHelpers, exportImportPage, page, uiElementsPage}) => {
 		const objectActionAPIClient =
@@ -1012,7 +1012,7 @@ testWithDeprecationFF(
 );
 
 testWithDeprecationFFDisabled(
-	'show modal warning at site level - FF disabled',
+	'Show modal warning at site level - FF disabled',
 	{tag: ['@LPD-54835', '@LPD-54836']},
 	async ({apiHelpers, exportImportPage, page, uiElementsPage}) => {
 		const objectActionAPIClient =

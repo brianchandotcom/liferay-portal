@@ -13,6 +13,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -229,5 +230,123 @@ test(
 		const picklist = await picklistBuilderPage.getPicklist(picklistName);
 
 		await picklistBuilderPage.deletePicklist(picklist.id);
+	}
+);
+
+test(
+	'Space and folder contents inherit parent default permissions',
+	{tag: '@LPD-62475'},
+	async ({defaultPermissionsPage, folderPage, page, spaceSummaryPage}) => {
+		const getTableRowByText = async (text: string) => {
+			return page
+				.locator('table.table tbody tr', {hasText: text})
+				.first();
+		};
+
+		const checkPermission = async (folderName: string) => {
+			await expect(async () => {
+				await (await getTableRowByText(folderName))
+					.getByRole('button', {name: 'Actions'})
+					.click();
+				await page
+					.getByRole('menuitem', {
+						exact: true,
+						name: 'Default Permissions',
+					})
+					.click();
+			}).toPass();
+
+			await defaultPermissionsPage.verifyPermissionIsChecked(
+				'Power User',
+				'DELETE'
+			);
+
+			await defaultPermissionsPage.permissionsModalCancelButton.click();
+		};
+
+		await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+		await page.getByTestId('fdsCreationActionButton').click();
+
+		const spaceName = 'Space' + getRandomInt();
+
+		await page.getByLabel('Space Name').fill(spaceName);
+		await page.getByRole('button', {name: 'Continue'}).click();
+		await page
+			.getByRole('button', {name: 'Continue Without Members'})
+			.click();
+
+		try {
+			await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+			await expect(async () => {
+				await (await getTableRowByText(spaceName))
+					.getByRole('button', {name: 'Actions'})
+					.click();
+				await page
+					.getByRole('menuitem', {name: 'Default Permissions'})
+					.click();
+			}).toPass();
+
+			await defaultPermissionsPage.checkPermissionAndSave(
+				'Power User',
+				'DELETE'
+			);
+
+			await spaceSummaryPage.goto(spaceName);
+
+			await spaceSummaryPage.viewAllContentLink.click();
+
+			const folderName = 'Folder' + getRandomInt();
+
+			await folderPage.createFolder(folderName);
+
+			await checkPermission(folderName);
+
+			await page.getByRole('link', {name: folderName}).click();
+
+			const subFolderName = 'SubFolder' + getRandomInt();
+
+			await folderPage.createFolder(subFolderName);
+
+			await checkPermission(subFolderName);
+
+			await page.getByTestId('fdsCreationActionButton').click();
+			await page
+				.getByRole('menuitem', {name: 'Basic Web Content'})
+				.click();
+
+			const webContentName = 'Content' + getRandomInt();
+
+			await page
+				.getByPlaceholder('New Basic Web Content')
+				.fill(webContentName);
+			await page.getByRole('button', {name: 'Publish'}).click();
+
+			await expect(page.getByText(webContentName)).toBeVisible();
+
+			await (await getTableRowByText(webContentName))
+				.getByRole('button', {name: 'Actions'})
+				.click();
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Permissions'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('menuitem', {name: 'Default Permissions'})
+			).not.toBeVisible();
+		}
+		finally {
+			await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+			await expect(async () => {
+				await (await getTableRowByText(spaceName))
+					.getByRole('button', {name: 'Actions'})
+					.click();
+				await page.getByRole('menuitem', {name: 'Delete'}).click();
+			}).toPass();
+
+			await page.getByRole('button', {name: 'Delete'}).click();
+		}
 	}
 );

@@ -145,7 +145,23 @@ public class Sidecar {
 
 		_addFutureListener(processChannel, futureListener);
 
-		String address = _startElasticsearch(processChannel);
+		NoticeableFuture<String> noticeableFuture = processChannel.write(
+			new StartSidecarProcessCallable(_getSidecarServerArgs()));
+
+		String address = null;
+
+		try {
+			address = noticeableFuture.get();
+		}
+		catch (Exception exception) {
+			processChannel.write(new StopSidecarProcessCallable());
+
+			if (exception instanceof RuntimeException) {
+				throw (RuntimeException)exception;
+			}
+
+			throw new RuntimeException(exception);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -559,26 +575,6 @@ public class Sidecar {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
-		}
-	}
-
-	private String _startElasticsearch(
-		ProcessChannel<Serializable> processChannel) {
-
-		NoticeableFuture<String> noticeableFuture = processChannel.write(
-			new StartSidecarProcessCallable(_getSidecarServerArgs()));
-
-		try {
-			return noticeableFuture.get();
-		}
-		catch (Exception exception) {
-			processChannel.write(new StopSidecarProcessCallable());
-
-			if (exception instanceof RuntimeException) {
-				throw (RuntimeException)exception;
-			}
-
-			throw new RuntimeException(exception);
 		}
 	}
 

@@ -272,7 +272,7 @@ export default function ItemSelectorSamples() {
 				</ItemSelector>
 			</SampleContainer>
 
-			<SampleContainer label="Item selector pops up modal on button click autocomplete (Users)">
+			<SampleContainer label="Single Select (Users) - Open Modal Trigger">
 				<ItemSelector
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					fdsProps={{
@@ -290,7 +290,7 @@ export default function ItemSelectorSamples() {
 						value: 'id',
 					}}
 					onItemsChange={(items: User[]) => setUser2(items[0])}
-					placeholder="Select an User"
+					placeholder="Select a User"
 					type={userAccountsItemSelectorConfig.type}
 				>
 					{(item) => (
@@ -301,7 +301,7 @@ export default function ItemSelectorSamples() {
 				</ItemSelector>
 			</SampleContainer>
 
-			<SampleContainer label="Multiple Select Item selector pops up modal on button click (Users)">
+			<SampleContainer label="Multiple Select (Users) - Open Modal Trigger">
 				<ItemSelector
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					fdsProps={{
@@ -322,7 +322,7 @@ export default function ItemSelectorSamples() {
 					onItemsChange={(items: User[]) => {
 						setUsersMultiSelect(items);
 					}}
-					placeholder="Select an User"
+					placeholder="Select a User"
 					type={userAccountsItemSelectorConfig.type}
 				>
 					{(item) => (
@@ -333,7 +333,7 @@ export default function ItemSelectorSamples() {
 				</ItemSelector>
 			</SampleContainer>
 
-			<SampleContainer label="Item selector pops up modal on button click autocomplete (Spaces)">
+			<SampleContainer label="Single Select (Spaces) - Open Modal Trigger">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 					fdsProps={{
@@ -351,7 +351,7 @@ export default function ItemSelectorSamples() {
 						value: 'id',
 					}}
 					onItemsChange={(items: Space[]) => setSpace3(items[0])}
-					placeholder="Select an Space"
+					placeholder="Select a Space"
 					type={assetLibrariesItemSelectorConfig.type}
 				>
 					{(item) => (
@@ -362,7 +362,7 @@ export default function ItemSelectorSamples() {
 				</ItemSelector>
 			</SampleContainer>
 
-			<SampleContainer label="Multiple Select Item selector pops up modal on button click (Spaces)">
+			<SampleContainer label="Multiple Select (Spaces) - Open Modal Trigger">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 					fdsProps={{
@@ -383,7 +383,7 @@ export default function ItemSelectorSamples() {
 					onItemsChange={(items: Space[]) => {
 						setSpacesMultiSelect(items);
 					}}
-					placeholder="Select an Space"
+					placeholder="Select a Space"
 					type={assetLibrariesItemSelectorConfig.type}
 				>
 					{(item) => (

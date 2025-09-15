@@ -606,68 +606,18 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testCopyArticle() throws Exception {
-		JournalArticle oldJournalArticle = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test-1",
 			RandomTestUtil.randomString());
 
-		JournalArticle thirdJournalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test-2",
-			oldJournalArticle.getContent());
+		_testCopyArticle(journalArticle, " (Copy)", "-copy-");
+		_testCopyArticle(journalArticle, " (Copy 1)", "-copy-1-");
 
-		JournalArticle newJournalArticle =
-			_journalArticleLocalService.copyArticle(
-				oldJournalArticle.getUserId(), oldJournalArticle.getGroupId(),
-				oldJournalArticle.getArticleId(), null, true,
-				oldJournalArticle.getVersion());
+		journalArticle = JournalTestUtil.updateArticle(
+			journalArticle, "Test-2");
 
-		Assert.assertNotEquals(oldJournalArticle, newJournalArticle);
-		Assert.assertNotEquals(
-			thirdJournalArticle.getUrlTitle(), newJournalArticle.getUrlTitle());
-
-		List<ResourcePermission> oldResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				oldJournalArticle.getCompanyId(),
-				JournalArticle.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(oldJournalArticle.getResourcePrimKey()));
-
-		List<ResourcePermission> newResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				newJournalArticle.getCompanyId(),
-				JournalArticle.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(newJournalArticle.getResourcePrimKey()));
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"Old resource permissions: ", oldResourcePermissions,
-				", new resource permissions: ", newResourcePermissions),
-			oldResourcePermissions.size(), newResourcePermissions.size());
-
-		for (int i = 0; i < oldResourcePermissions.size(); i++) {
-			ResourcePermission oldResourcePermission =
-				oldResourcePermissions.get(i);
-			ResourcePermission newResourcePermission =
-				newResourcePermissions.get(i);
-
-			Assert.assertNotEquals(
-				oldResourcePermission, newResourcePermission);
-
-			Assert.assertEquals(
-				oldResourcePermission.getRoleId(),
-				newResourcePermission.getRoleId());
-			Assert.assertEquals(
-				oldResourcePermission.getOwnerId(),
-				newResourcePermission.getOwnerId());
-			Assert.assertEquals(
-				oldResourcePermission.getActionIds(),
-				newResourcePermission.getActionIds());
-			Assert.assertEquals(
-				oldResourcePermission.isViewActionId(),
-				newResourcePermission.isViewActionId());
-		}
+		_testCopyArticle(journalArticle, " (Copy)", "-copy-");
 	}
 
 	@Test
@@ -2633,6 +2583,67 @@ public class JournalArticleLocalServiceTest {
 	private String _readFileToString(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _testCopyArticle(
+			JournalArticle journalArticle, String titleSuffix,
+			String urlTitleSuffix)
+		throws Exception {
+
+		JournalArticle journalArticle1 =
+			_journalArticleLocalService.copyArticle(
+				journalArticle.getUserId(), journalArticle.getGroupId(),
+				journalArticle.getArticleId(), null, true,
+				journalArticle.getVersion());
+
+		Assert.assertNotEquals(journalArticle, journalArticle1);
+		Assert.assertEquals(
+			journalArticle.getTitle() + titleSuffix,
+			journalArticle1.getTitle());
+		Assert.assertEquals(
+			journalArticle.getUrlTitle() + urlTitleSuffix,
+			journalArticle1.getUrlTitle());
+
+		List<ResourcePermission> oldResourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				journalArticle.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(journalArticle.getResourcePrimKey()));
+
+		List<ResourcePermission> newResourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				journalArticle1.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(journalArticle1.getResourcePrimKey()));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Old resource permissions: ", oldResourcePermissions,
+				", new resource permissions: ", newResourcePermissions),
+			oldResourcePermissions.size(), newResourcePermissions.size());
+
+		for (int i = 0; i < oldResourcePermissions.size(); i++) {
+			ResourcePermission oldResourcePermission =
+				oldResourcePermissions.get(i);
+			ResourcePermission newResourcePermission =
+				newResourcePermissions.get(i);
+
+			Assert.assertNotEquals(
+				oldResourcePermission, newResourcePermission);
+
+			Assert.assertEquals(
+				oldResourcePermission.getRoleId(),
+				newResourcePermission.getRoleId());
+			Assert.assertEquals(
+				oldResourcePermission.getOwnerId(),
+				newResourcePermission.getOwnerId());
+			Assert.assertEquals(
+				oldResourcePermission.getActionIds(),
+				newResourcePermission.getActionIds());
+			Assert.assertEquals(
+				oldResourcePermission.isViewActionId(),
+				newResourcePermission.isViewActionId());
+		}
 	}
 
 	private String _toJSON(FileEntry fileEntry) {

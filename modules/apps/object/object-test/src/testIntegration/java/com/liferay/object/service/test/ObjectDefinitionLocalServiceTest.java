@@ -2340,16 +2340,18 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false,
-				Arrays.asList(
+				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"a" + RandomTestUtil.randomString()
+						"textObjectField"
 					).localized(
 						true
 					).build()));
+
+		ObjectDefinition finalObjectDefinition = objectDefinition1;
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionEnableLocalizationException.class,
@@ -2357,30 +2359,40 @@ public class ObjectDefinitionLocalServiceTest {
 				"because translation is enabled for custom fields",
 			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				objectDefinition1.getObjectDefinitionId()));
+				finalObjectDefinition.getObjectDefinitionId()));
 
-		ObjectDefinition objectDefinition2 = null;
-		ObjectDefinition objectDefinition3 = null;
+		objectDefinition1.setEnableLocalization(true);
+		objectDefinition1.setName(ObjectDefinitionTestUtil.getRandomName());
 
-		try {
-			objectDefinition2 = _publishCustomObjectDefinition(false);
+		objectDefinition1 = _updateCustomObjectDefinition(
+			null, objectDefinition1);
 
-			Assert.assertNull(
-				IndexerRegistryUtil.getIndexer(
-					objectDefinition2.getClassName()));
+		objectDefinition1 =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId());
 
-			objectDefinition3 = _publishCustomObjectDefinition(true);
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition1.getObjectDefinitionId(), "textObjectField");
 
-			Assert.assertNotNull(
-				IndexerRegistryUtil.getIndexer(
-					objectDefinition3.getClassName()));
-		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition2);
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition3);
-		}
+		Assert.assertEquals(
+			objectDefinition1.getDBTableName(), objectField.getDBTableName());
+
+		ObjectDefinition objectDefinition2 = _publishCustomObjectDefinition(
+			false);
+
+		Assert.assertNull(
+			IndexerRegistryUtil.getIndexer(objectDefinition2.getClassName()));
+
+		ObjectDefinition objectDefinition3 = _publishCustomObjectDefinition(
+			true);
+
+		Assert.assertNotNull(
+			IndexerRegistryUtil.getIndexer(objectDefinition3.getClassName()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
 	}
 
 	@Test

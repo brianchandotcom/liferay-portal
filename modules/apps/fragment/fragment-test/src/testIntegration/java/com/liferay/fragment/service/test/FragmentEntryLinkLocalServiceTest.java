@@ -622,7 +622,15 @@ public class FragmentEntryLinkLocalServiceTest {
 		fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				TestPropsValues.getUserId(),
-				fragmentEntryLink1.getFragmentEntryLinkId(), 3);
+				fragmentEntryLink1.getFragmentEntryLinkId(),
+				fragmentEntryLink1.getOriginalFragmentEntryLinkId(),
+				fragmentEntryLink1.getFragmentEntryId(),
+				fragmentEntryLink1.getPlid(), fragmentEntryLink1.getCss(),
+				fragmentEntryLink1.getHtml(), fragmentEntryLink1.getJs(),
+				fragmentEntryLink1.getConfiguration(),
+				fragmentEntryLink1.getEditableValues(),
+				fragmentEntryLink1.getNamespace(), 3,
+				fragmentEntryLink1.getType(), _serviceContext);
 
 		Assert.assertEquals(3, fragmentEntryLink1.getPosition());
 
@@ -920,8 +928,8 @@ public class FragmentEntryLinkLocalServiceTest {
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			_read(
-				"updated-editable-default-values-update-latest-changes.json"));
+			_read("updated-editable-default-values-update-latest-changes.json"),
+			true);
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
@@ -975,7 +983,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			_read("updated-editable-values-update-latest-changes.json"));
+			_read("updated-editable-values-update-latest-changes.json"), true);
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),

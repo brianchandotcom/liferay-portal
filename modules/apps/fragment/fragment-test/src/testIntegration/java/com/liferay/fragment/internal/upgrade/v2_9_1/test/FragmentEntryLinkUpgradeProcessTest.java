@@ -189,7 +189,8 @@ public class FragmentEntryLinkUpgradeProcessTest
 				JSONUtil.put(
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString())
-			).toString());
+			).toString(),
+			true);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToDraftLayout(

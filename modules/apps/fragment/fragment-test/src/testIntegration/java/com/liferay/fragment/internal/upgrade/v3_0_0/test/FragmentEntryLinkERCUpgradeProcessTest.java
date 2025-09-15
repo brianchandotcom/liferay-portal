@@ -235,7 +235,8 @@ public class FragmentEntryLinkERCUpgradeProcessTest
 				JSONUtil.put(
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString())
-			).toString());
+			).toString(),
+			true);
 	}
 
 	private void _assertFragmentEntryLinks(

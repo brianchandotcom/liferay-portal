@@ -94,7 +94,8 @@ public class JournalFragmentEntryProcessorEditableTest {
 			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			StringUtil.replace(
-				editableValues, "TEMPLATE_KEY", _ddmTemplate.getTemplateKey()));
+				editableValues, "TEMPLATE_KEY", _ddmTemplate.getTemplateKey()),
+			true);
 
 		DDMTemplateLink ddmTemplateLink =
 			_ddmTemplateLinkLocalService.getTemplateLink(

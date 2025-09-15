@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -79,12 +81,11 @@ public class PermissionCheckFinderEntryTest {
 	}
 
 	@Test
-	public void testFilterFindByGroupId() {
-		_assertFilterFindByGroupIdAdminAndOwnerDefaultPermissions();
-		_assertFilterFindByGroupIdPermissions(
+	public void testFilterFindByGroupId() throws Exception {
+		_testFilterFindByGroupId(
 			Collections.emptyList(), Collections.emptyList(),
 			Collections.emptyList(), Collections.emptyList(),
-			Collections.emptyList(), _permissionedUser);
+			Collections.emptyList());
 	}
 
 	@Test
@@ -103,16 +104,15 @@ public class PermissionCheckFinderEntryTest {
 			String.valueOf(TestPropsValues.getCompanyId()), _role.getRoleId(),
 			ActionKeys.VIEW);
 
-		_assertFilterFindByGroupIdAdminAndOwnerDefaultPermissions();
-		_assertFilterFindByGroupIdPermissions(
+		_testFilterFindByGroupId(
 			Collections.singletonList(_permissionCheckFinderEntryAdmin),
 			Collections.singletonList(_permissionCheckFinderEntry1),
 			Collections.singletonList(_permissionCheckFinderEntry2),
 			Arrays.asList(
 				_permissionCheckFinderEntry1, _permissionCheckFinderEntry2),
 			Arrays.asList(
-				_permissionCheckFinderEntry1, _permissionCheckFinderEntryAdmin),
-			_permissionedUser);
+				_permissionCheckFinderEntry1,
+				_permissionCheckFinderEntryAdmin));
 	}
 
 	@Test
@@ -135,15 +135,13 @@ public class PermissionCheckFinderEntryTest {
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group2.getGroupId()),
 			_role.getRoleId(), ActionKeys.VIEW);
 
-		_assertFilterFindByGroupIdAdminAndOwnerDefaultPermissions();
-		_assertFilterFindByGroupIdPermissions(
+		_testFilterFindByGroupId(
 			Collections.emptyList(),
 			Collections.singletonList(_permissionCheckFinderEntry1),
 			Collections.singletonList(_permissionCheckFinderEntry2),
 			Arrays.asList(
 				_permissionCheckFinderEntry1, _permissionCheckFinderEntry2),
-			Collections.singletonList(_permissionCheckFinderEntry1),
-			_permissionedUser);
+			Collections.singletonList(_permissionCheckFinderEntry1));
 	}
 
 	@Test
@@ -166,15 +164,13 @@ public class PermissionCheckFinderEntryTest {
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			_role.getRoleId(), ActionKeys.VIEW);
 
-		_assertFilterFindByGroupIdAdminAndOwnerDefaultPermissions();
-		_assertFilterFindByGroupIdPermissions(
+		_testFilterFindByGroupId(
 			Collections.emptyList(),
 			Collections.singletonList(_permissionCheckFinderEntry1),
 			Collections.singletonList(_permissionCheckFinderEntry2),
 			Arrays.asList(
 				_permissionCheckFinderEntry1, _permissionCheckFinderEntry2),
-			Collections.singletonList(_permissionCheckFinderEntry1),
-			_permissionedUser);
+			Collections.singletonList(_permissionCheckFinderEntry1));
 	}
 
 	private PermissionCheckFinderEntry _addPermissionCheckFinderEntry(
@@ -270,6 +266,45 @@ public class PermissionCheckFinderEntryTest {
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
+	private void _testFilterFindByGroupId(
+			List<PermissionCheckFinderEntry> expectedEntriesAdminGroup,
+			List<PermissionCheckFinderEntry> expectedEntriesGroup1,
+			List<PermissionCheckFinderEntry> expectedEntriesGroup2,
+			List<PermissionCheckFinderEntry> expectedEntriesGroup1AndGroup2,
+			List<PermissionCheckFinderEntry> expectedEntriesGroup1AndAdminGroup)
+		throws Exception {
+
+		BasePersistence<?> basePersistence =
+			_permissionCheckFinderEntryLocalService.getBasePersistence();
+
+		Assert.assertTrue(
+			ReflectionTestUtil.invoke(
+				basePersistence, "isPermissionsInMemoryFilterEnabled", null));
+
+		_assertFilterFindByGroupIdAdminAndOwnerDefaultPermissions();
+		_assertFilterFindByGroupIdPermissions(
+			expectedEntriesAdminGroup, expectedEntriesGroup1,
+			expectedEntriesGroup2, expectedEntriesGroup1AndGroup2,
+			expectedEntriesGroup1AndAdminGroup, _permissionedUser);
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					basePersistence, "_permissionsInMemoryFilterEnabled",
+					false)) {
+
+			Assert.assertFalse(
+				ReflectionTestUtil.invoke(
+					basePersistence, "isPermissionsInMemoryFilterEnabled",
+					null));
+
+			_assertFilterFindByGroupIdAdminAndOwnerDefaultPermissions();
+			_assertFilterFindByGroupIdPermissions(
+				expectedEntriesAdminGroup, expectedEntriesGroup1,
+				expectedEntriesGroup2, expectedEntriesGroup1AndGroup2,
+				expectedEntriesGroup1AndAdminGroup, _permissionedUser);
 		}
 	}
 

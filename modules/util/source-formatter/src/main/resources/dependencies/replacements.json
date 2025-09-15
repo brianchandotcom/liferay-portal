@@ -5307,6 +5307,22 @@
 	},
 	{
 		"classNames": [
+			"CommerceOrderValidator"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPS-196599",
+		"methodsToFormat": [
+			{
+				"from": "regex:(?<methodSignature>@Override\\n\\tpublic CommerceOrderValidatorResult validate\\(\\n\\s+Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,\\n\\s+)int quantity\\)",
+				"to": "${methodSignature}String json, BigDecimal quantity, boolean child)"
+			}
+		],
+		"newImports": [
+			"java.math.BigDecimal"
+		]
+	},
+	{
+		"classNames": [
 			"AssetCategoryLocalService",
 			"AssetCategoryLocalServiceUtil"
 		],

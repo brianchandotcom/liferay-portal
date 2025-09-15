@@ -267,7 +267,8 @@ public class DuplicateItemMVCActionCommandTest {
 							LocaleUtil.toLanguageId(
 								_portal.getSiteDefaultLocale(_group)),
 							RandomTestUtil.randomString()))
-				).toString());
+				).toString(),
+				true);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.

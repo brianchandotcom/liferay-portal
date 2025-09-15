@@ -156,7 +156,8 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put(
 					"element-text", JSONUtil.put(languageId, updatedText))
-			).toString());
+			).toString(),
+			true);
 
 		importedFragmentEntryLink =
 			_fragmentEntryLinkLocalService.

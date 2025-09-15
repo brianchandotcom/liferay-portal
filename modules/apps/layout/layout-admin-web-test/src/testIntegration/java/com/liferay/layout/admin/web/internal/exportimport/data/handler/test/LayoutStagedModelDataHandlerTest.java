@@ -2531,7 +2531,8 @@ public class LayoutStagedModelDataHandlerTest
 							"mapperType", "link"
 						)
 					))
-			).toString());
+			).toString(),
+			true);
 	}
 
 	private void _updateJournalArticle(

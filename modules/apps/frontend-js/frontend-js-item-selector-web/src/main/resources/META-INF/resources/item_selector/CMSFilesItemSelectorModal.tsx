@@ -157,7 +157,7 @@ function CMSFilesItemSelectorModal({
 							) {
 								return {
 									...props,
-									interactive: true,
+									href: '#',
 									onClick: () => {
 										const folderId = item.embedded.id;
 										const folderName = item.embedded.title;
@@ -175,10 +175,8 @@ function CMSFilesItemSelectorModal({
 							}
 
 							const stickerProps = {
-								stickerProps: {
-									className: 'file-icon-color-5',
-									displayType: 'unstyled',
-								},
+								className: 'file-icon-color-5',
+								displayType: 'unstyled',
 							};
 
 							if (
@@ -187,13 +185,13 @@ function CMSFilesItemSelectorModal({
 								return {
 									...props,
 									imgProps: null,
-									...stickerProps,
+									stickerProps,
 								};
 							}
 
 							return {
 								...props,
-								...stickerProps,
+								stickerProps,
 							};
 						},
 						thumbnail: 'cards2',

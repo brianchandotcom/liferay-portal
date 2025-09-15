@@ -53,8 +53,10 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -202,17 +204,28 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			setDataLevel(DataLevel.SITE);
 		}
 
-		if (_registrations.size() > 1) {
-			setExportControls(
-				TransformUtil.transformToArray(
-					_registrations, this::_getPortletDataHandlerControl,
-					PortletDataHandlerControl.class));
+		_updateExportControls();
+	}
 
-			setEmptyControlsAllowed(false);
-		}
-		else {
-			setEmptyControlsAllowed(true);
-			setExportControls();
+	public void unregisterExportImportVulcanBatchEngineTaskItemDelegate(
+		String className, String taskItemDelegateName) {
+
+		Iterator<Registration> iterator = _registrations.iterator();
+
+		while (iterator.hasNext()) {
+			Registration registration = iterator.next();
+
+			if (Objects.equals(registration.getClassName(), className) &&
+				Objects.equals(
+					registration.getTaskItemDelegateName(),
+					taskItemDelegateName)) {
+
+				iterator.remove();
+
+				_updateExportControls();
+
+				return;
+			}
 		}
 	}
 
@@ -524,6 +537,21 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			StringPool.FORWARD_SLASH, ExportImportPathUtil.PATH_PREFIX_GROUP,
 			StringPool.FORWARD_SLASH, groupId, StringPool.FORWARD_SLASH,
 			fileName);
+	}
+
+	private void _updateExportControls() {
+		if (_registrations.size() > 1) {
+			setExportControls(
+				TransformUtil.transformToArray(
+					_registrations, this::_getPortletDataHandlerControl,
+					PortletDataHandlerControl.class));
+
+			setEmptyControlsAllowed(false);
+		}
+		else {
+			setEmptyControlsAllowed(true);
+			setExportControls();
+		}
 	}
 
 	private final BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;

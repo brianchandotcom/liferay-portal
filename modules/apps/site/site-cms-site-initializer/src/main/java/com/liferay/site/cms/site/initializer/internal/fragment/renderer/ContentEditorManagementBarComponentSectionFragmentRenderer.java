@@ -102,11 +102,14 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 					return StringPool.BLANK;
 				}
 
+				ObjectEntry objectEntry = (ObjectEntry)displayObject;
+
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				ObjectEntry objectEntry = (ObjectEntry)displayObject;
+				String title = _getTitle(
+					layoutDisplayPageObjectProvider, objectEntry, themeDisplay);
 
 				Layout layout = themeDisplay.getLayout();
 
@@ -116,9 +119,6 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 
 				String layoutPageTemplateEntryKey =
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
-
-				String title = _getTitle(
-					objectEntry, layoutDisplayPageObjectProvider, themeDisplay);
 
 				if (layoutPageTemplateEntryKey.startsWith(
 						"LFR_CMS_TRANSLATION_")) {
@@ -139,9 +139,8 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 	}
 
 	private String _getTitle(
-		ObjectEntry objectEntry,
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-		ThemeDisplay themeDisplay) {
+		ObjectEntry objectEntry, ThemeDisplay themeDisplay) {
 
 		String title = layoutDisplayPageObjectProvider.getTitle(
 			themeDisplay.getLocale());

@@ -268,9 +268,7 @@ public class ActionUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		long segmentsExperienceId =
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
@@ -319,7 +317,9 @@ public class ActionUtil {
 			formStyledLayoutStructureItem.getClassNameId(), layout.getGroupId(),
 			infoItemServiceRegistry, infoSearchClassMapperRegistry);
 
-		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+		long segmentsExperienceId =
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
 
 		_addInputFragmentEntryLink(
 			addedFragmentEntryLinks, null, formStyledLayoutStructureItem,

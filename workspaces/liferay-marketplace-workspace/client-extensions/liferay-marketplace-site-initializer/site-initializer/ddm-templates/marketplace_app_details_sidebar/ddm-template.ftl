@@ -9,7 +9,7 @@
 
 	catalogName = product.catalogName!""
 	categories = product.categories![]
-	createDate = product.createDatea!0
+	createDate = product.createDate!0
 	productSpecifications = product.productSpecifications![]
 
 	liferayVersions = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "liferay-version"))
@@ -39,22 +39,21 @@
 >
 <@section title = languageUtil.get(locale, "developer")>
 	<#if publisherDetails?has_content>
-		<a class = "bg-neutral-8" href = "${redirectPath}/${publisherDetails.id}">
-			${developerName}
+	  <a class="bg-neutral-8" href="${redirectPath}/${publisherDetails.id}">
+		   ${developerName}
 		</a>
 	<#else>
-		<a class = "bg-neutral-8" href = "/?developer-name=${developerName}">
-			${developerName}
+	  <a class="bg-neutral-8" 	href="/?developer-name=${developerName}">
+			 ${developerName}
 		</a>
 	</#if>
 </@section>
 
-<@section title = languageUtil.get(locale, "publisher-date", "Publisher Date")>
-	<#if createDate?has_content>
-		<#assign parsedDate = createDate?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'") />
-
-		<p>${parsedDate?string("MMMM d, yyyy")}</p>
-	</#if>
+<@section title=languageUtil.get(locale, "publisher-date", "Publisher Date")>
+    <#if createDate?has_content>
+        <#assign parsedDate = createDate?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'")>
+        <p>${parsedDate?string("MMMM d, yyyy")}</p>
+    </#if>
 </@section>
 
 <@section title = languageUtil.get(locale, "deployment-method", "Deployment Method")>
@@ -144,14 +143,14 @@
 			</span>
 
 			<a class="d-flex w-100 justify-content-between help-and-support-link" href="https://www.liferay.com/en/legal/marketplace-terms-of-service" target="_blank">
-				<span class="copy-text ml-1 help-and-support-link">
+				<span class="copy-text ml-1 mb-4 help-and-support-link">
 					${languageUtil.get(locale, "terms-and-conditions", "Terms & Conditions")}
 				</span>
 
 				<@clay["icon"]
 					className="help-and-support-link-arrow link-arrow ml-auto"
 					height="12"
-					symbol="angle-right"
+					symbol="angle-right-small"
 				/>
 			</a>
 		</div>
@@ -169,7 +168,7 @@
 				<@clay["icon"]
 					className="help-and-support-link-arrow link-arrow ml-auto"
 					height="12"
-					symbol="angle-right"
+					symbol="angle-right-small"
 				/>
 			</a>
 		</div>
@@ -321,7 +320,8 @@
 		text-decoration: none;
 	}
 
-	.help-and-support-link-arrow {
+  .help-and-support-link-arrow {
+		margin-top: 3px;
 		fill: rgb(133, 140, 148);
 	}
 

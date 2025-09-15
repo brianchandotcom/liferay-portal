@@ -24,7 +24,7 @@
 	</div>
 
 	<div class="thumbnails-wrapper">
-		<div class="thumbnails"></div>
+		<div class="thumbnails align-items-center"></div>
 
 		<#assign count = (totalCount?default(0)?number) />
 
@@ -34,7 +34,7 @@
 					${languageUtil.get(locale, "full-gallery", "Full Gallery")}
 				</span>
 				<span class="subtitle">
-					${count - 1} ${languageUtil.get(locale, "photos", "Photos")}
+					${count} ${languageUtil.get(locale, "photos", "Photos")}
 				</span>
 			</button>
 		</#if>
@@ -56,6 +56,7 @@
 </template>
 
 <script ${nonceAttribute}>
+(function () {
 	let currentIndex = 0;
 	let images = [];
 
@@ -137,7 +138,7 @@
 		Liferay.Util.openModal({
 			bodyHTML: container.innerHTML,
 			center: true,
-			headerHTML: '<h2 id="modal-header-title">${languageUtil.get(locale, "Image")} <span id="modal-index-display"></span></h2>',
+			headerHTML: '<h2 class="modal-gallery-header" id="modal-header-title"><@clay["icon"] symbol="picture"/> ${languageUtil.get(locale, "Image")} <span id="modal-index-display"></span></h2>',
 			size: "full-screen",
 			onOpen: () => {
 				const modalContainer = document.querySelector('.modal-content');
@@ -190,11 +191,13 @@
 	}
 
 	main();
+})();
 </script>
 
 <style ${nonceAttribute}>
 .carousel-container img {
 	cursor: pointer;
+	object-fit: contain;
 }
 
 .custom-gallery-modal button:disabled {
@@ -218,11 +221,16 @@
 
 .custom-gallery-modal .close {
 	color: white !important;
+	margin-right: 16px !important;
 }
 
 .lexicon-icon-overwide .lexicon-icon {
 	height: 2em;
-	margin: 0px;
+	margin: 0px !important;
+}
+
+.custom-gallery-modal{
+	height: 80% !important;
 }
 
 .main-image-wrapper {
@@ -250,33 +258,48 @@
 }
 
 .modal-image {
+	aspect-ratio: 16/9;
+	object-fit: contain;;
 	border-radius: 8px;
-	max-width: 100vh;
+	max-width: 100vh !important;
+}
+
+.modal-gallery-header .lexicon-icon {
+	fill: #FFC124 !important;
+	margin-right: 8px !important;
+	width: 16px !important;
+}
+
+.modal-gallery-header {
+
+	padding: 16px !important;
 }
 
 .modal-prev,
 .modal-next {
 	align-items: center;
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(105, 102, 102, 0.4) !important;
 	border-radius: 50%;
 	border: none;
-	color: white;
-	cursor: pointer;
 	display: flex;
 	font-size: 1.6rem;
 	justify-content: center;
-	padding: 14px;
+	padding: 14px !important;
 	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
+	top: 45%;
+}
+
+.modal-prev .lexicon-icon,
+.modal-next .lexicon-icon {
+	margin-top: 0px !important;
 }
 
 .modal-next {
-	right: 0;
+	right: 24px;
 }
 
 .modal-prev {
-	left: 0;
+	left: 24px;
 }
 
 .nav-button {
@@ -285,9 +308,9 @@
 	border: none;
 	color: white;
 	cursor: pointer;
-	font-size: 1.3rem;
+	font-size: 1rem;
 	opacity: 0;
-	padding: 0 10px;
+	padding: 0 8px;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
@@ -310,13 +333,20 @@
 	height: 86px;
 	object-fit: cover;
 	opacity: 0.6;
-	transition: opacity 0.3s ease;
+	transition:
+		border-color 250ms ease-out,
+		opacity 250ms ease-out;
 	width: 142px;
 }
 
-.thumbnail.selected {
+.thumbnail.selected,
+.thumbnail:hover {
 	border-color: #8FB5FF;
 	opacity: 1;
+}
+
+.thumbnail.selected{
+	height: 102px;
 }
 
 .thumbnails {
@@ -329,7 +359,7 @@
 	align-items: center;
 	display: flex;
 	justify-content: flex-start;
-	margin-top: 12px;
+	margin-top: 24px;
 	max-height: 86px;
 	max-width: 902px;
 }
@@ -346,7 +376,9 @@
 	justify-content: center;
 	margin-left: 8px;
 	min-width: 152px;
-	transition: background-color 0.3s ease, box-shadow 0.3s ease;
+	transition: background-color 0.3s ease,
+		box-shadow 0.3s ease,
+		border-color 250ms ease-out;
 }
 
 .view-full-gallery .subtitle {
@@ -366,5 +398,6 @@
 .view-full-gallery:hover {
 	background-color: #f3f4f6;
 	box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+	border: 2px solid rgb(143, 181, 255);
 }
 </style>

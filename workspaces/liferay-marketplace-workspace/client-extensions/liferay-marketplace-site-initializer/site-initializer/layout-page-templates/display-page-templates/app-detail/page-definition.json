@@ -81,7 +81,7 @@
 												"pageElements": [
 													{
 														"definition": {
-															"customCSS": ".[$FRAGMENT_CLASS$] img {\n    height: 90px;\n    object-fit: contain;\n    width: 90px;\n}",
+															"customCSS": ".[$FRAGMENT_CLASS$] img {\n    height: 72px;\n   width: 72px;\n}",
 															"fragment": {
 																"key": "image",
 																"siteKey": "[$GROUP_KEY$]"
@@ -107,10 +107,10 @@
 																}
 															],
 															"fragmentStyle": {
-																"height": "90px",
-																"maxHeight": "90px",
-																"maxWidth": "90px",
-																"width": "90px"
+																"height": "72px",
+																"maxHeight": "72px",
+																"maxWidth": "72px",
+																"width": "72px"
 															},
 															"indexed": true
 														},
@@ -170,8 +170,9 @@
 																				}
 																			],
 																			"fragmentStyle": {
-																				"fontSize": "28px",
-																				"fontWeight": "600"
+																				"fontSize": "24px",
+																				"fontWeight": "600",
+																				"lineHeight": "20px"
 																			},
 																			"indexed": true
 																		},

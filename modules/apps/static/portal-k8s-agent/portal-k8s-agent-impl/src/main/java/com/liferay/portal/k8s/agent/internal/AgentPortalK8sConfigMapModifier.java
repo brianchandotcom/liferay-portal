@@ -179,15 +179,14 @@ public class AgentPortalK8sConfigMapModifier
 			return result;
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Schedule modify config map " + configMapName);
+		}
+
 		_configMapModelConsumers.merge(
 			configMapName, configMapModelConsumer, Consumer::andThen);
 
 		_scheduleModifyConfigMap(configMapName);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Buffered request for modifying config map " + configMapName);
-		}
 
 		return Result.BUFFERED;
 	}
@@ -199,10 +198,6 @@ public class AgentPortalK8sConfigMapModifier
 		}
 
 		if (!_configMapModelConsumers.isEmpty()) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Flushing all pending config map updates");
-			}
-
 			for (String configMapName : _configMapModelConsumers.keySet()) {
 				_flushModifyConfigMap(configMapName);
 			}
@@ -291,6 +286,10 @@ public class AgentPortalK8sConfigMapModifier
 	}
 
 	private Result _flushModifyConfigMap(String configMapName) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Flushing modify config map " + configMapName);
+		}
+
 		Consumer<ConfigMapModel> configMapModelConsumer =
 			_configMapModelConsumers.remove(configMapName);
 
@@ -300,11 +299,6 @@ public class AgentPortalK8sConfigMapModifier
 			return Result.UNCHANGED;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Quiet period ended. Flushing changes for " + configMapName);
-		}
-
 		Result result = _modifyConfigMap(configMapModelConsumer, configMapName);
 
 		_futures.remove(configMapName);
@@ -312,8 +306,7 @@ public class AgentPortalK8sConfigMapModifier
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Flushed config map ", configMapName, " with result: ",
-					result));
+					"Flushed config map ", configMapName, " ", result));
 		}
 
 		return result;

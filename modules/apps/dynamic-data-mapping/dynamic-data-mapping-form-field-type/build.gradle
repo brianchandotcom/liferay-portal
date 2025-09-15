@@ -25,6 +25,7 @@ dependencies {
 	compileOnly project(":apps:list-type:list-type-api")
 	compileOnly project(":apps:map:map-api")
 	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:trash:trash-api")
 	compileOnly project(":core:osgi-service-tracker-collections")

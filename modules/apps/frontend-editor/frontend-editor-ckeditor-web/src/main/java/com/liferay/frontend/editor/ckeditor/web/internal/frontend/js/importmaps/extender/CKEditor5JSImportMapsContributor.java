@@ -5,46 +5,67 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.frontend.js.importmaps.extender;
 
-import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
+import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.portal.url.builder.ESModuleAbsolutePortalURLBuilder;
 
-import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
+import java.io.IOException;
+import java.io.Writer;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marko Čikoš
  */
-@Component(service = JSImportMapsContributor.class)
+@Component(service = DynamicJSImportMapsContributor.class)
 public class CKEditor5JSImportMapsContributor
-	implements JSImportMapsContributor {
+	implements DynamicJSImportMapsContributor {
 
 	@Override
-	public JSONObject getImportMapsJSONObject() {
-		return _importMapsJSONObject;
-	}
+	public void writeGlobalImports(
+			HttpServletRequest httpServletRequest, Writer writer)
+		throws IOException {
 
-	@Activate
-	protected void activate() {
-		_importMapsJSONObject = _jsonFactory.createJSONObject();
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
 
-		String contextPath = _servletContext.getContextPath();
+		boolean first = true;
 
 		for (String moduleName : _MODULE_NAMES) {
-			_importMapsJSONObject.put(
-				moduleName,
-				StringBundler.concat(
-					contextPath, "/__liferay__/exports/",
-					StringUtil.replace(
-						moduleName, CharPool.FORWARD_SLASH, CharPool.DOLLAR),
-					".js"));
+			String escapedModuleName = StringUtil.replace(
+				moduleName, CharPool.FORWARD_SLASH, CharPool.DOLLAR);
+
+			ESModuleAbsolutePortalURLBuilder esModuleAbsolutePortalURLBuilder =
+				absolutePortalURLBuilder.forESModule(
+					"frontend-editor-ckeditor-web",
+					"exports/" + escapedModuleName + ".js");
+
+			if (!first) {
+				writer.write(", ");
+			}
+			else {
+				first = false;
+			}
+
+			writer.write(StringPool.QUOTE);
+			writer.write(moduleName);
+			writer.write("\": \"");
+			writer.write(esModuleAbsolutePortalURLBuilder.build());
+			writer.write(StringPool.QUOTE);
 		}
+	}
+
+	@Override
+	public void writeScopedImports(
+		HttpServletRequest httpServletRequest, Writer writer) {
 	}
 
 	private static final String[] _MODULE_NAMES = {
@@ -111,15 +132,7 @@ public class CKEditor5JSImportMapsContributor
 		"@ckeditor/ckeditor5-word-count/dist/index.js"
 	};
 
-	private JSONObject _importMapsJSONObject;
-
 	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.ckeditor.web)",
-		unbind = "-"
-	)
-	private ServletContext _servletContext;
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 }

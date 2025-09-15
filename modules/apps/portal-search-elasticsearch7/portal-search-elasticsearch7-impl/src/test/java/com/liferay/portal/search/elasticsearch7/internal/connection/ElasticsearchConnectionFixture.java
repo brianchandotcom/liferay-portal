@@ -221,6 +221,12 @@ public class ElasticsearchConnectionFixture
 			ElasticsearchInstancePaths.class);
 
 		Mockito.doReturn(
+			_TMP_PATH.resolve("config")
+		).when(
+			elasticsearchInstancePaths
+		).getConfigPath();
+
+		Mockito.doReturn(
 			_TMP_PATH.resolve("sidecar-elasticsearch")
 		).when(
 			elasticsearchInstancePaths

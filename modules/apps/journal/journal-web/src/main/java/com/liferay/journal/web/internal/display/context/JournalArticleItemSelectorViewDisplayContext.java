@@ -326,7 +326,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			"scopeGroupType",
 			ParamUtil.getBoolean(_httpServletRequest, "scopeGroupType")
 		).setParameter(
-			"selectedTab", _getTitle(_httpServletRequest.getLocale())
+			"selectedTab", _getSelectedTab()
 		).buildPortletURL();
 	}
 
@@ -659,6 +659,16 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _scope;
 	}
 
+	private String _getSelectedTab() {
+		if (_selectedTab != null) {
+			return _selectedTab;
+		}
+
+		_selectedTab = ParamUtil.getString(_httpServletRequest, "selectedTab");
+
+		return _selectedTab;
+	}
+
 	private long _getStagingAwareGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -688,10 +698,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			ddmStructure.getStructureId(), _themeDisplay.getLocale());
 
 		return classType.getName();
-	}
-
-	private String _getTitle(Locale locale) {
-		return _journalArticleItemSelectorView.getTitle(locale);
 	}
 
 	private boolean _isEverywhereScopeFilter() {
@@ -813,6 +819,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private String _scope;
 	private final boolean _search;
 	private Boolean _searchEverywhere;
+	private String _selectedTab;
 	private final StagingGroupHelper _stagingGroupHelper;
 	private final ThemeDisplay _themeDisplay;
 

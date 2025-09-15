@@ -44,6 +44,7 @@ spec:
                     -   "s3"
                     -   "rm"
                     -   "s3://{{ "{{" }}inputs.parameters.s3-bucket-id}}/"
+                    -   "--only-show-errors"
                     -   "--recursive"
                 command: ["aws"]
                 image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"

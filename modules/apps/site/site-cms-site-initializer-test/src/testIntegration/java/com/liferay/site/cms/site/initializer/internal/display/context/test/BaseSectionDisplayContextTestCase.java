@@ -668,18 +668,6 @@ public abstract class BaseSectionDisplayContextTestCase
 		return jsonArray;
 	}
 
-	private DropdownItem _getDropdownItem(
-		List<DropdownItem> dropdownItems, String label) {
-
-		for (DropdownItem dropdownItem : dropdownItems) {
-			if (label.equals(dropdownItem.get("label"))) {
-				return dropdownItem;
-			}
-		}
-
-		return null;
-	}
-
 	private JSONArray _getJSONArray(List<DepotEntry> depotEntries) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -755,13 +743,14 @@ public abstract class BaseSectionDisplayContextTestCase
 			dropdownItems.toString(), expectedCreationMenuItems.size(),
 			dropdownItems.size());
 
+		int index = 0;
+
 		for (Map.Entry<String, String> entry :
 				expectedCreationMenuItems.entrySet()) {
 
-			DropdownItem dropdownItem = _getDropdownItem(
-				dropdownItems, entry.getKey());
+			DropdownItem dropdownItem = dropdownItems.get(index);
 
-			Assert.assertNotNull(dropdownItem);
+			Assert.assertEquals(entry.getKey(), dropdownItem.get("label"));
 
 			if (Validator.isNull(entry.getValue())) {
 				Assert.assertNull(_getRedirect(dropdownItem));
@@ -770,6 +759,8 @@ public abstract class BaseSectionDisplayContextTestCase
 				Assert.assertEquals(
 					entry.getValue(), _getRedirect(dropdownItem));
 			}
+
+			index++;
 		}
 	}
 

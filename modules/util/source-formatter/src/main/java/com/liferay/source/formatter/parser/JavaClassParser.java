@@ -496,13 +496,14 @@ public class JavaClassParser {
 	}
 
 	private static String _getName(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.IDENT) {
-			return detailAST.getText();
-		}
-		else if (detailAST.getType() == TokenTypes.DOT) {
+		if (detailAST.getType() == TokenTypes.DOT) {
 			FullIdent fullIdent = FullIdent.createFullIdent(detailAST);
 
 			return fullIdent.getText();
+		}
+
+		if (detailAST.getType() == TokenTypes.IDENT) {
+			return detailAST.getText();
 		}
 
 		return null;

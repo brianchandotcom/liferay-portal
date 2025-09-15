@@ -8,7 +8,6 @@ package com.liferay.cookies.banner.web.internal.portlet;
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
 import com.liferay.cookies.banner.web.internal.display.context.ProductAnalyticsBannerDisplayContext;
-import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -66,9 +65,7 @@ public class ProductAnalyticsBannerPortlet extends MVCPortlet {
 		ProductAnalyticsBannerDisplayContext
 			productAnalyticsBannerDisplayContext =
 				new ProductAnalyticsBannerDisplayContext(
-					_cookiesConfigurationProvider,
-					_layoutUtilityPageEntryLayoutProvider, renderRequest,
-					renderResponse);
+					_layoutUtilityPageEntryLayoutProvider, renderRequest);
 
 		renderRequest.setAttribute(
 			CookiesBannerWebKeys.PRODUCT_ANALYTICS_BANNER_DISPLAY_CONTEXT,
@@ -76,9 +73,6 @@ public class ProductAnalyticsBannerPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private CookiesConfigurationProvider _cookiesConfigurationProvider;
 
 	@Reference
 	private LayoutUtilityPageEntryLayoutProvider

@@ -55,7 +55,7 @@ public class KBArticleInfoItemObjectProvider
 			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 				(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-			kbArticle = _getKbArticle(
+			kbArticle = _getKBArticle(
 				classPKInfoItemIdentifier.getClassPK(),
 				classPKInfoItemIdentifier.getVersion());
 		}
@@ -63,7 +63,7 @@ public class KBArticleInfoItemObjectProvider
 			ERCInfoItemIdentifier ercInfoItemIdentifier =
 				(ERCInfoItemIdentifier)infoItemIdentifier;
 
-			kbArticle = _getKbArticle(
+			kbArticle = _getKBArticle(
 				ercInfoItemIdentifier.getExternalReferenceCode(), groupId,
 				ercInfoItemIdentifier.getVersion());
 		}
@@ -82,7 +82,7 @@ public class KBArticleInfoItemObjectProvider
 		return kbArticle;
 	}
 
-	private KBArticle _getKbArticle(long classPK, String version) {
+	private KBArticle _getKBArticle(long classPK, String version) {
 		if (Validator.isNull(version) ||
 			Objects.equals(
 				version, InfoItemIdentifier.VERSION_LATEST_APPROVED)) {
@@ -104,7 +104,7 @@ public class KBArticleInfoItemObjectProvider
 			GetterUtil.getInteger(version));
 	}
 
-	private KBArticle _getKbArticle(
+	private KBArticle _getKBArticle(
 		String externalReferenceCode, long groupId, String version) {
 
 		if (Validator.isNull(version) ||

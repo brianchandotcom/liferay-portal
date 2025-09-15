@@ -784,7 +784,7 @@ public class AgentPortalK8sConfigMapModifier
 					}
 					catch (Exception exception) {
 						_log.error(
-							"Unable to flush buffered updates for " +
+							"Unable to flush modify config map " +
 								configMapName,
 							exception);
 

@@ -61,6 +61,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -202,6 +203,8 @@ public abstract class BaseSectionDisplayContextTestCase
 		_testGetCreationMenu(getCreationMenu(), expectedCreationMenuItems);
 
 		ObjectFolder objectFolder = null;
+		TreeMap<String, String> expectedCustomCreationMenuItems = new TreeMap<>(
+			String.CASE_INSENSITIVE_ORDER);
 
 		for (String objectFolderExternalReferenceCode :
 				getObjectFolderExternalReferenceCodes()) {
@@ -216,13 +219,15 @@ public abstract class BaseSectionDisplayContextTestCase
 				ObjectDefinitionConstants.SCOPE_DEPOT,
 				WorkflowConstants.STATUS_APPROVED);
 
-			expectedCreationMenuItems.put(
+			expectedCustomCreationMenuItems.put(
 				objectDefinition.getLabel(LocaleUtil.US),
 				getRedirect(
 					objectDefinition,
 					_getRootObjectEntryFolderExternalReferenceCode(
 						objectFolderExternalReferenceCode)));
 		}
+
+		expectedCreationMenuItems.putAll(expectedCustomCreationMenuItems);
 
 		addCustomObjectDefinition(
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
@@ -668,18 +673,6 @@ public abstract class BaseSectionDisplayContextTestCase
 		return jsonArray;
 	}
 
-	private DropdownItem _getDropdownItem(
-		List<DropdownItem> dropdownItems, String label) {
-
-		for (DropdownItem dropdownItem : dropdownItems) {
-			if (label.equals(dropdownItem.get("label"))) {
-				return dropdownItem;
-			}
-		}
-
-		return null;
-	}
-
 	private JSONArray _getJSONArray(List<DepotEntry> depotEntries) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -755,13 +748,14 @@ public abstract class BaseSectionDisplayContextTestCase
 			dropdownItems.toString(), expectedCreationMenuItems.size(),
 			dropdownItems.size());
 
+		int index = 0;
+
 		for (Map.Entry<String, String> entry :
 				expectedCreationMenuItems.entrySet()) {
 
-			DropdownItem dropdownItem = _getDropdownItem(
-				dropdownItems, entry.getKey());
+			DropdownItem dropdownItem = dropdownItems.get(index);
 
-			Assert.assertNotNull(dropdownItem);
+			Assert.assertEquals(entry.getKey(), dropdownItem.get("label"));
 
 			if (Validator.isNull(entry.getValue())) {
 				Assert.assertNull(_getRedirect(dropdownItem));
@@ -770,6 +764,8 @@ public abstract class BaseSectionDisplayContextTestCase
 				Assert.assertEquals(
 					entry.getValue(), _getRedirect(dropdownItem));
 			}
+
+			index++;
 		}
 	}
 

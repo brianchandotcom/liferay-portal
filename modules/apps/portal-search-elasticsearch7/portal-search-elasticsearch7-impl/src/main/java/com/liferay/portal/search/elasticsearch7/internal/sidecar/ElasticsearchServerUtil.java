@@ -23,11 +23,49 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.elasticsearch.cli.ExitCodes;
+import org.elasticsearch.common.transport.BoundTransportAddress;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.http.HttpServerTransport;
 
 /**
  * @author Tina Tian
  */
 public class ElasticsearchServerUtil {
+
+	public static String getAddress() throws ProcessException {
+		try {
+			Object nodeObject = _nodeField.get(_instanceField.get(null));
+
+			ClassLoader classLoader =
+				ElasticsearchServerUtil.class.getClassLoader();
+
+			Method injectorMethod = ReflectionUtil.getDeclaredMethod(
+				classLoader.loadClass("org.elasticsearch.node.Node"),
+				"injector");
+
+			Object injectorObject = injectorMethod.invoke(nodeObject);
+
+			Method method = ReflectionUtil.getDeclaredMethod(
+				classLoader.loadClass(
+					"org.elasticsearch.injection.guice.Injector"),
+				"getInstance", Class.class);
+
+			HttpServerTransport httpServerTransport =
+				(HttpServerTransport)method.invoke(
+					injectorObject, HttpServerTransport.class);
+
+			BoundTransportAddress boundTransportAddress =
+				httpServerTransport.boundAddress();
+
+			TransportAddress publishAddress =
+				boundTransportAddress.publishAddress();
+
+			return publishAddress.toString();
+		}
+		catch (Exception exception) {
+			throw new ProcessException(exception);
+		}
+	}
 
 	public static void shutdown() {
 		try {
@@ -44,9 +82,7 @@ public class ElasticsearchServerUtil {
 		_shutdownCountDownLatch.countDown();
 	}
 
-	public static Object start(byte[] sidecarServerArgs)
-		throws ProcessException {
-
+	public static void start(byte[] sidecarServerArgs) throws ProcessException {
 		InputStream originalSystemInInputStream = System.in;
 
 		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
@@ -59,8 +95,6 @@ public class ElasticsearchServerUtil {
 			System.setSecurityManager(null);
 
 			_addShutdownHook();
-
-			return _nodeField.get(_instanceField.get(null));
 		}
 		catch (Exception exception) {
 			throw new ProcessException(

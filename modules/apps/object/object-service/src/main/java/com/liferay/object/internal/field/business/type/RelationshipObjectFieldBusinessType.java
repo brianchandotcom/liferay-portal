@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -312,9 +313,10 @@ public class RelationshipObjectFieldBusinessType
 
 		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
 
-		return modelAttributes.get(
-			systemObjectDefinitionManager.getPrimaryKeyColumn(
-			).getName());
+		Column<?, Long> primaryKeyColumn =
+			systemObjectDefinitionManager.getPrimaryKeyColumn();
+
+		return modelAttributes.get(primaryKeyColumn.getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -28,18 +29,30 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryLinkFinderImpl
 	extends FragmentEntryLinkFinderBaseImpl implements FragmentEntryLinkFinder {
 
-	public static final String FIND_BY_G_F =
-		FragmentEntryLinkFinder.class.getName() + ".findByG_F";
+	public static final String FIND_BY_G_FEERC_FESERC =
+		FragmentEntryLinkFinder.class.getName() + ".findByG_FEERC_FESERC";
 
-	public static final String FIND_BY_G_F_P =
-		FragmentEntryLinkFinder.class.getName() + ".findByG_F_P";
+	public static final String FIND_BY_G_FEERC_FESERCISNULL =
+		FragmentEntryLinkFinder.class.getName() + ".findByG_FEERC_FESERCISNULL";
 
-	public static final String FIND_BY_G_F_P_L =
-		FragmentEntryLinkFinder.class.getName() + ".findByG_F_P_L";
+	public static final String FIND_BY_G_FEERC_FESERC_P =
+		FragmentEntryLinkFinder.class.getName() + ".findByG_FEERC_FESERC_P";
+
+	public static final String FIND_BY_G_FEERC_FESERCISNULL_P =
+		FragmentEntryLinkFinder.class.getName() +
+			".findByG_FEERC_FESERCISNULL_P";
+
+	public static final String FIND_BY_G_FEERC_FESERC_P_L =
+		FragmentEntryLinkFinder.class.getName() + ".findByG_FEERC_FESERC_P_L";
+
+	public static final String FIND_BY_G_FEERC_FESERCISNULL_P_L =
+		FragmentEntryLinkFinder.class.getName() +
+			".findByG_FEERC_FESERCISNULL_P_L";
 
 	@Override
-	public List<FragmentEntryLink> findByG_F(
-		long groupId, long fragmentEntryId, int start, int end,
+	public List<FragmentEntryLink> findByG_FEERC_FESERC(
+		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
+		int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
 		Session session = null;
@@ -47,7 +60,14 @@ public class FragmentEntryLinkFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_G_F);
+			String sql;
+
+			if (Validator.isNull(fragmentEntryScopeERC)) {
+				sql = _customSQL.get(getClass(), FIND_BY_G_FEERC_FESERCISNULL);
+			}
+			else {
+				sql = _customSQL.get(getClass(), FIND_BY_G_FEERC_FESERC);
+			}
 
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
@@ -59,7 +79,11 @@ public class FragmentEntryLinkFinderImpl
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(groupId);
-			queryPos.add(fragmentEntryId);
+			queryPos.add(fragmentEntryERC);
+
+			if (Validator.isNotNull(fragmentEntryScopeERC)) {
+				queryPos.add(fragmentEntryScopeERC);
+			}
 
 			return (List<FragmentEntryLink>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
@@ -73,9 +97,9 @@ public class FragmentEntryLinkFinderImpl
 	}
 
 	@Override
-	public List<FragmentEntryLink> findByG_F_P_L(
-		long groupId, long fragmentEntryId, int layoutPageTemplateEntryType,
-		int start, int end,
+	public List<FragmentEntryLink> findByG_FEERC_FESERC_P_L(
+		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
+		int layoutPageTemplateEntryType, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
 		Session session = null;
@@ -83,13 +107,26 @@ public class FragmentEntryLinkFinderImpl
 		try {
 			session = openSession();
 
-			String sql = null;
+			String sql;
 
 			if (layoutPageTemplateEntryType >= 0) {
-				sql = _customSQL.get(getClass(), FIND_BY_G_F_P_L);
+				if (Validator.isNull(fragmentEntryScopeERC)) {
+					sql = _customSQL.get(
+						getClass(), FIND_BY_G_FEERC_FESERCISNULL_P_L);
+				}
+				else {
+					sql = _customSQL.get(
+						getClass(), FIND_BY_G_FEERC_FESERC_P_L);
+				}
 			}
 			else {
-				sql = _customSQL.get(getClass(), FIND_BY_G_F_P);
+				if (Validator.isNull(fragmentEntryScopeERC)) {
+					sql = _customSQL.get(
+						getClass(), FIND_BY_G_FEERC_FESERCISNULL_P);
+				}
+				else {
+					sql = _customSQL.get(getClass(), FIND_BY_G_FEERC_FESERC_P);
+				}
 			}
 
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
@@ -106,7 +143,11 @@ public class FragmentEntryLinkFinderImpl
 			}
 
 			queryPos.add(groupId);
-			queryPos.add(fragmentEntryId);
+			queryPos.add(fragmentEntryERC);
+
+			if (Validator.isNotNull(fragmentEntryScopeERC)) {
+				queryPos.add(fragmentEntryScopeERC);
+			}
 
 			return (List<FragmentEntryLink>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);

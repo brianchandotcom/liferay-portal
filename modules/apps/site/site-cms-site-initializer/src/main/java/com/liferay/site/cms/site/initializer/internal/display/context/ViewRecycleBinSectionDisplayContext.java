@@ -193,7 +193,7 @@ public class ViewRecycleBinSectionDisplayContext
 		}
 
 		if (ArrayUtil.isEmpty(groupIds)) {
-			return filterString + WorkflowConstants.STATUS_IN_TRASH;
+			return filterString + WorkflowConstants.STATUS_ANY;
 		}
 
 		return StringBundler.concat(

@@ -24,12 +24,6 @@ export default function CategorizationToolbar({
 	return (
 		<div>
 			<Breadcrumb
-				actionItems={[
-					{
-						label: Liferay.Language.get('order-by'),
-						type: 'group',
-					},
-				]}
 				breadcrumbItems={[
 					{
 						active: true,

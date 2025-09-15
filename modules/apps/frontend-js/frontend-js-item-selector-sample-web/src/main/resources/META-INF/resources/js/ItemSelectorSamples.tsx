@@ -131,7 +131,7 @@ export default function ItemSelectorSamples() {
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [space, setSpace] = useState<Space>();
 
-	const [cmsFile, setCMSFile] = useState<CMSFile | null>(null);
+	const [cmsFiles, setCMSFiles] = useState<CMSFile[]>([]);
 	const [documentsItemSelectorModal, setDocumentsItemSelectorModal] =
 		useState<Document[]>([]);
 	const [spacesItemSelectorModal, setSpacesItemSelectorModal] = useState<
@@ -470,10 +470,11 @@ export default function ItemSelectorSamples() {
 
 			<SampleContainer label="Item Selector Modal">
 				<CMSFilesItemSelectorModal
-					items={cmsFile ? [cmsFile] : []}
+					items={cmsFiles}
+					multiSelect
 					observer={cmsFileItemSelectorObserver}
 					onItemsChange={(items: any) => {
-						setCMSFile(items[0]);
+						setCMSFiles(items);
 					}}
 					onOpenChange={cmsFileItemSelectorOpenChange}
 					open={cmsFileItemSelectorOpen}
@@ -492,7 +493,7 @@ export default function ItemSelectorSamples() {
 					itemTypeLabel={documentsItemSelectorConfig.itemTypeLabel}
 					items={documentsItemSelectorModal}
 					locator={documentsItemSelectorConfig.locator}
-					multiSelect={true}
+					multiSelect
 					observer={documentItemSelectorObserver}
 					onItemsChange={(items: Document[]) => {
 						setDocumentsItemSelectorModal(items);
@@ -583,6 +584,16 @@ export default function ItemSelectorSamples() {
 					</ClayButton>
 				</ClayButton.Group>
 
+				{!!cmsFiles.length &&
+					cmsFiles.map((cmsFile: any) => (
+						<ClayAlert
+							displayType="info"
+							key={cmsFile.title}
+							symbol="document"
+							title={cmsFile.title}
+						/>
+					))}
+
 				{!!documentsItemSelectorModal.length &&
 					documentsItemSelectorModal.map((document) => (
 						<ClayAlert
@@ -606,14 +617,6 @@ export default function ItemSelectorSamples() {
 						displayType="info"
 						symbol="user"
 						title={usersItemSelectorModal[0].name}
-					/>
-				)}
-
-				{cmsFile && (
-					<ClayAlert
-						displayType="info"
-						symbol="file-template"
-						title={cmsFile.title}
 					/>
 				)}
 			</SampleContainer>

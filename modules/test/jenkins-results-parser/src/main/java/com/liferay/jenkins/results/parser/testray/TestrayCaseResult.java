@@ -96,7 +96,7 @@ public class TestrayCaseResult {
 		}
 
 		for (TestrayCaseResult previousTestrayCaseResult :
-				getTestrayCaseResultHistory(10, 10)) {
+				getTestrayCaseResultHistory(5, 5)) {
 
 			if (Objects.equals(getID(), previousTestrayCaseResult.getID())) {
 				continue;
@@ -241,15 +241,7 @@ public class TestrayCaseResult {
 				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
 				"dateCreated:desc", maxCount, pageSize);
 
-			int previousTestrayCaseResultsCount = 0;
-
 			for (JSONObject entityJSONObject : entityJSONObjects) {
-				if (previousTestrayCaseResultsCount >=
-						_MAX_PREVIOUS_TESTRAY_CASE_RESULTS) {
-
-					break;
-				}
-
 				TestrayCaseResult testrayCaseResult =
 					TestrayFactory.newJSONObjectTestrayCaseResult(
 						testrayServer, entityJSONObject);
@@ -259,8 +251,6 @@ public class TestrayCaseResult {
 						getPullRequestSenderUsername())) {
 
 					testrayCaseResults.add(testrayCaseResult);
-
-					previousTestrayCaseResultsCount++;
 				}
 			}
 		}
@@ -497,8 +487,6 @@ public class TestrayCaseResult {
 	};
 
 	private static final double _MAX_JARO_WINKLER_DISTANCE = 0.93;
-
-	private static final int _MAX_PREVIOUS_TESTRAY_CASE_RESULTS = 5;
 
 	private ErrorType _errorType;
 	private final JSONObject _jsonObject;

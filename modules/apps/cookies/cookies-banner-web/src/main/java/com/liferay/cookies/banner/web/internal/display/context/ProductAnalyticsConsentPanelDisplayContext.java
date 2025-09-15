@@ -5,14 +5,12 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
-import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
 
 import java.util.Map;
 
@@ -23,14 +21,11 @@ public class ProductAnalyticsConsentPanelDisplayContext
 	extends BaseProductAnalyticsDisplayContext {
 
 	public ProductAnalyticsConsentPanelDisplayContext(
-		CookiesConfigurationProvider cookiesConfigurationProvider,
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest) {
 
-		super(
-			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
-			renderRequest, renderResponse);
+		super(layoutUtilityPageEntryLayoutProvider, renderRequest);
 	}
 
 	public Map<String, Object> getContext() {
@@ -46,6 +41,8 @@ public class ProductAnalyticsConsentPanelDisplayContext
 	}
 
 	public boolean isShowButtons() {
+		RenderRequest renderRequest = getRenderRequest();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

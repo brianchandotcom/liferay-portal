@@ -66,14 +66,10 @@ public class JavaClassParser {
 
 		DetailAST siblingDetailAST = rootDetailAST.getNextSibling();
 
-		while (true) {
-			if ((siblingDetailAST == null) ||
-				(siblingDetailAST.getType() == TokenTypes.CLASS_DEF) ||
-				(siblingDetailAST.getType() == TokenTypes.ENUM_DEF) ||
-				(siblingDetailAST.getType() == TokenTypes.INTERFACE_DEF)) {
-
-				break;
-			}
+		while ((siblingDetailAST != null) &&
+			   (siblingDetailAST.getType() != TokenTypes.CLASS_DEF) &&
+			   (siblingDetailAST.getType() != TokenTypes.ENUM_DEF) &&
+			   (siblingDetailAST.getType() != TokenTypes.INTERFACE_DEF)) {
 
 			siblingDetailAST = siblingDetailAST.getNextSibling();
 		}
@@ -137,15 +133,11 @@ public class JavaClassParser {
 
 		DetailAST siblingDetailAST = rootDetailAST.getNextSibling();
 
-		while (true) {
-			if ((siblingDetailAST == null) ||
-				(siblingDetailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
-				(siblingDetailAST.getType() == TokenTypes.CLASS_DEF) ||
-				(siblingDetailAST.getType() == TokenTypes.ENUM_DEF) ||
-				(siblingDetailAST.getType() == TokenTypes.INTERFACE_DEF)) {
-
-				break;
-			}
+		while ((siblingDetailAST != null) &&
+			   (siblingDetailAST.getType() != TokenTypes.ANNOTATION_DEF) &&
+			   (siblingDetailAST.getType() != TokenTypes.CLASS_DEF) &&
+			   (siblingDetailAST.getType() != TokenTypes.ENUM_DEF) &&
+			   (siblingDetailAST.getType() != TokenTypes.INTERFACE_DEF)) {
 
 			siblingDetailAST = siblingDetailAST.getNextSibling();
 		}
@@ -514,15 +506,11 @@ public class JavaClassParser {
 
 		DetailAST childDetailAST = detailAST.getFirstChild();
 
-		while (true) {
-			if (childDetailAST == null) {
-				break;
-			}
-
+		while (childDetailAST != null) {
 			String name = _getName(childDetailAST);
 
 			if (name != null) {
-				names.add(_getName(childDetailAST));
+				names.add(name);
 			}
 
 			childDetailAST = childDetailAST.getNextSibling();

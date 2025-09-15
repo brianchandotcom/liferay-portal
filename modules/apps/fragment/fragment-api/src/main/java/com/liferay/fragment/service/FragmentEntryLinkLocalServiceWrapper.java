@@ -529,15 +529,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<FragmentEntryLink>
-		getFragmentEntryLinksByFragmentEntryId(
-			long fragmentEntryId, boolean deleted) {
-
-		return _fragmentEntryLinkLocalService.
-			getFragmentEntryLinksByFragmentEntryId(fragmentEntryId, deleted);
-	}
-
-	@Override
 	public java.util.List<FragmentEntryLink> getFragmentEntryLinksByPlid(
 		long groupId, long plid) {
 
@@ -784,15 +775,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 	@Override
 	public FragmentEntryLink updateFragmentEntryLink(
-			long userId, long fragmentEntryLinkId, int position)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(
-			userId, fragmentEntryLinkId, position);
-	}
-
-	@Override
-	public FragmentEntryLink updateFragmentEntryLink(
 			long userId, long fragmentEntryLinkId,
 			long originalFragmentEntryLinkId, long fragmentEntryId, long plid,
 			String css, String html, String js, String configuration,
@@ -804,15 +786,6 @@ public class FragmentEntryLinkLocalServiceWrapper
 			userId, fragmentEntryLinkId, originalFragmentEntryLinkId,
 			fragmentEntryId, plid, css, html, js, configuration, editableValues,
 			namespace, position, type, serviceContext);
-	}
-
-	@Override
-	public FragmentEntryLink updateFragmentEntryLink(
-			long userId, long fragmentEntryLinkId, String editableValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(
-			userId, fragmentEntryLinkId, editableValues);
 	}
 
 	@Override

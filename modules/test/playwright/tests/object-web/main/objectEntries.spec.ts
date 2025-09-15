@@ -48,6 +48,7 @@ import {createFile, deleteFile} from './utils/fileHelpers';
 import {generateObjectEntryValues} from './utils/generateObjectEntry';
 import {generateObjectFields} from './utils/generateObjectFields';
 import evaluateKeepCheckingAfterFound from './utils/keepCheckingAfterFound';
+import {pasteFile} from './utils/pasteFile';
 import {postListTypeDefinitionListTypeEntries} from './utils/postListTypeDefinitionListTypeEntries';
 
 const test = mergeTests(
@@ -2294,7 +2295,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
-	test('verify that an appropriate error message appears after attempting to upload an oversized file', async ({
+	test('verify that its not possible to paste file on richText field', async ({
 		apiHelpers,
 		page,
 		viewObjectEntriesPage,
@@ -2314,46 +2315,28 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'objectDefinition',
 		});
 
-		await test.step('Go to the object entry page, click to add an entry, attempt to upload the files, and verify the error messages', async () => {
+		await test.step('go to entry page, try to upload file by pasting it into editor and verify error message', async () => {
 			await viewObjectEntriesPage.goto(objectDefinition.className);
 
 			await viewObjectEntriesPage.clickAddObjectEntry(
 				objectDefinition.label['en_US']
 			);
 
-			const filePath = path.join(__dirname, 'dependencies', 'planet.jpg');
+			const editorFrame = page.frameLocator('iframe[title="editor"]');
 
-			const fileBase64 = fs.readFileSync(filePath).toString('base64');
+			const editorBody = editorFrame.locator('body');
 
-			const imageHtml = `<p><img alt="" src="data:image/jpeg;base64,${fileBase64}" /></p>`;
+			const file = fs.readFileSync(
+				path.join(__dirname, 'dependencies', 'tree.png')
+			);
 
-			const sourceButton = page.getByLabel('Source');
-
-			await sourceButton.click();
-
-			await page.getByRole('textbox').last().fill(imageHtml);
-
-			await sourceButton.click();
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-			await waitForAlert(page, 'Error:The input was too large.', {
-				type: 'danger',
+			await pasteFile(editorBody, {
+				buffer: file,
+				fileName: 'tree.png',
+				fileType: 'image/png',
 			});
 
-			await page.reload();
-
-			const imagesHtml = `<p><img alt="" src="data:image/jpeg;base64,${fileBase64}" /><img alt="" src="data:image/jpeg;base64,${fileBase64}" /><img alt="" src="data:image/jpeg;base64,${fileBase64}" /><img alt="" src="data:image/jpeg;base64,${fileBase64}" /><img alt="" src="data:image/jpeg;base64,${fileBase64}" /></p>`;
-
-			await sourceButton.click();
-
-			await page.getByRole('textbox').last().fill(imagesHtml);
-
-			await sourceButton.click();
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-			await waitForAlert(page, 'Error:Upload size is too large.', {
-				type: 'danger',
-			});
+			await expect(editorFrame.locator('img')).not.toBeVisible();
 		});
 	});
 

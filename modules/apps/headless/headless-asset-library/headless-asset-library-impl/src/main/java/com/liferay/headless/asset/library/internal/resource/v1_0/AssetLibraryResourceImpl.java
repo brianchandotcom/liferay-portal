@@ -682,12 +682,12 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					addAction(
 						ActionKeys.UPDATE, depotEntry, "patchAssetLibrary")
 				).put(
-					"view-members",
+					"view-connected-sites",
 					() -> {
-						if (_groupModelResourcePermission.contains(
+						if (_depotEntryModelResourcePermission.contains(
 								PermissionThreadLocal.getPermissionChecker(),
-								depotEntry.getGroupId(),
-								ActionKeys.ASSIGN_MEMBERS)) {
+								depotEntry.getDepotEntryId(),
+								ActionKeys.UPDATE)) {
 
 							return null;
 						}
@@ -696,12 +696,12 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 							ActionKeys.VIEW, depotEntry, "getAssetLibrary");
 					}
 				).put(
-					"view-sites",
+					"view-members",
 					() -> {
-						if (_depotEntryModelResourcePermission.contains(
+						if (_groupModelResourcePermission.contains(
 								PermissionThreadLocal.getPermissionChecker(),
-								depotEntry.getDepotEntryId(),
-								ActionKeys.UPDATE)) {
+								depotEntry.getGroupId(),
+								ActionKeys.ASSIGN_MEMBERS)) {
 
 							return null;
 						}

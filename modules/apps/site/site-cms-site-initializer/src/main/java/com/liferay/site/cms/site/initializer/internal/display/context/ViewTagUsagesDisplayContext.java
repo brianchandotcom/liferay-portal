@@ -37,7 +37,7 @@ public class ViewTagUsagesDisplayContext {
 			"')&nestedFields=embedded");
 	}
 
-	public Map<String, Object> getBreadcrumbReactData() throws Exception {
+	public Map<String, Object> getBreadcrumbProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"breadcrumbItems",
 			JSONUtil.putAll(
@@ -63,6 +63,8 @@ public class ViewTagUsagesDisplayContext {
 						ParamUtil.getString(_httpServletRequest, "keywordName"))
 				)
 			)
+		).put(
+			"hideSpace", true
 		).build();
 	}
 

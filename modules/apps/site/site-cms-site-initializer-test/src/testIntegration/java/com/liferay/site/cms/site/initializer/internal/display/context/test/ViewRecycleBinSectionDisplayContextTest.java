@@ -11,22 +11,18 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
-import com.liferay.headless.asset.library.dto.v1_0.Settings;
-import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -39,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,70 +59,81 @@ public class ViewRecycleBinSectionDisplayContextTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-
-		AssetLibraryResource.Builder builder =
-			_assetLibraryResourceFactory.create();
-
-		_assetLibraryResource = builder.user(
-			UserTestUtil.getAdminUser(group.getCompanyId())
-		).build();
-	}
-
 	@Test
 	public void testGetCMSSectionFilterString() throws Exception {
-		AssetLibrary assetLibrary = _addAssetLibrary();
-
-		Settings settings = assetLibrary.getSettings();
-
-		settings.setTrashEnabled(true);
-
-		assetLibrary.setSettings(settings);
-
 		Object displayContext = getSectionDisplayContext(
 			getMockHttpServletRequest());
 
-		String filter = ReflectionTestUtil.invoke(
-			displayContext, "getCMSSectionFilterString", new Class<?>[0],
-			new Object[0]);
-
-		Group defaultGroup = _groupLocalService.loadGetGroup(
+		Group defaultDepotGroup = groupLocalService.getGroup(
 			group.getCompanyId(), "Default");
+
+		Assert.assertNull(
+			defaultDepotGroup.getTypeSettingsProperty("trashEnabled"));
+
+		String filter = _getCMSSectionFilterString(displayContext);
 
 		Assert.assertTrue(
 			filter.contains(
 				StringBundler.concat(
-					"groupIds/any(g:g in (", defaultGroup.getGroupId(), ",",
-					assetLibrary.getSiteId())));
+					"status eq ", WorkflowConstants.STATUS_IN_TRASH,
+					" and groupIds/any(g:g in (",
+					defaultDepotGroup.getGroupId(), "))")));
 
-		assetLibrary.getSettings(
-		).setTrashEnabled(
-			false
-		);
+		_setTrashEnabledGroupProperty(
+			defaultDepotGroup, Boolean.FALSE.toString());
 
-		assetLibrary.setCreatorUserId(defaultGroup.getCreatorUserId());
+		Assert.assertFalse(
+			GetterUtil.getBoolean(
+				defaultDepotGroup.getTypeSettingsProperty("trashEnabled")));
 
-		Group assetLibraryGroup = _groupLocalService.getGroup(
-			assetLibrary.getSiteId());
+		filter = _getCMSSectionFilterString(displayContext);
 
-		UnicodeProperties unicodeProperties =
-			assetLibraryGroup.getTypeSettingsProperties();
+		Assert.assertTrue(
+			filter.contains("status eq " + WorkflowConstants.STATUS_ANY));
 
-		unicodeProperties.setProperty("trashEnabled", "false");
+		_setTrashEnabledGroupProperty(
+			defaultDepotGroup, Boolean.TRUE.toString());
 
-		assetLibraryGroup.setTypeSettingsProperties(unicodeProperties);
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				defaultDepotGroup.getTypeSettingsProperty("trashEnabled")));
 
-		_groupLocalService.updateGroup(assetLibraryGroup);
-
-		filter = ReflectionTestUtil.invoke(
-			displayContext, "getCMSSectionFilterString", new Class<?>[0],
-			new Object[0]);
+		filter = _getCMSSectionFilterString(displayContext);
 
 		Assert.assertTrue(
 			filter.contains(
-				"groupIds/any(g:g in (" + defaultGroup.getGroupId() + "))"));
+				StringBundler.concat(
+					"status eq ", WorkflowConstants.STATUS_IN_TRASH,
+					" and groupIds/any(g:g in (",
+					defaultDepotGroup.getGroupId(), "))")));
+
+		DepotEntry depotEntry = addDepotEntry(
+			RandomTestUtil.randomString(), DepotConstants.TYPE_SPACE);
+
+		try {
+			Group depotGroup = depotEntry.getGroup();
+
+			_setTrashEnabledGroupProperty(depotGroup, Boolean.TRUE.toString());
+
+			Assert.assertTrue(
+				GetterUtil.getBoolean(
+					depotGroup.getTypeSettingsProperty("trashEnabled")));
+
+			filter = _getCMSSectionFilterString(displayContext);
+
+			Assert.assertTrue(
+				filter.contains(
+					StringBundler.concat(
+						"status eq ", WorkflowConstants.STATUS_IN_TRASH,
+						" and groupIds/any(g:g in (",
+						defaultDepotGroup.getGroupId(), ",",
+						depotGroup.getGroupId(), "))")));
+
+			_setTrashEnabledGroupProperty(defaultDepotGroup, null);
+		}
+		finally {
+			_depotEntryLocalService.deleteDepotEntry(depotEntry);
+		}
 	}
 
 	@Test
@@ -199,28 +205,27 @@ public class ViewRecycleBinSectionDisplayContextTest
 		return viewRecycleBinSectionDisplayContext;
 	}
 
-	private AssetLibrary _addAssetLibrary() throws Exception {
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_SPACE,
-			new ServiceContext() {
-				{
-					setCompanyId(group.getCompanyId());
-					setUserId(
-						UserTestUtil.getAdminUser(
-							group.getCompanyId()
-						).getUserId());
-				}
-			});
-
-		return _assetLibraryResource.getAssetLibrary(depotEntry.getGroupId());
+	private String _getCMSSectionFilterString(Object displayContext) {
+		return ReflectionTestUtil.invoke(
+			displayContext, "getCMSSectionFilterString", new Class<?>[0],
+			new Object[0]);
 	}
 
-	private AssetLibraryResource _assetLibraryResource;
+	private void _setTrashEnabledGroupProperty(Group group, String value)
+		throws Exception {
 
-	@Inject
-	private AssetLibraryResource.Factory _assetLibraryResourceFactory;
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		if (value == null) {
+			unicodeProperties.remove("trashEnabled");
+		}
+		else {
+			unicodeProperties.setProperty("trashEnabled", value);
+		}
+
+		_groupLocalService.updateGroup(
+			group.getGroupId(), unicodeProperties.toString());
+	}
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

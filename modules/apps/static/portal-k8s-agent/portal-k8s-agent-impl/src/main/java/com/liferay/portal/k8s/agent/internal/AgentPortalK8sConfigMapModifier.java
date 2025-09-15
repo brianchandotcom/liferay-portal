@@ -197,10 +197,8 @@ public class AgentPortalK8sConfigMapModifier
 			_log.info("Deactivating K8s agent");
 		}
 
-		if (!_configMapModelConsumers.isEmpty()) {
-			for (String configMapName : _configMapModelConsumers.keySet()) {
-				_flushModifyConfigMap(configMapName);
-			}
+		for (String configMapName : _configMapModelConsumers.keySet()) {
+			_flushModifyConfigMap(configMapName);
 		}
 
 		_sharedIndexInformer.close();

@@ -68,10 +68,11 @@ public class FragmentEntryLinkModelListener
 		try {
 			InfoFieldUtil.forEachInfoField(
 				fragmentEntryLink, _fragmentRendererController,
-				(fieldObjectValuePair, infoField, unsafeSupplier) ->
+				(editableFieldObjectValuePair, infoField, unsafeSupplier) ->
 					infoFieldObjectValuePairs.add(
 						new ObjectValuePair<>(
-							infoField, fieldObjectValuePair.getValue())));
+							infoField,
+							editableFieldObjectValuePair.getValue())));
 
 			if (infoFieldObjectValuePairs.isEmpty()) {
 				return;

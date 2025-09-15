@@ -6,13 +6,12 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {InternalDispatch} from '@clayui/shared';
-import {
-	FrontendDataSet,
-	IItemSelectorModalFDSProps,
-} from '@liferay/frontend-data-set-web';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {getObjectValueFromPath, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
+
+import {IItemSelectorModalFDSProps} from '../utils/types';
 
 export interface IItemSelectorModalProps<T> {
 

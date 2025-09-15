@@ -11,10 +11,10 @@ import {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import {InternalDispatch, useControlledState} from '@clayui/shared';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {IItemSelectorModalFDSProps} from '@liferay/frontend-data-set-web';
 import {fetch, getObjectValueFromPath} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {IItemSelectorModalFDSProps} from '../utils/types';
 import ItemSelectorModal from './ItemSelectorModal';
 
 const NETWORK_STATUS_UNUSED = 4;

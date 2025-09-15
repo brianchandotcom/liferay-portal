@@ -230,6 +230,7 @@ const DocumentPreviewer = ({
 					<ClayButton.Group>
 						<ClayButton
 							className="btn-floating-bar btn-floating-bar-text"
+							disabled={totalPages === 1}
 							onClick={() => {
 								setShowPageInput(true);
 							}}

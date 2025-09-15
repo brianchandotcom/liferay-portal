@@ -150,6 +150,11 @@ public class JavaClassParser {
 			siblingDetailAST = siblingDetailAST.getNextSibling();
 		}
 
+		if (siblingDetailAST == null) {
+			throw new ParseException(
+				"Parsing error at line \"" + rootDetailAST.getLineNo() + "\"");
+		}
+
 		String accessModifier = JavaTerm.ACCESS_MODIFIER_DEFAULT;
 		boolean isAbstract = false;
 		boolean isFinal = false;

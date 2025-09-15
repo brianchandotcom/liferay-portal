@@ -5,8 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -34,9 +34,10 @@ public class ViewSpaceMembersSummaryJSPSectionFragmentRenderer
 	}
 
 	@Override
-	protected Object getDisplayContext(HttpServletRequest httpServletRequest) {
+	protected Object getDisplayContext(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
 		return new ViewSpaceMembersSummarySectionDisplayContext(
-			_depotEntryLocalService,
 			InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
 			_groupModelResourcePermission, httpServletRequest, _language,
 			_userGroupLocalService, _userLocalService);
@@ -51,9 +52,6 @@ public class ViewSpaceMembersSummaryJSPSectionFragmentRenderer
 	protected String getLabelKey() {
 		return "space-members-summary";
 	}
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

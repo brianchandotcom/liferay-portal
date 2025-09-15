@@ -62,6 +62,7 @@ describe('SpaceMembersWithList', () => {
 	const testUsers = [
 		{
 			emailAddress: 'john.doe@example.com',
+			externalReferenceCode: 'ERC_1',
 			id: '1',
 			image: '/image/user_portrait',
 			imageId: '1',
@@ -70,6 +71,7 @@ describe('SpaceMembersWithList', () => {
 		},
 		{
 			emailAddress: 'jane.smith@example.com',
+			externalReferenceCode: 'ERC_2',
 			id: '2',
 			image: '/image/user_portrait',
 			imageId: '1',
@@ -87,11 +89,13 @@ describe('SpaceMembersWithList', () => {
 
 	const testUserGroups = [
 		{
+			externalReferenceCode: 'ERC_1',
 			id: '1',
 			name: 'Group 1',
 			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
 		},
 		{
+			externalReferenceCode: 'ERC_2',
 			id: '2',
 			name: 'Group 2',
 			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
@@ -277,8 +281,8 @@ describe('SpaceMembersWithList', () => {
 	it('loads more user groups when scrolling down', async () => {
 		const moreGroups = [
 			{
-				id: '3',
 				externalReferenceCode: 'ERC_3',
+				id: '3',
 				name: 'Group Three',
 				roles: [{id: 1, name: 'Admin'}],
 			},
@@ -380,6 +384,7 @@ describe('SpaceMembersWithList', () => {
 		it('adds a new user to the list and shows a success toast', async () => {
 			const newUser = {
 				emailAddress: 'new@user.com',
+				externalReferenceCode: 'ERC_3',
 				id: '3',
 				name: 'New User',
 			};
@@ -408,8 +413,8 @@ describe('SpaceMembersWithList', () => {
 
 			await waitFor(() => {
 				expect(linkSpy).toHaveBeenCalledWith({
-					spaceId: testSpace.id,
-					userId: newUser.id,
+					spaceExternalReferenceCode: testSpace.externalReferenceCode,
+					userExternalReferenceCode: newUser.externalReferenceCode,
 				});
 			});
 
@@ -422,6 +427,7 @@ describe('SpaceMembersWithList', () => {
 		it('shows an error toast when linking a user fails', async () => {
 			const newUser = {
 				emailAddress: 'fail@user.com',
+				externalReferenceCode: 'ERC_3',
 				id: '3',
 				name: 'Fail User',
 			};
@@ -477,8 +483,9 @@ describe('SpaceMembersWithList', () => {
 
 			await waitFor(() => {
 				expect(unlinkSpy).toHaveBeenCalledWith({
-					spaceId: testSpace.id,
-					userId: testUsers[1].id,
+					spaceExternalReferenceCode: testSpace.externalReferenceCode,
+					userExternalReferenceCode:
+						testUsers[1].externalReferenceCode,
 				});
 			});
 
@@ -631,8 +638,10 @@ describe('SpaceMembersWithList', () => {
 				.mockResolvedValue({
 					data: {
 						roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
-						spaceId: testSpace.id,
-						userId: testUsers[1].id,
+						spaceExternalReferenceCode:
+							testSpace.externalReferenceCode,
+						userExternalReferenceCode:
+							testUsers[1].externalReferenceCode,
 					},
 					error: null,
 				});
@@ -655,8 +664,9 @@ describe('SpaceMembersWithList', () => {
 			await waitFor(() => {
 				expect(updateUserRolesSpy).toHaveBeenCalledWith({
 					roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
-					spaceId: testSpace.id,
-					userId: testUsers[1].id,
+					spaceExternalReferenceCode: testSpace.externalReferenceCode,
+					userExternalReferenceCode:
+						testUsers[1].externalReferenceCode,
 				});
 			});
 
@@ -714,7 +724,8 @@ describe('SpaceMembersWithList', () => {
 				.mockResolvedValue({
 					data: {
 						roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
-						spaceId: testSpace.id,
+						spaceExternalReferenceCode:
+							testSpace.externalReferenceCode,
 						userGroupId: testUserGroups[0].id,
 					},
 					error: null,
@@ -746,7 +757,7 @@ describe('SpaceMembersWithList', () => {
 			await waitFor(() => {
 				expect(updateUserGroupRolesSpy).toHaveBeenCalledWith({
 					roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
-					spaceId: testSpace.id,
+					spaceExternalReferenceCode: testSpace.externalReferenceCode,
 					userGroupId: testUserGroups[0].id,
 				});
 			});

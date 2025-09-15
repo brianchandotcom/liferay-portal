@@ -42,7 +42,12 @@ const DEFAULT_PROPS = {
 			actionIds: 'VIEW',
 			share: false,
 			type: 'User',
-			user: {id: '2', name: 'Test2 Test2', roles: []},
+			user: {
+				externalReferenceCode: 'ERC_2',
+				id: '2',
+				name: 'Test2 Test2',
+				roles: [],
+			},
 		},
 	],
 	itemId: 20,

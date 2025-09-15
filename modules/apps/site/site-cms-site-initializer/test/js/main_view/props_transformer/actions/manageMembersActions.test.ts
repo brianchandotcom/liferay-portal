@@ -35,6 +35,7 @@ describe('manageMembersAction', () => {
 				const data: ManageMembersData = {
 					assetLibraryCreatorUserId: 'user-123',
 					assetLibraryId: 'lib-456',
+					externalReferenceCode: 'ERC-456',
 					hasAssignMembersPermission,
 					title: 'Manage Members Title',
 				};
@@ -58,6 +59,7 @@ describe('manageMembersAction', () => {
 				expect(mockSpaceMembersModal).toHaveBeenCalledWith({
 					assetLibraryCreatorUserId: data.assetLibraryCreatorUserId,
 					assetLibraryId: data.assetLibraryId,
+					externalReferenceCode: data.externalReferenceCode,
 					hasAssignMembersPermission: data.hasAssignMembersPermission,
 				});
 			}

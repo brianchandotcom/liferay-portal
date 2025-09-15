@@ -21,11 +21,13 @@ jest.mock(
 
 const mockUsers = [
 	{
+		externalReferenceCode: 'ERC_1',
 		id: '1',
 		name: 'John Doe',
 		roles: [{id: 1, name: 'Admin'}],
 	},
 	{
+		externalReferenceCode: 'ERC_2',
 		id: '2',
 		name: 'Jane Smith',
 		roles: [{id: 2, name: 'Contributor'}],
@@ -36,6 +38,7 @@ describe('SpaceMembersModal', () => {
 	const props = {
 		assetLibraryCreatorUserId: '1',
 		assetLibraryId: '123',
+		externalReferenceCode: 'ERC',
 		hasAssignMembersPermission: true,
 	};
 

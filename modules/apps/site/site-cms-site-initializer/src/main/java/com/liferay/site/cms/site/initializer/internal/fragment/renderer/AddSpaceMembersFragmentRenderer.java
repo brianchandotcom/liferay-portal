@@ -63,6 +63,7 @@ public class AddSpaceMembersFragmentRenderer
 
 		String assetLibraryName = StringPool.BLANK;
 		long creatorUserId = 0;
+		String externalReferenceCode = StringPool.BLANK;
 		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
 			assetLibraryId);
 
@@ -73,6 +74,7 @@ public class AddSpaceMembersFragmentRenderer
 			assetLibraryName = group.getDescriptiveName(
 				themeDisplay.getLocale());
 			creatorUserId = group.getCreatorUserId();
+			externalReferenceCode = group.getExternalReferenceCode();
 		}
 
 		return HashMapBuilder.<String, Object>put(
@@ -83,6 +85,8 @@ public class AddSpaceMembersFragmentRenderer
 			"assetLibraryName", assetLibraryName
 		).put(
 			"baseAssetLibraryURL", ActionUtil.getBaseSpaceURL(themeDisplay)
+		).put(
+			"externalReferenceCode", externalReferenceCode
 		).put(
 			"hasAssignMembersPermission", true
 		).put(

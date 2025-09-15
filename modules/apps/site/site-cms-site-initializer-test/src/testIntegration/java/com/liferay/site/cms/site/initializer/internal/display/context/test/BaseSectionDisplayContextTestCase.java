@@ -260,7 +260,8 @@ public abstract class BaseSectionDisplayContextTestCase
 
 		String name = StringUtil.randomString();
 
-		DepotEntry depotEntry = _addDepotEntry(name);
+		DepotEntry depotEntry = addDepotEntry(
+			name, DepotConstants.TYPE_ASSET_LIBRARY);
 
 		try {
 			List<DepotEntry> depotEntries =
@@ -366,6 +367,17 @@ public abstract class BaseSectionDisplayContextTestCase
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
+	protected DepotEntry addDepotEntry(String name, int type) throws Exception {
+		return _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), name
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			type, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
 	protected void assertFDSActionDropdownItem(
 		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
 		String label, String method, String type) {
@@ -464,18 +476,6 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Inject
 	protected ObjectDefinitionService objectDefinitionService;
-
-	private DepotEntry _addDepotEntry(String name) throws Exception {
-		return _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), name
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_ASSET_LIBRARY,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-	}
 
 	private ObjectEntryFolder _addObjectFolderEntry(Group group)
 		throws Exception {

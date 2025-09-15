@@ -247,9 +247,21 @@ test(
 				await enabledButton.click();
 			}
 
-			await page
-				.getByRole('button', {name: 'Save'})
-				.dispatchEvent('click');
+			const updateButton = page.getByRole('button', {
+				name: 'Update',
+			});
+
+			const saveButton = page.getByRole('button', {
+				name: 'Save',
+			});
+
+			if (await saveButton.isVisible()) {
+				await saveButton.dispatchEvent('click');
+			}
+			else if (await updateButton.isVisible()) {
+				await updateButton.dispatchEvent('click');
+			}
+
 			await waitForAlert(page);
 
 			await expect(enabledButton).toBeChecked();

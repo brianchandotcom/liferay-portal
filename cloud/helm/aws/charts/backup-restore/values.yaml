@@ -1,6 +1,14 @@
 argo:
-    artifactRepositoryBucketId: ""
-    namespace: argo
+    artifactRepository:
+        bucketId: ""
+        namespace: argo
+    workflowSpec:
+        artifactGC:
+            strategy: OnWorkflowDeletion
+        podGC:
+            strategy: OnWorkflowSuccess
+        ttlStrategy:
+            secondsAfterCompletion: 86400
 awsBackupService:
     assumedIamRoleArn: ""
     restoreWaitTimeoutSeconds: 7200

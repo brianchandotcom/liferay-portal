@@ -9,9 +9,13 @@ spec:
     arguments:
         parameters:
             -   name: recovery-point-arn
+    artifactGC:
+        {{- .Values.argo.workflowSpec.artifactGC | toYaml | nindent 8 }}
     artifactRepositoryRef:
         configMap: {{ include "liferayAWSBackupRestore.artifactRepositoryConfigMapName" . }}
     entrypoint: main
+    podGC:
+        {{- .Values.argo.workflowSpec.podGC | toYaml | nindent 8 }}
     templates:
         -   inputs:
                 artifacts:
@@ -215,6 +219,8 @@ spec:
                         template: kubectl-rollout-restart
                 -   -   name: kubectl-rollout-status
                         template: kubectl-rollout-status
+    ttlStrategy:
+        {{- .Values.argo.workflowSpec.ttlStrategy | toYaml | nindent 8 }}
     {{- if and .Values.git.credentials.token .Values.git.credentials.username }}
     volumes:
         -   name: git-credentials

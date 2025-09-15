@@ -5,7 +5,7 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
-import com.liferay.cookies.banner.web.internal.constants.ProductAnalyticsBannerConstants;
+import com.liferay.cookies.banner.web.internal.constants.ProductAnalyticsBannerCookiesConstants;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
@@ -60,22 +60,22 @@ public class BaseProductAnalyticsDisplayContext
 		_optionalConsentCookieTypes = ListUtil.fromArray(
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerConstants.
+				ProductAnalyticsBannerCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_FUNCTIONAL,
 				false),
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerConstants.
+				ProductAnalyticsBannerCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_PERFORMANCE,
 				false),
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerConstants.
+				ProductAnalyticsBannerCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_PERSONALIZATION,
 				false),
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerConstants.
+				ProductAnalyticsBannerCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_PRODUCT_ANALYTICS,
 				false));
 
@@ -108,7 +108,7 @@ public class BaseProductAnalyticsDisplayContext
 		_requiredConsentCookieTypes = ListUtil.fromArray(
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerConstants.
+				ProductAnalyticsBannerCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_NECESSARY,
 				true));
 

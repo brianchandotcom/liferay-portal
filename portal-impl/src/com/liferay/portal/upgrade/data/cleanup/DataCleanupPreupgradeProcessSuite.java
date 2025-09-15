@@ -98,8 +98,7 @@ public class DataCleanupPreupgradeProcessSuite {
 
 			// Company, then user, then group, and then the rest for optimal
 			// performance since cleaning companies will remove its users,
-			// groups, and related data. Journal related data must be last
-			// because DDMStructure needs it.
+			// groups, and related data
 
 			new CompanyDataCleanupPreupgradeProcess(),
 
@@ -120,7 +119,7 @@ public class DataCleanupPreupgradeProcessSuite {
 			new NullUnicodeContentDataCleanupPreupgradeProcess(),
 			new QuartzJobDetailsDataCleanupPreupgradeProcess(),
 
-			//
+			// Journal data is used by dynamic data mapping structures data
 
 			new JournalDataCleanupPreupgradeProcess());
 

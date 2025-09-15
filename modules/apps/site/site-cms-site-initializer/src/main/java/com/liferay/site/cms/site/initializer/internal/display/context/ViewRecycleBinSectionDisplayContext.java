@@ -192,10 +192,6 @@ public class ViewRecycleBinSectionDisplayContext
 			return filterString + WorkflowConstants.STATUS_ANY;
 		}
 
-		if (groupIds.length == 0) {
-			return filterString + WorkflowConstants.STATUS_ANY;
-		}
-
 		if (ArrayUtil.isEmpty(groupIds)) {
 			return filterString + WorkflowConstants.STATUS_IN_TRASH;
 		}

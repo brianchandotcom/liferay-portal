@@ -322,7 +322,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		if ((ctCollection != null) && !cMS) {
 			ctCollectionId = ctCollection.getCtCollectionId();
 
-			data.put("disableDropdown", "false");
+			data.put("disableDropdown", false);
 			data.put("iconClass", "change-tracking-indicator-icon-publication");
 			data.put("iconName", "radio-button");
 
@@ -389,10 +389,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 		else {
 			if (cMS) {
-				data.put("disableDropdown", "true");
+				data.put("disableDropdown", true);
 			}
 			else {
-				data.put("disableDropdown", "false");
+				data.put("disableDropdown", false);
 			}
 
 			data.put("iconClass", "change-tracking-indicator-icon-production");

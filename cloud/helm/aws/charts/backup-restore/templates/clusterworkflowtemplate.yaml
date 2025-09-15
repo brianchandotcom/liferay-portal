@@ -28,6 +28,8 @@ spec:
             script:
                 command: [sh]
                 image: "{{ .Values.images.terraform.repository }}:{{ .Values.images.terraform.tag }}"
+                resources:
+                    {{- .Values.resources.applyTerraformDependenciesModule | toYaml | nindent 20 }}
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.applyTerraformModule" . | nindent 20 }}
                 {{- include "liferayAWSBackupRestore.gitCredentials.volumeMount" . | nindent 16 }}
@@ -40,6 +42,8 @@ spec:
             script:
                 command: [sh]
                 image: "{{ .Values.images.terraform.repository }}:{{ .Values.images.terraform.tag }}"
+                resources:
+                    {{- .Values.resources.checkoutGitRepository | toYaml | nindent 20 }}
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.checkoutGitRepository" . | nindent 20 }}
                 {{- include "liferayAWSBackupRestore.gitCredentials.volumeMount" . | nindent 16 }}
@@ -52,6 +56,8 @@ spec:
                     -   "--recursive"
                 command: ["aws"]
                 image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
+                resources:
+                    {{- .Values.resources.cleanUpS3Bucket | toYaml | nindent 16 }}
             inputs:
                 parameters:
                     -   name: s3-bucket-id
@@ -78,6 +84,8 @@ spec:
             script:
                 command: [sh]
                 image: "{{ .Values.images.terraform.repository }}:{{ .Values.images.terraform.tag }}"
+                resources:
+                    {{- .Values.resources.getDependenciesModuleOutputs | toYaml | nindent 20 }}
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.getDependenciesModuleOutputs" . | nindent 20 }}
                 workingDir: {{ printf "/src/%s" .Values.git.repository.paths.dependenciesModule }}
@@ -93,6 +101,8 @@ spec:
             script:
                 command: [sh]
                 image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
+                resources:
+                    {{- .Values.resources.getPeerRecoveryPoints | toYaml | nindent 20 }}
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.getPeerRecoveryPoints" . | nindent 20 }}
         -   container:
@@ -102,6 +112,8 @@ spec:
                     -   statefulset
                     -   "{{ .Values.liferayWorkload.name }}"
                 image: "{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}"
+                resources:
+                    {{- .Values.resources.kubectlRolloutRestart | toYaml | nindent 16 }}
             name: kubectl-rollout-restart
         -   container:
                 args:
@@ -111,6 +123,8 @@ spec:
                     -   "{{ .Values.liferayWorkload.name }}"
                     -   --timeout={{ .Values.liferayWorkload.rolloutTimeout }}
                 image: "{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}"
+                resources:
+                    {{- .Values.resources.kubectlRolloutStatus | toYaml | nindent 16 }}
             name: kubectl-rollout-status
         -   dag:
                 tasks:
@@ -211,6 +225,8 @@ spec:
             script:
                 command: [sh]
                 image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
+                resources:
+                    {{- .Values.resources.restoreS3Bucket | toYaml | nindent 20 }}
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.restoreS3Bucket" . | nindent 20 }}
         -   name: restart-liferay

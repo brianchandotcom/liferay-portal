@@ -33,10 +33,23 @@ function getCMSChildFolderURL(folderId: string) {
 	}).toString()}`;
 }
 
-function CMSFilesItemSelectorModal<T extends Record<string, any>>({
+type Document = {
+	contentUrl: string;
+	creator: {
+		name: string;
+	};
+	encodingFormat: string;
+	fileName: string;
+	id: string;
+	title: string;
+};
+
+function CMSFilesItemSelectorModal({
 	fdsProps,
 	...otherProps
-}: IItemSelectorModalProps<T>) {
+}: Omit<IItemSelectorModalProps<Document>, 'fdsProps' | 'type'> & {
+	fdsProps?: IItemSelectorModalProps<Document>['fdsProps'];
+}) {
 	const [folderStructure, setFolderStructure] = useState<
 		{folderId: string; folderName: string}[]
 	>([]);

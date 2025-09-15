@@ -19,7 +19,6 @@ import {dataRemoteApiHelpersTest} from '../../../fixtures/dataRemoteApiHelpersTe
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {remotePageTest} from '../../../fixtures/remotePageTest';
@@ -35,7 +34,6 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 import {remoteStagingPagesTest} from '../../export-import-service/main/fixtures/remoteStagingPagesTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getDataStructureDefinition from '../../journal-web/main/utils/getDataStructureDefinition';
-import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {exportImportConfig} from './export_import.config';
 import {exportPageTest} from './fixtures/exportPageTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
@@ -51,6 +49,7 @@ const test = mergeTests(
 	dataRemoteApiHelpersTest(remotePage, remotePort),
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
+		'LPD-39304': {enabled: true},
 	}),
 	loginTest(),
 	assetPublisherPagesTest,
@@ -58,7 +57,6 @@ const test = mergeTests(
 	collectionsPagesTest,
 	displayPageTemplatesPagesTest,
 	exportPageTest,
-	isolatedSiteTest,
 	journalPagesTest,
 	pageEditorPagesTest,
 	pageViewModePagesTest,
@@ -73,7 +71,7 @@ const test = mergeTests(
 );
 
 test(
-	'can publish web content with URL references to live via remote staging.',
+	'can publish web content with URL references to live via remote staging',
 	{tag: '@LPS-159626'},
 	async ({
 		apiHelpers,
@@ -84,21 +82,27 @@ test(
 		remoteApiHelpers,
 		remotePage,
 		remoteStagingPage,
-		site,
 		webContentDisplayPage,
 		widgetPagePage,
 	}) => {
 		test.slow();
-		
+		const site = await apiHelpers.headlessSite.createSite({
+			name: `site-${getRandomString()}`,
+		});
+
 		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		const remoteSite = await remoteApiHelpers.headlessSite.createSite({
 			name: site.name,
 		});
-		console.log(remoteSite);
 
 		remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
-			
+
+		const remoteUrl = remoteApiHelpers.baseUrl.substring(
+			0,
+			remoteApiHelpers.baseUrl.length - 3
+		);
+
 		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 			groupId: site.id,
 			remoteGroupId: remoteSite.id,
@@ -135,14 +139,13 @@ test(
 			}
 		}
 
-		
-
 		for (const layout of layouts) {
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 			await widgetPagePage.addPortlet('Web Content Display');
 			await widgetPagePage.addPortlet('Web Content Display');
 		}
+
 		const fields: Array<any> = [];
 		const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
 
@@ -178,7 +181,7 @@ test(
 		}
 
 		await journalStructuresPage.goto(site.friendlyUrlPath);
-		const templateName = getRandomString();
+		const templateName = 'template1';
 		const templateScript =
 			'<p><a href="${URL1.getData()}">${Openpage1.getData()}</a></p>\n' +
 			'<p><a href="${URL2.getData()}">${Openpage2.getData()}</a></p>\n' +
@@ -227,7 +230,7 @@ test(
 			dataDefinition2
 		);
 
-		const templateName2 = getRandomString();
+		const templateName2 = 'template2';
 		const templateScript2 =
 			'<h1>${Content1.getData()}</h1>\n' + '<p>${Content2.getData()}</p>';
 
@@ -270,31 +273,48 @@ test(
 		i = 0;
 		for (const layout of layouts) {
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-			try {
+			let attempt = 0;
+			do {
+				attempt++;
+				await page.reload({waitUntil: 'domcontentloaded'});
+
+				if (
+					await page
+						.getByText(webContentTitle, {exact: true})
+						.isVisible()
+				) {
+					break;
+				}
 				await webContentDisplayPage.addWebContentWithDisplay({
 					pageType: 'content',
+					waitAfterAddingWebcontent: true,
 					webContentName: webContentTitle,
 				});
-			}
-			catch {}
-
-			await page.waitForTimeout(2000);
-			await page.reload();
-			try {
+				await page.waitForTimeout(500);
+			} while (attempt <= 100);
+			attempt = 0;
+			do {
+				attempt++;
+				await page.reload({waitUntil: 'domcontentloaded'});
+				if (
+					await page
+						.getByText(`Title-${pageNumbers[i]}`, {exact: true})
+						.first()
+						.isVisible()
+				) {
+					break;
+				}
 				await webContentDisplayPage.addWebContentWithDisplay({
 					pageType: 'content',
+					waitAfterAddingWebcontent: true,
 					webContentName: `Title-${pageNumbers[i]}`,
 				});
-			}
-			catch {}
-			await page.waitForTimeout(2000);
+
+				await page.waitForTimeout(500);
+			} while (attempt <= 100);
+
 			i++;
 		}
-
-		const remoteUrl = remoteApiHelpers.baseUrl.substring(
-			0,
-			remoteApiHelpers.baseUrl.length - 3
-		);
 
 		await remoteStagingPage.publishToLive({
 			layoutFriendlyURL: layouts[0].friendlyURL,
@@ -308,7 +328,7 @@ test(
 
 		for (const num of [111, 21, 3]) {
 			await remotePage
-				.getByRole('link', {name: `Page ${num}`, exact: true})
+				.getByRole('link', {exact: true, name: `Page ${num}`})
 				.click();
 			await remotePage.waitForLoadState('domcontentloaded');
 
@@ -316,7 +336,9 @@ test(
 				remotePage.locator('h1').filter({hasText: `Title-${num}`})
 			).toBeVisible();
 
-			expect(remotePage.url()).toContain(`/web/${site.name}/page-${num}`);
+			await expect(remotePage.url()).toContain(
+				`/web/${site.name}/page-${num}`
+			);
 		}
 	}
 );

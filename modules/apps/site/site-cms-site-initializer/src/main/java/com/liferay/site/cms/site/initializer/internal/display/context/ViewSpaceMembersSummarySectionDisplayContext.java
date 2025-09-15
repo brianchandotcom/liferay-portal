@@ -5,13 +5,13 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -36,31 +36,34 @@ import java.util.Map;
 public class ViewSpaceMembersSummarySectionDisplayContext {
 
 	public ViewSpaceMembersSummarySectionDisplayContext(
-		DepotEntryLocalService depotEntryLocalService, long groupId,
-		GroupLocalService groupLocalService,
-		ModelResourcePermission<Group> groupModelResourcePermission,
-		HttpServletRequest httpServletRequest, Language language,
-		UserGroupLocalService userGroupLocalService,
-		UserLocalService userLocalService) {
+			long groupId, GroupLocalService groupLocalService,
+			ModelResourcePermission<Group> groupModelResourcePermission,
+			HttpServletRequest httpServletRequest, Language language,
+			UserGroupLocalService userGroupLocalService,
+			UserLocalService userLocalService)
+		throws PortalException {
 
-		_depotEntryLocalService = depotEntryLocalService;
 		_groupId = groupId;
-		_groupLocalService = groupLocalService;
 		_groupModelResourcePermission = groupModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
 
+		_group = groupLocalService.getGroup(groupId);
+
+		_externalReferenceCode = _group.getExternalReferenceCode();
+
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL(String type) {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(10);
 
-		sb.append("/o/headless-asset-library/v1.0/asset-libraries/");
-		sb.append(_groupId);
+		sb.append("/o/headless-asset-library/v1.0/asset-libraries");
+		sb.append("/by-external-reference-code/");
+		sb.append(_externalReferenceCode);
 		sb.append("/");
 		sb.append(type);
 		sb.append("?page=");
@@ -87,6 +90,8 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 					_getAssetLibraryCreatorUserId());
 				dropdownItem.putData(
 					"assetLibraryId", String.valueOf(_groupId));
+				dropdownItem.putData(
+					"externalReferenceCode", _externalReferenceCode);
 				dropdownItem.putData(
 					"hasAssignMembersPermission",
 					_hasAssignMembersPermission());
@@ -120,6 +125,8 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 				"assetLibraryCreatorUserId", _getAssetLibraryCreatorUserId()
 			).put(
 				"assetLibraryId", String.valueOf(_groupId)
+			).put(
+				"externalReferenceCode", _externalReferenceCode
 			).build(),
 			_getSpaceMembersHeaderTitle(), StringPool.BLANK);
 	}
@@ -140,9 +147,7 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 	}
 
 	private String _getAssetLibraryCreatorUserId() throws Exception {
-		Group group = _groupLocalService.getGroup(_groupId);
-
-		return String.valueOf(group.getCreatorUserId());
+		return String.valueOf(_group.getCreatorUserId());
 	}
 
 	private String _getSpaceMembersHeaderTitle() {
@@ -160,9 +165,9 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 			ActionKeys.ASSIGN_MEMBERS);
 	}
 
-	private final DepotEntryLocalService _depotEntryLocalService;
+	private final String _externalReferenceCode;
+	private final Group _group;
 	private final long _groupId;
-	private final GroupLocalService _groupLocalService;
 	private final ModelResourcePermission<Group> _groupModelResourcePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;

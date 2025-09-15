@@ -76,13 +76,13 @@ export function SpaceMembersWithList({
 							nestedFields: 'roles',
 							page: 1,
 							pageSize,
-							spaceId: assetLibraryId,
+							spaceExternalReferenceCode: externalReferenceCode,
 						}),
 						SpaceService.getSpaceUserGroups({
 							nestedFields: 'numberOfUserAccounts,roles',
 							page: 1,
 							pageSize,
-							spaceId: assetLibraryId,
+							spaceExternalReferenceCode: externalReferenceCode,
 						}),
 						AdminUserService.getUserRoles({
 							filter: "name ne 'Asset Library Connected Site Member' and type eq 5",
@@ -104,7 +104,7 @@ export function SpaceMembersWithList({
 		};
 
 		fetchMembers();
-	}, [assetLibraryId, pageSize]);
+	}, [assetLibraryId, externalReferenceCode, pageSize]);
 
 	useEffect(() => {
 		const hasMembers =
@@ -127,7 +127,7 @@ export function SpaceMembersWithList({
 					nestedFields: 'roles',
 					page: newUsersPage,
 					pageSize,
-					spaceId: assetLibraryId,
+					spaceExternalReferenceCode: externalReferenceCode,
 				});
 
 				setSelectedUsers((currentSelectedUsers) => [
@@ -159,7 +159,7 @@ export function SpaceMembersWithList({
 				nestedFields: 'numberOfUserAccounts,roles',
 				page: newUserGroupsPage,
 				pageSize,
-				spaceId: assetLibraryId,
+				spaceExternalReferenceCode: externalReferenceCode,
 			});
 
 			setSelectedUserGroups((currentSelectedUserGroups) => [
@@ -176,7 +176,7 @@ export function SpaceMembersWithList({
 			setIsFetchingMembers(false);
 		}
 	}, [
-		assetLibraryId,
+		externalReferenceCode,
 		pageSize,
 		selectedOption,
 		userGroupsPage,
@@ -227,8 +227,8 @@ export function SpaceMembersWithList({
 			]);
 
 			const {error} = await SpaceService.linkUserToSpace({
-				spaceId: assetLibraryId,
-				userId: item.id,
+				spaceExternalReferenceCode: externalReferenceCode,
+				userExternalReferenceCode: item.externalReferenceCode,
 			});
 
 			if (error) {
@@ -265,7 +265,7 @@ export function SpaceMembersWithList({
 		]);
 
 		const {error} = await SpaceService.linkUserGroupToSpace({
-			spaceId: assetLibraryId,
+			spaceExternalReferenceCode: externalReferenceCode,
 			userGroupId: item.id,
 		});
 
@@ -294,8 +294,8 @@ export function SpaceMembersWithList({
 			setSelectedUsers(selectedUsers.filter((u) => u.id !== item.id));
 
 			const {error} = await SpaceService.unlinkUserFromSpace({
-				spaceId: assetLibraryId,
-				userId: item.id,
+				spaceExternalReferenceCode: externalReferenceCode,
+				userExternalReferenceCode: item.externalReferenceCode,
 			});
 
 			if (error) {
@@ -329,7 +329,7 @@ export function SpaceMembersWithList({
 		);
 
 		const {error} = await SpaceService.unlinkUserGroupFromSpace({
-			spaceId: assetLibraryId,
+			spaceExternalReferenceCode: externalReferenceCode,
 			userGroupId: item.id,
 		});
 
@@ -383,12 +383,13 @@ export function SpaceMembersWithList({
 			const {error} = isUser
 				? await SpaceService.updateUserRoles({
 						roleNames: newRoles,
-						spaceId: assetLibraryId,
-						userId: itemToUpdate.id,
+						spaceExternalReferenceCode: externalReferenceCode,
+						userExternalReferenceCode:
+							itemToUpdate.externalReferenceCode,
 					})
 				: await SpaceService.updateUserGroupRoles({
 						roleNames: newRoles,
-						spaceId: assetLibraryId,
+						spaceExternalReferenceCode: externalReferenceCode,
 						userGroupId: itemToUpdate.id,
 					});
 
@@ -423,7 +424,7 @@ export function SpaceMembersWithList({
 				});
 			}
 		},
-		[assetLibraryId, selectedOption, spacePermissionsRoles]
+		[externalReferenceCode, selectedOption, spacePermissionsRoles]
 	);
 
 	const hasMembersSelected = useMemo(() => {

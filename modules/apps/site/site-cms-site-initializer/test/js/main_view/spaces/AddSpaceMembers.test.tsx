@@ -32,6 +32,7 @@ const mockLearnResources = {
 
 describe('AddSpaceMembers', () => {
 	const testSpace = {
+		externalReferenceCode: 'ERC',
 		id: '123',
 		name: 'Test Space',
 	};
@@ -55,6 +56,7 @@ describe('AddSpaceMembers', () => {
 		assetLibraryId: testSpace.id,
 		assetLibraryName: testSpace.name,
 		baseAssetLibraryURL: '/web/cms/e/space/28632',
+		externalReferenceCode: testSpace.externalReferenceCode,
 		hasAssignMembersPermission: true,
 		learnResources: mockLearnResources,
 	};

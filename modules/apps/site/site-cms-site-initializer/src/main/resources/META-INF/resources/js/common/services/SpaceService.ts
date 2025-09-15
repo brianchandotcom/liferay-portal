@@ -28,16 +28,11 @@ async function addSpace({
 }
 
 async function getSpace({
-	externalReferenceCode,
-	spaceId,
-}:
-	| {externalReferenceCode: string; spaceId?: undefined}
-	| {externalReferenceCode?: undefined; spaceId: string}): Promise<Space> {
-	let url = `/o/headless-asset-library/v1.0/asset-libraries/${spaceId}`;
-
-	if (externalReferenceCode) {
-		url = `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`;
-	}
+	spaceExternalReferenceCode,
+}: {
+	spaceExternalReferenceCode: string;
+}): Promise<Space> {
+	const url = `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}`;
 
 	const {data, error} = await ApiHelper.get<Space>(url);
 
@@ -52,12 +47,12 @@ async function getSpaceUserGroups({
 	nestedFields,
 	page,
 	pageSize,
-	spaceId,
+	spaceExternalReferenceCode,
 }: {
 	nestedFields?: string;
 	page?: number;
 	pageSize?: number;
-	spaceId: string;
+	spaceExternalReferenceCode: string;
 }): Promise<{
 	items: UserGroup[];
 	lastPage: number;
@@ -80,7 +75,7 @@ async function getSpaceUserGroups({
 		page: number;
 		totalCount: number;
 	}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
 	);
 
 	if (data) {
@@ -94,12 +89,12 @@ async function getSpaceUsers({
 	nestedFields,
 	page,
 	pageSize,
-	spaceId,
+	spaceExternalReferenceCode,
 }: {
 	nestedFields?: string;
 	page?: number;
 	pageSize?: number;
-	spaceId: string;
+	spaceExternalReferenceCode: string;
 }): Promise<{
 	items: UserAccount[];
 	lastPage: number;
@@ -122,7 +117,7 @@ async function getSpaceUsers({
 		page: number;
 		totalCount: number;
 	}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-accounts?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
 	);
 
 	if (data) {
@@ -145,90 +140,91 @@ async function getSpaces(): Promise<Space[]> {
 }
 
 async function linkUserToSpace({
-	spaceId,
-	userId,
+	spaceExternalReferenceCode,
+	userExternalReferenceCode,
 }: {
-	spaceId: string;
-	userId: string;
+	spaceExternalReferenceCode: string;
+	userExternalReferenceCode: string;
 }) {
 	return await ApiHelper.put(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts/${userId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-accounts/by-external-reference-code/${userExternalReferenceCode}`
 	);
 }
 
 async function linkUserGroupToSpace({
-	spaceId,
+	spaceExternalReferenceCode,
 	userGroupId,
 }: {
-	spaceId: string;
+	spaceExternalReferenceCode: string;
 	userGroupId: string;
 }) {
 	return await ApiHelper.put(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups/${userGroupId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/${userGroupId}`
 	);
 }
 
 async function unlinkUserFromSpace({
-	spaceId,
-	userId,
+	spaceExternalReferenceCode,
+	userExternalReferenceCode,
 }: {
-	spaceId: string;
-	userId: string;
+	spaceExternalReferenceCode: string;
+	userExternalReferenceCode: string;
 }) {
 	return await ApiHelper.delete(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts/${userId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-accounts/by-external-reference-code/${userExternalReferenceCode}`
 	);
 }
 
 async function unlinkUserGroupFromSpace({
-	spaceId,
+	spaceExternalReferenceCode,
 	userGroupId,
 }: {
-	spaceId: string;
+	spaceExternalReferenceCode: string;
 	userGroupId: string;
 }) {
 	return await ApiHelper.delete(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups/${userGroupId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/${userGroupId}`
 	);
 }
 
-async function updateSpace(externalReferenceCode: string, body: any) {
+async function updateSpace(spaceExternalReferenceCode: string, body: any) {
 	return await ApiHelper.patch(
 		body,
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}`
 	);
 }
 
 async function updateUserRoles(payload: {
 	roleNames: string[];
-	spaceId: string;
-	userId: string;
+	spaceExternalReferenceCode: string;
+	userExternalReferenceCode: string;
 }) {
-	const {roleNames, spaceId, userId} = payload;
+	const {roleNames, spaceExternalReferenceCode, userExternalReferenceCode} =
+		payload;
 
 	const body = roleNames.map((roleName) => ({
 		name: roleName,
 	}));
 
 	return await ApiHelper.put(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts/${userId}/roles`,
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-accounts/by-external-reference-code/${userExternalReferenceCode}/roles`,
 		body
 	);
 }
 
 async function updateUserGroupRoles(payload: {
 	roleNames: string[];
-	spaceId: string;
+	spaceExternalReferenceCode: string;
 	userGroupId: string;
 }) {
-	const {roleNames, spaceId, userGroupId} = payload;
+	const {roleNames, spaceExternalReferenceCode, userGroupId} = payload;
 
 	const body = roleNames.map((roleName) => ({
 		name: roleName,
 	}));
 
 	return await ApiHelper.put(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups/${userGroupId}/roles`,
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/${userGroupId}/roles`,
 		body
 	);
 }

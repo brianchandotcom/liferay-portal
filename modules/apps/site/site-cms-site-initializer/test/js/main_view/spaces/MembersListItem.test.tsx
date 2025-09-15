@@ -46,6 +46,7 @@ describe('MemberListItem', () => {
 
 	const testUserAccount = {
 		emailAddress: 'brian.smith@example.com',
+		externalReferenceCode: 'USER_ERC',
 		id: 'user',
 		image: '/images/brian_smith.png',
 		name: 'Brian Smith',
@@ -53,6 +54,7 @@ describe('MemberListItem', () => {
 	};
 
 	const testUserGroup = {
+		externalReferenceCode: 'USER_GROUP_ERC',
 		id: 'group',
 		name: 'Sample Group',
 		numberOfUserAccounts: '5',
@@ -101,6 +103,7 @@ describe('MemberListItem', () => {
 	it('renders a user with fallback image and without the (you) tag', () => {
 		const anotherUser = {
 			emailAddress: 'another.user@example.com',
+			externalReferenceCode: 'ANOTHER_USER_ERC',
 			id: 'another-user-id',
 			name: 'Another User',
 			roles: [],
@@ -164,6 +167,7 @@ describe('MemberListItem', () => {
 
 	it('renders correctly when items is group and there is no members', () => {
 		const testUserGroupWithoutMembers = {
+			externalReferenceCode: 'USER_GROUP_ERC',
 			id: 'group',
 			name: 'Sample Group',
 			roles: [],
@@ -188,6 +192,7 @@ describe('MemberListItem', () => {
 	it('does not render the remove button when hasAssignMembersPermission is false', () => {
 		const anotherUser = {
 			emailAddress: 'another.user@example.com',
+			externalReferenceCode: 'ANOTHER_USER_ERC',
 			id: 'another-user-id',
 			name: 'Another User',
 			roles: [],

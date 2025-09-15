@@ -10,6 +10,7 @@ export interface UserRole {
 
 export interface UserAccount {
 	emailAddress: string;
+	externalReferenceCode: string;
 	id: string;
 	image?: string;
 	imageId: string;
@@ -18,6 +19,7 @@ export interface UserAccount {
 }
 
 export interface UserGroup {
+	externalReferenceCode: string;
 	id: string;
 	name: string;
 	numberOfUserAccounts?: string;

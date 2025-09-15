@@ -2300,6 +2300,72 @@ public class DefaultObjectEntryManagerImplTest
 				ObjectDefinitionConstants.SCOPE_COMPANY));
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testAddObjectEntryWithLocalizedAttachmentObjectField()
+		throws Exception {
+
+		_enableObjectEntryVersioning();
+
+		ObjectFieldUtil.addCustomObjectField(
+			new AttachmentObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).localized(
+				true
+			).name(
+				"localizedAttachment"
+			).objectDefinitionId(
+				_objectDefinition1.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.
+							NAME_ACCEPTED_FILE_EXTENSIONS
+					).value(
+						"txt"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_FILE_SOURCE
+					).value(
+						ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+					).value(
+						"100"
+					).build())
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedAttachment_i18n",
+						HashMapBuilder.<String, Object>put(
+							"en_US",
+							_addTempFileEntry(
+								_objectDefinition1.getPortletId(),
+								StringUtil.randomString())
+						).build()
+					).build();
+				}
+			},
+			null);
+
+		FileEntry fileEntry = (FileEntry)_getLocalizedPropertyValue(
+			"en_US", objectEntry, "localizedAttachment");
+
+		Assert.assertNotNull(
+			_dlAppLocalService.getFileEntry(fileEntry.getId()));
+	}
+
 	@Test
 	@TestInfo("LPD-56833")
 	public void testAddObjectEntryWithMissingObjectEntryFolderReference()

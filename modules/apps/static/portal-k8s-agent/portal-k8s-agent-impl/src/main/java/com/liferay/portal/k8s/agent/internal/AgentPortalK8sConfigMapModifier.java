@@ -1047,14 +1047,14 @@ public class AgentPortalK8sConfigMapModifier
 	private final Map<String, Consumer<ConfigMapModel>>
 		_configMapModelConsumers = new ConcurrentHashMap<>();
 	private final ConfigurationAdmin _configurationAdmin;
+	private final Map<String, Future<Result>> _futures =
+		new ConcurrentHashMap<>();
 	private final KubernetesClient _kubernetesClient;
+	private final Lock _lock = new ReentrantLock();
 	private final PortalK8sAgentConfiguration _portalK8sAgentConfiguration;
 	private final List<PortalK8sConfigurationPropertiesMutator>
 		_portalK8sConfigurationPropertiesMutators;
 	private final ScheduledExecutorService _scheduledExecutorService;
-	private final Map<String, Future<Result>> _futures =
-		new ConcurrentHashMap<>();
-	private final Lock _lock = new ReentrantLock();
 	private final SharedIndexInformer<ConfigMap> _sharedIndexInformer;
 
 }

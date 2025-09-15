@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -40,8 +41,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import jakarta.ws.rs.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -107,10 +106,15 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		}
 
 		Group group = _getGroup(assetLibraryExternalReferenceCode);
+
+		_checkAssetLibraryAdminOrAssetLibraryMember(group.getGroupId());
+
 		User user = _userLocalService.getUserByExternalReferenceCode(
 			userAccountExternalReferenceCode, contextCompany.getCompanyId());
 
-		return getAssetLibraryUserAccount(group.getGroupId(), user.getUserId());
+		_checkAssetLibraryMember(group.getGroupId(), user.getUserId());
+
+		return _toUserAccount(group.getGroupId(), user);
 	}
 
 	@Override
@@ -126,8 +130,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		Group group = _getGroup(externalReferenceCode);
 
-		return getAssetLibraryUserAccountsPage(
-			group.getGroupId(), keywords, search, pagination, sorts);
+		_checkAssetLibraryAdminOrAssetLibraryMember(group.getGroupId());
+
+		return _getUserAccountsPage(
+			group.getGroupId(), keywords, pagination, sorts);
 	}
 
 	@Override
@@ -139,16 +145,11 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		_checkAssetLibraryUser(assetLibraryId);
+		_checkAssetLibraryAdminOrAssetLibraryMember(assetLibraryId);
 
 		User user = _userLocalService.getUserById(userAccountId);
 
-		if (!_userLocalService.hasGroupUser(assetLibraryId, user.getUserId())) {
-			throw new NoSuchUserException(
-				StringBundler.concat(
-					"User ", userAccountId, " is not associated to group ",
-					assetLibraryId));
-		}
+		_checkAssetLibraryMember(assetLibraryId, user.getUserId());
 
 		return _toUserAccount(assetLibraryId, user);
 	}
@@ -164,7 +165,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		_checkAssetLibraryUser(assetLibraryId);
+		_checkAssetLibraryAdminOrAssetLibraryMember(assetLibraryId);
 
 		return _getUserAccountsPage(
 			assetLibraryId, keywords, pagination, sorts);
@@ -201,7 +202,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			assetLibraryId, _updateUser(assetLibraryId, userAccountId, true));
 	}
 
-	private void _checkAssetLibraryUser(long assetLibraryId) throws Exception {
+	private void _checkAssetLibraryAdminOrAssetLibraryMember(
+			long assetLibraryId)
+		throws Exception {
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -212,7 +216,19 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		if (!_userService.hasGroupUser(
 				assetLibraryId, contextUser.getUserId())) {
 
-			throw new NotFoundException();
+			throw new PrincipalException.MustHavePermission(
+				contextUser.getUserId(), ActionKeys.VIEW);
+		}
+	}
+
+	private void _checkAssetLibraryMember(long assetLibraryId, long userId)
+		throws Exception {
+
+		if (!_userLocalService.hasGroupUser(assetLibraryId, userId)) {
+			throw new NoSuchUserException(
+				StringBundler.concat(
+					"User ", userId, " is not associated to group ",
+					assetLibraryId));
 		}
 	}
 
@@ -235,9 +251,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		LinkedHashMap<String, Object> params =
 			LinkedHashMapBuilder.<String, Object>put(
-				"usersGroups", groupId
-			).put(
 				"isUseCustomSQL", true
+			).put(
+				"usersGroups", groupId
 			).build();
 
 		return Page.of(

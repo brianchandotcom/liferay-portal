@@ -63,7 +63,7 @@ public class ViewStructuresDisplayContext {
 	public Map<String, Object> getBreadcrumbProps() throws PortalException {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		addBreadcrumbItem(jsonArray, false, null, _getLayoutName());
+		_addBreadcrumbItem(jsonArray, false, null, _getLayoutName());
 
 		return HashMapBuilder.<String, Object>put(
 			"breadcrumbItems", jsonArray
@@ -176,7 +176,7 @@ public class ViewStructuresDisplayContext {
 				"delete", null));
 	}
 
-	protected void addBreadcrumbItem(
+	private void _addBreadcrumbItem(
 		JSONArray jsonArray, boolean active, String friendlyURL, String label) {
 
 		jsonArray.put(

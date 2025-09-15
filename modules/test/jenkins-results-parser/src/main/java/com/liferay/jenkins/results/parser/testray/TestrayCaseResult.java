@@ -40,6 +40,12 @@ public class TestrayCaseResult {
 		"dueStatus { key name }", "errors", "id", "startDate"
 	};
 
+	public static final String[] TESTRAY_REPORT_FIELD_NAMES = {
+		"buildToCaseResult", "caseToCaseResult", "componentToCaseResult",
+		"dateCreated", "dateModified", "dueStatus { key name }", "errors", "id",
+		"startDate"
+	};
+
 	public TestrayAttachment getBuildResultTestrayAttachment() {
 		initTestrayAttachments();
 
@@ -424,6 +430,10 @@ public class TestrayCaseResult {
 		testrayAttachments = new TreeMap<>();
 
 		String attachments = _jsonObject.getString("attachments");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(attachments)) {
+			return;
+		}
 
 		JSONArray attachmentsJSONArray;
 

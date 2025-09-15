@@ -21,7 +21,7 @@ public interface FDSRenderer {
 
 	public String getFDSAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest,
-		JSONObject tokenResolutionsJSONObject);
+		boolean interpolate, JSONObject tokenResolutionsJSONObject);
 
 	public void render(
 		Map<String, Object> baseProps, String componentId, String fdsName,

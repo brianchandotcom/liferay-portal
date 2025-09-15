@@ -29,10 +29,12 @@ function generateObjectEntryValue({
 	listTypeEntriesName,
 	objectEntryFormat,
 	objectFieldBusinessType,
+	role,
 }: {
 	listTypeEntriesName?: string[];
 	objectEntryFormat: 'API' | 'UI';
 	objectFieldBusinessType: Partial<ObjectField['businessType']>;
+	role?: string;
 }) {
 	const listTypeEntriesRandomLength1 = listTypeEntriesName
 		? Math.floor(Math.random() * listTypeEntriesName.length)
@@ -42,6 +44,8 @@ function generateObjectEntryValue({
 		: '';
 
 	switch (objectFieldBusinessType) {
+		case 'Assignee':
+			return role;
 		case 'Boolean':
 			return Math.random() < 0.5;
 		case 'Date':
@@ -96,10 +100,12 @@ export async function generateObjectEntryValues({
 	listTypeEntries,
 	objectEntryFormat,
 	objectFields,
+	role,
 }: {
 	listTypeEntries?: string[];
 	objectEntryFormat?: 'API' | 'UI';
 	objectFields: ObjectField[];
+	role?: string;
 }) {
 	const objectEntry: {
 		[objectFieldName: string]: boolean | string | string[] | {key: string};
@@ -110,6 +116,7 @@ export async function generateObjectEntryValues({
 			listTypeEntriesName: listTypeEntries,
 			objectEntryFormat,
 			objectFieldBusinessType: objectField.businessType,
+			role,
 		});
 	}
 

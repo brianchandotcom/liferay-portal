@@ -313,7 +313,11 @@ export class ViewObjectEntriesPage {
 		);
 	}
 
-	async fillObjectFields({attachmentFileName, objectEntry, objectFields}) {
+	async fillObjectFields({
+		attachmentFileName = '',
+		objectEntry,
+		objectFields,
+	}) {
 		const objectEntries: {
 			businessType: SupportedBusinessType;
 			entry: string;
@@ -322,6 +326,20 @@ export class ViewObjectEntriesPage {
 
 		for (const objectField of objectFields) {
 			switch (objectField.businessType) {
+				case 'Assignee': {
+					await this.selectDropdownItem(
+						objectField.label['en_US'],
+						objectEntry[objectField.name]
+					);
+
+					objectEntries.push({
+						businessType: objectField.businessType,
+						entry: objectEntry[objectField.name],
+						name: objectField.name,
+					});
+
+					break;
+				}
 				case 'Attachment': {
 					await this.selectFileButton.click();
 

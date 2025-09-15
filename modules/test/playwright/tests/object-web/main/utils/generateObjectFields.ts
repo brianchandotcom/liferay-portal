@@ -48,6 +48,12 @@ function getObjectFieldSpecificProperties(
 	['type']: ObjectField['type'];
 } {
 	switch (objectFieldBusinessType) {
+		case 'Assignee':
+			return {
+				DBType: 'Long',
+				businessType: 'Assignee',
+				type: 'Long',
+			};
 		case 'Attachment':
 			return {
 				DBType: 'Long',

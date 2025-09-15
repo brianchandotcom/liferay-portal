@@ -119,8 +119,26 @@ public class Sidecar {
 				ioException);
 		}
 
-		ProcessChannel<Serializable> processChannel =
-			_executeSidecarMainProcess();
+		if (!Files.isDirectory(_sidecarHomePath)) {
+			throw new IllegalArgumentException(
+				"Sidecar Elasticsearch home does not exist: " +
+					_sidecarHomePath);
+		}
+
+		ProcessChannel<Serializable> processChannel = null;
+
+		try {
+			processChannel = _processExecutor.execute(
+				_createProcessConfig(),
+				new SidecarMainProcessCallable(
+					_elasticsearchConfigurationWrapper.
+						sidecarHeartbeatInterval()));
+		}
+		catch (ProcessException processException) {
+			throw new RuntimeException(
+				"Unable to start sidecar Elasticsearch process",
+				processException);
+		}
 
 		FutureListener<Serializable> futureListener = new RestartFutureListener(
 			_sidecarManager);
@@ -264,27 +282,6 @@ public class Sidecar {
 			StringBundler.concat(
 				bundleURL.getPath(), File.pathSeparator, bootstrapClassPath)
 		).build();
-	}
-
-	private ProcessChannel<Serializable> _executeSidecarMainProcess() {
-		if (!Files.isDirectory(_sidecarHomePath)) {
-			throw new IllegalArgumentException(
-				"Sidecar Elasticsearch home does not exist: " +
-					_sidecarHomePath);
-		}
-
-		try {
-			return _processExecutor.execute(
-				_createProcessConfig(),
-				new SidecarMainProcessCallable(
-					_elasticsearchConfigurationWrapper.
-						sidecarHeartbeatInterval()));
-		}
-		catch (ProcessException processException) {
-			throw new RuntimeException(
-				"Unable to start sidecar Elasticsearch process",
-				processException);
-		}
 	}
 
 	private boolean _fileNameContains(Path path, String s) {

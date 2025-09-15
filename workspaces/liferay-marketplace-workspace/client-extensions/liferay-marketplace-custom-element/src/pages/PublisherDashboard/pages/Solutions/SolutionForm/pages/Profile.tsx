@@ -193,7 +193,6 @@ const Profile = () => {
 					</Form.Label>
 
 					<ClayMultiSelect
-						{...{placeholder: 'Select categories'}}
 						inputName="description-selector"
 						items={categories}
 						key={`cat-${categories.length}`}
@@ -210,6 +209,7 @@ const Profile = () => {
 								target: {name: 'categories', value},
 							})
 						}
+						placeholder="Select categories"
 						sourceItems={getFilteredItems(
 							categories,
 							defaultSourceItems?.categories
@@ -230,7 +230,6 @@ const Profile = () => {
 					</Form.Label>
 
 					<ClayMultiSelect
-						{...{placeholder: 'Select tags'}}
 						inputName="tags-selector"
 						items={tags}
 						key={`tags-${tags.length}`}
@@ -247,6 +246,7 @@ const Profile = () => {
 								target: {name: 'tags', value},
 							})
 						}
+						placeholder="Select tags"
 						sourceItems={getFilteredItems(
 							tags,
 							defaultSourceItems?.tags

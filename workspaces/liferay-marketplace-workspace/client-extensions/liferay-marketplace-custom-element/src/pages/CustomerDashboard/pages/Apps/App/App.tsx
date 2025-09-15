@@ -42,8 +42,8 @@ const getPriceList = (
 			<table className="qa-table">
 				<thead>
 					<tr>
-						<th {...{width: '40%'}}>{i18n.translate('type')}</th>
-						<th {...{width: '30%'}}>{i18n.translate('qty')}</th>
+						<th width="40%">{i18n.translate('type')}</th>
+						<th width="30%">{i18n.translate('qty')}</th>
 						<th>{i18n.translate('total')}</th>
 					</tr>
 				</thead>

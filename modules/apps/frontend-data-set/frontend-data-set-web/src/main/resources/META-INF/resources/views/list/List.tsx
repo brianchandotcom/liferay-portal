@@ -101,11 +101,8 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 
 		return (
 			<ClayList.Item
-				{...{
-					...props,
-					...(activeView.setItemComponentProps?.({item, props}) ??
-						{}),
-				}}
+				{...props}
+				{...(activeView.setItemComponentProps?.({item, props}) ?? {})}
 				ref={ref}
 			>
 				{selectable && (

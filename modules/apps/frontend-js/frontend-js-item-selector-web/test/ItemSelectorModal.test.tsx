@@ -76,39 +76,37 @@ const ItemSelectorModalWrapper = ({
 			<button onClick={() => onOpenChange(true)}>open modal</button>
 
 			<ItemSelectorModal<TestItem>
-				{...{
-					apiURL: `${location.origin}/o/headless-delivery/v1.0/test-api-url`,
-					fdsProps: {
-						id: `itemSelectorModal-test-0001`,
-						pagination: {
-							deltas: [{label: 20}],
-							initialDelta: 20,
-						},
-						views: [
-							{
-								contentRenderer: 'cards',
-								label: 'Cards',
-								name: 'cards',
-								schema: {
-									description: 'description',
-									title: 'name',
-								},
-								thumbnail: 'cards2',
-							} as IView,
-						],
+				apiURL={`${location.origin}/o/headless-delivery/v1.0/test-api-url`}
+				fdsProps={{
+					id: `itemSelectorModal-test-0001`,
+					pagination: {
+						deltas: [{label: 20}],
+						initialDelta: 20,
 					},
-					itemTypeLabel: 'Space',
-					items: selectedItems,
-					locator: {
-						id: 'itemId',
-						label: 'name',
-						value: 'itemId',
-					},
-					observer,
-					onItemsChange,
-					onOpenChange,
-					open,
+					views: [
+						{
+							contentRenderer: 'cards',
+							label: 'Cards',
+							name: 'cards',
+							schema: {
+								description: 'description',
+								title: 'name',
+							},
+							thumbnail: 'cards2',
+						} as IView,
+					],
 				}}
+				itemTypeLabel="Space"
+				items={selectedItems}
+				locator={{
+					id: 'itemId',
+					label: 'name',
+					value: 'itemId',
+				}}
+				observer={observer}
+				onItemsChange={onItemsChange}
+				onOpenChange={onOpenChange}
+				open={open}
 			/>
 		</>
 	);

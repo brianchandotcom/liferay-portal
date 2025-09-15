@@ -201,11 +201,9 @@ const Card = forwardRef<HTMLDivElement, any>(
 		return (
 			<div ref={ref}>
 				<ClayCardWithInfo
-					{...{
-						...props,
-						...(activeView.setItemComponentProps?.({item, props}) ??
-							{}),
-					}}
+					{...props}
+					{...(activeView.setItemComponentProps?.({item, props}) ??
+						{})}
 				/>
 			</div>
 		);

@@ -470,123 +470,79 @@ export default function ItemSelectorSamples() {
 
 			<SampleContainer label="Item Selector Modal">
 				<CMSFilesItemSelectorModal
-					{...{
-						items: cmsFile ? [cmsFile] : [],
-						observer: cmsFileItemSelectorObserver,
-						onItemsChange: (items: any) => {
-							setCMSFile(items[0]);
-						},
-						onOpenChange: cmsFileItemSelectorOpenChange,
-						open: cmsFileItemSelectorOpen,
+					items={cmsFile ? [cmsFile] : []}
+					observer={cmsFileItemSelectorObserver}
+					onItemsChange={(items: any) => {
+						setCMSFile(items[0]);
 					}}
+					onOpenChange={cmsFileItemSelectorOpenChange}
+					open={cmsFileItemSelectorOpen}
 				/>
 
 				<ItemSelectorModal<Document>
-					{...{
-						apiURL: documentsItemSelectorConfig.apiURL,
-						fdsProps: {
-							...FDS_DEFAULT_PROPS,
-							id: `itemSelectorModal-documents-${getRandomId()}`,
-							views: getDefaultItemSelectorModalViews({
-								viewsConfig:
-									EItemSelectorModalViewsConfig.DOCUMENTS,
-							}),
-						},
-						itemTypeLabel:
-							documentsItemSelectorConfig.itemTypeLabel,
-						items: documentsItemSelectorModal,
-						locator: documentsItemSelectorConfig.locator,
-						multiSelect: true,
-						observer: documentItemSelectorObserver,
-						onItemsChange: (items: Document[]) => {
-							setDocumentsItemSelectorModal(items);
-						},
-						onOpenChange: documentItemSelectorOpenChange,
-						open: documentItemSelectorOpen,
+					apiURL={documentsItemSelectorConfig.apiURL}
+					fdsProps={{
+						...FDS_DEFAULT_PROPS,
+						id: `itemSelectorModal-documents-${getRandomId()}`,
+						views: getDefaultItemSelectorModalViews({
+							viewsConfig:
+								EItemSelectorModalViewsConfig.DOCUMENTS,
+						}),
 					}}
+					itemTypeLabel={documentsItemSelectorConfig.itemTypeLabel}
+					items={documentsItemSelectorModal}
+					locator={documentsItemSelectorConfig.locator}
+					multiSelect={true}
+					observer={documentItemSelectorObserver}
+					onItemsChange={(items: Document[]) => {
+						setDocumentsItemSelectorModal(items);
+					}}
+					onOpenChange={documentItemSelectorOpenChange}
+					open={documentItemSelectorOpen}
 				/>
 
 				<ItemSelectorModal<Space>
-					{...{
-						apiURL: assetLibrariesItemSelectorConfig.apiURL,
-						fdsProps: {
-							...FDS_DEFAULT_PROPS,
-							id: `itemSelectorModal-assets-${getRandomId()}`,
-							views: getDefaultItemSelectorModalViews({
-								viewsConfig:
-									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
-							}),
-						},
-						itemTypeLabel:
-							assetLibrariesItemSelectorConfig.itemTypeLabel,
-						items: spacesItemSelectorModal,
-						locator: assetLibrariesItemSelectorConfig.locator,
-						observer: spaceItemSelectorObserver,
-						onItemsChange: (items: Space[]) => {
-							setSpacesItemSelectorModal(items);
-						},
-						onOpenChange: spaceItemSelectorOpenChange,
-						open: spaceItemSelectorOpen,
+					apiURL={assetLibrariesItemSelectorConfig.apiURL}
+					fdsProps={{
+						...FDS_DEFAULT_PROPS,
+						id: `itemSelectorModal-assets-${getRandomId()}`,
+						views: getDefaultItemSelectorModalViews({
+							viewsConfig:
+								EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
+						}),
 					}}
+					itemTypeLabel={
+						assetLibrariesItemSelectorConfig.itemTypeLabel
+					}
+					items={spacesItemSelectorModal}
+					locator={assetLibrariesItemSelectorConfig.locator}
+					observer={spaceItemSelectorObserver}
+					onItemsChange={(items: Space[]) => {
+						setSpacesItemSelectorModal(items);
+					}}
+					onOpenChange={spaceItemSelectorOpenChange}
+					open={spaceItemSelectorOpen}
 				/>
 
 				<ItemSelectorModal<User>
-					{...{
-						apiURL: userAccountsItemSelectorConfig.apiURL,
-						fdsProps: {
-							...FDS_DEFAULT_PROPS,
-							id: `itemSelectorModal-users-${getRandomId()}`,
-							views: getDefaultItemSelectorModalViews({
-								viewsConfig:
-									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
-							}),
-						},
-						itemTypeLabel:
-							userAccountsItemSelectorConfig.itemTypeLabel,
-						items: usersItemSelectorModal,
-						locator: userAccountsItemSelectorConfig.locator,
-						observer: userItemSelectorObserver,
-						onItemsChange: (items: User[]) => {
-							setUsersItemSelectorModal(items);
-						},
-						onOpenChange: userItemSelectorOpenChange,
-						open: userItemSelectorOpen,
+					apiURL={userAccountsItemSelectorConfig.apiURL}
+					fdsProps={{
+						...FDS_DEFAULT_PROPS,
+						id: `itemSelectorModal-users-${getRandomId()}`,
+						views: getDefaultItemSelectorModalViews({
+							viewsConfig:
+								EItemSelectorModalViewsConfig.USER_ACCOUNTS,
+						}),
 					}}
-				/>
-
-				<ItemSelectorModal<CMSFile>
-					{...{
-						apiURL: cmsFileItemSelectorConfig.apiURL,
-						fdsProps: {
-							...FDS_DEFAULT_PROPS,
-							filters: [
-								{
-									apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
-									entityFieldType: 'collection',
-									id: 'groupIds',
-									itemKey: 'siteId',
-									itemLabel: 'name',
-									label: Liferay.Language.get('space'),
-									multiple: true,
-									type: 'selection',
-								},
-							],
-							id: `itemSelectorModal-cms-files-${getRandomId()}`,
-							views: getDefaultItemSelectorModalViews({
-								viewsConfig:
-									EItemSelectorModalViewsConfig.CMS_FILES,
-							}),
-						},
-						itemTypeLabel: cmsFileItemSelectorConfig.itemTypeLabel,
-						items: cmsFile ? [cmsFile] : [],
-						locator: cmsFileItemSelectorConfig.locator,
-						observer: cmsFileItemSelectorObserver,
-						onItemsChange: (items: CMSFile[]) => {
-							setCMSFile(items[0]);
-						},
-						onOpenChange: cmsFileItemSelectorOpenChange,
-						open: cmsFileItemSelectorOpen,
+					itemTypeLabel={userAccountsItemSelectorConfig.itemTypeLabel}
+					items={usersItemSelectorModal}
+					locator={userAccountsItemSelectorConfig.locator}
+					observer={userItemSelectorObserver}
+					onItemsChange={(items: User[]) => {
+						setUsersItemSelectorModal(items);
 					}}
+					onOpenChange={userItemSelectorOpenChange}
+					open={userItemSelectorOpen}
 				/>
 
 				<ClayButton.Group className="mb-3" spaced>

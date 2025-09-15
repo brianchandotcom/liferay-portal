@@ -424,10 +424,8 @@ function ClayTableRowOptionalDropTarget({
 
 	return (
 		<ClayTableRow
-			{...{
-				...props,
-				...(activeView.setItemComponentProps?.({item, props}) ?? {}),
-			}}
+			{...props}
+			{...(activeView.setItemComponentProps?.({item, props}) ?? {})}
 		>
 			{children}
 		</ClayTableRow>

@@ -81,9 +81,7 @@ describe('PageContentSelectors', () => {
 	});
 
 	it('If no segments available renders empty segments message', () => {
-		render(
-			<PageContentSelectors {...{...mockProps, segmentsEntries: []}} />
-		);
+		render(<PageContentSelectors {...mockProps} segmentsEntries={[]} />);
 
 		expect(
 			screen.getByText('no-segments-have-been-added-yet')
@@ -93,11 +91,7 @@ describe('PageContentSelectors', () => {
 	it('If no experiences available renders empty experiences message', async () => {
 		jest.useFakeTimers();
 
-		render(
-			<PageContentSelectors
-				{...{...mockProps, segmentsExperiences: []}}
-			/>
-		);
+		render(<PageContentSelectors {...mockProps} segmentsEntries={[]} />);
 
 		const previewBySelector = screen.getByRole('combobox', {
 			name: /preview-by/i,

@@ -6,6 +6,18 @@
 				"definition": {
 					"fragmentSettings": {
 						"unallowedFragments": [
+							{
+								"key": "page-bar"
+							},
+							{
+								"key": "sidebar"
+							},
+							{
+								"key": "sidebar-trigger"
+							},
+							{
+								"key": "vertical-navigation"
+							}
 						]
 					}
 				},

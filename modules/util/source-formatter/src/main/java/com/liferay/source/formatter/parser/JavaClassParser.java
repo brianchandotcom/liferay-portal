@@ -225,9 +225,7 @@ public class JavaClassParser {
 		return javaClass;
 	}
 
-	private static Position _getEndPosition(DetailAST detailAST)
-		throws ParseException {
-
+	private static Position _getEndPosition(DetailAST detailAST) {
 		if ((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
 			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
 			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
@@ -245,41 +243,6 @@ public class JavaClassParser {
 
 			if ((lastChildDetailAST == null) ||
 				(lastChildDetailAST.getType() != TokenTypes.RCURLY)) {
-
-				return null;
-			}
-
-			return new Position(
-				lastChildDetailAST.getColumnNo(),
-				lastChildDetailAST.getLineNo());
-		}
-
-		if (detailAST.getType() == TokenTypes.STATIC_INIT) {
-			DetailAST slistBlockDetailAST = detailAST.findFirstToken(
-				TokenTypes.SLIST);
-
-			if (slistBlockDetailAST == null) {
-				return null;
-			}
-
-			DetailAST lastChildDetailAST = slistBlockDetailAST.getLastChild();
-
-			if ((lastChildDetailAST == null) ||
-				(lastChildDetailAST.getType() != TokenTypes.RCURLY)) {
-
-				return null;
-			}
-
-			return new Position(
-				lastChildDetailAST.getColumnNo(),
-				lastChildDetailAST.getLineNo());
-		}
-
-		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
-			DetailAST lastChildDetailAST = detailAST.getLastChild();
-
-			if ((lastChildDetailAST == null) ||
-				(lastChildDetailAST.getType() != TokenTypes.SEMI)) {
 
 				return null;
 			}
@@ -319,6 +282,41 @@ public class JavaClassParser {
 			}
 
 			return null;
+		}
+
+		if (detailAST.getType() == TokenTypes.STATIC_INIT) {
+			DetailAST slistBlockDetailAST = detailAST.findFirstToken(
+				TokenTypes.SLIST);
+
+			if (slistBlockDetailAST == null) {
+				return null;
+			}
+
+			DetailAST lastChildDetailAST = slistBlockDetailAST.getLastChild();
+
+			if ((lastChildDetailAST == null) ||
+				(lastChildDetailAST.getType() != TokenTypes.RCURLY)) {
+
+				return null;
+			}
+
+			return new Position(
+				lastChildDetailAST.getColumnNo(),
+				lastChildDetailAST.getLineNo());
+		}
+
+		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
+			DetailAST lastChildDetailAST = detailAST.getLastChild();
+
+			if ((lastChildDetailAST == null) ||
+				(lastChildDetailAST.getType() != TokenTypes.SEMI)) {
+
+				return null;
+			}
+
+			return new Position(
+				lastChildDetailAST.getColumnNo(),
+				lastChildDetailAST.getLineNo());
 		}
 
 		return null;

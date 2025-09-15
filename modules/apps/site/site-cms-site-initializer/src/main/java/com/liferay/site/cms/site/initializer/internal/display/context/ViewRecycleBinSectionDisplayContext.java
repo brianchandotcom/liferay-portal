@@ -174,7 +174,7 @@ public class ViewRecycleBinSectionDisplayContext
 
 	@Override
 	protected String getCMSSectionFilterString() {
-		String filter =
+		String filterString =
 			"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq " +
 				"'files') and status eq ";
 
@@ -186,18 +186,18 @@ public class ViewRecycleBinSectionDisplayContext
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get depot group ids for group " + _groupId,
+					"Unable to get depot group IDs for group " + _groupId,
 					exception);
 			}
 
-			return filter + WorkflowConstants.STATUS_ANY;
+			return filterString + WorkflowConstants.STATUS_ANY;
 		}
 
 		if (groupIds.length == 0) {
-			return filter + WorkflowConstants.STATUS_ANY;
+			return filterString + WorkflowConstants.STATUS_ANY;
 		}
 
-		return filter + WorkflowConstants.STATUS_IN_TRASH +
+		return filterString + WorkflowConstants.STATUS_IN_TRASH +
 			_getGroupIdsAnyClause(groupIds);
 	}
 

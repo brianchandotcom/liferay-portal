@@ -311,7 +311,8 @@ public class JavaClassParser {
 					lastChildDetailAST.getColumnNo(),
 					lastChildDetailAST.getLineNo());
 			}
-			else if (lastChildDetailAST.getType() == TokenTypes.SEMI) {
+
+			if (lastChildDetailAST.getType() == TokenTypes.SEMI) {
 				return new Position(
 					lastChildDetailAST.getColumnNo(),
 					lastChildDetailAST.getLineNo());

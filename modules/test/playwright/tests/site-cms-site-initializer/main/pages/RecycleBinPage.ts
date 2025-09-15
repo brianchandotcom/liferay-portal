@@ -50,4 +50,14 @@ export class RecycleBinPage {
 
 		await this.page.getByPlaceholder('Search').waitFor({state: 'visible'});
 	}
+
+	async selectItems(titles: string[]) {
+		for (const title of titles) {
+			const card = this.page
+				.locator('tr', {hasText: title})
+				.or(this.page.locator('.card-row', {hasText: title}));
+
+			await card.getByRole('checkbox').check();
+		}
+	}
 }

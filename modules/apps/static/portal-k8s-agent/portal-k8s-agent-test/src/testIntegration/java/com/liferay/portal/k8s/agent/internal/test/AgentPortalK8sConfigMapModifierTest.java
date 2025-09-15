@@ -247,22 +247,22 @@ public class AgentPortalK8sConfigMapModifierTest {
 		Assert.assertEquals(
 			PortalK8sConfigMapModifier.Result.BUFFERED, secondResult);
 
-		ConfigMap extInitMetadataConfigMap = _kubernetesMockClient.configMaps(
+		ConfigMap configMap = _kubernetesMockClient.configMaps(
 		).withName(
 			configMapName
 		).waitUntilCondition(
-			configMap -> configMap != null, 20, TimeUnit.SECONDS
+			curConfigMap -> curConfigMap != null, 20, TimeUnit.SECONDS
 		);
 
-		Assert.assertNotNull(extInitMetadataConfigMap);
+		Assert.assertNotNull(configMap);
 
-		Map<String, String> data = extInitMetadataConfigMap.getData();
+		Map<String, String> data = configMap.getData();
 
 		Assert.assertEquals(
 			TestPropsValues.COMPANY_WEB_ID,
 			data.get("com.liferay.lxc.dxp.main.domain"));
 
-		ObjectMeta objectMeta = extInitMetadataConfigMap.getMetadata();
+		ObjectMeta objectMeta = configMap.getMetadata();
 
 		Assert.assertEquals(Long.valueOf(1), objectMeta.getGeneration());
 	}
@@ -294,21 +294,21 @@ public class AgentPortalK8sConfigMapModifierTest {
 			},
 			configMapName);
 
-		ConfigMap extInitMetdataConfigMap = _kubernetesMockClient.configMaps(
+		ConfigMap configMap = _kubernetesMockClient.configMaps(
 		).withName(
 			configMapName
 		).waitUntilCondition(
-			configMap -> configMap != null, 20, TimeUnit.SECONDS
+			curConfigMap -> curConfigMap != null, 20, TimeUnit.SECONDS
 		);
 
-		Assert.assertNotNull(extInitMetdataConfigMap);
+		Assert.assertNotNull(configMap);
 
-		Map<String, String> configMapData = extInitMetdataConfigMap.getData();
+		Map<String, String> configMapData = configMap.getData();
 
 		Assert.assertEquals(
 			randomData, configMapData.get("com.liferay.lxc.dxp.main.domain"));
 
-		ObjectMeta objectMeta = extInitMetdataConfigMap.getMetadata();
+		ObjectMeta objectMeta = configMap.getMetadata();
 
 		Assert.assertEquals(Long.valueOf(1), objectMeta.getGeneration());
 
@@ -336,24 +336,24 @@ public class AgentPortalK8sConfigMapModifierTest {
 			},
 			configMapName);
 
-		extInitMetdataConfigMap = _kubernetesMockClient.configMaps(
+		configMap = _kubernetesMockClient.configMaps(
 		).withName(
 			configMapName
 		).waitUntilCondition(
-			configMap ->
-				(configMap != null) &&
+			curConfigMap ->
+				(curConfigMap != null) &&
 				Objects.equals(
 					TestPropsValues.COMPANY_WEB_ID,
-					configMap.getData(
+					curConfigMap.getData(
 					).get(
 						"com.liferay.lxc.dxp.main.domain"
 					)),
 			20, TimeUnit.SECONDS
 		);
 
-		Assert.assertNotNull(extInitMetdataConfigMap);
+		Assert.assertNotNull(configMap);
 
-		objectMeta = extInitMetdataConfigMap.getMetadata();
+		objectMeta = configMap.getMetadata();
 
 		Assert.assertEquals(Long.valueOf(2), objectMeta.getGeneration());
 	}
@@ -366,24 +366,24 @@ public class AgentPortalK8sConfigMapModifierTest {
 			null, webId, webId, webId, 0, true, true, null, null, null, null,
 			null, null);
 
-		ConfigMap dxpMetadataConfigMap = _kubernetesMockClient.configMaps(
+		ConfigMap configMap = _kubernetesMockClient.configMaps(
 		).withName(
 			webId.concat("-lxc-dxp-metadata")
 		).waitUntilCondition(
-			configMap ->
-				(configMap != null) &&
+			curConfigMap ->
+				(curConfigMap != null) &&
 				Objects.equals(
 					webId,
-					configMap.getData(
+					curConfigMap.getData(
 					).get(
 						"com.liferay.lxc.dxp.domains"
 					)),
 			3, TimeUnit.MINUTES
 		);
 
-		Assert.assertNotNull(dxpMetadataConfigMap);
+		Assert.assertNotNull(configMap);
 
-		ObjectMeta objectMeta = dxpMetadataConfigMap.getMetadata();
+		ObjectMeta objectMeta = configMap.getMetadata();
 
 		Map<String, String> labels = objectMeta.getLabels();
 
@@ -401,14 +401,14 @@ public class AgentPortalK8sConfigMapModifierTest {
 			PermissionThreadLocal.setPermissionChecker(null);
 		}
 
-		dxpMetadataConfigMap = _kubernetesMockClient.configMaps(
+		configMap = _kubernetesMockClient.configMaps(
 		).withName(
 			webId.concat("-lxc-dxp-metadata")
 		).waitUntilCondition(
-			configMap -> configMap == null, 20, TimeUnit.SECONDS
+			curConfigMap -> curConfigMap == null, 20, TimeUnit.SECONDS
 		);
 
-		Assert.assertNull(dxpMetadataConfigMap);
+		Assert.assertNull(configMap);
 	}
 
 	@Test
@@ -443,16 +443,16 @@ public class AgentPortalK8sConfigMapModifierTest {
 			},
 			configMapName);
 
-		ConfigMap extInitMetadataConfigMap = _kubernetesMockClient.configMaps(
+		ConfigMap configMap = _kubernetesMockClient.configMaps(
 		).withName(
 			configMapName
 		).waitUntilCondition(
-			configMap -> configMap != null, 20, TimeUnit.SECONDS
+			curConfigMap -> curConfigMap != null, 20, TimeUnit.SECONDS
 		);
 
-		Assert.assertNotNull(extInitMetadataConfigMap);
+		Assert.assertNotNull(configMap);
 
-		Map<String, String> data = extInitMetadataConfigMap.getData();
+		Map<String, String> data = configMap.getData();
 
 		Assert.assertEquals(
 			TestPropsValues.COMPANY_WEB_ID,
@@ -461,7 +461,7 @@ public class AgentPortalK8sConfigMapModifierTest {
 			TestPropsValues.COMPANY_WEB_ID,
 			data.get("com.liferay.lxc.dxp.main.domain"));
 
-		ObjectMeta objectMeta = extInitMetadataConfigMap.getMetadata();
+		ObjectMeta objectMeta = configMap.getMetadata();
 
 		Map<String, String> labels = objectMeta.getLabels();
 

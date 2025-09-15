@@ -150,53 +150,59 @@ public class JavaClassParser {
 			siblingDetailAST = siblingDetailAST.getNextSibling();
 		}
 
-		DetailAST modifiersDetailAST = siblingDetailAST.findFirstToken(
-			TokenTypes.MODIFIERS);
-
 		String accessModifier = JavaTerm.ACCESS_MODIFIER_DEFAULT;
-
-		if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
-			accessModifier = JavaTerm.ACCESS_MODIFIER_PRIVATE;
-		}
-		else if (modifiersDetailAST.branchContains(
-					TokenTypes.LITERAL_PROTECTED)) {
-
-			accessModifier = JavaTerm.ACCESS_MODIFIER_PROTECTED;
-		}
-		else if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
-			accessModifier = JavaTerm.ACCESS_MODIFIER_PUBLIC;
-		}
-
 		boolean isAbstract = false;
 		boolean isFinal = false;
-		boolean isStrictfp = false;
-		boolean nonsealed = false;
-		boolean sealed = false;
-
-		if (modifiersDetailAST.branchContains(TokenTypes.ABSTRACT)) {
-			isAbstract = true;
-		}
-
-		if (modifiersDetailAST.branchContains(TokenTypes.FINAL)) {
-			isFinal = true;
-		}
-
-		if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_NON_SEALED)) {
-			nonsealed = true;
-		}
-
-		if (modifiersDetailAST.branchContains(TokenTypes.STRICTFP)) {
-			isStrictfp = true;
-		}
-
-		if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_SEALED)) {
-			sealed = true;
-		}
 
 		boolean isInterface = false;
 
 		if (siblingDetailAST.getType() == TokenTypes.INTERFACE_DEF) {
 			isInterface = true;
+		}
+
+		boolean isStrictfp = false;
+		boolean nonsealed = false;
+		boolean sealed = false;
+
+		DetailAST modifiersDetailAST = siblingDetailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
+
+		if (modifiersDetailAST != null) {
+			if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
+				accessModifier = JavaTerm.ACCESS_MODIFIER_PRIVATE;
+			}
+			else if (modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_PROTECTED)) {
+
+				accessModifier = JavaTerm.ACCESS_MODIFIER_PROTECTED;
+			}
+			else if (modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_PUBLIC)) {
+
+				accessModifier = JavaTerm.ACCESS_MODIFIER_PUBLIC;
+			}
+
+			if (modifiersDetailAST.branchContains(TokenTypes.ABSTRACT)) {
+				isAbstract = true;
+			}
+
+			if (modifiersDetailAST.branchContains(TokenTypes.FINAL)) {
+				isFinal = true;
+			}
+
+			if (modifiersDetailAST.branchContains(
+					TokenTypes.LITERAL_NON_SEALED)) {
+
+				nonsealed = true;
+			}
+
+			if (modifiersDetailAST.branchContains(TokenTypes.STRICTFP)) {
+				isStrictfp = true;
+			}
+
+			if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_SEALED)) {
+				sealed = true;
+			}
 		}
 
 		DetailAST nameDetailAST = siblingDetailAST.findFirstToken(
@@ -333,6 +339,11 @@ public class JavaClassParser {
 			isInterface = true;
 		}
 
+		boolean isStatic = false;
+		boolean isStrictfp = false;
+		boolean nonsealed = false;
+		boolean sealed = false;
+
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 
@@ -350,14 +361,7 @@ public class JavaClassParser {
 
 				accessModifier = JavaTerm.ACCESS_MODIFIER_PUBLIC;
 			}
-		}
 
-		boolean isStatic = false;
-		boolean isStrictfp = false;
-		boolean nonsealed = false;
-		boolean sealed = false;
-
-		if (modifiersDetailAST != null) {
 			if (modifiersDetailAST.branchContains(TokenTypes.ABSTRACT)) {
 				isAbstract = true;
 			}

@@ -12,6 +12,7 @@ import {
 } from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
+import {getImagesSrcFromHtml} from '../util/getImageSrcFromHtml.ts';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
 import {
 	convertStringToObject,
@@ -231,6 +232,22 @@ const RichText = ({
 		}
 	};
 
+	const handleFileDrop = (event) => {
+		const files = event.data.dataTransfer.$.files;
+
+		if (files.length) {
+			event.stop();
+		}
+	};
+
+	const handleFilePaste = (event) => {
+		const imagesSources = getImagesSrcFromHtml(event.data.dataValue);
+
+		if (imagesSources.length) {
+			event.stop();
+		}
+	};
+
 	const onReady = (editor) => {
 		const sourceEditingPlugin = editor.plugins.get('SourceEditing');
 
@@ -385,7 +402,9 @@ const RichText = ({
 							name={name}
 							onBlur={onBlur}
 							onChange={(content) => handleContentChange(content)}
+							onDrop={(event) => handleFileDrop(event)}
 							onFocus={onFocus}
+							onPaste={(event) => handleFilePaste(event)}
 							onSetData={(event) => {
 								const editor = event.editor;
 

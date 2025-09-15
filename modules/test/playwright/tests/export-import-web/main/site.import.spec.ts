@@ -457,14 +457,7 @@ testWithExportImportAtInstanceLevelFF(
 				.getByLabel('Overall Maximum Upload Request Size')
 				.fill('200000000');
 
-			await systemSettingsPage.page
-				.getByRole('button', {name: 'Save'})
-				.or(
-					systemSettingsPage.page.getByRole('button', {
-						name: 'Update',
-					})
-				)
-				.click();
+			await systemSettingsPage.saveButton.click();
 		});
 
 		await test.step('Create the Object definitions with 1-M relationship', async () => {
@@ -672,9 +665,7 @@ testWithExportImportAtInstanceLevelFF(
 				.getByLabel('Overall Maximum Upload Request Size')
 				.fill(originalOverallMaximumUploadRequestSize);
 
-			await systemSettingsPage.page
-				.getByRole('button', {name: 'Update'})
-				.click();
+			await systemSettingsPage.saveButton.click();
 		});
 	}
 );

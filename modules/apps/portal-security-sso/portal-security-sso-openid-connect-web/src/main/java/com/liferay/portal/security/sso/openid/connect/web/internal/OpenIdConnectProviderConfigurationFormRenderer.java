@@ -8,6 +8,7 @@ package com.liferay.portal.security.sso.openid.connect.web.internal;
 import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.sso.openid.connect.web.internal.constants.OpenIdConnectWebKeys;
@@ -21,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -53,16 +55,20 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 				httpServletRequest,
 				"customClaimsKey-" + customClaimsIndexes[i]);
 
-			if (key.isEmpty()) {
+			if (key.isEmpty() && (i == 0)) {
 				customClaims[i] = StringPool.BLANK;
 			}
-			else {
+			else if (!key.isEmpty()) {
 				String value = ParamUtil.getString(
 					httpServletRequest,
 					"customClaimsValue-" + customClaimsIndexes[i]);
 
 				customClaims[i] = key + StringPool.EQUAL + value;
 			}
+		}
+
+		if (customClaims.length > 1) {
+			customClaims = ArrayUtil.filter(customClaims, Objects::nonNull);
 		}
 
 		return HashMapBuilder.<String, Object>put(
@@ -164,8 +170,16 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		String[] values = new String[indexes.length];
 
 		for (int i = 0; i < values.length; i++) {
-			values[i] = ParamUtil.getString(
+			String value = ParamUtil.getString(
 				httpServletRequest, paramName + StringPool.DASH + indexes[i]);
+
+			if ((i == 0) || !value.isEmpty()) {
+				values[i] = value;
+			}
+		}
+
+		if (values.length > 1) {
+			values = ArrayUtil.filter(values, Objects::nonNull);
 		}
 
 		return values;

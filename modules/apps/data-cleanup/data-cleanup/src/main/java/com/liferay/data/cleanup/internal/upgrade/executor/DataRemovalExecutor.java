@@ -136,7 +136,7 @@ public class DataRemovalExecutor {
 		}
 
 		if (clazz.equals(CounterDataCleanupPreupgradeProcess.class)) {
-			return dataRemovalConfiguration.reviewCounterValues();
+			return dataRemovalConfiguration.fixCounterValues();
 		}
 
 		if (clazz.equals(DDMStructureDataCleanupPreupgradeProcess.class)) {

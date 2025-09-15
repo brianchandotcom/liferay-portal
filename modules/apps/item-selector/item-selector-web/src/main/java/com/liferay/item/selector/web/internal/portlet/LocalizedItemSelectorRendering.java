@@ -11,6 +11,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -52,31 +54,46 @@ public class LocalizedItemSelectorRendering {
 
 		String title = itemSelectorView.getTitle(_locale);
 
+		Class<?> clazz = itemSelectorView.getClass();
+
+		String curSelectedTab = StringBundler.concat(
+			clazz.getName(), StringPool.UNDERLINE, title);
+
 		ItemSelectorViewRenderer previousItemSelectorViewRenderer =
-			_itemSelectorViewRenderers.put(title, itemSelectorViewRenderer);
+			_itemSelectorViewRenderers.put(
+				curSelectedTab, itemSelectorViewRenderer);
 
 		if (previousItemSelectorViewRenderer != null) {
 			_navigationItems.removeIf(
-				navigationItem -> title.equals(
-					String.valueOf(navigationItem.get("label"))));
+				navigationItem -> {
+					Map<String, String> data =
+						(Map<String, String>)navigationItem.get("data");
+
+					if ((data != null) && data.containsKey("id")) {
+						return curSelectedTab.equals(data.get("id"));
+					}
+
+					return curSelectedTab.equals(title);
+				});
 		}
 
 		_navigationItems.add(
 			navigationItem -> {
+				navigationItem.putData("id", curSelectedTab);
 				navigationItem.setHref(
 					itemSelectorViewRenderer.getPortletURL());
 				navigationItem.setLabel(title);
 
 				String selectedTab = _itemSelectorRendering.getSelectedTab();
 
-				if (selectedTab.equals(title) ||
+				if (selectedTab.equals(curSelectedTab) ||
 					(Validator.isNull(selectedTab) &&
 					 _navigationItems.isEmpty())) {
 
 					navigationItem.setActive(true);
 
 					_activeNavigationItem = navigationItem;
-					_selectedNavigationItemLabel = title;
+					_selectedNavigationItemLabel = curSelectedTab;
 				}
 			});
 	}
@@ -107,7 +124,16 @@ public class LocalizedItemSelectorRendering {
 					verticalNavItem.setHref(
 						GetterUtil.getString(navigationItem.get("href")));
 					verticalNavItem.setLabel(name);
-					verticalNavItem.setId(name);
+
+					Map<String, String> data =
+						(Map<String, String>)navigationItem.get("data");
+
+					if ((data != null) && data.containsKey("id")) {
+						verticalNavItem.setId(data.get("id"));
+					}
+					else {
+						verticalNavItem.setId(name);
+					}
 				});
 		}
 

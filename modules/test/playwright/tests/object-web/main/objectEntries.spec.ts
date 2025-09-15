@@ -76,6 +76,14 @@ const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
+const assigneeTest = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-6233': {enabled: true},
+		'LPS-179669': {enabled: true},
+	})
+);
+
 const scheduleTest = mergeTests(
 	test,
 	featureFlagsTest({
@@ -117,6 +125,102 @@ test.afterEach(async ({apiHelpers, page, pagesAdminPage, templatesPage}) => {
 		siteLanguage = 'en';
 	}
 });
+
+assigneeTest(
+	'can add and update an entry with assignee object field',
+	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Assignee'],
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: getRandomString(),
+				label: {
+					en_US: getRandomString(),
+				},
+				name: 'ObjectDefinitionName' + getRandomInt(),
+				objectFields,
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: 'NewObject',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		const {objectEntry} = await generateObjectEntryValues({
+			objectEntryFormat: 'UI',
+			objectFields,
+			role: 'Asset Library Owner',
+		});
+
+		const objectFieldObjectEntryValues =
+			await viewObjectEntriesPage.fillObjectFields({
+				objectEntry,
+				objectFields,
+			});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.backButton.click();
+
+		for (const {entry} of objectFieldObjectEntryValues) {
+			await expect(
+				page.locator('td').getByText(entry, {exact: true})
+			).toBeVisible();
+		}
+
+		const {objectEntry: newObjectEntryValues} =
+			await generateObjectEntryValues({
+				objectEntryFormat: 'UI',
+				objectFields,
+				role: 'Site Owner',
+			});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		const newObjectFieldObjectEntryValues =
+			await viewObjectEntriesPage.fillObjectFields({
+				objectEntry: newObjectEntryValues,
+				objectFields,
+			});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.backButton.click();
+
+		for (const {entry} of newObjectFieldObjectEntryValues) {
+			await expect(
+				page.locator('td').getByText(entry, {exact: true})
+			).toBeVisible();
+		}
+	}
+);
 
 test.describe('Manage object entries through Friendly URL', () => {
 	let _objectDefinition: ObjectDefinition;

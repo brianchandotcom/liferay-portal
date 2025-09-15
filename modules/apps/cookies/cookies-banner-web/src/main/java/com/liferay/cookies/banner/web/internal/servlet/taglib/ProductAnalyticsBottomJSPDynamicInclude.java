@@ -5,15 +5,17 @@
 
 package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
-import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.ProductAnalyticsConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -71,8 +73,7 @@ public class ProductAnalyticsBottomJSPDynamicInclude
 
 		try {
 			ProductAnalyticsConfiguration productAnalyticsConfiguration =
-				_cookiesConfigurationProvider.getProductAnalyticsConfiguration(
-					themeDisplay);
+				_getProductAnalyticsConfiguration(themeDisplay);
 
 			if (!productAnalyticsConfiguration.enabled()) {
 				return;
@@ -100,11 +101,32 @@ public class ProductAnalyticsBottomJSPDynamicInclude
 		return _log;
 	}
 
+	private ProductAnalyticsConfiguration _getProductAnalyticsConfiguration(
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			themeDisplay.getServerName());
+
+		if (layoutSet != null) {
+			Group group = layoutSet.getGroup();
+
+			return _configurationProvider.getGroupConfiguration(
+				ProductAnalyticsConfiguration.class, group.getGroupId());
+		}
+
+		return _configurationProvider.getCompanyConfiguration(
+			ProductAnalyticsConfiguration.class, themeDisplay.getCompanyId());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductAnalyticsBottomJSPDynamicInclude.class);
 
 	@Reference
-	private CookiesConfigurationProvider _cookiesConfigurationProvider;
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.cookies.banner.web)"

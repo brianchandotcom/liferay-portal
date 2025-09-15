@@ -8289,11 +8289,27 @@ public class JournalArticleLocalServiceImpl
 	private String _getUniqueUrlTitle(
 		long groupId, String articleId, String urlTitle) {
 
-		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
-		String prefix = urlTitle;
-		String title = urlTitle;
+		String copyText = _language.get(LocaleUtil.getSiteDefault(), "copy");
 
-		for (int i = 1;; i++) {
+		String baseTitle = StringBundler.concat(
+			urlTitle, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copyText);
+		String baseUrlTitle = StringBundler.concat(
+			urlTitle, StringPool.DASH, copyText, StringPool.DASH);
+
+		for (int i = 0;; i++) {
+			String title;
+
+			if (i == 0) {
+				title = baseTitle + StringPool.CLOSE_PARENTHESIS;
+				urlTitle = baseUrlTitle;
+			}
+			else {
+				title = StringBundler.concat(
+					baseTitle, StringPool.SPACE, i,
+					StringPool.CLOSE_PARENTHESIS);
+				urlTitle = baseUrlTitle + i;
+			}
+
 			JournalArticle article = fetchArticleByUrlTitle(groupId, urlTitle);
 
 			if ((article == null) ||
@@ -8301,23 +8317,6 @@ public class JournalArticleLocalServiceImpl
 
 				return title;
 			}
-
-			if (i == 1) {
-				title = StringBundler.concat(
-					prefix, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
-					StringPool.CLOSE_PARENTHESIS);
-				urlTitle = StringBundler.concat(
-					prefix, StringPool.DASH, copy, StringPool.DASH);
-
-				continue;
-			}
-
-			title = StringBundler.concat(
-				prefix, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
-				StringPool.SPACE, i - 1, StringPool.CLOSE_PARENTHESIS);
-			urlTitle = StringBundler.concat(
-				prefix, StringPool.DASH, copy, StringPool.DASH, i - 1,
-				StringPool.DASH);
 		}
 	}
 

@@ -180,7 +180,7 @@ PagesTree.propTypes = {
 	selectedLayoutId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-function showEmptyLabel() {
+function EmptyLabel() {
 	return (
 		<ClayLabel className="bg-transparent ml-2 mr-2" displayType="warning">
 			{Liferay.Language.get('empty')}
@@ -269,9 +269,9 @@ function TreeItem({
 							>
 								{item.name}
 
-								{item.type === LAYOUT_TYPE_EMPTY
-									? showEmptyLabel()
-									: null}
+								{item.type === LAYOUT_TYPE_EMPTY ? (
+									<EmptyLabel />
+								) : null}
 							</span>
 
 							{!item.hasGuestViewPermission ? (
@@ -297,9 +297,9 @@ function TreeItem({
 						<span className="d-flex flex-wrap" title={item.name}>
 							{item.name}
 
-							{item.type === LAYOUT_TYPE_EMPTY
-								? showEmptyLabel()
-								: null}
+							{item.type === LAYOUT_TYPE_EMPTY ? (
+								<EmptyLabel />
+							) : null}
 						</span>
 					)}
 				</div>
@@ -378,9 +378,9 @@ function TreeItem({
 									>
 										{item.name}
 
-										{item.type === LAYOUT_TYPE_EMPTY
-											? showEmptyLabel()
-											: null}
+										{item.type === LAYOUT_TYPE_EMPTY ? (
+											<EmptyLabel />
+										) : null}
 									</span>
 
 									{!item.hasGuestViewPermission ? (
@@ -409,9 +409,9 @@ function TreeItem({
 								>
 									{item.name}
 
-									{item.type === LAYOUT_TYPE_EMPTY
-										? showEmptyLabel()
-										: null}
+									{item.type === LAYOUT_TYPE_EMPTY ? (
+										<EmptyLabel />
+									) : null}
 								</span>
 							)}
 						</div>

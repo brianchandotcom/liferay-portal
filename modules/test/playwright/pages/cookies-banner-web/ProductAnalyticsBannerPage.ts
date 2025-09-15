@@ -14,7 +14,7 @@ export class ProductAnalyticsBannerPage {
 
 	constructor(page: Page) {
 		this.bannerLocator = page.locator(
-			'#p_p_id_com_liferay_cookies_banner_web_portlet_ProductAnalyticsBannerPortlet_'
+			'#p_p_id_com_liferay_product_analytics_web_portlet_ProductAnalyticsBannerPortlet_'
 		);
 
 		this.acceptAllButton = this.bannerLocator.getByRole('button', {

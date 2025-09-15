@@ -14,25 +14,26 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -153,31 +154,42 @@ public class GroupModelListenerTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateDepotEntry() throws Exception {
+		Group siteGroup = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CMS);
+
+		Layout layout = _getRecycleBinLayout(siteGroup);
+
+		Assert.assertFalse(layout.isHidden());
+
+		Group defaultDepotGroup = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), "Default");
+
+		_setTrashEnabledGroupProperty(
+			defaultDepotGroup, Boolean.FALSE.toString());
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(
+				defaultDepotGroup.getTypeSettingsProperty("trashEnabled")));
+
+		layout = _getRecycleBinLayout(siteGroup);
+
+		Assert.assertTrue(layout.isHidden());
+
 		DepotEntry depotEntry = _addDepotEntry();
 
-		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+		Group depotGroup = depotEntry.getGroup();
 
-		ObjectEntry objectEntry1 = CMSDefaultPermissionUtil.fetchObjectEntry(
-			group.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), depotEntry.getModelClassName(),
-			_filterFactory);
+		_setTrashEnabledGroupProperty(depotGroup, Boolean.TRUE.toString());
 
-		String externalReferenceCode = RandomTestUtil.randomString();
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				depotGroup.getTypeSettingsProperty("trashEnabled")));
 
-		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-			RandomTestUtil.randomString(), group.getCompanyId(),
-			TestPropsValues.getUserId(), externalReferenceCode,
-			depotEntry.getModelClassName(),
-			JSONUtil.put(
-				"L_BASIC_WEB_CONTENT",
-				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
+		layout = _getRecycleBinLayout(siteGroup);
 
-		ObjectEntry objectEntry2 = CMSDefaultPermissionUtil.fetchObjectEntry(
-			group.getCompanyId(), TestPropsValues.getUserId(),
-			externalReferenceCode, depotEntry.getModelClassName(),
-			_filterFactory);
+		Assert.assertFalse(layout.isHidden());
 
-		Assert.assertNotEquals(objectEntry1, objectEntry2);
+		_setTrashEnabledGroupProperty(defaultDepotGroup, null);
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -206,6 +218,11 @@ public class GroupModelListenerTest {
 		}
 	}
 
+	private Layout _getRecycleBinLayout(Group group) throws Exception {
+		return _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/recycle-bin");
+	}
+
 	private boolean _isCMSSiteInitialized() throws Exception {
 		ObjectFolder objectFolder =
 			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
@@ -217,6 +234,22 @@ public class GroupModelListenerTest {
 		}
 
 		return false;
+	}
+
+	private void _setTrashEnabledGroupProperty(Group group, String value)
+		throws Exception {
+
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		if (value == null) {
+			unicodeProperties.remove("trashEnabled");
+		}
+		else {
+			unicodeProperties.setProperty("trashEnabled", value);
+		}
+
+		_groupLocalService.updateGroup(
+			group.getGroupId(), unicodeProperties.toString());
 	}
 
 	@Inject
@@ -238,6 +271,9 @@ public class GroupModelListenerTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

@@ -17,7 +17,6 @@
 		background-color: #1a3b7b;
 		border-radius: 6px;
 		cursor: pointer;
-		outline: var(--color-brand-primary-lighten-2, #6399ff) solid 2px;
 	}
 }
 

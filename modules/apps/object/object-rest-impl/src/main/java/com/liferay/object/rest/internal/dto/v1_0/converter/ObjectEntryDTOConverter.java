@@ -1029,6 +1029,10 @@ public class ObjectEntryDTOConverter
 		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
+			if (serializable instanceof FileEntry) {
+				return serializable;
+			}
+
 			long fileEntryId = 0;
 
 			if (serializable instanceof Long) {

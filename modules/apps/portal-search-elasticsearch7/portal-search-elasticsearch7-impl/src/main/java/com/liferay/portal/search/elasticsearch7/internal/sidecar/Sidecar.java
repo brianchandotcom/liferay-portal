@@ -88,6 +88,34 @@ public class Sidecar {
 
 		_installElasticsearchIfNeeded(sidecarVersion);
 
+		Path configPath = _elasticsearchInstancePaths.getConfigPath();
+
+		Path log4jPropertiesPath = configPath.resolve("log4j2.properties");
+
+		try {
+			byte[] log4jProperties = _getLog4jProperties();
+
+			File log4jPropertiesFile = log4jPropertiesPath.toFile();
+
+			if (log4jPropertiesFile.exists() &&
+				!Arrays.equals(
+					log4jProperties, Files.readAllBytes(log4jPropertiesPath))) {
+
+				log4jPropertiesFile.delete();
+			}
+
+			if (!log4jPropertiesFile.exists()) {
+				Files.createDirectories(configPath);
+
+				Files.write(log4jPropertiesPath, log4jProperties);
+			}
+		}
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to copy log4j2.properties to " + configPath,
+				ioException);
+		}
+
 		ProcessChannel<Serializable> processChannel =
 			_executeSidecarMainProcess();
 
@@ -318,38 +346,11 @@ public class Sidecar {
 				_elasticsearchConfigurationWrapper.sidecarDebugSettings());
 		}
 
-		Path configPath = _elasticsearchInstancePaths.getConfigPath();
-
-		Path log4jPropertiesPath = configPath.resolve("log4j2.properties");
-
-		try {
-			byte[] log4jProperties = _getLog4jProperties();
-
-			File log4jPropertiesFile = log4jPropertiesPath.toFile();
-
-			if (log4jPropertiesFile.exists() &&
-				!Arrays.equals(
-					log4jProperties, Files.readAllBytes(log4jPropertiesPath))) {
-
-				log4jPropertiesFile.delete();
-			}
-
-			if (!log4jPropertiesFile.exists()) {
-				Files.createDirectories(configPath);
-
-				Files.write(log4jPropertiesPath, log4jProperties);
-			}
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Unable to copy log4j2.properties to " + configPath,
-				ioException);
-		}
-
 		arguments.add("-Des.distribution.type=tar");
 		arguments.add("-Des.networkaddress.cache.negative.ttl=10");
 		arguments.add("-Des.networkaddress.cache.ttl=60");
-		arguments.add("-Des.path.conf=" + configPath);
+		arguments.add(
+			"-Des.path.conf=" + _elasticsearchInstancePaths.getConfigPath());
 		arguments.add("-Dfile.encoding=UTF-8");
 		arguments.add("-Dio.netty.noKeySetOptimization=true");
 		arguments.add("-Dio.netty.noUnsafe=true");

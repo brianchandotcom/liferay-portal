@@ -2364,29 +2364,13 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 21;
-						customValue = new CustomValue() {
-							{
-								geo = new Geo() {
-									{
-										latitude = _DATA_DOUBLE;
-										longitude = _DATA_DOUBLE;
-									}
-								};
-							}
-						};
-						name = randomName9;
-					}
-				},
-				new CustomField() {
-					{
 						attributeType = 9;
 						customValue = new CustomValue() {
 							{
 								data = _DATA_INT;
 							}
 						};
-						name = randomName10;
+						name = randomName9;
 					}
 				},
 				new CustomField() {
@@ -2397,7 +2381,7 @@ public class CustomFieldsUtilTest {
 								data = new int[] {_DATA_INT};
 							}
 						};
-						name = randomName11;
+						name = randomName10;
 					}
 				},
 				new CustomField() {
@@ -2408,7 +2392,7 @@ public class CustomFieldsUtilTest {
 								data = _DATA_LONG;
 							}
 						};
-						name = randomName12;
+						name = randomName11;
 					}
 				},
 				new CustomField() {
@@ -2419,7 +2403,51 @@ public class CustomFieldsUtilTest {
 								data = new long[] {_DATA_LONG};
 							}
 						};
+						name = randomName12;
+					}
+				},
+				new CustomField() {
+					{
+						attributeType = 13;
+						customValue = new CustomValue() {
+							{
+								data = randomShort;
+							}
+						};
 						name = randomName13;
+					}
+				},
+				new CustomField() {
+					{
+						attributeType = 14;
+						customValue = new CustomValue() {
+							{
+								data = new short[] {randomShort};
+							}
+						};
+						name = randomName14;
+					}
+				},
+				new CustomField() {
+					{
+						attributeType = 15;
+						customValue = new CustomValue() {
+							{
+								data = _DATA_STRING;
+							}
+						};
+						name = randomName15;
+					}
+				},
+				new CustomField() {
+					{
+						attributeType = 16;
+						customValue = new CustomValue() {
+							{
+								data = new String[] {_DATA_STRING};
+							}
+						};
+						name = randomName16;
 					}
 				},
 				new CustomField() {
@@ -2430,7 +2458,7 @@ public class CustomFieldsUtilTest {
 								data = new BigDecimal(randomNumber.intValue());
 							}
 						};
-						name = randomName14;
+						name = randomName17;
 					}
 				},
 				new CustomField() {
@@ -2443,51 +2471,7 @@ public class CustomFieldsUtilTest {
 								};
 							}
 						};
-						name = randomName15;
-					}
-				},
-				new CustomField() {
-					{
-						attributeType = 13;
-						customValue = new CustomValue() {
-							{
-								data = randomShort;
-							}
-						};
-						name = randomName16;
-					}
-				},
-				new CustomField() {
-					{
-						attributeType = 14;
-						customValue = new CustomValue() {
-							{
-								data = new short[] {randomShort};
-							}
-						};
-						name = randomName17;
-					}
-				},
-				new CustomField() {
-					{
-						attributeType = 15;
-						customValue = new CustomValue() {
-							{
-								data = _DATA_STRING;
-							}
-						};
 						name = randomName18;
-					}
-				},
-				new CustomField() {
-					{
-						attributeType = 16;
-						customValue = new CustomValue() {
-							{
-								data = new String[] {_DATA_STRING};
-							}
-						};
-						name = randomName19;
 					}
 				},
 				new CustomField() {
@@ -2504,7 +2488,7 @@ public class CustomFieldsUtilTest {
 								).build();
 							}
 						};
-						name = randomName20;
+						name = randomName19;
 					}
 				},
 				new CustomField() {
@@ -2520,6 +2504,22 @@ public class CustomFieldsUtilTest {
 								).put(
 									"pt-BR", randomString
 								).build();
+							}
+						};
+						name = randomName20;
+					}
+				},
+				new CustomField() {
+					{
+						attributeType = 21;
+						customValue = new CustomValue() {
+							{
+								geo = new Geo() {
+									{
+										latitude = _DATA_DOUBLE;
+										longitude = _DATA_DOUBLE;
+									}
+								};
 							}
 						};
 						name = randomName21;
@@ -2565,42 +2565,34 @@ public class CustomFieldsUtilTest {
 		Assert.assertEquals(8, expandoBridge.getAttributeType(randomName8));
 		Assert.assertArrayEquals(
 			new float[] {_DATA_FLOAT}, (float[])map.get(randomName8), 0);
-		Assert.assertEquals(21, expandoBridge.getAttributeType(randomName9));
-		Assert.assertEquals(
-			JSONUtil.put(
-				"latitude", _DATA_DOUBLE
-			).put(
-				"longitude", _DATA_DOUBLE
-			).toString(),
-			map.get(randomName9));
-		Assert.assertEquals(9, expandoBridge.getAttributeType(randomName10));
-		Assert.assertEquals(_DATA_INT, map.get(randomName10));
-		Assert.assertEquals(10, expandoBridge.getAttributeType(randomName11));
+		Assert.assertEquals(9, expandoBridge.getAttributeType(randomName9));
+		Assert.assertEquals(_DATA_INT, map.get(randomName9));
+		Assert.assertEquals(10, expandoBridge.getAttributeType(randomName10));
 		Assert.assertArrayEquals(
-			new int[] {_DATA_INT}, (int[])map.get(randomName11));
-		Assert.assertEquals(11, expandoBridge.getAttributeType(randomName12));
-		Assert.assertEquals(_DATA_LONG, map.get(randomName12));
-		Assert.assertEquals(12, expandoBridge.getAttributeType(randomName13));
+			new int[] {_DATA_INT}, (int[])map.get(randomName10));
+		Assert.assertEquals(11, expandoBridge.getAttributeType(randomName11));
+		Assert.assertEquals(_DATA_LONG, map.get(randomName11));
+		Assert.assertEquals(12, expandoBridge.getAttributeType(randomName12));
 		Assert.assertArrayEquals(
-			new long[] {_DATA_LONG}, (long[])map.get(randomName13));
-		Assert.assertEquals(17, expandoBridge.getAttributeType(randomName14));
+			new long[] {_DATA_LONG}, (long[])map.get(randomName12));
+		Assert.assertEquals(13, expandoBridge.getAttributeType(randomName13));
+		Assert.assertEquals(randomShort, map.get(randomName13));
+		Assert.assertEquals(14, expandoBridge.getAttributeType(randomName14));
+		Assert.assertArrayEquals(
+			new short[] {randomShort}, (short[])map.get(randomName14));
+		Assert.assertEquals(15, expandoBridge.getAttributeType(randomName15));
+		Assert.assertEquals(_DATA_STRING, map.get(randomName15));
+		Assert.assertEquals(16, expandoBridge.getAttributeType(randomName16));
+		Assert.assertArrayEquals(
+			new String[] {_DATA_STRING}, (String[])map.get(randomName16));
+		Assert.assertEquals(17, expandoBridge.getAttributeType(randomName17));
 		Assert.assertEquals(
-			new BigDecimal(randomNumber.intValue()), map.get(randomName14));
-		Assert.assertEquals(18, expandoBridge.getAttributeType(randomName15));
+			new BigDecimal(randomNumber.intValue()), map.get(randomName17));
+		Assert.assertEquals(18, expandoBridge.getAttributeType(randomName18));
 		Assert.assertArrayEquals(
 			new Number[] {new BigDecimal(randomNumber.intValue())},
-			(Number[])map.get(randomName15));
-		Assert.assertEquals(13, expandoBridge.getAttributeType(randomName16));
-		Assert.assertEquals(randomShort, map.get(randomName16));
-		Assert.assertEquals(14, expandoBridge.getAttributeType(randomName17));
-		Assert.assertArrayEquals(
-			new short[] {randomShort}, (short[])map.get(randomName17));
-		Assert.assertEquals(15, expandoBridge.getAttributeType(randomName18));
-		Assert.assertEquals(_DATA_STRING, map.get(randomName18));
-		Assert.assertEquals(16, expandoBridge.getAttributeType(randomName19));
-		Assert.assertArrayEquals(
-			new String[] {_DATA_STRING}, (String[])map.get(randomName19));
-		Assert.assertEquals(19, expandoBridge.getAttributeType(randomName20));
+			(Number[])map.get(randomName18));
+		Assert.assertEquals(19, expandoBridge.getAttributeType(randomName19));
 		AssertUtils.assertEquals(
 			HashMapBuilder.put(
 				_enLocale, new String[] {_DATA_STRING}
@@ -2609,8 +2601,8 @@ public class CustomFieldsUtilTest {
 			).put(
 				_ptLocale, new String[] {randomString}
 			).build(),
-			(Map)map.get(randomName20));
-		Assert.assertEquals(20, expandoBridge.getAttributeType(randomName21));
+			(Map)map.get(randomName19));
+		Assert.assertEquals(20, expandoBridge.getAttributeType(randomName20));
 		AssertUtils.assertEquals(
 			HashMapBuilder.put(
 				_enLocale, _DATA_STRING
@@ -2619,7 +2611,15 @@ public class CustomFieldsUtilTest {
 			).put(
 				_ptLocale, randomString
 			).build(),
-			(Map)map.get(randomName21));
+			(Map)map.get(randomName20));
+		Assert.assertEquals(21, expandoBridge.getAttributeType(randomName21));
+		Assert.assertEquals(
+			JSONUtil.put(
+				"latitude", _DATA_DOUBLE
+			).put(
+				"longitude", _DATA_DOUBLE
+			).toString(),
+			map.get(randomName21));
 
 		List<ExportImportReportEntry> exportImportReportEntries =
 			_exportImportReportEntryLocalService.getExportImportReportEntries(

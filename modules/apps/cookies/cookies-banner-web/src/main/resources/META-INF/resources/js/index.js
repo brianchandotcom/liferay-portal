@@ -13,14 +13,6 @@ export {
 
 export {default as CookiesBannerConfiguration} from '../cookies_banner_configuration/js/CookiesBannerConfiguration';
 
-export {
-	default as ProductAnalyticsBanner,
-	checkProductAnalyticsConsentForTypes,
-	openProductAnalyticsConsentModal,
-} from '../product_analytics_banner/js/ProductAnalyticsBanner';
-
-export {default as ProductAnalyticsConsentPanel} from '../product_analytics_consent_panel/js/ProductAnalyticsConsentPanel';
-
 export {default as ConfigurationFormEventHandler} from './ConfigurationFormEventHandler';
 
 export {

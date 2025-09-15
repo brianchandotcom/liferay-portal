@@ -43,5 +43,62 @@ liferayWorkload:
     name: liferay-default
     rolloutTimeout: 15m
 nameOverride: ""
+resources:
+    applyTerraformDependenciesModule:
+        limits:
+            cpu: "1"
+            memory: 1Gi
+        requests:
+            cpu: 500m
+            memory: 512Mi
+    checkoutGitRepository:
+        limits:
+            cpu: 250m
+            memory: 256Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
+    cleanUpS3Bucket:
+        limits:
+            cpu: 250m
+            memory: 256Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
+    getDependenciesModuleOutputs:
+        limits:
+            cpu: 500m
+            memory: 512Mi
+        requests:
+            cpu: 200m
+            memory: 256Mi
+    getPeerRecoveryPoints:
+        limits:
+            cpu: 250m
+            memory: 256Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
+    kubectlRolloutRestart:
+        limits:
+            cpu: 250m
+            memory: 256Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
+    kubectlRolloutStatus:
+        limits:
+            cpu: 250m
+            memory: 256Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
+    restoreS3Bucket:
+        limits:
+            cpu: 250m
+            memory: 256Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
 serviceAccountAnnotations: {}
 tfvarsOverrideFileName: zz-backup-restore.auto.tfvars

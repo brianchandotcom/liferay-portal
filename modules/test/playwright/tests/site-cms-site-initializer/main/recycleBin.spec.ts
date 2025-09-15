@@ -334,6 +334,10 @@ test(
 				page,
 				`Success:${contentName} has been permanently deleted.`
 			);
+
+			await expect(
+				page.getByText(`Success:${contentName} was moved to the`)
+			).toBeHidden();
 		});
 	}
 );

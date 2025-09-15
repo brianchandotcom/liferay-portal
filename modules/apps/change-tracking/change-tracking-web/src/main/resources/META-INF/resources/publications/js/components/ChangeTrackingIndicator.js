@@ -466,7 +466,7 @@ export default function ChangeTrackingIndicator({
 	};
 
 	const renderDropdown = () => {
-		if (disableDropdown === 'true') {
+		if (disableDropdown) {
 			return renderTrigger;
 		}
 
@@ -696,9 +696,7 @@ export default function ChangeTrackingIndicator({
 
 			<span className="change-tracking-indicator-title">{title}</span>
 
-			{disableDropdown === 'false' ? (
-				<ClayIcon symbol="caret-bottom" />
-			) : null}
+			{disableDropdown ? null : <ClayIcon symbol="caret-bottom" />}
 		</button>
 	);
 

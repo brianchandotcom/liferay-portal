@@ -69,7 +69,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(87);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -109,6 +109,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(enableCategorization);
 		sb.append(", enableComments=");
 		sb.append(enableComments);
+		sb.append(", enableFormContainer=");
+		sb.append(enableFormContainer);
 		sb.append(", enableFriendlyURLCustomization=");
 		sb.append(enableFriendlyURLCustomization);
 		sb.append(", enableIndexSearch=");
@@ -231,6 +233,7 @@ public class ObjectDefinitionCacheModel
 
 		objectDefinitionImpl.setEnableCategorization(enableCategorization);
 		objectDefinitionImpl.setEnableComments(enableComments);
+		objectDefinitionImpl.setEnableFormContainer(enableFormContainer);
 		objectDefinitionImpl.setEnableFriendlyURLCustomization(
 			enableFriendlyURLCustomization);
 		objectDefinitionImpl.setEnableIndexSearch(enableIndexSearch);
@@ -362,6 +365,8 @@ public class ObjectDefinitionCacheModel
 
 		enableComments = objectInput.readBoolean();
 
+		enableFormContainer = objectInput.readBoolean();
+
 		enableFriendlyURLCustomization = objectInput.readBoolean();
 
 		enableIndexSearch = objectInput.readBoolean();
@@ -462,6 +467,8 @@ public class ObjectDefinitionCacheModel
 		objectOutput.writeBoolean(enableCategorization);
 
 		objectOutput.writeBoolean(enableComments);
+
+		objectOutput.writeBoolean(enableFormContainer);
 
 		objectOutput.writeBoolean(enableFriendlyURLCustomization);
 
@@ -579,6 +586,7 @@ public class ObjectDefinitionCacheModel
 	public String dbTableName;
 	public boolean enableCategorization;
 	public boolean enableComments;
+	public boolean enableFormContainer;
 	public boolean enableFriendlyURLCustomization;
 	public boolean enableIndexSearch;
 	public boolean enableLocalization;

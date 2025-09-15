@@ -389,6 +389,27 @@ public interface ObjectDefinitionModel
 	public void setEnableComments(boolean enableComments);
 
 	/**
+	 * Returns the enable form container of this object definition.
+	 *
+	 * @return the enable form container of this object definition
+	 */
+	public boolean getEnableFormContainer();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable form container.
+	 *
+	 * @return <code>true</code> if this object definition is enable form container; <code>false</code> otherwise
+	 */
+	public boolean isEnableFormContainer();
+
+	/**
+	 * Sets whether this object definition is enable form container.
+	 *
+	 * @param enableFormContainer the enable form container of this object definition
+	 */
+	public void setEnableFormContainer(boolean enableFormContainer);
+
+	/**
 	 * Returns the enable friendly url customization of this object definition.
 	 *
 	 * @return the enable friendly url customization of this object definition

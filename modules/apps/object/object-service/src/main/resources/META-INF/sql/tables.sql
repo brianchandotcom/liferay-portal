@@ -42,6 +42,7 @@ create table ObjectDefinition (
 	dbTableName VARCHAR(75) null,
 	enableCategorization BOOLEAN,
 	enableComments BOOLEAN,
+	enableFormContainer BOOLEAN,
 	enableFriendlyURLCustomization BOOLEAN,
 	enableIndexSearch BOOLEAN,
 	enableLocalization BOOLEAN,

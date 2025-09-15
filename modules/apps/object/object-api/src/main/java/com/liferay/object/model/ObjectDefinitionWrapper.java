@@ -56,6 +56,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("enableCategorization", isEnableCategorization());
 		attributes.put("enableComments", isEnableComments());
+		attributes.put("enableFormContainer", isEnableFormContainer());
 		attributes.put(
 			"enableFriendlyURLCustomization",
 			isEnableFriendlyURLCustomization());
@@ -210,6 +211,13 @@ public class ObjectDefinitionWrapper
 
 		if (enableComments != null) {
 			setEnableComments(enableComments);
+		}
+
+		Boolean enableFormContainer = (Boolean)attributes.get(
+			"enableFormContainer");
+
+		if (enableFormContainer != null) {
+			setEnableFormContainer(enableFormContainer);
 		}
 
 		Boolean enableFriendlyURLCustomization = (Boolean)attributes.get(
@@ -484,6 +492,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableComments() {
 		return model.getEnableComments();
+	}
+
+	/**
+	 * Returns the enable form container of this object definition.
+	 *
+	 * @return the enable form container of this object definition
+	 */
+	@Override
+	public boolean getEnableFormContainer() {
+		return model.getEnableFormContainer();
 	}
 
 	/**
@@ -1076,6 +1094,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is enable form container.
+	 *
+	 * @return <code>true</code> if this object definition is enable form container; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableFormContainer() {
+		return model.isEnableFormContainer();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is enable friendly url customization.
 	 *
 	 * @return <code>true</code> if this object definition is enable friendly url customization; <code>false</code> otherwise
@@ -1336,6 +1364,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setEnableComments(boolean enableComments) {
 		model.setEnableComments(enableComments);
+	}
+
+	/**
+	 * Sets whether this object definition is enable form container.
+	 *
+	 * @param enableFormContainer the enable form container of this object definition
+	 */
+	@Override
+	public void setEnableFormContainer(boolean enableFormContainer) {
+		model.setEnableFormContainer(enableFormContainer);
 	}
 
 	/**

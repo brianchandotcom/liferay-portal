@@ -157,6 +157,9 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setEnableFormContainer(
+			RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setEnableFriendlyURLCustomization(
 			RandomTestUtil.randomBoolean());
 
@@ -274,6 +277,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableComments(),
 			newObjectDefinition.isEnableComments());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableFormContainer(),
+			newObjectDefinition.isEnableFormContainer());
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableFriendlyURLCustomization(),
 			newObjectDefinition.isEnableFriendlyURLCustomization());
@@ -562,16 +568,16 @@ public class ObjectDefinitionPersistenceTest {
 			"titleObjectFieldId", true, "accountEntryRestricted", true,
 			"active", true, "className", true, "dbTableName", true,
 			"enableCategorization", true, "enableComments", true,
-			"enableFriendlyURLCustomization", true, "enableIndexSearch", true,
-			"enableLocalization", true, "enableObjectEntryDraft", true,
-			"enableObjectEntryHistory", true, "enableObjectEntrySchedule", true,
-			"enableObjectEntrySubscription", true,
-			"enableObjectEntryVersioning", true, "friendlyURLSeparator", true,
-			"label", true, "modifiable", true, "name", true, "panelAppOrder",
-			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
-			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
-			"scope", true, "storageType", true, "system", true, "version", true,
-			"status", true);
+			"enableFormContainer", true, "enableFriendlyURLCustomization", true,
+			"enableIndexSearch", true, "enableLocalization", true,
+			"enableObjectEntryDraft", true, "enableObjectEntryHistory", true,
+			"enableObjectEntrySchedule", true, "enableObjectEntrySubscription",
+			true, "enableObjectEntryVersioning", true, "friendlyURLSeparator",
+			true, "label", true, "modifiable", true, "name", true,
+			"panelAppOrder", true, "panelCategoryKey", true,
+			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
+			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
+			true, "system", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -927,6 +933,8 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
+
+		objectDefinition.setEnableFormContainer(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableFriendlyURLCustomization(
 			RandomTestUtil.randomBoolean());

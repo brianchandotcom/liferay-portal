@@ -56,6 +56,7 @@
 		</field>
 		<field name="enableCategorization" type="boolean" />
 		<field name="enableComments" type="boolean" />
+		<field name="enableFormContainer" type="boolean" />
 		<field name="enableFriendlyURLCustomization" type="boolean" />
 		<field name="enableIndexSearch" type="boolean" />
 		<field name="enableLocalization" type="boolean" />

@@ -45,6 +45,7 @@ public class ObjectDefinitionServiceHttp {
 			addCustomObjectDefinition(
 				HttpPrincipal httpPrincipal, long objectFolderId,
 				String className, boolean enableComments,
+				boolean enableFormContainer,
 				boolean enableFriendlyURLCustomization,
 				boolean enableIndexSearch, boolean enableLocalization,
 				boolean enableObjectEntryDraft,
@@ -72,8 +73,8 @@ public class ObjectDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectFolderId, className, enableComments,
-				enableFriendlyURLCustomization, enableIndexSearch,
-				enableLocalization, enableObjectEntryDraft,
+				enableFormContainer, enableFriendlyURLCustomization,
+				enableIndexSearch, enableLocalization, enableObjectEntryDraft,
 				enableObjectEntrySchedule, enableObjectEntrySubscription,
 				enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
 				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
@@ -155,7 +156,8 @@ public class ObjectDefinitionServiceHttp {
 			addSystemObjectDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long userId, long objectFolderId, String className,
-				boolean enableComments, boolean enableFriendlyURLCustomization,
+				boolean enableComments, boolean enableFormContainer,
+				boolean enableFriendlyURLCustomization,
 				boolean enableIndexSearch, boolean enableLocalization,
 				boolean enableObjectEntryDraft,
 				boolean enableObjectEntrySchedule,
@@ -182,8 +184,9 @@ public class ObjectDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, userId, objectFolderId,
-				className, enableComments, enableFriendlyURLCustomization,
-				enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+				className, enableComments, enableFormContainer,
+				enableFriendlyURLCustomization, enableIndexSearch,
+				enableLocalization, enableObjectEntryDraft,
 				enableObjectEntrySchedule, enableObjectEntrySubscription,
 				enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
 				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
@@ -657,7 +660,8 @@ public class ObjectDefinitionServiceHttp {
 				long descriptionObjectFieldId, long objectFolderId,
 				long titleObjectFieldId, boolean accountEntryRestricted,
 				boolean active, String className, boolean enableCategorization,
-				boolean enableComments, boolean enableFriendlyURLCustomization,
+				boolean enableComments, boolean enableFormContainer,
+				boolean enableFriendlyURLCustomization,
 				boolean enableIndexSearch, boolean enableLocalization,
 				boolean enableObjectEntryDraft,
 				boolean enableObjectEntryHistory,
@@ -687,8 +691,8 @@ public class ObjectDefinitionServiceHttp {
 				accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 				objectFolderId, titleObjectFieldId, accountEntryRestricted,
 				active, className, enableCategorization, enableComments,
-				enableFriendlyURLCustomization, enableIndexSearch,
-				enableLocalization, enableObjectEntryDraft,
+				enableFormContainer, enableFriendlyURLCustomization,
+				enableIndexSearch, enableLocalization, enableObjectEntryDraft,
 				enableObjectEntryHistory, enableObjectEntrySchedule,
 				enableObjectEntrySubscription, enableObjectEntryVersioning,
 				friendlyURLSeparator, labelMap, name, panelAppOrder,
@@ -866,10 +870,10 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {
 			long.class, String.class, boolean.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, boolean.class, String.class, java.util.Map.class,
-			String.class, String.class, String.class, java.util.Map.class,
-			boolean.class, String.class, String.class, java.util.List.class,
-			java.util.List.class, java.util.List.class
+			boolean.class, boolean.class, boolean.class, String.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			java.util.Map.class, boolean.class, String.class, String.class,
+			java.util.List.class, java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _addObjectDefinitionParameterTypes1 =
 		new Class[] {
@@ -879,9 +883,9 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, boolean.class, boolean.class, String.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			java.util.Map.class, boolean.class, String.class,
+			boolean.class, boolean.class, boolean.class, boolean.class,
+			String.class, java.util.Map.class, String.class, String.class,
+			String.class, java.util.Map.class, boolean.class, String.class,
 			java.util.List.class, java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes3 =
@@ -918,10 +922,10 @@ public class ObjectDefinitionServiceHttp {
 			long.class, boolean.class, boolean.class, String.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, boolean.class, String.class, java.util.Map.class,
-			String.class, String.class, String.class, boolean.class,
-			java.util.Map.class, String.class, int.class, java.util.List.class,
-			java.util.List.class
+			boolean.class, boolean.class, boolean.class, String.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			boolean.class, java.util.Map.class, String.class, int.class,
+			java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes15 = new Class[] {

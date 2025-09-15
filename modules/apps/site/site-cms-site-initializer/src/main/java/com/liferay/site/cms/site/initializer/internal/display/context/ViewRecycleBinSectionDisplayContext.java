@@ -16,7 +16,6 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -197,8 +196,14 @@ public class ViewRecycleBinSectionDisplayContext
 			return filterString + WorkflowConstants.STATUS_ANY;
 		}
 
-		return filterString + WorkflowConstants.STATUS_IN_TRASH +
-			_getGroupIdsAnyClause(groupIds);
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return filterString + WorkflowConstants.STATUS_IN_TRASH;
+		}
+
+		return StringBundler.concat(
+			filterString, WorkflowConstants.STATUS_IN_TRASH,
+			" and groupIds/any(g:g in (", StringUtil.merge(groupIds, ","),
+			"))");
 	}
 
 	private Long[] _getDepotGroupIds(long companyId) throws Exception {
@@ -216,16 +221,6 @@ public class ViewRecycleBinSectionDisplayContext
 				return group.getGroupId();
 			},
 			Long.class);
-	}
-
-	private String _getGroupIdsAnyClause(Long[] groupIds) {
-		if (ArrayUtil.isEmpty(groupIds)) {
-			return StringPool.BLANK;
-		}
-
-		return StringBundler.concat(
-			" and groupIds/any(g:g in (", StringUtil.merge(groupIds, ","),
-			"))");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

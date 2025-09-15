@@ -8,7 +8,7 @@ package com.liferay.cookies.banner.web.internal.constants;
 /**
  * @author Christopher Kian
  */
-public class ProductAnalyticsBannerConstants {
+public class ProductAnalyticsBannerCookiesConstants {
 
 	public static final String NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_FUNCTIONAL =
 		"PRODUCT_ANALYTICS_CONSENT_TYPE_FUNCTIONAL";

@@ -18,6 +18,7 @@ page import="com.liferay.site.cms.site.initializer.internal.display.context.Edit
 page import="com.liferay.site.cms.site.initializer.internal.display.context.EditVocabularyDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewAllSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewAllSpacesDisplayContext" %><%@
+page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewBulkActionTaskReportDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewCategoriesDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewCategoryUsagesDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewContentsSectionDisplayContext" %><%@

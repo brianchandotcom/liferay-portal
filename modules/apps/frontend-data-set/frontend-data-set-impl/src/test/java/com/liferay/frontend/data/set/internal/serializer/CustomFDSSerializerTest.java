@@ -1266,6 +1266,11 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.serializeAdditionalAPIURLParameters(
 				fdsName, httpServletRequest)
 		).thenCallRealMethod();
+
+		Mockito.when(
+			_customFDSSerializer.serializeAdditionalAPIURLParameters(
+				fdsName, httpServletRequest, true, null)
+		).thenCallRealMethod();
 	}
 
 	private void _mockSerializeAPIURL(String fdsName, String[] fieldNames) {
@@ -1311,6 +1316,11 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		Mockito.when(
 			_customFDSSerializer.serializeAPIURL(fdsName, httpServletRequest)
+		).thenCallRealMethod();
+
+		Mockito.when(
+			_customFDSSerializer.serializeAPIURL(
+				fdsName, httpServletRequest, true, null)
 		).thenCallRealMethod();
 	}
 

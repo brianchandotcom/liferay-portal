@@ -110,7 +110,7 @@ public class CustomFDSSerializer
 	@Override
 	public String serializeAdditionalAPIURLParameters(
 		String fdsName, HttpServletRequest httpServletRequest,
-		JSONObject tokenResolutionsJSONObject) {
+		boolean interpolate, JSONObject tokenResolutionsJSONObject) {
 
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
@@ -124,13 +124,15 @@ public class CustomFDSSerializer
 			String.valueOf(properties.get("additionalAPIURLParameters"))
 		).setTokenResolutions(
 			tokenResolutionsJSONObject
-		).buildQueryString();
+		).buildQueryString(
+			interpolate
+		);
 	}
 
 	@Override
 	public String serializeAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest,
-		JSONObject tokenResolutionsJSONObject) {
+		boolean interpolate, JSONObject tokenResolutionsJSONObject) {
 
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
@@ -149,7 +151,7 @@ public class CustomFDSSerializer
 			"dataSetToDataSetTableSections");
 
 		if (objectEntries == null) {
-			return fdsAPIURLBuilder.build();
+			return fdsAPIURLBuilder.build(interpolate);
 		}
 
 		String nestedFields = StringPool.BLANK;
@@ -177,7 +179,7 @@ public class CustomFDSSerializer
 		}
 
 		if (nestedFields.equals(StringPool.BLANK)) {
-			return fdsAPIURLBuilder.build();
+			return fdsAPIURLBuilder.build(interpolate);
 		}
 
 		fdsAPIURLBuilder.addParameter(
@@ -190,7 +192,7 @@ public class CustomFDSSerializer
 				"nestedFieldsDepth", String.valueOf(nestedFieldsDepth));
 		}
 
-		return fdsAPIURLBuilder.build();
+		return fdsAPIURLBuilder.build(interpolate);
 	}
 
 	@Override

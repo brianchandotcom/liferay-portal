@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -73,7 +77,7 @@ public class ImportStagedModelExceptionHandlerImpl
 					GetterUtil.getLong(
 						portletDataContext.getExportImportProcessId()),
 					portletDataException.getMessage(),
-					portletDataException.toString(), modelName,
+					_getTraceString(portletDataException), modelName,
 					ExportImportReportEntryUtil.getOrigin(), scope,
 					ExportImportReportEntryUtil.getScopeKey(group));
 		}
@@ -85,6 +89,14 @@ public class ImportStagedModelExceptionHandlerImpl
 					" and modelName ", modelName),
 				exception);
 		}
+	}
+
+	private String _getTraceString(Throwable throwable) {
+		OutputStream outputStream = new ByteArrayOutputStream();
+
+		throwable.printStackTrace(new PrintStream(outputStream));
+
+		return outputStream.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

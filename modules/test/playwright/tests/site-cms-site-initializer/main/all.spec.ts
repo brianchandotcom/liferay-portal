@@ -20,9 +20,210 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
+		'LPD-53981': {enabled: true},
 		'LPS-179669': {enabled: true},
 	}),
 	loginTest()
+);
+
+test(
+	'Can delete multiple contents across spaces with and without recycle bin enabled',
+	{tag: '@LPD-62787'},
+	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceNameWithRecycleBin = `Space ${getRandomString()}`;
+		const spaceNameWithoutRecycleBin = `Space ${getRandomString()}`;
+		const file1Title = `title ${getRandomString()}`;
+		const file2Title = `title ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			name: spaceNameWithRecycleBin,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			name: spaceNameWithoutRecycleBin,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: false,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			spaceNameWithRecycleBin
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file2Title,
+			},
+			applicationName,
+			spaceNameWithoutRecycleBin
+		);
+
+		await assetsPage.gotoAll();
+
+		await assetsPage.selectItems([file1Title, file2Title]);
+
+		await page
+			.getByTestId('visualization-mode-table')
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		expect(page.getByText('Some of the selected files')).toBeVisible();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await page.reload();
+
+		await expect(
+			page.getByRole('cell', {name: file1Title})
+		).not.toBeVisible();
+		await expect(
+			page.getByRole('cell', {name: file2Title})
+		).not.toBeVisible();
+
+		await recycleBinPage.goto();
+
+		await expect(page.getByRole('cell', {name: file1Title})).toBeVisible();
+	}
+);
+
+test(
+	'Can delete multiple contents in a space with recycle bin disabled',
+	{tag: '@LPD-62787'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = `Space ${getRandomString()}`;
+		const file1Title = `title ${getRandomString()}`;
+		const file2Title = `title ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: false,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file2Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await assetsPage.gotoAll();
+
+		await assetsPage.selectItems([file1Title, file2Title]);
+
+		await page
+			.getByTestId('visualization-mode-table')
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await expect(
+			page.getByText('You are about to permanently')
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await page.reload();
+
+		await expect(
+			page.getByRole('cell', {name: file1Title})
+		).not.toBeVisible();
+		await expect(
+			page.getByRole('cell', {name: file2Title})
+		).not.toBeVisible();
+	}
+);
+
+test(
+	'Can delete multiple contents in a space with recycle bin enabled',
+	{tag: '@LPD-62787'},
+	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = `Space ${getRandomString()}`;
+		const file1Title = `title ${getRandomString()}`;
+		const file2Title = `title ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file2Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await assetsPage.gotoAll();
+
+		await assetsPage.selectItems([file1Title, file2Title]);
+
+		await page
+			.getByTestId('visualization-mode-table')
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await page.reload();
+
+		await recycleBinPage.goto();
+
+		await expect(page.getByRole('cell', {name: file1Title})).toBeVisible();
+		await expect(page.getByRole('cell', {name: file2Title})).toBeVisible();
+	}
 );
 
 test(
@@ -76,10 +277,20 @@ test(
 	{tag: '@LPD-62554'},
 	async ({apiHelpers, assetsPage, infoPanelPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
-		const spaceName = 'Default';
+		const spaceName = `Space ${getRandomString()}`;
 		let objectEntry1;
 
 		const file1Title = `title ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: false,
+			},
+			type: 'Space',
+		});
 
 		const addComment = async ({
 			content = 'New Comment',

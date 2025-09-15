@@ -3,6 +3,7 @@
 		return (
 			(...args) => {
 				import(
+					Liferay.ThemeDisplay.getCDNHost() +
 					Liferay.ThemeDisplay.getPathContext() +
 						'/o/' +
 						contextPath +

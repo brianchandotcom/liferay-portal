@@ -7,6 +7,8 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.concurrent.FutureListener;
 import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.io.OutputStreamWriter;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
@@ -44,7 +46,6 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -333,14 +334,7 @@ public class Sidecar {
 
 			Files.write(
 				configFolder.resolve("log4j2.properties"),
-				Arrays.asList(
-					"logger.bootstrapchecks.name=org.elasticsearch.bootstrap." +
-						"BootstrapChecks",
-					"logger.bootstrapchecks.level=error",
-					"logger.deprecation.name=org.elasticsearch.deprecation",
-					"logger.deprecation.level=error",
-					ResourceUtil.getResourceAsString(
-						Sidecar.class, "/log4j2.properties")));
+				_getLog4jProperties());
 		}
 		catch (IOException ioException) {
 			_log.error(
@@ -408,6 +402,29 @@ public class Sidecar {
 		arguments.add("-javaagent:" + agentPath);
 
 		return arguments;
+	}
+
+	private byte[] _getLog4jProperties() throws IOException {
+		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+				unsyncByteArrayOutputStream)) {
+
+			outputStreamWriter.write(
+				StringBundler.concat(
+					"logger.bootstrapchecks.name=org.elasticsearch.bootstrap.",
+					"BootstrapChecks\n", "logger.bootstrapchecks.level=error\n",
+					"logger.deprecation.name=org.elasticsearch.deprecation\n",
+					"logger.deprecation.level=error\n"));
+
+			outputStreamWriter.write(
+				ResourceUtil.getResourceAsString(
+					Sidecar.class, "/log4j2.properties"));
+
+			outputStreamWriter.flush();
+
+			return unsyncByteArrayOutputStream.toByteArray();
+		}
 	}
 
 	private String _getNodeName() {

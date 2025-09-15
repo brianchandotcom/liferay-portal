@@ -366,10 +366,6 @@ public interface FragmentEntryLinkLocalService
 		long fragmentEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryId(
-		long fragmentEntryId, boolean deleted);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinksByPlid(
 		long groupId, long plid);
 
@@ -501,19 +497,11 @@ public interface FragmentEntryLinkLocalService
 		FragmentEntryLink fragmentEntryLink);
 
 	public FragmentEntryLink updateFragmentEntryLink(
-			long userId, long fragmentEntryLinkId, int position)
-		throws PortalException;
-
-	public FragmentEntryLink updateFragmentEntryLink(
 			long userId, long fragmentEntryLinkId,
 			long originalFragmentEntryLinkId, long fragmentEntryId, long plid,
 			String css, String html, String js, String configuration,
 			String editableValues, String namespace, int position, int type,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	public FragmentEntryLink updateFragmentEntryLink(
-			long userId, long fragmentEntryLinkId, String editableValues)
 		throws PortalException;
 
 	public FragmentEntryLink updateFragmentEntryLink(

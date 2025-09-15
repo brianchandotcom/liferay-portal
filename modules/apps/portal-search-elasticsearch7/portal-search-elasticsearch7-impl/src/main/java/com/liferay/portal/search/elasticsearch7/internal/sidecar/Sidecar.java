@@ -51,7 +51,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -571,22 +570,7 @@ public class Sidecar {
 			new StartSidecarProcessCallable(_getSidecarServerArgs()));
 
 		try {
-			return _waitForPublishedAddress(noticeableFuture);
-		}
-		catch (IOException ioException) {
-			if (Objects.equals(ioException.getMessage(), "Stream closed")) {
-				throw new RuntimeException(
-					StringBundler.concat(
-						"Sidecar JVM did not launch successfully. ",
-						SidecarMainProcessCallable.class.getSimpleName(),
-						" may have crashed, or its classpath may be missing ",
-						"required libraries"),
-					ioException);
-			}
-
-			processChannel.write(new StopSidecarProcessCallable());
-
-			throw new RuntimeException(ioException);
+			return noticeableFuture.get();
 		}
 		catch (Exception exception) {
 			processChannel.write(new StopSidecarProcessCallable());
@@ -596,21 +580,6 @@ public class Sidecar {
 			}
 
 			throw new RuntimeException(exception);
-		}
-	}
-
-	private String _waitForPublishedAddress(
-			NoticeableFuture<String> noticeableFuture)
-		throws Exception {
-
-		try {
-			return noticeableFuture.get();
-		}
-		catch (ExecutionException executionException) {
-			throw new Exception(executionException.getCause());
-		}
-		catch (InterruptedException interruptedException) {
-			throw new RuntimeException(interruptedException);
 		}
 	}
 

@@ -11,8 +11,8 @@
 	margin: 0.25rem 0;
 	outline: rgba(99, 153, 255, 0) solid 2px;
 	outline-offset: 2px;
-	transition: all var(--transition-base);
 	padding: 8px;
+	transition: all var(--transition-base);
 
 	.mega-menu-item-html {
 		align-self: start;

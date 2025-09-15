@@ -167,16 +167,7 @@ public class AgentPortalK8sConfigMapModifier
 		Consumer<ConfigMapModel> configMapModelConsumer, String configMapName) {
 
 		if (_portalK8sAgentConfiguration.debounceDelayMillis() <= 0) {
-			Result result = _modifyConfigMap(
-				configMapModelConsumer, configMapName);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Config map ", configMapName, " ", result));
-			}
-
-			return result;
+			return _modifyConfigMap(configMapModelConsumer, configMapName);
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -362,6 +353,10 @@ public class AgentPortalK8sConfigMapModifier
 
 	private Result _modifyConfigMap(
 		Consumer<ConfigMapModel> configMapModelConsumer, String configMapName) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Modify config map " + configMapName);
+		}
 
 		if (_clusterMasterExecutor.isEnabled()) {
 			if (_log.isDebugEnabled()) {

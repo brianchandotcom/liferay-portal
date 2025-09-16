@@ -186,7 +186,7 @@ public class FragmentEntryFragmentRendererTest {
 		Assert.assertTrue(content.contains("https://liferay.com"));
 
 		Assert.assertTrue(
-			content.contains("target=\"_blank\" rel=\"noopener noreferrer\""));
+			content.contains("rel=\"noopener noreferrer\" target=\"_blank\""));
 	}
 
 	@Test

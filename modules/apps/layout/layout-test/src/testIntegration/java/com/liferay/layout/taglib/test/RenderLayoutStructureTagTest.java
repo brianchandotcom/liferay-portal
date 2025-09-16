@@ -2682,8 +2682,8 @@ public class RenderLayoutStructureTagTest {
 			content.contains(
 				StringBundler.concat(
 					"data-lfr-editable-id=\"element-text\" data-lfr-editable-",
-					"type=\"text\"><a target=\"_blank\" rel=\"noopener ",
-					"noreferrer\" href=\"https://www.liferay.com/\">",
+					"type=\"text\"><a rel=\"noopener noreferrer\" ",
+					"target=\"_blank\" href=\"https://www.liferay.com/\">",
 					expectedContent, "</a></h1></div>")));
 	}
 

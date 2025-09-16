@@ -345,8 +345,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	public void testViewURL1() throws Exception {
 		long classNameId = RandomTestUtil.randomLong();
 
-		_setUpClassNameLocalService(
-			classNameId, RandomTestUtil.randomString());
+		_setUpClassNameLocalService(classNameId, RandomTestUtil.randomString());
 
 		String className = RandomTestUtil.randomString();
 
@@ -418,24 +417,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		searchResultSummaryDisplayContextBuilder.setDocument(document);
 
 		return searchResultSummaryDisplayContextBuilder.build();
-	}
-
-	private void _setUpAssetRenderer() throws Exception {
-		Mockito.doReturn(
-			_SUMMARY_CONTENT
-		).when(
-			assetRenderer
-		).getSearchSummary(
-			Mockito.nullable(Locale.class)
-		);
-
-		Mockito.doReturn(
-			_SUMMARY_TITLE
-		).when(
-			assetRenderer
-		).getTitle(
-			Mockito.nullable(Locale.class)
-		);
 	}
 
 	protected AssetEntryLocalService assetEntryLocalService = Mockito.mock(
@@ -652,6 +633,52 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		);
 	}
 
+	private void _setUpAssetRenderer() throws Exception {
+		Mockito.doReturn(
+			_SUMMARY_CONTENT
+		).when(
+			assetRenderer
+		).getSearchSummary(
+			Mockito.nullable(Locale.class)
+		);
+
+		Mockito.doReturn(
+			_SUMMARY_TITLE
+		).when(
+			assetRenderer
+		).getTitle(
+			Mockito.nullable(Locale.class)
+		);
+	}
+
+	private void _setUpClassNameLocalService(long classNameId, String value)
+		throws Exception {
+
+		ClassName className = Mockito.mock(ClassName.class);
+
+		Mockito.doReturn(
+			value
+		).when(
+			className
+		).getClassName();
+
+		Mockito.doReturn(
+			className
+		).when(
+			classNameLocalService
+		).getClassName(
+			Mockito.eq(classNameId)
+		);
+	}
+
+	private void _setUpGroup(boolean stagingGroup) throws Exception {
+		Mockito.doReturn(
+			stagingGroup
+		).when(
+			group
+		).isStagingGroup();
+	}
+
 	private void _setUpGroupLocalService() {
 		Mockito.doReturn(
 			group
@@ -662,8 +689,38 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		);
 	}
 
+	private void _setUpIndexerRegistry(String className, Indexer<?> indexer) {
+		Mockito.doReturn(
+			indexer
+		).when(
+			indexerRegistry
+		).getIndexer(
+			className
+		);
+	}
+
+	private void _setUpLanguage(String string) {
+		Mockito.doReturn(
+			string
+		).when(
+			language
+		).get(
+			Mockito.nullable(HttpServletRequest.class), Mockito.anyString()
+		);
+	}
+
 	private void _setUpLocaleThreadLocal() {
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+	}
+
+	private void _setUpSearchUtilMockedStatic(String className, long classPK) {
+		searchUtilMockedStatic.when(
+			() -> SearchUtil.getSearchResultViewURL(
+				Mockito.any(), Mockito.any(), Mockito.eq(className),
+				Mockito.eq(classPK), Mockito.eq(false), Mockito.isNull())
+		).thenReturn(
+			className + classPK
+		);
 	}
 
 	private void _setUpUser() throws Exception {
@@ -751,68 +808,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			assetRenderer
 		).getURLDownload(
 			themeDisplay
-		);
-	}
-
-	private void _setUpClassNameLocalService(long classNameId, String value)
-		throws Exception {
-
-		ClassName className = Mockito.mock(ClassName.class);
-
-		Mockito.doReturn(
-			value
-		).when(
-			className
-		).getClassName();
-
-		Mockito.doReturn(
-			className
-		).when(
-			classNameLocalService
-		).getClassName(
-			Mockito.eq(classNameId)
-		);
-	}
-
-	private void _setUpGroup(boolean stagingGroup)
-		throws Exception {
-
-		Mockito.doReturn(
-			stagingGroup
-		).when(
-			group
-		).isStagingGroup();
-	}
-
-	private void _setUpIndexerRegistry(
-		String className, Indexer<?> indexer) {
-
-		Mockito.doReturn(
-			indexer
-		).when(
-			indexerRegistry
-		).getIndexer(
-			className
-		);
-	}
-
-	private void _setUpLanguage(String string) {
-		Mockito.doReturn(
-			string
-		).when(
-			language
-		).get(
-			Mockito.nullable(HttpServletRequest.class), Mockito.anyString()
-		);
-	}
-
-	private void _setUpSearchUtilMockedStatic(String className, long classPK) {
-		searchUtilMockedStatic.when(
-			() -> SearchUtil.getSearchResultViewURL(
-				Mockito.any(), Mockito.any(), Mockito.eq(className),
-				Mockito.eq(classPK), Mockito.eq(false), Mockito.isNull())
-		).thenReturn(
-			className + classPK
 		);
 	}
 

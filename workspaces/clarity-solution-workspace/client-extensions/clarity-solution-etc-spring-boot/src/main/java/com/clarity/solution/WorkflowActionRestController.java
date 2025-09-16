@@ -26,10 +26,9 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author David Nebinger
  * @author Mumen Tayyem
  */
-@RequestMapping("/workflow/action/application")
+@RequestMapping("/workflow/action")
 @RestController
-public class WorkflowActionApplicationRestController
-	extends BaseRestController {
+public class WorkflowActionRestController extends BaseRestController {
 
 	@PostMapping
 	public ResponseEntity<String> post(

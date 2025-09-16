@@ -1,9 +1,9 @@
 assemble:
     -   fromTask: bootJar
-clarity-solution-etc-spring-boot-create-account-action:
-    name: Clarity Solution Etc Spring Boot Create Account Action
+clarity-solution-etc-spring-boot-object-action:
+    name: Clarity Solution Etc Spring Boot Object Action
     oAuth2ApplicationExternalReferenceCode: clarity-solution-etc-spring-boot-oaua
-    resourcePath: /object/action/account
+    resourcePath: /object/action
     type: objectAction
 clarity-solution-etc-spring-boot-oaua:
     .serviceAddress: localhost:58081
@@ -16,5 +16,5 @@ clarity-solution-etc-spring-boot-oaua:
 clarity-solution-etc-spring-boot-workflow-action:
     name: Clarity Solution Etc Spring Boot Workflow Action
     oAuth2ApplicationExternalReferenceCode: clarity-solution-etc-spring-boot-oaua
-    resourcePath: /workflow/action/application
+    resourcePath: /workflow/action
     type: workflowAction

@@ -27,9 +27,9 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author David Nebinger
  * @author Mumen Tayyem
  */
-@RequestMapping("/object/action/account")
+@RequestMapping("/object/action")
 @RestController
-public class ObjectActionAccountRestController extends BaseRestController {
+public class ObjectActionRestController extends BaseRestController {
 
 	@PostMapping
 	public ResponseEntity<String> post(

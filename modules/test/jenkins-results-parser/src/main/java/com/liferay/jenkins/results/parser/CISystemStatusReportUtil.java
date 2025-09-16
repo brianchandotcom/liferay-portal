@@ -97,9 +97,11 @@ public class CISystemStatusReportUtil {
 	}
 
 	public static void writeConfigJSFile(String filePath) throws IOException {
-		String masterNetworkName = System.getenv("MASTER_NETWORK_NAME");
+		int maxYAxes = 2370;
 
-		int maxYAxes = masterNetworkName.equals("aws-network") ? 1210 : 2370;
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			maxYAxes = 1210;
+		}
 
 		String content = String.format("window.MAX_Y_AXES = %d;%n", maxYAxes);
 

@@ -96,6 +96,18 @@ public class CISystemStatusReportUtil {
 			_CI_SYSTEM_STATUS_REPORT_DIR, new File(filePath));
 	}
 
+	public static void writeConfigJSFile(String filePath) throws IOException {
+		String masterNetworkName = System.getenv("MASTER_NETWORK_NAME");
+
+		int maxYAxes = masterNetworkName.equals("aws-network") ? 1210 : 2370;
+
+		String content = String.format("window.MAX_Y_AXES = %d;%n", maxYAxes);
+
+		File configFile = new File(filePath, "/js/config.js");
+
+		JenkinsResultsParserUtil.write(configFile, content);
+	}
+
 	public static void writeJenkinsDataJavaScriptFile(String filePath)
 		throws IOException {
 

@@ -36,6 +36,13 @@ public class SamlIbSloMessageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.saml.persistence.service.impl.SamlIbSloMessageLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static SamlIbSloMessage addSamlIbSloMessage(
+		long companyId, String logoutRequestXml, String samlIdpEntityId,
+		String samlIdpSessionIndex) {
+
+		return getService().addSamlIbSloMessage(
+			companyId, logoutRequestXml, samlIdpEntityId, samlIdpSessionIndex);
+	}
 
 	/**
 	 * Adds the saml ib slo message to the database. Also notifies the appropriate model listeners.
@@ -51,14 +58,6 @@ public class SamlIbSloMessageLocalServiceUtil {
 		SamlIbSloMessage samlIbSloMessage) {
 
 		return getService().addSamlIbSloMessage(samlIbSloMessage);
-	}
-
-	public static SamlIbSloMessage addSamlIbSloMessage(
-		String logoutRequestXml, String samlIdpEntityId,
-		String samlIdpSessionIndex) {
-
-		return getService().addSamlIbSloMessage(
-			logoutRequestXml, samlIdpEntityId, samlIdpSessionIndex);
 	}
 
 	/**

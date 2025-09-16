@@ -29,6 +29,16 @@ public class SamlIbSloMessageLocalServiceWrapper
 		_samlIbSloMessageLocalService = samlIbSloMessageLocalService;
 	}
 
+	@Override
+	public com.liferay.saml.persistence.model.SamlIbSloMessage
+		addSamlIbSloMessage(
+			long companyId, String logoutRequestXml, String samlIdpEntityId,
+			String samlIdpSessionIndex) {
+
+		return _samlIbSloMessageLocalService.addSamlIbSloMessage(
+			companyId, logoutRequestXml, samlIdpEntityId, samlIdpSessionIndex);
+	}
+
 	/**
 	 * Adds the saml ib slo message to the database. Also notifies the appropriate model listeners.
 	 *
@@ -47,16 +57,6 @@ public class SamlIbSloMessageLocalServiceWrapper
 
 		return _samlIbSloMessageLocalService.addSamlIbSloMessage(
 			samlIbSloMessage);
-	}
-
-	@Override
-	public com.liferay.saml.persistence.model.SamlIbSloMessage
-		addSamlIbSloMessage(
-			String logoutRequestXml, String samlIdpEntityId,
-			String samlIdpSessionIndex) {
-
-		return _samlIbSloMessageLocalService.addSamlIbSloMessage(
-			logoutRequestXml, samlIdpEntityId, samlIdpSessionIndex);
 	}
 
 	/**

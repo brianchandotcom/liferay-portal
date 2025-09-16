@@ -53,6 +53,9 @@ public interface SamlIbSloMessageLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.saml.persistence.service.impl.SamlIbSloMessageLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the saml ib slo message local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SamlIbSloMessageLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public SamlIbSloMessage addSamlIbSloMessage(
+		long companyId, String logoutRequestXml, String samlIdpEntityId,
+		String samlIdpSessionIndex);
 
 	/**
 	 * Adds the saml ib slo message to the database. Also notifies the appropriate model listeners.
@@ -67,10 +70,6 @@ public interface SamlIbSloMessageLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public SamlIbSloMessage addSamlIbSloMessage(
 		SamlIbSloMessage samlIbSloMessage);
-
-	public SamlIbSloMessage addSamlIbSloMessage(
-		String logoutRequestXml, String samlIdpEntityId,
-		String samlIdpSessionIndex);
 
 	/**
 	 * @throws PortalException

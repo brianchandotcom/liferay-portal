@@ -125,6 +125,18 @@ public interface AbsolutePortalURLBuilder {
 	public ServletAbsolutePortalURLBuilder forServlet(String requestURL);
 
 	/**
+	 * Returns a URL builder for a JavaScript file using the new caching
+	 * architecture based on hashed file names.
+	 *
+	 * @param  webContextPath the context path where the script lives
+	 * @param  scriptPath the script path (e.g. /js/main.js)
+	 * @return a URL builder
+	 * @review
+	 */
+	public WebContextScriptAbsolutePortalURLBuilder forWebContextScript(
+		String webContextPath, String scriptPath);
+
+	/**
 	 * Returns a URL builder for a CSS stylesheet using the new caching
 	 * architecture based on hashed file names.
 	 *

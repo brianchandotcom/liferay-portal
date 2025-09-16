@@ -23,6 +23,7 @@ import com.liferay.portal.url.builder.PortalImageAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortalMainResourceAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortletDependencyAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ServletAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.WebContextScriptAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.WebContextStylesheetAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.internal.util.CacheHelper;
 
@@ -130,6 +131,15 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 	public ServletAbsolutePortalURLBuilder forServlet(String requestURL) {
 		return new ServletAbsolutePortalURLBuilderImpl(
 			_pathModule, _pathProxy, requestURL);
+	}
+
+	@Override
+	public WebContextScriptAbsolutePortalURLBuilder forWebContextScript(
+		String webContextPath, String scriptPath) {
+
+		return new WebContextScriptAbsolutePortalURLBuilderImpl(
+			_getCDNHost(_httpServletRequest), _hashedFilesRegistry, _pathModule,
+			_pathProxy, scriptPath, webContextPath);
 	}
 
 	@Override

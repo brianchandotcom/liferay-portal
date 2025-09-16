@@ -38,15 +38,14 @@
 </#if>
 
 <style ${nonceAttribute}>
-
-	.title{
-	 	font-size: 24px;
-		font-weight: 600;
-	}
-
-	.description-content{
+	.description-content {
 		font-size: 18px;
 		line-height: 32px;
+	}
+
+	.title {
+	 	font-size: 24px;
+		font-weight: 600;
 	}
 
 </style>

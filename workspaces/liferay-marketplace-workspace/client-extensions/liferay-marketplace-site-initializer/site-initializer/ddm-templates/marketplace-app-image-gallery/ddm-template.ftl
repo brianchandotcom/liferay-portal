@@ -7,8 +7,16 @@
 	)
 
 	productImages = productImagesResponse.items![]
-	totalCount = productImagesResponse.totalCount
+	filteredProductImages = []
 >
+
+<#list productImages as image>
+	<#if image.galleryEnabled>
+		<#assign filteredProductImages += [image] />
+	</#if>
+</#list>
+
+<#assign totalCount = filteredProductImages?size />
 
 <div class = "carousel-container">
 	<div class = "main-image-wrapper">
@@ -16,7 +24,7 @@
 			<span class = "lexicon-icon-overwide"> <@clay["icon"] symbol = "angle-left" /></span>
 		</button>
 
-		<img alt = "${productImages[0].title?html}" id = "main-image" src = "${(productImages[0].src?replace("https://", "http://"))}" />
+		<img alt = "${filteredProductImages[0].title?html}" id = "main-image" src = "${(filteredProductImages[0].src?replace("https://", "http://"))}" />
 
 		<button class="nav-button next" aria-label="Next Image">
 			<span class="lexicon-icon-overwide"> <@clay["icon"] symbol="angle-right" /></span>
@@ -24,7 +32,7 @@
 	</div>
 
 	<div class="thumbnails-wrapper">
-		<div class="thumbnails align-items-center"></div>
+		<div class="align-items-center thumbnails"></div>
 
 		<#assign count = (totalCount?default(0)?number) />
 
@@ -68,7 +76,7 @@
 
 	function loadImages() {
 		images = [
-			<#list productImages as image>
+			<#list filteredProductImages as image>
 			{
 				src: "${(image.src?replace('https://', 'http://'))?js_string}",
 				alt: "${image.title?html?js_string}"
@@ -229,7 +237,7 @@
 	margin: 0px !important;
 }
 
-.custom-gallery-modal{
+.custom-gallery-modal {
 	height: 80% !important;
 }
 
@@ -259,9 +267,9 @@
 
 .modal-image {
 	aspect-ratio: 16/9;
-	object-fit: contain;;
 	border-radius: 8px;
 	max-width: 100vh !important;
+	object-fit: contain;
 }
 
 .modal-gallery-header .lexicon-icon {
@@ -345,7 +353,7 @@
 	opacity: 1;
 }
 
-.thumbnail.selected{
+.thumbnail.selected {
 	height: 102px;
 }
 
@@ -377,8 +385,8 @@
 	margin-left: 8px;
 	min-width: 152px;
 	transition: background-color 0.3s ease,
-		box-shadow 0.3s ease,
-		border-color 250ms ease-out;
+		border-color 250ms ease-out,
+		box-shadow 0.3s ease;
 }
 
 .view-full-gallery .subtitle {
@@ -397,7 +405,7 @@
 
 .view-full-gallery:hover {
 	background-color: #f3f4f6;
-	box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
 	border: 2px solid rgb(143, 181, 255);
+	box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
 }
 </style>

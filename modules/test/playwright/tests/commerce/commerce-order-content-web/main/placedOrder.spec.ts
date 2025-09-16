@@ -950,9 +950,10 @@ test('LPD-32095 A user can search orders by account name', async ({
 	await expect(placedOrdersPage.orderAccountName(account1.name)).toHaveCount(
 		0
 	);
-	await expect(placedOrdersPage.orderAccountName(account2.name)).toHaveCount(
-		1
-	);
+	await expect(
+		(await placedOrdersPage.searchTableRowByValue(6, account2.name, true))
+			.row
+	).toBeVisible();
 });
 
 test(

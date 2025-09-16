@@ -2004,10 +2004,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).build(),
 				unicodeProperties, serviceContext);
 
-			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-				(group != null) ? group.getClassPK() :
-					depotEntry.getDepotEntryId(),
-				serviceContext.getScopeGroupId());
+			Group scopeGroup = serviceContext.getScopeGroup();
+
+			if (scopeGroup.isSite()) {
+				_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+					(group != null) ? group.getClassPK() :
+						depotEntry.getDepotEntryId(),
+					serviceContext.getScopeGroupId());
+			}
 		}
 	}
 

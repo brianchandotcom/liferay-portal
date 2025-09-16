@@ -46,6 +46,13 @@ public class StyleSheetFrontendResourceRequestHandler
 
 	@Override
 	public boolean canHandleRequest(HttpServletRequest httpServletRequest) {
+
+		// LPD-57326
+
+		if (true) {
+			return false;
+		}
+
 		String requestURI = httpServletRequest.getRequestURI();
 
 		if (!requestURI.endsWith(".css")) {

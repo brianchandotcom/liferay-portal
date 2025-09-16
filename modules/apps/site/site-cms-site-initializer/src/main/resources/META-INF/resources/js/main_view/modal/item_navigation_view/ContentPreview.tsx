@@ -5,6 +5,15 @@
 
 import React from 'react';
 
-export default function ContentPreview() {
-    return (<p>Not yet implemented</p>);
+export default function ContentPreview({url}: {url: string}) {
+	return (
+		<div style={{height: '100%'}}>
+			<iframe
+				height="100%"
+				src={url}
+				style={{border: 'none'}}
+				width="100%"
+			/>
+		</div>
+	);
 }

@@ -41,6 +41,7 @@ export type AdditionalProps = {
 	baseFolderViewURL: string;
 	cmsGroupId?: number;
 	collaboratorURLs: Record<string, string>;
+	contentViewURL: string;
 	defaultPermissionAdditionalProps?: any;
 	fileMimeTypeCssClasses: Record<string, string>;
 	fileMimeTypeIcons: Record<string, string>;
@@ -251,6 +252,7 @@ export default function AssetsFDSPropsTransformer({
 					},
 					contentComponent: () =>
 						ItemNavigationModalContent({
+							contentViewURL: additionalProps.contentViewURL,
 							currentIndex: currentItemPos,
 							items: filteredItems,
 						}),

@@ -11,11 +11,13 @@ import Carousel from './Carousel';
 import Header from './Header';
 
 interface ItemNavigationModalContent {
+	contentViewURL: string;
 	currentIndex: number;
 	items: ItemData[];
 }
 
 export default function ItemNavigationModalContent({
+	contentViewURL,
 	currentIndex = 0,
 	items,
 }: ItemNavigationModalContent) {
@@ -53,6 +55,7 @@ export default function ItemNavigationModalContent({
 
 			<ClayModal.Body>
 				<Carousel
+					contentViewURL={contentViewURL}
 					currentItem={currentItem}
 					handleClickNext={handleClickNext}
 					handleClickPrevious={handleClickPrevious}

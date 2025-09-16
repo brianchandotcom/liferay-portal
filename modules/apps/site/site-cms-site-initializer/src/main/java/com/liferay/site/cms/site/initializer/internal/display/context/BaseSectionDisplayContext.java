@@ -166,6 +166,14 @@ public abstract class BaseSectionDisplayContext {
 				return collaboratorURLs;
 			}
 		).put(
+			"contentViewURL",
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/edit_content_item?&p_l_mode=read&p_p_state=",
+				LiferayWindowState.POP_UP, "&redirect=",
+				themeDisplay.getURLCurrent(), "&objectEntryId={embedded.id}")
+		).put(
 			"defaultPermissionAdditionalProps",
 			_getDefaultPermissionAdditionalProps()
 		).put(

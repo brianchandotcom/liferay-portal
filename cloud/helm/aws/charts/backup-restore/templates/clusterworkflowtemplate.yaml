@@ -57,7 +57,7 @@ spec:
                 command: ["aws"]
                 image: "{{ .Values.images.awsCli.repository }}:{{ .Values.images.awsCli.tag }}"
                 resources:
-                    {{- .Values.resources.cleanUpS3Bucket | toYaml | nindent 16 }}
+                    {{- .Values.resources.cleanUpS3Bucket | toYaml | nindent 20 }}
             inputs:
                 parameters:
                     -   name: s3-bucket-id
@@ -113,7 +113,7 @@ spec:
                     -   "{{ .Values.liferayWorkload.name }}"
                 image: "{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}"
                 resources:
-                    {{- .Values.resources.kubectlRolloutRestart | toYaml | nindent 16 }}
+                    {{- .Values.resources.kubectlRolloutRestart | toYaml | nindent 20 }}
             name: kubectl-rollout-restart
         -   container:
                 args:
@@ -124,7 +124,7 @@ spec:
                     -   --timeout={{ .Values.liferayWorkload.rolloutTimeout }}
                 image: "{{ .Values.images.kubectl.repository }}:{{ .Values.images.kubectl.tag }}"
                 resources:
-                    {{- .Values.resources.kubectlRolloutStatus | toYaml | nindent 16 }}
+                    {{- .Values.resources.kubectlRolloutStatus | toYaml | nindent 20 }}
             name: kubectl-rollout-status
         -   dag:
                 tasks:
@@ -193,14 +193,21 @@ spec:
                                     name: git-repository
                             parameters:
                                 -   name: commit-message
-                                    value: Roll back failed restore
+                                    value: Roll back RDS instance
                                 -   name: tfvars-content
                                     value: |-
                                         data_active = "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.data-active}}"
                                         is_restoring = false
-                        depends: restore-rds-instance.Succeeded && !restart-liferay.Succeeded
-                        name: roll-back-failed-restore
+                        depends: "!restore-rds-instance.Skipped && !update-kubernetes-secret.Succeeded"
+                        name: roll-back-rds-instance
                         template: apply-terraform-dependencies-module
+                    -   arguments:
+                            parameters:
+                                -   name: s3-bucket-id
+                                    value: "{{ "{{" }}tasks.get-dependencies-module-outputs.outputs.parameters.s3-bucket-id-inactive}}"
+                        depends: "!restore-s3-bucket.Skipped && !update-kubernetes-secret.Succeeded"
+                        name: roll-back-s3-bucket
+                        template: clean-up-s3-bucket
                     -   arguments:
                             artifacts:
                                 -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"

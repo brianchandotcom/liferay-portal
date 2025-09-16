@@ -189,6 +189,13 @@ else {
 						const value = editor.getData();
 
 						onChange(value);
+
+						if (
+							input.required &&
+							currentLanguageId === defaultLanguageId
+						) {
+							updateCKEditorRequired(value);
+						}
 					};
 
 					if (Liferay.FeatureFlags['LPD-11235']) {

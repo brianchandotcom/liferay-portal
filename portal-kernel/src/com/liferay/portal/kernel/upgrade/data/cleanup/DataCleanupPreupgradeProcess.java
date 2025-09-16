@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup;
 
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -18,6 +17,55 @@ import java.util.Map;
  * @author Luis Ortiz
  */
 public abstract class DataCleanupPreupgradeProcess extends UpgradeProcess {
+
+	public static List<DataCleanupPreupgradeProcess> dependsOn(
+		DataCleanupPreupgradeProcess... dataCleanupPreupgradeProcesses) {
+
+		return ListUtil.fromArray(dataCleanupPreupgradeProcesses);
+	}
+
+	public static List<DataCleanupPreupgradeProcess>
+		getSortedDataCleanupPreupgradeProcesses(
+			Map
+				<DataCleanupPreupgradeProcess,
+				 List<DataCleanupPreupgradeProcess>>
+					dataCleanupPreupgradeProcessesMap) {
+
+		List<DataCleanupPreupgradeProcess>
+			sortedDataCleanupPreupgradeProcesses = new ArrayList<>();
+
+		while (sortedDataCleanupPreupgradeProcesses.size() !=
+					dataCleanupPreupgradeProcessesMap.size()) {
+
+			int size = sortedDataCleanupPreupgradeProcesses.size();
+
+			for (Map.Entry
+					<DataCleanupPreupgradeProcess,
+					 List<DataCleanupPreupgradeProcess>> entry :
+						dataCleanupPreupgradeProcessesMap.entrySet()) {
+
+				DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess =
+					entry.getKey();
+
+				if (sortedDataCleanupPreupgradeProcesses.contains(
+						dataCleanupPreupgradeProcess) ||
+					!sortedDataCleanupPreupgradeProcesses.containsAll(
+						entry.getValue())) {
+
+					continue;
+				}
+
+				sortedDataCleanupPreupgradeProcesses.add(
+					dataCleanupPreupgradeProcess);
+			}
+
+			if (size == sortedDataCleanupPreupgradeProcesses.size()) {
+				throw new RuntimeException("Circular dependency");
+			}
+		}
+
+		return sortedDataCleanupPreupgradeProcesses;
+	}
 
 	@Override
 	public void upgrade() throws DataCleanupPreupgradeException {
@@ -38,46 +86,6 @@ public abstract class DataCleanupPreupgradeProcess extends UpgradeProcess {
 		}
 		catch (UpgradeException upgradeException) {
 			throw new DataCleanupPreupgradeException(upgradeException);
-		}
-	}
-
-	@SafeVarargs
-	protected final List<UnsafeRunnable<Exception>> dependsOn(
-		UnsafeRunnable<Exception>... unsafeRunnables) {
-
-		return ListUtil.fromArray(unsafeRunnables);
-	}
-
-	protected void run(
-			Map<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
-				unsafeRunnablesMap)
-		throws Exception {
-
-		List<UnsafeRunnable<Exception>> unsafeRunnableList = new ArrayList<>();
-
-		while (unsafeRunnableList.size() != unsafeRunnablesMap.size()) {
-			int size = unsafeRunnableList.size();
-
-			for (Map.Entry
-					<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
-						entry : unsafeRunnablesMap.entrySet()) {
-
-				UnsafeRunnable<Exception> unsafeRunnable = entry.getKey();
-
-				if (unsafeRunnableList.contains(unsafeRunnable) ||
-					!unsafeRunnableList.containsAll(entry.getValue())) {
-
-					continue;
-				}
-
-				unsafeRunnable.run();
-
-				unsafeRunnableList.add(unsafeRunnable);
-			}
-
-			if (size == unsafeRunnableList.size()) {
-				throw new RuntimeException("Circular dependency");
-			}
 		}
 	}
 

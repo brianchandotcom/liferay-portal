@@ -174,7 +174,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			).as(
 				"tagsCount"
 			),
-			DSLFunctionFactoryUtil.count(
+			DSLFunctionFactoryUtil.countDistinct(
 				objectEntryTable.objectEntryId
 			).as(
 				"totalCount"

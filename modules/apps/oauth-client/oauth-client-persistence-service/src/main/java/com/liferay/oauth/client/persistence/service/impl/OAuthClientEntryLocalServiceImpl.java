@@ -101,11 +101,8 @@ public class OAuthClientEntryLocalServiceImpl
 			_validateAuthRequestParametersJSON(authRequestParametersJSON);
 		}
 
-		if (Validator.isNull(tokenRequestParametersJSON)) {
-			tokenRequestParametersJSON = "{}";
-		}
-		else {
-			_validateTokenRequestParametersJSON(tokenRequestParametersJSON);
+		if (customClaimsJSON == null) {
+			customClaimsJSON = "{}";
 		}
 
 		if (authServerWellKnownURI.contains("openid-configuration")) {
@@ -115,8 +112,11 @@ public class OAuthClientEntryLocalServiceImpl
 			oidcUserInfoMapperJSON = "{}";
 		}
 
-		if (customClaimsJSON == null) {
-			customClaimsJSON = "{}";
+		if (Validator.isNull(tokenRequestParametersJSON)) {
+			tokenRequestParametersJSON = "{}";
+		}
+		else {
+			_validateTokenRequestParametersJSON(tokenRequestParametersJSON);
 		}
 
 		JSONObject clientInformationJSONObject =
@@ -132,12 +132,12 @@ public class OAuthClientEntryLocalServiceImpl
 			authRequestParametersJSON);
 		oAuthClientEntry.setAuthServerWellKnownURI(authServerWellKnownURI);
 		oAuthClientEntry.setClientId(clientId);
+		oAuthClientEntry.setCustomClaimsJSON(customClaimsJSON);
 		oAuthClientEntry.setInfoJSON(clientInformationJSONObject.toString());
 		oAuthClientEntry.setMetadataCacheTime(metadataCacheTime);
 		oAuthClientEntry.setOIDCUserInfoMapperJSON(oidcUserInfoMapperJSON);
 		oAuthClientEntry.setTokenRequestParametersJSON(
 			tokenRequestParametersJSON);
-		oAuthClientEntry.setCustomClaimsJSON(customClaimsJSON);
 
 		oAuthClientEntry = oAuthClientEntryPersistence.update(oAuthClientEntry);
 

@@ -1,0 +1,51 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ClayButtonWithIcon} from '@clayui/button';
+import React from 'react';
+
+const Arrow = ({
+	direction,
+	handleClick,
+}: {
+	direction: string;
+	handleClick: any;
+}) => (
+	<div className={`position-absolute pull-${direction}`}>
+		<ClayButtonWithIcon
+			displayType="secondary"
+			onClick={handleClick}
+			outline
+			rounded
+			symbol={`angle-${direction}`}
+		/>
+	</div>
+);
+
+export default function Carousel({
+	currentItem,
+	handleClickNext,
+	handleClickPrevious,
+	showArrows = true,
+}: {
+	currentItem: ItemData;
+	handleClickNext: () => void;
+	handleClickPrevious: () => void;
+	showArrows: boolean;
+}) {
+	return (
+		<div className="carousel">
+			{showArrows && (
+				<Arrow direction="left" handleClick={handleClickPrevious} />
+			)}
+
+			{currentItem.title}
+
+			{showArrows && (
+				<Arrow direction="right" handleClick={handleClickNext} />
+			)}
+		</div>
+	);
+}

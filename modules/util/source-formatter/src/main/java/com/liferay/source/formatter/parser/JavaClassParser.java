@@ -448,7 +448,7 @@ public class JavaClassParser {
 			detailAST.getColumnNo(), _getStartLineNumber(detailAST));
 
 		String javaTermContent = _getJavaTermContent(
-			fileContents, startPosition, endPosition);
+			fileContents, endPosition, startPosition);
 
 		if (startPosition.getColumnNumber() != 0) {
 			javaTermContent = javaTermContent + "\n";
@@ -458,8 +458,8 @@ public class JavaClassParser {
 	}
 
 	private static String _getJavaTermContent(
-		FileContents fileContents, Position startPosition,
-		Position endPosition) {
+		FileContents fileContents, Position endPosition,
+		Position startPosition) {
 
 		int endLineNumber = endPosition.getLineNumber();
 		int startLineNumber = startPosition.getLineNumber();

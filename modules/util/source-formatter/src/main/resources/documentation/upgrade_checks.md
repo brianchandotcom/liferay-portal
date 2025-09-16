@@ -22,7 +22,6 @@ UpgradeJavaAssetEntryAssetCategoriesCheck | .bnd, .ftl, .gradle, .java, .json, .
 UpgradeJavaBaseFragmentCollectionContributorExtendedClassesCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Adds FragmentCollectionKey to Component annotation in classes that extend `BaseFragmentCollectionContributor` |
 UpgradeJavaBaseModelListenerCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class. |
 UpgradeJavaBasePanelAppExtendedClassesCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replace the setPortlet method with getPortlet. |
-UpgradeJavaCommerceOrderValidatorCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replace the parameter Int for BigDecimal of method validate of 'CommerceOrderValidator' interface. |
 UpgradeJavaDDMFormValuesSerializerTrackerCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages. |
 UpgradeJavaDisplayPageInfoItemCapabilityCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replace all references of DisplayPageInfoItemCapability to InfoItemCapability |
 UpgradeJavaFDSActionProviderCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Reorder parameters in the getDropdownItems method of the FDSDataProvider interface. |

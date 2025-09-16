@@ -51,6 +51,7 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.hamcrest.CoreMatchers;
 
@@ -259,7 +260,16 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 		ServiceRegistration<S> serviceRegistration =
 			bundleContext.registerService(clazz, service, properties);
 
-		return serviceRegistration::unregister;
+		AtomicBoolean isUnregistered = new AtomicBoolean(false);
+
+		return () -> {
+			if (isUnregistered.get()) {
+				return;
+			}
+
+			isUnregistered.set(true);
+			serviceRegistration.unregister();
+		};
 	}
 
 	@Inject

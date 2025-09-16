@@ -6,8 +6,13 @@
 package com.clarity.solution;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
+
+import org.json.JSONObject;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,11 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * Invoked when a Distributor Application is approved and an Account
- * needs to be created.
- *
  * @author dnebing
  * @author Mumen Tayyem
  */
@@ -28,25 +31,87 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ObjectActionAccountRestController extends BaseRestController {
 
-	@Autowired
-	public ObjectActionAccountRestController(
-		AccountCreationRequestQueueManager queueManager) {
-
-		_queueManager = queueManager;
-	}
-
 	@PostMapping
 	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
-		AccountCreationRequest accountCreationRequest =
-			new AccountCreationRequest(json, jwt);
+		JSONObject jsonObject = new JSONObject(json);
 
-		_queueManager.enqueue(accountCreationRequest);
+		JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+			"objectEntryDTOU3A2DistributorApplication"
+		).getJSONObject(
+			"properties"
+		);
 
-		return new ResponseEntity<>(json, HttpStatus.OK);
+		String accountName = propertiesJSONObject.getString("businessName");
+		String accountEmailAddress = propertiesJSONObject.getString(
+			"applicantEmailAddress");
+
+		String standardAccountName = StringUtils.replace(
+			StringUtil.toUpperCase(accountName), " ", "_");
+
+		String accountExternalReferenceCode = "ACCOUNT_" + standardAccountName;
+
+		String authorizationHeader = "Bearer " + jwt.getTokenValue();
+
+		post(
+			authorizationHeader,
+			new JSONObject(
+			).put(
+				"externalReferenceCode", accountExternalReferenceCode
+			).put(
+				"name", accountName
+			).put(
+				"type", "business"
+			).toString(),
+			UriComponentsBuilder.fromUriString(
+				"/o/headless-admin-user/v1.0/accounts"
+			).build(
+			).toUri());
+
+		post(
+			authorizationHeader, "",
+			UriComponentsBuilder.fromUriString(
+				StringBundler.concat(
+					"/o/headless-admin-user/v1.0/accounts",
+					"/by-external-reference-code/",
+					accountExternalReferenceCode,
+					"/user-accounts/by-email-address/", accountEmailAddress)
+			).build(
+			).toUri());
+
+		long adminAccountRoleId = new JSONObject(
+			get(
+				authorizationHeader,
+				UriComponentsBuilder.fromUriString(
+					StringBundler.concat(
+						"/o/headless-admin-user/v1.0/accounts",
+						"/by-external-reference-code/",
+						accountExternalReferenceCode, "/account-roles",
+						"?filter=name eq 'Account Administrator'")
+				).build(
+				).toUri())
+		).getJSONArray(
+			"items"
+		).getJSONObject(
+			0
+		).getLong(
+			"id"
+		);
+
+		post(
+			authorizationHeader, "",
+			UriComponentsBuilder.fromUriString(
+				StringBundler.concat(
+					"/o/headless-admin-user/v1.0/accounts",
+					"/by-external-reference-code/",
+					accountExternalReferenceCode, "/account-roles/",
+					adminAccountRoleId, "/user-accounts/by-email-address/",
+					accountEmailAddress)
+			).build(
+			).toUri());
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
-	private final AccountCreationRequestQueueManager _queueManager;
 
 }

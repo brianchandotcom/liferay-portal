@@ -6,7 +6,6 @@
 package com.clarity.solution;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.petra.string.StringBundler;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * @author Raymond Augé
- * @author Gregory Amerson
  * @author Brian Wing Shun Chan
  * @author Mumen Tayyem
  */
@@ -62,9 +59,7 @@ public class WorkflowActionApplicationRestController
 				"transitionName", transitionName
 			).toString(),
 			UriComponentsBuilder.fromPath(
-				StringBundler.concat(
-					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-					jsonObject.getString("transitionURL"))
+				jsonObject.getString("transitionURL")
 			).build(
 			).toUri());
 

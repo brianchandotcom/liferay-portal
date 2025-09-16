@@ -323,6 +323,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.BOOLEAN;
 					customValue = new CustomValue() {
 						{
 							data = true;
@@ -336,6 +337,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.BOOLEAN_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new boolean[] {true};
@@ -349,6 +351,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DATE;
 					customValue = new CustomValue() {
 						{
 							data = _dateFormat.format(randomDate);
@@ -362,6 +365,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DATE_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new Date[] {randomDate};
@@ -375,6 +379,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DOUBLE;
 					customValue = new CustomValue() {
 						{
 							data = _DATA_DOUBLE;
@@ -388,6 +393,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DOUBLE_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new double[] {_DATA_DOUBLE};
@@ -401,6 +407,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DOUBLE_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new double[] {_DATA_DOUBLE};
@@ -414,6 +421,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DOUBLE_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new double[] {_DATA_DOUBLE};
@@ -427,6 +435,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.FLOAT;
 					customValue = new CustomValue() {
 						{
 							data = randomFloat;
@@ -440,6 +449,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.FLOAT_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new float[] {randomFloat};
@@ -453,6 +463,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.GEOLOCATION;
 					customValue = new CustomValue() {
 						{
 							geo = new Geo() {
@@ -471,6 +482,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.INTEGER;
 					customValue = new CustomValue() {
 						{
 							data = randomInt;
@@ -484,6 +496,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.INTEGER_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new int[] {randomInt};
@@ -497,6 +510,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.LONG;
 					customValue = new CustomValue() {
 						{
 							data = _DATA_LONG;
@@ -510,6 +524,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.LONG_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new long[] {_DATA_LONG};
@@ -523,6 +538,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.LONG_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new long[] {_DATA_LONG};
@@ -536,6 +552,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.LONG_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new long[] {_DATA_LONG};
@@ -549,6 +566,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.NUMBER;
 					customValue = new CustomValue() {
 						{
 							data = new BigDecimal(randomNumber.intValue());
@@ -562,6 +580,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.NUMBER_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new Number[] {
@@ -577,6 +596,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.SHORT;
 					customValue = new CustomValue() {
 						{
 							data = randomShort;
@@ -590,6 +610,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.SHORT_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new short[] {randomShort};
@@ -603,6 +624,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING;
 					customValue = new CustomValue() {
 						{
 							data = _DATA_STRING;
@@ -616,6 +638,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new String[] {_DATA_STRING};
@@ -629,6 +652,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new String[] {_DATA_STRING};
@@ -642,6 +666,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new String[] {_DATA_STRING};
@@ -655,6 +680,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_ARRAY_LOCALIZED;
 					customValue = new CustomValue() {
 						{
 							data = HashMapBuilder.put(
@@ -674,6 +700,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_LOCALIZED;
 					customValue = new CustomValue() {
 						{
 							data = _DATA_STRING;
@@ -702,6 +729,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.BOOLEAN;
 					customValue = new CustomValue() {
 						{
 							data = false;
@@ -715,6 +743,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.BOOLEAN_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new boolean[0];
@@ -728,6 +757,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DATE;
 					customValue = new CustomValue() {
 						{
 							data = "1970-01-01T00:00:00Z";
@@ -741,6 +771,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DATE_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new String[0];
@@ -754,6 +785,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DOUBLE;
 					customValue = new CustomValue() {
 						{
 							data = 0.0;
@@ -767,6 +799,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DOUBLE_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new double[] {0.0};
@@ -780,6 +813,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DOUBLE_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new double[] {0.0};
@@ -793,6 +827,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.DOUBLE_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new double[] {_DATA_DOUBLE};
@@ -806,6 +841,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.FLOAT;
 					customValue = new CustomValue() {
 						{
 							data = (float)0.0;
@@ -819,6 +855,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.FLOAT_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new float[0];
@@ -832,6 +869,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.GEOLOCATION;
 					customValue = new CustomValue() {
 						{
 							geo = new Geo() {
@@ -850,6 +888,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.INTEGER;
 					customValue = new CustomValue() {
 						{
 							data = 0;
@@ -863,6 +902,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.INTEGER_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new int[0];
@@ -876,6 +916,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.LONG;
 					customValue = new CustomValue() {
 						{
 							data = 0L;
@@ -889,6 +930,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.LONG_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new long[] {0L};
@@ -902,6 +944,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.LONG_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new long[] {0L};
@@ -915,6 +958,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.LONG_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new long[] {_DATA_LONG};
@@ -928,6 +972,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.NUMBER;
 					customValue = new CustomValue() {
 						{
 							data = 0;
@@ -941,6 +986,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.NUMBER_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new Number[0];
@@ -954,6 +1000,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.SHORT;
 					customValue = new CustomValue() {
 						{
 							data = (short)0;
@@ -967,6 +1014,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.SHORT_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new short[0];
@@ -980,6 +1028,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING;
 					customValue = new CustomValue() {
 						{
 							data = "";
@@ -993,6 +1042,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new String[] {"false"};
@@ -1006,6 +1056,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new String[] {"false"};
@@ -1019,6 +1070,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_ARRAY;
 					customValue = new CustomValue() {
 						{
 							data = new String[] {_DATA_STRING};
@@ -1032,6 +1084,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_ARRAY_LOCALIZED;
 					customValue = new CustomValue() {
 						{
 							data = new HashMap<>();
@@ -1045,6 +1098,7 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			new CustomField() {
 				{
+					attributeType = AttributeType.STRING_LOCALIZED;
 					customValue = new CustomValue() {
 						{
 							data_i18n = new HashMap<>();
@@ -2185,7 +2239,7 @@ public class CustomFieldsUtilTest {
 				new CustomField[] {
 					new CustomField() {
 						{
-							attributeType = 9;
+							attributeType = AttributeType.INTEGER;
 							customValue = new CustomValue() {
 								{
 									data = _DATA_INT;
@@ -2268,7 +2322,7 @@ public class CustomFieldsUtilTest {
 			new CustomField[] {
 				new CustomField() {
 					{
-						attributeType = 1;
+						attributeType = AttributeType.BOOLEAN;
 						customValue = new CustomValue() {
 							{
 								data = true;
@@ -2279,7 +2333,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 1;
+						attributeType = AttributeType.BOOLEAN;
 						customValue = new CustomValue() {
 							{
 								data = true;
@@ -2290,7 +2344,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 2;
+						attributeType = AttributeType.BOOLEAN_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new boolean[] {true};
@@ -2301,7 +2355,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 3;
+						attributeType = AttributeType.DATE;
 						customValue = new CustomValue() {
 							{
 								data = _dateFormat.format(randomDate);
@@ -2313,7 +2367,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 4;
+						attributeType = AttributeType.DATE_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new Date[] {randomDate};
@@ -2324,7 +2378,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 5;
+						attributeType = AttributeType.DOUBLE;
 						customValue = new CustomValue() {
 							{
 								data = _DATA_DOUBLE;
@@ -2335,7 +2389,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 6;
+						attributeType = AttributeType.DOUBLE_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new double[] {_DATA_DOUBLE};
@@ -2346,7 +2400,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 7;
+						attributeType = AttributeType.FLOAT;
 						customValue = new CustomValue() {
 							{
 								data = _DATA_FLOAT;
@@ -2357,7 +2411,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 8;
+						attributeType = AttributeType.FLOAT_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new float[] {_DATA_FLOAT};
@@ -2368,7 +2422,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 9;
+						attributeType = AttributeType.INTEGER;
 						customValue = new CustomValue() {
 							{
 								data = _DATA_INT;
@@ -2379,7 +2433,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 10;
+						attributeType = AttributeType.INTEGER_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new int[] {_DATA_INT};
@@ -2390,7 +2444,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 11;
+						attributeType = AttributeType.LONG;
 						customValue = new CustomValue() {
 							{
 								data = _DATA_LONG;
@@ -2401,7 +2455,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 12;
+						attributeType = AttributeType.LONG_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new long[] {_DATA_LONG};
@@ -2412,7 +2466,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 13;
+						attributeType = AttributeType.SHORT;
 						customValue = new CustomValue() {
 							{
 								data = randomShort;
@@ -2423,7 +2477,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 14;
+						attributeType = AttributeType.SHORT_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new short[] {randomShort};
@@ -2434,7 +2488,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 15;
+						attributeType = AttributeType.STRING;
 						customValue = new CustomValue() {
 							{
 								data = _DATA_STRING;
@@ -2445,7 +2499,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 16;
+						attributeType = AttributeType.STRING_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new String[] {_DATA_STRING};
@@ -2456,7 +2510,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 17;
+						attributeType = AttributeType.NUMBER;
 						customValue = new CustomValue() {
 							{
 								data = new BigDecimal(randomNumber.intValue());
@@ -2467,7 +2521,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 18;
+						attributeType = AttributeType.NUMBER_ARRAY;
 						customValue = new CustomValue() {
 							{
 								data = new Number[] {
@@ -2480,7 +2534,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 19;
+						attributeType = AttributeType.STRING_ARRAY_LOCALIZED;
 						customValue = new CustomValue() {
 							{
 								data = HashMapBuilder.put(
@@ -2497,7 +2551,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 20;
+						attributeType = AttributeType.STRING_LOCALIZED;
 						customValue = new CustomValue() {
 							{
 								data = _DATA_STRING;
@@ -2515,7 +2569,7 @@ public class CustomFieldsUtilTest {
 				},
 				new CustomField() {
 					{
-						attributeType = 21;
+						attributeType = AttributeType.GEOLOCATION;
 						customValue = new CustomValue() {
 							{
 								geo = new Geo() {
@@ -2693,6 +2747,9 @@ public class CustomFieldsUtilTest {
 
 	private void _assertEquals(
 		CustomField customField1, CustomField customField2) {
+
+		Assert.assertEquals(
+			customField1.getAttributeType(), customField2.getAttributeType());
 
 		_assertEquals(
 			customField1.getCustomValue(), customField2.getCustomValue());

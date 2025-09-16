@@ -37,6 +37,9 @@ components:
                     type: object
         FileEntry:
             properties:
+                alternativeText:
+                    readOnly: true
+                    type: string
                 externalReferenceCode:
                     type: string
                 fileBase64:
@@ -59,6 +62,15 @@ components:
                 link:
                     $ref: "#/components/schemas/Link"
                     readOnly: true
+                metadata:
+                    additionalProperties:
+                        type: object
+                    # @review
+                    description:
+                        optional field that specifies the metadata of the file, can be embedded with nestedFields (the
+                        format of the nested field must be `<attachment field name>.metadata`)
+                    readOnly: true
+                    type: object
                 mimeType:
                     readOnly: true
                     type: string

@@ -48,6 +48,7 @@ interface IItemSelectorModalTriggerProps<T extends Record<string, any>> {
 	};
 	setItems: InternalDispatch<T[]>;
 	type?: string;
+	multiSelect?: boolean;
 }
 
 function ItemSelectorModalTrigger<T extends Record<string, any>>({
@@ -56,6 +57,7 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 	locator,
 	setItems,
 	type = 'Item',
+	multiSelect = false
 }: IItemSelectorModalTriggerProps<T>) {
 	const {observer, onOpenChange, open} = useModal();
 
@@ -86,6 +88,7 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 				onOpenChange={onOpenChange}
 				open={open}
 				type={type}
+				multiSelect={multiSelect}
 			/>
 		</>
 	);
@@ -426,6 +429,7 @@ function ItemSelector<T extends Record<string, any>>({
 				locator={locator}
 				setItems={handleModalItemsChange}
 				type={type}
+				multiSelect={multiSelect}
 			/>
 		</ClayInput.Group>
 	) : (

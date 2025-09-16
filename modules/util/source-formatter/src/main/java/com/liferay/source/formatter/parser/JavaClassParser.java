@@ -125,7 +125,8 @@ public class JavaClassParser {
 			   (siblingDetailAST.getType() != TokenTypes.ANNOTATION_DEF) &&
 			   (siblingDetailAST.getType() != TokenTypes.CLASS_DEF) &&
 			   (siblingDetailAST.getType() != TokenTypes.ENUM_DEF) &&
-			   (siblingDetailAST.getType() != TokenTypes.INTERFACE_DEF)) {
+			   (siblingDetailAST.getType() != TokenTypes.INTERFACE_DEF) &&
+			   (siblingDetailAST.getType() != TokenTypes.RECORD_DEF)) {
 
 			siblingDetailAST = siblingDetailAST.getNextSibling();
 		}
@@ -242,7 +243,8 @@ public class JavaClassParser {
 			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
 			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
 			(detailAST.getType() == TokenTypes.INTERFACE_DEF) ||
-			(detailAST.getType() == TokenTypes.LITERAL_NEW)) {
+			(detailAST.getType() == TokenTypes.LITERAL_NEW) ||
+			(detailAST.getType() == TokenTypes.RECORD_DEF)) {
 
 			DetailAST objBlockDetailAST = detailAST.findFirstToken(
 				TokenTypes.OBJBLOCK);
@@ -403,7 +405,8 @@ public class JavaClassParser {
 		if ((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
 			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
 			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
-			(detailAST.getType() == TokenTypes.INTERFACE_DEF)) {
+			(detailAST.getType() == TokenTypes.INTERFACE_DEF) ||
+			(detailAST.getType() == TokenTypes.RECORD_DEF)) {
 
 			DetailAST nameDetailAST = detailAST.findFirstToken(
 				TokenTypes.IDENT);
@@ -604,7 +607,8 @@ public class JavaClassParser {
 			objBlockDetailAST, false, TokenTypes.ANNOTATION_DEF,
 			TokenTypes.CLASS_DEF, TokenTypes.CTOR_DEF, TokenTypes.ENUM_DEF,
 			TokenTypes.INTERFACE_DEF, TokenTypes.METHOD_DEF,
-			TokenTypes.STATIC_INIT, TokenTypes.VARIABLE_DEF);
+			TokenTypes.RECORD_DEF, TokenTypes.STATIC_INIT,
+			TokenTypes.VARIABLE_DEF);
 
 		for (DetailAST childDetailAST : childDetailASTList) {
 			String javaTermContent = _getJavaTermContent(

@@ -1,10 +1,5 @@
 assemble:
     -   fromTask: bootJar
-clarity-solution-etc-spring-boot-object-action:
-    name: Clarity Solution Etc Spring Boot Object Action
-    oAuth2ApplicationExternalReferenceCode: clarity-solution-etc-spring-boot-oaua
-    resourcePath: /object/action
-    type: objectAction
 clarity-solution-etc-spring-boot-oaua:
     .serviceAddress: localhost:58081
     .serviceScheme: http
@@ -13,6 +8,11 @@ clarity-solution-etc-spring-boot-oaua:
         -   Liferay.Headless.Admin.User.everything
         -   Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent
+clarity-solution-etc-spring-boot-object-action:
+    name: Clarity Solution Etc Spring Boot Object Action
+    oAuth2ApplicationExternalReferenceCode: clarity-solution-etc-spring-boot-oaua
+    resourcePath: /object/action
+    type: objectAction
 clarity-solution-etc-spring-boot-workflow-action:
     name: Clarity Solution Etc Spring Boot Workflow Action
     oAuth2ApplicationExternalReferenceCode: clarity-solution-etc-spring-boot-oaua

@@ -8,6 +8,10 @@ import {FetchPolicy, useResource} from '@clayui/data-provider';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React, {useState} from 'react';
 
+import Option from './Option';
+
+import './Assignee.scss';
+
 const searchURL = new URL(`${window.location.origin}/o/search/v1.0/search`);
 
 const searchParams = {
@@ -19,6 +23,7 @@ const searchParams = {
 	fields: [
 		'entryClassName',
 		'embedded.externalReferenceCode',
+		'embedded.image',
 		'embedded.name',
 	].join(','),
 	nestedFields: 'embedded',
@@ -26,15 +31,17 @@ const searchParams = {
 
 searchURL.search = new URLSearchParams(searchParams).toString();
 
+interface AssigneeValue {
+	externalReferenceCode: string;
+	name: string;
+	type: string;
+}
+
 interface Assignee {
 	label: string;
 	name: string;
 	onChange: (event: {target: {value: any}}) => void;
-	value: {
-		externalReferenceCode: string;
-		name: string;
-		type: string;
-	};
+	value?: AssigneeValue;
 }
 
 export default function Assignee({
@@ -44,7 +51,7 @@ export default function Assignee({
 	value,
 	...otherProps
 }: Assignee) {
-	const [search, setSearch] = useState(value.name ?? '');
+	const [search, setSearch] = useState(value?.name ?? '');
 	const [networkStatus, setNetworkStatus] = useState(4);
 
 	const {resource} = useResource({
@@ -63,7 +70,7 @@ export default function Assignee({
 		<FieldBase accessible={false} label={label} {...otherProps}>
 			<Autocomplete
 				aria-label={label}
-				defaultValue={value?.name}
+				defaultValue={value?.name ?? ''}
 				items={resource ? resource.items : []}
 				loadingState={networkStatus}
 				menuTrigger="focus"
@@ -78,7 +85,11 @@ export default function Assignee({
 				value={search}
 			>
 				{(item: {
-					embedded: {externalReferenceCode: string; name: string};
+					embedded: {
+						externalReferenceCode: string;
+						image?: string;
+						name: string;
+					};
 					entryClassName: string;
 				}) => (
 					<Autocomplete.Item
@@ -97,8 +108,12 @@ export default function Assignee({
 								},
 							});
 						}}
+						textValue={item.embedded.name}
 					>
-						{item.embedded.name}
+						<Option
+							image={item.embedded.image}
+							name={item.embedded.name}
+						/>
 					</Autocomplete.Item>
 				)}
 			</Autocomplete>

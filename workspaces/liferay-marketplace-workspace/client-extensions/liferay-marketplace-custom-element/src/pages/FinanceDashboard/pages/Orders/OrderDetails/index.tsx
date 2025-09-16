@@ -77,13 +77,13 @@ const OrderDetails = () => {
 							})
 						)
 				}
+				paymentStatusCode={order?.paymentStatusInfo.code as number}
 				showButton={[
 					PaymentStatusCode.PAYMENT_PENDING,
 					PaymentStatusCode.PENDING,
 					PaymentStatusCode.FAILED,
 				].includes(order?.paymentStatusInfo.code as number)}
 				title={orderId as string}
-				paymentStatusCode={order?.paymentStatusInfo.code as number}
 			/>
 
 			<div className="d-flex mt-5">

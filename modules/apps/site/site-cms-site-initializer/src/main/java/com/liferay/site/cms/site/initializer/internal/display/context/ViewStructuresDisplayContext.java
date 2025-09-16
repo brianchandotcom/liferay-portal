@@ -112,7 +112,7 @@ public class ViewStructuresDisplayContext {
 					"objectDefinitionExternalReferenceCode",
 					"{externalReferenceCode}"),
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
-				"get", "update", null),
+				"get", "update", null, Map.of("system", false)),
 			new FDSActionDropdownItem(
 				HttpComponentsUtil.addParameters(
 					PortalUtil.getLayoutFullURL(
@@ -141,7 +141,7 @@ public class ViewStructuresDisplayContext {
 				).buildString(),
 				"export", "export",
 				LanguageUtil.get(_httpServletRequest, "export-as-json"), "get",
-				"exportObjectDefinition", null),
+				"exportObjectDefinition", null, Map.of("system", false)),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortletURLFactoryUtil.create(
@@ -155,7 +155,7 @@ public class ViewStructuresDisplayContext {
 				).buildString(),
 				"import", "import",
 				LanguageUtil.get(_httpServletRequest, "import-and-override"),
-				"get", "update", null),
+				"get", "update", null, Map.of("system", false)),
 			new FDSActionDropdownItem(
 				"", "password-policies", "permissions",
 				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
@@ -173,7 +173,7 @@ public class ViewStructuresDisplayContext {
 				).buildString(),
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
-				"delete", null));
+				"delete", null, Map.of("system", false)));
 	}
 
 	private void _addBreadcrumbItem(

@@ -95,6 +95,12 @@ public class JavaClassParser {
 			String classContent = _getJavaTermContent(
 				fileContents, leteralNewDetailAST);
 
+			if (classContent == null) {
+				throw new ParseException(
+					"Parsing error at line \"" +
+						leteralNewDetailAST.getLineNo() + "\"");
+			}
+
 			classContent = classContent.substring(0, classContent.length() - 1);
 
 			JavaClass anonymousClass = _parseJavaClass(
@@ -205,15 +211,19 @@ public class JavaClassParser {
 		DetailAST nameDetailAST = siblingDetailAST.findFirstToken(
 			TokenTypes.IDENT);
 
-		String className = nameDetailAST.getText();
-
 		String classContent = _getJavaTermContent(
 			fileContents, siblingDetailAST);
 
+		if (classContent == null) {
+			throw new ParseException(
+				"Parsing error at line \"" + siblingDetailAST.getLineNo() +
+					"\"");
+		}
+
 		JavaClass javaClass = _parseJavaClass(
 			accessModifier, false, classContent, siblingDetailAST.getLineNo(),
-			className, JavaSourceUtil.getImportNames(content), isAbstract,
-			isFinal, isInterface, false, isStrictfp, nonsealed,
+			nameDetailAST.getText(), JavaSourceUtil.getImportNames(content),
+			isAbstract, isFinal, isInterface, false, isStrictfp, nonsealed,
 			JavaSourceUtil.getPackageName(content), sealed, fileContents,
 			siblingDetailAST);
 
@@ -434,14 +444,12 @@ public class JavaClassParser {
 	}
 
 	private static String _getJavaTermContent(
-			FileContents fileContents, DetailAST detailAST)
-		throws ParseException {
+		FileContents fileContents, DetailAST detailAST) {
 
 		Position endPosition = _getEndPosition(detailAST);
 
 		if (endPosition == null) {
-			throw new ParseException(
-				"Parsing error at line \"" + detailAST.getLineNo() + "\"");
+			return null;
 		}
 
 		Position startPosition = new Position(
@@ -594,10 +602,18 @@ public class JavaClassParser {
 			TokenTypes.STATIC_INIT, TokenTypes.VARIABLE_DEF);
 
 		for (DetailAST childDetailAST : childDetailASTList) {
+			String javaTermContent = _getJavaTermContent(
+				fileContents, childDetailAST);
+
+			if (javaTermContent == null) {
+				throw new ParseException(
+					"Parsing error at line \"" + childDetailAST.getLineNo() +
+						"\"");
+			}
+
 			JavaTerm javaTerm = _getJavaTerm(
-				packageName, importNames,
-				_getJavaTermContent(fileContents, childDetailAST),
-				childDetailAST, fileContents);
+				packageName, importNames, javaTermContent, childDetailAST,
+				fileContents);
 
 			if (javaTerm == null) {
 				throw new ParseException(

@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.cms.client.dto.v1_0.BulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.BulkActionTask;
+import com.liferay.headless.cms.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.DeleteBulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.KeywordBulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.MoveBulkAction;
@@ -284,6 +285,50 @@ public abstract class BaseBulkActionResourceTestCase {
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (bulkAction.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultPermissions", additionalAssertFieldName)) {
+
+				if (!(bulkAction instanceof DefaultPermissionBulkAction)) {
+					continue;
+				}
+
+				if (((DefaultPermissionBulkAction)bulkAction).
+						getDefaultPermissions() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("depotGroupId", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof DefaultPermissionBulkAction)) {
+					continue;
+				}
+
+				if (((DefaultPermissionBulkAction)bulkAction).
+						getDepotGroupId() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("treePath", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof DefaultPermissionBulkAction)) {
+					continue;
+				}
+
+				if (((DefaultPermissionBulkAction)bulkAction).getTreePath() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -593,6 +638,65 @@ public abstract class BaseBulkActionResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						bulkAction1.getType(), bulkAction2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultPermissions", additionalAssertFieldName)) {
+
+				if (!(bulkAction1 instanceof DefaultPermissionBulkAction) ||
+					!(bulkAction2 instanceof DefaultPermissionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DefaultPermissionBulkAction)bulkAction1).
+							getDefaultPermissions(),
+						((DefaultPermissionBulkAction)bulkAction2).
+							getDefaultPermissions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("depotGroupId", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof DefaultPermissionBulkAction) ||
+					!(bulkAction2 instanceof DefaultPermissionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DefaultPermissionBulkAction)bulkAction1).
+							getDepotGroupId(),
+						((DefaultPermissionBulkAction)bulkAction2).
+							getDepotGroupId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("treePath", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof DefaultPermissionBulkAction) ||
+					!(bulkAction2 instanceof DefaultPermissionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DefaultPermissionBulkAction)bulkAction1).
+							getTreePath(),
+						((DefaultPermissionBulkAction)bulkAction2).
+							getTreePath())) {
 
 					return false;
 				}
@@ -975,6 +1079,23 @@ public abstract class BaseBulkActionResourceTestCase {
 
 	protected BulkAction randomBulkAction() throws Exception {
 		List<Supplier<BulkAction>> suppliers = Arrays.asList(
+			() -> {
+				DefaultPermissionBulkAction bulkAction =
+					new DefaultPermissionBulkAction();
+
+				bulkAction.setSelectAll(RandomTestUtil.randomBoolean());
+
+				bulkAction.setDefaultPermissions(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				bulkAction.setDepotGroupId(RandomTestUtil.randomLong());
+				bulkAction.setTreePath(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				bulkAction.setType(
+					BulkAction.Type.create("DefaultPermissionBulkAction"));
+
+				return bulkAction;
+			},
 			() -> {
 				DeleteBulkAction bulkAction = new DeleteBulkAction();
 

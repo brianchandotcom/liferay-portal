@@ -65,6 +65,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -813,9 +814,7 @@ public class ObjectEntryDTOConverter
 					LiferayFileEntry liferayFileEntry = new LiferayFileEntry(
 						dlFileEntry);
 
-					String previewURL = _dlURLHelper.getPreviewURL(
-						liferayFileEntry, liferayFileEntry.getFileVersion(),
-						null, StringPool.BLANK, false, false);
+					String previewURL = _getPreviewURL(liferayFileEntry);
 
 					if (Validator.isNull(previewURL)) {
 						return null;
@@ -1043,6 +1042,20 @@ public class ObjectEntryDTOConverter
 		}
 
 		return objectDefinition;
+	}
+
+	private String _getPreviewURL(LiferayFileEntry liferayFileEntry)
+		throws PortalException {
+
+		if (StringUtil.startsWith(liferayFileEntry.getMimeType(), "video/")) {
+			return _dlURLHelper.getPreviewURL(
+				liferayFileEntry, liferayFileEntry.getFileVersion(), null,
+				"&videoEmbed=true", true, true);
+		}
+
+		return _dlURLHelper.getPreviewURL(
+			liferayFileEntry, liferayFileEntry.getFileVersion(), null,
+			StringPool.BLANK, false, false);
 	}
 
 	private String _getScopeKey(

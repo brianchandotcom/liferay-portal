@@ -514,9 +514,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).put(
 					"com.liferay.portlet.display-category",
 					() -> {
-						if (objectDefinition.isPortlet() &&
-							!objectDefinition.isRootDescendantNode()) {
-
+						if (objectDefinition.isPortlet()) {
 							return "category.object";
 						}
 

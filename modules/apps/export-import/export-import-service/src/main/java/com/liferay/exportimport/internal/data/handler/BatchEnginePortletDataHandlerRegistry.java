@@ -167,7 +167,7 @@ public class BatchEnginePortletDataHandlerRegistry {
 							"batch.engine.entity.class.name")),
 					_companyLocalService,
 					exportImportVulcanBatchEngineTaskItemDelegate,
-					exportImportDescriptor.getItemClassName(),
+					exportImportDescriptor.getItemClassName(), portletId,
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"),
 					_userLocalService);

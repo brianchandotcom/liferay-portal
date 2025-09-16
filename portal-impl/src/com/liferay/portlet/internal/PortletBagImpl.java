@@ -10,7 +10,10 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -263,18 +266,12 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public PortletDataHandler getPortletDataHandlerInstance(long companyId) {
-		Snapshot<PortletDataHandler> portletDataHandlerSnapshot =
-			new Snapshot<>(
-				PortletBagImpl.class, PortletDataHandler.class,
-				StringBundler.concat(
-					"(&", _filterString, "(company.id=", companyId, "))"),
-				true);
+		PortletDataHandler companyPortletDataHandler =
+			_companyPortletDataHandlers.getService(
+				_getKey(companyId, getPortletName()));
 
-		PortletDataHandler portletDataHandler =
-			portletDataHandlerSnapshot.get();
-
-		if (portletDataHandler != null) {
-			return portletDataHandler;
+		if (companyPortletDataHandler != null) {
+			return companyPortletDataHandler;
 		}
 
 		return _portletDataHandlerSnapshot.get();
@@ -486,6 +483,10 @@ public class PortletBagImpl implements PortletBag {
 		_portletName = portletName;
 	}
 
+	private static String _getKey(Object companyId, String portletId) {
+		return portletId + StringPool.POUND + companyId;
+	}
+
 	private final <T> List<T> _getList(Class<?> clazz) {
 		ServiceTrackerList<Class<?>> serviceTrackerList =
 			_serviceTrackerListMap.computeIfAbsent(
@@ -500,6 +501,31 @@ public class PortletBagImpl implements PortletBag {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
+
+	private static final ServiceTrackerMap<String, PortletDataHandler>
+		_companyPortletDataHandlers =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				SystemBundleUtil.getBundleContext(), PortletDataHandler.class,
+				null,
+				(serviceReference, emitter) -> {
+					Object companyId = serviceReference.getProperty(
+						"company.id");
+
+					if (companyId != null) {
+						PortletDataHandler portletDataHandler =
+							_bundleContext.getService(serviceReference);
+
+						try {
+							emitter.emit(
+								_getKey(
+									companyId,
+									portletDataHandler.getPortletId()));
+						}
+						finally {
+							_bundleContext.ungetService(serviceReference);
+						}
+					}
+				});
 
 	private final Snapshot<ConfigurationAction> _configurationActionSnapshot;
 	private final Snapshot<ControlPanelEntry> _controlPanelEntrySnapshot;

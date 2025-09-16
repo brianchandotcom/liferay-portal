@@ -74,7 +74,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		String className, CompanyLocalService companyLocalService,
 		ExportImportVulcanBatchEngineTaskItemDelegate
 			exportImportVulcanBatchEngineTaskItemDelegate,
-		String itemClassName, String taskItemDelegateName,
+		String itemClassName, String portletId, String taskItemDelegateName,
 		UserLocalService userLocalService) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
@@ -88,6 +88,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_exportImportVulcanBatchEngineTaskItemDelegate =
 			exportImportVulcanBatchEngineTaskItemDelegate;
 		_itemClassName = itemClassName;
+		_portletId = portletId;
 		_taskItemDelegateName = taskItemDelegateName;
 		_userLocalService = userLocalService;
 
@@ -157,6 +158,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getName() {
 		return _className + StringPool.POUND + _taskItemDelegateName;
+	}
+
+	@Override
+	public String getPortletId() {
+		return _portletId;
 	}
 
 	@Override
@@ -439,6 +445,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_exportImportVulcanBatchEngineTaskItemDelegate;
 	private final String _fileName;
 	private final String _itemClassName;
+	private final String _portletId;
 	private final String _taskItemDelegateName;
 	private final UserLocalService _userLocalService;
 

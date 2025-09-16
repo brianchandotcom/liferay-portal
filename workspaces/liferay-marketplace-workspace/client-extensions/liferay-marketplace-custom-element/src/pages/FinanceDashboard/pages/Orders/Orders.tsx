@@ -12,7 +12,7 @@ import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
-import PaymentStatus from '../../components/Order/PaymentStatus/PaymentStatus';
+import PaymentStatus from '../../components/PaymentStatus/PaymentStatus';
 
 async function onClickMarkAsPaid(order: Order, mutate: KeyedMutator<any>) {
 	try {

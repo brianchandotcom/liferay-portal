@@ -17,66 +17,10 @@ import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import HeadlessCommerceAdminOrder from '../../../../../services/rest/HeadlessCommerceAdminOrder';
 import {safeJSONParse} from '../../../../../utils/util';
-import OrderDetailsHeader from '../../../components/Order/OrderDetailsHeader';
-import PaymentStatus from '../../../components/Order/PaymentStatus/PaymentStatus';
-import Label from '@clayui/label';
-
-function formatAddress(address: BillingAddress) {
-	if (!address || !Object.keys(address).length) {
-		return '-';
-	}
-
-	const displayNames = new Intl.DisplayNames(
-		[Liferay.ThemeDisplay.getBCP47LanguageId()],
-		{type: 'region'}
-	);
-
-	return [
-		address.street1,
-		address.city,
-		address.regionISOCode,
-		address.zip,
-		displayNames.of(address.countryISOCode),
-	]
-		.filter(Boolean)
-		.join(', ');
-}
-
-function formatCurrency(price: number, currencyCode: string) {
-	if (!price) {
-		return '-';
-	}
-
-	return price.toLocaleString(currencyCode, {
-		currency: currencyCode,
-		currencyDisplay: 'narrowSymbol',
-		maximumFractionDigits: 2,
-		minimumFractionDigits: 2,
-		style: 'currency',
-	});
-}
-
-function formatDate(date: string | undefined) {
-	if (!date) {
-		return '-';
-	}
-
-	return new Date(date).toLocaleDateString('en-US', {
-		day: 'numeric',
-		hour: 'numeric',
-		minute: '2-digit',
-		month: 'short',
-		year: 'numeric',
-	});
-}
-
-function textWrapper(content: string | undefined) {
-	if (!content) {
-		return '-';
-	}
-
-	return <p className="mb-2 mt-1">{content}</p>;
-}
+import DetailsHeader from '../../../components/DetailsHeader/DetailsHeader';
+import PaymentStatus from '../../../components/PaymentStatus/PaymentStatus';
+import {formatCurrency} from '../../../util/finance';
+import {formatAddress, formatDate, textWrapper} from '../../../util/util';
 
 const OrderDetails = () => {
 	const {orderId} = useParams();
@@ -102,7 +46,8 @@ const OrderDetails = () => {
 			error={error}
 			isLoading={isLoading}
 		>
-			<OrderDetailsHeader
+			<DetailsHeader
+				backLink="/"
 				onClick={async () =>
 					HeadlessCommerceAdminOrder.patchOrder(orderId as string, {
 						paymentStatus: PaymentStatusCode.PAID,
@@ -132,7 +77,12 @@ const OrderDetails = () => {
 							})
 						)
 				}
-				orderId={orderId as string}
+				showButton={[
+					PaymentStatusCode.PAYMENT_PENDING,
+					PaymentStatusCode.PENDING,
+					PaymentStatusCode.FAILED,
+				].includes(order?.paymentStatusInfo.code as number)}
+				title={orderId as string}
 				paymentStatusCode={order?.paymentStatusInfo.code as number}
 			/>
 
@@ -250,9 +200,9 @@ const OrderDetails = () => {
 				clayIcon="order-form"
 			>
 				<Table
+					className="table-borderless"
 					columns={[
 						{
-							bodyClass: 'order-item-display',
 							key: 'options',
 							render: (options) => {
 								const [skuOption] = safeJSONParse(options, [
@@ -260,28 +210,33 @@ const OrderDetails = () => {
 								]);
 
 								return (
-									<div className="alignt-items-center d-flex mt-2">
-										<img
-											alt="App Icon"
-											className="mr-2 order-details-app-icon rounded"
-											draggable={false}
-											src={product?.thumbnail}
-										/>
-										<span>
-											<strong>
-												{product?.name.en_US}
-											</strong>
-											<p className="finance-dashboard-text-secondary text-capitalize">
-												{skuOption?.skuOptionValueKey}
-											</p>
-										</span>
+									<div className="pt-2">
+										<div className="d-flex">
+											<img
+												alt="App Icon"
+												className="mr-2 order-details-app-icon rounded"
+												draggable={false}
+												src={product?.thumbnail}
+											/>
+
+											<span>
+												<strong>
+													{product?.name.en_US}
+												</strong>
+
+												<p className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize">
+													{
+														skuOption?.skuOptionValueKey
+													}
+												</p>
+											</span>
+										</div>
 									</div>
 								);
 							},
 							title: i18n.translate('app-name'),
 						},
 						{
-							bodyClass: 'order-item-display',
 							key: 'id',
 							render: () =>
 								textWrapper(
@@ -294,39 +249,35 @@ const OrderDetails = () => {
 							title: i18n.translate('publisher'),
 						},
 						{
-							bodyClass: 'order-item-display',
 							key: 'quantity',
 							title: i18n.translate('quantity'),
 						},
 						{
-							bodyClass: 'order-item-display',
 							key: 'finalPrice',
 							render: (finalPrice) =>
 								textWrapper(
-									formatCurrency(finalPrice, currencyCode)
+									formatCurrency(currencyCode, finalPrice)
 								),
 							title: i18n.translate('net-price'),
 						},
 						{
-							bodyClass: 'order-item-display',
 							key: 'finalPriceWithTaxAmount',
 							render: (finalPriceWithTaxAmount, _) =>
 								textWrapper(
 									formatCurrency(
-										finalPriceWithTaxAmount - _?.finalPrice,
-										currencyCode
+										currencyCode,
+										finalPriceWithTaxAmount - _?.finalPrice
 									)
 								),
 							title: i18n.translate('vat'),
 						},
 						{
-							bodyClass: 'order-item-display',
 							key: 'finalPriceWithTaxAmount',
 							render: (finalPriceWithTaxAmount) =>
 								textWrapper(
 									formatCurrency(
-										finalPriceWithTaxAmount,
-										currencyCode
+										currencyCode,
+										finalPriceWithTaxAmount
 									)
 								),
 							title: i18n.translate('total'),

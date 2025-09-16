@@ -15,6 +15,7 @@ import {
 } from '../enums/Order';
 import {ProductType, ProductWorkflowStatusCode} from '../enums/Product';
 import i18n from '../i18n';
+import {PublisherPayoutStatus} from '../pages/FinanceDashboard/pages/Payments/Payments';
 import {LIFERAY_VERSION_PICKLIST} from '../pages/PublisherDashboard/pages/NewAppFlow/constants';
 
 type AutoCompleteProps = {
@@ -461,6 +462,30 @@ const filterSchema = {
 				],
 				removeQuoteMark: true,
 				type: 'multiselect',
+			}),
+		],
+		name: 'financeOrders',
+	},
+	financeDashboardPayments: {
+		fields: [
+			overrides(baseFilters.dateCreated, {
+				name: 'dateCreated',
+			}),
+			overrides(baseFilters.status, {
+				label: i18n.translate('payment-status'),
+				name: 'paymentStatus',
+				operator: 'eq',
+				options: [
+					{
+						label: i18n.translate('paid'),
+						value: PublisherPayoutStatus.PAID,
+					},
+					{
+						label: i18n.translate('unpaid'),
+						value: PublisherPayoutStatus.UNPAID,
+					},
+				],
+				type: 'select',
 			}),
 		],
 		name: 'financeOrders',

@@ -13,18 +13,14 @@ import Table from '../../../../../components/Table/Table';
 import i18n from '../../../../../i18n';
 import DetailsHeader from '../../../components/DetailsHeader/DetailsHeader';
 import usePublisherSalesSummaryObject from '../../../../../hooks/usePublisherSalesSummaryObject';
-import {
-	formatCurrency,
-	formatDate,
-	getTotalByOrderKey,
-	textWrapper,
-} from '../../../util/finance';
+import {formatCurrency, getTotalByOrderKey} from '../../../util/finance';
 import {PaymentStatus as PaymentStatusCode} from '../../../../../enums/Order';
 import PaymentStatus from '../../../components/PaymentStatus/PaymentStatus';
 import PublisherSalesSummary from '../../../../../services/rest/PublisherSalesSummary';
 import {Liferay} from '../../../../../liferay/liferay';
 import {safeJSONParse} from '../../../../../utils/util';
 import {PublisherPayoutStatus} from '../Payments';
+import { formatDate, textWrapper } from '../../../util/util';
 
 export function formatAddress(address: AccountPostalAddresses) {
 	if (!address || !Object.keys(address).length) {

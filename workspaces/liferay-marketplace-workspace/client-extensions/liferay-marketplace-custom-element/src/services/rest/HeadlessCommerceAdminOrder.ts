@@ -12,7 +12,10 @@ export default class HeadlessCommerceAdminOrder {
 		);
 	}
 
-	static getOrder(orderId: string, searchParams = new URLSearchParams()) {
+	static getOrder(
+		orderId: number | string,
+		searchParams = new URLSearchParams()
+	) {
 		return fetcher<Order>(
 			`o/headless-commerce-admin-order/v1.0/orders/${orderId}?${searchParams.toString()}`
 		);

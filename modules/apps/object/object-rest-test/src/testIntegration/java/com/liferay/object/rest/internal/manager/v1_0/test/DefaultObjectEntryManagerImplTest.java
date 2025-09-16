@@ -96,6 +96,7 @@ import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
+import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -115,6 +116,7 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.function.UnsafeBiFunction;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.UnsafeTriFunction;
 import com.liferay.petra.lang.SafeCloseable;
@@ -3291,6 +3293,13 @@ public class DefaultObjectEntryManagerImplTest
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, status.getCode());
+
+		// Status in trash
+
+		_assertFailureWithStatusInTrash(
+			objectEntryId ->
+				_defaultObjectEntryManager.copyObjectEntryByVersion(
+					dtoConverterContext, _objectDefinition4, objectEntryId, 1));
 	}
 
 	@Test
@@ -3608,6 +3617,13 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition4, _group.getGroupKey(), null
 			).getItems(
 			).size());
+
+		// Status in trash
+
+		_assertFailureWithStatusInTrash(
+			objectEntryId ->
+				_defaultObjectEntryManager.deleteObjectEntryByVersion(
+					_objectDefinition4, objectEntryId, 2));
 	}
 
 	@Test
@@ -4213,6 +4229,13 @@ public class DefaultObjectEntryManagerImplTest
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_EXPIRED, status.getCode());
+
+		// Status in trash
+
+		_assertFailureWithStatusInTrash(
+			objectEntryId ->
+				_defaultObjectEntryManager.expireObjectEntryByVersion(
+					dtoConverterContext, _objectDefinition4, objectEntryId, 1));
 	}
 
 	@Test
@@ -6950,6 +6973,13 @@ public class DefaultObjectEntryManagerImplTest
 						});
 				}
 			});
+
+		// Status in trash
+
+		_assertFailureWithStatusInTrash(
+			objectEntryId ->
+				_defaultObjectEntryManager.restoreObjectEntryByVersion(
+					dtoConverterContext, _objectDefinition4, objectEntryId, 1));
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -8953,6 +8983,32 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			});
+	}
+
+	private void _assertFailureWithStatusInTrash(
+			UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.moveObjectEntryToTrash(
+				TestPropsValues.getUserId(),
+				ObjectEntryTestUtil.addObjectEntry(
+					TestPropsValues.getGroupId(), _objectDefinition4,
+					Collections.emptyMap()),
+				ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH,
+			serviceBuilderObjectEntry.getStatus());
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {objectEntryId=",
+				serviceBuilderObjectEntry.getObjectEntryId(), ", status!=",
+				WorkflowConstants.STATUS_IN_TRASH, "}"),
+			() -> unsafeConsumer.accept(
+				serviceBuilderObjectEntry.getObjectEntryId()));
 	}
 
 	private void _assertFilteredObjectEntriesSize(

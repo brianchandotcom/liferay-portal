@@ -67,8 +67,7 @@ public class ViewRecycleBinSectionDisplayContextTest
 		Group defaultGroup = groupLocalService.getGroup(
 			group.getCompanyId(), "Default");
 
-		Assert.assertNull(
-			defaultGroup.getTypeSettingsProperty("trashEnabled"));
+		Assert.assertNull(defaultGroup.getTypeSettingsProperty("trashEnabled"));
 
 		String filterString = _getCMSSectionFilterString(displayContext);
 
@@ -76,11 +75,10 @@ public class ViewRecycleBinSectionDisplayContextTest
 			filterString.contains(
 				StringBundler.concat(
 					"status eq ", WorkflowConstants.STATUS_IN_TRASH,
-					" and groupIds/any(g:g in (",
-					defaultGroup.getGroupId(), "))")));
+					" and groupIds/any(g:g in (", defaultGroup.getGroupId(),
+					"))")));
 
-		_setTrashEnabledGroupProperty(
-			defaultGroup, Boolean.FALSE.toString());
+		_setTrashEnabledGroupProperty(defaultGroup, Boolean.FALSE.toString());
 
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
@@ -91,8 +89,7 @@ public class ViewRecycleBinSectionDisplayContextTest
 		Assert.assertTrue(
 			filterString.contains("status eq " + WorkflowConstants.STATUS_ANY));
 
-		_setTrashEnabledGroupProperty(
-			defaultGroup, Boolean.TRUE.toString());
+		_setTrashEnabledGroupProperty(defaultGroup, Boolean.TRUE.toString());
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
@@ -104,8 +101,8 @@ public class ViewRecycleBinSectionDisplayContextTest
 			filterString.contains(
 				StringBundler.concat(
 					"status eq ", WorkflowConstants.STATUS_IN_TRASH,
-					" and groupIds/any(g:g in (",
-					defaultGroup.getGroupId(), "))")));
+					" and groupIds/any(g:g in (", defaultGroup.getGroupId(),
+					"))")));
 
 		DepotEntry depotEntry = addDepotEntry(
 			RandomTestUtil.randomString(), DepotConstants.TYPE_SPACE);
@@ -125,9 +122,8 @@ public class ViewRecycleBinSectionDisplayContextTest
 				filterString.contains(
 					StringBundler.concat(
 						"status eq ", WorkflowConstants.STATUS_IN_TRASH,
-						" and groupIds/any(g:g in (",
-						defaultGroup.getGroupId(), ",",
-						depotGroup.getGroupId(), "))")));
+						" and groupIds/any(g:g in (", defaultGroup.getGroupId(),
+						",", depotGroup.getGroupId(), "))")));
 
 			_setTrashEnabledGroupProperty(defaultGroup, null);
 		}

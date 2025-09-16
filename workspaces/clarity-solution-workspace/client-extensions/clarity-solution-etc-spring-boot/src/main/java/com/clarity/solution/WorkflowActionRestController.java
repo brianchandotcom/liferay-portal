@@ -7,7 +7,7 @@ package com.clarity.solution;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -36,7 +36,7 @@ public class WorkflowActionRestController extends BaseRestController {
 
 		JSONObject jsonObject = new JSONObject(json);
 
-		String applicationStateKey = jsonObject.getJSONObject(
+		String key = jsonObject.getJSONObject(
 			"entryDTO"
 		).getJSONObject(
 			"applicationState"
@@ -46,9 +46,7 @@ public class WorkflowActionRestController extends BaseRestController {
 
 		String transitionName = "auto-approve";
 
-		if (StringUtils.equals(applicationStateKey, "approved") ||
-			StringUtils.equals(applicationStateKey, "denied")) {
-
+		if (Objects.equals(key, "approved") || Objects.equals(key, "denied")) {
 			transitionName = "review";
 		}
 

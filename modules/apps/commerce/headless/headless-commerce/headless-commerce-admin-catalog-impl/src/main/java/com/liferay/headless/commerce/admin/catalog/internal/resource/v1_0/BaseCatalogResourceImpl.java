@@ -643,8 +643,17 @@ public abstract class BaseCatalogResourceImpl
 					Catalog persistedCatalog = null;
 
 					try {
-						getCatalog = getCatalogByExternalReferenceCode(
-							catalog.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode")) {
+							getCatalog =
+								getProductByExternalReferenceCodeCatalog(
+									(String)parameters.get(
+										"externalReferenceCode"),
+									(Pagination)parameters.get("pagination"));
+						}
+						else {
+							getCatalog = getCatalogByExternalReferenceCode(
+								catalog.getExternalReferenceCode());
+						}
 
 						patchCatalog(getCatalog.getId(), catalog);
 					}

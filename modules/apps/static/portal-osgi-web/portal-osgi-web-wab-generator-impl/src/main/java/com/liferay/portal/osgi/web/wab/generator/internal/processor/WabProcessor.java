@@ -373,6 +373,9 @@ public class WabProcessor {
 						Files.copy(
 							new ByteArrayInputStream(json.getBytes()),
 							osgiInfConfiguratorPath.resolve(name));
+
+						_pluginPackageProperties.setProperty(
+							"Liferay-Configurator-Policy", "always");
 					}
 				}
 				else if (name.startsWith(batchPathString)) {

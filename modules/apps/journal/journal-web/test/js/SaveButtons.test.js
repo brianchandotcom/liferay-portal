@@ -186,7 +186,7 @@ describe('SaveButtons', () => {
 
 		userEvent.click(screen.getByText('schedule-publication'));
 
-		userEvent.click(await screen.findByText('schedule'));
+		userEvent.click(await screen.findByText('schedule[verb]'));
 
 		const alerts = screen.getAllByText('please-enter-a-valid-date');
 

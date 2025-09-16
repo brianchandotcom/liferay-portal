@@ -11,7 +11,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
@@ -265,10 +264,29 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Set<String> modifiedContents = new HashSet<>();
 		Set<String> modifiedMessages = new TreeSet<>();
 
+		List<String> checkCategoryNames =
+			_sourceFormatterArgs.getCheckCategoryNames();
+
+		String originalReturnCharacter = StringPool.NEW_LINE;
+
+		if (content.contains(StringPool.RETURN_NEW_LINE)) {
+			originalReturnCharacter = StringPool.RETURN_NEW_LINE;
+		}
+		else if (content.contains(StringPool.RETURN)) {
+			originalReturnCharacter = StringPool.RETURN;
+		}
+
+		content = preFormat(
+			file, fileName, content, checkCategoryNames, modifiedMessages,
+			originalReturnCharacter);
+
 		String newContent = format(
 			file, fileName, absolutePath, content, content,
 			new ArrayList<>(_sourceChecks), modifiedContents, modifiedMessages,
 			0);
+
+		newContent = postFormat(
+			newContent, checkCategoryNames, originalReturnCharacter);
 
 		return processFormattedFile(
 			file, fileName, content, newContent, modifiedMessages);
@@ -284,23 +302,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_sourceFormatterMessagesMap.remove(fileName);
 
 		String newContent = content;
-
-		List<String> checkCategoryNames =
-			_sourceFormatterArgs.getCheckCategoryNames();
-
-		if (checkCategoryNames.contains("Styling") ||
-			(checkCategoryNames.isEmpty() &&
-			 ListUtil.isEmpty(_sourceFormatterArgs.getCheckNames()))) {
-
-			_checkUTF8(file, fileName);
-
-			newContent = StringUtil.replace(
-				newContent, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-
-			if (!content.equals(newContent)) {
-				modifiedMessages.add(file.toString() + " (ReturnCharacter)");
-			}
-		}
 
 		newContent = parse(file, fileName, newContent, modifiedMessages);
 
@@ -440,7 +441,45 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void postFormat() throws Exception {
 	}
 
+	protected String postFormat(
+		String content, List<String> checkCategoryNames,
+		String originalReturnCharacter) {
+
+		if (!originalReturnCharacter.equals(StringPool.NEW_LINE) &&
+			checkCategoryNames.isEmpty() && isPortalSource()) {
+
+			return content;
+		}
+
+		return StringUtil.replace(
+			content, CharPool.NEW_LINE, originalReturnCharacter);
+	}
+
 	protected void preFormat() throws Exception {
+	}
+
+	protected String preFormat(
+			File file, String fileName, String content,
+			List<String> checkCategoryNames, Set<String> modifiedMessages,
+			String originalReturnCharacter)
+		throws Exception {
+
+		if (checkCategoryNames.isEmpty() && isPortalSource()) {
+			_checkUTF8(file, fileName);
+		}
+
+		String newContent = StringUtil.replace(
+			content, originalReturnCharacter, StringPool.NEW_LINE);
+
+		if (content.equals(newContent)) {
+			return newContent;
+		}
+
+		if (checkCategoryNames.isEmpty() && isPortalSource()) {
+			modifiedMessages.add(file.toString() + " (ReturnCharacter)");
+		}
+
+		return newContent;
 	}
 
 	protected void printError(String fileName, String message) {

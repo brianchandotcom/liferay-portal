@@ -12,11 +12,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,27 +33,10 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected File format(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String postFormat(
+		String content, List<String> checkCategoryNames,
+		String originalReturnCharacter) {
 
-		Set<String> modifiedContents = new HashSet<>();
-		Set<String> modifiedMessages = new TreeSet<>();
-
-		String newContent = _preProcess(content);
-
-		newContent = format(
-			file, fileName, absolutePath, newContent, content,
-			new ArrayList<>(getSourceChecks()), modifiedContents,
-			modifiedMessages, 0);
-
-		newContent = _postProcess(newContent);
-
-		return processFormattedFile(
-			file, fileName, content, newContent, modifiedMessages);
-	}
-
-	private String _postProcess(String content) {
 		StringBuffer sb = new StringBuffer();
 
 		Matcher matcher = _dashPattern2.matcher(content);
@@ -80,15 +60,24 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 
 		if (sb.length() > 0) {
 			matcher.appendTail(sb);
-
-			return sb.toString();
 		}
 
-		return content;
+		return super.postFormat(
+			sb.toString(), checkCategoryNames, originalReturnCharacter);
 	}
 
-	private String _preProcess(String content) {
+	@Override
+	protected String preFormat(
+			File file, String fileName, String content,
+			List<String> checkCategoryNames, Set<String> modifiedMessages,
+			String originalReturnCharacter)
+		throws Exception {
+
 		StringBundler sb = new StringBundler();
+
+		content = super.preFormat(
+			file, fileName, content, checkCategoryNames, modifiedMessages,
+			originalReturnCharacter);
 
 		content = content.replaceAll("\\n +\\n", "\n\n");
 

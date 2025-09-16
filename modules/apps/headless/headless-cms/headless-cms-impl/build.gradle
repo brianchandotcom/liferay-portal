@@ -12,10 +12,12 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:depot:depot-api")
+	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:headless:headless-batch-engine:headless-batch-engine-api")
 	compileOnly project(":apps:headless:headless-cms:headless-cms-api")
 	compileOnly project(":apps:headless:headless-common-spi")
 	compileOnly project(":apps:headless:headless-delivery:headless-delivery-api")
+	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
@@ -23,6 +25,7 @@ dependencies {
 	compileOnly project(":apps:portal-search:portal-search-rest-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:sharing:sharing-api")
+	compileOnly project(":apps:trash:trash-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")

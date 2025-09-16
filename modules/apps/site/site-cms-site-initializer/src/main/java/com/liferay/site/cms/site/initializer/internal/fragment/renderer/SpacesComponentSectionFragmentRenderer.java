@@ -31,6 +31,11 @@ public class SpacesComponentSectionFragmentRenderer
 	}
 
 	@Override
+	public boolean isSelectable(HttpServletRequest httpServletRequest) {
+		return true;
+	}
+
+	@Override
 	protected String getLabelKey() {
 		return "spaces";
 	}

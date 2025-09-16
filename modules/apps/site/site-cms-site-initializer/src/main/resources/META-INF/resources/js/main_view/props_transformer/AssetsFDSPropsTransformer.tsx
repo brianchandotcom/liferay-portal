@@ -260,7 +260,6 @@ export default function AssetsFDSPropsTransformer({
 		}) => {
 			if (action?.data?.id === 'delete') {
 				deleteAssetEntriesBulkAction({
-					actionId: action.data.id,
 					selectedData,
 				});
 			}

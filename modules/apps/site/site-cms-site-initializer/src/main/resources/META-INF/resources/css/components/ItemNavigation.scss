@@ -1,0 +1,36 @@
+@import 'atlas-variables';
+
+.carousel {
+	display: flex;
+
+	.preview-container {
+		height: 100%;
+		margin: 0 auto;
+		width: 90%;
+
+		.preview-file {
+			margin: 0;
+
+			.preview-file-container.preview-file-max-height {
+				height: 600px;
+			}
+		}
+	}
+
+	.pull-left,
+	.pull-right {
+		top: calc(50% - 32px);
+	}
+
+	.pull-left {
+		left: 0;
+	}
+
+	.pull-right {
+		right: 0;
+	}
+}
+
+.height-100 {
+	height: 100%;
+}

@@ -10,6 +10,8 @@ import React, {useCallback, useState} from 'react';
 import Carousel from './Carousel';
 import Header from './Header';
 
+import '../../../../css/components/ItemNavigation.scss';
+
 interface ItemNavigationModalContent {
 	contentViewURL: string;
 	currentIndex: number;
@@ -64,13 +66,14 @@ export default function ItemNavigationModalContent({
 			</ClayModal.Body>
 
 			<ClayModal.Footer
-				last={
-					<div>
+				className="text-center"
+				middle={
+					<span className="text-3">
 						{sub(Liferay.Language.get('x-of-x'), [
 							currentItemIndex + 1,
 							items.length,
 						])}
-					</div>
+					</span>
 				}
 			/>
 		</>

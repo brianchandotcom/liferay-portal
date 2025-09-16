@@ -42,18 +42,20 @@ export default function Carousel({
 	showArrows: boolean;
 }) {
 	return (
-		<div className="carousel" style={{height: '100%'}}>
+		<div className="carousel height-100">
 			{showArrows && (
 				<Arrow direction="left" handleClick={handleClickPrevious} />
 			)}
 
-			{currentItem.embedded?.file ? (
-				<FilePreview file={currentItem.embedded.file} />
-			) : (
-				<ContentPreview
-					url={formatActionURL(currentItem, contentViewURL)}
-				/>
-			)}
+			<div className="preview-container">
+				{currentItem.embedded?.file ? (
+					<FilePreview file={currentItem.embedded.file} />
+				) : (
+					<ContentPreview
+						url={formatActionURL(currentItem, contentViewURL)}
+					/>
+				)}
+			</div>
 
 			{showArrows && (
 				<Arrow direction="right" handleClick={handleClickNext} />

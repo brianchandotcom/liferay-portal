@@ -17,19 +17,17 @@ export default function FilePreview({file}: {file: File}) {
 	const params = new URLSearchParams(thumbnailURL);
 	const hasImagePreview = params.has('imageThumbnail');
 
-	return (
-		<>
-			{hasImagePreview ? (
-				<ImagePreviewer alt={name} imageURL={link.href} />
-			) : (
-				<ClayEmptyState
-					description={Liferay.Language.get(
-						'hmm-looks-like-this-item-does-not-have-a-preview-we-can-show-you'
-					)}
-					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state_preview.svg`}
-					title={Liferay.Language.get('no-preview-available')}
-				/>
-			)}
-		</>
+	return hasImagePreview ? (
+		<ImagePreviewer alt={name} imageURL={link.href} />
+	) : (
+		<div className="bg-light d-flex height-100">
+			<ClayEmptyState
+				description={Liferay.Language.get(
+					'hmm-looks-like-this-item-does-not-have-a-preview-we-can-show-you'
+				)}
+				imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state_preview.svg`}
+				title={Liferay.Language.get('no-preview-available')}
+			/>
+		</div>
 	);
 }

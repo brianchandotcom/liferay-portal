@@ -115,6 +115,8 @@ public class ObjectEntryFolderResourceTest
 
 		_testDepotEntryGroup = _groupLocalService.getGroup(
 			_testDepotEntry.getGroupId());
+
+		_updateGroup(false);
 	}
 
 	@Override
@@ -203,6 +205,8 @@ public class ObjectEntryFolderResourceTest
 
 		super.
 			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore();
+
+		_updateGroup(true);
 
 		ObjectEntryFolder postObjectEntryFolder =
 			testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore_addObjectEntryFolder(
@@ -1238,6 +1242,17 @@ public class ObjectEntryFolderResourceTest
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 			Assert.assertNull(problem.getTitle());
 		}
+	}
+
+	private void _updateGroup(boolean trashEnabled) throws Exception {
+		UnicodeProperties unicodeProperties =
+			_testDepotEntryGroup.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty(
+			"trashEnabled", String.valueOf(trashEnabled));
+
+		_testDepotEntryGroup = _groupLocalService.updateGroup(
+			_testDepotEntryGroup.getGroupId(), unicodeProperties.toString());
 	}
 
 	@Inject

@@ -36,6 +36,7 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.JavaParser;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
 
 import java.io.File;
@@ -140,16 +141,18 @@ public class SourceChecksUtil {
 
 						DetailAST detailAST = JavaParser.parseFileText(
 							fileText, JavaParser.Options.WITH_COMMENTS);
+						FileContents fileContents = new FileContents(fileText);
 
 						javaClass = JavaClassParser.parseJavaClass(
 							fileName, sourceChecksResult.getContent(),
-							detailAST);
+							detailAST, fileContents);
 
 						anonymousClasses =
 							JavaClassParser.parseAnonymousClasses(
 								fileName, sourceChecksResult.getContent(),
 								javaClass.getPackageName(),
-								javaClass.getImportNames(), detailAST);
+								javaClass.getImportNames(), detailAST,
+								fileContents);
 					}
 					catch (ParseException parseException) {
 						sourceChecksResult.addSourceFormatterMessage(

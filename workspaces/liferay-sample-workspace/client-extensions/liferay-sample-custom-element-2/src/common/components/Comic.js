@@ -11,7 +11,7 @@ function Comic() {
 
 	React.useEffect(() => {
 		OAuth2.FromUserAgentApplication(
-			'liferay-sample-etc-node-oauth-application-user-agent'
+			'liferay-sample-etc-node-oaua'
 		)
 			.then((oAuth2Client) => {
 				oAuth2Client?.fetch('/comic').then((comic) => {

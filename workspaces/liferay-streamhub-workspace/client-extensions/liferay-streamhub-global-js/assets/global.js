@@ -10,7 +10,7 @@ let retryCount = 0;
 async function liferayStreamHubConnect() {
 	try {
 		const oAuthApplication = Liferay.OAuth2Client.FromUserAgentApplication(
-			'liferay-streamhub-etc-spring-boot-oauth-application-user-agent'
+			'liferay-streamhub-etc-spring-boot-oaua'
 		);
 
 		const [, hostname] = oAuthApplication.homePageURL.split('//');

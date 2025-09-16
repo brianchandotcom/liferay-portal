@@ -154,7 +154,7 @@ public class SampleCommandLineRunner
 
 	private String _getWebClientBaseURL() {
 		String homePageURL = LiferayOAuth2Util.getHomePageURL(
-			"liferay-sample-etc-spring-boot-oauth-application-user-agent",
+			"liferay-sample-etc-spring-boot-oaua",
 			_lxcDXPMainDomain, _lxcDXPServerProtocol);
 
 		if (_log.isDebugEnabled()) {

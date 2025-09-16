@@ -11,7 +11,7 @@ function DadJoke() {
 
 	React.useEffect(() => {
 		OAuth2.FromUserAgentApplication(
-			'liferay-sample-etc-spring-boot-oauth-application-user-agent'
+			'liferay-sample-etc-spring-boot-oaua'
 		)
 			.then((oAuth2Client) => {
 				oAuth2Client

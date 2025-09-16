@@ -101,7 +101,7 @@ const CaseResultEditTest = () => {
 			if (_issues.length) {
 				_issues.map((issue) => {
 					Liferay.OAuth2Client.FromUserAgentApplication(
-						'liferay-testray-etc-spring-boot-oauth-application-user-agent'
+						'liferay-testray-etc-spring-boot-oaua'
 					).fetch(`/jira/issues/${issue}`, {
 						body: JSON.stringify({
 							testrayCaseNames: [

@@ -185,6 +185,8 @@ test(
 				'Cookie Manager'
 			);
 
+			await systemSettingsPage.page.waitForTimeout(1000);
+
 			const enabledButton = page.getByLabel('Enabled');
 			const isChecked = await enabledButton.isChecked();
 

@@ -9,6 +9,7 @@ import {sub} from 'frontend-js-web';
 import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/genericOpenModalUtil';
 import {getFormattedLabel} from '../../common/utils/getFormattedText';
 import {displayDeleteSuccessToast} from '../../common/utils/toastUtil';
+import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
 import restoreItemAction from './actions/restoreItemAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
@@ -100,6 +101,19 @@ export default function RecycleBinFDSPropsTransformer({
 					itemData.actions?.restore.method,
 					itemData.actions?.restore.href
 				);
+			}
+		},
+		onBulkActionItemClick: ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			if (action?.data?.id === 'delete') {
+				deleteAssetEntriesBulkAction({
+					selectedData,
+				});
 			}
 		},
 	};

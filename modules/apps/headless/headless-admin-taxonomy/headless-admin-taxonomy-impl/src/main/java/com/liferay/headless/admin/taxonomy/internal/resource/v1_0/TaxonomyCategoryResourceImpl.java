@@ -913,7 +913,7 @@ public class TaxonomyCategoryResourceImpl
 
 		if (Validator.isBlank(taxonomyVocabularyExternalReferenceCode)) {
 			throw new BadRequestException(
-				"No Taxonomy Vocabulary reference code provided");
+				"Taxonomy vocabulary external reference code is required");
 		}
 
 		AssetVocabulary assetVocabulary = null;

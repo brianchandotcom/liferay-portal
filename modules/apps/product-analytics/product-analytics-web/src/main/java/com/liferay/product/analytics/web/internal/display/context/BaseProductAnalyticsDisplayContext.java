@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsBannerCookiesConstants;
+import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsCookiesConstants;
 
 import jakarta.portlet.RenderRequest;
 
@@ -57,22 +57,22 @@ public class BaseProductAnalyticsDisplayContext {
 		_optionalConsentCookieTypes = ListUtil.fromArray(
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerCookiesConstants.
+				ProductAnalyticsCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_FUNCTIONAL,
 				false),
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerCookiesConstants.
+				ProductAnalyticsCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_PERFORMANCE,
 				false),
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerCookiesConstants.
+				ProductAnalyticsCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_PERSONALIZATION,
 				false),
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerCookiesConstants.
+				ProductAnalyticsCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_PRODUCT_ANALYTICS,
 				false));
 
@@ -104,7 +104,7 @@ public class BaseProductAnalyticsDisplayContext {
 		_requiredConsentCookieTypes = ListUtil.fromArray(
 			_getConsentCookieType(
 				false,
-				ProductAnalyticsBannerCookiesConstants.
+				ProductAnalyticsCookiesConstants.
 					NAME_PRODUCT_ANALYTICS_CONSENT_TYPE_NECESSARY,
 				true));
 

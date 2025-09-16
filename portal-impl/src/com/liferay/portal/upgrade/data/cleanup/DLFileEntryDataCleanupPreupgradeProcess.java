@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.processor.RawMetadataProcessor;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
@@ -18,9 +19,13 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProce
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author István András Dézsi
@@ -30,11 +35,33 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		UnsafeRunnable<Exception> dlFileEntryEmptyNameRunnable =
+			_getDLFileEntryEmptyNameRunnable();
+		UnsafeRunnable<Exception> dlFileEntryRunnable =
+			_getDLFileEntryRunnable();
 
-		// First cleanup invalid DLFileEntry records, as this affects the next
-		// set of cleanups
+		Map<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
+			dataCleanupPreupgradeProcessMap =
+				HashMapBuilder.
+					<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
+						put(
+							dlFileEntryEmptyNameRunnable, dependsOn()
+					).put(
+						dlFileEntryRunnable,
+						dependsOn(dlFileEntryEmptyNameRunnable)
+					).put(
+						_getDLFileShortcutRunnable(),
+						dependsOn(dlFileEntryRunnable)
+					).put(
+						_getDLFileEntryMetadataRunnable(),
+						dependsOn(dlFileEntryRunnable)
+					).build();
 
-		upgrade(
+		run(dataCleanupPreupgradeProcessMap);
+	}
+
+	private UnsafeRunnable<Exception> _getDLFileEntryEmptyNameRunnable() {
+		return () -> upgrade(
 			new DataCleanupPreupgradeProcess() {
 
 				@Override
@@ -73,57 +100,10 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 				}
 
 			});
+	}
 
-		// Then remove DLFileEntry related data
-
-		upgrade(
-			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
-				StringBundler.concat(
-					"classNameId in (select classNameId from ClassName_ where ",
-					"value in ('", FileEntry.class.getName(), "', '",
-					DLFileEntry.class.getName(), "'))"),
-				new String[] {"classNameId"}, "classPK",
-				new String[] {"fileEntryId"}, "DLFileEntry"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "fileEntryId", "DLFileEntryMetadata", "fileEntryId",
-				"DLFileEntry"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "fileEntryId", "DLFileVersion", "fileEntryId",
-				"DLFileEntry"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "fileEntryId", "DLFileVersionPreview", "fileEntryId",
-				"DLFileEntry"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "toFileEntryId", "DLFileShortcut", "fileEntryId",
-				"DLFileEntry"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				"name = '" + DLFileEntry.class.getName() + "'", "primKeyId",
-				"ResourcePermission", "fileEntryId", "DLFileEntry"));
-
-		// Then delete DLFileShortcut related data (as some DLFileShortcut
-		// could be deleted in the previous set of cleanups
-
-		upgrade(
-			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
-				StringBundler.concat(
-					"classNameId = (select classNameId from ClassName_ where ",
-					"value = '", DLFileShortcut.class.getName(), "')"),
-				new String[] {"classNameId"}, "classPK",
-				new String[] {"fileShortcutId"}, "DLFileShortcut"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				"name = '" + DLFileShortcut.class.getName() + "'", "primKeyId",
-				"ResourcePermission", "fileShortcutId", "DLFileShortcut"));
-
-		// Then delete DLFileEntryMetadata related data (as some
-		// DLFileEntryMetadata could be deleted in the previous set of cleanups
-
-		upgrade(
+	private UnsafeRunnable<Exception> _getDLFileEntryMetadataRunnable() {
+		return () -> upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(
 					"exists (select 1 from DDMStructure where ",
@@ -134,6 +114,57 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 					RawMetadataProcessor.class.getName(), "')))"),
 				"classPK", "DDMStorageLink", "DDMStorageId",
 				"DLFileEntryMetadata"));
+	}
+
+	private UnsafeRunnable<Exception> _getDLFileEntryRunnable() {
+		return () -> {
+			upgrade(
+				new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
+					StringBundler.concat(
+						"classNameId in (select classNameId from ClassName_ ",
+						"where value in ('", FileEntry.class.getName(), "', '",
+						DLFileEntry.class.getName(), "'))"),
+					new String[] {"classNameId"}, "classPK",
+					new String[] {"fileEntryId"}, "DLFileEntry"));
+			upgrade(
+				new TableOrphanReferencesDataCleanupPreupgradeProcess(
+					null, "fileEntryId", "DLFileEntryMetadata", "fileEntryId",
+					"DLFileEntry"));
+			upgrade(
+				new TableOrphanReferencesDataCleanupPreupgradeProcess(
+					null, "fileEntryId", "DLFileVersion", "fileEntryId",
+					"DLFileEntry"));
+			upgrade(
+				new TableOrphanReferencesDataCleanupPreupgradeProcess(
+					null, "fileEntryId", "DLFileVersionPreview", "fileEntryId",
+					"DLFileEntry"));
+			upgrade(
+				new TableOrphanReferencesDataCleanupPreupgradeProcess(
+					null, "toFileEntryId", "DLFileShortcut", "fileEntryId",
+					"DLFileEntry"));
+			upgrade(
+				new TableOrphanReferencesDataCleanupPreupgradeProcess(
+					"name = '" + DLFileEntry.class.getName() + "'", "primKeyId",
+					"ResourcePermission", "fileEntryId", "DLFileEntry"));
+		};
+	}
+
+	private UnsafeRunnable<Exception> _getDLFileShortcutRunnable() {
+		return () -> {
+			upgrade(
+				new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
+					StringBundler.concat(
+						"classNameId = (select classNameId from ClassName_ ",
+						"where value = '", DLFileShortcut.class.getName(),
+						"')"),
+					new String[] {"classNameId"}, "classPK",
+					new String[] {"fileShortcutId"}, "DLFileShortcut"));
+			upgrade(
+				new TableOrphanReferencesDataCleanupPreupgradeProcess(
+					"name = '" + DLFileShortcut.class.getName() + "'",
+					"primKeyId", "ResourcePermission", "fileShortcutId",
+					"DLFileShortcut"));
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

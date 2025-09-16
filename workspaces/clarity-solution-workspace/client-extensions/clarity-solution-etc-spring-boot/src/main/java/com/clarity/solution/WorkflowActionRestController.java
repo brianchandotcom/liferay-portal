@@ -36,6 +36,21 @@ public class WorkflowActionRestController extends BaseRestController {
 
 		JSONObject jsonObject = new JSONObject(json);
 
+		post(
+			"Bearer " + jwt.getTokenValue(),
+			new JSONObject(
+			).put(
+				"transitionName", _getTransitionName(jsonObject)
+			).toString(),
+			UriComponentsBuilder.fromPath(
+				jsonObject.getString("transitionURL")
+			).build(
+			).toUri());
+
+		return new ResponseEntity<>(json, HttpStatus.OK);
+	}
+
+	private String _getTransitionName(JSONObject jsonObject) {
 		String key = jsonObject.getJSONObject(
 			"entryDTO"
 		).getJSONObject(
@@ -44,24 +59,11 @@ public class WorkflowActionRestController extends BaseRestController {
 			"key"
 		);
 
-		String transitionName = "auto-approve";
-
 		if (Objects.equals(key, "approved") || Objects.equals(key, "denied")) {
-			transitionName = "review";
+			return "review";
 		}
 
-		post(
-			"Bearer " + jwt.getTokenValue(),
-			new JSONObject(
-			).put(
-				"transitionName", transitionName
-			).toString(),
-			UriComponentsBuilder.fromPath(
-				jsonObject.getString("transitionURL")
-			).build(
-			).toUri());
-
-		return new ResponseEntity<>(json, HttpStatus.OK);
+		return "auto-approve";
 	}
 
 }

@@ -11,10 +11,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.IdEntityField;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -43,8 +45,30 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testGetAssetLibraryByExternalReferenceCodeUserAccountsPage()
+		throws Exception {
+
+		super.testGetAssetLibraryByExternalReferenceCodeUserAccountsPage();
+
+		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithSortId();
+	}
+
+	@Override
+	@Test
+	public void testGetAssetLibraryUserAccountsPage() throws Exception {
+		super.testGetAssetLibraryUserAccountsPage();
+
+		_testGetAssetLibraryUserAccountsPageWithSortId();
+	}
+
+	@Override
 	protected Collection<EntityField> getEntityFields() {
-		return Collections.emptyList();
+		return List.of(
+			new StringEntityField(
+				"externalReferenceCode", locale -> "externalReferenceCode"),
+			new StringEntityField("name", locale -> "name"),
+			new IdEntityField("id", locale -> "id", locale -> "id"));
 	}
 
 	@Override
@@ -195,6 +219,24 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		Group group = testDepotEntry.getGroup();
 
 		return group.getExternalReferenceCode();
+	}
+
+	private void _testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithSortId()
+		throws Exception {
+
+		testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithSort(
+			EntityField.Type.ID,
+			(entityField, userAccount1, userAccount2) -> {
+			});
+	}
+
+	private void _testGetAssetLibraryUserAccountsPageWithSortId()
+		throws Exception {
+
+		testGetAssetLibraryUserAccountsPageWithSort(
+			EntityField.Type.ID,
+			(entityField, userAccount1, userAccount2) -> {
+			});
 	}
 
 	private User _testUser;

@@ -61,11 +61,11 @@
 	background: #fff;
 	border-radius: 10px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-	left: 0;
 	min-width: 280px;
 	opacity: 0;
 	pointer-events: none;
 	position: absolute;
+	right: 0;
 	top: 100%;
 	transform: translateY(-5px);
 	transition: var(--account-selection-dropdown-transition);

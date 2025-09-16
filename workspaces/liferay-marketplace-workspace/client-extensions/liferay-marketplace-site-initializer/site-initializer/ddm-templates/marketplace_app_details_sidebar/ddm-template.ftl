@@ -39,21 +39,22 @@
 >
 <@section title = languageUtil.get(locale, "developer")>
 	<#if publisherDetails?has_content>
-	  <a class="bg-neutral-8" href="${redirectPath}/${publisherDetails.id}">
-		   ${developerName}
+		<a class = "bg-neutral-8" href = "${redirectPath}/${publisherDetails.id}">
+			${developerName}
 		</a>
 	<#else>
-	  <a class="bg-neutral-8" 	href="/?developer-name=${developerName}">
-			 ${developerName}
+		<a class = "bg-neutral-8" href = "/?developer-name=${developerName}">
+			${developerName}
 		</a>
 	</#if>
 </@section>
 
-<@section title=languageUtil.get(locale, "publisher-date", "Publisher Date")>
-    <#if createDate?has_content>
-        <#assign parsedDate = createDate?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'")>
-        <p>${parsedDate?string("MMMM d, yyyy")}</p>
-    </#if>
+<@section title = languageUtil.get(locale, "publisher-date", "Publisher Date")>
+	<#if createDate?has_content>
+		<#assign parsedDate = createDate?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'") />
+
+		<p>${parsedDate?string("MMMM d, yyyy")}</p>
+	</#if>
 </@section>
 
 <@section title = languageUtil.get(locale, "deployment-method", "Deployment Method")>
@@ -320,7 +321,7 @@
 		text-decoration: none;
 	}
 
-  .help-and-support-link-arrow {
+.help-and-support-link-arrow {
 		margin-top: 3px;
 		fill: rgb(133, 140, 148);
 	}

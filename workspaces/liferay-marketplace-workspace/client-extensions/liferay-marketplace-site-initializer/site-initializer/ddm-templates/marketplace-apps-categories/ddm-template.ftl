@@ -6,6 +6,7 @@
 	}
 
 	.app-category {
+		display: block !important;
 		flex: 1;
 		font-size: 11px;
 		max-width: 200px;
@@ -18,17 +19,18 @@
 		background-color: #e6ebf5;
 		color: #1c3667;
 		font-weight: 600;
-		height:20px;
+		height: 20px;
+		padding: 3px 8px;
 	}
 
 	.app-container .app-product-type {
-		font-size:11px;
+		font-size: 11px;
 		font-weight: 600;
+		height: 20px;
 		min-width: 0;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		height: 20px;
 	}
 
 	.client-extension-product-type {
@@ -154,7 +156,7 @@
 
 			<#list categories as category>
 				<#if category.vocabulary?upper_case == vocabularyProductCategory>
-					<span class="app-category d-flex align-items-center bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${category.name}">
+					<span class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${category.name}">
 						${category.name}
 					</span>
 				</#if>

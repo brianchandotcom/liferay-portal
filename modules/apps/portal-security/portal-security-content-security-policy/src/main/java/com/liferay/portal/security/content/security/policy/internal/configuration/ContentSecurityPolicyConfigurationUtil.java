@@ -86,6 +86,11 @@ public class ContentSecurityPolicyConfigurationUtil {
 					return StringPool.BLANK;
 				}
 
+				@Override
+				public boolean reportOnly() {
+					return true;
+				}
+
 				private final String[] _excludedPaths = {};
 
 			};

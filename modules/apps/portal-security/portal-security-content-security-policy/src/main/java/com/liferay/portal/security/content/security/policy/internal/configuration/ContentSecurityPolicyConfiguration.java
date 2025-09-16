@@ -27,6 +27,9 @@ public interface ContentSecurityPolicyConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
+	@Meta.AD(deflt = "true", name = "report-only", required = false)
+	public boolean reportOnly();
+
 	@ExtendedAttributeDefinition(descriptionArguments = "[$NONCE$]")
 	@Meta.AD(
 		description = "content-security-policy-help",

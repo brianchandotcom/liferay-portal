@@ -325,10 +325,21 @@ else {
 							'change:data',
 							(event, source) => {
 								if (source?.isTyping || source?.isUndoable) {
-									hiddenInput.value = editor.getData();
+									const value = editor.getData();
+
+									hiddenInput.value = value;
+
+									if (input.required) {
+										updateCKEditorRequired(value);
+									}
 								}
 							}
 						);
+					}
+					else if (input.required) {
+						editor.on('change', () => {
+							updateCKEditorRequired(editor.getData());
+						});
 					}
 				});
 			}
@@ -364,4 +375,13 @@ function initEditorWhenReady(onReady) {
 			onReady(editor);
 		}
 	});
+}
+
+function updateCKEditorRequired(value) {
+	CKEditorRequiredInput.value = value;
+
+	if (value) {
+		errorMessage.classList.add('d-none');
+		errorMessageText.textContent = '';
+	}
 }

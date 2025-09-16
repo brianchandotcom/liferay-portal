@@ -861,6 +861,29 @@ public abstract class BaseMasterPageResourceImpl
 			}
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				masterPageUnsafeFunction = masterPage -> {
+					MasterPage persistedMasterPage = null;
+
+					if (parameters.containsKey("siteExternalReferenceCode")) {
+						persistedMasterPage = putSiteMasterPage(
+							(String)parameters.get("siteExternalReferenceCode"),
+							masterPage.getExternalReferenceCode(), masterPage);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteExternalReferenceCode]");
+					}
+
+					return persistedMasterPage;
+				};
+			}
+		}
+
 		if (masterPageUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -918,7 +941,7 @@ public abstract class BaseMasterPageResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

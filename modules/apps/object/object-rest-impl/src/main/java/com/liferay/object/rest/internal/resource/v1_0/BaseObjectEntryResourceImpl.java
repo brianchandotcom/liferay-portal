@@ -13,6 +13,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -2300,6 +2301,26 @@ public abstract class BaseObjectEntryResourceImpl
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				objectEntryUnsafeFunction = objectEntry -> {
+					ObjectEntry getObjectEntry = null;
+					ObjectEntry persistedObjectEntry = null;
+
+					try {
+						getObjectEntry = getByExternalReferenceCode(
+							objectEntry.getExternalReferenceCode());
+
+						persistedObjectEntry = patchObjectEntry(
+							getObjectEntry.getId(), objectEntry);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedObjectEntry = postObjectEntry(objectEntry);
+					}
+
+					return persistedObjectEntry;
+				};
+			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 				objectEntryUnsafeFunction = objectEntry -> {

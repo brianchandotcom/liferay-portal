@@ -45,6 +45,13 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 
 		String content = javaTerm.getContent();
 
+		if (!content.contains("new ActionableDynamicQuery.AddCriteriaMethod") &&
+			!content.contains(
+				"new ActionableDynamicQuery.PerformActionMethod")) {
+
+			return content;
+		}
+
 		File file = new File(absolutePath);
 
 		FileText fileText = new FileText(

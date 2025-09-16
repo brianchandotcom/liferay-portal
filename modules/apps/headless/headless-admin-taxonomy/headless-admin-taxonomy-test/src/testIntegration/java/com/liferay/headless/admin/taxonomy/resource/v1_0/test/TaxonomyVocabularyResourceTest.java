@@ -224,6 +224,7 @@ public class TaxonomyVocabularyResourceTest
 		_addCMSGroup();
 
 		super.testGetSiteTaxonomyVocabulariesPage();
+
 		_testGetSiteTaxonomyVocabulariesPage();
 
 		testGroup = originalTestGroup;
@@ -255,10 +256,9 @@ public class TaxonomyVocabularyResourceTest
 	protected TaxonomyVocabulary randomTaxonomyVocabulary() throws Exception {
 		return new TaxonomyVocabulary() {
 			{
-				if (testGroup.isCMS()) {
-					assetLibraries = new AssetLibrary[] {_randomAssetLibrary()};
-				}
-
+				assetLibraries =
+					testGroup.isCMS() ?
+						new AssetLibrary[] {_randomAssetLibrary()} : null;
 				assetTypes = new AssetType[] {
 					new AssetType() {
 						{

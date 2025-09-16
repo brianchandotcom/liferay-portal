@@ -1,5 +1,13 @@
+const CKEditorRequiredInput = document.getElementById(
+	`${fragmentEntryLinkNamespace}-ckeditor-required`
+);
 const editorClass = '.ck-editor';
 const editorName = `${fragmentEntryLinkNamespace}-${input.name}`;
+const errorMessage = document.getElementById(
+	`${fragmentEntryLinkNamespace}-error-message`
+);
+const errorMessageTextId = `${fragmentEntryLinkNamespace}-error-message-text`;
+const errorMessageText = document.getElementById(errorMessageTextId);
 const wrapper = document.getElementById(
 	`${fragmentEntryLinkNamespace}-wrapper`
 );
@@ -32,6 +40,37 @@ else {
 			});
 		}
 	});
+
+	// Whenever the field is required, we validate if the CKEditorRequiredInput
+	// is valid on submit. If it is not valid, the error message will be shown
+	// and the field will be focused.
+
+	if (input.required) {
+		CKEditorRequiredInput.addEventListener('invalid', (event) => {
+			event.preventDefault();
+
+			errorMessage.classList.remove('d-none');
+			errorMessageText.textContent =
+				errorMessageText.dataset.requiredError;
+
+			editorPromise.then((editor) => {
+				if (Liferay.FeatureFlags['LPD-11235']) {
+					editor.editing.view.focus();
+
+					editor.ui.view.editable.element.setAttribute(
+						'aria-describedby',
+						errorMessageTextId
+					);
+				}
+				else {
+					document
+						.getElementById(`cke_${editorName}`)
+						.querySelector('iframe')
+						.contentDocument.body.focus();
+				}
+			});
+		});
+	}
 
 	if (input.readOnly || input.attributes?.disabled) {
 		editorPromise.then((editor) => {

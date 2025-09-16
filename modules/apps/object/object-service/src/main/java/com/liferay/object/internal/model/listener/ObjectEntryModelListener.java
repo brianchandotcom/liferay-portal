@@ -111,27 +111,14 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 					objectEntry, objectEntry, user);
 			}
 
-			if (!FeatureFlagManagerUtil.isEnabled(
-					objectEntry.getCompanyId(), "LPD-34594")) {
-
-				return;
-			}
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId());
-
-			if (!objectDefinition.isRootDescendantNode() ||
-				!objectDefinition.isRootNode()) {
-
-				return;
-			}
-
 			ObjectEntry rootObjectEntry =
 				_objectEntryLocalService.fetchObjectEntry(
 					objectEntry.getRootObjectEntryId());
 
-			if (rootObjectEntry == null) {
+			if (!FeatureFlagManagerUtil.isEnabled(
+					objectEntry.getCompanyId(), "LPD-34594") ||
+				(rootObjectEntry == null)) {
+
 				return;
 			}
 

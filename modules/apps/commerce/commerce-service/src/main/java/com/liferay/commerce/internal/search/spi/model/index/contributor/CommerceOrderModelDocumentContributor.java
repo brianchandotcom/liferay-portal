@@ -166,6 +166,9 @@ public class CommerceOrderModelDocumentContributor
 				document.addKeyword("regionName", region.getName());
 			}
 
+			document.addDate(
+				"requestedDeliveryDate",
+				commerceOrder.getRequestedDeliveryDate());
 			document.addDateSortable(
 				"requestedDeliveryDate",
 				commerceOrder.getRequestedDeliveryDate());

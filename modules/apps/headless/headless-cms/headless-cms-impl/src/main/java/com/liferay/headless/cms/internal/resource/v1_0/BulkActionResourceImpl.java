@@ -10,14 +10,20 @@ import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.cms.dto.v1_0.BulkAction;
 import com.liferay.headless.cms.dto.v1_0.BulkActionItem;
 import com.liferay.headless.cms.dto.v1_0.BulkActionTask;
+import com.liferay.headless.cms.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.headless.cms.dto.v1_0.DeleteBulkAction;
 import com.liferay.headless.cms.internal.odata.entity.v1_0.BulkActionEntityModel;
 import com.liferay.headless.cms.resource.v1_0.BulkActionResource;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -27,8 +33,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
@@ -77,7 +85,25 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		if (BulkAction.Type.DELETE_BULK_ACTION.equals(bulkAction.getType())) {
+		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
+				bulkAction.getType())) {
+
+			DefaultPermissionBulkAction defaultPermissionBulkAction =
+				(DefaultPermissionBulkAction)bulkAction;
+
+			return _executeDefaultPermissionBulkAction(
+				defaultPermissionBulkAction,
+				_getDefaultPermissionBulkActionItemsMap(
+					bulkAction.getBulkActionItems(),
+					GetterUtil.getLong(
+						defaultPermissionBulkAction.getDepotGroupId()),
+					GetterUtil.getBoolean(bulkAction.getSelectAll()),
+					GetterUtil.getString(
+						defaultPermissionBulkAction.getTreePath())));
+		}
+		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(
+					bulkAction.getType())) {
+
 			return _executeDeleteBulkAction(
 				bulkAction,
 				_getBulkActionItemsMap(
@@ -146,6 +172,69 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"type", (type != null) ? type : "ObjectEntryFolder"
 			).build(),
 			new ServiceContext());
+	}
+
+	private BulkActionTask _executeDefaultPermissionBulkAction(
+			DefaultPermissionBulkAction defaultPermissionBulkAction,
+			Map<String, List<BulkActionItem>> bulkActionItemsMap)
+		throws Exception {
+
+		String defaultPermissions =
+			defaultPermissionBulkAction.getDefaultPermissions();
+
+		if (MapUtil.isEmpty(bulkActionItemsMap) ||
+			Validator.isNull(defaultPermissions)) {
+
+			return new BulkActionTask();
+		}
+
+		BulkActionTask bulkActionTask = _addBulkActionTask(
+			defaultPermissionBulkAction.getTypeAsString());
+
+		ImportTaskResource importTaskResource =
+			_importTaskResourceFactory.create(
+			).httpServletRequest(
+				contextHttpServletRequest
+			).httpServletResponse(
+				contextHttpServletResponse
+			).uriInfo(
+				contextUriInfo
+			).user(
+				contextUser
+			).build();
+
+		for (Map.Entry<String, List<BulkActionItem>> entry :
+				bulkActionItemsMap.entrySet()) {
+
+			String taskItemDelegateName = _getTaskItemDelegateName(
+				entry.getKey());
+
+			ImportTask importTask = importTaskResource.putImportTaskObject(
+				_getClassName(entry.getKey()), null, null,
+				ImportTask.ImportStrategy.ON_ERROR_CONTINUE.getValue(),
+				taskItemDelegateName, "PARTIAL_UPDATE",
+				transform(
+					entry.getValue(),
+					bulkActionItem -> HashMapBuilder.<String, Object>put(
+						"defaultPermissions", defaultPermissions
+					).put(
+						"id", bulkActionItem.getClassPK()
+					).build()));
+
+			for (BulkActionItem bulkActionItem : entry.getValue()) {
+				_addBulkActionTaskItem(
+					bulkActionTask.getId(),
+					bulkActionItem.getClassExternalReferenceCode(),
+					bulkActionItem.getClassPK(),
+					StringUtil.toLowerCase(
+						importTask.getExecuteStatusAsString()),
+					importTask.getId(), bulkActionItem.getName(),
+					_getBulkActionTaskItemObjectDefinitionId(),
+					taskItemDelegateName);
+			}
+		}
+
+		return bulkActionTask;
 	}
 
 	private BulkActionTask _executeDeleteBulkAction(
@@ -306,6 +395,81 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return "com.liferay.object.rest.dto.v1_0.ObjectEntry";
 	}
 
+	private Map<String, List<BulkActionItem>>
+			_getDefaultPermissionBulkActionItemsMap(
+				BulkActionItem[] bulkActionItems, long depotGroupId,
+				boolean selectAll, String treePath)
+		throws Exception {
+
+		Map<String, List<BulkActionItem>> bulkActionItemsMap = new HashMap<>();
+
+		if (selectAll && ArrayUtil.isEmpty(bulkActionItems)) {
+			if ((depotGroupId == 0) && Validator.isNull(treePath)) {
+				throw new ValidationException();
+			}
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					getObjectDefinitionByExternalReferenceCode(
+						"L_CMS_DEFAULT_PERMISSION",
+						contextCompany.getCompanyId());
+
+			String filterString = StringBundler.concat(
+				"(className eq '", ObjectEntryFolder.class.getName(),
+				"') and ");
+
+			if (Validator.isNull(treePath)) {
+				filterString = StringBundler.concat(
+					filterString, "(depotGroupId eq ", depotGroupId, ")");
+			}
+			else {
+				filterString = StringBundler.concat(
+					filterString, "(startswith(treePath, '", treePath, "'))");
+			}
+
+			Predicate predicate = _filterFactory.create(
+				filterString, objectDefinition);
+
+			List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
+				new Long[0], contextCompany.getCompanyId(),
+				contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(), predicate, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			if (ListUtil.isEmpty(primaryKeys)) {
+				return bulkActionItemsMap;
+			}
+
+			for (long primaryKey : primaryKeys) {
+				bulkActionItemsMap.computeIfAbsent(
+					objectDefinition.getClassName(), key -> new ArrayList<>()
+				).add(
+					new BulkActionItem() {
+						{
+							setClassPK(() -> primaryKey);
+						}
+					}
+				);
+			}
+
+			return bulkActionItemsMap;
+		}
+
+		if (ArrayUtil.isEmpty(bulkActionItems)) {
+			return bulkActionItemsMap;
+		}
+
+		for (BulkActionItem bulkActionItem : bulkActionItems) {
+			bulkActionItemsMap.computeIfAbsent(
+				bulkActionItem.getClassName(), key -> new ArrayList<>()
+			).add(
+				bulkActionItem
+			);
+		}
+
+		return bulkActionItemsMap;
+	}
+
 	private String _getTaskItemDelegateName(String key) throws Exception {
 		if (StringUtil.equals(
 				"com.liferay.object.model.ObjectEntryFolder", key)) {
@@ -324,6 +488,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	private ObjectDefinition _bulkActionTaskItemObjectDefinition;
 	private ObjectDefinition _bulkActionTaskObjectDefinition;
+
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
+	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
 	private ImportTaskResource.Factory _importTaskResourceFactory;

@@ -9,7 +9,7 @@
 		"ckeditor5": "46.0.2",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
-		"liferay-ckeditor": "4.21.0-liferay.12",
+		"liferay-ckeditor": "4.21.0-liferay.13",
 		"prop-types": "15.7.2",
 		"react": "18.2.0"
 	},

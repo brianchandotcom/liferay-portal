@@ -93,7 +93,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpAssetRenderer();
+		_setUpAssetRenderer();
 		_setUpGroupLocalService();
 		_setUpLocaleThreadLocal();
 		_setUpUser();
@@ -179,7 +179,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 
-		_whenGroupLocalServiceGetGroup(false);
+		_setUpGroup(false);
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, classPK));
@@ -211,8 +211,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 
-		_whenGroupLocalServiceGetGroup(true);
-		_whenLanguageGet("staged");
+		_setUpGroup(true);
+		_setUpLanguage("staged");
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, classPK));
@@ -246,7 +246,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
-		_whenIndexerRegistryGetIndexer(className, _createIndexer());
+		_setUpIndexerRegistry(className, _createIndexer());
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, classPK));
@@ -279,7 +279,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
-		_whenIndexerRegistryGetIndexer(className, _createIndexer());
+		_setUpIndexerRegistry(className, _createIndexer());
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, classPK));
@@ -326,7 +326,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
-		_whenIndexerRegistryGetIndexer(className, _createIndexer());
+		_setUpIndexerRegistry(className, _createIndexer());
 
 		Document document = _createDocument(className, classPK);
 
@@ -345,7 +345,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	public void testViewURL1() throws Exception {
 		long classNameId = RandomTestUtil.randomLong();
 
-		_whenClassNameLocalServiceGetClassName(
+		_setUpClassNameLocalService(
 			classNameId, RandomTestUtil.randomString());
 
 		String className = RandomTestUtil.randomString();
@@ -355,7 +355,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long classPK = RandomTestUtil.randomLong();
 
-		_whenSearchUtilGetSearchResultViewURL(className, classPK);
+		_setUpSearchUtilMockedStatic(className, classPK);
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		Document document = _createDocument(className, classPK);
@@ -380,11 +380,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		long classNameId = RandomTestUtil.randomLong();
 
-		_whenClassNameLocalServiceGetClassName(classNameId, className1);
+		_setUpClassNameLocalService(classNameId, className1);
 
 		long classPK1 = RandomTestUtil.randomLong();
 
-		_whenSearchUtilGetSearchResultViewURL(className1, classPK1);
+		_setUpSearchUtilMockedStatic(className1, classPK1);
 
 		String className2 = RandomTestUtil.randomString();
 
@@ -420,7 +420,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		return searchResultSummaryDisplayContextBuilder.build();
 	}
 
-	protected void setUpAssetRenderer() throws Exception {
+	private void _setUpAssetRenderer() throws Exception {
 		Mockito.doReturn(
 			_SUMMARY_CONTENT
 		).when(
@@ -754,8 +754,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		);
 	}
 
-	private void _whenClassNameLocalServiceGetClassName(
-			long classNameId, String value)
+	private void _setUpClassNameLocalService(long classNameId, String value)
 		throws Exception {
 
 		ClassName className = Mockito.mock(ClassName.class);
@@ -775,7 +774,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		);
 	}
 
-	private void _whenGroupLocalServiceGetGroup(boolean stagingGroup)
+	private void _setUpGroup(boolean stagingGroup)
 		throws Exception {
 
 		Mockito.doReturn(
@@ -785,7 +784,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		).isStagingGroup();
 	}
 
-	private void _whenIndexerRegistryGetIndexer(
+	private void _setUpIndexerRegistry(
 		String className, Indexer<?> indexer) {
 
 		Mockito.doReturn(
@@ -797,7 +796,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		);
 	}
 
-	private void _whenLanguageGet(String string) {
+	private void _setUpLanguage(String string) {
 		Mockito.doReturn(
 			string
 		).when(
@@ -807,9 +806,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		);
 	}
 
-	private void _whenSearchUtilGetSearchResultViewURL(
-		String className, long classPK) {
-
+	private void _setUpSearchUtilMockedStatic(String className, long classPK) {
 		searchUtilMockedStatic.when(
 			() -> SearchUtil.getSearchResultViewURL(
 				Mockito.any(), Mockito.any(), Mockito.eq(className),

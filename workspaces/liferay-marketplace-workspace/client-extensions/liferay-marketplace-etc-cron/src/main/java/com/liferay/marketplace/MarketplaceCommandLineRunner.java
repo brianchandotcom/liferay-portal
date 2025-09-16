@@ -233,8 +233,7 @@ public class MarketplaceCommandLineRunner
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-cron-oauth-application-headless-" +
-					"server")
+				"liferay-marketplace-etc-cron-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
@@ -245,8 +244,7 @@ public class MarketplaceCommandLineRunner
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-cron-oauth-application-headless-" +
-					"server")
+				"liferay-marketplace-etc-cron-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();

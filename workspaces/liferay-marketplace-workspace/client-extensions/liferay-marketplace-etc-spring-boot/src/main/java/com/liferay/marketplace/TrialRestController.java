@@ -156,8 +156,7 @@ public class TrialRestController extends BaseRestController {
 		JSONObject trialExtensionRequestJSONObject = new JSONObject(
 			get(
 				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-marketplace-etc-spring-boot-oauth-application-" +
-						"headless-server"),
+					"liferay-marketplace-etc-spring-boot-oahs"),
 				UriComponentsBuilder.fromPath(
 					"/o/c/trialextensionrequests/" + id
 				).build(
@@ -194,8 +193,7 @@ public class TrialRestController extends BaseRestController {
 		if (Objects.equals(dueStatusJSONObject.getString("key"), "Pending")) {
 			patch(
 				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-marketplace-etc-spring-boot-oauth-application-" +
-						"headless-server"),
+					"liferay-marketplace-etc-spring-boot-oahs"),
 				new JSONObject(
 				).put(
 					"dueStatus", "Approved"

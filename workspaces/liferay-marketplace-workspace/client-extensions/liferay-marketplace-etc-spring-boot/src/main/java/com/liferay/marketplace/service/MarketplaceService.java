@@ -126,8 +126,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
@@ -150,8 +149,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
@@ -162,8 +160,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).parameters(
@@ -176,8 +173,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
@@ -194,8 +190,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
@@ -295,8 +290,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
@@ -315,8 +309,7 @@ public class MarketplaceService extends BaseService {
 
 		String authorization =
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server");
+				"liferay-marketplace-etc-spring-boot-oahs");
 		URL liferayDXPURL = new URL(
 			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 
@@ -433,8 +426,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
@@ -463,8 +455,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
@@ -477,8 +468,7 @@ public class MarketplaceService extends BaseService {
 		).header(
 			org.apache.http.HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oauth-application-" +
-					"headless-server")
+				"liferay-marketplace-etc-spring-boot-oahs")
 		).build();
 	}
 

@@ -140,8 +140,7 @@ public class JiraService extends BaseService {
 
 	private String _getLiferayAuthorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-testray-etc-spring-boot-oauth-application-headless-" +
-				"server");
+			"liferay-testray-etc-spring-boot-oahs");
 	}
 
 	private String _getNestedKey(JSONObject jsonObject, String... keys) {

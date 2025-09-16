@@ -10,11 +10,6 @@ import HeadlessCommerceAdminOrder from '../services/rest/HeadlessCommerceAdminOr
 import HeadlessCommerceDeliveryOrder from '../services/rest/HeadlessCommerceDeliveryOrder';
 import PublisherSalesSummary from '../services/rest/PublisherSalesSummary';
 
-type CompleteOrderItem = {
-	orderItem: ExtendedOrderItems;
-	placedOrderItem: PlacedOrderItems;
-};
-
 type ExtendedOrderItems = OrderItem & {
 	account: {
 		id: number;
@@ -44,31 +39,34 @@ const usePublisherSalesSummaryObject = (
 					})
 				);
 
-			const publisherAccount = await HeadlessAdminUser.getAccount(
-				publisherSalesSummary.r_accountToPublisher_accountEntryId
-			);
-
-			const postalAddresses =
-				await HeadlessAdminUser.getAccountPostalAddresses(
-					publisherSalesSummary.r_accountToPublisher_accountEntryId
-				);
-
-			const placedOrders = await Promise.all(
-				publisherSalesSummary.publisherToCommerceOrder.map((order) =>
-					HeadlessCommerceDeliveryOrder.getPlacedOrder(order.id)
-				)
-			);
-
-			const orders = await Promise.all(
-				publisherSalesSummary.publisherToCommerceOrder.map((order) =>
-					HeadlessCommerceAdminOrder.getOrder(
-						order.id,
-						new URLSearchParams({
-							nestedFields: 'account,orderItems',
-						})
-					)
-				)
-			);
+			const [publisherAccount, postalAddresses, placedOrders, orders] =
+				await Promise.all([
+					HeadlessAdminUser.getAccount(
+						publisherSalesSummary.r_accountToPublisher_accountEntryId
+					),
+					HeadlessAdminUser.getAccountPostalAddresses(
+						publisherSalesSummary.r_accountToPublisher_accountEntryId
+					),
+					Promise.all(
+						publisherSalesSummary.publisherToCommerceOrder.map(
+							(order) =>
+								HeadlessCommerceDeliveryOrder.getPlacedOrder(
+									order.id
+								)
+						)
+					),
+					Promise.all(
+						publisherSalesSummary.publisherToCommerceOrder.map(
+							(order) =>
+								HeadlessCommerceAdminOrder.getOrder(
+									order.id,
+									new URLSearchParams({
+										nestedFields: 'account,orderItems',
+									})
+								)
+						)
+					),
+				]);
 
 			const orderItems: ExtendedOrderItems[] = [];
 			const placedOrderItems: ExtendedPlacedOrderItems[] = [];
@@ -92,12 +90,10 @@ const usePublisherSalesSummaryObject = (
 				)
 			);
 
-			const completeOrderItems: CompleteOrderItem[] = orderItems.map(
-				(orderItem, index) => ({
-					orderItem,
-					placedOrderItem: placedOrderItems[index],
-				})
-			);
+			const completeOrderItems = orderItems.map((orderItem, index) => ({
+				orderItem,
+				placedOrderItem: placedOrderItems[index],
+			}));
 
 			return {
 				account: publisherAccount,

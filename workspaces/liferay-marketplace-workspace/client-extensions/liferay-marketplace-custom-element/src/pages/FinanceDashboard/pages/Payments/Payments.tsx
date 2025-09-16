@@ -60,7 +60,7 @@ const Payments = () => {
 		<Page
 			description={i18n.translate('section-that-shows-the-payments')}
 			pageRendererProps={{
-				className: 'border py-2 rounded-lg mb-8',
+				className: 'border mb-8 py-2 rounded-lg',
 			}}
 			title={i18n.translate('last-orders')}
 		>
@@ -72,7 +72,7 @@ const Payments = () => {
 					searchVisible: true,
 					visible: true,
 				}}
-				resource="/o/c/publishersalessummaries?nestedFields=accountToPublisher,publisherToCommerceOrder"
+				resource={`/o/c/publishersalessummaries?${new URLSearchParams({nestedFields: 'accountToPublisher,publisherToCommerceOrder'})}`}
 				tableProps={{
 					actions: [
 						{

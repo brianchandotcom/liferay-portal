@@ -29,12 +29,12 @@ const OrderDetails = () => {
 
 	const {order, payments, product} = data || {};
 
-	const kProjectsArray = safeJSONParse(
+	const koroneikiProjects = safeJSONParse(
 		order?.customFields!!['Project Name']!!,
 		[]
 	);
 
-	const projectNames = kProjectsArray.map(
+	const koroneikiProjectNames = koroneikiProjects.map(
 		(project: {name: string}) => project?.name
 	);
 
@@ -105,8 +105,8 @@ const OrderDetails = () => {
 							},
 							{
 								title: i18n.translate('project'),
-								value: projectNames[0]?.length
-									? projectNames.join(', ')
+								value: koroneikiProjectNames[0]?.length
+									? koroneikiProjectNames.join(', ')
 									: '-',
 							},
 							{

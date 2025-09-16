@@ -170,6 +170,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@Test
 	public void testNoStagingLabel() throws Exception {
+		_setUpGroup(false);
+
 		String className = RandomTestUtil.randomString();
 
 		long classPK = RandomTestUtil.randomLong();
@@ -178,8 +180,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
-
-		_setUpGroup(false);
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, classPK));
@@ -202,6 +202,9 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@Test
 	public void testStagingLabel() throws Exception {
+		_setUpGroup(true);
+		_setUpLanguage("staged");
+
 		String className = RandomTestUtil.randomString();
 
 		long classPK = RandomTestUtil.randomLong();
@@ -210,9 +213,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
-
-		_setUpGroup(true);
-		_setUpLanguage("staged");
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, classPK));
@@ -226,11 +226,14 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	public void testTagsURLDownloadAndUserPortraitFromResult()
 		throws Exception {
 
+		String className = RandomTestUtil.randomString();
+
+		_setUpIndexerRegistry(className, _createIndexer());
+
 		long userId = RandomTestUtil.randomLong();
 
 		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId);
 
-		String className = RandomTestUtil.randomString();
 		long classPK = RandomTestUtil.randomLong();
 
 		_whenAssetEntryLocalServiceFetchEntry(assetEntry, className, classPK);
@@ -246,8 +249,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
-		_setUpIndexerRegistry(className, _createIndexer());
-
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, classPK));
 
@@ -259,11 +260,14 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@Test
 	public void testURLDownloadHiddenFromResult() throws Exception {
+		String className = RandomTestUtil.randomString();
+
+		_setUpIndexerRegistry(className, _createIndexer());
+
 		long userId = RandomTestUtil.randomLong();
 
 		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId);
 
-		String className = RandomTestUtil.randomString();
 		long classPK = RandomTestUtil.randomLong();
 
 		_whenAssetEntryLocalServiceFetchEntry(assetEntry, className, classPK);
@@ -278,8 +282,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		String urlDownload = RandomTestUtil.randomString();
 
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
-
-		_setUpIndexerRegistry(className, _createIndexer());
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, classPK));
@@ -296,11 +298,14 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	public void testUserPortraitFromResultButTagsAndURLDownloadFromRoot()
 		throws Exception {
 
+		String className = RandomTestUtil.randomString();
+
+		_setUpIndexerRegistry(className, _createIndexer());
+
 		long userId = RandomTestUtil.randomInt(2, Integer.MAX_VALUE);
 
 		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId - 1);
 
-		String className = RandomTestUtil.randomString();
 		long classPK = RandomTestUtil.randomInt(2, Integer.MAX_VALUE);
 
 		_whenAssetEntryLocalServiceFetchEntry(
@@ -326,8 +331,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
-		_setUpIndexerRegistry(className, _createIndexer());
-
 		Document document = _createDocument(className, classPK);
 
 		document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, rootClassPK);
@@ -348,13 +351,12 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_setUpClassNameLocalService(classNameId, RandomTestUtil.randomString());
 
 		String className = RandomTestUtil.randomString();
-
-		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			className);
-
 		long classPK = RandomTestUtil.randomLong();
 
 		_setUpSearchUtilMockedStatic(className, classPK);
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			className);
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		Document document = _createDocument(className, classPK);
@@ -373,10 +375,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	@Test
 	public void testViewURL2() throws Exception {
 		String className1 = RandomTestUtil.randomString();
-
-		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
-			className1);
-
 		long classNameId = RandomTestUtil.randomLong();
 
 		_setUpClassNameLocalService(classNameId, className1);
@@ -384,6 +382,9 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		long classPK1 = RandomTestUtil.randomLong();
 
 		_setUpSearchUtilMockedStatic(className1, classPK1);
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			className1);
 
 		String className2 = RandomTestUtil.randomString();
 

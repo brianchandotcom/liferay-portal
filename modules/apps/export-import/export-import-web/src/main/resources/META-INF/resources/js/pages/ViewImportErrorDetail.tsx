@@ -236,14 +236,13 @@ export function ViewImportErrorDetail({
 							</ClayLayout.Row>
 						</ClayLayout.SheetSection>
 					</ClayLayout.Sheet>
+					<ClayLayout.SheetFooter>
+						<ClayLink button displayType="secondary" href={backURL}>
+							{Liferay.Language.get('back')}
+						</ClayLink>
+					</ClayLayout.SheetFooter>
 				</>
 			)}
-
-			<ClayLayout.SheetFooter>
-				<ClayLink button displayType="secondary" href={backURL}>
-					{Liferay.Language.get('back')}
-				</ClayLink>
-			</ClayLayout.SheetFooter>
 		</ClayLayout.ContainerFluid>
 	);
 }

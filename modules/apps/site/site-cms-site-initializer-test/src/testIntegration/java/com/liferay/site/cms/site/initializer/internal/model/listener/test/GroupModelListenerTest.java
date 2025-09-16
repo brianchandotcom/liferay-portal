@@ -164,8 +164,7 @@ public class GroupModelListenerTest {
 		Group defaultGroup = _groupLocalService.getGroup(
 			TestPropsValues.getCompanyId(), "Default");
 
-		_setTrashEnabled(
-			defaultGroup, Boolean.FALSE.toString());
+		_setTrashEnabled(defaultGroup, Boolean.FALSE.toString());
 
 		Assert.assertFalse(
 			GetterUtil.getBoolean(

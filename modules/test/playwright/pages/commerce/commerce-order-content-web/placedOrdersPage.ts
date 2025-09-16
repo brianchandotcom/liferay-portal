@@ -93,7 +93,10 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 			.getByTestId('specificationFacetPanel')
 			.getByRole('button');
 		this.placedOrderTableViewButton = this.table.getByLabel('View');
-		this.searchButton = page.getByRole('button', {name: 'Search'});
+		this.searchButton = page.getByRole('button', {
+			exact: true,
+			name: 'Search',
+		});
 		this.searchInput = page.getByPlaceholder('Search');
 		this.commerceShippingAddress = page.getByTestId(
 			'commerceShippingAddress'

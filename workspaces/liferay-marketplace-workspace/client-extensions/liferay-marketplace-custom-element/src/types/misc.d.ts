@@ -75,6 +75,28 @@ type PublisherRequestInfo = {
 	};
 };
 
+type PublisherSalesSummaryEntry = {
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	objectEntryFolderExternalReferenceCode: string;
+	objectEntryFolderId: number;
+	paidBy: string;
+	paidDate: string;
+	paymentStatus: {
+		key: string;
+		name: string;
+	};
+	publisherName: string;
+	publisherToAccountERC: string;
+	publisherToCommerceOrder: Order[];
+	quarter: string;
+	r_accountToPublisher_accountEntryERC: string;
+	r_accountToPublisher_accountEntryId: number;
+	scopeId: number;
+};
+
 type RadioOption<T> = {
 	index: number;
 	value: T;

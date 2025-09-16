@@ -12,6 +12,7 @@ import './Table.scss';
 
 type TableProps<T = any> = {
 	Actions?: React.FC<{row: T}>;
+	children?: ReactNode;
 	className?: string;
 	columns: TableColumn<T>[];
 	hasHover?: boolean;
@@ -52,6 +53,7 @@ type PaginationProps = {
 
 const Table: React.FC<TableProps> = ({
 	Actions,
+	children,
 	className,
 	columns,
 	hasHover = true,
@@ -140,6 +142,7 @@ const Table: React.FC<TableProps> = ({
 							)}
 						</ClayTable.Row>
 					))}
+					{children && children}
 				</ClayTable.Body>
 			</ClayTable>
 

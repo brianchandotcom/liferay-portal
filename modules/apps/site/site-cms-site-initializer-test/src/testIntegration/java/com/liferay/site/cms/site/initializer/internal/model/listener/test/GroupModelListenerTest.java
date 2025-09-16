@@ -161,15 +161,15 @@ public class GroupModelListenerTest {
 
 		Assert.assertFalse(layout.isHidden());
 
-		Group defaultDepotGroup = _groupLocalService.getGroup(
+		Group defaultGroup = _groupLocalService.getGroup(
 			TestPropsValues.getCompanyId(), "Default");
 
 		_setTrashEnabled(
-			defaultDepotGroup, Boolean.FALSE.toString());
+			defaultGroup, Boolean.FALSE.toString());
 
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
-				defaultDepotGroup.getTypeSettingsProperty("trashEnabled")));
+				defaultGroup.getTypeSettingsProperty("trashEnabled")));
 
 		layout = _getRecycleBinLayout(siteGroup);
 
@@ -189,7 +189,7 @@ public class GroupModelListenerTest {
 
 		Assert.assertFalse(layout.isHidden());
 
-		_setTrashEnabled(defaultDepotGroup, null);
+		_setTrashEnabled(defaultGroup, null);
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {

@@ -46,6 +46,15 @@ public class HashedFileFrontendResourceRequestHandler
 
 	@Override
 	public boolean canHandleRequest(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
+
+		if (!requestURI.endsWith(_fileExtension)) {
+			return false;
+		}
+
+		if (HashedFilesUtil.containsHash(requestURI)) {
+			return true;
+		}
 
 		// LPD-52709
 
@@ -53,11 +62,16 @@ public class HashedFileFrontendResourceRequestHandler
 			return false;
 		}
 
-		String requestURI = httpServletRequest.getRequestURI();
+		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
+			requestURI);
 
-		if (requestURI.contains("/__liferay__/") &&
-			requestURI.endsWith(_fileExtension)) {
+		if (hashedFileURI != null) {
+			return true;
+		}
 
+		URL resourceURL = _hashedFilesRegistry.getResource(requestURI);
+
+		if (resourceURL != null) {
 			return true;
 		}
 

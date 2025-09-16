@@ -46,6 +46,15 @@ public class StyleSheetFrontendResourceRequestHandler
 
 	@Override
 	public boolean canHandleRequest(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
+
+		if (!requestURI.endsWith(".css")) {
+			return false;
+		}
+
+		if (HashedFilesUtil.containsHash(requestURI)) {
+			return true;
+		}
 
 		// LPD-57326
 
@@ -53,21 +62,8 @@ public class StyleSheetFrontendResourceRequestHandler
 			return false;
 		}
 
-		String requestURI = httpServletRequest.getRequestURI();
-
-		if (!requestURI.endsWith(".css")) {
-			return false;
-		}
-
-		String hashedFileURI;
-
-		if (HashedFilesUtil.containsHash(requestURI)) {
-			hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
-				HashedFilesUtil.removeHash(requestURI));
-		}
-		else {
-			hashedFileURI = _hashedFilesRegistry.getHashedFileURI(requestURI);
-		}
+		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
+			requestURI);
 
 		if (hashedFileURI != null) {
 			return true;

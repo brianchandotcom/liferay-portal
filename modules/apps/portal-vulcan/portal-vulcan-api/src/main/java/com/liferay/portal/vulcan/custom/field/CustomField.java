@@ -5,9 +5,11 @@
 
 package com.liferay.portal.vulcan.custom.field;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
@@ -22,6 +24,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -44,7 +47,7 @@ public class CustomField implements Serializable {
 	}
 
 	@Schema(description = "The field attribute type.")
-	public int getAttributeType() {
+	public AttributeType getAttributeType() {
 		if (_dataTypeSupplier != null) {
 			attributeType = _attributeTypeSupplier.get();
 
@@ -52,6 +55,17 @@ public class CustomField implements Serializable {
 		}
 
 		return attributeType;
+	}
+
+	@JsonIgnore
+	public String getAttributeTypeAsString() {
+		AttributeType attributeType = getAttributeType();
+
+		if (attributeType == null) {
+			return null;
+		}
+
+		return attributeType.toString();
 	}
 
 	@Schema(description = "The field's value.")
@@ -90,7 +104,7 @@ public class CustomField implements Serializable {
 		return name;
 	}
 
-	public void setAttributeType(int attributeType) {
+	public void setAttributeType(AttributeType attributeType) {
 		this.attributeType = attributeType;
 
 		_attributeTypeSupplier = null;
@@ -98,7 +112,7 @@ public class CustomField implements Serializable {
 
 	@JsonIgnore
 	public void setAttributeType(
-		UnsafeSupplier<Integer, Exception> attributeTypeUnsafeSupplier) {
+		UnsafeSupplier<AttributeType, Exception> attributeTypeUnsafeSupplier) {
 
 		_attributeTypeSupplier = () -> {
 			try {
@@ -187,9 +201,57 @@ public class CustomField implements Serializable {
 	)
 	public String xClassName;
 
+	@GraphQLName("AttributeType")
+	public static enum AttributeType {
+
+		BOOLEAN("BOOLEAN"), BOOLEAN_ARRAY("BOOLEAN_ARRAY"), DATE("DATE"),
+		DATE_ARRAY("DATE_ARRAY"), DOUBLE("DOUBLE"),
+		DOUBLE_ARRAY("DOUBLE_ARRAY"), FLOAT("FLOAT"),
+		FLOAT_ARRAY("FLOAT_ARRAY"), GEOLOCATION("GEOLOCATION"),
+		INTEGER("INTEGER"), INTEGER_ARRAY("INTEGER_ARRAY"), LONG("LONG"),
+		LONG_ARRAY("LONG_ARRAY"), NUMBER("NUMBER"),
+		NUMBER_ARRAY("NUMBER_ARRAY"), SHORT("SHORT"),
+		SHORT_ARRAY("SHORT_ARRAY"), STRING("STRING"),
+		STRING_ARRAY("STRING_ARRAY"),
+		STRING_ARRAY_LOCALIZED("STRING_ARRAY_LOCALIZED"),
+		STRING_LOCALIZED("STRING_LOCALIZED");
+
+		@JsonCreator
+		public static AttributeType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (AttributeType attributeType : values()) {
+				if (Objects.equals(attributeType.getValue(), value)) {
+					return attributeType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private AttributeType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	@GraphQLField(description = "The field attribute type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected int attributeType;
+	protected AttributeType attributeType;
 
 	@GraphQLField(description = "The field's value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
@@ -206,7 +268,7 @@ public class CustomField implements Serializable {
 	protected String name;
 
 	@JsonIgnore
-	private Supplier<Integer> _attributeTypeSupplier;
+	private Supplier<AttributeType> _attributeTypeSupplier;
 
 	@JsonIgnore
 	private Supplier<CustomValue> _customValueSupplier;

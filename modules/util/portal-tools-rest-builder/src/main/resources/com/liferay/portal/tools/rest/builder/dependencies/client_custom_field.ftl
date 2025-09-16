@@ -36,7 +36,7 @@ public class CustomField {
 		return Objects.equals(toString(), customField.toString());
 	}
 
-	public Integer getAttributeType() {
+	public AttributeType getAttributeType() {
 		return attributeType;
 	}
 
@@ -59,12 +59,12 @@ public class CustomField {
 		return string.hashCode();
 	}
 
-	public void setAttributeType(Integer attributeType) {
+	public void setAttributeType(AttributeType attributeType) {
 		this.attributeType = attributeType;
 	}
 
 	public void setAttributeType(
-		UnsafeSupplier<Integer, Exception> attributeTypeUnsafeSupplier) {
+		UnsafeSupplier<AttributeType, Exception> attributeTypeUnsafeSupplier) {
 
 		try {
 			attributeType = attributeTypeUnsafeSupplier.get();
@@ -121,10 +121,55 @@ public class CustomField {
 		return CustomFieldJSONParser.toJSON(this);
 	}
 
-	protected Integer attributeType;
+	protected AttributeType attributeType;
 	protected CustomValue customValue;
 	protected String dataType;
 	protected String name;
+
+	public static enum AttributeType {
+
+		BOOLEAN("BOOLEAN"), BOOLEAN_ARRAY("BOOLEAN_ARRAY"), DATE("DATE"),
+		DATE_ARRAY("DATE_ARRAY"), DOUBLE("DOUBLE"),
+		DOUBLE_ARRAY("DOUBLE_ARRAY"), FLOAT("FLOAT"),
+		FLOAT_ARRAY("FLOAT_ARRAY"), GEOLOCATION("GEOLOCATION"),
+		INTEGER("INTEGER"), INTEGER_ARRAY("INTEGER_ARRAY"), LONG("LONG"),
+		LONG_ARRAY("LONG_ARRAY"), NUMBER("NUMBER"),
+		NUMBER_ARRAY("NUMBER_ARRAY"), SHORT("SHORT"),
+		SHORT_ARRAY("SHORT_ARRAY"), STRING("STRING"),
+		STRING_ARRAY("STRING_ARRAY"),
+		STRING_ARRAY_LOCALIZED("STRING_ARRAY_LOCALIZED"),
+		STRING_LOCALIZED("STRING_LOCALIZED");
+
+		public static AttributeType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (AttributeType attributeType : values()) {
+				if (Objects.equals(attributeType.getValue(), value)) {
+					return attributeType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private AttributeType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static class CustomFieldJSONParser
 		extends BaseJSONParser<CustomField> {
@@ -145,7 +190,11 @@ public class CustomField {
 
 				sb.append("\"attributeType\": ");
 
-				sb.append(String.valueOf(customField.getAttributeType()));
+				sb.append("\"");
+
+				sb.append(customField.getAttributeType());
+
+				sb.append("\"");
 			}
 
 			if (customField.getCustomValue() != null) {
@@ -206,7 +255,7 @@ public class CustomField {
 			if (Objects.equals(jsonParserFieldName, "attributeType")) {
 				return false;
 			}
-			if (Objects.equals(jsonParserFieldName, "customValue")) {
+			else if (Objects.equals(jsonParserFieldName, "customValue")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "dataType")) {
@@ -226,7 +275,9 @@ public class CustomField {
 
 			if (Objects.equals(jsonParserFieldName, "attributeType")) {
 				if (jsonParserFieldValue != null) {
-					customField.setAttributeType((Integer)jsonParserFieldValue);
+					customField.setAttributeType(
+						CustomField.AttributeType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customValue")) {

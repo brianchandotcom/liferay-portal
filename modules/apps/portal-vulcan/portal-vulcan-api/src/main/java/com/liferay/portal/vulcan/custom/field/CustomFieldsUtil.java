@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -136,7 +137,8 @@ public class CustomFieldsUtil {
 					},
 					() -> {
 						expandoBridge.addAttribute(
-							name, customField.getAttributeType());
+							name,
+							_toAttributeType(customField.getAttributeType()));
 
 						return _EXPANDO_COLUMN;
 					});
@@ -376,6 +378,21 @@ public class CustomFieldsUtil {
 		return serializable;
 	}
 
+	private static int _toAttributeType(
+		CustomField.AttributeType attributeType) {
+
+		for (Map.Entry<Integer, CustomField.AttributeType> entry :
+				_attributeTypes.entrySet()) {
+
+			if (attributeType == entry.getValue()) {
+				return entry.getKey();
+			}
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid attribute type: " + attributeType);
+	}
+
 	private static CustomField _toCustomField(
 		boolean acceptAllLanguages, String displayType,
 		Map.Entry<String, Serializable> entry, ExpandoBridge expandoBridge,
@@ -388,7 +405,7 @@ public class CustomFieldsUtil {
 		if (ExpandoColumnConstants.GEOLOCATION == type) {
 			return new CustomField() {
 				{
-					setAttributeType(() -> type);
+					setAttributeType(() -> _attributeTypes.get(type));
 					setCustomValue(
 						() -> {
 							JSONObject jsonObject =
@@ -419,7 +436,7 @@ public class CustomFieldsUtil {
 
 		return new CustomField() {
 			{
-				setAttributeType(() -> type);
+				setAttributeType(() -> _attributeTypes.get(type));
 				setCustomValue(
 					() -> new CustomValue() {
 						{
@@ -462,5 +479,62 @@ public class CustomFieldsUtil {
 
 	private static final ExpandoColumn _EXPANDO_COLUMN =
 		new ExpandoColumnImpl();
+
+	private static final Map<Integer, CustomField.AttributeType>
+		_attributeTypes = HashMapBuilder.put(
+			ExpandoColumnConstants.BOOLEAN, CustomField.AttributeType.BOOLEAN
+		).put(
+			ExpandoColumnConstants.BOOLEAN_ARRAY,
+			CustomField.AttributeType.BOOLEAN_ARRAY
+		).put(
+			ExpandoColumnConstants.DATE, CustomField.AttributeType.DATE
+		).put(
+			ExpandoColumnConstants.DATE_ARRAY,
+			CustomField.AttributeType.DATE_ARRAY
+		).put(
+			ExpandoColumnConstants.DOUBLE, CustomField.AttributeType.DOUBLE
+		).put(
+			ExpandoColumnConstants.DOUBLE_ARRAY,
+			CustomField.AttributeType.DOUBLE_ARRAY
+		).put(
+			ExpandoColumnConstants.FLOAT, CustomField.AttributeType.FLOAT
+		).put(
+			ExpandoColumnConstants.FLOAT_ARRAY,
+			CustomField.AttributeType.FLOAT_ARRAY
+		).put(
+			ExpandoColumnConstants.GEOLOCATION,
+			CustomField.AttributeType.GEOLOCATION
+		).put(
+			ExpandoColumnConstants.INTEGER, CustomField.AttributeType.INTEGER
+		).put(
+			ExpandoColumnConstants.INTEGER_ARRAY,
+			CustomField.AttributeType.INTEGER_ARRAY
+		).put(
+			ExpandoColumnConstants.LONG, CustomField.AttributeType.LONG
+		).put(
+			ExpandoColumnConstants.LONG_ARRAY,
+			CustomField.AttributeType.LONG_ARRAY
+		).put(
+			ExpandoColumnConstants.NUMBER, CustomField.AttributeType.NUMBER
+		).put(
+			ExpandoColumnConstants.NUMBER_ARRAY,
+			CustomField.AttributeType.NUMBER_ARRAY
+		).put(
+			ExpandoColumnConstants.SHORT, CustomField.AttributeType.SHORT
+		).put(
+			ExpandoColumnConstants.SHORT_ARRAY,
+			CustomField.AttributeType.SHORT_ARRAY
+		).put(
+			ExpandoColumnConstants.STRING, CustomField.AttributeType.STRING
+		).put(
+			ExpandoColumnConstants.STRING_ARRAY,
+			CustomField.AttributeType.STRING_ARRAY
+		).put(
+			ExpandoColumnConstants.STRING_ARRAY_LOCALIZED,
+			CustomField.AttributeType.STRING_ARRAY_LOCALIZED
+		).put(
+			ExpandoColumnConstants.STRING_LOCALIZED,
+			CustomField.AttributeType.STRING_LOCALIZED
+		).build();
 
 }

@@ -97,12 +97,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		try {
 			_updateObjectViewFilterColumn(StringPool.BLANK, objectEntry);
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
 
-		try {
 			long userId = PrincipalThreadLocal.getUserId();
 
 			if (userId == 0) {

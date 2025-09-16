@@ -6,6 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
+import formatActionURL from '../../../common/utils/formatActionURL';
 import ContentPreview from './ContentPreview';
 import FilePreview from './FilePreview';
 
@@ -28,18 +29,20 @@ const Arrow = ({
 );
 
 export default function Carousel({
+	contentViewURL,
 	currentItem,
 	handleClickNext,
 	handleClickPrevious,
 	showArrows = true,
 }: {
+	contentViewURL: string;
 	currentItem: ItemData;
 	handleClickNext: () => void;
 	handleClickPrevious: () => void;
 	showArrows: boolean;
 }) {
 	return (
-		<div className="carousel">
+		<div className="carousel" style={{height: '100%'}}>
 			{showArrows && (
 				<Arrow direction="left" handleClick={handleClickPrevious} />
 			)}
@@ -47,7 +50,9 @@ export default function Carousel({
 			{currentItem.embedded?.file ? (
 				<FilePreview file={currentItem.embedded.file} />
 			) : (
-				<ContentPreview />
+				<ContentPreview
+					url={formatActionURL(currentItem, contentViewURL)}
+				/>
 			)}
 
 			{showArrows && (

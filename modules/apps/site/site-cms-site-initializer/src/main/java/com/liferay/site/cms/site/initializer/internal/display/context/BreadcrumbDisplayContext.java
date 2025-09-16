@@ -85,8 +85,9 @@ public class BreadcrumbDisplayContext {
 						"are-you-sure-you-want-to-delete-this-entry")
 				).put(
 					"href",
-					"/o/headless-asset-library/v1.0/asset-libraries/" +
-						group.getClassPK()
+					"/o/headless-asset-library/v1.0/asset-libraries" +
+						"/by-external-reference-code/" +
+							group.getExternalReferenceCode()
 				).put(
 					"label", LanguageUtil.get(_httpServletRequest, "delete")
 				).put(

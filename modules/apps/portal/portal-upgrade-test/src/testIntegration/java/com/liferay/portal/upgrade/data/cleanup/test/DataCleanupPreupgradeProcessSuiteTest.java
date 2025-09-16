@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeException;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -31,8 +32,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -85,16 +86,15 @@ public class DataCleanupPreupgradeProcessSuiteTest
 
 	@Before
 	public void setUp() {
-		_originalDataCleanupPreupgradeProcesses =
-			ReflectionTestUtil.getFieldValue(
-				this, "_dataCleanupPreupgradeProcesses");
+		_dataCleanupPreupgradeProcessesMap = ReflectionTestUtil.getFieldValue(
+			this, "_dataCleanupPreupgradeProcessesMap");
 	}
 
 	@After
 	public void tearDown() {
 		ReflectionTestUtil.setFieldValue(
-			this, "_dataCleanupPreupgradeProcesses",
-			_originalDataCleanupPreupgradeProcesses);
+			this, "_dataCleanupPreupgradeProcessesMap",
+			_dataCleanupPreupgradeProcessesMap);
 	}
 
 	@Test
@@ -113,12 +113,19 @@ public class DataCleanupPreupgradeProcessSuiteTest
 					new String[] {className})) {
 
 			ReflectionTestUtil.setFieldValue(
-				this, "_dataCleanupPreupgradeProcesses",
-				Arrays.asList(
-					new BlacklistedDataCleanupPreupgradeTestProcess(
-						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)),
-					new DataCleanupPreupgradeTestProcess(
-						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2))));
+				DataCleanupPreupgradeProcessSuite.class,
+				"_dataCleanupPreupgradeProcessesMap",
+				HashMapBuilder.
+					<DataCleanupPreupgradeProcess,
+					 List<DataCleanupPreupgradeProcess>>put(
+						new BlacklistedDataCleanupPreupgradeTestProcess(
+							() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)),
+						DataCleanupPreupgradeProcess.dependsOn()
+					).put(
+						new DataCleanupPreupgradeTestProcess(
+							() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2)),
+						DataCleanupPreupgradeProcess.dependsOn()
+					).build());
 
 			cleanUp();
 
@@ -151,17 +158,33 @@ public class DataCleanupPreupgradeProcessSuiteTest
 
 	@Test
 	public void testDataCleanupPreupgradeProcessesSuiteWithFailures() {
+		DataCleanupPreupgradeProcess failureDataCleanupPreupgradeProcess =
+			_createDataCleanupPreupgradeProcess(
+				() -> {
+					throw new Exception(_EXCEPTION_MESSAGE);
+				});
+		DataCleanupPreupgradeProcess successDataCleanupPreupgradeProcess =
+			_createDataCleanupPreupgradeProcess(
+				() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1));
+
 		ReflectionTestUtil.setFieldValue(
-			this, "_dataCleanupPreupgradeProcesses",
-			Arrays.asList(
-				_createDataCleanupPreupgradeProcess(
-					() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)),
-				_createDataCleanupPreupgradeProcess(
-					() -> {
-						throw new Exception(_EXCEPTION_MESSAGE);
-					}),
-				_createDataCleanupPreupgradeProcess(
-					() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2))));
+			DataCleanupPreupgradeProcessSuite.class,
+			"_dataCleanupPreupgradeProcessesMap",
+			HashMapBuilder.
+				<DataCleanupPreupgradeProcess,
+				 List<DataCleanupPreupgradeProcess>>put(
+					successDataCleanupPreupgradeProcess,
+					DataCleanupPreupgradeProcess.dependsOn()
+				).put(
+					failureDataCleanupPreupgradeProcess,
+					DataCleanupPreupgradeProcess.dependsOn(
+						successDataCleanupPreupgradeProcess)
+				).put(
+					_createDataCleanupPreupgradeProcess(
+						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2)),
+					DataCleanupPreupgradeProcess.dependsOn(
+						failureDataCleanupPreupgradeProcess)
+				).build());
 
 		try {
 			cleanUp();
@@ -190,12 +213,19 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		throws Exception {
 
 		ReflectionTestUtil.setFieldValue(
-			this, "_dataCleanupPreupgradeProcesses",
-			Arrays.asList(
-				_createDataCleanupPreupgradeProcess(
-					() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)),
-				_createDataCleanupPreupgradeProcess(
-					() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2))));
+			DataCleanupPreupgradeProcessSuite.class,
+			"_dataCleanupPreupgradeProcessesMap",
+			HashMapBuilder.
+				<DataCleanupPreupgradeProcess,
+				 List<DataCleanupPreupgradeProcess>>put(
+					_createDataCleanupPreupgradeProcess(
+						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1)),
+					DataCleanupPreupgradeProcess.dependsOn()
+				).put(
+					_createDataCleanupPreupgradeProcess(
+						() -> _cleanupMessages.add(_SUCCESS_MESSAGE_2)),
+					DataCleanupPreupgradeProcess.dependsOn()
+				).build());
 
 		cleanUp();
 
@@ -252,8 +282,9 @@ public class DataCleanupPreupgradeProcessSuiteTest
 	private static String _currentPortalSchemaVersion;
 
 	private final List<String> _cleanupMessages = new ArrayList<>();
-	private List<DataCleanupPreupgradeProcess>
-		_originalDataCleanupPreupgradeProcesses;
+	private Map
+		<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
+			_dataCleanupPreupgradeProcessesMap;
 
 	private static class BlacklistedDataCleanupPreupgradeTestProcess
 		extends DataCleanupPreupgradeTestProcess {

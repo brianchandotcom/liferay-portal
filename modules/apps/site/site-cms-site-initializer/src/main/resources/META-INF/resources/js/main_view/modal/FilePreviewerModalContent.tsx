@@ -21,6 +21,7 @@ type File = {
 		href: string;
 		label: string;
 	};
+	mimeType: string;
 	name: string;
 	previewURL: string;
 	thumbnailURL: string;
@@ -35,9 +36,10 @@ export default function FilePreviewerModalContent({
 	file,
 	headerName,
 }: FilePreviewerModalContentProps) {
-	const {link, name, thumbnailURL} = file;
+	const {link, name, mimeType, previewURL, thumbnailURL} = file;
 	const params = new URLSearchParams(thumbnailURL);
 	const hasImagePreview = params.has('imageThumbnail');
+	const isVideo = mimeType.startsWith('video/') && previewURL;
 
 	return (
 		<>
@@ -73,6 +75,17 @@ export default function FilePreviewerModalContent({
 			>
 				{hasImagePreview ? (
 					<ImagePreviewer alt={name} imageURL={link.href} />
+				) : isVideo ? (
+					<div className="preview-file video-preview video-preview-framed">
+						<div className="video-preview-aspect-ratio">
+							<iframe
+								data-video-liferay
+								height="315"
+								src={previewURL}
+								width="560"
+							/>
+						</div>
+					</div>
 				) : (
 					<ClayEmptyState
 						description={Liferay.Language.get(

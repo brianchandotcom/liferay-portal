@@ -14,13 +14,11 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -82,46 +80,9 @@ public class DataCleanupPreupgradeProcessSuite {
 	public List<DataCleanupPreupgradeProcess>
 		getSortedDataCleanupPreupgradeProcesses() {
 
-		List<DataCleanupPreupgradeProcess>
-			sortedDataCleanupPreupgradeProcesses = new ArrayList<>();
-
-		while (sortedDataCleanupPreupgradeProcesses.size() !=
-					_dataCleanupPreupgradeProcessesMap.size()) {
-
-			int size = sortedDataCleanupPreupgradeProcesses.size();
-
-			for (Map.Entry
-					<DataCleanupPreupgradeProcess,
-					 List<DataCleanupPreupgradeProcess>> entry :
-						_dataCleanupPreupgradeProcessesMap.entrySet()) {
-
-				DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess =
-					entry.getKey();
-
-				if (sortedDataCleanupPreupgradeProcesses.contains(
-						dataCleanupPreupgradeProcess) ||
-					!sortedDataCleanupPreupgradeProcesses.containsAll(
-						entry.getValue())) {
-
-					continue;
-				}
-
-				sortedDataCleanupPreupgradeProcesses.add(
-					dataCleanupPreupgradeProcess);
-			}
-
-			if (size == sortedDataCleanupPreupgradeProcesses.size()) {
-				throw new RuntimeException("Circular dependency");
-			}
-		}
-
-		return sortedDataCleanupPreupgradeProcesses;
-	}
-
-	private static List<DataCleanupPreupgradeProcess> _dependsOn(
-		DataCleanupPreupgradeProcess... dataCleanupPreupgradeProcesses) {
-
-		return ListUtil.fromArray(dataCleanupPreupgradeProcesses);
+		return DataCleanupPreupgradeProcess.
+			getSortedDataCleanupPreupgradeProcesses(
+				_dataCleanupPreupgradeProcessesMap);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -174,41 +135,48 @@ public class DataCleanupPreupgradeProcessSuite {
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
 						updateAllPrimaryKeysDataCleanupPreupgradeProcess,
-						_dependsOn()
+						DataCleanupPreupgradeProcess.dependsOn()
 					).put(
 						companyDataCleanupPreupgradeProcess,
-						_dependsOn(
+						DataCleanupPreupgradeProcess.dependsOn(
 							updateAllPrimaryKeysDataCleanupPreupgradeProcess)
 					).put(
 						userDataCleanupPreupgradeProcess,
-						_dependsOn(companyDataCleanupPreupgradeProcess)
+						DataCleanupPreupgradeProcess.dependsOn(
+							companyDataCleanupPreupgradeProcess)
 					).put(
 						groupDataCleanupPreupgradeProcess,
-						_dependsOn(userDataCleanupPreupgradeProcess)
+						DataCleanupPreupgradeProcess.dependsOn(
+							userDataCleanupPreupgradeProcess)
 					).put(
 						analyticsMessageDataCleanupPreupgradeProcess,
-						_dependsOn()
+						DataCleanupPreupgradeProcess.dependsOn()
 					).put(
 						configurationDataCleanupPreupgradeProcess,
-						_dependsOn(userDataCleanupPreupgradeProcess)
+						DataCleanupPreupgradeProcess.dependsOn(
+							userDataCleanupPreupgradeProcess)
 					).put(
 						ddmStructureDataCleanupPreupgradeProcess,
-						_dependsOn(groupDataCleanupPreupgradeProcess)
+						DataCleanupPreupgradeProcess.dependsOn(
+							groupDataCleanupPreupgradeProcess)
 					).put(
 						dlFileEntryDataCleanupPreupgradeProcess,
-						_dependsOn(groupDataCleanupPreupgradeProcess)
+						DataCleanupPreupgradeProcess.dependsOn(
+							groupDataCleanupPreupgradeProcess)
 					).put(
 						nullUnicodeContentDataCleanupPreupgradeProcess,
-						_dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+						DataCleanupPreupgradeProcess.dependsOn(
+							ddmStructureDataCleanupPreupgradeProcess)
 					).put(
 						quartzJobDetailsDataCleanupPreupgradeProcess,
-						_dependsOn()
+						DataCleanupPreupgradeProcess.dependsOn()
 					).put(
 						journalDataCleanupPreupgradeProcess,
-						_dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+						DataCleanupPreupgradeProcess.dependsOn(
+							ddmStructureDataCleanupPreupgradeProcess)
 					).put(
 						counterDataCleanupPreupgradeProcess,
-						_dependsOn(
+						DataCleanupPreupgradeProcess.dependsOn(
 							analyticsMessageDataCleanupPreupgradeProcess,
 							companyDataCleanupPreupgradeProcess,
 							configurationDataCleanupPreupgradeProcess,

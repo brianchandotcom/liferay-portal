@@ -34,7 +34,6 @@ import com.liferay.object.exception.ObjectDefinitionFriendlyURLSeparatorExceptio
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
-import com.liferay.object.exception.ObjectDefinitionPanelCategoryKeyException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionSettingNameException;
@@ -2798,45 +2797,49 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testUpdateRootDescendantObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition1 =
+		ObjectDefinition objectDefinitionA =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
-		ObjectDefinition objectDefinition2 =
+		ObjectDefinition objectDefinitionAA =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				StringUtil.randomId(), TestPropsValues.getUserId(),
-				objectDefinition1.getObjectDefinitionId(),
-				objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+		TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
-		AssertUtils.assertFailure(
-			ObjectDefinitionPanelCategoryKeyException.class,
-			"Panel category key cannot be changed when the object definition " +
-				"is a root descendant node",
-			() -> _testUpdateRootDescendantObjectDefinition(
-				objectDefinition2, RandomTestUtil.randomString()));
+		String panelCategoryKey = RandomTestUtil.randomString();
 
-		_testUpdateRootDescendantObjectDefinition(objectDefinition2, null);
-		_testUpdateRootDescendantObjectDefinition(
-			objectDefinition2, StringPool.BLANK);
+		objectDefinitionAA =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				objectDefinitionAA.getExternalReferenceCode(),
+				objectDefinitionAA.getObjectDefinitionId(),
+				objectDefinitionAA.getAccountEntryRestrictedObjectFieldId(),
+				objectDefinitionAA.getDescriptionObjectFieldId(),
+				objectDefinitionAA.getObjectFolderId(),
+				objectDefinitionAA.getTitleObjectFieldId(),
+				objectDefinitionAA.isAccountEntryRestricted(),
+				objectDefinitionAA.isActive(),
+				objectDefinitionAA.getClassName(),
+				objectDefinitionAA.isEnableCategorization(),
+				objectDefinitionAA.isEnableComments(),
+				objectDefinitionAA.isEnableFriendlyURLCustomization(),
+				objectDefinitionAA.isEnableIndexSearch(),
+				objectDefinitionAA.isEnableLocalization(),
+				objectDefinitionAA.isEnableObjectEntryDraft(),
+				objectDefinitionAA.isEnableObjectEntryHistory(),
+				objectDefinitionAA.isEnableObjectEntrySchedule(),
+				objectDefinitionAA.isEnableObjectEntrySubscription(),
+				objectDefinitionAA.isEnableObjectEntryVersioning(),
+				objectDefinitionAA.getFriendlyURLSeparator(),
+				objectDefinitionAA.getLabelMap(), objectDefinitionAA.getName(),
+				objectDefinitionAA.getPanelAppOrder(), panelCategoryKey,
+				objectDefinitionAA.isPortlet(),
+				objectDefinitionAA.getPluralLabelMap(),
+				objectDefinitionAA.getScope(), objectDefinitionAA.getStatus(),
+				Collections.emptyList(), Collections.emptyList());
 
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getExternalReferenceCode(),
-				objectRelationship.getObjectRelationshipId(),
-				objectRelationship.getParameterObjectFieldId(),
-				objectRelationship.getDeletionType(), false,
-				objectRelationship.getLabelMap(), null);
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
+		Assert.assertEquals(
+			panelCategoryKey, objectDefinitionAA.getPanelCategoryKey());
 	}
 
 	@FeatureFlag("LPD-32050")
@@ -3728,40 +3731,6 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition2);
 		}
-	}
-
-	private void _testUpdateRootDescendantObjectDefinition(
-			ObjectDefinition objectDefinition, String panelCategoryKey)
-		throws Exception {
-
-		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
-
-		_objectDefinitionLocalService.updateCustomObjectDefinition(
-			objectDefinition.getExternalReferenceCode(),
-			objectDefinition.getObjectDefinitionId(),
-			objectDefinition.getAccountEntryRestrictedObjectFieldId(),
-			objectDefinition.getDescriptionObjectFieldId(),
-			objectDefinition.getObjectFolderId(),
-			objectDefinition.getTitleObjectFieldId(),
-			objectDefinition.isAccountEntryRestricted(),
-			objectDefinition.isActive(), objectDefinition.getClassName(),
-			objectDefinition.isEnableCategorization(),
-			objectDefinition.isEnableComments(),
-			objectDefinition.isEnableFriendlyURLCustomization(),
-			objectDefinition.isEnableIndexSearch(),
-			objectDefinition.isEnableLocalization(),
-			objectDefinition.isEnableObjectEntryDraft(),
-			objectDefinition.isEnableObjectEntryHistory(),
-			objectDefinition.isEnableObjectEntrySchedule(),
-			objectDefinition.isEnableObjectEntrySubscription(),
-			objectDefinition.isEnableObjectEntryVersioning(),
-			objectDefinition.getFriendlyURLSeparator(),
-			objectDefinition.getLabelMap(), objectDefinition.getName(),
-			objectDefinition.getPanelAppOrder(), panelCategoryKey,
-			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
-			objectDefinition.getScope(), objectDefinition.getStatus(),
-			Collections.emptyList(), Collections.emptyList());
 	}
 
 	private ObjectDefinition _updateCustomObjectDefinition(

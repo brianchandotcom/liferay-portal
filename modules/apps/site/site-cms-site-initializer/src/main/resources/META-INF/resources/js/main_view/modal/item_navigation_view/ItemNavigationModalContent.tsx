@@ -5,7 +5,7 @@
 
 import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import Carousel from './Carousel';
 import Header from './Header';
@@ -17,6 +17,11 @@ interface ItemNavigationModalContent {
 	currentIndex: number;
 	items: ItemData[];
 }
+
+const KEY_CODE = {
+	LEFT: 37,
+	RIGHT: 39,
+};
 
 export default function ItemNavigationModalContent({
 	contentViewURL,
@@ -48,6 +53,33 @@ export default function ItemNavigationModalContent({
 			});
 		}
 	}, [items.length]);
+
+	const handleOnKeyDown = useCallback(
+		(event: any) => {
+			switch (event.which || event.keyCode) {
+				case KEY_CODE.LEFT:
+					handleClickPrevious();
+					break;
+				case KEY_CODE.RIGHT:
+					handleClickNext();
+					break;
+				default:
+					break;
+			}
+		},
+		[handleClickNext, handleClickPrevious]
+	);
+
+	useEffect(() => {
+		document.documentElement.addEventListener('keydown', handleOnKeyDown);
+
+		return () => {
+			document.documentElement.removeEventListener(
+				'keydown',
+				handleOnKeyDown
+			);
+		};
+	}, [handleOnKeyDown]);
 
 	return (
 		<>

@@ -488,10 +488,6 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public ObjectDefinition updatePortlet(long objectDefinitionId)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition updateSystemObjectDefinition(
 			String externalReferenceCode, long objectDefinitionId,
 			long objectFolderId, long titleObjectFieldId,

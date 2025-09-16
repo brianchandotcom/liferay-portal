@@ -12,7 +12,7 @@ import formatActionURL from '../../common/utils/formatActionURL';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
-import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
+import ItemNavigationModalContent from '../modal/item_navigation_view/ItemNavigationModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
@@ -174,11 +174,13 @@ export default function AssetsFDSPropsTransformer({
 			action,
 			event,
 			itemData,
+			items,
 			loadData,
 		}: {
 			action: any;
 			event: Event;
 			itemData: ItemData;
+			items: any;
 			loadData: () => {};
 		}) {
 			if (action?.data?.id === 'default-permissions') {
@@ -228,24 +230,24 @@ export default function AssetsFDSPropsTransformer({
 					title: itemData.embedded?.title,
 				});
 			}
-			else if (action?.data?.id === 'view-content') {
+			else if (
+				action?.data?.id === 'view-content' ||
+				action?.data?.id === 'view-file'
+			) {
 				event?.preventDefault();
 
-				openModal({
-					size: 'full-screen',
-					title: itemData.embedded.title,
-					url: formatActionURL(itemData, action.href),
-				});
-			}
-			else if (action?.data?.id === 'view-file') {
+				const currentItemPos = items.findIndex(
+					(item: any) => item.embedded.id === itemData.embedded.id
+				);
+
 				openModal({
 					containerProps: {
 						className: '',
 					},
 					contentComponent: () =>
-						FilePreviewerModalContent({
-							file: itemData.embedded.file,
-							headerName: itemData.embedded.title,
+						ItemNavigationModalContent({
+							currentIndex: currentItemPos,
+							items,
 						}),
 					size: 'full-screen',
 				});

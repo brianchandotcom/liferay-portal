@@ -19,4 +19,6 @@ interface ItemData {
 		image?: string;
 		name: string;
 	};};
+	id: number;
+	title: string;
 }

@@ -50,7 +50,8 @@ public class ContentSecurityPolicyFilterTest {
 	public void testNotNeededForDocrootHtmlResources() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
-					_getCompanyConfigurationTemporarySwapper(false, null, "")) {
+					_getCompanyConfigurationTemporarySwapper(
+						false, null, "", false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
 				"http://localhost:8080/html/common/null.html");
@@ -72,7 +73,8 @@ public class ContentSecurityPolicyFilterTest {
 
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
-					_getCompanyConfigurationTemporarySwapper(false, null, "")) {
+					_getCompanyConfigurationTemporarySwapper(
+						false, null, "", false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
 				"http://" + company.getVirtualHostname() + ":8080/web/guest");
@@ -88,7 +90,26 @@ public class ContentSecurityPolicyFilterTest {
 
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
-					_getCompanyConfigurationTemporarySwapper(true, null, "")) {
+					_getCompanyConfigurationTemporarySwapper(
+						false, null, "", true)) {
+
+			HttpURLConnection httpURLConnection = _openHttpURLConnection(
+				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+
+			Map<String, List<String>> headerFields =
+				httpURLConnection.getHeaderFields();
+
+			Assert.assertFalse(
+				headerFields.containsKey(
+					"Content-Security-Policy-Report-Only"));
+
+			httpURLConnection.disconnect();
+		}
+
+		try (CompanyConfigurationTemporarySwapper
+				configurationTemporarySwapper =
+					_getCompanyConfigurationTemporarySwapper(
+						true, null, "", false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
 				"http://" + company.getVirtualHostname() + ":8080/web/guest");
@@ -111,7 +132,7 @@ public class ContentSecurityPolicyFilterTest {
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper(
-						true, null, policy)) {
+						true, null, policy, false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
 				"http://" + company.getVirtualHostname() + ":8080/web/guest");
@@ -129,6 +150,29 @@ public class ContentSecurityPolicyFilterTest {
 			httpURLConnection.disconnect();
 		}
 
+		try (CompanyConfigurationTemporarySwapper
+				configurationTemporarySwapper =
+					_getCompanyConfigurationTemporarySwapper(
+						true, null, policy, true)) {
+
+			HttpURLConnection httpURLConnection = _openHttpURLConnection(
+				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+
+			Map<String, List<String>> headerFields =
+				httpURLConnection.getHeaderFields();
+
+			Assert.assertTrue(
+				headerFields.containsKey(
+					"Content-Security-Policy-Report-Only"));
+
+			Assert.assertEquals(
+				httpURLConnection.getHeaderField(
+					"Content-Security-Policy-Report-Only"),
+				policy);
+
+			httpURLConnection.disconnect();
+		}
+
 		policy =
 			"default-src 'self'; script-src 'self' '[$NONCE$]'; style-src " +
 				"'self' '[$NONCE$]'";
@@ -136,7 +180,7 @@ public class ContentSecurityPolicyFilterTest {
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper(
-						true, null, policy)) {
+						true, null, policy, false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
 				"http://" + company.getVirtualHostname() + ":8080/web/guest");
@@ -182,7 +226,7 @@ public class ContentSecurityPolicyFilterTest {
 				configurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper(
 						true, new String[] {"/c/portal/layout", "/web/guest"},
-						policy)) {
+						policy, false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
 				"http://" + company.getVirtualHostname() + ":8080/web/guest");
@@ -201,7 +245,8 @@ public class ContentSecurityPolicyFilterTest {
 
 	private CompanyConfigurationTemporarySwapper
 			_getCompanyConfigurationTemporarySwapper(
-				boolean enabled, String[] excludedPaths, String policy)
+				boolean enabled, String[] excludedPaths, String policy,
+				boolean reportOnly)
 		throws Exception {
 
 		return new CompanyConfigurationTemporarySwapper(
@@ -214,6 +259,8 @@ public class ContentSecurityPolicyFilterTest {
 				"excludedPaths", excludedPaths
 			).put(
 				"policy", policy
+			).put(
+				"reportOnly", reportOnly
 			).build());
 	}
 

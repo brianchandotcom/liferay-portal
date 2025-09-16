@@ -135,7 +135,7 @@ public class DLFileEntryCTTest {
 	}
 
 	@Test
-	public void testEditFileEntry() throws Exception {
+	public void testUpdateFileEntry() throws Exception {
 		FileEntry fileEntry = _addFileEntry();
 
 		ServiceContext serviceContext =

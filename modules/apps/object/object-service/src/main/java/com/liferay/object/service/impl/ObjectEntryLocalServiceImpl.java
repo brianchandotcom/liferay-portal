@@ -1840,16 +1840,12 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
 			objectEntryId);
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
 		if (objectEntry.isRootDescendantNode()) {
 			throw new UnsupportedOperationException();
 		}
 
 		_subscriptionLocalService.deleteSubscription(
-			userId, objectDefinition.getClassName(), objectEntryId);
+			userId, objectEntry.getModelClassName(), objectEntryId);
 	}
 
 	@Override

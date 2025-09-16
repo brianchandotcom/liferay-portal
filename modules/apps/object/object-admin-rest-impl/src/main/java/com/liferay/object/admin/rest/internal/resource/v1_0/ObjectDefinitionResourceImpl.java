@@ -1345,9 +1345,9 @@ public class ObjectDefinitionResourceImpl
 				).put(
 					"exportObjectDefinition",
 					() -> {
-						if (serviceBuilderObjectDefinition.
-								isRootDescendantNode() ||
-							serviceBuilderObjectDefinition.isRootNode()) {
+						if (ArrayUtil.isNotEmpty(
+								serviceBuilderObjectDefinition.
+									getRootObjectDefinitionIds())) {
 
 							return null;
 						}

@@ -5,19 +5,19 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-import SpaceSitesModal from '../../spaces/SpaceSitesModal';
+import SpaceConnectedSitesModal from '../../spaces/SpaceConnectedSitesModal';
 
-export interface ManageSitesData {
+export interface ManageConnectedSitesData {
 	externalReferenceCode: string;
 	hasConnectSitesPermission: boolean;
 }
 
-export default function manageSitesAction(
-	data: ManageSitesData,
+export default function manageConnectedSitesAction(
+	data: ManageConnectedSitesData,
 	loadData?: () => void
 ) {
 	openModal({
-		contentComponent: () => SpaceSitesModal(data),
+		contentComponent: () => SpaceConnectedSitesModal(data),
 		onClose: loadData,
 		size: 'md',
 	});

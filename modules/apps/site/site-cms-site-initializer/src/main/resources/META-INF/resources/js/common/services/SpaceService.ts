@@ -28,11 +28,11 @@ async function addSpace({
 }
 
 async function getSpace({
-	spaceExternalReferenceCode,
+	externalReferenceCode,
 }: {
-	spaceExternalReferenceCode: string;
+	externalReferenceCode: string;
 }): Promise<Space> {
-	const url = `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}`;
+	const url = `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`;
 
 	const {data, error} = await ApiHelper.get<Space>(url);
 
@@ -44,15 +44,15 @@ async function getSpace({
 }
 
 async function getSpaceUserGroups({
+	externalReferenceCode,
 	nestedFields,
 	page,
 	pageSize,
-	spaceExternalReferenceCode,
 }: {
+	externalReferenceCode: string;
 	nestedFields?: string;
 	page?: number;
 	pageSize?: number;
-	spaceExternalReferenceCode: string;
 }): Promise<{
 	items: UserGroup[];
 	lastPage: number;
@@ -75,7 +75,7 @@ async function getSpaceUserGroups({
 		page: number;
 		totalCount: number;
 	}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}/user-groups?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
 	);
 
 	if (data) {
@@ -86,15 +86,15 @@ async function getSpaceUserGroups({
 }
 
 async function getSpaceUsers({
+	externalReferenceCode,
 	nestedFields,
 	page,
 	pageSize,
-	spaceExternalReferenceCode,
 }: {
+	externalReferenceCode: string;
 	nestedFields?: string;
 	page?: number;
 	pageSize?: number;
-	spaceExternalReferenceCode: string;
 }): Promise<{
 	items: UserAccount[];
 	lastPage: number;
@@ -117,7 +117,7 @@ async function getSpaceUsers({
 		page: number;
 		totalCount: number;
 	}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-accounts?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}/user-accounts?${urlParams.toString()}${nestedFields ? '&nestedFields=' + nestedFields : ''}`
 	);
 
 	if (data) {
@@ -187,10 +187,10 @@ async function unlinkUserGroupFromSpace({
 	);
 }
 
-async function updateSpace(spaceExternalReferenceCode: string, body: any) {
+async function updateSpace(externalReferenceCode: string, body: any) {
 	return await ApiHelper.patch(
 		body,
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`
 	);
 }
 

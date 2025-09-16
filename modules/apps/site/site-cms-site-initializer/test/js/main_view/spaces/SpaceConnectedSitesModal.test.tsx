@@ -12,12 +12,12 @@ import userEvent from '@testing-library/user-event';
 import {openToast} from 'frontend-js-components-web';
 import React from 'react';
 
-import SiteService from '../../../../src/main/resources/META-INF/resources/js/common/services/SiteService';
+import ConnectedSiteService from '../../../../src/main/resources/META-INF/resources/js/common/services/ConnectedSiteService';
 import {Site} from '../../../../src/main/resources/META-INF/resources/js/common/types/Site';
-import SpaceSitesModal from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceSitesModal';
+import SpaceConnectedSitesModal from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceConnectedSitesModal';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/common/services/SiteService'
+	'../../../../src/main/resources/META-INF/resources/js/common/services/ConnectedSiteService'
 );
 
 jest.mock('frontend-js-components-web', () => ({
@@ -25,22 +25,22 @@ jest.mock('frontend-js-components-web', () => ({
 }));
 
 const mockGetConnectedSitesFromSpace =
-	SiteService.getConnectedSitesFromSpace as jest.MockedFunction<
-		typeof SiteService.getConnectedSitesFromSpace
+	ConnectedSiteService.getConnectedSitesFromSpace as jest.MockedFunction<
+		typeof ConnectedSiteService.getConnectedSitesFromSpace
 	>;
 
-const mockGetAllSites = SiteService.getAllSites as jest.MockedFunction<
-	typeof SiteService.getAllSites
+const mockGetAllSites = ConnectedSiteService.getAllSites as jest.MockedFunction<
+	typeof ConnectedSiteService.getAllSites
 >;
 
 const mockConnectSiteToSpace =
-	SiteService.connectSiteToSpace as jest.MockedFunction<
-		typeof SiteService.connectSiteToSpace
+	ConnectedSiteService.connectSiteToSpace as jest.MockedFunction<
+		typeof ConnectedSiteService.connectSiteToSpace
 	>;
 
 const mockDisconnectSiteFromSpace =
-	SiteService.disconnectSiteFromSpace as jest.MockedFunction<
-		typeof SiteService.disconnectSiteFromSpace
+	ConnectedSiteService.disconnectSiteFromSpace as jest.MockedFunction<
+		typeof ConnectedSiteService.disconnectSiteFromSpace
 	>;
 
 const mockedOpenToast = openToast as jest.Mock;
@@ -78,7 +78,7 @@ const DEFAULT_PROPS = {
 const errorMessage = 'Connection failed';
 
 const renderComponent = (props = DEFAULT_PROPS) => {
-	return render(<SpaceSitesModal {...props} />);
+	return render(<SpaceConnectedSitesModal {...props} />);
 };
 
 const assertErrorToast = async () => {

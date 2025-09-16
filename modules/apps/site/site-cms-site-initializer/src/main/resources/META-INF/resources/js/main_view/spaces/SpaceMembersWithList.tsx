@@ -73,16 +73,16 @@ export function SpaceMembersWithList({
 				const [spaceUsers, spaceUserGroups, userRoles] =
 					await Promise.all([
 						SpaceService.getSpaceUsers({
+							externalReferenceCode,
 							nestedFields: 'roles',
 							page: 1,
 							pageSize,
-							spaceExternalReferenceCode: externalReferenceCode,
 						}),
 						SpaceService.getSpaceUserGroups({
+							externalReferenceCode,
 							nestedFields: 'numberOfUserAccounts,roles',
 							page: 1,
 							pageSize,
-							spaceExternalReferenceCode: externalReferenceCode,
 						}),
 						AdminUserService.getUserRoles({
 							filter: "name ne 'Asset Library Connected Site Member' and type eq 5",
@@ -124,10 +124,10 @@ export function SpaceMembersWithList({
 
 			try {
 				const spaceUsers = await SpaceService.getSpaceUsers({
+					externalReferenceCode,
 					nestedFields: 'roles',
 					page: newUsersPage,
 					pageSize,
-					spaceExternalReferenceCode: externalReferenceCode,
 				});
 
 				setSelectedUsers((currentSelectedUsers) => [
@@ -156,10 +156,10 @@ export function SpaceMembersWithList({
 
 		try {
 			const spaceUserGroups = await SpaceService.getSpaceUserGroups({
+				externalReferenceCode,
 				nestedFields: 'numberOfUserAccounts,roles',
 				page: newUserGroupsPage,
 				pageSize,
-				spaceExternalReferenceCode: externalReferenceCode,
 			});
 
 			setSelectedUserGroups((currentSelectedUserGroups) => [

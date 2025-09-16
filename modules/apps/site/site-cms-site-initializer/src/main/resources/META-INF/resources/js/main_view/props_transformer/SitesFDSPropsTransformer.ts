@@ -5,12 +5,12 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
-import manageSitesAction from './actions/manageSitesAction';
+import manageConnectedSitesAction from './actions/manageConnectedSitesAction';
 import SiteRenderer from './cell_renderers/SiteRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
 const ACTIONS = {
-	connectSites: manageSitesAction,
+	connectSites: manageConnectedSitesAction,
 };
 
 export default function SitesFDSPropsTransformer({

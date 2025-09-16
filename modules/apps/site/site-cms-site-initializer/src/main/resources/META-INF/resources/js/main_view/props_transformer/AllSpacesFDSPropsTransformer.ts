@@ -9,10 +9,12 @@ import {sub} from 'frontend-js-web';
 
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import deleteEntryAction from './actions/deleteEntryAction';
+import manageConnectedSitesAction, {
+	ManageConnectedSitesData,
+} from './actions/manageConnectedSitesAction';
 import manageMembersAction, {
 	ManageMembersData,
 } from './actions/manageMembersAction';
-import manageSitesAction, {ManageSitesData} from './actions/manageSitesAction';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
@@ -157,12 +159,12 @@ export default function AllSpacesFDSPropsTransformer({
 				const hasConnectSitesPermission =
 					action.data.permissionKey === 'connect-sites';
 
-				const data: ManageSitesData = {
+				const data: ManageConnectedSitesData = {
 					externalReferenceCode: itemData.externalReferenceCode,
 					hasConnectSitesPermission,
 				};
 
-				manageSitesAction(data, loadData);
+				manageConnectedSitesAction(data, loadData);
 			}
 		},
 	};

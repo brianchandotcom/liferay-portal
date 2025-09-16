@@ -6,7 +6,6 @@
 package com.liferay.saml.persistence.service.impl;
 
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.saml.persistence.exception.NoSuchIbSloMessageException;
 import com.liferay.saml.persistence.model.SamlIbSloMessage;
 import com.liferay.saml.persistence.service.base.SamlIbSloMessageLocalServiceBaseImpl;
@@ -28,7 +27,7 @@ public class SamlIbSloMessageLocalServiceImpl
 
 	@Override
 	public SamlIbSloMessage addSamlIbSloMessage(
-		String logoutRequestXml, String samlIdpEntityId,
+		long companyId, String logoutRequestXml, String samlIdpEntityId,
 		String samlIdpSessionIndex) {
 
 		long samlIbSloMessageId = counterLocalService.increment(
@@ -37,7 +36,7 @@ public class SamlIbSloMessageLocalServiceImpl
 		SamlIbSloMessage samlIbSloMessage = samlIbSloMessagePersistence.create(
 			samlIbSloMessageId);
 
-		samlIbSloMessage.setCompanyId(CompanyThreadLocal.getCompanyId());
+		samlIbSloMessage.setCompanyId(companyId);
 		samlIbSloMessage.setCreateDate(new Date());
 		samlIbSloMessage.setLogoutRequestXml(logoutRequestXml);
 		samlIbSloMessage.setSamlIdpEntityId(samlIdpEntityId);

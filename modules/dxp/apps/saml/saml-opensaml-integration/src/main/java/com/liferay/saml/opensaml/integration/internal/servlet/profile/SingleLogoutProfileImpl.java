@@ -690,6 +690,7 @@ public class SingleLogoutProfileImpl
 				samlSpSession.getSessionIndex());
 
 			_samlIbSloMessageLocalService.addSamlIbSloMessage(
+				samlSpSession.getCompanyId(),
 				OpenSamlUtil.marshall(logoutRequest),
 				samlPeerEntityContext.getEntityId(),
 				samlSpSession.getSessionIndex());
@@ -1299,13 +1300,14 @@ public class SingleLogoutProfileImpl
 			List<SamlIdpSpSession> samlIdpSpSessions = _getSamlIdpSpSessions(
 				sessionIndexes.get(0));
 
-			_samlIbSloMessageLocalService.addSamlIbSloMessage(
-				OpenSamlUtil.marshall(logoutRequest),
-				samlPeerEntityContext.getEntityId(), sessionIndexes.get(0));
-
 			SamlIdpSpSession samlIdpSpSession =
 				_samlIdpSpSessionLocalService.deleteSamlIdpSpSession(
 					samlIdpSpSessions.get(0));
+
+			_samlIbSloMessageLocalService.addSamlIbSloMessage(
+				samlIdpSpSession.getCompanyId(),
+				OpenSamlUtil.marshall(logoutRequest),
+				samlPeerEntityContext.getEntityId(), sessionIndexes.get(0));
 
 			_sendIbLogoutRequest(
 				httpServletRequest, httpServletResponse, samlIdpSpSession,

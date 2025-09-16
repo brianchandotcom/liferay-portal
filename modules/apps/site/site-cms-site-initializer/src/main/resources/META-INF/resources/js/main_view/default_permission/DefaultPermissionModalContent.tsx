@@ -6,6 +6,7 @@
 import '../../../css/components/DefaultPermission.scss';
 
 import ClayButton from '@clayui/button';
+import {ClayCheckbox} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -31,72 +32,65 @@ export default function DefaultPermissionModalContent({
 	const [currentValues, setCurrentValues] =
 		useState<AssetRoleSelectedActions>({});
 	const [loading, setLoading] = useState(false);
+	const [propagate, setPropagate] = useState(false);
 
 	const saveHandler = useCallback(() => {
 		setLoading(true);
 
-		if (currentObjectEntry) {
-			CMSDefaultPermissionService.updateObjectEntry({
-				defaultPermissions: JSON.stringify(currentValues),
-				externalReferenceCode: currentObjectEntry.externalReferenceCode,
-			})
-				.then(() => {
-					openToast({
-						message: Liferay.Language.get(
-							'your-request-completed-successfully'
-						),
-						type: 'success',
+		return Promise.resolve()
+			.then(() => {
+				if (currentObjectEntry) {
+					return CMSDefaultPermissionService.updateObjectEntry({
+						defaultPermissions: JSON.stringify(currentValues),
+						externalReferenceCode:
+							currentObjectEntry.externalReferenceCode,
 					});
+				}
 
-					closeModal();
-				})
-				.catch(() => {
-					openToast({
-						message: Liferay.Language.get(
-							'an-unexpected-system-error-occurred'
-						),
-						type: 'danger',
-					});
-				})
-				.finally(() => {
-					setLoading(false);
-				});
-		}
-		else {
-			CMSDefaultPermissionService.addObjectEntry({
-				classExternalReferenceCode,
-				className,
-				defaultPermissions: JSON.stringify(currentValues),
+				throw new Error();
 			})
-				.then(() => {
-					openToast({
-						message: Liferay.Language.get(
-							'your-request-completed-successfully'
-						),
-						type: 'success',
-					});
+			.then(({error}) => {
+				if (error) {
+					throw new Error(error);
+				}
 
-					closeModal();
-				})
-				.catch(() => {
-					openToast({
-						message: Liferay.Language.get(
-							'an-unexpected-system-error-occurred'
-						),
-						type: 'danger',
+				if (propagate) {
+					return CMSDefaultPermissionService.batchUpdateObjectEntry({
+						defaultPermissions: JSON.stringify(currentValues),
+						depotGroupId: currentObjectEntry?.depotGroupId || 0,
+						treePath: currentObjectEntry?.treePath || '',
 					});
-				})
-				.finally(() => {
-					setLoading(false);
+				}
+
+				return Promise.resolve({error: ''}) as any;
+			})
+			.then(({error}) => {
+				if (error) {
+					throw new Error(error);
+				}
+			})
+			.then(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-completed-successfully'
+					),
+					type: 'success',
 				});
-		}
-	}, [
-		classExternalReferenceCode,
-		className,
-		closeModal,
-		currentObjectEntry,
-		currentValues,
-	]);
+
+				closeModal();
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-system-error-occurred'
+					),
+					type: 'danger',
+				});
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, [closeModal, currentObjectEntry, currentValues, propagate]);
 
 	const onChangeHandler = useCallback((data: any) => {
 		setCurrentValues(data);
@@ -141,6 +135,18 @@ export default function DefaultPermissionModalContent({
 			</ClayModal.Body>
 
 			<ClayModal.Footer
+				first={
+					<ClayCheckbox
+						checked={propagate}
+						data-testid="checkbox-propagate"
+						disabled={loading}
+						inline
+						label="Text"
+						onChange={() => {
+							setPropagate(!propagate);
+						}}
+					/>
+				}
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton

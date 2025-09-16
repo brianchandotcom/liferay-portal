@@ -309,9 +309,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 				if ((!groupAware && hasScope) ||
 					(groupAware && !hasScope &&
-					 !value.startsWith("/{objectEntryId}")) ||
-					(objectDefinition.isRootDescendantNode() &&
-					 value.endsWith("/permissions"))) {
+					 !value.startsWith("/{objectEntryId}"))) {
 
 					excludedOperationIds.add(method.getName());
 				}

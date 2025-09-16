@@ -37,12 +37,13 @@ public class JavaClassParser {
 		throws IOException, ParseException {
 
 		return parseAnonymousClasses(
-			fileName, content, null, Collections.emptyList(), null);
+			fileName, content, null, Collections.emptyList(), null, null);
 	}
 
 	public static List<JavaClass> parseAnonymousClasses(
 			String fileName, String content, String packageName,
-			List<String> importNames, DetailAST detailAST)
+			List<String> importNames, DetailAST detailAST,
+			FileContents fileContents)
 		throws IOException, ParseException {
 
 		String absolutePath = SourceUtil.getAbsolutePath(fileName);
@@ -51,8 +52,6 @@ public class JavaClassParser {
 
 		FileText fileText = new FileText(
 			file, CheckstyleUtil.getLines(content));
-
-		FileContents fileContents = new FileContents(fileText);
 
 		if (detailAST == null) {
 			try {
@@ -135,21 +134,14 @@ public class JavaClassParser {
 			throw new RuntimeException(checkstyleException);
 		}
 
-		return parseJavaClass(fileName, content, detailAST);
+		return parseJavaClass(
+			fileName, content, detailAST, new FileContents(fileText));
 	}
 
 	public static JavaClass parseJavaClass(
-			String fileName, String content, DetailAST detailAST)
+			String fileName, String content, DetailAST detailAST,
+			FileContents fileContents)
 		throws IOException, ParseException {
-
-		String absolutePath = SourceUtil.getAbsolutePath(fileName);
-
-		File file = new File(absolutePath);
-
-		FileText fileText = new FileText(
-			file, CheckstyleUtil.getLines(content));
-
-		FileContents fileContents = new FileContents(fileText);
 
 		DetailAST siblingDetailAST = detailAST.getNextSibling();
 

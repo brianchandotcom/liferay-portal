@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.util.Attribute;
 import com.liferay.portal.security.audit.event.generators.util.AuditMessageBuilder;
@@ -106,7 +105,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			User user = _userLocalService.getUser(userId);
 
-			if (objectEntry.getStatus() != WorkflowConstants.STATUS_IN_TRASH) {
+			if (!objectEntry.isInTrash()) {
 				_executeObjectActions(
 					ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 					objectEntry, objectEntry, user);

@@ -53,7 +53,7 @@ public class ObjectActionRestController extends BaseRestController {
 			StringUtils.upperCase(businessName), " ", "_");
 
 		post(
-			"Bearer " + jwt.getTokenValue(),
+			jwt.toString(),
 			new JSONObject(
 			).put(
 				"externalReferenceCode", externalReferenceCode
@@ -68,7 +68,7 @@ public class ObjectActionRestController extends BaseRestController {
 			).toUri());
 
 		post(
-			"Bearer " + jwt.getTokenValue(), "",
+			jwt.toString(), "",
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
 					"/o/headless-admin-user/v1.0/accounts",
@@ -79,7 +79,7 @@ public class ObjectActionRestController extends BaseRestController {
 
 		long id = new JSONObject(
 			get(
-				"Bearer " + jwt.getTokenValue(),
+				jwt.toString(),
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
 						"/o/headless-admin-user/v1.0/accounts",
@@ -97,7 +97,7 @@ public class ObjectActionRestController extends BaseRestController {
 		);
 
 		post(
-			"Bearer " + jwt.getTokenValue(), "",
+			jwt.toString(), "",
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
 					"/o/headless-admin-user/v1.0/accounts",

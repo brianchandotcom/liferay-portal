@@ -103,29 +103,38 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 			},
 			overviewResource.getContentOverview(null, null, null, 7, null));
 
-		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "novo",
-			_serviceContext);
-
-		_assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "Titulo",
-			_assetVocabulary.getVocabularyId(), _serviceContext);
-
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry.getGroupId(), objectDefinition, Collections.emptyMap());
 
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			objectDefinition.getClassName(), _objectEntry.getObjectEntryId());
 
+		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "Vocabulary",
+			_serviceContext);
+
+		_assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "Category 1",
+			_assetVocabulary.getVocabularyId(), _serviceContext);
+
 		_assetEntryAssetCategoryRel =
 			_assetEntryAssetCategoryRelLocalService.
 				addAssetEntryAssetCategoryRel(
-					assetEntry.getEntryId(), _assetCategory.getCategoryId());
+					assetEntry.getEntryId(), _assetCategory1.getCategoryId());
+
+		_assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "Category 2",
+			_assetVocabulary.getVocabularyId(), _serviceContext);
+
+		_assetEntryAssetCategoryRel =
+			_assetEntryAssetCategoryRelLocalService.
+				addAssetEntryAssetCategoryRel(
+					assetEntry.getEntryId(), _assetCategory2.getCategoryId());
 
 		Assert.assertEquals(
 			new Overview() {
 				{
-					categoriesCount = 1L;
+					categoriesCount = 2L;
 					tagsCount = 0L;
 					totalCount = 2L;
 					trend = positiveTrend;
@@ -141,7 +150,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 		Assert.assertEquals(
 			new Overview() {
 				{
-					categoriesCount = 1L;
+					categoriesCount = 2L;
 					tagsCount = 1L;
 					totalCount = 3L;
 					trend = positiveTrend;
@@ -246,7 +255,10 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 	}
 
 	@DeleteAfterTestRun
-	private AssetCategory _assetCategory;
+	private AssetCategory _assetCategory1;
+
+	@DeleteAfterTestRun
+	private AssetCategory _assetCategory2;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

@@ -99,8 +99,8 @@ export default function EditObjectDetails({
 	storageTypes,
 }: EditObjectDetailsProps) {
 	const [backEndErrors, setBackEndErrors] = useState<Error>({});
+	const [loading, setLoading] = useState(true);
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
-
 	const {errors, handleChange, handleValidate, setValues, values} =
 		useObjectDetailsForm({
 			initialValues: {
@@ -118,6 +118,7 @@ export default function EditObjectDetails({
 		const validationErrors = handleValidate();
 
 		if (!Object.keys(validationErrors).length) {
+			setLoading(true);
 			let objectDefinition = values;
 
 			if (values.accountEntryRestricted) {
@@ -135,6 +136,8 @@ export default function EditObjectDetails({
 				const {detail, title} = error as Error;
 
 				handleErrors({detail, title}, setBackEndErrors);
+
+				setLoading(false);
 
 				return;
 			}
@@ -160,6 +163,8 @@ export default function EditObjectDetails({
 						});
 
 						setTimeout(() => window.location.reload(), 1000);
+
+						setLoading(false);
 
 						return;
 					}
@@ -197,6 +202,7 @@ export default function EditObjectDetails({
 
 			setValues(objectDefinitionResponse);
 			setObjectFields(objectFieldsResponse);
+			setLoading(false);
 		};
 
 		makeFetch();
@@ -235,6 +241,7 @@ export default function EditObjectDetails({
 							values.defaultLanguageId as Liferay.Language.Locale,
 						labels: values.label,
 					})}
+					loading={loading}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}

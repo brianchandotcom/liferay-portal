@@ -164,7 +164,7 @@ public class GroupModelListenerTest {
 		Group defaultDepotGroup = _groupLocalService.getGroup(
 			TestPropsValues.getCompanyId(), "Default");
 
-		_setTrashEnabledGroupProperty(
+		_setTrashEnabled(
 			defaultDepotGroup, Boolean.FALSE.toString());
 
 		Assert.assertFalse(
@@ -179,7 +179,7 @@ public class GroupModelListenerTest {
 
 		Group depotGroup = depotEntry.getGroup();
 
-		_setTrashEnabledGroupProperty(depotGroup, Boolean.TRUE.toString());
+		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
@@ -189,7 +189,7 @@ public class GroupModelListenerTest {
 
 		Assert.assertFalse(layout.isHidden());
 
-		_setTrashEnabledGroupProperty(defaultDepotGroup, null);
+		_setTrashEnabled(defaultDepotGroup, null);
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -236,9 +236,7 @@ public class GroupModelListenerTest {
 		return false;
 	}
 
-	private void _setTrashEnabledGroupProperty(Group group, String value)
-		throws Exception {
-
+	private void _setTrashEnabled(Group group, String value) throws Exception {
 		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
 		if (value == null) {

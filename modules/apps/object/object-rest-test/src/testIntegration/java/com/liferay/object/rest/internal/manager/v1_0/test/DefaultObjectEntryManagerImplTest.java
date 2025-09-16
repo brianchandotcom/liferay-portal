@@ -54,6 +54,7 @@ import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryDefaultLanguageIdException;
+import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.RequiredObjectEntryVersionException;
@@ -96,6 +97,7 @@ import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
+import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -3189,6 +3191,7 @@ public class DefaultObjectEntryManagerImplTest
 					objectRelationship, _group.getGroupKey()));
 	}
 
+	@FeatureFlag("LPD-53981")
 	@Test
 	public void testCopyObjectEntryByVersion() throws Exception {
 
@@ -3290,6 +3293,15 @@ public class DefaultObjectEntryManagerImplTest
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, status.getCode());
+
+		// Status in trash
+
+		AssertUtils.assertFailure(
+			ObjectEntryStatusException.class,
+			"Must not copy an object entry that is in the trash",
+			() -> _defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition4,
+				_getTrashedObjectEntryId(), 1));
 	}
 
 	@Test
@@ -3517,6 +3529,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinition2.getObjectDefinitionId());
 	}
 
+	@FeatureFlag("LPD-53981")
 	@Test
 	public void testDeleteObjectEntryByVersion() throws Exception {
 
@@ -3606,6 +3619,15 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition4, _group.getGroupKey(), null
 			).getItems(
 			).size());
+
+		// Status in trash
+
+		AssertUtils.assertFailure(
+			ObjectEntryStatusException.class,
+			"Object entry version operations are not allowed when the object " +
+				"entry is in trash",
+			() -> _defaultObjectEntryManager.deleteObjectEntryByVersion(
+				_objectDefinition4, _getTrashedObjectEntryId(), 2));
 	}
 
 	@Test
@@ -4211,6 +4233,15 @@ public class DefaultObjectEntryManagerImplTest
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_EXPIRED, status.getCode());
+
+		// Status in trash
+
+		AssertUtils.assertFailure(
+			ObjectEntryStatusException.class,
+			"Must not expire an object entry that is in the trash",
+			() -> _defaultObjectEntryManager.expireObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition4,
+				_getTrashedObjectEntryId(), 1));
 	}
 
 	@Test
@@ -6946,6 +6977,15 @@ public class DefaultObjectEntryManagerImplTest
 						});
 				}
 			});
+
+		// Status in trash
+
+		AssertUtils.assertFailure(
+			ObjectEntryStatusException.class,
+			"Must not update an object entry that is in the trash",
+			() -> _defaultObjectEntryManager.restoreObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition4,
+				_getTrashedObjectEntryId(), 1));
 	}
 
 	@FeatureFlag("LPD-53981")
@@ -9434,6 +9474,18 @@ public class DefaultObjectEntryManagerImplTest
 			"yyyy-MM-dd", dateString, LocaleUtil.getSiteDefault());
 
 		return new Timestamp(date.getTime());
+	}
+
+	private long _getTrashedObjectEntryId() throws Exception {
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.moveObjectEntryToTrash(
+				TestPropsValues.getUserId(),
+				ObjectEntryTestUtil.addObjectEntry(
+					TestPropsValues.getGroupId(), _objectDefinition4,
+					Collections.emptyMap()),
+				ServiceContextTestUtil.getServiceContext());
+
+		return serviceBuilderObjectEntry.getObjectEntryId();
 	}
 
 	private void _removeResourcePermission(

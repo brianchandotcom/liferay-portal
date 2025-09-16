@@ -63,10 +63,6 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 			JavaClassParser.parseAnonymousClasses(
 				fileName, fileContent, fileContents);
 
-		if (anonymousClasses.isEmpty()) {
-			return content;
-		}
-
 		for (JavaClass anonymousClass : anonymousClasses) {
 			content = _convertToLambda(
 				fileName, content, anonymousClass, javaTerm,

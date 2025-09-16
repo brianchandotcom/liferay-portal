@@ -9,12 +9,18 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+
+import com.puppycrawl.tools.checkstyle.api.FileContents;
+import com.puppycrawl.tools.checkstyle.api.FileText;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +45,16 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 
 		String content = javaTerm.getContent();
 
+		File file = new File(absolutePath);
+
+		FileText fileText = new FileText(
+			file, CheckstyleUtil.getLines(fileContent));
+
+		FileContents fileContents = new FileContents(fileText);
+
 		List<JavaClass> anonymousClasses =
-			JavaClassParser.parseAnonymousClasses(fileName, fileContent);
+			JavaClassParser.parseAnonymousClasses(
+				fileName, fileContent, fileContents);
 
 		if (anonymousClasses.isEmpty()) {
 			return content;

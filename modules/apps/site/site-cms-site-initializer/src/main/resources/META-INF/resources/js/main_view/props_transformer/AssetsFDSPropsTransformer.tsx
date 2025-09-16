@@ -236,7 +236,12 @@ export default function AssetsFDSPropsTransformer({
 			) {
 				event?.preventDefault();
 
-				const currentItemPos = items.findIndex(
+				const filteredItems = items.filter(
+					(item: any) =>
+						item?.entryClassName !== OBJECT_ENTRY_FOLDER_CLASS_NAME
+				);
+
+				const currentItemPos = filteredItems.findIndex(
 					(item: any) => item.embedded.id === itemData.embedded.id
 				);
 
@@ -247,7 +252,7 @@ export default function AssetsFDSPropsTransformer({
 					contentComponent: () =>
 						ItemNavigationModalContent({
 							currentIndex: currentItemPos,
-							items,
+							items: filteredItems,
 						}),
 					size: 'full-screen',
 				});

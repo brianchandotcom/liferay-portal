@@ -43,7 +43,16 @@ export default function ({
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 	if (!editMode) {
-		setBannerVisibility(cookieBanner);
+		const productAnalyticsBanner = document.querySelector(
+			'.product-analytics-banner'
+		);
+
+		if (productAnalyticsBanner) {
+			cookieBanner.style.display = 'none';
+		}
+		else {
+			setBannerVisibility(cookieBanner);
+		}
 
 		const cookiePreferences = {};
 

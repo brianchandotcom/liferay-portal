@@ -47,6 +47,8 @@ import com.liferay.portal.vulcan.custom.field.CustomField;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.custom.field.CustomValue;
 import com.liferay.portal.vulcan.custom.field.Geo;
+import com.liferay.portal.vulcan.fields.NestedFieldsContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 
 import java.io.Serializable;
 
@@ -193,6 +195,10 @@ public class CustomFieldsUtilTest {
 
 		_user = UserTestUtil.addCompanyAdminUser(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			new NestedFieldsContext(
+				1, Arrays.asList("customFields.attributeType")));
 	}
 
 	@Test
@@ -718,6 +724,42 @@ public class CustomFieldsUtilTest {
 				}
 			},
 			_getCustomField(customFields, _expandoColumn27.getName()));
+
+		// Without nested fields
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(null);
+
+		customFields = CustomFieldsUtil.toCustomFields(
+			true, _clazz.getName(), _user.getPrimaryKey(),
+			TestPropsValues.getCompanyId(), LocaleUtil.getDefault());
+
+		_assertNullAttributeType(customFields, _expandoColumn1.getName());
+		_assertNullAttributeType(customFields, _expandoColumn2.getName());
+		_assertNullAttributeType(customFields, _expandoColumn3.getName());
+		_assertNullAttributeType(customFields, _expandoColumn4.getName());
+		_assertNullAttributeType(customFields, _expandoColumn5.getName());
+		_assertNullAttributeType(customFields, _expandoColumn6.getName());
+		_assertNullAttributeType(customFields, _expandoColumn7.getName());
+		_assertNullAttributeType(customFields, _expandoColumn8.getName());
+		_assertNullAttributeType(customFields, _expandoColumn9.getName());
+		_assertNullAttributeType(customFields, _expandoColumn10.getName());
+		_assertNullAttributeType(customFields, _expandoColumn11.getName());
+		_assertNullAttributeType(customFields, _expandoColumn12.getName());
+		_assertNullAttributeType(customFields, _expandoColumn13.getName());
+		_assertNullAttributeType(customFields, _expandoColumn14.getName());
+		_assertNullAttributeType(customFields, _expandoColumn15.getName());
+		_assertNullAttributeType(customFields, _expandoColumn16.getName());
+		_assertNullAttributeType(customFields, _expandoColumn17.getName());
+		_assertNullAttributeType(customFields, _expandoColumn18.getName());
+		_assertNullAttributeType(customFields, _expandoColumn19.getName());
+		_assertNullAttributeType(customFields, _expandoColumn20.getName());
+		_assertNullAttributeType(customFields, _expandoColumn21.getName());
+		_assertNullAttributeType(customFields, _expandoColumn22.getName());
+		_assertNullAttributeType(customFields, _expandoColumn23.getName());
+		_assertNullAttributeType(customFields, _expandoColumn24.getName());
+		_assertNullAttributeType(customFields, _expandoColumn25.getName());
+		_assertNullAttributeType(customFields, _expandoColumn26.getName());
+		_assertNullAttributeType(customFields, _expandoColumn27.getName());
 	}
 
 	@Test
@@ -2792,6 +2834,15 @@ public class CustomFieldsUtilTest {
 
 		Assert.assertEquals(geo1.getLatitude(), geo2.getLatitude());
 		Assert.assertEquals(geo1.getLongitude(), geo2.getLongitude());
+	}
+
+	private void _assertNullAttributeType(
+			CustomField[] customFields, String name)
+		throws Exception {
+
+		CustomField customField = _getCustomField(customFields, name);
+
+		Assert.assertNull(customField.getAttributeType());
 	}
 
 	private CustomField _createCustomField(

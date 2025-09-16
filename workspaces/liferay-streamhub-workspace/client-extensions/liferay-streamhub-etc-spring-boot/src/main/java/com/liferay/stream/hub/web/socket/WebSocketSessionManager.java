@@ -104,7 +104,7 @@ public class WebSocketSessionManager {
 		).header(
 			"Authorization",
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-streamhub-etc-spring-boot-oauth-application-server")
+				"liferay-streamhub-etc-spring-boot-oahs")
 		).endpoint(
 			_lxcDXPMainDomain, _lxcDXPServerProtocol
 		).build();

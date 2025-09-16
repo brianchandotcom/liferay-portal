@@ -2,10 +2,10 @@ assemble:
     -   include:
             -   "**/*.js"
             -   package.json
-liferay-dlfoldertemplate-etc-node-oauth-application-server:
+liferay-dlfoldertemplate-etc-node-oahs:
     .serviceAddress: localhost:3001
     .serviceScheme: http
-    name: Liferay DL Folder Template Etc Node OAuth Application Server
+    name: Liferay DL Folder Template Etc Node OAuth Application Headless Server
     scopes:
         -   C_T4T1DLFolderTemplate.everything
         -   C_T4T1DLFolderTemplateNode.everything

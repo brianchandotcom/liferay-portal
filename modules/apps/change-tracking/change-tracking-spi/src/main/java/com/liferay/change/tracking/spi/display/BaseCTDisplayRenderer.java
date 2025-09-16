@@ -297,38 +297,37 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			model.getModelClassName(), (Long)model.getPrimaryKeyObj());
 
-		if (AssetDisplayPageUtil.hasAssetDisplayPage(
+		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
 				assetEntry.getGroupId(), assetEntry)) {
 
-			HttpServletRequest httpServletRequest =
-				displayContext.getHttpServletRequest();
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				new ClassPKInfoItemIdentifier(assetEntry.getClassPK());
-
-			String previewURL =
-				assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					new InfoItemReference(
-						assetEntry.getClassName(), classPKInfoItemIdentifier),
-					themeDisplay);
-
-			previewURL = HttpComponentsUtil.addParameter(
-				previewURL, "p_l_mode", Constants.PREVIEW);
-			previewURL = HttpComponentsUtil.addParameter(
-				previewURL, "previewCTCollectionId",
-				assetEntry.getCtCollectionId());
-
-			return StringBundler.concat(
-				"<iframe frameborder=\"0\" onload=\"this.style.height = ",
-				"(this.contentWindow.document.body.scrollHeight+20) + 'px';\" ",
-				"src=\"", previewURL, "\" width=\"100%\"></iframe>");
+			return null;
 		}
 
-		return null;
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			new ClassPKInfoItemIdentifier(assetEntry.getClassPK());
+
+		String previewURL = assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+			new InfoItemReference(
+				assetEntry.getClassName(), classPKInfoItemIdentifier),
+			themeDisplay);
+
+		previewURL = HttpComponentsUtil.addParameter(
+			previewURL, "p_l_mode", Constants.PREVIEW);
+		previewURL = HttpComponentsUtil.addParameter(
+			previewURL, "previewCTCollectionId",
+			assetEntry.getCtCollectionId());
+
+		return StringBundler.concat(
+			"<iframe frameborder=\"0\" onload=\"this.style.height = ",
+			"(this.contentWindow.document.body.scrollHeight+20) + 'px';\" ",
+			"src=\"", previewURL, "\" width=\"100%\"></iframe>");
 	}
 
 	protected interface DisplayBuilder<T> {
@@ -405,14 +404,14 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			).display(
 				"download",
 				() -> {
-					if (dlFileEntry != null) {
-						return getDownloadLink(
-							displayBuilder.getDisplayContext(),
-							dlFileEntry.getVersion(), dlFileEntry.getSize(),
-							dlFileEntry.getFileName());
+					if (dlFileEntry == null) {
+						return StringPool.BLANK;
 					}
 
-					return StringPool.BLANK;
+					return getDownloadLink(
+						displayBuilder.getDisplayContext(),
+						dlFileEntry.getVersion(), dlFileEntry.getSize(),
+						dlFileEntry.getFileName());
 				},
 				false
 			);
@@ -460,8 +459,9 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 
 			return;
 		}
-		else if (StringUtil.equals(
-					ddmFormField.getType(), DDMFormFieldTypeConstants.GRID)) {
+
+		if (StringUtil.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.GRID)) {
 
 			displayBuilder.display(
 				labelString,

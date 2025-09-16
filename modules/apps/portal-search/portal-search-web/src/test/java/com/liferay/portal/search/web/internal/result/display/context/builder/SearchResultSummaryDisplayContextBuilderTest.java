@@ -117,11 +117,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			portletURLFactory
 		).getPortletURL();
 
-		String className = RandomTestUtil.randomString();
-
 		long classPK = RandomTestUtil.randomLong();
 
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
+
+		String className = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
@@ -139,11 +139,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 	@Test
 	public void testCreationDate() throws Exception {
-		String className = RandomTestUtil.randomString();
-
 		long classPK = RandomTestUtil.randomLong();
 
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
+
+		String className = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
@@ -172,11 +172,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	public void testNoStagingLabel() throws Exception {
 		_setUpGroup(false);
 
-		String className = RandomTestUtil.randomString();
-
 		long classPK = RandomTestUtil.randomLong();
 
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
+
+		String className = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
@@ -205,11 +205,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_setUpGroup(true);
 		_setUpLanguage("staged");
 
-		String className = RandomTestUtil.randomString();
-
 		long classPK = RandomTestUtil.randomLong();
 
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
+
+		String className = RandomTestUtil.randomString();
 
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
@@ -241,7 +241,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		_whenAssetRendererFactoryHasPermission(true);
-
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 
@@ -275,7 +274,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, classPK);
 
 		_whenAssetRendererFactoryHasPermission(false);
-
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 
@@ -323,7 +321,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_whenAssetRendererFactoryGetAssetRenderer(assetRenderer, rootClassPK);
 
 		_whenAssetRendererFactoryHasPermission(true);
-
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 

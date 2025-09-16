@@ -75,6 +75,7 @@ export default {
 	'approve-request': 'Approve Request',
 	'approved': 'Approved',
 	'apps': 'Apps',
+	'apps-sold': 'Apps Sold',
 	'are-you-sure-you-want-to-expire-this-trial-this-action-implies-the-permanent-end-of-the-test-environment':
 		'Are you sure you want to expire this trial? This action implies the permanent end of the test environment.',
 	'area': 'Area',
@@ -366,6 +367,7 @@ export default {
 	'manage-your-current-trials': 'Manage your current trials',
 	'manage-your-teams-trial': "Manage your team's trial",
 	'mark-as-paid': 'Mark as Paid',
+	'marked-as-paid': 'Marked as paid.',
 	'maximum-number-of-uploads-reached': 'Maximum Number of Uploads Reached',
 	'modified-date': 'Modified Date',
 	'modular-components-built-with-html-css-and-javascript-offer-extensible-and-reusable-elements-or-collections-of-elements-for-constructing-content-pages-and-templates':
@@ -380,6 +382,7 @@ export default {
 	'move-to-bottom': 'Move to Bottom',
 	'move-to-top': 'Move to Top',
 	'move-up': 'Move Up',
+	'mp-commission': 'MP Commission',
 	'my-apps': 'My Apps',
 	'my-solutions': 'My Solutions',
 	'name': 'Name',
@@ -423,10 +426,12 @@ export default {
 	'other': 'Other',
 	'package': 'Package',
 	'paid': 'Paid',
+	'paid-by': 'Paid By',
 	'paid-date': 'Paid Date',
 	'payment': 'Payment',
 	'payment-method': 'Payment Method',
 	'payment-status': 'Payment Status',
+	'payment-summary': 'Payment Summary',
 	'paypal-account': 'PayPal Account',
 	'pending': 'Pending',
 	'phone': 'Phone',
@@ -474,8 +479,10 @@ export default {
 	'publisher': 'Publisher',
 	'publisher-account-request': 'Publisher Account Request',
 	'publisher-dashboard': 'Publisher Dashboard',
+	'publisher-details': 'Publisher Details',
 	'publisher-id': 'Publisher ID',
 	'publisher-name': 'Publisher Name',
+	'publisher-payout': 'Publisher Payout',
 	'publisher-requests': 'Publisher Requests',
 	'publisher-type': 'Publisher Type',
 	'publisher-website-url': 'Publisher Website URL',
@@ -487,6 +494,7 @@ export default {
 	'purchased-by': 'Purchased by',
 	'qty': 'Qty',
 	'quantity': 'Quantity',
+	'quarter': 'Quarter',
 	'ram': 'RAM',
 	'ram-in-gbs': 'RAM in GBs',
 	'reason': 'Reason',
@@ -519,6 +527,7 @@ export default {
 	'search': 'Search',
 	'section-that-shows-the-latest-sales-made':
 		'Section that shows the latest sales made',
+	'section-that-shows-the-payments': 'Section that shows the payments.',
 	'select-a-file': 'Select a File',
 	'select-a-local-file-to-upload': 'Select a Local File to Upload',
 	'select-an-option': 'Select an Option',
@@ -584,6 +593,10 @@ export default {
 	'thank-you-for-your': 'Thank you for your',
 	'the-app-and-all-its-client-extensions-services-will-be-deleted-and-uninstalled-from-liferay-dxp':
 		'The app and all its client extensions (services) will be deleted and uninstalled from Liferay DXP.',
+	'the-app-submission-is-compatible-with-liferay-experience-cloud-and':
+		'The app submission is compatible with Liferay SaaS and ',
+	'the-app-submission-is-integrates-with-liferay-dxp-version-7-4-or-later':
+		'The app submission is integrates with Liferay DXP version 7.4 or later.',
 	'the-cloud-app-is-client-extension-based-and-compatible-with-liferay-saas-it-fully-supports-and-deploys-on-extension-environments':
 		'The cloud app is client extension based and compatible with Liferay SaaS. It fully supports and deploys on extension environments.',
 	'the-cloud-app-is-client-extension-based-and-is-compatible-with-a-customer’s-self-hosted-environment':

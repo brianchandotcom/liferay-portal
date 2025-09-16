@@ -6,38 +6,37 @@
 import Button from '@clayui/button';
 
 import BackLink from '../../../../components/BackLink';
-import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
-import PaymentStatus from './PaymentStatus/PaymentStatus';
+import PaymentStatus from '../PaymentStatus/PaymentStatus';
 
-type OrderDetailsHeaderProps = {
+type DetailsHeaderProps = {
+	backLink: string;
 	onClick: () => void;
-	orderId: string;
+	showButton: boolean;
+	title: string;
 	paymentStatusCode: number;
 };
 
-const OrderDetailsHeader = ({
+const DetailsHeader = ({
+	backLink,
 	onClick,
-	orderId,
+	showButton,
+	title,
 	paymentStatusCode,
-}: OrderDetailsHeaderProps) => {
+}: DetailsHeaderProps) => {
 	return (
 		<div className="align-items-center d-flex justify-content-between">
 			<div>
-				<BackLink>
+				<BackLink path={backLink}>
 					{i18n.translate('back-to-last-transaction')}
 				</BackLink>
 
-				<h2>{orderId}</h2>
+				<h2>{title}</h2>
 
 				<PaymentStatus paymentStatus={paymentStatusCode} />
 			</div>
 
-			{[
-				PaymentStatusCode.FAILED,
-				PaymentStatusCode.PAYMENT_PENDING,
-				PaymentStatusCode.PENDING,
-			].includes(paymentStatusCode) && (
+			{showButton && (
 				<Button displayType="secondary" onClick={onClick}>
 					{i18n.translate('mark-as-paid')}
 				</Button>
@@ -46,4 +45,4 @@ const OrderDetailsHeader = ({
 	);
 };
 
-export default OrderDetailsHeader;
+export default DetailsHeader;

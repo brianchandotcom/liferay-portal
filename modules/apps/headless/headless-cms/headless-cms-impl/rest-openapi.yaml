@@ -3,6 +3,7 @@ components:
         BulkAction:
             discriminator:
                 mapping:
+                    DefaultPermissionBulkAction: "#/components/schemas/DefaultPermissionBulkAction"
                     DeleteBulkAction: "#/components/schemas/DeleteBulkAction"
                     KeywordBulkAction: "#/components/schemas/KeywordBulkAction"
                     MoveBulkAction: "#/components/schemas/MoveBulkAction"
@@ -19,6 +20,7 @@ components:
                     type: boolean
                 type:
                     enum:
+                        -   DefaultPermissionBulkAction
                         -   DeleteBulkAction
                         -   KeywordBulkAction
                         -   MoveBulkAction
@@ -60,6 +62,17 @@ components:
                     type: integer
                 type:
                     type: string
+        DefaultPermissionBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
+                -   properties:
+                        defaultPermissions:
+                            type: string
+                        depotGroupId:
+                            format: int64
+                            type: integer
+                        treePath:
+                            type: string
         DeleteBulkAction:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"

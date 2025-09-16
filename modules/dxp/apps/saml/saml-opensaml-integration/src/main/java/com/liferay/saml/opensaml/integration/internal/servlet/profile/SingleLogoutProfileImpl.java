@@ -1071,11 +1071,8 @@ public class SingleLogoutProfileImpl
 
 	private void _processIbLogoutResponse(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletResponse httpServletResponse, String idpSessionIndex)
 		throws Exception {
-
-		String idpSessionIndex = ParamUtil.getString(
-			httpServletRequest, "RelayState");
 
 		List<SamlIdpSpSession> samlIdpSpSessions = _getSamlIdpSpSessions(
 			idpSessionIndex);
@@ -1255,14 +1252,20 @@ public class SingleLogoutProfileImpl
 		if (samlProviderConfigurationHelper.isRoleIb()) {
 			SAMLPeerEntityContext samlPeerEntityContext =
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
+			String relayState = ParamUtil.getString(
+				httpServletRequest, "RelayState");
 
-			if (_isSpIdPConnection(samlPeerEntityContext.getEntityId())) {
+			if (Validator.isNotNull(relayState)) {
+				_processIbLogoutResponse(
+					httpServletRequest, httpServletResponse, relayState);
+			}
+			else if (_isSpIdPConnection(samlPeerEntityContext.getEntityId())) {
 				_processSpLogoutResponse(
 					httpServletRequest, httpServletResponse);
 			}
 			else {
-				_processIbLogoutResponse(
-					httpServletRequest, httpServletResponse);
+				_processIdpLogoutResponse(
+					httpServletRequest, httpServletResponse, messageContext);
 			}
 		}
 		else if (samlProviderConfigurationHelper.isRoleIdp()) {

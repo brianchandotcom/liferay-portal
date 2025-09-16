@@ -395,7 +395,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("Filter cannot be null", problem.getTitle());
+			Assert.assertEquals("Filter must not be null", problem.getTitle());
 		}
 
 		ObjectEntry basicWebContentObjectEntry =

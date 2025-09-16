@@ -379,7 +379,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		if (selectAll && ArrayUtil.isEmpty(bulkActionItems)) {
 			if (filter == null) {
-				throw new ValidationException("Filter is null");
+				throw new ValidationException("Filter must not be null");
 			}
 
 			SearchResultResource searchResultResource =

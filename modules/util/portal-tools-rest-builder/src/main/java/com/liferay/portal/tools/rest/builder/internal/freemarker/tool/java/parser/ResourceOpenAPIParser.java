@@ -395,14 +395,35 @@ public class ResourceOpenAPIParser {
 
 				createStrategies.add("INSERT");
 			}
-			else if ((methodName.equals("putByExternalReferenceCode") ||
-					  methodName.equals(
-						  StringBundler.concat(
-							  "put", parentSchemaName, schemaName,
-							  "ByExternalReferenceCode"))) &&
-					 propertyNames.contains("externalReferenceCode")) {
+			else {
+				String formattedParentSchemaName = TextFormatter.format(
+					parentSchemaName, TextFormatter.I);
+				boolean hasSchemaExternalReferenceCodePathParameter =
+					hasPathParameter(
+						javaMethodSignature,
+						TextFormatter.format(schemaName, TextFormatter.I) +
+							"ExternalReferenceCode");
 
-				createStrategies.add("UPSERT");
+				if (propertyNames.contains("externalReferenceCode") &&
+					(methodName.equals("putByExternalReferenceCode") ||
+					 methodName.equals(
+						 StringBundler.concat(
+							 "put", parentSchemaName, schemaName,
+							 "ByExternalReferenceCode")) ||
+					 (Objects.equals(
+						 methodName,
+						 StringBundler.concat(
+							 "put", parentSchemaName, schemaName)) &&
+					  hasSchemaExternalReferenceCodePathParameter &&
+					  hasPathParameter(
+						  javaMethodSignature,
+						  formattedParentSchemaName +
+							  "ExternalReferenceCode")) ||
+					 (Objects.equals(methodName, "put" + schemaName) &&
+					  hasSchemaExternalReferenceCodePathParameter))) {
+
+					createStrategies.add("UPSERT");
+				}
 			}
 		}
 
@@ -427,6 +448,21 @@ public class ResourceOpenAPIParser {
 		}
 
 		return updateStrategies;
+	}
+
+	public static boolean hasPathParameter(
+		JavaMethodSignature javaMethodSignature, String parameterName) {
+
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getPathJavaMethodParameters();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			if (parameterName.equals(javaMethodParameter.getParameterName())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean hasReadVulcanBatchImplementation(
@@ -1278,17 +1314,26 @@ public class ResourceOpenAPIParser {
 		}
 
 		basePath = basePath.substring(0, lastIndexOfSlash);
+		String schemaPath = TextFormatter.format(
+			TextFormatter.formatPlural(schemaName), TextFormatter.K);
 
 		if (basePath.equals(
 				"/asset-libraries/{assetLibraryExternalReferenceCode}") ||
+			basePath.equals(
+				"/asset-libraries/{assetLibraryExternalReferenceCode}/" +
+					schemaPath) ||
 			basePath.equals("/asset-libraries/{assetLibraryId}")) {
 
 			return "AssetLibrary";
 		}
-		else if (basePath.equals("/sites/{siteExternalReferenceCode}") ||
-				 basePath.equals("/sites/{siteId}")) {
+		else {
+			if (basePath.equals("/sites/{siteExternalReferenceCode}") ||
+				basePath.equals(
+					"/sites/{siteExternalReferenceCode}/" + schemaPath) ||
+				basePath.equals("/sites/{siteId}")) {
 
-			return "Site";
+				return "Site";
+			}
 		}
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {

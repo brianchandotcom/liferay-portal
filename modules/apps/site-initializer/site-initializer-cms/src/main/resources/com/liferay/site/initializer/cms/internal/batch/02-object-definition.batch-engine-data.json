@@ -727,6 +727,47 @@
 					"system": true,
 					"type": "Clob",
 					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"defaultValue": "null",
+					"externalReferenceCode": "DEPOT_GROUP_ID",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Depot Group ID"
+					},
+					"localized": false,
+					"name": "depotGroupId",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "null",
+					"externalReferenceCode": "TREE_PATH",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Tree Path"
+					},
+					"localized": false,
+					"name": "treePath",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
 				}
 			],
 			"objectFolderExternalReferenceCode": "L_CMS_CONTENT_SETTINGS",

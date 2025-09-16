@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -124,9 +125,10 @@ public class CMSDefaultPermissionUtilTest {
 			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 				RandomTestUtil.randomString(), group.getCompanyId(),
 				TestPropsValues.getUserId(), externalReferenceCode,
-				_depotEntry.getModelClassName(),
+				_depotEntry.getModelClassName(), group.getGroupId(),
 				JSONUtil.put(
-					"L_BASIC_WEB_CONTENT", JSONUtil.putAll(ActionKeys.VIEW)));
+					"L_BASIC_WEB_CONTENT", JSONUtil.putAll(ActionKeys.VIEW)),
+				StringPool.BLANK);
 
 		Map<String, Serializable> values = objectEntry1.getValues();
 
@@ -142,10 +144,11 @@ public class CMSDefaultPermissionUtilTest {
 			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 				objectEntry1.getExternalReferenceCode(), group.getCompanyId(),
 				TestPropsValues.getUserId(), externalReferenceCode,
-				_depotEntry.getModelClassName(),
+				_depotEntry.getModelClassName(), group.getGroupId(),
 				JSONUtil.put(
 					"L_BASIC_WEB_CONTENT",
-					JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
+					JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)),
+				StringPool.BLANK);
 
 		Assert.assertEquals(
 			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId());
@@ -178,10 +181,11 @@ public class CMSDefaultPermissionUtilTest {
 		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			RandomTestUtil.randomString(), group.getCompanyId(),
 			TestPropsValues.getUserId(), externalReferenceCode,
-			_depotEntry.getModelClassName(),
+			_depotEntry.getModelClassName(), group.getGroupId(),
 			JSONUtil.put(
 				"L_BASIC_WEB_CONTENT",
-				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
+				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)),
+			StringPool.BLANK);
 
 		Assert.assertNotNull(
 			CMSDefaultPermissionUtil.fetchObjectEntry(
@@ -198,10 +202,11 @@ public class CMSDefaultPermissionUtilTest {
 		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			RandomTestUtil.randomString(), group.getCompanyId(),
 			TestPropsValues.getUserId(), externalReferenceCode,
-			_depotEntry.getModelClassName(),
+			_depotEntry.getModelClassName(), group.getGroupId(),
 			JSONUtil.put(
 				"L_BASIC_WEB_CONTENT",
-				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)));
+				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)),
+			StringPool.BLANK);
 
 		JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
 			group.getCompanyId(), TestPropsValues.getUserId(),

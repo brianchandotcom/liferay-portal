@@ -21,6 +21,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -136,6 +137,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			null, group.getCompanyId(), group.getCreatorUserId(),
 			group.getExternalReferenceCode(), DepotEntry.class.getName(),
+			group.getGroupId(),
 			JSONUtil.put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 				JSONUtil.put(
@@ -164,7 +166,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 								ObjectEntryFolder.class.getName()),
 							resourceAction -> resourceAction.getActionId(),
 							String.class)))
-			));
+			),
+			StringPool.BLANK);
 	}
 
 	private void _onAfterRemove(Group group) throws PortalException {

@@ -34,7 +34,8 @@ public class CMSDefaultPermissionUtil {
 	public static ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long companyId, long userId,
 			String classExternalReferenceCode, String className,
-			JSONObject permissionsJSONObject)
+			long depotGroupId, JSONObject permissionsJSONObject,
+			String treePath)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -52,6 +53,10 @@ public class CMSDefaultPermissionUtil {
 				"className", className
 			).put(
 				"defaultPermissions", permissionsJSONObject.toString()
+			).put(
+				"depotGroupId", depotGroupId
+			).put(
+				"treePath", treePath
 			).build(),
 			new ServiceContext());
 	}

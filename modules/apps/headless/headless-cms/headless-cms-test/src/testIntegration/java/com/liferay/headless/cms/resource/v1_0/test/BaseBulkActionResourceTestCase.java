@@ -181,6 +181,11 @@ public abstract class BaseBulkActionResourceTestCase {
 	}
 
 	@Test
+	public void testPostBulkActionItemPreviewPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostBulkAction() throws Exception {
 		Assert.assertTrue(true);
 	}

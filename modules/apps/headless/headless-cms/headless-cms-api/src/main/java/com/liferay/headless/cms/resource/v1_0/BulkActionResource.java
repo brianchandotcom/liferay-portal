@@ -6,6 +6,7 @@
 package com.liferay.headless.cms.resource.v1_0;
 
 import com.liferay.headless.cms.dto.v1_0.BulkAction;
+import com.liferay.headless.cms.dto.v1_0.BulkActionItem;
 import com.liferay.headless.cms.dto.v1_0.BulkActionTask;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -16,6 +17,8 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.annotation.Generated;
 
@@ -47,6 +50,14 @@ public interface BulkActionResource {
 	public BulkActionTask postBulkAction(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
+			BulkAction bulkAction)
+		throws Exception;
+
+	public Page<BulkActionItem> postBulkActionItemPreviewPage(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts,
 			BulkAction bulkAction)
 		throws Exception;
 

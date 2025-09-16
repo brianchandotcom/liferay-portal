@@ -7,7 +7,7 @@ import {
 	ObjectDefinitionAPI,
 	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -16,6 +16,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
 import getFormContainerDefinition from '../main/utils/getFormContainerDefinition';
@@ -37,6 +38,15 @@ const test = mergeTests(
 	loginTest(),
 	pageEditorPagesTest,
 	pageManagementSiteTest
+);
+
+const testWithCKEditor4 = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-11235': {enabled: false},
+		'LPD-32050': {enabled: true},
+		'LPS-178052': {enabled: true},
+	})
 );
 
 test.describe('Text input field', () => {
@@ -952,6 +962,422 @@ test.describe('Rich Text Fragment', () => {
 			await objectValidationRuleAPIClient.deleteObjectValidationRule(
 				objectValidationRule.id
 			);
+		}
+	);
+
+	test(
+		'Check required errors for different Rich Text field types',
+		{tag: ['@LPD-65544']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a new object 'Article' with the following rich text fields:
+			// - A required field localizable (Name)
+			// - A required field not localizable (Content)
+			// - A field not localizable (Summary)
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					enableLocalization: true,
+					externalReferenceCode: 'article-erc',
+					label: {
+						en_US: 'Article',
+					},
+					name: 'Article',
+					objectFields: [
+						{
+							DBType: 'Clob',
+							businessType: 'RichText',
+							externalReferenceCode: 'article-name-erc',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Name',
+							},
+							localized: true,
+							name: 'name',
+							required: true,
+						},
+						{
+							DBType: 'Clob',
+							businessType: 'RichText',
+							externalReferenceCode: 'article-content-erc',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Content',
+							},
+							name: 'content',
+							required: true,
+						},
+
+						{
+							DBType: 'Clob',
+							businessType: 'RichText',
+							externalReferenceCode: 'article-summary-erc',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Summary',
+							},
+							name: 'summary',
+						},
+					],
+					pluralLabel: {
+						en_US: 'Articles',
+					},
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a form mapped to 'Article'
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Article', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			// Mark as required the summary field and publish the page
+
+			const fragmentId = await pageEditorPage.getFragmentId(
+				'Rich Text',
+				2
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Mark as Required',
+				fragmentId,
+				tab: 'General',
+				value: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Go to the view mode, submit the form and check that there are 3 validation errors
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			const error = page.getByText('This field is required');
+
+			await expect(error).toHaveCount(3);
+
+			// Change the translation language to spanish and fill the Name field
+
+			const translationSelector = page.getByLabel(
+				'Select a language, current language:'
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
+				trigger: translationSelector,
+			});
+
+			const nameEditor = page.getByLabel(/Name. Press/);
+
+			await nameEditor.click();
+
+			await page.keyboard.type('How to water the plants?');
+			await page.keyboard.press('Tab');
+
+			// Check that no errors disappear when the default language is not filled in
+
+			await expect(error).toHaveCount(3);
+
+			// Change the translation language to the default language and fill the Name field
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option').filter({hasText: 'en-US'}),
+				trigger: translationSelector,
+			});
+
+			await nameEditor.click();
+
+			await page.keyboard.type('How to water the plants?');
+			await page.keyboard.press('Tab');
+
+			await expect(error).toHaveCount(2);
+
+			// Fill the Content field and check the validation errors
+
+			await page.getByLabel(/Content. Press/).click();
+
+			await page.keyboard.type('To water the plants, first check ...');
+			await page.keyboard.press('Tab');
+
+			await expect(error).toHaveCount(1);
+
+			// Submit the form and check that the input is focused
+
+			await page.getByText('Submit').click();
+
+			await expect(page.getByLabel(/Summary. Press/)).toHaveClass(
+				/ck-focused/
+			);
+
+			await expect(
+				page.getByLabel(/Summary. Press/)
+			).toHaveAccessibleDescription('This field is required.');
+
+			// Fill the Summary field and check the validation errors
+
+			await page.keyboard.type('In summary, plants need water ...');
+			await page.keyboard.press('Tab');
+
+			await expect(error).not.toBeAttached();
+
+			// Submit the form
+
+			await page.getByText('Submit').click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+		}
+	);
+});
+
+testWithCKEditor4.describe('Rich Text Fragment with CKEditor 4', () => {
+	testWithCKEditor4(
+		'Check required errors for different Rich Text field types with CKEditor 4',
+		{tag: ['@LPD-65544']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+			const getEditor = (label: Locator) => {
+				return label
+					.locator('..')
+					.frameLocator('iframe')
+					.locator('[contenteditable="true"]');
+			};
+
+			// Create a new object 'Article' with the following rich text fields:
+			// - A required field localizable (Name)
+			// - A required field not localizable (Content)
+			// - A field not localizable (Summary)
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					enableLocalization: true,
+					externalReferenceCode: 'article-erc',
+					label: {
+						en_US: 'Article',
+					},
+					name: 'Article',
+					objectFields: [
+						{
+							DBType: 'Clob',
+							businessType: 'RichText',
+							externalReferenceCode: 'article-name-erc',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Name',
+							},
+							localized: true,
+							name: 'name',
+							required: true,
+						},
+						{
+							DBType: 'Clob',
+							businessType: 'RichText',
+							externalReferenceCode: 'article-content-erc',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Content',
+							},
+							name: 'content',
+							required: true,
+						},
+
+						{
+							DBType: 'Clob',
+							businessType: 'RichText',
+							externalReferenceCode: 'article-summary-erc',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Summary',
+							},
+							name: 'summary',
+						},
+					],
+					pluralLabel: {
+						en_US: 'Articles',
+					},
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a form mapped to 'Article'
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Article', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			// Mark as required the summary field and publish the page
+
+			const fragmentId = await pageEditorPage.getFragmentId(
+				'Rich Text',
+				2
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Mark as Required',
+				fragmentId,
+				tab: 'General',
+				value: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Go to the view mode, submit the form and check that there are 3 validation errors
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const nameEditor = getEditor(
+				page.locator('label', {hasText: /Name/})
+			);
+
+			await nameEditor.waitFor();
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			const error = page.getByText('This field is required');
+
+			await expect(error).toHaveCount(3);
+
+			// Change the translation language to spanish and fill the Name field
+
+			const translationSelector = page.getByLabel(
+				'Select a language, current language:'
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
+				trigger: translationSelector,
+			});
+
+			await nameEditor.click();
+
+			await page.keyboard.type('How to water the plants?');
+			await page.keyboard.press('Tab');
+
+			// Check that no errors disappear when the default language is not filled in
+
+			await expect(error).toHaveCount(3);
+
+			// Change the translation language to the default language and fill the Name field
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option').filter({hasText: 'en-US'}),
+				trigger: translationSelector,
+			});
+
+			await nameEditor.click();
+
+			await page.keyboard.type('How to water the plants?');
+			await page.keyboard.press('Tab');
+
+			await expect(error).toHaveCount(2);
+
+			// Fill the Content field and check the validation errors
+
+			await getEditor(
+				page.locator('label', {hasText: /Content/})
+			).click();
+
+			await page.keyboard.type('To water the plants, first check ...');
+			await page.keyboard.press('Tab');
+
+			await expect(error).toHaveCount(1);
+
+			// Submit the form and check that the input is focused
+
+			await page.getByText('Submit').click();
+
+			await expect(
+				page.getByLabel('Rich Text Editor').nth(2)
+			).toHaveClass(/cke_focus/);
+
+			// Fill the Summary field and check the validation errors
+
+			await page.keyboard.type('In summary, plants need water ...');
+			await page.keyboard.press('Tab');
+
+			await expect(error).not.toBeAttached();
+
+			// Submit the form
+
+			await page.getByText('Submit').click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
 		}
 	);
 });

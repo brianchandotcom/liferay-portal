@@ -12,9 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 /**
- * @author Raymond Augé
- * @author Gregory Amerson
  * @author Brian Wing Shun Chan
+ * @author Mumen Tayyem
  */
 @Import(ClientExtensionUtilSpringBootComponentScan.class)
 @SpringBootApplication

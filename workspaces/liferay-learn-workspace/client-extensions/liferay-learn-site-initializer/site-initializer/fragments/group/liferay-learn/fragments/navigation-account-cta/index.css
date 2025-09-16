@@ -7,18 +7,17 @@
 	padding: 8px 16px;
 
 	&:before {
-		content: "";
+		content: '';
 		display: inline-block;
 		height: 16px;
 		width: 16px;
 	}
 
 	&:hover {
-		background-color: #193A7A;
+		background-color: #193a7a;
 		color: var(--color-neutral-0, '#ffffff');
 		cursor: pointer;
 	}
-
 }
 
 .navigation-account-cta-dashboard:before {

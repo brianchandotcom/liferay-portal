@@ -6,6 +6,7 @@
 package com.liferay.headless.cms.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.cms.dto.v1_0.BulkAction;
+import com.liferay.headless.cms.dto.v1_0.BulkActionItem;
 import com.liferay.headless.cms.dto.v1_0.BulkActionTask;
 import com.liferay.headless.cms.resource.v1_0.BulkActionResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -15,6 +16,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.annotation.Generated;
 
@@ -56,6 +59,35 @@ public class Mutation {
 				search,
 				_filterBiFunction.apply(bulkActionResource, filterString),
 				bulkAction));
+	}
+
+	@GraphQLField(
+		description = "Creates a preview for each item based on the bulk action type"
+	)
+	public java.util.Collection<BulkActionItem> createBulkActionItemPreviewPage(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("bulkAction") BulkAction bulkAction)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_bulkActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			bulkActionResource -> {
+				Page paginationPage =
+					bulkActionResource.postBulkActionItemPreviewPage(
+						search,
+						_filterBiFunction.apply(
+							bulkActionResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(bulkActionResource, sortsString),
+						bulkAction);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

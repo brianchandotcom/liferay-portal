@@ -76,6 +76,11 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createBulkAction",
 						new ObjectValuePair<>(
 							BulkActionResourceImpl.class, "postBulkAction"));
+					put(
+						"mutation#createBulkActionItemPreviewPage",
+						new ObjectValuePair<>(
+							BulkActionResourceImpl.class,
+							"postBulkActionItemPreviewPage"));
 				}
 			};
 

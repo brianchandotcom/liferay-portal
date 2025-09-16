@@ -488,7 +488,7 @@ const filterSchema = {
 				type: 'select',
 			}),
 		],
-		name: 'financeOrders',
+		name: 'financePayments',
 	},
 };
 

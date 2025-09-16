@@ -7,9 +7,9 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
 import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
+import i18n from '../../../../i18n';
 
 import './index.scss';
-import i18n from '../../../../i18n';
 
 const paymentStatusLabel = {
 	[PaymentStatusCode.CANCELED]: i18n.translate('canceled'),

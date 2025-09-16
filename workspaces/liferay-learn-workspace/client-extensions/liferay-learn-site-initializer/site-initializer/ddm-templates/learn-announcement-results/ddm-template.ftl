@@ -42,11 +42,7 @@
 	/>
 
 	<#if endIndex == -1>
-		<#assign endIndex = substring?index_of(",") />
-
-		<#if endIndex == -1>
-			<#return substring?trim />
-		</#if>
+		<#return substring?trim />
 	</#if>
 
 	<#return substring?substring(0, endIndex)?trim />

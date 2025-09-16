@@ -400,6 +400,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		String filePath = _getReportFilePath(reportName);
 
+		CISystemStatusReportUtil.writeConfigJSFile(filePath);
+
 		CISystemStatusReportUtil.copyBaseReportFiles(filePath);
 
 		Files.deleteIfExists(Paths.get(filePath, "js/testray-data.js"));

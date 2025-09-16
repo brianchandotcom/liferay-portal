@@ -35,32 +35,32 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		UnsafeRunnable<Exception> dlFileEntryEmptyNameRunnable =
-			_getDLFileEntryEmptyNameRunnable();
-		UnsafeRunnable<Exception> dlFileEntryRunnable =
-			_getDLFileEntryRunnable();
+		UnsafeRunnable<Exception> dlFileEntryEmptyNameUnsafeRunnable =
+			_getDLFileEntryEmptyNameUnsafeRunnable();
+		UnsafeRunnable<Exception> dlFileEntryUnsafeRunnable =
+			_getDLFileEntryUnsafeRunnable();
 
 		Map<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
 			dataCleanupPreupgradeProcessMap =
 				HashMapBuilder.
 					<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
 						put(
-							dlFileEntryEmptyNameRunnable, dependsOn()
+							dlFileEntryEmptyNameUnsafeRunnable, dependsOn()
 					).put(
-						dlFileEntryRunnable,
-						dependsOn(dlFileEntryEmptyNameRunnable)
+						dlFileEntryUnsafeRunnable,
+						dependsOn(dlFileEntryEmptyNameUnsafeRunnable)
 					).put(
-						_getDLFileShortcutRunnable(),
-						dependsOn(dlFileEntryRunnable)
+						_getDLFileShortcutUnsafeRunnable(),
+						dependsOn(dlFileEntryUnsafeRunnable)
 					).put(
-						_getDLFileEntryMetadataRunnable(),
-						dependsOn(dlFileEntryRunnable)
+						_getDLFileEntryMetadataUnsafeRunnable(),
+						dependsOn(dlFileEntryUnsafeRunnable)
 					).build();
 
 		run(dataCleanupPreupgradeProcessMap);
 	}
 
-	private UnsafeRunnable<Exception> _getDLFileEntryEmptyNameRunnable() {
+	private UnsafeRunnable<Exception> _getDLFileEntryEmptyNameUnsafeRunnable() {
 		return () -> upgrade(
 			new DataCleanupPreupgradeProcess() {
 
@@ -102,7 +102,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 			});
 	}
 
-	private UnsafeRunnable<Exception> _getDLFileEntryMetadataRunnable() {
+	private UnsafeRunnable<Exception> _getDLFileEntryMetadataUnsafeRunnable() {
 		return () -> upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(
@@ -116,7 +116,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 				"DLFileEntryMetadata"));
 	}
 
-	private UnsafeRunnable<Exception> _getDLFileEntryRunnable() {
+	private UnsafeRunnable<Exception> _getDLFileEntryUnsafeRunnable() {
 		return () -> {
 			upgrade(
 				new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
@@ -149,7 +149,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 		};
 	}
 
-	private UnsafeRunnable<Exception> _getDLFileShortcutRunnable() {
+	private UnsafeRunnable<Exception> _getDLFileShortcutUnsafeRunnable() {
 		return () -> {
 			upgrade(
 				new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(

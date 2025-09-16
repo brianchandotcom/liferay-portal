@@ -28,17 +28,13 @@
 			[/#if]
 		</div>
 
-		[#if input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger">
-				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
-					<use xlink:href="${siteSpritemap}#info-circle" />
-				</svg>
+		<p class="font-weight-semi-bold mt-1 text-danger[#if !input.errorMessage?has_content] d-none[/#if]" id="${fragmentEntryLinkNamespace}-error-message">
+			[@clay["icon"] symbol="info-circle" /]
 
-				<span>
-					${input.errorMessage}
-				</span>
-			</p>
-		[/#if]
+			<span data-required-error="${languageUtil.get(locale, 'this-field-is-required')}" id="${fragmentEntryLinkNamespace}-error-message-text" role="status">
+				${input.errorMessage}
+			</span>
+		</p>
 
 		[#if input.showHelpText && input.helpText?has_content]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-rich-text-input-help-text">

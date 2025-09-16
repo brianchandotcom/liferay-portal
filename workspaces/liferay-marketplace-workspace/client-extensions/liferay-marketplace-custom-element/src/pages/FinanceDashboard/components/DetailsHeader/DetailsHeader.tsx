@@ -12,17 +12,17 @@ import PaymentStatus from '../PaymentStatus/PaymentStatus';
 type DetailsHeaderProps = {
 	backLink: string;
 	onClick: () => void;
+	paymentStatusCode: number;
 	showButton: boolean;
 	title: string;
-	paymentStatusCode: number;
 };
 
 const DetailsHeader = ({
 	backLink,
 	onClick,
+	paymentStatusCode,
 	showButton,
 	title,
-	paymentStatusCode,
 }: DetailsHeaderProps) => {
 	return (
 		<div className="align-items-center d-flex justify-content-between">

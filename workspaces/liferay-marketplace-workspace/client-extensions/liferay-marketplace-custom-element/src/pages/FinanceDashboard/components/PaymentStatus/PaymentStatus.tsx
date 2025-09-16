@@ -5,6 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+
 import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
 
 import './index.scss';

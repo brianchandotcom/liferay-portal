@@ -3,24 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayTable from '@clayui/table';
 import {useParams} from 'react-router-dom';
 
-import ClayTable from '@clayui/table';
 import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
 import {PageRenderer} from '../../../../../components/Page';
 import QATable, {Orientation} from '../../../../../components/QATable';
 import Table from '../../../../../components/Table/Table';
-import i18n from '../../../../../i18n';
-import DetailsHeader from '../../../components/DetailsHeader/DetailsHeader';
-import usePublisherSalesSummaryObject from '../../../../../hooks/usePublisherSalesSummaryObject';
-import {formatCurrency, getTotalByOrderKey} from '../../../util/finance';
 import {PaymentStatus as PaymentStatusCode} from '../../../../../enums/Order';
-import PaymentStatus from '../../../components/PaymentStatus/PaymentStatus';
-import PublisherSalesSummary from '../../../../../services/rest/PublisherSalesSummary';
+import usePublisherSalesSummaryObject from '../../../../../hooks/usePublisherSalesSummaryObject';
+import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
+import PublisherSalesSummary from '../../../../../services/rest/PublisherSalesSummary';
 import {safeJSONParse} from '../../../../../utils/util';
+import DetailsHeader from '../../../components/DetailsHeader/DetailsHeader';
+import PaymentStatus from '../../../components/PaymentStatus/PaymentStatus';
+import {formatCurrency, getTotalByOrderKey} from '../../../util/finance';
+import {formatDate, textWrapper} from '../../../util/util';
 import {PublisherPayoutStatus} from '../Payments';
-import { formatDate, textWrapper } from '../../../util/util';
 
 export function formatAddress(address: AccountPostalAddresses) {
 	if (!address || !Object.keys(address).length) {
@@ -75,7 +75,6 @@ const PaymentDetails = () => {
 		>
 			<DetailsHeader
 				backLink="/payments"
-				showButton={paymentStatus !== PublisherPayoutStatus.PAID}
 				onClick={async () =>
 					PublisherSalesSummary.patchPublisherSalesSummary(
 						{
@@ -99,8 +98,9 @@ const PaymentDetails = () => {
 						);
 					})
 				}
-				title={publisherSalesSummary?.publisherName as string}
 				paymentStatusCode={paymentStautsCode}
+				showButton={paymentStatus !== PublisherPayoutStatus.PAID}
+				title={publisherSalesSummary?.publisherName as string}
 			/>
 
 			<div className="d-flex mt-5">
@@ -259,7 +259,7 @@ const PaymentDetails = () => {
 													{placedOrderItem.name}
 												</strong>
 
-												<p className="finance-dashboard-secondary-text pb-0 mb-0 text-capitalize">
+												<p className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize">
 													{
 														skuOption?.skuOptionValueKey
 													}
@@ -287,9 +287,9 @@ const PaymentDetails = () => {
 						},
 						{
 							key: 'placedOrderItem',
-							title: i18n.translate('quantity'),
 							render: (placedOrderItem) =>
 								placedOrderItem.quantity,
+							title: i18n.translate('quantity'),
 						},
 						{
 							key: 'orderItem',

@@ -688,7 +688,7 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		if (objectDefinition.isRootDescendantNode()) {
+		if (objectEntry.isRootDescendantNode()) {
 			_startWorkflowInstance(
 				PrincipalThreadLocal.getUserId(), objectEntry,
 				new ServiceContext(), false);
@@ -1825,7 +1825,7 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		if (objectDefinition.isRootDescendantNode() ||
+		if (objectEntry.isRootDescendantNode() ||
 			ObjectEntryFolderSubscriptionUtil.isSubscribedToObjectEntryFolder(
 				objectEntry.getCompanyId(), groupId,
 				objectEntry.getObjectEntryFolderId(), userId)) {
@@ -1848,7 +1848,7 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		if (objectDefinition.isRootDescendantNode()) {
+		if (objectEntry.isRootDescendantNode()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -2982,8 +2982,7 @@ public class ObjectEntryLocalServiceImpl
 			long companyId, String objectActionTriggerKey,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			ObjectEntry originalObjectEntry, String preferredLanguageId,
-			User user)
-		throws NoSuchObjectDefinitionException {
+			User user) {
 
 		ObjectActionEngine objectActionEngine =
 			_objectActionEngineSnapshot.get();
@@ -3005,7 +3004,7 @@ public class ObjectEntryLocalServiceImpl
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-34594") ||
-			(!objectDefinition.isRootDescendantNode() &&
+			(!objectEntry.isRootDescendantNode() &&
 			 (!objectDefinition.isRootNode() ||
 			  StringUtil.equals(
 				  objectActionTriggerKey,

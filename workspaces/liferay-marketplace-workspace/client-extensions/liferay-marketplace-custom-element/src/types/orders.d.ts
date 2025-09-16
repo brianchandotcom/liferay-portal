@@ -81,17 +81,7 @@ type Order = {
 	marketplaceOrderType?: string;
 	modifiedDate?: string;
 	orderDate?: string;
-	orderItems: [
-		{
-			id?: number;
-			name?: {
-				en_US: string;
-			};
-			quantity?: number;
-			skuId: number;
-			unitPriceWithTaxAmount?: number;
-		},
-	];
+	orderItems: OrderItem[];
 	orderStatus: number;
 	orderStatusInfo: {
 		code: number;
@@ -109,12 +99,25 @@ type Order = {
 	projectName?: string;
 	shippingAmount?: number;
 	shippingWithTaxAmount?: number;
+	subtotalAmount?: number;
 	subtotalFormatted?: string;
+	subtotalWithTaxAmountValue?: number;
 	taxAmountFormatted?: string;
+	taxAmountValue?: number;
 	totalAmount?: number;
 	totalFormatted: string;
 	totalWithTaxAmountFormatted: string;
 	transactionId: string;
+};
+
+type OrderItem = {
+	id?: number;
+	name?: {
+		en_US: string;
+	};
+	quantity?: number;
+	skuId: number;
+	unitPriceWithTaxAmount?: number;
 };
 
 type OrderType = {

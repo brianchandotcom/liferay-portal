@@ -94,16 +94,6 @@ data "aws_iam_policy_document" "liferay_backup_restore_policy_doc" {
 		]
 		sid="AllowTerraformStateBucketAccess"
 	}
-	statement {
-		actions=[
-			"dynamodb:DeleteItem",
-			"dynamodb:GetItem",
-			"dynamodb:PutItem",
-		]
-		effect="Allow"
-		resources=[var.terraform_state_dynamodb_table_arn]
-		sid="AllowTerraformStateLocking"
-	}
 }
 locals {
 	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider_url}"

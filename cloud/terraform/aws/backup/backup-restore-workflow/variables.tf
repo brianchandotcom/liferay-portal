@@ -23,6 +23,3 @@ variable "tags" {
 variable "terraform_state_bucket_arn" {
 	type=string
 }
-variable "terraform_state_dynamodb_table_arn" {
-	type=string
-}

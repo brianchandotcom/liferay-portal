@@ -11,7 +11,7 @@ import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
 import React, {useEffect, useId, useState} from 'react';
 
-import SiteService from '../../common/services/SiteService';
+import ConnectedSiteService from '../../common/services/ConnectedSiteService';
 import {Site} from '../../common/types/Site';
 
 const showErrorMessage = (message: string) => {
@@ -21,7 +21,7 @@ const showErrorMessage = (message: string) => {
 	});
 };
 
-const SiteActions = ({
+const ConnectedSiteActions = ({
 	externalReferenceCode,
 	onSiteChange,
 	onSiteDisconnected,
@@ -35,7 +35,7 @@ const SiteActions = ({
 	const {searchable} = site;
 
 	const disconnectSite = async () => {
-		const {error} = await SiteService.disconnectSiteFromSpace(
+		const {error} = await ConnectedSiteService.disconnectSiteFromSpace(
 			externalReferenceCode,
 			site.externalReferenceCode
 		);
@@ -50,7 +50,7 @@ const SiteActions = ({
 	};
 
 	const changeSearchable = async () => {
-		const {data, error} = await SiteService.connectSiteToSpace(
+		const {data, error} = await ConnectedSiteService.connectSiteToSpace(
 			externalReferenceCode,
 			site.externalReferenceCode,
 			String(!searchable)
@@ -115,7 +115,7 @@ const SitesSelector = ({
 
 	const connectSiteToSpace = async () => {
 		if (siteSelected) {
-			const {data, error} = await SiteService.connectSiteToSpace(
+			const {data, error} = await ConnectedSiteService.connectSiteToSpace(
 				externalReferenceCode,
 				siteSelected.externalReferenceCode
 			);
@@ -134,7 +134,7 @@ const SitesSelector = ({
 
 	useEffect(() => {
 		const fetchSites = async () => {
-			const {data} = await SiteService.getAllSites();
+			const {data} = await ConnectedSiteService.getAllSites();
 
 			if (data) {
 				setSites(data.items);
@@ -183,7 +183,7 @@ const SitesSelector = ({
 	);
 };
 
-export default function SpaceSitesModal({
+export default function SpaceConnectedSitesModal({
 	externalReferenceCode,
 	hasConnectSitesPermission = true,
 }: {
@@ -195,9 +195,10 @@ export default function SpaceSitesModal({
 
 	useEffect(() => {
 		const fetchConnectedSitesToSpace = async () => {
-			const {data} = await SiteService.getConnectedSitesFromSpace(
-				externalReferenceCode
-			);
+			const {data} =
+				await ConnectedSiteService.getConnectedSitesFromSpace(
+					externalReferenceCode
+				);
 
 			if (data) {
 				setConnectedSites(data.items);
@@ -300,7 +301,7 @@ export default function SpaceSitesModal({
 											</div>
 
 											{hasConnectSitesPermission && (
-												<SiteActions
+												<ConnectedSiteActions
 													externalReferenceCode={
 														externalReferenceCode
 													}

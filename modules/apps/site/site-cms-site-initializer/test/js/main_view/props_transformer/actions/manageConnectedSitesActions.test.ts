@@ -5,22 +5,22 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-import manageSitesAction, {
-	ManageSitesData,
-} from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageSitesAction';
-import SpaceSitesModal from '../../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceSitesModal';
+import manageConnectedSitesAction, {
+	ManageConnectedSitesData,
+} from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageConnectedSitesAction';
+import SpaceConnectedSitesModal from '../../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceConnectedSitesModal';
 
 jest.mock('frontend-js-components-web', () => ({
 	openModal: jest.fn(),
 }));
 
-const mockSpaceSitesModal = SpaceSitesModal as jest.Mock;
+const mockSpaceSitesModal = SpaceConnectedSitesModal as jest.Mock;
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceSitesModal',
+	'../../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceConnectedSitesModal',
 	() => jest.fn()
 );
 
-describe('manageSitesAction', () => {
+describe('manageConnectedSitesAction', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
@@ -32,12 +32,12 @@ describe('manageSitesAction', () => {
 		])(
 			'is called with hasConnectSitesPermission=%s and loadData=%s',
 			(hasConnectSitesPermission, loadData) => {
-				const data: ManageSitesData = {
+				const data: ManageConnectedSitesData = {
 					externalReferenceCode: 'lib-456',
 					hasConnectSitesPermission,
 				};
 
-				manageSitesAction(data, loadData);
+				manageConnectedSitesAction(data, loadData);
 
 				expect(openModal).toHaveBeenCalledTimes(1);
 

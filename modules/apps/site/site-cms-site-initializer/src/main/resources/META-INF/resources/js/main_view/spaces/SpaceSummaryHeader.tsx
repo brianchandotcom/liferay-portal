@@ -7,12 +7,12 @@ import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import React from 'react';
 
+import manageConnectedSitesAction, {
+	ManageConnectedSitesData,
+} from '../props_transformer/actions/manageConnectedSitesAction';
 import manageMembersAction, {
 	ManageMembersData,
 } from '../props_transformer/actions/manageMembersAction';
-import manageSitesAction, {
-	ManageSitesData,
-} from '../props_transformer/actions/manageSitesAction';
 
 export enum SpaceSummaryHeaderActions {
 	OPEN_MEMBERS_MODAL = 'open-members-modal',
@@ -79,14 +79,14 @@ export default function SpaceSummaryHeader({
 			spaceModalProps?.action ===
 			SpaceSummaryHeaderActions.OPEN_SITES_MODAL
 		) {
-			const data: ManageSitesData = {
+			const data: ManageConnectedSitesData = {
 				externalReferenceCode: spaceModalProps.externalReferenceCode,
 				hasConnectSitesPermission: Boolean(
 					permissions?.hasConnectSitesPermission
 				),
 			};
 
-			return manageSitesAction(data, loadData);
+			return manageConnectedSitesAction(data, loadData);
 		}
 	};
 

@@ -8,8 +8,8 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import manageConnectedSitesAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageConnectedSitesAction';
 import manageMembersAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageMembersAction';
-import manageSitesAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageSitesAction';
 import SpaceSummaryHeader, {
 	SpaceSummaryHeaderActions,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceSummaryHeader';
@@ -20,7 +20,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageSitesAction',
+	'../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/manageConnectedSitesAction',
 	() => jest.fn()
 );
 
@@ -126,7 +126,7 @@ describe('SpaceSummaryHeader', () => {
 		);
 	});
 
-	describe('manageSitesAction', () => {
+	describe('manageConnectedSitesAction', () => {
 		it.each([
 			[false, undefined],
 			[false, false],
@@ -164,8 +164,8 @@ describe('SpaceSummaryHeader', () => {
 
 				await userEvent.click(button);
 
-				expect(manageSitesAction).toHaveBeenCalledTimes(1);
-				expect(manageSitesAction).toHaveBeenCalledWith(
+				expect(manageConnectedSitesAction).toHaveBeenCalledTimes(1);
+				expect(manageConnectedSitesAction).toHaveBeenCalledWith(
 					{
 						externalReferenceCode:
 							spaceModalProps.externalReferenceCode,

@@ -13,13 +13,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Luis Ortiz
@@ -43,8 +47,11 @@ public class DataCleanupPreupgradeProcessSuite {
 					DataCleanupPreupgradeProcessSuite.class.getName());
 		}
 
+		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
+			getSortedDataCleanupPreupgradeProcesses();
+
 		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
-				_dataCleanupPreupgradeProcesses) {
+				dataCleanupPreupgradeProcesses) {
 
 			Class<?> clazz = dataCleanupPreupgradeProcess.getClass();
 
@@ -73,55 +80,150 @@ public class DataCleanupPreupgradeProcessSuite {
 	}
 
 	public List<DataCleanupPreupgradeProcess>
-		getDataCleanupPreupgradeProcesses() {
+		getSortedDataCleanupPreupgradeProcesses() {
 
-		return _dataCleanupPreupgradeProcesses;
+		List<DataCleanupPreupgradeProcess>
+			sortedDataCleanupPreupgradeProcesses = new ArrayList<>();
+
+		while (sortedDataCleanupPreupgradeProcesses.size() !=
+					_dataCleanupPreupgradeProcessesMap.size()) {
+
+			int size = sortedDataCleanupPreupgradeProcesses.size();
+
+			for (Map.Entry
+					<DataCleanupPreupgradeProcess,
+					 List<DataCleanupPreupgradeProcess>> entry :
+						_dataCleanupPreupgradeProcessesMap.entrySet()) {
+
+				DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess =
+					entry.getKey();
+
+				if (sortedDataCleanupPreupgradeProcesses.contains(
+						dataCleanupPreupgradeProcess) ||
+					!sortedDataCleanupPreupgradeProcesses.containsAll(
+						entry.getValue())) {
+
+					continue;
+				}
+
+				sortedDataCleanupPreupgradeProcesses.add(
+					dataCleanupPreupgradeProcess);
+			}
+
+			if (size == sortedDataCleanupPreupgradeProcesses.size()) {
+				throw new RuntimeException("Circular dependency");
+			}
+		}
+
+		return sortedDataCleanupPreupgradeProcesses;
+	}
+
+	private static List<DataCleanupPreupgradeProcess> _dependsOn(
+		DataCleanupPreupgradeProcess... dataCleanupPreupgradeProcesses) {
+
+		return ListUtil.fromArray(dataCleanupPreupgradeProcesses);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataCleanupPreupgradeProcessSuite.class);
 
-	private final List<DataCleanupPreupgradeProcess>
-		_dataCleanupPreupgradeProcesses = ListUtil.fromArray(
+	private static final Map
+		<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
+			_dataCleanupPreupgradeProcessesMap;
 
-			// Recreate missing primary keys so that later upgrade processes can
-			// use them
+	static {
+		DataCleanupPreupgradeProcess
+			analyticsMessageDataCleanupPreupgradeProcess =
+				new AnalyticsMessageDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess companyDataCleanupPreupgradeProcess =
+			new CompanyDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess configurationDataCleanupPreupgradeProcess =
+			new ConfigurationDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess counterDataCleanupPreupgradeProcess =
+			new CounterDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess ddmStructureDataCleanupPreupgradeProcess =
+			new DDMStructureDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess dlFileEntryDataCleanupPreupgradeProcess =
+			new DLFileEntryDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess groupDataCleanupPreupgradeProcess =
+			new GroupDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess journalDataCleanupPreupgradeProcess =
+			new JournalDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess
+			nullUnicodeContentDataCleanupPreupgradeProcess =
+				new NullUnicodeContentDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess
+			quartzJobDetailsDataCleanupPreupgradeProcess =
+				new QuartzJobDetailsDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess
+			updateAllPrimaryKeysDataCleanupPreupgradeProcess =
+				new DataCleanupPreupgradeProcess() {
 
-			new DataCleanupPreupgradeProcess() {
+					@Override
+					protected void doUpgrade() throws Exception {
+						PrimaryKeyUpdaterUtil.updateAllPrimaryKeys();
+					}
 
-				@Override
-				protected void doUpgrade() throws Exception {
-					PrimaryKeyUpdaterUtil.updateAllPrimaryKeys();
-				}
+				};
+		DataCleanupPreupgradeProcess userDataCleanupPreupgradeProcess =
+			new UserDataCleanupPreupgradeProcess();
 
-			},
+		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
+			dataCleanupPreupgradeProcessestMap =
+				HashMapBuilder.
+					<DataCleanupPreupgradeProcess,
+					 List<DataCleanupPreupgradeProcess>>put(
+						updateAllPrimaryKeysDataCleanupPreupgradeProcess,
+						_dependsOn()
+					).put(
+						companyDataCleanupPreupgradeProcess,
+						_dependsOn(
+							updateAllPrimaryKeysDataCleanupPreupgradeProcess)
+					).put(
+						userDataCleanupPreupgradeProcess,
+						_dependsOn(companyDataCleanupPreupgradeProcess)
+					).put(
+						groupDataCleanupPreupgradeProcess,
+						_dependsOn(userDataCleanupPreupgradeProcess)
+					).put(
+						analyticsMessageDataCleanupPreupgradeProcess,
+						_dependsOn()
+					).put(
+						configurationDataCleanupPreupgradeProcess,
+						_dependsOn(userDataCleanupPreupgradeProcess)
+					).put(
+						ddmStructureDataCleanupPreupgradeProcess,
+						_dependsOn(groupDataCleanupPreupgradeProcess)
+					).put(
+						dlFileEntryDataCleanupPreupgradeProcess,
+						_dependsOn(groupDataCleanupPreupgradeProcess)
+					).put(
+						nullUnicodeContentDataCleanupPreupgradeProcess,
+						_dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+					).put(
+						quartzJobDetailsDataCleanupPreupgradeProcess,
+						_dependsOn()
+					).put(
+						journalDataCleanupPreupgradeProcess,
+						_dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+					).put(
+						counterDataCleanupPreupgradeProcess,
+						_dependsOn(
+							analyticsMessageDataCleanupPreupgradeProcess,
+							companyDataCleanupPreupgradeProcess,
+							configurationDataCleanupPreupgradeProcess,
+							ddmStructureDataCleanupPreupgradeProcess,
+							dlFileEntryDataCleanupPreupgradeProcess,
+							groupDataCleanupPreupgradeProcess,
+							journalDataCleanupPreupgradeProcess,
+							nullUnicodeContentDataCleanupPreupgradeProcess,
+							quartzJobDetailsDataCleanupPreupgradeProcess,
+							updateAllPrimaryKeysDataCleanupPreupgradeProcess,
+							userDataCleanupPreupgradeProcess)
+					).build();
 
-			// Company, then user, then group, and then the rest for optimal
-			// performance since cleaning companies will remove its users,
-			// groups, and related data
-
-			new CompanyDataCleanupPreupgradeProcess(),
-
-			//
-
-			new UserDataCleanupPreupgradeProcess(),
-
-			//
-
-			new GroupDataCleanupPreupgradeProcess(),
-
-			//
-
-			new AnalyticsMessageDataCleanupPreupgradeProcess(),
-			new ConfigurationDataCleanupPreupgradeProcess(),
-			new CounterDataCleanupPreupgradeProcess(),
-			new DDMStructureDataCleanupPreupgradeProcess(),
-			new DLFileEntryDataCleanupPreupgradeProcess(),
-			new NullUnicodeContentDataCleanupPreupgradeProcess(),
-			new QuartzJobDetailsDataCleanupPreupgradeProcess(),
-
-			// Journal data is used by dynamic data mapping structures data
-
-			new JournalDataCleanupPreupgradeProcess());
+		_dataCleanupPreupgradeProcessesMap = Collections.unmodifiableMap(
+			dataCleanupPreupgradeProcessestMap);
+	}
 
 }

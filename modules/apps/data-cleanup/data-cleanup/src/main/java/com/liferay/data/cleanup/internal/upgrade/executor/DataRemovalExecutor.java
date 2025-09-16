@@ -105,7 +105,7 @@ public class DataRemovalExecutor {
 
 		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
 				dataCleanupPreupgradeProcessSuite.
-					getDataCleanupPreupgradeProcesses()) {
+					getSortedDataCleanupPreupgradeProcesses()) {
 
 			if (_isDataCleanupPreupgradeProcessEnabled(
 					dataCleanupPreupgradeProcess, dataRemovalConfiguration)) {

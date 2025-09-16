@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portlet.expando.model.impl.ExpandoColumnImpl;
 
@@ -405,7 +406,10 @@ public class CustomFieldsUtil {
 		if (ExpandoColumnConstants.GEOLOCATION == type) {
 			return new CustomField() {
 				{
-					setAttributeType(() -> _attributeTypes.get(type));
+					setAttributeType(
+						() -> NestedFieldsSupplier.supply(
+							"customFields.attributeType",
+							nestedField -> _attributeTypes.get(type)));
 					setCustomValue(
 						() -> {
 							JSONObject jsonObject =
@@ -436,7 +440,10 @@ public class CustomFieldsUtil {
 
 		return new CustomField() {
 			{
-				setAttributeType(() -> _attributeTypes.get(type));
+				setAttributeType(
+					() -> NestedFieldsSupplier.supply(
+						"customFields.attributeType",
+						nestedField -> _attributeTypes.get(type)));
 				setCustomValue(
 					() -> new CustomValue() {
 						{

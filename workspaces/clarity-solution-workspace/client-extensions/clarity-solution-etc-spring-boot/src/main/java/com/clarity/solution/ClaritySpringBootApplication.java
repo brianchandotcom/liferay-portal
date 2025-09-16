@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Import;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author dnebing
  * @author Mumen Tayyem
  */
 @Import(ClientExtensionUtilSpringBootComponentScan.class)

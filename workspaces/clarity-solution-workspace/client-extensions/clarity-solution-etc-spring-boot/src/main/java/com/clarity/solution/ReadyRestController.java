@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author dnebing
  * @author Mumen Tayyem
  */
 @RequestMapping("/ready")

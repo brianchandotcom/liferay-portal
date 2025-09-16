@@ -1809,10 +1809,6 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
 			objectEntryId);
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
 		if (objectEntry.isRootDescendantNode() ||
 			ObjectEntryFolderSubscriptionUtil.isSubscribedToObjectEntryFolder(
 				objectEntry.getCompanyId(), groupId,
@@ -1822,7 +1818,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		_subscriptionLocalService.addSubscription(
-			userId, groupId, objectDefinition.getClassName(), objectEntryId);
+			userId, groupId, objectEntry.getModelClassName(), objectEntryId);
 	}
 
 	@Override
@@ -2967,10 +2963,10 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _executeObjectActions(
-			long companyId, String objectActionTriggerKey,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ObjectEntry originalObjectEntry, String preferredLanguageId,
-			User user) {
+		long companyId, String objectActionTriggerKey,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		ObjectEntry originalObjectEntry, String preferredLanguageId,
+		User user) {
 
 		ObjectActionEngine objectActionEngine =
 			_objectActionEngineSnapshot.get();

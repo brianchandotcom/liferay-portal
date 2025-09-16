@@ -166,9 +166,9 @@ function ItemSelectorModal<T extends Record<string, any>>({
 							disabled={!hasSelectedItems}
 							onClick={() => {
 								onItemsChange(
-									fdsProps.selectionType === 'single'
-										? selectedItems.slice(0, 1)
-										: selectedItems
+									multiSelect
+										? selectedItems
+										: selectedItems.slice(0, 1)
 								);
 
 								onOpenChange(false);

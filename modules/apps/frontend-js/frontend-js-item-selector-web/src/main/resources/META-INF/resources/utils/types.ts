@@ -7,5 +7,5 @@ import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
 export type IItemSelectorModalFDSProps = Omit<
 	IFrontendDataSetProps,
-	'selectedItems' | 'selectedItemsKey'
+	'selectedItems' | 'selectedItemsKey' | 'onSelectedItemsChange' | 'selectedItems' | 'selectedItemsKey' | 'selectionType' | 'showNavBarWhenSelected' | 'style'
 >;

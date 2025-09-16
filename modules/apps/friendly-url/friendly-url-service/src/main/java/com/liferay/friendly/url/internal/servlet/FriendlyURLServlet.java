@@ -5,6 +5,10 @@
 
 package com.liferay.friendly.url.internal.servlet;
 
+import com.liferay.depot.constants.DepotActionKeys;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration;
 import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfigurationProvider;
 import com.liferay.petra.lang.HashUtil;
@@ -17,6 +21,7 @@ import com.liferay.portal.kernel.exception.LayoutPermissionException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,12 +34,14 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -90,6 +97,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -259,6 +268,43 @@ public class FriendlyURLServlet extends HttpServlet {
 							PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
 
 						throw new NoSuchLayoutException();
+					}
+
+					if (group.isCMS()) {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								layout.getCompanyId(), "LPD-17564")) {
+
+							throw new NoSuchLayoutException();
+						}
+
+						int depotEntriesCount =
+							depotEntryLocalService.getDepotEntriesCount(
+								group.getCompanyId(),
+								DepotConstants.TYPE_SPACE);
+
+						if ((depotEntriesCount == 0) &&
+							(portletResourcePermission != null)) {
+
+							portletResourcePermission.check(
+								permissionChecker, group.getGroupId(),
+								DepotActionKeys.ADD_DEPOT_ENTRY);
+
+							if (!Objects.equals(
+									layout.getFriendlyURL(), "/new-space")) {
+
+								return new Redirect("/web/cms/new-space");
+							}
+						}
+						else if (!permissionChecker.isGroupAdmin(
+									layout.getGroupId()) &&
+								 !userLocalService.hasRoleUser(
+									 group.getCompanyId(),
+									 RoleConstants.CMS_ADMINISTRATOR,
+									 user.getUserId(), true) &&
+								 !_isSpaceMember(user)) {
+
+							throw new NoSuchLayoutException();
+						}
 					}
 
 					if ((redirectProviderRedirect != null) &&
@@ -684,6 +730,9 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	@Reference
+	protected DepotEntryLocalService depotEntryLocalService;
+
+	@Reference
 	protected Encryptor encryptor;
 
 	@Reference
@@ -710,6 +759,13 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	protected Portal portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")"
+	)
+	protected volatile PortletResourcePermission portletResourcePermission;
 
 	@Reference
 	protected SiteFriendlyURLLocalService siteFriendlyURLLocalService;
@@ -1118,6 +1174,22 @@ public class FriendlyURLServlet extends HttpServlet {
 			return refererURL.contains(
 				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR +
 					GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
+		}
+
+		return false;
+	}
+
+	private boolean _isSpaceMember(User user) throws PortalException {
+		for (Group group : user.getGroups()) {
+			if (group.isDepot()) {
+				DepotEntry depotEntry =
+					depotEntryLocalService.getGroupDepotEntry(
+						group.getGroupId());
+
+				if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+					return true;
+				}
+			}
 		}
 
 		return false;

@@ -130,7 +130,7 @@ export class PageEditorPage {
 		}
 
 		if (name !== 'Stepper') {
-			await this.waitForChangesSaved();
+			await this.waitForChangesSaved({timeout: 2000});
 		}
 	}
 
@@ -1112,6 +1112,14 @@ export class PageEditorPage {
 		);
 	}
 
+	async mapFormRelationshipFragment(fragmentId: string, type: string) {
+		const fragment = this.getFragment(fragmentId);
+
+		await fragment.getByLabel('Select a content type').selectOption(type);
+
+		await this.waitForChangesSaved();
+	}
+
 	async mapEditableLink({
 		editableId,
 		fragmentName,
@@ -1593,14 +1601,14 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
-	async waitForChangesSaved() {
-		await this.page.getByLabel('Saved', {exact: true}).waitFor();
+	async waitForChangesSaved({timeout}: {timeout?: number} = {}) {
+		await this.page.getByLabel('Saved', {exact: true}).waitFor({timeout});
 
 		await this.page
 			.getByText(
 				'Changes have been saved. Page editor will autosave new changes.'
 			)
-			.waitFor();
+			.waitFor({timeout});
 	}
 
 	getEditable({

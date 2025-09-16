@@ -67,6 +67,7 @@ import {loadData} from './utils/loadData';
 
 import {logError} from './utils/logError';
 import {
+	EStateInURLSettings,
 	IField,
 	IFrontendDataSetProps,
 	IModalConfig,
@@ -133,6 +134,7 @@ const FrontendDataSetContent = ({
 	showSelectAll = false,
 	sidePanelId,
 	sorts: sortsProp = [],
+	stateInURLSettings = EStateInURLSettings.OFF,
 	style = 'default',
 	uniformActionsDisplay,
 	views,

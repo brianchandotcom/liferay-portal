@@ -26,6 +26,7 @@ export {default as FDS_EVENT} from './utils/eventsDefinitions';
 
 export {
 	DisplayType,
+	EStateInURLSettings,
 	ICardSchema,
 	IClientExtensionRenderer,
 	ICreationActionItem,

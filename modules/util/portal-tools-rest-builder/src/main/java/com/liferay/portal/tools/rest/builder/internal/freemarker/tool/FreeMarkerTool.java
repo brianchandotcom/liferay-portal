@@ -1058,16 +1058,8 @@ public class FreeMarkerTool {
 	public boolean hasPathParameter(
 		JavaMethodSignature javaMethodSignature, String parameterName) {
 
-		List<JavaMethodParameter> javaMethodParameters =
-			javaMethodSignature.getPathJavaMethodParameters();
-
-		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
-			if (parameterName.equals(javaMethodParameter.getParameterName())) {
-				return true;
-			}
-		}
-
-		return false;
+		return ResourceOpenAPIParser.hasPathParameter(
+			javaMethodSignature, parameterName);
 	}
 
 	public boolean hasPostSchemaJavaMethodSignature(

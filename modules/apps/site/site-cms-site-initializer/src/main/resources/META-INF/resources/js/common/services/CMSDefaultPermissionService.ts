@@ -62,8 +62,27 @@ async function updateObjectEntry({
 	);
 }
 
+async function batchUpdateObjectEntry({
+	defaultPermissions,
+	depotGroupId,
+	treePath,
+}: {
+	defaultPermissions: string;
+	depotGroupId?: number;
+	treePath?: string;
+}) {
+	return await ApiHelper.post(`/o/headless-cms/v1.0/bulk-action`, {
+		defaultPermissions,
+		depotGroupId,
+		selectAll: true,
+		treePath,
+		type: 'DefaultPermissionBulkAction',
+	});
+}
+
 export default {
 	addObjectEntry,
+	batchUpdateObjectEntry,
 	getObjectEntry,
 	updateObjectEntry,
 };

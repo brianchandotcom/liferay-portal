@@ -686,7 +686,7 @@ public class SingleLogoutProfileImpl
 			Validator.isNotNull(
 				httpSession.getAttribute(SamlWebKeys.SAML_SSO_SESSION_ID))) {
 
-			List<SamlIdpSpSession> samlIdpSpSessions = _getIbSamlIdpSpSessions(
+			List<SamlIdpSpSession> samlIdpSpSessions = _getSamlIdpSpSessions(
 				samlSpSession.getSessionIndex());
 
 			_samlIbSloMessageLocalService.addSamlIbSloMessage(
@@ -879,11 +879,11 @@ public class SingleLogoutProfileImpl
 		return messageContext;
 	}
 
-	private List<SamlIdpSpSession> _getIbSamlIdpSpSessions(
-		String idpSessionIndex) {
+	private List<SamlIdpSpSession> _getSamlIdpSpSessions(String idpSessionIndex)
+		throws Exception {
 
 		SamlSpSession samlSpSession =
-			samlSpSessionLocalService.fetchSamlSpSessionBySessionIndex(
+			samlSpSessionLocalService.getSamlSpSessionBySessionIndex(
 				CompanyThreadLocal.getCompanyId(), idpSessionIndex);
 
 		SamlIdpSsoSession samlIdpSsoSession =
@@ -1077,7 +1077,7 @@ public class SingleLogoutProfileImpl
 		String idpSessionIndex = ParamUtil.getString(
 			httpServletRequest, "RelayState");
 
-		List<SamlIdpSpSession> samlIdpSpSessions = _getIbSamlIdpSpSessions(
+		List<SamlIdpSpSession> samlIdpSpSessions = _getSamlIdpSpSessions(
 			idpSessionIndex);
 
 		if (!samlIdpSpSessions.isEmpty()) {
@@ -1305,7 +1305,7 @@ public class SingleLogoutProfileImpl
 		if (Objects.equals(statusCodeURI, StatusCode.SUCCESS) &&
 			samlProviderConfigurationHelper.isRoleIb()) {
 
-			List<SamlIdpSpSession> samlIdpSpSessions = _getIbSamlIdpSpSessions(
+			List<SamlIdpSpSession> samlIdpSpSessions = _getSamlIdpSpSessions(
 				sessionIndexes.get(0));
 
 			SamlIdpSpSession samlIdpSpSession =

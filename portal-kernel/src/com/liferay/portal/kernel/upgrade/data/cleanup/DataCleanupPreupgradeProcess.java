@@ -50,17 +50,17 @@ public abstract class DataCleanupPreupgradeProcess extends UpgradeProcess {
 
 	protected void run(
 			Map<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
-				unsafeRunnableMap)
+				unsafeRunnablesMap)
 		throws Exception {
 
 		List<UnsafeRunnable<Exception>> unsafeRunnableList = new ArrayList<>();
 
-		while (unsafeRunnableList.size() != unsafeRunnableMap.size()) {
+		while (unsafeRunnableList.size() != unsafeRunnablesMap.size()) {
 			int size = unsafeRunnableList.size();
 
 			for (Map.Entry
 					<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
-						entry : unsafeRunnableMap.entrySet()) {
+						entry : unsafeRunnablesMap.entrySet()) {
 
 				UnsafeRunnable<Exception> unsafeRunnable = entry.getKey();
 

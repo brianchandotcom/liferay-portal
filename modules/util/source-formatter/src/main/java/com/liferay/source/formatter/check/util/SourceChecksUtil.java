@@ -144,8 +144,8 @@ public class SourceChecksUtil {
 						FileContents fileContents = new FileContents(fileText);
 
 						javaClass = JavaClassParser.parseJavaClass(
-							fileName, sourceChecksResult.getContent(),
-							detailAST, fileContents);
+							sourceChecksResult.getContent(), detailAST,
+							fileContents);
 
 						anonymousClasses =
 							JavaClassParser.parseAnonymousClasses(

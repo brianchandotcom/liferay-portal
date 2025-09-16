@@ -114,33 +114,8 @@ public class JavaClassParser {
 		return anonymousClasses;
 	}
 
-	public static JavaClass parseJavaClass(String fileName, String content)
-		throws IOException, ParseException {
-
-		String absolutePath = SourceUtil.getAbsolutePath(fileName);
-
-		File file = new File(absolutePath);
-
-		FileText fileText = new FileText(
-			file, CheckstyleUtil.getLines(content));
-
-		DetailAST detailAST;
-
-		try {
-			detailAST = JavaParser.parseFileText(
-				fileText, JavaParser.Options.WITH_COMMENTS);
-		}
-		catch (CheckstyleException checkstyleException) {
-			throw new RuntimeException(checkstyleException);
-		}
-
-		return parseJavaClass(
-			fileName, content, detailAST, new FileContents(fileText));
-	}
-
 	public static JavaClass parseJavaClass(
-			String fileName, String content, DetailAST detailAST,
-			FileContents fileContents)
+			String content, DetailAST detailAST, FileContents fileContents)
 		throws IOException, ParseException {
 
 		DetailAST siblingDetailAST = detailAST.getNextSibling();
@@ -236,6 +211,29 @@ public class JavaClassParser {
 		_parseExtendsImplementsPermits(javaClass, siblingDetailAST);
 
 		return javaClass;
+	}
+
+	public static JavaClass parseJavaClass(String fileName, String content)
+		throws IOException, ParseException {
+
+		String absolutePath = SourceUtil.getAbsolutePath(fileName);
+
+		File file = new File(absolutePath);
+
+		FileText fileText = new FileText(
+			file, CheckstyleUtil.getLines(content));
+
+		DetailAST detailAST;
+
+		try {
+			detailAST = JavaParser.parseFileText(
+				fileText, JavaParser.Options.WITH_COMMENTS);
+		}
+		catch (CheckstyleException checkstyleException) {
+			throw new RuntimeException(checkstyleException);
+		}
+
+		return parseJavaClass(content, detailAST, new FileContents(fileText));
 	}
 
 	private static Position _getEndPosition(DetailAST detailAST) {

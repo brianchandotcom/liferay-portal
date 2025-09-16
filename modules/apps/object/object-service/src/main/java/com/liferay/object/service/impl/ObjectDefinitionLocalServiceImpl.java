@@ -43,9 +43,7 @@ import com.liferay.object.exception.ObjectDefinitionFriendlyURLSeparatorExceptio
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
-import com.liferay.object.exception.ObjectDefinitionPanelCategoryKeyException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
-import com.liferay.object.exception.ObjectDefinitionPortletException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionSettingNameException;
 import com.liferay.object.exception.ObjectDefinitionSettingValueException;
@@ -1220,43 +1218,6 @@ public class ObjectDefinitionLocalServiceImpl
 				"Object definition " + objectDefinition);
 		}
 
-		if (objectDefinition.isRootDescendantNode()) {
-			String errorMessage =
-				"cannot be changed when the object definition is a root " +
-					"descendant node";
-
-			if (!Objects.equals(
-					objectDefinition.getAccountEntryRestrictedObjectFieldId(),
-					accountEntryRestrictedObjectFieldId)) {
-
-				throw new ObjectDefinitionAccountEntryRestrictedObjectFieldIdException(
-					"Account entry restriction object field ID " +
-						errorMessage);
-			}
-			else if (!Objects.equals(
-						objectDefinition.isAccountEntryRestricted(),
-						accountEntryRestricted)) {
-
-				throw new ObjectDefinitionAccountEntryRestrictedException(
-					"Account entry restriction " + errorMessage);
-			}
-			else if (!Objects.equals(
-						objectDefinition.getPanelCategoryKey(),
-						GetterUtil.getString(panelCategoryKey))) {
-
-				throw new ObjectDefinitionPanelCategoryKeyException(
-					"Panel category key " + errorMessage);
-			}
-			else if (!Objects.equals(objectDefinition.isPortlet(), portlet)) {
-				throw new ObjectDefinitionPortletException(
-					"Portlet " + errorMessage);
-			}
-			else if (!Objects.equals(objectDefinition.getScope(), scope)) {
-				throw new ObjectDefinitionScopeException(
-					"Scope " + errorMessage);
-			}
-		}
-
 		return _updateObjectDefinition(
 			externalReferenceCode, objectDefinition,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
@@ -1308,25 +1269,6 @@ public class ObjectDefinitionLocalServiceImpl
 		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
 			objectDefinitionId, objectDefinition.getObjectFolderId(),
 			oldObjectFolderId);
-
-		return objectDefinition;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public ObjectDefinition updatePortlet(long objectDefinitionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		if (objectDefinition.isPortlet() &&
-			objectDefinition.isRootDescendantNode()) {
-
-			objectDefinition.setPortlet(false);
-
-			return objectDefinitionPersistence.update(objectDefinition);
-		}
 
 		return objectDefinition;
 	}
@@ -2441,10 +2383,6 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateFriendlyURLSeparator(objectDefinition);
 
 		objectDefinition.setActive(true);
-
-		if (objectDefinition.isRootDescendantNode()) {
-			objectDefinition.setPanelCategoryKey(StringPool.BLANK);
-		}
 
 		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 

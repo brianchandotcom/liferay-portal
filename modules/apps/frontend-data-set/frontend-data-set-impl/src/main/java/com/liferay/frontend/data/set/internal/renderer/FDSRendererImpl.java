@@ -53,9 +53,28 @@ public class FDSRendererImpl implements FDSRenderer {
 			fdsName, httpServletRequest);
 
 		if (fdsSerializer != null) {
-			return fdsSerializer.serializeAPIURL(
+			String fdsAPIURL = fdsSerializer.serializeAPIURL(
 				fdsName, httpServletRequest, interpolate,
 				tokenResolutionsJSONObject);
+
+			String additionalAPIURLParameters =
+				fdsSerializer.serializeAdditionalAPIURLParameters(
+					fdsName, httpServletRequest, interpolate,
+					tokenResolutionsJSONObject);
+
+			if (fdsAPIURL.contains(StringPool.QUESTION) &&
+				Validator.isNotNull(additionalAPIURLParameters)) {
+
+				return fdsAPIURL + StringPool.AMPERSAND +
+					additionalAPIURLParameters;
+			}
+
+			if (Validator.isNotNull(additionalAPIURLParameters)) {
+				return fdsAPIURL + StringPool.QUESTION +
+					additionalAPIURLParameters;
+			}
+
+			return fdsAPIURL;
 		}
 
 		if (_log.isDebugEnabled()) {

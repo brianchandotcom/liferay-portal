@@ -16,6 +16,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.rule.LazyReferencing;
@@ -2631,6 +2632,39 @@ public class CustomFieldsUtilTest {
 		Assert.assertEquals(
 			exportImportReportEntries.toString(),
 			exportImportReportEntries.size(), 21);
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntries.get(0);
+
+		Assert.assertEquals(0L, exportImportReportEntry.getGroupId());
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(),
+			exportImportReportEntry.getCompanyId());
+		Assert.assertEquals(
+			randomName1,
+			exportImportReportEntry.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			_classNameLocalService.getClassNameId(ExpandoColumn.class),
+			exportImportReportEntry.getClassNameId());
+		Assert.assertEquals(
+			exportImportConfigurationId,
+			exportImportReportEntry.getExportImportConfigurationId());
+		Assert.assertNull(exportImportReportEntry.getError());
+		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
+		Assert.assertEquals(
+			ExpandoColumn.class.getName(),
+			exportImportReportEntry.getModelName());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.ORIGIN_STAGING,
+			exportImportReportEntry.getOrigin());
+		Assert.assertEquals("company", exportImportReportEntry.getScope());
+		Assert.assertEquals("", exportImportReportEntry.getScopeKey());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.TYPE_EMPTY,
+			exportImportReportEntry.getType());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportReportEntry.getStatus());
 	}
 
 	private ExpandoColumn _addExpandoColumn(

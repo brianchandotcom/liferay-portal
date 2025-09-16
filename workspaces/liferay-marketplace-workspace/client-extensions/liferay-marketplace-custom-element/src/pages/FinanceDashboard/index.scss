@@ -12,9 +12,14 @@
 		padding-bottom: 1px !important;
 	}
 
-	.detailed-card-header-clay-icon {
-		background-color: #e7efff;
-		color: #377cff;
+	.detailed-card-header {
+		&-clay-icon {
+			color: #377cff;
+		}
+
+		&-icon-container {
+			background-color: #e7efff !important;
+		}
 	}
 
 	.finance-dashboard-secondary-text {
@@ -22,12 +27,28 @@
 	}
 
 	.order-details-app-icon {
-		height: 36px;
-		width: 36px;
+		height: 32px;
+		width: 32px;
 	}
 
 	.order-item-display {
 		border-bottom: none !important;
 		margin: 0 !important;
+	}
+
+	.publisher-payout-footer {
+		background-color: #f7f7f8;
+
+		td {
+			&:first-child {
+				border-top-left-radius: 8px;
+				border-bottom-left-radius: 8px;
+			}
+
+			&:last-child {
+				border-top-right-radius: 8px;
+				border-bottom-right-radius: 8px;
+			}
+		}
 	}
 }

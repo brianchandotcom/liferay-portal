@@ -6,6 +6,9 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
+import ContentPreview from './ContentPreview';
+import FilePreview from './FilePreview';
+
 const Arrow = ({
 	direction,
 	handleClick,
@@ -41,7 +44,11 @@ export default function Carousel({
 				<Arrow direction="left" handleClick={handleClickPrevious} />
 			)}
 
-			{currentItem.title}
+			{currentItem.embedded?.file ? (
+				<FilePreview file={currentItem.embedded.file} />
+			) : (
+				<ContentPreview />
+			)}
 
 			{showArrows && (
 				<Arrow direction="right" handleClick={handleClickNext} />

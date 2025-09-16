@@ -12,7 +12,7 @@ import {ImagePreviewer} from 'document-library-preview-image';
 import {DLVideoIframe} from 'document-library-video';
 import React from 'react';
 
-type File = {
+export type File = {
 	externalReferenceCode: string;
 	id: number;
 	link: {

@@ -5,14 +5,9 @@
 
 package com.liferay.headless.cms.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -22,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
-
-import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -40,76 +33,46 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkAction")
+@GraphQLName("DefaultPermissionBulkAction")
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "DefaultPermissionBulkAction",
-			value = DefaultPermissionBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "DeleteBulkAction", value = DeleteBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "KeywordBulkAction", value = KeywordBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "MoveBulkAction", value = MoveBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "PermissionBulkAction", value = PermissionBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "StatusBulkAction", value = StatusBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "TaxonomyCategoryBulkAction",
-			value = TaxonomyCategoryBulkAction.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "BulkAction")
-public abstract class BulkAction implements Serializable {
+@XmlRootElement(name = "DefaultPermissionBulkAction")
+public class DefaultPermissionBulkAction
+	extends BulkAction implements Serializable {
 
-	public static BulkAction toDTO(String json) {
-		return ObjectMapperUtil.readValue(BulkAction.class, json);
+	public static DefaultPermissionBulkAction toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			DefaultPermissionBulkAction.class, json);
 	}
 
-	public static BulkAction unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(BulkAction.class, json);
+	public static DefaultPermissionBulkAction unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			DefaultPermissionBulkAction.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public BulkActionItem[] getBulkActionItems() {
-		if (_bulkActionItemsSupplier != null) {
-			bulkActionItems = _bulkActionItemsSupplier.get();
+	public String getDefaultPermissions() {
+		if (_defaultPermissionsSupplier != null) {
+			defaultPermissions = _defaultPermissionsSupplier.get();
 
-			_bulkActionItemsSupplier = null;
+			_defaultPermissionsSupplier = null;
 		}
 
-		return bulkActionItems;
+		return defaultPermissions;
 	}
 
-	public void setBulkActionItems(BulkActionItem[] bulkActionItems) {
-		this.bulkActionItems = bulkActionItems;
+	public void setDefaultPermissions(String defaultPermissions) {
+		this.defaultPermissions = defaultPermissions;
 
-		_bulkActionItemsSupplier = null;
+		_defaultPermissionsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setBulkActionItems(
-		UnsafeSupplier<BulkActionItem[], Exception>
-			bulkActionItemsUnsafeSupplier) {
+	public void setDefaultPermissions(
+		UnsafeSupplier<String, Exception> defaultPermissionsUnsafeSupplier) {
 
-		_bulkActionItemsSupplier = () -> {
+		_defaultPermissionsSupplier = () -> {
 			try {
-				return bulkActionItemsUnsafeSupplier.get();
+				return defaultPermissionsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -122,35 +85,35 @@ public abstract class BulkAction implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected BulkActionItem[] bulkActionItems;
+	protected String defaultPermissions;
 
 	@JsonIgnore
-	private Supplier<BulkActionItem[]> _bulkActionItemsSupplier;
+	private Supplier<String> _defaultPermissionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Boolean getSelectAll() {
-		if (_selectAllSupplier != null) {
-			selectAll = _selectAllSupplier.get();
+	public Long getDepotGroupId() {
+		if (_depotGroupIdSupplier != null) {
+			depotGroupId = _depotGroupIdSupplier.get();
 
-			_selectAllSupplier = null;
+			_depotGroupIdSupplier = null;
 		}
 
-		return selectAll;
+		return depotGroupId;
 	}
 
-	public void setSelectAll(Boolean selectAll) {
-		this.selectAll = selectAll;
+	public void setDepotGroupId(Long depotGroupId) {
+		this.depotGroupId = depotGroupId;
 
-		_selectAllSupplier = null;
+		_depotGroupIdSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSelectAll(
-		UnsafeSupplier<Boolean, Exception> selectAllUnsafeSupplier) {
+	public void setDepotGroupId(
+		UnsafeSupplier<Long, Exception> depotGroupIdUnsafeSupplier) {
 
-		_selectAllSupplier = () -> {
+		_depotGroupIdSupplier = () -> {
 			try {
-				return selectAllUnsafeSupplier.get();
+				return depotGroupIdUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -163,46 +126,35 @@ public abstract class BulkAction implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean selectAll;
+	protected Long depotGroupId;
 
 	@JsonIgnore
-	private Supplier<Boolean> _selectAllSupplier;
+	private Supplier<Long> _depotGroupIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("type")
-	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public String getTreePath() {
+		if (_treePathSupplier != null) {
+			treePath = _treePathSupplier.get();
 
-			_typeSupplier = null;
+			_treePathSupplier = null;
 		}
 
-		return type;
+		return treePath;
+	}
+
+	public void setTreePath(String treePath) {
+		this.treePath = treePath;
+
+		_treePathSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public void setTreePath(
+		UnsafeSupplier<String, Exception> treePathUnsafeSupplier) {
 
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+		_treePathSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return treePathUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -215,10 +167,10 @@ public abstract class BulkAction implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected String treePath;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<String> _treePathSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -226,13 +178,15 @@ public abstract class BulkAction implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof BulkAction)) {
+		if (!(object instanceof DefaultPermissionBulkAction)) {
 			return false;
 		}
 
-		BulkAction bulkAction = (BulkAction)object;
+		DefaultPermissionBulkAction defaultPermissionBulkAction =
+			(DefaultPermissionBulkAction)object;
 
-		return Objects.equals(toString(), bulkAction.toString());
+		return Objects.equals(
+			toString(), defaultPermissionBulkAction.toString());
 	}
 
 	@Override
@@ -246,6 +200,50 @@ public abstract class BulkAction implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String defaultPermissions = getDefaultPermissions();
+
+		if (defaultPermissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultPermissions\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(defaultPermissions));
+
+			sb.append("\"");
+		}
+
+		Long depotGroupId = getDepotGroupId();
+
+		if (depotGroupId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"depotGroupId\": ");
+
+			sb.append(depotGroupId);
+		}
+
+		String treePath = getTreePath();
+
+		if (treePath != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"treePath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(treePath));
+
+			sb.append("\"");
+		}
 
 		BulkActionItem[] bulkActionItems = getBulkActionItems();
 
@@ -304,54 +302,10 @@ public abstract class BulkAction implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.cms.dto.v1_0.BulkAction",
+		defaultValue = "com.liferay.headless.cms.dto.v1_0.DefaultPermissionBulkAction",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		DEFAULT_PERMISSION_BULK_ACTION("DefaultPermissionBulkAction"),
-		DELETE_BULK_ACTION("DeleteBulkAction"),
-		KEYWORD_BULK_ACTION("KeywordBulkAction"),
-		MOVE_BULK_ACTION("MoveBulkAction"),
-		PERMISSION_BULK_ACTION("PermissionBulkAction"),
-		STATUS_BULK_ACTION("StatusBulkAction"),
-		TAXONOMY_CATEGORY_BULK_ACTION("TaxonomyCategoryBulkAction");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

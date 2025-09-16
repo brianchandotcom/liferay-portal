@@ -7,6 +7,7 @@ package com.liferay.headless.cms.client.serdes.v1_0;
 
 import com.liferay.headless.cms.client.dto.v1_0.BulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.BulkActionItem;
+import com.liferay.headless.cms.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.DeleteBulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.KeywordBulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.MoveBulkAction;
@@ -51,6 +52,11 @@ public class BulkActionSerDes {
 
 		if (type != null) {
 			String typeString = type.toString();
+
+			if (typeString.equals("DefaultPermissionBulkAction")) {
+				return DefaultPermissionBulkActionSerDes.toJSON(
+					(DefaultPermissionBulkAction)bulkAction);
+			}
 
 			if (typeString.equals("DeleteBulkAction")) {
 				return DeleteBulkActionSerDes.toJSON(
@@ -163,6 +169,10 @@ public class BulkActionSerDes {
 
 			if (type != null) {
 				String typeString = type.toString();
+
+				if (typeString.equals("DefaultPermissionBulkAction")) {
+					return DefaultPermissionBulkAction.toDTO(json);
+				}
 
 				if (typeString.equals("DeleteBulkAction")) {
 					return DeleteBulkAction.toDTO(json);

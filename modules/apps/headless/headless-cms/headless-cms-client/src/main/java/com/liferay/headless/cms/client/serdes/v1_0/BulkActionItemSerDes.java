@@ -46,6 +46,16 @@ public class BulkActionItemSerDes {
 
 		sb.append("{");
 
+		if (bulkActionItem.getAttributes() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attributes\": ");
+
+			sb.append(_toJSON(bulkActionItem.getAttributes()));
+		}
+
 		if (bulkActionItem.getClassExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -117,6 +127,14 @@ public class BulkActionItemSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (bulkActionItem.getAttributes() == null) {
+			map.put("attributes", null);
+		}
+		else {
+			map.put(
+				"attributes", String.valueOf(bulkActionItem.getAttributes()));
+		}
+
 		if (bulkActionItem.getClassExternalReferenceCode() == null) {
 			map.put("classExternalReferenceCode", null);
 		}
@@ -165,8 +183,11 @@ public class BulkActionItemSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "classExternalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "attributes")) {
+				return true;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "classExternalReferenceCode")) {
 
 				return false;
 			}
@@ -188,8 +209,14 @@ public class BulkActionItemSerDes {
 			BulkActionItem bulkActionItem, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "classExternalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "attributes")) {
+				if (jsonParserFieldValue != null) {
+					bulkActionItem.setAttributes(
+						(Map<String, Object>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "classExternalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
 					bulkActionItem.setClassExternalReferenceCode(

@@ -12,6 +12,7 @@ import jakarta.annotation.Generated;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -24,6 +25,28 @@ public class BulkActionItem implements Cloneable, Serializable {
 	public static BulkActionItem toDTO(String json) {
 		return BulkActionItemSerDes.toDTO(json);
 	}
+
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(Map<String, Object> attributes) {
+		this.attributes = attributes;
+	}
+
+	public void setAttributes(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			attributesUnsafeSupplier) {
+
+		try {
+			attributes = attributesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> attributes;
 
 	public String getClassExternalReferenceCode() {
 		return classExternalReferenceCode;

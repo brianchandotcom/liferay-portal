@@ -18,6 +18,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
+import jakarta.validation.Valid;
+
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -45,6 +47,49 @@ public class BulkActionItem implements Serializable {
 	public static BulkActionItem unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(BulkActionItem.class, json);
 	}
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Map<String, Object> getAttributes() {
+		if (_attributesSupplier != null) {
+			attributes = _attributesSupplier.get();
+
+			_attributesSupplier = null;
+		}
+
+		return attributes;
+	}
+
+	public void setAttributes(Map<String, Object> attributes) {
+		this.attributes = attributes;
+
+		_attributesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAttributes(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			attributesUnsafeSupplier) {
+
+		_attributesSupplier = () -> {
+			try {
+				return attributesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> attributes;
+
+	@JsonIgnore
+	private Supplier<Map<String, Object>> _attributesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public String getClassExternalReferenceCode() {
@@ -238,6 +283,18 @@ public class BulkActionItem implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Map<String, Object> attributes = getAttributes();
+
+		if (attributes != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attributes\": ");
+
+			sb.append(_toJSON(attributes));
+		}
 
 		String classExternalReferenceCode = getClassExternalReferenceCode();
 

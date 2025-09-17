@@ -230,8 +230,8 @@ public class OIDCUserInfoProcessorTest {
 	}
 
 	private void _testProcessUserInfo(
-			String[] expectedUserGroupNames, String[] userGroupNames,
-			String userInfoMapperJSON, String customClaimsJSON)
+			String customClaimsJSON, String[] expectedUserGroupNames,
+			String[] userGroupNames, String userInfoMapperJSON)
 		throws Exception {
 
 		User existingUser = _userLocalService.fetchUserByEmailAddress(
@@ -279,12 +279,12 @@ public class OIDCUserInfoProcessorTest {
 		long userId = ReflectionTestUtil.invoke(
 			_oidcUserInfoProcessor, "processUserInfo",
 			new Class<?>[] {
-				long.class, String.class, ServiceContext.class, String.class,
+				long.class, String.class, String.class, ServiceContext.class,
 				String.class, String.class
 			},
-			TestPropsValues.getCompanyId(), StringUtil.randomString(),
-			_serviceContext, userInfoJSONObject.toString(), userInfoMapperJSON,
-			customClaimsJSON);
+			TestPropsValues.getCompanyId(), customClaimsJSON,
+			StringUtil.randomString(), _serviceContext,
+			userInfoJSONObject.toString(), userInfoMapperJSON);
 
 		User user = _userLocalService.fetchUserByEmailAddress(
 			TestPropsValues.getCompanyId(), _emailAddress);

@@ -121,11 +121,6 @@ public class CustomField {
 		return CustomFieldJSONParser.toJSON(this);
 	}
 
-	protected AttributeType attributeType;
-	protected CustomValue customValue;
-	protected String dataType;
-	protected String name;
-
 	public static enum AttributeType {
 
 		BOOLEAN("BOOLEAN"), BOOLEAN_ARRAY("BOOLEAN_ARRAY"), DATE("DATE"),
@@ -170,6 +165,11 @@ public class CustomField {
 		private final String _value;
 
 	}
+
+	protected AttributeType attributeType;
+	protected CustomValue customValue;
+	protected String dataType;
+	protected String name;
 
 	private static class CustomFieldJSONParser
 		extends BaseJSONParser<CustomField> {

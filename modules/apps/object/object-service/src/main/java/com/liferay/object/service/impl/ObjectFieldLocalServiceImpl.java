@@ -1436,16 +1436,7 @@ public class ObjectFieldLocalServiceImpl
 			businessType, objectDefinition.isApproved(), oldObjectField,
 			required);
 
-		if (Objects.equals(
-				businessType,
-				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) &&
-			objectDefinition.isRootDescendantNode() &&
-			!Objects.equals(oldObjectField.getReadOnly(), readOnly)) {
-
-			throw new ObjectFieldReadOnlyException(
-				"An object field's read only setting is defined by the root " +
-					"object definition and cannot be changed");
-		}
+		_validateReadOnly(oldObjectField, readOnly);
 
 		if (Validator.isNotNull(newObjectField.getRelationshipType())) {
 			if (!Objects.equals(newObjectField.getDBType(), dbType) ||
@@ -1861,6 +1852,26 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldRelationshipTypeException(
 				"Object field cannot be required because the relationship " +
 					"deletion type is disassociate");
+		}
+	}
+
+	private void _validateReadOnly(ObjectField objectField, String readOnly)
+		throws PortalException {
+
+		if (Objects.equals(objectField.getReadOnly(), readOnly) ||
+			!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			return;
+		}
+
+		ObjectRelationship objectRelationship =
+			objectField.getObjectRelationship();
+
+		if (objectRelationship.isEdge()) {
+			throw new ObjectFieldReadOnlyException(
+				"An object field's read only setting is defined by the root " +
+					"object definition and cannot be changed");
 		}
 	}
 

@@ -8,9 +8,6 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-
-// @ts-ignore
-
 import {ImagePreviewer} from 'document-library-preview-image';
 import {DLVideoIframe} from 'document-library-video';
 import React from 'react';

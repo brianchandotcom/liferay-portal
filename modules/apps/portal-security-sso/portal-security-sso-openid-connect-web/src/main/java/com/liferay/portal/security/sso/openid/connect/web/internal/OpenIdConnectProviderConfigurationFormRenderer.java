@@ -8,7 +8,6 @@ package com.liferay.portal.security.sso.openid.connect.web.internal;
 import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.sso.openid.connect.web.internal.constants.OpenIdConnectWebKeys;
@@ -21,8 +20,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -48,27 +48,24 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		int[] customClaimsIndexes = ParamUtil.getIntegerValues(
 			httpServletRequest, "customClaimsIndexes");
 
-		String[] customClaims = new String[customClaimsIndexes.length];
+		List<String> customClaims = new ArrayList<>();
 
-		for (int i = 0; i < customClaimsIndexes.length; i++) {
+		for (int customClaimsIndex : customClaimsIndexes) {
 			String key = ParamUtil.getString(
-				httpServletRequest,
-				"customClaimsKey-" + customClaimsIndexes[i]);
+				httpServletRequest, "customClaimsKey-" + customClaimsIndex);
 
-			if (key.isEmpty() && (i == 0)) {
-				customClaims[i] = StringPool.BLANK;
+			if (key.isEmpty()) {
+				continue;
 			}
-			else if (!key.isEmpty()) {
-				String value = ParamUtil.getString(
-					httpServletRequest,
-					"customClaimsValue-" + customClaimsIndexes[i]);
 
-				customClaims[i] = key + StringPool.EQUAL + value;
-			}
+			String value = ParamUtil.getString(
+				httpServletRequest, "customClaimsValue-" + customClaimsIndex);
+
+			customClaims.add(key + StringPool.EQUAL + value);
 		}
 
-		if (customClaims.length > 1) {
-			customClaims = ArrayUtil.filter(customClaims, Objects::nonNull);
+		if (customClaims.isEmpty()) {
+			customClaims.add(StringPool.BLANK);
 		}
 
 		return HashMapBuilder.<String, Object>put(
@@ -79,7 +76,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 			_getStringValues(
 				httpServletRequest, "customAuthorizationRequestParameters")
 		).put(
-			"customClaims", customClaims
+			"customClaims", customClaims.toArray(String[]::new)
 		).put(
 			"customTokenRequestParameters",
 			_getStringValues(httpServletRequest, "customTokenRequestParameters")

@@ -88,12 +88,12 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		portalWorkspaceGitRepository.setUp();
 
+		_configureComLiferayOSBAsahPrivateWorkspaceGitRepository();
 		_configureLiferayBladeSamplesWorkspaceGitRepository();
 		_configureLiferayFacesAlloyWorkspaceGitRepository();
 		_configureLiferayFacesBridgeImplWorkspaceGitRepository();
 		_configureLiferayFacesPortalWorkspaceGitRepository();
 		_configureLiferayFacesShowcaseWorkspaceGitRepository();
-		_configureOSBAsahWorkspaceGitRepository();
 		_configureOSBFaroWorkspaceGitRepository();
 		_configurePluginsWorkspaceGitRepository();
 		_configurePortalsPlutoWorkspaceGitRepository();
@@ -242,7 +242,7 @@ public class PortalWorkspace extends BaseWorkspace {
 			return;
 		}
 
-		copyOSBAsahRepositoryToModule();
+		copyComLiferayOSBAsahPrivateRepositoryToModule();
 	}
 
 	private void _configureLiferayBladeSamplesWorkspaceGitRepository() {

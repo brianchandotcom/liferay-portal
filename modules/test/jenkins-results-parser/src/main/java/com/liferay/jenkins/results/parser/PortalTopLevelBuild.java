@@ -48,7 +48,7 @@ public class PortalTopLevelBuild
 		}
 
 		WorkspaceGitRepository workspaceGitRepository =
-			portalWorkspace.getOSBAsahWorkspaceGitRepository();
+			portalWorkspace.getComLiferayOSBAsahPrivateWorkspaceGitRepository();
 
 		if (workspaceGitRepository == null) {
 			return null;

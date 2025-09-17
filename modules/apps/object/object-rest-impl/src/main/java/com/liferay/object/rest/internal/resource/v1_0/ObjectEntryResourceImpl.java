@@ -957,7 +957,7 @@ public class ObjectEntryResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -1087,7 +1087,7 @@ public class ObjectEntryResourceImpl
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 

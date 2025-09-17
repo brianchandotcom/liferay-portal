@@ -104,6 +104,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -825,7 +826,7 @@ public class ObjectEntryDisplayContextImpl
 		ObjectDefinition objectDefinition = getObjectDefinition1();
 
 		if ((objectLayoutTab == null) &&
-			(objectDefinition.getRootObjectDefinitionId() == 0)) {
+			ArrayUtil.isEmpty(objectDefinition.getRootObjectDefinitionIds())) {
 
 			return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 		}
@@ -837,7 +838,8 @@ public class ObjectEntryDisplayContextImpl
 		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
 
 		if ((objectLayoutTab == null) &&
-			(objectDefinition.getRootObjectDefinitionId() > 0)) {
+			ArrayUtil.isNotEmpty(
+				objectDefinition.getRootObjectDefinitionIds())) {
 
 			_addDDMFormLayoutRow(
 				ddmFormLayoutPage,
@@ -1089,7 +1091,9 @@ public class ObjectEntryDisplayContextImpl
 				_addDDMFormField(
 					ddmFormFields, objectEntry, objectField, readOnly);
 
-				if (objectDefinition.getRootObjectDefinitionId() == 0) {
+				if (ArrayUtil.isEmpty(
+						objectDefinition.getRootObjectDefinitionIds())) {
+
 					continue;
 				}
 
@@ -1104,7 +1108,9 @@ public class ObjectEntryDisplayContextImpl
 							))));
 			}
 
-			if (objectDefinition.getRootObjectDefinitionId() == 0) {
+			if (ArrayUtil.isEmpty(
+					objectDefinition.getRootObjectDefinitionIds())) {
+
 				ddmForm.setDDMFormFields(ddmFormFields);
 			}
 			else {

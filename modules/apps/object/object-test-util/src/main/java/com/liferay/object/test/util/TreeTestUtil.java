@@ -88,10 +88,22 @@ public class TreeTestUtil {
 
 			ObjectDefinition objectDefinition = entry.getKey();
 
-			Assert.assertArrayEquals(
+			long[] actualRootObjectDefinitionIds = actualMap.get(
+				objectDefinition.getObjectDefinitionId());
+
+			long[] expectedRootObjectDefinitionIds =
 				TransformUtil.transformToLongArray(
-					entry.getValue(), ObjectDefinition::getObjectDefinitionId),
-				actualMap.get(objectDefinition.getObjectDefinitionId()));
+					entry.getValue(), ObjectDefinition::getObjectDefinitionId);
+
+			Assert.assertEquals(
+				Arrays.toString(actualRootObjectDefinitionIds),
+				expectedRootObjectDefinitionIds.length,
+				actualRootObjectDefinitionIds.length);
+
+			Assert.assertTrue(
+				ArrayUtil.containsAll(
+					actualRootObjectDefinitionIds,
+					expectedRootObjectDefinitionIds));
 		}
 	}
 

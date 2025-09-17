@@ -7,9 +7,9 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.item.selector.DepotGroupItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -124,18 +124,18 @@ public class DepotAdminMembershipsDisplayContext {
 	}
 
 	public PortletURL getItemSelectorURL() {
-		DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion =
-			new DepotGroupItemSelectorCriterion();
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
+			new GroupItemSelectorCriterion();
 
-		depotGroupItemSelectorCriterion.setDepotEntryType(
+		groupItemSelectorCriterion.setDepotEntryType(
 			DepotConstants.TYPE_ASSET_LIBRARY);
-		depotGroupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());
-		depotGroupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
+		groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
 
 		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
-			getItemSelectorEventName(), depotGroupItemSelectorCriterion);
+			getItemSelectorEventName(), groupItemSelectorCriterion);
 	}
 
 	public String getLabel() {

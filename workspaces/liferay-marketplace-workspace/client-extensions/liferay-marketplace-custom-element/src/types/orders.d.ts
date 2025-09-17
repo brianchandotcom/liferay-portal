@@ -6,7 +6,7 @@
 type BillingAddress = {
 	city?: string;
 	country?: string;
-	countryISOCode: string;
+	countryISOCode?: string;
 	description?: string;
 	name?: string;
 	phoneNumber?: string;
@@ -14,6 +14,7 @@ type BillingAddress = {
 	saveAddress?: boolean;
 	street1?: string;
 	street2?: string;
+	vatNumber?: string;
 	zip?: string;
 };
 
@@ -25,15 +26,23 @@ type Cart = {
 	currencyCode: string;
 	customFields: any;
 	id: number;
-	orderStatusInfo: {[key: string]: string};
+	orderStatusInfo: {
+		[key: string]: string
+	};
 	orderTypeExternalReferenceCode: string;
 	orderTypeId: number;
-	paymentMethod: string;
-	paymentStatusInfo: {[key: string]: string};
-	paymentStatusLabel: string;
+	paymentMethod?: string;
+	paymentMethodLabel?: string;
+	paymentStatusInfo: {
+		[key: string]: string
+	};
+	paymentStatusLabel?: string;
 	purchaseOrderNumber?: string;
 	shippingAddress: BillingAddress;
 	summary: {
+		subtotalFormatted: string;
+		taxValueFormatted: string;
+		totalFormatted: string;
 		totalFormatted: string;
 	};
 };
@@ -75,7 +84,9 @@ type Order = {
 	createDate?: string;
 	creatorEmailAddress?: string;
 	currencyCode: string;
-	customFields?: {[key: string]: string};
+	customFields?: {
+		[key: string]: string
+	};
 	externalReferenceCode?: string;
 	id: number;
 	marketplaceOrderType?: string;
@@ -123,7 +134,7 @@ type OrderItem = {
 type OrderType = {
 	externalReferenceCode: string;
 	id: number;
-	name: {[key: string]: string};
+	name: { [key: string]: string };
 };
 
 type PaymentMethodSelector = 'order' | 'pay' | 'trial' | 'free';
@@ -139,7 +150,7 @@ type PlacedOrder = {
 	accountId: number;
 	author: string;
 	createDate: string;
-	customFields: {[key: string]: string};
+	customFields: { [key: string]: string };
 	id: number;
 	orderStatusInfo: {
 		code: number;

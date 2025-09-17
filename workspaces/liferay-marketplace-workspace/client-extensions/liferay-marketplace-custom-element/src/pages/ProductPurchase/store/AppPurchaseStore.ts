@@ -28,6 +28,7 @@ export const productPurchaseStore = createStore({
 				regionISOCode: '',
 				street1: '',
 				street2: '',
+				vatNumber: '',
 				zip: '',
 			} as BillingAddress,
 			eulaAgreement: false,

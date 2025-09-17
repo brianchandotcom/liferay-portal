@@ -24,14 +24,14 @@ import TrialLicense from './TrialLicense';
 
 import '../../../../GetApp/styles/index.scss';
 
-const isContinueButtonDisabled = () => {
+const isContinueButtonDisabled = (cartId: number) => {
 	const snapshot = productPurchaseStore.getSnapshot();
 
 	if (snapshot.context.licenseType === null) {
 		return true;
 	}
 
-	if (snapshot.context.licenseType === 'PAID') {
+	if (snapshot.context.licenseType === 'PAID' && cartId) {
 		return false;
 	}
 
@@ -39,7 +39,8 @@ const isContinueButtonDisabled = () => {
 };
 
 const License = () => {
-	const {product, selectedAccount} = useProductPurchaseOutletContext();
+	const {product, productPurchaseCart, selectedAccount} =
+		useProductPurchaseOutletContext();
 
 	const navigate = useNavigate();
 
@@ -79,15 +80,15 @@ const License = () => {
 		}
 	}, [navigate, selectedAccount]);
 
-	const {productPurchaseCart} = useProductPurchaseOutletContext();
-
 	return (
 		<ProductPurchase.Shell
 			className="d-flex flex-column license-selector-timeline"
 			footerProps={{
 				backButtonProps: {onClick: previousStep},
 				continueButtonProps: {
-					disabled: isContinueButtonDisabled(),
+					disabled: isContinueButtonDisabled(
+						productPurchaseCart.cart.id
+					),
 					onClick: () => nextStep(),
 				},
 			}}

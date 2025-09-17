@@ -305,23 +305,27 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"assetLibraryId",
-							"\"" +
-								testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								taxonomyCategory1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										taxonomyCategory1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -351,25 +355,30 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminTaxonomy_v1_0",
-				new GraphQLField(
-					"deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"assetLibraryId",
-								"\"" +
-									testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									taxonomyCategory2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											taxonomyCategory2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -456,21 +465,26 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteTaxonomyCategoryByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + taxonomyCategory1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								taxonomyCategory1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteTaxonomyCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + taxonomyCategory1.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										taxonomyCategory1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteTaxonomyCategoryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -498,23 +512,29 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminTaxonomy_v1_0",
-				new GraphQLField(
-					"deleteSiteTaxonomyCategoryByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + taxonomyCategory2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									taxonomyCategory2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteSiteTaxonomyCategoryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + taxonomyCategory2.getSiteId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											taxonomyCategory2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteSiteTaxonomyCategoryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -582,16 +602,19 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteTaxonomyCategory",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"taxonomyCategoryId",
-							"\"" + taxonomyCategory1.getId() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteTaxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyCategoryId",
+									"\"" + taxonomyCategory1.getId() + "\"");
+							}
+						})),
+				"JSONObject/data", "Object/deleteTaxonomyCategory"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -614,18 +637,23 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminTaxonomy_v1_0",
-				new GraphQLField(
-					"deleteTaxonomyCategory",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"taxonomyCategoryId",
-								"\"" + taxonomyCategory2.getId() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteTaxonomyCategory",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyCategoryId",
+										"\"" + taxonomyCategory2.getId() +
+											"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteTaxonomyCategory"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -753,22 +781,26 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"taxonomyVocabularyId",
-							testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-								taxonomyCategory1));
-						put(
-							"externalReferenceCode",
-							"\"" +
-								taxonomyCategory1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyVocabularyId",
+									testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+										taxonomyCategory1));
+								put(
+									"externalReferenceCode",
+									"\"" +
+										taxonomyCategory1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -797,24 +829,29 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminTaxonomy_v1_0",
-				new GraphQLField(
-					"deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"taxonomyVocabularyId",
-								testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-									taxonomyCategory2));
-							put(
-								"externalReferenceCode",
-								"\"" +
-									taxonomyCategory2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyVocabularyId",
+										testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+											taxonomyCategory2));
+									put(
+										"externalReferenceCode",
+										"\"" +
+											taxonomyCategory2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

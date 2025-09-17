@@ -232,36 +232,44 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		ShippingFixedOptionTerm shippingFixedOptionTerm1 =
 			testGraphQLDeleteShippingFixedOptionTerm_addShippingFixedOptionTerm();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteShippingFixedOptionTerm",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"shippingFixedOptionTermId",
-							shippingFixedOptionTerm1.
-								getShippingFixedOptionTermId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteShippingFixedOptionTerm",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"shippingFixedOptionTermId",
+									shippingFixedOptionTerm1.
+										getShippingFixedOptionTermId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteShippingFixedOptionTerm"));
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
 		ShippingFixedOptionTerm shippingFixedOptionTerm2 =
 			testGraphQLDeleteShippingFixedOptionTerm_addShippingFixedOptionTerm();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminChannel_v1_0",
-				new GraphQLField(
-					"deleteShippingFixedOptionTerm",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"shippingFixedOptionTermId",
-								shippingFixedOptionTerm2.
-									getShippingFixedOptionTermId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deleteShippingFixedOptionTerm",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"shippingFixedOptionTermId",
+										shippingFixedOptionTerm2.
+											getShippingFixedOptionTermId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deleteShippingFixedOptionTerm"));
 	}
 
 	protected ShippingFixedOptionTerm

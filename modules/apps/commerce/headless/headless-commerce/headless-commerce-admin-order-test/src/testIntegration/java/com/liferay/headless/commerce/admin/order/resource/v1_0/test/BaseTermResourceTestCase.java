@@ -256,14 +256,17 @@ public abstract class BaseTermResourceTestCase {
 
 		Term term1 = testGraphQLDeleteTerm_addTerm();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteTerm",
-				new HashMap<String, Object>() {
-					{
-						put("id", term1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteTerm",
+						new HashMap<String, Object>() {
+							{
+								put("id", term1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteTerm"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -283,16 +286,20 @@ public abstract class BaseTermResourceTestCase {
 
 		Term term2 = testGraphQLDeleteTerm_addTerm();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteTerm",
-					new HashMap<String, Object>() {
-						{
-							put("id", term2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteTerm",
+							new HashMap<String, Object>() {
+								{
+									put("id", term2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteTerm"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -408,16 +415,20 @@ public abstract class BaseTermResourceTestCase {
 
 		Term term1 = testGraphQLDeleteTermByExternalReferenceCode_addTerm();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteTermByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + term1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteTermByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + term1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data", "Object/deleteTermByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -439,18 +450,24 @@ public abstract class BaseTermResourceTestCase {
 
 		Term term2 = testGraphQLDeleteTermByExternalReferenceCode_addTerm();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteTermByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + term2.getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteTermByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											term2.getExternalReferenceCode() +
+												"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteTermByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

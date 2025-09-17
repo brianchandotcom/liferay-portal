@@ -243,14 +243,17 @@ public abstract class BaseWishListResourceTestCase {
 
 		WishList wishList1 = testGraphQLDeleteWishList_addWishList();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteWishList",
-				new HashMap<String, Object>() {
-					{
-						put("wishListId", wishList1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWishList",
+						new HashMap<String, Object>() {
+							{
+								put("wishListId", wishList1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWishList"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -270,16 +273,21 @@ public abstract class BaseWishListResourceTestCase {
 
 		WishList wishList2 = testGraphQLDeleteWishList_addWishList();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceDeliveryCatalog_v1_0",
-				new GraphQLField(
-					"deleteWishList",
-					new HashMap<String, Object>() {
-						{
-							put("wishListId", wishList2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceDeliveryCatalog_v1_0",
+						new GraphQLField(
+							"deleteWishList",
+							new HashMap<String, Object>() {
+								{
+									put("wishListId", wishList2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceDeliveryCatalog_v1_0",
+				"Object/deleteWishList"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

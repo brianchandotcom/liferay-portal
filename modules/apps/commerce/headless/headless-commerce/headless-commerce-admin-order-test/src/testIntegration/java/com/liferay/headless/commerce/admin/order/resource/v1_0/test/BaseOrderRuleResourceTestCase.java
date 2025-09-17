@@ -260,14 +260,17 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		OrderRule orderRule1 = testGraphQLDeleteOrderRule_addOrderRule();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOrderRule",
-				new HashMap<String, Object>() {
-					{
-						put("id", orderRule1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderRule",
+						new HashMap<String, Object>() {
+							{
+								put("id", orderRule1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderRule"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -287,16 +290,20 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		OrderRule orderRule2 = testGraphQLDeleteOrderRule_addOrderRule();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteOrderRule",
-					new HashMap<String, Object>() {
-						{
-							put("id", orderRule2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderRule",
+							new HashMap<String, Object>() {
+								{
+									put("id", orderRule2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderRule"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -427,17 +434,22 @@ public abstract class BaseOrderRuleResourceTestCase {
 		OrderRule orderRule1 =
 			testGraphQLDeleteOrderRuleByExternalReferenceCode_addOrderRule();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOrderRuleByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + orderRule1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderRuleByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										orderRule1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteOrderRuleByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -461,19 +473,25 @@ public abstract class BaseOrderRuleResourceTestCase {
 		OrderRule orderRule2 =
 			testGraphQLDeleteOrderRuleByExternalReferenceCode_addOrderRule();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteOrderRuleByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + orderRule2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderRuleByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											orderRule2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderRuleByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

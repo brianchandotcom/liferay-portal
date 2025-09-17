@@ -281,18 +281,22 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		CompanyTestEntity companyTestEntity1 =
 			testGraphQLDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCompanyTestEntityByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" +
-								companyTestEntity1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCompanyTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										companyTestEntity1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteCompanyTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -317,20 +321,25 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		CompanyTestEntity companyTestEntity2 =
 			testGraphQLDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"test_v1_0",
-				new GraphQLField(
-					"deleteCompanyTestEntityByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									companyTestEntity2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"deleteCompanyTestEntityByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											companyTestEntity2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"Object/deleteCompanyTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

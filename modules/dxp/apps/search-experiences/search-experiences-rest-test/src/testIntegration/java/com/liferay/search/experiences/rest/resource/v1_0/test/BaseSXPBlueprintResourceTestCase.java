@@ -273,14 +273,17 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		SXPBlueprint sxpBlueprint1 =
 			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSXPBlueprint",
-				new HashMap<String, Object>() {
-					{
-						put("sxpBlueprintId", sxpBlueprint1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSXPBlueprint",
+						new HashMap<String, Object>() {
+							{
+								put("sxpBlueprintId", sxpBlueprint1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSXPBlueprint"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -301,16 +304,22 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		SXPBlueprint sxpBlueprint2 =
 			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"searchExperiences_v1_0",
-				new GraphQLField(
-					"deleteSXPBlueprint",
-					new HashMap<String, Object>() {
-						{
-							put("sxpBlueprintId", sxpBlueprint2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"searchExperiences_v1_0",
+						new GraphQLField(
+							"deleteSXPBlueprint",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"sxpBlueprintId",
+										sxpBlueprint2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+				"Object/deleteSXPBlueprint"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

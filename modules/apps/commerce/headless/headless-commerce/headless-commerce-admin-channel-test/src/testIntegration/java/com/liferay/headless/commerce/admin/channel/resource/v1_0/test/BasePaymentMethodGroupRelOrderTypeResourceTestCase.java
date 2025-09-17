@@ -240,36 +240,45 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType1 =
 			testGraphQLDeletePaymentMethodGroupRelOrderType_addPaymentMethodGroupRelOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePaymentMethodGroupRelOrderType",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"paymentMethodGroupRelOrderTypeId",
-							paymentMethodGroupRelOrderType1.
-								getPaymentMethodGroupRelOrderTypeId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePaymentMethodGroupRelOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"paymentMethodGroupRelOrderTypeId",
+									paymentMethodGroupRelOrderType1.
+										getPaymentMethodGroupRelOrderTypeId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deletePaymentMethodGroupRelOrderType"));
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
 		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType2 =
 			testGraphQLDeletePaymentMethodGroupRelOrderType_addPaymentMethodGroupRelOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminChannel_v1_0",
-				new GraphQLField(
-					"deletePaymentMethodGroupRelOrderType",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"paymentMethodGroupRelOrderTypeId",
-								paymentMethodGroupRelOrderType2.
-									getPaymentMethodGroupRelOrderTypeId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deletePaymentMethodGroupRelOrderType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"paymentMethodGroupRelOrderTypeId",
+										paymentMethodGroupRelOrderType2.
+											getPaymentMethodGroupRelOrderTypeId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deletePaymentMethodGroupRelOrderType"));
 	}
 
 	protected PaymentMethodGroupRelOrderType

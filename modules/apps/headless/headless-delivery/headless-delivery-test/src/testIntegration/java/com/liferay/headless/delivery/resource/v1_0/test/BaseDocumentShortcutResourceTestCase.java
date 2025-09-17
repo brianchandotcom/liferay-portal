@@ -288,14 +288,19 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		DocumentShortcut documentShortcut1 =
 			testGraphQLDeleteDocumentShortcut_addDocumentShortcut();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDocumentShortcut",
-				new HashMap<String, Object>() {
-					{
-						put("documentShortcutId", documentShortcut1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocumentShortcut",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"documentShortcutId",
+									documentShortcut1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocumentShortcut"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -318,18 +323,22 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		DocumentShortcut documentShortcut2 =
 			testGraphQLDeleteDocumentShortcut_addDocumentShortcut();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteDocumentShortcut",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"documentShortcutId",
-								documentShortcut2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocumentShortcut",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"documentShortcutId",
+										documentShortcut2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocumentShortcut"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -444,21 +453,26 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		DocumentShortcut documentShortcut1 =
 			testGraphQLDeleteSiteDocumentShortcutByExternalReferenceCode_addDocumentShortcut();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteDocumentShortcutByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + documentShortcut1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								documentShortcut1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteDocumentShortcutByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + documentShortcut1.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										documentShortcut1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteDocumentShortcutByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -486,23 +500,29 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		DocumentShortcut documentShortcut2 =
 			testGraphQLDeleteSiteDocumentShortcutByExternalReferenceCode_addDocumentShortcut();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteDocumentShortcutByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + documentShortcut2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									documentShortcut2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteDocumentShortcutByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + documentShortcut2.getSiteId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											documentShortcut2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteDocumentShortcutByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

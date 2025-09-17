@@ -225,34 +225,43 @@ public abstract class BaseWarehouseAccountResourceTestCase {
 		WarehouseAccount warehouseAccount1 =
 			testGraphQLDeleteWarehouseAccount_addWarehouseAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteWarehouseAccount",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"warehouseAccountId",
-							warehouseAccount1.getWarehouseAccountId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWarehouseAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"warehouseAccountId",
+									warehouseAccount1.getWarehouseAccountId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWarehouseAccount"));
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
 		WarehouseAccount warehouseAccount2 =
 			testGraphQLDeleteWarehouseAccount_addWarehouseAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminInventory_v1_0",
-				new GraphQLField(
-					"deleteWarehouseAccount",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"warehouseAccountId",
-								warehouseAccount2.getWarehouseAccountId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminInventory_v1_0",
+						new GraphQLField(
+							"deleteWarehouseAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"warehouseAccountId",
+										warehouseAccount2.
+											getWarehouseAccountId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminInventory_v1_0",
+				"Object/deleteWarehouseAccount"));
 	}
 
 	protected WarehouseAccount

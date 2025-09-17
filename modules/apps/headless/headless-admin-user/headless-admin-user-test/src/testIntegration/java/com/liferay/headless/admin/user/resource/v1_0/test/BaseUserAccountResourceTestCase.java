@@ -311,22 +311,27 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"accountExternalReferenceCode",
-							"\"" +
-								testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" + userAccount1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountExternalReferenceCode",
+									"\"" +
+										testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										userAccount1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -355,24 +360,30 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"accountExternalReferenceCode",
-								"\"" +
-									testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" + userAccount2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"accountExternalReferenceCode",
+										"\"" +
+											testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											userAccount2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -458,17 +469,20 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccount_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAccountUserAccount",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"accountId",
-							testGraphQLDeleteAccountUserAccount_getAccountId());
-						put("userAccountId", userAccount1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountId",
+									testGraphQLDeleteAccountUserAccount_getAccountId());
+								put("userAccountId", userAccount1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAccountUserAccount"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -492,19 +506,23 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccount_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteAccountUserAccount",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"accountId",
-								testGraphQLDeleteAccountUserAccount_getAccountId());
-							put("userAccountId", userAccount2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteAccountUserAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"accountId",
+										testGraphQLDeleteAccountUserAccount_getAccountId());
+									put("userAccountId", userAccount2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteAccountUserAccount"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -576,40 +594,50 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccountByEmailAddress_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAccountUserAccountByEmailAddress",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"accountId",
-							testGraphQLDeleteAccountUserAccountByEmailAddress_getAccountId());
-						put(
-							"emailAddress",
-							"\"" + userAccount1.getEmailAddress() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountUserAccountByEmailAddress",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountId",
+									testGraphQLDeleteAccountUserAccountByEmailAddress_getAccountId());
+								put(
+									"emailAddress",
+									"\"" + userAccount1.getEmailAddress() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAccountUserAccountByEmailAddress"));
 
 		// Using the namespace headlessAdminUser_v1_0
 
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccountByEmailAddress_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteAccountUserAccountByEmailAddress",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"accountId",
-								testGraphQLDeleteAccountUserAccountByEmailAddress_getAccountId());
-							put(
-								"emailAddress",
-								"\"" + userAccount2.getEmailAddress() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteAccountUserAccountByEmailAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"accountId",
+										testGraphQLDeleteAccountUserAccountByEmailAddress_getAccountId());
+									put(
+										"emailAddress",
+										"\"" + userAccount2.getEmailAddress() +
+											"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteAccountUserAccountByEmailAddress"));
 	}
 
 	protected Long
@@ -670,44 +698,54 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAccountUserAccountByExternalReferenceCodeByEmailAddress",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" +
-								testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-									userAccount1) + "\"");
-						put(
-							"emailAddress",
-							"\"" + userAccount1.getEmailAddress() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountUserAccountByExternalReferenceCodeByEmailAddress",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+											userAccount1) + "\"");
+								put(
+									"emailAddress",
+									"\"" + userAccount1.getEmailAddress() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAccountUserAccountByExternalReferenceCodeByEmailAddress"));
 
 		// Using the namespace headlessAdminUser_v1_0
 
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteAccountUserAccountByExternalReferenceCodeByEmailAddress",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-										userAccount2) + "\"");
-							put(
-								"emailAddress",
-								"\"" + userAccount2.getEmailAddress() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteAccountUserAccountByExternalReferenceCodeByEmailAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+												userAccount2) + "\"");
+									put(
+										"emailAddress",
+										"\"" + userAccount2.getEmailAddress() +
+											"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteAccountUserAccountByExternalReferenceCodeByEmailAddress"));
 	}
 
 	protected String
@@ -763,34 +801,42 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccountsByEmailAddress_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAccountUserAccountsByEmailAddress",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"accountId",
-							testGraphQLDeleteAccountUserAccountsByEmailAddress_getAccountId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountUserAccountsByEmailAddress",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountId",
+									testGraphQLDeleteAccountUserAccountsByEmailAddress_getAccountId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAccountUserAccountsByEmailAddress"));
 
 		// Using the namespace headlessAdminUser_v1_0
 
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccountsByEmailAddress_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteAccountUserAccountsByEmailAddress",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"accountId",
-								testGraphQLDeleteAccountUserAccountsByEmailAddress_getAccountId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteAccountUserAccountsByEmailAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"accountId",
+										testGraphQLDeleteAccountUserAccountsByEmailAddress_getAccountId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteAccountUserAccountsByEmailAddress"));
 	}
 
 	protected Long
@@ -851,38 +897,46 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" +
-								testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-									userAccount1) + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+											userAccount1) + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress"));
 
 		// Using the namespace headlessAdminUser_v1_0
 
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-										userAccount2) + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+												userAccount2) + "\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress"));
 	}
 
 	protected String
@@ -934,14 +988,17 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteUserAccount_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteUserAccount",
-				new HashMap<String, Object>() {
-					{
-						put("userAccountId", userAccount1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put("userAccountId", userAccount1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteUserAccount"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -962,16 +1019,20 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount2 =
 			testGraphQLDeleteUserAccount_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteUserAccount",
-					new HashMap<String, Object>() {
-						{
-							put("userAccountId", userAccount2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteUserAccount",
+							new HashMap<String, Object>() {
+								{
+									put("userAccountId", userAccount2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteUserAccount"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -1111,17 +1172,22 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteUserAccountByExternalReferenceCode_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteUserAccountByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + userAccount1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserAccountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										userAccount1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteUserAccountByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -1145,19 +1211,25 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount2 =
 			testGraphQLDeleteUserAccountByExternalReferenceCode_addUserAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteUserAccountByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + userAccount2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteUserAccountByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											userAccount2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteUserAccountByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

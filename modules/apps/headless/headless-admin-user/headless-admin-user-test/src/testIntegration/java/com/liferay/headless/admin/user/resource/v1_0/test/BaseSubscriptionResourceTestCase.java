@@ -217,14 +217,17 @@ public abstract class BaseSubscriptionResourceTestCase {
 		Subscription subscription1 =
 			testGraphQLDeleteMyUserAccountSubscription_addSubscription();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteMyUserAccountSubscription",
-				new HashMap<String, Object>() {
-					{
-						put("subscriptionId", subscription1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMyUserAccountSubscription",
+						new HashMap<String, Object>() {
+							{
+								put("subscriptionId", subscription1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteMyUserAccountSubscription"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -245,16 +248,22 @@ public abstract class BaseSubscriptionResourceTestCase {
 		Subscription subscription2 =
 			testGraphQLDeleteMyUserAccountSubscription_addSubscription();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteMyUserAccountSubscription",
-					new HashMap<String, Object>() {
-						{
-							put("subscriptionId", subscription2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteMyUserAccountSubscription",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"subscriptionId",
+										subscription2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteMyUserAccountSubscription"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

@@ -249,36 +249,45 @@ public abstract class BaseProductConfigurationListOrderTypeResourceTestCase {
 		ProductConfigurationListOrderType productConfigurationListOrderType1 =
 			testGraphQLDeleteProductConfigurationListOrderType_addProductConfigurationListOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductConfigurationListOrderType",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"productConfigurationListOrderTypeId",
-							productConfigurationListOrderType1.
-								getProductConfigurationListOrderTypeId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductConfigurationListOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"productConfigurationListOrderTypeId",
+									productConfigurationListOrderType1.
+										getProductConfigurationListOrderTypeId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteProductConfigurationListOrderType"));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		ProductConfigurationListOrderType productConfigurationListOrderType2 =
 			testGraphQLDeleteProductConfigurationListOrderType_addProductConfigurationListOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductConfigurationListOrderType",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"productConfigurationListOrderTypeId",
-								productConfigurationListOrderType2.
-									getProductConfigurationListOrderTypeId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductConfigurationListOrderType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"productConfigurationListOrderTypeId",
+										productConfigurationListOrderType2.
+											getProductConfigurationListOrderTypeId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductConfigurationListOrderType"));
 	}
 
 	protected ProductConfigurationListOrderType

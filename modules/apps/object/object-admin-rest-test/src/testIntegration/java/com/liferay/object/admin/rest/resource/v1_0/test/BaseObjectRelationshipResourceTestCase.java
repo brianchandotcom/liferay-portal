@@ -280,16 +280,19 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		ObjectRelationship objectRelationship1 =
 			testGraphQLDeleteObjectRelationship_addObjectRelationship();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteObjectRelationship",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"objectRelationshipId",
-							objectRelationship1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectRelationship",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectRelationshipId",
+									objectRelationship1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectRelationship"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -312,18 +315,22 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		ObjectRelationship objectRelationship2 =
 			testGraphQLDeleteObjectRelationship_addObjectRelationship();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"objectAdmin_v1_0",
-				new GraphQLField(
-					"deleteObjectRelationship",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"objectRelationshipId",
-								objectRelationship2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"deleteObjectRelationship",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectRelationshipId",
+										objectRelationship2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+				"Object/deleteObjectRelationship"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

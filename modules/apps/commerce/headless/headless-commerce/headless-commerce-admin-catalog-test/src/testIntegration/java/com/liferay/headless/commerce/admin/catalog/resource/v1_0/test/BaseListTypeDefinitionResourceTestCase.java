@@ -223,40 +223,49 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		ListTypeDefinition listTypeDefinition1 =
 			testGraphQLDeleteSpecificationListTypeDefinition_addListTypeDefinition();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSpecificationListTypeDefinition",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"specificationId",
-							testGraphQLDeleteSpecificationListTypeDefinition_getSpecificationId());
-						put(
-							"listTypeDefinitionId",
-							listTypeDefinition1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSpecificationListTypeDefinition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"specificationId",
+									testGraphQLDeleteSpecificationListTypeDefinition_getSpecificationId());
+								put(
+									"listTypeDefinitionId",
+									listTypeDefinition1.getId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSpecificationListTypeDefinition"));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		ListTypeDefinition listTypeDefinition2 =
 			testGraphQLDeleteSpecificationListTypeDefinition_addListTypeDefinition();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteSpecificationListTypeDefinition",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"specificationId",
-								testGraphQLDeleteSpecificationListTypeDefinition_getSpecificationId());
-							put(
-								"listTypeDefinitionId",
-								listTypeDefinition2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteSpecificationListTypeDefinition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"specificationId",
+										testGraphQLDeleteSpecificationListTypeDefinition_getSpecificationId());
+									put(
+										"listTypeDefinitionId",
+										listTypeDefinition2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteSpecificationListTypeDefinition"));
 	}
 
 	protected Long

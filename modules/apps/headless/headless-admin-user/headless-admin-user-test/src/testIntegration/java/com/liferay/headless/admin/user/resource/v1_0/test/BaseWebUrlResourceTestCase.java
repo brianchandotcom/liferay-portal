@@ -245,14 +245,17 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		WebUrl webUrl1 = testGraphQLDeleteWebUrl_addWebUrl();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteWebUrl",
-				new HashMap<String, Object>() {
-					{
-						put("webUrlId", webUrl1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWebUrl",
+						new HashMap<String, Object>() {
+							{
+								put("webUrlId", webUrl1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWebUrl"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -272,16 +275,20 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		WebUrl webUrl2 = testGraphQLDeleteWebUrl_addWebUrl();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteWebUrl",
-					new HashMap<String, Object>() {
-						{
-							put("webUrlId", webUrl2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteWebUrl",
+							new HashMap<String, Object>() {
+								{
+									put("webUrlId", webUrl2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteWebUrl"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -399,16 +406,21 @@ public abstract class BaseWebUrlResourceTestCase {
 		WebUrl webUrl1 =
 			testGraphQLDeleteWebUrlByExternalReferenceCode_addWebUrl();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteWebUrlByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + webUrl1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWebUrlByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + webUrl1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteWebUrlByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -432,19 +444,24 @@ public abstract class BaseWebUrlResourceTestCase {
 		WebUrl webUrl2 =
 			testGraphQLDeleteWebUrlByExternalReferenceCode_addWebUrl();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteWebUrlByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + webUrl2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteWebUrlByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											webUrl2.getExternalReferenceCode() +
+												"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteWebUrlByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

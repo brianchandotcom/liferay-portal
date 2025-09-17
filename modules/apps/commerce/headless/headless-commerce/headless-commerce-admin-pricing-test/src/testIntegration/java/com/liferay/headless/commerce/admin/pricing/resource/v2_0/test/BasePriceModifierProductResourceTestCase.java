@@ -231,35 +231,44 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		PriceModifierProduct priceModifierProduct1 =
 			testGraphQLDeletePriceModifierProduct_addPriceModifierProduct();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePriceModifierProduct",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"priceModifierProductId",
-							priceModifierProduct1.getPriceModifierProductId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePriceModifierProduct",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"priceModifierProductId",
+									priceModifierProduct1.
+										getPriceModifierProductId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePriceModifierProduct"));
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
 		PriceModifierProduct priceModifierProduct2 =
 			testGraphQLDeletePriceModifierProduct_addPriceModifierProduct();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminPricing_v2_0",
-				new GraphQLField(
-					"deletePriceModifierProduct",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"priceModifierProductId",
-								priceModifierProduct2.
-									getPriceModifierProductId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deletePriceModifierProduct",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"priceModifierProductId",
+										priceModifierProduct2.
+											getPriceModifierProductId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deletePriceModifierProduct"));
 	}
 
 	protected PriceModifierProduct

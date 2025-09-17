@@ -252,14 +252,17 @@ public abstract class BaseCountryResourceTestCase {
 
 		Country country1 = testGraphQLDeleteCountry_addCountry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCountry",
-				new HashMap<String, Object>() {
-					{
-						put("countryId", country1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCountry",
+						new HashMap<String, Object>() {
+							{
+								put("countryId", country1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCountry"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -279,16 +282,20 @@ public abstract class BaseCountryResourceTestCase {
 
 		Country country2 = testGraphQLDeleteCountry_addCountry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminAddress_v1_0",
-				new GraphQLField(
-					"deleteCountry",
-					new HashMap<String, Object>() {
-						{
-							put("countryId", country2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminAddress_v1_0",
+						new GraphQLField(
+							"deleteCountry",
+							new HashMap<String, Object>() {
+								{
+									put("countryId", country2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminAddress_v1_0",
+				"Object/deleteCountry"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

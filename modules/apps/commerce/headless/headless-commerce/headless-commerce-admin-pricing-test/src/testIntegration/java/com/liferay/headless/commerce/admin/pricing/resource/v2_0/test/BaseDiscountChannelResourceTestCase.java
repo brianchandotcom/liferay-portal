@@ -225,34 +225,43 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		DiscountChannel discountChannel1 =
 			testGraphQLDeleteDiscountChannel_addDiscountChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDiscountChannel",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"discountChannelId",
-							discountChannel1.getDiscountChannelId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscountChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"discountChannelId",
+									discountChannel1.getDiscountChannelId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscountChannel"));
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
 		DiscountChannel discountChannel2 =
 			testGraphQLDeleteDiscountChannel_addDiscountChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminPricing_v2_0",
-				new GraphQLField(
-					"deleteDiscountChannel",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"discountChannelId",
-								discountChannel2.getDiscountChannelId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deleteDiscountChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"discountChannelId",
+										discountChannel2.
+											getDiscountChannelId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deleteDiscountChannel"));
 	}
 
 	protected DiscountChannel

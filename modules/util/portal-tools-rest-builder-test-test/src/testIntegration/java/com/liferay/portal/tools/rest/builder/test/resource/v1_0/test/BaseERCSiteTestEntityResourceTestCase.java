@@ -256,23 +256,27 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		ERCSiteTestEntity ercSiteTestEntity1 =
 			testGraphQLDeleteSiteERCSiteTestEntity_addERCSiteTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteERCSiteTestEntity",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteExternalReferenceCode",
-							"\"" +
-								ercSiteTestEntity1.
-									getSiteExternalReferenceCode() + "\"");
-						put(
-							"ercSiteTestEntityExternalReferenceCode",
-							"\"" +
-								ercSiteTestEntity1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteERCSiteTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteExternalReferenceCode",
+									"\"" +
+										ercSiteTestEntity1.
+											getSiteExternalReferenceCode() +
+												"\"");
+								put(
+									"ercSiteTestEntityExternalReferenceCode",
+									"\"" +
+										ercSiteTestEntity1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data", "Object/deleteSiteERCSiteTestEntity"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -302,25 +306,31 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		ERCSiteTestEntity ercSiteTestEntity2 =
 			testGraphQLDeleteSiteERCSiteTestEntity_addERCSiteTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"test_v1_0",
-				new GraphQLField(
-					"deleteSiteERCSiteTestEntity",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteExternalReferenceCode",
-								"\"" +
-									ercSiteTestEntity2.
-										getSiteExternalReferenceCode() + "\"");
-							put(
-								"ercSiteTestEntityExternalReferenceCode",
-								"\"" +
-									ercSiteTestEntity2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"deleteSiteERCSiteTestEntity",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteExternalReferenceCode",
+										"\"" +
+											ercSiteTestEntity2.
+												getSiteExternalReferenceCode() +
+													"\"");
+									put(
+										"ercSiteTestEntityExternalReferenceCode",
+										"\"" +
+											ercSiteTestEntity2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"Object/deleteSiteERCSiteTestEntity"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

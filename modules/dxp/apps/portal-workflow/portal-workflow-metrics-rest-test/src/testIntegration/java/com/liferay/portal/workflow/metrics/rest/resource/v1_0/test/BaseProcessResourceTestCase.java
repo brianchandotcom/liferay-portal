@@ -251,14 +251,17 @@ public abstract class BaseProcessResourceTestCase {
 
 		Process process1 = testGraphQLDeleteProcess_addProcess();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProcess",
-				new HashMap<String, Object>() {
-					{
-						put("processId", process1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProcess",
+						new HashMap<String, Object>() {
+							{
+								put("processId", process1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProcess"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -278,16 +281,20 @@ public abstract class BaseProcessResourceTestCase {
 
 		Process process2 = testGraphQLDeleteProcess_addProcess();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"portalWorkflowMetrics_v1_0",
-				new GraphQLField(
-					"deleteProcess",
-					new HashMap<String, Object>() {
-						{
-							put("processId", process2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"portalWorkflowMetrics_v1_0",
+						new GraphQLField(
+							"deleteProcess",
+							new HashMap<String, Object>() {
+								{
+									put("processId", process2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/portalWorkflowMetrics_v1_0",
+				"Object/deleteProcess"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

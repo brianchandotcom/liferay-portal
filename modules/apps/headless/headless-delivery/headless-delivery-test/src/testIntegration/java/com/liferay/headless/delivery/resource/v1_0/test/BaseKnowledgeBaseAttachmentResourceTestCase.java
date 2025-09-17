@@ -279,16 +279,19 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		KnowledgeBaseAttachment knowledgeBaseAttachment1 =
 			testGraphQLDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteKnowledgeBaseAttachment",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"knowledgeBaseAttachmentId",
-							knowledgeBaseAttachment1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteKnowledgeBaseAttachment",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"knowledgeBaseAttachmentId",
+									knowledgeBaseAttachment1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteKnowledgeBaseAttachment"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -311,18 +314,22 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		KnowledgeBaseAttachment knowledgeBaseAttachment2 =
 			testGraphQLDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteKnowledgeBaseAttachment",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"knowledgeBaseAttachmentId",
-								knowledgeBaseAttachment2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteKnowledgeBaseAttachment",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"knowledgeBaseAttachmentId",
+										knowledgeBaseAttachment2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteKnowledgeBaseAttachment"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -459,29 +466,33 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		KnowledgeBaseAttachment knowledgeBaseAttachment1 =
 			testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" +
-								testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId() +
-									"\"");
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" +
+										testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId() +
+											"\"");
 
-						put(
-							"knowledgeBaseArticleExternalReferenceCode",
-							"\"" +
-								testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								knowledgeBaseAttachment1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+								put(
+									"knowledgeBaseArticleExternalReferenceCode",
+									"\"" +
+										testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										knowledgeBaseAttachment1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -517,31 +528,36 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		KnowledgeBaseAttachment knowledgeBaseAttachment2 =
 			testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" +
-									testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId() +
-										"\"");
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" +
+											testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId() +
+												"\"");
 
-							put(
-								"knowledgeBaseArticleExternalReferenceCode",
-								"\"" +
-									testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									knowledgeBaseAttachment2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+									put(
+										"knowledgeBaseArticleExternalReferenceCode",
+										"\"" +
+											testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											knowledgeBaseAttachment2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

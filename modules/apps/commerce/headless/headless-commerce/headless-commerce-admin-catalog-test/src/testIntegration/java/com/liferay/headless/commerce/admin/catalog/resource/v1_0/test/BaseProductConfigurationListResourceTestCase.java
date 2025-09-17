@@ -278,14 +278,17 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		ProductConfigurationList productConfigurationList1 =
 			testGraphQLDeleteProductConfigurationList_addProductConfigurationList();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductConfigurationList",
-				new HashMap<String, Object>() {
-					{
-						put("id", productConfigurationList1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductConfigurationList",
+						new HashMap<String, Object>() {
+							{
+								put("id", productConfigurationList1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProductConfigurationList"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -306,16 +309,23 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		ProductConfigurationList productConfigurationList2 =
 			testGraphQLDeleteProductConfigurationList_addProductConfigurationList();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductConfigurationList",
-					new HashMap<String, Object>() {
-						{
-							put("id", productConfigurationList2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductConfigurationList",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"id",
+										productConfigurationList2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductConfigurationList"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -471,18 +481,22 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		ProductConfigurationList productConfigurationList1 =
 			testGraphQLDeleteProductConfigurationListByExternalReferenceCode_addProductConfigurationList();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductConfigurationListByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" +
-								productConfigurationList1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductConfigurationListByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										productConfigurationList1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteProductConfigurationListByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -507,20 +521,26 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		ProductConfigurationList productConfigurationList2 =
 			testGraphQLDeleteProductConfigurationListByExternalReferenceCode_addProductConfigurationList();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductConfigurationListByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									productConfigurationList2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductConfigurationListByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											productConfigurationList2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductConfigurationListByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

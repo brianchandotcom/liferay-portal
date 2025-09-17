@@ -256,14 +256,17 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup1 =
 			testGraphQLDeleteProductGroup_addProductGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductGroup",
-				new HashMap<String, Object>() {
-					{
-						put("id", productGroup1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", productGroup1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProductGroup"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -284,16 +287,21 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup2 =
 			testGraphQLDeleteProductGroup_addProductGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductGroup",
-					new HashMap<String, Object>() {
-						{
-							put("id", productGroup2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductGroup",
+							new HashMap<String, Object>() {
+								{
+									put("id", productGroup2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductGroup"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -437,17 +445,22 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup1 =
 			testGraphQLDeleteProductGroupByExternalReferenceCode_addProductGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductGroupByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + productGroup1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductGroupByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										productGroup1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteProductGroupByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -472,20 +485,26 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup2 =
 			testGraphQLDeleteProductGroupByExternalReferenceCode_addProductGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductGroupByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									productGroup2.getExternalReferenceCode() +
-										"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductGroupByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											productGroup2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductGroupByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

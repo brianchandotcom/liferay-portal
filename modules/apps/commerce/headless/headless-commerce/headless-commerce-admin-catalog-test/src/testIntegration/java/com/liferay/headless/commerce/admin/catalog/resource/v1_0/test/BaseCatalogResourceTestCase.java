@@ -257,14 +257,17 @@ public abstract class BaseCatalogResourceTestCase {
 
 		Catalog catalog1 = testGraphQLDeleteCatalog_addCatalog();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCatalog",
-				new HashMap<String, Object>() {
-					{
-						put("id", catalog1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCatalog",
+						new HashMap<String, Object>() {
+							{
+								put("id", catalog1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCatalog"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -284,16 +287,21 @@ public abstract class BaseCatalogResourceTestCase {
 
 		Catalog catalog2 = testGraphQLDeleteCatalog_addCatalog();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteCatalog",
-					new HashMap<String, Object>() {
-						{
-							put("id", catalog2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteCatalog",
+							new HashMap<String, Object>() {
+								{
+									put("id", catalog2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteCatalog"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -411,16 +419,21 @@ public abstract class BaseCatalogResourceTestCase {
 		Catalog catalog1 =
 			testGraphQLDeleteCatalogByExternalReferenceCode_addCatalog();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCatalogByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + catalog1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCatalogByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + catalog1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteCatalogByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -444,19 +457,26 @@ public abstract class BaseCatalogResourceTestCase {
 		Catalog catalog2 =
 			testGraphQLDeleteCatalogByExternalReferenceCode_addCatalog();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteCatalogByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + catalog2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteCatalogByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											catalog2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteCatalogByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

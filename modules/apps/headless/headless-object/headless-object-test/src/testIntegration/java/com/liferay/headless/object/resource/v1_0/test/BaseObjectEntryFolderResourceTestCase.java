@@ -288,14 +288,19 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		ObjectEntryFolder objectEntryFolder1 =
 			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteObjectEntryFolder",
-				new HashMap<String, Object>() {
-					{
-						put("objectEntryFolderId", objectEntryFolder1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectEntryFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectEntryFolderId",
+									objectEntryFolder1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectEntryFolder"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -318,18 +323,22 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		ObjectEntryFolder objectEntryFolder2 =
 			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessObject_v1_0",
-				new GraphQLField(
-					"deleteObjectEntryFolder",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"objectEntryFolderId",
-								objectEntryFolder2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessObject_v1_0",
+						new GraphQLField(
+							"deleteObjectEntryFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectEntryFolderId",
+										objectEntryFolder2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessObject_v1_0",
+				"Object/deleteObjectEntryFolder"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -457,23 +466,27 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		ObjectEntryFolder objectEntryFolder1 =
 			testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"scopeKey",
-							"\"" +
-								testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-									objectEntryFolder1) + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								objectEntryFolder1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"scopeKey",
+									"\"" +
+										testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+											objectEntryFolder1) + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										objectEntryFolder1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -503,25 +516,30 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		ObjectEntryFolder objectEntryFolder2 =
 			testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessObject_v1_0",
-				new GraphQLField(
-					"deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"scopeKey",
-								"\"" +
-									testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-										objectEntryFolder2) + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									objectEntryFolder2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessObject_v1_0",
+						new GraphQLField(
+							"deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"scopeKey",
+										"\"" +
+											testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+												objectEntryFolder2) + "\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											objectEntryFolder2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessObject_v1_0",
+				"Object/deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

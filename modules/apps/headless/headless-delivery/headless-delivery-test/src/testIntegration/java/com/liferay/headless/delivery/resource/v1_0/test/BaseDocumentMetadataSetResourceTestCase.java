@@ -311,23 +311,27 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet documentMetadataSet1 =
 			testGraphQLDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"assetLibraryId",
-							"\"" +
-								testGraphQLDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_getAssetLibraryId() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								documentMetadataSet1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										documentMetadataSet1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -357,25 +361,30 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet documentMetadataSet2 =
 			testGraphQLDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"assetLibraryId",
-								"\"" +
-									testGraphQLDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_getAssetLibraryId() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									documentMetadataSet2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											documentMetadataSet2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -453,16 +462,19 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet documentMetadataSet1 =
 			testGraphQLDeleteDocumentMetadataSet_addDocumentMetadataSet();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDocumentMetadataSet",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"documentMetadataSetId",
-							documentMetadataSet1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocumentMetadataSet",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"documentMetadataSetId",
+									documentMetadataSet1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocumentMetadataSet"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -485,18 +497,22 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet documentMetadataSet2 =
 			testGraphQLDeleteDocumentMetadataSet_addDocumentMetadataSet();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteDocumentMetadataSet",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"documentMetadataSetId",
-								documentMetadataSet2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocumentMetadataSet",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"documentMetadataSetId",
+										documentMetadataSet2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocumentMetadataSet"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -612,21 +628,26 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet documentMetadataSet1 =
 			testGraphQLDeleteSiteDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteDocumentMetadataSetByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + documentMetadataSet1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								documentMetadataSet1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteDocumentMetadataSetByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + documentMetadataSet1.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										documentMetadataSet1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteDocumentMetadataSetByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -654,23 +675,30 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet documentMetadataSet2 =
 			testGraphQLDeleteSiteDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteDocumentMetadataSetByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + documentMetadataSet2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									documentMetadataSet2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteDocumentMetadataSetByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" +
+											documentMetadataSet2.getSiteId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											documentMetadataSet2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteDocumentMetadataSetByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

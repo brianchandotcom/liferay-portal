@@ -265,16 +265,19 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		ListTypeDefinition listTypeDefinition1 =
 			testGraphQLDeleteListTypeDefinition_addListTypeDefinition();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteListTypeDefinition",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"listTypeDefinitionId",
-							listTypeDefinition1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteListTypeDefinition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"listTypeDefinitionId",
+									listTypeDefinition1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteListTypeDefinition"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -297,18 +300,22 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		ListTypeDefinition listTypeDefinition2 =
 			testGraphQLDeleteListTypeDefinition_addListTypeDefinition();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminListType_v1_0",
-				new GraphQLField(
-					"deleteListTypeDefinition",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"listTypeDefinitionId",
-								listTypeDefinition2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminListType_v1_0",
+						new GraphQLField(
+							"deleteListTypeDefinition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"listTypeDefinitionId",
+										listTypeDefinition2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminListType_v1_0",
+				"Object/deleteListTypeDefinition"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

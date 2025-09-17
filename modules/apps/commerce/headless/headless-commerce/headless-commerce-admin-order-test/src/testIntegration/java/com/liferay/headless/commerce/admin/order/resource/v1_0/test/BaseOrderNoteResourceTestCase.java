@@ -250,14 +250,17 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		OrderNote orderNote1 = testGraphQLDeleteOrderNote_addOrderNote();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOrderNote",
-				new HashMap<String, Object>() {
-					{
-						put("id", orderNote1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderNote",
+						new HashMap<String, Object>() {
+							{
+								put("id", orderNote1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderNote"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -277,16 +280,20 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		OrderNote orderNote2 = testGraphQLDeleteOrderNote_addOrderNote();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteOrderNote",
-					new HashMap<String, Object>() {
-						{
-							put("id", orderNote2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderNote",
+							new HashMap<String, Object>() {
+								{
+									put("id", orderNote2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderNote"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -417,17 +424,22 @@ public abstract class BaseOrderNoteResourceTestCase {
 		OrderNote orderNote1 =
 			testGraphQLDeleteOrderNoteByExternalReferenceCode_addOrderNote();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOrderNoteByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + orderNote1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderNoteByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										orderNote1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteOrderNoteByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -451,19 +463,25 @@ public abstract class BaseOrderNoteResourceTestCase {
 		OrderNote orderNote2 =
 			testGraphQLDeleteOrderNoteByExternalReferenceCode_addOrderNote();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteOrderNoteByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + orderNote2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderNoteByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											orderNote2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderNoteByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

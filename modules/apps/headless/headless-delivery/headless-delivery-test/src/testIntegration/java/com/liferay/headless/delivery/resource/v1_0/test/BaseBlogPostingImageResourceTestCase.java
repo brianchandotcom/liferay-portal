@@ -271,14 +271,19 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage1 =
 			testGraphQLDeleteBlogPostingImage_addBlogPostingImage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteBlogPostingImage",
-				new HashMap<String, Object>() {
-					{
-						put("blogPostingImageId", blogPostingImage1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteBlogPostingImage",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"blogPostingImageId",
+									blogPostingImage1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteBlogPostingImage"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -301,18 +306,22 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage2 =
 			testGraphQLDeleteBlogPostingImage_addBlogPostingImage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteBlogPostingImage",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"blogPostingImageId",
-								blogPostingImage2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteBlogPostingImage",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"blogPostingImageId",
+										blogPostingImage2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteBlogPostingImage"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -436,23 +445,27 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage1 =
 			testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteBlogPostingImageByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" +
-								testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								blogPostingImage1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteBlogPostingImageByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" +
+										testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										blogPostingImage1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteBlogPostingImageByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -482,25 +495,30 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage2 =
 			testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteBlogPostingImageByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" +
-									testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									blogPostingImage2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteBlogPostingImageByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" +
+											testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											blogPostingImage2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteBlogPostingImageByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

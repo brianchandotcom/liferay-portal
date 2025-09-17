@@ -261,14 +261,19 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		PriceEntry priceEntry1 = testGraphQLDeletePriceEntry_addPriceEntry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePriceEntry",
-				new HashMap<String, Object>() {
-					{
-						put("priceEntryId", priceEntry1.getPriceEntryId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePriceEntry",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"priceEntryId",
+									priceEntry1.getPriceEntryId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePriceEntry"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -288,16 +293,23 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		PriceEntry priceEntry2 = testGraphQLDeletePriceEntry_addPriceEntry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminPricing_v2_0",
-				new GraphQLField(
-					"deletePriceEntry",
-					new HashMap<String, Object>() {
-						{
-							put("priceEntryId", priceEntry2.getPriceEntryId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deletePriceEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"priceEntryId",
+										priceEntry2.getPriceEntryId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deletePriceEntry"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -438,17 +450,22 @@ public abstract class BasePriceEntryResourceTestCase {
 		PriceEntry priceEntry1 =
 			testGraphQLDeletePriceEntryByExternalReferenceCode_addPriceEntry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePriceEntryByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + priceEntry1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePriceEntryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										priceEntry1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deletePriceEntryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -472,19 +489,26 @@ public abstract class BasePriceEntryResourceTestCase {
 		PriceEntry priceEntry2 =
 			testGraphQLDeletePriceEntryByExternalReferenceCode_addPriceEntry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminPricing_v2_0",
-				new GraphQLField(
-					"deletePriceEntryByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + priceEntry2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deletePriceEntryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											priceEntry2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deletePriceEntryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

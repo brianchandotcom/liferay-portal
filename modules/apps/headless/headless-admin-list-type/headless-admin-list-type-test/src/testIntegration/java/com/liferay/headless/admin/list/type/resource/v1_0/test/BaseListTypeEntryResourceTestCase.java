@@ -263,14 +263,17 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		ListTypeEntry listTypeEntry1 =
 			testGraphQLDeleteListTypeEntry_addListTypeEntry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteListTypeEntry",
-				new HashMap<String, Object>() {
-					{
-						put("listTypeEntryId", listTypeEntry1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteListTypeEntry",
+						new HashMap<String, Object>() {
+							{
+								put("listTypeEntryId", listTypeEntry1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteListTypeEntry"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -291,16 +294,22 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		ListTypeEntry listTypeEntry2 =
 			testGraphQLDeleteListTypeEntry_addListTypeEntry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminListType_v1_0",
-				new GraphQLField(
-					"deleteListTypeEntry",
-					new HashMap<String, Object>() {
-						{
-							put("listTypeEntryId", listTypeEntry2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminListType_v1_0",
+						new GraphQLField(
+							"deleteListTypeEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"listTypeEntryId",
+										listTypeEntry2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminListType_v1_0",
+				"Object/deleteListTypeEntry"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

@@ -333,21 +333,27 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document1 =
 			testGraphQLDeleteAssetLibraryDocumentByExternalReferenceCode_addDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAssetLibraryDocumentByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"assetLibraryId",
-							"\"" +
-								testGraphQLDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" + document1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAssetLibraryDocumentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										document1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAssetLibraryDocumentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -376,24 +382,30 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document2 =
 			testGraphQLDeleteAssetLibraryDocumentByExternalReferenceCode_addDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteAssetLibraryDocumentByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"assetLibraryId",
-								"\"" +
-									testGraphQLDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" + document2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteAssetLibraryDocumentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											document2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteAssetLibraryDocumentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -461,14 +473,17 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Document document1 = testGraphQLDeleteDocument_addDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDocument",
-				new HashMap<String, Object>() {
-					{
-						put("documentId", document1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocument",
+						new HashMap<String, Object>() {
+							{
+								put("documentId", document1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocument"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -488,16 +503,20 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Document document2 = testGraphQLDeleteDocument_addDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteDocument",
-					new HashMap<String, Object>() {
-						{
-							put("documentId", document2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocument",
+							new HashMap<String, Object>() {
+								{
+									put("documentId", document2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocument"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -588,14 +607,17 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Document document1 = testGraphQLDeleteDocumentMyRating_addDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDocumentMyRating",
-				new HashMap<String, Object>() {
-					{
-						put("documentId", document1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocumentMyRating",
+						new HashMap<String, Object>() {
+							{
+								put("documentId", document1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocumentMyRating"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -615,16 +637,20 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Document document2 = testGraphQLDeleteDocumentMyRating_addDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteDocumentMyRating",
-					new HashMap<String, Object>() {
-						{
-							put("documentId", document2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocumentMyRating",
+							new HashMap<String, Object>() {
+								{
+									put("documentId", document2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocumentMyRating"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -690,17 +716,25 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document1 =
 			testGraphQLDeleteSiteDocumentByExternalReferenceCode_addDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteDocumentByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put("siteKey", "\"" + document1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" + document1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteDocumentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + document1.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										document1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteDocumentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -725,20 +759,28 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document2 =
 			testGraphQLDeleteSiteDocumentByExternalReferenceCode_addDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteDocumentByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put("siteKey", "\"" + document2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" + document2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteDocumentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + document2.getSiteId() + "\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											document2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteDocumentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

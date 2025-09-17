@@ -257,14 +257,17 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		DiscountRule discountRule1 =
 			testGraphQLDeleteDiscountRule_addDiscountRule();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDiscountRule",
-				new HashMap<String, Object>() {
-					{
-						put("id", discountRule1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscountRule",
+						new HashMap<String, Object>() {
+							{
+								put("id", discountRule1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscountRule"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -285,16 +288,21 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		DiscountRule discountRule2 =
 			testGraphQLDeleteDiscountRule_addDiscountRule();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminPricing_v2_0",
-				new GraphQLField(
-					"deleteDiscountRule",
-					new HashMap<String, Object>() {
-						{
-							put("id", discountRule2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deleteDiscountRule",
+							new HashMap<String, Object>() {
+								{
+									put("id", discountRule2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deleteDiscountRule"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

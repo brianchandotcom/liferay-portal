@@ -6,9 +6,11 @@
 import React from 'react';
 
 import {
+	EStateInURLKeys,
 	IDataSetData,
 	IInlineEditingSettings,
 	IItemsActions,
+	IStateInURLSetter,
 	TRenderer,
 } from './utils/types';
 
@@ -74,6 +76,7 @@ export interface IFrontendDataSetContext {
 	selectedItemsValue?: Array<any>;
 	selectionType?: 'single' | 'multiple';
 	setSearching: (value: boolean) => void;
+	setView: IStateInURLSetter<EStateInURLKeys.VIEW_NAME>;
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;
 	showInfoPanel: boolean;

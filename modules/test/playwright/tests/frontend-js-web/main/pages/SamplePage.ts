@@ -30,7 +30,13 @@ export class SamplePage {
 		await tabHeading.click();
 	}
 
-	async setupSampleWidget({site, locale = 'en-US'}: {site: Site; locale?: string}) {
+	async setupSampleWidget({
+		locale = 'en-US',
+		site,
+	}: {
+		locale?: string;
+		site: Site;
+	}) {
 		const widgetDefinition = getWidgetDefinition({
 			id: getRandomString(),
 			widgetName:

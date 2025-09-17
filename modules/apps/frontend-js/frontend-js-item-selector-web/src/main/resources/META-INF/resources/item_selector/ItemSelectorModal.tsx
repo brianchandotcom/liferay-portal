@@ -16,6 +16,11 @@ import {IItemSelectorModalFDSProps} from '../utils/types';
 export interface IItemSelectorModalProps<T> {
 
 	/**
+	 * The URL that will be fetched to return the items.
+	 */
+	apiURL: string;
+
+	/**
 	 * Configuration properties of the Frontend Data Set used to display data.
 	 */
 	fdsProps: IItemSelectorModalFDSProps;
@@ -67,6 +72,7 @@ export interface IItemSelectorModalProps<T> {
 }
 
 function ItemSelectorModal<T extends Record<string, any>>({
+	apiURL,
 	fdsProps,
 	items: externalItems,
 	locator = {
@@ -107,6 +113,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 			<ClayModal.Body className="p-0">
 				<FrontendDataSet
 					{...fdsProps}
+					apiURL={apiURL}
 					onSelectedItemsChange={setSelectedItems}
 					selectedItems={selectedItems}
 					selectedItemsKey={locator.id}

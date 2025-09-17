@@ -39,6 +39,7 @@ interface HeadlessPage<T = unknown> {
 }
 
 interface IItemSelectorModalTriggerProps<T extends Record<string, any>> {
+	apiURL: string;
 	fdsProps: IItemSelectorModalFDSProps;
 	items: T[];
 	locator: {
@@ -52,6 +53,7 @@ interface IItemSelectorModalTriggerProps<T extends Record<string, any>> {
 }
 
 function ItemSelectorModalTrigger<T extends Record<string, any>>({
+	apiURL,
 	fdsProps,
 	items,
 	locator,
@@ -80,6 +82,7 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 			</ClayInput.GroupItem>
 
 			<ItemSelectorModal
+				apiURL={apiURL}
 				fdsProps={fdsProps}
 				items={items}
 				locator={locator}
@@ -424,7 +427,8 @@ function ItemSelector<T extends Record<string, any>>({
 			<ClayInput.GroupItem>{itemSelectorComponent}</ClayInput.GroupItem>
 
 			<ItemSelectorModalTrigger
-				fdsProps={{apiURL, ...fdsProps}}
+				apiURL={apiURL}
+				fdsProps={fdsProps}
 				items={items}
 				locator={locator}
 				setItems={handleModalItemsChange}

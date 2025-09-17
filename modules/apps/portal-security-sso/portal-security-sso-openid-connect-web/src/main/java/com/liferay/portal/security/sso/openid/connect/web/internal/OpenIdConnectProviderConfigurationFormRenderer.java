@@ -146,14 +146,13 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
-					"/portal_settings/open_id_connect_configuration.jsp");
+					"/open_id_connect_configuration.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render /portal_settings" +
-					"/open_id_connect_configuration.jsp",
+				"Unable to render /open_id_connect_configuration.jsp",
 				exception);
 		}
 	}

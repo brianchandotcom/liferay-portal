@@ -46,17 +46,17 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 				HashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
-						dlFileEntryEmptyNameDataCleanupPreupgradeProcess,
-						dependsOn()
-					).put(
 						dlFileEntryDataCleanupPreupgradeProcess,
 						dependsOn(
 							dlFileEntryEmptyNameDataCleanupPreupgradeProcess)
 					).put(
-						_getDLFileShortcutDataCleanupPreupgradeProcess(),
-						dependsOn(dlFileEntryDataCleanupPreupgradeProcess)
+						dlFileEntryEmptyNameDataCleanupPreupgradeProcess,
+						dependsOn()
 					).put(
 						_getDLFileEntryMetadataDataCleanupPreupgradeProcess(),
+						dependsOn(dlFileEntryDataCleanupPreupgradeProcess)
+					).put(
+						_getDLFileShortcutDataCleanupPreupgradeProcess(),
 						dependsOn(dlFileEntryDataCleanupPreupgradeProcess)
 					).build();
 

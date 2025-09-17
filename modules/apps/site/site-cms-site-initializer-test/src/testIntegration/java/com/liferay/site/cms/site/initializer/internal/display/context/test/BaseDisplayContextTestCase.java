@@ -62,6 +62,10 @@ public abstract class BaseDisplayContextTestCase {
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
 
+		mockHttpServletRequest = getMockHttpServletRequest();
+
+		themeDisplay = getThemeDisplay(mockHttpServletRequest);
+
 		if (_isCMSSiteInitialized()) {
 			return;
 		}
@@ -233,11 +237,15 @@ public abstract class BaseDisplayContextTestCase {
 	@DeleteAfterTestRun
 	protected Group group;
 
+	protected MockHttpServletRequest mockHttpServletRequest;
+
 	@Inject
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	@Inject
 	protected ObjectFolderLocalService objectFolderLocalService;
+
+	protected ThemeDisplay themeDisplay;
 
 	private void _deleteFile(Bundle bundle, String fileName) {
 		File file = bundle.getDataFile(

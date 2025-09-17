@@ -77,7 +77,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	public HashMap<String, Object> getAdditionalProps() throws Exception {
 		return ReflectionTestUtil.invoke(
-			getSectionDisplayContext(getMockHttpServletRequest()),
+			getSectionDisplayContext(mockHttpServletRequest),
 			"getAdditionalProps", new Class<?>[0]);
 	}
 

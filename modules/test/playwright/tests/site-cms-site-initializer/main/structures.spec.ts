@@ -158,3 +158,80 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Some actions are only allowed to non-system structures',
+	{tag: '@LPD-51405'},
+	async ({apiHelpers, page, structuresPage}) => {
+		await structuresPage.goto();
+
+		await page
+			.getByRole('row', {name: 'Basic Document'})
+			.locator('.dropdown-toggle')
+			.click();
+
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'View Usages'})
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Make a Copy'})
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Permissions'})
+		).toBeVisible();
+
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Edit'})
+		).toBeHidden();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Export as JSON'})
+		).toBeHidden();
+		expect(
+			page.getByRole('menuitem', {
+				exact: true,
+				name: 'Import and Override',
+			})
+		).toBeHidden();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Delete'})
+		).toBeHidden();
+
+		const objectDefinition =
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
+				status: {code: 0},
+			})) as ObjectDefinition;
+
+		await structuresPage.goto();
+
+		await page
+			.getByRole('row', {name: objectDefinition.name})
+			.locator('.dropdown-toggle')
+			.click();
+
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Edit'})
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'View Usages'})
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Make a Copy'})
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Export as JSON'})
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {
+				exact: true,
+				name: 'Import and Override',
+			})
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Permissions'})
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Delete'})
+		).toBeVisible();
+	}
+);

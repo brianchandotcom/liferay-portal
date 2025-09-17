@@ -106,7 +106,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return _executeDeleteBulkAction(
 				bulkAction,
-				_getBulkActionItemsMap(
+				_getDeleteBulkActionItemsMap(
 					bulkAction.getBulkActionItems(), filter, search,
 					GetterUtil.getBoolean(bulkAction.getSelectAll())));
 		}
@@ -293,7 +293,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return bulkActionTask;
 	}
 
-	private Map<String, List<BulkActionItem>> _getBulkActionItemsMap(
+	private Map<String, List<BulkActionItem>> _getDeleteBulkActionItemsMap(
 			BulkActionItem[] bulkActionItems, Filter filter, String search,
 			boolean selectAll)
 		throws Exception {

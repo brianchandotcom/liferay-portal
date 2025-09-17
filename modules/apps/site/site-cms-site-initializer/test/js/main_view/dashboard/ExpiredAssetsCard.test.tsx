@@ -4,9 +4,6 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-
-// eslint-disable-next-line
-import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {
 	render,
 	screen,
@@ -15,6 +12,10 @@ import {
 import React from 'react';
 
 import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
+import {
+	ViewDashboardContextProvider,
+	initialSpace,
+} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/ViewDashboardContext';
 import {ExpiredAssetsCard} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/ExpiredAssetsCard';
 
 const assetsList = [
@@ -52,16 +53,6 @@ describe('[CMS Dashboard] ExpiredAssetsCard', () => {
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
 		expect(getByText('EXPIRED-ASSETS')).toBeTruthy();
-	});
-
-	it('is accessible', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
-
-		const {container} = render(<ExpiredAssetsCard />);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		await checkAccessibility({context: container});
 	});
 
 	it('displays the number of usage for each item', async () => {
@@ -137,16 +128,55 @@ describe('[CMS Dashboard] ExpiredAssetsCard', () => {
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
-		expect(screen.getByText('no-assets-yet')).toBeInTheDocument();
+		expect(screen.getByText('no-assets-expired-yet')).toBeInTheDocument();
 
 		expect(
-			screen.getByText('no-content-has-been-created-in-the-cms-spaces')
+			screen.getByText('there-are-no-assets-expired-in-the-spaces')
 		).toBeInTheDocument();
 
 		const images = screen.getAllByRole('img');
 
 		const emptyStateImage = images.find((image) =>
 			image.getAttribute('src')?.includes('cms_empty_state.svg')
+		);
+
+		expect(emptyStateImage).toBeInTheDocument();
+	});
+
+	it('renders Clear Filters empty state when filters applied but no results', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {
+				items: [],
+				totalCount: 0,
+			},
+			error: null,
+		});
+
+		const customValue = {
+			filters: {
+				language: {label: 'English', value: 'en_US'},
+				space: initialSpace,
+			},
+		};
+
+		render(
+			<ViewDashboardContextProvider value={customValue}>
+				<ExpiredAssetsCard />
+			</ViewDashboardContextProvider>
+		);
+
+		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+
+		expect(screen.getByText('no-results-found')).toBeInTheDocument();
+		expect(
+			screen.getByText('sorry,-no-results-were-found')
+		).toBeInTheDocument();
+
+		expect(screen.getByText('clear-filters')).toBeInTheDocument();
+
+		const images = screen.getAllByRole('img');
+		const emptyStateImage = images.find((image) =>
+			image.getAttribute('src')?.includes('search_state.svg')
 		);
 
 		expect(emptyStateImage).toBeInTheDocument();

@@ -122,7 +122,7 @@ describe('[CMS Dashboard] InventoryAnalysisCard', () => {
 		);
 
 		expect(
-			screen.getByText('no-content-has-been-created-in-the-cms-spaces')
+			screen.getByText('there-are-no-assets-created-in-the-spaces')
 		).toBeInTheDocument();
 
 		const images = screen.getAllByRole('img');

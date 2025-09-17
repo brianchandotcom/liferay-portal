@@ -644,7 +644,7 @@ public class DDMFormEvaluatorHelper {
 		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
 
 		return _isBooleanPropertyValue(
-			ddmFormFieldContextKey, "nativeField", true);
+			ddmFormFieldContextKey, "nativeField", false);
 	}
 
 	private boolean _isFieldReadOnly(
@@ -826,11 +826,16 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	private void _resetInvisibleFieldValue() {
+		if ((_ddmFormEvaluatorEvaluateRequest.getDDMFormInstanceId() == 0) ||
+			!_ddmFormEvaluatorEvaluateRequest.isViewMode() ||
+			!_ddmFormEvaluatorEvaluateRequest.isEditingFieldValue()) {
+
+			return;
+		}
+
 		_ddmFormFieldsPropertyChanges.forEach(
 			(ddmFormFieldContextKey, ddmFormFieldProperties) -> {
-				if (_ddmFormEvaluatorEvaluateRequest.isViewMode() &&
-					_ddmFormEvaluatorEvaluateRequest.isEditingFieldValue() &&
-					!_isFieldNative(ddmFormFieldContextKey) &&
+				if (!_isFieldNative(ddmFormFieldContextKey) &&
 					!_isFieldVisible(ddmFormFieldContextKey)) {
 
 					ddmFormFieldProperties.put("value", StringPool.BLANK);

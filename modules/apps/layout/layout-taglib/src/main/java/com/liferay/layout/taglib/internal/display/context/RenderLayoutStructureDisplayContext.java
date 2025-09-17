@@ -20,6 +20,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
@@ -605,6 +606,31 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("fieldId"),
 				_themeDisplay.getLocale());
 		}
+		else if (backgroundImageJSONObject.has("className") &&
+				 backgroundImageJSONObject.has("externalReferenceCode") &&
+				 backgroundImageJSONObject.has("fieldId")) {
+
+			String scopeExternalReferenceCode = null;
+
+			if (backgroundImageJSONObject.has("scopeExternalReferenceCode")) {
+				scopeExternalReferenceCode =
+					backgroundImageJSONObject.getString(
+						"scopeExternalReferenceCode");
+			}
+
+			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
+				ServletContextUtil.getFragmentEntryProcessorHelper();
+
+			fileEntryId = fragmentEntryProcessorHelper.getFileEntryId(
+				new InfoItemReference(
+					backgroundImageJSONObject.getString("className"),
+					new ERCInfoItemIdentifier(
+						backgroundImageJSONObject.getString(
+							"externalReferenceCode"),
+						scopeExternalReferenceCode)),
+				backgroundImageJSONObject.getString("fieldId"),
+				_themeDisplay.getLocale());
+		}
 		else if (backgroundImageJSONObject.has("collectionFieldId")) {
 			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
 				ServletContextUtil.getFragmentEntryProcessorHelper();
@@ -821,13 +847,37 @@ public class RenderLayoutStructureDisplayContext {
 		String fieldId = jsonObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
+			String className = jsonObject.getString("className");
 			long classNameId = jsonObject.getLong("classNameId");
 			long classPK = jsonObject.getLong("classPK");
+			String externalReferenceCode = jsonObject.getString(
+				"externalReferenceCode");
 
 			if ((classNameId > 0) && (classPK > 0)) {
 				InfoItemReference infoItemReference = new InfoItemReference(
 					PortalUtil.getClassName(classNameId),
 					new ClassPKInfoItemIdentifier(classPK));
+
+				String value = _getValue(fieldId, infoItemReference);
+
+				if (Validator.isNotNull(value)) {
+					return value;
+				}
+			}
+			else if (Validator.isNotNull(className) &&
+					 Validator.isNotNull(externalReferenceCode)) {
+
+				String scopeExternalReferenceCode = null;
+
+				if (jsonObject.has("scopeExternalReferenceCode")) {
+					scopeExternalReferenceCode = jsonObject.getString(
+						"scopeExternalReferenceCode");
+				}
+
+				InfoItemReference infoItemReference = new InfoItemReference(
+					className,
+					new ERCInfoItemIdentifier(
+						externalReferenceCode, scopeExternalReferenceCode));
 
 				String value = _getValue(fieldId, infoItemReference);
 

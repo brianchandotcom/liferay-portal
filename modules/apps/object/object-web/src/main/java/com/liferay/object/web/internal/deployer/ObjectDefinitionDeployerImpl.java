@@ -619,7 +619,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"jakarta.portlet.name", objectDefinition.getPortletId()
 				).build()));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-21926")) {
+
 			if (Validator.isNotNull(
 					objectDefinition.getFriendlyURLSeparator()) &&
 				!ObjectDefinitionUtil.isDefaultFriendlyURLSeparator(

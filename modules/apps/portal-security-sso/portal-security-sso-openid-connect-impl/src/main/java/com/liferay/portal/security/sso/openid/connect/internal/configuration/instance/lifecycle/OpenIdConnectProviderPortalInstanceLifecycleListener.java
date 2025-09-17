@@ -12,6 +12,7 @@ import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLo
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -208,9 +209,9 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 				continue;
 			}
 
-			String[] splitClaim = customClaim.split("=");
+			String[] parts = customClaim.split(StringPool.EQUAL);
 
-			customClaimsJSONObject.put(splitClaim[0], splitClaim[1]);
+			customClaimsJSONObject.put(parts[0], parts[1]);
 		}
 
 		return customClaimsJSONObject.toString();

@@ -234,36 +234,43 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 		OrderRuleAccountGroup orderRuleAccountGroup1 =
 			testGraphQLDeleteOrderRuleAccountGroup_addOrderRuleAccountGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOrderRuleAccountGroup",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"orderRuleAccountGroupId",
-							orderRuleAccountGroup1.
-								getOrderRuleAccountGroupId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderRuleAccountGroup",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderRuleAccountGroupId",
+									orderRuleAccountGroup1.
+										getOrderRuleAccountGroupId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderRuleAccountGroup"));
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
 		OrderRuleAccountGroup orderRuleAccountGroup2 =
 			testGraphQLDeleteOrderRuleAccountGroup_addOrderRuleAccountGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteOrderRuleAccountGroup",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"orderRuleAccountGroupId",
-								orderRuleAccountGroup2.
-									getOrderRuleAccountGroupId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderRuleAccountGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"orderRuleAccountGroupId",
+										orderRuleAccountGroup2.
+											getOrderRuleAccountGroupId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderRuleAccountGroup"));
 	}
 
 	protected OrderRuleAccountGroup

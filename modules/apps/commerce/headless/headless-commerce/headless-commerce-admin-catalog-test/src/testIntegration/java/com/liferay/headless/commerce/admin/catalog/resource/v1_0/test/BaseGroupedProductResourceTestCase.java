@@ -222,30 +222,42 @@ public abstract class BaseGroupedProductResourceTestCase {
 		GroupedProduct groupedProduct1 =
 			testGraphQLDeleteGroupedProduct_addGroupedProduct();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteGroupedProduct",
-				new HashMap<String, Object>() {
-					{
-						put("groupedProductId", groupedProduct1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteGroupedProduct",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"groupedProductId",
+									groupedProduct1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteGroupedProduct"));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		GroupedProduct groupedProduct2 =
 			testGraphQLDeleteGroupedProduct_addGroupedProduct();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteGroupedProduct",
-					new HashMap<String, Object>() {
-						{
-							put("groupedProductId", groupedProduct2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteGroupedProduct",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"groupedProductId",
+										groupedProduct2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteGroupedProduct"));
 	}
 
 	protected GroupedProduct testGraphQLDeleteGroupedProduct_addGroupedProduct()

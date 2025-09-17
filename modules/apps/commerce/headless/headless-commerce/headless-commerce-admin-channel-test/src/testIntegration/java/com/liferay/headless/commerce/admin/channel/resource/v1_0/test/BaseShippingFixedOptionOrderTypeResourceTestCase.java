@@ -239,36 +239,45 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 		ShippingFixedOptionOrderType shippingFixedOptionOrderType1 =
 			testGraphQLDeleteShippingFixedOptionOrderType_addShippingFixedOptionOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteShippingFixedOptionOrderType",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"shippingFixedOptionOrderTypeId",
-							shippingFixedOptionOrderType1.
-								getShippingFixedOptionOrderTypeId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteShippingFixedOptionOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"shippingFixedOptionOrderTypeId",
+									shippingFixedOptionOrderType1.
+										getShippingFixedOptionOrderTypeId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteShippingFixedOptionOrderType"));
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
 		ShippingFixedOptionOrderType shippingFixedOptionOrderType2 =
 			testGraphQLDeleteShippingFixedOptionOrderType_addShippingFixedOptionOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminChannel_v1_0",
-				new GraphQLField(
-					"deleteShippingFixedOptionOrderType",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"shippingFixedOptionOrderTypeId",
-								shippingFixedOptionOrderType2.
-									getShippingFixedOptionOrderTypeId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deleteShippingFixedOptionOrderType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"shippingFixedOptionOrderTypeId",
+										shippingFixedOptionOrderType2.
+											getShippingFixedOptionOrderTypeId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deleteShippingFixedOptionOrderType"));
 	}
 
 	protected ShippingFixedOptionOrderType

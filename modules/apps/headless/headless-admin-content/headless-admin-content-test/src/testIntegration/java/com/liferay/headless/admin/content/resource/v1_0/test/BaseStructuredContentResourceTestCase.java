@@ -243,18 +243,23 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContentByVersion_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteStructuredContentByVersion",
-				new HashMap<String, Object>() {
-					{
-						put("structuredContentId", structuredContent1.getId());
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteStructuredContentByVersion",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentId",
+									structuredContent1.getId());
 
-						put(
-							"version",
-							testGraphQLDeleteStructuredContentByVersion_getVersion());
-					}
-				}));
+								put(
+									"version",
+									testGraphQLDeleteStructuredContentByVersion_getVersion());
+							}
+						})),
+				"JSONObject/data", "Object/deleteStructuredContentByVersion"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -281,22 +286,26 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteStructuredContentByVersion_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminContent_v1_0",
-				new GraphQLField(
-					"deleteStructuredContentByVersion",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"structuredContentId",
-								structuredContent2.getId());
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminContent_v1_0",
+						new GraphQLField(
+							"deleteStructuredContentByVersion",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentId",
+										structuredContent2.getId());
 
-							put(
-								"version",
-								testGraphQLDeleteStructuredContentByVersion_getVersion());
-						}
-					})));
+									put(
+										"version",
+										testGraphQLDeleteStructuredContentByVersion_getVersion());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminContent_v1_0",
+				"Object/deleteStructuredContentByVersion"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

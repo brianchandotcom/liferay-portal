@@ -306,24 +306,28 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity1 =
 			testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAssetLibraryERCAssetLibraryTestEntity",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"assetLibraryExternalReferenceCode",
-							"\"" +
-								ercAssetLibraryTestEntity1.
-									getAssetLibraryExternalReferenceCode() +
-										"\"");
-						put(
-							"ercAssetLibraryTestEntityExternalReferenceCode",
-							"\"" +
-								ercAssetLibraryTestEntity1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAssetLibraryERCAssetLibraryTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryExternalReferenceCode",
+									"\"" +
+										ercAssetLibraryTestEntity1.
+											getAssetLibraryExternalReferenceCode() +
+												"\"");
+								put(
+									"ercAssetLibraryTestEntityExternalReferenceCode",
+									"\"" +
+										ercAssetLibraryTestEntity1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAssetLibraryERCAssetLibraryTestEntity"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -354,26 +358,31 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity2 =
 			testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"test_v1_0",
-				new GraphQLField(
-					"deleteAssetLibraryERCAssetLibraryTestEntity",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"assetLibraryExternalReferenceCode",
-								"\"" +
-									ercAssetLibraryTestEntity2.
-										getAssetLibraryExternalReferenceCode() +
-											"\"");
-							put(
-								"ercAssetLibraryTestEntityExternalReferenceCode",
-								"\"" +
-									ercAssetLibraryTestEntity2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"deleteAssetLibraryERCAssetLibraryTestEntity",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryExternalReferenceCode",
+										"\"" +
+											ercAssetLibraryTestEntity2.
+												getAssetLibraryExternalReferenceCode() +
+													"\"");
+									put(
+										"ercAssetLibraryTestEntityExternalReferenceCode",
+										"\"" +
+											ercAssetLibraryTestEntity2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"Object/deleteAssetLibraryERCAssetLibraryTestEntity"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

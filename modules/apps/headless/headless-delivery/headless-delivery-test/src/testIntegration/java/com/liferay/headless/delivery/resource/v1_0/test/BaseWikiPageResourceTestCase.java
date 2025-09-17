@@ -276,17 +276,25 @@ public abstract class BaseWikiPageResourceTestCase {
 		WikiPage wikiPage1 =
 			testGraphQLDeleteSiteWikiPageByExternalReferenceCode_addWikiPage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteWikiPageByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put("siteKey", "\"" + wikiPage1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" + wikiPage1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteWikiPageByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + wikiPage1.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										wikiPage1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteWikiPageByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -311,20 +319,28 @@ public abstract class BaseWikiPageResourceTestCase {
 		WikiPage wikiPage2 =
 			testGraphQLDeleteSiteWikiPageByExternalReferenceCode_addWikiPage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteWikiPageByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put("siteKey", "\"" + wikiPage2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" + wikiPage2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteWikiPageByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + wikiPage2.getSiteId() + "\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											wikiPage2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteWikiPageByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -382,14 +398,17 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		WikiPage wikiPage1 = testGraphQLDeleteWikiPage_addWikiPage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteWikiPage",
-				new HashMap<String, Object>() {
-					{
-						put("wikiPageId", wikiPage1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWikiPage",
+						new HashMap<String, Object>() {
+							{
+								put("wikiPageId", wikiPage1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWikiPage"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -409,16 +428,20 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		WikiPage wikiPage2 = testGraphQLDeleteWikiPage_addWikiPage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteWikiPage",
-					new HashMap<String, Object>() {
-						{
-							put("wikiPageId", wikiPage2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteWikiPage",
+							new HashMap<String, Object>() {
+								{
+									put("wikiPageId", wikiPage2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteWikiPage"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

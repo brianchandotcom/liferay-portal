@@ -323,23 +323,27 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAssetLibraryStructuredContentByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"assetLibraryId",
-							"\"" +
-								testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								structuredContent1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAssetLibraryStructuredContentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										structuredContent1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAssetLibraryStructuredContentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -369,25 +373,30 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteAssetLibraryStructuredContentByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"assetLibraryId",
-								"\"" +
-									testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									structuredContent2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteAssetLibraryStructuredContentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											structuredContent2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteAssetLibraryStructuredContentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -474,21 +483,26 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteStructuredContentByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + structuredContent1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								structuredContent1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteStructuredContentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + structuredContent1.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										structuredContent1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteStructuredContentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -516,23 +530,29 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteStructuredContentByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + structuredContent2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									structuredContent2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteStructuredContentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + structuredContent2.getSiteId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											structuredContent2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteStructuredContentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -602,14 +622,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContent_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteStructuredContent",
-				new HashMap<String, Object>() {
-					{
-						put("structuredContentId", structuredContent1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteStructuredContent",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentId",
+									structuredContent1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteStructuredContent"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -632,18 +657,22 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteStructuredContent_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteStructuredContent",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"structuredContentId",
-								structuredContent2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteStructuredContent",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentId",
+										structuredContent2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteStructuredContent"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -751,14 +780,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContentMyRating_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteStructuredContentMyRating",
-				new HashMap<String, Object>() {
-					{
-						put("structuredContentId", structuredContent1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteStructuredContentMyRating",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentId",
+									structuredContent1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteStructuredContentMyRating"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -781,18 +815,22 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteStructuredContentMyRating_addStructuredContent();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteStructuredContentMyRating",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"structuredContentId",
-								structuredContent2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteStructuredContentMyRating",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentId",
+										structuredContent2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteStructuredContentMyRating"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

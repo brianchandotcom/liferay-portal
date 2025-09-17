@@ -279,16 +279,19 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		NotificationTemplate notificationTemplate1 =
 			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteNotificationTemplate",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"notificationTemplateId",
-							notificationTemplate1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteNotificationTemplate",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"notificationTemplateId",
+									notificationTemplate1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteNotificationTemplate"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -311,18 +314,22 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		NotificationTemplate notificationTemplate2 =
 			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"notification_v1_0",
-				new GraphQLField(
-					"deleteNotificationTemplate",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"notificationTemplateId",
-								notificationTemplate2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"notification_v1_0",
+						new GraphQLField(
+							"deleteNotificationTemplate",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"notificationTemplateId",
+										notificationTemplate2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/notification_v1_0",
+				"Object/deleteNotificationTemplate"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

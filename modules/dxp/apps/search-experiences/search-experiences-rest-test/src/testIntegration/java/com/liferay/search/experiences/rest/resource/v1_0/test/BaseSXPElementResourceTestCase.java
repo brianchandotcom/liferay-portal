@@ -267,14 +267,17 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		SXPElement sxpElement1 = testGraphQLDeleteSXPElement_addSXPElement();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSXPElement",
-				new HashMap<String, Object>() {
-					{
-						put("sxpElementId", sxpElement1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSXPElement",
+						new HashMap<String, Object>() {
+							{
+								put("sxpElementId", sxpElement1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSXPElement"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -294,16 +297,20 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		SXPElement sxpElement2 = testGraphQLDeleteSXPElement_addSXPElement();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"searchExperiences_v1_0",
-				new GraphQLField(
-					"deleteSXPElement",
-					new HashMap<String, Object>() {
-						{
-							put("sxpElementId", sxpElement2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"searchExperiences_v1_0",
+						new GraphQLField(
+							"deleteSXPElement",
+							new HashMap<String, Object>() {
+								{
+									put("sxpElementId", sxpElement2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+				"Object/deleteSXPElement"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

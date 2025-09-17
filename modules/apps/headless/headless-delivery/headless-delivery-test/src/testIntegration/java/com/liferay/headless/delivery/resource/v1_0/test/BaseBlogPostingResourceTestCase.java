@@ -273,14 +273,17 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting1 =
 			testGraphQLDeleteBlogPosting_addBlogPosting();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteBlogPosting",
-				new HashMap<String, Object>() {
-					{
-						put("blogPostingId", blogPosting1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteBlogPosting",
+						new HashMap<String, Object>() {
+							{
+								put("blogPostingId", blogPosting1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteBlogPosting"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -301,16 +304,20 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting2 =
 			testGraphQLDeleteBlogPosting_addBlogPosting();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteBlogPosting",
-					new HashMap<String, Object>() {
-						{
-							put("blogPostingId", blogPosting2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteBlogPosting",
+							new HashMap<String, Object>() {
+								{
+									put("blogPostingId", blogPosting2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteBlogPosting"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -409,14 +416,17 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting1 =
 			testGraphQLDeleteBlogPostingMyRating_addBlogPosting();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteBlogPostingMyRating",
-				new HashMap<String, Object>() {
-					{
-						put("blogPostingId", blogPosting1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteBlogPostingMyRating",
+						new HashMap<String, Object>() {
+							{
+								put("blogPostingId", blogPosting1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteBlogPostingMyRating"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -437,16 +447,20 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting2 =
 			testGraphQLDeleteBlogPostingMyRating_addBlogPosting();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteBlogPostingMyRating",
-					new HashMap<String, Object>() {
-						{
-							put("blogPostingId", blogPosting2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteBlogPostingMyRating",
+							new HashMap<String, Object>() {
+								{
+									put("blogPostingId", blogPosting2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteBlogPostingMyRating"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -516,18 +530,25 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting1 =
 			testGraphQLDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteBlogPostingByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put("siteKey", "\"" + blogPosting1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" + blogPosting1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteBlogPostingByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + blogPosting1.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										blogPosting1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteBlogPostingByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -554,22 +575,28 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting2 =
 			testGraphQLDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteBlogPostingByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + blogPosting2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" + blogPosting2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteBlogPostingByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + blogPosting2.getSiteId() + "\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											blogPosting2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteBlogPostingByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

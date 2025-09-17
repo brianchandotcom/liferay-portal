@@ -215,36 +215,44 @@ public abstract class BaseNodeResourceTestCase {
 
 		Node node1 = testGraphQLDeleteProcessNode_addNode();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProcessNode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"processId",
-							testGraphQLDeleteProcessNode_getProcessId(node1));
-						put("nodeId", node1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProcessNode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"processId",
+									testGraphQLDeleteProcessNode_getProcessId(
+										node1));
+								put("nodeId", node1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProcessNode"));
 
 		// Using the namespace portalWorkflowMetrics_v1_0
 
 		Node node2 = testGraphQLDeleteProcessNode_addNode();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"portalWorkflowMetrics_v1_0",
-				new GraphQLField(
-					"deleteProcessNode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"processId",
-								testGraphQLDeleteProcessNode_getProcessId(
-									node2));
-							put("nodeId", node2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"portalWorkflowMetrics_v1_0",
+						new GraphQLField(
+							"deleteProcessNode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"processId",
+										testGraphQLDeleteProcessNode_getProcessId(
+											node2));
+									put("nodeId", node2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/portalWorkflowMetrics_v1_0",
+				"Object/deleteProcessNode"));
 	}
 
 	protected Long testGraphQLDeleteProcessNode_getProcessId(Node node)

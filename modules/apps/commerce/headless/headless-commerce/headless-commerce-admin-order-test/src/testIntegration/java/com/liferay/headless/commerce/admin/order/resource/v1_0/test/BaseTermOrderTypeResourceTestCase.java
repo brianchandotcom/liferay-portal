@@ -222,34 +222,41 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 		TermOrderType termOrderType1 =
 			testGraphQLDeleteTermOrderType_addTermOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteTermOrderType",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"termOrderTypeId",
-							termOrderType1.getTermOrderTypeId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteTermOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"termOrderTypeId",
+									termOrderType1.getTermOrderTypeId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteTermOrderType"));
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
 		TermOrderType termOrderType2 =
 			testGraphQLDeleteTermOrderType_addTermOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteTermOrderType",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"termOrderTypeId",
-								termOrderType2.getTermOrderTypeId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteTermOrderType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"termOrderTypeId",
+										termOrderType2.getTermOrderTypeId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteTermOrderType"));
 	}
 
 	protected TermOrderType testGraphQLDeleteTermOrderType_addTermOrderType()

@@ -296,14 +296,19 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder1 =
 			testGraphQLDeleteDocumentFolder_addDocumentFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDocumentFolder",
-				new HashMap<String, Object>() {
-					{
-						put("documentFolderId", documentFolder1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocumentFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"documentFolderId",
+									documentFolder1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocumentFolder"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -324,16 +329,22 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder2 =
 			testGraphQLDeleteDocumentFolder_addDocumentFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteDocumentFolder",
-					new HashMap<String, Object>() {
-						{
-							put("documentFolderId", documentFolder2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocumentFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"documentFolderId",
+										documentFolder2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocumentFolder"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -437,14 +448,19 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder1 =
 			testGraphQLDeleteDocumentFolderMyRating_addDocumentFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDocumentFolderMyRating",
-				new HashMap<String, Object>() {
-					{
-						put("documentFolderId", documentFolder1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocumentFolderMyRating",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"documentFolderId",
+									documentFolder1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocumentFolderMyRating"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -465,16 +481,22 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder2 =
 			testGraphQLDeleteDocumentFolderMyRating_addDocumentFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteDocumentFolderMyRating",
-					new HashMap<String, Object>() {
-						{
-							put("documentFolderId", documentFolder2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocumentFolderMyRating",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"documentFolderId",
+										documentFolder2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocumentFolderMyRating"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -547,20 +569,25 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder1 =
 			testGraphQLDeleteSiteDocumentsFolderByExternalReferenceCode_addDocumentFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteDocumentsFolderByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + documentFolder1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" + documentFolder1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteDocumentsFolderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + documentFolder1.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										documentFolder1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteDocumentsFolderByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -588,23 +615,29 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder2 =
 			testGraphQLDeleteSiteDocumentsFolderByExternalReferenceCode_addDocumentFolder();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteDocumentsFolderByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + documentFolder2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									documentFolder2.getExternalReferenceCode() +
-										"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteDocumentsFolderByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + documentFolder2.getSiteId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											documentFolder2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteDocumentsFolderByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

@@ -259,14 +259,17 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		OptionCategory optionCategory1 =
 			testGraphQLDeleteOptionCategory_addOptionCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOptionCategory",
-				new HashMap<String, Object>() {
-					{
-						put("id", optionCategory1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOptionCategory",
+						new HashMap<String, Object>() {
+							{
+								put("id", optionCategory1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOptionCategory"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -287,16 +290,21 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		OptionCategory optionCategory2 =
 			testGraphQLDeleteOptionCategory_addOptionCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteOptionCategory",
-					new HashMap<String, Object>() {
-						{
-							put("id", optionCategory2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteOptionCategory",
+							new HashMap<String, Object>() {
+								{
+									put("id", optionCategory2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteOptionCategory"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -440,17 +448,22 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		OptionCategory optionCategory1 =
 			testGraphQLDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOptionCategoryByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + optionCategory1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOptionCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										optionCategory1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteOptionCategoryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -475,20 +488,26 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		OptionCategory optionCategory2 =
 			testGraphQLDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteOptionCategoryByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									optionCategory2.getExternalReferenceCode() +
-										"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteOptionCategoryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											optionCategory2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteOptionCategoryByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

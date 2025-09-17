@@ -283,14 +283,17 @@ public abstract class BasePaymentResourceTestCase {
 
 		Payment payment1 = testGraphQLDeletePayment_addPayment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePayment",
-				new HashMap<String, Object>() {
-					{
-						put("id", payment1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePayment",
+						new HashMap<String, Object>() {
+							{
+								put("id", payment1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePayment"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -310,16 +313,21 @@ public abstract class BasePaymentResourceTestCase {
 
 		Payment payment2 = testGraphQLDeletePayment_addPayment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminPayment_v1_0",
-				new GraphQLField(
-					"deletePayment",
-					new HashMap<String, Object>() {
-						{
-							put("id", payment2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPayment_v1_0",
+						new GraphQLField(
+							"deletePayment",
+							new HashMap<String, Object>() {
+								{
+									put("id", payment2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPayment_v1_0",
+				"Object/deletePayment"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -437,16 +445,21 @@ public abstract class BasePaymentResourceTestCase {
 		Payment payment1 =
 			testGraphQLDeletePaymentByExternalReferenceCode_addPayment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePaymentByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + payment1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePaymentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + payment1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deletePaymentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -470,19 +483,26 @@ public abstract class BasePaymentResourceTestCase {
 		Payment payment2 =
 			testGraphQLDeletePaymentByExternalReferenceCode_addPayment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminPayment_v1_0",
-				new GraphQLField(
-					"deletePaymentByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + payment2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPayment_v1_0",
+						new GraphQLField(
+							"deletePaymentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											payment2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPayment_v1_0",
+				"Object/deletePaymentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

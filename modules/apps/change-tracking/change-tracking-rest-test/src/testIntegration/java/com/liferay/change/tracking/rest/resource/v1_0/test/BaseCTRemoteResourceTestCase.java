@@ -258,14 +258,17 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		CTRemote ctRemote1 = testGraphQLDeleteCTRemote_addCTRemote();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCTRemote",
-				new HashMap<String, Object>() {
-					{
-						put("id", ctRemote1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCTRemote",
+						new HashMap<String, Object>() {
+							{
+								put("id", ctRemote1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCTRemote"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -285,16 +288,20 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		CTRemote ctRemote2 = testGraphQLDeleteCTRemote_addCTRemote();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"changeTracking_v1_0",
-				new GraphQLField(
-					"deleteCTRemote",
-					new HashMap<String, Object>() {
-						{
-							put("id", ctRemote2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"deleteCTRemote",
+							new HashMap<String, Object>() {
+								{
+									put("id", ctRemote2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/changeTracking_v1_0",
+				"Object/deleteCTRemote"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

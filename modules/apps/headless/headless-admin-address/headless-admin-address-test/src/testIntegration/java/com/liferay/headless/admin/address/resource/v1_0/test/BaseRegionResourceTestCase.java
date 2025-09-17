@@ -250,14 +250,17 @@ public abstract class BaseRegionResourceTestCase {
 
 		Region region1 = testGraphQLDeleteRegion_addRegion();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteRegion",
-				new HashMap<String, Object>() {
-					{
-						put("regionId", region1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteRegion",
+						new HashMap<String, Object>() {
+							{
+								put("regionId", region1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteRegion"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -277,16 +280,20 @@ public abstract class BaseRegionResourceTestCase {
 
 		Region region2 = testGraphQLDeleteRegion_addRegion();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminAddress_v1_0",
-				new GraphQLField(
-					"deleteRegion",
-					new HashMap<String, Object>() {
-						{
-							put("regionId", region2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminAddress_v1_0",
+						new GraphQLField(
+							"deleteRegion",
+							new HashMap<String, Object>() {
+								{
+									put("regionId", region2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminAddress_v1_0",
+				"Object/deleteRegion"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

@@ -253,14 +253,17 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		Currency currency1 = testGraphQLDeleteCurrency_addCurrency();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCurrency",
-				new HashMap<String, Object>() {
-					{
-						put("id", currency1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCurrency",
+						new HashMap<String, Object>() {
+							{
+								put("id", currency1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCurrency"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -280,16 +283,21 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		Currency currency2 = testGraphQLDeleteCurrency_addCurrency();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteCurrency",
-					new HashMap<String, Object>() {
-						{
-							put("id", currency2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteCurrency",
+							new HashMap<String, Object>() {
+								{
+									put("id", currency2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteCurrency"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -411,16 +419,22 @@ public abstract class BaseCurrencyResourceTestCase {
 		Currency currency1 =
 			testGraphQLDeleteCurrencyByExternalReferenceCode_addCurrency();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCurrencyByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + currency1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCurrencyByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										currency1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteCurrencyByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -444,19 +458,26 @@ public abstract class BaseCurrencyResourceTestCase {
 		Currency currency2 =
 			testGraphQLDeleteCurrencyByExternalReferenceCode_addCurrency();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteCurrencyByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + currency2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteCurrencyByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											currency2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteCurrencyByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

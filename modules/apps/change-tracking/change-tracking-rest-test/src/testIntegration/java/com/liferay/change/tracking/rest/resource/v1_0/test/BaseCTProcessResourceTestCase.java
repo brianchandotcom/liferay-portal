@@ -251,14 +251,17 @@ public abstract class BaseCTProcessResourceTestCase {
 
 		CTProcess ctProcess1 = testGraphQLDeleteCTProcess_addCTProcess();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCTProcess",
-				new HashMap<String, Object>() {
-					{
-						put("ctProcessId", ctProcess1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCTProcess",
+						new HashMap<String, Object>() {
+							{
+								put("ctProcessId", ctProcess1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCTProcess"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -278,16 +281,20 @@ public abstract class BaseCTProcessResourceTestCase {
 
 		CTProcess ctProcess2 = testGraphQLDeleteCTProcess_addCTProcess();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"changeTracking_v1_0",
-				new GraphQLField(
-					"deleteCTProcess",
-					new HashMap<String, Object>() {
-						{
-							put("ctProcessId", ctProcess2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"deleteCTProcess",
+							new HashMap<String, Object>() {
+								{
+									put("ctProcessId", ctProcess2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/changeTracking_v1_0",
+				"Object/deleteCTProcess"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

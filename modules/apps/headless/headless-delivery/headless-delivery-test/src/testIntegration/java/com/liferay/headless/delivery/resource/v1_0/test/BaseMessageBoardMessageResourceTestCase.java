@@ -276,16 +276,19 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage1 =
 			testGraphQLDeleteMessageBoardMessage_addMessageBoardMessage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteMessageBoardMessage",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"messageBoardMessageId",
-							messageBoardMessage1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMessageBoardMessage",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardMessageId",
+									messageBoardMessage1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteMessageBoardMessage"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -308,18 +311,22 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage2 =
 			testGraphQLDeleteMessageBoardMessage_addMessageBoardMessage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteMessageBoardMessage",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"messageBoardMessageId",
-								messageBoardMessage2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteMessageBoardMessage",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"messageBoardMessageId",
+										messageBoardMessage2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteMessageBoardMessage"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -430,16 +437,19 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage1 =
 			testGraphQLDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteMessageBoardMessageMyRating",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"messageBoardMessageId",
-							messageBoardMessage1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMessageBoardMessageMyRating",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardMessageId",
+									messageBoardMessage1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteMessageBoardMessageMyRating"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -462,18 +472,22 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage2 =
 			testGraphQLDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteMessageBoardMessageMyRating",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"messageBoardMessageId",
-								messageBoardMessage2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteMessageBoardMessageMyRating",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"messageBoardMessageId",
+										messageBoardMessage2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteMessageBoardMessageMyRating"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -546,21 +560,26 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage1 =
 			testGraphQLDeleteSiteMessageBoardMessageByExternalReferenceCode_addMessageBoardMessage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteMessageBoardMessageByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + messageBoardMessage1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								messageBoardMessage1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteMessageBoardMessageByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + messageBoardMessage1.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										messageBoardMessage1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteMessageBoardMessageByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -588,23 +607,30 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage2 =
 			testGraphQLDeleteSiteMessageBoardMessageByExternalReferenceCode_addMessageBoardMessage();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteMessageBoardMessageByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + messageBoardMessage2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									messageBoardMessage2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteMessageBoardMessageByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" +
+											messageBoardMessage2.getSiteId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											messageBoardMessage2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteMessageBoardMessageByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

@@ -274,14 +274,17 @@ public abstract class BasePostalAddressResourceTestCase {
 		PostalAddress postalAddress1 =
 			testGraphQLDeletePostalAddress_addPostalAddress();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePostalAddress",
-				new HashMap<String, Object>() {
-					{
-						put("postalAddressId", postalAddress1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePostalAddress",
+						new HashMap<String, Object>() {
+							{
+								put("postalAddressId", postalAddress1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePostalAddress"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -302,16 +305,22 @@ public abstract class BasePostalAddressResourceTestCase {
 		PostalAddress postalAddress2 =
 			testGraphQLDeletePostalAddress_addPostalAddress();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deletePostalAddress",
-					new HashMap<String, Object>() {
-						{
-							put("postalAddressId", postalAddress2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deletePostalAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"postalAddressId",
+										postalAddress2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deletePostalAddress"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -455,17 +464,22 @@ public abstract class BasePostalAddressResourceTestCase {
 		PostalAddress postalAddress1 =
 			testGraphQLDeletePostalAddressByExternalReferenceCode_addPostalAddress();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePostalAddressByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + postalAddress1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePostalAddressByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										postalAddress1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deletePostalAddressByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -490,20 +504,25 @@ public abstract class BasePostalAddressResourceTestCase {
 		PostalAddress postalAddress2 =
 			testGraphQLDeletePostalAddressByExternalReferenceCode_addPostalAddress();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deletePostalAddressByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									postalAddress2.getExternalReferenceCode() +
-										"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deletePostalAddressByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											postalAddress2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deletePostalAddressByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

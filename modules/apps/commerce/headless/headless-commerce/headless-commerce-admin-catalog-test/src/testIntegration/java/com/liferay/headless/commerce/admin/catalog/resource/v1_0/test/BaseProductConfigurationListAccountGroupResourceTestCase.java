@@ -257,17 +257,21 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 			productConfigurationListAccountGroup1 =
 				testGraphQLDeleteProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductConfigurationListAccountGroup",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"productConfigurationListAccountGroupId",
-							productConfigurationListAccountGroup1.
-								getProductConfigurationListAccountGroupId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductConfigurationListAccountGroup",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"productConfigurationListAccountGroupId",
+									productConfigurationListAccountGroup1.
+										getProductConfigurationListAccountGroupId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteProductConfigurationListAccountGroup"));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
@@ -275,19 +279,24 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 			productConfigurationListAccountGroup2 =
 				testGraphQLDeleteProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductConfigurationListAccountGroup",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"productConfigurationListAccountGroupId",
-								productConfigurationListAccountGroup2.
-									getProductConfigurationListAccountGroupId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductConfigurationListAccountGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"productConfigurationListAccountGroupId",
+										productConfigurationListAccountGroup2.
+											getProductConfigurationListAccountGroupId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductConfigurationListAccountGroup"));
 	}
 
 	protected ProductConfigurationListAccountGroup

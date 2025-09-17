@@ -266,23 +266,27 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		ScopedTestEntity scopedTestEntity1 =
 			testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAssetLibraryScopedTestEntityByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"assetLibraryId",
-							"\"" +
-								testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								scopedTestEntity1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAssetLibraryScopedTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										scopedTestEntity1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAssetLibraryScopedTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -312,25 +316,30 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		ScopedTestEntity scopedTestEntity2 =
 			testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"test_v1_0",
-				new GraphQLField(
-					"deleteAssetLibraryScopedTestEntityByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"assetLibraryId",
-								"\"" +
-									testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									scopedTestEntity2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"deleteAssetLibraryScopedTestEntityByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											scopedTestEntity2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"Object/deleteAssetLibraryScopedTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -417,21 +426,26 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		ScopedTestEntity scopedTestEntity1 =
 			testGraphQLDeleteSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteScopedTestEntityByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + scopedTestEntity1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								scopedTestEntity1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteScopedTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + scopedTestEntity1.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										scopedTestEntity1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteScopedTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -459,23 +473,29 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		ScopedTestEntity scopedTestEntity2 =
 			testGraphQLDeleteSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"test_v1_0",
-				new GraphQLField(
-					"deleteSiteScopedTestEntityByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + scopedTestEntity2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									scopedTestEntity2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"deleteSiteScopedTestEntityByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + scopedTestEntity2.getSiteId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											scopedTestEntity2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"Object/deleteSiteScopedTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

@@ -275,16 +275,19 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThread messageBoardThread1 =
 			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteMessageBoardThread",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"messageBoardThreadId",
-							messageBoardThread1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMessageBoardThread",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardThreadId",
+									messageBoardThread1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteMessageBoardThread"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -307,18 +310,22 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThread messageBoardThread2 =
 			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteMessageBoardThread",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"messageBoardThreadId",
-								messageBoardThread2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteMessageBoardThread",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"messageBoardThreadId",
+										messageBoardThread2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteMessageBoardThread"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -428,16 +435,19 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThread messageBoardThread1 =
 			testGraphQLDeleteMessageBoardThreadMyRating_addMessageBoardThread();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteMessageBoardThreadMyRating",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"messageBoardThreadId",
-							messageBoardThread1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMessageBoardThreadMyRating",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardThreadId",
+									messageBoardThread1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteMessageBoardThreadMyRating"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -460,18 +470,22 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThread messageBoardThread2 =
 			testGraphQLDeleteMessageBoardThreadMyRating_addMessageBoardThread();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteMessageBoardThreadMyRating",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"messageBoardThreadId",
-								messageBoardThread2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteMessageBoardThreadMyRating",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"messageBoardThreadId",
+										messageBoardThread2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteMessageBoardThreadMyRating"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

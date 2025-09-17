@@ -254,14 +254,17 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		UserGroup userGroup1 = testGraphQLDeleteUserGroup_addUserGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteUserGroup",
-				new HashMap<String, Object>() {
-					{
-						put("userGroupId", userGroup1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserGroup",
+						new HashMap<String, Object>() {
+							{
+								put("userGroupId", userGroup1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteUserGroup"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -281,16 +284,20 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		UserGroup userGroup2 = testGraphQLDeleteUserGroup_addUserGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteUserGroup",
-					new HashMap<String, Object>() {
-						{
-							put("userGroupId", userGroup2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteUserGroup",
+							new HashMap<String, Object>() {
+								{
+									put("userGroupId", userGroup2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteUserGroup"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -421,17 +428,22 @@ public abstract class BaseUserGroupResourceTestCase {
 		UserGroup userGroup1 =
 			testGraphQLDeleteUserGroupByExternalReferenceCode_addUserGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteUserGroupByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + userGroup1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserGroupByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										userGroup1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteUserGroupByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -455,19 +467,25 @@ public abstract class BaseUserGroupResourceTestCase {
 		UserGroup userGroup2 =
 			testGraphQLDeleteUserGroupByExternalReferenceCode_addUserGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteUserGroupByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + userGroup2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteUserGroupByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											userGroup2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteUserGroupByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -529,36 +547,47 @@ public abstract class BaseUserGroupResourceTestCase {
 		UserGroup userGroup1 =
 			testGraphQLDeleteUserGroupByExternalReferenceCodeUsers_addUserGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteUserGroupByExternalReferenceCodeUsers",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + userGroup1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserGroupByExternalReferenceCodeUsers",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										userGroup1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteUserGroupByExternalReferenceCodeUsers"));
 
 		// Using the namespace headlessAdminUser_v1_0
 
 		UserGroup userGroup2 =
 			testGraphQLDeleteUserGroupByExternalReferenceCodeUsers_addUserGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteUserGroupByExternalReferenceCodeUsers",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + userGroup2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteUserGroupByExternalReferenceCodeUsers",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											userGroup2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteUserGroupByExternalReferenceCodeUsers"));
 	}
 
 	protected UserGroup
@@ -593,29 +622,36 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		UserGroup userGroup1 = testGraphQLDeleteUserGroupUsers_addUserGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteUserGroupUsers",
-				new HashMap<String, Object>() {
-					{
-						put("userGroupId", userGroup1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserGroupUsers",
+						new HashMap<String, Object>() {
+							{
+								put("userGroupId", userGroup1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteUserGroupUsers"));
 
 		// Using the namespace headlessAdminUser_v1_0
 
 		UserGroup userGroup2 = testGraphQLDeleteUserGroupUsers_addUserGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deleteUserGroupUsers",
-					new HashMap<String, Object>() {
-						{
-							put("userGroupId", userGroup2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteUserGroupUsers",
+							new HashMap<String, Object>() {
+								{
+									put("userGroupId", userGroup2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteUserGroupUsers"));
 	}
 
 	protected UserGroup testGraphQLDeleteUserGroupUsers_addUserGroup()

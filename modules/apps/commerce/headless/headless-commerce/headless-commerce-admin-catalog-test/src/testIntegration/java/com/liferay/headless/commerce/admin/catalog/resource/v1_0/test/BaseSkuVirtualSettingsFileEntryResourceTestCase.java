@@ -276,14 +276,17 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
 			testGraphQLDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSkuVirtualSettingsFileEntry",
-				new HashMap<String, Object>() {
-					{
-						put("id", skuVirtualSettingsFileEntry1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSkuVirtualSettingsFileEntry",
+						new HashMap<String, Object>() {
+							{
+								put("id", skuVirtualSettingsFileEntry1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSkuVirtualSettingsFileEntry"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -304,16 +307,23 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
 			testGraphQLDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteSkuVirtualSettingsFileEntry",
-					new HashMap<String, Object>() {
-						{
-							put("id", skuVirtualSettingsFileEntry2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteSkuVirtualSettingsFileEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"id",
+										skuVirtualSettingsFileEntry2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteSkuVirtualSettingsFileEntry"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

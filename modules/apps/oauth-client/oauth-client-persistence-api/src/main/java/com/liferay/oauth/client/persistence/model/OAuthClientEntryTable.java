@@ -52,6 +52,10 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, String> clientId = createColumn(
 		"clientId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientEntryTable, String> customClaimsJSON =
+		createColumn(
+			"customClaimsJSON", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, Clob> infoJSON = createColumn(
 		"infoJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, Long> metadataCacheTime =
@@ -64,10 +68,6 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 	public final Column<OAuthClientEntryTable, String>
 		tokenRequestParametersJSON = createColumn(
 			"tokenRequestParametersJSON", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<OAuthClientEntryTable, String> customClaimsJSON =
-		createColumn(
-			"customClaimsJSON", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 
 	private OAuthClientEntryTable() {

@@ -91,6 +91,8 @@ public class OAuthClientEntryCacheModel
 		sb.append(authServerWellKnownURI);
 		sb.append(", clientId=");
 		sb.append(clientId);
+		sb.append(", customClaimsJSON=");
+		sb.append(customClaimsJSON);
 		sb.append(", infoJSON=");
 		sb.append(infoJSON);
 		sb.append(", metadataCacheTime=");
@@ -99,8 +101,6 @@ public class OAuthClientEntryCacheModel
 		sb.append(oidcUserInfoMapperJSON);
 		sb.append(", tokenRequestParametersJSON=");
 		sb.append(tokenRequestParametersJSON);
-		sb.append(", customClaimsJSON=");
-		sb.append(customClaimsJSON);
 		sb.append("}");
 
 		return sb.toString();
@@ -159,6 +159,13 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setClientId(clientId);
 		}
 
+		if (customClaimsJSON == null) {
+			oAuthClientEntryImpl.setCustomClaimsJSON("");
+		}
+		else {
+			oAuthClientEntryImpl.setCustomClaimsJSON(customClaimsJSON);
+		}
+
 		if (infoJSON == null) {
 			oAuthClientEntryImpl.setInfoJSON("");
 		}
@@ -184,13 +191,6 @@ public class OAuthClientEntryCacheModel
 				tokenRequestParametersJSON);
 		}
 
-		if (customClaimsJSON == null) {
-			oAuthClientEntryImpl.setCustomClaimsJSON("");
-		}
-		else {
-			oAuthClientEntryImpl.setCustomClaimsJSON(customClaimsJSON);
-		}
-
 		oAuthClientEntryImpl.resetOriginalValues();
 
 		return oAuthClientEntryImpl;
@@ -213,12 +213,12 @@ public class OAuthClientEntryCacheModel
 		authRequestParametersJSON = objectInput.readUTF();
 		authServerWellKnownURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
+		customClaimsJSON = objectInput.readUTF();
 		infoJSON = (String)objectInput.readObject();
 
 		metadataCacheTime = objectInput.readLong();
 		oidcUserInfoMapperJSON = objectInput.readUTF();
 		tokenRequestParametersJSON = objectInput.readUTF();
-		customClaimsJSON = objectInput.readUTF();
 	}
 
 	@Override
@@ -262,6 +262,13 @@ public class OAuthClientEntryCacheModel
 			objectOutput.writeUTF(clientId);
 		}
 
+		if (customClaimsJSON == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(customClaimsJSON);
+		}
+
 		if (infoJSON == null) {
 			objectOutput.writeObject("");
 		}
@@ -284,13 +291,6 @@ public class OAuthClientEntryCacheModel
 		else {
 			objectOutput.writeUTF(tokenRequestParametersJSON);
 		}
-
-		if (customClaimsJSON == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(customClaimsJSON);
-		}
 	}
 
 	public long mvccVersion;
@@ -303,10 +303,10 @@ public class OAuthClientEntryCacheModel
 	public String authRequestParametersJSON;
 	public String authServerWellKnownURI;
 	public String clientId;
+	public String customClaimsJSON;
 	public String infoJSON;
 	public long metadataCacheTime;
 	public String oidcUserInfoMapperJSON;
 	public String tokenRequestParametersJSON;
-	public String customClaimsJSON;
 
 }

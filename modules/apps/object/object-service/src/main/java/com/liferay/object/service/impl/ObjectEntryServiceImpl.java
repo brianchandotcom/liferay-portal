@@ -422,8 +422,12 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			long groupId, long objectDefinitionId, String actionId)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission(objectDefinitionId);
+			ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
+				objectDefinition.getResourceName());
 
 		return portletResourcePermission.contains(
 			getPermissionChecker(), groupId, actionId);
@@ -553,51 +557,50 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			Map<String, Serializable> values)
 		throws PortalException {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
-			(objectEntryFolderId !=
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-17564") &&
+			(objectEntryFolderId ==
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT)) {
 
 			ModelResourcePermissionUtil.check(
-				_objectEntryFolderModelResourcePermission,
-				getPermissionChecker(), groupId, objectEntryFolderId,
-				ActionKeys.ADD_ENTRY);
+				_objectEntryFolderModelResourcePermission, permissionChecker,
+				groupId, objectEntryFolderId, ActionKeys.ADD_ENTRY);
 		}
-
-		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission(objectDefinitionId);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		ObjectEntry rootObjectEntry = _getRootObjectEntry(
 			objectDefinition, values);
 
-		if (rootObjectEntry != null) {
-			portletResourcePermission = _getPortletResourcePermission(
-				rootObjectEntry.getObjectDefinitionId());
-		}
+		PortletResourcePermission portletResourcePermission = null;
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		if (rootObjectEntry == null) {
+			portletResourcePermission =
+				ObjectDefinitionPortletResourcePermissionRegistryUtil.
+					getService(objectDefinition.getResourceName());
 
-		try {
 			portletResourcePermission.check(
-				permissionChecker, groupId, ObjectActionKeys.ADD_OBJECT_ENTRY);
+				getPermissionChecker(), groupId,
+				ObjectActionKeys.ADD_OBJECT_ENTRY);
 		}
-		catch (PortalException portalException1) {
-			if (!_isRootDescendantNode(objectDefinition, rootObjectEntry)) {
-				throw portalException1;
-			}
+		else {
+			ModelResourcePermission<ObjectEntry> modelResourcePermission =
+				getModelResourcePermission(
+					rootObjectEntry.getObjectDefinitionId());
 
-			try {
-				_checkPermission(
-					ActionKeys.UPDATE, objectDefinitionId, rootObjectEntry);
+			modelResourcePermission.check(
+				getPermissionChecker(), rootObjectEntry, ActionKeys.UPDATE);
 
-				return;
-			}
-			catch (PortalException portalException2) {
-				portalException1.addSuppressed(portalException2);
-			}
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				rootObjectEntry.getObjectDefinitionId());
+
+			portletResourcePermission =
+				ObjectDefinitionPortletResourcePermissionRegistryUtil.
+					getService(objectDefinition.getResourceName());
 		}
 
 		if (LazyReferencingThreadLocal.isEnabled() ||
@@ -606,11 +609,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
 
 			return;
-		}
-
-		if (rootObjectEntry != null) {
-			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
-				rootObjectEntry.getObjectDefinitionId());
 		}
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -690,42 +688,18 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			getModelResourcePermission(objectDefinitionId);
 
-		try {
+		if (objectEntry.isRootDescendantNode() &&
+			(actionId.equals(ActionKeys.DELETE) ||
+			 actionId.equals(ActionKeys.UPDATE) ||
+			 actionId.equals(ActionKeys.VIEW))) {
+
+			modelResourcePermission.check(
+				getPermissionChecker(), objectEntry, ActionKeys.UPDATE);
+		}
+		else {
 			modelResourcePermission.check(
 				getPermissionChecker(), objectEntry, actionId);
 		}
-		catch (PortalException portalException1) {
-			if ((objectEntry.getRootObjectEntryId() != 0) &&
-				(objectEntry.getRootObjectEntryId() !=
-					objectEntry.getObjectEntryId()) &&
-				(actionId.equals(ActionKeys.DELETE) ||
-				 actionId.equals(ActionKeys.UPDATE) ||
-				 actionId.equals(ActionKeys.VIEW))) {
-
-				try {
-					modelResourcePermission.check(
-						getPermissionChecker(), objectEntry, ActionKeys.UPDATE);
-
-					return;
-				}
-				catch (PortalException portalException2) {
-					portalException1.addSuppressed(portalException2);
-				}
-			}
-
-			throw portalException1;
-		}
-	}
-
-	private PortletResourcePermission _getPortletResourcePermission(
-			long objectDefinitionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		return ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
-			objectDefinition.getResourceName());
 	}
 
 	private ObjectEntry _getRootObjectEntry(
@@ -795,19 +769,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		return modelResourcePermission.contains(
 			permissionChecker, rootObjectEntry, ActionKeys.UPDATE);
-	}
-
-	private boolean _isRootDescendantNode(
-		ObjectDefinition objectDefinition, ObjectEntry rootObjectEntry) {
-
-		if (!objectDefinition.isRootDescendantNode() ||
-			(objectDefinition.isRootDescendantNode() &&
-			 (rootObjectEntry == null))) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private void _sendUserNotificationEvents(

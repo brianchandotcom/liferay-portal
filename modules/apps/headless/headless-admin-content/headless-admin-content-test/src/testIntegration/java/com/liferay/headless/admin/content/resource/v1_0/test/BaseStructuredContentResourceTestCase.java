@@ -238,7 +238,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	@Test
 	public void testGraphQLDeleteStructuredContentByVersion() throws Exception {
 
-		// No namespace
+		// Using the configured namespace admin
 
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContentByVersion_addStructuredContent();
@@ -247,7 +247,29 @@ public abstract class BaseStructuredContentResourceTestCase {
 			JSONUtil.getValueAsBoolean(
 				invokeGraphQLMutation(
 					new GraphQLField(
-						"deleteStructuredContentByVersion",
+						"admin",
+						new GraphQLField(
+							"deleteStructuredContentByVersion",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentId",
+										structuredContent1.getId());
+
+									put(
+										"version",
+										testGraphQLDeleteStructuredContentByVersion_getVersion());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/admin",
+				"Object/deleteStructuredContentByVersion"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"admin",
+					new GraphQLField(
+						"structuredContentByVersion",
 						new HashMap<String, Object>() {
 							{
 								put(
@@ -258,25 +280,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 									"version",
 									testGraphQLDeleteStructuredContentByVersion_getVersion());
 							}
-						})),
-				"JSONObject/data", "Object/deleteStructuredContentByVersion"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"structuredContentByVersion",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"structuredContentId",
-								structuredContent1.getId());
-
-							put(
-								"version",
-								testGraphQLDeleteStructuredContentByVersion_getVersion());
-						}
-					},
-					getGraphQLFields())),
+						},
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -822,7 +827,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testGraphQLGetStructuredContentByVersion_addStructuredContent();
 
-		// No namespace
+		// Using the configured namespace admin
 
 		Assert.assertTrue(
 			equals(
@@ -831,20 +836,22 @@ public abstract class BaseStructuredContentResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"structuredContentByVersion",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"structuredContentId",
-											structuredContent.getId());
+								"admin",
+								new GraphQLField(
+									"structuredContentByVersion",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"structuredContentId",
+												structuredContent.getId());
 
-										put(
-											"version",
-											testGraphQLGetStructuredContentByVersion_getVersion());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
+											put(
+												"version",
+												testGraphQLGetStructuredContentByVersion_getVersion());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/admin",
 						"Object/structuredContentByVersion"))));
 
 		// Using the namespace headlessAdminContent_v1_0
@@ -890,23 +897,25 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();
 		Double irrelevantVersion = RandomTestUtil.randomDouble();
 
-		// No namespace
+		// Using the configured namespace admin
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"structuredContentByVersion",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"structuredContentId",
-									irrelevantStructuredContentId);
-								put("version", irrelevantVersion);
-							}
-						},
-						getGraphQLFields())),
+						"admin",
+						new GraphQLField(
+							"structuredContentByVersion",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentId",
+										irrelevantStructuredContentId);
+									put("version", irrelevantVersion);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 

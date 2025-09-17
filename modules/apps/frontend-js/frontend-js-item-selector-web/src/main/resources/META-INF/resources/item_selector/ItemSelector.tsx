@@ -317,7 +317,6 @@ function ItemSelector<T extends Record<string, any>>({
 	);
 
 	let itemSelectorComponent;
-	let handleModalItemsChange: InternalDispatch<T[]> = setItems;
 
 	if (multiSelect && displaySelectedItems) {
 		itemSelectorComponent = (
@@ -407,22 +406,6 @@ function ItemSelector<T extends Record<string, any>>({
 				{memoizedChildren}
 			</ClayAutocomplete>
 		);
-
-		handleModalItemsChange = (selectedItems: T[]) => {
-			setItems(selectedItems);
-
-			if (selectedItems.length) {
-				const firstItemLabel = getObjectValueFromPath({
-					object: selectedItems[0],
-					path: locator.label,
-				});
-
-				setValue(firstItemLabel);
-			}
-			else {
-				setValue('');
-			}
-		};
 	}
 
 	return itemSelectorModalProps ? (
@@ -435,7 +418,25 @@ function ItemSelector<T extends Record<string, any>>({
 				items={items}
 				locator={locator}
 				multiSelect={multiSelect}
-				onItemsChange={handleModalItemsChange}
+				onItemsChange={(items: T[]) => {
+					setItems(items);
+
+					if (multiSelect) {
+						return;
+					}
+
+					if (items.length) {
+						const firstItemLabel = getObjectValueFromPath({
+							object: items[0],
+							path: locator.label,
+						});
+
+						setValue(firstItemLabel);
+					}
+					else {
+						setValue('');
+					}
+				}}
 			/>
 		</ClayInput.Group>
 	) : (

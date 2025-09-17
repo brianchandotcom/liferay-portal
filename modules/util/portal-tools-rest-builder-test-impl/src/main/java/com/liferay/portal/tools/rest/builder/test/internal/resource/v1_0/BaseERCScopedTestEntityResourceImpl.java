@@ -781,6 +781,44 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			}
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				ercScopedTestEntityUnsafeFunction = ercScopedTestEntity -> {
+					ERCScopedTestEntity persistedERCScopedTestEntity = null;
+
+					if (parameters.containsKey(
+							"assetLibraryExternalReferenceCode")) {
+
+						persistedERCScopedTestEntity =
+							putAssetLibraryERCScopedTestEntity(
+								(String)parameters.get(
+									"assetLibraryExternalReferenceCode"),
+								ercScopedTestEntity.getExternalReferenceCode(),
+								ercScopedTestEntity);
+					}
+					else if (parameters.containsKey(
+								"siteExternalReferenceCode")) {
+
+						persistedERCScopedTestEntity =
+							putSiteERCScopedTestEntity(
+								(String)parameters.get(
+									"siteExternalReferenceCode"),
+								ercScopedTestEntity.getExternalReferenceCode(),
+								ercScopedTestEntity);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [assetLibraryExternalReferenceCode, siteExternalReferenceCode]");
+					}
+
+					return persistedERCScopedTestEntity;
+				};
+			}
+		}
+
 		if (ercScopedTestEntityUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -854,7 +892,7 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

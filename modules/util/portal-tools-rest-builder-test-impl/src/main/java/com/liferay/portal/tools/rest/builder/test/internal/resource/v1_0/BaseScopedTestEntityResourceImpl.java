@@ -1155,11 +1155,12 @@ public abstract class BaseScopedTestEntityResourceImpl
 									scopedTestEntity.
 										getExternalReferenceCode());
 						}
-						else
-
-						getScopedTestEntity =
-							getScopedTestEntityByExternalReferenceCode(
-								scopedTestEntity.getExternalReferenceCode());
+						else {
+							getScopedTestEntity =
+								getScopedTestEntityByExternalReferenceCode(
+									scopedTestEntity.
+										getExternalReferenceCode());
+						}
 
 						persistedScopedTestEntity = patchScopedTestEntity(
 							getScopedTestEntity.getId(), scopedTestEntity);

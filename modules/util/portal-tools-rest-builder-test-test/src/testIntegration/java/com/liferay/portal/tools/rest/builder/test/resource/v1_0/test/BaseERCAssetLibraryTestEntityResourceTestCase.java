@@ -440,6 +440,17 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		assertEquals(
 			postERCAssetLibraryTestEntity, getERCAssetLibraryTestEntity);
 		assertValid(getERCAssetLibraryTestEntity);
+
+		Assert.assertNull(getERCAssetLibraryTestEntity.getPermissions());
+
+		getERCAssetLibraryTestEntity =
+			permissionsERCAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntity(
+					postERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode());
+
+		Assert.assertNotNull(getERCAssetLibraryTestEntity.getPermissions());
 	}
 
 	protected ERCAssetLibraryTestEntity
@@ -694,6 +705,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			randomERCAssetLibraryTestEntity, putERCAssetLibraryTestEntity);
 		assertValid(putERCAssetLibraryTestEntity);
 
+		Assert.assertNull(putERCAssetLibraryTestEntity.getPermissions());
+
 		ERCAssetLibraryTestEntity getERCAssetLibraryTestEntity =
 			ercAssetLibraryTestEntityResource.
 				getAssetLibraryERCAssetLibraryTestEntity(
@@ -704,6 +717,34 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		assertEquals(
 			randomERCAssetLibraryTestEntity, getERCAssetLibraryTestEntity);
 		assertValid(getERCAssetLibraryTestEntity);
+
+		ERCAssetLibraryTestEntity randomPermissionsERCAssetLibraryTestEntity =
+			randomPermissionsERCAssetLibraryTestEntity();
+
+		putERCAssetLibraryTestEntity =
+			ercAssetLibraryTestEntityResource.
+				putAssetLibraryERCAssetLibraryTestEntity(
+					postERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode(),
+					randomPermissionsERCAssetLibraryTestEntity);
+
+		assertEquals(
+			randomPermissionsERCAssetLibraryTestEntity,
+			putERCAssetLibraryTestEntity);
+		assertValid(putERCAssetLibraryTestEntity);
+
+		Assert.assertNull(putERCAssetLibraryTestEntity.getPermissions());
+
+		putERCAssetLibraryTestEntity =
+			permissionsERCAssetLibraryTestEntityResource.
+				putAssetLibraryERCAssetLibraryTestEntity(
+					postERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode(),
+					randomPermissionsERCAssetLibraryTestEntity);
+
+		Assert.assertNotNull(putERCAssetLibraryTestEntity.getPermissions());
 	}
 
 	protected ERCAssetLibraryTestEntity

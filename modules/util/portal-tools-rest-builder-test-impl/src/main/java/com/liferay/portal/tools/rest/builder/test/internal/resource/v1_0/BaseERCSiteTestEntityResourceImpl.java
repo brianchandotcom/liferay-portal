@@ -187,6 +187,11 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		return ercSiteTestEntitiesPage;
 	}
 
+	protected abstract ERCSiteTestEntity doGetSiteERCSiteTestEntity(
+			String siteExternalReferenceCode,
+			String ercSiteTestEntityExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -215,7 +220,7 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ERCSiteTestEntity getSiteERCSiteTestEntity(
+	public final ERCSiteTestEntity getSiteERCSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -226,7 +231,27 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 			String ercSiteTestEntityExternalReferenceCode)
 		throws Exception {
 
-		return new ERCSiteTestEntity();
+		ERCSiteTestEntity getERCSiteTestEntity = doGetSiteERCSiteTestEntity(
+			siteExternalReferenceCode, ercSiteTestEntityExternalReferenceCode);
+
+		getERCSiteTestEntity.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionsPage =
+						getSiteERCSiteTestEntityPermissionsPage(
+							siteExternalReferenceCode,
+							getERCSiteTestEntity.getExternalReferenceCode(),
+							null);
+
+					Collection<Permission> permissions =
+						permissionsPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getERCSiteTestEntity;
 	}
 
 	/**
@@ -503,6 +528,12 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		).build();
 	}
 
+	protected abstract ERCSiteTestEntity doPutSiteERCSiteTestEntity(
+			String siteExternalReferenceCode,
+			String ercSiteTestEntityExternalReferenceCode,
+			ERCSiteTestEntity ercSiteTestEntity)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -532,7 +563,7 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public ERCSiteTestEntity putSiteERCSiteTestEntity(
+	public final ERCSiteTestEntity putSiteERCSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -544,7 +575,32 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 			ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 
-		return new ERCSiteTestEntity();
+		Permission[] permissions = ercSiteTestEntity.getPermissions();
+
+		ERCSiteTestEntity putERCSiteTestEntity = doPutSiteERCSiteTestEntity(
+			siteExternalReferenceCode, ercSiteTestEntityExternalReferenceCode,
+			ercSiteTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putSiteERCSiteTestEntityPermissionsPage(
+					siteExternalReferenceCode,
+					putERCSiteTestEntity.getExternalReferenceCode(),
+					permissions);
+
+			putERCSiteTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putERCSiteTestEntity;
 	}
 
 	/**
@@ -677,6 +733,30 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 			}
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				ercSiteTestEntityUnsafeFunction = ercSiteTestEntity -> {
+					ERCSiteTestEntity persistedERCSiteTestEntity = null;
+
+					if (parameters.containsKey("siteExternalReferenceCode")) {
+						persistedERCSiteTestEntity = putSiteERCSiteTestEntity(
+							(String)parameters.get("siteExternalReferenceCode"),
+							ercSiteTestEntity.getExternalReferenceCode(),
+							ercSiteTestEntity);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteExternalReferenceCode]");
+					}
+
+					return persistedERCSiteTestEntity;
+				};
+			}
+		}
+
 		if (ercSiteTestEntityUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -734,7 +814,7 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

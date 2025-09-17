@@ -466,6 +466,15 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		assertEquals(postERCSiteTestEntity, getERCSiteTestEntity);
 		assertValid(getERCSiteTestEntity);
+
+		Assert.assertNull(getERCSiteTestEntity.getPermissions());
+
+		getERCSiteTestEntity =
+			permissionsERCSiteTestEntityResource.getSiteERCSiteTestEntity(
+				postERCSiteTestEntity.getSiteExternalReferenceCode(),
+				postERCSiteTestEntity.getExternalReferenceCode());
+
+		Assert.assertNotNull(getERCSiteTestEntity.getPermissions());
 	}
 
 	protected ERCSiteTestEntity
@@ -707,6 +716,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		assertEquals(randomERCSiteTestEntity, putERCSiteTestEntity);
 		assertValid(putERCSiteTestEntity);
 
+		Assert.assertNull(putERCSiteTestEntity.getPermissions());
+
 		ERCSiteTestEntity getERCSiteTestEntity =
 			ercSiteTestEntityResource.getSiteERCSiteTestEntity(
 				putERCSiteTestEntity.getSiteExternalReferenceCode(),
@@ -714,6 +725,28 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		assertEquals(randomERCSiteTestEntity, getERCSiteTestEntity);
 		assertValid(getERCSiteTestEntity);
+
+		ERCSiteTestEntity randomPermissionsERCSiteTestEntity =
+			randomPermissionsERCSiteTestEntity();
+
+		putERCSiteTestEntity =
+			ercSiteTestEntityResource.putSiteERCSiteTestEntity(
+				postERCSiteTestEntity.getSiteExternalReferenceCode(),
+				postERCSiteTestEntity.getExternalReferenceCode(),
+				randomPermissionsERCSiteTestEntity);
+
+		assertEquals(randomPermissionsERCSiteTestEntity, putERCSiteTestEntity);
+		assertValid(putERCSiteTestEntity);
+
+		Assert.assertNull(putERCSiteTestEntity.getPermissions());
+
+		putERCSiteTestEntity =
+			permissionsERCSiteTestEntityResource.putSiteERCSiteTestEntity(
+				postERCSiteTestEntity.getSiteExternalReferenceCode(),
+				postERCSiteTestEntity.getExternalReferenceCode(),
+				randomPermissionsERCSiteTestEntity);
+
+		Assert.assertNotNull(putERCSiteTestEntity.getPermissions());
 	}
 
 	protected ERCSiteTestEntity

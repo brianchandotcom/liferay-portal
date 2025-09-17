@@ -121,7 +121,7 @@ public class DataCleanupPreupgradeProcessSuite {
 			new UserDataCleanupPreupgradeProcess();
 
 		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
-			dataCleanupPreupgradeProcessestMap =
+			dataCleanupPreupgradeProcessesMap =
 				HashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
@@ -182,7 +182,7 @@ public class DataCleanupPreupgradeProcessSuite {
 					).build();
 
 		_dataCleanupPreupgradeProcessesMap = Collections.unmodifiableMap(
-			dataCleanupPreupgradeProcessestMap);
+			dataCleanupPreupgradeProcessesMap);
 	}
 
 }

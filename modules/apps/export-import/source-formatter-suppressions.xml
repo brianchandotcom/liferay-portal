@@ -4,4 +4,17 @@
 	<checkstyle>
 		<suppress checks="StaticVariableNameCheck" files="export-import-web/src/main/java/com/liferay/exportimport/web/internal/configuration/ExportImportWebConfigurationValues\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="CSPTagIllegalAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/ddm-templates/product-detail/ddm-template\.ftl" />
+		<suppress checks="CSPTagIllegalAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/ddm-templates/search-category/ddm-template\.ftl" />
+		<suppress checks="CSPTagIllegalAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/fragments/group/clarity-components/fragments/icon/index\.html" />
+		<suppress checks="CSPTagIllegalAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/fragments/group/clarity-components/fragments/login/index\.html" />
+		<suppress checks="CSPTagIllegalAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/fragments/group/clarity-components/fragments/login-and-user-menu/index\.html" />
+		<suppress checks="CSPTagIllegalAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/fragments/group/clarity-components/fragments/search-button/index\.html" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/ddm-templates/category-cards/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/ddm-templates/product-category-banner/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/ddm-templates/product-detail/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/ddm-templates/product-search-results/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="export-import-test-site-initializer/src/main/resources/site-initializer/ddm-templates/search-results-cards/ddm-template\.ftl" />
+	</source-check>
 </suppressions>

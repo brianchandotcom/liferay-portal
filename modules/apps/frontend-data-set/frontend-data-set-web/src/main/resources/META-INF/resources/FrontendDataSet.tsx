@@ -1365,6 +1365,7 @@ const FrontendDataSetContent = ({
 				selectedItemsValue,
 				selectionType,
 				setSearching,
+				setView,
 				showBulkActionsManagementBar,
 				showBulkActionsManagementBarActions,
 				showInfoPanel: infoPanelComponent ? true : false,

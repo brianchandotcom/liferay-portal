@@ -304,6 +304,11 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 />
 
 <c:if test='<%= customFacetDisplayContext.isShowInputRange() && (aggregationType.equals("dateRange") || aggregationType.equals("range")) %>'>
+	<aui:script>
+		Liferay.destroyComponent('<portlet:namespace />fromInputDatePicker');
+		Liferay.destroyComponent('<portlet:namespace />toInputDatePicker');
+	</aui:script>
+
 	<aui:script use="liferay-search-custom-range-facet">
 		new Liferay.Search.CustomRangeFacet({
 			aggregationType: '<%= customFacetDisplayContext.getAggregationType() %>',

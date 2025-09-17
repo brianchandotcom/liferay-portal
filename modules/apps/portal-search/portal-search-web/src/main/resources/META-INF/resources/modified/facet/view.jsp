@@ -209,6 +209,11 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 		module="{FacetUtil} from portal-search-web"
 	/>
 
+	<aui:script>
+		Liferay.destroyComponent('<portlet:namespace />fromInputDatePicker');
+		Liferay.destroyComponent('<portlet:namespace />toInputDatePicker');
+	</aui:script>
+
 	<aui:script use="liferay-search-custom-range-facet">
 		new Liferay.Search.CustomRangeFacet({
 			form: A.one('#<portlet:namespace />fm'),

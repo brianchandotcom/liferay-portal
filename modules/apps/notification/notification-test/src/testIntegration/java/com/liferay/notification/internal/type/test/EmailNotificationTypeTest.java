@@ -1233,7 +1233,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	public void testSendNotificationToSubscribers() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				true, true,
+				false, true, true,
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(

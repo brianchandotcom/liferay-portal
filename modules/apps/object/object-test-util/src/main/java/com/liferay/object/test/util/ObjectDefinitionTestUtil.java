@@ -181,6 +181,7 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
+			boolean enableObjectEntryDraft,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, boolean localized, String name,
 			List<ObjectField> objectFields, long objectFolderId, String scope,
@@ -190,8 +191,9 @@ public class ObjectDefinitionTestUtil {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				userId, objectFolderId, null, false, true, false, true,
-				localized, false, false, enableObjectEntrySubscription,
-				enableObjectEntryVersioning, null,
+				localized, enableObjectEntryDraft, false,
+				enableObjectEntrySubscription, enableObjectEntryVersioning,
+				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -203,13 +205,15 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
+			boolean enableObjectEntryDraft,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, List<ObjectField> objectFields,
 			String scope)
 		throws Exception {
 
 		return publishObjectDefinition(
-			enableObjectEntrySubscription, enableObjectEntryVersioning,
+			enableObjectEntryDraft, enableObjectEntrySubscription,
+			enableObjectEntryVersioning,
 			FeatureFlagManagerUtil.isEnabled("LPD-32050"), getRandomName(),
 			objectFields, 0, scope, TestPropsValues.getUserId());
 	}
@@ -250,8 +254,8 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return publishObjectDefinition(
-			false, false, localized, name, objectFields, objectFolderId, scope,
-			userId);
+			false, false, false, localized, name, objectFields, objectFolderId,
+			scope, userId);
 	}
 
 	public static ObjectDefinition publishObjectDefinition(

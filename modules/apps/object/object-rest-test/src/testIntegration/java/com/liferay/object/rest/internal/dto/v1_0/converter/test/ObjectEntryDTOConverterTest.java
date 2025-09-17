@@ -75,7 +75,7 @@ public class ObjectEntryDTOConverterTest {
 						"listTypeEntryKey2")));
 
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			false, true,
+			false, false, true,
 			ListUtil.fromArray(
 				new PicklistObjectFieldBuilder(
 				).labelMap(

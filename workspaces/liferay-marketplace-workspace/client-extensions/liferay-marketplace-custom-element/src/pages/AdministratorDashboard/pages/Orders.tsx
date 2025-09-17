@@ -15,6 +15,7 @@ import ListView, {ListViewProps} from '../../../components/ListView';
 import {ManagementToolbarProps} from '../../../components/ListView/components/ManagementToolbar';
 import Page from '../../../components/Page';
 import {
+	OrderCustomFields,
 	OrderTypes,
 	orderTypeLabel,
 	orderWorkflowDisplayType,
@@ -200,7 +201,9 @@ export function AdministratorOrdersListView({
 						name: i18n.translate('customer-project'),
 						render: (customFields) => {
 							const projects = safeJSONParse(
-								customFields!['koroneiki-project'],
+								customFields![
+									OrderCustomFields.KORONEIKI_PROJECT
+								],
 								[]
 							);
 

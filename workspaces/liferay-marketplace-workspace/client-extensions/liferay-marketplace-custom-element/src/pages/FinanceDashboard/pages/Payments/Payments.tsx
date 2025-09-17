@@ -72,7 +72,7 @@ const Payments = () => {
 					searchVisible: true,
 					visible: true,
 				}}
-				resource={`/o/c/publishersalessummaries?${new URLSearchParams({nestedFields: 'accountToPublisher,publisherToCommerceOrder'})}`}
+				resource="/o/c/publishersalessummaries?nestedFields=accountToPublisher,publisherToCommerceOrder"
 				tableProps={{
 					actions: [
 						{

@@ -233,7 +233,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_friendlyURLEntryLocalService, objectDefinition, _portal);
 
 		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission(_getResourceName(objectDefinition));
+			_getPortletResourcePermission(objectDefinition.getResourceName());
 
 		InfoPermissionProvider infoPermissionProvider =
 			new ObjectEntryInfoPermissionProvider(
@@ -731,17 +731,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return portletResourcePermission;
 	}
 
-	private String _getResourceName(ObjectDefinition objectDefinition) {
-		if (!objectDefinition.isRootDescendantNode()) {
-			return objectDefinition.getResourceName();
-		}
-
-		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
-			objectDefinition.getRootObjectDefinitionId());
-
-		return objectDefinition.getResourceName();
-	}
-
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -940,7 +929,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 			PortletResourcePermission portletResourcePermission =
 				ObjectDefinitionPortletResourcePermissionRegistryUtil.
-					getService(_getResourceName(objectDefinition));
+					getService(objectDefinition.getResourceName());
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)uploadPortletRequest.getAttribute(

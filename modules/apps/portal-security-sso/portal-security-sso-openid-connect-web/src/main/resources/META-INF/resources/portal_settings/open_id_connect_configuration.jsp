@@ -183,7 +183,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:select fieldParam="<%= claimColumnId %>" id="<%= claimColumnId %>" inlineField="<%= true %>" label="custom-claims-key" name="<%= claimColumnId %>" showEmptyOption="<%= true %>">
+				<aui:select fieldParam="<%= claimColumnId %>" id="<%= claimColumnId %>" inlineField="<%= true %>" label="user-custom-fields" name="<%= claimColumnId %>" showEmptyOption="<%= true %>">
 
 					<%
 					for (ExpandoColumn expandoColumn : openIdConnectProviderConfigurationDisplayContext.getAvailableCustomFields()) {
@@ -199,7 +199,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 			</div>
 
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-claims-value" name="<%= fieldId %>" type="text" value="<%= customClaimsValues[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-claim" name="<%= fieldId %>" type="text" value="<%= customClaimsValues[i] %>" />
 			</div>
 		</div>
 

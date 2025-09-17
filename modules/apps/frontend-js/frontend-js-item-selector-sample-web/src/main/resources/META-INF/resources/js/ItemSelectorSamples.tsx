@@ -275,13 +275,16 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Single Select (Users) - Open Modal Trigger">
 				<ItemSelector
 					apiURL={userAccountsItemSelectorConfig.apiURL}
-					fdsProps={{
-						...FDS_DEFAULT_PROPS,
-						id: `itemSelectorModal-users-${getRandomId()}`,
-						views: getDefaultItemSelectorModalViews({
-							viewsConfig:
-								EItemSelectorModalViewsConfig.USER_ACCOUNTS,
-						}),
+					itemSelectorModalProps={{
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							id: `itemSelectorModal-users-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
+							}),
+						},
+						type: userAccountsItemSelectorConfig.type,
 					}}
 					items={user2 ? [user2] : []}
 					locator={{
@@ -291,7 +294,6 @@ export default function ItemSelectorSamples() {
 					}}
 					onItemsChange={(items: User[]) => setUser2(items[0])}
 					placeholder="Select a User"
-					type={userAccountsItemSelectorConfig.type}
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>
@@ -304,13 +306,16 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Multiple Select (Users) - Open Modal Trigger">
 				<ItemSelector
 					apiURL={userAccountsItemSelectorConfig.apiURL}
-					fdsProps={{
-						...FDS_DEFAULT_PROPS,
-						id: `itemSelectorModal-documents-${getRandomId()}`,
-						views: getDefaultItemSelectorModalViews({
-							viewsConfig:
-								EItemSelectorModalViewsConfig.USER_ACCOUNTS,
-						}),
+					itemSelectorModalProps={{
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							id: `itemSelectorModal-documents-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
+							}),
+						},
+						type: userAccountsItemSelectorConfig.type,
 					}}
 					items={usersMultiSelect}
 					locator={{
@@ -323,7 +328,6 @@ export default function ItemSelectorSamples() {
 						setUsersMultiSelect(items);
 					}}
 					placeholder="Select a User"
-					type={userAccountsItemSelectorConfig.type}
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>
@@ -336,13 +340,16 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Single Select (Spaces) - Open Modal Trigger">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
-					fdsProps={{
-						...FDS_DEFAULT_PROPS,
-						id: `itemSelectorModal-spaces-${getRandomId()}`,
-						views: getDefaultItemSelectorModalViews({
-							viewsConfig:
-								EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
-						}),
+					itemSelectorModalProps={{
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							id: `itemSelectorModal-spaces-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
+							}),
+						},
+						type: assetLibrariesItemSelectorConfig.type,
 					}}
 					items={space3 ? [space3] : []}
 					locator={{
@@ -352,7 +359,6 @@ export default function ItemSelectorSamples() {
 					}}
 					onItemsChange={(items: Space[]) => setSpace3(items[0])}
 					placeholder="Select a Space"
-					type={assetLibrariesItemSelectorConfig.type}
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>
@@ -365,13 +371,16 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Multiple Select (Spaces) - Open Modal Trigger">
 				<ItemSelector
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
-					fdsProps={{
-						...FDS_DEFAULT_PROPS,
-						id: `itemSelectorModal-spaces-${getRandomId()}`,
-						views: getDefaultItemSelectorModalViews({
-							viewsConfig:
-								EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
-						}),
+					itemSelectorModalProps={{
+						fdsProps: {
+							...FDS_DEFAULT_PROPS,
+							id: `itemSelectorModal-spaces-${getRandomId()}`,
+							views: getDefaultItemSelectorModalViews({
+								viewsConfig:
+									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
+							}),
+						},
+						type: assetLibrariesItemSelectorConfig.type,
 					}}
 					items={spacesMultiSelect}
 					locator={{
@@ -384,7 +393,6 @@ export default function ItemSelectorSamples() {
 						setSpacesMultiSelect(items);
 					}}
 					placeholder="Select a Space"
-					type={assetLibrariesItemSelectorConfig.type}
 				>
 					{(item) => (
 						<ItemSelector.Item key={item.id} textValue={item.name}>

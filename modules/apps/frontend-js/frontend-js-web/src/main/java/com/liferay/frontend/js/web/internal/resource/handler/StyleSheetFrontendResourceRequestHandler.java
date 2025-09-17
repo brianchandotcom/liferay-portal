@@ -56,12 +56,6 @@ public class StyleSheetFrontendResourceRequestHandler
 			return true;
 		}
 
-		// LPD-57326
-
-		if (true) {
-			return false;
-		}
-
 		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
 			requestURI);
 

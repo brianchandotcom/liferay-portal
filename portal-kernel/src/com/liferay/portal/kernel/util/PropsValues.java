@@ -480,6 +480,17 @@ public class PropsValues {
 	public static final String DATABASE_MYSQL_ENGINE = PropsUtil.get(
 		PropsKeys.DATABASE_MYSQL_ENGINE);
 
+	public static final boolean DATABASE_PARTITION_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DATABASE_PARTITION_ENABLED));
+
+	public static final String DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
+		PropsUtil.get(PropsKeys.DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
+
+	public static final boolean DATABASE_PARTITION_THREAD_POOL_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DATABASE_PARTITION_THREAD_POOL_ENABLED));
+
 	public static String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX = PropsUtil.get(
 		PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX);
 

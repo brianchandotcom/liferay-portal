@@ -184,7 +184,6 @@ public class FragmentEntryFragmentRendererTest {
 		String content = mockHttpServletResponse.getContentAsString();
 
 		Assert.assertTrue(content.contains("https://liferay.com"));
-
 		Assert.assertTrue(
 			content.contains("rel=\"noopener noreferrer\" target=\"_blank\""));
 	}

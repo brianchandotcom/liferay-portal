@@ -131,7 +131,7 @@ public class GitRepositoryFactory {
 				pullRequest, gitUpstreamBranchName);
 		}
 		else if (gitRepositoryName.equals("liferay-release-tool-ee")) {
-			workspaceGitRepository = new ReleaseToolWorkspaceGitRepository(
+			workspaceGitRepository = new LiferayReleaseToolEEWorkspaceGitRepository(
 				pullRequest, gitUpstreamBranchName);
 		}
 		else {
@@ -218,7 +218,7 @@ public class GitRepositoryFactory {
 				remoteGitRef, upstreamBranchName);
 		}
 		else if (gitRepositoryName.equals("liferay-release-tool-ee")) {
-			workspaceGitRepository = new ReleaseToolWorkspaceGitRepository(
+			workspaceGitRepository = new LiferayReleaseToolEEWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}
 		else {
@@ -268,7 +268,7 @@ public class GitRepositoryFactory {
 				jsonObject);
 		}
 		else if (repositoryName.equals("liferay-release-tool-ee")) {
-			workspaceGitRepository = new ReleaseToolWorkspaceGitRepository(
+			workspaceGitRepository = new LiferayReleaseToolEEWorkspaceGitRepository(
 				jsonObject);
 		}
 		else {

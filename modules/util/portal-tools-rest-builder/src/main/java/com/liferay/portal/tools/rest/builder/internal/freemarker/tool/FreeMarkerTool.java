@@ -1120,10 +1120,10 @@ public class FreeMarkerTool {
 		return mediaTypes.contains(mediaType);
 	}
 
-	public boolean isByExternalReferenceCode(
+	public boolean isByExternalReferenceCodeMethod(
 		String httpMethod, JavaMethodSignature javaMethodSignature) {
 
-		return ResourceOpenAPIParser.isByExternalReferenceCode(
+		return ResourceOpenAPIParser.isByExternalReferenceCodeMethod(
 			httpMethod, javaMethodSignature);
 	}
 

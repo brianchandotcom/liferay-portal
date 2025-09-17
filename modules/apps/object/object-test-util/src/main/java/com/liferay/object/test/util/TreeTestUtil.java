@@ -290,7 +290,9 @@ public class TreeTestUtil {
 				objectEntryLocalService.deleteObjectEntry(objectEntry);
 			}
 
-			if (objectDefinition.getRootObjectDefinitionId() != 0) {
+			if (ArrayUtil.isNotEmpty(
+					objectDefinition.getRootObjectDefinitionIds())) {
+
 				unbind(
 					objectDefinition.getObjectDefinitionId(),
 					objectRelationshipLocalService);

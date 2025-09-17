@@ -1,5 +1,5 @@
 {
-	"@generated": "31f26822c82fd8221761f5bf04dc4da97a68b43a",
+	"@generated": "cb1cf6452a93b6c0c23f9e29a688cd1a105cdc25",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -28,6 +28,9 @@
 			],
 			"document-library-preview-image": [
 				"../../../document-library/document-library-preview-image/src/main/resources/META-INF/resources/preview/js/index.tsx"
+			],
+			"document-library-video": [
+				"../../../document-library/document-library-video/src/main/resources/META-INF/resources/js/index.d.ts"
 			],
 			"frontend-editor-ckeditor-web": [
 				"../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/js/index.ts"
@@ -80,6 +83,9 @@
 		},
 		{
 			"path": "../../../document-library/document-library-preview-image/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../document-library/document-library-video/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/tsconfig.json"

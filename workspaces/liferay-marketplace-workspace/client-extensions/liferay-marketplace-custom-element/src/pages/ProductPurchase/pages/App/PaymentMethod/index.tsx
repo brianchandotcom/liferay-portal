@@ -13,48 +13,41 @@ import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import ProductPurchaseApp from '../../../services/ProductPurchaseApp';
+import {cartStore} from '../../../store';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';
 import {PaymentMethodType} from '../../../types';
 import {BillingAddress} from './BillingAddress/BillingAddress';
-import InvoiceForm from './InvoiceForm';
-import PayNow from './PayNow';
 import {PaymentTypeSelector} from './PaymentTypeSelector';
+import TaxIdDisplay from './TaxIdDisplay';
 import {TrialMethod} from './TrialMethod/TrialMethod';
 
 const PaymentMethodFlows = {
 	[PaymentMethodType.TRIAL]: {
-		Component: TrialMethod,
 		actionMessage: i18n.translate('start-trial'),
 	},
 	[PaymentMethodType.PAY_NOW]: {
-		Component: PayNow,
-		actionMessage: (price: string) => `Pay ${price} Now`,
+		actionMessage: i18n.translate('continue'),
 	},
 	[PaymentMethodType.INVOICE]: {
-		Component: InvoiceForm,
-		actionMessage: (price: string) => `Create PO for ${price}`,
+		actionMessage: i18n.translate('continue'),
 	},
 };
 
 const isPrimaryButtonActive = () => {
 	const {context} = productPurchaseStore.getSnapshot();
 
+	const {type: paymentMethodType} = context.payment;
+
 	const isAddressValid = zodSchema.billingAddress.safeParse(
 		context.payment.billingAddress
 	);
 
-	if (!isAddressValid.success) {
-		return false;
-	}
-
-	const {type: paymentMethodType} = context.payment;
-
 	if (paymentMethodType === PaymentMethodType.TRIAL) {
-		return true;
+		return isAddressValid.success && true;
 	}
 
 	if (paymentMethodType === PaymentMethodType.PAY_NOW) {
-		return context.payment.eulaAgreement;
+		return isAddressValid.success;
 	}
 
 	const invoiceValues = Object.values(context.payment.invoice);
@@ -66,6 +59,8 @@ const isPrimaryButtonActive = () => {
 
 export default function PaymentMethod() {
 	const navigate = useNavigate();
+	const {context} = productPurchaseStore.getSnapshot();
+	const {type: paymentMethodType} = context.payment;
 
 	const {licenseType, payment: paymentStore} = useSelector(
 		productPurchaseStore,
@@ -73,25 +68,27 @@ export default function PaymentMethod() {
 	);
 
 	const {
-		actions: {previousStep},
+		actions: {nextStep, previousStep},
 		handlePurchase,
-		productPurchaseCart: {cart, cartItems},
+		productPurchaseCart,
 		selectedAccount,
 	} = useProductPurchaseOutletContext();
 
-	const onClickPayNow = async () => {
+	const onClickContinue = async () => {
 		if (licenseType === 'TRIAL') {
 			return handlePurchase(ProductPurchaseApp, undefined, {
 				isTrialSKU: true,
 			});
 		}
 
-		await handlePurchase(ProductPurchaseApp, {
-			...cart,
-			billingAddress: paymentStore.billingAddress,
-			cartItems,
-			shippingAddress: paymentStore.billingAddress,
-		});
+		const updatedCart = await productPurchaseCart.updateCart(
+			productPurchaseCart.cart.id,
+			{billingAddress: context.payment.billingAddress}
+		);
+
+		cartStore.send({cart: updatedCart, type: 'setCart'});
+
+		nextStep();
 	};
 
 	useEffect(() => {
@@ -103,11 +100,12 @@ export default function PaymentMethod() {
 		}
 	}, [licenseType, navigate]);
 
-	const {data: addressResponse = {items: []}} = useAccountAddresses(
-		selectedAccount?.id
-	);
+	const {
+		data: addressResponse = {items: []},
+		mutate: mutateUserAccoutAddress,
+	} = useAccountAddresses(selectedAccount?.id);
 
-	const {Component: PaymentFlowComponent, actionMessage} =
+	const {actionMessage} =
 		PaymentMethodFlows[
 			paymentStore.type as keyof typeof PaymentMethodFlows
 		];
@@ -120,31 +118,17 @@ export default function PaymentMethod() {
 					onClick: previousStep,
 				},
 				continueButtonProps: {
-					children:
-						typeof actionMessage === 'function'
-							? actionMessage(
-									cart?.summary?.totalFormatted ?? '0'
-								)
-							: actionMessage,
+					children: actionMessage,
 					disabled: !isPrimaryButtonActive(),
-					onClick: onClickPayNow,
+					onClick: onClickContinue,
 				},
 			}}
 			title={i18n.translate('payment-method')}
 		>
-			<PaymentTypeSelector
-				paymentMethodType={paymentStore.type}
-				setPaymentMethodType={(paymentMethodType) =>
-					productPurchaseStore.send({
-						paymentMethodType,
-						type: 'setPaymentMethodType',
-					})
-				}
-			/>
-
 			<BillingAddress
 				addresses={addressResponse.items}
 				billingAddress={paymentStore.billingAddress as BillingAddress}
+				mutateUserAccoutAddress={mutateUserAccoutAddress}
 				setBillingAddress={(billingAddress) =>
 					productPurchaseStore.send({
 						billingAddress,
@@ -153,7 +137,14 @@ export default function PaymentMethod() {
 				}
 			/>
 
-			<PaymentFlowComponent />
+			{paymentMethodType === PaymentMethodType.TRIAL ? (
+				<TrialMethod />
+			) : (
+				<>
+					<TaxIdDisplay />
+					<PaymentTypeSelector />
+				</>
+			)}
 		</ProductPurchase.Shell>
 	);
 }

@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -84,28 +82,24 @@ public class ProductConfigurationResourceTest
 				0, true, new ServiceContext());
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		super.testBatchEngineDeleteImportTask();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testDeleteProductConfiguration() throws Exception {
 		super.testDeleteProductConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testDeleteProductConfigurationBatch() throws Exception {
 		super.testDeleteProductConfigurationBatch();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testDeleteProductConfigurationByExternalReferenceCode()
@@ -114,7 +108,6 @@ public class ProductConfigurationResourceTest
 		super.testDeleteProductConfigurationByExternalReferenceCode();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductByExternalReferenceCodeConfiguration()
@@ -123,14 +116,12 @@ public class ProductConfigurationResourceTest
 		super.testGetProductByExternalReferenceCodeConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductConfiguration() throws Exception {
 		super.testGetProductConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductConfigurationByExternalReferenceCode()
@@ -139,7 +130,6 @@ public class ProductConfigurationResourceTest
 		super.testGetProductConfigurationByExternalReferenceCode();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage()
@@ -149,7 +139,6 @@ public class ProductConfigurationResourceTest
 			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithFilterDateTimeEquals()
@@ -159,7 +148,6 @@ public class ProductConfigurationResourceTest
 			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithFilterDateTimeEquals();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithPagination()
@@ -169,7 +157,6 @@ public class ProductConfigurationResourceTest
 			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithPagination();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductConfigurationListIdProductConfigurationsPage()
@@ -178,7 +165,6 @@ public class ProductConfigurationResourceTest
 		super.testGetProductConfigurationListIdProductConfigurationsPage();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductConfigurationListIdProductConfigurationsPageWithPagination()
@@ -188,21 +174,18 @@ public class ProductConfigurationResourceTest
 			testGetProductConfigurationListIdProductConfigurationsPageWithPagination();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGetProductIdConfiguration() throws Exception {
 		super.testGetProductIdConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGraphQLDeleteProductConfiguration() throws Exception {
 		super.testGraphQLDeleteProductConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGraphQLDeleteProductConfigurationByExternalReferenceCode()
@@ -220,14 +203,12 @@ public class ProductConfigurationResourceTest
 		super.testGraphQLGetProductByExternalReferenceCodeConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGraphQLGetProductConfiguration() throws Exception {
 		super.testGraphQLGetProductConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testGraphQLGetProductConfigurationByExternalReferenceCode()
@@ -264,34 +245,14 @@ public class ProductConfigurationResourceTest
 
 		Assert.assertTrue(
 			equals(productConfiguration, randomProductConfiguration));
-
-		PropsUtil.set("LPD-10889", "true");
-
-		productConfigurationResource.
-			patchProductByExternalReferenceCodeConfiguration(
-				randomProductConfiguration.getEntityExternalReferenceCode(),
-				randomProductConfiguration);
-
-		productConfiguration =
-			productConfigurationResource.
-				getProductByExternalReferenceCodeConfiguration(
-					randomProductConfiguration.
-						getEntityExternalReferenceCode());
-
-		Assert.assertTrue(
-			equals(productConfiguration, randomProductConfiguration));
-
-		PropsUtil.set("LPD-10889", "false");
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testPatchProductConfiguration() throws Exception {
 		super.testPatchProductConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testPatchProductConfigurationByExternalReferenceCode()
@@ -316,24 +277,8 @@ public class ProductConfigurationResourceTest
 
 		Assert.assertTrue(
 			equals(productConfiguration, randomProductConfiguration));
-
-		PropsUtil.set("LPD-10889", "true");
-
-		productConfigurationResource.patchProductIdConfiguration(
-			randomProductConfiguration.getEntityId(),
-			randomProductConfiguration);
-
-		productConfiguration =
-			productConfigurationResource.getProductIdConfiguration(
-				randomProductConfiguration.getEntityId());
-
-		Assert.assertTrue(
-			equals(productConfiguration, randomProductConfiguration));
-
-		PropsUtil.set("LPD-10889", "false");
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testPostProductConfigurationListByExternalReferenceCodeProductConfiguration()
@@ -343,7 +288,6 @@ public class ProductConfigurationResourceTest
 			testPostProductConfigurationListByExternalReferenceCodeProductConfiguration();
 	}
 
-	@FeatureFlag("LPD-10889")
 	@Override
 	@Test
 	public void testPostProductConfigurationListIdProductConfiguration()

@@ -9,7 +9,6 @@ import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPag
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {customFieldsPagesTest} from '../../../../fixtures/customFieldsPagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {createCategories} from '../../../../helpers/CreateCategories';
 import {TCustomField} from '../../../../helpers/CustomFieldTypesHelper';
@@ -23,9 +22,6 @@ export const test = mergeTests(
 	commercePagesTest,
 	customFieldsPagesTest,
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-10889': {enabled: true},
-	}),
 	loginTest()
 );
 

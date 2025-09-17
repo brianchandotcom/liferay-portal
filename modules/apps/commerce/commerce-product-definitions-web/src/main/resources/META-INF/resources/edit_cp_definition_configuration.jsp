@@ -196,13 +196,11 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 		</div>
 
 		<div class="col-4">
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled(cpDefinition.getCompanyId(), "LPD-10889") %>'>
-				<commerce-ui:panel
-					title='<%= LanguageUtil.get(request, "base-settings") %>'
-				>
-					<aui:input checked="<%= cpDefinitionConfigurationDisplayContext.isPurchasable() %>" data-qa-id="purchasableInput" inlineField="<%= true %>" name="purchasable" type="toggle-switch" />
-				</commerce-ui:panel>
-			</c:if>
+			<commerce-ui:panel
+				title='<%= LanguageUtil.get(request, "base-settings") %>'
+			>
+				<aui:input checked="<%= cpDefinitionConfigurationDisplayContext.isPurchasable() %>" data-qa-id="purchasableInput" inlineField="<%= true %>" name="purchasable" type="toggle-switch" />
+			</commerce-ui:panel>
 
 			<commerce-ui:panel
 				title='<%= LanguageUtil.get(request, "shipping") %>'

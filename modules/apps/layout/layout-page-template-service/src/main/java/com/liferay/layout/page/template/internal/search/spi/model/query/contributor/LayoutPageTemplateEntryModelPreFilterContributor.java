@@ -41,20 +41,19 @@ public class LayoutPageTemplateEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		int[] statuses = GetterUtil.getIntegerValues(
-			searchContext.getAttribute(Field.STATUS),
-			new int[] {
-				WorkflowConstants.STATUS_APPROVED,
-				WorkflowConstants.STATUS_DRAFT,
-				WorkflowConstants.STATUS_INACTIVE
-			});
+			searchContext.getAttribute(Field.STATUS));
 
-		if (!ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
-			TermsFilter termsFilter = new TermsFilter(Field.STATUS);
+		if (ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY) ||
+			ArrayUtil.isEmpty(statuses)) {
 
-			termsFilter.addValues(ArrayUtil.toStringArray(statuses));
-
-			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+			return;
 		}
+
+		TermsFilter termsFilter = new TermsFilter(Field.STATUS);
+
+		termsFilter.addValues(ArrayUtil.toStringArray(statuses));
+
+		booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 	}
 
 	private void _filterByTypes(

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 
@@ -39,41 +40,31 @@ public class DataCleanupPreupgradeProcessSuite {
 			}
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Starting " +
-					DataCleanupPreupgradeProcessSuite.class.getName());
-		}
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
+				getSortedDataCleanupPreupgradeProcesses();
 
-		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
-			getSortedDataCleanupPreupgradeProcesses();
+			for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
+					dataCleanupPreupgradeProcesses) {
 
-		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
-				dataCleanupPreupgradeProcesses) {
+				Class<?> clazz = dataCleanupPreupgradeProcess.getClass();
 
-			Class<?> clazz = dataCleanupPreupgradeProcess.getClass();
+				if (ArrayUtil.contains(
+						PropsValues.
+							UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST,
+						clazz.getName())) {
 
-			if (ArrayUtil.contains(
-					PropsValues.
-						UPGRADE_DATABASE_PREUPGRADE_DATA_CLEANUP_BLACKLIST,
-					clazz.getName())) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Skipping blacklisted data cleanup process: " +
+								clazz.getName());
+					}
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skipping blacklisted data cleanup process: " +
-							clazz.getName());
+					continue;
 				}
 
-				continue;
+				dataCleanupPreupgradeProcess.upgrade();
 			}
-
-			dataCleanupPreupgradeProcess.upgrade();
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Finished " +
-					DataCleanupPreupgradeProcessSuite.class.getName());
 		}
 	}
 

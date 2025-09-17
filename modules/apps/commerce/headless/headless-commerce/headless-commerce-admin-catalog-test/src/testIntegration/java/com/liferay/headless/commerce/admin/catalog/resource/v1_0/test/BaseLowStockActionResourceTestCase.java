@@ -218,11 +218,6 @@ public abstract class BaseLowStockActionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetLowStockActionsPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

@@ -486,6 +486,83 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSiteDSEnvelopesPage() throws Exception {
+		Long siteId = testGetSiteDSEnvelopesPage_getSiteId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"dSEnvelopes",
+			new HashMap<String, Object>() {
+				{
+					put("siteKey", "\"" + siteId + "\"");
+					put(
+						"fromDate",
+						"\"" + RandomTestUtil.randomString() + "\"");
+					put("keywords", null);
+					put("order", "\"" + RandomTestUtil.randomString() + "\"");
+					put("status", "\"" + RandomTestUtil.randomString() + "\"");
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject dSEnvelopesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/dSEnvelopes");
+
+		long totalCount = dSEnvelopesJSONObject.getLong("totalCount");
+
+		DSEnvelope dsEnvelope1 = testGraphQLSiteDSEnvelope_addDSEnvelope(
+			siteId, randomDSEnvelope());
+
+		DSEnvelope dsEnvelope2 = testGraphQLSiteDSEnvelope_addDSEnvelope(
+			siteId, randomDSEnvelope());
+
+		dSEnvelopesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/dSEnvelopes");
+
+		Assert.assertEquals(
+			totalCount + 2, dSEnvelopesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			dsEnvelope1,
+			Arrays.asList(
+				DSEnvelopeSerDes.toDTOs(
+					dSEnvelopesJSONObject.getString("items"))));
+		assertContains(
+			dsEnvelope2,
+			Arrays.asList(
+				DSEnvelopeSerDes.toDTOs(
+					dSEnvelopesJSONObject.getString("items"))));
+
+		// Using the namespace digitalSignature_v1_0
+
+		dSEnvelopesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("digitalSignature_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/digitalSignature_v1_0",
+			"JSONObject/dSEnvelopes");
+
+		Assert.assertEquals(
+			totalCount + 2, dSEnvelopesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			dsEnvelope1,
+			Arrays.asList(
+				DSEnvelopeSerDes.toDTOs(
+					dSEnvelopesJSONObject.getString("items"))));
+		assertContains(
+			dsEnvelope2,
+			Arrays.asList(
+				DSEnvelopeSerDes.toDTOs(
+					dSEnvelopesJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPostSiteDSEnvelope() throws Exception {
 		DSEnvelope randomDSEnvelope = randomDSEnvelope();
 
@@ -508,8 +585,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	public void testGraphQLPostSiteDSEnvelope() throws Exception {
 		DSEnvelope randomDSEnvelope = randomDSEnvelope();
 
-		DSEnvelope dsEnvelope = testGraphQLDSEnvelope_addDSEnvelope(
-			randomDSEnvelope);
+		DSEnvelope dsEnvelope = testGraphQLSiteDSEnvelope_addDSEnvelope(
+			testGroup.getGroupId(), randomDSEnvelope);
 
 		Assert.assertTrue(equals(randomDSEnvelope, dsEnvelope));
 	}
@@ -517,6 +594,116 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected DSEnvelope testGraphQLDSEnvelope_addDSEnvelope()
+		throws Exception {
+
+		return testGraphQLDSEnvelope_addDSEnvelope(
+			testGroup.getGroupId(), randomDSEnvelope());
+	}
+
+	protected DSEnvelope testGraphQLDSEnvelope_addDSEnvelope(
+			Long siteId, DSEnvelope dsEnvelope)
+		throws Exception {
+
+		JSONDeserializer<DSEnvelope> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DSEnvelope.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(dsEnvelope));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteDSEnvelope",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("dsEnvelope", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteDSEnvelope"),
+			DSEnvelope.class);
+	}
+
+	protected DSEnvelope testGraphQLSiteDSEnvelope_addDSEnvelope()
+		throws Exception {
+
+		return testGraphQLSiteDSEnvelope_addDSEnvelope(
+			testGroup.getGroupId(), randomDSEnvelope());
+	}
+
+	protected DSEnvelope testGraphQLSiteDSEnvelope_addDSEnvelope(
+			Long siteId, DSEnvelope dsEnvelope)
+		throws Exception {
+
+		JSONDeserializer<DSEnvelope> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DSEnvelope.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(dsEnvelope));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteDSEnvelope",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("dsEnvelope", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteDSEnvelope"),
+			DSEnvelope.class);
 	}
 
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
@@ -562,62 +749,6 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected DSEnvelope testGraphQLDSEnvelope_addDSEnvelope()
-		throws Exception {
-
-		return testGraphQLDSEnvelope_addDSEnvelope(randomDSEnvelope());
-	}
-
-	protected DSEnvelope testGraphQLDSEnvelope_addDSEnvelope(
-			DSEnvelope dsEnvelope)
-		throws Exception {
-
-		JSONDeserializer<DSEnvelope> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(DSEnvelope.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(dsEnvelope));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteDSEnvelope",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("dsEnvelope", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteDSEnvelope"),
-			DSEnvelope.class);
 	}
 
 	protected void assertContains(

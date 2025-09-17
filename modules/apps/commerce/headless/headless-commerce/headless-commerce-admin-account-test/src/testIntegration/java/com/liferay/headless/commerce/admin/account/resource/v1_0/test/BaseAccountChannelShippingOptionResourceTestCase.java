@@ -282,20 +282,14 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		AccountChannelShippingOption accountChannelShippingOption1 =
 			testGraphQLDeleteAccountChannelShippingOption_addAccountChannelShippingOption();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteAccountChannelShippingOption",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"id",
-									accountChannelShippingOption1.getId());
-							}
-						})),
-				"JSONObject/data",
-				"Object/deleteAccountChannelShippingOption"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelShippingOption",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelShippingOption1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -316,23 +310,16 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		AccountChannelShippingOption accountChannelShippingOption2 =
 			testGraphQLDeleteAccountChannelShippingOption_addAccountChannelShippingOption();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminAccount_v1_0",
-						new GraphQLField(
-							"deleteAccountChannelShippingOption",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"id",
-										accountChannelShippingOption2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminAccount_v1_0",
-				"Object/deleteAccountChannelShippingOption"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelShippingOption",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelShippingOption2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

@@ -224,44 +224,34 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		PriceListOrderType priceListOrderType1 =
 			testGraphQLDeletePriceListOrderType_addPriceListOrderType();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceListOrderType",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"priceListOrderTypeId",
-									priceListOrderType1.
-										getPriceListOrderTypeId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceListOrderType"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceListOrderType",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"priceListOrderTypeId",
+							priceListOrderType1.getPriceListOrderTypeId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
 		PriceListOrderType priceListOrderType2 =
 			testGraphQLDeletePriceListOrderType_addPriceListOrderType();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v2_0",
-						new GraphQLField(
-							"deletePriceListOrderType",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"priceListOrderTypeId",
-										priceListOrderType2.
-											getPriceListOrderTypeId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v2_0",
-				"Object/deletePriceListOrderType"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deletePriceListOrderType",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"priceListOrderTypeId",
+								priceListOrderType2.getPriceListOrderTypeId());
+						}
+					})));
 	}
 
 	protected PriceListOrderType

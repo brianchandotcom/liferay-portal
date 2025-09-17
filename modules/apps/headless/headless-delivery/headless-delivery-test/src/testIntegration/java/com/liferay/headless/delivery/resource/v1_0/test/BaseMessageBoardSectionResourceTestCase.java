@@ -266,19 +266,16 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		MessageBoardSection messageBoardSection1 =
 			testGraphQLDeleteMessageBoardSection_addMessageBoardSection();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteMessageBoardSection",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"messageBoardSectionId",
-									messageBoardSection1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteMessageBoardSection"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteMessageBoardSection",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"messageBoardSectionId",
+							messageBoardSection1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -301,22 +298,18 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		MessageBoardSection messageBoardSection2 =
 			testGraphQLDeleteMessageBoardSection_addMessageBoardSection();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"deleteMessageBoardSection",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"messageBoardSectionId",
-										messageBoardSection2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-				"Object/deleteMessageBoardSection"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteMessageBoardSection",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"messageBoardSectionId",
+								messageBoardSection2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -1218,6 +1211,40 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetMessageBoardSectionPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection postMessageBoardSection =
+			testGraphQLGetMessageBoardSectionPermissionsPage_addMessageBoardSection();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"messageBoardSectionPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"messageBoardSectionId",
+						postMessageBoardSection.getId());
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject messageBoardSectionPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/messageBoardSectionPermissions");
+
+		Assert.assertNotNull(messageBoardSectionPermissionsJSONObject);
+	}
+
+	protected MessageBoardSection
+			testGraphQLGetMessageBoardSectionPermissionsPage_addMessageBoardSection()
+		throws Exception {
+
+		return testGraphQLMessageBoardSection_addMessageBoardSection();
+	}
+
+	@Test
 	public void testGetSiteMessageBoardSectionByFriendlyUrlPath()
 		throws Exception {
 
@@ -1394,6 +1421,40 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		return messageBoardSectionResource.postSiteMessageBoardSection(
 			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	@Test
+	public void testGraphQLGetSiteMessageBoardSectionPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection postMessageBoardSection =
+			testGraphQLGetSiteMessageBoardSectionPermissionsPage_addMessageBoardSection();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"siteMessageBoardSectionPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"siteKey",
+						"\"" + postMessageBoardSection.getSiteId() + "\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject siteMessageBoardSectionPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/siteMessageBoardSectionPermissions");
+
+		Assert.assertNotNull(siteMessageBoardSectionPermissionsJSONObject);
+	}
+
+	protected MessageBoardSection
+			testGraphQLGetSiteMessageBoardSectionPermissionsPage_addMessageBoardSection()
+		throws Exception {
+
+		return testGraphQLMessageBoardSection_addMessageBoardSection();
 	}
 
 	@Test
@@ -1873,10 +1934,10 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			"messageBoardSections",
 			new HashMap<String, Object>() {
 				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -1892,9 +1953,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		long totalCount = messageBoardSectionsJSONObject.getLong("totalCount");
 
 		MessageBoardSection messageBoardSection1 =
-			testGraphQLGetSiteMessageBoardSectionsPage_addMessageBoardSection();
+			testGraphQLSiteMessageBoardSection_addMessageBoardSection(
+				siteId, randomMessageBoardSection());
+
 		MessageBoardSection messageBoardSection2 =
-			testGraphQLGetSiteMessageBoardSectionsPage_addMessageBoardSection();
+			testGraphQLSiteMessageBoardSection_addMessageBoardSection(
+				siteId, randomMessageBoardSection());
 
 		messageBoardSectionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1937,13 +2001,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Arrays.asList(
 				MessageBoardSectionSerDes.toDTOs(
 					messageBoardSectionsJSONObject.getString("items"))));
-	}
-
-	protected MessageBoardSection
-			testGraphQLGetSiteMessageBoardSectionsPage_addMessageBoardSection()
-		throws Exception {
-
-		return testGraphQLMessageBoardSection_addMessageBoardSection();
 	}
 
 	@Test
@@ -2009,6 +2066,21 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostMessageBoardSectionMessageBoardSection()
+		throws Exception {
+
+		MessageBoardSection randomMessageBoardSection =
+			randomMessageBoardSection();
+
+		MessageBoardSection messageBoardSection =
+			testGraphQLMessageBoardSection_addMessageBoardSection(
+				testGroup.getGroupId(), randomMessageBoardSection);
+
+		Assert.assertTrue(
+			equals(randomMessageBoardSection, messageBoardSection));
+	}
+
+	@Test
 	public void testPostSiteMessageBoardSection() throws Exception {
 		MessageBoardSection randomMessageBoardSection =
 			randomMessageBoardSection();
@@ -2037,8 +2109,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			randomMessageBoardSection();
 
 		MessageBoardSection messageBoardSection =
-			testGraphQLMessageBoardSection_addMessageBoardSection(
-				randomMessageBoardSection);
+			testGraphQLSiteMessageBoardSection_addMessageBoardSection(
+				testGroup.getGroupId(), randomMessageBoardSection);
 
 		Assert.assertTrue(
 			equals(randomMessageBoardSection, messageBoardSection));
@@ -2282,6 +2354,120 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected MessageBoardSection
+			testGraphQLMessageBoardSection_addMessageBoardSection()
+		throws Exception {
+
+		return testGraphQLMessageBoardSection_addMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	protected MessageBoardSection
+			testGraphQLMessageBoardSection_addMessageBoardSection(
+				Long siteId, MessageBoardSection messageBoardSection)
+		throws Exception {
+
+		JSONDeserializer<MessageBoardSection> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(MessageBoardSection.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(messageBoardSection));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteMessageBoardSection",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("messageBoardSection", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteMessageBoardSection"),
+			MessageBoardSection.class);
+	}
+
+	protected MessageBoardSection
+			testGraphQLSiteMessageBoardSection_addMessageBoardSection()
+		throws Exception {
+
+		return testGraphQLSiteMessageBoardSection_addMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	protected MessageBoardSection
+			testGraphQLSiteMessageBoardSection_addMessageBoardSection(
+				Long siteId, MessageBoardSection messageBoardSection)
+		throws Exception {
+
+		JSONDeserializer<MessageBoardSection> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(MessageBoardSection.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(messageBoardSection));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteMessageBoardSection",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("messageBoardSection", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteMessageBoardSection"),
+			MessageBoardSection.class);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -2325,65 +2511,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected MessageBoardSection
-			testGraphQLMessageBoardSection_addMessageBoardSection()
-		throws Exception {
-
-		return testGraphQLMessageBoardSection_addMessageBoardSection(
-			randomMessageBoardSection());
-	}
-
-	protected MessageBoardSection
-			testGraphQLMessageBoardSection_addMessageBoardSection(
-				MessageBoardSection messageBoardSection)
-		throws Exception {
-
-		JSONDeserializer<MessageBoardSection> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(MessageBoardSection.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(messageBoardSection));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteMessageBoardSection",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("messageBoardSection", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteMessageBoardSection"),
-			MessageBoardSection.class);
 	}
 
 	protected void assertContains(

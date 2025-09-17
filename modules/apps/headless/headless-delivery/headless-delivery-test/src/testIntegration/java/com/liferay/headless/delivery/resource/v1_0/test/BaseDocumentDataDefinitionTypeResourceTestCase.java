@@ -309,19 +309,16 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		DocumentDataDefinitionType documentDataDefinitionType1 =
 			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDocumentDataDefinitionType",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"documentDataDefinitionTypeId",
-									documentDataDefinitionType1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDocumentDataDefinitionType"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteDocumentDataDefinitionType",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"documentDataDefinitionTypeId",
+							documentDataDefinitionType1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -344,22 +341,18 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		DocumentDataDefinitionType documentDataDefinitionType2 =
 			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"deleteDocumentDataDefinitionType",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"documentDataDefinitionTypeId",
-										documentDataDefinitionType2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-				"Object/deleteDocumentDataDefinitionType"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteDocumentDataDefinitionType",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"documentDataDefinitionTypeId",
+								documentDataDefinitionType2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -947,6 +940,96 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		throws Exception {
 
 		return irrelevantDepotEntry.getDepotEntryId();
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryDocumentDataDefinitionTypesPage()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryDocumentDataDefinitionTypes",
+			new HashMap<String, Object>() {
+				{
+					put("assetLibraryId", "\"" + assetLibraryId + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject assetLibraryDocumentDataDefinitionTypesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryDocumentDataDefinitionTypes");
+
+		long totalCount =
+			assetLibraryDocumentDataDefinitionTypesJSONObject.getLong(
+				"totalCount");
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGraphQLAssetLibraryDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGraphQLAssetLibraryDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		assetLibraryDocumentDataDefinitionTypesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryDocumentDataDefinitionTypes");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryDocumentDataDefinitionTypesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			documentDataDefinitionType1,
+			Arrays.asList(
+				DocumentDataDefinitionTypeSerDes.toDTOs(
+					assetLibraryDocumentDataDefinitionTypesJSONObject.getString(
+						"items"))));
+		assertContains(
+			documentDataDefinitionType2,
+			Arrays.asList(
+				DocumentDataDefinitionTypeSerDes.toDTOs(
+					assetLibraryDocumentDataDefinitionTypesJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		assetLibraryDocumentDataDefinitionTypesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/assetLibraryDocumentDataDefinitionTypes");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryDocumentDataDefinitionTypesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			documentDataDefinitionType1,
+			Arrays.asList(
+				DocumentDataDefinitionTypeSerDes.toDTOs(
+					assetLibraryDocumentDataDefinitionTypesJSONObject.getString(
+						"items"))));
+		assertContains(
+			documentDataDefinitionType2,
+			Arrays.asList(
+				DocumentDataDefinitionTypeSerDes.toDTOs(
+					assetLibraryDocumentDataDefinitionTypesJSONObject.getString(
+						"items"))));
 	}
 
 	@Test
@@ -1788,10 +1871,10 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			"documentDataDefinitionTypes",
 			new HashMap<String, Object>() {
 				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -1808,9 +1891,12 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			"totalCount");
 
 		DocumentDataDefinitionType documentDataDefinitionType1 =
-			testGraphQLGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType();
+			testGraphQLSiteDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
+
 		DocumentDataDefinitionType documentDataDefinitionType2 =
-			testGraphQLGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType();
+			testGraphQLSiteDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
 
 		documentDataDefinitionTypesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1855,13 +1941,6 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 					documentDataDefinitionTypesJSONObject.getString("items"))));
 	}
 
-	protected DocumentDataDefinitionType
-			testGraphQLGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType()
-		throws Exception {
-
-		return testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType();
-	}
-
 	@Test
 	public void testPostAssetLibraryDocumentDataDefinitionType()
 		throws Exception {
@@ -1887,6 +1966,23 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			postAssetLibraryDocumentDataDefinitionType(
 				testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId(),
 				documentDataDefinitionType);
+	}
+
+	@Test
+	public void testGraphQLPostAssetLibraryDocumentDataDefinitionType()
+		throws Exception {
+
+		DocumentDataDefinitionType randomDocumentDataDefinitionType =
+			randomDocumentDataDefinitionType();
+
+		DocumentDataDefinitionType documentDataDefinitionType =
+			testGraphQLAssetLibraryDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				testDepotEntry.getDepotEntryId(),
+				randomDocumentDataDefinitionType);
+
+		Assert.assertTrue(
+			equals(
+				randomDocumentDataDefinitionType, documentDataDefinitionType));
 	}
 
 	@Test
@@ -1922,8 +2018,8 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			randomDocumentDataDefinitionType();
 
 		DocumentDataDefinitionType documentDataDefinitionType =
-			testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType(
-				randomDocumentDataDefinitionType);
+			testGraphQLSiteDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				testGroup.getGroupId(), randomDocumentDataDefinitionType);
 
 		Assert.assertTrue(
 			equals(
@@ -1991,6 +2087,192 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected DocumentDataDefinitionType
+			testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType(
+			testGroup.getGroupId(), randomDocumentDataDefinitionType());
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				Long siteId,
+				DocumentDataDefinitionType documentDataDefinitionType)
+		throws Exception {
+
+		JSONDeserializer<DocumentDataDefinitionType> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DocumentDataDefinitionType.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(documentDataDefinitionType));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteDocumentDataDefinitionType",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put(
+									"documentDataDefinitionType",
+									sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createSiteDocumentDataDefinitionType"),
+			DocumentDataDefinitionType.class);
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLAssetLibraryDocumentDataDefinitionType_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return testGraphQLAssetLibraryDocumentDataDefinitionType_addDocumentDataDefinitionType(
+			testDepotEntry.getDepotEntryId(),
+			randomDocumentDataDefinitionType());
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLAssetLibraryDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				Long assetLibraryId,
+				DocumentDataDefinitionType documentDataDefinitionType)
+		throws Exception {
+
+		JSONDeserializer<DocumentDataDefinitionType> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DocumentDataDefinitionType.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(documentDataDefinitionType));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAssetLibraryDocumentDataDefinitionType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" + assetLibraryId + "\"");
+								put(
+									"documentDataDefinitionType",
+									sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createAssetLibraryDocumentDataDefinitionType"),
+			DocumentDataDefinitionType.class);
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLSiteDocumentDataDefinitionType_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return testGraphQLSiteDocumentDataDefinitionType_addDocumentDataDefinitionType(
+			testGroup.getGroupId(), randomDocumentDataDefinitionType());
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLSiteDocumentDataDefinitionType_addDocumentDataDefinitionType(
+				Long siteId,
+				DocumentDataDefinitionType documentDataDefinitionType)
+		throws Exception {
+
+		JSONDeserializer<DocumentDataDefinitionType> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DocumentDataDefinitionType.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(documentDataDefinitionType));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteDocumentDataDefinitionType",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put(
+									"documentDataDefinitionType",
+									sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createSiteDocumentDataDefinitionType"),
+			DocumentDataDefinitionType.class);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -2034,68 +2316,6 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected DocumentDataDefinitionType
-			testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType()
-		throws Exception {
-
-		return testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType(
-			randomDocumentDataDefinitionType());
-	}
-
-	protected DocumentDataDefinitionType
-			testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType(
-				DocumentDataDefinitionType documentDataDefinitionType)
-		throws Exception {
-
-		JSONDeserializer<DocumentDataDefinitionType> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(DocumentDataDefinitionType.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(documentDataDefinitionType));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteDocumentDataDefinitionType",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put(
-									"documentDataDefinitionType",
-									sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data",
-				"JSONObject/createSiteDocumentDataDefinitionType"),
-			DocumentDataDefinitionType.class);
 	}
 
 	protected void assertContains(

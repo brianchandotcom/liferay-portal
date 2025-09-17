@@ -208,11 +208,6 @@ public abstract class BaseFilterResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetFiltersPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

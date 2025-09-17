@@ -21,6 +21,7 @@ import com.liferay.dispatch.rest.client.serdes.v1_0.DispatchTriggerSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -249,9 +250,12 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 		long totalCount = dispatchTriggersJSONObject.getLong("totalCount");
 
 		DispatchTrigger dispatchTrigger1 =
-			testGraphQLGetDispatchTriggersPage_addDispatchTrigger();
+			testGraphQLDispatchTrigger_addDispatchTrigger(
+				randomDispatchTrigger());
+
 		DispatchTrigger dispatchTrigger2 =
-			testGraphQLGetDispatchTriggersPage_addDispatchTrigger();
+			testGraphQLDispatchTrigger_addDispatchTrigger(
+				randomDispatchTrigger());
 
 		dispatchTriggersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -293,13 +297,6 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 					dispatchTriggersJSONObject.getString("items"))));
 	}
 
-	protected DispatchTrigger
-			testGraphQLGetDispatchTriggersPage_addDispatchTrigger()
-		throws Exception {
-
-		return testGraphQLDispatchTrigger_addDispatchTrigger();
-	}
-
 	@Test
 	public void testPostDispatchTrigger() throws Exception {
 		DispatchTrigger randomDispatchTrigger = randomDispatchTrigger();
@@ -317,6 +314,17 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostDispatchTrigger() throws Exception {
+		DispatchTrigger randomDispatchTrigger = randomDispatchTrigger();
+
+		DispatchTrigger dispatchTrigger =
+			testGraphQLDispatchTrigger_addDispatchTrigger(
+				randomDispatchTrigger);
+
+		Assert.assertTrue(equals(randomDispatchTrigger, dispatchTrigger));
 	}
 
 	@Test
@@ -350,8 +358,100 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 	protected DispatchTrigger testGraphQLDispatchTrigger_addDispatchTrigger()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLDispatchTrigger_addDispatchTrigger(
+			randomDispatchTrigger());
+	}
+
+	protected DispatchTrigger testGraphQLDispatchTrigger_addDispatchTrigger(
+			DispatchTrigger dispatchTrigger)
+		throws Exception {
+
+		JSONDeserializer<DispatchTrigger> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DispatchTrigger.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(dispatchTrigger));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createDispatchTrigger",
+						new HashMap<String, Object>() {
+							{
+								put("dispatchTrigger", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createDispatchTrigger"),
+			DispatchTrigger.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

@@ -17,6 +17,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -219,6 +220,98 @@ public abstract class BaseInstanceResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProcessInstance() throws Exception {
+
+		// No namespace
+
+		Instance instance1 = testGraphQLDeleteProcessInstance_addInstance();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProcessInstance",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"processId",
+							testGraphQLDeleteProcessInstance_getProcessId(
+								instance1));
+						put("instanceId", instance1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"processInstance",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"processId",
+								testGraphQLDeleteProcessInstance_getProcessId(
+									instance1));
+							put("instanceId", instance1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace portalWorkflowMetrics_v1_0
+
+		Instance instance2 = testGraphQLDeleteProcessInstance_addInstance();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"portalWorkflowMetrics_v1_0",
+				new GraphQLField(
+					"deleteProcessInstance",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"processId",
+								testGraphQLDeleteProcessInstance_getProcessId(
+									instance2));
+							put("instanceId", instance2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"portalWorkflowMetrics_v1_0",
+					new GraphQLField(
+						"processInstance",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"processId",
+									testGraphQLDeleteProcessInstance_getProcessId(
+										instance2));
+								put("instanceId", instance2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long testGraphQLDeleteProcessInstance_getProcessId(
+			Instance instance)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Instance testGraphQLDeleteProcessInstance_addInstance()
+		throws Exception {
+
+		return testGraphQLInstance_addInstance();
 	}
 
 	@Test

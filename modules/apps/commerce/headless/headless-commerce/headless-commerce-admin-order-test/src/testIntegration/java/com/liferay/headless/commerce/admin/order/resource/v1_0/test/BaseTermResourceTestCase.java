@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -253,17 +254,14 @@ public abstract class BaseTermResourceTestCase {
 
 		Term term1 = testGraphQLDeleteTerm_addTerm();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteTerm",
-						new HashMap<String, Object>() {
-							{
-								put("id", term1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteTerm"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteTerm",
+				new HashMap<String, Object>() {
+					{
+						put("id", term1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -283,20 +281,16 @@ public abstract class BaseTermResourceTestCase {
 
 		Term term2 = testGraphQLDeleteTerm_addTerm();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"deleteTerm",
-							new HashMap<String, Object>() {
-								{
-									put("id", term2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-				"Object/deleteTerm"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteTerm",
+					new HashMap<String, Object>() {
+						{
+							put("id", term2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -402,6 +396,84 @@ public abstract class BaseTermResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteTermByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Term term1 = testGraphQLDeleteTermByExternalReferenceCode_addTerm();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteTermByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + term1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"termByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + term1.getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Term term2 = testGraphQLDeleteTermByExternalReferenceCode_addTerm();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteTermByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + term2.getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminOrder_v1_0",
+					new GraphQLField(
+						"termByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + term2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Term testGraphQLDeleteTermByExternalReferenceCode_addTerm()
+		throws Exception {
+
+		return testGraphQLTerm_addTerm();
 	}
 
 	@Test
@@ -1135,6 +1207,7 @@ public abstract class BaseTermResourceTestCase {
 			"terms",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1150,8 +1223,9 @@ public abstract class BaseTermResourceTestCase {
 
 		long totalCount = termsJSONObject.getLong("totalCount");
 
-		Term term1 = testGraphQLGetTermsPage_addTerm();
-		Term term2 = testGraphQLGetTermsPage_addTerm();
+		Term term1 = testGraphQLTerm_addTerm(randomTerm());
+
+		Term term2 = testGraphQLTerm_addTerm(randomTerm());
 
 		termsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1189,10 +1263,6 @@ public abstract class BaseTermResourceTestCase {
 			term2,
 			Arrays.asList(
 				TermSerDes.toDTOs(termsJSONObject.getString("items"))));
-	}
-
-	protected Term testGraphQLGetTermsPage_addTerm() throws Exception {
-		return testGraphQLTerm_addTerm();
 	}
 
 	@Test
@@ -1261,6 +1331,15 @@ public abstract class BaseTermResourceTestCase {
 	protected Term testPostTerm_addTerm(Term term) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostTerm() throws Exception {
+		Term randomTerm = randomTerm();
+
+		Term term = testGraphQLTerm_addTerm(randomTerm);
+
+		Assert.assertTrue(equals(randomTerm, term));
 	}
 
 	@Test
@@ -1390,8 +1469,94 @@ public abstract class BaseTermResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Term testGraphQLTerm_addTerm() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLTerm_addTerm(randomTerm());
+	}
+
+	protected Term testGraphQLTerm_addTerm(Term term) throws Exception {
+		JSONDeserializer<Term> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Term.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(term));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createTerm",
+						new HashMap<String, Object>() {
+							{
+								put("term", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createTerm"),
+			Term.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(Term term, List<Term> terms) {

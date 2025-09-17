@@ -305,7 +305,7 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 										getExternalReferenceCode() + "\"");
 						}
 					},
-					new GraphQLField("id"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -345,7 +345,7 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 											getExternalReferenceCode() + "\"");
 							}
 						},
-						new GraphQLField("id")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -434,9 +434,12 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		long totalCount = companyTestEntitiesJSONObject.getLong("totalCount");
 
 		CompanyTestEntity companyTestEntity1 =
-			testGraphQLGetCompanyTestEntitiesPage_addCompanyTestEntity();
+			testGraphQLCompanyTestEntity_addCompanyTestEntity(
+				randomCompanyTestEntity());
+
 		CompanyTestEntity companyTestEntity2 =
-			testGraphQLGetCompanyTestEntitiesPage_addCompanyTestEntity();
+			testGraphQLCompanyTestEntity_addCompanyTestEntity(
+				randomCompanyTestEntity());
 
 		companyTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -478,13 +481,6 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 			Arrays.asList(
 				CompanyTestEntitySerDes.toDTOs(
 					companyTestEntitiesJSONObject.getString("items"))));
-	}
-
-	protected CompanyTestEntity
-			testGraphQLGetCompanyTestEntitiesPage_addCompanyTestEntity()
-		throws Exception {
-
-		return testGraphQLCompanyTestEntity_addCompanyTestEntity();
 	}
 
 	@Test
@@ -974,6 +970,38 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCompanyTestEntityPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CompanyTestEntity postCompanyTestEntity =
+			testGraphQLGetCompanyTestEntityPermissionsPage_addCompanyTestEntity();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"companyTestEntityPermissions",
+			new HashMap<String, Object>() {
+				{
+					put("companyTestEntityId", postCompanyTestEntity.getId());
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject companyTestEntityPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/companyTestEntityPermissions");
+
+		Assert.assertNotNull(companyTestEntityPermissionsJSONObject);
+	}
+
+	protected CompanyTestEntity
+			testGraphQLGetCompanyTestEntityPermissionsPage_addCompanyTestEntity()
+		throws Exception {
+
+		return testGraphQLCompanyTestEntity_addCompanyTestEntity();
 	}
 
 	@Test

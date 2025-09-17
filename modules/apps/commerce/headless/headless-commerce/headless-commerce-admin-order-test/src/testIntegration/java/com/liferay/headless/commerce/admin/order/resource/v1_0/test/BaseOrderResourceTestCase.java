@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -324,17 +325,14 @@ public abstract class BaseOrderResourceTestCase {
 
 		Order order1 = testGraphQLDeleteOrder_addOrder();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrder",
-						new HashMap<String, Object>() {
-							{
-								put("id", order1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrder"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrder",
+				new HashMap<String, Object>() {
+					{
+						put("id", order1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -354,20 +352,16 @@ public abstract class BaseOrderResourceTestCase {
 
 		Order order2 = testGraphQLDeleteOrder_addOrder();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"deleteOrder",
-							new HashMap<String, Object>() {
-								{
-									put("id", order2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-				"Object/deleteOrder"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrder",
+					new HashMap<String, Object>() {
+						{
+							put("id", order2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -474,6 +468,86 @@ public abstract class BaseOrderResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrderByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Order order1 = testGraphQLDeleteOrderByExternalReferenceCode_addOrder();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrderByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + order1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"orderByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + order1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Order order2 = testGraphQLDeleteOrderByExternalReferenceCode_addOrder();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrderByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + order2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminOrder_v1_0",
+					new GraphQLField(
+						"orderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + order2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Order testGraphQLDeleteOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		return testGraphQLOrder_addOrder();
 	}
 
 	@Test
@@ -1209,6 +1283,7 @@ public abstract class BaseOrderResourceTestCase {
 			"orders",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1224,8 +1299,9 @@ public abstract class BaseOrderResourceTestCase {
 
 		long totalCount = ordersJSONObject.getLong("totalCount");
 
-		Order order1 = testGraphQLGetOrdersPage_addOrder();
-		Order order2 = testGraphQLGetOrdersPage_addOrder();
+		Order order1 = testGraphQLOrder_addOrder(randomOrder());
+
+		Order order2 = testGraphQLOrder_addOrder(randomOrder());
 
 		ordersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1263,10 +1339,6 @@ public abstract class BaseOrderResourceTestCase {
 			order2,
 			Arrays.asList(
 				OrderSerDes.toDTOs(ordersJSONObject.getString("items"))));
-	}
-
-	protected Order testGraphQLGetOrdersPage_addOrder() throws Exception {
-		return testGraphQLOrder_addOrder();
 	}
 
 	@Test
@@ -1335,6 +1407,15 @@ public abstract class BaseOrderResourceTestCase {
 	protected Order testPostOrder_addOrder(Order order) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostOrder() throws Exception {
+		Order randomOrder = randomOrder();
+
+		Order order = testGraphQLOrder_addOrder(randomOrder);
+
+		Assert.assertTrue(equals(randomOrder, order));
 	}
 
 	@Test
@@ -1466,8 +1547,94 @@ public abstract class BaseOrderResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Order testGraphQLOrder_addOrder() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLOrder_addOrder(randomOrder());
+	}
+
+	protected Order testGraphQLOrder_addOrder(Order order) throws Exception {
+		JSONDeserializer<Order> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Order.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(order));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createOrder",
+						new HashMap<String, Object>() {
+							{
+								put("order", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createOrder"),
+			Order.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(Order order, List<Order> orders) {

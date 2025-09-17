@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -250,17 +251,14 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		Currency currency1 = testGraphQLDeleteCurrency_addCurrency();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteCurrency",
-						new HashMap<String, Object>() {
-							{
-								put("id", currency1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteCurrency"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCurrency",
+				new HashMap<String, Object>() {
+					{
+						put("id", currency1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -280,21 +278,16 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		Currency currency2 = testGraphQLDeleteCurrency_addCurrency();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteCurrency",
-							new HashMap<String, Object>() {
-								{
-									put("id", currency2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteCurrency"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteCurrency",
+					new HashMap<String, Object>() {
+						{
+							put("id", currency2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -405,6 +398,90 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteCurrencyByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Currency currency1 =
+			testGraphQLDeleteCurrencyByExternalReferenceCode_addCurrency();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCurrencyByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + currency1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"currencyByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + currency1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Currency currency2 =
+			testGraphQLDeleteCurrencyByExternalReferenceCode_addCurrency();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteCurrencyByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + currency2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"currencyByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										currency2.getExternalReferenceCode() +
+											"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Currency
+			testGraphQLDeleteCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		return testGraphQLCurrency_addCurrency();
 	}
 
 	@Test
@@ -736,6 +813,7 @@ public abstract class BaseCurrencyResourceTestCase {
 			"currencies",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -751,8 +829,9 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		long totalCount = currenciesJSONObject.getLong("totalCount");
 
-		Currency currency1 = testGraphQLGetCurrenciesPage_addCurrency();
-		Currency currency2 = testGraphQLGetCurrenciesPage_addCurrency();
+		Currency currency1 = testGraphQLCurrency_addCurrency(randomCurrency());
+
+		Currency currency2 = testGraphQLCurrency_addCurrency(randomCurrency());
 
 		currenciesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -794,12 +873,6 @@ public abstract class BaseCurrencyResourceTestCase {
 			Arrays.asList(
 				CurrencySerDes.toDTOs(
 					currenciesJSONObject.getString("items"))));
-	}
-
-	protected Currency testGraphQLGetCurrenciesPage_addCurrency()
-		throws Exception {
-
-		return testGraphQLCurrency_addCurrency();
 	}
 
 	@Test
@@ -1305,6 +1378,15 @@ public abstract class BaseCurrencyResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostCurrency() throws Exception {
+		Currency randomCurrency = randomCurrency();
+
+		Currency currency = testGraphQLCurrency_addCurrency(randomCurrency);
+
+		Assert.assertTrue(equals(randomCurrency, currency));
+	}
+
+	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Currency currency1 = testBatchEngineDeleteImportTask_addCurrency();
 
@@ -1385,8 +1467,98 @@ public abstract class BaseCurrencyResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Currency testGraphQLCurrency_addCurrency() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLCurrency_addCurrency(randomCurrency());
+	}
+
+	protected Currency testGraphQLCurrency_addCurrency(Currency currency)
+		throws Exception {
+
+		JSONDeserializer<Currency> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(Currency.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(currency));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createCurrency",
+						new HashMap<String, Object>() {
+							{
+								put("currency", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createCurrency"),
+			Currency.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

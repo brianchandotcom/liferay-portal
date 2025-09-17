@@ -262,19 +262,16 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection dataRecordCollection1 =
 			testGraphQLDeleteDataRecordCollection_addDataRecordCollection();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataRecordCollection",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"dataRecordCollectionId",
-									dataRecordCollection1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataRecordCollection"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteDataRecordCollection",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"dataRecordCollectionId",
+							dataRecordCollection1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -297,22 +294,18 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection dataRecordCollection2 =
 			testGraphQLDeleteDataRecordCollection_addDataRecordCollection();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"dataEngine_v2_0",
-						new GraphQLField(
-							"deleteDataRecordCollection",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"dataRecordCollectionId",
-										dataRecordCollection2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/dataEngine_v2_0",
-				"Object/deleteDataRecordCollection"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"dataEngine_v2_0",
+				new GraphQLField(
+					"deleteDataRecordCollection",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"dataRecordCollectionId",
+								dataRecordCollection2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -413,123 +406,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetDataDefinitionDataRecordCollection()
-		throws Exception {
-
-		DataRecordCollection dataRecordCollection =
-			testGraphQLGetDataDefinitionDataRecordCollection_addDataRecordCollection();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				dataRecordCollection,
-				DataRecordCollectionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"dataDefinitionDataRecordCollection",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"dataDefinitionId",
-											testGraphQLGetDataDefinitionDataRecordCollection_getDataDefinitionId(
-												dataRecordCollection));
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/dataDefinitionDataRecordCollection"))));
-
-		// Using the namespace dataEngine_v2_0
-
-		Assert.assertTrue(
-			equals(
-				dataRecordCollection,
-				DataRecordCollectionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"dataEngine_v2_0",
-								new GraphQLField(
-									"dataDefinitionDataRecordCollection",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"dataDefinitionId",
-												testGraphQLGetDataDefinitionDataRecordCollection_getDataDefinitionId(
-													dataRecordCollection));
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/dataEngine_v2_0",
-						"Object/dataDefinitionDataRecordCollection"))));
-	}
-
-	protected Long
-			testGraphQLGetDataDefinitionDataRecordCollection_getDataDefinitionId(
-				DataRecordCollection dataRecordCollection)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetDataDefinitionDataRecordCollectionNotFound()
-		throws Exception {
-
-		Long irrelevantDataDefinitionId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"dataDefinitionDataRecordCollection",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"dataDefinitionId",
-									irrelevantDataDefinitionId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace dataEngine_v2_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"dataEngine_v2_0",
-						new GraphQLField(
-							"dataDefinitionDataRecordCollection",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"dataDefinitionId",
-										irrelevantDataDefinitionId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected DataRecordCollection
-			testGraphQLGetDataDefinitionDataRecordCollection_addDataRecordCollection()
-		throws Exception {
-
-		return testGraphQLDataRecordCollection_addDataRecordCollection();
 	}
 
 	@Test

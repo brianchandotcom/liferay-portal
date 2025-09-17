@@ -243,8 +243,7 @@ public abstract class BasePageTemplateSetResourceTestCase {
 			testDeleteSitePageTemplateSet_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -271,8 +270,7 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	protected String testGetSitePageTemplateSet_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -850,8 +848,7 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	protected String testPutSitePageTemplateSet_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -962,8 +959,7 @@ public abstract class BasePageTemplateSetResourceTestCase {
 			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Rule

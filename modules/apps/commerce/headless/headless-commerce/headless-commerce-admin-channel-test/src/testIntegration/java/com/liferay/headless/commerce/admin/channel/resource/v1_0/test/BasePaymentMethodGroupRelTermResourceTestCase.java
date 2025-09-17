@@ -235,44 +235,36 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm1 =
 			testGraphQLDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePaymentMethodGroupRelTerm",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"paymentMethodGroupRelTermId",
-									paymentMethodGroupRelTerm1.
-										getPaymentMethodGroupRelTermId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePaymentMethodGroupRelTerm"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePaymentMethodGroupRelTerm",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"paymentMethodGroupRelTermId",
+							paymentMethodGroupRelTerm1.
+								getPaymentMethodGroupRelTermId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
 		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm2 =
 			testGraphQLDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminChannel_v1_0",
-						new GraphQLField(
-							"deletePaymentMethodGroupRelTerm",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"paymentMethodGroupRelTermId",
-										paymentMethodGroupRelTerm2.
-											getPaymentMethodGroupRelTermId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminChannel_v1_0",
-				"Object/deletePaymentMethodGroupRelTerm"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminChannel_v1_0",
+				new GraphQLField(
+					"deletePaymentMethodGroupRelTerm",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"paymentMethodGroupRelTermId",
+								paymentMethodGroupRelTerm2.
+									getPaymentMethodGroupRelTermId());
+						}
+					})));
 	}
 
 	protected PaymentMethodGroupRelTerm

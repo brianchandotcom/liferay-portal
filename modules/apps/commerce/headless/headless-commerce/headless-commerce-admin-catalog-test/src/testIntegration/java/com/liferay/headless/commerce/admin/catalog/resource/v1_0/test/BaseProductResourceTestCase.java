@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -258,17 +259,14 @@ public abstract class BaseProductResourceTestCase {
 
 		Product product1 = testGraphQLDeleteProduct_addProduct();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProduct",
-						new HashMap<String, Object>() {
-							{
-								put("id", product1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteProduct"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProduct",
+				new HashMap<String, Object>() {
+					{
+						put("id", product1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -288,21 +286,16 @@ public abstract class BaseProductResourceTestCase {
 
 		Product product2 = testGraphQLDeleteProduct_addProduct();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteProduct",
-							new HashMap<String, Object>() {
-								{
-									put("id", product2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteProduct"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProduct",
+					new HashMap<String, Object>() {
+						{
+							put("id", product2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -412,6 +405,89 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteProductByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Product product1 =
+			testGraphQLDeleteProductByExternalReferenceCode_addProduct();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + product1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + product1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Product product2 =
+			testGraphQLDeleteProductByExternalReferenceCode_addProduct();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProductByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + product2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"productByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + product2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Product
+			testGraphQLDeleteProductByExternalReferenceCode_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
+	}
+
+	@Test
 	public void testDeleteProductByExternalReferenceCodeByVersion()
 		throws Exception {
 
@@ -446,6 +522,93 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteProductByExternalReferenceCodeByVersion()
+		throws Exception {
+
+		// No namespace
+
+		Product product1 =
+			testGraphQLDeleteProductByExternalReferenceCodeByVersion_addProduct();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductByExternalReferenceCodeByVersion",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + product1.getExternalReferenceCode() + "\"");
+						put("version", product1.getVersion());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productByExternalReferenceCodeByVersion",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + product1.getExternalReferenceCode() +
+									"\"");
+							put("version", product1.getVersion());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Product product2 =
+			testGraphQLDeleteProductByExternalReferenceCodeByVersion_addProduct();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProductByExternalReferenceCodeByVersion",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + product2.getExternalReferenceCode() +
+									"\"");
+							put("version", product2.getVersion());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"productByExternalReferenceCodeByVersion",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + product2.getExternalReferenceCode() +
+										"\"");
+								put("version", product2.getVersion());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Product
+			testGraphQLDeleteProductByExternalReferenceCodeByVersion_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
+	}
+
+	@Test
 	public void testDeleteProductByVersion() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product = testDeleteProductByVersion_addProduct();
@@ -468,6 +631,78 @@ public abstract class BaseProductResourceTestCase {
 	protected Product testDeleteProductByVersion_addProduct() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProductByVersion() throws Exception {
+
+		// No namespace
+
+		Product product1 = testGraphQLDeleteProductByVersion_addProduct();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductByVersion",
+				new HashMap<String, Object>() {
+					{
+						put("id", product1.getId());
+						put("version", product1.getVersion());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productByVersion",
+					new HashMap<String, Object>() {
+						{
+							put("id", product1.getId());
+							put("version", product1.getVersion());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Product product2 = testGraphQLDeleteProductByVersion_addProduct();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProductByVersion",
+					new HashMap<String, Object>() {
+						{
+							put("id", product2.getId());
+							put("version", product2.getVersion());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"productByVersion",
+						new HashMap<String, Object>() {
+							{
+								put("id", product2.getId());
+								put("version", product2.getVersion());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Product testGraphQLDeleteProductByVersion_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
 	}
 
 	@Test
@@ -1472,6 +1707,7 @@ public abstract class BaseProductResourceTestCase {
 			"products",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1487,8 +1723,9 @@ public abstract class BaseProductResourceTestCase {
 
 		long totalCount = productsJSONObject.getLong("totalCount");
 
-		Product product1 = testGraphQLGetProductsPage_addProduct();
-		Product product2 = testGraphQLGetProductsPage_addProduct();
+		Product product1 = testGraphQLProduct_addProduct(randomProduct());
+
+		Product product2 = testGraphQLProduct_addProduct(randomProduct());
 
 		productsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1528,10 +1765,6 @@ public abstract class BaseProductResourceTestCase {
 				ProductSerDes.toDTOs(productsJSONObject.getString("items"))));
 	}
 
-	protected Product testGraphQLGetProductsPage_addProduct() throws Exception {
-		return testGraphQLProduct_addProduct();
-	}
-
 	@Test
 	public void testPatchProduct() throws Exception {
 		Assert.assertTrue(false);
@@ -1560,6 +1793,15 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostProduct() throws Exception {
+		Product randomProduct = randomProduct();
+
+		Product product = testGraphQLProduct_addProduct(randomProduct);
+
+		Assert.assertTrue(equals(randomProduct, product));
+	}
+
+	@Test
 	public void testPostProductByExternalReferenceCodeClone() throws Exception {
 		Product randomProduct = randomProduct();
 
@@ -1580,6 +1822,17 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostProductByExternalReferenceCodeClone()
+		throws Exception {
+
+		Product randomProduct = randomProduct();
+
+		Product product = testGraphQLProduct_addProduct(randomProduct);
+
+		Assert.assertTrue(equals(randomProduct, product));
+	}
+
+	@Test
 	public void testPostProductClone() throws Exception {
 		Product randomProduct = randomProduct();
 
@@ -1594,6 +1847,15 @@ public abstract class BaseProductResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostProductClone() throws Exception {
+		Product randomProduct = randomProduct();
+
+		Product product = testGraphQLProduct_addProduct(randomProduct);
+
+		Assert.assertTrue(equals(randomProduct, product));
 	}
 
 	@Test
@@ -1728,8 +1990,96 @@ public abstract class BaseProductResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Product testGraphQLProduct_addProduct() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLProduct_addProduct(randomProduct());
+	}
+
+	protected Product testGraphQLProduct_addProduct(Product product)
+		throws Exception {
+
+		JSONDeserializer<Product> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Product.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(product));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createProduct",
+						new HashMap<String, Object>() {
+							{
+								put("product", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createProduct"),
+			Product.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(Product product, List<Product> products) {

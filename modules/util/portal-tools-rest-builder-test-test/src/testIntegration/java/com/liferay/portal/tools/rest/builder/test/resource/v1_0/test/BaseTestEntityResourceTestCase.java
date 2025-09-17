@@ -499,8 +499,11 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		long totalCount = testEntitiesJSONObject.getLong("totalCount");
 
-		TestEntity testEntity1 = testGraphQLGetTestEntitiesPage_addTestEntity();
-		TestEntity testEntity2 = testGraphQLGetTestEntitiesPage_addTestEntity();
+		TestEntity testEntity1 = testGraphQLTestEntity_addTestEntity(
+			randomTestEntity());
+
+		TestEntity testEntity2 = testGraphQLTestEntity_addTestEntity(
+			randomTestEntity());
 
 		testEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -540,12 +543,6 @@ public abstract class BaseTestEntityResourceTestCase {
 			Arrays.asList(
 				TestEntitySerDes.toDTOs(
 					testEntitiesJSONObject.getString("items"))));
-	}
-
-	protected TestEntity testGraphQLGetTestEntitiesPage_addTestEntity()
-		throws Exception {
-
-		return testGraphQLTestEntity_addTestEntity();
 	}
 
 	@Test

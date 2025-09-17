@@ -287,7 +287,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 										getExternalReferenceCode() + "\"");
 						}
 					},
-					new GraphQLField("id"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -327,7 +327,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 											getExternalReferenceCode() + "\"");
 							}
 						},
-						new GraphQLField("id")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -403,9 +403,12 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 		long totalCount = batchTestEntitiesJSONObject.getLong("totalCount");
 
 		BatchTestEntity batchTestEntity1 =
-			testGraphQLGetBatchTestEntitiesPage_addBatchTestEntity();
+			testGraphQLBatchTestEntity_addBatchTestEntity(
+				randomBatchTestEntity());
+
 		BatchTestEntity batchTestEntity2 =
-			testGraphQLGetBatchTestEntitiesPage_addBatchTestEntity();
+			testGraphQLBatchTestEntity_addBatchTestEntity(
+				randomBatchTestEntity());
 
 		batchTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -445,13 +448,6 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 			Arrays.asList(
 				BatchTestEntitySerDes.toDTOs(
 					batchTestEntitiesJSONObject.getString("items"))));
-	}
-
-	protected BatchTestEntity
-			testGraphQLGetBatchTestEntitiesPage_addBatchTestEntity()
-		throws Exception {
-
-		return testGraphQLBatchTestEntity_addBatchTestEntity();
 	}
 
 	@Test

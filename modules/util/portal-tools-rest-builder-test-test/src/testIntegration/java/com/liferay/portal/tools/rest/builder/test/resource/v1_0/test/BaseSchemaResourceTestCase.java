@@ -212,11 +212,6 @@ public abstract class BaseSchemaResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSchemasPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

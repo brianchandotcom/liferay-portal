@@ -328,77 +328,6 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteSegmentsPage() throws Exception {
-		Long siteId = testGetSiteSegmentsPage_getSiteId();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"segments",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject segmentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/segments");
-
-		long totalCount = segmentsJSONObject.getLong("totalCount");
-
-		Segment segment1 = testGraphQLGetSiteSegmentsPage_addSegment();
-		Segment segment2 = testGraphQLGetSiteSegmentsPage_addSegment();
-
-		segmentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/segments");
-
-		Assert.assertEquals(
-			totalCount + 2, segmentsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			segment1,
-			Arrays.asList(
-				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
-		assertContains(
-			segment2,
-			Arrays.asList(
-				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		segmentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-			"JSONObject/segments");
-
-		Assert.assertEquals(
-			totalCount + 2, segmentsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			segment1,
-			Arrays.asList(
-				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
-		assertContains(
-			segment2,
-			Arrays.asList(
-				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
-	}
-
-	protected Segment testGraphQLGetSiteSegmentsPage_addSegment()
-		throws Exception {
-
-		return testGraphQLSegment_addSegment();
-	}
-
-	@Test
 	public void testGetSiteUserAccountSegmentsPage() throws Exception {
 		Long siteId = testGetSiteUserAccountSegmentsPage_getSiteId();
 		Long irrelevantSiteId =
@@ -497,11 +426,6 @@ public abstract class BaseSegmentResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
-	}
-
-	protected Segment testGraphQLSegment_addSegment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected void assertContains(Segment segment, List<Segment> segments) {

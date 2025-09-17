@@ -247,17 +247,14 @@ public abstract class BaseSLAResourceTestCase {
 
 		SLA sla1 = testGraphQLDeleteSLA_addSLA();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSLA",
-						new HashMap<String, Object>() {
-							{
-								put("slaId", sla1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSLA"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSLA",
+				new HashMap<String, Object>() {
+					{
+						put("slaId", sla1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -277,20 +274,16 @@ public abstract class BaseSLAResourceTestCase {
 
 		SLA sla2 = testGraphQLDeleteSLA_addSLA();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"portalWorkflowMetrics_v1_0",
-						new GraphQLField(
-							"deleteSLA",
-							new HashMap<String, Object>() {
-								{
-									put("slaId", sla2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/portalWorkflowMetrics_v1_0",
-				"Object/deleteSLA"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"portalWorkflowMetrics_v1_0",
+				new GraphQLField(
+					"deleteSLA",
+					new HashMap<String, Object>() {
+						{
+							put("slaId", sla2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

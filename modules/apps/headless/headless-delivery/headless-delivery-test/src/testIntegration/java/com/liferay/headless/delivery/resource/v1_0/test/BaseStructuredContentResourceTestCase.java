@@ -309,8 +309,122 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Test
+	public void testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		StructuredContent structuredContent1 =
+			testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAssetLibraryStructuredContentByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"assetLibraryId",
+							"\"" +
+								testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
+									"\"");
+						put(
+							"externalReferenceCode",
+							"\"" +
+								structuredContent1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"assetLibraryStructuredContentByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									structuredContent1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		StructuredContent structuredContent2 =
+			testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteAssetLibraryStructuredContentByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									structuredContent2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"assetLibraryStructuredContentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										structuredContent2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long
+			testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected StructuredContent
+			testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLAssetLibraryStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -350,6 +464,107 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteSiteStructuredContentByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		StructuredContent structuredContent1 =
+			testGraphQLDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSiteStructuredContentByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + structuredContent1.getSiteId() + "\"");
+						put(
+							"externalReferenceCode",
+							"\"" +
+								structuredContent1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"structuredContentByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + structuredContent1.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									structuredContent1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		StructuredContent structuredContent2 =
+			testGraphQLDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteSiteStructuredContentByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + structuredContent2.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									structuredContent2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"structuredContentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + structuredContent2.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										structuredContent2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected StructuredContent
+			testGraphQLDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLSiteStructuredContent_addStructuredContent();
+	}
+
+	@Test
 	public void testDeleteStructuredContent() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent =
@@ -385,19 +600,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContent_addStructuredContent();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteStructuredContent",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"structuredContentId",
-									structuredContent1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteStructuredContent"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteStructuredContent",
+				new HashMap<String, Object>() {
+					{
+						put("structuredContentId", structuredContent1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -420,22 +630,18 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteStructuredContent_addStructuredContent();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"deleteStructuredContent",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"structuredContentId",
-										structuredContent2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-				"Object/deleteStructuredContent"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteStructuredContent",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"structuredContentId",
+								structuredContent2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -536,6 +742,83 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteStructuredContentMyRating() throws Exception {
+
+		// No namespace
+
+		StructuredContent structuredContent1 =
+			testGraphQLDeleteStructuredContentMyRating_addStructuredContent();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteStructuredContentMyRating",
+				new HashMap<String, Object>() {
+					{
+						put("structuredContentId", structuredContent1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"structuredContentMyRating",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"structuredContentId",
+								structuredContent1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		StructuredContent structuredContent2 =
+			testGraphQLDeleteStructuredContentMyRating_addStructuredContent();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteStructuredContentMyRating",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"structuredContentId",
+								structuredContent2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"structuredContentMyRating",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentId",
+									structuredContent2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected StructuredContent
+			testGraphQLDeleteStructuredContentMyRating_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContent_addStructuredContent();
+	}
+
+	@Test
 	public void testGetAssetLibraryStructuredContentByExternalReferenceCode()
 		throws Exception {
 
@@ -564,8 +847,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -640,8 +922,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -706,7 +987,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent()
 		throws Exception {
 
-		return testGraphQLStructuredContent_addStructuredContent();
+		return testGraphQLAssetLibraryStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -731,6 +1012,50 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		return structuredContentResource.postAssetLibraryStructuredContent(
 			testDepotEntry.getDepotEntryId(), randomStructuredContent());
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryStructuredContentPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent postStructuredContent =
+			testGraphQLGetAssetLibraryStructuredContentPermissionsPage_addStructuredContent();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryStructuredContentPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"assetLibraryId",
+						"\"" +
+							testGraphQLGetAssetLibraryStructuredContentPermissionsPage_getAssetLibraryId() +
+								"\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject assetLibraryStructuredContentPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryStructuredContentPermissions");
+
+		Assert.assertNotNull(
+			assetLibraryStructuredContentPermissionsJSONObject);
+	}
+
+	protected Long
+			testGraphQLGetAssetLibraryStructuredContentPermissionsPage_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected StructuredContent
+			testGraphQLGetAssetLibraryStructuredContentPermissionsPage_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -1202,6 +1527,93 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		return irrelevantDepotEntry.getDepotEntryId();
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryStructuredContentsPage()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryStructuredContentsPage_getAssetLibraryId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryStructuredContents",
+			new HashMap<String, Object>() {
+				{
+					put("assetLibraryId", "\"" + assetLibraryId + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject assetLibraryStructuredContentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryStructuredContents");
+
+		long totalCount = assetLibraryStructuredContentsJSONObject.getLong(
+			"totalCount");
+
+		StructuredContent structuredContent1 =
+			testGraphQLAssetLibraryStructuredContent_addStructuredContent(
+				assetLibraryId, randomStructuredContent());
+
+		StructuredContent structuredContent2 =
+			testGraphQLAssetLibraryStructuredContent_addStructuredContent(
+				assetLibraryId, randomStructuredContent());
+
+		assetLibraryStructuredContentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryStructuredContents");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryStructuredContentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			structuredContent1,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					assetLibraryStructuredContentsJSONObject.getString(
+						"items"))));
+		assertContains(
+			structuredContent2,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					assetLibraryStructuredContentsJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		assetLibraryStructuredContentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/assetLibraryStructuredContents");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryStructuredContentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			structuredContent1,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					assetLibraryStructuredContentsJSONObject.getString(
+						"items"))));
+		assertContains(
+			structuredContent2,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					assetLibraryStructuredContentsJSONObject.getString(
+						"items"))));
 	}
 
 	@Test
@@ -1837,7 +2249,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGraphQLGetSiteStructuredContentByExternalReferenceCode_addStructuredContent()
 		throws Exception {
 
-		return testGraphQLStructuredContent_addStructuredContent();
+		return testGraphQLSiteStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -2141,6 +2553,40 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		return structuredContentResource.postSiteStructuredContent(
 			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
+	public void testGraphQLGetSiteStructuredContentPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent postStructuredContent =
+			testGraphQLGetSiteStructuredContentPermissionsPage_addStructuredContent();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"siteStructuredContentPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"siteKey",
+						"\"" + postStructuredContent.getSiteId() + "\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject siteStructuredContentPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/siteStructuredContentPermissions");
+
+		Assert.assertNotNull(siteStructuredContentPermissionsJSONObject);
+	}
+
+	protected StructuredContent
+			testGraphQLGetSiteStructuredContentPermissionsPage_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -2610,10 +3056,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 			"structuredContents",
 			new HashMap<String, Object>() {
 				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -2628,9 +3074,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 		long totalCount = structuredContentsJSONObject.getLong("totalCount");
 
 		StructuredContent structuredContent1 =
-			testGraphQLGetSiteStructuredContentsPage_addStructuredContent();
+			testGraphQLSiteStructuredContent_addStructuredContent(
+				siteId, randomStructuredContent());
+
 		StructuredContent structuredContent2 =
-			testGraphQLGetSiteStructuredContentsPage_addStructuredContent();
+			testGraphQLSiteStructuredContent_addStructuredContent(
+				siteId, randomStructuredContent());
 
 		structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -2671,13 +3120,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Arrays.asList(
 				StructuredContentSerDes.toDTOs(
 					structuredContentsJSONObject.getString("items"))));
-	}
-
-	protected StructuredContent
-			testGraphQLGetSiteStructuredContentsPage_addStructuredContent()
-		throws Exception {
-
-		return testGraphQLStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -3517,6 +3959,38 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetStructuredContentPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent postStructuredContent =
+			testGraphQLGetStructuredContentPermissionsPage_addStructuredContent();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"structuredContentPermissions",
+			new HashMap<String, Object>() {
+				{
+					put("structuredContentId", postStructuredContent.getId());
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject structuredContentPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/structuredContentPermissions");
+
+		Assert.assertNotNull(structuredContentPermissionsJSONObject);
+	}
+
+	protected StructuredContent
+			testGraphQLGetStructuredContentPermissionsPage_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContent_addStructuredContent();
+	}
+
+	@Test
 	public void testGetStructuredContentRenderedContentByDisplayPageDisplayPageKey()
 		throws Exception {
 
@@ -3588,6 +4062,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostAssetLibraryStructuredContent()
+		throws Exception {
+
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent structuredContent =
+			testGraphQLAssetLibraryStructuredContent_addStructuredContent(
+				testDepotEntry.getDepotEntryId(), randomStructuredContent);
+
+		Assert.assertTrue(equals(randomStructuredContent, structuredContent));
+	}
+
+	@Test
 	public void testPostSiteStructuredContent() throws Exception {
 		StructuredContent randomStructuredContent = randomStructuredContent();
 
@@ -3613,8 +4100,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent randomStructuredContent = randomStructuredContent();
 
 		StructuredContent structuredContent =
-			testGraphQLStructuredContent_addStructuredContent(
-				randomStructuredContent);
+			testGraphQLSiteStructuredContent_addStructuredContent(
+				testGroup.getGroupId(), randomStructuredContent);
 
 		Assert.assertTrue(equals(randomStructuredContent, structuredContent));
 	}
@@ -3710,8 +4197,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testPutAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected StructuredContent
@@ -4127,6 +4613,180 @@ public abstract class BaseStructuredContentResourceTestCase {
 			structuredContentId, rating);
 	}
 
+	protected StructuredContent
+			testGraphQLAssetLibraryStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLAssetLibraryStructuredContent_addStructuredContent(
+			testDepotEntry.getDepotEntryId(), randomStructuredContent());
+	}
+
+	protected StructuredContent
+			testGraphQLAssetLibraryStructuredContent_addStructuredContent(
+				Long assetLibraryId, StructuredContent structuredContent)
+		throws Exception {
+
+		JSONDeserializer<StructuredContent> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(StructuredContent.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(structuredContent));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAssetLibraryStructuredContent",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" + assetLibraryId + "\"");
+								put("structuredContent", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createAssetLibraryStructuredContent"),
+			StructuredContent.class);
+	}
+
+	protected StructuredContent
+			testGraphQLSiteStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLSiteStructuredContent_addStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	protected StructuredContent
+			testGraphQLSiteStructuredContent_addStructuredContent(
+				Long siteId, StructuredContent structuredContent)
+		throws Exception {
+
+		JSONDeserializer<StructuredContent> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(StructuredContent.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(structuredContent));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteStructuredContent",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("structuredContent", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteStructuredContent"),
+			StructuredContent.class);
+	}
+
+	protected StructuredContent
+			testGraphQLStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContent_addStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	protected StructuredContent
+			testGraphQLStructuredContent_addStructuredContent(
+				Long siteId, StructuredContent structuredContent)
+		throws Exception {
+
+		JSONDeserializer<StructuredContent> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(StructuredContent.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(structuredContent));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteStructuredContent",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("structuredContent", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteStructuredContent"),
+			StructuredContent.class);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -4170,65 +4830,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected StructuredContent
-			testGraphQLStructuredContent_addStructuredContent()
-		throws Exception {
-
-		return testGraphQLStructuredContent_addStructuredContent(
-			randomStructuredContent());
-	}
-
-	protected StructuredContent
-			testGraphQLStructuredContent_addStructuredContent(
-				StructuredContent structuredContent)
-		throws Exception {
-
-		JSONDeserializer<StructuredContent> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(StructuredContent.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(structuredContent));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteStructuredContent",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("structuredContent", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteStructuredContent"),
-			StructuredContent.class);
 	}
 
 	protected void assertContains(

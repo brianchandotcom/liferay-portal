@@ -27,6 +27,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -257,17 +258,14 @@ public abstract class BaseCartCommentResourceTestCase {
 		CartComment cartComment1 =
 			testGraphQLDeleteCartComment_addCartComment();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteCartComment",
-						new HashMap<String, Object>() {
-							{
-								put("cartCommentId", cartComment1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteCartComment"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCartComment",
+				new HashMap<String, Object>() {
+					{
+						put("cartCommentId", cartComment1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -288,21 +286,16 @@ public abstract class BaseCartCommentResourceTestCase {
 		CartComment cartComment2 =
 			testGraphQLDeleteCartComment_addCartComment();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceDeliveryCart_v1_0",
-						new GraphQLField(
-							"deleteCartComment",
-							new HashMap<String, Object>() {
-								{
-									put("cartCommentId", cartComment2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceDeliveryCart_v1_0",
-				"Object/deleteCartComment"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceDeliveryCart_v1_0",
+				new GraphQLField(
+					"deleteCartComment",
+					new HashMap<String, Object>() {
+						{
+							put("cartCommentId", cartComment2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -431,6 +424,91 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteCartCommentByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		CartComment cartComment1 =
+			testGraphQLDeleteCartCommentByExternalReferenceCode_addCartComment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCartCommentByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + cartComment1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"cartCommentByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + cartComment1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		CartComment cartComment2 =
+			testGraphQLDeleteCartCommentByExternalReferenceCode_addCartComment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceDeliveryCart_v1_0",
+				new GraphQLField(
+					"deleteCartCommentByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + cartComment2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceDeliveryCart_v1_0",
+					new GraphQLField(
+						"cartCommentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										cartComment2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected CartComment
+			testGraphQLDeleteCartCommentByExternalReferenceCode_addCartComment()
+		throws Exception {
+
+		return testGraphQLCartComment_addCartComment();
 	}
 
 	@Test
@@ -1215,84 +1293,6 @@ public abstract class BaseCartCommentResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetCartCommentsPage() throws Exception {
-		Long cartId = testGetCartCommentsPage_getCartId();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"cartComments",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-
-					put("cartId", cartId);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject cartCommentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/cartComments");
-
-		long totalCount = cartCommentsJSONObject.getLong("totalCount");
-
-		CartComment cartComment1 =
-			testGraphQLGetCartCommentsPage_addCartComment();
-		CartComment cartComment2 =
-			testGraphQLGetCartCommentsPage_addCartComment();
-
-		cartCommentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/cartComments");
-
-		Assert.assertEquals(
-			totalCount + 2, cartCommentsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			cartComment1,
-			Arrays.asList(
-				CartCommentSerDes.toDTOs(
-					cartCommentsJSONObject.getString("items"))));
-		assertContains(
-			cartComment2,
-			Arrays.asList(
-				CartCommentSerDes.toDTOs(
-					cartCommentsJSONObject.getString("items"))));
-
-		// Using the namespace headlessCommerceDeliveryCart_v1_0
-
-		cartCommentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceDeliveryCart_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessCommerceDeliveryCart_v1_0",
-			"JSONObject/cartComments");
-
-		Assert.assertEquals(
-			totalCount + 2, cartCommentsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			cartComment1,
-			Arrays.asList(
-				CartCommentSerDes.toDTOs(
-					cartCommentsJSONObject.getString("items"))));
-		assertContains(
-			cartComment2,
-			Arrays.asList(
-				CartCommentSerDes.toDTOs(
-					cartCommentsJSONObject.getString("items"))));
-	}
-
-	protected CartComment testGraphQLGetCartCommentsPage_addCartComment()
-		throws Exception {
-
-		return testGraphQLCartComment_addCartComment();
-	}
-
-	@Test
 	public void testPatchCartComment() throws Exception {
 		CartComment postCartComment = testPatchCartComment_addCartComment();
 
@@ -1568,8 +1568,100 @@ public abstract class BaseCartCommentResourceTestCase {
 	protected CartComment testGraphQLCartComment_addCartComment()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLCartComment_addCartComment(null, randomCartComment());
+	}
+
+	protected CartComment testGraphQLCartComment_addCartComment(
+			Long cartId, CartComment cartComment)
+		throws Exception {
+
+		JSONDeserializer<CartComment> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(CartComment.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(cartComment));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createCartCartComment",
+						new HashMap<String, Object>() {
+							{
+								put("cartId", cartId);
+								put("cartComment", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createCartCartComment"),
+			CartComment.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

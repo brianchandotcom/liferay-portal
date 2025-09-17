@@ -226,11 +226,6 @@ public abstract class BaseFieldMappingInfoResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetFieldMappingInfosPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

@@ -551,11 +551,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@Test
-	public void testGraphQLGetSiteDisplayPageTemplatesPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
 	protected void assertContains(
 		DisplayPageTemplate displayPageTemplate,
 		List<DisplayPageTemplate> displayPageTemplates) {

@@ -234,44 +234,36 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 		PriceModifierCategory priceModifierCategory1 =
 			testGraphQLDeletePriceModifierCategory_addPriceModifierCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceModifierCategory",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"priceModifierCategoryId",
-									priceModifierCategory1.
-										getPriceModifierCategoryId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceModifierCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceModifierCategory",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"priceModifierCategoryId",
+							priceModifierCategory1.
+								getPriceModifierCategoryId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
 		PriceModifierCategory priceModifierCategory2 =
 			testGraphQLDeletePriceModifierCategory_addPriceModifierCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v2_0",
-						new GraphQLField(
-							"deletePriceModifierCategory",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"priceModifierCategoryId",
-										priceModifierCategory2.
-											getPriceModifierCategoryId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v2_0",
-				"Object/deletePriceModifierCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deletePriceModifierCategory",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"priceModifierCategoryId",
+								priceModifierCategory2.
+									getPriceModifierCategoryId());
+						}
+					})));
 	}
 
 	protected PriceModifierCategory

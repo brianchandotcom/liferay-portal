@@ -221,8 +221,7 @@ public abstract class BasePageRuleResourceTestCase {
 	protected String testDeleteSitePageRule_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -358,8 +357,7 @@ public abstract class BasePageRuleResourceTestCase {
 	protected String testGetSitePageRule_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -436,8 +434,7 @@ public abstract class BasePageRuleResourceTestCase {
 	protected String testPutSitePageRule_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -497,8 +494,7 @@ public abstract class BasePageRuleResourceTestCase {
 			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	protected void assertContains(PageRule pageRule, List<PageRule> pageRules) {

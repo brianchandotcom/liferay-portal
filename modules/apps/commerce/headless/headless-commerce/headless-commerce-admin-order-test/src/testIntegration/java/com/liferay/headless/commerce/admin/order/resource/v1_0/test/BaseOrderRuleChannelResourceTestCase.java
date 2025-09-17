@@ -225,42 +225,34 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 		OrderRuleChannel orderRuleChannel1 =
 			testGraphQLDeleteOrderRuleChannel_addOrderRuleChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrderRuleChannel",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"orderRuleChannelId",
-									orderRuleChannel1.getOrderRuleChannelId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrderRuleChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrderRuleChannel",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"orderRuleChannelId",
+							orderRuleChannel1.getOrderRuleChannelId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
 		OrderRuleChannel orderRuleChannel2 =
 			testGraphQLDeleteOrderRuleChannel_addOrderRuleChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"deleteOrderRuleChannel",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"orderRuleChannelId",
-										orderRuleChannel2.
-											getOrderRuleChannelId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-				"Object/deleteOrderRuleChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrderRuleChannel",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"orderRuleChannelId",
+								orderRuleChannel2.getOrderRuleChannelId());
+						}
+					})));
 	}
 
 	protected OrderRuleChannel

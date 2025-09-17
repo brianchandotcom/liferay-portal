@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -256,17 +257,14 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		OptionCategory optionCategory1 =
 			testGraphQLDeleteOptionCategory_addOptionCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOptionCategory",
-						new HashMap<String, Object>() {
-							{
-								put("id", optionCategory1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOptionCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOptionCategory",
+				new HashMap<String, Object>() {
+					{
+						put("id", optionCategory1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -287,21 +285,16 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		OptionCategory optionCategory2 =
 			testGraphQLDeleteOptionCategory_addOptionCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteOptionCategory",
-							new HashMap<String, Object>() {
-								{
-									put("id", optionCategory2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteOptionCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteOptionCategory",
+					new HashMap<String, Object>() {
+						{
+							put("id", optionCategory2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -434,6 +427,93 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		OptionCategory optionCategory1 =
+			testGraphQLDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOptionCategoryByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + optionCategory1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"optionCategoryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									optionCategory1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		OptionCategory optionCategory2 =
+			testGraphQLDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteOptionCategoryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									optionCategory2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"optionCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										optionCategory2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected OptionCategory
+			testGraphQLDeleteOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		return testGraphQLOptionCategory_addOptionCategory();
 	}
 
 	@Test
@@ -830,9 +910,10 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		long totalCount = optionCategoriesJSONObject.getLong("totalCount");
 
 		OptionCategory optionCategory1 =
-			testGraphQLGetOptionCategoriesPage_addOptionCategory();
+			testGraphQLOptionCategory_addOptionCategory(randomOptionCategory());
+
 		OptionCategory optionCategory2 =
-			testGraphQLGetOptionCategoriesPage_addOptionCategory();
+			testGraphQLOptionCategory_addOptionCategory(randomOptionCategory());
 
 		optionCategoriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -874,13 +955,6 @@ public abstract class BaseOptionCategoryResourceTestCase {
 			Arrays.asList(
 				OptionCategorySerDes.toDTOs(
 					optionCategoriesJSONObject.getString("items"))));
-	}
-
-	protected OptionCategory
-			testGraphQLGetOptionCategoriesPage_addOptionCategory()
-		throws Exception {
-
-		return testGraphQLOptionCategory_addOptionCategory();
 	}
 
 	@Test
@@ -1386,6 +1460,16 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostOptionCategory() throws Exception {
+		OptionCategory randomOptionCategory = randomOptionCategory();
+
+		OptionCategory optionCategory =
+			testGraphQLOptionCategory_addOptionCategory(randomOptionCategory);
+
+		Assert.assertTrue(equals(randomOptionCategory, optionCategory));
+	}
+
+	@Test
 	public void testPutOptionCategoryByExternalReferenceCode()
 		throws Exception {
 
@@ -1543,8 +1627,100 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	protected OptionCategory testGraphQLOptionCategory_addOptionCategory()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLOptionCategory_addOptionCategory(
+			randomOptionCategory());
+	}
+
+	protected OptionCategory testGraphQLOptionCategory_addOptionCategory(
+			OptionCategory optionCategory)
+		throws Exception {
+
+		JSONDeserializer<OptionCategory> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(OptionCategory.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(optionCategory));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createOptionCategory",
+						new HashMap<String, Object>() {
+							{
+								put("optionCategory", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createOptionCategory"),
+			OptionCategory.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

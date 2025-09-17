@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -300,6 +301,119 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"accountExternalReferenceCode",
+							"\"" +
+								testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+									"\"");
+						put(
+							"externalReferenceCode",
+							"\"" + userAccount1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountByExternalReferenceCodeUserAccountByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountExternalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" + userAccount1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserAccount userAccount2 =
+			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountExternalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" + userAccount2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"accountByExternalReferenceCodeUserAccountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountExternalReferenceCode",
+									"\"" +
+										testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										userAccount2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected String
+			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount
+			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
 	public void testDeleteAccountUserAccount() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount = testDeleteAccountUserAccount_addUserAccount();
@@ -335,6 +449,95 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountUserAccount() throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteAccountUserAccount_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountUserAccount",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"accountId",
+							testGraphQLDeleteAccountUserAccount_getAccountId());
+						put("userAccountId", userAccount1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountUserAccount",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountId",
+								testGraphQLDeleteAccountUserAccount_getAccountId());
+							put("userAccountId", userAccount1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserAccount userAccount2 =
+			testGraphQLDeleteAccountUserAccount_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountUserAccount",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountId",
+								testGraphQLDeleteAccountUserAccount_getAccountId());
+							put("userAccountId", userAccount2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"accountUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountId",
+									testGraphQLDeleteAccountUserAccount_getAccountId());
+								put("userAccountId", userAccount2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long testGraphQLDeleteAccountUserAccount_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGraphQLDeleteAccountUserAccount_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
 	public void testDeleteAccountUserAccountByEmailAddress() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount =
@@ -360,6 +563,66 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountUserAccountByEmailAddress()
+		throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteAccountUserAccountByEmailAddress_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountUserAccountByEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"accountId",
+							testGraphQLDeleteAccountUserAccountByEmailAddress_getAccountId());
+						put(
+							"emailAddress",
+							"\"" + userAccount1.getEmailAddress() + "\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserAccount userAccount2 =
+			testGraphQLDeleteAccountUserAccountByEmailAddress_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountUserAccountByEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountId",
+								testGraphQLDeleteAccountUserAccountByEmailAddress_getAccountId());
+							put(
+								"emailAddress",
+								"\"" + userAccount2.getEmailAddress() + "\"");
+						}
+					})));
+	}
+
+	protected Long
+			testGraphQLDeleteAccountUserAccountByEmailAddress_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount
+			testGraphQLDeleteAccountUserAccountByEmailAddress_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -397,6 +660,71 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountUserAccountByExternalReferenceCodeByEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" +
+								testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+									userAccount1) + "\"");
+						put(
+							"emailAddress",
+							"\"" + userAccount1.getEmailAddress() + "\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserAccount userAccount2 =
+			testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountUserAccountByExternalReferenceCodeByEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+										userAccount2) + "\"");
+							put(
+								"emailAddress",
+								"\"" + userAccount2.getEmailAddress() + "\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+				UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount
+			testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
 	public void testDeleteAccountUserAccountsByEmailAddress() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount =
@@ -422,6 +750,60 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountUserAccountsByEmailAddress()
+		throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteAccountUserAccountsByEmailAddress_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountUserAccountsByEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"accountId",
+							testGraphQLDeleteAccountUserAccountsByEmailAddress_getAccountId());
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserAccount userAccount2 =
+			testGraphQLDeleteAccountUserAccountsByEmailAddress_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountUserAccountsByEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountId",
+								testGraphQLDeleteAccountUserAccountsByEmailAddress_getAccountId());
+						}
+					})));
+	}
+
+	protected Long
+			testGraphQLDeleteAccountUserAccountsByEmailAddress_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount
+			testGraphQLDeleteAccountUserAccountsByEmailAddress_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -459,6 +841,65 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" +
+								testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+									userAccount1) + "\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserAccount userAccount2 =
+			testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+										userAccount2) + "\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+				UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount
+			testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
 	public void testDeleteUserAccount() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
@@ -491,17 +932,14 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGraphQLDeleteUserAccount_addUserAccount();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteUserAccount",
-						new HashMap<String, Object>() {
-							{
-								put("userAccountId", userAccount1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteUserAccount"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteUserAccount",
+				new HashMap<String, Object>() {
+					{
+						put("userAccountId", userAccount1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -522,20 +960,16 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount2 =
 			testGraphQLDeleteUserAccount_addUserAccount();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"deleteUserAccount",
-							new HashMap<String, Object>() {
-								{
-									put("userAccountId", userAccount2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-				"Object/deleteUserAccount"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteUserAccount",
+					new HashMap<String, Object>() {
+						{
+							put("userAccountId", userAccount2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -664,6 +1098,91 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteUserAccountByExternalReferenceCode_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteUserAccountByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + userAccount1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"userAccountByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + userAccount1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserAccount userAccount2 =
+			testGraphQLDeleteUserAccountByExternalReferenceCode_addUserAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteUserAccountByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + userAccount2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"userAccountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										userAccount2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected UserAccount
+			testGraphQLDeleteUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -4547,6 +5066,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			"userAccounts",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -4562,10 +5082,11 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		long totalCount = userAccountsJSONObject.getLong("totalCount");
 
-		UserAccount userAccount1 =
-			testGraphQLGetUserAccountsPage_addUserAccount();
-		UserAccount userAccount2 =
-			testGraphQLGetUserAccountsPage_addUserAccount();
+		UserAccount userAccount1 = testGraphQLUserAccount_addUserAccount(
+			randomUserAccount());
+
+		UserAccount userAccount2 = testGraphQLUserAccount_addUserAccount(
+			randomUserAccount());
 
 		userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -4606,12 +5127,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			Arrays.asList(
 				UserAccountSerDes.toDTOs(
 					userAccountsJSONObject.getString("items"))));
-	}
-
-	protected UserAccount testGraphQLGetUserAccountsPage_addUserAccount()
-		throws Exception {
-
-		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -5489,8 +6004,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected Long testPatchSiteAccountUserAccountSelected_getSiteId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getGroupId();
 	}
 
 	protected Long testPatchSiteAccountUserAccountSelected_getAccountId()
@@ -5700,6 +6214,18 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostAccountUserAccountByEmailAddress()
+		throws Exception {
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount userAccount = testGraphQLUserAccount_addUserAccount(
+			randomUserAccount);
+
+		Assert.assertTrue(equals(randomUserAccount, userAccount));
+	}
+
+	@Test
 	public void testPostAccountUserAccountByExternalReferenceCode()
 		throws Exception {
 
@@ -5746,6 +6272,18 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostAccountUserAccountByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount userAccount = testGraphQLUserAccount_addUserAccount(
+			randomUserAccount);
+
+		Assert.assertTrue(equals(randomUserAccount, userAccount));
+	}
+
+	@Test
 	public void testPostAccountUserAccountsByEmailAddress() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -5774,6 +6312,16 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostUserAccount() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount userAccount = testGraphQLUserAccount_addUserAccount(
+			randomUserAccount);
+
+		Assert.assertTrue(equals(randomUserAccount, userAccount));
 	}
 
 	@Test
@@ -5957,8 +6505,99 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected UserAccount testGraphQLUserAccount_addUserAccount()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLUserAccount_addUserAccount(randomUserAccount());
+	}
+
+	protected UserAccount testGraphQLUserAccount_addUserAccount(
+			UserAccount userAccount)
+		throws Exception {
+
+		JSONDeserializer<UserAccount> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(UserAccount.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(userAccount));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put("userAccount", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createUserAccount"),
+			UserAccount.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

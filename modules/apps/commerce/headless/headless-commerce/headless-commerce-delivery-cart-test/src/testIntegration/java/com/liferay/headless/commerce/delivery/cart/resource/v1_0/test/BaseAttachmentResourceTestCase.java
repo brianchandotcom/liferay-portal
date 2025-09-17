@@ -206,6 +206,61 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteCartAttachment() throws Exception {
+
+		// No namespace
+
+		Attachment attachment1 =
+			testGraphQLDeleteCartAttachment_addAttachment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCartAttachment",
+				new HashMap<String, Object>() {
+					{
+						put("attachmentId", attachment1.getId());
+
+						put(
+							"cartId",
+							testGraphQLDeleteCartAttachment_getCartId());
+					}
+				}));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Attachment attachment2 =
+			testGraphQLDeleteCartAttachment_addAttachment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceDeliveryCart_v1_0",
+				new GraphQLField(
+					"deleteCartAttachment",
+					new HashMap<String, Object>() {
+						{
+							put("attachmentId", attachment2.getId());
+
+							put(
+								"cartId",
+								testGraphQLDeleteCartAttachment_getCartId());
+						}
+					})));
+	}
+
+	protected Long testGraphQLDeleteCartAttachment_getCartId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Attachment testGraphQLDeleteCartAttachment_addAttachment()
+		throws Exception {
+
+		return testGraphQLAttachment_addAttachment();
+	}
+
+	@Test
 	public void testDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode()
 		throws Exception {
 
@@ -237,6 +292,75 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Attachment attachment1 =
+			testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"attachmentExternalReferenceCode",
+							"\"" + attachment1.getExternalReferenceCode() +
+								"\"");
+
+						put(
+							"externalReferenceCode",
+							"\"" +
+								testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+									attachment1) + "\"");
+					}
+				}));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Attachment attachment2 =
+			testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceDeliveryCart_v1_0",
+				new GraphQLField(
+					"deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"attachmentExternalReferenceCode",
+								"\"" + attachment2.getExternalReferenceCode() +
+									"\"");
+
+							put(
+								"externalReferenceCode",
+								"\"" +
+									testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+										attachment2) + "\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+				Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Attachment
+			testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		return testGraphQLAttachment_addAttachment();
 	}
 
 	@Test
@@ -626,6 +750,13 @@ public abstract class BaseAttachmentResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected Attachment testGraphQLAttachment_addAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

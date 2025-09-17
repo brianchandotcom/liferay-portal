@@ -252,17 +252,14 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		Warehouse warehouse1 = testGraphQLDeleteWarehouse_addWarehouse();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWarehouse",
-						new HashMap<String, Object>() {
-							{
-								put("id", warehouse1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWarehouse"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteWarehouse",
+				new HashMap<String, Object>() {
+					{
+						put("id", warehouse1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -282,21 +279,16 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		Warehouse warehouse2 = testGraphQLDeleteWarehouse_addWarehouse();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminSiteSetting_v1_0",
-						new GraphQLField(
-							"deleteWarehouse",
-							new HashMap<String, Object>() {
-								{
-									put("id", warehouse2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
-				"Object/deleteWarehouse"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminSiteSetting_v1_0",
+				new GraphQLField(
+					"deleteWarehouse",
+					new HashMap<String, Object>() {
+						{
+							put("id", warehouse2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

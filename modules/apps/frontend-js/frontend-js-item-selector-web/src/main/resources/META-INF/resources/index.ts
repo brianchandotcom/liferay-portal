@@ -5,5 +5,3 @@
 
 export {default as ItemSelector} from './item_selector/ItemSelector';
 export {default as ItemSelectorModal} from './item_selector/ItemSelectorModal';
-
-export {IItemSelectorModalFDSProps} from './utils/types';

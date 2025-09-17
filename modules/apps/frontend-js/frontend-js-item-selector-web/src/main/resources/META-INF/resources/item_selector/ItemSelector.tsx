@@ -14,8 +14,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch, getObjectValueFromPath} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {IItemSelectorModalFDSProps} from '../utils/types';
-import ItemSelectorModal from './ItemSelectorModal';
+import ItemSelectorModal, {IItemSelectorModalProps} from './ItemSelectorModal';
 
 const NETWORK_STATUS_UNUSED = 4;
 
@@ -38,9 +37,21 @@ interface HeadlessPage<T = unknown> {
 	page: number;
 }
 
+type IInternalItemSelectorModalProps<T> = Omit<
+	IItemSelectorModalProps<T>,
+	| 'apiURL'
+	| 'items'
+	| 'locator'
+	| 'multiSelect'
+	| 'observer'
+	| 'onItemsChange'
+	| 'onOpenChange'
+	| 'open'
+>;
+
 interface IItemSelectorModalTriggerProps<T extends Record<string, any>> {
 	apiURL: string;
-	fdsProps: IItemSelectorModalFDSProps;
+	itemSelectorModalProps: IInternalItemSelectorModalProps<T>;
 	items: T[];
 	locator: {
 		id: string;
@@ -48,17 +59,15 @@ interface IItemSelectorModalTriggerProps<T extends Record<string, any>> {
 		value: string;
 	};
 	setItems: InternalDispatch<T[]>;
-	type?: string;
 	multiSelect?: boolean;
 }
 
 function ItemSelectorModalTrigger<T extends Record<string, any>>({
 	apiURL,
-	fdsProps,
+	itemSelectorModalProps,
 	items,
 	locator,
 	setItems,
-	type = 'Item',
 	multiSelect = false
 }: IItemSelectorModalTriggerProps<T>) {
 	const {observer, onOpenChange, open} = useModal();
@@ -82,15 +91,14 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 			</ClayInput.GroupItem>
 
 			<ItemSelectorModal
+				{...itemSelectorModalProps}
 				apiURL={apiURL}
-				fdsProps={fdsProps}
 				items={items}
 				locator={locator}
 				observer={observer}
 				onItemsChange={setItems}
 				onOpenChange={onOpenChange}
 				open={open}
-				type={type}
 				multiSelect={multiSelect}
 			/>
 		</>
@@ -141,7 +149,8 @@ export interface IItemSelectorProps<T>
 	/**
 	 * Props passed to the ItemSelectorModal component.
 	 */
-	fdsProps?: IItemSelectorModalFDSProps;
+
+	itemSelectorModalProps?: IInternalItemSelectorModalProps<T>;
 
 	/**
 	 * Items that are currently selected (controlled).
@@ -175,11 +184,6 @@ export interface IItemSelectorProps<T>
 	onItemsChange?: InternalDispatch<T[]>;
 
 	/**
-	 * Used to render ItemSelectorModal placeholder
-	 */
-	type?: string;
-
-	/**
 	 * The current value of the input (controlled).
 	 */
 	value?: string;
@@ -194,6 +198,7 @@ function ItemSelector<T extends Record<string, any>>({
 		value: 'id',
 	},
 	value: externalValue,
+	itemSelectorModalProps,
 	onChange,
 	onItemsChange,
 	multiSelect = false,
@@ -201,8 +206,6 @@ function ItemSelector<T extends Record<string, any>>({
 	defaultValue,
 	defaultItems,
 	displaySelectedItems = true,
-	fdsProps,
-	type,
 	...otherProps
 }: IItemSelectorProps<T>) {
 	useEffect(() => {
@@ -422,17 +425,16 @@ function ItemSelector<T extends Record<string, any>>({
 		};
 	}
 
-	return fdsProps ? (
+	return itemSelectorModalProps ? (
 		<ClayInput.Group>
 			<ClayInput.GroupItem>{itemSelectorComponent}</ClayInput.GroupItem>
 
 			<ItemSelectorModalTrigger
 				apiURL={apiURL}
-				fdsProps={fdsProps}
+				itemSelectorModalProps={itemSelectorModalProps}
 				items={items}
 				locator={locator}
 				setItems={handleModalItemsChange}
-				type={type}
 				multiSelect={multiSelect}
 			/>
 		</ClayInput.Group>

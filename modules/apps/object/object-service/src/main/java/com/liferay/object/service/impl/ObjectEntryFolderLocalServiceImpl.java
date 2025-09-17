@@ -281,23 +281,9 @@ public class ObjectEntryFolderLocalServiceImpl
 			long userId, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (groupId == 0) {
-			return _emptyModelManager.getOrAddEmptyModel(
-				ObjectEntryFolder.class, companyId,
-				() -> _addObjectEntryFolder(
-					externalReferenceCode, groupId,
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					StringPool.BLANK, null, externalReferenceCode,
-					serviceContext, WorkflowConstants.STATUS_EMPTY,
-					_userLocalService.getUser(userId)),
-				externalReferenceCode,
-				this::fetchObjectEntryFolderByExternalReferenceCode,
-				this::getObjectEntryFolderByExternalReferenceCode);
-		}
-
 		return _emptyModelManager.getOrAddEmptyModel(
-			ObjectEntryFolder.class,
+			ObjectEntryFolder.class.getName(),
+			ObjectEntryFolder.class.getName(), companyId,
 			() -> _addObjectEntryFolder(
 				externalReferenceCode, groupId,
 				ObjectEntryFolderConstants.
@@ -306,8 +292,13 @@ public class ObjectEntryFolderLocalServiceImpl
 				WorkflowConstants.STATUS_EMPTY,
 				_userLocalService.getUser(userId)),
 			externalReferenceCode,
-			this::fetchObjectEntryFolderByExternalReferenceCode,
-			this::getObjectEntryFolderByExternalReferenceCode, groupId);
+			(_externalReferenceCode, _groupId) ->
+				fetchObjectEntryFolderByExternalReferenceCode(
+					_externalReferenceCode, _groupId, companyId),
+			(_externalReferenceCode, _groupId) ->
+				getObjectEntryFolderByExternalReferenceCode(
+					_externalReferenceCode, _groupId, companyId),
+			groupId);
 	}
 
 	@Override
@@ -506,7 +497,7 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		return objectEntryFolderPersistence.update(objectEntryFolder);
 	}
-	
+
 	private ObjectEntryFolder _addObjectEntryFolder(
 			String externalReferenceCode, long groupId,
 			long parentObjectEntryFolderId, String description,

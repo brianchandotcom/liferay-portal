@@ -39,7 +39,7 @@ export class ItemSelectorSamplePage {
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);
-		this.inputGroup = (label: string) => 
+		this.inputGroup = (label: string) =>
 			page.getByText(label).locator('..');
 		this.modal = {
 			cancelButton: page.getByRole('button', {
@@ -51,7 +51,7 @@ export class ItemSelectorSamplePage {
 				name: 'Select',
 			}),
 		};
-		this.multiselectGridItem = (name: string) => 
+		this.multiselectGridItem = (name: string) =>
 			page.getByRole('gridcell', {
 				exact: true,
 				name,

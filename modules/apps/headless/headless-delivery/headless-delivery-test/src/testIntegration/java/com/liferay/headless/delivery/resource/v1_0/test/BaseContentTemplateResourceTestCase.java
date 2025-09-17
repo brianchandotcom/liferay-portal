@@ -807,7 +807,7 @@ public abstract class BaseContentTemplateResourceTestCase {
 			testGraphQLGetSiteContentTemplate_addContentTemplate()
 		throws Exception {
 
-		return testGraphQLContentTemplate_addContentTemplate();
+		return testGraphQLSiteContentTemplate_addContentTemplate();
 	}
 
 	@Test
@@ -1255,7 +1255,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected ContentTemplate testGraphQLContentTemplate_addContentTemplate()
+	protected ContentTemplate
+			testGraphQLSiteContentTemplate_addContentTemplate()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

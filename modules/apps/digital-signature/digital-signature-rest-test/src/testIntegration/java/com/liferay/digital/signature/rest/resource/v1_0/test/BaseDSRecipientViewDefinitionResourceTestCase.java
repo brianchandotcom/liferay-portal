@@ -198,6 +198,11 @@ public abstract class BaseDSRecipientViewDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testPostSiteDSRecipientViewDefinition() throws Exception {
 		Assert.assertTrue(true);
 	}

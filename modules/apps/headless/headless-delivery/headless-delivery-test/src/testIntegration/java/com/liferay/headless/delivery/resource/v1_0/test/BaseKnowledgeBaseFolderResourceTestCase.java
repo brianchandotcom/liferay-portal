@@ -1319,7 +1319,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGraphQLGetSiteKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
+		return testGraphQLSiteKnowledgeBaseFolder_addKnowledgeBaseFolder();
 	}
 
 	@Test

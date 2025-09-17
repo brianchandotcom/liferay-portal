@@ -590,7 +590,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			testGraphQLDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_addMessageBoardAttachment()
 		throws Exception {
 
-		return testGraphQLMessageBoardAttachment_addMessageBoardAttachment();
+		return testGraphQLSiteMessageBoardAttachment_addMessageBoardAttachment();
 	}
 
 	@Test
@@ -1351,7 +1351,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			testGraphQLGetSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_addMessageBoardAttachment()
 		throws Exception {
 
-		return testGraphQLMessageBoardAttachment_addMessageBoardAttachment();
+		return testGraphQLSiteMessageBoardAttachment_addMessageBoardAttachment();
 	}
 
 	@Test
@@ -1475,6 +1475,14 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 	protected MessageBoardAttachment
 			testGraphQLMessageBoardAttachment_addMessageBoardAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected MessageBoardAttachment
+			testGraphQLSiteMessageBoardAttachment_addMessageBoardAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

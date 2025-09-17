@@ -1002,7 +1002,7 @@ public abstract class BaseDocumentResourceTestCase {
 			testGraphQLGetAssetLibraryDocumentPermissionsPage_addDocument()
 		throws Exception {
 
-		return testGraphQLDocument_addDocument();
+		return testGraphQLAssetLibraryDocument_addDocument();
 	}
 
 	@Test
@@ -1677,6 +1677,90 @@ public abstract class BaseDocumentResourceTestCase {
 		throws Exception {
 
 		return irrelevantDepotEntry.getDepotEntryId();
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryDocumentsRatedByMePage()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentsRatedByMePage_getAssetLibraryId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryDocumentsRatedByMe",
+			new HashMap<String, Object>() {
+				{
+					put("assetLibraryId", "\"" + assetLibraryId + "\"");
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject assetLibraryDocumentsRatedByMeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryDocumentsRatedByMe");
+
+		long totalCount = assetLibraryDocumentsRatedByMeJSONObject.getLong(
+			"totalCount");
+
+		Document document1 = testGraphQLAssetLibraryDocument_addDocument(
+			assetLibraryId, randomDocument());
+
+		Document document2 = testGraphQLAssetLibraryDocument_addDocument(
+			assetLibraryId, randomDocument());
+
+		assetLibraryDocumentsRatedByMeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryDocumentsRatedByMe");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryDocumentsRatedByMeJSONObject.getLong("totalCount"));
+
+		assertContains(
+			document1,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(
+					assetLibraryDocumentsRatedByMeJSONObject.getString(
+						"items"))));
+		assertContains(
+			document2,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(
+					assetLibraryDocumentsRatedByMeJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		assetLibraryDocumentsRatedByMeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/assetLibraryDocumentsRatedByMe");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryDocumentsRatedByMeJSONObject.getLong("totalCount"));
+
+		assertContains(
+			document1,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(
+					assetLibraryDocumentsRatedByMeJSONObject.getString(
+						"items"))));
+		assertContains(
+			document2,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(
+					assetLibraryDocumentsRatedByMeJSONObject.getString(
+						"items"))));
 	}
 
 	@Test
@@ -2646,7 +2730,7 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Document testGraphQLGetSiteDocumentPermissionsPage_addDocument()
 		throws Exception {
 
-		return testGraphQLDocument_addDocument();
+		return testGraphQLSiteDocument_addDocument();
 	}
 
 	@Test
@@ -3285,10 +3369,10 @@ public abstract class BaseDocumentResourceTestCase {
 
 		long totalCount = documentsRatedByMeJSONObject.getLong("totalCount");
 
-		Document document1 = testGraphQLDocument_addDocument(
+		Document document1 = testGraphQLSiteDocument_addDocument(
 			siteId, randomDocument());
 
-		Document document2 = testGraphQLDocument_addDocument(
+		Document document2 = testGraphQLSiteDocument_addDocument(
 			siteId, randomDocument());
 
 		documentsRatedByMeJSONObject = JSONUtil.getValueAsJSONObject(

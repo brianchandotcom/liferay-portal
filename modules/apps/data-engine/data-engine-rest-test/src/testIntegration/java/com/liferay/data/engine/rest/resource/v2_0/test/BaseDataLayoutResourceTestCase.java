@@ -1176,7 +1176,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 			testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey_addDataLayout()
 		throws Exception {
 
-		return testGraphQLDataLayout_addDataLayout();
+		return testGraphQLSiteDataLayout_addDataLayout();
 	}
 
 	@Test
@@ -1283,6 +1283,13 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected DataLayout testGraphQLSiteDataLayout_addDataLayout()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

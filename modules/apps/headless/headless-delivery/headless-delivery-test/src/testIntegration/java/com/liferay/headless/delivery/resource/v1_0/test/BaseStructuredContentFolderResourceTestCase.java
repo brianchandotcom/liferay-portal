@@ -966,7 +966,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGraphQLGetAssetLibraryStructuredContentFolderPermissionsPage_addStructuredContentFolder()
 		throws Exception {
 
-		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
+		return testGraphQLAssetLibraryStructuredContentFolder_addStructuredContentFolder();
 	}
 
 	@Test
@@ -1777,7 +1777,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGraphQLGetSiteStructuredContentFolderPermissionsPage_addStructuredContentFolder()
 		throws Exception {
 
-		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
+		return testGraphQLSiteStructuredContentFolder_addStructuredContentFolder();
 	}
 
 	@Test

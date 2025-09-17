@@ -1159,7 +1159,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			testGraphQLGetSiteBlogPostingPermissionsPage_addBlogPosting()
 		throws Exception {
 
-		return testGraphQLBlogPosting_addBlogPosting();
+		return testGraphQLSiteBlogPosting_addBlogPosting();
 	}
 
 	@Test

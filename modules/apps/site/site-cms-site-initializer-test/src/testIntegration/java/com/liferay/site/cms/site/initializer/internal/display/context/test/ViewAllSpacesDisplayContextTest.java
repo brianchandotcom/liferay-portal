@@ -7,10 +7,14 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -44,22 +48,40 @@ public class ViewAllSpacesDisplayContextTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetToolbarProps() throws Exception {
+	public void testGetBreadcrumbProps() throws Exception {
+		HttpServletRequest httpServletRequest = getMockHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setLayout(
+			LayoutTestUtil.addTypeContentLayout(group, "test-name"));
+
 		AssertUtils.assertEquals(
 			HashMapBuilder.<String, Object>put(
-				"title", "test"
+				"breadcrumbItems",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"active", false
+					).put(
+						"href", (String)null
+					).put(
+						"label", "test-name"
+					))
 			).put(
-				"toolbarClassName", "section-toolbar tbar-light"
-			).put(
-				"toolbarTitleClassName", "section-toolbar-title"
+				"hideSpace", true
 			).build(),
-			_getToolbarProps());
+			_getBreadcrumbProps(httpServletRequest));
 	}
 
-	private HashMap<String, Object> _getToolbarProps() throws Exception {
+	private HashMap<String, Object> _getBreadcrumbProps(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
 		return ReflectionTestUtil.invoke(
-			_getViewAllSpacesDisplayContext(getMockHttpServletRequest()),
-			"getToolbarProps", new Class<?>[0]);
+			_getViewAllSpacesDisplayContext(httpServletRequest),
+			"getBreadcrumbProps", new Class<?>[0]);
 	}
 
 	private Object _getViewAllSpacesDisplayContext(

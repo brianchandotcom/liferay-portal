@@ -6,7 +6,6 @@
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
-import Nav from '@clayui/nav';
 import ClaySticker from '@clayui/sticker';
 import {openConfirmModal, openModal} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
@@ -112,7 +111,7 @@ export default function Breadcrumb({
 	size,
 }: Props) {
 	return (
-		<Nav
+		<div
 			aria-label={Liferay.Language.get('breadcrumb')}
 			className="autofit-row autofit-row-center p-4"
 		>
@@ -159,6 +158,6 @@ export default function Breadcrumb({
 					</ClayDropDown>
 				</div>
 			)}
-		</Nav>
+		</div>
 	);
 }

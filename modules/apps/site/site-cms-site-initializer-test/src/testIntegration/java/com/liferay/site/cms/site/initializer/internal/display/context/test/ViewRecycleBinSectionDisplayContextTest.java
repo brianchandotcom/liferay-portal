@@ -16,13 +16,16 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -33,6 +36,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +64,29 @@ public class ViewRecycleBinSectionDisplayContextTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testGetBreadcrumbProps() throws Exception {
+		HttpServletRequest httpServletRequest = getMockHttpServletRequest();
+
+		Object displayContext = getSectionDisplayContext(httpServletRequest);
+
+		AssertUtils.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				"breadcrumbItems",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"active", false
+					).put(
+						"href", (String)null
+					).put(
+						"label", "recycle-bin"
+					))
+			).put(
+				"hideSpace", true
+			).build(),
+			_getBreadcrumbProps(displayContext));
+	}
 
 	@Test
 	public void testGetCMSSectionFilterString() throws Exception {
@@ -208,6 +235,11 @@ public class ViewRecycleBinSectionDisplayContextTest
 		Assert.assertNotNull(viewRecycleBinSectionDisplayContext);
 
 		return viewRecycleBinSectionDisplayContext;
+	}
+
+	private HashMap<String, Object> _getBreadcrumbProps(Object displayContext) {
+		return ReflectionTestUtil.invoke(
+			displayContext, "getBreadcrumbProps", new Class<?>[0]);
 	}
 
 	private String _getCMSSectionFilterString(Object displayContext) {

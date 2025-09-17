@@ -1,7 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
-	property chrome.version = "100";
+	property chrome.version = "139";
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";

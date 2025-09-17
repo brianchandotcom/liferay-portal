@@ -743,22 +743,6 @@ const FrontendDataSetContent = ({
 		viewsDispatch,
 	]);
 
-	useEffect(() => {
-		const registerEvent =
-			stateInURLSettings === EStateInURLSettings.PUSH &&
-			(!Liferay.SPA || !Liferay.SPA.app);
-
-		if (registerEvent) {
-			window.addEventListener('popstate', handlePopState);
-		}
-
-		return () => {
-			if (registerEvent) {
-				window.removeEventListener('popstate', handlePopState);
-			}
-		};
-	}, [handlePopState, stateInURLSettings]);
-
 	const refreshData = useCallback(
 		(successNotification?: ISuccessNotification) => {
 			setDataLoading(true);
@@ -930,14 +914,25 @@ const FrontendDataSetContent = ({
 		Liferay.on(EVENTS.SIDE_PANEL_CLOSED, handleCloseSidePanel);
 		Liferay.on(EVENTS.UPDATE_DISPLAY, handleRefreshFromTheOutside);
 
+		const registerPopstateEvent =
+			stateInURLSettings === EStateInURLSettings.PUSH &&
+			(!Liferay.SPA || !Liferay.SPA.app);
+
+		if (registerPopstateEvent) {
+			window.addEventListener('popstate', handlePopState);
+		}
+
 		return () => {
 			Liferay.detach(EVENTS.SIDE_PANEL_CLOSED, handleCloseSidePanel);
 			Liferay.detach(
 				EVENTS.UPDATE_DISPLAY,
 				handleRefreshFromTheOutside as () => void
 			);
+			if (registerPopstateEvent) {
+				window.removeEventListener('popstate', handlePopState);
+			}
 		};
-	}, [id, refreshData]);
+	}, [handlePopState, id, refreshData, stateInURLSettings]);
 
 	const managementBar = showManagementBar ? (
 		<div className="management-bar-wrapper">

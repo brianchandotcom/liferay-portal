@@ -1310,7 +1310,13 @@ const FrontendDataSetContent = ({
 		};
 	}, [configInURLSettings, handlePopState, id, refreshData]);
 
-	const managementBar = showManagementBar ? (
+	const hasSearch = !!searchParam;
+	const hasActiveFilters = filters.some((filter: any) => filter.active);
+
+	const showManagementToolbar =
+		showManagementBar && (!!items.length || hasSearch || hasActiveFilters);
+
+	const managementBar = showManagementToolbar ? (
 		<div className="management-bar-wrapper">
 			<ManagementBar
 				bulkActions={bulkActions}

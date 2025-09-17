@@ -346,8 +346,9 @@ public class ObjectEntryFolderLocalServiceTest {
 			NoSuchObjectEntryFolderException.class,
 			String.format(
 				"No ObjectEntryFolder exists with the key {externalReference" +
-					"Code=%s, groupId=%s}",
-				externalReferenceCode, TestPropsValues.getGroupId()),
+					"Code=%s, groupId=%s, companyId=%s}",
+				externalReferenceCode, TestPropsValues.getGroupId(),
+				TestPropsValues.getCompanyId()),
 			() -> _objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
 				externalReferenceCode, TestPropsValues.getGroupId(),
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -749,7 +750,7 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		Assert.assertEquals(expectedStatus, objectEntry.getStatus());
 	}
-	
+
 	@Inject
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;

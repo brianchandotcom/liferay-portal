@@ -84,7 +84,6 @@ const ItemSelectorModalWrapper = ({
 							deltas: [{label: 20}],
 							initialDelta: 20,
 						},
-						selectionType: 'single',
 						views: [
 							{
 								contentRenderer: 'cards',

@@ -568,7 +568,7 @@ public class LayoutModelDocumentContributorTest {
 	public void testSearchEmptyLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeEmptyLayout(_group);
 
-		_layoutIndexerFixture.searchNoOne(layout.getName(_locale));
+		_layoutIndexerFixture.searchOnlyOne(layout.getName(_locale));
 	}
 
 	@Test

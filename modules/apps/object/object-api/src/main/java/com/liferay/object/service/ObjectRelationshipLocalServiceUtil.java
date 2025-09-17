@@ -195,12 +195,6 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void disableEdge(long objectDefinitionId2)
-		throws PortalException {
-
-		getService().disableEdge(objectDefinitionId2);
-	}
-
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}

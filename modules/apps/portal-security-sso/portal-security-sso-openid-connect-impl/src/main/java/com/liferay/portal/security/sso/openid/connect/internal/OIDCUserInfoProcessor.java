@@ -337,6 +337,14 @@ public class OIDCUserInfoProcessor {
 				_expandoColumnLocalService.fetchColumn(
 					expandoTable.getTableId(), key);
 
+			if (expandoColumn == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("No expando column found with name " + key);
+				}
+
+				continue;
+			}
+
 			_expandoValueLocalService.addValue(
 				_classNameLocalService.getClassNameId(User.class.getName()),
 				expandoColumn.getTableId(), expandoColumn.getColumnId(), userId,

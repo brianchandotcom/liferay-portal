@@ -14,7 +14,7 @@ import {LiferayEditorConfig} from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import moment from 'moment';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import {Comment} from '../services/CommentService';
@@ -220,6 +220,7 @@ export default function ContentEditorSidePanel(props: Props) {
 }
 
 function SidePanel(props: SidePanelProps) {
+	const buttonRef = useRef<HTMLButtonElement>(null);
 	const [hasError, setHasError] = useState<boolean>(false);
 	const [panel, setPanel] = useState<React.Key | null>(null);
 
@@ -284,7 +285,11 @@ function SidePanel(props: SidePanelProps) {
 										borderless
 										displayType="secondary"
 										monospaced
-										onClick={() => setPanel(null)}
+										onClick={() => {
+											setPanel(null);
+
+											buttonRef.current?.focus();
+										}}
 										size="sm"
 										symbol="times"
 										title={Liferay.Language.get('close')}
@@ -305,6 +310,7 @@ function SidePanel(props: SidePanelProps) {
 							aria-label={item.title}
 							data-tooltip-align="left"
 							displayType={null}
+							ref={panel === item.title ? buttonRef : null}
 							title={item.title}
 						>
 							<ClayIcon symbol={item.icon} />

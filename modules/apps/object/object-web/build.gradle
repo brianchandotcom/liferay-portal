@@ -61,4 +61,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-sql-dsl-spi")
 	compileOnly project(":core:petra:petra-string")
+	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

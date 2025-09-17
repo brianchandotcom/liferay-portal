@@ -7,6 +7,10 @@ package com.liferay.object.web.internal.object.entries.display.context;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectWebKeys;
@@ -22,9 +26,16 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Collections;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -42,17 +53,51 @@ public class ObjectEntryDisplayContextImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetObjectFieldBusinessType() {
+	public void testAddFieldsetDDMFormField() {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
 		Mockito.when(
-			httpServletRequest.getAttribute(
-				ObjectWebKeys.OBJECT_ENTRY_READ_ONLY)
+			themeDisplay.getLocale()
 		).thenReturn(
-			false
+			LocaleUtil.SPAIN
 		);
 
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
+			_createObjectEntryDisplayContextImpl(httpServletRequest);
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+		String fieldName = RandomTestUtil.randomString();
+		String label = RandomTestUtil.randomString();
+
+		objectEntryDisplayContextImpl.addFieldsetDDMFormField(
+			RandomTestUtil.randomBoolean(), ddmForm, fieldName, label,
+			Collections.singletonList(new DDMFormField()), null);
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		Assert.assertEquals(
+			LocaleUtil.SPAIN, localizedValue.getDefaultLocale());
+		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.SPAIN));
+		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetObjectFieldBusinessType() {
 		ObjectField objectField = Mockito.mock(ObjectField.class);
 
 		Mockito.when(
@@ -81,19 +126,8 @@ public class ObjectEntryDisplayContextImplTest {
 		);
 
 		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
-			new ObjectEntryDisplayContextImpl(
-				Mockito.mock(DDMExpressionFactory.class),
-				Mockito.mock(DDMFormRenderer.class), httpServletRequest,
-				Mockito.mock(ItemSelector.class),
-				Mockito.mock(ObjectDefinitionLocalService.class),
-				Mockito.mock(ObjectEntryManagerRegistry.class),
-				Mockito.mock(ObjectEntryLocalService.class),
-				Mockito.mock(ObjectEntryService.class),
-				objectFieldBusinessTypeRegistry,
-				Mockito.mock(ObjectFieldLocalService.class),
-				Mockito.mock(ObjectLayoutLocalService.class),
-				Mockito.mock(ObjectRelationshipLocalService.class),
-				Mockito.mock(ObjectScopeProviderRegistry.class));
+			_createObjectEntryDisplayContextImpl(
+				objectFieldBusinessTypeRegistry);
 
 		Assert.assertSame(
 			objectFieldBusinessType,
@@ -101,6 +135,48 @@ public class ObjectEntryDisplayContextImplTest {
 				objectEntryDisplayContextImpl, "_getObjectFieldBusinessType",
 				new Class<?>[] {ObjectField.class},
 				new Object[] {objectField}));
+	}
+
+	private ObjectEntryDisplayContextImpl _createObjectEntryDisplayContextImpl(
+		HttpServletRequest httpServletRequest) {
+
+		return _createObjectEntryDisplayContextImpl(
+			httpServletRequest,
+			Mockito.mock(ObjectFieldBusinessTypeRegistry.class));
+	}
+
+	private ObjectEntryDisplayContextImpl _createObjectEntryDisplayContextImpl(
+		HttpServletRequest httpServletRequest,
+		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry) {
+
+		Mockito.when(
+			httpServletRequest.getAttribute(
+				ObjectWebKeys.OBJECT_ENTRY_READ_ONLY)
+		).thenReturn(
+			false
+		);
+
+		return new ObjectEntryDisplayContextImpl(
+			Mockito.mock(DDMExpressionFactory.class),
+			Mockito.mock(DDMFormRenderer.class), httpServletRequest,
+			Mockito.mock(ItemSelector.class),
+			Mockito.mock(ObjectDefinitionLocalService.class),
+			Mockito.mock(ObjectEntryManagerRegistry.class),
+			Mockito.mock(ObjectEntryLocalService.class),
+			Mockito.mock(ObjectEntryService.class),
+			objectFieldBusinessTypeRegistry,
+			Mockito.mock(ObjectFieldLocalService.class),
+			Mockito.mock(ObjectLayoutLocalService.class),
+			Mockito.mock(ObjectRelationshipLocalService.class),
+			Mockito.mock(ObjectScopeProviderRegistry.class));
+	}
+
+	private ObjectEntryDisplayContextImpl _createObjectEntryDisplayContextImpl(
+		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry) {
+
+		return _createObjectEntryDisplayContextImpl(
+			Mockito.mock(HttpServletRequest.class),
+			objectFieldBusinessTypeRegistry);
 	}
 
 }

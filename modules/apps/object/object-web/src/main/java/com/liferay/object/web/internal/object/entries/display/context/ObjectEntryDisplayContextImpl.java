@@ -868,6 +868,32 @@ public class ObjectEntryDisplayContextImpl
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
+	protected void addFieldsetDDMFormField(
+		boolean collapsible, DDMForm ddmForm, String fieldName, String label,
+		List<DDMFormField> nestedDDMFormFields, String rows) {
+
+		if (nestedDDMFormFields.isEmpty()) {
+			return;
+		}
+
+		ddmForm.addDDMFormField(
+			new DDMFormField(fieldName, DDMFormFieldTypeConstants.FIELDSET) {
+				{
+					setLabel(
+						new LocalizedValue(_objectRequestHelper.getLocale()) {
+							{
+								addString(
+									_objectRequestHelper.getLocale(), label);
+							}
+						});
+					setNestedDDMFormFields(nestedDDMFormFields);
+					setProperty("collapsible", collapsible);
+					setProperty("rows", rows);
+					setShowLabel(true);
+				}
+			});
+	}
+
 	private void _addDDMFormField(
 			List<DDMFormField> ddmFormFields, ObjectEntry objectEntry,
 			ObjectField objectField, boolean readOnly)
@@ -896,32 +922,6 @@ public class ObjectEntryDisplayContextImpl
 			new DDMFormLayoutColumn(12, fieldName));
 
 		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
-	}
-
-	private void _addFieldsetDDMFormField(
-		boolean collapsible, DDMForm ddmForm, String fieldName, String label,
-		List<DDMFormField> nestedDDMFormFields, String rows) {
-
-		if (nestedDDMFormFields.isEmpty()) {
-			return;
-		}
-
-		ddmForm.addDDMFormField(
-			new DDMFormField(fieldName, DDMFormFieldTypeConstants.FIELDSET) {
-				{
-					setLabel(
-						new LocalizedValue(_objectRequestHelper.getLocale()) {
-							{
-								addString(
-									_objectRequestHelper.getLocale(), label);
-							}
-						});
-					setNestedDDMFormFields(nestedDDMFormFields);
-					setProperty("collapsible", collapsible);
-					setProperty("rows", rows);
-					setShowLabel(true);
-				}
-			});
 	}
 
 	private ObjectFieldRenderingContext _createObjectFieldRenderingContext(
@@ -1108,7 +1108,7 @@ public class ObjectEntryDisplayContextImpl
 				ddmForm.setDDMFormFields(ddmFormFields);
 			}
 			else {
-				_addFieldsetDDMFormField(
+				addFieldsetDDMFormField(
 					true, ddmForm,
 					String.valueOf(objectDefinition.getPrimaryKey()),
 					objectDefinition.getLabel(_objectRequestHelper.getLocale()),
@@ -1168,7 +1168,7 @@ public class ObjectEntryDisplayContextImpl
 				rowsJSONArray.put(JSONUtil.put("columns", columnsJSONArray));
 			}
 
-			_addFieldsetDDMFormField(
+			addFieldsetDDMFormField(
 				objectLayoutBox.isCollapsable(), ddmForm,
 				String.valueOf(objectLayoutBox.getPrimaryKey()),
 				objectLayoutBox.getName(_objectRequestHelper.getLocale()),

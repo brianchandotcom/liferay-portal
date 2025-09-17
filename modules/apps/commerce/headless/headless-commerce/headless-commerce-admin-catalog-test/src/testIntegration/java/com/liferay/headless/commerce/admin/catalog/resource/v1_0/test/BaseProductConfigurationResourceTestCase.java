@@ -271,17 +271,14 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		ProductConfiguration productConfiguration1 =
 			testGraphQLDeleteProductConfiguration_addProductConfiguration();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProductConfiguration",
-						new HashMap<String, Object>() {
-							{
-								put("id", productConfiguration1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteProductConfiguration"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductConfiguration",
+				new HashMap<String, Object>() {
+					{
+						put("id", productConfiguration1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -302,21 +299,16 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		ProductConfiguration productConfiguration2 =
 			testGraphQLDeleteProductConfiguration_addProductConfiguration();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteProductConfiguration",
-							new HashMap<String, Object>() {
-								{
-									put("id", productConfiguration2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteProductConfiguration"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProductConfiguration",
+					new HashMap<String, Object>() {
+						{
+							put("id", productConfiguration2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -459,6 +451,94 @@ public abstract class BaseProductConfigurationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteProductConfigurationByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		ProductConfiguration productConfiguration1 =
+			testGraphQLDeleteProductConfigurationByExternalReferenceCode_addProductConfiguration();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductConfigurationByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" +
+								productConfiguration1.
+									getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productConfigurationByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									productConfiguration1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		ProductConfiguration productConfiguration2 =
+			testGraphQLDeleteProductConfigurationByExternalReferenceCode_addProductConfiguration();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProductConfigurationByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									productConfiguration2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"productConfigurationByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										productConfiguration2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ProductConfiguration
+			testGraphQLDeleteProductConfigurationByExternalReferenceCode_addProductConfiguration()
+		throws Exception {
+
+		return testGraphQLProductConfiguration_addProductConfiguration();
+	}
+
+	@Test
 	public void testGetProductByExternalReferenceCodeConfiguration()
 		throws Exception {
 
@@ -490,129 +570,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductByExternalReferenceCodeConfiguration()
-		throws Exception {
-
-		ProductConfiguration productConfiguration =
-			testGraphQLGetProductByExternalReferenceCodeConfiguration_addProductConfiguration();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productConfiguration,
-				ProductConfigurationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productByExternalReferenceCodeConfiguration",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-													productConfiguration) +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/productByExternalReferenceCodeConfiguration"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				productConfiguration,
-				ProductConfigurationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"productByExternalReferenceCodeConfiguration",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-														productConfiguration) +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/productByExternalReferenceCodeConfiguration"))));
-	}
-
-	protected String
-			testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-				ProductConfiguration productConfiguration)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductByExternalReferenceCodeConfigurationNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productByExternalReferenceCodeConfiguration",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"productByExternalReferenceCodeConfiguration",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductConfiguration
-			testGraphQLGetProductByExternalReferenceCodeConfiguration_addProductConfiguration()
-		throws Exception {
-
-		return testGraphQLProductConfiguration_addProductConfiguration();
 	}
 
 	@Test
@@ -2082,116 +2039,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductIdConfiguration() throws Exception {
-		ProductConfiguration productConfiguration =
-			testGraphQLGetProductIdConfiguration_addProductConfiguration();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productConfiguration,
-				ProductConfigurationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productIdConfiguration",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"id",
-											testGraphQLGetProductIdConfiguration_getId(
-												productConfiguration));
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/productIdConfiguration"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				productConfiguration,
-				ProductConfigurationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"productIdConfiguration",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"id",
-												testGraphQLGetProductIdConfiguration_getId(
-													productConfiguration));
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/productIdConfiguration"))));
-	}
-
-	protected Long testGraphQLGetProductIdConfiguration_getId(
-			ProductConfiguration productConfiguration)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductIdConfigurationNotFound()
-		throws Exception {
-
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productIdConfiguration",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"productIdConfiguration",
-							new HashMap<String, Object>() {
-								{
-									put("id", irrelevantId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductConfiguration
-			testGraphQLGetProductIdConfiguration_addProductConfiguration()
-		throws Exception {
-
-		return testGraphQLProductConfiguration_addProductConfiguration();
 	}
 
 	@Test

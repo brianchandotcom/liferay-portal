@@ -261,19 +261,14 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu1 =
 			testGraphQLDeleteNavigationMenu_addNavigationMenu();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteNavigationMenu",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"navigationMenuId",
-									navigationMenu1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteNavigationMenu"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteNavigationMenu",
+				new HashMap<String, Object>() {
+					{
+						put("navigationMenuId", navigationMenu1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -294,22 +289,16 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu2 =
 			testGraphQLDeleteNavigationMenu_addNavigationMenu();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"deleteNavigationMenu",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"navigationMenuId",
-										navigationMenu2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-				"Object/deleteNavigationMenu"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteNavigationMenu",
+					new HashMap<String, Object>() {
+						{
+							put("navigationMenuId", navigationMenu2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -411,6 +400,105 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		return navigationMenuResource.postSiteNavigationMenu(
 			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	@Test
+	public void testGraphQLDeleteSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		NavigationMenu navigationMenu1 =
+			testGraphQLDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSiteNavigationMenuByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + navigationMenu1.getSiteId() + "\"");
+						put(
+							"externalReferenceCode",
+							"\"" + navigationMenu1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"navigationMenuByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + navigationMenu1.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									navigationMenu1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		NavigationMenu navigationMenu2 =
+			testGraphQLDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteSiteNavigationMenuByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + navigationMenu2.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									navigationMenu2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"navigationMenuByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + navigationMenu2.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										navigationMenu2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected NavigationMenu
+			testGraphQLDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLSiteNavigationMenu_addNavigationMenu();
 	}
 
 	@Test
@@ -747,6 +835,36 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetNavigationMenuPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NavigationMenu postNavigationMenu =
+			testGraphQLGetNavigationMenuPermissionsPage_addNavigationMenu();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"navigationMenuPermissions",
+			new HashMap<String, Object>() {
+				{
+					put("navigationMenuId", postNavigationMenu.getId());
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject navigationMenuPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/navigationMenuPermissions");
+
+		Assert.assertNotNull(navigationMenuPermissionsJSONObject);
+	}
+
+	protected NavigationMenu
+			testGraphQLGetNavigationMenuPermissionsPage_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLNavigationMenu_addNavigationMenu();
+	}
+
+	@Test
 	public void testGetSiteNavigationMenuByExternalReferenceCode()
 		throws Exception {
 
@@ -896,7 +1014,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
 		throws Exception {
 
-		return testGraphQLNavigationMenu_addNavigationMenu();
+		return testGraphQLSiteNavigationMenu_addNavigationMenu();
 	}
 
 	@Test
@@ -918,6 +1036,40 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		return navigationMenuResource.postSiteNavigationMenu(
 			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	@Test
+	public void testGraphQLGetSiteNavigationMenuPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NavigationMenu postNavigationMenu =
+			testGraphQLGetSiteNavigationMenuPermissionsPage_addNavigationMenu();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"siteNavigationMenuPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"siteKey",
+						"\"" + postNavigationMenu.getSiteId() + "\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject siteNavigationMenuPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/siteNavigationMenuPermissions");
+
+		Assert.assertNotNull(siteNavigationMenuPermissionsJSONObject);
+	}
+
+	protected NavigationMenu
+			testGraphQLGetSiteNavigationMenuPermissionsPage_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLNavigationMenu_addNavigationMenu();
 	}
 
 	@Test
@@ -1369,10 +1521,10 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			"navigationMenus",
 			new HashMap<String, Object>() {
 				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -1387,9 +1539,12 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		long totalCount = navigationMenusJSONObject.getLong("totalCount");
 
 		NavigationMenu navigationMenu1 =
-			testGraphQLGetSiteNavigationMenusPage_addNavigationMenu();
+			testGraphQLSiteNavigationMenu_addNavigationMenu(
+				siteId, randomNavigationMenu());
+
 		NavigationMenu navigationMenu2 =
-			testGraphQLGetSiteNavigationMenusPage_addNavigationMenu();
+			testGraphQLSiteNavigationMenu_addNavigationMenu(
+				siteId, randomNavigationMenu());
 
 		navigationMenusJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1432,13 +1587,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 					navigationMenusJSONObject.getString("items"))));
 	}
 
-	protected NavigationMenu
-			testGraphQLGetSiteNavigationMenusPage_addNavigationMenu()
-		throws Exception {
-
-		return testGraphQLNavigationMenu_addNavigationMenu();
-	}
-
 	@Test
 	public void testPostSiteNavigationMenu() throws Exception {
 		NavigationMenu randomNavigationMenu = randomNavigationMenu();
@@ -1463,7 +1611,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu randomNavigationMenu = randomNavigationMenu();
 
 		NavigationMenu navigationMenu =
-			testGraphQLNavigationMenu_addNavigationMenu(randomNavigationMenu);
+			testGraphQLSiteNavigationMenu_addNavigationMenu(
+				testGroup.getGroupId(), randomNavigationMenu);
 
 		Assert.assertTrue(equals(randomNavigationMenu, navigationMenu));
 	}
@@ -1711,6 +1860,116 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected NavigationMenu testGraphQLNavigationMenu_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLNavigationMenu_addNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	protected NavigationMenu testGraphQLNavigationMenu_addNavigationMenu(
+			Long siteId, NavigationMenu navigationMenu)
+		throws Exception {
+
+		JSONDeserializer<NavigationMenu> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(NavigationMenu.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(navigationMenu));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteNavigationMenu",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("navigationMenu", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteNavigationMenu"),
+			NavigationMenu.class);
+	}
+
+	protected NavigationMenu testGraphQLSiteNavigationMenu_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLSiteNavigationMenu_addNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	protected NavigationMenu testGraphQLSiteNavigationMenu_addNavigationMenu(
+			Long siteId, NavigationMenu navigationMenu)
+		throws Exception {
+
+		JSONDeserializer<NavigationMenu> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(NavigationMenu.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(navigationMenu));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteNavigationMenu",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("navigationMenu", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteNavigationMenu"),
+			NavigationMenu.class);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -1754,63 +2013,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected NavigationMenu testGraphQLNavigationMenu_addNavigationMenu()
-		throws Exception {
-
-		return testGraphQLNavigationMenu_addNavigationMenu(
-			randomNavigationMenu());
-	}
-
-	protected NavigationMenu testGraphQLNavigationMenu_addNavigationMenu(
-			NavigationMenu navigationMenu)
-		throws Exception {
-
-		JSONDeserializer<NavigationMenu> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(NavigationMenu.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(navigationMenu));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteNavigationMenu",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("navigationMenu", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteNavigationMenu"),
-			NavigationMenu.class);
 	}
 
 	protected void assertContains(

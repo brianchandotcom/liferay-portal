@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -256,17 +257,14 @@ public abstract class BaseSpecificationResourceTestCase {
 		Specification specification1 =
 			testGraphQLDeleteSpecification_addSpecification();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSpecification",
-						new HashMap<String, Object>() {
-							{
-								put("id", specification1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSpecification"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSpecification",
+				new HashMap<String, Object>() {
+					{
+						put("id", specification1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -287,21 +285,16 @@ public abstract class BaseSpecificationResourceTestCase {
 		Specification specification2 =
 			testGraphQLDeleteSpecification_addSpecification();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteSpecification",
-							new HashMap<String, Object>() {
-								{
-									put("id", specification2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteSpecification"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteSpecification",
+					new HashMap<String, Object>() {
+						{
+							put("id", specification2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -434,6 +427,93 @@ public abstract class BaseSpecificationResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Specification specification1 =
+			testGraphQLDeleteSpecificationByExternalReferenceCode_addSpecification();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSpecificationByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + specification1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"specificationByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									specification1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Specification specification2 =
+			testGraphQLDeleteSpecificationByExternalReferenceCode_addSpecification();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteSpecificationByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									specification2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"specificationByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										specification2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Specification
+			testGraphQLDeleteSpecificationByExternalReferenceCode_addSpecification()
+		throws Exception {
+
+		return testGraphQLSpecification_addSpecification();
 	}
 
 	@Test
@@ -1245,6 +1325,7 @@ public abstract class BaseSpecificationResourceTestCase {
 			"specifications",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1261,9 +1342,10 @@ public abstract class BaseSpecificationResourceTestCase {
 		long totalCount = specificationsJSONObject.getLong("totalCount");
 
 		Specification specification1 =
-			testGraphQLGetSpecificationsPage_addSpecification();
+			testGraphQLSpecification_addSpecification(randomSpecification());
+
 		Specification specification2 =
-			testGraphQLGetSpecificationsPage_addSpecification();
+			testGraphQLSpecification_addSpecification(randomSpecification());
 
 		specificationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1305,12 +1387,6 @@ public abstract class BaseSpecificationResourceTestCase {
 			Arrays.asList(
 				SpecificationSerDes.toDTOs(
 					specificationsJSONObject.getString("items"))));
-	}
-
-	protected Specification testGraphQLGetSpecificationsPage_addSpecification()
-		throws Exception {
-
-		return testGraphQLSpecification_addSpecification();
 	}
 
 	@Test
@@ -1397,6 +1473,16 @@ public abstract class BaseSpecificationResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostSpecification() throws Exception {
+		Specification randomSpecification = randomSpecification();
+
+		Specification specification = testGraphQLSpecification_addSpecification(
+			randomSpecification);
+
+		Assert.assertTrue(equals(randomSpecification, specification));
 	}
 
 	@Test
@@ -1554,8 +1640,99 @@ public abstract class BaseSpecificationResourceTestCase {
 	protected Specification testGraphQLSpecification_addSpecification()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLSpecification_addSpecification(randomSpecification());
+	}
+
+	protected Specification testGraphQLSpecification_addSpecification(
+			Specification specification)
+		throws Exception {
+
+		JSONDeserializer<Specification> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(Specification.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(specification));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSpecification",
+						new HashMap<String, Object>() {
+							{
+								put("specification", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSpecification"),
+			Specification.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

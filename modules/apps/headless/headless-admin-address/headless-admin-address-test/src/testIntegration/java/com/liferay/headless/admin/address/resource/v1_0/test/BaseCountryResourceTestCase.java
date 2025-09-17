@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -249,17 +250,14 @@ public abstract class BaseCountryResourceTestCase {
 
 		Country country1 = testGraphQLDeleteCountry_addCountry();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteCountry",
-						new HashMap<String, Object>() {
-							{
-								put("countryId", country1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteCountry"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCountry",
+				new HashMap<String, Object>() {
+					{
+						put("countryId", country1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -279,20 +277,16 @@ public abstract class BaseCountryResourceTestCase {
 
 		Country country2 = testGraphQLDeleteCountry_addCountry();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminAddress_v1_0",
-						new GraphQLField(
-							"deleteCountry",
-							new HashMap<String, Object>() {
-								{
-									put("countryId", country2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminAddress_v1_0",
-				"Object/deleteCountry"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminAddress_v1_0",
+				new GraphQLField(
+					"deleteCountry",
+					new HashMap<String, Object>() {
+						{
+							put("countryId", country2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -596,6 +590,7 @@ public abstract class BaseCountryResourceTestCase {
 			"countries",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -611,8 +606,9 @@ public abstract class BaseCountryResourceTestCase {
 
 		long totalCount = countriesJSONObject.getLong("totalCount");
 
-		Country country1 = testGraphQLGetCountriesPage_addCountry();
-		Country country2 = testGraphQLGetCountriesPage_addCountry();
+		Country country1 = testGraphQLCountry_addCountry(randomCountry());
+
+		Country country2 = testGraphQLCountry_addCountry(randomCountry());
 
 		countriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -649,12 +645,6 @@ public abstract class BaseCountryResourceTestCase {
 			country2,
 			Arrays.asList(
 				CountrySerDes.toDTOs(countriesJSONObject.getString("items"))));
-	}
-
-	protected Country testGraphQLGetCountriesPage_addCountry()
-		throws Exception {
-
-		return testGraphQLCountry_addCountry();
 	}
 
 	@Test
@@ -1433,6 +1423,15 @@ public abstract class BaseCountryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostCountry() throws Exception {
+		Country randomCountry = randomCountry();
+
+		Country country = testGraphQLCountry_addCountry(randomCountry);
+
+		Assert.assertTrue(equals(randomCountry, country));
+	}
+
+	@Test
 	public void testPutCountry() throws Exception {
 		Country postCountry = testPutCountry_addCountry();
 
@@ -1508,8 +1507,96 @@ public abstract class BaseCountryResourceTestCase {
 	}
 
 	protected Country testGraphQLCountry_addCountry() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLCountry_addCountry(randomCountry());
+	}
+
+	protected Country testGraphQLCountry_addCountry(Country country)
+		throws Exception {
+
+		JSONDeserializer<Country> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Country.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(country));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createCountry",
+						new HashMap<String, Object>() {
+							{
+								put("country", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createCountry"),
+			Country.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(Country country, List<Country> countries) {

@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -255,17 +256,14 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		CTRemote ctRemote1 = testGraphQLDeleteCTRemote_addCTRemote();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteCTRemote",
-						new HashMap<String, Object>() {
-							{
-								put("id", ctRemote1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteCTRemote"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCTRemote",
+				new HashMap<String, Object>() {
+					{
+						put("id", ctRemote1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -285,20 +283,16 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		CTRemote ctRemote2 = testGraphQLDeleteCTRemote_addCTRemote();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"changeTracking_v1_0",
-						new GraphQLField(
-							"deleteCTRemote",
-							new HashMap<String, Object>() {
-								{
-									put("id", ctRemote2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/changeTracking_v1_0",
-				"Object/deleteCTRemote"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"changeTracking_v1_0",
+				new GraphQLField(
+					"deleteCTRemote",
+					new HashMap<String, Object>() {
+						{
+							put("id", ctRemote2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -892,6 +886,69 @@ public abstract class BaseCTRemoteResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetCTRemotesPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"cTRemotes",
+			new HashMap<String, Object>() {
+				{
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject cTRemotesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/cTRemotes");
+
+		long totalCount = cTRemotesJSONObject.getLong("totalCount");
+
+		CTRemote ctRemote1 = testGraphQLCTRemote_addCTRemote(randomCTRemote());
+
+		CTRemote ctRemote2 = testGraphQLCTRemote_addCTRemote(randomCTRemote());
+
+		cTRemotesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/cTRemotes");
+
+		Assert.assertEquals(
+			totalCount + 2, cTRemotesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ctRemote1,
+			Arrays.asList(
+				CTRemoteSerDes.toDTOs(cTRemotesJSONObject.getString("items"))));
+		assertContains(
+			ctRemote2,
+			Arrays.asList(
+				CTRemoteSerDes.toDTOs(cTRemotesJSONObject.getString("items"))));
+
+		// Using the namespace changeTracking_v1_0
+
+		cTRemotesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("changeTracking_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/changeTracking_v1_0",
+			"JSONObject/cTRemotes");
+
+		Assert.assertEquals(
+			totalCount + 2, cTRemotesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ctRemote1,
+			Arrays.asList(
+				CTRemoteSerDes.toDTOs(cTRemotesJSONObject.getString("items"))));
+		assertContains(
+			ctRemote2,
+			Arrays.asList(
+				CTRemoteSerDes.toDTOs(cTRemotesJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPatchCTRemote() throws Exception {
 		CTRemote postCTRemote = testPatchCTRemote_addCTRemote();
 
@@ -932,6 +989,15 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostCTRemote() throws Exception {
+		CTRemote randomCTRemote = randomCTRemote();
+
+		CTRemote ctRemote = testGraphQLCTRemote_addCTRemote(randomCTRemote);
+
+		Assert.assertTrue(equals(randomCTRemote, ctRemote));
 	}
 
 	@Test
@@ -1011,8 +1077,98 @@ public abstract class BaseCTRemoteResourceTestCase {
 	}
 
 	protected CTRemote testGraphQLCTRemote_addCTRemote() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLCTRemote_addCTRemote(randomCTRemote());
+	}
+
+	protected CTRemote testGraphQLCTRemote_addCTRemote(CTRemote ctRemote)
+		throws Exception {
+
+		JSONDeserializer<CTRemote> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(CTRemote.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(ctRemote));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createCTRemote",
+						new HashMap<String, Object>() {
+							{
+								put("ctRemote", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createCTRemote"),
+			CTRemote.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(CTRemote ctRemote, List<CTRemote> ctRemotes) {

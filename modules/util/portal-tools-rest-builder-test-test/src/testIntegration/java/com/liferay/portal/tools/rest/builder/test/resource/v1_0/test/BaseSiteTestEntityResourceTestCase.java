@@ -297,7 +297,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 										"\"");
 						}
 					},
-					new GraphQLField("id"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -343,7 +343,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 											getExternalReferenceCode() + "\"");
 							}
 						},
-						new GraphQLField("id")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -476,9 +476,12 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		long totalCount = siteTestEntitiesJSONObject.getLong("totalCount");
 
 		SiteTestEntity siteTestEntity1 =
-			testGraphQLGetSiteSiteTestEntitiesPage_addSiteTestEntity();
+			testGraphQLSiteSiteTestEntity_addSiteTestEntity(
+				siteId, randomSiteTestEntity());
+
 		SiteTestEntity siteTestEntity2 =
-			testGraphQLGetSiteSiteTestEntitiesPage_addSiteTestEntity();
+			testGraphQLSiteSiteTestEntity_addSiteTestEntity(
+				siteId, randomSiteTestEntity());
 
 		siteTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -518,13 +521,6 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 			Arrays.asList(
 				SiteTestEntitySerDes.toDTOs(
 					siteTestEntitiesJSONObject.getString("items"))));
-	}
-
-	protected SiteTestEntity
-			testGraphQLGetSiteSiteTestEntitiesPage_addSiteTestEntity()
-		throws Exception {
-
-		return testGraphQLSiteSiteTestEntity_addSiteTestEntity();
 	}
 
 	@Test
@@ -1028,6 +1024,36 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 		return siteTestEntityResource.postSiteSiteTestEntity(
 			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
+	public void testGraphQLGetSiteTestEntityPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SiteTestEntity postSiteTestEntity =
+			testGraphQLGetSiteTestEntityPermissionsPage_addSiteTestEntity();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"testEntityPermissions",
+			new HashMap<String, Object>() {
+				{
+					put("siteTestEntityId", postSiteTestEntity.getId());
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject testEntityPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/testEntityPermissions");
+
+		Assert.assertNotNull(testEntityPermissionsJSONObject);
+	}
+
+	protected SiteTestEntity
+			testGraphQLGetSiteTestEntityPermissionsPage_addSiteTestEntity()
+		throws Exception {
+
+		return testGraphQLSiteTestEntity_addSiteTestEntity();
 	}
 
 	@Test

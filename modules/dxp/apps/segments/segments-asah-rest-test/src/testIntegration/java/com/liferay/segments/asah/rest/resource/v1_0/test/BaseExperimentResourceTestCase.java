@@ -226,19 +226,14 @@ public abstract class BaseExperimentResourceTestCase {
 
 		Experiment experiment1 = testGraphQLDeleteExperiment_addExperiment();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteExperiment",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"experimentId",
-									"\"" + experiment1.getId() + "\"");
-							}
-						})),
-				"JSONObject/data", "Object/deleteExperiment"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteExperiment",
+				new HashMap<String, Object>() {
+					{
+						put("experimentId", "\"" + experiment1.getId() + "\"");
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -260,22 +255,18 @@ public abstract class BaseExperimentResourceTestCase {
 
 		Experiment experiment2 = testGraphQLDeleteExperiment_addExperiment();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"segmentsAsah_v1_0",
-						new GraphQLField(
-							"deleteExperiment",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"experimentId",
-										"\"" + experiment2.getId() + "\"");
-								}
-							}))),
-				"JSONObject/data", "JSONObject/segmentsAsah_v1_0",
-				"Object/deleteExperiment"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"segmentsAsah_v1_0",
+				new GraphQLField(
+					"deleteExperiment",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"experimentId",
+								"\"" + experiment2.getId() + "\"");
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

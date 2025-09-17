@@ -269,19 +269,14 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage1 =
 			testGraphQLDeleteBlogPostingImage_addBlogPostingImage();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteBlogPostingImage",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"blogPostingImageId",
-									blogPostingImage1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteBlogPostingImage"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteBlogPostingImage",
+				new HashMap<String, Object>() {
+					{
+						put("blogPostingImageId", blogPostingImage1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -304,22 +299,18 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage2 =
 			testGraphQLDeleteBlogPostingImage_addBlogPostingImage();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"deleteBlogPostingImage",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"blogPostingImageId",
-										blogPostingImage2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-				"Object/deleteBlogPostingImage"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteBlogPostingImage",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"blogPostingImageId",
+								blogPostingImage2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -431,8 +422,122 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getGroupId();
+	}
+
+	@Test
+	public void testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		BlogPostingImage blogPostingImage1 =
+			testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSiteBlogPostingImageByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" +
+								testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
+									"\"");
+						put(
+							"externalReferenceCode",
+							"\"" +
+								blogPostingImage1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"blogPostingImageByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" +
+									testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									blogPostingImage1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		BlogPostingImage blogPostingImage2 =
+			testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessDelivery_v1_0",
+				new GraphQLField(
+					"deleteSiteBlogPostingImageByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" +
+									testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									blogPostingImage2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"blogPostingImageByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" +
+										testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										blogPostingImage2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long
+			testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected BlogPostingImage
+			testGraphQLDeleteSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage()
+		throws Exception {
+
+		return testGraphQLSiteBlogPostingImage_addBlogPostingImage();
 	}
 
 	@Test
@@ -779,8 +884,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getGroupId();
 	}
 
 	@Test
@@ -855,8 +959,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getGroupId();
 	}
 
 	@Test
@@ -918,7 +1021,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage()
 		throws Exception {
 
-		return testGraphQLBlogPostingImage_addBlogPostingImage();
+		return testGraphQLSiteBlogPostingImage_addBlogPostingImage();
 	}
 
 	@Test
@@ -1384,10 +1487,10 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			"blogPostingImages",
 			new HashMap<String, Object>() {
 				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -1402,9 +1505,12 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		long totalCount = blogPostingImagesJSONObject.getLong("totalCount");
 
 		BlogPostingImage blogPostingImage1 =
-			testGraphQLGetSiteBlogPostingImagesPage_addBlogPostingImage();
+			testGraphQLSiteBlogPostingImage_addBlogPostingImage(
+				siteId, randomBlogPostingImage());
+
 		BlogPostingImage blogPostingImage2 =
-			testGraphQLGetSiteBlogPostingImagesPage_addBlogPostingImage();
+			testGraphQLSiteBlogPostingImage_addBlogPostingImage(
+				siteId, randomBlogPostingImage());
 
 		blogPostingImagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1445,13 +1551,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			Arrays.asList(
 				BlogPostingImageSerDes.toDTOs(
 					blogPostingImagesJSONObject.getString("items"))));
-	}
-
-	protected BlogPostingImage
-			testGraphQLGetSiteBlogPostingImagesPage_addBlogPostingImage()
-		throws Exception {
-
-		return testGraphQLBlogPostingImage_addBlogPostingImage();
 	}
 
 	@Test
@@ -1538,6 +1637,118 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage()
+		throws Exception {
+
+		return testGraphQLBlogPostingImage_addBlogPostingImage(
+			testGroup.getGroupId(), randomBlogPostingImage());
+	}
+
+	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage(
+			Long siteId, BlogPostingImage blogPostingImage)
+		throws Exception {
+
+		JSONDeserializer<BlogPostingImage> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(BlogPostingImage.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(blogPostingImage));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteBlogPostingImage",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("blogPostingImage", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteBlogPostingImage"),
+			BlogPostingImage.class);
+	}
+
+	protected BlogPostingImage
+			testGraphQLSiteBlogPostingImage_addBlogPostingImage()
+		throws Exception {
+
+		return testGraphQLSiteBlogPostingImage_addBlogPostingImage(
+			testGroup.getGroupId(), randomBlogPostingImage());
+	}
+
+	protected BlogPostingImage
+			testGraphQLSiteBlogPostingImage_addBlogPostingImage(
+				Long siteId, BlogPostingImage blogPostingImage)
+		throws Exception {
+
+		JSONDeserializer<BlogPostingImage> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(BlogPostingImage.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(blogPostingImage));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteBlogPostingImage",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("blogPostingImage", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteBlogPostingImage"),
+			BlogPostingImage.class);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -1581,63 +1792,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage()
-		throws Exception {
-
-		return testGraphQLBlogPostingImage_addBlogPostingImage(
-			randomBlogPostingImage());
-	}
-
-	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage(
-			BlogPostingImage blogPostingImage)
-		throws Exception {
-
-		JSONDeserializer<BlogPostingImage> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(BlogPostingImage.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(blogPostingImage));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteBlogPostingImage",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("blogPostingImage", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteBlogPostingImage"),
-			BlogPostingImage.class);
 	}
 
 	protected void assertContains(

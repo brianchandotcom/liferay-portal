@@ -209,6 +209,61 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeletePlacedOrderAttachment() throws Exception {
+
+		// No namespace
+
+		Attachment attachment1 =
+			testGraphQLDeletePlacedOrderAttachment_addAttachment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePlacedOrderAttachment",
+				new HashMap<String, Object>() {
+					{
+						put("attachmentId", attachment1.getId());
+
+						put(
+							"placedOrderId",
+							testGraphQLDeletePlacedOrderAttachment_getPlacedOrderId());
+					}
+				}));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Attachment attachment2 =
+			testGraphQLDeletePlacedOrderAttachment_addAttachment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceDeliveryOrder_v1_0",
+				new GraphQLField(
+					"deletePlacedOrderAttachment",
+					new HashMap<String, Object>() {
+						{
+							put("attachmentId", attachment2.getId());
+
+							put(
+								"placedOrderId",
+								testGraphQLDeletePlacedOrderAttachment_getPlacedOrderId());
+						}
+					})));
+	}
+
+	protected Long testGraphQLDeletePlacedOrderAttachment_getPlacedOrderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Attachment testGraphQLDeletePlacedOrderAttachment_addAttachment()
+		throws Exception {
+
+		return testGraphQLAttachment_addAttachment();
+	}
+
+	@Test
 	public void testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode()
 		throws Exception {
 
@@ -240,6 +295,75 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Attachment attachment1 =
+			testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"attachmentExternalReferenceCode",
+							"\"" + attachment1.getExternalReferenceCode() +
+								"\"");
+
+						put(
+							"externalReferenceCode",
+							"\"" +
+								testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+									attachment1) + "\"");
+					}
+				}));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Attachment attachment2 =
+			testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceDeliveryOrder_v1_0",
+				new GraphQLField(
+					"deletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"attachmentExternalReferenceCode",
+								"\"" + attachment2.getExternalReferenceCode() +
+									"\"");
+
+							put(
+								"externalReferenceCode",
+								"\"" +
+									testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+										attachment2) + "\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+				Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Attachment
+			testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		return testGraphQLAttachment_addAttachment();
 	}
 
 	@Test
@@ -657,6 +781,13 @@ public abstract class BaseAttachmentResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected Attachment testGraphQLAttachment_addAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

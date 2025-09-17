@@ -291,8 +291,122 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Test
+	public void testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"assetLibraryId",
+							"\"" +
+								testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() +
+									"\"");
+						put(
+							"externalReferenceCode",
+							"\"" +
+								taxonomyCategory1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"assetLibraryTaxonomyCategoryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									taxonomyCategory1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminTaxonomy_v1_0",
+				new GraphQLField(
+					"deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									taxonomyCategory2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"assetLibraryTaxonomyCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										taxonomyCategory2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long
+			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected TaxonomyCategory
+			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLAssetLibraryTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test
@@ -332,6 +446,107 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteSiteTaxonomyCategoryByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGraphQLDeleteSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSiteTaxonomyCategoryByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + taxonomyCategory1.getSiteId() + "\"");
+						put(
+							"externalReferenceCode",
+							"\"" +
+								taxonomyCategory1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"taxonomyCategoryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + taxonomyCategory1.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									taxonomyCategory1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLDeleteSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminTaxonomy_v1_0",
+				new GraphQLField(
+					"deleteSiteTaxonomyCategoryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + taxonomyCategory2.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									taxonomyCategory2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"taxonomyCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + taxonomyCategory2.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										taxonomyCategory2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected TaxonomyCategory
+			testGraphQLDeleteSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLSiteTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Test
 	public void testDeleteTaxonomyCategory() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory =
@@ -365,19 +580,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteTaxonomyCategory",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"taxonomyCategoryId",
-									"\"" + taxonomyCategory1.getId() + "\"");
-							}
-						})),
-				"JSONObject/data", "Object/deleteTaxonomyCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteTaxonomyCategory",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"taxonomyCategoryId",
+							"\"" + taxonomyCategory1.getId() + "\"");
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -400,23 +612,18 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminTaxonomy_v1_0",
-						new GraphQLField(
-							"deleteTaxonomyCategory",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"taxonomyCategoryId",
-										"\"" + taxonomyCategory2.getId() +
-											"\"");
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
-				"Object/deleteTaxonomyCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminTaxonomy_v1_0",
+				new GraphQLField(
+					"deleteTaxonomyCategory",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"taxonomyCategoryId",
+								"\"" + taxonomyCategory2.getId() + "\"");
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -1016,6 +1223,94 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAssetLibraryTaxonomyCategoriesPage()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryTaxonomyCategoriesPage_getAssetLibraryId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryTaxonomyCategories",
+			new HashMap<String, Object>() {
+				{
+					put("assetLibraryId", "\"" + assetLibraryId + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject assetLibraryTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryTaxonomyCategories");
+
+		long totalCount = assetLibraryTaxonomyCategoriesJSONObject.getLong(
+			"totalCount");
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGraphQLAssetLibraryTaxonomyCategory_addTaxonomyCategory(
+				assetLibraryId, randomTaxonomyCategory());
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLAssetLibraryTaxonomyCategory_addTaxonomyCategory(
+				assetLibraryId, randomTaxonomyCategory());
+
+		assetLibraryTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryTaxonomyCategories");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryTaxonomyCategoriesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			taxonomyCategory1,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					assetLibraryTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+		assertContains(
+			taxonomyCategory2,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					assetLibraryTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		assetLibraryTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"JSONObject/assetLibraryTaxonomyCategories");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryTaxonomyCategoriesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			taxonomyCategory1,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					assetLibraryTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+		assertContains(
+			taxonomyCategory2,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					assetLibraryTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+	}
+
+	@Test
 	public void testGetAssetLibraryTaxonomyCategoryByExternalReferenceCode()
 		throws Exception {
 
@@ -1054,8 +1349,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGetAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -1131,8 +1425,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGraphQLGetAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -1197,7 +1490,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGraphQLGetAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
 		throws Exception {
 
-		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
+		return testGraphQLAssetLibraryTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test
@@ -1675,10 +1968,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			"taxonomyCategories",
 			new HashMap<String, Object>() {
 				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -1693,9 +1986,12 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		long totalCount = taxonomyCategoriesJSONObject.getLong("totalCount");
 
 		TaxonomyCategory taxonomyCategory1 =
-			testGraphQLGetSiteTaxonomyCategoriesPage_addTaxonomyCategory();
+			testGraphQLSiteTaxonomyCategory_addTaxonomyCategory(
+				siteId, randomTaxonomyCategory());
+
 		TaxonomyCategory taxonomyCategory2 =
-			testGraphQLGetSiteTaxonomyCategoriesPage_addTaxonomyCategory();
+			testGraphQLSiteTaxonomyCategory_addTaxonomyCategory(
+				siteId, randomTaxonomyCategory());
 
 		taxonomyCategoriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1736,13 +2032,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			Arrays.asList(
 				TaxonomyCategorySerDes.toDTOs(
 					taxonomyCategoriesJSONObject.getString("items"))));
-	}
-
-	protected TaxonomyCategory
-			testGraphQLGetSiteTaxonomyCategoriesPage_addTaxonomyCategory()
-		throws Exception {
-
-		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test
@@ -1908,7 +2197,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGraphQLGetSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
 		throws Exception {
 
-		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
+		return testGraphQLSiteTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test
@@ -2214,6 +2503,40 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		return taxonomyCategoryResource.postSiteTaxonomyCategory(
 			testGroup.getGroupId(), randomTaxonomyCategory());
+	}
+
+	@Test
+	public void testGraphQLGetTaxonomyCategoryPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TaxonomyCategory postTaxonomyCategory =
+			testGraphQLGetTaxonomyCategoryPermissionsPage_addTaxonomyCategory();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"taxonomyCategoryPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"taxonomyCategoryId",
+						"\"" + postTaxonomyCategory.getId() + "\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject taxonomyCategoryPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/taxonomyCategoryPermissions");
+
+		Assert.assertNotNull(taxonomyCategoryPermissionsJSONObject);
+	}
+
+	protected TaxonomyCategory
+			testGraphQLGetTaxonomyCategoryPermissionsPage_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test
@@ -3247,144 +3570,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
-		throws Exception {
-
-		TaxonomyCategory taxonomyCategory =
-			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				taxonomyCategory,
-				TaxonomyCategorySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"taxonomyVocabularyId",
-											testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-												taxonomyCategory));
-										put(
-											"externalReferenceCode",
-											"\"" +
-												taxonomyCategory.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"))));
-
-		// Using the namespace headlessAdminTaxonomy_v1_0
-
-		Assert.assertTrue(
-			equals(
-				taxonomyCategory,
-				TaxonomyCategorySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminTaxonomy_v1_0",
-								new GraphQLField(
-									"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"taxonomyVocabularyId",
-												testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-													taxonomyCategory));
-											put(
-												"externalReferenceCode",
-												"\"" +
-													taxonomyCategory.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessAdminTaxonomy_v1_0",
-						"Object/taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-				TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		Long irrelevantTaxonomyVocabularyId = RandomTestUtil.randomLong();
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"taxonomyVocabularyId",
-									irrelevantTaxonomyVocabularyId);
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminTaxonomy_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminTaxonomy_v1_0",
-						new GraphQLField(
-							"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"taxonomyVocabularyId",
-										irrelevantTaxonomyVocabularyId);
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected TaxonomyCategory
-			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
-		throws Exception {
-
-		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
-	}
-
-	@Test
 	public void testPatchTaxonomyCategory() throws Exception {
 		TaxonomyCategory postTaxonomyCategory =
 			testPatchTaxonomyCategory_addTaxonomyCategory();
@@ -3470,6 +3655,17 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostAssetLibraryTaxonomyCategory() throws Exception {
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory taxonomyCategory =
+			testGraphQLAssetLibraryTaxonomyCategory_addTaxonomyCategory(
+				testDepotEntry.getDepotEntryId(), randomTaxonomyCategory);
+
+		Assert.assertTrue(equals(randomTaxonomyCategory, taxonomyCategory));
+	}
+
+	@Test
 	public void testPostSiteTaxonomyCategory() throws Exception {
 		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
 
@@ -3521,8 +3717,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
 
 		TaxonomyCategory taxonomyCategory =
-			testGraphQLTaxonomyCategory_addTaxonomyCategory(
-				randomTaxonomyCategory);
+			testGraphQLSiteTaxonomyCategory_addTaxonomyCategory(
+				testGroup.getGroupId(), randomTaxonomyCategory);
 
 		Assert.assertTrue(equals(randomTaxonomyCategory, taxonomyCategory));
 	}
@@ -3547,6 +3743,19 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
 			taxonomyCategory);
+	}
+
+	@Test
+	public void testGraphQLPostTaxonomyCategoryTaxonomyCategory()
+		throws Exception {
+
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory taxonomyCategory =
+			testGraphQLTaxonomyCategory_addTaxonomyCategory(
+				testGroup.getGroupId(), randomTaxonomyCategory);
+
+		Assert.assertTrue(equals(randomTaxonomyCategory, taxonomyCategory));
 	}
 
 	@Test
@@ -3692,8 +3901,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testPutAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected TaxonomyCategory
@@ -4063,6 +4271,178 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected TaxonomyCategory
+			testGraphQLAssetLibraryTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLAssetLibraryTaxonomyCategory_addTaxonomyCategory(
+			testDepotEntry.getDepotEntryId(), randomTaxonomyCategory());
+	}
+
+	protected TaxonomyCategory
+			testGraphQLAssetLibraryTaxonomyCategory_addTaxonomyCategory(
+				Long assetLibraryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		JSONDeserializer<TaxonomyCategory> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(TaxonomyCategory.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(taxonomyCategory));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAssetLibraryTaxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" + assetLibraryId + "\"");
+								put("taxonomyCategory", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createAssetLibraryTaxonomyCategory"),
+			TaxonomyCategory.class);
+	}
+
+	protected TaxonomyCategory
+			testGraphQLSiteTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLSiteTaxonomyCategory_addTaxonomyCategory(
+			testGroup.getGroupId(), randomTaxonomyCategory());
+	}
+
+	protected TaxonomyCategory
+			testGraphQLSiteTaxonomyCategory_addTaxonomyCategory(
+				Long siteId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		JSONDeserializer<TaxonomyCategory> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(TaxonomyCategory.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(taxonomyCategory));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteTaxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("taxonomyCategory", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteTaxonomyCategory"),
+			TaxonomyCategory.class);
+	}
+
+	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyCategory_addTaxonomyCategory(
+			testGroup.getGroupId(), randomTaxonomyCategory());
+	}
+
+	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory(
+			Long siteId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		JSONDeserializer<TaxonomyCategory> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(TaxonomyCategory.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(taxonomyCategory));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteTaxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("taxonomyCategory", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteTaxonomyCategory"),
+			TaxonomyCategory.class);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -4106,63 +4486,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		return testGraphQLTaxonomyCategory_addTaxonomyCategory(
-			randomTaxonomyCategory());
-	}
-
-	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory(
-			TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		JSONDeserializer<TaxonomyCategory> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(TaxonomyCategory.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(taxonomyCategory));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteTaxonomyCategory",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("taxonomyCategory", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteTaxonomyCategory"),
-			TaxonomyCategory.class);
 	}
 
 	protected void assertContains(

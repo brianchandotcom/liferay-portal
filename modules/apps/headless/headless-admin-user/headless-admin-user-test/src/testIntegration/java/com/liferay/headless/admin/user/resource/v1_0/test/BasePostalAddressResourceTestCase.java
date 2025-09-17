@@ -271,17 +271,14 @@ public abstract class BasePostalAddressResourceTestCase {
 		PostalAddress postalAddress1 =
 			testGraphQLDeletePostalAddress_addPostalAddress();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePostalAddress",
-						new HashMap<String, Object>() {
-							{
-								put("postalAddressId", postalAddress1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePostalAddress"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePostalAddress",
+				new HashMap<String, Object>() {
+					{
+						put("postalAddressId", postalAddress1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -302,22 +299,16 @@ public abstract class BasePostalAddressResourceTestCase {
 		PostalAddress postalAddress2 =
 			testGraphQLDeletePostalAddress_addPostalAddress();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"deletePostalAddress",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"postalAddressId",
-										postalAddress2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-				"Object/deletePostalAddress"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deletePostalAddress",
+					new HashMap<String, Object>() {
+						{
+							put("postalAddressId", postalAddress2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -450,6 +441,93 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePostalAddressByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		PostalAddress postalAddress1 =
+			testGraphQLDeletePostalAddressByExternalReferenceCode_addPostalAddress();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePostalAddressByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + postalAddress1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"postalAddressByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									postalAddress1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		PostalAddress postalAddress2 =
+			testGraphQLDeletePostalAddressByExternalReferenceCode_addPostalAddress();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deletePostalAddressByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									postalAddress2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"postalAddressByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										postalAddress2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected PostalAddress
+			testGraphQLDeletePostalAddressByExternalReferenceCode_addPostalAddress()
+		throws Exception {
+
+		return testGraphQLPostalAddress_addPostalAddress();
 	}
 
 	@Test

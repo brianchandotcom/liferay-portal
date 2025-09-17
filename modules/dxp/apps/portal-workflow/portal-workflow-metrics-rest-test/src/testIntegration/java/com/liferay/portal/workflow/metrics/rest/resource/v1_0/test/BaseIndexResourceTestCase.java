@@ -212,11 +212,6 @@ public abstract class BaseIndexResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetIndexesPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testPatchIndexRefresh() throws Exception {
 		Assert.assertTrue(false);
 	}

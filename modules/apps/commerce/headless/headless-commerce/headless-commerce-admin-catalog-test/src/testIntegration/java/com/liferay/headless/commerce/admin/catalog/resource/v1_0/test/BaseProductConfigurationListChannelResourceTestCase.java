@@ -246,45 +246,36 @@ public abstract class BaseProductConfigurationListChannelResourceTestCase {
 		ProductConfigurationListChannel productConfigurationListChannel1 =
 			testGraphQLDeleteProductConfigurationListChannel_addProductConfigurationListChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProductConfigurationListChannel",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"productConfigurationListChannelId",
-									productConfigurationListChannel1.
-										getProductConfigurationListChannelId());
-							}
-						})),
-				"JSONObject/data",
-				"Object/deleteProductConfigurationListChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductConfigurationListChannel",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"productConfigurationListChannelId",
+							productConfigurationListChannel1.
+								getProductConfigurationListChannelId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		ProductConfigurationListChannel productConfigurationListChannel2 =
 			testGraphQLDeleteProductConfigurationListChannel_addProductConfigurationListChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteProductConfigurationListChannel",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"productConfigurationListChannelId",
-										productConfigurationListChannel2.
-											getProductConfigurationListChannelId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteProductConfigurationListChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProductConfigurationListChannel",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"productConfigurationListChannelId",
+								productConfigurationListChannel2.
+									getProductConfigurationListChannelId());
+						}
+					})));
 	}
 
 	protected ProductConfigurationListChannel

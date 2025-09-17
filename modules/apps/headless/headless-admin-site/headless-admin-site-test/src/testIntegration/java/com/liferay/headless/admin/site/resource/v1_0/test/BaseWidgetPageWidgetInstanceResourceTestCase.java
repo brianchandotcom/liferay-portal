@@ -243,8 +243,7 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 			testDeleteSiteSitePageWidgetInstance_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	protected String
@@ -290,8 +289,7 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 			testGetSiteSitePageWidgetInstance_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	protected String
@@ -535,8 +533,7 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 			testPutSiteSitePageWidgetInstance_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	protected String

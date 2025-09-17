@@ -254,17 +254,14 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		AvailabilityEstimate availabilityEstimate1 =
 			testGraphQLDeleteAvailabilityEstimate_addAvailabilityEstimate();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteAvailabilityEstimate",
-						new HashMap<String, Object>() {
-							{
-								put("id", availabilityEstimate1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteAvailabilityEstimate"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAvailabilityEstimate",
+				new HashMap<String, Object>() {
+					{
+						put("id", availabilityEstimate1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -285,21 +282,16 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		AvailabilityEstimate availabilityEstimate2 =
 			testGraphQLDeleteAvailabilityEstimate_addAvailabilityEstimate();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminSiteSetting_v1_0",
-						new GraphQLField(
-							"deleteAvailabilityEstimate",
-							new HashMap<String, Object>() {
-								{
-									put("id", availabilityEstimate2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
-				"Object/deleteAvailabilityEstimate"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminSiteSetting_v1_0",
+				new GraphQLField(
+					"deleteAvailabilityEstimate",
+					new HashMap<String, Object>() {
+						{
+							put("id", availabilityEstimate2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

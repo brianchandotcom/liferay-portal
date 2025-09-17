@@ -262,17 +262,14 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 		ProductDisplayPage productDisplayPage1 =
 			testGraphQLDeleteProductDisplayPage_addProductDisplayPage();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProductDisplayPage",
-						new HashMap<String, Object>() {
-							{
-								put("id", productDisplayPage1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteProductDisplayPage"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductDisplayPage",
+				new HashMap<String, Object>() {
+					{
+						put("id", productDisplayPage1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -293,21 +290,16 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 		ProductDisplayPage productDisplayPage2 =
 			testGraphQLDeleteProductDisplayPage_addProductDisplayPage();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminChannel_v1_0",
-						new GraphQLField(
-							"deleteProductDisplayPage",
-							new HashMap<String, Object>() {
-								{
-									put("id", productDisplayPage2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminChannel_v1_0",
-				"Object/deleteProductDisplayPage"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminChannel_v1_0",
+				new GraphQLField(
+					"deleteProductDisplayPage",
+					new HashMap<String, Object>() {
+						{
+							put("id", productDisplayPage2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

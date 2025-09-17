@@ -215,82 +215,8 @@ public abstract class BaseTimeRangeResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetTimeRangesPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"timeRanges",
-			new HashMap<String, Object>() {
-				{
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject timeRangesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/timeRanges");
-
-		long totalCount = timeRangesJSONObject.getLong("totalCount");
-
-		TimeRange timeRange1 = testGraphQLGetTimeRangesPage_addTimeRange();
-		TimeRange timeRange2 = testGraphQLGetTimeRangesPage_addTimeRange();
-
-		timeRangesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/timeRanges");
-
-		Assert.assertEquals(
-			totalCount + 2, timeRangesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			timeRange1,
-			Arrays.asList(
-				TimeRangeSerDes.toDTOs(
-					timeRangesJSONObject.getString("items"))));
-		assertContains(
-			timeRange2,
-			Arrays.asList(
-				TimeRangeSerDes.toDTOs(
-					timeRangesJSONObject.getString("items"))));
-
-		// Using the namespace portalWorkflowMetrics_v1_0
-
-		timeRangesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("portalWorkflowMetrics_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/portalWorkflowMetrics_v1_0",
-			"JSONObject/timeRanges");
-
-		Assert.assertEquals(
-			totalCount + 2, timeRangesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			timeRange1,
-			Arrays.asList(
-				TimeRangeSerDes.toDTOs(
-					timeRangesJSONObject.getString("items"))));
-		assertContains(
-			timeRange2,
-			Arrays.asList(
-				TimeRangeSerDes.toDTOs(
-					timeRangesJSONObject.getString("items"))));
-	}
-
-	protected TimeRange testGraphQLGetTimeRangesPage_addTimeRange()
-		throws Exception {
-
-		return testGraphQLTimeRange_addTimeRange();
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
-	}
-
-	protected TimeRange testGraphQLTimeRange_addTimeRange() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

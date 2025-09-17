@@ -234,11 +234,6 @@ public abstract class BaseKeywordQueryContributorResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetKeywordQueryContributorsPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

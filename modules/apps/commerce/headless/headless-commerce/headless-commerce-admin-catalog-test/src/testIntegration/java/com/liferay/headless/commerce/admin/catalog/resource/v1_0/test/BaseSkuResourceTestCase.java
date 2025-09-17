@@ -260,17 +260,14 @@ public abstract class BaseSkuResourceTestCase {
 
 		Sku sku1 = testGraphQLDeleteSku_addSku();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSku",
-						new HashMap<String, Object>() {
-							{
-								put("id", sku1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSku"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSku",
+				new HashMap<String, Object>() {
+					{
+						put("id", sku1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -290,21 +287,16 @@ public abstract class BaseSkuResourceTestCase {
 
 		Sku sku2 = testGraphQLDeleteSku_addSku();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteSku",
-							new HashMap<String, Object>() {
-								{
-									put("id", sku2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteSku"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteSku",
+					new HashMap<String, Object>() {
+						{
+							put("id", sku2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -410,6 +402,83 @@ public abstract class BaseSkuResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSkuByExternalReferenceCode() throws Exception {
+
+		// No namespace
+
+		Sku sku1 = testGraphQLDeleteSkuByExternalReferenceCode_addSku();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSkuByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + sku1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"skuByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + sku1.getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Sku sku2 = testGraphQLDeleteSkuByExternalReferenceCode_addSku();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteSkuByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + sku2.getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"skuByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + sku2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Sku testGraphQLDeleteSkuByExternalReferenceCode_addSku()
+		throws Exception {
+
+		return testGraphQLSku_addSku();
 	}
 
 	@Test
@@ -1441,68 +1510,6 @@ public abstract class BaseSkuResourceTestCase {
 	protected Sku testGetSkusPage_addSku(Sku sku) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSkusPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"skus",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject skusJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/skus");
-
-		long totalCount = skusJSONObject.getLong("totalCount");
-
-		Sku sku1 = testGraphQLGetSkusPage_addSku();
-		Sku sku2 = testGraphQLGetSkusPage_addSku();
-
-		skusJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/skus");
-
-		Assert.assertEquals(
-			totalCount + 2, skusJSONObject.getLong("totalCount"));
-
-		assertContains(
-			sku1,
-			Arrays.asList(SkuSerDes.toDTOs(skusJSONObject.getString("items"))));
-		assertContains(
-			sku2,
-			Arrays.asList(SkuSerDes.toDTOs(skusJSONObject.getString("items"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		skusJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminCatalog_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessCommerceAdminCatalog_v1_0",
-			"JSONObject/skus");
-
-		Assert.assertEquals(
-			totalCount + 2, skusJSONObject.getLong("totalCount"));
-
-		assertContains(
-			sku1,
-			Arrays.asList(SkuSerDes.toDTOs(skusJSONObject.getString("items"))));
-		assertContains(
-			sku2,
-			Arrays.asList(SkuSerDes.toDTOs(skusJSONObject.getString("items"))));
-	}
-
-	protected Sku testGraphQLGetSkusPage_addSku() throws Exception {
-		return testGraphQLSku_addSku();
 	}
 
 	@Test

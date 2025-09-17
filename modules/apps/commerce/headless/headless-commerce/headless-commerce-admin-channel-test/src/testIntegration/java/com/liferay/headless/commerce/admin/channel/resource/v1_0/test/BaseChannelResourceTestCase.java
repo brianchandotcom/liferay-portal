@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -256,17 +257,14 @@ public abstract class BaseChannelResourceTestCase {
 
 		Channel channel1 = testGraphQLDeleteChannel_addChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteChannel",
-						new HashMap<String, Object>() {
-							{
-								put("channelId", channel1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteChannel",
+				new HashMap<String, Object>() {
+					{
+						put("channelId", channel1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -286,21 +284,16 @@ public abstract class BaseChannelResourceTestCase {
 
 		Channel channel2 = testGraphQLDeleteChannel_addChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminChannel_v1_0",
-						new GraphQLField(
-							"deleteChannel",
-							new HashMap<String, Object>() {
-								{
-									put("channelId", channel2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminChannel_v1_0",
-				"Object/deleteChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminChannel_v1_0",
+				new GraphQLField(
+					"deleteChannel",
+					new HashMap<String, Object>() {
+						{
+							put("channelId", channel2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -407,6 +400,89 @@ public abstract class BaseChannelResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteChannelByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Channel channel1 =
+			testGraphQLDeleteChannelByExternalReferenceCode_addChannel();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteChannelByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + channel1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"channelByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + channel1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminChannel_v1_0
+
+		Channel channel2 =
+			testGraphQLDeleteChannelByExternalReferenceCode_addChannel();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminChannel_v1_0",
+				new GraphQLField(
+					"deleteChannelByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + channel2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminChannel_v1_0",
+					new GraphQLField(
+						"channelByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + channel2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Channel
+			testGraphQLDeleteChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
 	}
 
 	@Test
@@ -1289,6 +1365,7 @@ public abstract class BaseChannelResourceTestCase {
 			"channels",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1304,8 +1381,9 @@ public abstract class BaseChannelResourceTestCase {
 
 		long totalCount = channelsJSONObject.getLong("totalCount");
 
-		Channel channel1 = testGraphQLGetChannelsPage_addChannel();
-		Channel channel2 = testGraphQLGetChannelsPage_addChannel();
+		Channel channel1 = testGraphQLChannel_addChannel(randomChannel());
+
+		Channel channel2 = testGraphQLChannel_addChannel(randomChannel());
 
 		channelsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1343,10 +1421,6 @@ public abstract class BaseChannelResourceTestCase {
 			channel2,
 			Arrays.asList(
 				ChannelSerDes.toDTOs(channelsJSONObject.getString("items"))));
-	}
-
-	protected Channel testGraphQLGetChannelsPage_addChannel() throws Exception {
-		return testGraphQLChannel_addChannel();
 	}
 
 	@Test
@@ -1419,6 +1493,15 @@ public abstract class BaseChannelResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostChannel() throws Exception {
+		Channel randomChannel = randomChannel();
+
+		Channel channel = testGraphQLChannel_addChannel(randomChannel);
+
+		Assert.assertTrue(equals(randomChannel, channel));
 	}
 
 	@Test
@@ -1576,8 +1659,96 @@ public abstract class BaseChannelResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Channel testGraphQLChannel_addChannel() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLChannel_addChannel(randomChannel());
+	}
+
+	protected Channel testGraphQLChannel_addChannel(Channel channel)
+		throws Exception {
+
+		JSONDeserializer<Channel> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Channel.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(channel));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createChannel",
+						new HashMap<String, Object>() {
+							{
+								put("channel", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createChannel"),
+			Channel.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(Channel channel, List<Channel> channels) {

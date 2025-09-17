@@ -225,43 +225,34 @@ public abstract class BasePriceListChannelResourceTestCase {
 		PriceListChannel priceListChannel1 =
 			testGraphQLDeletePriceListChannel_addPriceListChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceListChannel",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"priceListChannelId",
-									priceListChannel1.getPriceListChannelId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceListChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceListChannel",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"priceListChannelId",
+							priceListChannel1.getPriceListChannelId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
 		PriceListChannel priceListChannel2 =
 			testGraphQLDeletePriceListChannel_addPriceListChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v2_0",
-						new GraphQLField(
-							"deletePriceListChannel",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"priceListChannelId",
-										priceListChannel2.
-											getPriceListChannelId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v2_0",
-				"Object/deletePriceListChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deletePriceListChannel",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"priceListChannelId",
+								priceListChannel2.getPriceListChannelId());
+						}
+					})));
 	}
 
 	protected PriceListChannel

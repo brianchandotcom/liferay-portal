@@ -238,13 +238,6 @@ public abstract class BaseQueryPrefilterContributorResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetQueryPrefilterContributorsPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

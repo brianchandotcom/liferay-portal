@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountCha
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -219,6 +220,78 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountChannelBillingAddressId()
+		throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelBillingAddressId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelBillingAddressId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelBillingAddressId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelBillingAddressId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelBillingAddressId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelBillingAddressId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelBillingAddressId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
+	}
+
+	@Test
 	public void testDeleteAccountChannelCurrencyId() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry =
@@ -246,6 +319,77 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountChannelCurrencyId() throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelCurrencyId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelCurrencyId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelCurrencyId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelCurrencyId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelCurrencyId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelCurrencyId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelCurrencyId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
 	}
 
 	@Test
@@ -280,6 +424,78 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountChannelDeliveryTermId()
+		throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelDeliveryTermId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelDeliveryTermId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelDeliveryTermId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelDeliveryTermId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelDeliveryTermId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelDeliveryTermId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelDeliveryTermId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
+	}
+
+	@Test
 	public void testDeleteAccountChannelDiscountId() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry =
@@ -307,6 +523,77 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountChannelDiscountId() throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelDiscountId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelDiscountId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelDiscountId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelDiscountId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelDiscountId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelDiscountId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelDiscountId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
 	}
 
 	@Test
@@ -341,6 +628,78 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountChannelPaymentMethodId()
+		throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelPaymentMethodId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelPaymentMethodId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelPaymentMethodId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelPaymentMethodId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelPaymentMethodId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelPaymentMethodId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
+	}
+
+	@Test
 	public void testDeleteAccountChannelPaymentTermId() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry =
@@ -369,6 +728,78 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountChannelPaymentTermId()
+		throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelPaymentTermId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelPaymentTermId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelPaymentTermId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelPaymentTermId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelPaymentTermId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelPaymentTermId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelPaymentTermId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
 	}
 
 	@Test
@@ -403,6 +834,77 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountChannelPriceListId() throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelPriceListId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelPriceListId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelPriceListId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelPriceListId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelPriceListId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelPriceListId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelPriceListId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
+	}
+
+	@Test
 	public void testDeleteAccountChannelShippingAddressId() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry =
@@ -434,6 +936,78 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountChannelShippingAddressId()
+		throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelShippingAddressId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelShippingAddressId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelShippingAddressId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelShippingAddressId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelShippingAddressId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelShippingAddressId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelShippingAddressId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
+	}
+
+	@Test
 	public void testDeleteAccountChannelUserId() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry =
@@ -460,6 +1034,77 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountChannelUserId() throws Exception {
+
+		// No namespace
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGraphQLDeleteAccountChannelUserId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountChannelUserId",
+				new HashMap<String, Object>() {
+					{
+						put("id", accountChannelEntry1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountChannelUserId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGraphQLDeleteAccountChannelUserId_addAccountChannelEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountChannelUserId",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountChannelEntry2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountChannelUserId",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountChannelEntry2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountChannelEntry
+			testGraphQLDeleteAccountChannelUserId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
 	}
 
 	@Test

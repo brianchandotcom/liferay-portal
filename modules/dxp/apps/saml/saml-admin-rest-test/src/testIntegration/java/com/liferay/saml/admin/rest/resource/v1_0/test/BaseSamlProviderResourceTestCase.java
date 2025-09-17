@@ -219,6 +219,11 @@ public abstract class BaseSamlProviderResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostSamlProvider() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

@@ -264,19 +264,14 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition dataDefinition1 =
 			testGraphQLDeleteDataDefinition_addDataDefinition();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataDefinition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"dataDefinitionId",
-									dataDefinition1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataDefinition"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteDataDefinition",
+				new HashMap<String, Object>() {
+					{
+						put("dataDefinitionId", dataDefinition1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -297,22 +292,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition dataDefinition2 =
 			testGraphQLDeleteDataDefinition_addDataDefinition();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"dataEngine_v2_0",
-						new GraphQLField(
-							"deleteDataDefinition",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"dataDefinitionId",
-										dataDefinition2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/dataEngine_v2_0",
-				"Object/deleteDataDefinition"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"dataEngine_v2_0",
+				new GraphQLField(
+					"deleteDataDefinition",
+					new HashMap<String, Object>() {
+						{
+							put("dataDefinitionId", dataDefinition2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -415,6 +404,118 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		DataDefinition dataDefinition1 =
+			testGraphQLDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSiteDataDefinitionByContentTypeByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + dataDefinition1.getSiteId() + "\"");
+						put(
+							"contentType",
+							"\"" + dataDefinition1.getContentType() + "\"");
+						put(
+							"externalReferenceCode",
+							"\"" + dataDefinition1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataDefinitionByContentTypeByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + dataDefinition1.getSiteId() + "\"");
+							put(
+								"contentType",
+								"\"" + dataDefinition1.getContentType() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									dataDefinition1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace dataEngine_v2_0
+
+		DataDefinition dataDefinition2 =
+			testGraphQLDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"dataEngine_v2_0",
+				new GraphQLField(
+					"deleteSiteDataDefinitionByContentTypeByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"siteKey",
+								"\"" + dataDefinition2.getSiteId() + "\"");
+							put(
+								"contentType",
+								"\"" + dataDefinition2.getContentType() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									dataDefinition2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataEngine_v2_0",
+					new GraphQLField(
+						"dataDefinitionByContentTypeByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + dataDefinition2.getSiteId() + "\"");
+								put(
+									"contentType",
+									"\"" + dataDefinition2.getContentType() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										dataDefinition2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected DataDefinition
+			testGraphQLDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition()
+		throws Exception {
+
+		return testGraphQLDataDefinition_addDataDefinition();
 	}
 
 	@Test

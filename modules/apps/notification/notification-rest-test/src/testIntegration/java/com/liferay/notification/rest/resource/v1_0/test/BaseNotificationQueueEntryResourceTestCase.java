@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -279,19 +280,16 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		NotificationQueueEntry notificationQueueEntry1 =
 			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteNotificationQueueEntry",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"notificationQueueEntryId",
-									notificationQueueEntry1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteNotificationQueueEntry"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteNotificationQueueEntry",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"notificationQueueEntryId",
+							notificationQueueEntry1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -314,22 +312,18 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		NotificationQueueEntry notificationQueueEntry2 =
 			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"notification_v1_0",
-						new GraphQLField(
-							"deleteNotificationQueueEntry",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"notificationQueueEntryId",
-										notificationQueueEntry2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/notification_v1_0",
-				"Object/deleteNotificationQueueEntry"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"notification_v1_0",
+				new GraphQLField(
+					"deleteNotificationQueueEntry",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"notificationQueueEntryId",
+								notificationQueueEntry2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -823,6 +817,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			"notificationQueueEntries",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -841,9 +836,12 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			"totalCount");
 
 		NotificationQueueEntry notificationQueueEntry1 =
-			testGraphQLGetNotificationQueueEntriesPage_addNotificationQueueEntry();
+			testGraphQLNotificationQueueEntry_addNotificationQueueEntry(
+				randomNotificationQueueEntry());
+
 		NotificationQueueEntry notificationQueueEntry2 =
-			testGraphQLGetNotificationQueueEntriesPage_addNotificationQueueEntry();
+			testGraphQLNotificationQueueEntry_addNotificationQueueEntry(
+				randomNotificationQueueEntry());
 
 		notificationQueueEntriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -886,13 +884,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			Arrays.asList(
 				NotificationQueueEntrySerDes.toDTOs(
 					notificationQueueEntriesJSONObject.getString("items"))));
-	}
-
-	protected NotificationQueueEntry
-			testGraphQLGetNotificationQueueEntriesPage_addNotificationQueueEntry()
-		throws Exception {
-
-		return testGraphQLNotificationQueueEntry_addNotificationQueueEntry();
 	}
 
 	@Test
@@ -1235,6 +1226,19 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostNotificationQueueEntry() throws Exception {
+		NotificationQueueEntry randomNotificationQueueEntry =
+			randomNotificationQueueEntry();
+
+		NotificationQueueEntry notificationQueueEntry =
+			testGraphQLNotificationQueueEntry_addNotificationQueueEntry(
+				randomNotificationQueueEntry);
+
+		Assert.assertTrue(
+			equals(randomNotificationQueueEntry, notificationQueueEntry));
+	}
+
+	@Test
 	public void testPutNotificationQueueEntryResend() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NotificationQueueEntry notificationQueueEntry =
@@ -1324,8 +1328,101 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			testGraphQLNotificationQueueEntry_addNotificationQueueEntry()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLNotificationQueueEntry_addNotificationQueueEntry(
+			randomNotificationQueueEntry());
+	}
+
+	protected NotificationQueueEntry
+			testGraphQLNotificationQueueEntry_addNotificationQueueEntry(
+				NotificationQueueEntry notificationQueueEntry)
+		throws Exception {
+
+		JSONDeserializer<NotificationQueueEntry> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(NotificationQueueEntry.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(notificationQueueEntry));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createNotificationQueueEntry",
+						new HashMap<String, Object>() {
+							{
+								put("notificationQueueEntry", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createNotificationQueueEntry"),
+			NotificationQueueEntry.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

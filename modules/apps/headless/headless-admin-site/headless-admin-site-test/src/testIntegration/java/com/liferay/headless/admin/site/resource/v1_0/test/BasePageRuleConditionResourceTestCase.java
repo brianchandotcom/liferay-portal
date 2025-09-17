@@ -233,8 +233,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 			testDeleteSitePageRuleCondition_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -262,8 +261,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	protected String testGetSitePageRuleCondition_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -478,8 +476,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	protected String testPutSitePageRuleCondition_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -541,8 +538,7 @@ public abstract class BasePageRuleConditionResourceTestCase {
 			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	protected void assertContains(

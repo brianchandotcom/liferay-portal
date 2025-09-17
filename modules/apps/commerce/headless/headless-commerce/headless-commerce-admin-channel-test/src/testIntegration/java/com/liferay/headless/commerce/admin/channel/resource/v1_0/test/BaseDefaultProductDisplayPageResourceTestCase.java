@@ -201,24 +201,17 @@ public abstract class BaseDefaultProductDisplayPageResourceTestCase {
 	}
 
 	@Test
-	public void testGetChannelByExternalReferenceCodeDefaultProductDisplayPage()
+	public void testGraphQLDeleteChannelIdDefaultProductDisplayPage()
 		throws Exception {
 
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetChannelByExternalReferenceCodeDefaultProductDisplayPage()
+	public void testGetChannelByExternalReferenceCodeDefaultProductDisplayPage()
 		throws Exception {
 
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetChannelByExternalReferenceCodeDefaultProductDisplayPageNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -251,17 +252,14 @@ public abstract class BasePriceListResourceTestCase {
 
 		PriceList priceList1 = testGraphQLDeletePriceList_addPriceList();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceList",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceList1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceList"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceList",
+				new HashMap<String, Object>() {
+					{
+						put("id", priceList1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -281,21 +279,16 @@ public abstract class BasePriceListResourceTestCase {
 
 		PriceList priceList2 = testGraphQLDeletePriceList_addPriceList();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v1_0",
-						new GraphQLField(
-							"deletePriceList",
-							new HashMap<String, Object>() {
-								{
-									put("id", priceList2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v1_0",
-				"Object/deletePriceList"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v1_0",
+				new GraphQLField(
+					"deletePriceList",
+					new HashMap<String, Object>() {
+						{
+							put("id", priceList2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -415,6 +408,91 @@ public abstract class BasePriceListResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePriceListByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		PriceList priceList1 =
+			testGraphQLDeletePriceListByExternalReferenceCode_addPriceList();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceListByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + priceList1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"priceListByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + priceList1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminPricing_v1_0
+
+		PriceList priceList2 =
+			testGraphQLDeletePriceListByExternalReferenceCode_addPriceList();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v1_0",
+				new GraphQLField(
+					"deletePriceListByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + priceList2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPricing_v1_0",
+					new GraphQLField(
+						"priceListByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										priceList2.getExternalReferenceCode() +
+											"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected PriceList
+			testGraphQLDeletePriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		return testGraphQLPriceList_addPriceList();
 	}
 
 	@Test
@@ -1193,8 +1271,11 @@ public abstract class BasePriceListResourceTestCase {
 
 		long totalCount = priceListsJSONObject.getLong("totalCount");
 
-		PriceList priceList1 = testGraphQLGetPriceListsPage_addPriceList();
-		PriceList priceList2 = testGraphQLGetPriceListsPage_addPriceList();
+		PriceList priceList1 = testGraphQLPriceList_addPriceList(
+			randomPriceList());
+
+		PriceList priceList2 = testGraphQLPriceList_addPriceList(
+			randomPriceList());
 
 		priceListsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1238,12 +1319,6 @@ public abstract class BasePriceListResourceTestCase {
 					priceListsJSONObject.getString("items"))));
 	}
 
-	protected PriceList testGraphQLGetPriceListsPage_addPriceList()
-		throws Exception {
-
-		return testGraphQLPriceList_addPriceList();
-	}
-
 	@Test
 	public void testPatchPriceList() throws Exception {
 		Assert.assertTrue(false);
@@ -1270,6 +1345,16 @@ public abstract class BasePriceListResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostPriceList() throws Exception {
+		PriceList randomPriceList = randomPriceList();
+
+		PriceList priceList = testGraphQLPriceList_addPriceList(
+			randomPriceList);
+
+		Assert.assertTrue(equals(randomPriceList, priceList));
 	}
 
 	@Test
@@ -1412,8 +1497,98 @@ public abstract class BasePriceListResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected PriceList testGraphQLPriceList_addPriceList() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLPriceList_addPriceList(randomPriceList());
+	}
+
+	protected PriceList testGraphQLPriceList_addPriceList(PriceList priceList)
+		throws Exception {
+
+		JSONDeserializer<PriceList> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(PriceList.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(priceList));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createPriceList",
+						new HashMap<String, Object>() {
+							{
+								put("priceList", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createPriceList"),
+			PriceList.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

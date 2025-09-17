@@ -23,6 +23,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -232,6 +233,106 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteStructuredContentByVersion() throws Exception {
+
+		// No namespace
+
+		StructuredContent structuredContent1 =
+			testGraphQLDeleteStructuredContentByVersion_addStructuredContent();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteStructuredContentByVersion",
+				new HashMap<String, Object>() {
+					{
+						put("structuredContentId", structuredContent1.getId());
+
+						put(
+							"version",
+							testGraphQLDeleteStructuredContentByVersion_getVersion());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"structuredContentByVersion",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"structuredContentId",
+								structuredContent1.getId());
+
+							put(
+								"version",
+								testGraphQLDeleteStructuredContentByVersion_getVersion());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminContent_v1_0
+
+		StructuredContent structuredContent2 =
+			testGraphQLDeleteStructuredContentByVersion_addStructuredContent();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminContent_v1_0",
+				new GraphQLField(
+					"deleteStructuredContentByVersion",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"structuredContentId",
+								structuredContent2.getId());
+
+							put(
+								"version",
+								testGraphQLDeleteStructuredContentByVersion_getVersion());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminContent_v1_0",
+					new GraphQLField(
+						"structuredContentByVersion",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentId",
+									structuredContent2.getId());
+
+								put(
+									"version",
+									testGraphQLDeleteStructuredContentByVersion_getVersion());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Double testGraphQLDeleteStructuredContentByVersion_getVersion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContent
+			testGraphQLDeleteStructuredContentByVersion_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -676,84 +777,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
-	}
-
-	@Test
-	public void testGraphQLGetSiteStructuredContentsPage() throws Exception {
-		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"structuredContents",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/structuredContents");
-
-		long totalCount = structuredContentsJSONObject.getLong("totalCount");
-
-		StructuredContent structuredContent1 =
-			testGraphQLGetSiteStructuredContentsPage_addStructuredContent();
-		StructuredContent structuredContent2 =
-			testGraphQLGetSiteStructuredContentsPage_addStructuredContent();
-
-		structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/structuredContents");
-
-		Assert.assertEquals(
-			totalCount + 2, structuredContentsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			structuredContent1,
-			Arrays.asList(
-				StructuredContentSerDes.toDTOs(
-					structuredContentsJSONObject.getString("items"))));
-		assertContains(
-			structuredContent2,
-			Arrays.asList(
-				StructuredContentSerDes.toDTOs(
-					structuredContentsJSONObject.getString("items"))));
-
-		// Using the namespace headlessAdminContent_v1_0
-
-		structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessAdminContent_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessAdminContent_v1_0",
-			"JSONObject/structuredContents");
-
-		Assert.assertEquals(
-			totalCount + 2, structuredContentsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			structuredContent1,
-			Arrays.asList(
-				StructuredContentSerDes.toDTOs(
-					structuredContentsJSONObject.getString("items"))));
-		assertContains(
-			structuredContent2,
-			Arrays.asList(
-				StructuredContentSerDes.toDTOs(
-					structuredContentsJSONObject.getString("items"))));
-	}
-
-	protected StructuredContent
-			testGraphQLGetSiteStructuredContentsPage_addStructuredContent()
-		throws Exception {
-
-		return testGraphQLStructuredContent_addStructuredContent();
 	}
 
 	@Test

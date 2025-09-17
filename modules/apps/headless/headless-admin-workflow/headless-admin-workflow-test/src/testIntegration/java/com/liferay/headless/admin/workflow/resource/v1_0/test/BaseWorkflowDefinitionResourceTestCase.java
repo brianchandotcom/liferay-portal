@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -267,19 +268,16 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		WorkflowDefinition workflowDefinition1 =
 			testGraphQLDeleteWorkflowDefinition_addWorkflowDefinition();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWorkflowDefinition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"workflowDefinitionId",
-									workflowDefinition1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWorkflowDefinition"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteWorkflowDefinition",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"workflowDefinitionId",
+							workflowDefinition1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -302,22 +300,18 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		WorkflowDefinition workflowDefinition2 =
 			testGraphQLDeleteWorkflowDefinition_addWorkflowDefinition();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminWorkflow_v1_0",
-						new GraphQLField(
-							"deleteWorkflowDefinition",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"workflowDefinitionId",
-										workflowDefinition2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminWorkflow_v1_0",
-				"Object/deleteWorkflowDefinition"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminWorkflow_v1_0",
+				new GraphQLField(
+					"deleteWorkflowDefinition",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"workflowDefinitionId",
+								workflowDefinition2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -406,6 +400,11 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteWorkflowDefinitionUndeploy() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -1186,9 +1185,12 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		long totalCount = workflowDefinitionsJSONObject.getLong("totalCount");
 
 		WorkflowDefinition workflowDefinition1 =
-			testGraphQLGetWorkflowDefinitionsPage_addWorkflowDefinition();
+			testGraphQLWorkflowDefinition_addWorkflowDefinition(
+				randomWorkflowDefinition());
+
 		WorkflowDefinition workflowDefinition2 =
-			testGraphQLGetWorkflowDefinitionsPage_addWorkflowDefinition();
+			testGraphQLWorkflowDefinition_addWorkflowDefinition(
+				randomWorkflowDefinition());
 
 		workflowDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1233,13 +1235,6 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 					workflowDefinitionsJSONObject.getString("items"))));
 	}
 
-	protected WorkflowDefinition
-			testGraphQLGetWorkflowDefinitionsPage_addWorkflowDefinition()
-		throws Exception {
-
-		return testGraphQLWorkflowDefinition_addWorkflowDefinition();
-	}
-
 	@Test
 	public void testPostWorkflowDefinition() throws Exception {
 		WorkflowDefinition randomWorkflowDefinition =
@@ -1260,6 +1255,18 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostWorkflowDefinition() throws Exception {
+		WorkflowDefinition randomWorkflowDefinition =
+			randomWorkflowDefinition();
+
+		WorkflowDefinition workflowDefinition =
+			testGraphQLWorkflowDefinition_addWorkflowDefinition(
+				randomWorkflowDefinition);
+
+		Assert.assertTrue(equals(randomWorkflowDefinition, workflowDefinition));
 	}
 
 	@Test
@@ -1285,6 +1292,18 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostWorkflowDefinitionDeploy() throws Exception {
+		WorkflowDefinition randomWorkflowDefinition =
+			randomWorkflowDefinition();
+
+		WorkflowDefinition workflowDefinition =
+			testGraphQLWorkflowDefinition_addWorkflowDefinition(
+				randomWorkflowDefinition);
+
+		Assert.assertTrue(equals(randomWorkflowDefinition, workflowDefinition));
+	}
+
+	@Test
 	public void testPostWorkflowDefinitionSave() throws Exception {
 		WorkflowDefinition randomWorkflowDefinition =
 			randomWorkflowDefinition();
@@ -1307,6 +1326,18 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostWorkflowDefinitionSave() throws Exception {
+		WorkflowDefinition randomWorkflowDefinition =
+			randomWorkflowDefinition();
+
+		WorkflowDefinition workflowDefinition =
+			testGraphQLWorkflowDefinition_addWorkflowDefinition(
+				randomWorkflowDefinition);
+
+		Assert.assertTrue(equals(randomWorkflowDefinition, workflowDefinition));
+	}
+
+	@Test
 	public void testPostWorkflowDefinitionUpdateActive() throws Exception {
 		WorkflowDefinition randomWorkflowDefinition =
 			randomWorkflowDefinition();
@@ -1326,6 +1357,20 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostWorkflowDefinitionUpdateActive()
+		throws Exception {
+
+		WorkflowDefinition randomWorkflowDefinition =
+			randomWorkflowDefinition();
+
+		WorkflowDefinition workflowDefinition =
+			testGraphQLWorkflowDefinition_addWorkflowDefinition(
+				randomWorkflowDefinition);
+
+		Assert.assertTrue(equals(randomWorkflowDefinition, workflowDefinition));
 	}
 
 	@Test
@@ -1419,8 +1464,101 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			testGraphQLWorkflowDefinition_addWorkflowDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLWorkflowDefinition_addWorkflowDefinition(
+			randomWorkflowDefinition());
+	}
+
+	protected WorkflowDefinition
+			testGraphQLWorkflowDefinition_addWorkflowDefinition(
+				WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		JSONDeserializer<WorkflowDefinition> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(WorkflowDefinition.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(workflowDefinition));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createWorkflowDefinition",
+						new HashMap<String, Object>() {
+							{
+								put("workflowDefinition", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createWorkflowDefinition"),
+			WorkflowDefinition.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

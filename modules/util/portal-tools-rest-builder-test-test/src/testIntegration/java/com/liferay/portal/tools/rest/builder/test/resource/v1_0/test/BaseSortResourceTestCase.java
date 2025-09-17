@@ -206,11 +206,6 @@ public abstract class BaseSortResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSortsPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

@@ -24,6 +24,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -215,6 +216,77 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountGroup() throws Exception {
+
+		// No namespace
+
+		AdminAccountGroup adminAccountGroup1 =
+			testGraphQLDeleteAccountGroup_addAdminAccountGroup();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountGroup",
+				new HashMap<String, Object>() {
+					{
+						put("id", adminAccountGroup1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountGroup",
+					new HashMap<String, Object>() {
+						{
+							put("id", adminAccountGroup1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AdminAccountGroup adminAccountGroup2 =
+			testGraphQLDeleteAccountGroup_addAdminAccountGroup();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountGroup",
+					new HashMap<String, Object>() {
+						{
+							put("id", adminAccountGroup2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", adminAccountGroup2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AdminAccountGroup
+			testGraphQLDeleteAccountGroup_addAdminAccountGroup()
+		throws Exception {
+
+		return testGraphQLAdminAccountGroup_addAdminAccountGroup();
+	}
+
+	@Test
 	public void testDeleteAccountGroupByExternalReferenceCode()
 		throws Exception {
 
@@ -245,6 +317,94 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		AdminAccountGroup adminAccountGroup1 =
+			testGraphQLDeleteAccountGroupByExternalReferenceCode_addAdminAccountGroup();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountGroupByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" +
+								adminAccountGroup1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountGroupByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									adminAccountGroup1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		AdminAccountGroup adminAccountGroup2 =
+			testGraphQLDeleteAccountGroupByExternalReferenceCode_addAdminAccountGroup();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminAccount_v1_0",
+				new GraphQLField(
+					"deleteAccountGroupByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									adminAccountGroup2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"accountGroupByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										adminAccountGroup2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AdminAccountGroup
+			testGraphQLDeleteAccountGroupByExternalReferenceCode_addAdminAccountGroup()
+		throws Exception {
+
+		return testGraphQLAdminAccountGroup_addAdminAccountGroup();
 	}
 
 	@Test

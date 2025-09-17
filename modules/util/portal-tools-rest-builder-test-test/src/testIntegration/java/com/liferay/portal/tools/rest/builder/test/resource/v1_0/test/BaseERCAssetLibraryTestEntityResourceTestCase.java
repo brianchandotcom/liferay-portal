@@ -342,7 +342,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 										getExternalReferenceCode() + "\"");
 						}
 					},
-					new GraphQLField("ercAssetLibraryTestEntityId"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -394,7 +394,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 											getExternalReferenceCode() + "\"");
 							}
 						},
-						new GraphQLField("ercAssetLibraryTestEntityId")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -535,6 +535,96 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		throws Exception {
 
 		return irrelevantDepotEntryGroup.getExternalReferenceCode();
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryERCAssetLibraryTestEntitiesPage()
+		throws Exception {
+
+		String assetLibraryExternalReferenceCode =
+			testGetAssetLibraryERCAssetLibraryTestEntitiesPage_getAssetLibraryExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryERCAssetLibraryTestEntities",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"assetLibraryExternalReferenceCode",
+						"\"" + RandomTestUtil.randomString() + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject assetLibraryERCAssetLibraryTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryERCAssetLibraryTestEntities");
+
+		long totalCount =
+			assetLibraryERCAssetLibraryTestEntitiesJSONObject.getLong(
+				"totalCount");
+
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity1 =
+			testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity(
+				assetLibraryExternalReferenceCode,
+				randomERCAssetLibraryTestEntity());
+
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity2 =
+			testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity(
+				assetLibraryExternalReferenceCode,
+				randomERCAssetLibraryTestEntity());
+
+		assetLibraryERCAssetLibraryTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryERCAssetLibraryTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryERCAssetLibraryTestEntitiesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			ercAssetLibraryTestEntity1,
+			Arrays.asList(
+				ERCAssetLibraryTestEntitySerDes.toDTOs(
+					assetLibraryERCAssetLibraryTestEntitiesJSONObject.getString(
+						"items"))));
+		assertContains(
+			ercAssetLibraryTestEntity2,
+			Arrays.asList(
+				ERCAssetLibraryTestEntitySerDes.toDTOs(
+					assetLibraryERCAssetLibraryTestEntitiesJSONObject.getString(
+						"items"))));
+
+		// Using the namespace test_v1_0
+
+		assetLibraryERCAssetLibraryTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"JSONObject/assetLibraryERCAssetLibraryTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryERCAssetLibraryTestEntitiesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			ercAssetLibraryTestEntity1,
+			Arrays.asList(
+				ERCAssetLibraryTestEntitySerDes.toDTOs(
+					assetLibraryERCAssetLibraryTestEntitiesJSONObject.getString(
+						"items"))));
+		assertContains(
+			ercAssetLibraryTestEntity2,
+			Arrays.asList(
+				ERCAssetLibraryTestEntitySerDes.toDTOs(
+					assetLibraryERCAssetLibraryTestEntitiesJSONObject.getString(
+						"items"))));
 	}
 
 	@Test

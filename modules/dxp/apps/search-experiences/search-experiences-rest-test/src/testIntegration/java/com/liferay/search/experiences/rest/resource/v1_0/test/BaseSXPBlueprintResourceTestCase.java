@@ -22,6 +22,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -270,17 +271,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		SXPBlueprint sxpBlueprint1 =
 			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSXPBlueprint",
-						new HashMap<String, Object>() {
-							{
-								put("sxpBlueprintId", sxpBlueprint1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSXPBlueprint"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSXPBlueprint",
+				new HashMap<String, Object>() {
+					{
+						put("sxpBlueprintId", sxpBlueprint1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -301,22 +299,16 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		SXPBlueprint sxpBlueprint2 =
 			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"searchExperiences_v1_0",
-						new GraphQLField(
-							"deleteSXPBlueprint",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"sxpBlueprintId",
-										sxpBlueprint2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/searchExperiences_v1_0",
-				"Object/deleteSXPBlueprint"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"searchExperiences_v1_0",
+				new GraphQLField(
+					"deleteSXPBlueprint",
+					new HashMap<String, Object>() {
+						{
+							put("sxpBlueprintId", sxpBlueprint2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -1178,6 +1170,75 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSXPBlueprintsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"sXPBlueprints",
+			new HashMap<String, Object>() {
+				{
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject sXPBlueprintsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/sXPBlueprints");
+
+		long totalCount = sXPBlueprintsJSONObject.getLong("totalCount");
+
+		SXPBlueprint sxpBlueprint1 = testGraphQLSXPBlueprint_addSXPBlueprint(
+			randomSXPBlueprint());
+
+		SXPBlueprint sxpBlueprint2 = testGraphQLSXPBlueprint_addSXPBlueprint(
+			randomSXPBlueprint());
+
+		sXPBlueprintsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/sXPBlueprints");
+
+		Assert.assertEquals(
+			totalCount + 2, sXPBlueprintsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			sxpBlueprint1,
+			Arrays.asList(
+				SXPBlueprintSerDes.toDTOs(
+					sXPBlueprintsJSONObject.getString("items"))));
+		assertContains(
+			sxpBlueprint2,
+			Arrays.asList(
+				SXPBlueprintSerDes.toDTOs(
+					sXPBlueprintsJSONObject.getString("items"))));
+
+		// Using the namespace searchExperiences_v1_0
+
+		sXPBlueprintsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("searchExperiences_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+			"JSONObject/sXPBlueprints");
+
+		Assert.assertEquals(
+			totalCount + 2, sXPBlueprintsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			sxpBlueprint1,
+			Arrays.asList(
+				SXPBlueprintSerDes.toDTOs(
+					sXPBlueprintsJSONObject.getString("items"))));
+		assertContains(
+			sxpBlueprint2,
+			Arrays.asList(
+				SXPBlueprintSerDes.toDTOs(
+					sXPBlueprintsJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPatchSXPBlueprint() throws Exception {
 		SXPBlueprint postSXPBlueprint = testPatchSXPBlueprint_addSXPBlueprint();
 
@@ -1226,6 +1287,16 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostSXPBlueprint() throws Exception {
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint sxpBlueprint = testGraphQLSXPBlueprint_addSXPBlueprint(
+			randomSXPBlueprint);
+
+		Assert.assertTrue(equals(randomSXPBlueprint, sxpBlueprint));
+	}
+
+	@Test
 	public void testPostSXPBlueprintCopy() throws Exception {
 		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
 
@@ -1245,6 +1316,16 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostSXPBlueprintCopy() throws Exception {
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint sxpBlueprint = testGraphQLSXPBlueprint_addSXPBlueprint(
+			randomSXPBlueprint);
+
+		Assert.assertTrue(equals(randomSXPBlueprint, sxpBlueprint));
+	}
+
+	@Test
 	public void testPostSXPBlueprintValidate() throws Exception {
 		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
 
@@ -1261,6 +1342,16 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostSXPBlueprintValidate() throws Exception {
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint sxpBlueprint = testGraphQLSXPBlueprint_addSXPBlueprint(
+			randomSXPBlueprint);
+
+		Assert.assertTrue(equals(randomSXPBlueprint, sxpBlueprint));
 	}
 
 	@Test
@@ -1408,8 +1499,99 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	protected SXPBlueprint testGraphQLSXPBlueprint_addSXPBlueprint()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLSXPBlueprint_addSXPBlueprint(randomSXPBlueprint());
+	}
+
+	protected SXPBlueprint testGraphQLSXPBlueprint_addSXPBlueprint(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		JSONDeserializer<SXPBlueprint> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(SXPBlueprint.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(sxpBlueprint));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSXPBlueprint",
+						new HashMap<String, Object>() {
+							{
+								put("sxpBlueprint", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSXPBlueprint"),
+			SXPBlueprint.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

@@ -206,6 +206,56 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteProcessNode() throws Exception {
+
+		// No namespace
+
+		Node node1 = testGraphQLDeleteProcessNode_addNode();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProcessNode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"processId",
+							testGraphQLDeleteProcessNode_getProcessId(node1));
+						put("nodeId", node1.getId());
+					}
+				}));
+
+		// Using the namespace portalWorkflowMetrics_v1_0
+
+		Node node2 = testGraphQLDeleteProcessNode_addNode();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"portalWorkflowMetrics_v1_0",
+				new GraphQLField(
+					"deleteProcessNode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"processId",
+								testGraphQLDeleteProcessNode_getProcessId(
+									node2));
+							put("nodeId", node2.getId());
+						}
+					})));
+	}
+
+	protected Long testGraphQLDeleteProcessNode_getProcessId(Node node)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Node testGraphQLDeleteProcessNode_addNode() throws Exception {
+		return testGraphQLNode_addNode();
+	}
+
+	@Test
 	public void testGetProcessNodesPage() throws Exception {
 		Long processId = testGetProcessNodesPage_getProcessId();
 		Long irrelevantProcessId =
@@ -297,6 +347,11 @@ public abstract class BaseNodeResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected Node testGraphQLNode_addNode() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(Node node, List<Node> nodes) {

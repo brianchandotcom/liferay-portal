@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -280,17 +281,14 @@ public abstract class BasePaymentResourceTestCase {
 
 		Payment payment1 = testGraphQLDeletePayment_addPayment();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePayment",
-						new HashMap<String, Object>() {
-							{
-								put("id", payment1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePayment"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePayment",
+				new HashMap<String, Object>() {
+					{
+						put("id", payment1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -310,21 +308,16 @@ public abstract class BasePaymentResourceTestCase {
 
 		Payment payment2 = testGraphQLDeletePayment_addPayment();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPayment_v1_0",
-						new GraphQLField(
-							"deletePayment",
-							new HashMap<String, Object>() {
-								{
-									put("id", payment2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPayment_v1_0",
-				"Object/deletePayment"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPayment_v1_0",
+				new GraphQLField(
+					"deletePayment",
+					new HashMap<String, Object>() {
+						{
+							put("id", payment2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -431,6 +424,89 @@ public abstract class BasePaymentResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePaymentByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Payment payment1 =
+			testGraphQLDeletePaymentByExternalReferenceCode_addPayment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePaymentByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + payment1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"paymentByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + payment1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Payment payment2 =
+			testGraphQLDeletePaymentByExternalReferenceCode_addPayment();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPayment_v1_0",
+				new GraphQLField(
+					"deletePaymentByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + payment2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPayment_v1_0",
+					new GraphQLField(
+						"paymentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + payment2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Payment
+			testGraphQLDeletePaymentByExternalReferenceCode_addPayment()
+		throws Exception {
+
+		return testGraphQLPayment_addPayment();
 	}
 
 	@Test
@@ -1175,6 +1251,7 @@ public abstract class BasePaymentResourceTestCase {
 			"payments",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1190,8 +1267,9 @@ public abstract class BasePaymentResourceTestCase {
 
 		long totalCount = paymentsJSONObject.getLong("totalCount");
 
-		Payment payment1 = testGraphQLGetPaymentsPage_addPayment();
-		Payment payment2 = testGraphQLGetPaymentsPage_addPayment();
+		Payment payment1 = testGraphQLPayment_addPayment(randomPayment());
+
+		Payment payment2 = testGraphQLPayment_addPayment(randomPayment());
 
 		paymentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1229,10 +1307,6 @@ public abstract class BasePaymentResourceTestCase {
 			payment2,
 			Arrays.asList(
 				PaymentSerDes.toDTOs(paymentsJSONObject.getString("items"))));
-	}
-
-	protected Payment testGraphQLGetPaymentsPage_addPayment() throws Exception {
-		return testGraphQLPayment_addPayment();
 	}
 
 	@Test
@@ -1308,6 +1382,15 @@ public abstract class BasePaymentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostPayment() throws Exception {
+		Payment randomPayment = randomPayment();
+
+		Payment payment = testGraphQLPayment_addPayment(randomPayment);
+
+		Assert.assertTrue(equals(randomPayment, payment));
+	}
+
+	@Test
 	public void testPostPaymentByExternalReferenceCodeRefund()
 		throws Exception {
 
@@ -1330,6 +1413,17 @@ public abstract class BasePaymentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostPaymentByExternalReferenceCodeRefund()
+		throws Exception {
+
+		Payment randomPayment = randomPayment();
+
+		Payment payment = testGraphQLPayment_addPayment(randomPayment);
+
+		Assert.assertTrue(equals(randomPayment, payment));
+	}
+
+	@Test
 	public void testPostPaymentRefund() throws Exception {
 		Payment randomPayment = randomPayment();
 
@@ -1344,6 +1438,15 @@ public abstract class BasePaymentResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostPaymentRefund() throws Exception {
+		Payment randomPayment = randomPayment();
+
+		Payment payment = testGraphQLPayment_addPayment(randomPayment);
+
+		Assert.assertTrue(equals(randomPayment, payment));
 	}
 
 	@Test
@@ -1478,8 +1581,96 @@ public abstract class BasePaymentResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Payment testGraphQLPayment_addPayment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLPayment_addPayment(randomPayment());
+	}
+
+	protected Payment testGraphQLPayment_addPayment(Payment payment)
+		throws Exception {
+
+		JSONDeserializer<Payment> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Payment.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(payment));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createPayment",
+						new HashMap<String, Object>() {
+							{
+								put("payment", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createPayment"),
+			Payment.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(Payment payment, List<Payment> payments) {

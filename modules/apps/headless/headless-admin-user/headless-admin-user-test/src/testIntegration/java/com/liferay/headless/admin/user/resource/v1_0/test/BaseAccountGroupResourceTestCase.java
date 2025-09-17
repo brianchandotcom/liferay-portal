@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -257,17 +258,14 @@ public abstract class BaseAccountGroupResourceTestCase {
 		AccountGroup accountGroup1 =
 			testGraphQLDeleteAccountGroup_addAccountGroup();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteAccountGroup",
-						new HashMap<String, Object>() {
-							{
-								put("accountGroupId", accountGroup1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteAccountGroup"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountGroup",
+				new HashMap<String, Object>() {
+					{
+						put("accountGroupId", accountGroup1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -288,22 +286,16 @@ public abstract class BaseAccountGroupResourceTestCase {
 		AccountGroup accountGroup2 =
 			testGraphQLDeleteAccountGroup_addAccountGroup();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"deleteAccountGroup",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"accountGroupId",
-										accountGroup2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-				"Object/deleteAccountGroup"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountGroup",
+					new HashMap<String, Object>() {
+						{
+							put("accountGroupId", accountGroup2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -439,6 +431,93 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		AccountGroup accountGroup1 =
+			testGraphQLDeleteAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountGroupByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + accountGroup1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountGroupByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									accountGroup1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		AccountGroup accountGroup2 =
+			testGraphQLDeleteAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountGroupByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									accountGroup2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"accountGroupByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										accountGroup2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountGroup
+			testGraphQLDeleteAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
+	@Test
 	public void testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode()
 		throws Exception {
 
@@ -468,6 +547,73 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		AccountGroup accountGroup1 =
+			testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"accountExternalReferenceCode",
+							"\"" +
+								testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+									"\"");
+						put(
+							"externalReferenceCode",
+							"\"" + accountGroup1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		AccountGroup accountGroup2 =
+			testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountExternalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" +
+									accountGroup2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AccountGroup
+			testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	@Test
@@ -1645,6 +1791,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 			"accountGroups",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1660,10 +1807,11 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		long totalCount = accountGroupsJSONObject.getLong("totalCount");
 
-		AccountGroup accountGroup1 =
-			testGraphQLGetAccountGroupsPage_addAccountGroup();
-		AccountGroup accountGroup2 =
-			testGraphQLGetAccountGroupsPage_addAccountGroup();
+		AccountGroup accountGroup1 = testGraphQLAccountGroup_addAccountGroup(
+			randomAccountGroup());
+
+		AccountGroup accountGroup2 = testGraphQLAccountGroup_addAccountGroup(
+			randomAccountGroup());
 
 		accountGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1704,12 +1852,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 			Arrays.asList(
 				AccountGroupSerDes.toDTOs(
 					accountGroupsJSONObject.getString("items"))));
-	}
-
-	protected AccountGroup testGraphQLGetAccountGroupsPage_addAccountGroup()
-		throws Exception {
-
-		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	@Test
@@ -1794,6 +1936,16 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostAccountGroup() throws Exception {
+		AccountGroup randomAccountGroup = randomAccountGroup();
+
+		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup(
+			randomAccountGroup);
+
+		Assert.assertTrue(equals(randomAccountGroup, accountGroup));
 	}
 
 	@Test
@@ -2016,8 +2168,99 @@ public abstract class BaseAccountGroupResourceTestCase {
 	protected AccountGroup testGraphQLAccountGroup_addAccountGroup()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLAccountGroup_addAccountGroup(randomAccountGroup());
+	}
+
+	protected AccountGroup testGraphQLAccountGroup_addAccountGroup(
+			AccountGroup accountGroup)
+		throws Exception {
+
+		JSONDeserializer<AccountGroup> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(AccountGroup.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(accountGroup));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAccountGroup",
+						new HashMap<String, Object>() {
+							{
+								put("accountGroup", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createAccountGroup"),
+			AccountGroup.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

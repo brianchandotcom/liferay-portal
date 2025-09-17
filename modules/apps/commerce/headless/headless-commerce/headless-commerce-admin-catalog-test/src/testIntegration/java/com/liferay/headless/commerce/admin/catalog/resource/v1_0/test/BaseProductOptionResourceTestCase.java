@@ -264,17 +264,14 @@ public abstract class BaseProductOptionResourceTestCase {
 		ProductOption productOption1 =
 			testGraphQLDeleteProductOption_addProductOption();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProductOption",
-						new HashMap<String, Object>() {
-							{
-								put("id", productOption1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteProductOption"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductOption",
+				new HashMap<String, Object>() {
+					{
+						put("id", productOption1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -295,21 +292,16 @@ public abstract class BaseProductOptionResourceTestCase {
 		ProductOption productOption2 =
 			testGraphQLDeleteProductOption_addProductOption();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteProductOption",
-							new HashMap<String, Object>() {
-								{
-									put("id", productOption2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteProductOption"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProductOption",
+					new HashMap<String, Object>() {
+						{
+							put("id", productOption2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

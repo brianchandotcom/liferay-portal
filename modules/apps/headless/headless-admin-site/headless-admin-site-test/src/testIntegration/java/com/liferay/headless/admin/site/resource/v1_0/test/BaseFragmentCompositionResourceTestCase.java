@@ -245,8 +245,7 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 			testDeleteSiteFragmentComposition_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -275,8 +274,7 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 			testGetSiteFragmentComposition_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -852,8 +850,7 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 			testPutSiteFragmentComposition_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -915,8 +912,7 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Rule

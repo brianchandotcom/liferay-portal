@@ -280,17 +280,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		DataLayout dataLayout1 = testGraphQLDeleteDataLayout_addDataLayout();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataLayout",
-						new HashMap<String, Object>() {
-							{
-								put("dataLayoutId", dataLayout1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataLayout"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteDataLayout",
+				new HashMap<String, Object>() {
+					{
+						put("dataLayoutId", dataLayout1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -310,20 +307,16 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		DataLayout dataLayout2 = testGraphQLDeleteDataLayout_addDataLayout();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"dataEngine_v2_0",
-						new GraphQLField(
-							"deleteDataLayout",
-							new HashMap<String, Object>() {
-								{
-									put("dataLayoutId", dataLayout2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/dataEngine_v2_0",
-				"Object/deleteDataLayout"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"dataEngine_v2_0",
+				new GraphQLField(
+					"deleteDataLayout",
+					new HashMap<String, Object>() {
+						{
+							put("dataLayoutId", dataLayout2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

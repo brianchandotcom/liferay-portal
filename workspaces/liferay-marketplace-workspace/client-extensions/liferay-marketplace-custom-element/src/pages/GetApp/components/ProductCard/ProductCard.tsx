@@ -46,7 +46,7 @@ const ProductCardRevamp = ({
 	const HeadingComponent = title.length > 30 ? 'h3' : 'h1';
 
 	return (
-		<div className="pb-3 product-banner pt-5 px-5">
+		<div className="product-banner px-5 py-5">
 			<div className="d-flex flex-row justify-content-between">
 				<div className="d-flex flex-row">
 					<img

@@ -4,7 +4,7 @@
  */
 
 import classNames from 'classnames';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -24,6 +24,7 @@ import {productTypeRoutes} from './ProductPurchaseRouter';
 import useAccounts from './hooks/useAccounts';
 import ProductPurchaseService from './services/ProductPurchase';
 import ProductPurchaseApp from './services/ProductPurchaseApp';
+import {productPurchaseStore} from './store/AppPurchaseStore';
 
 type ProductPurchaseOutletProps = {
 	product: DeliveryProduct;
@@ -59,6 +60,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 }) => {
 	const [isSubmitting, setSubmitting] = useState(false);
 	const {accounts, selectedAccount, setSelectedAccount} = useAccounts();
+
 	const {pathname} = useLocation();
 	const navigate = useNavigate();
 
@@ -134,6 +136,8 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		? metadata.isNavigationStepVisible(product)
 		: true;
 
+	const isTinyDisplay = metadata?.tineStepsDisplay;
+
 	const context = {
 		accounts,
 		actions: {
@@ -149,6 +153,17 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		solutionTypeSpecificationValue,
 	};
 
+	useEffect(() => {
+		if (selectedAccount?.taxId) {
+			productPurchaseStore.send({
+				billingAddress: {
+					vatNumber: selectedAccount.taxId,
+				},
+				type: 'setBillingAddress',
+			});
+		}
+	}, [selectedAccount?.taxId]);
+
 	return (
 		<ProductPurchase className="my-7">
 			{isSubmitting && (
@@ -162,17 +177,14 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 				product={product}
 				rightNode={
 					metadata.useCart ? (
-						<ProductPurchasePrice
-							activeStepIndex={activeStepIndex}
-							product={product}
-						/>
+						<ProductPurchasePrice product={product} />
 					) : null
 				}
 			>
 				<ProductPurchase.HeaderAccount account={selectedAccount} />
 			</ProductPurchase.Header>
 
-			{displaySteps && (
+			{displaySteps && !isTinyDisplay && (
 				<ProductPurchase.Steps
 					className="mt-5 px-8"
 					onClickIndicator={(step) => navigate(step.key)}
@@ -181,8 +193,16 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			)}
 
 			<ProductPurchase.Body
-				className={classNames({'mt-7': accounts.length === 1})}
+				className={classNames('mt-7', {'mt-7': accounts.length === 1})}
 			>
+				{displaySteps && isTinyDisplay && (
+					<ProductPurchase.CircleSteps
+						className="my-5 px-8"
+						onClickIndicator={(step) => navigate(step.key)}
+						steps={steps}
+					/>
+				)}
+
 				<Outlet context={context} />
 			</ProductPurchase.Body>
 		</ProductPurchase>

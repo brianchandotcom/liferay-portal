@@ -4918,6 +4918,11 @@
 		"to": "getSitemap(param#0#, param#1#, param#2#)"
 	},
 	{
+		"from": "PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION",
+		"issueKey": "LPD-61573",
+		"to": "\"xml\""
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

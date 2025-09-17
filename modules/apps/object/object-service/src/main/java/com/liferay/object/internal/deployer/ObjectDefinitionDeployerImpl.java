@@ -546,7 +546,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		try {
 			if (objectDefinition.isRootNode()) {
 				_registerRootObjectLayoutTabScreenNavigationCategories(
-					objectDefinition.getRootObjectDefinitionId());
+					objectDefinition.getObjectDefinitionId());
 			}
 		}
 		catch (PortalException portalException) {

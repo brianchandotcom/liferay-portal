@@ -930,6 +930,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 	</macrodef>
 
 	<macrodef name="get-browser-property">
+		<attribute default="" name="browser.version" />
 		<attribute name="property.name" />
 
 		<sequential>
@@ -942,7 +943,13 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<beanshell>
 				<![CDATA[
+					String browserVersion = "@{browser.version}";
 					String propertyName = project.getProperty("property.name");
+
+					if(propertyName.equals("browser.version") && !browserVersion.isEmpty()){
+						project.setProperty(propertyName, browserVersion);
+						return;
+					}
 
 					StringBuilder sb = new StringBuilder();
 
@@ -950,6 +957,10 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					sb.append(project.getProperty("browser.type"));
 					sb.append(".");
 					sb.append(propertyName.substring(8));
+
+					if (!browserVersion.isEmpty()) {
+						sb.append("[" + browserVersion + "]");
+					}
 
 					propertyValue = project.getProperty(sb.toString());
 
@@ -7714,7 +7725,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	<macrodef name="start-docker-browser">
 		<sequential>
 			<get-browser-property property.name="browser.docker.browser.options" />
-			<get-browser-property property.name="browser.docker.image" />
+			<get-testcase-property property.name="browser.chrome.version" />
+
+			<get-browser-property browser.version="${browser.chrome.version}" property.name="browser.docker.image" />
 			<get-browser-property property.name="browser.docker.run.options" />
 			<get-browser-property property.name="browser.host" />
 
@@ -17435,17 +17448,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 				<stop-docker-os />
 
 				<start-docker-os />
-			</then>
-		</if>
-
-		<get-browser-property property.name="browser.docker.image" />
-
-		<if>
-			<isset property="browser.docker.image" />
-			<then>
-				<stop-docker-browser />
-
-				<start-docker-browser />
 			</then>
 		</if>
 

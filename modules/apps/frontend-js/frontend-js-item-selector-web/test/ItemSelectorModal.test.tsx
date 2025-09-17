@@ -97,6 +97,7 @@ const ItemSelectorModalWrapper = ({
 							} as IView,
 						],
 					},
+					itemTypeLabel: 'Space',
 					items: selectedItems,
 					locator: {
 						id: 'itemId',
@@ -107,7 +108,6 @@ const ItemSelectorModalWrapper = ({
 					onItemsChange,
 					onOpenChange,
 					open,
-					type: 'Space',
 				}}
 			/>
 		</>

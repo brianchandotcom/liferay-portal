@@ -82,34 +82,34 @@ const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 
 const assetLibrariesItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-asset-library/v1.0/asset-libraries`,
+	itemTypeLabel: Liferay.Language.get('space'),
 	locator: {
 		id: 'id',
 		label: 'name',
 		value: 'id',
 	},
-	type: Liferay.Language.get('space'),
 	views: assetLibraryViews,
 };
 
 const documentsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getSiteGroupId()}/documents`,
+	itemTypeLabel: Liferay.Language.get('documents'),
 	locator: {
 		id: 'id',
 		label: 'fileName',
 		value: 'id',
 	},
-	type: Liferay.Language.get('documents'),
 	views: documentViews,
 };
 
 const userAccountsItemSelectorConfig = {
 	apiURL: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
+	itemTypeLabel: Liferay.Language.get('user'),
 	locator: {
 		id: 'id',
 		label: 'givenName',
 		value: 'id',
 	},
-	type: Liferay.Language.get('user'),
 	views: userViews,
 };
 
@@ -119,12 +119,12 @@ const cmsFileItemSelectorConfig = {
 		'nestedFields=embedded,file.thumbnailURL',
 		"filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))",
 	].join('&')}`,
+	itemTypeLabel: Liferay.Language.get('file'),
 	locator: {
 		id: 'embedded.id',
 		label: 'embedded.title',
 		value: 'embedded.id',
 	},
-	type: Liferay.Language.get('file'),
 	views: cmsFileViews,
 };
 
@@ -284,7 +284,8 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
 							}),
 						},
-						type: userAccountsItemSelectorConfig.type,
+						itemTypeLabel:
+							userAccountsItemSelectorConfig.itemTypeLabel,
 					}}
 					items={user2 ? [user2] : []}
 					locator={{
@@ -315,7 +316,8 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
 							}),
 						},
-						type: userAccountsItemSelectorConfig.type,
+						itemTypeLabel:
+							userAccountsItemSelectorConfig.itemTypeLabel,
 					}}
 					items={usersMultiSelect}
 					locator={{
@@ -349,7 +351,8 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
 							}),
 						},
-						type: assetLibrariesItemSelectorConfig.type,
+						itemTypeLabel:
+							assetLibrariesItemSelectorConfig.itemTypeLabel,
 					}}
 					items={space3 ? [space3] : []}
 					locator={{
@@ -380,7 +383,8 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
 							}),
 						},
-						type: assetLibrariesItemSelectorConfig.type,
+						itemTypeLabel:
+							assetLibrariesItemSelectorConfig.itemTypeLabel,
 					}}
 					items={spacesMultiSelect}
 					locator={{
@@ -481,6 +485,8 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.DOCUMENTS,
 							}),
 						},
+						itemTypeLabel:
+							documentsItemSelectorConfig.itemTypeLabel,
 						items: documentsItemSelectorModal,
 						locator: documentsItemSelectorConfig.locator,
 						multiSelect: true,
@@ -490,7 +496,6 @@ export default function ItemSelectorSamples() {
 						},
 						onOpenChange: documentItemSelectorOpenChange,
 						open: documentItemSelectorOpen,
-						type: documentsItemSelectorConfig.type,
 					}}
 				/>
 
@@ -505,6 +510,8 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.ASSET_LIBRARIES,
 							}),
 						},
+						itemTypeLabel:
+							assetLibrariesItemSelectorConfig.itemTypeLabel,
 						items: spacesItemSelectorModal,
 						locator: assetLibrariesItemSelectorConfig.locator,
 						observer: spaceItemSelectorObserver,
@@ -513,7 +520,6 @@ export default function ItemSelectorSamples() {
 						},
 						onOpenChange: spaceItemSelectorOpenChange,
 						open: spaceItemSelectorOpen,
-						type: assetLibrariesItemSelectorConfig.type,
 					}}
 				/>
 
@@ -528,6 +534,8 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.USER_ACCOUNTS,
 							}),
 						},
+						itemTypeLabel:
+							userAccountsItemSelectorConfig.itemTypeLabel,
 						items: usersItemSelectorModal,
 						locator: userAccountsItemSelectorConfig.locator,
 						observer: userItemSelectorObserver,
@@ -536,7 +544,6 @@ export default function ItemSelectorSamples() {
 						},
 						onOpenChange: userItemSelectorOpenChange,
 						open: userItemSelectorOpen,
-						type: userAccountsItemSelectorConfig.type,
 					}}
 				/>
 
@@ -564,6 +571,7 @@ export default function ItemSelectorSamples() {
 									EItemSelectorModalViewsConfig.CMS_FILES,
 							}),
 						},
+						itemTypeLabel: cmsFileItemSelectorConfig.itemTypeLabel,
 						items: cmsFile ? [cmsFile] : [],
 						locator: cmsFileItemSelectorConfig.locator,
 						observer: cmsFileItemSelectorObserver,
@@ -572,7 +580,6 @@ export default function ItemSelectorSamples() {
 						},
 						onOpenChange: cmsFileItemSelectorOpenChange,
 						open: cmsFileItemSelectorOpen,
-						type: cmsFileItemSelectorConfig.type,
 					}}
 				/>
 

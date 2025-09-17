@@ -35,7 +35,7 @@ const getStateFromURL = (url: string, fdsId: string): Partial<IStateInURL> => {
 	const params = new URLSearchParams(url);
 
 	const stateParam = params.get(
-		`fds_state_com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-${fdsId}`
+		`com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-${fdsId}_fdsState`
 	);
 
 	if (!stateParam) {

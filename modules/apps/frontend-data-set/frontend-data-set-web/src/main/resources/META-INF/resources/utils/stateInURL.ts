@@ -6,7 +6,7 @@
 import {EStateInURLSettings, IStateInURL} from './types';
 
 function getStateParamName(id: string): string {
-	return `fds_state_${id}`;
+	return `${id}_fdsState`;
 }
 
 export function readStateFromURL(id: string): Partial<IStateInURL> | null {

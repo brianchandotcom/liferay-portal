@@ -384,12 +384,13 @@ public class ResourceOpenAPIParser {
 			}
 
 			if (methodName.equals("post" + parentSchemaName + schemaName) ||
-				isByExternalReferenceCode("post", javaMethodSignature)) {
+				isByExternalReferenceCodeMethod("post", javaMethodSignature)) {
 
 				createStrategies.add("INSERT");
 			}
 			else if (propertyNames.contains("externalReferenceCode") &&
-					 isByExternalReferenceCode("put", javaMethodSignature)) {
+					 isByExternalReferenceCodeMethod(
+						 "put", javaMethodSignature)) {
 
 				createStrategies.add("UPSERT");
 			}
@@ -490,7 +491,7 @@ public class ResourceOpenAPIParser {
 		return false;
 	}
 
-	public static boolean isByExternalReferenceCode(
+	public static boolean isByExternalReferenceCodeMethod(
 		String httpMethod, JavaMethodSignature javaMethodSignature) {
 
 		String parentSchemaName = javaMethodSignature.getParentSchemaName();

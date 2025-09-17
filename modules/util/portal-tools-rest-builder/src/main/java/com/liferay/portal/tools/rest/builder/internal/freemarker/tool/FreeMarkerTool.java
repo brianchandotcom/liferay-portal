@@ -1120,6 +1120,66 @@ public class FreeMarkerTool {
 		return mediaTypes.contains(mediaType);
 	}
 
+	public boolean isByExternalReferenceCode(
+		String httpMethod, JavaMethodSignature javaMethodSignature,
+		String parentSchemaName, String schemaName) {
+
+		httpMethod = StringUtil.toLowerCase(httpMethod);
+		boolean hasSchemaExternalReferenceCodePathParameter = hasPathParameter(
+			javaMethodSignature,
+			TextFormatter.format(schemaName, TextFormatter.I) +
+				"ExternalReferenceCode");
+
+		if (parentSchemaName.isEmpty()) {
+			if (Objects.equals(
+					javaMethodSignature.getMethodName(),
+					httpMethod + "ByExternalReferenceCode") ||
+				Objects.equals(
+					javaMethodSignature.getMethodName(),
+					StringBundler.concat(
+						httpMethod, schemaName, "ByExternalReferenceCode")) ||
+				(Objects.equals(
+					javaMethodSignature.getMethodName(),
+					httpMethod + schemaName) &&
+				 hasSchemaExternalReferenceCodePathParameter)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		String formattedParentSchemaName = TextFormatter.format(
+			parentSchemaName, TextFormatter.I);
+
+		if (Objects.equals(
+				javaMethodSignature.getMethodName(),
+				StringBundler.concat(
+					httpMethod, parentSchemaName, schemaName,
+					"ByExternalReferenceCode")) ||
+			Objects.equals(
+				javaMethodSignature.getMethodName(),
+				StringBundler.concat(
+					httpMethod, parentSchemaName, "ByExternalReferenceCode",
+					schemaName)) ||
+			(Objects.equals(
+				javaMethodSignature.getMethodName(),
+				StringBundler.concat(
+					httpMethod, parentSchemaName, schemaName)) &&
+			 hasSchemaExternalReferenceCodePathParameter &&
+			 hasPathParameter(
+				 javaMethodSignature,
+				 formattedParentSchemaName + "ExternalReferenceCode")) ||
+			(Objects.equals(
+				javaMethodSignature.getMethodName(), httpMethod + schemaName) &&
+			 hasSchemaExternalReferenceCodePathParameter)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isCollection(
 		JavaMethodSignature javaMethodSignaturePathItem,
 		List<JavaMethodSignature> javaMethodSignatures, String schemaNames) {

@@ -361,7 +361,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		throws Exception {
 
 		if (filter == null) {
-			throw new ValidationException("Filter must not be null");
+			throw new ValidationException("Filter is null");
 		}
 
 		List<BulkActionItem> bulkActionItems = new ArrayList<>();

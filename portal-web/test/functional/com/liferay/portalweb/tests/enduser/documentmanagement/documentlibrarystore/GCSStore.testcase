@@ -1,6 +1,7 @@
 @component-name = "portal-core-infra"
 definition {
 
+	property chrome.version = "100";
 	property gcs.store.enabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";

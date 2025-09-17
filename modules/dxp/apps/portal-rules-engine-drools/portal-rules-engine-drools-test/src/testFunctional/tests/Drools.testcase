@@ -1,6 +1,7 @@
 @component-name = "portal-bpm"
 definition {
 
+	property chrome.version = "100";
 	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";

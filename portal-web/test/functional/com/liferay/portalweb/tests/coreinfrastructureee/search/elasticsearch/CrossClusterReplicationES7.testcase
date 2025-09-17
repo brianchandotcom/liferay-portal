@@ -1,6 +1,7 @@
 @component-name = "portal-search"
 definition {
 
+	property chrome.version = "100";
 	property elasticsearch.ccr.enabled = "true";
 	property elasticsearch.multiple.connections = "true";
 	property minimum.slave.ram = "24";

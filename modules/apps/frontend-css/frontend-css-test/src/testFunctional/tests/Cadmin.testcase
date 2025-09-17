@@ -1,6 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property chrome.version = "100";
 	property osgi.modules.includes = "frontend-css-cadmin-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";

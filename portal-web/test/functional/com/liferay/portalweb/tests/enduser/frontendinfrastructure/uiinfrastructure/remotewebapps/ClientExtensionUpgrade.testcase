@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.types = "jboss,tomcat,weblogic,wildfly";
+	property chrome.version = "100";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property test.assert.warning.exceptions = "true";
 	property test.liferay.virtual.instance = "false";

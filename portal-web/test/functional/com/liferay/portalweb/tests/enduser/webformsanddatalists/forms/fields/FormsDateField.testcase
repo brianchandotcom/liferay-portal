@@ -1,6 +1,7 @@
 @component-name = "portal-bpm"
 definition {
 
+	property chrome.version = "100";
 	property osgi.module.configuration.file.names = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details.config";
 	property osgi.module.configurations = "waitTimeout=\"15\"";
 	property portal.release = "true";

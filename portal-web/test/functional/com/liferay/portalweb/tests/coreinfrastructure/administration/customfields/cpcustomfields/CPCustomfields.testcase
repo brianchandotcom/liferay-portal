@@ -1,6 +1,7 @@
 @component-name = "portal-core-infra"
 definition {
 
+	property chrome.version = "100";
 	property custom.properties = "feature.flag.LPD-35013=false";
 	property osgi.modules.includes = "wiki";
 	property portal.release = "false";

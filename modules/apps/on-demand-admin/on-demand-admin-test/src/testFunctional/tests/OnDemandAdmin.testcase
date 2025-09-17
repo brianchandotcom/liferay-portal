@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property chrome.version = "100";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "On Demand Admin";

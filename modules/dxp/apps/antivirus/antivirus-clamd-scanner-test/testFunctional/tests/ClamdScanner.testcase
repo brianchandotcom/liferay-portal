@@ -1,6 +1,7 @@
 @component-name = "portal-application-security"
 definition {
 
+	property chrome.version = "100";
 	property custom.properties = "dl.store.antivirus.enabled=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,clamd";
 	property osgi.module.configuration.file.names = "com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration.config";
 	property osgi.module.configurations = "hostname=\"clamd\"${line.separator}port=I\"3310\"";

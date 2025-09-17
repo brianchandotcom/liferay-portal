@@ -1,6 +1,7 @@
 @component-name = "portal-core-infra"
 definition {
 
+	property chrome.version = "100";
 	property ci.retries.disabled = "true";
 	property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 	property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"\"]";

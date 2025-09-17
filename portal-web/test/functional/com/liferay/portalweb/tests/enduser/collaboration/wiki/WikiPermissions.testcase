@@ -1,6 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
+	property chrome.version = "100";
 	property custom.properties = "feature.flag.LPD-35013=false";
 	property portal.acceptance = "true";
 	property portal.release = "false";

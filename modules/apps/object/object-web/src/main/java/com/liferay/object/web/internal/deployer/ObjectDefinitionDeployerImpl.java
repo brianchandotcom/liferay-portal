@@ -112,7 +112,6 @@ import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView
 import com.liferay.object.web.internal.layout.display.page.ObjectEntryLayoutDisplayPageProvider;
 import com.liferay.object.web.internal.notifications.ObjectUserNotificationsDefinition;
 import com.liferay.object.web.internal.notifications.ObjectUserNotificationsHandler;
-import com.liferay.object.web.internal.object.definitions.portlet.ObjectDefinitionsControlPanelEntry;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.factory.ObjectFieldFDSFilterFactoryRegistry;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.view.table.ObjectEntriesTableFDSView;
@@ -135,7 +134,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -250,13 +248,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(
-					"jakarta.portlet.name", objectDefinition.getPortletId()
-				).build()),
-			_bundleContext.registerService(
-				ControlPanelEntry.class,
-				new ObjectDefinitionsControlPanelEntry(
-					objectDefinition, _objectDefinitionLocalService),
-				HashMapDictionaryBuilder.<String, Object>put(
 					"jakarta.portlet.name", objectDefinition.getPortletId()
 				).build()),
 			_bundleContext.registerService(

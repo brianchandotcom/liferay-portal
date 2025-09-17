@@ -337,6 +337,11 @@ public class DepotEntryLocalServiceWrapper
 		return _depotEntryLocalService.getDepotEntriesCount();
 	}
 
+	@Override
+	public int getDepotEntriesCount(long companyId, int type) {
+		return _depotEntryLocalService.getDepotEntriesCount(companyId, type);
+	}
+
 	/**
 	 * Returns the depot entry with the primary key.
 	 *

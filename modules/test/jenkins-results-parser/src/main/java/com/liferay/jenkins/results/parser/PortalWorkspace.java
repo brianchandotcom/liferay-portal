@@ -130,7 +130,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		super(primaryRepositoryName, upstreamBranchName, jobName);
 	}
 
-	protected void copyOSBAsahRepositoryToModule() {
+	protected void copyComLiferayOSBAsahPrivateRepositoryToModule() {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			getPortalWorkspaceGitRepository();
 
@@ -226,7 +226,7 @@ public class PortalWorkspace extends BaseWorkspace {
 				" for testing on CI"));
 	}
 
-	protected WorkspaceGitRepository getOSBAsahWorkspaceGitRepository() {
+	protected WorkspaceGitRepository getComLiferayOSBAsahPrivateWorkspaceGitRepository() {
 		return getWorkspaceGitRepository("com-liferay-osb-asah-private");
 	}
 
@@ -339,7 +339,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		workspaceGitRepository.setGitHubURL(gitHubURL);
 	}
 
-	private void _configureOSBAsahWorkspaceGitRepository() {
+	private void _configureComLiferayOSBAsahPrivateWorkspaceGitRepository() {
 		boolean updated = _updateWorkspaceGitRepository(
 			"modules/dxp/apps/osb/osb-asah/ci-merge",
 			"com-liferay-osb-asah-private");

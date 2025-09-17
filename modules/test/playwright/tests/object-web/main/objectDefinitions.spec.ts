@@ -723,6 +723,41 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 			})
 		).toBeHidden();
 	});
+
+	test('can save object with slow 3g connection', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+		page = await editObjectDetailsPage.page;
+
+		await page.route('**', async (route) => {
+			await new Promise((fulfill) => setTimeout(fulfill, 1000));
+			await route.continue();
+		});
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		const saveButton = page.getByRole('button', {name: 'save'});
+
+		await saveButton.click();
+
+		await expect(saveButton).not.toBeEnabled();
+
+		await expect(saveButton).toBeEnabled();
+	});
 });
 
 test.describe('Manage object definitions through a Page', () => {

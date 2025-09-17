@@ -6,12 +6,26 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {InternalDispatch} from '@clayui/shared';
-import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {
+	FrontendDataSet,
+	IFrontendDataSetProps,
+} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {getObjectValueFromPath, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {IItemSelectorModalFDSProps} from '../utils/types';
+type IItemSelectorModalFDSProps = Omit<
+	IFrontendDataSetProps,
+	| 'apiURL'
+	| 'selectedItems'
+	| 'selectedItemsKey'
+	| 'onSelectedItemsChange'
+	| 'selectedItems'
+	| 'selectedItemsKey'
+	| 'selectionType'
+	| 'showNavBarWhenSelected'
+	| 'style'
+>;
 
 export interface IItemSelectorModalProps<T> {
 

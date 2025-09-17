@@ -46,7 +46,7 @@ public class CustomField implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(CustomField.class, json);
 	}
 
-	@Schema(description = "The field attribute type.")
+	@Schema(description = "The field's attribute type.")
 	public AttributeType getAttributeType() {
 		if (_dataTypeSupplier != null) {
 			attributeType = _attributeTypeSupplier.get();
@@ -80,7 +80,7 @@ public class CustomField implements Serializable {
 		return customValue;
 	}
 
-	@Schema(description = "The field type (e.g., image, text, etc.).")
+	@Schema(description = "The field's type (e.g., image, text, etc.).")
 	public String getDataType() {
 		if (_dataTypeSupplier != null) {
 			dataType = _dataTypeSupplier.get();
@@ -228,7 +228,7 @@ public class CustomField implements Serializable {
 				}
 			}
 
-			throw new IllegalArgumentException("Invalid enum value: " + value);
+			throw new IllegalArgumentException("Invalid value: " + value);
 		}
 
 		@JsonValue
@@ -249,7 +249,7 @@ public class CustomField implements Serializable {
 
 	}
 
-	@GraphQLField(description = "The field attribute type.")
+	@GraphQLField(description = "The field's attribute type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AttributeType attributeType;
 
@@ -257,7 +257,7 @@ public class CustomField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomValue customValue;
 
-	@GraphQLField(description = "The field type (e.g., image, text, etc.).")
+	@GraphQLField(description = "The field's type (e.g., image, text, etc.).")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 

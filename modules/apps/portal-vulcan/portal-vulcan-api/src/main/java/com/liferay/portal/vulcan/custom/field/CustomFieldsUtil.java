@@ -123,7 +123,7 @@ public class CustomFieldsUtil {
 							return null;
 						}
 
-						return _EXPANDO_COLUMN;
+						return _expandoColumn;
 					},
 					(__, ___) -> {
 						if (!expandoBridge.hasAttribute(name)) {
@@ -133,14 +133,14 @@ public class CustomFieldsUtil {
 							return null;
 						}
 
-						return _EXPANDO_COLUMN;
+						return _expandoColumn;
 					},
 					() -> {
 						expandoBridge.addAttribute(
 							name,
 							_toAttributeType(customField.getAttributeType()));
 
-						return _EXPANDO_COLUMN;
+						return _expandoColumn;
 					});
 			}
 			catch (PortalException portalException) {
@@ -483,9 +483,6 @@ public class CustomFieldsUtil {
 		}
 	}
 
-	private static final ExpandoColumn _EXPANDO_COLUMN =
-		new ExpandoColumnImpl();
-
 	private static final Map<Integer, CustomField.AttributeType>
 		_attributeTypes = HashMapBuilder.put(
 			ExpandoColumnConstants.BOOLEAN, CustomField.AttributeType.BOOLEAN
@@ -542,5 +539,6 @@ public class CustomFieldsUtil {
 			ExpandoColumnConstants.STRING_LOCALIZED,
 			CustomField.AttributeType.STRING_LOCALIZED
 		).build();
+	private static final ExpandoColumn _expandoColumn = new ExpandoColumnImpl();
 
 }

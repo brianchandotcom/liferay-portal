@@ -424,7 +424,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		}
 	}
 
-	private void _configureReleaseToolWorkspaceGitRepository() {
+	private void _configureLiferayReleaseToolEEWorkspaceGitRepository() {
 		_updateWorkspaceGitRepository(
 			"git-commit/liferay-release-tool-ee", "liferay-release-tool-ee");
 
@@ -442,7 +442,7 @@ public class PortalWorkspace extends BaseWorkspace {
 			portalWorkspaceGitRepository.getUpstreamBranchName());
 	}
 
-	private ReleaseToolWorkspaceGitRepository
+	private LiferayReleaseToolEEWorkspaceGitRepository
 		_getReleaseToolWorkspaceGitRepository() {
 
 		WorkspaceGitRepository workspaceGitRepository =

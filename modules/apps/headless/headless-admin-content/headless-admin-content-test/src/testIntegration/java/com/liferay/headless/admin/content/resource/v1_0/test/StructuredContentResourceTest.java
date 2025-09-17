@@ -487,57 +487,6 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
-	public void testGraphQLGetStructuredContentByVersion() throws Exception {
-		StructuredContent structuredContent =
-			testGraphQLStructuredContent_addStructuredContent();
-
-		Assert.assertTrue(
-			equals(
-				structuredContent,
-				StructuredContentSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"admin",
-								new GraphQLField(
-									"structuredContentByVersion",
-									HashMapBuilder.<String, Object>put(
-										"structuredContentId",
-										structuredContent.getId()
-									).put(
-										"version", 1.0D
-									).build(),
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/admin",
-						"Object/structuredContentByVersion"))));
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetStructuredContentByVersionNotFound()
-		throws Exception {
-
-		Assert.assertEquals(
-			"null",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"admin",
-						new GraphQLField(
-							"structuredContentByVersion",
-							HashMapBuilder.<String, Object>put(
-								"structuredContentId",
-								RandomTestUtil.randomLong()
-							).put(
-								"version", RandomTestUtil.randomDouble()
-							).build(),
-							getGraphQLFields()))),
-				"JSONObject/data", "JSONObject/admin",
-				"Object/structuredContentByVersion"));
-	}
-
-	@Override
-	@Test
 	public void testPostSiteStructuredContentDraft() throws Exception {
 		super.testPostSiteStructuredContentDraft();
 
@@ -648,6 +597,13 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected Double testGraphQLDeleteStructuredContentByVersion_getVersion()
+		throws Exception {
+
+		return 1.0D;
+	}
+
+	@Override
+	protected Double testGraphQLGetStructuredContentByVersion_getVersion()
 		throws Exception {
 
 		return 1.0D;

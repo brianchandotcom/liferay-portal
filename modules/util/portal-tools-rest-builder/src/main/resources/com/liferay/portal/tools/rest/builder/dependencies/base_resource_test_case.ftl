@@ -2026,47 +2026,100 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#else>
 					<#assign generateTestGraphQLAddMethod = true />
 
-					// No namespace
+					<#if !configYAML.getGraphQLNamespace()?has_content>
+						// No namespace
 
-					${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+						${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-					Assert.assertTrue(
-						JSONUtil.getValueAsBoolean(
-							invokeGraphQLMutation(
-								new GraphQLField(
-									"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
-									new HashMap<String, Object>() {
-										{
-											<@getGraphQLMethodParameters
-												javaMethodSignature = javaMethodSignature
-												testJavaMethodName = javaMethodSignature.methodName
-												varName = schemaVarName + "1"
-											/>
-										}
-									})),
-							"JSONObject/data",
-							"Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
+						Assert.assertTrue(
+							JSONUtil.getValueAsBoolean(
+								invokeGraphQLMutation(
+									new GraphQLField(
+										"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
+										new HashMap<String, Object>() {
+											{
+												<@getGraphQLMethodParameters
+													javaMethodSignature = javaMethodSignature
+													testJavaMethodName = javaMethodSignature.methodName
+													varName = schemaVarName + "1"
+												/>
+											}
+										})),
+								"JSONObject/data",
+								"Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
 
-					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
-						<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete")) />
+						<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
+							<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete")) />
 
-						JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-							invokeGraphQLQuery(
-								new GraphQLField(
-									"${freeMarkerTool.getGraphQLPropertyName(getJavaMethodSignature, javaMethodSignatures)}",
-									new HashMap<String, Object>() {
-										{
-											<@getGraphQLMethodParameters
-												javaMethodSignature = getJavaMethodSignature
-												testJavaMethodName = javaMethodSignature.methodName
-												varName = schemaVarName + "1"
-											/>
-										}
-									},
-									getGraphQLFields())),
-							"JSONArray/errors");
+							JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+								invokeGraphQLQuery(
+									new GraphQLField(
+										"${freeMarkerTool.getGraphQLPropertyName(getJavaMethodSignature, javaMethodSignatures)}",
+										new HashMap<String, Object>() {
+											{
+												<@getGraphQLMethodParameters
+													javaMethodSignature = getJavaMethodSignature
+													testJavaMethodName = javaMethodSignature.methodName
+													varName = schemaVarName + "1"
+												/>
+											}
+										},
+										getGraphQLFields())),
+								"JSONArray/errors");
 
-						Assert.assertTrue(errorsJSONArray1.length() > 0);
+							Assert.assertTrue(errorsJSONArray1.length() > 0);
+						</#if>
+					<#else>
+						// Using the configured namespace ${configYAML.getGraphQLNamespace()}
+
+						${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+						Assert.assertTrue(
+							JSONUtil.getValueAsBoolean(
+								invokeGraphQLMutation(
+									new GraphQLField(
+										"${configYAML.getGraphQLNamespace()}",
+										new GraphQLField(
+											"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
+											new HashMap<String, Object>() {
+												{
+													<@getGraphQLMethodParameters
+														javaMethodSignature = javaMethodSignature
+														testJavaMethodName = javaMethodSignature.methodName
+														varName = schemaVarName + "1"
+													/>
+												}
+											}))),
+								"JSONObject/data",
+								"JSONObject/${configYAML.getGraphQLNamespace()}",
+								"Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
+
+						<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
+							<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(
+								javaMethodSignatures,
+								"get" + javaMethodSignature.methodName?remove_beginning("delete")
+							) />
+
+							JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+								invokeGraphQLQuery(
+									new GraphQLField(
+										"${configYAML.getGraphQLNamespace()}",
+										new GraphQLField(
+											"${freeMarkerTool.getGraphQLPropertyName(getJavaMethodSignature, javaMethodSignatures)}",
+											new HashMap<String, Object>() {
+												{
+													<@getGraphQLMethodParameters
+														javaMethodSignature = getJavaMethodSignature
+														testJavaMethodName = javaMethodSignature.methodName
+														varName = schemaVarName + "1"
+													/>
+												}
+											},
+											getGraphQLFields()))),
+								"JSONArray/errors");
+
+							Assert.assertTrue(errorsJSONArray1.length() > 0);
+						</#if>
 					</#if>
 
 					<#if freeMarkerTool.isVersionCompatible(configYAML, 5)>
@@ -2222,46 +2275,99 @@ public abstract class Base${schemaName}ResourceTestCase {
 							new GraphQLField("page"),
 							new GraphQLField("totalCount"));
 
-						// No namespace
+						<#if !configYAML.getGraphQLNamespace()?has_content>
+							// No namespace
 
-						JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
-							invokeGraphQLQuery(graphQLField),
-							"JSONObject/data",
-							"JSONObject/${propertyName}");
+							JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
+								invokeGraphQLQuery(graphQLField),
+								"JSONObject/data",
+								"JSONObject/${propertyName}");
 
-						long totalCount = ${propertyName}JSONObject.getLong("totalCount");
+							long totalCount = ${propertyName}JSONObject.getLong("totalCount");
 
-						<#if !generateCustomAdderMethod>
-							<#assign generateSchemaGraphQLAddMethod = true />
+							<#if !generateCustomAdderMethod>
+								<#assign generateSchemaGraphQLAddMethod = true />
 
-							<#if !parentSchemaNames?seq_contains(parentSchemaName)>
-								<#assign parentSchemaNames = parentSchemaNames + [parentSchemaName] />
+								<#if !parentSchemaNames?seq_contains(parentSchemaName)>
+									<#assign parentSchemaNames = parentSchemaNames + [parentSchemaName] />
+								</#if>
 							</#if>
-						</#if>
 
-						${schemaName} ${schemaVarName}1 = testGraphQL${generateCustomAdderMethod?then(javaMethodSignature.methodName?cap_first, '')}${parentSchemaName}${schemaName}_add${schemaName}(
-							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-								${javaMethodParameter.parameterName},
-							</#list>
+							${schemaName} ${schemaVarName}1 = testGraphQL${generateCustomAdderMethod?then(javaMethodSignature.methodName?cap_first, '')}${parentSchemaName}${schemaName}_add${schemaName}(
+								<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+									${javaMethodParameter.parameterName},
+								</#list>
 
 								random${schemaName}());
 
-						${schemaName} ${schemaVarName}2 = testGraphQL${generateCustomAdderMethod?then(javaMethodSignature.methodName?cap_first, '')}${parentSchemaName}${schemaName}_add${schemaName}(
-							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-								${javaMethodParameter.parameterName},
-							</#list>
+							${schemaName} ${schemaVarName}2 = testGraphQL${generateCustomAdderMethod?then(javaMethodSignature.methodName?cap_first, '')}${parentSchemaName}${schemaName}_add${schemaName}(
+								<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+									${javaMethodParameter.parameterName},
+								</#list>
 
-							random${schemaName}());
+								random${schemaName}());
 
-						${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
-							invokeGraphQLQuery(graphQLField),
-							"JSONObject/data",
-							"JSONObject/${propertyName}");
+							${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
+								invokeGraphQLQuery(graphQLField),
+								"JSONObject/data",
+								"JSONObject/${propertyName}");
 
-						Assert.assertEquals(totalCount + 2, ${propertyName}JSONObject.getLong("totalCount"));
+							Assert.assertEquals(totalCount + 2, ${propertyName}JSONObject.getLong("totalCount"));
 
-						assertContains(${schemaVarName}1, Arrays.asList(${schemaName}SerDes.toDTOs(${propertyName}JSONObject.getString("items"))));
-						assertContains(${schemaVarName}2, Arrays.asList(${schemaName}SerDes.toDTOs(${propertyName}JSONObject.getString("items"))));
+							assertContains(
+								${schemaVarName}1,
+								Arrays.asList(${schemaName}SerDes.toDTOs(${propertyName}JSONObject.getString("items"))));
+							assertContains(
+								${schemaVarName}2,
+								Arrays.asList(${schemaName}SerDes.toDTOs(${propertyName}JSONObject.getString("items"))));
+						<#else>
+							// Using the configured namespace ${configYAML.getGraphQLNamespace()}
+
+							JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
+								invokeGraphQLQuery(new GraphQLField("${configYAML.getGraphQLNamespace()}", graphQLField)),
+								"JSONObject/data",
+								"JSONObject/${configYAML.getGraphQLNamespace()}",
+								"JSONObject/${propertyName}");
+
+							long totalCount = ${propertyName}JSONObject.getLong("totalCount");
+
+							<#if !generateCustomAdderMethod>
+								<#assign generateSchemaGraphQLAddMethod = true />
+
+								<#if !parentSchemaNames?seq_contains(parentSchemaName)>
+									<#assign parentSchemaNames = parentSchemaNames + [parentSchemaName] />
+								</#if>
+							</#if>
+
+							${schemaName} ${schemaVarName}1 = testGraphQL${generateCustomAdderMethod?then(javaMethodSignature.methodName?cap_first, '')}${parentSchemaName}${schemaName}_add${schemaName}(
+								<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+									${javaMethodParameter.parameterName},
+								</#list>
+
+								random${schemaName}());
+
+							${schemaName} ${schemaVarName}2 = testGraphQL${generateCustomAdderMethod?then(javaMethodSignature.methodName?cap_first, '')}${parentSchemaName}${schemaName}_add${schemaName}(
+								<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+									${javaMethodParameter.parameterName},
+								</#list>
+
+								random${schemaName}());
+
+							${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
+								invokeGraphQLQuery(new GraphQLField("${configYAML.getGraphQLNamespace()}", graphQLField)),
+								"JSONObject/data",
+								"JSONObject/${configYAML.getGraphQLNamespace()}",
+								"JSONObject/${propertyName}");
+
+							Assert.assertEquals(totalCount + 2, ${propertyName}JSONObject.getLong("totalCount"));
+
+							assertContains(
+								${schemaVarName}1,
+								Arrays.asList(${schemaName}SerDes.toDTOs(${propertyName}JSONObject.getString("items"))));
+							assertContains(
+								${schemaVarName}2,
+								Arrays.asList(${schemaName}SerDes.toDTOs(${propertyName}JSONObject.getString("items"))));
+						</#if>
 
 						<#if freeMarkerTool.isVersionCompatible(configYAML, 5)>
 
@@ -2309,27 +2415,54 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					${schemaName} ${schemaVarName} = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-					// No namespace
+					<#if !configYAML.getGraphQLNamespace()?has_content>
+						// No namespace
 
-					Assert.assertTrue(
-						equals(${schemaVarName},
-						${schemaName}SerDes.toDTO(
-							JSONUtil.getValueAsString(
-								invokeGraphQLQuery(
-									new GraphQLField(
-										"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
-										new HashMap<String, Object>() {
-											{
-												<@getGraphQLMethodParameters
-													javaMethodSignature = javaMethodSignature
-													testJavaMethodName = javaMethodSignature.methodName
-													varName = schemaVarName
-												/>
-											}
-										},
-										getGraphQLFields())),
-								"JSONObject/data",
-								"Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
+						Assert.assertTrue(
+							equals(${schemaVarName},
+							${schemaName}SerDes.toDTO(
+								JSONUtil.getValueAsString(
+									invokeGraphQLQuery(
+										new GraphQLField(
+											"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
+											new HashMap<String, Object>() {
+												{
+													<@getGraphQLMethodParameters
+														javaMethodSignature = javaMethodSignature
+														testJavaMethodName = javaMethodSignature.methodName
+														varName = schemaVarName
+													/>
+												}
+											},
+											getGraphQLFields())),
+									"JSONObject/data",
+									"Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
+					<#else>
+						// Using the configured namespace ${configYAML.getGraphQLNamespace()}
+
+						Assert.assertTrue(
+							equals(${schemaVarName},
+							${schemaName}SerDes.toDTO(
+								JSONUtil.getValueAsString(
+									invokeGraphQLQuery(
+										new GraphQLField(
+											"${configYAML.getGraphQLNamespace()}",
+											new GraphQLField(
+												"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
+												new HashMap<String, Object>() {
+													{
+														<@getGraphQLMethodParameters
+															javaMethodSignature = javaMethodSignature
+															testJavaMethodName = javaMethodSignature.methodName
+															varName = schemaVarName
+														/>
+													}
+												},
+												getGraphQLFields()))),
+									"JSONObject/data",
+									"JSONObject/${configYAML.getGraphQLNamespace()}",
+									"Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
+					</#if>
 
 					<#if freeMarkerTool.isVersionCompatible(configYAML, 5)>
 
@@ -2391,35 +2524,69 @@ public abstract class Base${schemaName}ResourceTestCase {
 						</#if>
 					</#list>
 
-					// No namespace
+					<#if !configYAML.getGraphQLNamespace()?has_content>
+						// No namespace
 
-					Assert.assertEquals(
-						"Not Found",
-						JSONUtil.getValueAsString(
-							invokeGraphQLQuery(
-								new GraphQLField(
-									"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
-									new HashMap<String, Object>() {
-										{
-											<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-												<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-													<#if generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
-														put("assetLibraryExternalReferenceCode", <@getQuotedString unquotedString="irrelevantDepotEntryGroup.getExternalReferenceCode()" />);
-													<#elseif generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-														put("assetLibraryId", <@getQuotedString unquotedString="irrelevantDepotEntry.getDepotEntryId()" />);
-													<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
-														put("siteExternalReferenceCode", <@getQuotedString unquotedString="irrelevantGroup.getExternalReferenceCode()" />);
-													<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-														put("siteKey", <@getQuotedString unquotedString="irrelevantGroup.getGroupId()" />);
-													<#else>
-														put("${javaMethodParameter.parameterName}", irrelevant${javaMethodParameter.parameterName?cap_first});
+						Assert.assertEquals(
+							"Not Found",
+							JSONUtil.getValueAsString(
+								invokeGraphQLQuery(
+									new GraphQLField(
+										"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
+										new HashMap<String, Object>() {
+											{
+												<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+													<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+														<#if generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
+															put("assetLibraryExternalReferenceCode", <@getQuotedString unquotedString="irrelevantDepotEntryGroup.getExternalReferenceCode()" />);
+														<#elseif generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+															put("assetLibraryId", <@getQuotedString unquotedString="irrelevantDepotEntry.getDepotEntryId()" />);
+														<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
+															put("siteExternalReferenceCode", <@getQuotedString unquotedString="irrelevantGroup.getExternalReferenceCode()" />);
+														<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+															put("siteKey", <@getQuotedString unquotedString="irrelevantGroup.getGroupId()" />);
+														<#else>
+															put("${javaMethodParameter.parameterName}", irrelevant${javaMethodParameter.parameterName?cap_first});
+														</#if>
 													</#if>
-												</#if>
-											</#list>
-										}
-									},
-									getGraphQLFields())),
-							"JSONArray/errors", "Object/0", "JSONObject/extensions", "Object/code"));
+												</#list>
+											}
+										},
+										getGraphQLFields())),
+								"JSONArray/errors", "Object/0", "JSONObject/extensions", "Object/code"));
+					<#else>
+						// Using the configured namespace ${configYAML.getGraphQLNamespace()}
+
+						Assert.assertEquals(
+							"Not Found",
+							JSONUtil.getValueAsString(
+								invokeGraphQLQuery(
+									new GraphQLField(
+										"${configYAML.getGraphQLNamespace()}",
+										new GraphQLField(
+											"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
+											new HashMap<String, Object>() {
+												{
+													<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+														<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+															<#if generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
+																put("assetLibraryExternalReferenceCode", <@getQuotedString unquotedString="irrelevantDepotEntryGroup.getExternalReferenceCode()" />);
+															<#elseif generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+																put("assetLibraryId", <@getQuotedString unquotedString="irrelevantDepotEntry.getDepotEntryId()" />);
+															<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
+																put("siteExternalReferenceCode", <@getQuotedString unquotedString="irrelevantGroup.getExternalReferenceCode()" />);
+															<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+																put("siteKey", <@getQuotedString unquotedString="irrelevantGroup.getGroupId()" />);
+															<#else>
+																put("${javaMethodParameter.parameterName}", irrelevant${javaMethodParameter.parameterName?cap_first});
+															</#if>
+														</#if>
+													</#list>
+												}
+											},
+											getGraphQLFields()))),
+								"JSONArray/errors", "Object/0", "JSONObject/extensions", "Object/code"));
+					</#if>
 
 					<#if freeMarkerTool.isVersionCompatible(configYAML, 5)>
 

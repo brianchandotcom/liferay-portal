@@ -1,6 +1,7 @@
 @component-name = "portal-platform-experience"
 definition {
 
+	property chrome.version = "100";
 	property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 	property portal.release = "true";
 	property portal.upstream = "true";

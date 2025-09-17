@@ -1,4 +1,5 @@
 definition {
+		property chrome.version = "100";
 	property fake.property1 = "missing semicolon"
 
 	setUp {

@@ -1,6 +1,7 @@
 @component-name = "portal-ci-infrastructure"
 definition {
 
+	property chrome.version = "100";
 	property poshi.runner.acceptance = "true";
 	property testray.main.component.name = "Poshi Runner";
 

@@ -1,6 +1,7 @@
 @component-name = "portal-application-security"
 definition {
 
+	property chrome.version = "100";
 	property ci.retries.disabled = "true";
 	property log.context.enabled = "true";
 	property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";

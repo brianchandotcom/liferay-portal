@@ -1,5 +1,7 @@
 definition {
 
+	property chrome.version = "100";
+
 	@disable-webdriver = "true"
 	test TestAssertStatusCode {
 		HttpRequester.getGoogleResponse();

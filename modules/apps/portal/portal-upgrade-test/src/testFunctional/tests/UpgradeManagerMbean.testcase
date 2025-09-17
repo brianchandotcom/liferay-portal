@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.types = "tomcat";
+	property chrome.version = "100";
 	property database.auto.upgrade.enabled = "true";
 	property database.types = "mysql";
 	property jmxremote.enabled = "true";

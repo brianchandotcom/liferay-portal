@@ -68,14 +68,14 @@ import org.osgi.service.component.annotations.Reference;
 public class OIDCUserInfoProcessor {
 
 	public long processUserInfo(
-			long companyId, String issuer, ServiceContext serviceContext,
-			String userInfoJSON, String userInfoMapperJSON,
-			String customClaimsJSON)
+			long companyId, String customClaimsJSON, String issuer,
+			ServiceContext serviceContext, String userInfoJSON,
+			String userInfoMapperJSON)
 		throws Exception {
 
 		User user = _addOrUpdateUser(
-			companyId, issuer, serviceContext, userInfoJSON, userInfoMapperJSON,
-			customClaimsJSON);
+			companyId, customClaimsJSON, issuer, serviceContext, userInfoJSON,
+			userInfoMapperJSON);
 
 		try {
 			_addAddress(serviceContext, user, userInfoJSON, userInfoMapperJSON);
@@ -196,9 +196,9 @@ public class OIDCUserInfoProcessor {
 	}
 
 	private User _addOrUpdateUser(
-			long companyId, String issuer, ServiceContext serviceContext,
-			String userInfoJSON, String userInfoMapperJSON,
-			String customClaimsJSON)
+			long companyId, String customClaimsJSON, String issuer,
+			ServiceContext serviceContext, String userInfoJSON,
+			String userInfoMapperJSON)
 		throws Exception {
 
 		JSONObject userInfoMapperJSONObject = _jsonFactory.createJSONObject(

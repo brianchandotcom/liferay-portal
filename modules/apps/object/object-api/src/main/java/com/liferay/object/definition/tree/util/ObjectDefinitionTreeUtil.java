@@ -80,7 +80,7 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1());
 
-		if (objectDefinition1.getRootObjectDefinitionId() == 0) {
+		if (ArrayUtil.isEmpty(objectDefinition1.getRootObjectDefinitionIds())) {
 			_setRootObjectDefinitionIds(
 				new long[] {objectDefinition1.getObjectDefinitionId()},
 				objectDefinition1, objectDefinitionSettingLocalService,

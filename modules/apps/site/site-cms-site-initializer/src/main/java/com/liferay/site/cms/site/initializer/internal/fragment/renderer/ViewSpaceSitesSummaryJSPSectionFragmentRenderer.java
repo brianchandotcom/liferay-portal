@@ -5,11 +5,11 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceSitesSummarySectionDisplayContext;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
@@ -36,7 +36,7 @@ public class ViewSpaceSitesSummaryJSPSectionFragmentRenderer
 		return new ViewSpaceSitesSummarySectionDisplayContext(
 			_depotEntryService, _depotEntryGroupRelLocalService,
 			InfoItemUtil.getGroupId(httpServletRequest), httpServletRequest,
-			_language, _depotEntryModelResourcePermission);
+			_language, _userModelResourcePermission);
 	}
 
 	@Override
@@ -52,16 +52,15 @@ public class ViewSpaceSitesSummaryJSPSectionFragmentRenderer
 	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
-	)
-	private ModelResourcePermission<DepotEntry>
-		_depotEntryModelResourcePermission;
-
 	@Reference
 	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ModelResourcePermission<User> _userModelResourcePermission;
 
 }

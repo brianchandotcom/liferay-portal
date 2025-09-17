@@ -9,7 +9,7 @@ function getStateParamName(id: string): string {
 	return `fds_state_${id}`;
 }
 
-export function getStateFromURL(id: string): Partial<IStateInURL> | null {
+export function readStateFromURL(id: string): Partial<IStateInURL> | null {
 	if (!Liferay.FeatureFlags['LPD-22473']) {
 		return null;
 	}
@@ -47,7 +47,7 @@ export function writeStateInURL(
 		return;
 	}
 
-	const currentState = getStateFromURL(id);
+	const currentState = readStateFromURL(id);
 
 	if (contains(state, currentState)) {
 		return;

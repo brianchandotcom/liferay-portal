@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getStateFromURL} from './stateInURL';
+import {readStateFromURL} from './stateInURL';
 import {IStateInURL} from './types';
 
 type StateInitializer = {
@@ -18,7 +18,7 @@ function useGetStateFromURL({
 	stateInitializers?: StateInitializer;
 }): () => Partial<IStateInURL> {
 	return (): Partial<IStateInURL> => {
-		const state: Partial<IStateInURL> | null = getStateFromURL(id);
+		const state: Partial<IStateInURL> | null = readStateFromURL(id);
 
 		if (!state) {
 			return {};

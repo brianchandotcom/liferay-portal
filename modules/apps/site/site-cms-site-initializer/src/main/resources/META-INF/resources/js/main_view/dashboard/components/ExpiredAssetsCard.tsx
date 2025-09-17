@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Body, Cell, Row, Table, Text} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
@@ -23,7 +24,6 @@ import {
 	AssetTypeIcons as _AssetTypeIcons,
 } from '../utils/assetTypes';
 import {BaseCard} from './BaseCard';
-import EmptyStateCard from './EmptyStateCard';
 import {Item} from './FilterDropdown';
 
 type ExpiredAsset = {
@@ -144,6 +144,61 @@ function ExpiredAssetItem({
 	);
 }
 
+const EmptyState = () => {
+	const {
+		changeLanguage,
+		changeSpace,
+		filters: {language, space},
+	} = useContext(ViewDashboardContext);
+
+	const hasFilters: boolean =
+		(language && language.value !== 'all') ||
+		(space && space.value !== 'all');
+
+	if (hasFilters) {
+		return (
+			<ClayEmptyState
+				description={Liferay.Language.get(
+					'sorry,-no-results-were-found'
+				)}
+				imgSrc={
+					Liferay.ThemeDisplay.getPathThemeImages() +
+					'/states/search_state.svg'
+				}
+				title={Liferay.Language.get('no-results-found')}
+			>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => {
+						changeLanguage({
+							label: Liferay.Language.get('all-languages'),
+							value: 'all',
+						});
+						changeSpace({
+							label: Liferay.Language.get('all-spaces'),
+							value: 'all',
+						});
+					}}
+				>
+					{Liferay.Language.get('clear-filters')}
+				</ClayButton>
+			</ClayEmptyState>
+		);
+	}
+
+	return (
+		<ClayEmptyState
+			className="cms-dashboard__empty-state"
+			description={Liferay.Language.get(
+				'there-are-no-assets-expired-in-the-spaces'
+			)}
+			imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state.svg`}
+			imgSrcReducedMotion={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state.svg`}
+			title={Liferay.Language.get('no-assets-expired-yet')}
+		/>
+	);
+};
+
 function ExpiredAssetsCard() {
 	const {
 		filters: {language, space},
@@ -228,7 +283,7 @@ function ExpiredAssetsCard() {
 			</Table>
 
 			{!expiredAssetsList || expiredAssetsList.totalCount === 0 ? (
-				<EmptyStateCard />
+				<EmptyState />
 			) : (
 				<ClayPaginationBarWithBasicItems
 					activeDelta={pagination.delta}

@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayDropdown from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
 import React, {useContext, useEffect, useState} from 'react';
@@ -17,7 +18,6 @@ import {AllStructureTypesDropdown} from './AllStructureTypesDropdown';
 import {AllTagsDropdown} from './AllTagsDropdown';
 import {AllVocabulariesDropdown} from './AllVocabulariesDropdown';
 import {BaseCard} from './BaseCard';
-import EmptyStateCard from './EmptyStateCard';
 import {Item} from './FilterDropdown';
 import {GroupByDropdown} from './GroupByDropdown';
 import PaginatedTable from './PaginatedTable';
@@ -250,7 +250,15 @@ export function InventoryAnalysisCard() {
 			>
 				{!inventoryAnalysisData ||
 				inventoryAnalysisData.totalCount === 0 ? (
-					<EmptyStateCard />
+					<ClayEmptyState
+						className="cms-dashboard__empty-state"
+						description={Liferay.Language.get(
+							'there-are-no-assets-created-in-the-spaces'
+						)}
+						imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state.svg`}
+						imgSrcReducedMotion={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state.svg`}
+						title={Liferay.Language.get('no-assets-yet')}
+					/>
 				) : (
 					<>
 						<div className="align-items-lg-center d-flex flex-column flex-lg-row">

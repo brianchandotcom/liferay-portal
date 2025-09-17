@@ -2030,18 +2030,22 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-					invokeGraphQLMutation(
-						new GraphQLField(
-							"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
-							new HashMap<String, Object>() {
-								{
-									<@getGraphQLMethodParameters
-										javaMethodSignature = javaMethodSignature
-										testJavaMethodName = javaMethodSignature.methodName
-										varName = schemaVarName + "1"
-									/>
-								}
-							}));
+					Assert.assertTrue(
+						JSONUtil.getValueAsBoolean(
+							invokeGraphQLMutation(
+								new GraphQLField(
+									"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
+									new HashMap<String, Object>() {
+										{
+											<@getGraphQLMethodParameters
+												javaMethodSignature = javaMethodSignature
+												testJavaMethodName = javaMethodSignature.methodName
+												varName = schemaVarName + "1"
+											/>
+										}
+									})),
+							"JSONObject/data",
+							"Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
 
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 						<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete")) />
@@ -2071,20 +2075,25 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						${schemaName} ${schemaVarName}2 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-						invokeGraphQLMutation(
-							new GraphQLField(
-								"${graphQLNamespace}",
-								new GraphQLField(
-									"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
-									new HashMap<String, Object>() {
-										{
-											<@getGraphQLMethodParameters
-												javaMethodSignature = javaMethodSignature
-												testJavaMethodName = javaMethodSignature.methodName
-												varName = schemaVarName + "2"
-											/>
-										}
-									})));
+						Assert.assertTrue(
+							JSONUtil.getValueAsBoolean(
+								invokeGraphQLMutation(
+									new GraphQLField(
+										"${graphQLNamespace}",
+										new GraphQLField(
+											"${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}",
+											new HashMap<String, Object>() {
+												{
+													<@getGraphQLMethodParameters
+														javaMethodSignature = javaMethodSignature
+														testJavaMethodName = javaMethodSignature.methodName
+														varName = schemaVarName + "2"
+													/>
+												}
+										}))),
+								"JSONObject/data",
+								"JSONObject/${graphQLNamespace}",
+								"Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
 
 						<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 							JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(

@@ -198,7 +198,11 @@ public class LayoutUtil {
 	}
 
 	private static boolean _isExcludedLayout(Layout layout) {
-		if (!layout.isTypeContent() && !layout.isTypeEmpty()) {
+		if (layout.isTypeEmpty()) {
+			return true;
+		}
+
+		if (!layout.isTypeContent()) {
 			return false;
 		}
 
@@ -206,9 +210,7 @@ public class LayoutUtil {
 			return !layout.isPublished();
 		}
 
-		if (layout.isApproved() && !layout.isHidden() && !layout.isSystem() &&
-			layout.isTypeEmpty()) {
-
+		if (layout.isApproved() && !layout.isHidden() && !layout.isSystem()) {
 			return false;
 		}
 

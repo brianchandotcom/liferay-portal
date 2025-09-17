@@ -1,0 +1,298 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"widthType": "Fixed"
+					},
+					"name": "Open Positions Page"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"height": "240px"
+							},
+							"indexed": true,
+							"layout": {
+								"align": "Center",
+								"contentDisplay": "FlexColumn",
+								"justify": "Center"
+							},
+							"name": "Banner"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h1"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Join the Team!"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"paddingBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"minWidth": "500px"
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"displayStyleGroupId": "[$GROUP_ID$]"
+										},
+										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingBottom": "5",
+								"paddingLeft": "5",
+								"paddingRight": "3",
+								"paddingTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"paddingBottom": 4,
+								"paddingLeft": 4,
+								"paddingRight": 1,
+								"paddingTop": 4
+							},
+							"name": "Search Results and Options"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 3
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"boost": "",
+															"customHeading": "",
+															"disabled": "false",
+															"displayStyle": "default",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"federatedSearchKey": "",
+															"filterField": "ddmStructureKey",
+															"filterQueryType": "match",
+															"filterValue": "JOB LISTING",
+															"immutable": "true",
+															"invisible": "true",
+															"occur": "filter",
+															"parameterName": "",
+															"parentQueryName": "",
+															"queryName": ""
+														},
+														"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyle": "ddmTemplate_SEARCH CATEGORY",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxTerms": "10",
+															"order": "count:desc",
+															"parameterName": "category-region",
+															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Regions$]"
+														},
+														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyle": "ddmTemplate_Search Category",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxTerms": "10",
+															"order": "count:desc",
+															"parameterName": "category-location",
+															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Locations$]"
+														},
+														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyle": "ddmTemplate_Search Category",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxTerms": "10",
+															"order": "count:desc",
+															"parameterName": "category-position",
+															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Job Positions$]"
+														},
+														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 9
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyleGroupId": "[$GROUP_ID$]"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							},
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+											"allowEmptySearches": "true",
+											"basicFacetSelection": "false",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"federatedSearchKey": "",
+											"retainFacetSelections": "false"
+										},
+										"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	},
+	"version": 1.1
+}

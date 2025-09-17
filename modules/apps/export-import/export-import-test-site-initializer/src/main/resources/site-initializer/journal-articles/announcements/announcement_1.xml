@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="message" index-type="keyword" instance-id="Gr7SPnty" name="message" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				See Clarity's latest eyewear innovations!
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="linkText" index-type="keyword" instance-id="7fvRpjd9" name="linkText" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				Learn more
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="linkPage" index-type="keyword" instance-id="zujzWHf5" name="linkPage" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				products
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

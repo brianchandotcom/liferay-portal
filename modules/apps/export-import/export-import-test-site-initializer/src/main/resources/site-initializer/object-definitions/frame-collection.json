@@ -1,0 +1,23 @@
+{
+	"label": {
+		"en_US": "Frame Collection"
+	},
+	"name": "FrameCollection",
+	"objectFields": [
+		{
+			"label": {
+				"en_US": "Collection Name"
+			},
+			"name": "name",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"objectFolderExternalReferenceCode": "CLARITY",
+	"panelAppOrder": "1",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Frame Collections"
+	},
+	"scope": "site"
+}

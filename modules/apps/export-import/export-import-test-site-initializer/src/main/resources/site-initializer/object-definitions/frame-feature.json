@@ -1,0 +1,23 @@
+{
+	"label": {
+		"en_US": "Frame Feature"
+	},
+	"name": "FrameFeature",
+	"objectFields": [
+		{
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectFolderExternalReferenceCode": "CLARITY",
+	"panelAppOrder": "3",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Frame Features"
+	},
+	"scope": "site"
+}

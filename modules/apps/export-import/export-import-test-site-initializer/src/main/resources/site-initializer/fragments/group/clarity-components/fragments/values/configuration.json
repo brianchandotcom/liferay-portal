@@ -1,0 +1,61 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Specifies the size of the watermark circle that is controlled using Bootstrap utility classes (e.g. sm and lg).",
+					"label": "Size",
+					"name": "circleSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Small",
+								"value": "sm"
+							},
+							{
+								"label": "Large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Controls the visibility and positioning of the circular watermark. When enabled, the watermark is displayed in the top right corner of the card.",
+					"label": "Top Right",
+					"name": "topRight",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Controls the visibility and positioning of the circular watermark. When enabled, the watermark is displayed in the bottom right corner of the card.",
+					"label": "Bottom Right",
+					"name": "bottomRight",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Controls the visibility and positioning of the circular watermark. When enabled, the watermark is displayed in the bottom left corner of the card.",
+					"label": "Bottom Left",
+					"name": "bottomLeft",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Controls the visibility and positioning of the circular watermark. When enabled, the watermark is displayed in the top left corner of the card.",
+					"label": "Top Left",
+					"name": "topLeft",
+					"type": "checkbox"
+				}
+			],
+			"label": "Watermark"
+		}
+	]
+}

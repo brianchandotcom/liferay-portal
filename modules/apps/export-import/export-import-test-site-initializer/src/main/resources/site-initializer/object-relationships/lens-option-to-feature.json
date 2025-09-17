@@ -1,0 +1,11 @@
+{
+	"deletionType": "disassociate",
+	"label": {
+		"en_US": "Lens Option to Feature"
+	},
+	"name": "lensOptionToFeature",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:LensOption$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:FrameFeature$]",
+	"objectDefinitionName2": "FrameFeature",
+	"type": "manyToMany"
+}

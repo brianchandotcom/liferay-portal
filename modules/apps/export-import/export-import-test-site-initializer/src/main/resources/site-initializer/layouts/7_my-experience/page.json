@@ -1,0 +1,25 @@
+{
+	"friendlyURL": "/my-experience",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "My Experience"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

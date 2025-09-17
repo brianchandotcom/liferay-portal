@@ -1,0 +1,311 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "remove-interest",
+						"siteKey": "[$GROUP_KEY$]"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"widthType": "Fixed"
+					},
+					"name": "Product Lists Page"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundFragmentImage": {
+									"title": {
+										"value": "products_banner"
+									},
+									"url": {
+										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/products_banner.jpg$]"
+									}
+								},
+								"marginBottom": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 4
+							},
+							"name": "Banner"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"assetCategoryId": "0",
+											"displayStyle": "ddmTemplate_PRODUCT-CATEGORY-BANNER",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"displayStyleGroupKey": "[$GROUP_KEY$]",
+											"useAssetCategory": "false"
+										},
+										"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"customCSS": "\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet {\n    padding: 0 !important;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet .panel-collapse {\n    padding-left: 0 !important;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet .panel-body .panel-body {\n    padding: 0 !important;\n}\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpoptionfacetsportlet {\n    padding: 0 !important;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpoptionfacetsportlet .panel-body {\n    padding: 0 !important;\n    padding-top: 0.3rem !important;\n}",
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"marginLeft": "7",
+								"marginRight": "7",
+								"marginTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 4,
+								"marginLeft": 8,
+								"marginRight": 8,
+								"marginTop": 4
+							},
+							"name": "Search Results"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 3
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"destination": "",
+															"displayStyle": "default",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"federatedSearchKey": "",
+															"invisible": "false",
+															"keywordsParameterName": "q",
+															"scopeParameterName": "scope",
+															"searchScope": "everything",
+															"showStagedResults": "false",
+															"suggestionsContributorConfigurations": "{\"contributorName\": \"basic\", \"displayGroupName\": \"suggestions\", \"size\": 5}",
+															"suggestionsDisplayThreshold": "2",
+															"suggestionsEnabled": "true",
+															"useAdvancedSearchSyntax": "false"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "#F8F8F8"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyleGroupId": "[$GROUP_ID$]"
+														},
+														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet {\n    padding: 0;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet .panel-collapse {\n    padding-left: 0;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet .panel-body .panel-body {\n    padding: 0;\n}\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpoptionfacetsportlet {\n    padding: 0;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpoptionfacetsportlet .panel-body {\n    padding: 0;\n    padding-top: 0.3rem;\n}",
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyleGroupId": "[$GROUP_ID$]"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyle": "default",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxOptions": "10",
+															"maxTerms": "10"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 9
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyleGroupId": "[$GROUP_ID$]"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"cpContentListRendererKey": "list-default",
+															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
+															"displayStyle": "ddmTemplate_PRODUCT-SEARCH-RESULTS",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+															"paginate": "true",
+															"paginationDelta": "9",
+															"selectionStyle": "adt",
+															"simple--cpTypeListEntryRendererKey": "list-entry-default",
+															"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+							},
+							"name": "Search Options"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"hidden": true
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"allowEmptySearches": "true",
+											"basicFacetSelection": "false",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"federatedSearchKey": "",
+											"retainFacetSelections": "true"
+										},
+										"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	},
+	"version": 1.1
+}

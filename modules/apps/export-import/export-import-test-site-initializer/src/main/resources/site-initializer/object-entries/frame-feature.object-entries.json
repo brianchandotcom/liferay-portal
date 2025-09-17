@@ -1,0 +1,15 @@
+{
+	"object-entries": [
+		{
+			"description": "Lightweight titanium frame",
+			"externalReferenceCode": "LIGHTWEIGHT_FRAME_FEATURE",
+			"r_collectionToFeature_c_frameCollectionERC": "CLASSIC_FRAME_COLLECTION"
+		},
+		{
+			"description": "Flexible memory metal construction",
+			"externalReferenceCode": "FLEXIBLE_MEMORY_FRAME_FEATURE",
+			"r_collectionToFeature_c_frameCollectionERC": "MODERN_FRAME_COLLECTION"
+		}
+	],
+	"objectDefinitionName": "FrameFeature"
+}

@@ -1,0 +1,45 @@
+<#assign
+	description = ''
+	image = ''
+	title = ''
+/>
+
+<#if cpCategoryContentDisplayContext.getDefaultImageSrc()??>
+	<#assign image = cpCategoryContentDisplayContext.getDefaultImageSrc() />
+</#if>
+
+<#if assetCategory??>
+	<#assign
+		description = assetCategory.getDescription(locale)
+		title = assetCategory.getTitle(locale)
+	/>
+</#if>
+
+<style>
+	.product-category-banner__background {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		height: 280px;
+	}
+</style>
+
+<div class="product-category-content-container">
+	<div class="container-fluid product-category-banner__background">
+		<div class="d-flex d-flex-row align-items-center h-100">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-6 col-sm-6 col-xs-6">
+						<div class="text-primary text-uppercase mb-2 font-weight-bold">Products</div>
+
+						<h1 class="mb-3">${htmlUtil.escape(title)}</h1>
+
+						<p>${htmlUtil.escape(description)}</p>
+					</div>
+
+					<div class="col-md-6 col-sm-6 col-xs-6"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

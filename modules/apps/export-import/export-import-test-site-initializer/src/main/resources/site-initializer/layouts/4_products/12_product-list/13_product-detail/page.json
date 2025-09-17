@@ -1,0 +1,10 @@
+{
+	"friendlyURL": "/product-detail",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Product Detail"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

@@ -1,0 +1,53 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginLeft": "9",
+						"marginRight": "9",
+						"maxWidth": "900px",
+						"minWidth": "400px"
+					},
+					"indexed": true,
+					"layout": {
+						"widthType": "Fixed"
+					},
+					"name": "Product Details Page"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+								},
+								"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
+							}
+						},
+						"type": "Widget"
+					},
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+								},
+								"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "primary"
+		},
+		"themeName": "Dialect"
+	},
+	"version": 1.1
+}

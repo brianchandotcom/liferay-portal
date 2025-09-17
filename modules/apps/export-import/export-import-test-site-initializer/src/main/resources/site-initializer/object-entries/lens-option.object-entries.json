@@ -1,0 +1,13 @@
+{
+	"object-entries": [
+		{
+			"externalReferenceCode": "BLUELIGHT_LENS_OPTION",
+			"title": "Blue Light Filter"
+		},
+		{
+			"externalReferenceCode": "PROGRESSIVE_LENS_OPTION",
+			"title": "Progressive Lenses"
+		}
+	],
+	"objectDefinitionName": "LensOption"
+}

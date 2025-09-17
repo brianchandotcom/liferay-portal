@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Export Import Test Site Initializer
+Bundle-SymbolicName: com.liferay.exportimport.test.site.initializer
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Feature-Flag: LPD-35914
+Liferay-Site-Initializer-Name: Liferay Export Import Test
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /export-import-test-site-initializer

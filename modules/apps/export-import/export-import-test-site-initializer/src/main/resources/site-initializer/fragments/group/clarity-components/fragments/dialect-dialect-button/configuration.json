@@ -1,0 +1,99 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "solid",
+					"label": "Type",
+					"name": "type",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Solid",
+								"value": "solid"
+							},
+							{
+								"label": "Ghost",
+								"value": "ghost"
+							},
+							{
+								"label": "Borderless",
+								"value": "borderless"
+							},
+							{
+								"label": "Rounded",
+								"value": "rounded"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "Solid",
+					"name": "style",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "neutral"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Small",
+								"value": "btn-sm"
+							},
+							{
+								"label": "Medium",
+								"value": ""
+							},
+							{
+								"label": "Large",
+								"value": "btn-lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "Inverted",
+					"name": "inverted",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "Uppercase",
+					"name": "uppercase",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "share",
+					"label": "Icon Name",
+					"name": "iconName",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

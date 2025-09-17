@@ -1,0 +1,70 @@
+<style>
+	.widget-resume{
+		min-height: 96px;
+	}
+</style>
+
+<div class="row widget-mode-card">
+	<#if entries?has_content>
+		<#if currentURL?has_content>
+			<#assign groupKey = currentURL?substring(currentURL?index_of('/web/') + 5, currentURL?index_of('/products')) />
+		</#if>
+
+		<#list entries as currentCategory>
+			<#if currentCategory.getName() == "Contacts">
+				<#assign categoryImage = "/documents/d/${groupKey}/contacts-png" />
+			<#elseif currentCategory.getName() == "Eyeglasses">
+				<#assign categoryImage = "/documents/d/${groupKey}/eyeglasses-png" />
+			<#elseif currentCategory.getName() == "Lenses">
+				<#assign categoryImage = "/documents/d/${groupKey}/lenses-png" />
+			<#elseif currentCategory.getName() == "Sunglasses">
+				<#assign categoryImage = "/documents/d/${groupKey}/sunglasses-png" />
+			</#if>
+
+			<#assign
+				categoryHref = cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(currentCategory.getCategoryId(), themeDisplay)
+				categoryName = currentCategory.getName()
+			/>
+
+			<#if cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(currentCategory.getCategoryId())??>
+				<#assign cardImage = true />
+			<#else>
+				<#assign cardImage = false />
+			</#if>
+
+			<div class="col-lg-4">
+				<div class="card">
+					<div class="card-header">
+							<div class="aspect-ratio aspect-ratio-8-to-3">
+								<a href="${categoryHref}">${categoryName}
+									<img
+										alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+										src="${categoryImage}">
+								</a>
+							</div>
+					</div>
+
+					<div class="card-body widget-topbar">
+						<div class="autofit-row card-title">
+							<div class="autofit-col autofit-col-expand">
+								<h3 class="title">
+									<a class="title-link" href="${categoryHref}">${categoryName}</a>
+								</h3>
+							</div>
+						</div>
+
+						<#if validator.isNotNull(currentCategory.getDescription())>
+							<#assign content = currentCategory.getDescription() />
+
+							<#if cardImage>
+								<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(content), 150)}</p>
+							<#else>
+								<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(content), 400)}</p>
+							</#if>
+						</#if>
+					</div>
+				</div>
+			</div>
+		</#list>
+	</#if>
+</div>

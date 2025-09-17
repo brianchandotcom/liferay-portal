@@ -1,0 +1,23 @@
+{
+	"label": {
+		"en_US": "Lens Option"
+	},
+	"name": "LensOption",
+	"objectFields": [
+		{
+			"label": {
+				"en_US": "Option Title"
+			},
+			"name": "title",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"objectFolderExternalReferenceCode": "CLARITY",
+	"panelAppOrder": "2",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Lens Options"
+	},
+	"scope": "site"
+}

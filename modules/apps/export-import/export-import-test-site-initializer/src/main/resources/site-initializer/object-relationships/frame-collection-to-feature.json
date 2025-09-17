@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Collection to Feature"
+	},
+	"name": "collectionToFeature",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:FrameCollection$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:FrameFeature$]",
+	"objectDefinitionName2": "FrameFeature",
+	"type": "oneToMany"
+}

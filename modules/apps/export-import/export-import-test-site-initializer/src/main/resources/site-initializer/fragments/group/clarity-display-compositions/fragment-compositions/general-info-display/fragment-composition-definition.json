@@ -1,0 +1,65 @@
+{
+	"definition": {
+		"fragmentStyle": {
+			"paddingBottom": "7",
+			"paddingLeft": "9",
+			"paddingRight": "9",
+			"paddingTop": "7"
+		},
+		"indexed": true,
+		"layout": {
+			"paddingBottom": 8,
+			"paddingTop": 8
+		},
+		"name": "General Info Page"
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragment": {
+					"key": "BASIC_COMPONENT-heading"
+				},
+				"fragmentConfig": {
+					"headingLevel": "h1"
+				},
+				"fragmentFields": [
+					{
+						"id": "element-text",
+						"value": {
+							"fragmentLink": {
+							}
+						}
+					}
+				],
+				"fragmentStyle": {
+					"marginBottom": "5"
+				},
+				"indexed": true
+			},
+			"type": "Fragment"
+		},
+		{
+			"definition": {
+				"fragment": {
+					"key": "BASIC_COMPONENT-html"
+				},
+				"fragmentConfig": {
+				},
+				"fragmentFields": [
+					{
+						"id": "element-html",
+						"value": {
+							"html": {
+								"value_i18n": {
+								}
+							}
+						}
+					}
+				],
+				"indexed": true
+			},
+			"type": "Fragment"
+		}
+	],
+	"type": "Section"
+}

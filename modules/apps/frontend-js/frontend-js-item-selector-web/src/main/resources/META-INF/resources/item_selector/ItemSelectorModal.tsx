@@ -40,6 +40,12 @@ export interface IItemSelectorModalProps<T> {
 	fdsProps: IItemSelectorModalFDSProps;
 
 	/**
+	 * The displayed label for the type of item being selected. Used in the
+	 * modal title.
+	 */
+	itemTypeLabel: string;
+
+	/**
 	 * Items that are currently selected (controlled).
 	 */
 	items: T[];
@@ -78,16 +84,12 @@ export interface IItemSelectorModalProps<T> {
 	 * Expects the 'open' property from the Clay useModal hook.
 	 */
 	open: boolean;
-
-	/**
-	 * Type of item to be selected. Used to display modal title.
-	 */
-	type: string;
 }
 
 function ItemSelectorModal<T extends Record<string, any>>({
 	apiURL,
 	fdsProps,
+	itemTypeLabel,
 	items: externalItems,
 	locator = {
 		id: 'id',
@@ -99,7 +101,6 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	onItemsChange,
 	onOpenChange,
 	open,
-	type,
 }: IItemSelectorModalProps<T>) {
 	const [selectedItems, setSelectedItems] = useState(externalItems);
 
@@ -121,7 +122,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	return open ? (
 		<ClayModal observer={observer} size="full-screen">
 			<ClayModal.Header>
-				{sub(Liferay.Language.get('select-x'), type)}
+				{sub(Liferay.Language.get('select-x'), itemTypeLabel)}
 			</ClayModal.Header>
 
 			<ClayModal.Body className="p-0">

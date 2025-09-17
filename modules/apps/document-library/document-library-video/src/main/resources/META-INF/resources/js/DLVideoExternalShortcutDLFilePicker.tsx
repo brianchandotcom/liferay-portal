@@ -3,14 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import DLVideoExternalShortcutInput from './components/DLVideoExternalShortcutInput';
 import DLVideoExternalShortcutPreview from './components/DLVideoExternalShortcutPreview';
 import {useDLVideoExternalShortcutFields} from './utils/hooks';
 
-const DLVideoExternalShortcutDLFilePicker = ({
+type DLVideoExternalShortcutDLFilePickerProps = {
+	dlVideoExternalShortcutHTML?: string;
+	dlVideoExternalShortcutURL?: string;
+	getDLVideoExternalShortcutFieldsURL: string;
+	namespace: string;
+	onFilePickCallback: string;
+};
+
+const DLVideoExternalShortcutDLFilePicker: React.FC<
+	DLVideoExternalShortcutDLFilePickerProps
+> = ({
 	dlVideoExternalShortcutHTML = '',
 	dlVideoExternalShortcutURL = '',
 	getDLVideoExternalShortcutFieldsURL,
@@ -18,6 +27,7 @@ const DLVideoExternalShortcutDLFilePicker = ({
 	onFilePickCallback,
 }) => {
 	const [url, setUrl] = useState(dlVideoExternalShortcutURL);
+
 	const {error, fields, loading} = useDLVideoExternalShortcutFields({
 		getDLVideoExternalShortcutFieldsURL,
 		namespace,
@@ -26,7 +36,7 @@ const DLVideoExternalShortcutDLFilePicker = ({
 
 	useEffect(() => {
 		if (fields) {
-			window[onFilePickCallback](fields);
+			(window as any)[onFilePickCallback](fields);
 		}
 	}, [fields, onFilePickCallback]);
 
@@ -42,14 +52,6 @@ const DLVideoExternalShortcutDLFilePicker = ({
 			/>
 		</>
 	);
-};
-
-DLVideoExternalShortcutDLFilePicker.propTypes = {
-	dlVideoExternalShortcutHTML: PropTypes.string,
-	dlVideoExternalShortcutURL: PropTypes.string,
-	getDLVideoExternalShortcutFieldsURL: PropTypes.string.isRequired,
-	namespace: PropTypes.string.isRequired,
-	onFilePickCallback: PropTypes.string.isRequired,
 };
 
 export default DLVideoExternalShortcutDLFilePicker;

@@ -5,10 +5,17 @@
 
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const DLVideoExternalShortcutPreview = ({labelTooltip, onChange, url = ''}) => {
+type DLVideoExternalShortcutPreviewProps = {
+	labelTooltip?: string;
+	onChange: (value: string) => void;
+	url?: string;
+};
+
+const DLVideoExternalShortcutPreview: React.FC<
+	DLVideoExternalShortcutPreviewProps
+> = ({labelTooltip, onChange, url = ''}) => {
 	const inputName = 'dlVideoExternalShortcutURLInput';
 
 	return (
@@ -17,16 +24,20 @@ const DLVideoExternalShortcutPreview = ({labelTooltip, onChange, url = ''}) => {
 				{Liferay.Language.get('video-url')}
 
 				{labelTooltip && (
-					<ClayIcon
-						className="ml-1 text-secondary"
-						symbol="question-circle-full"
-						title={labelTooltip}
-					/>
+					<span title={labelTooltip}>
+						<ClayIcon
+							aria-label={labelTooltip}
+							className="ml-1 text-secondary"
+							symbol="question-circle-full"
+						/>
+					</span>
 				)}
 			</label>
 			<ClayInput
 				id={inputName}
-				onChange={(event) => onChange(event.target.value.trim())}
+				onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+					onChange(event.target.value.trim())
+				}
 				placeholder="http://"
 				type="text"
 				value={url}
@@ -36,12 +47,6 @@ const DLVideoExternalShortcutPreview = ({labelTooltip, onChange, url = ''}) => {
 			</p>
 		</>
 	);
-};
-
-DLVideoExternalShortcutPreview.propTypes = {
-	labelTooltip: PropTypes.string,
-	onChange: PropTypes.func,
-	url: PropTypes.string,
 };
 
 export default DLVideoExternalShortcutPreview;

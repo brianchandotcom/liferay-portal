@@ -7,7 +7,7 @@ import {fetch} from 'frontend-js-web';
 
 const INTERVAL = 3000;
 
-function scheduleEmbedVideoStatusCheck(url) {
+function scheduleEmbedVideoStatusCheck(url: string) {
 	setTimeout(() => {
 		fetch(url)
 			.then(({status}) => {
@@ -24,6 +24,10 @@ function scheduleEmbedVideoStatusCheck(url) {
 	}, INTERVAL);
 }
 
-export default function ({getEmbedVideoStatusURL}) {
+export default function ({
+	getEmbedVideoStatusURL,
+}: {
+	getEmbedVideoStatusURL: string;
+}) {
 	scheduleEmbedVideoStatusCheck(getEmbedVideoStatusURL);
 }

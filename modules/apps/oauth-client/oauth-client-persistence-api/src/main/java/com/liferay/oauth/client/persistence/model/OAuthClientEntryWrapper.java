@@ -44,12 +44,12 @@ public class OAuthClientEntryWrapper
 			"authRequestParametersJSON", getAuthRequestParametersJSON());
 		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
 		attributes.put("clientId", getClientId());
+		attributes.put("customClaimsJSON", getCustomClaimsJSON());
 		attributes.put("infoJSON", getInfoJSON());
 		attributes.put("metadataCacheTime", getMetadataCacheTime());
 		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
 		attributes.put(
 			"tokenRequestParametersJSON", getTokenRequestParametersJSON());
-		attributes.put("customClaimsJSON", getCustomClaimsJSON());
 
 		return attributes;
 	}
@@ -118,6 +118,12 @@ public class OAuthClientEntryWrapper
 			setClientId(clientId);
 		}
 
+		String customClaimsJSON = (String)attributes.get("customClaimsJSON");
+
+		if (customClaimsJSON != null) {
+			setCustomClaimsJSON(customClaimsJSON);
+		}
+
 		String infoJSON = (String)attributes.get("infoJSON");
 
 		if (infoJSON != null) {
@@ -142,12 +148,6 @@ public class OAuthClientEntryWrapper
 
 		if (tokenRequestParametersJSON != null) {
 			setTokenRequestParametersJSON(tokenRequestParametersJSON);
-		}
-
-		String customClaimsJSON = (String)attributes.get("customClaimsJSON");
-
-		if (customClaimsJSON != null) {
-			setCustomClaimsJSON(customClaimsJSON);
 		}
 	}
 

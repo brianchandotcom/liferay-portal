@@ -528,6 +528,19 @@ public class ActionUtil {
 			PortalUtil.getClassNameId(DepotEntry.class), StringPool.SLASH);
 	}
 
+	public static String getBaseStructureBuilderURL(ThemeDisplay themeDisplay) {
+		return StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/structure-builder");
+	}
+
+	public static String getBaseStructureUsagesURL(ThemeDisplay themeDisplay) {
+		return StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL,
+			"/structure-usages?objectDefinitionId=");
+	}
+
 	public static String getBaseViewFolderRecycleBinURL(
 		ThemeDisplay themeDisplay) {
 

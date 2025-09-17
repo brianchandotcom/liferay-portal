@@ -2298,7 +2298,7 @@ public class CustomFieldsUtilTest {
 		}
 		catch (NullPointerException nullPointerException) {
 
-			// TODO LPD-65443 - The exception should not be a NPE
+			// TODO LPD-65443 The exception should not be a NPE
 
 			Assert.assertNotNull(nullPointerException);
 

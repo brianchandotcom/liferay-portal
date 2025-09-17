@@ -6,21 +6,24 @@
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const DLVideoExternalShortcutPreview = ({
-	error,
-	framed,
-	loading,
-	small,
-	videoHTML,
-}) => {
+type DLVideoExternalShortcutPreviewProps = {
+	error?: string | null;
+	framed?: boolean;
+	loading?: boolean;
+	small?: boolean;
+	videoHTML?: string;
+};
+
+const DLVideoExternalShortcutPreview: React.FC<
+	DLVideoExternalShortcutPreviewProps
+> = ({error, framed = false, loading = false, small = false, videoHTML}) => {
 	return (
 		<div
 			className={classNames('video-preview mt-4', {
-				['video-preview-framed']: framed,
-				['video-preview-sm']: small,
+				'video-preview-framed': framed,
+				'video-preview-sm': small,
 			})}
 		>
 			{videoHTML && !error && !loading ? (
@@ -36,7 +39,10 @@ const DLVideoExternalShortcutPreview = ({
 							<ClayLoadingIndicator />
 						) : (
 							<>
-								<ClayIcon symbol="video" />
+								<ClayIcon
+									aria-label="Video icon"
+									symbol="video"
+								/>
 								{error && (
 									<div className="video-preview-placeholder-text">
 										{error}
@@ -49,14 +55,6 @@ const DLVideoExternalShortcutPreview = ({
 			)}
 		</div>
 	);
-};
-
-DLVideoExternalShortcutPreview.propTypes = {
-	error: PropTypes.string,
-	framed: PropTypes.bool,
-	loading: PropTypes.bool,
-	small: PropTypes.bool,
-	videoHTML: PropTypes.string,
 };
 
 export default DLVideoExternalShortcutPreview;

@@ -5,20 +5,25 @@
 
 import ClayButton from '@clayui/button';
 import {getOpener} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import DLVideoExternalShortcutInput from './components/DLVideoExternalShortcutInput';
 import DLVideoExternalShortcutPreview from './components/DLVideoExternalShortcutPreview';
 import {useDLVideoExternalShortcutFields} from './utils/hooks';
 
-const DLVideoExternalShortcutURLItemSelectorView = ({
+const DLVideoExternalShortcutURLItemSelectorView: React.FC<{
+	eventName: string;
+	getDLVideoExternalShortcutFieldsURL: string;
+	namespace: string;
+	returnType: string;
+}> = ({
 	eventName,
 	getDLVideoExternalShortcutFieldsURL,
 	namespace,
 	returnType,
 }) => {
-	const [url, setUrl] = useState('');
+	const [url, setUrl] = useState<string>('');
+
 	const {error, fields, loading} = useDLVideoExternalShortcutFields({
 		getDLVideoExternalShortcutFieldsURL,
 		namespace,
@@ -28,6 +33,10 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 	const isDisabled = !fields || loading;
 
 	const onClick = () => {
+		if (!fields) {
+			return;
+		}
+
 		getOpener().Liferay.fire(eventName, {
 			data: {
 				returnType,
@@ -55,19 +64,12 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 			</ClayButton>
 
 			<DLVideoExternalShortcutPreview
-				error={error}
+				error={error ? error : undefined}
 				loading={loading}
-				videoHTML={fields && fields.HTML}
+				videoHTML={fields?.HTML}
 			/>
 		</div>
 	);
-};
-
-DLVideoExternalShortcutURLItemSelectorView.propTypes = {
-	eventName: PropTypes.string.isRequired,
-	getDLVideoExternalShortcutFieldsURL: PropTypes.string.isRequired,
-	namespace: PropTypes.string.isRequired,
-	returnType: PropTypes.string.isRequired,
 };
 
 export default DLVideoExternalShortcutURLItemSelectorView;

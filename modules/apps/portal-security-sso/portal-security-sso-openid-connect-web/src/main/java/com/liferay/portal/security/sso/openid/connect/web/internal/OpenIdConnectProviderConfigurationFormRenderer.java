@@ -76,14 +76,13 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 			ParamUtil.getString(httpServletRequest, "authorizationEndPoint")
 		).put(
 			"customAuthorizationRequestParameters",
-			_getParamRepeatedValues(
+			_getStringValues(
 				httpServletRequest, "customAuthorizationRequestParameters")
 		).put(
 			"customClaims", customClaims
 		).put(
 			"customTokenRequestParameters",
-			_getParamRepeatedValues(
-				httpServletRequest, "customTokenRequestParameters")
+			_getStringValues(httpServletRequest, "customTokenRequestParameters")
 		).put(
 			"discoveryEndPoint",
 			ParamUtil.getString(httpServletRequest, "discoveryEndPoint")
@@ -93,8 +92,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 				httpServletRequest, "discoveryEndPointCacheInMillis")
 		).put(
 			"idTokenSigningAlgValues",
-			_getParamRepeatedValues(
-				httpServletRequest, "idTokenSigningAlgValues")
+			_getStringValues(httpServletRequest, "idTokenSigningAlgValues")
 		).put(
 			"issuerURL", ParamUtil.getString(httpServletRequest, "issuerURL")
 		).put(
@@ -115,8 +113,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		).put(
 			"scopes", ParamUtil.getString(httpServletRequest, "scopes")
 		).put(
-			"subjectTypes",
-			_getParamRepeatedValues(httpServletRequest, "subjectTypes")
+			"subjectTypes", _getStringValues(httpServletRequest, "subjectTypes")
 		).put(
 			"tokenConnectionTimeout",
 			ParamUtil.getInteger(httpServletRequest, "tokenConnectionTimeout")
@@ -161,28 +158,30 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		}
 	}
 
-	private String[] _getParamRepeatedValues(
+	private String[] _getStringValues(
 		HttpServletRequest httpServletRequest, String paramName) {
 
 		int[] indexes = ParamUtil.getIntegerValues(
 			httpServletRequest, paramName + "Indexes");
 
-		String[] values = new String[indexes.length];
+		List<String> values = new ArrayList<>();
 
-		for (int i = 0; i < values.length; i++) {
+		for (int index : indexes) {
 			String value = ParamUtil.getString(
-				httpServletRequest, paramName + StringPool.DASH + indexes[i]);
+				httpServletRequest, paramName + StringPool.DASH + index);
 
-			if ((i == 0) || !value.isEmpty()) {
-				values[i] = value;
+			if (value.isEmpty()) {
+				continue;
 			}
+
+			values.add(value);
 		}
 
-		if (values.length > 1) {
-			values = ArrayUtil.filter(values, Objects::nonNull);
+		if (values.isEmpty()) {
+			values.add(StringPool.BLANK);
 		}
 
-		return values;
+		return values.toArray(String[]::new);
 	}
 
 	@Reference

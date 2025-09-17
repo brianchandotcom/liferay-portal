@@ -326,10 +326,8 @@ public class OIDCUserInfoProcessor {
 			customClaimsJSON);
 
 		for (String key : customClaimsJSONObject.keySet()) {
-			String value = GetterUtil.getString(
-				customClaimsJSONObject.get(key));
-
-			String claimValue = userInfoJSONObject.getString(value);
+			String claimValue = userInfoJSONObject.getString(
+				customClaimsJSONObject.getString(key));
 
 			if (claimValue.isEmpty()) {
 				continue;

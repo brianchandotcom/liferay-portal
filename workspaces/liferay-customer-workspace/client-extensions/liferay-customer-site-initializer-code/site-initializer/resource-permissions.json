@@ -765,6 +765,27 @@
 	},
 	{
 		"actionIds": [
+			"ADD_LAYOUT_PAGE_TEMPLATE_ENTRY",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.layout.page.template",
+		"roleName": "Documentation Admin",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
+		"roleName": "Documentation Admin",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
 			"VIEW"
 		],
 		"primKey": "0",
@@ -1277,6 +1298,7 @@
 	{
 		"actionIds": [
 			"ADD_LAYOUT",
+			"MANAGE_LAYOUTS",
 			"VIEW",
 			"VIEW_SITE_ADMINISTRATION"
 		],
@@ -1426,6 +1448,16 @@
 		],
 		"primKey": "0",
 		"resourceName": "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+		"roleName": "Documentation Admin",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet",
 		"roleName": "Documentation Admin",
 		"scope": "3"
 	},

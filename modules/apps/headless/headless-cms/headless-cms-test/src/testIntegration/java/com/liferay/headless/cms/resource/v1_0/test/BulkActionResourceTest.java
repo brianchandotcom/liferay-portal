@@ -16,18 +16,29 @@ import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource
 import com.liferay.headless.cms.client.dto.v1_0.BulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.BulkActionItem;
 import com.liferay.headless.cms.client.dto.v1_0.BulkActionTask;
+import com.liferay.headless.cms.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.headless.cms.client.dto.v1_0.DeleteBulkAction;
 import com.liferay.headless.cms.client.problem.Problem;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -150,6 +161,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Override
 	@Test
 	public void testPostBulkAction() throws Exception {
+		_testPostBulkActionWithTypeDefaultPermission();
 		_testPostBulkActionWithTypeDelete();
 	}
 
@@ -163,6 +175,64 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		}
 	}
 
+	private JSONObject _getDefaultPermissionsJSONObject(
+			ObjectDefinition objectDefinition,
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		Predicate predicate = _filterFactory.create(
+			StringBundler.concat(
+				"(classExternalReferenceCode eq '",
+				objectEntryFolder.getExternalReferenceCode(),
+				"') and (className eq '", objectEntryFolder.getModelClassName(),
+				"')"),
+			objectDefinition);
+
+		List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
+			new Long[0], _depotEntry.getCompanyId(),
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), predicate, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			primaryKeys.get(0));
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		return JSONFactoryUtil.createJSONObject(
+			String.valueOf(values.get("defaultPermissions")));
+	}
+
+	private Map<String, Serializable> _getImportTaskValues(
+			BulkActionTask bulkActionTask)
+		throws Exception {
+
+		ObjectEntry bulkActionTaskObjectEntry =
+			_objectEntryLocalService.getObjectEntry(bulkActionTask.getId());
+
+		List<ObjectEntry> objectEntries = ListUtil.filter(
+			_objectEntryLocalService.getOneToManyObjectEntries(
+				bulkActionTaskObjectEntry.getGroupId(),
+				_objectRelationshipLocalService.getObjectRelationship(
+					_bulkActionTaskObjectDefinition.getObjectDefinitionId(),
+					"bulkActionTaskToBulkActionTaskItems"
+				).getObjectRelationshipId(),
+				null, bulkActionTaskObjectEntry.getObjectEntryId(), true, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			objectEntry -> Objects.equals(
+				GetterUtil.getLong(
+					objectEntry.getValues(
+					).get(
+						"r_bulkActionTaskToBulkActionTaskItems_c_" +
+							"bulkActionTaskId"
+					)),
+				bulkActionTaskObjectEntry.getObjectEntryId()));
+
+		ObjectEntry objectEntry = objectEntries.get(0);
+
+		return objectEntry.getValues();
+	}
+
 	private boolean _isCMSSiteInitialized() throws Exception {
 		ObjectFolder objectFolder =
 			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
@@ -174,6 +244,150 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		}
 
 		return false;
+	}
+
+	private void _testPostBulkActionWithTypeDefaultPermission()
+		throws Exception {
+
+		DefaultPermissionBulkAction defaultPermissionBulkAction =
+			new DefaultPermissionBulkAction();
+
+		defaultPermissionBulkAction.setDefaultPermissions(
+			"{\"test1\": \"test1\"}");
+		defaultPermissionBulkAction.setSelectAll(true);
+		defaultPermissionBulkAction.setType(
+			BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION);
+
+		try {
+			bulkActionResource.postBulkAction(
+				null, null, defaultPermissionBulkAction);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Assert.assertNotNull(problemException);
+		}
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION", _depotEntry.getCompanyId());
+
+		ObjectEntryFolder objectEntryFolder1 =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					_depotEntry.getGroupId(), _depotEntry.getCompanyId());
+
+		ObjectEntryFolder objectEntryFolder2 =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), _depotEntry.getGroupId(),
+				TestPropsValues.getUserId(),
+				objectEntryFolder1.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		JSONObject jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder2);
+
+		Assert.assertTrue(
+			jsonObject.has(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS));
+
+		ObjectEntryFolder objectEntryFolder3 =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), _depotEntry.getGroupId(),
+				TestPropsValues.getUserId(),
+				objectEntryFolder1.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder2);
+
+		Assert.assertTrue(
+			jsonObject.has(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS));
+
+		defaultPermissionBulkAction.setDepotGroupId(_depotEntry.getGroupId());
+
+		BulkActionTask bulkActionTask = bulkActionResource.postBulkAction(
+			null, null, defaultPermissionBulkAction);
+
+		Map<String, Serializable> values = _getImportTaskValues(bulkActionTask);
+
+		_waitForFinish(GetterUtil.getLong(values.get("importTaskId")));
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder2);
+
+		Assert.assertFalse(
+			jsonObject.has(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS));
+		Assert.assertTrue(jsonObject.has("test1"));
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder3);
+
+		Assert.assertFalse(
+			jsonObject.has(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS));
+		Assert.assertTrue(jsonObject.has("test1"));
+
+		ObjectEntryFolder objectEntryFolder4 =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), _depotEntry.getGroupId(),
+				TestPropsValues.getUserId(),
+				objectEntryFolder3.getObjectEntryFolderId(), "",
+				HashMapBuilder.put(
+					LocaleUtil.ENGLISH, RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder4);
+
+		Assert.assertFalse(
+			jsonObject.has(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS));
+		Assert.assertTrue(jsonObject.has("test1"));
+
+		defaultPermissionBulkAction.setDefaultPermissions(
+			"{\"test2\": \"test2\"}");
+		defaultPermissionBulkAction.setTreePath(
+			objectEntryFolder3.getTreePath());
+
+		bulkActionTask = bulkActionResource.postBulkAction(
+			null, null, defaultPermissionBulkAction);
+
+		values = _getImportTaskValues(bulkActionTask);
+
+		_waitForFinish(GetterUtil.getLong(values.get("importTaskId")));
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder2);
+
+		Assert.assertTrue(jsonObject.has("test1"));
+		Assert.assertFalse(jsonObject.has("test2"));
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder3);
+
+		Assert.assertFalse(jsonObject.has("test1"));
+		Assert.assertTrue(jsonObject.has("test2"));
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder4);
+
+		Assert.assertFalse(jsonObject.has("test1"));
+		Assert.assertTrue(jsonObject.has("test2"));
 	}
 
 	private void _testPostBulkActionWithTypeDelete() throws Exception {
@@ -195,7 +409,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("Filter cannot be null", problem.getTitle());
+			Assert.assertEquals("Filter is null", problem.getTitle());
 		}
 
 		ObjectEntry basicWebContentObjectEntry =
@@ -226,30 +440,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertEquals("STARTED", bulkActionTask.getExecuteStatus());
 		Assert.assertNotNull(bulkActionTask.getId());
 
-		ObjectEntry bulkActionTaskObjectEntry =
-			_objectEntryLocalService.getObjectEntry(bulkActionTask.getId());
-
-		List<ObjectEntry> objectEntries = ListUtil.filter(
-			_objectEntryLocalService.getOneToManyObjectEntries(
-				bulkActionTaskObjectEntry.getGroupId(),
-				_objectRelationshipLocalService.getObjectRelationship(
-					_bulkActionTaskObjectDefinition.getObjectDefinitionId(),
-					"bulkActionTaskToBulkActionTaskItems"
-				).getObjectRelationshipId(),
-				null, bulkActionTaskObjectEntry.getObjectEntryId(), true, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			objectEntry -> Objects.equals(
-				GetterUtil.getLong(
-					objectEntry.getValues(
-					).get(
-						"r_bulkActionTaskToBulkActionTaskItems_c_" +
-							"bulkActionTaskId"
-					)),
-				bulkActionTaskObjectEntry.getObjectEntryId()));
-
-		ObjectEntry objectEntry = objectEntries.get(0);
-
-		Map<String, Serializable> values = objectEntry.getValues();
+		Map<String, Serializable> values = _getImportTaskValues(bulkActionTask);
 
 		Assert.assertEquals(
 			basicWebContentObjectEntry.getExternalReferenceCode(),
@@ -298,10 +489,18 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
+	@Inject(
+		filter = "filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
+	)
+	private FilterFactory<Predicate> _filterFactory;
+
 	private ImportTaskResource _importTaskResource;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

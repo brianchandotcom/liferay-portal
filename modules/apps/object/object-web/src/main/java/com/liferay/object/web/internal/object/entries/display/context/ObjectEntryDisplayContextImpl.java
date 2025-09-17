@@ -910,7 +910,7 @@ public class ObjectEntryDisplayContextImpl
 			new DDMFormField(fieldName, DDMFormFieldTypeConstants.FIELDSET) {
 				{
 					setLabel(
-						new LocalizedValue() {
+						new LocalizedValue(_objectRequestHelper.getLocale()) {
 							{
 								addString(
 									_objectRequestHelper.getLocale(), label);

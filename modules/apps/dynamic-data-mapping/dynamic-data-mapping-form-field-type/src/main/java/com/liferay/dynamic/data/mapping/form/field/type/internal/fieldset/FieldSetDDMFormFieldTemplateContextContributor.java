@@ -10,10 +10,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -27,13 +25,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -78,7 +74,7 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 			rowsJSONArray = getRowsJSONArray(nestedFields);
 		}
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
 			"collapsible", ddmFormField.getProperty("collapsible")
 		).put(
 			"dataDefinitionId",
@@ -109,28 +105,6 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 			"visible",
 			ListUtil.isNotEmpty(_getVisibleNestedFields(nestedFields))
 		).build();
-
-		if (StringUtil.startsWith(
-				ddmFormFieldRenderingContext.getPortletNamespace(),
-				_portal.getPortletNamespace(
-					ObjectPortletKeys.OBJECT_DEFINITIONS))) {
-
-			LocalizedValue localizedValue = ddmFormField.getLabel();
-
-			Map<Locale, String> values = localizedValue.getValues();
-
-			for (Map.Entry<Locale, String> entry : values.entrySet()) {
-				parameters.put("label", entry.getValue());
-
-				Locale locale = entry.getKey();
-
-				if (locale.equals(localizedValue.getDefaultLocale())) {
-					break;
-				}
-			}
-		}
-
-		return parameters;
 	}
 
 	protected JSONArray getJSONArray(String rows) {
@@ -249,8 +223,5 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FieldSetDDMFormFieldTemplateContextContributor.class);
-
-	@Reference
-	private Portal _portal;
 
 }

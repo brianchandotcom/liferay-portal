@@ -19,6 +19,7 @@ const baseImageFile = {
 		href: '/images/image1.jpg',
 		label: 'Download Image',
 	},
+	mimeType: 'image/jpeg',
 	name: 'Image 1',
 	previewURL: '/preview/image1',
 	thumbnailURL: '/thumbs/image1?version=1.0&imageThumbnail=1',

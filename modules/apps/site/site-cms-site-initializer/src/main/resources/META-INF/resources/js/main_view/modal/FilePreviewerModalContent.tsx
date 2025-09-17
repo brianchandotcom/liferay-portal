@@ -12,6 +12,7 @@ import classNames from 'classnames';
 // @ts-ignore
 
 import {ImagePreviewer} from 'document-library-preview-image';
+import {DLVideoIframe} from 'document-library-video';
 import React from 'react';
 
 type File = {
@@ -36,7 +37,7 @@ export default function FilePreviewerModalContent({
 	file,
 	headerName,
 }: FilePreviewerModalContentProps) {
-	const {link, name, mimeType, previewURL, thumbnailURL} = file;
+	const {link, mimeType, name, previewURL, thumbnailURL} = file;
 	const params = new URLSearchParams(thumbnailURL);
 	const hasImagePreview = params.has('imageThumbnail');
 	const isVideo = mimeType.startsWith('video/') && previewURL;
@@ -76,16 +77,7 @@ export default function FilePreviewerModalContent({
 				{hasImagePreview ? (
 					<ImagePreviewer alt={name} imageURL={link.href} />
 				) : isVideo ? (
-					<div className="preview-file video-preview video-preview-framed">
-						<div className="video-preview-aspect-ratio">
-							<iframe
-								data-video-liferay
-								height="315"
-								src={previewURL}
-								width="560"
-							/>
-						</div>
-					</div>
+					<DLVideoIframe videoPreviewURL={previewURL} />
 				) : (
 					<ClayEmptyState
 						description={Liferay.Language.get(

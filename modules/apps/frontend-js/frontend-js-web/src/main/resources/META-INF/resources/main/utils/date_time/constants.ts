@@ -64,10 +64,10 @@ export const FIRST_DAY_OF_WEEK_MAP = {
 	'zh-CN': 1,
 } as const;
 
-export const WEEKDAYS_SHORT_MAP = {
-	'eu-ES': ["ig","al","ar","az","og","or","lr"],
-} as const;
-
 export const MONTHS_LONG_MAP = {
 	'eu-ES': ["urtarrila","otsaila","martxoa","apirila","maiatza","ekaina","uztaila","abuztua","iraila","urria","azaroa","abendua"],
+} as const;
+
+export const WEEKDAYS_SHORT_MAP = {
+	'eu-ES': ["ig","al","ar","az","og","or","lr"],
 } as const;

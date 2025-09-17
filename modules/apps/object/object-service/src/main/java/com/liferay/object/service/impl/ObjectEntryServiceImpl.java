@@ -786,7 +786,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			return true;
 		}
 
-		if (!_isRootDescendantNode(objectDefinition, rootObjectEntry)) {
+		if ((rootObjectEntry == null) || objectDefinition.isRootNode()) {
 			return false;
 		}
 

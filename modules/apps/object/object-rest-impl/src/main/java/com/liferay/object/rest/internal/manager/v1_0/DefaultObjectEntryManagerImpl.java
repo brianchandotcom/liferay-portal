@@ -1789,7 +1789,7 @@ public class DefaultObjectEntryManagerImpl
 				serviceBuilderObjectEntry.getGroupId()) &&
 			(serviceBuilderObjectEntry.getStatus() !=
 				WorkflowConstants.STATUS_IN_TRASH) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-53981")) {
+			FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 
 			_objectEntryService.moveObjectEntryToTrash(
 				serviceBuilderObjectEntry,
@@ -3024,7 +3024,7 @@ public class DefaultObjectEntryManagerImpl
 			).put(
 				"restore",
 				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPD-53981") ||
+					if (!FeatureFlagManagerUtil.isEnabled("LPD-17564") ||
 						!serviceBuilderObjectEntry.isInTrash()) {
 
 						return null;

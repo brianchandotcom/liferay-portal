@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -247,17 +248,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		OrderType orderType1 = testGraphQLDeleteOrderType_addOrderType();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrderType",
-						new HashMap<String, Object>() {
-							{
-								put("id", orderType1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrderType"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrderType",
+				new HashMap<String, Object>() {
+					{
+						put("id", orderType1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -277,20 +275,16 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		OrderType orderType2 = testGraphQLDeleteOrderType_addOrderType();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"deleteOrderType",
-							new HashMap<String, Object>() {
-								{
-									put("id", orderType2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-				"Object/deleteOrderType"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrderType",
+					new HashMap<String, Object>() {
+						{
+							put("id", orderType2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -410,6 +404,91 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrderTypeByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		OrderType orderType1 =
+			testGraphQLDeleteOrderTypeByExternalReferenceCode_addOrderType();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrderTypeByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + orderType1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"orderTypeByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + orderType1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		OrderType orderType2 =
+			testGraphQLDeleteOrderTypeByExternalReferenceCode_addOrderType();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrderTypeByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + orderType2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminOrder_v1_0",
+					new GraphQLField(
+						"orderTypeByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										orderType2.getExternalReferenceCode() +
+											"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected OrderType
+			testGraphQLDeleteOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
 	}
 
 	@Test
@@ -1312,6 +1391,7 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"orderTypes",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1327,8 +1407,11 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		long totalCount = orderTypesJSONObject.getLong("totalCount");
 
-		OrderType orderType1 = testGraphQLGetOrderTypesPage_addOrderType();
-		OrderType orderType2 = testGraphQLGetOrderTypesPage_addOrderType();
+		OrderType orderType1 = testGraphQLOrderType_addOrderType(
+			randomOrderType());
+
+		OrderType orderType2 = testGraphQLOrderType_addOrderType(
+			randomOrderType());
 
 		orderTypesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1370,12 +1453,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			Arrays.asList(
 				OrderTypeSerDes.toDTOs(
 					orderTypesJSONObject.getString("items"))));
-	}
-
-	protected OrderType testGraphQLGetOrderTypesPage_addOrderType()
-		throws Exception {
-
-		return testGraphQLOrderType_addOrderType();
 	}
 
 	@Test
@@ -1591,6 +1668,16 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostOrderType() throws Exception {
+		OrderType randomOrderType = randomOrderType();
+
+		OrderType orderType = testGraphQLOrderType_addOrderType(
+			randomOrderType);
+
+		Assert.assertTrue(equals(randomOrderType, orderType));
+	}
+
+	@Test
 	public void testPutOrderTypeByExternalReferenceCode() throws Exception {
 		OrderType postOrderType =
 			testPutOrderTypeByExternalReferenceCode_addOrderType();
@@ -1730,8 +1817,98 @@ public abstract class BaseOrderTypeResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected OrderType testGraphQLOrderType_addOrderType() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLOrderType_addOrderType(randomOrderType());
+	}
+
+	protected OrderType testGraphQLOrderType_addOrderType(OrderType orderType)
+		throws Exception {
+
+		JSONDeserializer<OrderType> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(OrderType.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(orderType));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createOrderType",
+						new HashMap<String, Object>() {
+							{
+								put("orderType", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createOrderType"),
+			OrderType.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

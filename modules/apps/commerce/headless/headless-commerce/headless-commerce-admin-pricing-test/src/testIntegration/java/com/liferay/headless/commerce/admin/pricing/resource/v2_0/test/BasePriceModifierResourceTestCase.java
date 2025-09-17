@@ -263,17 +263,14 @@ public abstract class BasePriceModifierResourceTestCase {
 		PriceModifier priceModifier1 =
 			testGraphQLDeletePriceModifier_addPriceModifier();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceModifier",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceModifier1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceModifier"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceModifier",
+				new HashMap<String, Object>() {
+					{
+						put("id", priceModifier1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -294,21 +291,16 @@ public abstract class BasePriceModifierResourceTestCase {
 		PriceModifier priceModifier2 =
 			testGraphQLDeletePriceModifier_addPriceModifier();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v2_0",
-						new GraphQLField(
-							"deletePriceModifier",
-							new HashMap<String, Object>() {
-								{
-									put("id", priceModifier2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v2_0",
-				"Object/deletePriceModifier"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deletePriceModifier",
+					new HashMap<String, Object>() {
+						{
+							put("id", priceModifier2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -441,6 +433,93 @@ public abstract class BasePriceModifierResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePriceModifierByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		PriceModifier priceModifier1 =
+			testGraphQLDeletePriceModifierByExternalReferenceCode_addPriceModifier();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceModifierByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + priceModifier1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"priceModifierByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									priceModifier1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		PriceModifier priceModifier2 =
+			testGraphQLDeletePriceModifierByExternalReferenceCode_addPriceModifier();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deletePriceModifierByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									priceModifier2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPricing_v2_0",
+					new GraphQLField(
+						"priceModifierByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										priceModifier2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected PriceModifier
+			testGraphQLDeletePriceModifierByExternalReferenceCode_addPriceModifier()
+		throws Exception {
+
+		return testGraphQLPriceModifier_addPriceModifier();
 	}
 
 	@Test

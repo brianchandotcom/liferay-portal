@@ -261,19 +261,14 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		PriceEntry priceEntry1 = testGraphQLDeletePriceEntry_addPriceEntry();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceEntry",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"priceEntryId",
-									priceEntry1.getPriceEntryId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceEntry"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceEntry",
+				new HashMap<String, Object>() {
+					{
+						put("priceEntryId", priceEntry1.getPriceEntryId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -293,23 +288,16 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		PriceEntry priceEntry2 = testGraphQLDeletePriceEntry_addPriceEntry();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v2_0",
-						new GraphQLField(
-							"deletePriceEntry",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"priceEntryId",
-										priceEntry2.getPriceEntryId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v2_0",
-				"Object/deletePriceEntry"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deletePriceEntry",
+					new HashMap<String, Object>() {
+						{
+							put("priceEntryId", priceEntry2.getPriceEntryId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -439,6 +427,91 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePriceEntryByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		PriceEntry priceEntry1 =
+			testGraphQLDeletePriceEntryByExternalReferenceCode_addPriceEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceEntryByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + priceEntry1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"priceEntryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + priceEntry1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		PriceEntry priceEntry2 =
+			testGraphQLDeletePriceEntryByExternalReferenceCode_addPriceEntry();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deletePriceEntryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + priceEntry2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPricing_v2_0",
+					new GraphQLField(
+						"priceEntryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										priceEntry2.getExternalReferenceCode() +
+											"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected PriceEntry
+			testGraphQLDeletePriceEntryByExternalReferenceCode_addPriceEntry()
+		throws Exception {
+
+		return testGraphQLPriceEntry_addPriceEntry();
 	}
 
 	@Test

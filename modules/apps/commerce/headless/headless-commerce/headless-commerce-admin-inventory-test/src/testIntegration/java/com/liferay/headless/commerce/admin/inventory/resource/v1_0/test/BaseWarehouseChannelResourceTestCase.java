@@ -225,43 +225,34 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		WarehouseChannel warehouseChannel1 =
 			testGraphQLDeleteWarehouseChannel_addWarehouseChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWarehouseChannel",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"warehouseChannelId",
-									warehouseChannel1.getWarehouseChannelId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWarehouseChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteWarehouseChannel",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"warehouseChannelId",
+							warehouseChannel1.getWarehouseChannelId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
 		WarehouseChannel warehouseChannel2 =
 			testGraphQLDeleteWarehouseChannel_addWarehouseChannel();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminInventory_v1_0",
-						new GraphQLField(
-							"deleteWarehouseChannel",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"warehouseChannelId",
-										warehouseChannel2.
-											getWarehouseChannelId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminInventory_v1_0",
-				"Object/deleteWarehouseChannel"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminInventory_v1_0",
+				new GraphQLField(
+					"deleteWarehouseChannel",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"warehouseChannelId",
+								warehouseChannel2.getWarehouseChannelId());
+						}
+					})));
 	}
 
 	protected WarehouseChannel

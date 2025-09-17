@@ -22,6 +22,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -264,17 +265,14 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		SXPElement sxpElement1 = testGraphQLDeleteSXPElement_addSXPElement();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSXPElement",
-						new HashMap<String, Object>() {
-							{
-								put("sxpElementId", sxpElement1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSXPElement"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSXPElement",
+				new HashMap<String, Object>() {
+					{
+						put("sxpElementId", sxpElement1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -294,20 +292,16 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		SXPElement sxpElement2 = testGraphQLDeleteSXPElement_addSXPElement();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"searchExperiences_v1_0",
-						new GraphQLField(
-							"deleteSXPElement",
-							new HashMap<String, Object>() {
-								{
-									put("sxpElementId", sxpElement2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/searchExperiences_v1_0",
-				"Object/deleteSXPElement"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"searchExperiences_v1_0",
+				new GraphQLField(
+					"deleteSXPElement",
+					new HashMap<String, Object>() {
+						{
+							put("sxpElementId", sxpElement2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -1139,6 +1133,75 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSXPElementsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"sXPElements",
+			new HashMap<String, Object>() {
+				{
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject sXPElementsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/sXPElements");
+
+		long totalCount = sXPElementsJSONObject.getLong("totalCount");
+
+		SXPElement sxpElement1 = testGraphQLSXPElement_addSXPElement(
+			randomSXPElement());
+
+		SXPElement sxpElement2 = testGraphQLSXPElement_addSXPElement(
+			randomSXPElement());
+
+		sXPElementsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/sXPElements");
+
+		Assert.assertEquals(
+			totalCount + 2, sXPElementsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			sxpElement1,
+			Arrays.asList(
+				SXPElementSerDes.toDTOs(
+					sXPElementsJSONObject.getString("items"))));
+		assertContains(
+			sxpElement2,
+			Arrays.asList(
+				SXPElementSerDes.toDTOs(
+					sXPElementsJSONObject.getString("items"))));
+
+		// Using the namespace searchExperiences_v1_0
+
+		sXPElementsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("searchExperiences_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+			"JSONObject/sXPElements");
+
+		Assert.assertEquals(
+			totalCount + 2, sXPElementsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			sxpElement1,
+			Arrays.asList(
+				SXPElementSerDes.toDTOs(
+					sXPElementsJSONObject.getString("items"))));
+		assertContains(
+			sxpElement2,
+			Arrays.asList(
+				SXPElementSerDes.toDTOs(
+					sXPElementsJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPatchSXPElement() throws Exception {
 		SXPElement postSXPElement = testPatchSXPElement_addSXPElement();
 
@@ -1184,6 +1247,16 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostSXPElement() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement sxpElement = testGraphQLSXPElement_addSXPElement(
+			randomSXPElement);
+
+		Assert.assertTrue(equals(randomSXPElement, sxpElement));
+	}
+
+	@Test
 	public void testPostSXPElementCopy() throws Exception {
 		SXPElement randomSXPElement = randomSXPElement();
 
@@ -1200,6 +1273,16 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostSXPElementCopy() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement sxpElement = testGraphQLSXPElement_addSXPElement(
+			randomSXPElement);
+
+		Assert.assertTrue(equals(randomSXPElement, sxpElement));
 	}
 
 	@Test
@@ -1222,6 +1305,16 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostSXPElementPreview() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement sxpElement = testGraphQLSXPElement_addSXPElement(
+			randomSXPElement);
+
+		Assert.assertTrue(equals(randomSXPElement, sxpElement));
+	}
+
+	@Test
 	public void testPostSXPElementValidate() throws Exception {
 		SXPElement randomSXPElement = randomSXPElement();
 
@@ -1238,6 +1331,16 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostSXPElementValidate() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement sxpElement = testGraphQLSXPElement_addSXPElement(
+			randomSXPElement);
+
+		Assert.assertTrue(equals(randomSXPElement, sxpElement));
 	}
 
 	@Test
@@ -1379,8 +1482,99 @@ public abstract class BaseSXPElementResourceTestCase {
 	protected SXPElement testGraphQLSXPElement_addSXPElement()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLSXPElement_addSXPElement(randomSXPElement());
+	}
+
+	protected SXPElement testGraphQLSXPElement_addSXPElement(
+			SXPElement sxpElement)
+		throws Exception {
+
+		JSONDeserializer<SXPElement> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(SXPElement.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(sxpElement));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSXPElement",
+						new HashMap<String, Object>() {
+							{
+								put("sxpElement", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSXPElement"),
+			SXPElement.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

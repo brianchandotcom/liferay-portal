@@ -264,8 +264,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 			testDeleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntryGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -302,8 +301,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 	protected Long testDeleteAssetLibraryConnectedSite_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -335,8 +333,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntryGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -568,8 +565,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 	protected Long testGetAssetLibraryConnectedSite_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -798,8 +794,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntryGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -836,8 +831,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 	protected Long testPutAssetLibraryConnectedSite_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -899,8 +893,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 	protected Long testBatchEngineDeleteImportTask_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected void assertContains(

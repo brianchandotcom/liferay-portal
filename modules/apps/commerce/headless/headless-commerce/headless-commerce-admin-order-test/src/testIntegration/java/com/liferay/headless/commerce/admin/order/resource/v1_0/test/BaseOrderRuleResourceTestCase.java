@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -257,17 +258,14 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		OrderRule orderRule1 = testGraphQLDeleteOrderRule_addOrderRule();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrderRule",
-						new HashMap<String, Object>() {
-							{
-								put("id", orderRule1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrderRule"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrderRule",
+				new HashMap<String, Object>() {
+					{
+						put("id", orderRule1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -287,20 +285,16 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		OrderRule orderRule2 = testGraphQLDeleteOrderRule_addOrderRule();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"deleteOrderRule",
-							new HashMap<String, Object>() {
-								{
-									put("id", orderRule2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-				"Object/deleteOrderRule"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrderRule",
+					new HashMap<String, Object>() {
+						{
+							put("id", orderRule2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -420,6 +414,91 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrderRuleByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		OrderRule orderRule1 =
+			testGraphQLDeleteOrderRuleByExternalReferenceCode_addOrderRule();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrderRuleByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + orderRule1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"orderRuleByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + orderRule1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		OrderRule orderRule2 =
+			testGraphQLDeleteOrderRuleByExternalReferenceCode_addOrderRule();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrderRuleByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + orderRule2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminOrder_v1_0",
+					new GraphQLField(
+						"orderRuleByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										orderRule2.getExternalReferenceCode() +
+											"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected OrderRule
+			testGraphQLDeleteOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
 	}
 
 	@Test
@@ -1183,6 +1262,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 			"orderRules",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1198,8 +1278,11 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		long totalCount = orderRulesJSONObject.getLong("totalCount");
 
-		OrderRule orderRule1 = testGraphQLGetOrderRulesPage_addOrderRule();
-		OrderRule orderRule2 = testGraphQLGetOrderRulesPage_addOrderRule();
+		OrderRule orderRule1 = testGraphQLOrderRule_addOrderRule(
+			randomOrderRule());
+
+		OrderRule orderRule2 = testGraphQLOrderRule_addOrderRule(
+			randomOrderRule());
 
 		orderRulesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1241,12 +1324,6 @@ public abstract class BaseOrderRuleResourceTestCase {
 			Arrays.asList(
 				OrderRuleSerDes.toDTOs(
 					orderRulesJSONObject.getString("items"))));
-	}
-
-	protected OrderRule testGraphQLGetOrderRulesPage_addOrderRule()
-		throws Exception {
-
-		return testGraphQLOrderRule_addOrderRule();
 	}
 
 	@Test
@@ -1324,6 +1401,16 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostOrderRule() throws Exception {
+		OrderRule randomOrderRule = randomOrderRule();
+
+		OrderRule orderRule = testGraphQLOrderRule_addOrderRule(
+			randomOrderRule);
+
+		Assert.assertTrue(equals(randomOrderRule, orderRule));
 	}
 
 	@Test
@@ -1466,8 +1553,98 @@ public abstract class BaseOrderRuleResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected OrderRule testGraphQLOrderRule_addOrderRule() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLOrderRule_addOrderRule(randomOrderRule());
+	}
+
+	protected OrderRule testGraphQLOrderRule_addOrderRule(OrderRule orderRule)
+		throws Exception {
+
+		JSONDeserializer<OrderRule> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(OrderRule.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(orderRule));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createOrderRule",
+						new HashMap<String, Object>() {
+							{
+								put("orderRule", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createOrderRule"),
+			OrderRule.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

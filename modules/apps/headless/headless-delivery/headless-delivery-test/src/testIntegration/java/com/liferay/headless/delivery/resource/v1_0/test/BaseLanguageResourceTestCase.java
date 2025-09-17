@@ -353,81 +353,8 @@ public abstract class BaseLanguageResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteLanguagesPage() throws Exception {
-		Long siteId = testGetSiteLanguagesPage_getSiteId();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"languages",
-			new HashMap<String, Object>() {
-				{
-					put("siteKey", "\"" + siteId + "\"");
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject languagesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/languages");
-
-		long totalCount = languagesJSONObject.getLong("totalCount");
-
-		Language language1 = testGraphQLGetSiteLanguagesPage_addLanguage();
-		Language language2 = testGraphQLGetSiteLanguagesPage_addLanguage();
-
-		languagesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/languages");
-
-		Assert.assertEquals(
-			totalCount + 2, languagesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			language1,
-			Arrays.asList(
-				LanguageSerDes.toDTOs(languagesJSONObject.getString("items"))));
-		assertContains(
-			language2,
-			Arrays.asList(
-				LanguageSerDes.toDTOs(languagesJSONObject.getString("items"))));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		languagesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-			"JSONObject/languages");
-
-		Assert.assertEquals(
-			totalCount + 2, languagesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			language1,
-			Arrays.asList(
-				LanguageSerDes.toDTOs(languagesJSONObject.getString("items"))));
-		assertContains(
-			language2,
-			Arrays.asList(
-				LanguageSerDes.toDTOs(languagesJSONObject.getString("items"))));
-	}
-
-	protected Language testGraphQLGetSiteLanguagesPage_addLanguage()
-		throws Exception {
-
-		return testGraphQLLanguage_addLanguage();
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
-	}
-
-	protected Language testGraphQLLanguage_addLanguage() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected void assertContains(Language language, List<Language> languages) {

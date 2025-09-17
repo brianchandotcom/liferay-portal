@@ -225,43 +225,34 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		DiscountCategory discountCategory1 =
 			testGraphQLDeleteDiscountCategory_addDiscountCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDiscountCategory",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"discountCategoryId",
-									discountCategory1.getDiscountCategoryId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDiscountCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteDiscountCategory",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"discountCategoryId",
+							discountCategory1.getDiscountCategoryId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
 		DiscountCategory discountCategory2 =
 			testGraphQLDeleteDiscountCategory_addDiscountCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v2_0",
-						new GraphQLField(
-							"deleteDiscountCategory",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"discountCategoryId",
-										discountCategory2.
-											getDiscountCategoryId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v2_0",
-				"Object/deleteDiscountCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deleteDiscountCategory",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"discountCategoryId",
+								discountCategory2.getDiscountCategoryId());
+						}
+					})));
 	}
 
 	protected DiscountCategory

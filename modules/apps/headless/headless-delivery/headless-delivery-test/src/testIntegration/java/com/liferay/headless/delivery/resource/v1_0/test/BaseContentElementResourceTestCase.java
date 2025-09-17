@@ -1090,97 +1090,12 @@ public abstract class BaseContentElementResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteContentElementsPage() throws Exception {
-		Long siteId = testGetSiteContentElementsPage_getSiteId();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"contentElements",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject contentElementsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/contentElements");
-
-		long totalCount = contentElementsJSONObject.getLong("totalCount");
-
-		ContentElement contentElement1 =
-			testGraphQLGetSiteContentElementsPage_addContentElement();
-		ContentElement contentElement2 =
-			testGraphQLGetSiteContentElementsPage_addContentElement();
-
-		contentElementsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/contentElements");
-
-		Assert.assertEquals(
-			totalCount + 2, contentElementsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			contentElement1,
-			Arrays.asList(
-				ContentElementSerDes.toDTOs(
-					contentElementsJSONObject.getString("items"))));
-		assertContains(
-			contentElement2,
-			Arrays.asList(
-				ContentElementSerDes.toDTOs(
-					contentElementsJSONObject.getString("items"))));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		contentElementsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-			"JSONObject/contentElements");
-
-		Assert.assertEquals(
-			totalCount + 2, contentElementsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			contentElement1,
-			Arrays.asList(
-				ContentElementSerDes.toDTOs(
-					contentElementsJSONObject.getString("items"))));
-		assertContains(
-			contentElement2,
-			Arrays.asList(
-				ContentElementSerDes.toDTOs(
-					contentElementsJSONObject.getString("items"))));
-	}
-
-	protected ContentElement
-			testGraphQLGetSiteContentElementsPage_addContentElement()
-		throws Exception {
-
-		return testGraphQLContentElement_addContentElement();
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	protected ContentElement testGraphQLContentElement_addContentElement()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
 
 	protected void assertContains(
 		ContentElement contentElement, List<ContentElement> contentElements) {

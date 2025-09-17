@@ -212,6 +212,66 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteSpecificationListTypeDefinition()
+		throws Exception {
+
+		// No namespace
+
+		ListTypeDefinition listTypeDefinition1 =
+			testGraphQLDeleteSpecificationListTypeDefinition_addListTypeDefinition();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSpecificationListTypeDefinition",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"specificationId",
+							testGraphQLDeleteSpecificationListTypeDefinition_getSpecificationId());
+						put(
+							"listTypeDefinitionId",
+							listTypeDefinition1.getId());
+					}
+				}));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		ListTypeDefinition listTypeDefinition2 =
+			testGraphQLDeleteSpecificationListTypeDefinition_addListTypeDefinition();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteSpecificationListTypeDefinition",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"specificationId",
+								testGraphQLDeleteSpecificationListTypeDefinition_getSpecificationId());
+							put(
+								"listTypeDefinitionId",
+								listTypeDefinition2.getId());
+						}
+					})));
+	}
+
+	protected Long
+			testGraphQLDeleteSpecificationListTypeDefinition_getSpecificationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ListTypeDefinition
+			testGraphQLDeleteSpecificationListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return testGraphQLListTypeDefinition_addListTypeDefinition();
+	}
+
+	@Test
 	public void testGetSpecificationIdListTypeDefinitionsPage()
 		throws Exception {
 
@@ -363,6 +423,14 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected ListTypeDefinition
+			testGraphQLListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

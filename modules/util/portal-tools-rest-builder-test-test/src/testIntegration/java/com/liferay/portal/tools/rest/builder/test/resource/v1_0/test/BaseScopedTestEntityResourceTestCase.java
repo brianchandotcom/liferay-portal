@@ -300,7 +300,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 										getExternalReferenceCode() + "\"");
 						}
 					},
-					new GraphQLField("id"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -350,7 +350,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 											getExternalReferenceCode() + "\"");
 							}
 						},
-						new GraphQLField("id")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -447,7 +447,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 										getExternalReferenceCode() + "\"");
 						}
 					},
-					new GraphQLField("id"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -494,7 +494,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 											getExternalReferenceCode() + "\"");
 							}
 						},
-						new GraphQLField("id")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -603,6 +603,89 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		throws Exception {
 
 		return irrelevantDepotEntry.getDepotEntryId();
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryScopedTestEntitiesPage()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryScopedTestEntitiesPage_getAssetLibraryId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryScopedTestEntities",
+			new HashMap<String, Object>() {
+				{
+					put("assetLibraryId", "\"" + assetLibraryId + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject assetLibraryScopedTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryScopedTestEntities");
+
+		long totalCount = assetLibraryScopedTestEntitiesJSONObject.getLong(
+			"totalCount");
+
+		ScopedTestEntity scopedTestEntity1 =
+			testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity(
+				assetLibraryId, randomScopedTestEntity());
+
+		ScopedTestEntity scopedTestEntity2 =
+			testGraphQLAssetLibraryScopedTestEntity_addScopedTestEntity(
+				assetLibraryId, randomScopedTestEntity());
+
+		assetLibraryScopedTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryScopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryScopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			scopedTestEntity1,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					assetLibraryScopedTestEntitiesJSONObject.getString(
+						"items"))));
+		assertContains(
+			scopedTestEntity2,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					assetLibraryScopedTestEntitiesJSONObject.getString(
+						"items"))));
+
+		// Using the namespace test_v1_0
+
+		assetLibraryScopedTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"JSONObject/assetLibraryScopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryScopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			scopedTestEntity1,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					assetLibraryScopedTestEntitiesJSONObject.getString(
+						"items"))));
+		assertContains(
+			scopedTestEntity2,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					assetLibraryScopedTestEntitiesJSONObject.getString(
+						"items"))));
 	}
 
 	@Test
@@ -889,9 +972,12 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		long totalCount = scopedTestEntitiesJSONObject.getLong("totalCount");
 
 		ScopedTestEntity scopedTestEntity1 =
-			testGraphQLGetSiteScopedTestEntitiesPage_addScopedTestEntity();
+			testGraphQLSiteScopedTestEntity_addScopedTestEntity(
+				siteId, randomScopedTestEntity());
+
 		ScopedTestEntity scopedTestEntity2 =
-			testGraphQLGetSiteScopedTestEntitiesPage_addScopedTestEntity();
+			testGraphQLSiteScopedTestEntity_addScopedTestEntity(
+				siteId, randomScopedTestEntity());
 
 		scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -931,13 +1017,6 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			Arrays.asList(
 				ScopedTestEntitySerDes.toDTOs(
 					scopedTestEntitiesJSONObject.getString("items"))));
-	}
-
-	protected ScopedTestEntity
-			testGraphQLGetSiteScopedTestEntitiesPage_addScopedTestEntity()
-		throws Exception {
-
-		return testGraphQLSiteScopedTestEntity_addScopedTestEntity();
 	}
 
 	@Test

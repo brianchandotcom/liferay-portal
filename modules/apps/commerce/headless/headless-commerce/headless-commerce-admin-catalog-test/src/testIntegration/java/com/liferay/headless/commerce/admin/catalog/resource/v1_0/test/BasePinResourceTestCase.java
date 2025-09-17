@@ -214,37 +214,29 @@ public abstract class BasePinResourceTestCase {
 
 		Pin pin1 = testGraphQLDeletePin_addPin();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePin",
-						new HashMap<String, Object>() {
-							{
-								put("pinId", pin1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePin"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePin",
+				new HashMap<String, Object>() {
+					{
+						put("pinId", pin1.getId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		Pin pin2 = testGraphQLDeletePin_addPin();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deletePin",
-							new HashMap<String, Object>() {
-								{
-									put("pinId", pin2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deletePin"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deletePin",
+					new HashMap<String, Object>() {
+						{
+							put("pinId", pin2.getId());
+						}
+					})));
 	}
 
 	protected Pin testGraphQLDeletePin_addPin() throws Exception {

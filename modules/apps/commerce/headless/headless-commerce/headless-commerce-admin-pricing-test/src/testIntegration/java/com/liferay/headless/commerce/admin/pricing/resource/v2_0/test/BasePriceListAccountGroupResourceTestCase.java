@@ -234,44 +234,36 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 		PriceListAccountGroup priceListAccountGroup1 =
 			testGraphQLDeletePriceListAccountGroup_addPriceListAccountGroup();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceListAccountGroup",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"priceListAccountGroupId",
-									priceListAccountGroup1.
-										getPriceListAccountGroupId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceListAccountGroup"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deletePriceListAccountGroup",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"priceListAccountGroupId",
+							priceListAccountGroup1.
+								getPriceListAccountGroupId());
+					}
+				}));
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
 		PriceListAccountGroup priceListAccountGroup2 =
 			testGraphQLDeletePriceListAccountGroup_addPriceListAccountGroup();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v2_0",
-						new GraphQLField(
-							"deletePriceListAccountGroup",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"priceListAccountGroupId",
-										priceListAccountGroup2.
-											getPriceListAccountGroupId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v2_0",
-				"Object/deletePriceListAccountGroup"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminPricing_v2_0",
+				new GraphQLField(
+					"deletePriceListAccountGroup",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"priceListAccountGroupId",
+								priceListAccountGroup2.
+									getPriceListAccountGroupId());
+						}
+					})));
 	}
 
 	protected PriceListAccountGroup

@@ -249,17 +249,14 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		ObjectView objectView1 = testGraphQLDeleteObjectView_addObjectView();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteObjectView",
-						new HashMap<String, Object>() {
-							{
-								put("objectViewId", objectView1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteObjectView"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteObjectView",
+				new HashMap<String, Object>() {
+					{
+						put("objectViewId", objectView1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -279,20 +276,16 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		ObjectView objectView2 = testGraphQLDeleteObjectView_addObjectView();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"objectAdmin_v1_0",
-						new GraphQLField(
-							"deleteObjectView",
-							new HashMap<String, Object>() {
-								{
-									put("objectViewId", objectView2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
-				"Object/deleteObjectView"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"objectAdmin_v1_0",
+				new GraphQLField(
+					"deleteObjectView",
+					new HashMap<String, Object>() {
+						{
+							put("objectViewId", objectView2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

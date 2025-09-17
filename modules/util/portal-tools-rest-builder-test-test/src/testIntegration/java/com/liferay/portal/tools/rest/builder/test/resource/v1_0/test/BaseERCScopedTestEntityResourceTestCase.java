@@ -313,7 +313,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 										getExternalReferenceCode() + "\"");
 						}
 					},
-					new GraphQLField("ercScopedTestEntityId"))),
+					getGraphQLFields())),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray1.length() > 0);
@@ -365,7 +365,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 											getExternalReferenceCode() + "\"");
 							}
 						},
-						new GraphQLField("ercScopedTestEntityId")))),
+						getGraphQLFields()))),
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray2.length() > 0);
@@ -627,6 +627,91 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAssetLibraryERCScopedTestEntitiesPage()
+		throws Exception {
+
+		String assetLibraryExternalReferenceCode =
+			testGetAssetLibraryERCScopedTestEntitiesPage_getAssetLibraryExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryERCScopedTestEntities",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"assetLibraryExternalReferenceCode",
+						"\"" + RandomTestUtil.randomString() + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject assetLibraryERCScopedTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryERCScopedTestEntities");
+
+		long totalCount = assetLibraryERCScopedTestEntitiesJSONObject.getLong(
+			"totalCount");
+
+		ERCScopedTestEntity ercScopedTestEntity1 =
+			testGraphQLAssetLibraryERCScopedTestEntity_addERCScopedTestEntity(
+				assetLibraryExternalReferenceCode, randomERCScopedTestEntity());
+
+		ERCScopedTestEntity ercScopedTestEntity2 =
+			testGraphQLAssetLibraryERCScopedTestEntity_addERCScopedTestEntity(
+				assetLibraryExternalReferenceCode, randomERCScopedTestEntity());
+
+		assetLibraryERCScopedTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryERCScopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryERCScopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ercScopedTestEntity1,
+			Arrays.asList(
+				ERCScopedTestEntitySerDes.toDTOs(
+					assetLibraryERCScopedTestEntitiesJSONObject.getString(
+						"items"))));
+		assertContains(
+			ercScopedTestEntity2,
+			Arrays.asList(
+				ERCScopedTestEntitySerDes.toDTOs(
+					assetLibraryERCScopedTestEntitiesJSONObject.getString(
+						"items"))));
+
+		// Using the namespace test_v1_0
+
+		assetLibraryERCScopedTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"JSONObject/assetLibraryERCScopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryERCScopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ercScopedTestEntity1,
+			Arrays.asList(
+				ERCScopedTestEntitySerDes.toDTOs(
+					assetLibraryERCScopedTestEntitiesJSONObject.getString(
+						"items"))));
+		assertContains(
+			ercScopedTestEntity2,
+			Arrays.asList(
+				ERCScopedTestEntitySerDes.toDTOs(
+					assetLibraryERCScopedTestEntitiesJSONObject.getString(
+						"items"))));
+	}
+
+	@Test
 	public void testGetAssetLibraryERCScopedTestEntity() throws Exception {
 		ERCScopedTestEntity postERCScopedTestEntity =
 			testGetAssetLibraryERCScopedTestEntity_addERCScopedTestEntity();
@@ -884,6 +969,82 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		throws Exception {
 
 		return irrelevantGroup.getExternalReferenceCode();
+	}
+
+	@Test
+	public void testGraphQLGetSiteERCScopedTestEntitiesPage() throws Exception {
+		String siteExternalReferenceCode =
+			testGetSiteERCScopedTestEntitiesPage_getSiteExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"eRCScopedTestEntities",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"siteExternalReferenceCode",
+						"\"" + RandomTestUtil.randomString() + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject eRCScopedTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/eRCScopedTestEntities");
+
+		long totalCount = eRCScopedTestEntitiesJSONObject.getLong("totalCount");
+
+		ERCScopedTestEntity ercScopedTestEntity1 =
+			testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity(
+				siteExternalReferenceCode, randomERCScopedTestEntity());
+
+		ERCScopedTestEntity ercScopedTestEntity2 =
+			testGraphQLSiteERCScopedTestEntity_addERCScopedTestEntity(
+				siteExternalReferenceCode, randomERCScopedTestEntity());
+
+		eRCScopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/eRCScopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			eRCScopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ercScopedTestEntity1,
+			Arrays.asList(
+				ERCScopedTestEntitySerDes.toDTOs(
+					eRCScopedTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			ercScopedTestEntity2,
+			Arrays.asList(
+				ERCScopedTestEntitySerDes.toDTOs(
+					eRCScopedTestEntitiesJSONObject.getString("items"))));
+
+		// Using the namespace test_v1_0
+
+		eRCScopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/test_v1_0",
+			"JSONObject/eRCScopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			eRCScopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ercScopedTestEntity1,
+			Arrays.asList(
+				ERCScopedTestEntitySerDes.toDTOs(
+					eRCScopedTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			ercScopedTestEntity2,
+			Arrays.asList(
+				ERCScopedTestEntitySerDes.toDTOs(
+					eRCScopedTestEntitiesJSONObject.getString("items"))));
 	}
 
 	@Test

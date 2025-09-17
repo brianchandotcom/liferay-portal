@@ -216,11 +216,6 @@ public abstract class BaseReindexStatusResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetReindexStatusesPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

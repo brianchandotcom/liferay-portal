@@ -468,6 +468,82 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSiteERCSiteTestEntitiesPage() throws Exception {
+		String siteExternalReferenceCode =
+			testGetSiteERCSiteTestEntitiesPage_getSiteExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"eRCSiteTestEntities",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"siteExternalReferenceCode",
+						"\"" + RandomTestUtil.randomString() + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject eRCSiteTestEntitiesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/eRCSiteTestEntities");
+
+		long totalCount = eRCSiteTestEntitiesJSONObject.getLong("totalCount");
+
+		ERCSiteTestEntity ercSiteTestEntity1 =
+			testGraphQLSiteERCSiteTestEntity_addERCSiteTestEntity(
+				siteExternalReferenceCode, randomERCSiteTestEntity());
+
+		ERCSiteTestEntity ercSiteTestEntity2 =
+			testGraphQLSiteERCSiteTestEntity_addERCSiteTestEntity(
+				siteExternalReferenceCode, randomERCSiteTestEntity());
+
+		eRCSiteTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/eRCSiteTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			eRCSiteTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ercSiteTestEntity1,
+			Arrays.asList(
+				ERCSiteTestEntitySerDes.toDTOs(
+					eRCSiteTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			ercSiteTestEntity2,
+			Arrays.asList(
+				ERCSiteTestEntitySerDes.toDTOs(
+					eRCSiteTestEntitiesJSONObject.getString("items"))));
+
+		// Using the namespace test_v1_0
+
+		eRCSiteTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/test_v1_0",
+			"JSONObject/eRCSiteTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			eRCSiteTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ercSiteTestEntity1,
+			Arrays.asList(
+				ERCSiteTestEntitySerDes.toDTOs(
+					eRCSiteTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			ercSiteTestEntity2,
+			Arrays.asList(
+				ERCSiteTestEntitySerDes.toDTOs(
+					eRCSiteTestEntitiesJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testGetSiteERCSiteTestEntity() throws Exception {
 		ERCSiteTestEntity postERCSiteTestEntity =
 			testGetSiteERCSiteTestEntity_addERCSiteTestEntity();
@@ -650,6 +726,47 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
 			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
+	}
+
+	@Test
+	public void testGraphQLGetSiteERCSiteTestEntityPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ERCSiteTestEntity postERCSiteTestEntity =
+			testGraphQLGetSiteERCSiteTestEntityPermissionsPage_addERCSiteTestEntity();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"eRCSiteTestEntityPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"siteExternalReferenceCode",
+						"\"" +
+							postERCSiteTestEntity.
+								getSiteExternalReferenceCode() + "\"");
+					put(
+						"ercSiteTestEntityExternalReferenceCode",
+						"\"" +
+							postERCSiteTestEntity.getExternalReferenceCode() +
+								"\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject eRCSiteTestEntityPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/eRCSiteTestEntityPermissions");
+
+		Assert.assertNotNull(eRCSiteTestEntityPermissionsJSONObject);
+	}
+
+	protected ERCSiteTestEntity
+			testGraphQLGetSiteERCSiteTestEntityPermissionsPage_addERCSiteTestEntity()
+		throws Exception {
+
+		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity();
 	}
 
 	@Test

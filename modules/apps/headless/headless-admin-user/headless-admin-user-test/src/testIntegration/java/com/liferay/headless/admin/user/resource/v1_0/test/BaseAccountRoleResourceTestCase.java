@@ -230,6 +230,81 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountAccountRoleUserAccountAssociation()
+		throws Exception {
+
+		// No namespace
+
+		AccountRole accountRole1 =
+			testGraphQLDeleteAccountAccountRoleUserAccountAssociation_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountAccountRoleUserAccountAssociation",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"accountId",
+							testGraphQLDeleteAccountAccountRoleUserAccountAssociation_getAccountId(
+								accountRole1));
+						put("accountRoleId", accountRole1.getId());
+
+						put(
+							"userAccountId",
+							testGraphQLDeleteAccountAccountRoleUserAccountAssociation_getUserAccountId());
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		AccountRole accountRole2 =
+			testGraphQLDeleteAccountAccountRoleUserAccountAssociation_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountAccountRoleUserAccountAssociation",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountId",
+								testGraphQLDeleteAccountAccountRoleUserAccountAssociation_getAccountId(
+									accountRole2));
+							put("accountRoleId", accountRole2.getId());
+
+							put(
+								"userAccountId",
+								testGraphQLDeleteAccountAccountRoleUserAccountAssociation_getUserAccountId());
+						}
+					})));
+	}
+
+	protected Long
+			testGraphQLDeleteAccountAccountRoleUserAccountAssociation_getAccountId(
+				AccountRole accountRole)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGraphQLDeleteAccountAccountRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AccountRole
+			testGraphQLDeleteAccountAccountRoleUserAccountAssociation_addAccountRole()
+		throws Exception {
+
+		return testGraphQLAccountRole_addAccountRole();
+	}
+
+	@Test
 	public void testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress()
 		throws Exception {
 
@@ -273,6 +348,93 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress()
+		throws Exception {
+
+		// No namespace
+
+		AccountRole accountRole1 =
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" +
+								testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode(
+									accountRole1) + "\"");
+						put(
+							"accountRoleExternalReferenceCode",
+							"\"" + accountRole1.getExternalReferenceCode() +
+								"\"");
+
+						put(
+							"emailAddress",
+							"\"" +
+								testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress() +
+									"\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		AccountRole accountRole2 =
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode(
+										accountRole2) + "\"");
+							put(
+								"accountRoleExternalReferenceCode",
+								"\"" + accountRole2.getExternalReferenceCode() +
+									"\"");
+
+							put(
+								"emailAddress",
+								"\"" +
+									testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress() +
+										"\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode(
+				AccountRole accountRole)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AccountRole
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_addAccountRole()
+		throws Exception {
+
+		return testGraphQLAccountRole_addAccountRole();
+	}
+
+	@Test
 	public void testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode()
 		throws Exception {
 
@@ -303,6 +465,80 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		AccountRole accountRole1 =
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"accountExternalReferenceCode",
+							"\"" +
+								testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+									"\"");
+						put(
+							"accountRoleExternalReferenceCode",
+							"\"" + accountRole1.getExternalReferenceCode() +
+								"\"");
+						put(
+							"externalReferenceCode",
+							"\"" + accountRole1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		AccountRole accountRole2 =
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountExternalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+										"\"");
+							put(
+								"accountRoleExternalReferenceCode",
+								"\"" + accountRole2.getExternalReferenceCode() +
+									"\"");
+							put(
+								"externalReferenceCode",
+								"\"" + accountRole2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AccountRole
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_addAccountRole()
+		throws Exception {
+
+		return testGraphQLAccountRole_addAccountRole();
 	}
 
 	@Test
@@ -349,6 +585,87 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress()
+		throws Exception {
+
+		// No namespace
+
+		AccountRole accountRole1 =
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" +
+								testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode(
+									accountRole1) + "\"");
+						put("accountRoleId", accountRole1.getId());
+
+						put(
+							"emailAddress",
+							"\"" +
+								testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress() +
+									"\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		AccountRole accountRole2 =
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode(
+										accountRole2) + "\"");
+							put("accountRoleId", accountRole2.getId());
+
+							put(
+								"emailAddress",
+								"\"" +
+									testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress() +
+										"\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode(
+				AccountRole accountRole)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AccountRole
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_addAccountRole()
+		throws Exception {
+
+		return testGraphQLAccountRole_addAccountRole();
+	}
+
+	@Test
 	public void testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode()
 		throws Exception {
 
@@ -379,6 +696,74 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		AccountRole accountRole1 =
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"accountExternalReferenceCode",
+							"\"" +
+								testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+									"\"");
+						put("accountRoleId", accountRole1.getId());
+						put(
+							"externalReferenceCode",
+							"\"" + accountRole1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		AccountRole accountRole2 =
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_addAccountRole();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"accountExternalReferenceCode",
+								"\"" +
+									testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+										"\"");
+							put("accountRoleId", accountRole2.getId());
+							put(
+								"externalReferenceCode",
+								"\"" + accountRole2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AccountRole
+			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_addAccountRole()
+		throws Exception {
+
+		return testGraphQLAccountRole_addAccountRole();
 	}
 
 	@Test
@@ -1794,6 +2179,13 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
+
+	protected AccountRole testGraphQLAccountRole_addAccountRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
 	protected void assertContains(
 		AccountRole accountRole, List<AccountRole> accountRoles) {

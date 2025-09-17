@@ -252,17 +252,14 @@ public abstract class BaseEmailAddressResourceTestCase {
 		EmailAddress emailAddress1 =
 			testGraphQLDeleteEmailAddress_addEmailAddress();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteEmailAddress",
-						new HashMap<String, Object>() {
-							{
-								put("emailAddressId", emailAddress1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteEmailAddress"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put("emailAddressId", emailAddress1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -283,22 +280,16 @@ public abstract class BaseEmailAddressResourceTestCase {
 		EmailAddress emailAddress2 =
 			testGraphQLDeleteEmailAddress_addEmailAddress();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"deleteEmailAddress",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"emailAddressId",
-										emailAddress2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-				"Object/deleteEmailAddress"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put("emailAddressId", emailAddress2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -431,6 +422,93 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteEmailAddressByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		EmailAddress emailAddress1 =
+			testGraphQLDeleteEmailAddressByExternalReferenceCode_addEmailAddress();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteEmailAddressByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + emailAddress1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"emailAddressByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									emailAddress1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		EmailAddress emailAddress2 =
+			testGraphQLDeleteEmailAddressByExternalReferenceCode_addEmailAddress();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteEmailAddressByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									emailAddress2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"emailAddressByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										emailAddress2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected EmailAddress
+			testGraphQLDeleteEmailAddressByExternalReferenceCode_addEmailAddress()
+		throws Exception {
+
+		return testGraphQLEmailAddress_addEmailAddress();
 	}
 
 	@Test

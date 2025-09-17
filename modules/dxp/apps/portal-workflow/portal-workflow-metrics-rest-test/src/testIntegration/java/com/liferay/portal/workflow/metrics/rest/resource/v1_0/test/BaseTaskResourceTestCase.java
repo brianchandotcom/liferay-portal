@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -216,6 +217,94 @@ public abstract class BaseTaskResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProcessTask() throws Exception {
+
+		// No namespace
+
+		Task task1 = testGraphQLDeleteProcessTask_addTask();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProcessTask",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"processId",
+							testGraphQLDeleteProcessTask_getProcessId(task1));
+						put("taskId", task1.getId());
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"processTask",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"processId",
+								testGraphQLDeleteProcessTask_getProcessId(
+									task1));
+							put("taskId", task1.getId());
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace portalWorkflowMetrics_v1_0
+
+		Task task2 = testGraphQLDeleteProcessTask_addTask();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"portalWorkflowMetrics_v1_0",
+				new GraphQLField(
+					"deleteProcessTask",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"processId",
+								testGraphQLDeleteProcessTask_getProcessId(
+									task2));
+							put("taskId", task2.getId());
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"portalWorkflowMetrics_v1_0",
+					new GraphQLField(
+						"processTask",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"processId",
+									testGraphQLDeleteProcessTask_getProcessId(
+										task2));
+								put("taskId", task2.getId());
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long testGraphQLDeleteProcessTask_getProcessId(Task task)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Task testGraphQLDeleteProcessTask_addTask() throws Exception {
+		return testGraphQLTask_addTask();
 	}
 
 	@Test

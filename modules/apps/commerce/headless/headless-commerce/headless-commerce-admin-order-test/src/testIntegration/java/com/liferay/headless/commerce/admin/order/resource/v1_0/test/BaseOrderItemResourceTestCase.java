@@ -275,17 +275,14 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		OrderItem orderItem1 = testGraphQLDeleteOrderItem_addOrderItem();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrderItem",
-						new HashMap<String, Object>() {
-							{
-								put("id", orderItem1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrderItem"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrderItem",
+				new HashMap<String, Object>() {
+					{
+						put("id", orderItem1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -305,20 +302,16 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		OrderItem orderItem2 = testGraphQLDeleteOrderItem_addOrderItem();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"deleteOrderItem",
-							new HashMap<String, Object>() {
-								{
-									put("id", orderItem2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-				"Object/deleteOrderItem"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrderItem",
+					new HashMap<String, Object>() {
+						{
+							put("id", orderItem2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -438,6 +431,91 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrderItemByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		OrderItem orderItem1 =
+			testGraphQLDeleteOrderItemByExternalReferenceCode_addOrderItem();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrderItemByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + orderItem1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"orderItemByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + orderItem1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		OrderItem orderItem2 =
+			testGraphQLDeleteOrderItemByExternalReferenceCode_addOrderItem();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminOrder_v1_0",
+				new GraphQLField(
+					"deleteOrderItemByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" + orderItem2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminOrder_v1_0",
+					new GraphQLField(
+						"orderItemByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										orderItem2.getExternalReferenceCode() +
+											"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected OrderItem
+			testGraphQLDeleteOrderItemByExternalReferenceCode_addOrderItem()
+		throws Exception {
+
+		return testGraphQLOrderItem_addOrderItem();
 	}
 
 	@Test
@@ -1529,78 +1607,6 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderItemsPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"orderItems",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject orderItemsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/orderItems");
-
-		long totalCount = orderItemsJSONObject.getLong("totalCount");
-
-		OrderItem orderItem1 = testGraphQLGetOrderItemsPage_addOrderItem();
-		OrderItem orderItem2 = testGraphQLGetOrderItemsPage_addOrderItem();
-
-		orderItemsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/orderItems");
-
-		Assert.assertEquals(
-			totalCount + 2, orderItemsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			orderItem1,
-			Arrays.asList(
-				OrderItemSerDes.toDTOs(
-					orderItemsJSONObject.getString("items"))));
-		assertContains(
-			orderItem2,
-			Arrays.asList(
-				OrderItemSerDes.toDTOs(
-					orderItemsJSONObject.getString("items"))));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		orderItemsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminOrder_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-			"JSONObject/orderItems");
-
-		Assert.assertEquals(
-			totalCount + 2, orderItemsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			orderItem1,
-			Arrays.asList(
-				OrderItemSerDes.toDTOs(
-					orderItemsJSONObject.getString("items"))));
-		assertContains(
-			orderItem2,
-			Arrays.asList(
-				OrderItemSerDes.toDTOs(
-					orderItemsJSONObject.getString("items"))));
-	}
-
-	protected OrderItem testGraphQLGetOrderItemsPage_addOrderItem()
-		throws Exception {
-
-		return testGraphQLOrderItem_addOrderItem();
 	}
 
 	@Test

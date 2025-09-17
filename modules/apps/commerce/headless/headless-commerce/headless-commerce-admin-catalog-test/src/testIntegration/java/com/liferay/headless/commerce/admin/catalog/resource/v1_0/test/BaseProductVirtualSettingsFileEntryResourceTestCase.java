@@ -280,20 +280,14 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceTestCase {
 		ProductVirtualSettingsFileEntry productVirtualSettingsFileEntry1 =
 			testGraphQLDeleteProductVirtualSettingsFileEntry_addProductVirtualSettingsFileEntry();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProductVirtualSettingsFileEntry",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"id",
-									productVirtualSettingsFileEntry1.getId());
-							}
-						})),
-				"JSONObject/data",
-				"Object/deleteProductVirtualSettingsFileEntry"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteProductVirtualSettingsFileEntry",
+				new HashMap<String, Object>() {
+					{
+						put("id", productVirtualSettingsFileEntry1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -314,24 +308,16 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceTestCase {
 		ProductVirtualSettingsFileEntry productVirtualSettingsFileEntry2 =
 			testGraphQLDeleteProductVirtualSettingsFileEntry_addProductVirtualSettingsFileEntry();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteProductVirtualSettingsFileEntry",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"id",
-										productVirtualSettingsFileEntry2.
-											getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteProductVirtualSettingsFileEntry"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminCatalog_v1_0",
+				new GraphQLField(
+					"deleteProductVirtualSettingsFileEntry",
+					new HashMap<String, Object>() {
+						{
+							put("id", productVirtualSettingsFileEntry2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

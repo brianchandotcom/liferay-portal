@@ -998,10 +998,10 @@ public abstract class BaseSitePageResourceTestCase {
 			"sitePages",
 			new HashMap<String, Object>() {
 				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -1015,8 +1015,11 @@ public abstract class BaseSitePageResourceTestCase {
 
 		long totalCount = sitePagesJSONObject.getLong("totalCount");
 
-		SitePage sitePage1 = testGraphQLGetSiteSitePagesPage_addSitePage();
-		SitePage sitePage2 = testGraphQLGetSiteSitePagesPage_addSitePage();
+		SitePage sitePage1 = testGraphQLSiteSitePage_addSitePage(
+			siteId, randomSitePage());
+
+		SitePage sitePage2 = testGraphQLSiteSitePage_addSitePage(
+			siteId, randomSitePage());
 
 		sitePagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1055,12 +1058,6 @@ public abstract class BaseSitePageResourceTestCase {
 				SitePageSerDes.toDTOs(sitePagesJSONObject.getString("items"))));
 	}
 
-	protected SitePage testGraphQLGetSiteSitePagesPage_addSitePage()
-		throws Exception {
-
-		return testGraphQLSitePage_addSitePage();
-	}
-
 	@Test
 	public void testPostSiteSitePage() throws Exception {
 		SitePage randomSitePage = randomSitePage();
@@ -1083,7 +1080,8 @@ public abstract class BaseSitePageResourceTestCase {
 	public void testGraphQLPostSiteSitePage() throws Exception {
 		SitePage randomSitePage = randomSitePage();
 
-		SitePage sitePage = testGraphQLSitePage_addSitePage(randomSitePage);
+		SitePage sitePage = testGraphQLSiteSitePage_addSitePage(
+			testGroup.getGroupId(), randomSitePage);
 
 		Assert.assertTrue(equals(randomSitePage, sitePage));
 	}
@@ -1095,6 +1093,112 @@ public abstract class BaseSitePageResourceTestCase {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
+
+	protected SitePage testGraphQLSitePage_addSitePage() throws Exception {
+		return testGraphQLSitePage_addSitePage(
+			testGroup.getGroupId(), randomSitePage());
+	}
+
+	protected SitePage testGraphQLSitePage_addSitePage(
+			Long siteId, SitePage sitePage)
+		throws Exception {
+
+		JSONDeserializer<SitePage> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(SitePage.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(sitePage));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteSitePage",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("sitePage", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteSitePage"),
+			SitePage.class);
+	}
+
+	protected SitePage testGraphQLSiteSitePage_addSitePage() throws Exception {
+		return testGraphQLSiteSitePage_addSitePage(
+			testGroup.getGroupId(), randomSitePage());
+	}
+
+	protected SitePage testGraphQLSiteSitePage_addSitePage(
+			Long siteId, SitePage sitePage)
+		throws Exception {
+
+		JSONDeserializer<SitePage> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(SitePage.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(sitePage));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteSitePage",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("sitePage", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteSitePage"),
+			SitePage.class);
+	}
 
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
@@ -1139,59 +1243,6 @@ public abstract class BaseSitePageResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected SitePage testGraphQLSitePage_addSitePage() throws Exception {
-		return testGraphQLSitePage_addSitePage(randomSitePage());
-	}
-
-	protected SitePage testGraphQLSitePage_addSitePage(SitePage sitePage)
-		throws Exception {
-
-		JSONDeserializer<SitePage> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(SitePage.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(sitePage));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteSitePage",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("sitePage", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteSitePage"),
-			SitePage.class);
 	}
 
 	protected void assertContains(SitePage sitePage, List<SitePage> sitePages) {

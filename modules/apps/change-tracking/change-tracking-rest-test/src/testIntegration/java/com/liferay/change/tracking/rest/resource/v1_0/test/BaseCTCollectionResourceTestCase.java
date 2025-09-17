@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -260,17 +261,14 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection1 =
 			testGraphQLDeleteCTCollection_addCTCollection();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteCTCollection",
-						new HashMap<String, Object>() {
-							{
-								put("ctCollectionId", ctCollection1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteCTCollection"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCTCollection",
+				new HashMap<String, Object>() {
+					{
+						put("ctCollectionId", ctCollection1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -291,22 +289,16 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection2 =
 			testGraphQLDeleteCTCollection_addCTCollection();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"changeTracking_v1_0",
-						new GraphQLField(
-							"deleteCTCollection",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"ctCollectionId",
-										ctCollection2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/changeTracking_v1_0",
-				"Object/deleteCTCollection"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"changeTracking_v1_0",
+				new GraphQLField(
+					"deleteCTCollection",
+					new HashMap<String, Object>() {
+						{
+							put("ctCollectionId", ctCollection2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -439,6 +431,93 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteCTCollectionByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		CTCollection ctCollection1 =
+			testGraphQLDeleteCTCollectionByExternalReferenceCode_addCTCollection();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteCTCollectionByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + ctCollection1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"cTCollectionByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									ctCollection1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace changeTracking_v1_0
+
+		CTCollection ctCollection2 =
+			testGraphQLDeleteCTCollectionByExternalReferenceCode_addCTCollection();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"changeTracking_v1_0",
+				new GraphQLField(
+					"deleteCTCollectionByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									ctCollection2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"changeTracking_v1_0",
+					new GraphQLField(
+						"cTCollectionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										ctCollection2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected CTCollection
+			testGraphQLDeleteCTCollectionByExternalReferenceCode_addCTCollection()
+		throws Exception {
+
+		return testGraphQLCTCollection_addCTCollection();
 	}
 
 	@Test
@@ -1161,6 +1240,75 @@ public abstract class BaseCTCollectionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetCTCollectionsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"cTCollections",
+			new HashMap<String, Object>() {
+				{
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject cTCollectionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/cTCollections");
+
+		long totalCount = cTCollectionsJSONObject.getLong("totalCount");
+
+		CTCollection ctCollection1 = testGraphQLCTCollection_addCTCollection(
+			randomCTCollection());
+
+		CTCollection ctCollection2 = testGraphQLCTCollection_addCTCollection(
+			randomCTCollection());
+
+		cTCollectionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/cTCollections");
+
+		Assert.assertEquals(
+			totalCount + 2, cTCollectionsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ctCollection1,
+			Arrays.asList(
+				CTCollectionSerDes.toDTOs(
+					cTCollectionsJSONObject.getString("items"))));
+		assertContains(
+			ctCollection2,
+			Arrays.asList(
+				CTCollectionSerDes.toDTOs(
+					cTCollectionsJSONObject.getString("items"))));
+
+		// Using the namespace changeTracking_v1_0
+
+		cTCollectionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("changeTracking_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/changeTracking_v1_0",
+			"JSONObject/cTCollections");
+
+		Assert.assertEquals(
+			totalCount + 2, cTCollectionsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			ctCollection1,
+			Arrays.asList(
+				CTCollectionSerDes.toDTOs(
+					cTCollectionsJSONObject.getString("items"))));
+		assertContains(
+			ctCollection2,
+			Arrays.asList(
+				CTCollectionSerDes.toDTOs(
+					cTCollectionsJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPatchCTCollection() throws Exception {
 		CTCollection postCTCollection = testPatchCTCollection_addCTCollection();
 
@@ -1242,6 +1390,16 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostCTCollection() throws Exception {
+		CTCollection randomCTCollection = randomCTCollection();
+
+		CTCollection ctCollection = testGraphQLCTCollection_addCTCollection(
+			randomCTCollection);
+
+		Assert.assertTrue(equals(randomCTCollection, ctCollection));
 	}
 
 	@Test
@@ -1490,8 +1648,99 @@ public abstract class BaseCTCollectionResourceTestCase {
 	protected CTCollection testGraphQLCTCollection_addCTCollection()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLCTCollection_addCTCollection(randomCTCollection());
+	}
+
+	protected CTCollection testGraphQLCTCollection_addCTCollection(
+			CTCollection ctCollection)
+		throws Exception {
+
+		JSONDeserializer<CTCollection> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(CTCollection.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(ctCollection));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createCTCollection",
+						new HashMap<String, Object>() {
+							{
+								put("ctCollection", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createCTCollection"),
+			CTCollection.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

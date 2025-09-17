@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -276,19 +277,16 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		NotificationTemplate notificationTemplate1 =
 			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteNotificationTemplate",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"notificationTemplateId",
-									notificationTemplate1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteNotificationTemplate"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteNotificationTemplate",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"notificationTemplateId",
+							notificationTemplate1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -311,22 +309,18 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		NotificationTemplate notificationTemplate2 =
 			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"notification_v1_0",
-						new GraphQLField(
-							"deleteNotificationTemplate",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"notificationTemplateId",
-										notificationTemplate2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/notification_v1_0",
-				"Object/deleteNotificationTemplate"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"notification_v1_0",
+				new GraphQLField(
+					"deleteNotificationTemplate",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"notificationTemplateId",
+								notificationTemplate2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -1272,6 +1266,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"notificationTemplates",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1289,9 +1284,12 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		long totalCount = notificationTemplatesJSONObject.getLong("totalCount");
 
 		NotificationTemplate notificationTemplate1 =
-			testGraphQLGetNotificationTemplatesPage_addNotificationTemplate();
+			testGraphQLNotificationTemplate_addNotificationTemplate(
+				randomNotificationTemplate());
+
 		NotificationTemplate notificationTemplate2 =
-			testGraphQLGetNotificationTemplatesPage_addNotificationTemplate();
+			testGraphQLNotificationTemplate_addNotificationTemplate(
+				randomNotificationTemplate());
 
 		notificationTemplatesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1334,13 +1332,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			Arrays.asList(
 				NotificationTemplateSerDes.toDTOs(
 					notificationTemplatesJSONObject.getString("items"))));
-	}
-
-	protected NotificationTemplate
-			testGraphQLGetNotificationTemplatesPage_addNotificationTemplate()
-		throws Exception {
-
-		return testGraphQLNotificationTemplate_addNotificationTemplate();
 	}
 
 	@Test
@@ -1403,6 +1394,19 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostNotificationTemplate() throws Exception {
+		NotificationTemplate randomNotificationTemplate =
+			randomNotificationTemplate();
+
+		NotificationTemplate notificationTemplate =
+			testGraphQLNotificationTemplate_addNotificationTemplate(
+				randomNotificationTemplate);
+
+		Assert.assertTrue(
+			equals(randomNotificationTemplate, notificationTemplate));
+	}
+
+	@Test
 	public void testPostNotificationTemplateCopy() throws Exception {
 		NotificationTemplate randomNotificationTemplate =
 			randomNotificationTemplate();
@@ -1422,6 +1426,19 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostNotificationTemplateCopy() throws Exception {
+		NotificationTemplate randomNotificationTemplate =
+			randomNotificationTemplate();
+
+		NotificationTemplate notificationTemplate =
+			testGraphQLNotificationTemplate_addNotificationTemplate(
+				randomNotificationTemplate);
+
+		Assert.assertTrue(
+			equals(randomNotificationTemplate, notificationTemplate));
 	}
 
 	@Test
@@ -1584,8 +1601,101 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			testGraphQLNotificationTemplate_addNotificationTemplate()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLNotificationTemplate_addNotificationTemplate(
+			randomNotificationTemplate());
+	}
+
+	protected NotificationTemplate
+			testGraphQLNotificationTemplate_addNotificationTemplate(
+				NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		JSONDeserializer<NotificationTemplate> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(NotificationTemplate.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(notificationTemplate));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createNotificationTemplate",
+						new HashMap<String, Object>() {
+							{
+								put("notificationTemplate", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createNotificationTemplate"),
+			NotificationTemplate.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

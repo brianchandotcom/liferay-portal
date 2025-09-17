@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -284,19 +285,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		ObjectDefinition objectDefinition1 =
 			testGraphQLDeleteObjectDefinition_addObjectDefinition();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteObjectDefinition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"objectDefinitionId",
-									objectDefinition1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteObjectDefinition"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteObjectDefinition",
+				new HashMap<String, Object>() {
+					{
+						put("objectDefinitionId", objectDefinition1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -319,22 +315,18 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		ObjectDefinition objectDefinition2 =
 			testGraphQLDeleteObjectDefinition_addObjectDefinition();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"objectAdmin_v1_0",
-						new GraphQLField(
-							"deleteObjectDefinition",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"objectDefinitionId",
-										objectDefinition2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
-				"Object/deleteObjectDefinition"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"objectAdmin_v1_0",
+				new GraphQLField(
+					"deleteObjectDefinition",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"objectDefinitionId",
+								objectDefinition2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -1244,6 +1236,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"objectDefinitions",
 			new HashMap<String, Object>() {
 				{
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
 				}
@@ -1260,9 +1253,12 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		long totalCount = objectDefinitionsJSONObject.getLong("totalCount");
 
 		ObjectDefinition objectDefinition1 =
-			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
+			testGraphQLObjectDefinition_addObjectDefinition(
+				randomObjectDefinition());
+
 		ObjectDefinition objectDefinition2 =
-			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
+			testGraphQLObjectDefinition_addObjectDefinition(
+				randomObjectDefinition());
 
 		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1303,13 +1299,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			Arrays.asList(
 				ObjectDefinitionSerDes.toDTOs(
 					objectDefinitionsJSONObject.getString("items"))));
-	}
-
-	protected ObjectDefinition
-			testGraphQLGetObjectDefinitionsPage_addObjectDefinition()
-		throws Exception {
-
-		return testGraphQLObjectDefinition_addObjectDefinition();
 	}
 
 	@Test
@@ -1367,6 +1356,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostObjectDefinition() throws Exception {
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		ObjectDefinition objectDefinition =
+			testGraphQLObjectDefinition_addObjectDefinition(
+				randomObjectDefinition);
+
+		Assert.assertTrue(equals(randomObjectDefinition, objectDefinition));
+	}
+
+	@Test
 	public void testPostObjectDefinitionPublish() throws Exception {
 		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
 
@@ -1385,6 +1385,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostObjectDefinitionPublish() throws Exception {
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		ObjectDefinition objectDefinition =
+			testGraphQLObjectDefinition_addObjectDefinition(
+				randomObjectDefinition);
+
+		Assert.assertTrue(equals(randomObjectDefinition, objectDefinition));
 	}
 
 	@Test
@@ -1539,8 +1550,100 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	protected ObjectDefinition testGraphQLObjectDefinition_addObjectDefinition()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLObjectDefinition_addObjectDefinition(
+			randomObjectDefinition());
+	}
+
+	protected ObjectDefinition testGraphQLObjectDefinition_addObjectDefinition(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		JSONDeserializer<ObjectDefinition> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(ObjectDefinition.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(objectDefinition));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createObjectDefinition",
+						new HashMap<String, Object>() {
+							{
+								put("objectDefinition", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createObjectDefinition"),
+			ObjectDefinition.class);
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertContains(

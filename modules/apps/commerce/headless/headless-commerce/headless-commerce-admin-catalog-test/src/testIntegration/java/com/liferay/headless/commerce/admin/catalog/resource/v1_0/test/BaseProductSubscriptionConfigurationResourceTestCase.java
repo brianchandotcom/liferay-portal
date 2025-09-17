@@ -194,36 +194,8 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetProductByExternalReferenceCodeSubscriptionConfiguration()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetProductByExternalReferenceCodeSubscriptionConfigurationNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetProductIdSubscriptionConfiguration() throws Exception {
 		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetProductIdSubscriptionConfiguration()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetProductIdSubscriptionConfigurationNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
 	}
 
 	@Test

@@ -246,17 +246,14 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		TaxCategory taxCategory1 =
 			testGraphQLDeleteTaxCategory_addTaxCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteTaxCategory",
-						new HashMap<String, Object>() {
-							{
-								put("id", taxCategory1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteTaxCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteTaxCategory",
+				new HashMap<String, Object>() {
+					{
+						put("id", taxCategory1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -277,21 +274,16 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		TaxCategory taxCategory2 =
 			testGraphQLDeleteTaxCategory_addTaxCategory();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminSiteSetting_v1_0",
-						new GraphQLField(
-							"deleteTaxCategory",
-							new HashMap<String, Object>() {
-								{
-									put("id", taxCategory2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
-				"Object/deleteTaxCategory"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminSiteSetting_v1_0",
+				new GraphQLField(
+					"deleteTaxCategory",
+					new HashMap<String, Object>() {
+						{
+							put("id", taxCategory2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

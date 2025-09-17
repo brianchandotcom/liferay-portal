@@ -259,17 +259,14 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		WarehouseItem warehouseItem1 =
 			testGraphQLDeleteWarehouseItem_addWarehouseItem();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWarehouseItem",
-						new HashMap<String, Object>() {
-							{
-								put("id", warehouseItem1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWarehouseItem"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteWarehouseItem",
+				new HashMap<String, Object>() {
+					{
+						put("id", warehouseItem1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -290,21 +287,16 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		WarehouseItem warehouseItem2 =
 			testGraphQLDeleteWarehouseItem_addWarehouseItem();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminInventory_v1_0",
-						new GraphQLField(
-							"deleteWarehouseItem",
-							new HashMap<String, Object>() {
-								{
-									put("id", warehouseItem2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminInventory_v1_0",
-				"Object/deleteWarehouseItem"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminInventory_v1_0",
+				new GraphQLField(
+					"deleteWarehouseItem",
+					new HashMap<String, Object>() {
+						{
+							put("id", warehouseItem2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -437,6 +429,93 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteWarehouseItemByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		WarehouseItem warehouseItem1 =
+			testGraphQLDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteWarehouseItemByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + warehouseItem1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"warehouseItemByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									warehouseItem1.getExternalReferenceCode() +
+										"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		WarehouseItem warehouseItem2 =
+			testGraphQLDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessCommerceAdminInventory_v1_0",
+				new GraphQLField(
+					"deleteWarehouseItemByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									warehouseItem2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminInventory_v1_0",
+					new GraphQLField(
+						"warehouseItemByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										warehouseItem2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected WarehouseItem
+			testGraphQLDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem()
+		throws Exception {
+
+		return testGraphQLWarehouseItem_addWarehouseItem();
 	}
 
 	@Test

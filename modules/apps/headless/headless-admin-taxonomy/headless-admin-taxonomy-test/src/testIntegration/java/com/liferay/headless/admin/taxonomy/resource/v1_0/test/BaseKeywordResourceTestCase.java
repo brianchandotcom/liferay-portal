@@ -299,8 +299,117 @@ public abstract class BaseKeywordResourceTestCase {
 			testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Test
+	public void testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Keyword keyword1 =
+			testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteAssetLibraryKeywordByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"assetLibraryId",
+							"\"" +
+								testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+									"\"");
+						put(
+							"externalReferenceCode",
+							"\"" + keyword1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"assetLibraryKeywordByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" + keyword1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Keyword keyword2 =
+			testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminTaxonomy_v1_0",
+				new GraphQLField(
+					"deleteAssetLibraryKeywordByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"assetLibraryId",
+								"\"" +
+									testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+										"\"");
+							put(
+								"externalReferenceCode",
+								"\"" + keyword2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"assetLibraryKeywordByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" + keyword2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long
+			testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected Keyword
+			testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return testGraphQLAssetLibraryKeyword_addKeyword();
 	}
 
 	@Test
@@ -329,17 +438,14 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Keyword keyword1 = testGraphQLDeleteKeyword_addKeyword();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteKeyword",
-						new HashMap<String, Object>() {
-							{
-								put("keywordId", keyword1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteKeyword"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteKeyword",
+				new HashMap<String, Object>() {
+					{
+						put("keywordId", keyword1.getId());
+					}
+				}));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -359,20 +465,16 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Keyword keyword2 = testGraphQLDeleteKeyword_addKeyword();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminTaxonomy_v1_0",
-						new GraphQLField(
-							"deleteKeyword",
-							new HashMap<String, Object>() {
-								{
-									put("keywordId", keyword2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
-				"Object/deleteKeyword"));
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminTaxonomy_v1_0",
+				new GraphQLField(
+					"deleteKeyword",
+					new HashMap<String, Object>() {
+						{
+							put("keywordId", keyword2.getId());
+						}
+					})));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -462,6 +564,95 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteSiteKeywordByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		Keyword keyword1 =
+			testGraphQLDeleteSiteKeywordByExternalReferenceCode_addKeyword();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteSiteKeywordByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put("siteKey", "\"" + keyword1.getSiteId() + "\"");
+						put(
+							"externalReferenceCode",
+							"\"" + keyword1.getExternalReferenceCode() + "\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"keywordByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put("siteKey", "\"" + keyword1.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" + keyword1.getExternalReferenceCode() +
+									"\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Keyword keyword2 =
+			testGraphQLDeleteSiteKeywordByExternalReferenceCode_addKeyword();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminTaxonomy_v1_0",
+				new GraphQLField(
+					"deleteSiteKeywordByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put("siteKey", "\"" + keyword2.getSiteId() + "\"");
+							put(
+								"externalReferenceCode",
+								"\"" + keyword2.getExternalReferenceCode() +
+									"\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"keywordByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + keyword2.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" + keyword2.getExternalReferenceCode() +
+										"\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Keyword
+			testGraphQLDeleteSiteKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return testGraphQLSiteKeyword_addKeyword();
+	}
+
+	@Test
 	public void testGetAssetLibraryKeywordByExternalReferenceCode()
 		throws Exception {
 
@@ -489,8 +680,7 @@ public abstract class BaseKeywordResourceTestCase {
 			testGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -566,8 +756,7 @@ public abstract class BaseKeywordResourceTestCase {
 			testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -632,7 +821,7 @@ public abstract class BaseKeywordResourceTestCase {
 			testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_addKeyword()
 		throws Exception {
 
-		return testGraphQLKeyword_addKeyword();
+		return testGraphQLAssetLibraryKeyword_addKeyword();
 	}
 
 	@Test
@@ -653,6 +842,49 @@ public abstract class BaseKeywordResourceTestCase {
 
 		return keywordResource.postAssetLibraryKeyword(
 			testDepotEntry.getDepotEntryId(), randomKeyword());
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryKeywordPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword postKeyword =
+			testGraphQLGetAssetLibraryKeywordPermissionsPage_addKeyword();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryKeywordPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"assetLibraryId",
+						"\"" +
+							testGraphQLGetAssetLibraryKeywordPermissionsPage_getAssetLibraryId() +
+								"\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject assetLibraryKeywordPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryKeywordPermissions");
+
+		Assert.assertNotNull(assetLibraryKeywordPermissionsJSONObject);
+	}
+
+	protected Long
+			testGraphQLGetAssetLibraryKeywordPermissionsPage_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected Keyword
+			testGraphQLGetAssetLibraryKeywordPermissionsPage_addKeyword()
+		throws Exception {
+
+		return testGraphQLKeyword_addKeyword();
 	}
 
 	@Test
@@ -1065,6 +1297,82 @@ public abstract class BaseKeywordResourceTestCase {
 		throws Exception {
 
 		return irrelevantDepotEntry.getDepotEntryId();
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryKeywordsPage() throws Exception {
+		Long assetLibraryId =
+			testGetAssetLibraryKeywordsPage_getAssetLibraryId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryKeywords",
+			new HashMap<String, Object>() {
+				{
+					put("assetLibraryId", "\"" + assetLibraryId + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject assetLibraryKeywordsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryKeywords");
+
+		long totalCount = assetLibraryKeywordsJSONObject.getLong("totalCount");
+
+		Keyword keyword1 = testGraphQLAssetLibraryKeyword_addKeyword(
+			assetLibraryId, randomKeyword());
+
+		Keyword keyword2 = testGraphQLAssetLibraryKeyword_addKeyword(
+			assetLibraryId, randomKeyword());
+
+		assetLibraryKeywordsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/assetLibraryKeywords");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryKeywordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			keyword1,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(
+					assetLibraryKeywordsJSONObject.getString("items"))));
+		assertContains(
+			keyword2,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(
+					assetLibraryKeywordsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		assetLibraryKeywordsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminTaxonomy_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+			"JSONObject/assetLibraryKeywords");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			assetLibraryKeywordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			keyword1,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(
+					assetLibraryKeywordsJSONObject.getString("items"))));
+		assertContains(
+			keyword2,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(
+					assetLibraryKeywordsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -1622,7 +1930,7 @@ public abstract class BaseKeywordResourceTestCase {
 			testGraphQLGetSiteKeywordByExternalReferenceCode_addKeyword()
 		throws Exception {
 
-		return testGraphQLKeyword_addKeyword();
+		return testGraphQLSiteKeyword_addKeyword();
 	}
 
 	@Test
@@ -1641,6 +1949,34 @@ public abstract class BaseKeywordResourceTestCase {
 
 		return keywordResource.postSiteKeyword(
 			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testGraphQLGetSiteKeywordPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword postKeyword =
+			testGraphQLGetSiteKeywordPermissionsPage_addKeyword();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"keywordPermissions",
+			new HashMap<String, Object>() {
+				{
+					put("siteKey", "\"" + postKeyword.getSiteId() + "\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject keywordPermissionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/keywordPermissions");
+
+		Assert.assertNotNull(keywordPermissionsJSONObject);
+	}
+
+	protected Keyword testGraphQLGetSiteKeywordPermissionsPage_addKeyword()
+		throws Exception {
+
+		return testGraphQLKeyword_addKeyword();
 	}
 
 	@Test
@@ -2032,10 +2368,10 @@ public abstract class BaseKeywordResourceTestCase {
 			"keywords",
 			new HashMap<String, Object>() {
 				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("search", null);
 					put("page", 1);
 					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -2049,8 +2385,11 @@ public abstract class BaseKeywordResourceTestCase {
 
 		long totalCount = keywordsJSONObject.getLong("totalCount");
 
-		Keyword keyword1 = testGraphQLGetSiteKeywordsPage_addKeyword();
-		Keyword keyword2 = testGraphQLGetSiteKeywordsPage_addKeyword();
+		Keyword keyword1 = testGraphQLSiteKeyword_addKeyword(
+			siteId, randomKeyword());
+
+		Keyword keyword2 = testGraphQLSiteKeyword_addKeyword(
+			siteId, randomKeyword());
 
 		keywordsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -2089,12 +2428,6 @@ public abstract class BaseKeywordResourceTestCase {
 				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
 	}
 
-	protected Keyword testGraphQLGetSiteKeywordsPage_addKeyword()
-		throws Exception {
-
-		return testGraphQLKeyword_addKeyword();
-	}
-
 	@Test
 	public void testPostAssetLibraryKeyword() throws Exception {
 		Keyword randomKeyword = randomKeyword();
@@ -2111,6 +2444,16 @@ public abstract class BaseKeywordResourceTestCase {
 
 		return keywordResource.postAssetLibraryKeyword(
 			testGetAssetLibraryKeywordsPage_getAssetLibraryId(), keyword);
+	}
+
+	@Test
+	public void testGraphQLPostAssetLibraryKeyword() throws Exception {
+		Keyword randomKeyword = randomKeyword();
+
+		Keyword keyword = testGraphQLAssetLibraryKeyword_addKeyword(
+			testDepotEntry.getDepotEntryId(), randomKeyword);
+
+		Assert.assertTrue(equals(randomKeyword, keyword));
 	}
 
 	@Test
@@ -2134,7 +2477,8 @@ public abstract class BaseKeywordResourceTestCase {
 	public void testGraphQLPostSiteKeyword() throws Exception {
 		Keyword randomKeyword = randomKeyword();
 
-		Keyword keyword = testGraphQLKeyword_addKeyword(randomKeyword);
+		Keyword keyword = testGraphQLSiteKeyword_addKeyword(
+			testGroup.getGroupId(), randomKeyword);
 
 		Assert.assertTrue(equals(randomKeyword, keyword));
 	}
@@ -2199,8 +2543,7 @@ public abstract class BaseKeywordResourceTestCase {
 			testPutAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	protected Keyword
@@ -2492,6 +2835,163 @@ public abstract class BaseKeywordResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected Keyword testGraphQLAssetLibraryKeyword_addKeyword()
+		throws Exception {
+
+		return testGraphQLAssetLibraryKeyword_addKeyword(
+			testDepotEntry.getDepotEntryId(), randomKeyword());
+	}
+
+	protected Keyword testGraphQLAssetLibraryKeyword_addKeyword(
+			Long assetLibraryId, Keyword keyword)
+		throws Exception {
+
+		JSONDeserializer<Keyword> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Keyword.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(keyword));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAssetLibraryKeyword",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" + assetLibraryId + "\"");
+								put("keyword", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createAssetLibraryKeyword"),
+			Keyword.class);
+	}
+
+	protected Keyword testGraphQLKeyword_addKeyword() throws Exception {
+		return testGraphQLKeyword_addKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	protected Keyword testGraphQLKeyword_addKeyword(
+			Long siteId, Keyword keyword)
+		throws Exception {
+
+		JSONDeserializer<Keyword> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Keyword.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(keyword));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteKeyword",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("keyword", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteKeyword"),
+			Keyword.class);
+	}
+
+	protected Keyword testGraphQLSiteKeyword_addKeyword() throws Exception {
+		return testGraphQLSiteKeyword_addKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	protected Keyword testGraphQLSiteKeyword_addKeyword(
+			Long siteId, Keyword keyword)
+		throws Exception {
+
+		JSONDeserializer<Keyword> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Keyword.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(keyword));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteKeyword",
+						new HashMap<String, Object>() {
+							{
+								put("siteKey", "\"" + siteId + "\"");
+								put("keyword", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteKeyword"),
+			Keyword.class);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 
@@ -2535,57 +3035,6 @@ public abstract class BaseKeywordResourceTestCase {
 		else {
 			sb.append(value);
 		}
-	}
-
-	protected Keyword testGraphQLKeyword_addKeyword() throws Exception {
-		return testGraphQLKeyword_addKeyword(randomKeyword());
-	}
-
-	protected Keyword testGraphQLKeyword_addKeyword(Keyword keyword)
-		throws Exception {
-
-		JSONDeserializer<Keyword> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field : getDeclaredFields(Keyword.class)) {
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(keyword));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteKeyword",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + testGroup.getGroupId() + "\"");
-								put("keyword", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteKeyword"),
-			Keyword.class);
 	}
 
 	protected void assertContains(Keyword keyword, List<Keyword> keywords) {

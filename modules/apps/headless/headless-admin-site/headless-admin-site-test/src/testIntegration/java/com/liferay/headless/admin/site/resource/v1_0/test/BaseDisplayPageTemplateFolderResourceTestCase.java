@@ -266,8 +266,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			testDeleteSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -299,8 +298,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			testGetSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -950,8 +948,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			testPutSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -1068,8 +1065,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			testBatchEngineDeleteImportTask_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Rule

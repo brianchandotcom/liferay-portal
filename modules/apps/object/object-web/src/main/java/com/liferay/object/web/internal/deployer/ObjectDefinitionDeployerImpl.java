@@ -529,15 +529,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).put(
 					"jakarta.portlet.name", objectDefinition.getPortletId()
 				).put(
-					"jakarta.portlet.security-role-ref",
-					() -> {
-						if (objectDefinition.isRootDescendantNode()) {
-							return StringPool.BLANK;
-						}
-
-						return null;
-					}
-				).put(
 					"jakarta.portlet.version", "3.0"
 				).build()),
 			_bundleContext.registerService(

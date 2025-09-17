@@ -20,7 +20,7 @@ const ProductPurchasePrice: React.FC<ProductPurchasePriceProps> = ({
 	<div className="align-items-end d-flex flex-column price-text">
 		<strong className="mr-1">{i18n.translate('price')}</strong>
 
-		<div {...priceProps}>{price}</div>
+		<div {...priceProps}>{price} (Excluding VAT)</div>
 
 		{children}
 	</div>

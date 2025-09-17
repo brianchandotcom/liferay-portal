@@ -603,6 +603,15 @@ public interface PropsKeys {
 	public static final String DATABASE_ORDER_BY_MAX_COLUMNS =
 		"database.order.by.max.columns";
 
+	public static final String DATABASE_PARTITION_ENABLED =
+		"database.partition.enabled";
+
+	public static final String DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
+		"database.partition.schema.name.prefix";
+
+	public static final String DATABASE_PARTITION_THREAD_POOL_ENABLED =
+		"database.partition.thread.pool.enabled";
+
 	public static final String DATABASE_STRING_INDEX_MAX_LENGTH =
 		"database.string.index.max.length";
 

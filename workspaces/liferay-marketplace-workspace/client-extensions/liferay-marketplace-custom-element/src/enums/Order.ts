@@ -6,6 +6,7 @@
 export enum OrderCustomFields {
 	ANALYTICS_GROUP_ID = 'analytics-group-id',
 	CLOUD_PROVISIONING = 'cloud-provisioning',
+	KORONEIKI_PROJECT = 'koroneiki-projects',
 	PROJECT_NAME = 'project-name',
 	TRIAL_END_DATE = 'trial-end-date',
 	TRIAL_ERROR = 'trial-error',

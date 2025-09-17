@@ -22,7 +22,14 @@ import {formatCurrency, getTotalByOrderKey} from '../../../util/finance';
 import {formatDate, textWrapper} from '../../../util/util';
 import {PublisherPayoutStatus} from '../Payments';
 
-export function formatAddress(address: AccountPostalAddresses) {
+enum Payouts {
+	MP_COMMISSION = 0.2,
+	PUBLISHER_PAYOUT = 0.8,
+}
+
+export function formatPostalAddress(
+	address: AccountPostalAddresses | undefined
+) {
 	if (!address || !Object.keys(address).length) {
 		return '-';
 	}
@@ -42,23 +49,23 @@ const PaymentDetails = () => {
 	const {entryId} = useParams();
 
 	const {data, error, isLoading, mutate} = usePublisherSalesSummaryObject(
-		entryId!!
+		entryId as string
 	);
 
 	const {
 		account,
 		completeOrderItems,
-		postalAddresses,
+		postalAddresses = {items: []},
 		publisherSalesSummary,
 	} = data || {};
 
-	const billingAddress = postalAddresses?.items.find(
+	const postalAddress = postalAddresses.items.find(
 		(address) => address.addressType === 'billing'
 	);
 
 	const emailAddress = account?.customFields?.find(
 		(customField) => customField.name === 'Contact Email'
-	)?.customValue.data;
+	)?.customValue?.data;
 
 	const paymentStatus = publisherSalesSummary?.paymentStatus.key;
 
@@ -123,9 +130,7 @@ const PaymentDetails = () => {
 							{
 								title: i18n.translate('billing-address'),
 								value: textWrapper(
-									formatAddress(
-										billingAddress as AccountPostalAddresses
-									)
+									formatPostalAddress(postalAddress)
 								),
 							},
 							{
@@ -182,7 +187,7 @@ const PaymentDetails = () => {
 									getTotalByOrderKey(
 										'totalAmount',
 										publisherSalesSummary?.publisherToCommerceOrder!,
-										0.2
+										Payouts.MP_COMMISSION
 									)
 								),
 							},
@@ -192,7 +197,7 @@ const PaymentDetails = () => {
 									getTotalByOrderKey(
 										'totalAmount',
 										publisherSalesSummary?.publisherToCommerceOrder!,
-										0.8
+										Payouts.PUBLISHER_PAYOUT
 									)
 								),
 							},

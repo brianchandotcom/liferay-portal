@@ -10,7 +10,10 @@ import {PageRenderer} from '../../../../../components/Page';
 import QATable, {Orientation} from '../../../../../components/QATable';
 import Table from '../../../../../components/Table/Table';
 import {CurrencyAbbreviation} from '../../../../../enums/CurrencyAbbreviation';
-import {PaymentStatus as PaymentStatusCode} from '../../../../../enums/Order';
+import {
+	OrderCustomFields,
+	PaymentStatus as PaymentStatusCode,
+} from '../../../../../enums/Order';
 import {ProductSpecificationKey} from '../../../../../enums/Product';
 import useAdminOrderProduct from '../../../../../hooks/useAdminOrderProduct';
 import i18n from '../../../../../i18n';
@@ -30,7 +33,7 @@ const OrderDetails = () => {
 	const {order, payments, product} = data || {};
 
 	const koroneikiProjects = safeJSONParse(
-		order?.customFields!!['Project Name']!!,
+		order!.customFields![OrderCustomFields.KORONEIKI_PROJECT],
 		[]
 	);
 
@@ -79,9 +82,9 @@ const OrderDetails = () => {
 				}
 				paymentStatusCode={order?.paymentStatusInfo.code as number}
 				showButton={[
+					PaymentStatusCode.FAILED,
 					PaymentStatusCode.PAYMENT_PENDING,
 					PaymentStatusCode.PENDING,
-					PaymentStatusCode.FAILED,
 				].includes(order?.paymentStatusInfo.code as number)}
 				title={orderId as string}
 			/>
@@ -105,9 +108,11 @@ const OrderDetails = () => {
 							},
 							{
 								title: i18n.translate('project'),
-								value: koroneikiProjectNames[0]?.length
-									? koroneikiProjectNames.join(', ')
-									: '-',
+								value: textWrapper(
+									koroneikiProjectNames?.length
+										? koroneikiProjectNames.join(', ')
+										: '-'
+								),
 							},
 							{
 								title: i18n.translate('address'),
@@ -262,11 +267,12 @@ const OrderDetails = () => {
 						},
 						{
 							key: 'finalPriceWithTaxAmount',
-							render: (finalPriceWithTaxAmount, _) =>
+							render: (finalPriceWithTaxAmount, order) =>
 								textWrapper(
 									formatCurrency(
 										currencyCode,
-										finalPriceWithTaxAmount - _?.finalPrice
+										finalPriceWithTaxAmount -
+											order?.finalPrice
 									)
 								),
 							title: i18n.translate('vat'),

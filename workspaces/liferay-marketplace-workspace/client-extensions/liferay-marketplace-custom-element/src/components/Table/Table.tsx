@@ -142,7 +142,7 @@ const Table: React.FC<TableProps> = ({
 							)}
 						</ClayTable.Row>
 					))}
-					{children && children}
+					{children}
 				</ClayTable.Body>
 			</ClayTable>
 

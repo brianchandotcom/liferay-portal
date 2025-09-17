@@ -192,8 +192,36 @@ public abstract class BaseSkuSubscriptionConfigurationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSkuByExternalReferenceCodeSkuSubscriptionConfiguration()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSkuByExternalReferenceCodeSkuSubscriptionConfigurationNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetSkuIdSkuSubscriptionConfiguration() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSkuIdSkuSubscriptionConfiguration()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSkuIdSkuSubscriptionConfigurationNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
 	}
 
 	protected void assertContains(

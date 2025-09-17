@@ -641,7 +641,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 				{
 					put(
 						"assetLibraryExternalReferenceCode",
-						"\"" + RandomTestUtil.randomString() + "\"");
+						"\"" + assetLibraryExternalReferenceCode + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -984,7 +984,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 				{
 					put(
 						"siteExternalReferenceCode",
-						"\"" + RandomTestUtil.randomString() + "\"");
+						"\"" + siteExternalReferenceCode + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),

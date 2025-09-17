@@ -1570,7 +1570,13 @@ public abstract class BaseCartCommentResourceTestCase {
 	protected CartComment testGraphQLCartComment_addCartComment()
 		throws Exception {
 
-		return testGraphQLCartComment_addCartComment(null, randomCartComment());
+		return testGraphQLCartComment_addCartComment(
+			testGraphQLCartComment_getCartId(), randomCartComment());
+	}
+
+	protected Long testGraphQLCartComment_getCartId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected CartComment testGraphQLCartComment_addCartComment(

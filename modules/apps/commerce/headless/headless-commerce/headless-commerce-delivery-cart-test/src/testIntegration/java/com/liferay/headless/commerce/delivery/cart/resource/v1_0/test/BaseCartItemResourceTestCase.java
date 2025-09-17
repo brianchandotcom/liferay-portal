@@ -1510,7 +1510,13 @@ public abstract class BaseCartItemResourceTestCase {
 	}
 
 	protected CartItem testGraphQLCartItem_addCartItem() throws Exception {
-		return testGraphQLCartItem_addCartItem(null, randomCartItem());
+		return testGraphQLCartItem_addCartItem(
+			testGraphQLCartItem_getCartId(), randomCartItem());
+	}
+
+	protected Long testGraphQLCartItem_getCartId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected CartItem testGraphQLCartItem_addCartItem(

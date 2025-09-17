@@ -192,8 +192,36 @@ public abstract class BaseProductShippingConfigurationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeShippingConfiguration()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeShippingConfigurationNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetProductIdShippingConfiguration() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetProductIdShippingConfiguration()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetProductIdShippingConfigurationNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
 	}
 
 	@Test

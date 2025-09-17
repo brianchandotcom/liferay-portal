@@ -616,6 +616,92 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSiteSitePagesExperiencesPage() throws Exception {
+		Long siteId = testGetSiteSitePagesExperiencesPage_getSiteId();
+		String friendlyUrlPath =
+			testGetSiteSitePagesExperiencesPage_getFriendlyUrlPath();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"sitePagesExperiences",
+			new HashMap<String, Object>() {
+				{
+					put("siteKey", "\"" + siteId + "\"");
+					put("friendlyUrlPath", "\"" + friendlyUrlPath + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject sitePagesExperiencesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/sitePagesExperiences");
+
+		long totalCount = sitePagesExperiencesJSONObject.getLong("totalCount");
+
+		SitePage sitePage1 =
+			testGraphQLGetSiteSitePagesExperiencesPageSiteSitePage_addSitePage(
+				siteId, friendlyUrlPath, randomSitePage());
+
+		SitePage sitePage2 =
+			testGraphQLGetSiteSitePagesExperiencesPageSiteSitePage_addSitePage(
+				siteId, friendlyUrlPath, randomSitePage());
+
+		sitePagesExperiencesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/sitePagesExperiences");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			sitePagesExperiencesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			sitePage1,
+			Arrays.asList(
+				SitePageSerDes.toDTOs(
+					sitePagesExperiencesJSONObject.getString("items"))));
+		assertContains(
+			sitePage2,
+			Arrays.asList(
+				SitePageSerDes.toDTOs(
+					sitePagesExperiencesJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		sitePagesExperiencesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+			"JSONObject/sitePagesExperiences");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			sitePagesExperiencesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			sitePage1,
+			Arrays.asList(
+				SitePageSerDes.toDTOs(
+					sitePagesExperiencesJSONObject.getString("items"))));
+		assertContains(
+			sitePage2,
+			Arrays.asList(
+				SitePageSerDes.toDTOs(
+					sitePagesExperiencesJSONObject.getString("items"))));
+	}
+
+	protected SitePage
+			testGraphQLGetSiteSitePagesExperiencesPageSiteSitePage_addSitePage(
+				Long siteId, String friendlyUrlPath, SitePage sitePage)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteSitePagesPage() throws Exception {
 		Long siteId = testGetSiteSitePagesPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteSitePagesPage_getIrrelevantSiteId();

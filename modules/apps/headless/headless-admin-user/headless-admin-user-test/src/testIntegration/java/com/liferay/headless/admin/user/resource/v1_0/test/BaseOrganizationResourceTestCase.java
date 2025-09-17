@@ -932,6 +932,55 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress()
+		throws Exception {
+
+		// No namespace
+
+		Organization organization1 =
+			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" + organization1.getExternalReferenceCode() +
+								"\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Organization organization2 =
+			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									organization2.getExternalReferenceCode() +
+										"\"");
+						}
+					})));
+	}
+
+	protected Organization
+			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization()
+		throws Exception {
+
+		return testGraphQLUserAccountOrganization_addOrganization();
+	}
+
+	@Test
 	public void testDeleteUserAccountByEmailAddress() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization =
@@ -1041,6 +1090,51 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteUserAccountsByEmailAddress() throws Exception {
+
+		// No namespace
+
+		Organization organization1 =
+			testGraphQLDeleteUserAccountsByEmailAddress_addOrganization();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteUserAccountsByEmailAddress",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"organizationId",
+							"\"" + organization1.getId() + "\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Organization organization2 =
+			testGraphQLDeleteUserAccountsByEmailAddress_addOrganization();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteUserAccountsByEmailAddress",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"organizationId",
+								"\"" + organization2.getId() + "\"");
+						}
+					})));
+	}
+
+	protected Organization
+			testGraphQLDeleteUserAccountsByEmailAddress_addOrganization()
+		throws Exception {
+
+		return testGraphQLUserAccountOrganization_addOrganization();
 	}
 
 	@Test
@@ -1680,6 +1774,107 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeOrganizationsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodeOrganizationsPage_getExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"accountByExternalReferenceCodeOrganizations",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"externalReferenceCode",
+						"\"" + externalReferenceCode + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject accountByExternalReferenceCodeOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountByExternalReferenceCodeOrganizations");
+
+		long totalCount =
+			accountByExternalReferenceCodeOrganizationsJSONObject.getLong(
+				"totalCount");
+
+		Organization organization1 =
+			testGraphQLGetAccountByExternalReferenceCodeOrganizationsPageAccountOrganization_addOrganization(
+				externalReferenceCode, randomOrganization());
+
+		Organization organization2 =
+			testGraphQLGetAccountByExternalReferenceCodeOrganizationsPageAccountOrganization_addOrganization(
+				externalReferenceCode, randomOrganization());
+
+		accountByExternalReferenceCodeOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountByExternalReferenceCodeOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountByExternalReferenceCodeOrganizationsJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					accountByExternalReferenceCodeOrganizationsJSONObject.
+						getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					accountByExternalReferenceCodeOrganizationsJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		accountByExternalReferenceCodeOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"JSONObject/accountByExternalReferenceCodeOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountByExternalReferenceCodeOrganizationsJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					accountByExternalReferenceCodeOrganizationsJSONObject.
+						getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					accountByExternalReferenceCodeOrganizationsJSONObject.
+						getString("items"))));
+	}
+
+	protected Organization
+			testGraphQLGetAccountByExternalReferenceCodeOrganizationsPageAccountOrganization_addOrganization(
+				String externalReferenceCode, Organization organization)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountOrganization() throws Exception {
 		Organization postOrganization =
 			testGetAccountOrganization_addOrganization();
@@ -2251,6 +2446,92 @@ public abstract class BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGraphQLGetAccountOrganizationsPage() throws Exception {
+		Long accountId = testGetAccountOrganizationsPage_getAccountId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"accountOrganizations",
+			new HashMap<String, Object>() {
+				{
+					put("accountId", accountId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject accountOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountOrganizations");
+
+		long totalCount = accountOrganizationsJSONObject.getLong("totalCount");
+
+		Organization organization1 =
+			testGraphQLGetAccountOrganizationsPageAccountOrganization_addOrganization(
+				accountId, randomOrganization());
+
+		Organization organization2 =
+			testGraphQLGetAccountOrganizationsPageAccountOrganization_addOrganization(
+				accountId, randomOrganization());
+
+		accountOrganizationsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/accountOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountOrganizationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					accountOrganizationsJSONObject.getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					accountOrganizationsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		accountOrganizationsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+			"JSONObject/accountOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountOrganizationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					accountOrganizationsJSONObject.getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					accountOrganizationsJSONObject.getString("items"))));
+	}
+
+	protected Organization
+			testGraphQLGetAccountOrganizationsPageAccountOrganization_addOrganization(
+				Long accountId, Organization organization)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -2975,6 +3256,108 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetOrganizationByExternalReferenceCodeChildOrganizationsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetOrganizationByExternalReferenceCodeChildOrganizationsPage_getExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"organizationByExternalReferenceCodeChildOrganizations",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"externalReferenceCode",
+						"\"" + externalReferenceCode + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject
+			organizationByExternalReferenceCodeChildOrganizationsJSONObject =
+				JSONUtil.getValueAsJSONObject(
+					invokeGraphQLQuery(graphQLField), "JSONObject/data",
+					"JSONObject/organizationByExternalReferenceCodeChildOrganizations");
+
+		long totalCount =
+			organizationByExternalReferenceCodeChildOrganizationsJSONObject.
+				getLong("totalCount");
+
+		Organization organization1 =
+			testGraphQLGetOrganizationByExternalReferenceCodeChildOrganizationsPageOrganization_addOrganization(
+				externalReferenceCode, randomOrganization());
+
+		Organization organization2 =
+			testGraphQLGetOrganizationByExternalReferenceCodeChildOrganizationsPageOrganization_addOrganization(
+				externalReferenceCode, randomOrganization());
+
+		organizationByExternalReferenceCodeChildOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/organizationByExternalReferenceCodeChildOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			organizationByExternalReferenceCodeChildOrganizationsJSONObject.
+				getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationByExternalReferenceCodeChildOrganizationsJSONObject.
+						getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationByExternalReferenceCodeChildOrganizationsJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		organizationByExternalReferenceCodeChildOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"JSONObject/organizationByExternalReferenceCodeChildOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			organizationByExternalReferenceCodeChildOrganizationsJSONObject.
+				getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationByExternalReferenceCodeChildOrganizationsJSONObject.
+						getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationByExternalReferenceCodeChildOrganizationsJSONObject.
+						getString("items"))));
+	}
+
+	protected Organization
+			testGraphQLGetOrganizationByExternalReferenceCodeChildOrganizationsPageOrganization_addOrganization(
+				String externalReferenceCode, Organization organization)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetOrganizationChildOrganizationsPage() throws Exception {
 		String organizationId =
 			testGetOrganizationChildOrganizationsPage_getOrganizationId();
@@ -3420,6 +3803,102 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetOrganizationChildOrganizationsPage()
+		throws Exception {
+
+		String organizationId =
+			testGetOrganizationChildOrganizationsPage_getOrganizationId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"organizationChildOrganizations",
+			new HashMap<String, Object>() {
+				{
+					put("organizationId", "\"" + organizationId + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject organizationChildOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/organizationChildOrganizations");
+
+		long totalCount = organizationChildOrganizationsJSONObject.getLong(
+			"totalCount");
+
+		Organization organization1 =
+			testGraphQLGetOrganizationChildOrganizationsPageOrganization_addOrganization(
+				organizationId, randomOrganization());
+
+		Organization organization2 =
+			testGraphQLGetOrganizationChildOrganizationsPageOrganization_addOrganization(
+				organizationId, randomOrganization());
+
+		organizationChildOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/organizationChildOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			organizationChildOrganizationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationChildOrganizationsJSONObject.getString(
+						"items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationChildOrganizationsJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		organizationChildOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"JSONObject/organizationChildOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			organizationChildOrganizationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationChildOrganizationsJSONObject.getString(
+						"items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationChildOrganizationsJSONObject.getString(
+						"items"))));
+	}
+
+	protected Organization
+			testGraphQLGetOrganizationChildOrganizationsPageOrganization_addOrganization(
+				String organizationId, Organization organization)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetOrganizationOrganizationsPage() throws Exception {
 		String parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
@@ -3860,6 +4339,96 @@ public abstract class BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGraphQLGetOrganizationOrganizationsPage() throws Exception {
+		String parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"organizationOrganizations",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"parentOrganizationId",
+						"\"" + parentOrganizationId + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject organizationOrganizationsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/organizationOrganizations");
+
+		long totalCount = organizationOrganizationsJSONObject.getLong(
+			"totalCount");
+
+		Organization organization1 =
+			testGraphQLGetOrganizationOrganizationsPageOrganization_addOrganization(
+				parentOrganizationId, randomOrganization());
+
+		Organization organization2 =
+			testGraphQLGetOrganizationOrganizationsPageOrganization_addOrganization(
+				parentOrganizationId, randomOrganization());
+
+		organizationOrganizationsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/organizationOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			organizationOrganizationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationOrganizationsJSONObject.getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationOrganizationsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		organizationOrganizationsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+			"JSONObject/organizationOrganizations");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			organizationOrganizationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationOrganizationsJSONObject.getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationOrganizationsJSONObject.getString("items"))));
+	}
+
+	protected Organization
+			testGraphQLGetOrganizationOrganizationsPageOrganization_addOrganization(
+				String parentOrganizationId, Organization organization)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -4702,6 +5271,13 @@ public abstract class BaseOrganizationResourceTestCase {
 						graphQLFields)),
 				"JSONObject/data", "JSONObject/createOrganization"),
 			Organization.class);
+	}
+
+	protected Organization testGraphQLUserAccountOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String getGraphQLValue(Object value) throws Exception {

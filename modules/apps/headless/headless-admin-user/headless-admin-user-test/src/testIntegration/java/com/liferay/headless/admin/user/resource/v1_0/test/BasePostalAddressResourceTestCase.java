@@ -26,6 +26,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -82,6 +84,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -629,6 +632,104 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodePostalAddressesPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodePostalAddressesPage_getExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"accountByExternalReferenceCodePostalAddresses",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"externalReferenceCode",
+						"\"" + externalReferenceCode + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject accountByExternalReferenceCodePostalAddressesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountByExternalReferenceCodePostalAddresses");
+
+		long totalCount =
+			accountByExternalReferenceCodePostalAddressesJSONObject.getLong(
+				"totalCount");
+
+		PostalAddress postalAddress1 =
+			testGraphQLGetAccountByExternalReferenceCodePostalAddressesPageAccountPostalAddress_addPostalAddress(
+				externalReferenceCode, randomPostalAddress());
+
+		PostalAddress postalAddress2 =
+			testGraphQLGetAccountByExternalReferenceCodePostalAddressesPageAccountPostalAddress_addPostalAddress(
+				externalReferenceCode, randomPostalAddress());
+
+		accountByExternalReferenceCodePostalAddressesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountByExternalReferenceCodePostalAddresses");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountByExternalReferenceCodePostalAddressesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			postalAddress1,
+			Arrays.asList(
+				PostalAddressSerDes.toDTOs(
+					accountByExternalReferenceCodePostalAddressesJSONObject.
+						getString("items"))));
+		assertContains(
+			postalAddress2,
+			Arrays.asList(
+				PostalAddressSerDes.toDTOs(
+					accountByExternalReferenceCodePostalAddressesJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		accountByExternalReferenceCodePostalAddressesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"JSONObject/accountByExternalReferenceCodePostalAddresses");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountByExternalReferenceCodePostalAddressesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			postalAddress1,
+			Arrays.asList(
+				PostalAddressSerDes.toDTOs(
+					accountByExternalReferenceCodePostalAddressesJSONObject.
+						getString("items"))));
+		assertContains(
+			postalAddress2,
+			Arrays.asList(
+				PostalAddressSerDes.toDTOs(
+					accountByExternalReferenceCodePostalAddressesJSONObject.
+						getString("items"))));
+	}
+
+	protected PostalAddress
+			testGraphQLGetAccountByExternalReferenceCodePostalAddressesPageAccountPostalAddress_addPostalAddress(
+				String externalReferenceCode, PostalAddress postalAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountPostalAddressesPage() throws Exception {
 		Long accountId = testGetAccountPostalAddressesPage_getAccountId();
 		Long irrelevantAccountId =
@@ -717,6 +818,81 @@ public abstract class BasePostalAddressResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGraphQLGetAccountPostalAddressesPage() throws Exception {
+		Long accountId = testGetAccountPostalAddressesPage_getAccountId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"accountPostalAddresses",
+			new HashMap<String, Object>() {
+				{
+					put("accountId", accountId);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject accountPostalAddressesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountPostalAddresses");
+
+		long totalCount = accountPostalAddressesJSONObject.getLong(
+			"totalCount");
+
+		PostalAddress postalAddress1 =
+			testGraphQLAccountPostalAddress_addPostalAddress(
+				accountId, randomPostalAddress());
+
+		PostalAddress postalAddress2 =
+			testGraphQLAccountPostalAddress_addPostalAddress(
+				accountId, randomPostalAddress());
+
+		accountPostalAddressesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/accountPostalAddresses");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountPostalAddressesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			postalAddress1,
+			Arrays.asList(
+				PostalAddressSerDes.toDTOs(
+					accountPostalAddressesJSONObject.getString("items"))));
+		assertContains(
+			postalAddress2,
+			Arrays.asList(
+				PostalAddressSerDes.toDTOs(
+					accountPostalAddressesJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		accountPostalAddressesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+			"JSONObject/accountPostalAddresses");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountPostalAddressesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			postalAddress1,
+			Arrays.asList(
+				PostalAddressSerDes.toDTOs(
+					accountPostalAddressesJSONObject.getString("items"))));
+		assertContains(
+			postalAddress2,
+			Arrays.asList(
+				PostalAddressSerDes.toDTOs(
+					accountPostalAddressesJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -1623,6 +1799,25 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostAccountPostalAddress() throws Exception {
+		PostalAddress randomPostalAddress = randomPostalAddress();
+
+		PostalAddress postalAddress =
+			testGraphQLAccountPostalAddress_addPostalAddress(
+				testGraphQLPostAccountPostalAddress_getAccountId(),
+				randomPostalAddress);
+
+		Assert.assertTrue(equals(randomPostalAddress, postalAddress));
+	}
+
+	protected Long testGraphQLPostAccountPostalAddress_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutPostalAddress() throws Exception {
 		PostalAddress postPostalAddress =
 			testPutPostalAddress_addPostalAddress();
@@ -1803,6 +1998,131 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected PostalAddress testGraphQLAccountPostalAddress_addPostalAddress()
+		throws Exception {
+
+		return testGraphQLAccountPostalAddress_addPostalAddress(
+			testGraphQLAccountPostalAddress_getAccountId(),
+			randomPostalAddress());
+	}
+
+	protected Long testGraphQLAccountPostalAddress_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected PostalAddress testGraphQLAccountPostalAddress_addPostalAddress(
+			Long accountId, PostalAddress postalAddress)
+		throws Exception {
+
+		JSONDeserializer<PostalAddress> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(PostalAddress.class)) {
+
+			if (getGraphQLValue(field.get(postalAddress)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(postalAddress)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAccountPostalAddress",
+						new HashMap<String, Object>() {
+							{
+								put("accountId", accountId);
+								put("postalAddress", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createAccountPostalAddress"),
+			PostalAddress.class);
+	}
+
+	protected String getGraphQLValue(Object value) throws Exception {
+		if (value == null) {
+			return null;
+		}
+		else if (value instanceof Boolean || value instanceof Number) {
+			return value.toString();
+		}
+		else if (value instanceof Date date) {
+			return "\"" +
+				DateUtil.getDate(
+					date, "yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.getDefault(),
+					TimeZone.getTimeZone("UTC")) + "\"";
+		}
+		else if (value instanceof Enum<?> enm) {
+			return enm.name();
+		}
+		else if (value instanceof Map<?, ?> map) {
+			List<String> entries = new ArrayList<>();
+
+			for (Map.Entry<?, ?> entry : map.entrySet()) {
+				String graphQLValue = getGraphQLValue(entry.getValue());
+
+				if (graphQLValue != null) {
+					entries.add(entry.getKey() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
+		else if (value instanceof Object[] array) {
+			List<String> entries = new ArrayList<>();
+
+			for (Object entry : array) {
+				String graphQLValue = getGraphQLValue(entry);
+
+				if (graphQLValue != null) {
+					entries.add(graphQLValue);
+				}
+			}
+
+			return "[" + String.join(", ", entries) + "]";
+		}
+		else if (value instanceof String) {
+			return "\"" + value + "\"";
+		}
+		else {
+			List<String> entries = new ArrayList<>();
+
+			Class<?> clazz = value.getClass();
+			java.lang.reflect.Field[] declaredFields = getDeclaredFields(clazz);
+
+			if (declaredFields.length == 0) {
+				declaredFields = getDeclaredFields(clazz.getSuperclass());
+			}
+
+			for (java.lang.reflect.Field field : declaredFields) {
+				String graphQLValue = getGraphQLValue(field.get(value));
+
+				if (graphQLValue != null) {
+					entries.add(field.getName() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
 	}
 
 	protected void assertContains(

@@ -184,7 +184,7 @@ public abstract class BaseContactConfigurationResourceTestCase {
 
 	@Test
 	public void testGraphQLGetContactConfiguration() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

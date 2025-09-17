@@ -1495,7 +1495,12 @@ public abstract class BaseShipmentItemResourceTestCase {
 		throws Exception {
 
 		return testGraphQLShipmentItem_addShipmentItem(
-			null, randomShipmentItem());
+			testGraphQLShipmentItem_getShipmentId(), randomShipmentItem());
+	}
+
+	protected Long testGraphQLShipmentItem_getShipmentId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ShipmentItem testGraphQLShipmentItem_addShipmentItem(

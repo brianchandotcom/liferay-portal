@@ -193,7 +193,7 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSiteDisplayPageTemplate() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

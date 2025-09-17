@@ -336,6 +336,109 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetPriceEntryIdProduct() throws Exception {
+		Product product = testGraphQLGetPriceEntryIdProduct_addProduct();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				product,
+				ProductSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"priceEntryIdProduct",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"priceEntryId",
+											testGraphQLGetPriceEntryIdProduct_getPriceEntryId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/priceEntryIdProduct"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				product,
+				ProductSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"priceEntryIdProduct",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"priceEntryId",
+												testGraphQLGetPriceEntryIdProduct_getPriceEntryId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/priceEntryIdProduct"))));
+	}
+
+	protected Long testGraphQLGetPriceEntryIdProduct_getPriceEntryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPriceEntryIdProductNotFound() throws Exception {
+		Long irrelevantPriceEntryId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"priceEntryIdProduct",
+						new HashMap<String, Object>() {
+							{
+								put("priceEntryId", irrelevantPriceEntryId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"priceEntryIdProduct",
+							new HashMap<String, Object>() {
+								{
+									put("priceEntryId", irrelevantPriceEntryId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Product testGraphQLGetPriceEntryIdProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLPriceEntryProduct_addProduct();
+	}
+
+	@Test
 	public void testGetPriceModifierProductProduct() throws Exception {
 		Product postProduct = testGetPriceModifierProductProduct_addProduct();
 
@@ -474,6 +577,13 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	protected Product testGraphQLProduct_addProduct() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Product testGraphQLPriceEntryProduct_addProduct()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

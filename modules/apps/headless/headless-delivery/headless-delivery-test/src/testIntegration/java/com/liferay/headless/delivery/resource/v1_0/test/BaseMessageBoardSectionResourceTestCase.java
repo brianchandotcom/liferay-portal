@@ -1192,6 +1192,108 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetMessageBoardSectionMessageBoardSectionsPage()
+		throws Exception {
+
+		Long parentMessageBoardSectionId =
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"messageBoardSectionMessageBoardSections",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"parentMessageBoardSectionId",
+						parentMessageBoardSectionId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject messageBoardSectionMessageBoardSectionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/messageBoardSectionMessageBoardSections");
+
+		long totalCount =
+			messageBoardSectionMessageBoardSectionsJSONObject.getLong(
+				"totalCount");
+
+		MessageBoardSection messageBoardSection1 =
+			testGraphQLGetMessageBoardSectionMessageBoardSectionsPageMessageBoardSection_addMessageBoardSection(
+				parentMessageBoardSectionId, randomMessageBoardSection());
+
+		MessageBoardSection messageBoardSection2 =
+			testGraphQLGetMessageBoardSectionMessageBoardSectionsPageMessageBoardSection_addMessageBoardSection(
+				parentMessageBoardSectionId, randomMessageBoardSection());
+
+		messageBoardSectionMessageBoardSectionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/messageBoardSectionMessageBoardSections");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			messageBoardSectionMessageBoardSectionsJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			messageBoardSection1,
+			Arrays.asList(
+				MessageBoardSectionSerDes.toDTOs(
+					messageBoardSectionMessageBoardSectionsJSONObject.getString(
+						"items"))));
+		assertContains(
+			messageBoardSection2,
+			Arrays.asList(
+				MessageBoardSectionSerDes.toDTOs(
+					messageBoardSectionMessageBoardSectionsJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		messageBoardSectionMessageBoardSectionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/messageBoardSectionMessageBoardSections");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			messageBoardSectionMessageBoardSectionsJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			messageBoardSection1,
+			Arrays.asList(
+				MessageBoardSectionSerDes.toDTOs(
+					messageBoardSectionMessageBoardSectionsJSONObject.getString(
+						"items"))));
+		assertContains(
+			messageBoardSection2,
+			Arrays.asList(
+				MessageBoardSectionSerDes.toDTOs(
+					messageBoardSectionMessageBoardSectionsJSONObject.getString(
+						"items"))));
+	}
+
+	protected MessageBoardSection
+			testGraphQLGetMessageBoardSectionMessageBoardSectionsPageMessageBoardSection_addMessageBoardSection(
+				Long parentMessageBoardSectionId,
+				MessageBoardSection messageBoardSection)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetMessageBoardSectionPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardSection postMessageBoardSection =

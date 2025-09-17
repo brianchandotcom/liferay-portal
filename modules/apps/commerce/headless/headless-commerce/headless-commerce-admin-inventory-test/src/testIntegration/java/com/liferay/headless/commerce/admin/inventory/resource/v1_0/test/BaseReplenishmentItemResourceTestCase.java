@@ -1169,6 +1169,89 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetReplenishmentItemsPage() throws Exception {
+		String sku = testGetReplenishmentItemsPage_getSku();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"replenishmentItems",
+			new HashMap<String, Object>() {
+				{
+					put("sku", "\"" + sku + "\"");
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject replenishmentItemsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/replenishmentItems");
+
+		long totalCount = replenishmentItemsJSONObject.getLong("totalCount");
+
+		ReplenishmentItem replenishmentItem1 =
+			testGraphQLGetReplenishmentItemsPageReplenishmentItem_addReplenishmentItem(
+				sku, randomReplenishmentItem());
+
+		ReplenishmentItem replenishmentItem2 =
+			testGraphQLGetReplenishmentItemsPageReplenishmentItem_addReplenishmentItem(
+				sku, randomReplenishmentItem());
+
+		replenishmentItemsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/replenishmentItems");
+
+		Assert.assertEquals(
+			totalCount + 2, replenishmentItemsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			replenishmentItem1,
+			Arrays.asList(
+				ReplenishmentItemSerDes.toDTOs(
+					replenishmentItemsJSONObject.getString("items"))));
+		assertContains(
+			replenishmentItem2,
+			Arrays.asList(
+				ReplenishmentItemSerDes.toDTOs(
+					replenishmentItemsJSONObject.getString("items"))));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		replenishmentItemsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminInventory_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessCommerceAdminInventory_v1_0",
+			"JSONObject/replenishmentItems");
+
+		Assert.assertEquals(
+			totalCount + 2, replenishmentItemsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			replenishmentItem1,
+			Arrays.asList(
+				ReplenishmentItemSerDes.toDTOs(
+					replenishmentItemsJSONObject.getString("items"))));
+		assertContains(
+			replenishmentItem2,
+			Arrays.asList(
+				ReplenishmentItemSerDes.toDTOs(
+					replenishmentItemsJSONObject.getString("items"))));
+	}
+
+	protected ReplenishmentItem
+			testGraphQLGetReplenishmentItemsPageReplenishmentItem_addReplenishmentItem(
+				String sku, ReplenishmentItem replenishmentItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetWarehouseIdReplenishmentItemsPage() throws Exception {
 		Long warehouseId =
 			testGetWarehouseIdReplenishmentItemsPage_getWarehouseId();
@@ -1365,6 +1448,100 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetWarehouseIdReplenishmentItemsPage()
+		throws Exception {
+
+		Long warehouseId =
+			testGetWarehouseIdReplenishmentItemsPage_getWarehouseId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"warehouseIdReplenishmentItems",
+			new HashMap<String, Object>() {
+				{
+					put("warehouseId", warehouseId);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject warehouseIdReplenishmentItemsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/warehouseIdReplenishmentItems");
+
+		long totalCount = warehouseIdReplenishmentItemsJSONObject.getLong(
+			"totalCount");
+
+		ReplenishmentItem replenishmentItem1 =
+			testGraphQLGetWarehouseIdReplenishmentItemsPageReplenishmentItem_addReplenishmentItem(
+				warehouseId, randomReplenishmentItem());
+
+		ReplenishmentItem replenishmentItem2 =
+			testGraphQLGetWarehouseIdReplenishmentItemsPageReplenishmentItem_addReplenishmentItem(
+				warehouseId, randomReplenishmentItem());
+
+		warehouseIdReplenishmentItemsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/warehouseIdReplenishmentItems");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			warehouseIdReplenishmentItemsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			replenishmentItem1,
+			Arrays.asList(
+				ReplenishmentItemSerDes.toDTOs(
+					warehouseIdReplenishmentItemsJSONObject.getString(
+						"items"))));
+		assertContains(
+			replenishmentItem2,
+			Arrays.asList(
+				ReplenishmentItemSerDes.toDTOs(
+					warehouseIdReplenishmentItemsJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		warehouseIdReplenishmentItemsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminInventory_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessCommerceAdminInventory_v1_0",
+			"JSONObject/warehouseIdReplenishmentItems");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			warehouseIdReplenishmentItemsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			replenishmentItem1,
+			Arrays.asList(
+				ReplenishmentItemSerDes.toDTOs(
+					warehouseIdReplenishmentItemsJSONObject.getString(
+						"items"))));
+		assertContains(
+			replenishmentItem2,
+			Arrays.asList(
+				ReplenishmentItemSerDes.toDTOs(
+					warehouseIdReplenishmentItemsJSONObject.getString(
+						"items"))));
+	}
+
+	protected ReplenishmentItem
+			testGraphQLGetWarehouseIdReplenishmentItemsPageReplenishmentItem_addReplenishmentItem(
+				Long warehouseId, ReplenishmentItem replenishmentItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPatchReplenishmentItem() throws Exception {
 		ReplenishmentItem postReplenishmentItem =
 			testPatchReplenishmentItem_addReplenishmentItem();
@@ -1465,9 +1642,29 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		ReplenishmentItem replenishmentItem =
 			testGraphQLReplenishmentItem_addReplenishmentItem(
-				null, null, randomReplenishmentItem);
+				testGraphQLPostReplenishmentItem_getWarehouseId(
+					randomReplenishmentItem),
+				testGraphQLPostReplenishmentItem_getSku(
+					randomReplenishmentItem),
+				randomReplenishmentItem);
 
 		Assert.assertTrue(equals(randomReplenishmentItem, replenishmentItem));
+	}
+
+	protected Long testGraphQLPostReplenishmentItem_getWarehouseId(
+			ReplenishmentItem replenishmentItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGraphQLPostReplenishmentItem_getSku(
+			ReplenishmentItem replenishmentItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1634,7 +1831,20 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		throws Exception {
 
 		return testGraphQLReplenishmentItem_addReplenishmentItem(
-			null, null, randomReplenishmentItem());
+			testGraphQLReplenishmentItem_getWarehouseId(),
+			testGraphQLReplenishmentItem_getSku(), randomReplenishmentItem());
+	}
+
+	protected Long testGraphQLReplenishmentItem_getWarehouseId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGraphQLReplenishmentItem_getSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ReplenishmentItem

@@ -189,7 +189,7 @@ public abstract class BaseAssetMetricResourceTestCase {
 
 	@Test
 	public void testGraphQLGetGroupAssetMetric() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

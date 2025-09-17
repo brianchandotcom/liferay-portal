@@ -3240,6 +3240,110 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetStructuredContentFolderStructuredContentFoldersPage()
+		throws Exception {
+
+		Long parentStructuredContentFolderId =
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"structuredContentFolderStructuredContentFolders",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"parentStructuredContentFolderId",
+						parentStructuredContentFolderId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject structuredContentFolderStructuredContentFoldersJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/structuredContentFolderStructuredContentFolders");
+
+		long totalCount =
+			structuredContentFolderStructuredContentFoldersJSONObject.getLong(
+				"totalCount");
+
+		StructuredContentFolder structuredContentFolder1 =
+			testGraphQLGetStructuredContentFolderStructuredContentFoldersPageStructuredContentFolder_addStructuredContentFolder(
+				parentStructuredContentFolderId,
+				randomStructuredContentFolder());
+
+		StructuredContentFolder structuredContentFolder2 =
+			testGraphQLGetStructuredContentFolderStructuredContentFoldersPageStructuredContentFolder_addStructuredContentFolder(
+				parentStructuredContentFolderId,
+				randomStructuredContentFolder());
+
+		structuredContentFolderStructuredContentFoldersJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/structuredContentFolderStructuredContentFolders");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			structuredContentFolderStructuredContentFoldersJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			structuredContentFolder1,
+			Arrays.asList(
+				StructuredContentFolderSerDes.toDTOs(
+					structuredContentFolderStructuredContentFoldersJSONObject.
+						getString("items"))));
+		assertContains(
+			structuredContentFolder2,
+			Arrays.asList(
+				StructuredContentFolderSerDes.toDTOs(
+					structuredContentFolderStructuredContentFoldersJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		structuredContentFolderStructuredContentFoldersJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/structuredContentFolderStructuredContentFolders");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			structuredContentFolderStructuredContentFoldersJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			structuredContentFolder1,
+			Arrays.asList(
+				StructuredContentFolderSerDes.toDTOs(
+					structuredContentFolderStructuredContentFoldersJSONObject.
+						getString("items"))));
+		assertContains(
+			structuredContentFolder2,
+			Arrays.asList(
+				StructuredContentFolderSerDes.toDTOs(
+					structuredContentFolderStructuredContentFoldersJSONObject.
+						getString("items"))));
+	}
+
+	protected StructuredContentFolder
+			testGraphQLGetStructuredContentFolderStructuredContentFoldersPageStructuredContentFolder_addStructuredContentFolder(
+				Long parentStructuredContentFolderId,
+				StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPatchStructuredContentFolder() throws Exception {
 		StructuredContentFolder postStructuredContentFolder =
 			testPatchStructuredContentFolder_addStructuredContentFolder();

@@ -3940,6 +3940,96 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetStructuredContentFolderStructuredContentsPage()
+		throws Exception {
+
+		Long structuredContentFolderId =
+			testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"structuredContentFolderStructuredContents",
+			new HashMap<String, Object>() {
+				{
+					put("structuredContentFolderId", structuredContentFolderId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject structuredContentFolderStructuredContentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/structuredContentFolderStructuredContents");
+
+		long totalCount =
+			structuredContentFolderStructuredContentsJSONObject.getLong(
+				"totalCount");
+
+		StructuredContent structuredContent1 =
+			testGraphQLStructuredContentFolderStructuredContent_addStructuredContent(
+				structuredContentFolderId, randomStructuredContent());
+
+		StructuredContent structuredContent2 =
+			testGraphQLStructuredContentFolderStructuredContent_addStructuredContent(
+				structuredContentFolderId, randomStructuredContent());
+
+		structuredContentFolderStructuredContentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/structuredContentFolderStructuredContents");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			structuredContentFolderStructuredContentsJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			structuredContent1,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentFolderStructuredContentsJSONObject.
+						getString("items"))));
+		assertContains(
+			structuredContent2,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentFolderStructuredContentsJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		structuredContentFolderStructuredContentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/structuredContentFolderStructuredContents");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			structuredContentFolderStructuredContentsJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			structuredContent1,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentFolderStructuredContentsJSONObject.
+						getString("items"))));
+		assertContains(
+			structuredContent2,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentFolderStructuredContentsJSONObject.
+						getString("items"))));
+	}
+
+	@Test
 	public void testGetStructuredContentPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent postStructuredContent =
@@ -4131,6 +4221,30 @@ public abstract class BaseStructuredContentResourceTestCase {
 			postStructuredContentFolderStructuredContent(
 				testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId(),
 				structuredContent);
+	}
+
+	@Test
+	public void testGraphQLPostStructuredContentFolderStructuredContent()
+		throws Exception {
+
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent structuredContent =
+			testGraphQLStructuredContentFolderStructuredContent_addStructuredContent(
+				testGraphQLPostStructuredContentFolderStructuredContent_getStructuredContentFolderId(
+					randomStructuredContent),
+				randomStructuredContent);
+
+		Assert.assertTrue(equals(randomStructuredContent, structuredContent));
+	}
+
+	protected Long
+			testGraphQLPostStructuredContentFolderStructuredContent_getStructuredContentFolderId(
+				StructuredContent structuredContent)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -4771,6 +4885,71 @@ public abstract class BaseStructuredContentResourceTestCase {
 						},
 						graphQLFields)),
 				"JSONObject/data", "JSONObject/createSiteStructuredContent"),
+			StructuredContent.class);
+	}
+
+	protected StructuredContent
+			testGraphQLStructuredContentFolderStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContentFolderStructuredContent_addStructuredContent(
+			testGraphQLStructuredContentFolderStructuredContent_getStructuredContentFolderId(),
+			randomStructuredContent());
+	}
+
+	protected Long
+			testGraphQLStructuredContentFolderStructuredContent_getStructuredContentFolderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContent
+			testGraphQLStructuredContentFolderStructuredContent_addStructuredContent(
+				Long structuredContentFolderId,
+				StructuredContent structuredContent)
+		throws Exception {
+
+		JSONDeserializer<StructuredContent> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(StructuredContent.class)) {
+
+			if (getGraphQLValue(field.get(structuredContent)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(structuredContent)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createStructuredContentFolderStructuredContent",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentFolderId",
+									structuredContentFolderId);
+								put("structuredContent", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createStructuredContentFolderStructuredContent"),
 			StructuredContent.class);
 	}
 

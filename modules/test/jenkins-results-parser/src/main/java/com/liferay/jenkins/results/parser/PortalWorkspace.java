@@ -94,11 +94,11 @@ public class PortalWorkspace extends BaseWorkspace {
 		_configureLiferayFacesBridgeImplWorkspaceGitRepository();
 		_configureLiferayFacesPortalWorkspaceGitRepository();
 		_configureLiferayFacesShowcaseWorkspaceGitRepository();
+		_configureLiferayReleaseToolEEWorkspaceGitRepository();
 		_configureOSBFaroWorkspaceGitRepository();
 		_configurePluginsWorkspaceGitRepository();
 		_configurePortalsPlutoWorkspaceGitRepository();
 		_configurePortletAPIGitRepository();
-		_configureReleaseToolWorkspaceGitRepository();
 
 		super.setUp();
 
@@ -428,33 +428,33 @@ public class PortalWorkspace extends BaseWorkspace {
 		_updateWorkspaceGitRepository(
 			"git-commit/liferay-release-tool-ee", "liferay-release-tool-ee");
 
-		ReleaseToolWorkspaceGitRepository releaseToolWorkspaceGitRepository =
-			_getReleaseToolWorkspaceGitRepository();
+		LiferayReleaseToolEEWorkspaceGitRepository LiferayReleaseToolEEWorkspaceGitRepository =
+			_getLiferayReleaseToolEEWorkspaceGitRepository();
 
-		if (releaseToolWorkspaceGitRepository == null) {
+		if (LiferayReleaseToolEEWorkspaceGitRepository == null) {
 			return;
 		}
 
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			getPortalWorkspaceGitRepository();
 
-		releaseToolWorkspaceGitRepository.setPortalUpstreamBranchName(
+		LiferayReleaseToolEEWorkspaceGitRepository.setPortalUpstreamBranchName(
 			portalWorkspaceGitRepository.getUpstreamBranchName());
 	}
 
 	private LiferayReleaseToolEEWorkspaceGitRepository
-		_getReleaseToolWorkspaceGitRepository() {
+		_getLiferayReleaseToolEEWorkspaceGitRepository() {
 
 		WorkspaceGitRepository workspaceGitRepository =
 			getWorkspaceGitRepository("liferay-release-tool-ee");
 
 		if (!(workspaceGitRepository instanceof
-				ReleaseToolWorkspaceGitRepository)) {
+				LiferayReleaseToolEEWorkspaceGitRepository)) {
 
 			return null;
 		}
 
-		return (ReleaseToolWorkspaceGitRepository)workspaceGitRepository;
+		return (LiferayReleaseToolEEWorkspaceGitRepository)workspaceGitRepository;
 	}
 
 	private boolean _updateWorkspaceGitRepository(

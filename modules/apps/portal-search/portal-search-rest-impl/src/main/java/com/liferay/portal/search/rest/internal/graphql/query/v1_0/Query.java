@@ -8,6 +8,8 @@ package com.liferay.portal.search.rest.internal.graphql.query.v1_0;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.search.rest.dto.v1_0.EmbeddingModel;
 import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
@@ -207,6 +209,10 @@ public class Query {
 		embeddingModelResource.setContextUriInfo(_uriInfo);
 		embeddingModelResource.setContextUser(_user);
 		embeddingModelResource.setGroupLocalService(_groupLocalService);
+		embeddingModelResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		embeddingModelResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		embeddingModelResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -222,6 +228,10 @@ public class Query {
 		searchResultResource.setContextUriInfo(_uriInfo);
 		searchResultResource.setContextUser(_user);
 		searchResultResource.setGroupLocalService(_groupLocalService);
+		searchResultResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		searchResultResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		searchResultResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -238,6 +248,8 @@ public class Query {
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
 	private BiFunction<Object, String, com.liferay.portal.kernel.search.Sort[]>
 		_sortsBiFunction;

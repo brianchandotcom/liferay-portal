@@ -24,6 +24,8 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
@@ -1175,6 +1177,10 @@ public class Query {
 		assigneeResource.setContextUriInfo(_uriInfo);
 		assigneeResource.setContextUser(_user);
 		assigneeResource.setGroupLocalService(_groupLocalService);
+		assigneeResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		assigneeResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		assigneeResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -1188,6 +1194,10 @@ public class Query {
 		transitionResource.setContextUriInfo(_uriInfo);
 		transitionResource.setContextUser(_user);
 		transitionResource.setGroupLocalService(_groupLocalService);
+		transitionResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		transitionResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		transitionResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -1204,6 +1214,10 @@ public class Query {
 		workflowDefinitionResource.setContextUriInfo(_uriInfo);
 		workflowDefinitionResource.setContextUser(_user);
 		workflowDefinitionResource.setGroupLocalService(_groupLocalService);
+		workflowDefinitionResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		workflowDefinitionResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		workflowDefinitionResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -1221,6 +1235,10 @@ public class Query {
 		workflowDefinitionLinkResource.setContextUriInfo(_uriInfo);
 		workflowDefinitionLinkResource.setContextUser(_user);
 		workflowDefinitionLinkResource.setGroupLocalService(_groupLocalService);
+		workflowDefinitionLinkResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		workflowDefinitionLinkResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		workflowDefinitionLinkResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -1237,6 +1255,10 @@ public class Query {
 		workflowInstanceResource.setContextUriInfo(_uriInfo);
 		workflowInstanceResource.setContextUser(_user);
 		workflowInstanceResource.setGroupLocalService(_groupLocalService);
+		workflowInstanceResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		workflowInstanceResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		workflowInstanceResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -1251,6 +1273,10 @@ public class Query {
 		workflowLogResource.setContextUriInfo(_uriInfo);
 		workflowLogResource.setContextUser(_user);
 		workflowLogResource.setGroupLocalService(_groupLocalService);
+		workflowLogResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		workflowLogResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		workflowLogResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -1266,6 +1292,10 @@ public class Query {
 		workflowTaskResource.setContextUriInfo(_uriInfo);
 		workflowTaskResource.setContextUser(_user);
 		workflowTaskResource.setGroupLocalService(_groupLocalService);
+		workflowTaskResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		workflowTaskResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		workflowTaskResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -1292,6 +1322,8 @@ public class Query {
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
 	private BiFunction<Object, String, com.liferay.portal.kernel.search.Sort[]>
 		_sortsBiFunction;

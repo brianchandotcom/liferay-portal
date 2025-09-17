@@ -509,22 +509,28 @@ public class ObjectEntryDisplayContextImpl
 				objectDefinition2.getScope());
 
 		if ((getObjectLayoutTab() == null) && objectRelationship.isEdge()) {
-			ObjectDefinition rootObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinition2.getRootObjectDefinitionId());
+			for (long rootObjectDefinitionId :
+					objectDefinition2.getRootObjectDefinitionIds()) {
 
-			if (ObjectEntryServiceUtil.hasModelResourcePermission(
-					rootObjectDefinition.getObjectDefinitionId(),
-					_objectEntry.getId(), ActionKeys.UPDATE) ||
-				ObjectEntryServiceUtil.hasPortletResourcePermission(
-					objectScopeProvider.getGroupId(
-						_objectRequestHelper.getRequest()),
-					rootObjectDefinition.getObjectDefinitionId(),
-					ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+				ObjectDefinition rootObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						rootObjectDefinitionId);
 
-				creationMenu.addDropdownItem(
-					_getCreateNewRelatedModelDropdownItem(
-						objectDefinition2, objectRelationship));
+				if (ObjectEntryServiceUtil.hasModelResourcePermission(
+						rootObjectDefinition.getObjectDefinitionId(),
+						_objectEntry.getId(), ActionKeys.UPDATE) ||
+					ObjectEntryServiceUtil.hasPortletResourcePermission(
+						objectScopeProvider.getGroupId(
+							_objectRequestHelper.getRequest()),
+						rootObjectDefinition.getObjectDefinitionId(),
+						ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+
+					creationMenu.addDropdownItem(
+						_getCreateNewRelatedModelDropdownItem(
+							objectDefinition2, objectRelationship));
+
+					break;
+				}
 			}
 
 			return creationMenu;

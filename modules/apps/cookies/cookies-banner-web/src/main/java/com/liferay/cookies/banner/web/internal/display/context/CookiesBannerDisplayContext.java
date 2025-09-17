@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
 
 import java.util.Locale;
 import java.util.Map;
@@ -39,11 +38,11 @@ public class CookiesBannerDisplayContext
 		CookiesConfigurationProvider cookiesConfigurationProvider,
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest) {
 
 		super(
 			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
-			renderRequest, renderResponse);
+			renderRequest);
 	}
 
 	public Object getConfigurationURL() {

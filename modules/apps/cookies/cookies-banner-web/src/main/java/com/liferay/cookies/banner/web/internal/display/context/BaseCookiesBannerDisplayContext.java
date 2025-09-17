@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
 
 import java.util.List;
 
@@ -33,13 +32,12 @@ public class BaseCookiesBannerDisplayContext {
 		CookiesConfigurationProvider cookiesConfigurationProvider,
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest) {
 
 		_cookiesConfigurationProvider = cookiesConfigurationProvider;
 		this.layoutUtilityPageEntryLayoutProvider =
 			layoutUtilityPageEntryLayoutProvider;
 		this.renderRequest = renderRequest;
-		this.renderResponse = renderResponse;
 
 		cookiesBannerConfiguration = _getCookiesBannerConfiguration(
 			renderRequest);
@@ -110,7 +108,6 @@ public class BaseCookiesBannerDisplayContext {
 	protected LayoutUtilityPageEntryLayoutProvider
 		layoutUtilityPageEntryLayoutProvider;
 	protected RenderRequest renderRequest;
-	protected RenderResponse renderResponse;
 
 	private CookiesBannerConfiguration _getCookiesBannerConfiguration(
 		RenderRequest renderRequest) {

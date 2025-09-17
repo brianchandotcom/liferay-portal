@@ -71,12 +71,19 @@ public class ObjectEntryFolderServiceTest {
 
 		// Lazy referencing disabled
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+
 		_setUser(_adminUser);
 
 		AssertUtils.assertFailure(
-			NoSuchObjectEntryFolderException.class, null,
+			NoSuchObjectEntryFolderException.class,
+			StringBundler.concat(
+				"No ObjectEntryFolder exists with the key {",
+				"externalReferenceCode=", externalReferenceCode, ", groupId=",
+				_group.getGroupId(), ", companyId=",
+				TestPropsValues.getCompanyId(), "}"),
 			() -> _objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
-				RandomTestUtil.randomString(), _group.getGroupId(),
+				externalReferenceCode, _group.getGroupId(),
 				TestPropsValues.getCompanyId(),
 				ServiceContextTestUtil.getServiceContext()));
 

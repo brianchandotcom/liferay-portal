@@ -201,7 +201,7 @@ public class ObjectEntryFolderLocalServiceImpl
 					objectEntryFolder.getObjectEntryFolderId()));
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-53981") &&
+		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
 			(objectEntryFolder.getStatus() ==
 				WorkflowConstants.STATUS_IN_TRASH)) {
 

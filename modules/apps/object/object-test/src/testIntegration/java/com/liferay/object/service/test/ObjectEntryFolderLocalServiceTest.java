@@ -409,7 +409,7 @@ public class ObjectEntryFolderLocalServiceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-53981")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testMoveObjectEntryFolderToTrash() throws Exception {
 		Group group = GroupTestUtil.addGroup();
@@ -486,7 +486,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				objectEntryFolder2.getObjectEntryFolderId()));
 	}
 
-	@FeatureFlag("LPD-53981")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testRestoreObjectEntryFolderFromTrash() throws Exception {
 		Group group = GroupTestUtil.addGroup();

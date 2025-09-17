@@ -135,7 +135,7 @@ public class ObjectEntryFolderServiceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-53981")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testMoveObjectEntryFolderTrash() throws Exception {
 		try {
@@ -155,7 +155,7 @@ public class ObjectEntryFolderServiceTest {
 		_testMoveObjectEntryFolderTrash(_user, _user);
 	}
 
-	@FeatureFlag("LPD-53981")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testRestoreObjectEntryFolderFromTrash() throws Exception {
 		try {

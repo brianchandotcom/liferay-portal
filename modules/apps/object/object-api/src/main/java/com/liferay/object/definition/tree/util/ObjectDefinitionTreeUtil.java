@@ -153,13 +153,17 @@ public class ObjectDefinitionTreeUtil {
 			}
 		}
 
-		ObjectDefinition rootObjectDefinition =
-			objectDefinitionPersistence.findByPrimaryKey(
-				objectDefinition1.getRootObjectDefinitionId());
+		for (long rootObjectDefinitionId :
+				objectDefinition1.getRootObjectDefinitionIds()) {
 
-		if (rootObjectDefinition.isApproved()) {
-			objectDefinitionLocalService.deployObjectDefinition(
-				rootObjectDefinition);
+			ObjectDefinition rootObjectDefinition =
+				objectDefinitionPersistence.findByPrimaryKey(
+					rootObjectDefinitionId);
+
+			if (rootObjectDefinition.isApproved()) {
+				objectDefinitionLocalService.deployObjectDefinition(
+					rootObjectDefinition);
+			}
 		}
 	}
 

@@ -87,8 +87,6 @@ public interface ObjectDefinition
 
 	public boolean isModifiableAndSystem();
 
-	public boolean isRootDescendantNode();
-
 	public boolean isRootDescendantNode(long rootObjectDefinitionId);
 
 	public boolean isRootNode();

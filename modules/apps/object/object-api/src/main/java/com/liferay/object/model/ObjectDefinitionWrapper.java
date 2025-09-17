@@ -1214,11 +1214,6 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
-	public boolean isRootDescendantNode() {
-		return model.isRootDescendantNode();
-	}
-
-	@Override
 	public boolean isRootDescendantNode(long rootObjectDefinitionId) {
 		return model.isRootDescendantNode(rootObjectDefinitionId);
 	}

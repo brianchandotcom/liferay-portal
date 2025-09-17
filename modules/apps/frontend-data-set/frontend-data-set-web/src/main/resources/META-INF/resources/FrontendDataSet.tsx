@@ -1371,7 +1371,6 @@ const FrontendDataSetContent = ({
 				showInfoPanel: infoPanelComponent ? true : false,
 				sidePanelId: dataSetSupportSidePanelIdRef.current,
 				sorts,
-				stateInURLSetters,
 				style,
 				toggleItemInlineEdit,
 				uniformActionsDisplay,

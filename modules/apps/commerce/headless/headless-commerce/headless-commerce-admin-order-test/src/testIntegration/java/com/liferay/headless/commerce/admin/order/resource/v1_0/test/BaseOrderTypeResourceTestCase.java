@@ -250,14 +250,17 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		OrderType orderType1 = testGraphQLDeleteOrderType_addOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOrderType",
-				new HashMap<String, Object>() {
-					{
-						put("id", orderType1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderType",
+						new HashMap<String, Object>() {
+							{
+								put("id", orderType1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderType"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -277,16 +280,20 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		OrderType orderType2 = testGraphQLDeleteOrderType_addOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteOrderType",
-					new HashMap<String, Object>() {
-						{
-							put("id", orderType2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderType",
+							new HashMap<String, Object>() {
+								{
+									put("id", orderType2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderType"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -417,17 +424,22 @@ public abstract class BaseOrderTypeResourceTestCase {
 		OrderType orderType1 =
 			testGraphQLDeleteOrderTypeByExternalReferenceCode_addOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOrderTypeByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + orderType1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderTypeByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										orderType1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteOrderTypeByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -451,19 +463,25 @@ public abstract class BaseOrderTypeResourceTestCase {
 		OrderType orderType2 =
 			testGraphQLDeleteOrderTypeByExternalReferenceCode_addOrderType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteOrderTypeByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + orderType2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderTypeByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											orderType2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderTypeByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

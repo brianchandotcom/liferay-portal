@@ -274,16 +274,19 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		ObjectValidationRule objectValidationRule1 =
 			testGraphQLDeleteObjectValidationRule_addObjectValidationRule();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteObjectValidationRule",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"objectValidationRuleId",
-							objectValidationRule1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectValidationRule",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectValidationRuleId",
+									objectValidationRule1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectValidationRule"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -306,18 +309,22 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		ObjectValidationRule objectValidationRule2 =
 			testGraphQLDeleteObjectValidationRule_addObjectValidationRule();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"objectAdmin_v1_0",
-				new GraphQLField(
-					"deleteObjectValidationRule",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"objectValidationRuleId",
-								objectValidationRule2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"deleteObjectValidationRule",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectValidationRuleId",
+										objectValidationRule2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+				"Object/deleteObjectValidationRule"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

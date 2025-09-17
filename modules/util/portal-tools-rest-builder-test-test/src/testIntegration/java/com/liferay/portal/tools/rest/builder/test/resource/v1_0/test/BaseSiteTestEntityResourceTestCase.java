@@ -268,20 +268,25 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		SiteTestEntity siteTestEntity1 =
 			testGraphQLDeleteSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteSiteTestEntityByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + siteTestEntity1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" + siteTestEntity1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteSiteTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + siteTestEntity1.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										siteTestEntity1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteSiteTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -309,23 +314,29 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		SiteTestEntity siteTestEntity2 =
 			testGraphQLDeleteSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"test_v1_0",
-				new GraphQLField(
-					"deleteSiteSiteTestEntityByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + siteTestEntity2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									siteTestEntity2.getExternalReferenceCode() +
-										"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"deleteSiteSiteTestEntityByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + siteTestEntity2.getSiteId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											siteTestEntity2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"Object/deleteSiteSiteTestEntityByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

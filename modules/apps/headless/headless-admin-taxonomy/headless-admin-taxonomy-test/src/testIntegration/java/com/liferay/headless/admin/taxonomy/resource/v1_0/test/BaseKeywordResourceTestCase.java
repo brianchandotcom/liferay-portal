@@ -313,21 +313,26 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword1 =
 			testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAssetLibraryKeywordByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"assetLibraryId",
-							"\"" +
-								testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
-									"\"");
-						put(
-							"externalReferenceCode",
-							"\"" + keyword1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAssetLibraryKeywordByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									"\"" + keyword1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAssetLibraryKeywordByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -356,24 +361,30 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword2 =
 			testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminTaxonomy_v1_0",
-				new GraphQLField(
-					"deleteAssetLibraryKeywordByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"assetLibraryId",
-								"\"" +
-									testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
-										"\"");
-							put(
-								"externalReferenceCode",
-								"\"" + keyword2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteAssetLibraryKeywordByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											keyword2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteAssetLibraryKeywordByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -440,14 +451,17 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Keyword keyword1 = testGraphQLDeleteKeyword_addKeyword();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteKeyword",
-				new HashMap<String, Object>() {
-					{
-						put("keywordId", keyword1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteKeyword",
+						new HashMap<String, Object>() {
+							{
+								put("keywordId", keyword1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteKeyword"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -467,16 +481,20 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Keyword keyword2 = testGraphQLDeleteKeyword_addKeyword();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminTaxonomy_v1_0",
-				new GraphQLField(
-					"deleteKeyword",
-					new HashMap<String, Object>() {
-						{
-							put("keywordId", keyword2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteKeyword",
+							new HashMap<String, Object>() {
+								{
+									put("keywordId", keyword2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteKeyword"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -574,17 +592,24 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword1 =
 			testGraphQLDeleteSiteKeywordByExternalReferenceCode_addKeyword();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteKeywordByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put("siteKey", "\"" + keyword1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" + keyword1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteKeywordByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + keyword1.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" + keyword1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteKeywordByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -609,20 +634,28 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword2 =
 			testGraphQLDeleteSiteKeywordByExternalReferenceCode_addKeyword();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminTaxonomy_v1_0",
-				new GraphQLField(
-					"deleteSiteKeywordByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put("siteKey", "\"" + keyword2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" + keyword2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteSiteKeywordByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + keyword2.getSiteId() + "\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											keyword2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteSiteKeywordByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

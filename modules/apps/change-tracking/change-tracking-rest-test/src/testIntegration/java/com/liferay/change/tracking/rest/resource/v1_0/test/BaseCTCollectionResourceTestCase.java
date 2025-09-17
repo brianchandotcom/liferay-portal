@@ -263,14 +263,17 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection1 =
 			testGraphQLDeleteCTCollection_addCTCollection();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCTCollection",
-				new HashMap<String, Object>() {
-					{
-						put("ctCollectionId", ctCollection1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCTCollection",
+						new HashMap<String, Object>() {
+							{
+								put("ctCollectionId", ctCollection1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCTCollection"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -291,16 +294,22 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection2 =
 			testGraphQLDeleteCTCollection_addCTCollection();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"changeTracking_v1_0",
-				new GraphQLField(
-					"deleteCTCollection",
-					new HashMap<String, Object>() {
-						{
-							put("ctCollectionId", ctCollection2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"deleteCTCollection",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"ctCollectionId",
+										ctCollection2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/changeTracking_v1_0",
+				"Object/deleteCTCollection"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -444,17 +453,22 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection1 =
 			testGraphQLDeleteCTCollectionByExternalReferenceCode_addCTCollection();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCTCollectionByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + ctCollection1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCTCollectionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										ctCollection1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteCTCollectionByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -479,20 +493,25 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection2 =
 			testGraphQLDeleteCTCollectionByExternalReferenceCode_addCTCollection();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"changeTracking_v1_0",
-				new GraphQLField(
-					"deleteCTCollectionByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									ctCollection2.getExternalReferenceCode() +
-										"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"deleteCTCollectionByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											ctCollection2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/changeTracking_v1_0",
+				"Object/deleteCTCollectionByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

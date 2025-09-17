@@ -259,14 +259,17 @@ public abstract class BaseSpecificationResourceTestCase {
 		Specification specification1 =
 			testGraphQLDeleteSpecification_addSpecification();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSpecification",
-				new HashMap<String, Object>() {
-					{
-						put("id", specification1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSpecification",
+						new HashMap<String, Object>() {
+							{
+								put("id", specification1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSpecification"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -287,16 +290,21 @@ public abstract class BaseSpecificationResourceTestCase {
 		Specification specification2 =
 			testGraphQLDeleteSpecification_addSpecification();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteSpecification",
-					new HashMap<String, Object>() {
-						{
-							put("id", specification2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteSpecification",
+							new HashMap<String, Object>() {
+								{
+									put("id", specification2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteSpecification"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -440,17 +448,22 @@ public abstract class BaseSpecificationResourceTestCase {
 		Specification specification1 =
 			testGraphQLDeleteSpecificationByExternalReferenceCode_addSpecification();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSpecificationByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + specification1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSpecificationByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										specification1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSpecificationByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -475,20 +488,26 @@ public abstract class BaseSpecificationResourceTestCase {
 		Specification specification2 =
 			testGraphQLDeleteSpecificationByExternalReferenceCode_addSpecification();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteSpecificationByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									specification2.getExternalReferenceCode() +
-										"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteSpecificationByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											specification2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteSpecificationByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

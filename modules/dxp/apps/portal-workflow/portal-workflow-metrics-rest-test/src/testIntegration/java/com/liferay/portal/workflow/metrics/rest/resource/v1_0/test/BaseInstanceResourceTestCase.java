@@ -232,18 +232,21 @@ public abstract class BaseInstanceResourceTestCase {
 
 		Instance instance1 = testGraphQLDeleteProcessInstance_addInstance();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProcessInstance",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"processId",
-							testGraphQLDeleteProcessInstance_getProcessId(
-								instance1));
-						put("instanceId", instance1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProcessInstance",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"processId",
+									testGraphQLDeleteProcessInstance_getProcessId(
+										instance1));
+								put("instanceId", instance1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProcessInstance"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -267,20 +270,24 @@ public abstract class BaseInstanceResourceTestCase {
 
 		Instance instance2 = testGraphQLDeleteProcessInstance_addInstance();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"portalWorkflowMetrics_v1_0",
-				new GraphQLField(
-					"deleteProcessInstance",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"processId",
-								testGraphQLDeleteProcessInstance_getProcessId(
-									instance2));
-							put("instanceId", instance2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"portalWorkflowMetrics_v1_0",
+						new GraphQLField(
+							"deleteProcessInstance",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"processId",
+										testGraphQLDeleteProcessInstance_getProcessId(
+											instance2));
+									put("instanceId", instance2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/portalWorkflowMetrics_v1_0",
+				"Object/deleteProcessInstance"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

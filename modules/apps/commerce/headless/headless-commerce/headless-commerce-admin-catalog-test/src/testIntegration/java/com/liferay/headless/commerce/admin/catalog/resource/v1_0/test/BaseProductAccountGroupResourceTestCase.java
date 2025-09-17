@@ -257,14 +257,17 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 		ProductAccountGroup productAccountGroup1 =
 			testGraphQLDeleteProductAccountGroup_addProductAccountGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductAccountGroup",
-				new HashMap<String, Object>() {
-					{
-						put("id", productAccountGroup1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductAccountGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", productAccountGroup1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProductAccountGroup"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -285,16 +288,21 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 		ProductAccountGroup productAccountGroup2 =
 			testGraphQLDeleteProductAccountGroup_addProductAccountGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductAccountGroup",
-					new HashMap<String, Object>() {
-						{
-							put("id", productAccountGroup2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductAccountGroup",
+							new HashMap<String, Object>() {
+								{
+									put("id", productAccountGroup2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductAccountGroup"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

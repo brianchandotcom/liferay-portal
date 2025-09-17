@@ -311,16 +311,19 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		DocumentDataDefinitionType documentDataDefinitionType1 =
 			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteDocumentDataDefinitionType",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"documentDataDefinitionTypeId",
-							documentDataDefinitionType1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocumentDataDefinitionType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"documentDataDefinitionTypeId",
+									documentDataDefinitionType1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocumentDataDefinitionType"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -343,18 +346,22 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		DocumentDataDefinitionType documentDataDefinitionType2 =
 			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteDocumentDataDefinitionType",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"documentDataDefinitionTypeId",
-								documentDataDefinitionType2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocumentDataDefinitionType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"documentDataDefinitionTypeId",
+										documentDataDefinitionType2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocumentDataDefinitionType"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

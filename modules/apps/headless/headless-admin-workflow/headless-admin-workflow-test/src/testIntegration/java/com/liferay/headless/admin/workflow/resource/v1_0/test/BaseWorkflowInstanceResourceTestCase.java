@@ -256,14 +256,19 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		WorkflowInstance workflowInstance1 =
 			testGraphQLDeleteWorkflowInstance_addWorkflowInstance();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteWorkflowInstance",
-				new HashMap<String, Object>() {
-					{
-						put("workflowInstanceId", workflowInstance1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWorkflowInstance",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"workflowInstanceId",
+									workflowInstance1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWorkflowInstance"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -286,18 +291,22 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		WorkflowInstance workflowInstance2 =
 			testGraphQLDeleteWorkflowInstance_addWorkflowInstance();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminWorkflow_v1_0",
-				new GraphQLField(
-					"deleteWorkflowInstance",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"workflowInstanceId",
-								workflowInstance2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminWorkflow_v1_0",
+						new GraphQLField(
+							"deleteWorkflowInstance",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"workflowInstanceId",
+										workflowInstance2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminWorkflow_v1_0",
+				"Object/deleteWorkflowInstance"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

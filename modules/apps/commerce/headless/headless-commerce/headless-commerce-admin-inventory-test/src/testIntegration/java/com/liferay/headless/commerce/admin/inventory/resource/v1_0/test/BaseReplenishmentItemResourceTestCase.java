@@ -263,14 +263,19 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		ReplenishmentItem replenishmentItem1 =
 			testGraphQLDeleteReplenishmentItem_addReplenishmentItem();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteReplenishmentItem",
-				new HashMap<String, Object>() {
-					{
-						put("replenishmentItemId", replenishmentItem1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteReplenishmentItem",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"replenishmentItemId",
+									replenishmentItem1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteReplenishmentItem"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -293,18 +298,23 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		ReplenishmentItem replenishmentItem2 =
 			testGraphQLDeleteReplenishmentItem_addReplenishmentItem();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminInventory_v1_0",
-				new GraphQLField(
-					"deleteReplenishmentItem",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"replenishmentItemId",
-								replenishmentItem2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminInventory_v1_0",
+						new GraphQLField(
+							"deleteReplenishmentItem",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"replenishmentItemId",
+										replenishmentItem2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminInventory_v1_0",
+				"Object/deleteReplenishmentItem"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -454,18 +464,22 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		ReplenishmentItem replenishmentItem1 =
 			testGraphQLDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteReplenishmentItemByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" +
-								replenishmentItem1.getExternalReferenceCode() +
-									"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteReplenishmentItemByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										replenishmentItem1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteReplenishmentItemByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -490,20 +504,26 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		ReplenishmentItem replenishmentItem2 =
 			testGraphQLDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminInventory_v1_0",
-				new GraphQLField(
-					"deleteReplenishmentItemByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									replenishmentItem2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminInventory_v1_0",
+						new GraphQLField(
+							"deleteReplenishmentItemByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											replenishmentItem2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminInventory_v1_0",
+				"Object/deleteReplenishmentItemByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

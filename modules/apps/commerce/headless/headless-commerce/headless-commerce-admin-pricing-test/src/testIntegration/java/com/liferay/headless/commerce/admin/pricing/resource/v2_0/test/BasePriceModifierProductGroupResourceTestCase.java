@@ -240,36 +240,44 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		PriceModifierProductGroup priceModifierProductGroup1 =
 			testGraphQLDeletePriceModifierProductGroup_addPriceModifierProductGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePriceModifierProductGroup",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"priceModifierProductGroupId",
-							priceModifierProductGroup1.
-								getPriceModifierProductGroupId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePriceModifierProductGroup",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"priceModifierProductGroupId",
+									priceModifierProductGroup1.
+										getPriceModifierProductGroupId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePriceModifierProductGroup"));
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
 		PriceModifierProductGroup priceModifierProductGroup2 =
 			testGraphQLDeletePriceModifierProductGroup_addPriceModifierProductGroup();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminPricing_v2_0",
-				new GraphQLField(
-					"deletePriceModifierProductGroup",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"priceModifierProductGroupId",
-								priceModifierProductGroup2.
-									getPriceModifierProductGroupId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deletePriceModifierProductGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"priceModifierProductGroupId",
+										priceModifierProductGroup2.
+											getPriceModifierProductGroupId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deletePriceModifierProductGroup"));
 	}
 
 	protected PriceModifierProductGroup

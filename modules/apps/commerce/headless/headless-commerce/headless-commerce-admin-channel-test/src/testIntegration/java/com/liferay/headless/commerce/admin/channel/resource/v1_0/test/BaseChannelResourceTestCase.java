@@ -259,14 +259,17 @@ public abstract class BaseChannelResourceTestCase {
 
 		Channel channel1 = testGraphQLDeleteChannel_addChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteChannel",
-				new HashMap<String, Object>() {
-					{
-						put("channelId", channel1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteChannel",
+						new HashMap<String, Object>() {
+							{
+								put("channelId", channel1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteChannel"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -286,16 +289,21 @@ public abstract class BaseChannelResourceTestCase {
 
 		Channel channel2 = testGraphQLDeleteChannel_addChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminChannel_v1_0",
-				new GraphQLField(
-					"deleteChannel",
-					new HashMap<String, Object>() {
-						{
-							put("channelId", channel2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deleteChannel",
+							new HashMap<String, Object>() {
+								{
+									put("channelId", channel2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deleteChannel"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -413,16 +421,21 @@ public abstract class BaseChannelResourceTestCase {
 		Channel channel1 =
 			testGraphQLDeleteChannelByExternalReferenceCode_addChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteChannelByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + channel1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteChannelByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + channel1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteChannelByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -446,19 +459,26 @@ public abstract class BaseChannelResourceTestCase {
 		Channel channel2 =
 			testGraphQLDeleteChannelByExternalReferenceCode_addChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminChannel_v1_0",
-				new GraphQLField(
-					"deleteChannelByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + channel2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deleteChannelByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											channel2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deleteChannelByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

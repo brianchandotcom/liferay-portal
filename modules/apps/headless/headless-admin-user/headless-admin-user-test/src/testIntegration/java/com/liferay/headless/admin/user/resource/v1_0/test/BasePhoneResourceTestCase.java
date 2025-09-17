@@ -247,14 +247,17 @@ public abstract class BasePhoneResourceTestCase {
 
 		Phone phone1 = testGraphQLDeletePhone_addPhone();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePhone",
-				new HashMap<String, Object>() {
-					{
-						put("phoneId", phone1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePhone",
+						new HashMap<String, Object>() {
+							{
+								put("phoneId", phone1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePhone"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -274,16 +277,20 @@ public abstract class BasePhoneResourceTestCase {
 
 		Phone phone2 = testGraphQLDeletePhone_addPhone();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deletePhone",
-					new HashMap<String, Object>() {
-						{
-							put("phoneId", phone2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deletePhone",
+							new HashMap<String, Object>() {
+								{
+									put("phoneId", phone2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deletePhone"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -400,16 +407,21 @@ public abstract class BasePhoneResourceTestCase {
 
 		Phone phone1 = testGraphQLDeletePhoneByExternalReferenceCode_addPhone();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deletePhoneByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + phone1.getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePhoneByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" + phone1.getExternalReferenceCode() +
+										"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deletePhoneByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -432,19 +444,24 @@ public abstract class BasePhoneResourceTestCase {
 
 		Phone phone2 = testGraphQLDeletePhoneByExternalReferenceCode_addPhone();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessAdminUser_v1_0",
-				new GraphQLField(
-					"deletePhoneByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + phone2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deletePhoneByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											phone2.getExternalReferenceCode() +
+												"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deletePhoneByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

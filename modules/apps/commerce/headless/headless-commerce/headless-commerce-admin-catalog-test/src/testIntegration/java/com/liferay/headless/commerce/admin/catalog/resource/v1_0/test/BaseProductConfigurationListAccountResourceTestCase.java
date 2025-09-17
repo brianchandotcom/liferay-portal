@@ -246,36 +246,45 @@ public abstract class BaseProductConfigurationListAccountResourceTestCase {
 		ProductConfigurationListAccount productConfigurationListAccount1 =
 			testGraphQLDeleteProductConfigurationListAccount_addProductConfigurationListAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductConfigurationListAccount",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"productConfigurationListAccountId",
-							productConfigurationListAccount1.
-								getProductConfigurationListAccountId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductConfigurationListAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"productConfigurationListAccountId",
+									productConfigurationListAccount1.
+										getProductConfigurationListAccountId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteProductConfigurationListAccount"));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		ProductConfigurationListAccount productConfigurationListAccount2 =
 			testGraphQLDeleteProductConfigurationListAccount_addProductConfigurationListAccount();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductConfigurationListAccount",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"productConfigurationListAccountId",
-								productConfigurationListAccount2.
-									getProductConfigurationListAccountId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductConfigurationListAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"productConfigurationListAccountId",
+										productConfigurationListAccount2.
+											getProductConfigurationListAccountId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductConfigurationListAccount"));
 	}
 
 	protected ProductConfigurationListAccount

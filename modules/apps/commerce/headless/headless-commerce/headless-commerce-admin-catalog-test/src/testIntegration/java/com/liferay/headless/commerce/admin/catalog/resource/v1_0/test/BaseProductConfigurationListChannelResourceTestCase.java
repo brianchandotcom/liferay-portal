@@ -246,36 +246,45 @@ public abstract class BaseProductConfigurationListChannelResourceTestCase {
 		ProductConfigurationListChannel productConfigurationListChannel1 =
 			testGraphQLDeleteProductConfigurationListChannel_addProductConfigurationListChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteProductConfigurationListChannel",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"productConfigurationListChannelId",
-							productConfigurationListChannel1.
-								getProductConfigurationListChannelId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductConfigurationListChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"productConfigurationListChannelId",
+									productConfigurationListChannel1.
+										getProductConfigurationListChannelId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteProductConfigurationListChannel"));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		ProductConfigurationListChannel productConfigurationListChannel2 =
 			testGraphQLDeleteProductConfigurationListChannel_addProductConfigurationListChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteProductConfigurationListChannel",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"productConfigurationListChannelId",
-								productConfigurationListChannel2.
-									getProductConfigurationListChannelId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductConfigurationListChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"productConfigurationListChannelId",
+										productConfigurationListChannel2.
+											getProductConfigurationListChannelId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductConfigurationListChannel"));
 	}
 
 	protected ProductConfigurationListChannel

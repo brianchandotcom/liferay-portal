@@ -213,38 +213,46 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment1 =
 			testGraphQLDeleteCartAttachment_addAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCartAttachment",
-				new HashMap<String, Object>() {
-					{
-						put("attachmentId", attachment1.getId());
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCartAttachment",
+						new HashMap<String, Object>() {
+							{
+								put("attachmentId", attachment1.getId());
 
-						put(
-							"cartId",
-							testGraphQLDeleteCartAttachment_getCartId());
-					}
-				}));
+								put(
+									"cartId",
+									testGraphQLDeleteCartAttachment_getCartId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCartAttachment"));
 
 		// Using the namespace headlessCommerceDeliveryCart_v1_0
 
 		Attachment attachment2 =
 			testGraphQLDeleteCartAttachment_addAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceDeliveryCart_v1_0",
-				new GraphQLField(
-					"deleteCartAttachment",
-					new HashMap<String, Object>() {
-						{
-							put("attachmentId", attachment2.getId());
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"deleteCartAttachment",
+							new HashMap<String, Object>() {
+								{
+									put("attachmentId", attachment2.getId());
 
-							put(
-								"cartId",
-								testGraphQLDeleteCartAttachment_getCartId());
-						}
-					})));
+									put(
+										"cartId",
+										testGraphQLDeleteCartAttachment_getCartId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceDeliveryCart_v1_0",
+				"Object/deleteCartAttachment"));
 	}
 
 	protected Long testGraphQLDeleteCartAttachment_getCartId()
@@ -303,48 +311,60 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment1 =
 			testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"attachmentExternalReferenceCode",
-							"\"" + attachment1.getExternalReferenceCode() +
-								"\"");
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"attachmentExternalReferenceCode",
+									"\"" +
+										attachment1.getExternalReferenceCode() +
+											"\"");
 
-						put(
-							"externalReferenceCode",
-							"\"" +
-								testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
-									attachment1) + "\"");
-					}
-				}));
+								put(
+									"externalReferenceCode",
+									"\"" +
+										testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+											attachment1) + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode"));
 
 		// Using the namespace headlessCommerceDeliveryCart_v1_0
 
 		Attachment attachment2 =
 			testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceDeliveryCart_v1_0",
-				new GraphQLField(
-					"deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"attachmentExternalReferenceCode",
-								"\"" + attachment2.getExternalReferenceCode() +
-									"\"");
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"attachmentExternalReferenceCode",
+										"\"" +
+											attachment2.
+												getExternalReferenceCode() +
+													"\"");
 
-							put(
-								"externalReferenceCode",
-								"\"" +
-									testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
-										attachment2) + "\"");
-						}
-					})));
+									put(
+										"externalReferenceCode",
+										"\"" +
+											testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+												attachment2) + "\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceDeliveryCart_v1_0",
+				"Object/deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode"));
 	}
 
 	protected String

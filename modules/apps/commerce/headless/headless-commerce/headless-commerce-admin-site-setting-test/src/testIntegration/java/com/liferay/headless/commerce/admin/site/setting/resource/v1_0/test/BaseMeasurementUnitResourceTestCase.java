@@ -261,14 +261,17 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit1 =
 			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteMeasurementUnit",
-				new HashMap<String, Object>() {
-					{
-						put("id", measurementUnit1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMeasurementUnit",
+						new HashMap<String, Object>() {
+							{
+								put("id", measurementUnit1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteMeasurementUnit"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -289,16 +292,21 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit2 =
 			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminSiteSetting_v1_0",
-				new GraphQLField(
-					"deleteMeasurementUnit",
-					new HashMap<String, Object>() {
-						{
-							put("id", measurementUnit2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"deleteMeasurementUnit",
+							new HashMap<String, Object>() {
+								{
+									put("id", measurementUnit2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+				"Object/deleteMeasurementUnit"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -444,17 +452,22 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit1 =
 			testGraphQLDeleteMeasurementUnitByExternalReferenceCode_addMeasurementUnit();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteMeasurementUnitByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + measurementUnit1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMeasurementUnitByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										measurementUnit1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteMeasurementUnitByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -479,20 +492,26 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit2 =
 			testGraphQLDeleteMeasurementUnitByExternalReferenceCode_addMeasurementUnit();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminSiteSetting_v1_0",
-				new GraphQLField(
-					"deleteMeasurementUnitByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" +
-									measurementUnit2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"deleteMeasurementUnitByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											measurementUnit2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+				"Object/deleteMeasurementUnitByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -559,14 +578,19 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit1 =
 			testGraphQLDeleteMeasurementUnitByKey_addMeasurementUnit();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteMeasurementUnitByKey",
-				new HashMap<String, Object>() {
-					{
-						put("key", "\"" + measurementUnit1.getKey() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMeasurementUnitByKey",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"key",
+									"\"" + measurementUnit1.getKey() + "\"");
+							}
+						})),
+				"JSONObject/data", "Object/deleteMeasurementUnitByKey"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -587,16 +611,24 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit2 =
 			testGraphQLDeleteMeasurementUnitByKey_addMeasurementUnit();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminSiteSetting_v1_0",
-				new GraphQLField(
-					"deleteMeasurementUnitByKey",
-					new HashMap<String, Object>() {
-						{
-							put("key", "\"" + measurementUnit2.getKey() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"deleteMeasurementUnitByKey",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"key",
+										"\"" + measurementUnit2.getKey() +
+											"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+				"Object/deleteMeasurementUnitByKey"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

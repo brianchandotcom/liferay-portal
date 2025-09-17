@@ -280,16 +280,19 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGraphQLDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteKnowledgeBaseArticle",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"knowledgeBaseArticleId",
-							knowledgeBaseArticle1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteKnowledgeBaseArticle",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"knowledgeBaseArticleId",
+									knowledgeBaseArticle1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteKnowledgeBaseArticle"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -312,18 +315,22 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGraphQLDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteKnowledgeBaseArticle",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"knowledgeBaseArticleId",
-								knowledgeBaseArticle2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteKnowledgeBaseArticle",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"knowledgeBaseArticleId",
+										knowledgeBaseArticle2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteKnowledgeBaseArticle"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -435,16 +442,20 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGraphQLDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteKnowledgeBaseArticleMyRating",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"knowledgeBaseArticleId",
-							knowledgeBaseArticle1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteKnowledgeBaseArticleMyRating",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"knowledgeBaseArticleId",
+									knowledgeBaseArticle1.getId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteKnowledgeBaseArticleMyRating"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -467,18 +478,22 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGraphQLDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteKnowledgeBaseArticleMyRating",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"knowledgeBaseArticleId",
-								knowledgeBaseArticle2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteKnowledgeBaseArticleMyRating",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"knowledgeBaseArticleId",
+										knowledgeBaseArticle2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteKnowledgeBaseArticleMyRating"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -551,21 +566,26 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteKnowledgeBaseArticleByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + knowledgeBaseArticle1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" +
-								knowledgeBaseArticle1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteKnowledgeBaseArticleByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + knowledgeBaseArticle1.getSiteId() +
+										"\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										knowledgeBaseArticle1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteKnowledgeBaseArticleByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -594,24 +614,30 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteKnowledgeBaseArticleByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + knowledgeBaseArticle2.getSiteId() +
-									"\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									knowledgeBaseArticle2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteKnowledgeBaseArticleByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" +
+											knowledgeBaseArticle2.getSiteId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											knowledgeBaseArticle2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteKnowledgeBaseArticleByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

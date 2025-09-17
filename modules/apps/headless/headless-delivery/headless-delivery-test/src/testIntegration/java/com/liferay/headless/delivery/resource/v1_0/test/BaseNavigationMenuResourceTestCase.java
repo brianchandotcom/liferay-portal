@@ -263,14 +263,19 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu1 =
 			testGraphQLDeleteNavigationMenu_addNavigationMenu();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteNavigationMenu",
-				new HashMap<String, Object>() {
-					{
-						put("navigationMenuId", navigationMenu1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteNavigationMenu",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"navigationMenuId",
+									navigationMenu1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteNavigationMenu"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -291,16 +296,22 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu2 =
 			testGraphQLDeleteNavigationMenu_addNavigationMenu();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteNavigationMenu",
-					new HashMap<String, Object>() {
-						{
-							put("navigationMenuId", navigationMenu2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteNavigationMenu",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"navigationMenuId",
+										navigationMenu2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteNavigationMenu"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -413,20 +424,25 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu1 =
 			testGraphQLDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteNavigationMenuByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteKey",
-							"\"" + navigationMenu1.getSiteId() + "\"");
-						put(
-							"externalReferenceCode",
-							"\"" + navigationMenu1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteNavigationMenuByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + navigationMenu1.getSiteId() + "\"");
+								put(
+									"externalReferenceCode",
+									"\"" +
+										navigationMenu1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteSiteNavigationMenuByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -454,23 +470,29 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu2 =
 			testGraphQLDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessDelivery_v1_0",
-				new GraphQLField(
-					"deleteSiteNavigationMenuByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteKey",
-								"\"" + navigationMenu2.getSiteId() + "\"");
-							put(
-								"externalReferenceCode",
-								"\"" +
-									navigationMenu2.getExternalReferenceCode() +
-										"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteSiteNavigationMenuByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + navigationMenu2.getSiteId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										"\"" +
+											navigationMenu2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteSiteNavigationMenuByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

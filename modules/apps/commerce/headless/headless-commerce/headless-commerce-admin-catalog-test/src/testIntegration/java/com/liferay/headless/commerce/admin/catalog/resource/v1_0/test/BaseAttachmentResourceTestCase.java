@@ -230,29 +230,37 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		Attachment attachment1 = testGraphQLDeleteAttachment_addAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAttachment",
-				new HashMap<String, Object>() {
-					{
-						put("id", attachment1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAttachment",
+						new HashMap<String, Object>() {
+							{
+								put("id", attachment1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAttachment"));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		Attachment attachment2 = testGraphQLDeleteAttachment_addAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteAttachment",
-					new HashMap<String, Object>() {
-						{
-							put("id", attachment2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteAttachment",
+							new HashMap<String, Object>() {
+								{
+									put("id", attachment2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteAttachment"));
 	}
 
 	protected Attachment testGraphQLDeleteAttachment_addAttachment()
@@ -349,17 +357,22 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment1 =
 			testGraphQLDeleteAttachmentByExternalReferenceCode_addAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAttachmentByExternalReferenceCode",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"externalReferenceCode",
-							"\"" + attachment1.getExternalReferenceCode() +
-								"\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAttachmentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									"\"" +
+										attachment1.getExternalReferenceCode() +
+											"\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAttachmentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -383,19 +396,26 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment2 =
 			testGraphQLDeleteAttachmentByExternalReferenceCode_addAttachment();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminCatalog_v1_0",
-				new GraphQLField(
-					"deleteAttachmentByExternalReferenceCode",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"externalReferenceCode",
-								"\"" + attachment2.getExternalReferenceCode() +
-									"\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteAttachmentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										"\"" +
+											attachment2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteAttachmentByExternalReferenceCode"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

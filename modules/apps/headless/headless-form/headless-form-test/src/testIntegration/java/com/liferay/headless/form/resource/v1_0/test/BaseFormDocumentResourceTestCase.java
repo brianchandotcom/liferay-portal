@@ -256,14 +256,17 @@ public abstract class BaseFormDocumentResourceTestCase {
 		FormDocument formDocument1 =
 			testGraphQLDeleteFormDocument_addFormDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteFormDocument",
-				new HashMap<String, Object>() {
-					{
-						put("formDocumentId", formDocument1.getId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteFormDocument",
+						new HashMap<String, Object>() {
+							{
+								put("formDocumentId", formDocument1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteFormDocument"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -284,16 +287,22 @@ public abstract class BaseFormDocumentResourceTestCase {
 		FormDocument formDocument2 =
 			testGraphQLDeleteFormDocument_addFormDocument();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessForm_v1_0",
-				new GraphQLField(
-					"deleteFormDocument",
-					new HashMap<String, Object>() {
-						{
-							put("formDocumentId", formDocument2.getId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessForm_v1_0",
+						new GraphQLField(
+							"deleteFormDocument",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"formDocumentId",
+										formDocument2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessForm_v1_0",
+				"Object/deleteFormDocument"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

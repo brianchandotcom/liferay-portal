@@ -224,34 +224,42 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 		OrderTypeChannel orderTypeChannel1 =
 			testGraphQLDeleteOrderTypeChannel_addOrderTypeChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteOrderTypeChannel",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"orderTypeChannelId",
-							orderTypeChannel1.getOrderTypeChannelId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderTypeChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderTypeChannelId",
+									orderTypeChannel1.getOrderTypeChannelId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderTypeChannel"));
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
 		OrderTypeChannel orderTypeChannel2 =
 			testGraphQLDeleteOrderTypeChannel_addOrderTypeChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminOrder_v1_0",
-				new GraphQLField(
-					"deleteOrderTypeChannel",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"orderTypeChannelId",
-								orderTypeChannel2.getOrderTypeChannelId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderTypeChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"orderTypeChannelId",
+										orderTypeChannel2.
+											getOrderTypeChannelId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderTypeChannel"));
 	}
 
 	protected OrderTypeChannel

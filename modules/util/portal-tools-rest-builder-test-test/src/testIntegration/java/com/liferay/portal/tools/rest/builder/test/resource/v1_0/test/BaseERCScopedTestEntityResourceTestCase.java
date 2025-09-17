@@ -277,24 +277,28 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		ERCScopedTestEntity ercScopedTestEntity1 =
 			testGraphQLDeleteAssetLibraryERCScopedTestEntity_addERCScopedTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAssetLibraryERCScopedTestEntity",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"assetLibraryExternalReferenceCode",
-							"\"" +
-								ercScopedTestEntity1.
-									getAssetLibraryExternalReferenceCode() +
-										"\"");
-						put(
-							"ercScopedTestEntityExternalReferenceCode",
-							"\"" +
-								ercScopedTestEntity1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAssetLibraryERCScopedTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryExternalReferenceCode",
+									"\"" +
+										ercScopedTestEntity1.
+											getAssetLibraryExternalReferenceCode() +
+												"\"");
+								put(
+									"ercScopedTestEntityExternalReferenceCode",
+									"\"" +
+										ercScopedTestEntity1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteAssetLibraryERCScopedTestEntity"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -325,26 +329,31 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		ERCScopedTestEntity ercScopedTestEntity2 =
 			testGraphQLDeleteAssetLibraryERCScopedTestEntity_addERCScopedTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"test_v1_0",
-				new GraphQLField(
-					"deleteAssetLibraryERCScopedTestEntity",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"assetLibraryExternalReferenceCode",
-								"\"" +
-									ercScopedTestEntity2.
-										getAssetLibraryExternalReferenceCode() +
-											"\"");
-							put(
-								"ercScopedTestEntityExternalReferenceCode",
-								"\"" +
-									ercScopedTestEntity2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"deleteAssetLibraryERCScopedTestEntity",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryExternalReferenceCode",
+										"\"" +
+											ercScopedTestEntity2.
+												getAssetLibraryExternalReferenceCode() +
+													"\"");
+									put(
+										"ercScopedTestEntityExternalReferenceCode",
+										"\"" +
+											ercScopedTestEntity2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"Object/deleteAssetLibraryERCScopedTestEntity"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -420,23 +429,27 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		ERCScopedTestEntity ercScopedTestEntity1 =
 			testGraphQLDeleteSiteERCScopedTestEntity_addERCScopedTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteSiteERCScopedTestEntity",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"siteExternalReferenceCode",
-							"\"" +
-								ercScopedTestEntity1.
-									getSiteExternalReferenceCode() + "\"");
-						put(
-							"ercScopedTestEntityExternalReferenceCode",
-							"\"" +
-								ercScopedTestEntity1.
-									getExternalReferenceCode() + "\"");
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSiteERCScopedTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteExternalReferenceCode",
+									"\"" +
+										ercScopedTestEntity1.
+											getSiteExternalReferenceCode() +
+												"\"");
+								put(
+									"ercScopedTestEntityExternalReferenceCode",
+									"\"" +
+										ercScopedTestEntity1.
+											getExternalReferenceCode() + "\"");
+							}
+						})),
+				"JSONObject/data", "Object/deleteSiteERCScopedTestEntity"));
 
 		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
@@ -466,25 +479,31 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		ERCScopedTestEntity ercScopedTestEntity2 =
 			testGraphQLDeleteSiteERCScopedTestEntity_addERCScopedTestEntity();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"test_v1_0",
-				new GraphQLField(
-					"deleteSiteERCScopedTestEntity",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"siteExternalReferenceCode",
-								"\"" +
-									ercScopedTestEntity2.
-										getSiteExternalReferenceCode() + "\"");
-							put(
-								"ercScopedTestEntityExternalReferenceCode",
-								"\"" +
-									ercScopedTestEntity2.
-										getExternalReferenceCode() + "\"");
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"deleteSiteERCScopedTestEntity",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteExternalReferenceCode",
+										"\"" +
+											ercScopedTestEntity2.
+												getSiteExternalReferenceCode() +
+													"\"");
+									put(
+										"ercScopedTestEntityExternalReferenceCode",
+										"\"" +
+											ercScopedTestEntity2.
+												getExternalReferenceCode() +
+													"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/test_v1_0",
+				"Object/deleteSiteERCScopedTestEntity"));
 
 		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(

@@ -234,36 +234,44 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 		AccountAddressChannel accountAddressChannel1 =
 			testGraphQLDeleteAccountAddressChannel_addAccountAddressChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"deleteAccountAddressChannel",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"accountAddressChannelId",
-							accountAddressChannel1.
-								getAccountAddressChannelId());
-					}
-				}));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountAddressChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountAddressChannelId",
+									accountAddressChannel1.
+										getAccountAddressChannelId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAccountAddressChannel"));
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
 		AccountAddressChannel accountAddressChannel2 =
 			testGraphQLDeleteAccountAddressChannel_addAccountAddressChannel();
 
-		invokeGraphQLMutation(
-			new GraphQLField(
-				"headlessCommerceAdminChannel_v1_0",
-				new GraphQLField(
-					"deleteAccountAddressChannel",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"accountAddressChannelId",
-								accountAddressChannel2.
-									getAccountAddressChannelId());
-						}
-					})));
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deleteAccountAddressChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"accountAddressChannelId",
+										accountAddressChannel2.
+											getAccountAddressChannelId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deleteAccountAddressChannel"));
 	}
 
 	protected AccountAddressChannel

@@ -11,6 +11,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -44,12 +45,14 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
@@ -173,21 +176,36 @@ public abstract class BaseSectionDisplayContextTestCase
 	}
 
 	@Test
-	public void getToolbarProps() throws Exception {
-		AssertUtils.assertEquals(
-			HashMapBuilder.<String, Object>put(
-				"title", "test"
-			).put(
-				"toolbarClassName", "section-toolbar tbar-light"
-			).put(
-				"toolbarTitleClassName", "section-toolbar-title"
-			).build(),
-			_getToolbarProps());
+	public void testGetAdditionalProps() throws Exception {
+		_assertEquals(getBaseAdditionalProps(), getAdditionalProps());
 	}
 
 	@Test
-	public void testGetAdditionalProps() throws Exception {
-		_assertEquals(getBaseAdditionalProps(), getAdditionalProps());
+	public void testGetBreadcrumbProps() throws Exception {
+		HttpServletRequest httpServletRequest = getMockHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setLayout(
+			LayoutTestUtil.addTypeContentLayout(group, "test-name"));
+
+		AssertUtils.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				"breadcrumbItems",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"active", false
+					).put(
+						"href", (String)null
+					).put(
+						"label", "test-name"
+					))
+			).put(
+				"hideSpace", true
+			).build(),
+			_getBreadcrumbProps(httpServletRequest));
 	}
 
 	@Test
@@ -567,6 +585,15 @@ public abstract class BaseSectionDisplayContextTestCase
 			JSONCompareMode.STRICT);
 	}
 
+	private HashMap<String, Object> _getBreadcrumbProps(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(httpServletRequest), "getBreadcrumbProps",
+			new Class<?>[0]);
+	}
+
 	private Map<String, Object> _getDefaultPermissionAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"actions",
@@ -729,12 +756,6 @@ public abstract class BaseSectionDisplayContextTestCase
 		}
 
 		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
-	}
-
-	private HashMap<String, Object> _getToolbarProps() throws Exception {
-		return ReflectionTestUtil.invoke(
-			getSectionDisplayContext(getMockHttpServletRequest()),
-			"getToolbarProps", new Class<?>[0]);
 	}
 
 	private void _testGetCreationMenu(

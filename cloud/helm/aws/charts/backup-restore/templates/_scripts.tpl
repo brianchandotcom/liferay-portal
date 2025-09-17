@@ -28,7 +28,8 @@ function main {
 	terraform apply -auto-approve -input=false
 }
 
-main{{- end -}}
+main
+{{- end -}}
 
 {{- define "liferayAWSBackupRestore.script.checkoutGitRepository" -}}
 #!/bin/sh

@@ -1121,11 +1121,10 @@ public class FreeMarkerTool {
 	}
 
 	public boolean isByExternalReferenceCode(
-		String httpMethod, JavaMethodSignature javaMethodSignature,
-		String parentSchemaName, String schemaName) {
+		String httpMethod, JavaMethodSignature javaMethodSignature) {
 
 		return ResourceOpenAPIParser.isByExternalReferenceCode(
-			httpMethod, javaMethodSignature, parentSchemaName, schemaName);
+			httpMethod, javaMethodSignature);
 	}
 
 	public boolean isCollection(

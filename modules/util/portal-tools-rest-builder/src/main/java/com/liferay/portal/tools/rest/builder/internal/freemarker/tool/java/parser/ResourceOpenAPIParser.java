@@ -384,16 +384,12 @@ public class ResourceOpenAPIParser {
 			}
 
 			if (methodName.equals("post" + parentSchemaName + schemaName) ||
-				isByExternalReferenceCode(
-					"post", javaMethodSignature, parentSchemaName,
-					schemaName)) {
+				isByExternalReferenceCode("post", javaMethodSignature)) {
 
 				createStrategies.add("INSERT");
 			}
 			else if (propertyNames.contains("externalReferenceCode") &&
-					 isByExternalReferenceCode(
-						 "put", javaMethodSignature, parentSchemaName,
-						 schemaName)) {
+					 isByExternalReferenceCode("put", javaMethodSignature)) {
 
 				createStrategies.add("UPSERT");
 			}
@@ -495,8 +491,11 @@ public class ResourceOpenAPIParser {
 	}
 
 	public static boolean isByExternalReferenceCode(
-		String httpMethod, JavaMethodSignature javaMethodSignature,
-		String parentSchemaName, String schemaName) {
+		String httpMethod, JavaMethodSignature javaMethodSignature) {
+
+		String parentSchemaName = javaMethodSignature.getParentSchemaName();
+
+		String schemaName = javaMethodSignature.getSchemaName();
 
 		httpMethod = StringUtil.toLowerCase(httpMethod);
 		boolean hasSchemaExternalReferenceCodePathParameter = hasPathParameter(
@@ -504,7 +503,7 @@ public class ResourceOpenAPIParser {
 			TextFormatter.format(schemaName, TextFormatter.I) +
 				"ExternalReferenceCode");
 
-		if (parentSchemaName.isEmpty()) {
+		if (parentSchemaName == null) {
 			if (Objects.equals(
 					javaMethodSignature.getMethodName(),
 					httpMethod + "ByExternalReferenceCode") ||

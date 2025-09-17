@@ -5815,7 +5815,7 @@ public class ObjectEntryLocalServiceImpl
 
 				ObjectDefinition rootObjectDefinition =
 					_objectDefinitionPersistence.fetchByPrimaryKey(
-						objectDefinition.getRootObjectDefinitionId());
+						rootObjectEntry.getObjectDefinitionId());
 
 				if (serviceContext.getWorkflowAction() ==
 						WorkflowConstants.ACTION_SAVE_DRAFT) {

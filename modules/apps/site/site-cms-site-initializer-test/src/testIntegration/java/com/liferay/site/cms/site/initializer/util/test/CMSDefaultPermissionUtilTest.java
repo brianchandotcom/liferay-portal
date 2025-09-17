@@ -125,10 +125,10 @@ public class CMSDefaultPermissionUtilTest {
 			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 				RandomTestUtil.randomString(), group.getCompanyId(),
 				TestPropsValues.getUserId(), externalReferenceCode,
-				_depotEntry.getModelClassName(), group.getGroupId(),
+				_depotEntry.getModelClassName(),
 				JSONUtil.put(
 					"L_BASIC_WEB_CONTENT", JSONUtil.putAll(ActionKeys.VIEW)),
-				StringPool.BLANK);
+				group.getGroupId(), StringPool.BLANK);
 
 		Map<String, Serializable> values = objectEntry1.getValues();
 
@@ -144,11 +144,11 @@ public class CMSDefaultPermissionUtilTest {
 			CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 				objectEntry1.getExternalReferenceCode(), group.getCompanyId(),
 				TestPropsValues.getUserId(), externalReferenceCode,
-				_depotEntry.getModelClassName(), group.getGroupId(),
+				_depotEntry.getModelClassName(),
 				JSONUtil.put(
 					"L_BASIC_WEB_CONTENT",
 					JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)),
-				StringPool.BLANK);
+				group.getGroupId(), StringPool.BLANK);
 
 		Assert.assertEquals(
 			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId());
@@ -181,11 +181,11 @@ public class CMSDefaultPermissionUtilTest {
 		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			RandomTestUtil.randomString(), group.getCompanyId(),
 			TestPropsValues.getUserId(), externalReferenceCode,
-			_depotEntry.getModelClassName(), group.getGroupId(),
+			_depotEntry.getModelClassName(),
 			JSONUtil.put(
 				"L_BASIC_WEB_CONTENT",
 				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)),
-			StringPool.BLANK);
+			group.getGroupId(), StringPool.BLANK);
 
 		Assert.assertNotNull(
 			CMSDefaultPermissionUtil.fetchObjectEntry(
@@ -202,11 +202,11 @@ public class CMSDefaultPermissionUtilTest {
 		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			RandomTestUtil.randomString(), group.getCompanyId(),
 			TestPropsValues.getUserId(), externalReferenceCode,
-			_depotEntry.getModelClassName(), group.getGroupId(),
+			_depotEntry.getModelClassName(),
 			JSONUtil.put(
 				"L_BASIC_WEB_CONTENT",
 				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)),
-			StringPool.BLANK);
+			group.getGroupId(), StringPool.BLANK);
 
 		JSONObject jsonObject = CMSDefaultPermissionUtil.getJSONObject(
 			group.getCompanyId(), TestPropsValues.getUserId(),

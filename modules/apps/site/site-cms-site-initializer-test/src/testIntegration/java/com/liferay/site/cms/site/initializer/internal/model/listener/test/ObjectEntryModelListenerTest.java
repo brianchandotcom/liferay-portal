@@ -184,7 +184,7 @@ public class ObjectEntryModelListenerTest {
 			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
 			objectEntryFolder2.getExternalReferenceCode(),
 			objectEntryFolder2.getModelClassName(),
-			objectEntryFolder2.getGroupId(), jsonObject,
+			jsonObject, objectEntryFolder2.getGroupId(),
 			objectEntryFolder2.getTreePath());
 
 		ObjectDefinition objectDefinition =
@@ -270,7 +270,7 @@ public class ObjectEntryModelListenerTest {
 			objectEntryFolder2.getCompanyId(), objectEntryFolder2.getUserId(),
 			objectEntryFolder2.getExternalReferenceCode(),
 			objectEntryFolder2.getModelClassName(),
-			objectEntryFolder2.getGroupId(), jsonObject,
+			jsonObject, objectEntryFolder2.getGroupId(),
 			objectEntryFolder2.getTreePath());
 
 		objectDefinition =

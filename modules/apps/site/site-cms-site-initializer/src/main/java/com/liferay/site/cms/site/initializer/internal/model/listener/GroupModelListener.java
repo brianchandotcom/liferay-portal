@@ -137,7 +137,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			null, group.getCompanyId(), group.getCreatorUserId(),
 			group.getExternalReferenceCode(), DepotEntry.class.getName(),
-			group.getGroupId(),
 			JSONUtil.put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 				JSONUtil.put(
@@ -167,7 +166,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 							resourceAction -> resourceAction.getActionId(),
 							String.class)))
 			),
-			StringPool.BLANK);
+			group.getGroupId(), StringPool.BLANK);
 	}
 
 	private void _onAfterRemove(Group group) throws PortalException {

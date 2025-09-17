@@ -169,7 +169,7 @@ public class ObjectEntryFolderModelListener
 			objectEntryFolder.getUserId(),
 			objectEntryFolder.getExternalReferenceCode(),
 			objectEntryFolder.getModelClassName(),
-			objectEntryFolder.getGroupId(), defaultPermissionsJSONObject,
+			defaultPermissionsJSONObject, objectEntryFolder.getGroupId(),
 			objectEntryFolder.getTreePath());
 
 		JSONObject objectEntryFoldersJSONObject =

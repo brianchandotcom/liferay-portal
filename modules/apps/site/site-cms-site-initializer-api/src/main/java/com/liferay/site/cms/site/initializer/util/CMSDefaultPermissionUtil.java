@@ -34,7 +34,7 @@ public class CMSDefaultPermissionUtil {
 	public static ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long companyId, long userId,
 			String classExternalReferenceCode, String className,
-			long depotGroupId, JSONObject defaultPermissionsJSONObject,
+			JSONObject defaultPermissionsJSONObject, long depotGroupId,
 			String treePath)
 		throws PortalException {
 

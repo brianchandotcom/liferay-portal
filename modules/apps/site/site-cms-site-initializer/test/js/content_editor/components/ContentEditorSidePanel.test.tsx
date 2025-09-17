@@ -58,7 +58,9 @@ describe('ContentEditorSidePanel', () => {
 	it('closes the panel pressing the Close button', async () => {
 		renderComponent();
 
-		await userEvent.click(screen.getByLabelText('general'));
+		const panelButton = screen.getByLabelText('general');
+
+		await userEvent.click(panelButton);
 
 		await waitFor(() => {
 			expect(screen.getByText('general')).toBeInTheDocument();
@@ -68,6 +70,7 @@ describe('ContentEditorSidePanel', () => {
 
 		await waitFor(() => {
 			expect(screen.queryByText('general')).not.toBeInTheDocument();
+			expect(panelButton).toHaveFocus();
 		});
 	});
 

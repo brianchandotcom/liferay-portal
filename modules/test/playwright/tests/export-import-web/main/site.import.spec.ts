@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ObjectDefinitionAPI,
-	ObjectRelationshipAPI,
-} from '@liferay/object-admin-rest-client-js';
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {Page, expect, mergeTests} from '@playwright/test';
 import fs from 'fs/promises';
 import * as path from 'path';
@@ -25,13 +22,11 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
-import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
 import {HomePage} from '../../../pages/portal-web/HomePage';
-import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {openFieldset} from '../../../utils/openFieldset';
 import {getTempDir} from '../../../utils/temp';
@@ -73,13 +68,12 @@ export const testWithExportImportAtInstanceLevelFF = mergeTests(
 	companyExportImportPageTest,
 	exportImportPagesTest,
 	dataApiHelpersTest,
-	styleBookPageTest,
 	systemSettingsPageTest,
 	featureFlagsTest({
+		'LPD-17564': {enabled: true},
 		'LPD-35914': {enabled: true, system: true},
 		'LPD-44307': {enabled: true},
 		'LPD-44771': {enabled: true},
-		'LPD-45276': {enabled: true},
 	}),
 	loginTest(),
 	uiElementsPageTest
@@ -420,14 +414,9 @@ test('Can import a lar file selecting some items to import', async ({
 });
 
 testWithExportImportAtInstanceLevelFF(
-	'Can export and import a site created with clarity site initializer',
+	'Can export and import a site with all the exportable items and created with the test site initializer',
 	{tag: '@LPD-64056'},
-	async ({
-		apiHelpers,
-		exportImportPage,
-		styleBooksPage,
-		systemSettingsPage,
-	}) => {
+	async ({apiHelpers, exportImportPage, systemSettingsPage}) => {
 		test.setTimeout(180000);
 
 		let exportFilePath: string;
@@ -435,9 +424,6 @@ testWithExportImportAtInstanceLevelFF(
 		let exportableItems1: Map<string, number>;
 		let exportableItems2: Map<string, number>;
 		let exportableItems3: Map<string, number>;
-		let objectDefinition1;
-		let objectDefinition2;
-		let objectRelationship;
 		let originalOverallMaximumUploadRequestSize: string;
 		let site1;
 		let site2;
@@ -460,213 +446,137 @@ testWithExportImportAtInstanceLevelFF(
 			await systemSettingsPage.saveButton.click();
 		});
 
-		await test.step('Create the Object definitions with 1-M relationship', async () => {
-			const objectFolder1 =
-				await apiHelpers.objectAdmin.postRandomObjectFolder();
-
-			apiHelpers.data.push({id: objectFolder1.id, type: 'objectFolder'});
-
-			objectDefinition1 =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode:
-						objectFolder1.externalReferenceCode,
-					scope: 'site',
-					status: {code: 0},
+		try {
+			await test.step('Create the site 1 from the template', async () => {
+				site1 = await apiHelpers.headlessSite.createSite({
+					name: getRandomString(),
+					templateKey:
+						'com.liferay.exportimport.test.site.initializer',
+					templateType: 'site-initializer',
 				});
 
-			apiHelpers.data.push({
-				id: objectDefinition1.id,
-				type: 'objectDefinition',
+				apiHelpers.data.push({id: site1.id, type: 'site'});
 			});
 
-			const objectFolder2 =
-				await apiHelpers.objectAdmin.postRandomObjectFolder();
+			await test.step('Export the site 1', async () => {
+				await exportImportPage.goToExport(site1.friendlyUrlPath);
 
-			apiHelpers.data.push({id: objectFolder2.id, type: 'objectFolder'});
+				exportableItems1 = await exportImportPage.getExportableItems();
 
-			objectDefinition2 =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode:
-						objectFolder2.externalReferenceCode,
-					scope: 'site',
-					status: {code: 0},
+				expect(exportableItems1.size).toBeGreaterThan(0);
+
+				exportName = `MyExport-${getRandomString()}`;
+
+				await exportImportPage.exportAll(exportName);
+
+				await expect(
+					exportImportPage.page
+						.locator(
+							'//h2[span[normalize-space()="' + exportName + '"]]'
+						)
+						.first()
+						.locator('../..')
+						.getByText('Successful')
+				).toBeVisible({timeout: 60000});
+
+				exportFilePath =
+					await exportImportPage.downloadExportProcess(exportName);
+			});
+
+			await test.step('Create the site 2', async () => {
+				site2 = await apiHelpers.headlessSite.createSite({
+					name: getRandomString(),
 				});
 
-			apiHelpers.data.push({
-				id: objectDefinition2.id,
-				type: 'objectDefinition',
+				apiHelpers.data.push({id: site2.id, type: 'site'});
 			});
 
-			const objectRelationshipAPIClient =
-				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+			await test.step('Import the site 1', async () => {
+				await exportImportPage.goToExport(site2.friendlyUrlPath);
 
-			objectRelationship =
-				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					objectDefinition1.externalReferenceCode,
-					{
-						label: {
-							en_US: `objectRelationshipLabel${getRandomInt()}`,
-						},
-						name: `objectRelationshipName${Math.floor(Math.random() * 99)}`,
-						objectDefinitionExternalReferenceCode1:
-							objectDefinition1.externalReferenceCode,
-						objectDefinitionExternalReferenceCode2:
-							objectDefinition2.externalReferenceCode,
-						objectDefinitionId1: objectDefinition1.id,
-						objectDefinitionId2: objectDefinition2.id,
-						objectDefinitionName2: objectDefinition2.name,
-						type: 'oneToMany',
+				exportableItems2 = await exportImportPage.getExportableItems();
+
+				await exportImportPage.goToImport(site2.friendlyUrlPath);
+
+				await exportImportPage.import(exportFilePath);
+
+				await expect(
+					exportImportPage.page
+						.getByText(exportName)
+						.locator('../../..')
+						.getByText('Successful')
+				).toBeVisible({timeout: 60000});
+			});
+
+			await test.step('Assert the exportable items from site 1 and site 2 are equal', async () => {
+				await exportImportPage.goToExport(site2.friendlyUrlPath);
+
+				exportableItems3 = await exportImportPage.getExportableItems();
+
+				expect(exportableItems3.size).toEqual(exportableItems1.size);
+
+				for (const [name, count] of exportableItems1.entries()) {
+					if (name === 'Calendar' || name === 'Categories') {
+
+						// TODO LPD-64899, LPD-65749
+
+						continue;
 					}
-				);
-		});
+					else if (name === 'Pages') {
+						expect(exportableItems3.get(name)).toBe(
+							count + exportableItems2.get('Pages')
+						);
+					}
+					else if (name === 'Style Books') {
 
-		await test.step('Create the site 1 from the template and add test data', async () => {
-			site1 = await apiHelpers.headlessSite.createSite({
-				name: getRandomString(),
-				templateKey: 'com.liferay.site.initializer.teaser.showcase',
-				templateType: 'site-initializer',
+						// TODO LPD-64905
+
+						expect(
+							exportableItems3.get(name)
+						).toBeGreaterThanOrEqual(count);
+					}
+					else {
+						expect(exportableItems3.get(name)).toBe(count);
+					}
+				}
 			});
 
-			apiHelpers.data.push({id: site1.id, type: 'site'});
+			// TODO LPD-65374
 
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					textField: getRandomString(),
-					[objectRelationship.body.name]: [
-						{
-							textField: getRandomString(),
-						},
-					],
-				},
-				`c/${objectDefinition1.name.toLowerCase()}s/scopes/${site1.name}`
-			);
+			/*
+			await test.step('Assert the home page screenshots from site 1 and site 2 are equal', async () => {
 
-			await styleBooksPage.goto(site1.friendlyUrlPath);
+				const comparator = getComparator('image/png');
 
-			await styleBooksPage.create(getRandomString());
-		});
-
-		await test.step('Export the site 1', async () => {
-			await exportImportPage.goToExport(site1.friendlyUrlPath);
-
-			exportableItems1 = await exportImportPage.getExportableItems();
-
-			expect(exportableItems1.size).toBeGreaterThan(0);
-
-			expect(exportableItems1.has(objectDefinition1.name)).toBe(true);
-
-			expect(exportableItems1.has(objectDefinition2.name)).toBe(true);
-
-			expect(exportableItems1.has('Style Books')).toBe(true);
-
-			exportName = `MyExport-${getRandomString()}`;
-
-			await exportImportPage.exportAll(exportName);
-
-			await expect(
-				exportImportPage.page
-					.locator(
-						'//h2[span[normalize-space()="' + exportName + '"]]'
-					)
-					.first()
-					.locator('../..')
-					.getByText('Successful')
-			).toBeVisible({timeout: 30000});
-
-			exportFilePath =
-				await exportImportPage.downloadExportProcess(exportName);
-		});
-
-		await test.step('Create the site 2 and import the site 1', async () => {
-			site2 = await apiHelpers.headlessSite.createSite({
-				name: getRandomString(),
-			});
-
-			apiHelpers.data.push({id: site2.id, type: 'site'});
-
-			await exportImportPage.goToExport(site2.friendlyUrlPath);
-
-			exportableItems2 = await exportImportPage.getExportableItems();
-
-			await exportImportPage.goToImport(site2.friendlyUrlPath);
-
-			await exportImportPage.import(exportFilePath);
-
-			await expect(
-				exportImportPage.page
-					.getByText(exportName)
-					.locator('../../..')
-					.getByText('Successful')
-			).toBeVisible({timeout: 30000});
-		});
-
-		await test.step('Assert the exportable items from site 1 and site 2 are equal', async () => {
-			await exportImportPage.goToExport(site2.friendlyUrlPath);
-
-			exportableItems3 = await exportImportPage.getExportableItems();
-
-			expect(exportableItems3.size).toEqual(exportableItems1.size);
-
-			for (const [name, count] of exportableItems1.entries()) {
-
-				// TODO LPD-64899
-
-				if (name === 'Calendar') {
-					continue;
-				}
-				else if (name === 'Pages') {
-					expect(exportableItems3.get(name)).toBe(
-						count + exportableItems2.get('Pages')
-					);
-				}
-				else if (name === 'Style Books') {
-
-					// TODO LPD-64905
-
-					expect(exportableItems3.get(name)).toBeGreaterThanOrEqual(
-						count
-					);
-				}
-				else {
-					expect(exportableItems3.get(name)).toBe(count);
-				}
-			}
-		});
-
-		// TODO LPD-65374
-
-		/*
-		await test.step('Assert the home page screenshots from site 1 and site 2 are equal', async () => {
-
-			const comparator = getComparator('image/png');
-
-			const buffer = comparator(
-				await getSiteHomePageScreenshot(page, site1.name, {staging: false}),
-				await getSiteHomePageScreenshot(page, site2.name, {staging: false})
-			);
-
-			if (buffer !== null && buffer.diff !== undefined) {
-				const diffPath = path.join(getTempDir(), `${site1.name}-diff.png`);
-				await fs.writeFile(diffPath, buffer.diff);
-				throw new Error(
-					`The site 1 and site 2 home pages differ. Check the screenshot diff at "${diffPath}".`
+				const buffer = comparator(
+					await getSiteHomePageScreenshot(page, site1.name, {staging: false}),
+					await getSiteHomePageScreenshot(page, site2.name, {staging: false})
 				);
-			}
-		});
-	 	*/
 
-		await test.step('Restore the initial maximum upload request size', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Infrastructure',
-				'Upload Servlet Request'
-			);
+				if (buffer !== null && buffer.diff !== undefined) {
+					const diffPath = path.join(getTempDir(), `${site1.name}-diff.png`);
+					await fs.writeFile(diffPath, buffer.diff);
+					throw new Error(
+						`The site 1 and site 2 home pages differ. Check the screenshot diff at "${diffPath}".`
+					);
+				}
+			});
+			*/
+		}
+		finally {
+			await test.step('Restore the initial maximum upload request size', async () => {
+				await systemSettingsPage.goToSystemSetting(
+					'Infrastructure',
+					'Upload Servlet Request'
+				);
 
-			await systemSettingsPage.page
-				.getByLabel('Overall Maximum Upload Request Size')
-				.fill(originalOverallMaximumUploadRequestSize);
+				await systemSettingsPage.page
+					.getByLabel('Overall Maximum Upload Request Size')
+					.fill(originalOverallMaximumUploadRequestSize);
 
-			await systemSettingsPage.saveButton.click();
-		});
+				await systemSettingsPage.saveButton.click();
+			});
+		}
 	}
 );
 

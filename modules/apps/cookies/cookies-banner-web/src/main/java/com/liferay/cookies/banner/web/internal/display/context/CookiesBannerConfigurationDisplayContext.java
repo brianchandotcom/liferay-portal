@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -37,11 +36,11 @@ public class CookiesBannerConfigurationDisplayContext
 		CookiesConfigurationProvider cookiesConfigurationProvider,
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest) {
 
 		super(
 			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
-			renderRequest, renderResponse);
+			renderRequest);
 	}
 
 	public Map<String, Object> getContext() {

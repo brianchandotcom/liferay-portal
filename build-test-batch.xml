@@ -2111,6 +2111,9 @@ app.server.type=@{app.server.type}]]></echo>
 			<retry retrycount="${functional.batch.retry.count}">
 				<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 					<test-action>
+						<stop-docker-browser />
+
+						<start-docker-browser />
 						<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false">
 							<test-action>
 								<lstopwatch action="start" name="test.execution.duration" />

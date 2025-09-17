@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 /**
@@ -35,6 +36,7 @@ public class DBPartition {
 	}
 
 	private static final boolean _DATABASE_PARTITION_ENABLED =
-		GetterUtil.getBoolean(PropsUtil.get("database.partition.enabled"));
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DATABASE_PARTITION_ENABLED));
 
 }

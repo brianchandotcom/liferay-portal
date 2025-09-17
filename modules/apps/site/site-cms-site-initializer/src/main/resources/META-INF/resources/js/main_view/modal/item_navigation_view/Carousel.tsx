@@ -11,14 +11,17 @@ import ContentPreview from './ContentPreview';
 import FilePreview from './FilePreview';
 
 const Arrow = ({
+	ariaLabel,
 	direction,
 	handleClick,
 }: {
+	ariaLabel: string;
 	direction: string;
 	handleClick: any;
 }) => (
 	<div className={`position-absolute pull-${direction}`}>
 		<ClayButtonWithIcon
+			aria-label={ariaLabel}
 			displayType="secondary"
 			onClick={handleClick}
 			outline
@@ -44,7 +47,11 @@ export default function Carousel({
 	return (
 		<div className="carousel height-100">
 			{showArrows && (
-				<Arrow direction="left" handleClick={handleClickPrevious} />
+				<Arrow
+					ariaLabel={Liferay.Language.get('previous')}
+					direction="left"
+					handleClick={handleClickPrevious}
+				/>
 			)}
 
 			<div className="preview-container">
@@ -58,7 +65,11 @@ export default function Carousel({
 			</div>
 
 			{showArrows && (
-				<Arrow direction="right" handleClick={handleClickNext} />
+				<Arrow
+					ariaLabel={Liferay.Language.get('next')}
+					direction="right"
+					handleClick={handleClickNext}
+				/>
 			)}
 		</div>
 	);

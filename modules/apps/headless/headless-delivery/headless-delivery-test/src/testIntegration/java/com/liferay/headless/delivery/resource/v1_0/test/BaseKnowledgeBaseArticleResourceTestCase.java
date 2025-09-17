@@ -2233,7 +2233,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGraphQLGetSiteKnowledgeBaseArticlePermissionsPage_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return testGraphQLKnowledgeBaseArticle_addKnowledgeBaseArticle();
+		return testGraphQLSiteKnowledgeBaseArticle_addKnowledgeBaseArticle();
 	}
 
 	@Test

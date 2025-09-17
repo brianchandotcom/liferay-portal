@@ -429,7 +429,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			testGraphQLDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
 		throws Exception {
 
-		return testGraphQLWikiPageAttachment_addWikiPageAttachment();
+		return testGraphQLSiteWikiPageAttachment_addWikiPageAttachment();
 	}
 
 	@Test
@@ -785,7 +785,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			testGraphQLGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
 		throws Exception {
 
-		return testGraphQLWikiPageAttachment_addWikiPageAttachment();
+		return testGraphQLSiteWikiPageAttachment_addWikiPageAttachment();
 	}
 
 	@Test
@@ -1289,6 +1289,14 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 				"COMPLETED",
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
+	}
+
+	protected WikiPageAttachment
+			testGraphQLSiteWikiPageAttachment_addWikiPageAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected WikiPageAttachment

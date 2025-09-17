@@ -536,7 +536,7 @@ public abstract class BaseCommentResourceTestCase {
 			testGraphQLDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
-		return testGraphQLComment_addComment();
+		return testGraphQLSiteComment_addComment();
 	}
 
 	@Test
@@ -733,7 +733,7 @@ public abstract class BaseCommentResourceTestCase {
 			testGraphQLDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
-		return testGraphQLComment_addComment();
+		return testGraphQLSiteComment_addComment();
 	}
 
 	@Test
@@ -930,7 +930,7 @@ public abstract class BaseCommentResourceTestCase {
 			testGraphQLDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
-		return testGraphQLComment_addComment();
+		return testGraphQLSiteComment_addComment();
 	}
 
 	@Test
@@ -1127,7 +1127,7 @@ public abstract class BaseCommentResourceTestCase {
 			testGraphQLDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
-		return testGraphQLComment_addComment();
+		return testGraphQLSiteComment_addComment();
 	}
 
 	@Test
@@ -2797,7 +2797,7 @@ public abstract class BaseCommentResourceTestCase {
 			testGraphQLGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
-		return testGraphQLComment_addComment();
+		return testGraphQLSiteComment_addComment();
 	}
 
 	@Test
@@ -3003,7 +3003,7 @@ public abstract class BaseCommentResourceTestCase {
 			testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
-		return testGraphQLComment_addComment();
+		return testGraphQLSiteComment_addComment();
 	}
 
 	@Test
@@ -3209,7 +3209,7 @@ public abstract class BaseCommentResourceTestCase {
 			testGraphQLGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
-		return testGraphQLComment_addComment();
+		return testGraphQLSiteComment_addComment();
 	}
 
 	@Test
@@ -3415,7 +3415,7 @@ public abstract class BaseCommentResourceTestCase {
 			testGraphQLGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
-		return testGraphQLComment_addComment();
+		return testGraphQLSiteComment_addComment();
 	}
 
 	@Test
@@ -4339,6 +4339,11 @@ public abstract class BaseCommentResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Comment testGraphQLComment_addComment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Comment testGraphQLSiteComment_addComment() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

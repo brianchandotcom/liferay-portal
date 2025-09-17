@@ -1136,7 +1136,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey_addDataRecordCollection()
 		throws Exception {
 
-		return testGraphQLDataRecordCollection_addDataRecordCollection();
+		return testGraphQLSiteDataRecordCollection_addDataRecordCollection();
 	}
 
 	@Test
@@ -1299,6 +1299,14 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 	protected DataRecordCollection
 			testGraphQLDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected DataRecordCollection
+			testGraphQLSiteDataRecordCollection_addDataRecordCollection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -766,7 +766,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			testGraphQLGetSiteERCSiteTestEntityPermissionsPage_addERCSiteTestEntity()
 		throws Exception {
 
-		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity();
+		return testGraphQLSiteERCSiteTestEntity_addERCSiteTestEntity();
 	}
 
 	@Test

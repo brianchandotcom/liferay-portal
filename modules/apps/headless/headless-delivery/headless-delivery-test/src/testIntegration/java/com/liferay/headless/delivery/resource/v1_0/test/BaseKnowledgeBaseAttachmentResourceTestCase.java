@@ -591,7 +591,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+		return testGraphQLSiteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
 	}
 
 	@Test
@@ -1234,7 +1234,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+		return testGraphQLSiteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
 	}
 
 	@Test
@@ -1329,6 +1329,14 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 	protected KnowledgeBaseAttachment
 			testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected KnowledgeBaseAttachment
+			testGraphQLSiteKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

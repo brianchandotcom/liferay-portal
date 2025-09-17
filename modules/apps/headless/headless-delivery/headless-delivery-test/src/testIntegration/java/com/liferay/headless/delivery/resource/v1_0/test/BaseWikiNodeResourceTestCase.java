@@ -666,7 +666,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 	protected WikiNode testGraphQLGetSiteWikiNodePermissionsPage_addWikiNode()
 		throws Exception {
 
-		return testGraphQLWikiNode_addWikiNode();
+		return testGraphQLSiteWikiNode_addWikiNode();
 	}
 
 	@Test

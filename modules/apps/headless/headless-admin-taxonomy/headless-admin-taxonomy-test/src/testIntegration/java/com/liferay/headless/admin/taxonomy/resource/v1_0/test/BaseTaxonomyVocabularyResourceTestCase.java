@@ -1564,7 +1564,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGraphQLGetAssetLibraryTaxonomyVocabularyPermissionsPage_addTaxonomyVocabulary()
 		throws Exception {
 
-		return testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary();
+		return testGraphQLAssetLibraryTaxonomyVocabulary_addTaxonomyVocabulary();
 	}
 
 	@Test
@@ -2345,7 +2345,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGraphQLGetSiteTaxonomyVocabularyPermissionsPage_addTaxonomyVocabulary()
 		throws Exception {
 
-		return testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary();
+		return testGraphQLSiteTaxonomyVocabulary_addTaxonomyVocabulary();
 	}
 
 	@Test

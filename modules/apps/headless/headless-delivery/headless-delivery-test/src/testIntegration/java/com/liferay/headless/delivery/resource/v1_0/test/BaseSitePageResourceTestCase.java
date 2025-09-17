@@ -321,7 +321,7 @@ public abstract class BaseSitePageResourceTestCase {
 	protected SitePage testGraphQLGetSiteSitePage_addSitePage()
 		throws Exception {
 
-		return testGraphQLSitePage_addSitePage();
+		return testGraphQLSiteSitePage_addSitePage();
 	}
 
 	@Test
@@ -502,7 +502,7 @@ public abstract class BaseSitePageResourceTestCase {
 			testGraphQLGetSiteSitePageExperienceExperienceKey_addSitePage()
 		throws Exception {
 
-		return testGraphQLSitePage_addSitePage();
+		return testGraphQLSiteSitePage_addSitePage();
 	}
 
 	@Test
@@ -1093,59 +1093,6 @@ public abstract class BaseSitePageResourceTestCase {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	protected SitePage testGraphQLSitePage_addSitePage() throws Exception {
-		return testGraphQLSitePage_addSitePage(
-			testGroup.getGroupId(), randomSitePage());
-	}
-
-	protected SitePage testGraphQLSitePage_addSitePage(
-			Long siteId, SitePage sitePage)
-		throws Exception {
-
-		JSONDeserializer<SitePage> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(SitePage.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(sitePage));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteSitePage",
-						new HashMap<String, Object>() {
-							{
-								put("siteKey", "\"" + siteId + "\"");
-								put("sitePage", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteSitePage"),
-			SitePage.class);
-	}
 
 	protected SitePage testGraphQLSiteSitePage_addSitePage() throws Exception {
 		return testGraphQLSiteSitePage_addSitePage(

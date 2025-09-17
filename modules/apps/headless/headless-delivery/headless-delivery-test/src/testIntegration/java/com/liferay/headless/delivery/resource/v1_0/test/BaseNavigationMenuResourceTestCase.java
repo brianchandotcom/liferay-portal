@@ -1069,7 +1069,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testGraphQLGetSiteNavigationMenuPermissionsPage_addNavigationMenu()
 		throws Exception {
 
-		return testGraphQLNavigationMenu_addNavigationMenu();
+		return testGraphQLSiteNavigationMenu_addNavigationMenu();
 	}
 
 	@Test

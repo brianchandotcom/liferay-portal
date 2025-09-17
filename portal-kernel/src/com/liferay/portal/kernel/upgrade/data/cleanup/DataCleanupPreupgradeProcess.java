@@ -10,13 +10,14 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Luis Ortiz
  */
-public abstract class DataCleanupPreupgradeProcess extends UpgradeProcess {
+public class DataCleanupPreupgradeProcess extends UpgradeProcess {
 
 	public static List<DataCleanupPreupgradeProcess> dependsOn(
 		DataCleanupPreupgradeProcess... dataCleanupPreupgradeProcesses) {
@@ -67,6 +68,17 @@ public abstract class DataCleanupPreupgradeProcess extends UpgradeProcess {
 		return sortedDataCleanupPreupgradeProcesses;
 	}
 
+	public DataCleanupPreupgradeProcess() {
+		_dataCleanupPreupgradeProcesses = Collections.emptyList();
+	}
+
+	public DataCleanupPreupgradeProcess(
+		DataCleanupPreupgradeProcess... dataCleanupPreupgradeProcesses) {
+
+		_dataCleanupPreupgradeProcesses = ListUtil.fromArray(
+			dataCleanupPreupgradeProcesses);
+	}
+
 	@Override
 	public void upgrade() throws DataCleanupPreupgradeException {
 		try {
@@ -88,5 +100,17 @@ public abstract class DataCleanupPreupgradeProcess extends UpgradeProcess {
 			throw new DataCleanupPreupgradeException(upgradeException);
 		}
 	}
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
+				_dataCleanupPreupgradeProcesses) {
+
+			upgrade(dataCleanupPreupgradeProcess);
+		}
+	}
+
+	private final List<DataCleanupPreupgradeProcess>
+		_dataCleanupPreupgradeProcesses;
 
 }

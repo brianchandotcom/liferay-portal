@@ -328,7 +328,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					String.valueOf(searchResult.getEmbedded()));
 
 				bulkActionItemsMap.computeIfAbsent(
-					searchResult.getEntryClassName(), key -> new ArrayList<>()
+					searchResult.getEntryClassName(), className -> new ArrayList<>()
 				).add(
 					new BulkActionItem() {
 						{
@@ -350,7 +350,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		for (BulkActionItem bulkActionItem : bulkActionItems) {
 			bulkActionItemsMap.computeIfAbsent(
-				bulkActionItem.getClassName(), key -> new ArrayList<>()
+				bulkActionItem.getClassName(), className -> new ArrayList<>()
 			).add(
 				bulkActionItem
 			);
@@ -442,7 +442,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			for (long primaryKey : primaryKeys) {
 				bulkActionItemsMap.computeIfAbsent(
-					objectDefinition.getClassName(), key -> new ArrayList<>()
+					objectDefinition.getClassName(), className -> new ArrayList<>()
 				).add(
 					new BulkActionItem() {
 						{
@@ -461,7 +461,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		for (BulkActionItem bulkActionItem : bulkActionItems) {
 			bulkActionItemsMap.computeIfAbsent(
-				bulkActionItem.getClassName(), key -> new ArrayList<>()
+				bulkActionItem.getClassName(), className -> new ArrayList<>()
 			).add(
 				bulkActionItem
 			);
@@ -470,16 +470,16 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return bulkActionItemsMap;
 	}
 
-	private String _getTaskItemDelegateName(String key) throws Exception {
+	private String _getTaskItemDelegateName(String className) throws Exception {
 		if (StringUtil.equals(
-				"com.liferay.object.model.ObjectEntryFolder", key)) {
+				"com.liferay.object.model.ObjectEntryFolder", className)) {
 
 			return null;
 		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinitionByClassName(
-				contextCompany.getCompanyId(), key);
+				contextCompany.getCompanyId(), className);
 
 		return objectDefinition.getName();
 	}

@@ -49,14 +49,6 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 	<aui:input name="idTokenSigningAlgValuesIndexes" type="hidden" value="<%= StringUtil.merge(idTokenSigningAlgValuesIndexes) %>" />
 </aui:fieldset>
 
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />idTokenSigningAlgValuesContentBox',
-		fieldIndexes: '<portlet:namespace />idTokenSigningAlgValuesIndexes',
-		namespace: '<portlet:namespace />',
-	}).render();
-</aui:script>
-
 <aui:fieldset helpMessage="subject-types-help" id='<%= liferayPortletResponse.getNamespace() + "subjectTypesContentBox" %>' label="subject-types">
 
 	<%
@@ -80,14 +72,6 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 	<aui:input name="subjectTypesIndexes " type="hidden" value="<%= StringUtil.merge(subjectTypesIndexes) %>" />
 </aui:fieldset>
-
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />subjectTypesContentBox',
-		fieldIndexes: '<portlet:namespace />subjectTypesIndexes ',
-		namespace: '<portlet:namespace />',
-	}).render();
-</aui:script>
 
 <aui:input helpMessage="token-endpoint-help" label="token-endpoint" name="tokenEndPoint" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getTokenEndPoint() %>" />
 
@@ -125,16 +109,6 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 	<aui:input name="customAuthorizationRequestParametersIndexes" type="hidden" value="<%= StringUtil.merge(customAuthorizationRequestParametersIndexes) %>" />
 </aui:fieldset>
 
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields({
-		contentBox:
-			'#<portlet:namespace />customAuthorizationRequestParametersContentBox',
-		fieldIndexes:
-			'<portlet:namespace />customAuthorizationRequestParametersIndexes',
-		namespace: '<portlet:namespace />',
-	}).render();
-</aui:script>
-
 <aui:fieldset helpMessage="custom-token-request-parameters-help" id='<%= liferayPortletResponse.getNamespace() + "customTokenRequestParametersContentBox" %>' label="custom-token-request-parameters">
 
 	<%
@@ -158,14 +132,6 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 	<aui:input name="customTokenRequestParametersIndexes" type="hidden" value="<%= StringUtil.merge(customTokenRequestParametersIndexes) %>" />
 </aui:fieldset>
-
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />customTokenRequestParametersContentBox',
-		fieldIndexes: '<portlet:namespace />customTokenRequestParametersIndexes',
-		namespace: '<portlet:namespace />',
-	}).render();
-</aui:script>
 
 <aui:fieldset helpMessage="custom-claims-help" id='<%= liferayPortletResponse.getNamespace() + "customClaimsContentBox" %>' label="custom-claims">
 
@@ -212,8 +178,34 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
+		contentBox:
+			'#<portlet:namespace />customAuthorizationRequestParametersContentBox',
+		fieldIndexes:
+			'<portlet:namespace />customAuthorizationRequestParametersIndexes',
+		namespace: '<portlet:namespace />',
+	}).render();
+
+	new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />customClaimsContentBox',
 		fieldIndexes: '<portlet:namespace />customClaimsIndexes',
+		namespace: '<portlet:namespace />',
+	}).render();
+
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />customTokenRequestParametersContentBox',
+		fieldIndexes: '<portlet:namespace />customTokenRequestParametersIndexes',
+		namespace: '<portlet:namespace />',
+	}).render();
+
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />idTokenSigningAlgValuesContentBox',
+		fieldIndexes: '<portlet:namespace />idTokenSigningAlgValuesIndexes',
+		namespace: '<portlet:namespace />',
+	}).render();
+
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />subjectTypesContentBox',
+		fieldIndexes: '<portlet:namespace />subjectTypesIndexes ',
 		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>

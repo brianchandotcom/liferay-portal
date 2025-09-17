@@ -184,11 +184,11 @@ test('Check user selection via modal in autocomplete input', async ({
 	itemSelectorSamplePage,
 	page,
 }) => {
-	const inputGroupLabel =
-		'Single Select (Users) - Open Modal Trigger';
+	const inputGroupLabel = 'Single Select (Users) - Open Modal Trigger';
 
 	await test.step('Select use via modal', async () => {
-		await itemSelectorSamplePage.inputGroup(inputGroupLabel)
+		await itemSelectorSamplePage
+			.inputGroup(inputGroupLabel)
 			.getByLabel('Select Items')
 			.click();
 
@@ -198,9 +198,9 @@ test('Check user selection via modal in autocomplete input', async ({
 
 	await test.step('Assert that the autocomplete input has the proper value', async () => {
 		expect(
-			(
-				itemSelectorSamplePage.inputGroup(inputGroupLabel)
-			).getByRole('combobox')
+			itemSelectorSamplePage
+				.inputGroup(inputGroupLabel)
+				.getByRole('combobox')
 		).toHaveValue('Test Test');
 	});
 });
@@ -209,11 +209,11 @@ test('Check user selection via modal in multiselect input', async ({
 	itemSelectorSamplePage,
 	page,
 }) => {
-	const inputGroupLabel =
-		'Multiple Select (Users) - Open Modal Trigger';
+	const inputGroupLabel = 'Multiple Select (Users) - Open Modal Trigger';
 
 	await test.step('Select use via modal', async () => {
-		await itemSelectorSamplePage.inputGroup(inputGroupLabel)
+		await itemSelectorSamplePage
+			.inputGroup(inputGroupLabel)
 			.getByLabel('Select Items')
 			.click();
 
@@ -241,11 +241,11 @@ test('Check space selection via modal in autocomplete input', async ({
 		type: 'Space',
 	});
 
-	const inputGroupLabel =
-		'Single Select (Spaces) - Open Modal Trigger';
+	const inputGroupLabel = 'Single Select (Spaces) - Open Modal Trigger';
 
 	await test.step('Select space via modal', async () => {
-		await itemSelectorSamplePage.inputGroup(inputGroupLabel)
+		await itemSelectorSamplePage
+			.inputGroup(inputGroupLabel)
 			.getByLabel('Select Items')
 			.click();
 
@@ -256,9 +256,9 @@ test('Check space selection via modal in autocomplete input', async ({
 
 	await test.step('Assert that the autocomplete input has the proper value', async () => {
 		expect(
-			(
-				itemSelectorSamplePage.inputGroup(inputGroupLabel)
-			).getByRole('combobox')
+			itemSelectorSamplePage
+				.inputGroup(inputGroupLabel)
+				.getByRole('combobox')
 		).toHaveValue(spaceName);
 	});
 });
@@ -276,11 +276,11 @@ test('Check space selection via modal in multiselect input', async ({
 		type: 'Space',
 	});
 
-	const inputGroupLabel =
-		'Multiple Select (Spaces) - Open Modal Trigger';
+	const inputGroupLabel = 'Multiple Select (Spaces) - Open Modal Trigger';
 
 	await test.step('Select space via modal', async () => {
-		await itemSelectorSamplePage.inputGroup(inputGroupLabel)
+		await itemSelectorSamplePage
+			.inputGroup(inputGroupLabel)
 			.getByLabel('Select Items')
 			.click();
 

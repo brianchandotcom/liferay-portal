@@ -2279,7 +2279,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath_addMessageBoardMessage()
 		throws Exception {
 
-		return testGraphQLMessageBoardMessage_addMessageBoardMessage();
+		return testGraphQLSiteMessageBoardMessage_addMessageBoardMessage();
 	}
 
 	@Test

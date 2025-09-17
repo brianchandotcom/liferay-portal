@@ -1840,7 +1840,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread()
 		throws Exception {
 
-		return testGraphQLMessageBoardThread_addMessageBoardThread();
+		return testGraphQLSiteMessageBoardThread_addMessageBoardThread();
 	}
 
 	@Test
@@ -1897,7 +1897,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGraphQLGetSiteMessageBoardThreadPermissionsPage_addMessageBoardThread()
 		throws Exception {
 
-		return testGraphQLMessageBoardThread_addMessageBoardThread();
+		return testGraphQLSiteMessageBoardThread_addMessageBoardThread();
 	}
 
 	@Test

@@ -1055,7 +1055,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGraphQLGetAssetLibraryStructuredContentPermissionsPage_addStructuredContent()
 		throws Exception {
 
-		return testGraphQLStructuredContent_addStructuredContent();
+		return testGraphQLAssetLibraryStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -2390,7 +2390,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGraphQLGetSiteStructuredContentByKey_addStructuredContent()
 		throws Exception {
 
-		return testGraphQLStructuredContent_addStructuredContent();
+		return testGraphQLSiteStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -2531,7 +2531,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGraphQLGetSiteStructuredContentByUuid_addStructuredContent()
 		throws Exception {
 
-		return testGraphQLStructuredContent_addStructuredContent();
+		return testGraphQLSiteStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -2586,7 +2586,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGraphQLGetSiteStructuredContentPermissionsPage_addStructuredContent()
 		throws Exception {
 
-		return testGraphQLStructuredContent_addStructuredContent();
+		return testGraphQLSiteStructuredContent_addStructuredContent();
 	}
 
 	@Test

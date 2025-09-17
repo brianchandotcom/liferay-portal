@@ -351,7 +351,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			testGraphQLDeleteSiteERCSiteTestEntity_addERCSiteTestEntity()
 		throws Exception {
 
-		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity();
+		return testGraphQLSiteERCSiteTestEntity_addERCSiteTestEntity();
 	}
 
 	@Test
@@ -555,6 +555,15 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		assertEquals(postERCSiteTestEntity, getERCSiteTestEntity);
 		assertValid(getERCSiteTestEntity);
+
+		Assert.assertNull(getERCSiteTestEntity.getPermissions());
+
+		getERCSiteTestEntity =
+			permissionsERCSiteTestEntityResource.getSiteERCSiteTestEntity(
+				postERCSiteTestEntity.getSiteExternalReferenceCode(),
+				postERCSiteTestEntity.getExternalReferenceCode());
+
+		Assert.assertNotNull(getERCSiteTestEntity.getPermissions());
 	}
 
 	protected ERCSiteTestEntity
@@ -693,7 +702,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			testGraphQLGetSiteERCSiteTestEntity_addERCSiteTestEntity()
 		throws Exception {
 
-		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity();
+		return testGraphQLSiteERCSiteTestEntity_addERCSiteTestEntity();
 	}
 
 	@Test
@@ -757,7 +766,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			testGraphQLGetSiteERCSiteTestEntityPermissionsPage_addERCSiteTestEntity()
 		throws Exception {
 
-		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity();
+		return testGraphQLSiteERCSiteTestEntity_addERCSiteTestEntity();
 	}
 
 	@Test
@@ -837,6 +846,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		assertEquals(randomERCSiteTestEntity, putERCSiteTestEntity);
 		assertValid(putERCSiteTestEntity);
 
+		Assert.assertNull(putERCSiteTestEntity.getPermissions());
+
 		ERCSiteTestEntity getERCSiteTestEntity =
 			ercSiteTestEntityResource.getSiteERCSiteTestEntity(
 				putERCSiteTestEntity.getSiteExternalReferenceCode(),
@@ -844,6 +855,28 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		assertEquals(randomERCSiteTestEntity, getERCSiteTestEntity);
 		assertValid(getERCSiteTestEntity);
+
+		ERCSiteTestEntity randomPermissionsERCSiteTestEntity =
+			randomPermissionsERCSiteTestEntity();
+
+		putERCSiteTestEntity =
+			ercSiteTestEntityResource.putSiteERCSiteTestEntity(
+				postERCSiteTestEntity.getSiteExternalReferenceCode(),
+				postERCSiteTestEntity.getExternalReferenceCode(),
+				randomPermissionsERCSiteTestEntity);
+
+		assertEquals(randomPermissionsERCSiteTestEntity, putERCSiteTestEntity);
+		assertValid(putERCSiteTestEntity);
+
+		Assert.assertNull(putERCSiteTestEntity.getPermissions());
+
+		putERCSiteTestEntity =
+			permissionsERCSiteTestEntityResource.putSiteERCSiteTestEntity(
+				postERCSiteTestEntity.getSiteExternalReferenceCode(),
+				postERCSiteTestEntity.getExternalReferenceCode(),
+				randomPermissionsERCSiteTestEntity);
+
+		Assert.assertNotNull(putERCSiteTestEntity.getPermissions());
 	}
 
 	protected ERCSiteTestEntity
@@ -956,66 +989,6 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 				"COMPLETED",
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
-	}
-
-	protected ERCSiteTestEntity
-			testGraphQLERCSiteTestEntity_addERCSiteTestEntity()
-		throws Exception {
-
-		return testGraphQLERCSiteTestEntity_addERCSiteTestEntity(
-			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
-	}
-
-	protected ERCSiteTestEntity
-			testGraphQLERCSiteTestEntity_addERCSiteTestEntity(
-				String siteExternalReferenceCode,
-				ERCSiteTestEntity ercSiteTestEntity)
-		throws Exception {
-
-		JSONDeserializer<ERCSiteTestEntity> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field :
-				getDeclaredFields(ERCSiteTestEntity.class)) {
-
-			if (!ArrayUtil.contains(
-					getAdditionalAssertFieldNames(), field.getName())) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			appendGraphQLFieldValue(sb, field.get(ercSiteTestEntity));
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createSiteERCSiteTestEntity",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteExternalReferenceCode",
-									"\"" + siteExternalReferenceCode + "\"");
-								put("ercSiteTestEntity", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createSiteERCSiteTestEntity"),
-			ERCSiteTestEntity.class);
 	}
 
 	protected ERCSiteTestEntity

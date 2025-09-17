@@ -515,7 +515,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testGraphQLDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition()
 		throws Exception {
 
-		return testGraphQLDataDefinition_addDataDefinition();
+		return testGraphQLSiteDataDefinition_addDataDefinition();
 	}
 
 	@Test
@@ -1395,7 +1395,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_addDataDefinition()
 		throws Exception {
 
-		return testGraphQLDataDefinition_addDataDefinition();
+		return testGraphQLSiteDataDefinition_addDataDefinition();
 	}
 
 	@Test
@@ -1565,7 +1565,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testGraphQLGetSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition()
 		throws Exception {
 
-		return testGraphQLDataDefinition_addDataDefinition();
+		return testGraphQLSiteDataDefinition_addDataDefinition();
 	}
 
 	@Test
@@ -2257,6 +2257,13 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	protected DataDefinition testGraphQLDataDefinition_addDataDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected DataDefinition testGraphQLSiteDataDefinition_addDataDefinition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

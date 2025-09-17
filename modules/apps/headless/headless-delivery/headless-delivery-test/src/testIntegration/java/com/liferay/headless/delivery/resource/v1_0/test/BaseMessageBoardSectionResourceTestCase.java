@@ -1396,7 +1396,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGraphQLGetSiteMessageBoardSectionByFriendlyUrlPath_addMessageBoardSection()
 		throws Exception {
 
-		return testGraphQLMessageBoardSection_addMessageBoardSection();
+		return testGraphQLSiteMessageBoardSection_addMessageBoardSection();
 	}
 
 	@Test
@@ -1454,7 +1454,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGraphQLGetSiteMessageBoardSectionPermissionsPage_addMessageBoardSection()
 		throws Exception {
 
-		return testGraphQLMessageBoardSection_addMessageBoardSection();
+		return testGraphQLSiteMessageBoardSection_addMessageBoardSection();
 	}
 
 	@Test

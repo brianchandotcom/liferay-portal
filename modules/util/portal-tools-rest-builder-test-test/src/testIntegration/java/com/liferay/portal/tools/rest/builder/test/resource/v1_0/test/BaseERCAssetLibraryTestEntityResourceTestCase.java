@@ -404,7 +404,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
 		throws Exception {
 
-		return testGraphQLERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+		return testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 	}
 
 	@Test
@@ -644,6 +644,17 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		assertEquals(
 			postERCAssetLibraryTestEntity, getERCAssetLibraryTestEntity);
 		assertValid(getERCAssetLibraryTestEntity);
+
+		Assert.assertNull(getERCAssetLibraryTestEntity.getPermissions());
+
+		getERCAssetLibraryTestEntity =
+			permissionsERCAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntity(
+					postERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode());
+
+		Assert.assertNotNull(getERCAssetLibraryTestEntity.getPermissions());
 	}
 
 	protected ERCAssetLibraryTestEntity
@@ -789,7 +800,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			testGraphQLGetAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
 		throws Exception {
 
-		return testGraphQLERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+		return testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 	}
 
 	@Test
@@ -818,6 +829,48 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			postAssetLibraryERCAssetLibraryTestEntity(
 				testDepotEntryGroup.getExternalReferenceCode(),
 				randomERCAssetLibraryTestEntity());
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryERCAssetLibraryTestEntityPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ERCAssetLibraryTestEntity postERCAssetLibraryTestEntity =
+			testGraphQLGetAssetLibraryERCAssetLibraryTestEntityPermissionsPage_addERCAssetLibraryTestEntity();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryERCAssetLibraryTestEntityPermissions",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"assetLibraryExternalReferenceCode",
+						"\"" +
+							postERCAssetLibraryTestEntity.
+								getAssetLibraryExternalReferenceCode() + "\"");
+					put(
+						"ercAssetLibraryTestEntityExternalReferenceCode",
+						"\"" +
+							postERCAssetLibraryTestEntity.
+								getExternalReferenceCode() + "\"");
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject assetLibraryERCAssetLibraryTestEntityPermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryERCAssetLibraryTestEntityPermissions");
+
+		Assert.assertNotNull(
+			assetLibraryERCAssetLibraryTestEntityPermissionsJSONObject);
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testGraphQLGetAssetLibraryERCAssetLibraryTestEntityPermissionsPage_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return testGraphQLAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 	}
 
 	@Test
@@ -914,6 +967,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			randomERCAssetLibraryTestEntity, putERCAssetLibraryTestEntity);
 		assertValid(putERCAssetLibraryTestEntity);
 
+		Assert.assertNull(putERCAssetLibraryTestEntity.getPermissions());
+
 		ERCAssetLibraryTestEntity getERCAssetLibraryTestEntity =
 			ercAssetLibraryTestEntityResource.
 				getAssetLibraryERCAssetLibraryTestEntity(
@@ -924,6 +979,34 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		assertEquals(
 			randomERCAssetLibraryTestEntity, getERCAssetLibraryTestEntity);
 		assertValid(getERCAssetLibraryTestEntity);
+
+		ERCAssetLibraryTestEntity randomPermissionsERCAssetLibraryTestEntity =
+			randomPermissionsERCAssetLibraryTestEntity();
+
+		putERCAssetLibraryTestEntity =
+			ercAssetLibraryTestEntityResource.
+				putAssetLibraryERCAssetLibraryTestEntity(
+					postERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode(),
+					randomPermissionsERCAssetLibraryTestEntity);
+
+		assertEquals(
+			randomPermissionsERCAssetLibraryTestEntity,
+			putERCAssetLibraryTestEntity);
+		assertValid(putERCAssetLibraryTestEntity);
+
+		Assert.assertNull(putERCAssetLibraryTestEntity.getPermissions());
+
+		putERCAssetLibraryTestEntity =
+			permissionsERCAssetLibraryTestEntityResource.
+				putAssetLibraryERCAssetLibraryTestEntity(
+					postERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode(),
+					randomPermissionsERCAssetLibraryTestEntity);
+
+		Assert.assertNotNull(putERCAssetLibraryTestEntity.getPermissions());
 	}
 
 	protected ERCAssetLibraryTestEntity
@@ -1046,14 +1129,6 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				"COMPLETED",
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
-	}
-
-	protected ERCAssetLibraryTestEntity
-			testGraphQLERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected ERCAssetLibraryTestEntity

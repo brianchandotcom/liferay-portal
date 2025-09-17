@@ -48,7 +48,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -934,12 +933,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				commerceChannelGroupId);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				commerceChannel.getCompanyId(), "LPD-10889")) {
-
-			return 0;
-		}
 
 		CPConfigurationList cpConfigurationList =
 			_cpConfigurationListDiscovery.getCPConfigurationList(

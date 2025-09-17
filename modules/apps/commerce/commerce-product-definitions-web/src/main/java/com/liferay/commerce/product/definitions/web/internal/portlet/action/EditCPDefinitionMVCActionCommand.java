@@ -50,7 +50,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -789,19 +788,15 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				shippingExtraPrice, shipSeparately, taxExempt, weight, width);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				cpDefinition.getCompanyId(), "LPD-10889")) {
+		List<CPInstance> cpInstances =
+			_cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinitionId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
-			List<CPInstance> cpInstances =
-				_cpInstanceLocalService.getCPDefinitionInstances(
-					cpDefinitionId, WorkflowConstants.STATUS_ANY,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		for (CPInstance cpInstance : cpInstances) {
+			cpInstance.setPurchasable(purchasable);
 
-			for (CPInstance cpInstance : cpInstances) {
-				cpInstance.setPurchasable(purchasable);
-
-				_cpInstanceLocalService.updateCPInstance(cpInstance);
-			}
+			_cpInstanceLocalService.updateCPInstance(cpInstance);
 		}
 	}
 

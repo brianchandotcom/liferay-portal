@@ -36,6 +36,7 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -164,6 +165,16 @@ public class CommerceOrderModelDocumentContributor
 				Region region = address.getRegion();
 
 				document.addKeyword("regionName", region.getName());
+			}
+
+			Date requestedDeliveryDate =
+				commerceOrder.getRequestedDeliveryDate();
+
+			if (requestedDeliveryDate != null) {
+				document.addDate(
+					"requestedDeliveryDate", requestedDeliveryDate);
+				document.addDateSortable(
+					"requestedDeliveryDate", requestedDeliveryDate);
 			}
 
 			document.addDate(

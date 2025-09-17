@@ -164,7 +164,9 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
-		if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
+		if (jobName.equals("forward-pullrequest") ||
+			jobName.startsWith("test-portal-acceptance-pullrequest")) {
+
 			return new PullRequestPortalTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);
 		}

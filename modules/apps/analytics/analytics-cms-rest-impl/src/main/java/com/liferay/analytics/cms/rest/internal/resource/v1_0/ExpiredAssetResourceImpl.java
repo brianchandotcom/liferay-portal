@@ -10,6 +10,7 @@ import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.internal.resource.v1_0.util.ObjectEntryVersionTitleExpressionUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.ExpiredAssetResource;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersionTable;
@@ -24,7 +25,6 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -97,9 +97,9 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 							return String.valueOf(objects[4]);
 						});
 					expiredAsset.setUsages(
-						() -> _getUsages(
-							String.valueOf(objects[0]), groupIds,
-							(Long)objects[2], objectEntryId));
+						() -> _getUsagesCount(
+							String.valueOf(objects[0]), (Long)objects[2],
+							objectEntryId));
 
 					return expiredAsset;
 				}),
@@ -209,35 +209,44 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 		return predicate;
 	}
 
-	private int _getUsages(
-			String className, Long[] groupIds, long objectDefinitionId,
-			long objectEntryId)
-		throws PortalException {
+	private long _getUsagesCount(
+			String className, long objectDefinitionId, long objectEntryId)
+		throws Exception {
 
-		int usages =
+		int usagesCount =
 			_layoutClassedModelUsageLocalService.
 				getLayoutClassedModelUsagesCount(
 					_portal.getClassNameId(className), objectEntryId);
 
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.
-				getObjectRelationshipsByObjectDefinitionId2(objectDefinitionId);
+		boolean skipObjectEntryResourcePermission =
+			ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission();
 
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectRelatedModelsProvider objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						className, contextCompany.getCompanyId(),
-						objectRelationship.getType());
+		try {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
-			for (long groupId : groupIds) {
-				usages += objectRelatedModelsProvider.getRelatedModelsCount(
-					groupId, objectRelationship.getObjectRelationshipId(), null,
-					objectEntryId, null);
+			List<ObjectRelationship> objectRelationships =
+				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinitionId);
+
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							className, contextCompany.getCompanyId(),
+							objectRelationship.getType());
+
+				usagesCount +=
+					objectRelatedModelsProvider.getRelatedModelsCount(
+						0, objectRelationship.getObjectRelationshipId(), null,
+						objectEntryId, null);
 			}
 		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
+				skipObjectEntryResourcePermission);
+		}
 
-		return usages;
+		return usagesCount;
 	}
 
 	@Reference

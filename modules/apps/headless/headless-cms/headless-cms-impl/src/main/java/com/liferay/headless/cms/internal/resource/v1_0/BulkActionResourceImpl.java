@@ -700,11 +700,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return objectDefinition.getName();
 	}
 
-	private long _getUsages(
+	private long _getUsagesCount(
 			String className, long objectDefinitionId, long objectEntryId)
 		throws Exception {
 
-		int usages =
+		int usagesCount =
 			_layoutClassedModelUsageLocalService.
 				getLayoutClassedModelUsagesCount(
 					_portal.getClassNameId(className), objectEntryId);
@@ -726,9 +726,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 							className, contextCompany.getCompanyId(),
 							objectRelationship.getType());
 
-				usages += objectRelatedModelsProvider.getRelatedModelsCount(
-					0, objectRelationship.getObjectRelationshipId(), null,
-					objectEntryId, null);
+				usagesCount +=
+					objectRelatedModelsProvider.getRelatedModelsCount(
+						0, objectRelationship.getObjectRelationshipId(), null,
+						objectEntryId, null);
 			}
 		}
 		finally {
@@ -736,7 +737,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				skipObjectEntryResourcePermission);
 		}
 
-		return usages;
+		return usagesCount;
 	}
 
 	private BulkActionItem _toBulkActionItem(long classPK) {
@@ -762,7 +763,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					"type", "ASSET"
 				).put(
 					"usages",
-					_getUsages(
+					_getUsagesCount(
 						objectDefinition.getClassName(),
 						objectDefinition.getObjectDefinitionId(),
 						objectEntry.getObjectEntryId())

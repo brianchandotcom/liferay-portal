@@ -120,6 +120,76 @@ testWithCKEditor4(
 	}
 );
 
+testWithCKEditor4(
+	'Checks the functionality of splitting table cells in CKEditor 4',
+	{tag: ['@LPD-65783']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page with a Paragraph fragment containing a 1-cell table and go to edit mode
+
+		const paragraphId = getRandomString();
+		const paragraphDefinition = getFragmentDefinition({
+			fragmentFields: [
+				{
+					id: 'element-text',
+					value: {
+						fragmentLink: {},
+						text: {
+							value_i18n: {
+								en_US: '<table border="1" style="width: 100%;"><tbody><tr><td><br></td></tr></tbody></table>',
+							},
+						},
+					},
+				},
+			],
+			id: paragraphId,
+			key: 'BASIC_COMPONENT-paragraph',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([paragraphDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await page
+			.getByLabel('Control Menu')
+			.getByTitle('Edit', {exact: true})
+			.click();
+
+		await page.locator('.page-editor').waitFor();
+
+		// Edit the table and split the cell horizontally
+
+		await pageEditorPage.selectFragment(paragraphId);
+
+		await pageEditorPage.selectEditable(paragraphId, 'element-text');
+
+		const editable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: paragraphId,
+		});
+
+		await editable.click();
+
+		await editable.locator('.cke_editable_inline').waitFor();
+
+		await editable.locator('.cke_editable_inline').click();
+
+		await page.getByLabel('Cell').click();
+
+		await page.getByLabel('Split Cell Horizontally').click();
+
+		const html = await page.locator('.cke_editable table').innerHTML();
+
+		expect(html).toContain(
+			'<tbody><tr><td><br></td><td><br></td></tr></tbody>'
+		);
+	}
+);
+
 test(
 	'Saves edited content when leaving page while editing',
 	{

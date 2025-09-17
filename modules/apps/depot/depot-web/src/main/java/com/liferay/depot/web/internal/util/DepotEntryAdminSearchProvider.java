@@ -6,10 +6,10 @@
 package com.liferay.depot.web.internal.util;
 
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.item.selector.DepotGroupItemSelectorCriterion;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.search.DepotEntrySearch;
 import com.liferay.depot.service.DepotEntryService;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -46,21 +46,21 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotEntryAdminSearchProvider {
 
 	public DepotEntrySearch getDepotEntrySearch(
-			DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion,
+			GroupItemSelectorCriterion groupItemSelectorCriterion,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortletURL portletURL)
 		throws PortalException {
 
 		if (Validator.isNull(ParamUtil.getString(portletRequest, "keywords")) &&
-			!depotGroupItemSelectorCriterion.isIncludeAllVisibleGroups()) {
+			!groupItemSelectorCriterion.isIncludeAllVisibleGroups()) {
 
 			return _getGroupConnectedDepotEntrySearch(
-				depotGroupItemSelectorCriterion.getDepotEntryType(),
-				portletRequest, portletResponse, portletURL);
+				groupItemSelectorCriterion.getDepotEntryType(), portletRequest,
+				portletResponse, portletURL);
 		}
 
 		return _getDepotEntrySearch(
-			depotGroupItemSelectorCriterion.getDepotEntryType(), portletRequest,
+			groupItemSelectorCriterion.getDepotEntryType(), portletRequest,
 			portletResponse, portletURL);
 	}
 
@@ -74,13 +74,13 @@ public class DepotEntryAdminSearchProvider {
 	}
 
 	public GroupSearch getGroupSearch(
-			DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion,
+			GroupItemSelectorCriterion groupItemSelectorCriterion,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortletURL portletURL)
 		throws PortalException {
 
 		DepotEntrySearch depotEntrySearch = _getDepotEntrySearch(
-			depotGroupItemSelectorCriterion.getDepotEntryType(), portletRequest,
+			groupItemSelectorCriterion.getDepotEntryType(), portletRequest,
 			portletResponse, portletURL);
 
 		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);

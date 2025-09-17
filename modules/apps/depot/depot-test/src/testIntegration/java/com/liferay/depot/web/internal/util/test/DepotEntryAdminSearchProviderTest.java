@@ -7,11 +7,11 @@ package com.liferay.depot.web.internal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.item.selector.DepotGroupItemSelectorCriterion;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.search.DepotEntrySearch;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -77,8 +77,8 @@ public class DepotEntryAdminSearchProviderTest {
 
 	@Test
 	public void testGetDepotEntrySearch() throws Exception {
-		DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion =
-			new DepotGroupItemSelectorCriterion();
+		GroupItemSelectorCriterion depotGroupItemSelectorCriterion =
+			new GroupItemSelectorCriterion();
 
 		depotGroupItemSelectorCriterion.setIncludeAllVisibleGroups(false);
 
@@ -93,7 +93,7 @@ public class DepotEntryAdminSearchProviderTest {
 			ReflectionTestUtil.invoke(
 				_depotEntryAdminSearchProvider, "getDepotEntrySearch",
 				new Class<?>[] {
-					DepotGroupItemSelectorCriterion.class, PortletRequest.class,
+					GroupItemSelectorCriterion.class, PortletRequest.class,
 					PortletResponse.class, PortletURL.class
 				},
 				depotGroupItemSelectorCriterion,
@@ -104,10 +104,10 @@ public class DepotEntryAdminSearchProviderTest {
 
 	@Test
 	public void testGetGroupSearchWithKeywords() throws Exception {
-		DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion =
-			new DepotGroupItemSelectorCriterion();
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
+			new GroupItemSelectorCriterion();
 
-		depotGroupItemSelectorCriterion.setIncludeAllVisibleGroups(false);
+		groupItemSelectorCriterion.setIncludeAllVisibleGroups(false);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
@@ -122,11 +122,10 @@ public class DepotEntryAdminSearchProviderTest {
 			ReflectionTestUtil.invoke(
 				_depotEntryAdminSearchProvider, "getDepotEntrySearch",
 				new Class<?>[] {
-					DepotGroupItemSelectorCriterion.class, PortletRequest.class,
+					GroupItemSelectorCriterion.class, PortletRequest.class,
 					PortletResponse.class, PortletURL.class
 				},
-				depotGroupItemSelectorCriterion,
-				mockLiferayPortletActionRequest,
+				groupItemSelectorCriterion, mockLiferayPortletActionRequest,
 				new MockLiferayPortletRenderResponse(),
 				new MockLiferayPortletURL()));
 	}

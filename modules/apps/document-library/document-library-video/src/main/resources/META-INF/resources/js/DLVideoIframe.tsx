@@ -17,7 +17,6 @@ export default function DLVideoIframe({
 			<div className="video-preview-aspect-ratio">
 				<iframe
 					data-video-liferay
-					frameBorder="0"
 					height="315"
 					src={videoPreviewURL}
 					width="560"

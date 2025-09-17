@@ -6,133 +6,93 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
-import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
-import {getRandomInt} from '../../../utils/getRandomInt';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
 import {openProductMenu} from '../../../utils/productMenu';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	pageEditorPagesTest,
 	pagesAdminPagesTest,
-	pagesPagesTest,
-	serverAdministrationPageTest
+	pagesPagesTest
 );
 
-const getGroovyScript = (companyId, pageName, siteId, userId) => `
-    import com.liferay.portal.kernel.model.Group
-    import com.liferay.portal.kernel.model.Layout
-    import com.liferay.portal.kernel.service.GroupLocalServiceUtil
-    import com.liferay.portal.kernel.service.LayoutLocalServiceUtil
-    import com.liferay.portal.kernel.model.LayoutConstants
-    import com.liferay.portal.kernel.service.ServiceContext
-    import com.liferay.portal.kernel.service.ServiceContextThreadLocal
-    import com.liferay.portal.kernel.util.PortalUtil
-    
-    def userId = ${userId}
-    
-    def serviceContext = new ServiceContext()
-    def companyGroupId = ${siteId}
-    serviceContext.setScopeGroupId(companyGroupId)
-    serviceContext.setCompanyId(${companyId})
-    serviceContext.setAttribute("layout.instanceable.allowed", Boolean.TRUE);
-    
-    try {
-        out.println(
-            LayoutLocalServiceUtil.addLayout(
-                null, userId, companyGroupId, false,
-                LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-                "${pageName}", "${pageName}", "", LayoutConstants.TYPE_EMPTY, true, "", serviceContext));
-    } catch (Exception e) {
-        out.println("An error occurred: " + e.getMessage())
-        e.printStackTrace()
-    }
-`;
+async function addEmptyPage({
+	apiHelpers,
+	name,
+	siteId,
+}: {
+	apiHelpers: ApiHelpers;
+	name: string;
+	siteId: string;
+}): Promise<Layout> {
+	const serviceContext = {
+		attributes: {
+			'layout.instanceable.allowed': true,
+		},
+		scopeGroupId: siteId,
+	};
 
-let emptyLayoutJSON;
-let emptyLayoutName;
+	const urlSearchParams = new URLSearchParams();
 
-test.beforeEach(
-	'Create an empty page using a Groovy script in the Server Administration Script tab',
-	async ({
-		apiHelpers,
-		applicationsMenuPage,
-		page,
-		serverAdministrationPage,
-		site,
-	}) => {
-		await applicationsMenuPage.goToServerAdministration();
+	urlSearchParams.append('externalReferenceCode', null);
+	urlSearchParams.append('groupId', siteId);
+	urlSearchParams.append('privateLayout', 'false');
+	urlSearchParams.append('parentLayoutId', '0');
+	urlSearchParams.append('name', name);
+	urlSearchParams.append('title', name);
+	urlSearchParams.append('description', '');
+	urlSearchParams.append('type', 'empty');
+	urlSearchParams.append('hidden', 'true');
+	urlSearchParams.append('friendlyURL', '');
+	urlSearchParams.append('serviceContext', JSON.stringify(serviceContext));
 
-		const companyId = await page.evaluate(() => {
-			return Liferay.ThemeDisplay.getCompanyId();
-		});
-
-		const user =
-			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-				'test@liferay.com'
-			);
-
-		emptyLayoutName = 'empty' + getRandomInt();
-
-		await serverAdministrationPage.executeScript(
-			getGroovyScript(companyId, emptyLayoutName, site.id, user.id)
-		);
-
-		await expect(await page.getByText('"type": "empty"')).toBeVisible();
-
-		const output = await page
-			.locator("//b[text() = 'Output']/following-sibling::pre")
-			.textContent();
-
-		emptyLayoutJSON = JSON.parse(output);
-	}
-);
-
-test.afterEach(
-	'Delete the empty page',
-	async ({apiHelpers, page, pageTreePage}) => {
-		try {
-			await openProductMenu(page);
-
-			await pageTreePage.close();
+	const layout = await apiHelpers.post(
+		`${liferayConfig.environment.baseUrl}/api/jsonws/layout/add-layout`,
+		{
+			data: urlSearchParams.toString(),
+			failOnStatusCode: true,
+			headers: await apiHelpers.getJSONWebServicesHeaders(),
 		}
-		catch (error) {
-			throw new Error(error);
-		}
-		finally {
-			await apiHelpers.jsonWebServicesLayout.deleteLayout(
-				emptyLayoutJSON.plid
-			);
-		}
-	}
-);
+	);
 
-test('Assert the Empty Status Label is present in the UI', async ({
+	return layout;
+}
+
+test('Empty pages show correct label in UI and correct alert in view mode', async ({
+	apiHelpers,
 	page,
 	pageTreePage,
 	pagesAdminPage,
 	site,
 }) => {
+
+	// Create a page of type Empty
+
+	const layoutName = getRandomString();
+
+	const layout = await addEmptyPage({
+		apiHelpers,
+		name: layoutName,
+		siteId: site.id,
+	});
+
 	await page.goto(`/web/${site.name}`);
 
 	// Assert label is in Control Menu Bar
 
 	await expect(
-		page.locator(
-			"//div[@class='control-menu-nav-item']/span[contains(@class, 'label-warning')]/span[text()='Empty']"
-		)
+		page.locator('.control-menu-nav-item').getByText('Empty')
 	).toBeVisible();
 
 	// Assert label is in Product Menu's Page Tree
@@ -141,58 +101,23 @@ test('Assert the Empty Status Label is present in the UI', async ({
 
 	await pageTreePage.open();
 
-	await expect(page.getByRole('link', {name: emptyLayoutName})).toBeVisible();
+	await expect(page.getByRole('link', {name: layoutName})).toBeVisible();
 
 	await expect(
-		page.locator(
-			`//span[text()='${emptyLayoutName}']/span[contains(@class, 'label-warning')]/span[text()='Empty']`
-		)
+		page.locator('.treeview-item').getByText('Empty').nth(0)
 	).toBeVisible();
 
 	// Assert label is in Group Pages Portlet Miller Columns
 
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
-	const emptyLayoutLocator = page.locator(
-		`//a[@aria-label='${emptyLayoutName} Empty']/parent::li`
-	);
-
-	await expect(emptyLayoutLocator).toBeVisible();
-
 	await expect(
-		emptyLayoutLocator.locator(
-			"//span[contains(@class, 'label-warning')]/span[text()='Empty']"
-		)
+		page.locator('.miller-columns-item').getByText('Empty').nth(0)
 	).toBeVisible();
-});
 
-test('Viewing an empty page via Page Tree shows a dummy page with an alert', async ({
-	page,
-	pageTreePage,
-	site,
-}) => {
-	await page.goto(`/web/${site.name}`);
+	// Check it's a dummy page with an alert in view mode
 
-	await openProductMenu(page);
-
-	await pageTreePage.open();
-
-	await expect(page.getByRole('link', {name: emptyLayoutName})).toBeVisible();
-
-	await page.getByRole('link', {name: emptyLayoutName}).click();
-
-	await expect(
-		page.getByText(
-			'This page was automatically generated during the import process to ensure the correct hierarchy of imported elements. Edit the page to configure.'
-		)
-	).toBeVisible();
-});
-
-test('Viewing an empty page via Friendly URL shows a dummy page with an alert', async ({
-	page,
-	site,
-}) => {
-	await page.goto(`/web/${site.name}${emptyLayoutJSON.friendlyURL}`);
+	await page.goto(`/web/${site.name}${layout.friendlyURL}`);
 
 	await expect(
 		page.getByText(

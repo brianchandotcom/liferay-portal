@@ -126,20 +126,6 @@ public class DDMFormFieldUtilTest {
 			ddmFormField, new String[] {"Field1", "Field3"});
 	}
 
-	private void _assertNestedDDMFormFieldsWithDeletedField(
-		DDMFormField ddmFormField, String[] nestedDDMFormFieldNames) {
-
-		List<DDMFormField> nestedDDMFormFields =
-			ddmFormField.getNestedDDMFormFields();
-
-		Assert.assertEquals(
-			nestedDDMFormFieldNames[0],
-			_getDDMFormFieldName(nestedDDMFormFields.get(0)));
-		Assert.assertEquals(
-			nestedDDMFormFieldNames[1],
-			_getDDMFormFieldName(nestedDDMFormFields.get(1)));
-	}
-
 	private void _assertNestedDDMFormFields(
 		DDMFormField ddmFormField, String[] nestedDDMFormFieldNames) {
 
@@ -155,6 +141,20 @@ public class DDMFormFieldUtilTest {
 		Assert.assertEquals(
 			nestedDDMFormFieldNames[2],
 			_getDDMFormFieldName(nestedDDMFormFields.get(2)));
+	}
+
+	private void _assertNestedDDMFormFieldsWithDeletedField(
+		DDMFormField ddmFormField, String[] nestedDDMFormFieldNames) {
+
+		List<DDMFormField> nestedDDMFormFields =
+			ddmFormField.getNestedDDMFormFields();
+
+		Assert.assertEquals(
+			nestedDDMFormFieldNames[0],
+			_getDDMFormFieldName(nestedDDMFormFields.get(0)));
+		Assert.assertEquals(
+			nestedDDMFormFieldNames[1],
+			_getDDMFormFieldName(nestedDDMFormFields.get(1)));
 	}
 
 	private String _getDDMFormFieldName(DDMFormField ddmFormField) {

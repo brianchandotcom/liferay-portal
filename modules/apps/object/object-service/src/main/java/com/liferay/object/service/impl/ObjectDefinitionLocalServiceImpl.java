@@ -2096,16 +2096,6 @@ public class ObjectDefinitionLocalServiceImpl
 			).build());
 	}
 
-	private int _getObjectDefinitionsCountByClassName(String className) {
-		AtomicInteger atomicInteger = new AtomicInteger(0);
-
-		_companyLocalService.forEachCompanyId(
-			companyId -> atomicInteger.addAndGet(
-				objectDefinitionPersistence.countByClassName(className)));
-
-		return atomicInteger.get();
-	}
-
 	private void _createLocalizationTable(
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizedTable) {
@@ -2284,6 +2274,16 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return name;
+	}
+
+	private int _getObjectDefinitionsCountByClassName(String className) {
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> atomicInteger.addAndGet(
+				objectDefinitionPersistence.countByClassName(className)));
+
+		return atomicInteger.get();
 	}
 
 	private long _getObjectFolderId(long companyId, long objectFolderId)

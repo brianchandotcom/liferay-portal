@@ -79,8 +79,7 @@ import {
 	TRenderer,
 	TSort,
 } from './utils/types';
-import useGetStateFromURL from './utils/useGetStateFromURL';
-import useSetStateInURL from './utils/useSetStateInURL';
+import useStateInURL from './utils/useStateInURL';
 import ViewsContext from './views/ViewsContext';
 
 // @ts-ignore
@@ -146,41 +145,41 @@ const FrontendDataSetContent = ({
 }: IFrontendDataSetProps) => {
 	const fdsRef = useRef(null);
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
-	const getStateFromURL = useGetStateFromURL({
+
+	const [getDelta, setDelta] = useStateInURL({
 		id,
-		stateInitializers: {
-			[EStateInURLKeys.DELTA]: (delta: number) => {
-				if (isNaN(delta) || delta < 1) {
-					return null;
-				}
+		stateDispatcher: {
+			key: EStateInURLKeys.DELTA,
+			type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
+		},
+		stateInURLSettings,
+		stateInitializer: (delta: number) => {
+			if (isNaN(delta) || delta < 1) {
+				return undefined;
+			}
 
-				return delta;
-			},
-			[EStateInURLKeys.VIEW_NAME]: (viewName: string) => {
-				const view = views.find(({name}) => name === viewName);
-
-				if (view) {
-					return viewName;
-				}
-
-				return null;
-			},
+			return delta;
 		},
 	});
-	const stateInURLSetters = useSetStateInURL({
+
+	const [getView, setView] = useStateInURL({
 		id,
-		setters: [
-			{
-				key: EStateInURLKeys.DELTA,
-				type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
-			},
-			{
-				key: EStateInURLKeys.VIEW_NAME,
-				type: VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW,
-			},
-		],
+		stateDispatcher: {
+			key: EStateInURLKeys.VIEW_NAME,
+			type: VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW,
+		},
 		stateInURLSettings,
+		stateInitializer: (viewName: string) => {
+			const view = views.find(({name}) => name === viewName);
+
+			if (view) {
+				return viewName;
+			}
+
+			return undefined;
+		},
 	});
+
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
@@ -229,7 +228,7 @@ const FrontendDataSetContent = ({
 
 	const isMounted = useIsMounted();
 
-	const getInitialViewsState = (stateFromURL: Partial<IStateInURL>) => {
+	const getInitialViewsState = () => {
 		const customInternalViews =
 			customRenderers?.views?.map((customRenderer: TRenderer) => ({
 
@@ -273,10 +272,10 @@ const FrontendDataSetContent = ({
 			}
 		}
 
-		if (stateFromURL.view) {
-			const activeView = views.find(
-				({name}) => name === stateFromURL.view
-			);
+		const view = getView();
+
+		if (view) {
+			const activeView = views.find(({name}) => name === view);
 
 			if (activeView) {
 				initialActiveView = activeView;
@@ -314,9 +313,12 @@ const FrontendDataSetContent = ({
 
 		const paginationDelta =
 			showPagination &&
-			(stateFromURL?.delta ||
+			(getDelta() ||
 				pagination?.initialDelta ||
 				DEFAULT_PAGINATION_DELTA);
+
+		// viewsDispatch is not available here, so we can't use state in url
+		// setters at this point. writeStateInURL low level utility does the job
 
 		writeStateInURL(
 			id,
@@ -350,7 +352,7 @@ const FrontendDataSetContent = ({
 	};
 
 	const [viewsState, viewsDispatch] = useThunk(
-		useReducer(viewsReducer, getStateFromURL(), getInitialViewsState)
+		useReducer(viewsReducer, getInitialViewsState())
 	);
 
 	const {activeView, filters, paginationDelta, sorts} = viewsState;
@@ -359,9 +361,9 @@ const FrontendDataSetContent = ({
 		(delta: number) => {
 			setPageNumber(1);
 
-			viewsDispatch(stateInURLSetters[EStateInURLKeys.DELTA](delta));
+			viewsDispatch(setDelta(delta));
 		},
-		[stateInURLSetters, setPageNumber, viewsDispatch]
+		[setDelta, setPageNumber, viewsDispatch]
 	);
 
 	const {
@@ -694,18 +696,12 @@ const FrontendDataSetContent = ({
 	}, [dataSetWrapperRef]);
 
 	const handlePopState = useCallback(() => {
-		const stateFromURL = getStateFromURL();
-
-		if (!stateFromURL) {
-			return;
-		}
-
 		const stateUpdates: Array<{
 			type: keyof VIEWS_ACTION_TYPES;
 			value: IStateInURL[keyof IStateInURL];
 		}> = [];
 
-		const delta = stateFromURL.delta;
+		const delta = getDelta();
 
 		if (delta && delta !== paginationDelta) {
 			setPageNumber(1);
@@ -715,17 +711,19 @@ const FrontendDataSetContent = ({
 			});
 		}
 
-		if (stateFromURL.view) {
+		const view = getView();
+
+		if (view) {
 			saveViewSettings({
 				appURL,
 				id,
 				portletId,
-				settings: {name: stateFromURL.view},
+				settings: {name: view},
 			});
 
 			stateUpdates.push({
 				type: VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW,
-				value: stateFromURL.view,
+				value: view,
 			});
 		}
 
@@ -737,7 +735,8 @@ const FrontendDataSetContent = ({
 		}
 	}, [
 		appURL,
-		getStateFromURL,
+		getDelta,
+		getView,
 		id,
 		paginationDelta,
 		portletId,

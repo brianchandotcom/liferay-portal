@@ -417,6 +417,10 @@ export type IStateInURLSetter<K extends keyof IStateInURL> = (
 	value: IStateInURL[K]
 ) => (viewsDispatch: Function) => void;
 
-export type IStateInURLSetters = {
-	[K in keyof IStateInURL]: IStateInURLSetter<K>;
-};
+export type IStateInURLGetter<K extends keyof IStateInURL> = () =>
+	| IStateInURL[K]
+	| undefined;
+
+export type IStateInitializer<K extends keyof IStateInURL> = (
+	value: IStateInURL[K]
+) => IStateInURL[K] | undefined;

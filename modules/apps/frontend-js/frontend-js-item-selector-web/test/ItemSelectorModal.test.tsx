@@ -77,8 +77,8 @@ const ItemSelectorModalWrapper = ({
 
 			<ItemSelectorModal<TestItem>
 				{...{
+					apiURL: `${location.origin}/o/headless-delivery/v1.0/test-api-url`,
 					fdsProps: {
-						apiURL: `${location.origin}/o/headless-delivery/v1.0/test-api-url`,
 						id: `itemSelectorModal-test-0001`,
 						pagination: {
 							deltas: [{label: 20}],

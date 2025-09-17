@@ -464,9 +464,9 @@ export default function ItemSelectorSamples() {
 			<SampleContainer label="Item Selector Modal">
 				<ItemSelectorModal<Document>
 					{...{
+						apiURL: documentsItemSelectorConfig.apiURL,
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: documentsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-documents-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -488,9 +488,9 @@ export default function ItemSelectorSamples() {
 
 				<ItemSelectorModal<Space>
 					{...{
+						apiURL: assetLibrariesItemSelectorConfig.apiURL,
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: assetLibrariesItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-assets-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -511,9 +511,9 @@ export default function ItemSelectorSamples() {
 
 				<ItemSelectorModal<User>
 					{...{
+						apiURL: userAccountsItemSelectorConfig.apiURL,
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: userAccountsItemSelectorConfig.apiURL,
 							id: `itemSelectorModal-users-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -534,9 +534,9 @@ export default function ItemSelectorSamples() {
 
 				<ItemSelectorModal<CMSFile>
 					{...{
+						apiURL: cmsFileItemSelectorConfig.apiURL,
 						fdsProps: {
 							...FDS_DEFAULT_PROPS,
-							apiURL: cmsFileItemSelectorConfig.apiURL,
 							filters: [
 								{
 									apiURL: '/o/headless-asset-library/v1.0/asset-libraries',

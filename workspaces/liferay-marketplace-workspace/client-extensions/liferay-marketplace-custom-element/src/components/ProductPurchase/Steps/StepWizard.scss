@@ -1,0 +1,16 @@
+.step-wizard {
+	.step {
+		color: #999aa3;
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+
+		&.selected {
+			color: #0b60ff;
+		}
+
+		&.done {
+			color: #0b60ff80;
+		}
+	}
+}

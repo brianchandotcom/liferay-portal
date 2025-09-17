@@ -233,7 +233,8 @@ public abstract class BaseWorkspaceGitRepository
 	public boolean isSnapshot() {
 		String jobName = System.getenv("JOB_NAME");
 
-		if (jobName.equals("publish-testray-report") ||
+		if (jobName.equals("forward-pullrequest") ||
+			jobName.equals("publish-testray-report") ||
 			jobName.equals("test-portal-source-format")) {
 
 			return false;

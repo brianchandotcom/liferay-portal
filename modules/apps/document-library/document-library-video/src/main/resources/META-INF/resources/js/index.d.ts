@@ -11,6 +11,8 @@ export type Fields = {
 	URL: string;
 };
 
+export {default as DLVideoIframe} from './DLVideoIframe';
+
 export function updateDLVideoFields({
 	getVideoFieldsURL,
 	namespace,

@@ -99,7 +99,7 @@ my-project $ blade create -t js-widget "my-js-widget"
 
 $h2 Gradle Properties
 
-Use these `gradle.properties` to customize default settings. 
+Use these `gradle.properties` to customize default settings.
 
 $h4 liferay.workspace.product
 Set the `liferay.workspace.product` to set the `app.server.tomcat.version`,
@@ -113,20 +113,20 @@ This file is refreshed once every 30 days. To force workspace to check for new
 releases, use the system property `-Dliferay.workspace.refresh.liferay.releases`.
 
 $h4 app.server.tomcat.version
-Overrides the default setting from 
+Overrides the default setting from
 `liferay.workspace.product`. Set the `app.server.tomcat.version` to match what's
 inside the Liferay bundle. The `TestIntegrationPlugin` and
 `LiferayExtPlugin` rely on this version to match the bundled Tomcat version. If
 your configured bundle URL points to a bundle with a different Tomcat version,
-set the property below to match that Tomcat version. 
+set the property below to match that Tomcat version.
 
 $h4 liferay.workspace.bundle.url
-Overrides the default setting from 
+Overrides the default setting from
 `liferay.workspace.product`. Set the URL pointing to the bundle Zip to
 download.
 
 $h4 liferay.workspace.docker.image.liferay
-Overrides the default setting from 
+Overrides the default setting from
 `liferay.workspace.product`. Set the Liferay Portal Docker image to create
 your container from.
 
@@ -140,7 +140,7 @@ See GETTING_STARTED#Overwrite-specific-dependency-in-one-project for overrides.
 
 For a list of all available target platform versions, see
 https://bit.ly/2IkAwwW for Liferay Portal and https://bit.ly/2GIyfZF for
-Liferay DXP. 
+Liferay DXP.
 
 $h4 liferay.workspace.bundle.cache.dir
 Set the directory where the downloaded bundle Zip files are stored. The
@@ -195,7 +195,7 @@ Set the folder that contains the Liferay bundle downloaded from the
 `liferay.workspace.bundle.url` property. The default value is `bundles`.
 
 $h4 liferay.workspace.java.ee.use.jakarta
-Set this to true to opt into Jakarta-compatible tooling and dependencies. Workspace 
+Set this to true to opt into Jakarta-compatible tooling and dependencies. Workspace
 determines whether to use Jakarta dependencies based on the product version, but
 setting this property forces the use of certain Jakarta dependencies regardless of the
 product version.

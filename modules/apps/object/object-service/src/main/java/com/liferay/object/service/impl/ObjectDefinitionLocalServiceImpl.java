@@ -2448,10 +2448,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 		deployObjectDefinition(objectDefinition);
 
-		if (objectDefinition.isRootDescendantNode()) {
-			deployObjectDefinition(
-				objectDefinitionLocalService.fetchObjectDefinition(
-					objectDefinition.getRootObjectDefinitionId()));
+		if (!objectDefinition.isRootNode()) {
+			for (long rootObjectDefinitionId :
+					objectDefinition.getRootObjectDefinitionIds()) {
+
+				deployObjectDefinition(
+					objectDefinitionLocalService.fetchObjectDefinition(
+						rootObjectDefinitionId));
+			}
 		}
 
 		_registerTransactionCallbackForCluster(

@@ -29,6 +29,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -88,6 +90,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -1535,6 +1538,81 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetBlogPostingCommentsPage() throws Exception {
+		Long blogPostingId = testGetBlogPostingCommentsPage_getBlogPostingId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"blogPostingComments",
+			new HashMap<String, Object>() {
+				{
+					put("blogPostingId", blogPostingId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject blogPostingCommentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/blogPostingComments");
+
+		long totalCount = blogPostingCommentsJSONObject.getLong("totalCount");
+
+		Comment comment1 = testGraphQLBlogPostingComment_addComment(
+			blogPostingId, randomComment());
+
+		Comment comment2 = testGraphQLBlogPostingComment_addComment(
+			blogPostingId, randomComment());
+
+		blogPostingCommentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/blogPostingComments");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			blogPostingCommentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			comment1,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					blogPostingCommentsJSONObject.getString("items"))));
+		assertContains(
+			comment2,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					blogPostingCommentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		blogPostingCommentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+			"JSONObject/blogPostingComments");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			blogPostingCommentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			comment1,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					blogPostingCommentsJSONObject.getString("items"))));
+		assertContains(
+			comment2,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					blogPostingCommentsJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testGetComment() throws Exception {
 		Comment postComment = testGetComment_addComment();
 
@@ -2592,6 +2670,78 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGraphQLGetDocumentCommentsPage() throws Exception {
+		Long documentId = testGetDocumentCommentsPage_getDocumentId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"documentComments",
+			new HashMap<String, Object>() {
+				{
+					put("documentId", documentId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject documentCommentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/documentComments");
+
+		long totalCount = documentCommentsJSONObject.getLong("totalCount");
+
+		Comment comment1 = testGraphQLDocumentComment_addComment(
+			documentId, randomComment());
+
+		Comment comment2 = testGraphQLDocumentComment_addComment(
+			documentId, randomComment());
+
+		documentCommentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/documentComments");
+
+		Assert.assertEquals(
+			totalCount + 2, documentCommentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			comment1,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					documentCommentsJSONObject.getString("items"))));
+		assertContains(
+			comment2,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					documentCommentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		documentCommentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+			"JSONObject/documentComments");
+
+		Assert.assertEquals(
+			totalCount + 2, documentCommentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			comment1,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					documentCommentsJSONObject.getString("items"))));
+		assertContains(
+			comment2,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					documentCommentsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -3846,6 +3996,83 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetStructuredContentCommentsPage() throws Exception {
+		Long structuredContentId =
+			testGetStructuredContentCommentsPage_getStructuredContentId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"structuredContentComments",
+			new HashMap<String, Object>() {
+				{
+					put("structuredContentId", structuredContentId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject structuredContentCommentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/structuredContentComments");
+
+		long totalCount = structuredContentCommentsJSONObject.getLong(
+			"totalCount");
+
+		Comment comment1 = testGraphQLStructuredContentComment_addComment(
+			structuredContentId, randomComment());
+
+		Comment comment2 = testGraphQLStructuredContentComment_addComment(
+			structuredContentId, randomComment());
+
+		structuredContentCommentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/structuredContentComments");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			structuredContentCommentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			comment1,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					structuredContentCommentsJSONObject.getString("items"))));
+		assertContains(
+			comment2,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					structuredContentCommentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		structuredContentCommentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+			"JSONObject/structuredContentComments");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			structuredContentCommentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			comment1,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					structuredContentCommentsJSONObject.getString("items"))));
+		assertContains(
+			comment2,
+			Arrays.asList(
+				CommentSerDes.toDTOs(
+					structuredContentCommentsJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testPostBlogPostingComment() throws Exception {
 		Comment randomComment = randomComment();
 
@@ -3861,6 +4088,24 @@ public abstract class BaseCommentResourceTestCase {
 
 		return commentResource.postBlogPostingComment(
 			testGetBlogPostingCommentsPage_getBlogPostingId(), comment);
+	}
+
+	@Test
+	public void testGraphQLPostBlogPostingComment() throws Exception {
+		Comment randomComment = randomComment();
+
+		Comment comment = testGraphQLBlogPostingComment_addComment(
+			testGraphQLPostBlogPostingComment_getBlogPostingId(),
+			randomComment);
+
+		Assert.assertTrue(equals(randomComment, comment));
+	}
+
+	protected Long testGraphQLPostBlogPostingComment_getBlogPostingId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -3898,6 +4143,23 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostDocumentComment() throws Exception {
+		Comment randomComment = randomComment();
+
+		Comment comment = testGraphQLDocumentComment_addComment(
+			testGraphQLPostDocumentComment_getDocumentId(), randomComment);
+
+		Assert.assertTrue(equals(randomComment, comment));
+	}
+
+	protected Long testGraphQLPostDocumentComment_getDocumentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostStructuredContentComment() throws Exception {
 		Comment randomComment = randomComment();
 
@@ -3915,6 +4177,25 @@ public abstract class BaseCommentResourceTestCase {
 		return commentResource.postStructuredContentComment(
 			testGetStructuredContentCommentsPage_getStructuredContentId(),
 			comment);
+	}
+
+	@Test
+	public void testGraphQLPostStructuredContentComment() throws Exception {
+		Comment randomComment = randomComment();
+
+		Comment comment = testGraphQLStructuredContentComment_addComment(
+			testGraphQLPostStructuredContentComment_getStructuredContentId(),
+			randomComment);
+
+		Assert.assertTrue(equals(randomComment, comment));
+	}
+
+	protected Long
+			testGraphQLPostStructuredContentComment_getStructuredContentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -4346,6 +4627,235 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment testGraphQLSiteComment_addComment() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Comment testGraphQLBlogPostingComment_addComment()
+		throws Exception {
+
+		return testGraphQLBlogPostingComment_addComment(
+			testGraphQLBlogPostingComment_getBlogPostingId(), randomComment());
+	}
+
+	protected Long testGraphQLBlogPostingComment_getBlogPostingId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Comment testGraphQLBlogPostingComment_addComment(
+			Long blogPostingId, Comment comment)
+		throws Exception {
+
+		JSONDeserializer<Comment> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Comment.class)) {
+			if (getGraphQLValue(field.get(comment)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(comment)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createBlogPostingComment",
+						new HashMap<String, Object>() {
+							{
+								put("blogPostingId", blogPostingId);
+								put("comment", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createBlogPostingComment"),
+			Comment.class);
+	}
+
+	protected Comment testGraphQLDocumentComment_addComment() throws Exception {
+		return testGraphQLDocumentComment_addComment(
+			testGraphQLDocumentComment_getDocumentId(), randomComment());
+	}
+
+	protected Long testGraphQLDocumentComment_getDocumentId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Comment testGraphQLDocumentComment_addComment(
+			Long documentId, Comment comment)
+		throws Exception {
+
+		JSONDeserializer<Comment> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Comment.class)) {
+			if (getGraphQLValue(field.get(comment)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(comment)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createDocumentComment",
+						new HashMap<String, Object>() {
+							{
+								put("documentId", documentId);
+								put("comment", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createDocumentComment"),
+			Comment.class);
+	}
+
+	protected Comment testGraphQLStructuredContentComment_addComment()
+		throws Exception {
+
+		return testGraphQLStructuredContentComment_addComment(
+			testGraphQLStructuredContentComment_getStructuredContentId(),
+			randomComment());
+	}
+
+	protected Long testGraphQLStructuredContentComment_getStructuredContentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Comment testGraphQLStructuredContentComment_addComment(
+			Long structuredContentId, Comment comment)
+		throws Exception {
+
+		JSONDeserializer<Comment> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field : getDeclaredFields(Comment.class)) {
+			if (getGraphQLValue(field.get(comment)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(comment)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createStructuredContentComment",
+						new HashMap<String, Object>() {
+							{
+								put("structuredContentId", structuredContentId);
+								put("comment", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createStructuredContentComment"),
+			Comment.class);
+	}
+
+	protected String getGraphQLValue(Object value) throws Exception {
+		if (value == null) {
+			return null;
+		}
+		else if (value instanceof Boolean || value instanceof Number) {
+			return value.toString();
+		}
+		else if (value instanceof Date date) {
+			return "\"" +
+				DateUtil.getDate(
+					date, "yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.getDefault(),
+					TimeZone.getTimeZone("UTC")) + "\"";
+		}
+		else if (value instanceof Enum<?> enm) {
+			return enm.name();
+		}
+		else if (value instanceof Map<?, ?> map) {
+			List<String> entries = new ArrayList<>();
+
+			for (Map.Entry<?, ?> entry : map.entrySet()) {
+				String graphQLValue = getGraphQLValue(entry.getValue());
+
+				if (graphQLValue != null) {
+					entries.add(entry.getKey() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
+		else if (value instanceof Object[] array) {
+			List<String> entries = new ArrayList<>();
+
+			for (Object entry : array) {
+				String graphQLValue = getGraphQLValue(entry);
+
+				if (graphQLValue != null) {
+					entries.add(graphQLValue);
+				}
+			}
+
+			return "[" + String.join(", ", entries) + "]";
+		}
+		else if (value instanceof String) {
+			return "\"" + value + "\"";
+		}
+		else {
+			List<String> entries = new ArrayList<>();
+
+			Class<?> clazz = value.getClass();
+			java.lang.reflect.Field[] declaredFields = getDeclaredFields(clazz);
+
+			if (declaredFields.length == 0) {
+				declaredFields = getDeclaredFields(clazz.getSuperclass());
+			}
+
+			for (java.lang.reflect.Field field : declaredFields) {
+				String graphQLValue = getGraphQLValue(field.get(value));
+
+				if (graphQLValue != null) {
+					entries.add(field.getName() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
 	}
 
 	protected void assertContains(Comment comment, List<Comment> comments) {

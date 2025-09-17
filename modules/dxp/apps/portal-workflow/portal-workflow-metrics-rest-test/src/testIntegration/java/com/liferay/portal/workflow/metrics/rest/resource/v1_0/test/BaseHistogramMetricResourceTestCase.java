@@ -179,7 +179,7 @@ public abstract class BaseHistogramMetricResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProcessHistogramMetric() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

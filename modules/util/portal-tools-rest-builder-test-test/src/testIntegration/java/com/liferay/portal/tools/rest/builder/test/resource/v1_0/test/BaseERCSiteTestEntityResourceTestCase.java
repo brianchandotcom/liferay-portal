@@ -480,7 +480,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 				{
 					put(
 						"siteExternalReferenceCode",
-						"\"" + RandomTestUtil.randomString() + "\"");
+						"\"" + siteExternalReferenceCode + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),

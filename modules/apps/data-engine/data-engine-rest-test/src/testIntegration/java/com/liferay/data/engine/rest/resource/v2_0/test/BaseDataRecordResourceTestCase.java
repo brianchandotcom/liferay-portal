@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -86,6 +88,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -682,6 +685,85 @@ public abstract class BaseDataRecordResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGraphQLGetDataDefinitionDataRecordsPage() throws Exception {
+		Long dataDefinitionId =
+			testGetDataDefinitionDataRecordsPage_getDataDefinitionId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"dataDefinitionDataRecords",
+			new HashMap<String, Object>() {
+				{
+					put("dataDefinitionId", dataDefinitionId);
+					put("keywords", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject dataDefinitionDataRecordsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/dataDefinitionDataRecords");
+
+		long totalCount = dataDefinitionDataRecordsJSONObject.getLong(
+			"totalCount");
+
+		DataRecord dataRecord1 =
+			testGraphQLDataDefinitionDataRecord_addDataRecord(
+				dataDefinitionId, randomDataRecord());
+
+		DataRecord dataRecord2 =
+			testGraphQLDataDefinitionDataRecord_addDataRecord(
+				dataDefinitionId, randomDataRecord());
+
+		dataDefinitionDataRecordsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/dataDefinitionDataRecords");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			dataDefinitionDataRecordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			dataRecord1,
+			Arrays.asList(
+				DataRecordSerDes.toDTOs(
+					dataDefinitionDataRecordsJSONObject.getString("items"))));
+		assertContains(
+			dataRecord2,
+			Arrays.asList(
+				DataRecordSerDes.toDTOs(
+					dataDefinitionDataRecordsJSONObject.getString("items"))));
+
+		// Using the namespace dataEngine_v2_0
+
+		dataDefinitionDataRecordsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("dataEngine_v2_0", graphQLField)),
+			"JSONObject/data", "JSONObject/dataEngine_v2_0",
+			"JSONObject/dataDefinitionDataRecords");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			dataDefinitionDataRecordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			dataRecord1,
+			Arrays.asList(
+				DataRecordSerDes.toDTOs(
+					dataDefinitionDataRecordsJSONObject.getString("items"))));
+		assertContains(
+			dataRecord2,
+			Arrays.asList(
+				DataRecordSerDes.toDTOs(
+					dataDefinitionDataRecordsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -1330,6 +1412,93 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDataRecordCollectionDataRecordsPage()
+		throws Exception {
+
+		Long dataRecordCollectionId =
+			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"dataRecordCollectionDataRecords",
+			new HashMap<String, Object>() {
+				{
+					put("dataRecordCollectionId", dataRecordCollectionId);
+					put("keywords", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject dataRecordCollectionDataRecordsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/dataRecordCollectionDataRecords");
+
+		long totalCount = dataRecordCollectionDataRecordsJSONObject.getLong(
+			"totalCount");
+
+		DataRecord dataRecord1 =
+			testGraphQLDataRecordCollectionDataRecord_addDataRecord(
+				dataRecordCollectionId, randomDataRecord());
+
+		DataRecord dataRecord2 =
+			testGraphQLDataRecordCollectionDataRecord_addDataRecord(
+				dataRecordCollectionId, randomDataRecord());
+
+		dataRecordCollectionDataRecordsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/dataRecordCollectionDataRecords");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			dataRecordCollectionDataRecordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			dataRecord1,
+			Arrays.asList(
+				DataRecordSerDes.toDTOs(
+					dataRecordCollectionDataRecordsJSONObject.getString(
+						"items"))));
+		assertContains(
+			dataRecord2,
+			Arrays.asList(
+				DataRecordSerDes.toDTOs(
+					dataRecordCollectionDataRecordsJSONObject.getString(
+						"items"))));
+
+		// Using the namespace dataEngine_v2_0
+
+		dataRecordCollectionDataRecordsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("dataEngine_v2_0", graphQLField)),
+				"JSONObject/data", "JSONObject/dataEngine_v2_0",
+				"JSONObject/dataRecordCollectionDataRecords");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			dataRecordCollectionDataRecordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			dataRecord1,
+			Arrays.asList(
+				DataRecordSerDes.toDTOs(
+					dataRecordCollectionDataRecordsJSONObject.getString(
+						"items"))));
+		assertContains(
+			dataRecord2,
+			Arrays.asList(
+				DataRecordSerDes.toDTOs(
+					dataRecordCollectionDataRecordsJSONObject.getString(
+						"items"))));
+	}
+
+	@Test
 	public void testPatchDataRecord() throws Exception {
 		DataRecord postDataRecord = testPatchDataRecord_addDataRecord();
 
@@ -1377,6 +1546,25 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostDataDefinitionDataRecord() throws Exception {
+		DataRecord randomDataRecord = randomDataRecord();
+
+		DataRecord dataRecord =
+			testGraphQLDataDefinitionDataRecord_addDataRecord(
+				testGraphQLPostDataDefinitionDataRecord_getDataDefinitionId(),
+				randomDataRecord);
+
+		Assert.assertTrue(equals(randomDataRecord, dataRecord));
+	}
+
+	protected Long testGraphQLPostDataDefinitionDataRecord_getDataDefinitionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostDataRecordCollectionDataRecord() throws Exception {
 		DataRecord randomDataRecord = randomDataRecord();
 
@@ -1395,6 +1583,30 @@ public abstract class BaseDataRecordResourceTestCase {
 		return dataRecordResource.postDataRecordCollectionDataRecord(
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
 			dataRecord);
+	}
+
+	@Test
+	public void testGraphQLPostDataRecordCollectionDataRecord()
+		throws Exception {
+
+		DataRecord randomDataRecord = randomDataRecord();
+
+		DataRecord dataRecord =
+			testGraphQLDataRecordCollectionDataRecord_addDataRecord(
+				testGraphQLPostDataRecordCollectionDataRecord_getDataRecordCollectionId(
+					randomDataRecord),
+				randomDataRecord);
+
+		Assert.assertTrue(equals(randomDataRecord, dataRecord));
+	}
+
+	protected Long
+			testGraphQLPostDataRecordCollectionDataRecord_getDataRecordCollectionId(
+				DataRecord dataRecord)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1480,6 +1692,195 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected DataRecord testGraphQLDataDefinitionDataRecord_addDataRecord()
+		throws Exception {
+
+		return testGraphQLDataDefinitionDataRecord_addDataRecord(
+			testGraphQLDataDefinitionDataRecord_getDataDefinitionId(),
+			randomDataRecord());
+	}
+
+	protected Long testGraphQLDataDefinitionDataRecord_getDataDefinitionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected DataRecord testGraphQLDataDefinitionDataRecord_addDataRecord(
+			Long dataDefinitionId, DataRecord dataRecord)
+		throws Exception {
+
+		JSONDeserializer<DataRecord> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DataRecord.class)) {
+
+			if (getGraphQLValue(field.get(dataRecord)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(dataRecord)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createDataDefinitionDataRecord",
+						new HashMap<String, Object>() {
+							{
+								put("dataDefinitionId", dataDefinitionId);
+								put("dataRecord", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createDataDefinitionDataRecord"),
+			DataRecord.class);
+	}
+
+	protected DataRecord
+			testGraphQLDataRecordCollectionDataRecord_addDataRecord()
+		throws Exception {
+
+		return testGraphQLDataRecordCollectionDataRecord_addDataRecord(
+			testGraphQLDataRecordCollectionDataRecord_getDataRecordCollectionId(),
+			randomDataRecord());
+	}
+
+	protected Long
+			testGraphQLDataRecordCollectionDataRecord_getDataRecordCollectionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected DataRecord
+			testGraphQLDataRecordCollectionDataRecord_addDataRecord(
+				Long dataRecordCollectionId, DataRecord dataRecord)
+		throws Exception {
+
+		JSONDeserializer<DataRecord> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DataRecord.class)) {
+
+			if (getGraphQLValue(field.get(dataRecord)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(dataRecord)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createDataRecordCollectionDataRecord",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"dataRecordCollectionId",
+									dataRecordCollectionId);
+								put("dataRecord", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createDataRecordCollectionDataRecord"),
+			DataRecord.class);
+	}
+
+	protected String getGraphQLValue(Object value) throws Exception {
+		if (value == null) {
+			return null;
+		}
+		else if (value instanceof Boolean || value instanceof Number) {
+			return value.toString();
+		}
+		else if (value instanceof Date date) {
+			return "\"" +
+				DateUtil.getDate(
+					date, "yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.getDefault(),
+					TimeZone.getTimeZone("UTC")) + "\"";
+		}
+		else if (value instanceof Enum<?> enm) {
+			return enm.name();
+		}
+		else if (value instanceof Map<?, ?> map) {
+			List<String> entries = new ArrayList<>();
+
+			for (Map.Entry<?, ?> entry : map.entrySet()) {
+				String graphQLValue = getGraphQLValue(entry.getValue());
+
+				if (graphQLValue != null) {
+					entries.add(entry.getKey() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
+		else if (value instanceof Object[] array) {
+			List<String> entries = new ArrayList<>();
+
+			for (Object entry : array) {
+				String graphQLValue = getGraphQLValue(entry);
+
+				if (graphQLValue != null) {
+					entries.add(graphQLValue);
+				}
+			}
+
+			return "[" + String.join(", ", entries) + "]";
+		}
+		else if (value instanceof String) {
+			return "\"" + value + "\"";
+		}
+		else {
+			List<String> entries = new ArrayList<>();
+
+			Class<?> clazz = value.getClass();
+			java.lang.reflect.Field[] declaredFields = getDeclaredFields(clazz);
+
+			if (declaredFields.length == 0) {
+				declaredFields = getDeclaredFields(clazz.getSuperclass());
+			}
+
+			for (java.lang.reflect.Field field : declaredFields) {
+				String graphQLValue = getGraphQLValue(field.get(value));
+
+				if (graphQLValue != null) {
+					entries.add(field.getName() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
 	}
 
 	protected void assertContains(

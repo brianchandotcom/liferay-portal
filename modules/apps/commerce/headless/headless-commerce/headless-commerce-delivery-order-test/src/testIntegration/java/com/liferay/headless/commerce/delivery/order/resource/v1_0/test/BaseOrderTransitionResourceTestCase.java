@@ -300,6 +300,11 @@ public abstract class BaseOrderTransitionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostPlacedOrderOrderTransition() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

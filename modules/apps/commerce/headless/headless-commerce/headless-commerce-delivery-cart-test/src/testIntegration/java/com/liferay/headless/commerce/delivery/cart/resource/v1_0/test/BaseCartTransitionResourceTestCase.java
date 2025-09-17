@@ -285,6 +285,11 @@ public abstract class BaseCartTransitionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostCartCartTransition() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}

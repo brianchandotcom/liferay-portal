@@ -412,7 +412,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
 		throws Exception {
 
-		return testGraphQLUserAccount_addUserAccount();
+		return testGraphQLAccountUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -1356,7 +1356,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
 		throws Exception {
 
-		return testGraphQLUserAccount_addUserAccount();
+		return testGraphQLAccountUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -1963,6 +1963,107 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAccountUserAccountsByExternalReferenceCodePage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountUserAccountsByExternalReferenceCodePage_getExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"accountUserAccountsByExternalReferenceCode",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"externalReferenceCode",
+						"\"" + externalReferenceCode + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject accountUserAccountsByExternalReferenceCodeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountUserAccountsByExternalReferenceCode");
+
+		long totalCount =
+			accountUserAccountsByExternalReferenceCodeJSONObject.getLong(
+				"totalCount");
+
+		UserAccount userAccount1 =
+			testGraphQLGetAccountUserAccountsByExternalReferenceCodePageAccountUserAccount_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		UserAccount userAccount2 =
+			testGraphQLGetAccountUserAccountsByExternalReferenceCodePageAccountUserAccount_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		accountUserAccountsByExternalReferenceCodeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountUserAccountsByExternalReferenceCode");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountUserAccountsByExternalReferenceCodeJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			userAccount1,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					accountUserAccountsByExternalReferenceCodeJSONObject.
+						getString("items"))));
+		assertContains(
+			userAccount2,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					accountUserAccountsByExternalReferenceCodeJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		accountUserAccountsByExternalReferenceCodeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"JSONObject/accountUserAccountsByExternalReferenceCode");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountUserAccountsByExternalReferenceCodeJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			userAccount1,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					accountUserAccountsByExternalReferenceCodeJSONObject.
+						getString("items"))));
+		assertContains(
+			userAccount2,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					accountUserAccountsByExternalReferenceCodeJSONObject.
+						getString("items"))));
+	}
+
+	protected UserAccount
+			testGraphQLGetAccountUserAccountsByExternalReferenceCodePageAccountUserAccount_addUserAccount(
+				String externalReferenceCode, UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountUserAccountsPage() throws Exception {
 		Long accountId = testGetAccountUserAccountsPage_getAccountId();
 		Long irrelevantAccountId =
@@ -2395,6 +2496,81 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAccountUserAccountsPage() throws Exception {
+		Long accountId = testGetAccountUserAccountsPage_getAccountId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"accountUserAccounts",
+			new HashMap<String, Object>() {
+				{
+					put("accountId", accountId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject accountUserAccountsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/accountUserAccounts");
+
+		long totalCount = accountUserAccountsJSONObject.getLong("totalCount");
+
+		UserAccount userAccount1 = testGraphQLAccountUserAccount_addUserAccount(
+			accountId, randomUserAccount());
+
+		UserAccount userAccount2 = testGraphQLAccountUserAccount_addUserAccount(
+			accountId, randomUserAccount());
+
+		accountUserAccountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/accountUserAccounts");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountUserAccountsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			userAccount1,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					accountUserAccountsJSONObject.getString("items"))));
+		assertContains(
+			userAccount2,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					accountUserAccountsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		accountUserAccountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+			"JSONObject/accountUserAccounts");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			accountUserAccountsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			userAccount1,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					accountUserAccountsJSONObject.getString("items"))));
+		assertContains(
+			userAccount2,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					accountUserAccountsJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testGetMyUserAccount() throws Exception {
 		UserAccount postUserAccount = testGetMyUserAccount_addUserAccount();
 
@@ -2413,7 +2589,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 	@Test
 	public void testGraphQLGetMyUserAccount() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -4723,6 +4899,92 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetUserAccountsByStatusPage() throws Exception {
+		String status = testGetUserAccountsByStatusPage_getStatus();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"userAccountsByStatus",
+			new HashMap<String, Object>() {
+				{
+					put("status", "\"" + status + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject userAccountsByStatusJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/userAccountsByStatus");
+
+		long totalCount = userAccountsByStatusJSONObject.getLong("totalCount");
+
+		UserAccount userAccount1 =
+			testGraphQLGetUserAccountsByStatusPageUserAccount_addUserAccount(
+				status, randomUserAccount());
+
+		UserAccount userAccount2 =
+			testGraphQLGetUserAccountsByStatusPageUserAccount_addUserAccount(
+				status, randomUserAccount());
+
+		userAccountsByStatusJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/userAccountsByStatus");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			userAccountsByStatusJSONObject.getLong("totalCount"));
+
+		assertContains(
+			userAccount1,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsByStatusJSONObject.getString("items"))));
+		assertContains(
+			userAccount2,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsByStatusJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		userAccountsByStatusJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+			"JSONObject/userAccountsByStatus");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			userAccountsByStatusJSONObject.getLong("totalCount"));
+
+		assertContains(
+			userAccount1,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsByStatusJSONObject.getString("items"))));
+		assertContains(
+			userAccount2,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsByStatusJSONObject.getString("items"))));
+	}
+
+	protected UserAccount
+			testGraphQLGetUserAccountsByStatusPageUserAccount_addUserAccount(
+				String status, UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetUserAccountsPage() throws Exception {
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -6195,6 +6457,24 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostAccountUserAccount() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount userAccount = testGraphQLAccountUserAccount_addUserAccount(
+			testGraphQLPostAccountUserAccount_getAccountId(),
+			randomUserAccount);
+
+		Assert.assertTrue(equals(randomUserAccount, userAccount));
+	}
+
+	protected Long testGraphQLPostAccountUserAccount_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostAccountUserAccountByEmailAddress() throws Exception {
 		UserAccount randomUserAccount = randomUserAccount();
 
@@ -6244,6 +6524,27 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected UserAccount
 			testPostAccountUserAccountByExternalReferenceCode_addUserAccount(
 				UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLPostAccountUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount userAccount = testGraphQLAccountUserAccount_addUserAccount(
+			testGraphQLPostAccountUserAccountByExternalReferenceCode_getAccountId(),
+			randomUserAccount);
+
+		Assert.assertTrue(equals(randomUserAccount, userAccount));
+	}
+
+	protected Long
+			testGraphQLPostAccountUserAccountByExternalReferenceCode_getAccountId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -6503,6 +6804,63 @@ public abstract class BaseUserAccountResourceTestCase {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
+
+	protected UserAccount testGraphQLAccountUserAccount_addUserAccount()
+		throws Exception {
+
+		return testGraphQLAccountUserAccount_addUserAccount(
+			testGraphQLAccountUserAccount_getAccountId(), randomUserAccount());
+	}
+
+	protected Long testGraphQLAccountUserAccount_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGraphQLAccountUserAccount_addUserAccount(
+			Long accountId, UserAccount userAccount)
+		throws Exception {
+
+		JSONDeserializer<UserAccount> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(UserAccount.class)) {
+
+			if (getGraphQLValue(field.get(userAccount)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(userAccount)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createAccountUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put("accountId", accountId);
+								put("userAccount", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createAccountUserAccount"),
+			UserAccount.class);
+	}
 
 	protected UserAccount testGraphQLUserAccount_addUserAccount()
 		throws Exception {

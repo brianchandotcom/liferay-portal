@@ -178,7 +178,7 @@ public abstract class BaseCompareRunsResourceTestCase {
 
 	@Test
 	public void testGraphQLGetCompareRuns() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

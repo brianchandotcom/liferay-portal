@@ -2486,6 +2486,83 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDocumentFolderDocumentsPage() throws Exception {
+		Long documentFolderId =
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"documentFolderDocuments",
+			new HashMap<String, Object>() {
+				{
+					put("documentFolderId", documentFolderId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject documentFolderDocumentsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/documentFolderDocuments");
+
+		long totalCount = documentFolderDocumentsJSONObject.getLong(
+			"totalCount");
+
+		Document document1 = testGraphQLDocumentFolderDocument_addDocument(
+			documentFolderId, randomDocument());
+
+		Document document2 = testGraphQLDocumentFolderDocument_addDocument(
+			documentFolderId, randomDocument());
+
+		documentFolderDocumentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/documentFolderDocuments");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			documentFolderDocumentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			document1,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(
+					documentFolderDocumentsJSONObject.getString("items"))));
+		assertContains(
+			document2,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(
+					documentFolderDocumentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		documentFolderDocumentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+			"JSONObject/documentFolderDocuments");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			documentFolderDocumentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			document1,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(
+					documentFolderDocumentsJSONObject.getString("items"))));
+		assertContains(
+			document2,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(
+					documentFolderDocumentsJSONObject.getString("items"))));
+	}
+
+	@Test
 	public void testGetDocumentPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document postDocument = testGetDocumentPermissionsPage_addDocument();
@@ -4065,6 +4142,64 @@ public abstract class BaseDocumentResourceTestCase {
 						},
 						graphQLFields)),
 				"JSONObject/data", "JSONObject/createSiteDocument"),
+			Document.class);
+	}
+
+	protected Document testGraphQLDocumentFolderDocument_addDocument()
+		throws Exception {
+
+		return testGraphQLDocumentFolderDocument_addDocument(
+			testGraphQLDocumentFolderDocument_getDocumentFolderId(),
+			randomDocument());
+	}
+
+	protected Long testGraphQLDocumentFolderDocument_getDocumentFolderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Document testGraphQLDocumentFolderDocument_addDocument(
+			Long documentFolderId, Document document)
+		throws Exception {
+
+		JSONDeserializer<Document> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(Document.class)) {
+
+			if (getGraphQLValue(field.get(document)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(document)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createDocumentFolderDocument",
+						new HashMap<String, Object>() {
+							{
+								put("documentFolderId", documentFolderId);
+								put("document", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createDocumentFolderDocument"),
 			Document.class);
 	}
 

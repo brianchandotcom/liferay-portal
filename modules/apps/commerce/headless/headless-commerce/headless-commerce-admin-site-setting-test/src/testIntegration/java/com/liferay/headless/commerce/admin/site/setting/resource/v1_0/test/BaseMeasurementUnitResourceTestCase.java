@@ -1534,6 +1534,97 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetMeasurementUnitsByType() throws Exception {
+		String measurementUnitType =
+			testGetMeasurementUnitsByType_getMeasurementUnitType();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"measurementUnitsByType",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"measurementUnitType",
+						"\"" + measurementUnitType + "\"");
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject measurementUnitsByTypeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/measurementUnitsByType");
+
+		long totalCount = measurementUnitsByTypeJSONObject.getLong(
+			"totalCount");
+
+		MeasurementUnit measurementUnit1 =
+			testGraphQLGetMeasurementUnitsByTypeMeasurementUnit_addMeasurementUnit(
+				measurementUnitType, randomMeasurementUnit());
+
+		MeasurementUnit measurementUnit2 =
+			testGraphQLGetMeasurementUnitsByTypeMeasurementUnit_addMeasurementUnit(
+				measurementUnitType, randomMeasurementUnit());
+
+		measurementUnitsByTypeJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/measurementUnitsByType");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			measurementUnitsByTypeJSONObject.getLong("totalCount"));
+
+		assertContains(
+			measurementUnit1,
+			Arrays.asList(
+				MeasurementUnitSerDes.toDTOs(
+					measurementUnitsByTypeJSONObject.getString("items"))));
+		assertContains(
+			measurementUnit2,
+			Arrays.asList(
+				MeasurementUnitSerDes.toDTOs(
+					measurementUnitsByTypeJSONObject.getString("items"))));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		measurementUnitsByTypeJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminSiteSetting_v1_0", graphQLField)),
+			"JSONObject/data",
+			"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+			"JSONObject/measurementUnitsByType");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			measurementUnitsByTypeJSONObject.getLong("totalCount"));
+
+		assertContains(
+			measurementUnit1,
+			Arrays.asList(
+				MeasurementUnitSerDes.toDTOs(
+					measurementUnitsByTypeJSONObject.getString("items"))));
+		assertContains(
+			measurementUnit2,
+			Arrays.asList(
+				MeasurementUnitSerDes.toDTOs(
+					measurementUnitsByTypeJSONObject.getString("items"))));
+	}
+
+	protected MeasurementUnit
+			testGraphQLGetMeasurementUnitsByTypeMeasurementUnit_addMeasurementUnit(
+				String measurementUnitType, MeasurementUnit measurementUnit)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetMeasurementUnitsPage() throws Exception {
 		Page<MeasurementUnit> page =
 			measurementUnitResource.getMeasurementUnitsPage(

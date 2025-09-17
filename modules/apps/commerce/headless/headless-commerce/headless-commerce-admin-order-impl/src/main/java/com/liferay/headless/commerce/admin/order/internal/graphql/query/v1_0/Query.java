@@ -42,6 +42,8 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.TermResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
@@ -2182,6 +2184,10 @@ public class Query {
 		accountResource.setContextUriInfo(_uriInfo);
 		accountResource.setContextUser(_user);
 		accountResource.setGroupLocalService(_groupLocalService);
+		accountResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		accountResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		accountResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2198,6 +2204,10 @@ public class Query {
 		billingAddressResource.setContextUriInfo(_uriInfo);
 		billingAddressResource.setContextUser(_user);
 		billingAddressResource.setGroupLocalService(_groupLocalService);
+		billingAddressResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		billingAddressResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		billingAddressResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2211,6 +2221,10 @@ public class Query {
 		channelResource.setContextUriInfo(_uriInfo);
 		channelResource.setContextUser(_user);
 		channelResource.setGroupLocalService(_groupLocalService);
+		channelResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		channelResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		channelResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2224,6 +2238,10 @@ public class Query {
 		orderResource.setContextUriInfo(_uriInfo);
 		orderResource.setContextUser(_user);
 		orderResource.setGroupLocalService(_groupLocalService);
+		orderResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2240,6 +2258,10 @@ public class Query {
 		orderAccountGroupResource.setContextUriInfo(_uriInfo);
 		orderAccountGroupResource.setContextUser(_user);
 		orderAccountGroupResource.setGroupLocalService(_groupLocalService);
+		orderAccountGroupResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderAccountGroupResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderAccountGroupResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2253,6 +2275,10 @@ public class Query {
 		orderItemResource.setContextUriInfo(_uriInfo);
 		orderItemResource.setContextUser(_user);
 		orderItemResource.setGroupLocalService(_groupLocalService);
+		orderItemResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderItemResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderItemResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2266,6 +2292,10 @@ public class Query {
 		orderNoteResource.setContextUriInfo(_uriInfo);
 		orderNoteResource.setContextUser(_user);
 		orderNoteResource.setGroupLocalService(_groupLocalService);
+		orderNoteResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderNoteResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderNoteResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2279,6 +2309,10 @@ public class Query {
 		orderRuleResource.setContextUriInfo(_uriInfo);
 		orderRuleResource.setContextUser(_user);
 		orderRuleResource.setGroupLocalService(_groupLocalService);
+		orderRuleResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderRuleResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderRuleResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2295,6 +2329,10 @@ public class Query {
 		orderRuleAccountResource.setContextUriInfo(_uriInfo);
 		orderRuleAccountResource.setContextUser(_user);
 		orderRuleAccountResource.setGroupLocalService(_groupLocalService);
+		orderRuleAccountResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderRuleAccountResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderRuleAccountResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2311,6 +2349,10 @@ public class Query {
 		orderRuleAccountGroupResource.setContextUriInfo(_uriInfo);
 		orderRuleAccountGroupResource.setContextUser(_user);
 		orderRuleAccountGroupResource.setGroupLocalService(_groupLocalService);
+		orderRuleAccountGroupResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderRuleAccountGroupResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderRuleAccountGroupResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2327,6 +2369,10 @@ public class Query {
 		orderRuleChannelResource.setContextUriInfo(_uriInfo);
 		orderRuleChannelResource.setContextUser(_user);
 		orderRuleChannelResource.setGroupLocalService(_groupLocalService);
+		orderRuleChannelResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderRuleChannelResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderRuleChannelResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2343,6 +2389,10 @@ public class Query {
 		orderRuleOrderTypeResource.setContextUriInfo(_uriInfo);
 		orderRuleOrderTypeResource.setContextUser(_user);
 		orderRuleOrderTypeResource.setGroupLocalService(_groupLocalService);
+		orderRuleOrderTypeResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderRuleOrderTypeResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderRuleOrderTypeResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2356,6 +2406,10 @@ public class Query {
 		orderTypeResource.setContextUriInfo(_uriInfo);
 		orderTypeResource.setContextUser(_user);
 		orderTypeResource.setGroupLocalService(_groupLocalService);
+		orderTypeResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderTypeResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderTypeResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2372,6 +2426,10 @@ public class Query {
 		orderTypeChannelResource.setContextUriInfo(_uriInfo);
 		orderTypeChannelResource.setContextUser(_user);
 		orderTypeChannelResource.setGroupLocalService(_groupLocalService);
+		orderTypeChannelResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		orderTypeChannelResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		orderTypeChannelResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2388,6 +2446,10 @@ public class Query {
 		shippingAddressResource.setContextUriInfo(_uriInfo);
 		shippingAddressResource.setContextUser(_user);
 		shippingAddressResource.setGroupLocalService(_groupLocalService);
+		shippingAddressResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		shippingAddressResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		shippingAddressResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2401,6 +2463,9 @@ public class Query {
 		termResource.setContextUriInfo(_uriInfo);
 		termResource.setContextUser(_user);
 		termResource.setGroupLocalService(_groupLocalService);
+		termResource.setResourceActionLocalService(_resourceActionLocalService);
+		termResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		termResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2416,6 +2481,10 @@ public class Query {
 		termOrderTypeResource.setContextUriInfo(_uriInfo);
 		termOrderTypeResource.setContextUser(_user);
 		termOrderTypeResource.setGroupLocalService(_groupLocalService);
+		termOrderTypeResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		termOrderTypeResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
 		termOrderTypeResource.setRoleLocalService(_roleLocalService);
 	}
 
@@ -2462,6 +2531,8 @@ public class Query {
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
 	private BiFunction<Object, String, com.liferay.portal.kernel.search.Sort[]>
 		_sortsBiFunction;

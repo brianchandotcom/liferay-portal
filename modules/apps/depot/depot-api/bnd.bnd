@@ -7,7 +7,6 @@ Export-Package:\
 	com.liferay.depot.constants,\
 	com.liferay.depot.exception,\
 	com.liferay.depot.group.provider,\
-	com.liferay.depot.item.selector,\
 	com.liferay.depot.model,\
 	com.liferay.depot.search,\
 	com.liferay.depot.service,\

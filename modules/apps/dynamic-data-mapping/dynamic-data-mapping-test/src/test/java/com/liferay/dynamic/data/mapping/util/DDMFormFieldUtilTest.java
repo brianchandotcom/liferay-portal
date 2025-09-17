@@ -121,16 +121,23 @@ public class DDMFormFieldUtilTest {
 
 		Assert.assertEquals(
 			nestedDDMFormFields.toString(), 2, nestedDDMFormFields.size());
+
+		_assertNestedDDMFormFieldsWithDeletedField(
+			ddmFormField, new String[] {"Field1", "Field3"});
+	}
+
+	private void _assertNestedDDMFormFieldsWithDeletedField(
+		DDMFormField ddmFormField, String[] nestedDDMFormFieldNames) {
+
+		List<DDMFormField> nestedDDMFormFields =
+			ddmFormField.getNestedDDMFormFields();
+
 		Assert.assertEquals(
-			"Field1",
-			nestedDDMFormFields.get(
-				0
-			).getName());
+			nestedDDMFormFieldNames[0],
+			_getDDMFormFieldName(nestedDDMFormFields.get(0)));
 		Assert.assertEquals(
-			"Field3",
-			nestedDDMFormFields.get(
-				1
-			).getName());
+			nestedDDMFormFieldNames[1],
+			_getDDMFormFieldName(nestedDDMFormFields.get(1)));
 	}
 
 	private void _assertNestedDDMFormFields(

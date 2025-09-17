@@ -634,18 +634,18 @@ public class ObjectEntryDTOConverter
 		}
 	}
 
-	private Assignee _getAssignee(Map<String, Serializable> assigneeValueMap) {
-		if (assigneeValueMap.containsKey("externalReferenceCode")) {
+	private Assignee _getAssignee(Map<String, Serializable> assigneeMap) {
+		if (assigneeMap.containsKey("externalReferenceCode")) {
 			return Assignee.toDTO(
-				_jsonFactory.looseSerializeDeep(assigneeValueMap));
+				_jsonFactory.looseSerializeDeep(assigneeMap));
 		}
 
 		String className = _portal.fetchClassName(
-			MapUtil.getLong(assigneeValueMap, "classNameId"));
+			MapUtil.getLong(assigneeMap, "classNameId"));
 
 		if (StringUtil.equals(className, Role.class.getName())) {
 			Role role = _roleLocalService.fetchRole(
-				MapUtil.getLong(assigneeValueMap, "classPK"));
+				MapUtil.getLong(assigneeMap, "classPK"));
 
 			if (role == null) {
 				return new Assignee();
@@ -661,7 +661,7 @@ public class ObjectEntryDTOConverter
 		}
 		else if (StringUtil.equals(className, User.class.getName())) {
 			User user = _userLocalService.fetchUser(
-				MapUtil.getLong(assigneeValueMap, "classPK"));
+				MapUtil.getLong(assigneeMap, "classPK"));
 
 			if (user == null) {
 				return new Assignee();

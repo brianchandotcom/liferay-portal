@@ -1414,7 +1414,7 @@ public class ObjectEntryLocalServiceTest {
 						"assignee"
 					).build()));
 
-		Map<String, Long> assigneeValueMap = HashMapBuilder.put(
+		Map<String, Long> assigneeMap = HashMapBuilder.put(
 			"classNameId", _portal.getClassNameId(User.class.getName())
 		).put(
 			"classPK",
@@ -1428,14 +1428,14 @@ public class ObjectEntryLocalServiceTest {
 		ObjectEntry objectEntry = _addObjectEntry(
 			objectDefinition,
 			HashMapBuilder.<String, Serializable>put(
-				"assignee", (Serializable)assigneeValueMap
+				"assignee", (Serializable)assigneeMap
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry.getObjectEntryId());
 
-		Assert.assertEquals(assigneeValueMap, values.get("assignee"));
+		Assert.assertEquals(assigneeMap, values.get("assignee"));
 	}
 
 	@Test

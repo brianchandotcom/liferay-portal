@@ -1462,6 +1462,108 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetKnowledgeBaseArticleKnowledgeBaseArticlesPage()
+		throws Exception {
+
+		Long parentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"knowledgeBaseArticleKnowledgeBaseArticles",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"parentKnowledgeBaseArticleId",
+						parentKnowledgeBaseArticleId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject knowledgeBaseArticleKnowledgeBaseArticlesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/knowledgeBaseArticleKnowledgeBaseArticles");
+
+		long totalCount =
+			knowledgeBaseArticleKnowledgeBaseArticlesJSONObject.getLong(
+				"totalCount");
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
+			testGraphQLGetKnowledgeBaseArticleKnowledgeBaseArticlesPageKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
+
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testGraphQLGetKnowledgeBaseArticleKnowledgeBaseArticlesPageKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
+
+		knowledgeBaseArticleKnowledgeBaseArticlesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/knowledgeBaseArticleKnowledgeBaseArticles");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			knowledgeBaseArticleKnowledgeBaseArticlesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			knowledgeBaseArticle1,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseArticleKnowledgeBaseArticlesJSONObject.
+						getString("items"))));
+		assertContains(
+			knowledgeBaseArticle2,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseArticleKnowledgeBaseArticlesJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		knowledgeBaseArticleKnowledgeBaseArticlesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/knowledgeBaseArticleKnowledgeBaseArticles");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			knowledgeBaseArticleKnowledgeBaseArticlesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			knowledgeBaseArticle1,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseArticleKnowledgeBaseArticlesJSONObject.
+						getString("items"))));
+		assertContains(
+			knowledgeBaseArticle2,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseArticleKnowledgeBaseArticlesJSONObject.
+						getString("items"))));
+	}
+
+	protected KnowledgeBaseArticle
+			testGraphQLGetKnowledgeBaseArticleKnowledgeBaseArticlesPageKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				Long parentKnowledgeBaseArticleId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetKnowledgeBaseArticlePermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle postKnowledgeBaseArticle =
@@ -2023,6 +2125,96 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGraphQLGetKnowledgeBaseFolderKnowledgeBaseArticlesPage()
+		throws Exception {
+
+		Long knowledgeBaseFolderId =
+			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"knowledgeBaseFolderKnowledgeBaseArticles",
+			new HashMap<String, Object>() {
+				{
+					put("knowledgeBaseFolderId", knowledgeBaseFolderId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject knowledgeBaseFolderKnowledgeBaseArticlesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/knowledgeBaseFolderKnowledgeBaseArticles");
+
+		long totalCount =
+			knowledgeBaseFolderKnowledgeBaseArticlesJSONObject.getLong(
+				"totalCount");
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
+			testGraphQLKnowledgeBaseFolderKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
+
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testGraphQLKnowledgeBaseFolderKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
+
+		knowledgeBaseFolderKnowledgeBaseArticlesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/knowledgeBaseFolderKnowledgeBaseArticles");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			knowledgeBaseFolderKnowledgeBaseArticlesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			knowledgeBaseArticle1,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseFolderKnowledgeBaseArticlesJSONObject.
+						getString("items"))));
+		assertContains(
+			knowledgeBaseArticle2,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseFolderKnowledgeBaseArticlesJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		knowledgeBaseFolderKnowledgeBaseArticlesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/knowledgeBaseFolderKnowledgeBaseArticles");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			knowledgeBaseFolderKnowledgeBaseArticlesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			knowledgeBaseArticle1,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseFolderKnowledgeBaseArticlesJSONObject.
+						getString("items"))));
+		assertContains(
+			knowledgeBaseArticle2,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseFolderKnowledgeBaseArticlesJSONObject.
+						getString("items"))));
 	}
 
 	@Test
@@ -2893,6 +3085,30 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostKnowledgeBaseFolderKnowledgeBaseArticle()
+		throws Exception {
+
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testGraphQLKnowledgeBaseFolderKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				testGraphQLPostKnowledgeBaseFolderKnowledgeBaseArticle_getKnowledgeBaseFolderId(),
+				randomKnowledgeBaseArticle);
+
+		Assert.assertTrue(
+			equals(randomKnowledgeBaseArticle, knowledgeBaseArticle));
+	}
+
+	protected Long
+			testGraphQLPostKnowledgeBaseFolderKnowledgeBaseArticle_getKnowledgeBaseFolderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostSiteKnowledgeBaseArticle() throws Exception {
 		KnowledgeBaseArticle randomKnowledgeBaseArticle =
 			randomKnowledgeBaseArticle();
@@ -3446,6 +3662,71 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 						},
 						graphQLFields)),
 				"JSONObject/data", "JSONObject/createSiteKnowledgeBaseArticle"),
+			KnowledgeBaseArticle.class);
+	}
+
+	protected KnowledgeBaseArticle
+			testGraphQLKnowledgeBaseFolderKnowledgeBaseArticle_addKnowledgeBaseArticle()
+		throws Exception {
+
+		return testGraphQLKnowledgeBaseFolderKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			testGraphQLKnowledgeBaseFolderKnowledgeBaseArticle_getKnowledgeBaseFolderId(),
+			randomKnowledgeBaseArticle());
+	}
+
+	protected Long
+			testGraphQLKnowledgeBaseFolderKnowledgeBaseArticle_getKnowledgeBaseFolderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected KnowledgeBaseArticle
+			testGraphQLKnowledgeBaseFolderKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				Long knowledgeBaseFolderId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		JSONDeserializer<KnowledgeBaseArticle> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(KnowledgeBaseArticle.class)) {
+
+			if (getGraphQLValue(field.get(knowledgeBaseArticle)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(knowledgeBaseArticle)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createKnowledgeBaseFolderKnowledgeBaseArticle",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"knowledgeBaseFolderId",
+									knowledgeBaseFolderId);
+								put("knowledgeBaseArticle", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createKnowledgeBaseFolderKnowledgeBaseArticle"),
 			KnowledgeBaseArticle.class);
 	}
 

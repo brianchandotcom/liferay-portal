@@ -235,6 +235,127 @@ public abstract class BaseBillingAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetOrderByExternalReferenceCodeBillingAddress()
+		throws Exception {
+
+		BillingAddress billingAddress =
+			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_addBillingAddress();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				billingAddress,
+				BillingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderByExternalReferenceCodeBillingAddress",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+													billingAddress) + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderByExternalReferenceCodeBillingAddress"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				billingAddress,
+				BillingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderByExternalReferenceCodeBillingAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+														billingAddress) + "\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderByExternalReferenceCodeBillingAddress"))));
+	}
+
+	protected String
+			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+				BillingAddress billingAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderByExternalReferenceCodeBillingAddressNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderByExternalReferenceCodeBillingAddress",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderByExternalReferenceCodeBillingAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected BillingAddress
+			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_addBillingAddress()
+		throws Exception {
+
+		return testGraphQLOrderBillingAddress_addBillingAddress();
+	}
+
+	@Test
 	public void testGetOrderIdBillingAddress() throws Exception {
 		BillingAddress postBillingAddress =
 			testGetOrderIdBillingAddress_addBillingAddress();
@@ -263,6 +384,114 @@ public abstract class BaseBillingAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetOrderIdBillingAddress() throws Exception {
+		BillingAddress billingAddress =
+			testGraphQLGetOrderIdBillingAddress_addBillingAddress();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				billingAddress,
+				BillingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderIdBillingAddress",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"id",
+											testGraphQLGetOrderIdBillingAddress_getId(
+												billingAddress));
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderIdBillingAddress"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				billingAddress,
+				BillingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderIdBillingAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetOrderIdBillingAddress_getId(
+													billingAddress));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderIdBillingAddress"))));
+	}
+
+	protected Long testGraphQLGetOrderIdBillingAddress_getId(
+			BillingAddress billingAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderIdBillingAddressNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderIdBillingAddress",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderIdBillingAddress",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected BillingAddress
+			testGraphQLGetOrderIdBillingAddress_addBillingAddress()
+		throws Exception {
+
+		return testGraphQLOrderBillingAddress_addBillingAddress();
+	}
+
+	@Test
 	public void testPatchOrderByExternalReferenceCodeBillingAddress()
 		throws Exception {
 
@@ -272,6 +501,13 @@ public abstract class BaseBillingAddressResourceTestCase {
 	@Test
 	public void testPatchOrderIdBillingAddress() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	protected BillingAddress testGraphQLOrderBillingAddress_addBillingAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

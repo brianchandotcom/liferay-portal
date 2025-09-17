@@ -552,7 +552,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				{
 					put(
 						"assetLibraryExternalReferenceCode",
-						"\"" + RandomTestUtil.randomString() + "\"");
+						"\"" + assetLibraryExternalReferenceCode + "\"");
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),

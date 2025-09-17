@@ -498,10 +498,14 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 					put("siteKey", "\"" + siteId + "\"");
 					put(
 						"fromDate",
-						"\"" + RandomTestUtil.randomString() + "\"");
+						getGraphQLValue(RandomTestUtil.randomString()));
 					put("keywords", null);
-					put("order", "\"" + RandomTestUtil.randomString() + "\"");
-					put("status", "\"" + RandomTestUtil.randomString() + "\"");
+					put(
+						"order",
+						getGraphQLValue(RandomTestUtil.randomString()));
+					put(
+						"status",
+						getGraphQLValue(RandomTestUtil.randomString()));
 					put("page", 1);
 					put("pageSize", 10);
 				}

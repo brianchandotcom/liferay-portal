@@ -195,7 +195,7 @@ public abstract class BaseAssetAppearsOnHistogramMetricResourceTestCase {
 	public void testGraphQLGetGroupAssetMetricAssetTypeAppearsOnHistogram()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

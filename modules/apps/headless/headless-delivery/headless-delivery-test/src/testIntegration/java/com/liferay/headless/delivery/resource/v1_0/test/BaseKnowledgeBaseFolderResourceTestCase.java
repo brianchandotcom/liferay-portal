@@ -1057,6 +1057,107 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetKnowledgeBaseFolderKnowledgeBaseFoldersPage()
+		throws Exception {
+
+		Long parentKnowledgeBaseFolderId =
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"knowledgeBaseFolderKnowledgeBaseFolders",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"parentKnowledgeBaseFolderId",
+						parentKnowledgeBaseFolderId);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject knowledgeBaseFolderKnowledgeBaseFoldersJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/knowledgeBaseFolderKnowledgeBaseFolders");
+
+		long totalCount =
+			knowledgeBaseFolderKnowledgeBaseFoldersJSONObject.getLong(
+				"totalCount");
+
+		KnowledgeBaseFolder knowledgeBaseFolder1 =
+			testGraphQLGetKnowledgeBaseFolderKnowledgeBaseFoldersPageKnowledgeBaseFolder_addKnowledgeBaseFolder(
+				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
+
+		KnowledgeBaseFolder knowledgeBaseFolder2 =
+			testGraphQLGetKnowledgeBaseFolderKnowledgeBaseFoldersPageKnowledgeBaseFolder_addKnowledgeBaseFolder(
+				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
+
+		knowledgeBaseFolderKnowledgeBaseFoldersJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/knowledgeBaseFolderKnowledgeBaseFolders");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			knowledgeBaseFolderKnowledgeBaseFoldersJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			knowledgeBaseFolder1,
+			Arrays.asList(
+				KnowledgeBaseFolderSerDes.toDTOs(
+					knowledgeBaseFolderKnowledgeBaseFoldersJSONObject.getString(
+						"items"))));
+		assertContains(
+			knowledgeBaseFolder2,
+			Arrays.asList(
+				KnowledgeBaseFolderSerDes.toDTOs(
+					knowledgeBaseFolderKnowledgeBaseFoldersJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		knowledgeBaseFolderKnowledgeBaseFoldersJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/knowledgeBaseFolderKnowledgeBaseFolders");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			knowledgeBaseFolderKnowledgeBaseFoldersJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			knowledgeBaseFolder1,
+			Arrays.asList(
+				KnowledgeBaseFolderSerDes.toDTOs(
+					knowledgeBaseFolderKnowledgeBaseFoldersJSONObject.getString(
+						"items"))));
+		assertContains(
+			knowledgeBaseFolder2,
+			Arrays.asList(
+				KnowledgeBaseFolderSerDes.toDTOs(
+					knowledgeBaseFolderKnowledgeBaseFoldersJSONObject.getString(
+						"items"))));
+	}
+
+	protected KnowledgeBaseFolder
+			testGraphQLGetKnowledgeBaseFolderKnowledgeBaseFoldersPageKnowledgeBaseFolder_addKnowledgeBaseFolder(
+				Long parentKnowledgeBaseFolderId,
+				KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetKnowledgeBaseFolderPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder postKnowledgeBaseFolder =

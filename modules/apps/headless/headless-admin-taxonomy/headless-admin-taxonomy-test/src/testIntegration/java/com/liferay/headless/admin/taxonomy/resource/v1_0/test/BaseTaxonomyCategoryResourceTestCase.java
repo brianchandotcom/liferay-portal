@@ -745,6 +745,119 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
+		throws Exception {
+
+		// No namespace
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"taxonomyVocabularyId",
+							testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+								taxonomyCategory1));
+						put(
+							"externalReferenceCode",
+							"\"" +
+								taxonomyCategory1.getExternalReferenceCode() +
+									"\"");
+					}
+				}));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"taxonomyVocabularyId",
+								testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+									taxonomyCategory1));
+							put(
+								"externalReferenceCode",
+								"\"" +
+									taxonomyCategory1.
+										getExternalReferenceCode() + "\"");
+						}
+					},
+					getGraphQLFields())),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminTaxonomy_v1_0",
+				new GraphQLField(
+					"deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"taxonomyVocabularyId",
+								testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+									taxonomyCategory2));
+							put(
+								"externalReferenceCode",
+								"\"" +
+									taxonomyCategory2.
+										getExternalReferenceCode() + "\"");
+						}
+					})));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyVocabularyId",
+									testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+										taxonomyCategory2));
+								put(
+									"externalReferenceCode",
+									"\"" +
+										taxonomyCategory2.
+											getExternalReferenceCode() + "\"");
+							}
+						},
+						getGraphQLFields()))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Long
+			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TaxonomyCategory
+			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Test
 	public void testGetAssetLibraryTaxonomyCategoriesPage() throws Exception {
 		Long assetLibraryId =
 			testGetAssetLibraryTaxonomyCategoriesPage_getAssetLibraryId();
@@ -2353,6 +2466,89 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetTaxonomyCategoriesRankedPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"taxonomyCategoriesRanked",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject taxonomyCategoriesRankedJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/taxonomyCategoriesRanked");
+
+		long totalCount = taxonomyCategoriesRankedJSONObject.getLong(
+			"totalCount");
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGraphQLGetTaxonomyCategoriesRankedPageTaxonomyCategory_addTaxonomyCategory(
+				randomTaxonomyCategory());
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLGetTaxonomyCategoriesRankedPageTaxonomyCategory_addTaxonomyCategory(
+				randomTaxonomyCategory());
+
+		taxonomyCategoriesRankedJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/taxonomyCategoriesRanked");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			taxonomyCategoriesRankedJSONObject.getLong("totalCount"));
+
+		assertContains(
+			taxonomyCategory1,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoriesRankedJSONObject.getString("items"))));
+		assertContains(
+			taxonomyCategory2,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoriesRankedJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		taxonomyCategoriesRankedJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminTaxonomy_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+			"JSONObject/taxonomyCategoriesRanked");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			taxonomyCategoriesRankedJSONObject.getLong("totalCount"));
+
+		assertContains(
+			taxonomyCategory1,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoriesRankedJSONObject.getString("items"))));
+		assertContains(
+			taxonomyCategory2,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoriesRankedJSONObject.getString("items"))));
+	}
+
+	protected TaxonomyCategory
+			testGraphQLGetTaxonomyCategoriesRankedPageTaxonomyCategory_addTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetTaxonomyCategory() throws Exception {
 		TaxonomyCategory postTaxonomyCategory =
 			testGetTaxonomyCategory_addTaxonomyCategory();
@@ -3020,6 +3216,106 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetTaxonomyCategoryTaxonomyCategoriesPage()
+		throws Exception {
+
+		String parentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"taxonomyCategoryTaxonomyCategories",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"parentTaxonomyCategoryId",
+						"\"" + parentTaxonomyCategoryId + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject taxonomyCategoryTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/taxonomyCategoryTaxonomyCategories");
+
+		long totalCount = taxonomyCategoryTaxonomyCategoriesJSONObject.getLong(
+			"totalCount");
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGraphQLGetTaxonomyCategoryTaxonomyCategoriesPageTaxonomyCategory_addTaxonomyCategory(
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLGetTaxonomyCategoryTaxonomyCategoriesPageTaxonomyCategory_addTaxonomyCategory(
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
+
+		taxonomyCategoryTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/taxonomyCategoryTaxonomyCategories");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			taxonomyCategoryTaxonomyCategoriesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			taxonomyCategory1,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoryTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+		assertContains(
+			taxonomyCategory2,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoryTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		taxonomyCategoryTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"JSONObject/taxonomyCategoryTaxonomyCategories");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			taxonomyCategoryTaxonomyCategoriesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			taxonomyCategory1,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoryTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+		assertContains(
+			taxonomyCategory2,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoryTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+	}
+
+	protected TaxonomyCategory
+			testGraphQLGetTaxonomyCategoryTaxonomyCategoriesPageTaxonomyCategory_addTaxonomyCategory(
+				String parentTaxonomyCategoryId,
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetTaxonomyVocabularyTaxonomyCategoriesPage()
 		throws Exception {
 
@@ -3526,6 +3822,97 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetTaxonomyVocabularyTaxonomyCategoriesPage()
+		throws Exception {
+
+		Long taxonomyVocabularyId =
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"taxonomyVocabularyTaxonomyCategories",
+			new HashMap<String, Object>() {
+				{
+					put("taxonomyVocabularyId", taxonomyVocabularyId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject taxonomyVocabularyTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/taxonomyVocabularyTaxonomyCategories");
+
+		long totalCount =
+			taxonomyVocabularyTaxonomyCategoriesJSONObject.getLong(
+				"totalCount");
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGraphQLTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				taxonomyVocabularyId, randomTaxonomyCategory());
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				taxonomyVocabularyId, randomTaxonomyCategory());
+
+		taxonomyVocabularyTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/taxonomyVocabularyTaxonomyCategories");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			taxonomyVocabularyTaxonomyCategoriesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			taxonomyCategory1,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyVocabularyTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+		assertContains(
+			taxonomyCategory2,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyVocabularyTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		taxonomyVocabularyTaxonomyCategoriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"JSONObject/taxonomyVocabularyTaxonomyCategories");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			taxonomyVocabularyTaxonomyCategoriesJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			taxonomyCategory1,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyVocabularyTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+		assertContains(
+			taxonomyCategory2,
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyVocabularyTaxonomyCategoriesJSONObject.getString(
+						"items"))));
+	}
+
+	@Test
 	public void testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
 		throws Exception {
 
@@ -3569,6 +3956,144 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
+		throws Exception {
+
+		TaxonomyCategory taxonomyCategory =
+			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				taxonomyCategory,
+				TaxonomyCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"taxonomyVocabularyId",
+											testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+												taxonomyCategory));
+										put(
+											"externalReferenceCode",
+											"\"" +
+												taxonomyCategory.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				taxonomyCategory,
+				TaxonomyCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"taxonomyVocabularyId",
+												testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+													taxonomyCategory));
+											put(
+												"externalReferenceCode",
+												"\"" +
+													taxonomyCategory.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		Long irrelevantTaxonomyVocabularyId = RandomTestUtil.randomLong();
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyVocabularyId",
+									irrelevantTaxonomyVocabularyId);
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyVocabularyId",
+										irrelevantTaxonomyVocabularyId);
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected TaxonomyCategory
+			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test
@@ -3809,6 +4334,30 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			postTaxonomyVocabularyTaxonomyCategory(
 				testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
 				taxonomyCategory);
+	}
+
+	@Test
+	public void testGraphQLPostTaxonomyVocabularyTaxonomyCategory()
+		throws Exception {
+
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory taxonomyCategory =
+			testGraphQLTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				testGraphQLPostTaxonomyVocabularyTaxonomyCategory_getTaxonomyVocabularyId(
+					randomTaxonomyCategory),
+				randomTaxonomyCategory);
+
+		Assert.assertTrue(equals(randomTaxonomyCategory, taxonomyCategory));
+	}
+
+	protected Long
+			testGraphQLPostTaxonomyVocabularyTaxonomyCategory_getTaxonomyVocabularyId(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -4427,6 +4976,70 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 						},
 						graphQLFields)),
 				"JSONObject/data", "JSONObject/createSiteTaxonomyCategory"),
+			TaxonomyCategory.class);
+	}
+
+	protected TaxonomyCategory
+			testGraphQLTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+			testGraphQLTaxonomyVocabularyTaxonomyCategory_getTaxonomyVocabularyId(),
+			randomTaxonomyCategory());
+	}
+
+	protected Long
+			testGraphQLTaxonomyVocabularyTaxonomyCategory_getTaxonomyVocabularyId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TaxonomyCategory
+			testGraphQLTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		JSONDeserializer<TaxonomyCategory> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(TaxonomyCategory.class)) {
+
+			if (getGraphQLValue(field.get(taxonomyCategory)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(taxonomyCategory)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createTaxonomyVocabularyTaxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyVocabularyId",
+									taxonomyVocabularyId);
+								put("taxonomyCategory", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createTaxonomyVocabularyTaxonomyCategory"),
 			TaxonomyCategory.class);
 	}
 

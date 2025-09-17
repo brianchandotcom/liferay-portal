@@ -180,6 +180,20 @@ public abstract class BaseAssetHistogramMetricResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testGraphQLGetGroupAssetMetricAssetTypeHistogram()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetGroupAssetMetricAssetTypeHistogramNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
 	protected void assertContains(
 		AssetHistogramMetric assetHistogramMetric,
 		List<AssetHistogramMetric> assetHistogramMetrics) {

@@ -222,7 +222,7 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 	public void testGraphQLGetAccountByExternalReferenceCodeAccountOrganization()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -455,7 +455,7 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 
 	@Test
 	public void testGraphQLGetAccountIdAccountOrganization() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

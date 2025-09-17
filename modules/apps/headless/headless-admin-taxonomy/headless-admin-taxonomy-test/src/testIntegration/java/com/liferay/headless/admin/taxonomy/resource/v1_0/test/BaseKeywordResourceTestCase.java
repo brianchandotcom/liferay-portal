@@ -1787,6 +1787,83 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetKeywordsRankedPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"keywordsRanked",
+			new HashMap<String, Object>() {
+				{
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject keywordsRankedJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/keywordsRanked");
+
+		long totalCount = keywordsRankedJSONObject.getLong("totalCount");
+
+		Keyword keyword1 = testGraphQLGetKeywordsRankedPageKeyword_addKeyword(
+			randomKeyword());
+
+		Keyword keyword2 = testGraphQLGetKeywordsRankedPageKeyword_addKeyword(
+			randomKeyword());
+
+		keywordsRankedJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/keywordsRanked");
+
+		Assert.assertEquals(
+			totalCount + 2, keywordsRankedJSONObject.getLong("totalCount"));
+
+		assertContains(
+			keyword1,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(
+					keywordsRankedJSONObject.getString("items"))));
+		assertContains(
+			keyword2,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(
+					keywordsRankedJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		keywordsRankedJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminTaxonomy_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+			"JSONObject/keywordsRanked");
+
+		Assert.assertEquals(
+			totalCount + 2, keywordsRankedJSONObject.getLong("totalCount"));
+
+		assertContains(
+			keyword1,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(
+					keywordsRankedJSONObject.getString("items"))));
+		assertContains(
+			keyword2,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(
+					keywordsRankedJSONObject.getString("items"))));
+	}
+
+	protected Keyword testGraphQLGetKeywordsRankedPageKeyword_addKeyword(
+			Keyword keyword)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteKeywordByExternalReferenceCode() throws Exception {
 		Keyword postKeyword =
 			testGetSiteKeywordByExternalReferenceCode_addKeyword();

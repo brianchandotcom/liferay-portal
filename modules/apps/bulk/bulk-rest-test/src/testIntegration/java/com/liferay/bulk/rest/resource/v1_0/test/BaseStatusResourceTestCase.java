@@ -179,7 +179,7 @@ public abstract class BaseStatusResourceTestCase {
 
 	@Test
 	public void testGraphQLGetStatus() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

@@ -180,7 +180,7 @@ public abstract class BaseFieldSummaryResourceTestCase {
 
 	@Test
 	public void testGraphQLGetField() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

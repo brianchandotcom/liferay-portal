@@ -186,7 +186,7 @@ public abstract class BaseSamlProviderResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSamlProvider() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

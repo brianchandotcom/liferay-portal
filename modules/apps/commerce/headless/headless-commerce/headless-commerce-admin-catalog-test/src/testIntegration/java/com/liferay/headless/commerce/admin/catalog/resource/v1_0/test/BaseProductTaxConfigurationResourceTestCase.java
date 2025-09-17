@@ -217,6 +217,126 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeTaxConfiguration()
+		throws Exception {
+
+		ProductTaxConfiguration productTaxConfiguration =
+			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_addProductTaxConfiguration();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productTaxConfiguration,
+				ProductTaxConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productByExternalReferenceCodeTaxConfiguration",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productByExternalReferenceCodeTaxConfiguration"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productTaxConfiguration,
+				ProductTaxConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productByExternalReferenceCodeTaxConfiguration",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productByExternalReferenceCodeTaxConfiguration"))));
+	}
+
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeTaxConfigurationNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productByExternalReferenceCodeTaxConfiguration",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productByExternalReferenceCodeTaxConfiguration",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductTaxConfiguration
+			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_addProductTaxConfiguration()
+		throws Exception {
+
+		return testGraphQLProductProductTaxConfiguration_addProductTaxConfiguration();
+	}
+
+	@Test
 	public void testGetProductIdTaxConfiguration() throws Exception {
 		ProductTaxConfiguration postProductTaxConfiguration =
 			testGetProductIdTaxConfiguration_addProductTaxConfiguration();
@@ -247,6 +367,117 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProductIdTaxConfiguration() throws Exception {
+		ProductTaxConfiguration productTaxConfiguration =
+			testGraphQLGetProductIdTaxConfiguration_addProductTaxConfiguration();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productTaxConfiguration,
+				ProductTaxConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productIdTaxConfiguration",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"id",
+											testGraphQLGetProductIdTaxConfiguration_getId(
+												productTaxConfiguration));
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productIdTaxConfiguration"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productTaxConfiguration,
+				ProductTaxConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productIdTaxConfiguration",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetProductIdTaxConfiguration_getId(
+													productTaxConfiguration));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productIdTaxConfiguration"))));
+	}
+
+	protected Long testGraphQLGetProductIdTaxConfiguration_getId(
+			ProductTaxConfiguration productTaxConfiguration)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductIdTaxConfigurationNotFound()
+		throws Exception {
+
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productIdTaxConfiguration",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productIdTaxConfiguration",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductTaxConfiguration
+			testGraphQLGetProductIdTaxConfiguration_addProductTaxConfiguration()
+		throws Exception {
+
+		return testGraphQLProductProductTaxConfiguration_addProductTaxConfiguration();
+	}
+
+	@Test
 	public void testPatchProductByExternalReferenceCodeTaxConfiguration()
 		throws Exception {
 
@@ -256,6 +487,14 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 	@Test
 	public void testPatchProductIdTaxConfiguration() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	protected ProductTaxConfiguration
+			testGraphQLProductProductTaxConfiguration_addProductTaxConfiguration()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

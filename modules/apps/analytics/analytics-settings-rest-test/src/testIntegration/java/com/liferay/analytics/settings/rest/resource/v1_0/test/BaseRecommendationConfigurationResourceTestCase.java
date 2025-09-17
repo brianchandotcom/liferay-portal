@@ -190,7 +190,7 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 
 	@Test
 	public void testGraphQLGetRecommendationConfiguration() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

@@ -524,6 +524,55 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteOrganizationAccounts() throws Exception {
+
+		// No namespace
+
+		Account account1 = testGraphQLDeleteOrganizationAccounts_addAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrganizationAccounts",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"organizationId",
+							testGraphQLDeleteOrganizationAccounts_getOrganizationId());
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Account account2 = testGraphQLDeleteOrganizationAccounts_addAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteOrganizationAccounts",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"organizationId",
+								testGraphQLDeleteOrganizationAccounts_getOrganizationId());
+						}
+					})));
+	}
+
+	protected Long testGraphQLDeleteOrganizationAccounts_getOrganizationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Account testGraphQLDeleteOrganizationAccounts_addAccount()
+		throws Exception {
+
+		return testGraphQLOrganizationAccount_addAccount();
+	}
+
+	@Test
 	public void testDeleteOrganizationAccountsByExternalReferenceCode()
 		throws Exception {
 
@@ -641,6 +690,65 @@ public abstract class BaseAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts()
+		throws Exception {
+
+		// No namespace
+
+		Account account1 =
+			testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts_addAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"deleteOrganizationByExternalReferenceCodeAccounts",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"externalReferenceCode",
+							"\"" +
+								testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts_getExternalReferenceCode(
+									account1) + "\"");
+					}
+				}));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Account account2 =
+			testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts_addAccount();
+
+		invokeGraphQLMutation(
+			new GraphQLField(
+				"headlessAdminUser_v1_0",
+				new GraphQLField(
+					"deleteOrganizationByExternalReferenceCodeAccounts",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"externalReferenceCode",
+								"\"" +
+									testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts_getExternalReferenceCode(
+										account2) + "\"");
+						}
+					})));
+	}
+
+	protected String
+			testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts_getExternalReferenceCode(
+				Account account)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Account
+			testGraphQLDeleteOrganizationByExternalReferenceCodeAccounts_addAccount()
+		throws Exception {
+
+		return testGraphQLOrganizationAccount_addAccount();
 	}
 
 	@Test
@@ -3692,6 +3800,108 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePage()
+		throws Exception {
+
+		String organizationExternalReferenceCode =
+			testGetOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePage_getOrganizationExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCode",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"organizationExternalReferenceCode",
+						"\"" + organizationExternalReferenceCode + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject
+			organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject =
+				JSONUtil.getValueAsJSONObject(
+					invokeGraphQLQuery(graphQLField), "JSONObject/data",
+					"JSONObject/organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCode");
+
+		long totalCount =
+			organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject.
+				getLong("totalCount");
+
+		Account account1 =
+			testGraphQLGetOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePageAccount_addAccount(
+				organizationExternalReferenceCode, randomAccount());
+
+		Account account2 =
+			testGraphQLGetOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePageAccount_addAccount(
+				organizationExternalReferenceCode, randomAccount());
+
+		organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCode");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject.
+				getLong("totalCount"));
+
+		assertContains(
+			account1,
+			Arrays.asList(
+				AccountSerDes.toDTOs(
+					organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject.
+						getString("items"))));
+		assertContains(
+			account2,
+			Arrays.asList(
+				AccountSerDes.toDTOs(
+					organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"JSONObject/organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCode");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject.
+				getLong("totalCount"));
+
+		assertContains(
+			account1,
+			Arrays.asList(
+				AccountSerDes.toDTOs(
+					organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject.
+						getString("items"))));
+		assertContains(
+			account2,
+			Arrays.asList(
+				AccountSerDes.toDTOs(
+					organizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodeJSONObject.
+						getString("items"))));
+	}
+
+	protected Account
+			testGraphQLGetOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountsByExternalReferenceCodePageAccount_addAccount(
+				String organizationExternalReferenceCode, Account account)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPatchAccount() throws Exception {
 		Account postAccount = testPatchAccount_addAccount();
 
@@ -4207,6 +4417,13 @@ public abstract class BaseAccountResourceTestCase {
 						graphQLFields)),
 				"JSONObject/data", "JSONObject/createAccount"),
 			Account.class);
+	}
+
+	protected Account testGraphQLOrganizationAccount_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String getGraphQLValue(Object value) throws Exception {

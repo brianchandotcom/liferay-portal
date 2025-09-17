@@ -2305,6 +2305,100 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDocumentFolderDocumentFoldersPage()
+		throws Exception {
+
+		Long parentDocumentFolderId =
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"documentFolderDocumentFolders",
+			new HashMap<String, Object>() {
+				{
+					put("parentDocumentFolderId", parentDocumentFolderId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject documentFolderDocumentFoldersJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/documentFolderDocumentFolders");
+
+		long totalCount = documentFolderDocumentFoldersJSONObject.getLong(
+			"totalCount");
+
+		DocumentFolder documentFolder1 =
+			testGraphQLGetDocumentFolderDocumentFoldersPageDocumentFolder_addDocumentFolder(
+				parentDocumentFolderId, randomDocumentFolder());
+
+		DocumentFolder documentFolder2 =
+			testGraphQLGetDocumentFolderDocumentFoldersPageDocumentFolder_addDocumentFolder(
+				parentDocumentFolderId, randomDocumentFolder());
+
+		documentFolderDocumentFoldersJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/documentFolderDocumentFolders");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			documentFolderDocumentFoldersJSONObject.getLong("totalCount"));
+
+		assertContains(
+			documentFolder1,
+			Arrays.asList(
+				DocumentFolderSerDes.toDTOs(
+					documentFolderDocumentFoldersJSONObject.getString(
+						"items"))));
+		assertContains(
+			documentFolder2,
+			Arrays.asList(
+				DocumentFolderSerDes.toDTOs(
+					documentFolderDocumentFoldersJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		documentFolderDocumentFoldersJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+			"JSONObject/documentFolderDocumentFolders");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			documentFolderDocumentFoldersJSONObject.getLong("totalCount"));
+
+		assertContains(
+			documentFolder1,
+			Arrays.asList(
+				DocumentFolderSerDes.toDTOs(
+					documentFolderDocumentFoldersJSONObject.getString(
+						"items"))));
+		assertContains(
+			documentFolder2,
+			Arrays.asList(
+				DocumentFolderSerDes.toDTOs(
+					documentFolderDocumentFoldersJSONObject.getString(
+						"items"))));
+	}
+
+	protected DocumentFolder
+			testGraphQLGetDocumentFolderDocumentFoldersPageDocumentFolder_addDocumentFolder(
+				Long parentDocumentFolderId, DocumentFolder documentFolder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetDocumentFolderPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder postDocumentFolder =

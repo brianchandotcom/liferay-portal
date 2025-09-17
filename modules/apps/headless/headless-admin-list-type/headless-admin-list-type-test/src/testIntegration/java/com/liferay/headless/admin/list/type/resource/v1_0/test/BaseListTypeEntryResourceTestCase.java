@@ -28,6 +28,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -87,6 +89,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -840,6 +843,109 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"listTypeDefinitionByExternalReferenceCodeListTypeEntries",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"externalReferenceCode",
+						"\"" + externalReferenceCode + "\"");
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject
+			listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject =
+				JSONUtil.getValueAsJSONObject(
+					invokeGraphQLQuery(graphQLField), "JSONObject/data",
+					"JSONObject/listTypeDefinitionByExternalReferenceCodeListTypeEntries");
+
+		long totalCount =
+			listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject.
+				getLong("totalCount");
+
+		ListTypeEntry listTypeEntry1 =
+			testGraphQLGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageListTypeDefinitionListTypeEntry_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		ListTypeEntry listTypeEntry2 =
+			testGraphQLGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageListTypeDefinitionListTypeEntry_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/listTypeDefinitionByExternalReferenceCodeListTypeEntries");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject.
+				getLong("totalCount"));
+
+		assertContains(
+			listTypeEntry1,
+			Arrays.asList(
+				ListTypeEntrySerDes.toDTOs(
+					listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject.
+						getString("items"))));
+		assertContains(
+			listTypeEntry2,
+			Arrays.asList(
+				ListTypeEntrySerDes.toDTOs(
+					listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject.
+						getString("items"))));
+
+		// Using the namespace headlessAdminListType_v1_0
+
+		listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminListType_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminListType_v1_0",
+				"JSONObject/listTypeDefinitionByExternalReferenceCodeListTypeEntries");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject.
+				getLong("totalCount"));
+
+		assertContains(
+			listTypeEntry1,
+			Arrays.asList(
+				ListTypeEntrySerDes.toDTOs(
+					listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject.
+						getString("items"))));
+		assertContains(
+			listTypeEntry2,
+			Arrays.asList(
+				ListTypeEntrySerDes.toDTOs(
+					listTypeDefinitionByExternalReferenceCodeListTypeEntriesJSONObject.
+						getString("items"))));
+	}
+
+	protected ListTypeEntry
+			testGraphQLGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageListTypeDefinitionListTypeEntry_addListTypeEntry(
+				String externalReferenceCode, ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetListTypeDefinitionListTypeEntriesPage()
 		throws Exception {
 
@@ -1308,6 +1414,94 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetListTypeDefinitionListTypeEntriesPage()
+		throws Exception {
+
+		Long listTypeDefinitionId =
+			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"listTypeDefinitionListTypeEntries",
+			new HashMap<String, Object>() {
+				{
+					put("listTypeDefinitionId", listTypeDefinitionId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject listTypeDefinitionListTypeEntriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/listTypeDefinitionListTypeEntries");
+
+		long totalCount = listTypeDefinitionListTypeEntriesJSONObject.getLong(
+			"totalCount");
+
+		ListTypeEntry listTypeEntry1 =
+			testGraphQLListTypeDefinitionListTypeEntry_addListTypeEntry(
+				listTypeDefinitionId, randomListTypeEntry());
+
+		ListTypeEntry listTypeEntry2 =
+			testGraphQLListTypeDefinitionListTypeEntry_addListTypeEntry(
+				listTypeDefinitionId, randomListTypeEntry());
+
+		listTypeDefinitionListTypeEntriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/listTypeDefinitionListTypeEntries");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			listTypeDefinitionListTypeEntriesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			listTypeEntry1,
+			Arrays.asList(
+				ListTypeEntrySerDes.toDTOs(
+					listTypeDefinitionListTypeEntriesJSONObject.getString(
+						"items"))));
+		assertContains(
+			listTypeEntry2,
+			Arrays.asList(
+				ListTypeEntrySerDes.toDTOs(
+					listTypeDefinitionListTypeEntriesJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessAdminListType_v1_0
+
+		listTypeDefinitionListTypeEntriesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminListType_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessAdminListType_v1_0",
+				"JSONObject/listTypeDefinitionListTypeEntries");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			listTypeDefinitionListTypeEntriesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			listTypeEntry1,
+			Arrays.asList(
+				ListTypeEntrySerDes.toDTOs(
+					listTypeDefinitionListTypeEntriesJSONObject.getString(
+						"items"))));
+		assertContains(
+			listTypeEntry2,
+			Arrays.asList(
+				ListTypeEntrySerDes.toDTOs(
+					listTypeDefinitionListTypeEntriesJSONObject.getString(
+						"items"))));
+	}
+
+	@Test
 	public void testGetListTypeEntry() throws Exception {
 		ListTypeEntry postListTypeEntry =
 			testGetListTypeEntry_addListTypeEntry();
@@ -1641,6 +1835,28 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostListTypeDefinitionByExternalReferenceCodeListTypeEntry()
+		throws Exception {
+
+		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
+
+		ListTypeEntry listTypeEntry =
+			testGraphQLListTypeDefinitionListTypeEntry_addListTypeEntry(
+				testGraphQLPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_getListTypeDefinitionId(),
+				randomListTypeEntry);
+
+		Assert.assertTrue(equals(randomListTypeEntry, listTypeEntry));
+	}
+
+	protected Long
+			testGraphQLPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_getListTypeDefinitionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostListTypeDefinitionListTypeEntry() throws Exception {
 		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
 
@@ -1660,6 +1876,28 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		return listTypeEntryResource.postListTypeDefinitionListTypeEntry(
 			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId(),
 			listTypeEntry);
+	}
+
+	@Test
+	public void testGraphQLPostListTypeDefinitionListTypeEntry()
+		throws Exception {
+
+		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
+
+		ListTypeEntry listTypeEntry =
+			testGraphQLListTypeDefinitionListTypeEntry_addListTypeEntry(
+				testGraphQLPostListTypeDefinitionListTypeEntry_getListTypeDefinitionId(),
+				randomListTypeEntry);
+
+		Assert.assertTrue(equals(randomListTypeEntry, listTypeEntry));
+	}
+
+	protected Long
+			testGraphQLPostListTypeDefinitionListTypeEntry_getListTypeDefinitionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1752,6 +1990,137 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected ListTypeEntry
+			testGraphQLListTypeDefinitionListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return testGraphQLListTypeDefinitionListTypeEntry_addListTypeEntry(
+			testGraphQLListTypeDefinitionListTypeEntry_getListTypeDefinitionId(),
+			randomListTypeEntry());
+	}
+
+	protected Long
+			testGraphQLListTypeDefinitionListTypeEntry_getListTypeDefinitionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ListTypeEntry
+			testGraphQLListTypeDefinitionListTypeEntry_addListTypeEntry(
+				Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		JSONDeserializer<ListTypeEntry> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(ListTypeEntry.class)) {
+
+			if (getGraphQLValue(field.get(listTypeEntry)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(listTypeEntry)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createListTypeDefinitionListTypeEntry",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"listTypeDefinitionId",
+									listTypeDefinitionId);
+								put("listTypeEntry", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createListTypeDefinitionListTypeEntry"),
+			ListTypeEntry.class);
+	}
+
+	protected String getGraphQLValue(Object value) throws Exception {
+		if (value == null) {
+			return null;
+		}
+		else if (value instanceof Boolean || value instanceof Number) {
+			return value.toString();
+		}
+		else if (value instanceof Date date) {
+			return "\"" +
+				DateUtil.getDate(
+					date, "yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.getDefault(),
+					TimeZone.getTimeZone("UTC")) + "\"";
+		}
+		else if (value instanceof Enum<?> enm) {
+			return enm.name();
+		}
+		else if (value instanceof Map<?, ?> map) {
+			List<String> entries = new ArrayList<>();
+
+			for (Map.Entry<?, ?> entry : map.entrySet()) {
+				String graphQLValue = getGraphQLValue(entry.getValue());
+
+				if (graphQLValue != null) {
+					entries.add(entry.getKey() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
+		else if (value instanceof Object[] array) {
+			List<String> entries = new ArrayList<>();
+
+			for (Object entry : array) {
+				String graphQLValue = getGraphQLValue(entry);
+
+				if (graphQLValue != null) {
+					entries.add(graphQLValue);
+				}
+			}
+
+			return "[" + String.join(", ", entries) + "]";
+		}
+		else if (value instanceof String) {
+			return "\"" + value + "\"";
+		}
+		else {
+			List<String> entries = new ArrayList<>();
+
+			Class<?> clazz = value.getClass();
+			java.lang.reflect.Field[] declaredFields = getDeclaredFields(clazz);
+
+			if (declaredFields.length == 0) {
+				declaredFields = getDeclaredFields(clazz.getSuperclass());
+			}
+
+			for (java.lang.reflect.Field field : declaredFields) {
+				String graphQLValue = getGraphQLValue(field.get(value));
+
+				if (graphQLValue != null) {
+					entries.add(field.getName() + ": " + graphQLValue);
+				}
+			}
+
+			return "{" + String.join(", ", entries) + "}";
+		}
 	}
 
 	protected void assertContains(

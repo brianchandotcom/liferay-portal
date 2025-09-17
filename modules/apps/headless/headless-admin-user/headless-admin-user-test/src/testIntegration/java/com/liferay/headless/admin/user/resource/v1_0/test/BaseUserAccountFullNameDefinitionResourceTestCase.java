@@ -191,7 +191,7 @@ public abstract class BaseUserAccountFullNameDefinitionResourceTestCase {
 
 	@Test
 	public void testGraphQLGetUserAccountFullNameDefinition() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

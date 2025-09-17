@@ -573,6 +573,129 @@ public abstract class BaseProductConfigurationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeConfiguration()
+		throws Exception {
+
+		ProductConfiguration productConfiguration =
+			testGraphQLGetProductByExternalReferenceCodeConfiguration_addProductConfiguration();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productConfiguration,
+				ProductConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productByExternalReferenceCodeConfiguration",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+													productConfiguration) +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productByExternalReferenceCodeConfiguration"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productConfiguration,
+				ProductConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productByExternalReferenceCodeConfiguration",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+														productConfiguration) +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productByExternalReferenceCodeConfiguration"))));
+	}
+
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+				ProductConfiguration productConfiguration)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeConfigurationNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productByExternalReferenceCodeConfiguration",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productByExternalReferenceCodeConfiguration",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductConfiguration
+			testGraphQLGetProductByExternalReferenceCodeConfiguration_addProductConfiguration()
+		throws Exception {
+
+		return testGraphQLProductProductConfiguration_addProductConfiguration();
+	}
+
+	@Test
 	public void testGetProductConfiguration() throws Exception {
 		ProductConfiguration postProductConfiguration =
 			testGetProductConfiguration_addProductConfiguration();
@@ -2042,6 +2165,116 @@ public abstract class BaseProductConfigurationResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProductIdConfiguration() throws Exception {
+		ProductConfiguration productConfiguration =
+			testGraphQLGetProductIdConfiguration_addProductConfiguration();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productConfiguration,
+				ProductConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productIdConfiguration",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"id",
+											testGraphQLGetProductIdConfiguration_getId(
+												productConfiguration));
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productIdConfiguration"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productConfiguration,
+				ProductConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productIdConfiguration",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetProductIdConfiguration_getId(
+													productConfiguration));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productIdConfiguration"))));
+	}
+
+	protected Long testGraphQLGetProductIdConfiguration_getId(
+			ProductConfiguration productConfiguration)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductIdConfigurationNotFound()
+		throws Exception {
+
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productIdConfiguration",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productIdConfiguration",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductConfiguration
+			testGraphQLGetProductIdConfiguration_addProductConfiguration()
+		throws Exception {
+
+		return testGraphQLProductProductConfiguration_addProductConfiguration();
+	}
+
+	@Test
 	public void testPatchProductByExternalReferenceCodeConfiguration()
 		throws Exception {
 
@@ -2278,6 +2511,14 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 	protected ProductConfiguration
 			testGraphQLProductConfiguration_addProductConfiguration()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ProductConfiguration
+			testGraphQLProductProductConfiguration_addProductConfiguration()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

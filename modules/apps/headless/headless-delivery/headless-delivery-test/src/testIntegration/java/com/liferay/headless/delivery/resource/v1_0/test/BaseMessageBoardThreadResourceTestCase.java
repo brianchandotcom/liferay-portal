@@ -1005,6 +1005,96 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetMessageBoardSectionMessageBoardThreadsPage()
+		throws Exception {
+
+		Long messageBoardSectionId =
+			testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"messageBoardSectionMessageBoardThreads",
+			new HashMap<String, Object>() {
+				{
+					put("messageBoardSectionId", messageBoardSectionId);
+					put("search", null);
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject messageBoardSectionMessageBoardThreadsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/messageBoardSectionMessageBoardThreads");
+
+		long totalCount =
+			messageBoardSectionMessageBoardThreadsJSONObject.getLong(
+				"totalCount");
+
+		MessageBoardThread messageBoardThread1 =
+			testGraphQLMessageBoardSectionMessageBoardThread_addMessageBoardThread(
+				messageBoardSectionId, randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread2 =
+			testGraphQLMessageBoardSectionMessageBoardThread_addMessageBoardThread(
+				messageBoardSectionId, randomMessageBoardThread());
+
+		messageBoardSectionMessageBoardThreadsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/messageBoardSectionMessageBoardThreads");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			messageBoardSectionMessageBoardThreadsJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			messageBoardThread1,
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardSectionMessageBoardThreadsJSONObject.getString(
+						"items"))));
+		assertContains(
+			messageBoardThread2,
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardSectionMessageBoardThreadsJSONObject.getString(
+						"items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		messageBoardSectionMessageBoardThreadsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(
+					new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"JSONObject/messageBoardSectionMessageBoardThreads");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			messageBoardSectionMessageBoardThreadsJSONObject.getLong(
+				"totalCount"));
+
+		assertContains(
+			messageBoardThread1,
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardSectionMessageBoardThreadsJSONObject.getString(
+						"items"))));
+		assertContains(
+			messageBoardThread2,
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardSectionMessageBoardThreadsJSONObject.getString(
+						"items"))));
+	}
+
+	@Test
 	public void testGetMessageBoardThread() throws Exception {
 		MessageBoardThread postMessageBoardThread =
 			testGetMessageBoardThread_addMessageBoardThread();
@@ -1683,6 +1773,95 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 	protected MessageBoardThread
 			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetMessageBoardThreadsRankedPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"messageBoardThreadsRanked",
+			new HashMap<String, Object>() {
+				{
+					put(
+						"dateCreated",
+						getGraphQLValue(RandomTestUtil.nextDate()));
+					put(
+						"dateModified",
+						getGraphQLValue(RandomTestUtil.nextDate()));
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject messageBoardThreadsRankedJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/messageBoardThreadsRanked");
+
+		long totalCount = messageBoardThreadsRankedJSONObject.getLong(
+			"totalCount");
+
+		MessageBoardThread messageBoardThread1 =
+			testGraphQLGetMessageBoardThreadsRankedPageMessageBoardThread_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread2 =
+			testGraphQLGetMessageBoardThreadsRankedPageMessageBoardThread_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		messageBoardThreadsRankedJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/messageBoardThreadsRanked");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			messageBoardThreadsRankedJSONObject.getLong("totalCount"));
+
+		assertContains(
+			messageBoardThread1,
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardThreadsRankedJSONObject.getString("items"))));
+		assertContains(
+			messageBoardThread2,
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardThreadsRankedJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		messageBoardThreadsRankedJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+			"JSONObject/messageBoardThreadsRanked");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			messageBoardThreadsRankedJSONObject.getLong("totalCount"));
+
+		assertContains(
+			messageBoardThread1,
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardThreadsRankedJSONObject.getString("items"))));
+		assertContains(
+			messageBoardThread2,
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardThreadsRankedJSONObject.getString("items"))));
+	}
+
+	protected MessageBoardThread
+			testGraphQLGetMessageBoardThreadsRankedPageMessageBoardThread_addMessageBoardThread(
 				MessageBoardThread messageBoardThread)
 		throws Exception {
 
@@ -2509,6 +2688,31 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLPostMessageBoardSectionMessageBoardThread()
+		throws Exception {
+
+		MessageBoardThread randomMessageBoardThread =
+			randomMessageBoardThread();
+
+		MessageBoardThread messageBoardThread =
+			testGraphQLMessageBoardSectionMessageBoardThread_addMessageBoardThread(
+				testGraphQLPostMessageBoardSectionMessageBoardThread_getMessageBoardSectionId(
+					randomMessageBoardThread),
+				randomMessageBoardThread);
+
+		Assert.assertTrue(equals(randomMessageBoardThread, messageBoardThread));
+	}
+
+	protected Long
+			testGraphQLPostMessageBoardSectionMessageBoardThread_getMessageBoardSectionId(
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostSiteMessageBoardThread() throws Exception {
 		MessageBoardThread randomMessageBoardThread =
 			randomMessageBoardThread();
@@ -2884,6 +3088,71 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 						},
 						graphQLFields)),
 				"JSONObject/data", "JSONObject/createSiteMessageBoardThread"),
+			MessageBoardThread.class);
+	}
+
+	protected MessageBoardThread
+			testGraphQLMessageBoardSectionMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return testGraphQLMessageBoardSectionMessageBoardThread_addMessageBoardThread(
+			testGraphQLMessageBoardSectionMessageBoardThread_getMessageBoardSectionId(),
+			randomMessageBoardThread());
+	}
+
+	protected Long
+			testGraphQLMessageBoardSectionMessageBoardThread_getMessageBoardSectionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected MessageBoardThread
+			testGraphQLMessageBoardSectionMessageBoardThread_addMessageBoardThread(
+				Long messageBoardSectionId,
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		JSONDeserializer<MessageBoardThread> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(MessageBoardThread.class)) {
+
+			if (getGraphQLValue(field.get(messageBoardThread)) != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append(field.getName());
+				sb.append(": ");
+				sb.append(getGraphQLValue(field.get(messageBoardThread)));
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createMessageBoardSectionMessageBoardThread",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardSectionId",
+									messageBoardSectionId);
+								put("messageBoardThread", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data",
+				"JSONObject/createMessageBoardSectionMessageBoardThread"),
 			MessageBoardThread.class);
 	}
 

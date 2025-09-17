@@ -214,6 +214,127 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm()
+		throws Exception {
+
+		Term term =
+			testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_addTerm();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"placedOrderByExternalReferenceCodeDeliveryTerm",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
+													term) + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/placedOrderByExternalReferenceCodeDeliveryTerm"))));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryOrder_v1_0",
+								new GraphQLField(
+									"placedOrderByExternalReferenceCodeDeliveryTerm",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
+														term) + "\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
+						"Object/placedOrderByExternalReferenceCodeDeliveryTerm"))));
+	}
+
+	protected String
+			testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
+				Term term)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTermNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"placedOrderByExternalReferenceCodeDeliveryTerm",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryOrder_v1_0",
+						new GraphQLField(
+							"placedOrderByExternalReferenceCodeDeliveryTerm",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Term
+			testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_addTerm()
+		throws Exception {
+
+		return testGraphQLPlacedOrderTerm_addTerm();
+	}
+
+	@Test
 	public void testGetPlacedOrderByExternalReferenceCodePaymentTerm()
 		throws Exception {
 
@@ -247,6 +368,127 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm()
+		throws Exception {
+
+		Term term =
+			testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_addTerm();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"placedOrderByExternalReferenceCodePaymentTerm",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
+													term) + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/placedOrderByExternalReferenceCodePaymentTerm"))));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryOrder_v1_0",
+								new GraphQLField(
+									"placedOrderByExternalReferenceCodePaymentTerm",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
+														term) + "\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
+						"Object/placedOrderByExternalReferenceCodePaymentTerm"))));
+	}
+
+	protected String
+			testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
+				Term term)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTermNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"placedOrderByExternalReferenceCodePaymentTerm",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryOrder_v1_0",
+						new GraphQLField(
+							"placedOrderByExternalReferenceCodePaymentTerm",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Term
+			testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_addTerm()
+		throws Exception {
+
+		return testGraphQLPlacedOrderTerm_addTerm();
+	}
+
+	@Test
 	public void testGetPlacedOrderDeliveryTerm() throws Exception {
 		Term postTerm = testGetPlacedOrderDeliveryTerm_addTerm();
 
@@ -270,6 +512,113 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetPlacedOrderDeliveryTerm() throws Exception {
+		Term term = testGraphQLGetPlacedOrderDeliveryTerm_addTerm();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"placedOrderDeliveryTerm",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"placedOrderId",
+											testGraphQLGetPlacedOrderDeliveryTerm_getPlacedOrderId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/placedOrderDeliveryTerm"))));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryOrder_v1_0",
+								new GraphQLField(
+									"placedOrderDeliveryTerm",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"placedOrderId",
+												testGraphQLGetPlacedOrderDeliveryTerm_getPlacedOrderId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
+						"Object/placedOrderDeliveryTerm"))));
+	}
+
+	protected Long testGraphQLGetPlacedOrderDeliveryTerm_getPlacedOrderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderDeliveryTermNotFound()
+		throws Exception {
+
+		Long irrelevantPlacedOrderId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"placedOrderDeliveryTerm",
+						new HashMap<String, Object>() {
+							{
+								put("placedOrderId", irrelevantPlacedOrderId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryOrder_v1_0",
+						new GraphQLField(
+							"placedOrderDeliveryTerm",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"placedOrderId",
+										irrelevantPlacedOrderId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Term testGraphQLGetPlacedOrderDeliveryTerm_addTerm()
+		throws Exception {
+
+		return testGraphQLPlacedOrderTerm_addTerm();
+	}
+
+	@Test
 	public void testGetPlacedOrderPaymentTerm() throws Exception {
 		Term postTerm = testGetPlacedOrderPaymentTerm_addTerm();
 
@@ -288,6 +637,118 @@ public abstract class BaseTermResourceTestCase {
 	protected Long testGetPlacedOrderPaymentTerm_getPlacedOrderId()
 		throws Exception {
 
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderPaymentTerm() throws Exception {
+		Term term = testGraphQLGetPlacedOrderPaymentTerm_addTerm();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"placedOrderPaymentTerm",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"placedOrderId",
+											testGraphQLGetPlacedOrderPaymentTerm_getPlacedOrderId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/placedOrderPaymentTerm"))));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				term,
+				TermSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryOrder_v1_0",
+								new GraphQLField(
+									"placedOrderPaymentTerm",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"placedOrderId",
+												testGraphQLGetPlacedOrderPaymentTerm_getPlacedOrderId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
+						"Object/placedOrderPaymentTerm"))));
+	}
+
+	protected Long testGraphQLGetPlacedOrderPaymentTerm_getPlacedOrderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderPaymentTermNotFound()
+		throws Exception {
+
+		Long irrelevantPlacedOrderId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"placedOrderPaymentTerm",
+						new HashMap<String, Object>() {
+							{
+								put("placedOrderId", irrelevantPlacedOrderId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryOrder_v1_0",
+						new GraphQLField(
+							"placedOrderPaymentTerm",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"placedOrderId",
+										irrelevantPlacedOrderId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Term testGraphQLGetPlacedOrderPaymentTerm_addTerm()
+		throws Exception {
+
+		return testGraphQLPlacedOrderTerm_addTerm();
+	}
+
+	protected Term testGraphQLPlacedOrderTerm_addTerm() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

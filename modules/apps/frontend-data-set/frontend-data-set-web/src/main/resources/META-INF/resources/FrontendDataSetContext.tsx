@@ -6,11 +6,9 @@
 import React from 'react';
 
 import {
-	EStateInURLSettings,
 	IDataSetData,
 	IInlineEditingSettings,
 	IItemsActions,
-	IStateInURLSetters,
 	TRenderer,
 } from './utils/types';
 
@@ -45,7 +43,7 @@ export interface IFrontendDataSetContext {
 	formName?: string;
 	highlightItems: Function;
 	highlightedItemsValue?: Array<string>;
-	id?: string;
+	id: string;
 	infoPanelId?: string;
 	infoPanelOpen?: boolean;
 	inlineAddingSettings?: {
@@ -81,8 +79,6 @@ export interface IFrontendDataSetContext {
 	showInfoPanel: boolean;
 	sidePanelId?: string;
 	sorts?: Array<TRenderer>;
-	stateInURLSetters: IStateInURLSetters;
-	stateInURLSettings?: EStateInURLSettings;
 	style?: string;
 	toggleItemInlineEdit: Function;
 	uniformActionsDisplay?: boolean;
@@ -102,6 +98,7 @@ const FrontendDataSetContext = React.createContext({
 	createInlineItem: () => {},
 	executeAsyncItemAction: () => {},
 	highlightItems: () => {},
+	id: '',
 	loadData: () => {},
 	onActionDropdownItemClick: () => {},
 	onBulkActionItemClick: () => {},
@@ -114,8 +111,6 @@ const FrontendDataSetContext = React.createContext({
 	selectedItems: [],
 	selectedItemsValue: [],
 	setSearching: () => {},
-	stateInURLSetters: {},
-	stateInURLSettings: EStateInURLSettings.OFF,
 	toggleItemInlineEdit: () => {},
 	updateDataSetItems: () => {},
 	updateItem: () => {},

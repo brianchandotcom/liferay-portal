@@ -125,46 +125,16 @@ public class DataCleanupPreupgradeProcessSuite {
 				HashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
-						updateAllPrimaryKeysDataCleanupPreupgradeProcess,
+						analyticsMessageDataCleanupPreupgradeProcess,
 						DataCleanupPreupgradeProcess.dependsOn()
 					).put(
 						companyDataCleanupPreupgradeProcess,
 						DataCleanupPreupgradeProcess.dependsOn(
 							updateAllPrimaryKeysDataCleanupPreupgradeProcess)
 					).put(
-						userDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							companyDataCleanupPreupgradeProcess)
-					).put(
-						groupDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							userDataCleanupPreupgradeProcess)
-					).put(
-						analyticsMessageDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn()
-					).put(
 						configurationDataCleanupPreupgradeProcess,
 						DataCleanupPreupgradeProcess.dependsOn(
 							userDataCleanupPreupgradeProcess)
-					).put(
-						ddmStructureDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							groupDataCleanupPreupgradeProcess)
-					).put(
-						dlFileEntryDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							groupDataCleanupPreupgradeProcess)
-					).put(
-						nullUnicodeContentDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							ddmStructureDataCleanupPreupgradeProcess)
-					).put(
-						quartzJobDetailsDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn()
-					).put(
-						journalDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							ddmStructureDataCleanupPreupgradeProcess)
 					).put(
 						counterDataCleanupPreupgradeProcess,
 						DataCleanupPreupgradeProcess.dependsOn(
@@ -179,6 +149,36 @@ public class DataCleanupPreupgradeProcessSuite {
 							quartzJobDetailsDataCleanupPreupgradeProcess,
 							updateAllPrimaryKeysDataCleanupPreupgradeProcess,
 							userDataCleanupPreupgradeProcess)
+					).put(
+						ddmStructureDataCleanupPreupgradeProcess,
+						DataCleanupPreupgradeProcess.dependsOn(
+							groupDataCleanupPreupgradeProcess)
+					).put(
+						dlFileEntryDataCleanupPreupgradeProcess,
+						DataCleanupPreupgradeProcess.dependsOn(
+							groupDataCleanupPreupgradeProcess)
+					).put(
+						groupDataCleanupPreupgradeProcess,
+						DataCleanupPreupgradeProcess.dependsOn(
+							userDataCleanupPreupgradeProcess)
+					).put(
+						journalDataCleanupPreupgradeProcess,
+						DataCleanupPreupgradeProcess.dependsOn(
+							ddmStructureDataCleanupPreupgradeProcess)
+					).put(
+						nullUnicodeContentDataCleanupPreupgradeProcess,
+						DataCleanupPreupgradeProcess.dependsOn(
+							ddmStructureDataCleanupPreupgradeProcess)
+					).put(
+						quartzJobDetailsDataCleanupPreupgradeProcess,
+						DataCleanupPreupgradeProcess.dependsOn()
+					).put(
+						updateAllPrimaryKeysDataCleanupPreupgradeProcess,
+						DataCleanupPreupgradeProcess.dependsOn()
+					).put(
+						userDataCleanupPreupgradeProcess,
+						DataCleanupPreupgradeProcess.dependsOn(
+							companyDataCleanupPreupgradeProcess)
 					).build();
 
 		_dataCleanupPreupgradeProcessesMap = Collections.unmodifiableMap(

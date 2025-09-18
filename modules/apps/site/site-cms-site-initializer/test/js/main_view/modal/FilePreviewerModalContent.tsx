@@ -25,6 +25,19 @@ const baseImageFile = {
 	thumbnailURL: '/thumbs/image1?version=1.0&imageThumbnail=1',
 };
 
+const baseVideoFile = {
+	externalReferenceCode: 'vid-001',
+	id: 201,
+	link: {
+		href: '/videos/video1.mp4',
+		label: 'Download Video',
+	},
+	mimeType: 'video/mp4',
+	name: 'Video 1',
+	previewURL: '/preview/video1.mp4',
+	thumbnailURL: '/thumbs/video1?version=1.0',
+};
+
 jest.mock('document-library-preview-image', () => ({
 	ImagePreviewer: (props: any) => (
 		<img
@@ -78,5 +91,16 @@ describe('FilePreviewerModalContent', () => {
 		);
 
 		await checkAccessibility({bestPractices: true, context: container});
+	});
+
+	it('renders a video iframe when file is a video with previewURL', () => {
+		const {container} = render(
+			<FilePreviewerModalContent file={baseVideoFile} />
+		);
+
+		const videoIframe = container.querySelector('[data-video-liferay]');
+
+		expect(videoIframe).toBeInTheDocument();
+		expect(videoIframe).toHaveAttribute('src', baseVideoFile.previewURL);
 	});
 });

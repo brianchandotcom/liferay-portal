@@ -633,6 +633,46 @@ public class JavaClassParser {
 			javaClass.addChildJavaTerm(javaTerm);
 		}
 
+		if (!anonymous) {
+			return javaClass;
+		}
+
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		while (parentDetailAST != null) {
+			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
+				break;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+		}
+
+		if (parentDetailAST == null) {
+			throw new ParseException(
+				"Parsing error at line \"" + detailAST.getLineNo() + "\"");
+		}
+
+		String javaTermContent = _getJavaTermContent(
+			fileContents, parentDetailAST);
+
+		if (javaTermContent == null) {
+			throw new ParseException(
+				"Parsing error at line \"" + detailAST.getLineNo() + "\"");
+		}
+
+		JavaTerm javaTerm = _getJavaTerm(
+			packageName, importNames, javaTermContent, parentDetailAST,
+			fileContents);
+
+		if (javaTerm == null) {
+			throw new ParseException(
+				"Parsing error at line \"" + detailAST.getLineNo() + "\"");
+		}
+
+		JavaMethod javaMethod = (JavaMethod)javaTerm;
+
+		javaClass.setParentJavaMethod(javaMethod);
+
 		return javaClass;
 	}
 

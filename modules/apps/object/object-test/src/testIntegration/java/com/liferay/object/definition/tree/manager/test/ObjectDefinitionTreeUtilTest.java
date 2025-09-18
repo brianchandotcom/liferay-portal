@@ -1412,13 +1412,11 @@ public class ObjectDefinitionTreeUtilTest {
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA1.getObjectEntryId()));
-
 		ObjectEntry objectEntryAA2 = _addObjectEntry(
 			_objectDefinitionAA,
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA2.getObjectEntryId()));
-
 		ObjectEntry objectEntryAA3 = _addObjectEntry(
 			_objectDefinitionAA, Map.of());
 
@@ -1490,13 +1488,11 @@ public class ObjectDefinitionTreeUtilTest {
 			Map.of(
 				_objectRelationshipAA_AAAObjectField2.getName(),
 				objectEntryAA1.getObjectEntryId()));
-
 		ObjectEntry objectEntryAAA2 = _addObjectEntry(
 			_objectDefinitionAAA,
 			Map.of(
 				_objectRelationshipAA_AAAObjectField2.getName(),
 				objectEntryAA2.getObjectEntryId()));
-
 		ObjectEntry objectEntryAAA3 = _addObjectEntry(
 			_objectDefinitionAAA, Map.of());
 
@@ -1562,13 +1558,11 @@ public class ObjectDefinitionTreeUtilTest {
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA1.getObjectEntryId()));
-
 		ObjectEntry objectEntryAA2 = _addObjectEntry(
 			_objectDefinitionAA,
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA2.getObjectEntryId()));
-
 		ObjectEntry objectEntryAA3 = _addObjectEntry(
 			_objectDefinitionAA, Map.of());
 
@@ -1577,13 +1571,11 @@ public class ObjectDefinitionTreeUtilTest {
 			Map.of(
 				_objectRelationshipAA_AAAObjectField2.getName(),
 				objectEntryAA1.getObjectEntryId()));
-
 		ObjectEntry objectEntryAAA2 = _addObjectEntry(
 			_objectDefinitionAAA,
 			Map.of(
 				_objectRelationshipAA_AAAObjectField2.getName(),
 				objectEntryAA2.getObjectEntryId()));
-
 		ObjectEntry objectEntryAAA3 = _addObjectEntry(
 			_objectDefinitionAAA, Map.of());
 
@@ -1649,13 +1641,11 @@ public class ObjectDefinitionTreeUtilTest {
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA1.getObjectEntryId()));
-
 		ObjectEntry objectEntryAA2 = _addObjectEntry(
 			_objectDefinitionAA,
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA2.getObjectEntryId()));
-
 		ObjectEntry objectEntryAA3 = _addObjectEntry(
 			_objectDefinitionAA, Map.of());
 
@@ -1664,13 +1654,11 @@ public class ObjectDefinitionTreeUtilTest {
 			Map.of(
 				_objectRelationshipAA_AAAObjectField2.getName(),
 				objectEntryAA1.getObjectEntryId()));
-
 		ObjectEntry objectEntryAAA2 = _addObjectEntry(
 			_objectDefinitionAAA,
 			Map.of(
 				_objectRelationshipAA_AAAObjectField2.getName(),
 				objectEntryAA2.getObjectEntryId()));
-
 		ObjectEntry objectEntryAAA3 = _addObjectEntry(
 			_objectDefinitionAAA, Map.of());
 

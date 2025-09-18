@@ -6,7 +6,11 @@
 import {getObjectValueFromPath} from 'frontend-js-web';
 
 import {getLocalizedValue} from '../getLocalizedValue';
-import {IItemActionsDataFilter, IItemsActions} from '../types';
+import {
+	EItemActionsType,
+	IItemActionsDataFilter,
+	IItemsActions,
+} from '../types';
 import {ACTION_ITEM_TARGETS} from './constants';
 
 const hasPermission = (action: IItemsActions, itemData: any): boolean => {
@@ -150,7 +154,10 @@ const filterItemActions = ({
 						selectedItem,
 					});
 
-					if (action.type === 'group' && action.items) {
+					if (
+						action.type === EItemActionsType.GROUP &&
+						action.items
+					) {
 						return {
 							...transformedAction,
 							items: filterItemActions({

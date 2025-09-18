@@ -317,6 +317,11 @@ test(
 			`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
 		);
 
+		await reloadUntilVisible({
+				myLocator: portletPublishToLivePage.publishToLiveButton,
+				page,
+			});
+
 		await portletPublishToLivePage.goToPortletAdvancedStagings();
 
 		const documentsAndMedia = portletPublishToLivePage.publishToLiveIframe

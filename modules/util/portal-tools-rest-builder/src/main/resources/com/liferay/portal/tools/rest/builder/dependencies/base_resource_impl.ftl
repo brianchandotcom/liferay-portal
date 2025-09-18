@@ -166,7 +166,7 @@ public abstract class Base${schemaName}ResourceImpl
 			<#assign deleteSiteBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
 			<#assign getByIdJavaMethodSignature = javaMethodSignature />
-		<#elseif freeMarkerTool.isByExternalReferenceCodeMethod("get", javaMethodSignature)>
+		<#elseif freeMarkerTool.isExternalReferenceCodeMethod("get", javaMethodSignature)>
 			<#if parentSchemaName?has_content>
 				<#assign getParentByExternalReferenceCodeBatchJavaMethodSignatures = getParentByExternalReferenceCodeBatchJavaMethodSignatures + [javaMethodSignature] />
 			<#else>
@@ -192,11 +192,11 @@ public abstract class Base${schemaName}ResourceImpl
 			<#else>
 				<#assign postBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
-		<#elseif freeMarkerTool.isByExternalReferenceCodeMethod("post", javaMethodSignature) && parentSchemaName?has_content>
+		<#elseif freeMarkerTool.isExternalReferenceCodeMethod("post", javaMethodSignature) && parentSchemaName?has_content>
 			<#assign postParentByExternalReferenceCodeBatchJavaMethodSignatures = postParentByExternalReferenceCodeBatchJavaMethodSignatures + [javaMethodSignature] />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
-		<#elseif freeMarkerTool.isByExternalReferenceCodeMethod("put", javaMethodSignature)>
+		<#elseif freeMarkerTool.isExternalReferenceCodeMethod("put", javaMethodSignature)>
 			<#if parentSchemaName?has_content>
 				<#assign putParentByExternalReferenceCodeBatchJavaMethodSignatures = putParentByExternalReferenceCodeBatchJavaMethodSignatures + [javaMethodSignature] />
 			<#else>

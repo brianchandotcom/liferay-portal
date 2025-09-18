@@ -39,6 +39,7 @@ import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -230,12 +231,7 @@ public abstract class BaseDBPartitionTestCase {
 			return defaultPartitionName;
 		}
 
-		String databasePartitionSchemaNamePrefix =
-			ReflectionTestUtil.getFieldValue(
-				DBPartitionUtil.class,
-				"_DATABASE_PARTITION_SCHEMA_NAME_PREFIX");
-
-		return databasePartitionSchemaNamePrefix + companyId;
+		return PropsValues.DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
 	protected static void importDBPartitions() throws Exception {

@@ -21,10 +21,16 @@ import {
 const DEFAULT_ASSET_TYPES: Array<AssetType> = [
 	{
 		key: DefaultAssetTypes.OBJECT_ENTRY_FOLDERS,
-		label: Liferay.Language.get('folder'),
+		label: Liferay.Language.get('default-folder-permissions'),
 	},
-	{key: DefaultAssetTypes.L_CONTENTS, label: Liferay.Language.get('content')},
-	{key: DefaultAssetTypes.L_FILES, label: Liferay.Language.get('file')},
+	{
+		key: DefaultAssetTypes.L_CONTENTS,
+		label: Liferay.Language.get('default-content-permissions'),
+	},
+	{
+		key: DefaultAssetTypes.L_FILES,
+		label: Liferay.Language.get('default-file-permissions'),
+	},
 ];
 
 export default function DefaultPermissionFormContainer({

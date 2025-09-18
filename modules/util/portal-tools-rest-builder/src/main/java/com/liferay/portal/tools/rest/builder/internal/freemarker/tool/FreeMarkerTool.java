@@ -1120,13 +1120,6 @@ public class FreeMarkerTool {
 		return mediaTypes.contains(mediaType);
 	}
 
-	public boolean isByExternalReferenceCodeMethod(
-		String httpMethod, JavaMethodSignature javaMethodSignature) {
-
-		return ResourceOpenAPIParser.isByExternalReferenceCodeMethod(
-			httpMethod, javaMethodSignature);
-	}
-
 	public boolean isCollection(
 		JavaMethodSignature javaMethodSignaturePathItem,
 		List<JavaMethodSignature> javaMethodSignatures, String schemaNames) {
@@ -1157,6 +1150,13 @@ public class FreeMarkerTool {
 
 		return DTOOpenAPIParser.isSchemaProperty(
 			configYAML, propertyName, schema, schemas);
+	}
+
+	public boolean isExternalReferenceCodeMethod(
+		String httpMethod, JavaMethodSignature javaMethodSignature) {
+
+		return ResourceOpenAPIParser.isExternalReferenceCodeMethod(
+			httpMethod, javaMethodSignature);
 	}
 
 	public boolean isExternalReferenceCodeParameter(

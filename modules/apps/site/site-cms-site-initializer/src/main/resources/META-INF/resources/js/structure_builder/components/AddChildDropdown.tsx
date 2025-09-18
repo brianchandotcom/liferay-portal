@@ -18,6 +18,12 @@ import {
 } from '../utils/field';
 import ReferencedStructureModal from './ReferencedStructureModal';
 
+type Item = {
+	className?: string;
+	label: string;
+	onClick: () => void;
+};
+
 export default function AddChildDropdown({
 	triggerType = 'text',
 }: {
@@ -53,15 +59,20 @@ export default function AddChildDropdown({
 
 			<ClayDropDownWithItems
 				items={[
-					...FIELD_TYPES.map((type) => ({
-						label: FIELD_TYPE_LABEL[type],
-						onClick: () => addField(type),
-					})),
+					...FIELD_TYPES.map(
+						(type): Item => ({
+							label: FIELD_TYPE_LABEL[type],
+							onClick: () => addField(type),
+						})
+					),
+					{type: 'divider'},
 					{
+						className: 'dropdown-item-cms-warning',
 						label: Liferay.Language.get('referenced-structure'),
 						onClick: () => setShowStructuresModal(true),
 					},
 				]}
+				menuElementAttrs={{className: 'dropdown-menu-cms'}}
 				trigger={
 					triggerType === 'text' ? (
 						<ClayButton displayType="secondary" size="sm">

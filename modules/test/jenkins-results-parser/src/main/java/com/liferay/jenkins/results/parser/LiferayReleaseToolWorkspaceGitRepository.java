@@ -31,9 +31,7 @@ public class LiferayReleaseToolWorkspaceGitRepository
 		_writeBuildPropertiesFile();
 	}
 
-	protected LiferayReleaseToolWorkspaceGitRepository(
-		JSONObject jsonObject) {
-
+	protected LiferayReleaseToolWorkspaceGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

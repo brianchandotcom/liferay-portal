@@ -90,12 +90,12 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		portalWorkspaceGitRepository.setUp();
 
-		_configureLiferayOSBAsahWorkspaceGitRepository();
 		_configureLiferayBladeSamplesWorkspaceGitRepository();
 		_configureLiferayFacesAlloyWorkspaceGitRepository();
 		_configureLiferayFacesBridgeImplWorkspaceGitRepository();
 		_configureLiferayFacesPortalWorkspaceGitRepository();
 		_configureLiferayFacesShowcaseWorkspaceGitRepository();
+		_configureLiferayOSBAsahWorkspaceGitRepository();
 		_configureLiferayReleaseToolWorkspaceGitRepository();
 		_configureOSBFaroWorkspaceGitRepository();
 		_configurePluginsWorkspaceGitRepository();
@@ -228,9 +228,7 @@ public class PortalWorkspace extends BaseWorkspace {
 				" for testing on CI"));
 	}
 
-	protected WorkspaceGitRepository
-		getLiferayOSBAsahWorkspaceGitRepository() {
-
+	protected WorkspaceGitRepository getLiferayOSBAsahWorkspaceGitRepository() {
 		return getWorkspaceGitRepository("com-liferay-osb-asah-private");
 	}
 
@@ -247,25 +245,6 @@ public class PortalWorkspace extends BaseWorkspace {
 		}
 
 		copyLiferayOSBAsahRepositoryToModule();
-	}
-
-	private void _configureLiferayOSBAsahWorkspaceGitRepository() {
-		boolean updated = _updateWorkspaceGitRepository(
-			"modules/dxp/apps/osb/osb-asah/ci-merge",
-			"com-liferay-osb-asah-private");
-
-		if (updated || (_osbAsahGitHubURL == null)) {
-			return;
-		}
-
-		WorkspaceGitRepository workspaceGitRepository =
-			getWorkspaceGitRepository("com-liferay-osb-asah-private");
-
-		if (workspaceGitRepository == null) {
-			return;
-		}
-
-		workspaceGitRepository.setGitHubURL(_osbAsahGitHubURL);
 	}
 
 	private void _configureLiferayBladeSamplesWorkspaceGitRepository() {
@@ -360,6 +339,25 @@ public class PortalWorkspace extends BaseWorkspace {
 		}
 
 		workspaceGitRepository.setGitHubURL(gitHubURL);
+	}
+
+	private void _configureLiferayOSBAsahWorkspaceGitRepository() {
+		boolean updated = _updateWorkspaceGitRepository(
+			"modules/dxp/apps/osb/osb-asah/ci-merge",
+			"com-liferay-osb-asah-private");
+
+		if (updated || (_osbAsahGitHubURL == null)) {
+			return;
+		}
+
+		WorkspaceGitRepository workspaceGitRepository =
+			getWorkspaceGitRepository("com-liferay-osb-asah-private");
+
+		if (workspaceGitRepository == null) {
+			return;
+		}
+
+		workspaceGitRepository.setGitHubURL(_osbAsahGitHubURL);
 	}
 
 	private void _configureLiferayReleaseToolWorkspaceGitRepository() {
@@ -459,8 +457,7 @@ public class PortalWorkspace extends BaseWorkspace {
 			return null;
 		}
 
-		return (LiferayReleaseToolWorkspaceGitRepository)
-			workspaceGitRepository;
+		return (LiferayReleaseToolWorkspaceGitRepository)workspaceGitRepository;
 	}
 
 	private boolean _updateWorkspaceGitRepository(

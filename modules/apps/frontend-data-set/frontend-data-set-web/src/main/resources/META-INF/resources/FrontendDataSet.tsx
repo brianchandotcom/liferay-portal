@@ -162,6 +162,22 @@ const FrontendDataSetContent = ({
 		},
 	});
 
+	const [getPageNumber, updatePageNumberThunk] = useStateInURL({
+		id,
+		stateDispatcher: {
+			key: EStateInURLKeys.PAGE_NUMBER,
+			type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
+		},
+		stateInURLSettings,
+		stateInitializer: (pageNumber: number) => {
+			if (isNaN(pageNumber) || pageNumber < 1) {
+				return 1;
+			}
+
+			return pageNumber;
+		},
+	});
+
 	const [getView, updateViewThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
@@ -196,9 +212,7 @@ const FrontendDataSetContent = ({
 	const [searching, setSearching] = useState(!!apiURL);
 	const [items, setItems] = useState(itemsProp || []);
 	const [itemsChanges, setItemsChanges] = useState<{[key: string]: any}>({});
-	const [pageNumber, setPageNumber] = useState(
-		pagination?.initialPageNumber || DEFAULT_PAGINATION_PAGE_NUMBER
-	);
+
 	const [searchParam, setSearchParam] = useState('');
 
 	const [allItemsSelectedActive, setAllItemsSelectedActive] = useState(false);
@@ -317,6 +331,11 @@ const FrontendDataSetContent = ({
 				pagination?.initialDelta ||
 				DEFAULT_PAGINATION_DELTA);
 
+		const pageNumber =
+			getPageNumber() ||
+			pagination?.initialPageNumber ||
+			DEFAULT_PAGINATION_PAGE_NUMBER;
+
 		// viewsDispatch is not available here, so we can't use state in url
 		// setters at this point. writeStateInURL low level utility does the job
 
@@ -326,6 +345,7 @@ const FrontendDataSetContent = ({
 				...(paginationDelta && {
 					[EStateInURLKeys.DELTA]: paginationDelta,
 				}),
+				[EStateInURLKeys.PAGE_NUMBER]: pageNumber,
 				[EStateInURLKeys.VIEW_NAME]: activeView.name,
 			},
 			stateInURLSettings
@@ -344,6 +364,7 @@ const FrontendDataSetContent = ({
 			},
 			filters,
 			modifiedFields: {},
+			pageNumber,
 			paginationDelta,
 			sorts: sortsProp,
 			views: [...views, ...customInternalViews],
@@ -355,7 +376,8 @@ const FrontendDataSetContent = ({
 		useReducer(viewsReducer, getInitialViewsState())
 	);
 
-	const {activeView, filters, paginationDelta, sorts} = viewsState;
+	const {activeView, filters, pageNumber, paginationDelta, sorts} =
+		viewsState;
 
 	const handleDeltaChange = useCallback(
 		(delta: number) => {
@@ -451,31 +473,34 @@ const FrontendDataSetContent = ({
 		onSearch({query: ''});
 	}, [filters, onSearch, viewsDispatch]);
 
-	function updateDataSetItems(dataSetData: IDataSetData) {
-		const remappedItems = dataSetData.items.map((item) => {
-			if (item.embedded && item.embedded.actions) {
-				const actions = item.embedded.actions;
+	const updateDataSetItems = useCallback(
+		(dataSetData: IDataSetData) => {
+			const remappedItems = dataSetData.items.map((item) => {
+				if (item.embedded && item.embedded.actions) {
+					const actions = item.embedded.actions;
 
-				delete item.embedded.actions;
+					delete item.embedded.actions;
+
+					return {
+						...item,
+						actions,
+					};
+				}
 
 				return {
 					...item,
-					actions,
 				};
+			});
+
+			setItems(remappedItems);
+			setTotal(dataSetData.totalCount);
+
+			if (!dataSetData.items.length && dataSetData.totalCount > 0) {
+				viewsDispatch(updatePageNumberThunk(dataSetData.lastPage));
 			}
-
-			return {
-				...item,
-			};
-		});
-
-		setItems(remappedItems);
-		setTotal(dataSetData.totalCount);
-
-		if (!dataSetData.items.length && dataSetData.totalCount > 0) {
-			setPageNumber(() => dataSetData.lastPage);
-		}
-	}
+		},
+		[updatePageNumberThunk, viewsDispatch]
+	);
 
 	useEffect(() => {
 		loadClientExtensions([
@@ -601,7 +626,7 @@ const FrontendDataSetContent = ({
 				totalCount: itemsProp.length,
 			});
 		}
-	}, [itemsProp]);
+	}, [itemsProp, updateDataSetItems]);
 
 	function deselectItems(value: any) {
 		const values = Array.isArray(value) ? value : [value];
@@ -702,7 +727,6 @@ const FrontendDataSetContent = ({
 		const delta = getDelta();
 
 		if (delta && delta !== paginationDelta) {
-			setPageNumber(1);
 			stateUpdates.push({
 				type: EViewsActionTypes.UPDATE_PAGINATION_DELTA,
 				value: delta,
@@ -725,6 +749,11 @@ const FrontendDataSetContent = ({
 			});
 		}
 
+		stateUpdates.push({
+			type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
+			value: getPageNumber() || 1,
+		});
+
 		if (stateUpdates.length) {
 			viewsDispatch({
 				type: EViewsActionTypes.BATCH_UPDATE,
@@ -734,6 +763,7 @@ const FrontendDataSetContent = ({
 	}, [
 		appURL,
 		getDelta,
+		getPageNumber,
 		getView,
 		id,
 		paginationDelta,
@@ -790,6 +820,7 @@ const FrontendDataSetContent = ({
 			selectedItemsKey,
 			selectedItemsValue,
 			setSelectedItems,
+			updateDataSetItems,
 		]
 	);
 
@@ -896,7 +927,15 @@ const FrontendDataSetContent = ({
 				setSearching(false);
 			}
 		});
-	}, [apiURL, filters, isMounted, requestData, setDataLoading, setSearching]);
+	}, [
+		apiURL,
+		filters,
+		isMounted,
+		requestData,
+		setDataLoading,
+		setSearching,
+		updateDataSetItems,
+	]);
 
 	useEffect(() => {
 		function handleRefreshFromTheOutside(event: any) {
@@ -1054,7 +1093,9 @@ const FrontendDataSetContent = ({
 						perPageItems: Liferay.Language.get('x-items'),
 						selectPerPageItems: Liferay.Language.get('x-items'),
 					}}
-					onActiveChange={setPageNumber}
+					onActiveChange={(page: number) =>
+						viewsDispatch(updatePageNumberThunk(page))
+					}
 					onDeltaChange={handleDeltaChange}
 					totalItems={total}
 				/>

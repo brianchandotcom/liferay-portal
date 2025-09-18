@@ -16,6 +16,7 @@ export enum EViewsActionTypes {
 	UPDATE_ACTIVE_VIEW = 'UPDATE_ACTIVE_VIEW',
 	UPDATE_FIELD = 'UPDATE_FIELD',
 	UPDATE_FILTERS = 'UPDATE_FILTERS',
+	UPDATE_PAGE_NUMBER = 'UPDATE_PAGE_NUMBER',
 	UPDATE_PAGINATION_DELTA = 'UPDATE_PAGINATION_DELTA',
 	UPDATE_SORTING = 'UPDATE_SORTING',
 	UPDATE_VIEW_COMPONENT = 'UPDATE_VIEW_COMPONENT',
@@ -48,10 +49,8 @@ const viewsActions: TViewsActions = {
 		}
 
 		return stateUpdates.reduce((acc, current) => {
-			const {
-				type,
-				value,
-			}: {type: keyof typeof viewsActions; value: any} = current;
+			const {type, value}: {type: keyof typeof viewsActions; value: any} =
+				current;
 			if (!viewsActions[type]) {
 				return acc;
 			}
@@ -160,6 +159,13 @@ const viewsActions: TViewsActions = {
 				...modifiedFields,
 				[name]: {...fieldAttributes, ...value},
 			},
+		};
+	},
+	[EViewsActionTypes.UPDATE_PAGE_NUMBER]: (state, value) => {
+		return {
+			...state,
+			pageNumber: value,
+			viewUpdated: false,
 		};
 	},
 	[EViewsActionTypes.UPDATE_PAGINATION_DELTA]: (state, value) => {

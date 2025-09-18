@@ -636,8 +636,7 @@ public class ObjectEntryDTOConverter
 
 	private Assignee _getAssignee(Map<String, Serializable> assigneeMap) {
 		if (assigneeMap.containsKey("externalReferenceCode")) {
-			return Assignee.toDTO(
-				_jsonFactory.looseSerializeDeep(assigneeMap));
+			return Assignee.toDTO(_jsonFactory.looseSerializeDeep(assigneeMap));
 		}
 
 		String className = _portal.fetchClassName(

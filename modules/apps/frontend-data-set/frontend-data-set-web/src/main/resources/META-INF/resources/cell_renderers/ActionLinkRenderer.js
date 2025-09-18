@@ -14,6 +14,7 @@ import FrontendDataSetContext from '../FrontendDataSetContext';
 import filterItemActions from '../utils/actionItems/filterItemActions';
 import formatActionURL from '../utils/actionItems/formatActionURL';
 import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
+import {EItemActionsType} from '../utils/types';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
@@ -46,7 +47,9 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		? formattedActions.find(
 				(action) => action.data?.id === options.actionId
 			)
-		: formattedActions[0];
+		: formattedActions[0]?.type === EItemActionsType.GROUP
+			? formattedActions[0]?.items?.[0]
+			: formattedActions[0];
 
 	if (!currentAction) {
 		return value ? <DefaultContent value={value} /> : null;

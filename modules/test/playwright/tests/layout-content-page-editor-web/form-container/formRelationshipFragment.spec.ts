@@ -317,6 +317,16 @@ test(
 			'Fruit (Fruit)'
 		);
 
+		// Check correct value is shown in general panel select
+
+		select = page
+			.locator('.page-editor__item-configuration-sidebar')
+			.getByLabel('Content Type', {exact: true});
+
+		const selectedOption = select.locator('option:checked');
+
+		await expect(selectedOption).toHaveText('Fruit (Fruit)');
+
 		// Add an input inside and check it can only be mapped to Fruit Title
 
 		await pageEditorPage.addFragment(

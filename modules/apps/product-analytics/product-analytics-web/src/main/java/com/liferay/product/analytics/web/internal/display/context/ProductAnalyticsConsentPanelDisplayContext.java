@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Christopher Kian
  */
 public class ProductAnalyticsConsentPanelDisplayContext
-	extends BaseProductAnalyticsDisplayContext {
+	extends BaseDisplayContext {
 
 	public ProductAnalyticsConsentPanelDisplayContext(
 		LayoutUtilityPageEntryLayoutProvider

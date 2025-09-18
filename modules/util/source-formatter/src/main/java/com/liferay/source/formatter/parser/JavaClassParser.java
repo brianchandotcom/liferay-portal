@@ -648,8 +648,7 @@ public class JavaClassParser {
 		}
 
 		if (parentDetailAST == null) {
-			throw new ParseException(
-				"Parsing error at line \"" + detailAST.getLineNo() + "\"");
+			return javaClass;
 		}
 
 		String javaTermContent = _getJavaTermContent(

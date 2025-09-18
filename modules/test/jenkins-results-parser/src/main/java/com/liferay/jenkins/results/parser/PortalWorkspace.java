@@ -29,7 +29,7 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	public WorkspaceGitRepository
-		getLiferayQAPortalLegacyEEWorkspaceGitRepository() {
+		getLiferayQAPortalLegacyWorkspaceGitRepository() {
 
 		return getWorkspaceGitRepository("liferay-qa-portal-legacy-ee");
 	}
@@ -90,13 +90,13 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		portalWorkspaceGitRepository.setUp();
 
-		_configureComLiferayOSBAsahPrivateWorkspaceGitRepository();
+		_configureLiferayOSBAsahWorkspaceGitRepository();
 		_configureLiferayBladeSamplesWorkspaceGitRepository();
 		_configureLiferayFacesAlloyWorkspaceGitRepository();
 		_configureLiferayFacesBridgeImplWorkspaceGitRepository();
 		_configureLiferayFacesPortalWorkspaceGitRepository();
 		_configureLiferayFacesShowcaseWorkspaceGitRepository();
-		_configureLiferayReleaseToolEEWorkspaceGitRepository();
+		_configureLiferayReleaseToolWorkspaceGitRepository();
 		_configureOSBFaroWorkspaceGitRepository();
 		_configurePluginsWorkspaceGitRepository();
 		_configurePortalsPlutoWorkspaceGitRepository();
@@ -132,7 +132,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		super(primaryRepositoryName, upstreamBranchName, jobName);
 	}
 
-	protected void copyComLiferayOSBAsahPrivateRepositoryToModule() {
+	protected void copyLiferayOSBAsahRepositoryToModule() {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			getPortalWorkspaceGitRepository();
 
@@ -229,7 +229,7 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	protected WorkspaceGitRepository
-		getComLiferayOSBAsahPrivateWorkspaceGitRepository() {
+		getLiferayOSBAsahWorkspaceGitRepository() {
 
 		return getWorkspaceGitRepository("com-liferay-osb-asah-private");
 	}
@@ -246,10 +246,10 @@ public class PortalWorkspace extends BaseWorkspace {
 			return;
 		}
 
-		copyComLiferayOSBAsahPrivateRepositoryToModule();
+		copyLiferayOSBAsahRepositoryToModule();
 	}
 
-	private void _configureComLiferayOSBAsahPrivateWorkspaceGitRepository() {
+	private void _configureLiferayOSBAsahWorkspaceGitRepository() {
 		boolean updated = _updateWorkspaceGitRepository(
 			"modules/dxp/apps/osb/osb-asah/ci-merge",
 			"com-liferay-osb-asah-private");
@@ -362,7 +362,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		workspaceGitRepository.setGitHubURL(gitHubURL);
 	}
 
-	private void _configureLiferayReleaseToolEEWorkspaceGitRepository() {
+	private void _configureLiferayReleaseToolWorkspaceGitRepository() {
 		_updateWorkspaceGitRepository(
 			"git-commit/liferay-release-tool-ee", "liferay-release-tool-ee");
 

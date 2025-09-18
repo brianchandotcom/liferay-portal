@@ -76,7 +76,7 @@ public class LegacyTopLevelBuild
 		}
 
 		WorkspaceGitRepository legacyWorkspaceGitRepository =
-			portalWorkspace.getLiferayQAPortalLegacyEEWorkspaceGitRepository();
+			portalWorkspace.getLiferayQAPortalLegacyWorkspaceGitRepository();
 
 		String legacyGitHubURL = _getLegacyGitHubURL();
 

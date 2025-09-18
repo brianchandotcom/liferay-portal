@@ -30,9 +30,9 @@ import java.util.List;
 /**
  * @author Christopher Kian
  */
-public class BaseProductAnalyticsDisplayContext {
+public abstract class BaseDisplayContext {
 
-	public BaseProductAnalyticsDisplayContext(
+	public BaseDisplayContext(
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
 		RenderRequest renderRequest) {

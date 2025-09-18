@@ -23,6 +23,7 @@ components:
                         $ref: "#/components/schemas/BulkActionItem"
                     type: array
                 selectAll:
+                    default: false
                     type: boolean
                 type:
                     enum:

@@ -7,8 +7,8 @@ package com.liferay.frontend.js.web.internal.frontend.resource.handler;
 
 import com.liferay.frontend.js.web.internal.frontend.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.frontend.resource.HashedFileFrontendResource;
-import com.liferay.portal.kernel.hashed.files.HashedFilesRegistry;
-import com.liferay.portal.kernel.hashed.files.HashedFilesUtil;
+import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
+import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;

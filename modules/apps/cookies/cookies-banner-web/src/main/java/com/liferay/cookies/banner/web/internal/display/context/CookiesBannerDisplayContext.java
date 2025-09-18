@@ -104,8 +104,9 @@ public class CookiesBannerDisplayContext
 			return privacyPolicyLink;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout =
 			layoutUtilityPageEntryLayoutProvider.

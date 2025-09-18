@@ -1311,7 +1311,16 @@ public class ResourceOpenAPIParser {
 		String basePath = path;
 
 		if (basePath.endsWith(
-				"/by-external-reference-code/{externalReferenceCode}")) {
+				"/{" + OpenAPIParserUtil.getSchemaVarName(schemaName) +
+					"ExternalReferenceCode}")) {
+
+			basePath = StringUtil.removeLast(
+				path,
+				"/{" + OpenAPIParserUtil.getSchemaVarName(schemaName) +
+					"ExternalReferenceCode}");
+		}
+		else if (basePath.endsWith(
+					"/by-external-reference-code/{externalReferenceCode}")) {
 
 			basePath = StringUtil.removeLast(
 				path, "/by-external-reference-code/{externalReferenceCode}");
@@ -1324,26 +1333,17 @@ public class ResourceOpenAPIParser {
 		}
 
 		basePath = basePath.substring(0, lastIndexOfSlash);
-		String schemaPath = TextFormatter.format(
-			TextFormatter.formatPlural(schemaName), TextFormatter.K);
 
 		if (basePath.equals(
 				"/asset-libraries/{assetLibraryExternalReferenceCode}") ||
-			basePath.equals(
-				"/asset-libraries/{assetLibraryExternalReferenceCode}/" +
-					schemaPath) ||
 			basePath.equals("/asset-libraries/{assetLibraryId}")) {
 
 			return "AssetLibrary";
 		}
-		else {
-			if (basePath.equals("/sites/{siteExternalReferenceCode}") ||
-				basePath.equals(
-					"/sites/{siteExternalReferenceCode}/" + schemaPath) ||
-				basePath.equals("/sites/{siteId}")) {
+		else if (basePath.equals("/sites/{siteExternalReferenceCode}") ||
+				 basePath.equals("/sites/{siteId}")) {
 
-				return "Site";
-			}
+			return "Site";
 		}
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {

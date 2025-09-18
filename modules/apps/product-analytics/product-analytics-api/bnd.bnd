@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Product Analytics API
-Bundle-SymbolicName: com.liferay.product.analytics.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.product.analytics.configuration

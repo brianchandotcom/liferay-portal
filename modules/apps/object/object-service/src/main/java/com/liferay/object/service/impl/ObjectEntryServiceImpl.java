@@ -690,16 +690,15 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		if (objectEntry.isRootDescendantNode() &&
 			(actionId.equals(ActionKeys.DELETE) ||
-			 actionId.equals(ActionKeys.UPDATE) ||
-			 actionId.equals(ActionKeys.VIEW))) {
+			 actionId.equals(ActionKeys.VIEW)) &&
+			modelResourcePermission.contains(
+				getPermissionChecker(), objectEntry, ActionKeys.UPDATE)) {
 
-			modelResourcePermission.check(
-				getPermissionChecker(), objectEntry, ActionKeys.UPDATE);
+			return;
 		}
-		else {
-			modelResourcePermission.check(
-				getPermissionChecker(), objectEntry, actionId);
-		}
+
+		modelResourcePermission.check(
+			getPermissionChecker(), objectEntry, actionId);
 	}
 
 	private ObjectEntry _getRootObjectEntry(

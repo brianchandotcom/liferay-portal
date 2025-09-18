@@ -142,14 +142,30 @@ const filterItemActions = ({
 				.filter((action: IItemsActions) =>
 					isVisible(action, itemData, selectable)
 				)
-				.map((action: IItemsActions) =>
-					transformAction({
+				.map((action: IItemsActions) => {
+					const transformedAction = transformAction({
 						action,
 						infoPanelOpen,
 						itemData,
 						selectedItem,
-					})
-				)
+					});
+
+					if (action.type === 'group' && action.items) {
+						return {
+							...transformedAction,
+							items: filterItemActions({
+								actions: action.items,
+								infoPanelOpen,
+								itemData,
+								selectable,
+								selectedItemsKey,
+								selectedItemsValue,
+							}),
+						};
+					}
+
+					return transformedAction;
+				})
 		: [];
 };
 

@@ -10,7 +10,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 
 import org.osgi.service.component.annotations.Activate;
@@ -32,13 +31,12 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CSPOSGiCommands implements OSGiCommands {
 
-	public void resetCompanyConfiguration(String companyId)
+	public void resetCompanyConfiguration(long companyId)
 		throws ConfigurationException {
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
-				ContentSecurityPolicyConfiguration.class,
-				GetterUtil.getLong(companyId));
+				ContentSecurityPolicyConfiguration.class, companyId);
 
 		if (contentSecurityPolicyConfiguration == null) {
 			System.out.println(
@@ -50,17 +48,15 @@ public class CSPOSGiCommands implements OSGiCommands {
 		}
 
 		_configurationProvider.deleteCompanyConfiguration(
-			ContentSecurityPolicyConfiguration.class,
-			GetterUtil.getLong(companyId));
+			ContentSecurityPolicyConfiguration.class, companyId);
 	}
 
-	public void resetGroupConfiguration(String groupId)
+	public void resetGroupConfiguration(long groupId)
 		throws ConfigurationException {
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			_configurationProvider.getGroupConfiguration(
-				ContentSecurityPolicyConfiguration.class,
-				GetterUtil.getLong(groupId));
+				ContentSecurityPolicyConfiguration.class, groupId);
 
 		if (contentSecurityPolicyConfiguration == null) {
 			System.out.println(
@@ -71,8 +67,7 @@ public class CSPOSGiCommands implements OSGiCommands {
 		}
 
 		_configurationProvider.deleteGroupConfiguration(
-			ContentSecurityPolicyConfiguration.class,
-			GetterUtil.getLong(groupId));
+			ContentSecurityPolicyConfiguration.class, groupId);
 	}
 
 	public void resetSystemConfiguration() throws ConfigurationException {

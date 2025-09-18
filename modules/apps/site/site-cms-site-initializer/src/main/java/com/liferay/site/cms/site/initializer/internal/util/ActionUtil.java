@@ -488,9 +488,10 @@ public class ActionUtil {
 					httpServletRequest,
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)));
 
-		List<DropdownItem> contentsCustomDropdownItems = getContentsCustomDropdownItems(
-			httpServletRequest,
-			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
+		List<DropdownItem> contentsCustomDropdownItems =
+			getContentsCustomDropdownItems(
+				httpServletRequest,
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
 
 		contentsCustomDropdownItems.addAll(
 			getFilesCustomDropdownItems(
@@ -628,8 +629,9 @@ public class ActionUtil {
 					httpServletRequest,
 					objectEntryFolderExternalReferenceCode)));
 
-		List<DropdownItem> contentsCustomDropdownItems = getContentsCustomDropdownItems(
-			httpServletRequest, objectEntryFolderExternalReferenceCode);
+		List<DropdownItem> contentsCustomDropdownItems =
+			getContentsCustomDropdownItems(
+				httpServletRequest, objectEntryFolderExternalReferenceCode);
 
 		contentsCustomDropdownItems.sort(
 			Comparator.comparing(
@@ -832,8 +834,9 @@ public class ActionUtil {
 					httpServletRequest,
 					objectEntryFolderExternalReferenceCode)));
 
-		List<DropdownItem> filesCustomDropdownItems = getFilesCustomDropdownItems(
-			httpServletRequest, objectEntryFolderExternalReferenceCode);
+		List<DropdownItem> filesCustomDropdownItems =
+			getFilesCustomDropdownItems(
+				httpServletRequest, objectEntryFolderExternalReferenceCode);
 
 		filesCustomDropdownItems.sort(
 			Comparator.comparing(

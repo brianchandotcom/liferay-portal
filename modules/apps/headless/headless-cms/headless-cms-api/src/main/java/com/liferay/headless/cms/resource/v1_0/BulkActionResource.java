@@ -54,7 +54,7 @@ public interface BulkActionResource {
 		throws Exception;
 
 	public Page<BulkActionItem> postBulkActionItemPreviewPage(
-			String search,
+			Boolean fetchChildren, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,

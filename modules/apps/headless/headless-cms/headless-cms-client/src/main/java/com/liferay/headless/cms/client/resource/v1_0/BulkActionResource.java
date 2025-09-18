@@ -46,13 +46,13 @@ public interface BulkActionResource {
 		throws Exception;
 
 	public Page<BulkActionItem> postBulkActionItemPreviewPage(
-			String search, String filterString, Pagination pagination,
-			String sortString, BulkAction bulkAction)
+			Boolean fetchChildren, String search, String filterString,
+			Pagination pagination, String sortString, BulkAction bulkAction)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postBulkActionItemPreviewPageHttpResponse(
-			String search, String filterString, Pagination pagination,
-			String sortString, BulkAction bulkAction)
+			Boolean fetchChildren, String search, String filterString,
+			Pagination pagination, String sortString, BulkAction bulkAction)
 		throws Exception;
 
 	public static class Builder {
@@ -278,13 +278,14 @@ public interface BulkActionResource {
 		}
 
 		public Page<BulkActionItem> postBulkActionItemPreviewPage(
-				String search, String filterString, Pagination pagination,
-				String sortString, BulkAction bulkAction)
+				Boolean fetchChildren, String search, String filterString,
+				Pagination pagination, String sortString, BulkAction bulkAction)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postBulkActionItemPreviewPageHttpResponse(
-					search, filterString, pagination, sortString, bulkAction);
+					fetchChildren, search, filterString, pagination, sortString,
+					bulkAction);
 
 			String content = httpResponse.getContent();
 
@@ -347,8 +348,9 @@ public interface BulkActionResource {
 
 		public HttpInvoker.HttpResponse
 				postBulkActionItemPreviewPageHttpResponse(
-					String search, String filterString, Pagination pagination,
-					String sortString, BulkAction bulkAction)
+					Boolean fetchChildren, String search, String filterString,
+					Pagination pagination, String sortString,
+					BulkAction bulkAction)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -373,6 +375,11 @@ public interface BulkActionResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (fetchChildren != null) {
+				httpInvoker.parameter(
+					"fetchChildren", String.valueOf(fetchChildren));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

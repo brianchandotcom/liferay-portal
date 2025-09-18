@@ -283,13 +283,12 @@ public abstract class BaseSectionDisplayContextTestCase
 
 		String name = StringUtil.randomString();
 
-		DepotEntry depotEntry = addDepotEntry(
-			name, DepotConstants.TYPE_ASSET_LIBRARY);
+		DepotEntry depotEntry = addDepotEntry(name, DepotConstants.TYPE_SPACE);
 
 		try {
 			List<DepotEntry> depotEntries =
 				_depotEntryLocalService.getDepotEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					group.getCompanyId(), DepotConstants.TYPE_SPACE);
 
 			Assert.assertEquals(
 				depotEntries.toString(), 2, depotEntries.size());
@@ -339,7 +338,7 @@ public abstract class BaseSectionDisplayContextTestCase
 		throws Exception {
 
 		List<DepotEntry> depotEntries = _depotEntryLocalService.getDepotEntries(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			group.getCompanyId(), DepotConstants.TYPE_SPACE);
 
 		Assert.assertEquals(depotEntries.toString(), 1, depotEntries.size());
 
@@ -678,11 +677,11 @@ public abstract class BaseSectionDisplayContextTestCase
 		).build();
 	}
 
-	private JSONArray _getDepotEntriesJSONArray() {
+	private JSONArray _getDepotEntriesJSONArray() throws PortalException {
 		return _getDepotEntriesJSONArray(
 			TransformUtil.transform(
 				_depotEntryLocalService.getDepotEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					group.getCompanyId(), DepotConstants.TYPE_SPACE),
 				DepotEntry::getGroupId));
 	}
 

@@ -6,16 +6,19 @@
 package com.liferay.portal.security.content.security.policy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -23,14 +26,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Method;
 
+import java.util.Dictionary;
+import java.util.Map;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -45,133 +49,122 @@ public class CSPOSGiCommandsTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-		_group = GroupTestUtil.addGroup();
-	}
-
 	@Test
-	public void testResettingCSPConfigurationsViaGoGoShell() throws Exception {
-		_contentSecurityPolicyConfiguration =
-			_configurationAdmin.getConfiguration(
-				_CLASS_NAME, StringPool.QUESTION);
+	public void testResetContentSecurityPolicyConfiguration() throws Exception {
+		Company company = CompanyTestUtil.addCompany(false);
 
-		ConfigurationTestUtil.saveConfiguration(
-			_contentSecurityPolicyConfiguration,
+		_testResetContentSecurityPolicyConfiguration(
+			company.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"enabled", false
-			).put(
-				"excludedPaths", "/api"
-			).put(
-				"policy", "script-src 'unsafe-inline';"
-			).build());
+				"companyId", company.getCompanyId()
+			).build(),
+			ExtendedObjectClassDefinition.Scope.COMPANY);
 
-		_resetSystemConfiguration();
+		Group group = GroupTestUtil.addGroup();
 
-		_assertConfigurationIsDeleted(
-			ExtendedObjectClassDefinition.Scope.SYSTEM, 0L, false);
+		_testResetContentSecurityPolicyConfiguration(
+			group.getGroupId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"groupId", group.getGroupId()
+			).build(),
+			ExtendedObjectClassDefinition.Scope.GROUP);
 
-		_createScopedConfiguration("companyId", _company.getCompanyId());
-
-		_resetCompanyConfiguration(String.valueOf(_company.getCompanyId()));
-
-		_assertConfigurationIsDeleted(
-			ExtendedObjectClassDefinition.Scope.COMPANY,
-			_company.getCompanyId(), true);
-
-		_createScopedConfiguration("groupId", _group.getGroupId());
-
-		_resetGroupConfiguration(String.valueOf(_group.getGroupId()));
-
-		_assertConfigurationIsDeleted(
-			ExtendedObjectClassDefinition.Scope.GROUP, _group.getGroupId(),
-			true);
+		_testResetContentSecurityPolicyConfiguration(
+			CompanyConstants.SYSTEM, new HashMapDictionary<>(),
+			ExtendedObjectClassDefinition.Scope.SYSTEM);
 	}
 
-	private void _assertConfigurationIsDeleted(
-			ExtendedObjectClassDefinition.Scope property, long propertyId,
-			boolean propertyFiltered)
+	private void _createConfiguration(
+			Dictionary<String, Object> properties,
+			ExtendedObjectClassDefinition.Scope scope)
 		throws Exception {
 
-		String filterString;
+		properties = HashMapDictionaryBuilder.<String, Object>putAll(
+			properties
+		).put(
+			"enabled", false
+		).put(
+			"excludedPaths", "/api"
+		).put(
+			"policy", "script-src 'unsafe-inline';"
+		).build();
 
-		if (propertyFiltered) {
-			filterString = StringBundler.concat(
-				"(&(service.factoryPid=", _CLASS_NAME, ".scoped)(",
-				property.getPropertyKey(), "=", propertyId, "))");
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
+			ConfigurationTestUtil.saveConfiguration(
+				_configurationAdmin.getConfiguration(
+					_CLASS_NAME, StringPool.QUESTION),
+				properties);
+
+			return;
+		}
+
+		ConfigurationTestUtil.createFactoryConfiguration(
+			_CLASS_NAME + ".scoped", properties);
+	}
+
+	private void _resetConfiguration(
+			long id, ExtendedObjectClassDefinition.Scope scope)
+		throws Exception {
+
+		Class<?> clazz = _osgiCommands.getClass();
+
+		Method method = null;
+		Object[] arguments = null;
+
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
+			method = clazz.getMethod(_functionNames.get(scope));
 		}
 		else {
+			method = clazz.getMethod(_functionNames.get(scope), long.class);
+			arguments = new Object[] {id};
+		}
+
+		method.invoke(_osgiCommands, arguments);
+	}
+
+	private void _testResetContentSecurityPolicyConfiguration(
+			long id, Dictionary<String, Object> properties,
+			ExtendedObjectClassDefinition.Scope scope)
+		throws Exception {
+
+		_createConfiguration(properties, scope);
+
+		_resetConfiguration(id, scope);
+
+		String filterString = null;
+
+		if (scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
 			filterString = StringBundler.concat(
 				"(&(service.pid=", _CLASS_NAME, "))");
 		}
+		else {
+			filterString = StringBundler.concat(
+				"(&(service.factoryPid=", _CLASS_NAME, ".scoped)(",
+				scope.getPropertyKey(), "=", id, "))");
+		}
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filterString);
-
-		Assert.assertNull(configurations);
-	}
-
-	private void _createScopedConfiguration(String property, long propertyId)
-		throws Exception {
-
-		ConfigurationTestUtil.createFactoryConfiguration(
-			_CLASS_NAME + ".scoped",
-			HashMapDictionaryBuilder.<String, Object>put(
-				property, propertyId
-			).put(
-				"enabled", false
-			).put(
-				"excludedPaths", "/api"
-			).put(
-				"policy", "script-src 'unsafe-inline';"
-			).build());
-	}
-
-	private void _resetCompanyConfiguration(String companyId) throws Exception {
-		_runWithId("resetCompanyConfiguration", companyId);
-	}
-
-	private void _resetGroupConfiguration(String groupId) throws Exception {
-		_runWithId("resetGroupConfiguration", groupId);
-	}
-
-	private void _resetSystemConfiguration() throws Exception {
-		_run("resetSystemConfiguration");
-	}
-
-	private void _run(String functionName) throws Exception {
-		Class<?> clazz = _cspOSGiCommands.getClass();
-
-		Method method = clazz.getMethod(functionName);
-
-		method.invoke(_cspOSGiCommands);
-	}
-
-	private void _runWithId(String functionName, String id) throws Exception {
-		Class<?> clazz = _cspOSGiCommands.getClass();
-
-		Method method = clazz.getMethod(functionName, String.class);
-
-		method.invoke(_cspOSGiCommands, id);
+		Assert.assertNull(_configurationAdmin.listConfigurations(filterString));
 	}
 
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.security.content.security.policy.internal." +
 			"configuration.ContentSecurityPolicyConfiguration";
 
-	@Inject(filter = "osgi.command.scope=csp", type = Inject.NoType.class)
-	private static Object _cspOSGiCommands;
-
-	@DeleteAfterTestRun
-	private Company _company;
+	@Inject(filter = "osgi.command.scope=csp")
+	private static OSGiCommands _osgiCommands;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
-	private Configuration _contentSecurityPolicyConfiguration;
-
-	@DeleteAfterTestRun
-	private Group _group;
+	private final Map<ExtendedObjectClassDefinition.Scope, String>
+		_functionNames = HashMapBuilder.put(
+			ExtendedObjectClassDefinition.Scope.COMPANY,
+			"resetCompanyConfiguration"
+		).put(
+			ExtendedObjectClassDefinition.Scope.GROUP, "resetGroupConfiguration"
+		).put(
+			ExtendedObjectClassDefinition.Scope.SYSTEM,
+			"resetSystemConfiguration"
+		).build();
 
 }

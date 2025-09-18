@@ -147,6 +147,13 @@ const FrontendDataSetContent = ({
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
 
 	const [getDelta, updateDeltaThunk] = useStateInURL({
+		additionalStateDispatchers: [
+			{
+				key: EStateInURLKeys.PAGE_NUMBER,
+				type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
+				value: 1,
+			},
+		],
 		id,
 		stateDispatcher: {
 			key: EStateInURLKeys.DELTA,

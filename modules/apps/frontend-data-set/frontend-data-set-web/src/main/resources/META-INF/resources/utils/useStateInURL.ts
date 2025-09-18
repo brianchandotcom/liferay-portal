@@ -16,11 +16,17 @@ import {
 } from './types';
 
 function useStateInURL<K extends keyof IStateInURL>({
+	additionalStateDispatchers = [],
 	id,
 	stateDispatcher,
 	stateInURLSettings,
 	stateInitializer,
 }: {
+	additionalStateDispatchers?: {
+		key: keyof IStateInURL;
+		type: EViewsActionTypes;
+		value: any;
+	}[];
 	id: string;
 	stateDispatcher: {
 		key: K;
@@ -34,6 +40,7 @@ function useStateInURL<K extends keyof IStateInURL>({
 	return [
 		useGetter({id, key, stateInitializer}),
 		useUpdaterThunk({
+			additionalStateDispatchers,
 			id,
 			key,
 			stateInURLSettings,
@@ -63,32 +70,68 @@ function useGetter<K extends keyof IStateInURL>({
 }
 
 function useUpdaterThunk<K extends keyof IStateInURL>({
+	additionalStateDispatchers,
 	id,
 	key,
 	stateInURLSettings,
 	type,
 }: {
+	additionalStateDispatchers?: {
+		key: keyof IStateInURL;
+		type: EViewsActionTypes;
+		value: any;
+	}[];
 	id: string;
 	key: K;
 	stateInURLSettings: EStateInURLSettings;
 	type: EViewsActionTypes;
-}) {
+}): IStateInURLUpdaterThunk<K> {
 	return useCallback(
 		(value: IStateInURL[K]) => {
 			return (viewsDispatch: Function) => {
-				viewsDispatch({
-					type,
-					value,
-				});
-
 				const newState: Partial<IStateInURL> = {
 					[key]: value,
 				};
 
+				if (
+					!additionalStateDispatchers ||
+					!additionalStateDispatchers.length
+				) {
+					viewsDispatch({
+						type,
+						value,
+					});
+				}
+				else {
+					const stateUpdates: Array<{
+						type: EViewsActionTypes;
+						value: IStateInURL[keyof IStateInURL];
+					}> = [];
+
+					stateUpdates.push({
+						type,
+						value,
+					});
+
+					additionalStateDispatchers.forEach((stateDispatcher) => {
+						stateUpdates.push({
+							type: stateDispatcher.type,
+							value: stateDispatcher.value,
+						});
+
+						newState[stateDispatcher.key] = stateDispatcher.value;
+					});
+
+					viewsDispatch({
+						type: EViewsActionTypes.BATCH_UPDATE,
+						value: stateUpdates,
+					});
+				}
+
 				writeStateInURL(id, newState, stateInURLSettings);
 			};
 		},
-		[id, key, stateInURLSettings, type]
+		[additionalStateDispatchers, id, key, stateInURLSettings, type]
 	);
 }
 

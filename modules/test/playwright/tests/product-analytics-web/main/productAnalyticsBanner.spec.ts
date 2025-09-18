@@ -197,7 +197,9 @@ test(
 			await page
 				.getByRole('button', {name: 'Save'})
 				.dispatchEvent('click');
-			await waitForAlert(page);
+
+			await page.waitForTimeout(1000);
+			await page.reload();
 
 			await expect(enabledButton).toBeChecked();
 		});
@@ -241,6 +243,8 @@ test(
 				'Privacy',
 				'Cookie Manager'
 			);
+
+			await systemSettingsPage.page.waitForTimeout(1000);
 
 			const enabledButton = page.getByLabel('Enabled');
 			const isChecked = await enabledButton.isChecked();

@@ -69,6 +69,10 @@ public class LayoutActionDropdownItemsProvider {
 			Layout layout, boolean includeAddChildPageAction)
 		throws Exception {
 
+		if (layout.isTypeEmpty()) {
+			return _getEmptyLayoutActionDropdownItems(layout);
+		}
+
 		Layout draftLayout = _layoutsAdminDisplayContext.getDraftLayout(layout);
 
 		return DropdownItemListBuilder.addGroup(
@@ -164,34 +168,6 @@ public class LayoutActionDropdownItemsProvider {
 						() -> _layoutActionsHelper.isShowPermissionsAction(
 							layout, _layoutsAdminDisplayContext.getSelGroup()),
 						_getPermissionLayoutActionUnsafeConsumer(layout)
-					).build());
-				dropdownGroupItem.setSeparator(true);
-			}
-		).addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						() -> _layoutActionsHelper.isShowDeleteAction(layout),
-						_getDeleteLayoutActionUnsafeConsumer(layout)
-					).build());
-				dropdownGroupItem.setSeparator(true);
-			}
-		).build();
-	}
-
-	public List<DropdownItem> getEmptyLayoutActionDropdownItems(Layout layout) {
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_getEmptySelectLayoutPageTemplateEntryURL(
-									layout));
-							dropdownItem.setIcon("pencil");
-							dropdownItem.setLabel(
-								LanguageUtil.get(_httpServletRequest, "edit"));
-						}
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -491,6 +467,36 @@ public class LayoutActionDropdownItemsProvider {
 
 			dropdownItem.setLabel(label);
 		};
+	}
+
+	private List<DropdownItem> _getEmptyLayoutActionDropdownItems(
+		Layout layout) {
+
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_getEmptySelectLayoutPageTemplateEntryURL(
+									layout));
+							dropdownItem.setIcon("pencil");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_httpServletRequest, "edit"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _layoutActionsHelper.isShowDeleteAction(layout),
+						_getDeleteLayoutActionUnsafeConsumer(layout)
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
 	}
 
 	private String _getEmptySelectLayoutPageTemplateEntryURL(Layout layout)

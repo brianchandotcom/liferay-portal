@@ -82,17 +82,6 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 				_portal.getLiferayPortletResponse(resourceResponse),
 				_translationURLProvider);
 
-		if (layout.isTypeEmpty()) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"actions",
-					layoutActionDropdownItemsProvider.
-						getEmptyLayoutActionDropdownItems(layout)));
-
-			return;
-		}
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(

@@ -23,8 +23,7 @@ import java.util.Map;
 /**
  * @author Christopher Kian
  */
-public class ProductAnalyticsBannerDisplayContext
-	extends BaseProductAnalyticsDisplayContext {
+public class ProductAnalyticsBannerDisplayContext extends BaseDisplayContext {
 
 	public ProductAnalyticsBannerDisplayContext(
 		LayoutUtilityPageEntryLayoutProvider

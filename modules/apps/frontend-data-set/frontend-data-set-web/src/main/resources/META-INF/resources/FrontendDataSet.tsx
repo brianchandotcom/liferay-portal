@@ -88,7 +88,7 @@ import getViewComponent from './views/getViewComponent';
 
 // @ts-ignore
 
-import {VIEWS_ACTION_TYPES, viewsReducer} from './views/viewsReducer';
+import viewsReducer, {EViewsActionTypes} from './views/viewsReducer';
 
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
@@ -150,7 +150,7 @@ const FrontendDataSetContent = ({
 		id,
 		stateDispatcher: {
 			key: EStateInURLKeys.DELTA,
-			type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
+			type: EViewsActionTypes.UPDATE_PAGINATION_DELTA,
 		},
 		stateInURLSettings,
 		stateInitializer: (delta: number) => {
@@ -166,7 +166,7 @@ const FrontendDataSetContent = ({
 		id,
 		stateDispatcher: {
 			key: EStateInURLKeys.VIEW_NAME,
-			type: VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW,
+			type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
 		},
 		stateInURLSettings,
 		stateInitializer: (viewName: string) => {
@@ -441,7 +441,7 @@ const FrontendDataSetContent = ({
 		setSearching(true);
 
 		viewsDispatch({
-			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+			type: EViewsActionTypes.UPDATE_FILTERS,
 			value: filters.map((filter: any) => ({
 				...filter,
 				active: false,
@@ -520,7 +520,7 @@ const FrontendDataSetContent = ({
 					});
 
 					viewsDispatch({
-						type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+						type: EViewsActionTypes.UPDATE_FILTERS,
 						value: newFilters,
 					});
 				},
@@ -568,7 +568,7 @@ const FrontendDataSetContent = ({
 
 						if (error) {
 							viewsDispatch({
-								type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+								type: EViewsActionTypes.UPDATE_FIELD,
 								value: {
 									clientExtensionResolutionError: error,
 									name: field.fieldName,
@@ -579,7 +579,7 @@ const FrontendDataSetContent = ({
 						}
 
 						viewsDispatch({
-							type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+							type: EViewsActionTypes.UPDATE_FIELD,
 							value: {
 								htmlElementBuilder: binding,
 								name: field.fieldName,
@@ -697,7 +697,7 @@ const FrontendDataSetContent = ({
 
 	const handlePopState = useCallback(() => {
 		const stateUpdates: Array<{
-			type: VIEWS_ACTION_TYPES;
+			type: EViewsActionTypes;
 			value: IStateInURL[keyof IStateInURL];
 		}> = [];
 
@@ -706,7 +706,7 @@ const FrontendDataSetContent = ({
 		if (delta && delta !== paginationDelta) {
 			setPageNumber(1);
 			stateUpdates.push({
-				type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
+				type: EViewsActionTypes.UPDATE_PAGINATION_DELTA,
 				value: delta,
 			});
 		}
@@ -722,14 +722,14 @@ const FrontendDataSetContent = ({
 			});
 
 			stateUpdates.push({
-				type: VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW,
+				type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
 				value: view,
 			});
 		}
 
 		if (stateUpdates.length) {
 			viewsDispatch({
-				type: VIEWS_ACTION_TYPES.BATCH_UPDATE,
+				type: EViewsActionTypes.BATCH_UPDATE,
 				value: stateUpdates,
 			});
 		}
@@ -806,7 +806,7 @@ const FrontendDataSetContent = ({
 			.then((view: IView) => {
 				if (isMounted()) {
 					viewsDispatch({
-						type: VIEWS_ACTION_TYPES.UPDATE_VIEW_COMPONENT,
+						type: EViewsActionTypes.UPDATE_VIEW_COMPONENT,
 						value: {component: view, name: activeViewName},
 					});
 

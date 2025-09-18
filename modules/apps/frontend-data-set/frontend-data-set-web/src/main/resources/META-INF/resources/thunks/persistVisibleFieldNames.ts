@@ -9,7 +9,7 @@ import {saveViewSettings} from '../utils/saveViewSettings';
 
 // @ts-ignore
 
-import {VIEWS_ACTION_TYPES} from '../views/viewsReducer';
+import {EViewsActionTypes} from '../views/viewsReducer';
 
 export type VisibleFieldNames = {
 	[fieldName: string]: boolean;
@@ -28,7 +28,7 @@ export default function persistVisibleFieldNames({
 }) {
 	return (viewsDispatch: any) => {
 		viewsDispatch({
-			type: VIEWS_ACTION_TYPES.UPDATE_VISIBLE_FIELD_NAMES,
+			type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
 			value: visibleFieldNames,
 		});
 

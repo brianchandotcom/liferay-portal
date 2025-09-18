@@ -12,7 +12,7 @@ import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import ViewsContext from '../../../views/ViewsContext';
-import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
+import {EViewsActionTypes} from '../../../views/viewsReducer';
 import Filter from './Filter';
 
 function FilterResume(props) {
@@ -67,7 +67,7 @@ function FilterResume(props) {
 					setSearching(true);
 
 					viewsDispatch({
-						type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+						type: EViewsActionTypes.UPDATE_FILTERS,
 						value: filters.map((filter) => ({
 							...filter,
 							...(filter.id === props.id

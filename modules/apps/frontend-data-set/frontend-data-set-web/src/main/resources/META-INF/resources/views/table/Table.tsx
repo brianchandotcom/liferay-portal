@@ -50,7 +50,7 @@ import getCellColumnClassName from '../utils/getCellColumnClassName';
 
 // @ts-ignore
 
-import {VIEWS_ACTION_TYPES} from '../viewsReducer';
+import {EViewsActionTypes} from '../viewsReducer';
 import TableContext from './TableContext';
 import TableContextProvider from './TableContextProvider';
 
@@ -469,7 +469,7 @@ function HeadCellResizer({
 			const boundingClientRect = cellRef.current.getBoundingClientRect();
 
 			viewsDispatch({
-				type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+				type: EViewsActionTypes.UPDATE_FIELD,
 				value: {
 					name: columnName,
 					resizable: true,
@@ -812,7 +812,7 @@ const Table = ({
 		}
 
 		viewsDispatch({
-			type: VIEWS_ACTION_TYPES.UPDATE_SORTING,
+			type: EViewsActionTypes.UPDATE_SORTING,
 			value: updatedSorts,
 		});
 	};

@@ -10,7 +10,7 @@ import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import ViewsContext from '../../../views/ViewsContext';
-import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
+import {EViewsActionTypes} from '../../../views/viewsReducer';
 import FilterResume from './FilterResume';
 import SearchResume from './SearchResume';
 
@@ -26,7 +26,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 		setSearching(true);
 
 		viewsDispatch({
-			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+			type: EViewsActionTypes.UPDATE_FILTERS,
 			value: filters.map((filter) => ({
 				...filter,
 				active: false,

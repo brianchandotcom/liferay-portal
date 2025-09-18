@@ -34,7 +34,10 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.Serializable;
 
 import java.text.Format;
 
@@ -160,7 +163,8 @@ public class ObjectEntryUtil {
 	}
 
 	public static Map<String, Object> toProperties(
-		long companyId, InfoItemFieldValues infoItemFieldValues) {
+		long companyId, InfoItemFieldValues infoItemFieldValues,
+		Map<String, Serializable> originalValues) {
 
 		Map<String, Object> properties = new HashMap<>();
 
@@ -174,7 +178,8 @@ public class ObjectEntryUtil {
 					ObjectRelationship.class.getSimpleName() +
 						StringPool.POUND)) {
 
-				_addPropertyValue(infoField, infoFieldValue, properties);
+				_addPropertyValue(
+					infoField, infoFieldValue, originalValues, properties);
 
 				continue;
 			}
@@ -191,7 +196,8 @@ public class ObjectEntryUtil {
 				(Map<String, Object>)properties.computeIfAbsent(
 					objectRelationshipName, key -> new HashMap<>());
 
-			_addPropertyValue(infoField, infoFieldValue, relatedProperties);
+			_addPropertyValue(
+				infoField, infoFieldValue, null, relatedProperties);
 
 			if (relatedProperties.containsKey("externalReferenceCode")) {
 				continue;
@@ -228,6 +234,7 @@ public class ObjectEntryUtil {
 
 	private static void _addPropertyValue(
 		InfoField<?> infoField, InfoFieldValue<Object> infoFieldValue,
+		Map<String, Serializable> originalValues,
 		Map<String, Object> properties) {
 
 		Object value = infoFieldValue.getValue();
@@ -246,6 +253,14 @@ public class ObjectEntryUtil {
 				(locale, localizedValue) -> languageIdMap.put(
 					LocaleUtil.toLanguageId(locale),
 					_parseValue(infoField, localizedValue)));
+
+			if (MapUtil.isNotEmpty(originalValues)) {
+				MapUtil.isNotEmptyForEach(
+					(Map<String, Object>)originalValues.get(
+						infoField.getName() + "_i18n"),
+					(languageId, localizedValue) -> languageIdMap.putIfAbsent(
+						languageId, _parseValue(infoField, localizedValue)));
+			}
 
 			properties.put(infoField.getName() + "_i18n", languageIdMap);
 		}

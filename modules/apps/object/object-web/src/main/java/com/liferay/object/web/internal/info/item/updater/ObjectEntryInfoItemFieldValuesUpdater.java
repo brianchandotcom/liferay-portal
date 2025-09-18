@@ -80,7 +80,8 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		Map<String, Object> curProperties = ObjectEntryUtil.toProperties(
-			themeDisplay.getCompanyId(), infoItemFieldValues);
+			themeDisplay.getCompanyId(), infoItemFieldValues,
+			objectEntry.getValues());
 
 		try {
 			String scopeKey = ObjectEntryInfoItemUtil.getScopeKey(

@@ -494,64 +494,42 @@ public class ResourceOpenAPIParser {
 	public static boolean isByExternalReferenceCodeMethod(
 		String httpMethod, JavaMethodSignature javaMethodSignature) {
 
-		String parentSchemaName = javaMethodSignature.getParentSchemaName();
+		String parentSchemaName = GetterUtil.getString(
+			javaMethodSignature.getParentSchemaName());
+		String schemaName = GetterUtil.getString(
+			javaMethodSignature.getSchemaName());
 
-		String schemaName = javaMethodSignature.getSchemaName();
+		Set<String> validMethodNames = new HashSet<>();
 
-		httpMethod = StringUtil.toLowerCase(httpMethod);
-		boolean hasSchemaExternalReferenceCodePathParameter = hasPathParameter(
-			javaMethodSignature,
-			TextFormatter.format(schemaName, TextFormatter.I) +
-				"ExternalReferenceCode");
+		validMethodNames.add(httpMethod + "ByExternalReferenceCode");
+		validMethodNames.add(
+			StringBundler.concat(
+				httpMethod, parentSchemaName, "ByExternalReferenceCode",
+				schemaName));
+		validMethodNames.add(
+			StringBundler.concat(
+				httpMethod, parentSchemaName, schemaName,
+				"ByExternalReferenceCode"));
 
-		if (parentSchemaName == null) {
-			if (Objects.equals(
-					javaMethodSignature.getMethodName(),
-					httpMethod + "ByExternalReferenceCode") ||
-				Objects.equals(
-					javaMethodSignature.getMethodName(),
+		if (hasPathParameter(
+				javaMethodSignature,
+				OpenAPIParserUtil.getSchemaVarName(schemaName) +
+					"ExternalReferenceCode")) {
+
+			validMethodNames.add(httpMethod + schemaName);
+
+			if (hasPathParameter(
+					javaMethodSignature,
+					OpenAPIParserUtil.getSchemaVarName(parentSchemaName) +
+						"ExternalReferenceCode")) {
+
+				validMethodNames.add(
 					StringBundler.concat(
-						httpMethod, schemaName, "ByExternalReferenceCode")) ||
-				(Objects.equals(
-					javaMethodSignature.getMethodName(),
-					httpMethod + schemaName) &&
-				 hasSchemaExternalReferenceCodePathParameter)) {
-
-				return true;
+						httpMethod, parentSchemaName, schemaName));
 			}
-
-			return false;
 		}
 
-		String formattedParentSchemaName = TextFormatter.format(
-			parentSchemaName, TextFormatter.I);
-
-		if (Objects.equals(
-				javaMethodSignature.getMethodName(),
-				StringBundler.concat(
-					httpMethod, parentSchemaName, schemaName,
-					"ByExternalReferenceCode")) ||
-			Objects.equals(
-				javaMethodSignature.getMethodName(),
-				StringBundler.concat(
-					httpMethod, parentSchemaName, "ByExternalReferenceCode",
-					schemaName)) ||
-			(Objects.equals(
-				javaMethodSignature.getMethodName(),
-				StringBundler.concat(
-					httpMethod, parentSchemaName, schemaName)) &&
-			 hasSchemaExternalReferenceCodePathParameter &&
-			 hasPathParameter(
-				 javaMethodSignature,
-				 formattedParentSchemaName + "ExternalReferenceCode")) ||
-			(Objects.equals(
-				javaMethodSignature.getMethodName(), httpMethod + schemaName) &&
-			 hasSchemaExternalReferenceCodePathParameter)) {
-
-			return true;
-		}
-
-		return false;
+		return validMethodNames.contains(javaMethodSignature.getMethodName());
 	}
 
 	private static void _addBatchJavaMethodSignature(

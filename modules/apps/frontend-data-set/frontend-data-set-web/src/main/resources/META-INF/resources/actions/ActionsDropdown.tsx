@@ -202,7 +202,7 @@ function ActionsDropdown({
 
 				return (
 					<ClayDropDown.Group {...item} key={i}>
-						{separator && <ClayDropDown.Divider />}
+						{separator && i !== 0 && <ClayDropDown.Divider />}
 
 						{renderItems(nestedItems)}
 					</ClayDropDown.Group>

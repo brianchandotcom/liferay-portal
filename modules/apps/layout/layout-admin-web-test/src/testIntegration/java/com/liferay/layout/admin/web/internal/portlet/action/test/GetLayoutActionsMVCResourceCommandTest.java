@@ -96,13 +96,8 @@ public class GetLayoutActionsMVCResourceCommandTest {
 			LayoutConstants.TYPE_EMPTY, false, StringPool.BLANK,
 			serviceContext);
 
-		String[] emptyActions = {
-			"Edit", "Translate", "View", "Convert to Page Template",
-			"Make a Copy", "Export for Translation", "Import Translation",
-			"Configure", "Permissions", "Delete"
-		};
-
-		_assertActionDropdownItems(layout.getPlid(), emptyActions);
+		_assertActionDropdownItems(
+			layout.getPlid(), new String[] {"Edit", "Delete"});
 	}
 
 	private void _assertActionDropdownItems(long plid, String[] actions)

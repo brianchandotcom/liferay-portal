@@ -110,8 +110,10 @@ public class BatchEngineExportTaskExecutorImpl
 				BatchEngineTaskExecuteStatus.STARTED.toString());
 			batchEngineExportTask.setStartTime(new Date());
 
-			_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
-				batchEngineExportTask);
+			if (settings.isPersist()) {
+				_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
+					batchEngineExportTask);
+			}
 
 			InputStream inputStream = BatchEngineTaskExecutorUtil.execute(
 				true, () -> _exportItems(batchEngineExportTask, settings),
@@ -119,7 +121,7 @@ public class BatchEngineExportTaskExecutorImpl
 
 			_updateBatchEngineExportTask(
 				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineExportTask,
-				null);
+				null, settings.isPersist());
 
 			return new Result() {
 
@@ -141,19 +143,23 @@ public class BatchEngineExportTaskExecutorImpl
 					batchEngineExportTask,
 				throwable);
 
-			try {
-				BatchEngineExportTask currentBatchEngineExportTask =
-					_batchEngineExportTaskLocalService.getBatchEngineExportTask(
-						batchEngineExportTask.getPrimaryKey());
+			if (settings.isPersist()) {
+				try {
+					BatchEngineExportTask currentBatchEngineExportTask =
+						_batchEngineExportTaskLocalService.
+							getBatchEngineExportTask(
+								batchEngineExportTask.getPrimaryKey());
 
-				_updateBatchEngineExportTask(
-					BatchEngineTaskExecuteStatus.FAILED,
-					currentBatchEngineExportTask, throwable.getMessage());
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to update batch engine export task",
-					portalException);
+					_updateBatchEngineExportTask(
+						BatchEngineTaskExecuteStatus.FAILED,
+						currentBatchEngineExportTask, throwable.getMessage(),
+						settings.isPersist());
+				}
+				catch (PortalException portalException) {
+					_log.error(
+						"Unable to update batch engine export task",
+						portalException);
+				}
 			}
 		}
 		finally {
@@ -239,9 +245,11 @@ public class BatchEngineExportTaskExecutorImpl
 					batchEngineExportTask.getProcessedItemsCount() +
 						items.size());
 
-				batchEngineExportTask =
-					_batchEngineExportTaskLocalService.
-						updateBatchEngineExportTask(batchEngineExportTask);
+				if (settings.isPersist()) {
+					batchEngineExportTask =
+						_batchEngineExportTaskLocalService.
+							updateBatchEngineExportTask(batchEngineExportTask);
+				}
 
 				if (Thread.interrupted()) {
 					throw new InterruptedException();
@@ -379,16 +387,19 @@ public class BatchEngineExportTaskExecutorImpl
 
 	private void _updateBatchEngineExportTask(
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus,
-		BatchEngineExportTask batchEngineExportTask, String errorMessage) {
+		BatchEngineExportTask batchEngineExportTask, String errorMessage,
+		boolean persist) {
 
 		batchEngineExportTask.setEndTime(new Date());
 		batchEngineExportTask.setErrorMessage(errorMessage);
 		batchEngineExportTask.setExecuteStatus(
 			batchEngineTaskExecuteStatus.toString());
 
-		batchEngineExportTask =
-			_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
-				batchEngineExportTask);
+		if (persist) {
+			batchEngineExportTask =
+				_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
+					batchEngineExportTask);
+		}
 
 		BatchEngineTaskCallbackUtil.sendCallback(
 			batchEngineExportTask.getCallbackURL(),

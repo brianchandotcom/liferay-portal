@@ -18,7 +18,6 @@ import React, {useState} from 'react';
 
 import {
 	assetLibraryViews,
-	cmsFileViews,
 	documentViews,
 	userViews,
 } from './utils/defaultViews';
@@ -108,21 +107,6 @@ const userAccountsItemSelectorConfig = {
 	views: userViews,
 };
 
-const cmsFileItemSelectorConfig = {
-	apiURL: `${location.origin}/o/search/v1.0/search?${[
-		'emptySearch=true',
-		'nestedFields=embedded,file.thumbnailURL',
-		"filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))",
-	].join('&')}`,
-	itemTypeLabel: Liferay.Language.get('file'),
-	locator: {
-		id: 'embedded.id',
-		label: 'embedded.title',
-		value: 'embedded.id',
-	},
-	views: cmsFileViews,
-};
-
 function getRandomId(): string {
 	return Math.random().toString(36).substring(2, 9);
 }
@@ -161,9 +145,9 @@ export default function ItemSelectorSamples() {
 		open: userItemSelectorOpen,
 	} = useModal();
 	const {
-		observer: cmsFileItemSelectorObserver,
-		onOpenChange: cmsFileItemSelectorOpenChange,
-		open: cmsFileItemSelectorOpen,
+		observer: cmsFilesItemSelectorObserver,
+		onOpenChange: cmsFilesItemSelectorOpenChange,
+		open: cmsFilesItemSelectorOpen,
 	} = useModal();
 
 	return (
@@ -272,7 +256,6 @@ export default function ItemSelectorSamples() {
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					itemSelectorModalProps={{
 						fdsProps: {
-							...FDS_DEFAULT_PROPS,
 							id: `itemSelectorModal-users-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -304,7 +287,6 @@ export default function ItemSelectorSamples() {
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					itemSelectorModalProps={{
 						fdsProps: {
-							...FDS_DEFAULT_PROPS,
 							id: `itemSelectorModal-documents-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -339,7 +321,6 @@ export default function ItemSelectorSamples() {
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 					itemSelectorModalProps={{
 						fdsProps: {
-							...FDS_DEFAULT_PROPS,
 							id: `itemSelectorModal-spaces-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -371,7 +352,6 @@ export default function ItemSelectorSamples() {
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 					itemSelectorModalProps={{
 						fdsProps: {
-							...FDS_DEFAULT_PROPS,
 							id: `itemSelectorModal-spaces-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -472,18 +452,17 @@ export default function ItemSelectorSamples() {
 				<CMSFilesItemSelectorModal
 					items={cmsFiles}
 					multiSelect
-					observer={cmsFileItemSelectorObserver}
+					observer={cmsFilesItemSelectorObserver}
 					onItemsChange={(items: any) => {
 						setCMSFiles(items);
 					}}
-					onOpenChange={cmsFileItemSelectorOpenChange}
-					open={cmsFileItemSelectorOpen}
+					onOpenChange={cmsFilesItemSelectorOpenChange}
+					open={cmsFilesItemSelectorOpen}
 				/>
 
 				<ItemSelectorModal<Document>
 					apiURL={documentsItemSelectorConfig.apiURL}
 					fdsProps={{
-						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-documents-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:
@@ -505,7 +484,6 @@ export default function ItemSelectorSamples() {
 				<ItemSelectorModal<Space>
 					apiURL={assetLibrariesItemSelectorConfig.apiURL}
 					fdsProps={{
-						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-assets-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:
@@ -528,7 +506,6 @@ export default function ItemSelectorSamples() {
 				<ItemSelectorModal<User>
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					fdsProps={{
-						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-users-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:
@@ -577,10 +554,10 @@ export default function ItemSelectorSamples() {
 					<ClayButton
 						displayType="primary"
 						onClick={() => {
-							cmsFileItemSelectorOpenChange(true);
+							cmsFilesItemSelectorOpenChange(true);
 						}}
 					>
-						Select CMS File
+						Select CMS Files
 					</ClayButton>
 				</ClayButton.Group>
 

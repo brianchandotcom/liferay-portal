@@ -5,10 +5,13 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
 import {dateUtils, sub} from 'frontend-js-web';
 import React from 'react';
 
 import formatActionURL from '../../../common/utils/formatActionURL';
+import {getFileMimeTypeObjectDefinitionStickerValue} from '../utils/transformViewsItemProps';
 
 interface ActionItem {
 	data: {id: string};
@@ -21,11 +24,18 @@ const formatDate = (date: string) => {
 
 export default function AssetRenderer({
 	actions,
+	additionalProps,
 	itemData,
 	options,
 	value,
 }: {
 	actions: ActionItem[];
+	additionalProps: {
+		fileMimeTypeCssClasses: Record<string, string>;
+		fileMimeTypeIcons: Record<string, string>;
+		objectDefinitionCssClasses: Record<string, string>;
+		objectDefinitionIcons: Record<string, string>;
+	};
 	itemData: any;
 	options: {actionId: string};
 	value: string;
@@ -46,9 +56,29 @@ export default function AssetRenderer({
 
 	return (
 		<div className="d-flex">
-			<ClayIcon className="m-3" symbol="document-default" />
+			<ClaySticker
+				className={classNames(
+					'c-mr-2',
+					'flex-shrink-0',
+					'inline-item',
+					'inline-item-before',
+					getFileMimeTypeObjectDefinitionStickerValue(
+						additionalProps.fileMimeTypeCssClasses,
+						additionalProps.objectDefinitionCssClasses,
+						itemData
+					)
+				)}
+			>
+				<ClayIcon
+					symbol={getFileMimeTypeObjectDefinitionStickerValue(
+						additionalProps.fileMimeTypeIcons,
+						additionalProps.objectDefinitionIcons,
+						itemData
+					)}
+				/>
+			</ClaySticker>
 
-			<div className="">
+			<div>
 				<div className="table-list-title">
 					<ClayLink
 						className="text-decoration-underline"

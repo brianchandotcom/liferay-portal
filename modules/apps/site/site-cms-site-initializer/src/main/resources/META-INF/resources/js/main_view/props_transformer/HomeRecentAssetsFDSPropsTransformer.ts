@@ -8,6 +8,7 @@ import {openModal} from 'frontend-js-components-web';
 
 import formatActionURL from '../../common/utils/formatActionURL';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
+import {AdditionalProps} from './AssetsFDSPropsTransformer';
 import deleteItemAction from './actions/deleteItemAction';
 import shareAction from './actions/shareAction';
 import AssetRenderer from './cell_renderers/AssetRenderer';
@@ -17,11 +18,7 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 	itemsActions = [],
 	...otherProps
 }: {
-	additionalProps: {
-		autocompleteURL: string;
-		cmsGroupId?: number;
-		collaboratorURLs: Record<string, string>;
-	};
+	additionalProps: AdditionalProps;
 	itemsActions?: any[];
 	otherProps: any;
 }) {
@@ -30,7 +27,14 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 		customRenderers: {
 			tableCell: [
 				{
-					component: AssetRenderer,
+					component: ({actions, itemData, options, value}) =>
+						AssetRenderer({
+							actions,
+							additionalProps,
+							itemData,
+							options,
+							value,
+						}),
 					name: 'assetRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

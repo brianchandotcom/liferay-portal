@@ -84,17 +84,9 @@ public class ConvertEmptyLayoutMVCActionCommand
 
 			long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
-			Map<Locale, String> nameMap = HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(),
-				ParamUtil.getString(actionRequest, "name")
-			).build();
-
 			Layout layout = _layoutLocalService.fetchLayout(selPlid);
 
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				Layout.class.getName(), actionRequest);
+			Layout layoutPageTemplateEntryLayout = null;
 
 			long layoutPageTemplateEntryId = ParamUtil.getLong(
 				actionRequest, "layoutPageTemplateEntryId");
@@ -102,8 +94,6 @@ public class ConvertEmptyLayoutMVCActionCommand
 			long masterLayoutPlid = ParamUtil.getLong(
 				actionRequest, "masterLayoutPlid",
 				LayoutConstants.DEFAULT_PLID);
-
-			Layout layoutPageTemplateEntryLayout = null;
 
 			if (layoutPageTemplateEntryId > 0) {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -126,6 +116,21 @@ public class ConvertEmptyLayoutMVCActionCommand
 				}
 			}
 
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			Map<Locale, String> nameMap = HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(),
+				ParamUtil.getString(actionRequest, "name")
+			).build();
+
+			String redirect = null;
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Layout.class.getName(), actionRequest);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 				layout = _layoutLocalService.updateLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),
@@ -141,6 +146,22 @@ public class ConvertEmptyLayoutMVCActionCommand
 					_layoutLocalService.copyLayoutContent(
 						layoutPageTemplateEntryLayout, layout);
 				}
+
+				redirect = PortletURLBuilder.createRenderURL(
+					_portal.getLiferayPortletResponse(actionResponse)
+				).setMVCRenderCommandName(
+					"/layout_admin/edit_layout"
+				).setBackURL(
+					_getBackURL(actionRequest)
+				).setParameter(
+					"backURLTitle", layout.getName()
+				).setParameter(
+					"groupId", themeDisplay.getScopeGroupId()
+				).setParameter(
+					"privateLayout", layout.isPrivateLayout()
+				).setParameter(
+					"selPlid", selPlid
+				).buildString();
 			}
 			else {
 				if (draftLayout == null) {
@@ -192,31 +213,7 @@ public class ConvertEmptyLayoutMVCActionCommand
 				_layoutLocalService.updateStatus(
 					layout.getUserId(), layout.getPlid(),
 					WorkflowConstants.STATUS_DRAFT, serviceContext);
-			}
 
-			String redirect = null;
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-				redirect = PortletURLBuilder.createRenderURL(
-					_portal.getLiferayPortletResponse(actionResponse)
-				).setMVCRenderCommandName(
-					"/layout_admin/edit_layout"
-				).setBackURL(
-					_getBackURL(actionRequest)
-				).setParameter(
-					"backURLTitle", layout.getName()
-				).setParameter(
-					"groupId", themeDisplay.getScopeGroupId()
-				).setParameter(
-					"privateLayout", layout.isPrivateLayout()
-				).setParameter(
-					"selPlid", selPlid
-				).buildString();
-			}
-			else {
 				redirect = HttpComponentsUtil.addParameters(
 					PortalUtil.getLayoutFullURL(draftLayout, themeDisplay),
 					"p_l_back_url", _getBackURL(actionRequest),

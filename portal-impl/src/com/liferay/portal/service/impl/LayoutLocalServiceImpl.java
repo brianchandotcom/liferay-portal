@@ -3094,15 +3094,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setExpandoBridgeAttributes(serviceContext);
 
-		if ((layout.getStatus() == WorkflowConstants.STATUS_EMPTY) &&
-			!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-
-			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
-		}
-		else if ((layout.getStatus() == WorkflowConstants.STATUS_EMPTY) &&
-				 Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-
-			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
+		if (layout.getStatus() == WorkflowConstants.STATUS_EMPTY) {
+			layout.setStatus(
+				Objects.equals(type, LayoutConstants.TYPE_CONTENT) ?
+					WorkflowConstants.STATUS_DRAFT :
+						WorkflowConstants.STATUS_APPROVED);
 		}
 
 		layout = layoutLocalService.updateLayout(layout);

@@ -7,21 +7,30 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTable from '@clayui/table';
 import {getObjectValueFromPath, sub} from 'frontend-js-web';
-import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 
-function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
+function SelectableTable({
+	dataLoading,
+	items: itemsProp,
+	schema,
+	style,
+}: {
+	dataLoading: boolean;
+	items: any[];
+	schema: any;
+	style: string;
+}) {
 	const {namespace, selectedItemsKey} = useContext(FrontendDataSetContext);
 
-	const [items, setItems] = useState(null);
+	const [items, setItems] = useState(itemsProp);
 
-	useEffect(() => {
-		setItems(itemsProp);
-	}, [itemsProp]);
-
-	function handleCheckboxChange(itemField, itemId, value) {
+	function handleCheckboxChange(
+		itemField: string,
+		itemId: string | null,
+		value?: boolean
+	) {
 		const updatedItems = items.map((item) => {
 			const currentItemId = getObjectValueFromPath({
 				object: item,
@@ -31,7 +40,7 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 				return {
 					...item,
 					restrictionFields: item.restrictionFields.map(
-						(currentField) => {
+						(currentField: any) => {
 							if (itemField !== currentField.name) {
 								return currentField;
 							}
@@ -58,7 +67,7 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 		return <ClayLoadingIndicator className="mt-7" />;
 	}
 
-	if (!items?.length) {
+	if (!items || !items.length) {
 		return null;
 	}
 
@@ -75,11 +84,11 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 							{schema.firstColumnLabel}
 						</ClayTable.Cell>
 
-						{items[0].restrictionFields.map((columnField) => {
+						{items[0].restrictionFields.map((columnField: any) => {
 							const checkedItems = items.reduce(
 								(checked, item) => {
 									const field = item.restrictionFields.find(
-										(itemField) =>
+										(itemField: any) =>
 											itemField.name === columnField.name
 									);
 
@@ -132,7 +141,7 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 									{item[schema.firstColumnName]}
 								</ClayTable.Cell>
 
-								{item.restrictionFields.map((field) => {
+								{item.restrictionFields.map((field: any) => {
 									return (
 										<ClayTable.Cell key={field.name}>
 											<ClayCheckbox
@@ -168,19 +177,5 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 		</div>
 	);
 }
-
-SelectableTable.propTypes = {
-	items: PropTypes.arrayOf(PropTypes.object),
-	itemsActions: PropTypes.array,
-	schema: PropTypes.shape({
-		firstColumnLabel: PropTypes.string.isRequired,
-		firstColumnName: PropTypes.string.isRequired,
-	}).isRequired,
-	style: PropTypes.string.isRequired,
-};
-
-SelectableTable.defaultProps = {
-	items: [],
-};
 
 export default SelectableTable;

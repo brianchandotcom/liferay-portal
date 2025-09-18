@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IView} from '../utils/types';
 import Cards from './cards/Cards';
 import EmailsList from './emails_list/EmailsList';
 import List from './list/List';
@@ -19,8 +20,8 @@ const VIEWS = {
 	timeline: Timeline,
 };
 
-const getViewComponent = (view) => {
-	return view.component || VIEWS[view.contentRenderer];
+const getViewComponent = (view: IView) => {
+	return view.component || VIEWS[view.contentRenderer as keyof typeof VIEWS];
 };
 
 export default getViewComponent;

@@ -8,7 +8,17 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function TimelineEntry({date, description, title}) {
+import {IFrontendDataSetContext} from '../../FrontendDataSetContext';
+
+function TimelineEntry({
+	date,
+	description,
+	title,
+}: {
+	date: string;
+	description: string;
+	title: string;
+}) {
 	return (
 		<li className="timeline-item">
 			<div className="panel panel-secondary">
@@ -40,14 +50,20 @@ TimelineEntry.propTypes = {
 
 TimelineEntry.defaultProps = {};
 
-function Timeline({frontendDataSetContext, items}) {
+function Timeline({
+	frontendDataSetContext,
+	items,
+}: {
+	frontendDataSetContext: IFrontendDataSetContext;
+	items: any[];
+}) {
 	if (!items?.length) {
 		return null;
 	}
 
 	return (
 		<ClayList className={classNames('mb-0', 'timeline')}>
-			{items.map((item, i) => (
+			{items.map((item: any, i: number) => (
 				<TimelineEntry
 					key={i}
 					{...item}
@@ -58,14 +74,5 @@ function Timeline({frontendDataSetContext, items}) {
 		</ClayList>
 	);
 }
-
-Timeline.propTypes = {
-	frontendDataSetContext: PropTypes.any,
-	items: PropTypes.array,
-};
-
-Timeline.defaultProps = {
-	items: [],
-};
 
 export default Timeline;

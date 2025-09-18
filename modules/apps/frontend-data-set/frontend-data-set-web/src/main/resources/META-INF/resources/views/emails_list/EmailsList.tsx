@@ -8,31 +8,31 @@ import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import {getObjectValueFromPath} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 
 function Email({
-	actionDropdownItems,
-	author,
 	borderBottom,
-	date,
-	frontendDataSetContext,
-	href,
+	item,
 	items,
-	status,
-	subject,
-	summary,
+}: {
+	borderBottom: boolean;
+	item: any;
+	items: any[];
 }) {
-	const {openSidePanel} = useContext(frontendDataSetContext);
+	const {openSidePanel, selectedItemsKey} = useContext(
+		FrontendDataSetContext
+	);
 
-	function handleClickOnSubject(event) {
+	function handleClickOnSubject(event: any) {
 		event.preventDefault();
 
 		openSidePanel({
 			slug: 'email',
-			url: href,
+			url: item.href,
 		});
 	}
 
@@ -50,7 +50,7 @@ function Email({
 					<div className="row">
 						<div className="col">
 							<div className="row">
-								{author.avatarSrc && (
+								{item.author?.avatarSrc && (
 									<div className="col-auto">
 										<ClaySticker
 											className="sticker-user-icon"
@@ -59,7 +59,7 @@ function Email({
 											<div className="sticker-overlay">
 												<img
 													className="sticker-img"
-													src={author.avatarSrc}
+													src={item.author?.avatarSrc}
 												/>
 											</div>
 										</ClaySticker>
@@ -68,11 +68,11 @@ function Email({
 
 								<div className="col d-flex flex-column justify-content-center">
 									<small className="d-block text-body">
-										<strong>{author.name}</strong>
+										<strong>{item.author.name}</strong>
 									</small>
 
 									<small className="d-block">
-										{author.email}
+										{item.author.email}
 									</small>
 								</div>
 							</div>
@@ -80,31 +80,41 @@ function Email({
 
 						<div className="col-auto d-flex flex-column justify-content-center">
 							<ClayLabel
-								displayType={status.displayStyle || 'success'}
+								displayType={
+									item.status?.displayStyle || 'success'
+								}
 							>
-								{status.label}
+								{item.status?.label}
 							</ClayLabel>
 						</div>
 
 						<div className="col-auto d-flex flex-column justify-content-center">
-							<small>{date}</small>
+							<small>{item.date}</small>
 						</div>
 
 						<div className="col-12">
 							<div className="h5 mt-3">
 								<a href="#" onClick={handleClickOnSubject}>
-									{subject}
+									{item.subject}
 								</a>
 							</div>
 
-							<div>{summary}</div>
+							<div>{item.summary}</div>
 						</div>
 					</div>
 				</div>
 
-				{actionDropdownItems.length ? (
+				{item.actionDropdownItems?.length ? (
 					<div className="col-auto d-flex flex-column justify-content-center">
-						<Actions actions={actionDropdownItems} items={items} />
+						<Actions
+							actions={item.actionDropdownItems}
+							itemData={undefined}
+							itemId={getObjectValueFromPath({
+								object: item,
+								path: selectedItemsKey,
+							})}
+							items={items}
+						/>
 					</div>
 				) : null}
 			</div>
@@ -112,30 +122,14 @@ function Email({
 	);
 }
 
-Email.propTypes = {
-	actionDropdownItems: PropTypes.array,
-	author: PropTypes.shape({
-		avatarSrc: PropTypes.string,
-		email: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-	}).isRequired,
-	borderBottom: PropTypes.bool,
-	date: PropTypes.string.isRequired,
-	href: PropTypes.string,
-	status: PropTypes.shape({
-		displayStyle: PropTypes.string,
-		label: PropTypes.string.isRequired,
-	}),
-	subject: PropTypes.string.isRequired,
-	summary: PropTypes.string.isRequired,
-};
-
-Email.defaultProps = {
-	actionItems: [],
-};
-
-function EmailsList({dataLoading, frontendDataSetContext, items}) {
-	const {style} = useContext(frontendDataSetContext);
+function EmailsList({
+	dataLoading,
+	items,
+}: {
+	dataLoading: boolean;
+	items: any[];
+}) {
+	const {style} = useContext(FrontendDataSetContext);
 
 	if (dataLoading) {
 		return <ClayLoadingIndicator className="mt-7" />;
@@ -152,26 +146,16 @@ function EmailsList({dataLoading, frontendDataSetContext, items}) {
 				style === 'default' ? 'border-bottom' : 'border'
 			)}
 		>
-			{items.map((item, i) => (
+			{items.map((item: any, i: number) => (
 				<Email
-					key={i}
-					{...item}
 					borderBottom={i !== items.length - 1}
-					frontendDataSetContext={frontendDataSetContext}
+					item={item}
 					items={items}
+					key={i}
 				/>
 			))}
 		</ClayList>
 	);
 }
-
-EmailsList.propTypes = {
-	frontendDataSetContext: PropTypes.any,
-	items: PropTypes.array,
-};
-
-EmailsList.defaultProps = {
-	items: [],
-};
 
 export default EmailsList;

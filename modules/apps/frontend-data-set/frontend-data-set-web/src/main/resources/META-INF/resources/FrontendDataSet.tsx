@@ -283,7 +283,7 @@ const FrontendDataSetContent = ({
 		}
 
 		const activeView = {
-			component: getViewComponent(initialActiveView),
+			component: getViewComponent(initialActiveView as IView),
 			...initialActiveView,
 		};
 

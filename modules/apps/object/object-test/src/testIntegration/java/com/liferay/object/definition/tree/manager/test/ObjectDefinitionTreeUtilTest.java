@@ -118,6 +118,13 @@ public class ObjectDefinitionTreeUtilTest {
 			_objectFieldLocalService.fetchObjectField(
 				_objectRelationshipA_AA.getObjectFieldId2());
 
+		_objectDefinitionAB = _addAndPublishCustomObjectDefinition();
+
+		_objectRelationshipA_AB =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinitionA,
+				_objectDefinitionAB);
+
 		_objectDefinitionAAA = _addAndPublishCustomObjectDefinition();
 
 		_objectRelationshipAA_AAA =
@@ -135,10 +142,6 @@ public class ObjectDefinitionTreeUtilTest {
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				_objectRelationshipLocalService, _objectDefinitionAAA,
 				_objectDefinitionAAAA);
-
-		_objectRelationshipAAA_AAAAObjectField2 =
-			_objectFieldLocalService.fetchObjectField(
-				_objectRelationshipAAA_AAAA.getObjectFieldId2());
 
 		_objectDefinitionB = _addAndPublishCustomObjectDefinition();
 
@@ -1182,13 +1185,192 @@ public class ObjectDefinitionTreeUtilTest {
 
 	@Test
 	public void testUnbindObjectDefinitions() throws Exception {
-		_testUnbindObjectDefinitions();
-		_testUnbindObjectDefinitionsWithDescendantNode();
-		_testUnbindObjectDefinitionsWithDescendantNodeAndGrandParentNodes();
-		_testUnbindObjectDefinitionsWithDescendantNodeAndParentNodes();
-		_testUnbindObjectDefinitionsWithGrandParentNodes();
-		_testUnbindObjectDefinitionsWithParentNodes();
-		_testUnbindObjectDefinitionsWithSiblingNode();
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService, List.of(_objectRelationshipA_AA));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA, new ObjectDefinition[] {_objectDefinitionA}
+			).build());
+
+		TreeTestUtil.unbind(
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipA_AA.getObjectRelationshipId()),
+			_objectRelationshipLocalService);
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[0]
+			).put(
+				_objectDefinitionAA, new ObjectDefinition[0]
+			).build());
+	}
+
+	@Test
+	public void testUnbindObjectDefinitionsWithDescendantNode()
+		throws Exception {
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(_objectRelationshipA_AA, _objectRelationshipAA_AAA));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAAA,
+				new ObjectDefinition[] {_objectDefinitionA}
+			).build());
+
+		TreeTestUtil.unbind(
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipA_AA.getObjectRelationshipId()),
+			_objectRelationshipLocalService);
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[0]
+			).put(
+				_objectDefinitionAA,
+				new ObjectDefinition[] {_objectDefinitionAA}
+			).put(
+				_objectDefinitionAAA,
+				new ObjectDefinition[] {_objectDefinitionAA}
+			).build());
+	}
+
+	@Test
+	public void testUnbindObjectDefinitionsWithDescendantNodeAndGrandParentNodes()
+		throws Exception {
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(
+				_objectRelationshipA_AA, _objectRelationshipAA_AAA,
+				_objectRelationshipAAA_AAAA, _objectRelationshipB_AA));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionAAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionAAAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionB, new ObjectDefinition[] {_objectDefinitionB}
+			).build());
+
+		TreeTestUtil.unbind(
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipAA_AAA.getObjectRelationshipId()),
+			_objectRelationshipLocalService);
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionAAA,
+				new ObjectDefinition[] {_objectDefinitionAAA}
+			).put(
+				_objectDefinitionAAAA,
+				new ObjectDefinition[] {_objectDefinitionAAA}
+			).put(
+				_objectDefinitionB, new ObjectDefinition[] {_objectDefinitionB}
+			).build());
+	}
+
+	@Test
+	public void testUnbindObjectDefinitionsWithDescendantNodeAndParentNodes()
+		throws Exception {
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(
+				_objectRelationshipA_AA, _objectRelationshipAA_AAA,
+				_objectRelationshipB_AA));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionAAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionB, new ObjectDefinition[] {_objectDefinitionB}
+			).build());
+
+		TreeTestUtil.unbind(
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipB_AA.getObjectRelationshipId()),
+			_objectRelationshipLocalService);
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAAA,
+				new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionB, new ObjectDefinition[0]
+			).build());
+	}
+
+	@Test
+	public void testUnbindObjectDefinitionsWithGrandParentNodes()
+		throws Exception {
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(
+				_objectRelationshipA_AA, _objectRelationshipAA_AAA,
+				_objectRelationshipB_AA));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionAAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionB, new ObjectDefinition[] {_objectDefinitionB}
+			).build());
+
+		TreeTestUtil.unbind(
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipAA_AAA.getObjectRelationshipId()),
+			_objectRelationshipLocalService);
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionAAA, new ObjectDefinition[0]
+			).put(
+				_objectDefinitionB, new ObjectDefinition[] {_objectDefinitionB}
+			).build());
 	}
 
 	@Test
@@ -1665,6 +1847,37 @@ public class ObjectDefinitionTreeUtilTest {
 	}
 
 	@Test
+	public void testUnbindObjectDefinitionsWithParentNodes() throws Exception {
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(_objectRelationshipA_AA, _objectRelationshipB_AA));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA,
+				new ObjectDefinition[] {_objectDefinitionA, _objectDefinitionB}
+			).put(
+				_objectDefinitionB, new ObjectDefinition[] {_objectDefinitionB}
+			).build());
+
+		TreeTestUtil.unbind(
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipB_AA.getObjectRelationshipId()),
+			_objectRelationshipLocalService);
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionB, new ObjectDefinition[0]
+			).build());
+	}
+
+	@Test
 	public void testUnbindObjectDefinitionsWithResourcePermissions()
 		throws Exception {
 
@@ -1760,6 +1973,36 @@ public class ObjectDefinitionTreeUtilTest {
 				ResourceConstants.SCOPE_GROUP_TEMPLATE,
 				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 				organizationRole.getRoleId(), objectAction.getName()));
+	}
+
+	@Test
+	public void testUnbindObjectDefinitionsWithSiblingNode() throws Exception {
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			List.of(_objectRelationshipA_AA, _objectRelationshipA_AB));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAB, new ObjectDefinition[] {_objectDefinitionA}
+			).build());
+
+		TreeTestUtil.unbind(
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationshipA_AB.getObjectRelationshipId()),
+			_objectRelationshipLocalService);
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				_objectDefinitionAB, new ObjectDefinition[0]
+			).build());
 	}
 
 	@Test
@@ -2446,266 +2689,6 @@ public class ObjectDefinitionTreeUtilTest {
 			_objectDefinitionLocalService);
 	}
 
-	private void _testUnbindObjectDefinitions() throws Exception {
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA, new ObjectDefinition[] {objectDefinitionA}
-			).build());
-
-		TreeTestUtil.unbind(
-			objectRelationshipA_AA, _objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[0]
-			).put(
-				objectDefinitionAA, new ObjectDefinition[0]
-			).build());
-	}
-
-	private void _testUnbindObjectDefinitionsWithDescendantNode()
-		throws Exception {
-
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionAAA =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionAA.getObjectDefinitionId(),
-			objectDefinitionAAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAAA, new ObjectDefinition[] {objectDefinitionA}
-			).build());
-
-		TreeTestUtil.unbind(
-			objectRelationshipA_AA, _objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[0]
-			).put(
-				objectDefinitionAA, new ObjectDefinition[] {objectDefinitionAA}
-			).put(
-				objectDefinitionAAA, new ObjectDefinition[] {objectDefinitionAA}
-			).build());
-	}
-
-	private void _testUnbindObjectDefinitionsWithDescendantNodeAndGrandParentNodes()
-		throws Exception {
-
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionAAA =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipAA_AAA = TreeTestUtil.bind(
-			objectDefinitionAA.getObjectDefinitionId(),
-			objectDefinitionAAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionAAAA =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionAAA.getObjectDefinitionId(),
-			objectDefinitionAAAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionB =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionB.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionAAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionAAAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionB, new ObjectDefinition[] {objectDefinitionB}
-			).build());
-
-		TreeTestUtil.unbind(
-			objectRelationshipAA_AAA, _objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionAAA,
-				new ObjectDefinition[] {objectDefinitionAAA}
-			).put(
-				objectDefinitionAAAA,
-				new ObjectDefinition[] {objectDefinitionAAA}
-			).put(
-				objectDefinitionB, new ObjectDefinition[] {objectDefinitionB}
-			).build());
-	}
-
-	private void _testUnbindObjectDefinitionsWithDescendantNodeAndParentNodes()
-		throws Exception {
-
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionAAA =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionAA.getObjectDefinitionId(),
-			objectDefinitionAAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionB =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipB_AA = TreeTestUtil.bind(
-			objectDefinitionB.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionAAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionB, new ObjectDefinition[] {objectDefinitionB}
-			).build());
-
-		TreeTestUtil.unbind(
-			objectRelationshipB_AA, _objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAAA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionB, new ObjectDefinition[0]
-			).build());
-	}
-
-	private void _testUnbindObjectDefinitionsWithGrandParentNodes()
-		throws Exception {
-
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionAAA =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipAA_AAA = TreeTestUtil.bind(
-			objectDefinitionAA.getObjectDefinitionId(),
-			objectDefinitionAAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionB =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionB.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionAAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionB, new ObjectDefinition[] {objectDefinitionB}
-			).build());
-
-		TreeTestUtil.unbind(
-			objectRelationshipAA_AAA, _objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionAAA, new ObjectDefinition[0]
-			).put(
-				objectDefinitionB, new ObjectDefinition[] {objectDefinitionB}
-			).build());
-	}
-
 	private void _testUnbindObjectDefinitionsWithObjectAction(
 			String objectDefinitionShortName,
 			String rootObjectDefinitionShortName, Tree tree)
@@ -2741,93 +2724,6 @@ public class ObjectDefinitionTreeUtilTest {
 			objectAction.getObjectActionTriggerKey(),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE);
 		Assert.assertFalse(objectAction.isActive());
-	}
-
-	private void _testUnbindObjectDefinitionsWithParentNodes()
-		throws Exception {
-
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionB =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipB_AA = TreeTestUtil.bind(
-			objectDefinitionB.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA,
-				new ObjectDefinition[] {objectDefinitionA, objectDefinitionB}
-			).put(
-				objectDefinitionB, new ObjectDefinition[] {objectDefinitionB}
-			).build());
-
-		TreeTestUtil.unbind(
-			objectRelationshipB_AA, _objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionB, new ObjectDefinition[0]
-			).build());
-	}
-
-	private void _testUnbindObjectDefinitionsWithSiblingNode()
-		throws Exception {
-
-		ObjectDefinition objectDefinitionA =
-			_addAndPublishCustomObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
-			_addAndPublishCustomObjectDefinition();
-
-		TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		ObjectDefinition objectDefinitionAB =
-			_addAndPublishCustomObjectDefinition();
-
-		ObjectRelationship objectRelationshipA_AB = TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAB.getObjectDefinitionId(),
-			_objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAB, new ObjectDefinition[] {objectDefinitionA}
-			).build());
-
-		TreeTestUtil.unbind(
-			objectRelationshipA_AB, _objectRelationshipLocalService);
-
-		TreeTestUtil.assertRootObjectDefinitionIds(
-			LinkedHashMapBuilder.put(
-				objectDefinitionA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAA, new ObjectDefinition[] {objectDefinitionA}
-			).put(
-				objectDefinitionAB, new ObjectDefinition[0]
-			).build());
 	}
 
 	private void _unbindObjectDefinitions(
@@ -2895,6 +2791,7 @@ public class ObjectDefinitionTreeUtilTest {
 	private ObjectDefinition _objectDefinitionAA;
 	private ObjectDefinition _objectDefinitionAAA;
 	private ObjectDefinition _objectDefinitionAAAA;
+	private ObjectDefinition _objectDefinitionAB;
 	private ObjectDefinition _objectDefinitionB;
 
 	@Inject
@@ -2910,10 +2807,10 @@ public class ObjectDefinitionTreeUtilTest {
 
 	private ObjectRelationship _objectRelationshipA_AA;
 	private ObjectField _objectRelationshipA_AAObjectField2;
+	private ObjectRelationship _objectRelationshipA_AB;
 	private ObjectRelationship _objectRelationshipAA_AAA;
 	private ObjectField _objectRelationshipAA_AAAObjectField2;
 	private ObjectRelationship _objectRelationshipAAA_AAAA;
-	private ObjectField _objectRelationshipAAA_AAAAObjectField2;
 	private ObjectRelationship _objectRelationshipB_AA;
 	private ObjectField _objectRelationshipB_AAObjectField2;
 

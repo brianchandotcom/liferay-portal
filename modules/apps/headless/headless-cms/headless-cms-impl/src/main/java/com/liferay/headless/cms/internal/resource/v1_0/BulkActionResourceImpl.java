@@ -138,8 +138,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Override
 	public Page<BulkActionItem> postBulkActionItemPreviewPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts,
-			BulkAction bulkAction)
+			Boolean fetchChildren, String search, Filter filter,
+			Pagination pagination, Sort[] sorts, BulkAction bulkAction)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -151,6 +151,28 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 
 		BulkActionItem[] bulkActionItems = bulkAction.getBulkActionItems();
+
+		if (GetterUtil.getBoolean(fetchChildren)) {
+			if (ArrayUtil.isEmpty(bulkActionItems)) {
+				return Page.of(Collections.emptyList());
+			}
+
+			BulkActionItem bulkActionItem = bulkActionItems[0];
+
+			if ((bulkActionItems.length > 1) ||
+				!Objects.equals(
+					bulkActionItem.getClassName(),
+					ObjectEntryFolder.class.getName())) {
+
+				throw new BadRequestException(
+					"\"fetchChildren\" is only supported with a single folder");
+			}
+
+			return _getBulkActionItemPreviewPage(
+				_getObjectEntryFolderBulkActionItems(
+					bulkActionItem.getClassPK()),
+				pagination, search, sorts);
+		}
 
 		if (ArrayUtil.isEmpty(bulkActionItems) &&
 			!GetterUtil.getBoolean(bulkAction.getSelectAll())) {
@@ -686,6 +708,31 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return "custom-structure";
 	}
 
+	private List<BulkActionItem> _getObjectEntryFolderBulkActionItems(
+			long objectObjectEntryFolderId)
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				objectObjectEntryFolderId);
+
+		List<BulkActionItem> bulkActionItems = transform(
+			_objectEntryLocalService.getObjectEntryFolderObjectEntries(
+				objectEntryFolder.getGroupId(), objectObjectEntryFolderId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			this::_toBulkActionItem);
+
+		bulkActionItems.addAll(
+			transform(
+				_objectEntryFolderLocalService.getObjectEntryFolders(
+					objectEntryFolder.getGroupId(),
+					objectEntryFolder.getCompanyId(), objectObjectEntryFolderId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				this::_toBulkActionItem));
+
+		return bulkActionItems;
+	}
+
 	private String _getTaskItemDelegateName(String className) throws Exception {
 		if (StringUtil.equals(
 				"com.liferay.object.model.ObjectEntryFolder", className)) {
@@ -741,46 +788,58 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private BulkActionItem _toBulkActionItem(long classPK) {
-		BulkActionItem bulkActionItem = new BulkActionItem();
-
-		bulkActionItem.setClassPK(() -> classPK);
-
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			classPK);
 
 		if (objectEntry != null) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectEntry.getObjectDefinitionId());
-
-			bulkActionItem.setAttributes(
-				() -> HashMapBuilder.<String, Object>put(
-					"deletionType",
-					() -> _getDeletionType(objectEntry.getGroupId())
-				).put(
-					"mimeType", _getMimeType(objectDefinition, objectEntry)
-				).put(
-					"type", "ASSET"
-				).put(
-					"usages",
-					_getUsagesCount(
-						objectDefinition.getClassName(),
-						objectDefinition.getObjectDefinitionId(),
-						objectEntry.getObjectEntryId())
-				).build());
-			bulkActionItem.setClassName(objectDefinition::getClassName);
-
-			bulkActionItem.setClassExternalReferenceCode(
-				objectEntry::getExternalReferenceCode);
-			bulkActionItem.setName(
-				() -> objectEntry.getTitleValue(
-					LocaleUtil.toLanguageId(contextUser.getLocale()), true));
-
-			return bulkActionItem;
+			return _toBulkActionItem(objectEntry);
 		}
 
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderLocalService.fetchObjectEntryFolder(classPK);
+		return _toBulkActionItem(
+			_objectEntryFolderLocalService.fetchObjectEntryFolder(classPK));
+	}
+
+	private BulkActionItem _toBulkActionItem(ObjectEntry objectEntry) {
+		BulkActionItem bulkActionItem = new BulkActionItem();
+
+		bulkActionItem.setClassPK(objectEntry::getObjectEntryId);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		bulkActionItem.setAttributes(
+			() -> HashMapBuilder.<String, Object>put(
+				"deletionType", () -> _getDeletionType(objectEntry.getGroupId())
+			).put(
+				"mimeType", _getMimeType(objectDefinition, objectEntry)
+			).put(
+				"type", "ASSET"
+			).put(
+				"usages",
+				_getUsagesCount(
+					objectDefinition.getClassName(),
+					objectDefinition.getObjectDefinitionId(),
+					objectEntry.getObjectEntryId())
+			).build());
+
+		bulkActionItem.setClassName(objectDefinition::getClassName);
+
+		bulkActionItem.setClassExternalReferenceCode(
+			objectEntry::getExternalReferenceCode);
+		bulkActionItem.setName(
+			() -> objectEntry.getTitleValue(
+				LocaleUtil.toLanguageId(contextUser.getLocale()), true));
+
+		return bulkActionItem;
+	}
+
+	private BulkActionItem _toBulkActionItem(
+		ObjectEntryFolder objectEntryFolder) {
+
+		BulkActionItem bulkActionItem = new BulkActionItem();
+
+		bulkActionItem.setClassPK(objectEntryFolder::getObjectEntryFolderId);
 
 		bulkActionItem.setAttributes(
 			() -> HashMapBuilder.<String, Object>put(

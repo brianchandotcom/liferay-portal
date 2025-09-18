@@ -20,7 +20,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -76,14 +75,10 @@ public class DataCleanupPreupgradeProcessSuite {
 				_dataCleanupPreupgradeProcessesMap);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DataCleanupPreupgradeProcessSuite.class);
-
-	private static final Map
+	private Map
 		<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
-			_dataCleanupPreupgradeProcessesMap;
+			_createDataCleanupPreupgradeProcessesMap() {
 
-	static {
 		DataCleanupPreupgradeProcess
 			analyticsMessageDataCleanupPreupgradeProcess =
 				new AnalyticsMessageDataCleanupPreupgradeProcess();
@@ -91,8 +86,6 @@ public class DataCleanupPreupgradeProcessSuite {
 			new CompanyDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess configurationDataCleanupPreupgradeProcess =
 			new ConfigurationDataCleanupPreupgradeProcess();
-		DataCleanupPreupgradeProcess counterDataCleanupPreupgradeProcess =
-			new CounterDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess ddmStructureDataCleanupPreupgradeProcess =
 			new DDMStructureDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess dlFileEntryDataCleanupPreupgradeProcess =
@@ -120,69 +113,72 @@ public class DataCleanupPreupgradeProcessSuite {
 		DataCleanupPreupgradeProcess userDataCleanupPreupgradeProcess =
 			new UserDataCleanupPreupgradeProcess();
 
-		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
-			dataCleanupPreupgradeProcessesMap =
-				HashMapBuilder.
-					<DataCleanupPreupgradeProcess,
-					 List<DataCleanupPreupgradeProcess>>put(
-						analyticsMessageDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn()
-					).put(
-						companyDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							updateAllPrimaryKeysDataCleanupPreupgradeProcess)
-					).put(
-						configurationDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							userDataCleanupPreupgradeProcess)
-					).put(
-						counterDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							analyticsMessageDataCleanupPreupgradeProcess,
-							companyDataCleanupPreupgradeProcess,
-							configurationDataCleanupPreupgradeProcess,
-							ddmStructureDataCleanupPreupgradeProcess,
-							dlFileEntryDataCleanupPreupgradeProcess,
-							groupDataCleanupPreupgradeProcess,
-							journalDataCleanupPreupgradeProcess,
-							nullUnicodeContentDataCleanupPreupgradeProcess,
-							quartzJobDetailsDataCleanupPreupgradeProcess,
-							updateAllPrimaryKeysDataCleanupPreupgradeProcess,
-							userDataCleanupPreupgradeProcess)
-					).put(
-						ddmStructureDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							groupDataCleanupPreupgradeProcess)
-					).put(
-						dlFileEntryDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							groupDataCleanupPreupgradeProcess)
-					).put(
-						groupDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							userDataCleanupPreupgradeProcess)
-					).put(
-						journalDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							ddmStructureDataCleanupPreupgradeProcess)
-					).put(
-						nullUnicodeContentDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							ddmStructureDataCleanupPreupgradeProcess)
-					).put(
-						quartzJobDetailsDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn()
-					).put(
-						updateAllPrimaryKeysDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn()
-					).put(
-						userDataCleanupPreupgradeProcess,
-						DataCleanupPreupgradeProcess.dependsOn(
-							companyDataCleanupPreupgradeProcess)
-					).build();
-
-		_dataCleanupPreupgradeProcessesMap = Collections.unmodifiableMap(
-			dataCleanupPreupgradeProcessesMap);
+		return HashMapBuilder.
+			<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
+				put(
+					analyticsMessageDataCleanupPreupgradeProcess,
+					DataCleanupPreupgradeProcess.dependsOn()
+			).put(
+				companyDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					updateAllPrimaryKeysDataCleanupPreupgradeProcess)
+			).put(
+				configurationDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					userDataCleanupPreupgradeProcess)
+			).put(
+				new CounterDataCleanupPreupgradeProcess(),
+				DataCleanupPreupgradeProcess.dependsOn(
+					analyticsMessageDataCleanupPreupgradeProcess,
+					companyDataCleanupPreupgradeProcess,
+					configurationDataCleanupPreupgradeProcess,
+					ddmStructureDataCleanupPreupgradeProcess,
+					dlFileEntryDataCleanupPreupgradeProcess,
+					groupDataCleanupPreupgradeProcess,
+					journalDataCleanupPreupgradeProcess,
+					nullUnicodeContentDataCleanupPreupgradeProcess,
+					quartzJobDetailsDataCleanupPreupgradeProcess,
+					updateAllPrimaryKeysDataCleanupPreupgradeProcess,
+					userDataCleanupPreupgradeProcess)
+			).put(
+				ddmStructureDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					groupDataCleanupPreupgradeProcess)
+			).put(
+				dlFileEntryDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					groupDataCleanupPreupgradeProcess)
+			).put(
+				groupDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					userDataCleanupPreupgradeProcess)
+			).put(
+				journalDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					ddmStructureDataCleanupPreupgradeProcess)
+			).put(
+				nullUnicodeContentDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					ddmStructureDataCleanupPreupgradeProcess)
+			).put(
+				quartzJobDetailsDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn()
+			).put(
+				updateAllPrimaryKeysDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn()
+			).put(
+				userDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					companyDataCleanupPreupgradeProcess)
+			).build();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DataCleanupPreupgradeProcessSuite.class);
+
+	private final Map
+		<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
+			_dataCleanupPreupgradeProcessesMap =
+				_createDataCleanupPreupgradeProcessesMap();
 
 }

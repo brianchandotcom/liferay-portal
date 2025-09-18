@@ -86,15 +86,16 @@ public class DataCleanupPreupgradeProcessSuiteTest
 
 	@Before
 	public void setUp() {
-		_dataCleanupPreupgradeProcessesMap = ReflectionTestUtil.getFieldValue(
-			this, "_dataCleanupPreupgradeProcessesMap");
+		_originalDataCleanupPreupgradeProcessesMap =
+			ReflectionTestUtil.getFieldValue(
+				this, "_dataCleanupPreupgradeProcessesMap");
 	}
 
 	@After
 	public void tearDown() {
 		ReflectionTestUtil.setFieldValue(
 			this, "_dataCleanupPreupgradeProcessesMap",
-			_dataCleanupPreupgradeProcessesMap);
+			_originalDataCleanupPreupgradeProcessesMap);
 	}
 
 	@Test
@@ -113,8 +114,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 					new String[] {className})) {
 
 			ReflectionTestUtil.setFieldValue(
-				DataCleanupPreupgradeProcessSuite.class,
-				"_dataCleanupPreupgradeProcessesMap",
+				this, "_dataCleanupPreupgradeProcessesMap",
 				HashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
@@ -168,8 +168,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 				() -> _cleanupMessages.add(_SUCCESS_MESSAGE_1));
 
 		ReflectionTestUtil.setFieldValue(
-			DataCleanupPreupgradeProcessSuite.class,
-			"_dataCleanupPreupgradeProcessesMap",
+			this, "_dataCleanupPreupgradeProcessesMap",
 			HashMapBuilder.
 				<DataCleanupPreupgradeProcess,
 				 List<DataCleanupPreupgradeProcess>>put(
@@ -213,8 +212,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		throws Exception {
 
 		ReflectionTestUtil.setFieldValue(
-			DataCleanupPreupgradeProcessSuite.class,
-			"_dataCleanupPreupgradeProcessesMap",
+			this, "_dataCleanupPreupgradeProcessesMap",
 			HashMapBuilder.
 				<DataCleanupPreupgradeProcess,
 				 List<DataCleanupPreupgradeProcess>>put(
@@ -284,7 +282,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 	private final List<String> _cleanupMessages = new ArrayList<>();
 	private Map
 		<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
-			_dataCleanupPreupgradeProcessesMap;
+			_originalDataCleanupPreupgradeProcessesMap;
 
 	private static class BlacklistedDataCleanupPreupgradeTestProcess
 		extends DataCleanupPreupgradeTestProcess {

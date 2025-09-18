@@ -10,7 +10,7 @@ import {
 	IDataSetData,
 	IInlineEditingSettings,
 	IItemsActions,
-	IStateInURLSetter,
+	IStateInURLUpdaterThunk,
 	TRenderer,
 } from './utils/types';
 
@@ -76,7 +76,6 @@ export interface IFrontendDataSetContext {
 	selectedItemsValue?: Array<any>;
 	selectionType?: 'single' | 'multiple';
 	setSearching: (value: boolean) => void;
-	setView: IStateInURLSetter<EStateInURLKeys.VIEW_NAME>;
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;
 	showInfoPanel: boolean;
@@ -93,6 +92,7 @@ export interface IFrontendDataSetContext {
 		totalCount,
 	}: IDataSetData) => void;
 	updateItem: Function;
+	updateViewThunk: IStateInURLUpdaterThunk<EStateInURLKeys.VIEW_NAME>;
 }
 
 const FrontendDataSetContext = React.createContext({

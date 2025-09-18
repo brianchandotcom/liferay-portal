@@ -34,8 +34,7 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String postFormat(
-		String content, List<String> checkCategoryNames,
-		String originalReturnCharacter) {
+		String content, String originalReturnCharacter) {
 
 		StringBuffer sb = new StringBuffer();
 
@@ -62,22 +61,19 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 			matcher.appendTail(sb);
 		}
 
-		return super.postFormat(
-			sb.toString(), checkCategoryNames, originalReturnCharacter);
+		return super.postFormat(sb.toString(), originalReturnCharacter);
 	}
 
 	@Override
 	protected String preFormat(
 			File file, String fileName, String content,
-			List<String> checkCategoryNames, Set<String> modifiedMessages,
-			String originalReturnCharacter)
+			Set<String> modifiedMessages, String originalReturnCharacter)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
 		content = super.preFormat(
-			file, fileName, content, checkCategoryNames, modifiedMessages,
-			originalReturnCharacter);
+			file, fileName, content, modifiedMessages, originalReturnCharacter);
 
 		content = content.replaceAll("\\n +\\n", "\n\n");
 

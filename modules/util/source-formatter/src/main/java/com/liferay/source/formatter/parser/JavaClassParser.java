@@ -639,16 +639,16 @@ public class JavaClassParser {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		while (parentDetailAST != null) {
+		while (true) {
+			if (parentDetailAST == null) {
+				return javaClass;
+			}
+
 			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
 				break;
 			}
 
 			parentDetailAST = parentDetailAST.getParent();
-		}
-
-		if (parentDetailAST == null) {
-			return javaClass;
 		}
 
 		String javaTermContent = _getJavaTermContent(

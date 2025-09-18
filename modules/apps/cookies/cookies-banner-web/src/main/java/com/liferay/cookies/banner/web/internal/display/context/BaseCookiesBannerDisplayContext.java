@@ -17,9 +17,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -32,17 +35,30 @@ public class BaseCookiesBannerDisplayContext {
 		CookiesConfigurationProvider cookiesConfigurationProvider,
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest) {
 
 		_cookiesConfigurationProvider = cookiesConfigurationProvider;
 		this.layoutUtilityPageEntryLayoutProvider =
 			layoutUtilityPageEntryLayoutProvider;
-		this.renderRequest = renderRequest;
+		this.httpServletRequest = httpServletRequest;
 
 		cookiesBannerConfiguration = _getCookiesBannerConfiguration(
-			renderRequest);
+			httpServletRequest);
 		cookiesConsentConfiguration = _getCookiesConsentConfiguration(
-			renderRequest);
+			httpServletRequest);
+	}
+
+	public BaseCookiesBannerDisplayContext(
+		CookiesConfigurationProvider cookiesConfigurationProvider,
+		LayoutUtilityPageEntryLayoutProvider
+			layoutUtilityPageEntryLayoutProvider,
+		RenderRequest renderRequest) {
+
+		this(
+			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
+			PortalUtil.getHttpServletRequest(renderRequest));
+
+		this.renderRequest = renderRequest;
 	}
 
 	public List<ConsentCookieType> getOptionalConsentCookieTypes() {
@@ -105,15 +121,17 @@ public class BaseCookiesBannerDisplayContext {
 
 	protected CookiesBannerConfiguration cookiesBannerConfiguration;
 	protected CookiesConsentConfiguration cookiesConsentConfiguration;
+	protected HttpServletRequest httpServletRequest;
 	protected LayoutUtilityPageEntryLayoutProvider
 		layoutUtilityPageEntryLayoutProvider;
 	protected RenderRequest renderRequest;
 
 	private CookiesBannerConfiguration _getCookiesBannerConfiguration(
-		RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			return _cookiesConfigurationProvider.getCookiesBannerConfiguration(
@@ -127,10 +145,11 @@ public class BaseCookiesBannerDisplayContext {
 	}
 
 	private CookiesConsentConfiguration _getCookiesConsentConfiguration(
-		RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			return _cookiesConfigurationProvider.getCookiesConsentConfiguration(

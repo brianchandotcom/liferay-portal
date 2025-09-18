@@ -15,7 +15,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class LiferayReleaseToolEEWorkspaceGitRepository
+public class LiferayReleaseToolWorkspaceGitRepository
 	extends BaseWorkspaceGitRepository {
 
 	public String getPortalUpstreamBranchName() {
@@ -31,19 +31,19 @@ public class LiferayReleaseToolEEWorkspaceGitRepository
 		_writeBuildPropertiesFile();
 	}
 
-	protected LiferayReleaseToolEEWorkspaceGitRepository(
+	protected LiferayReleaseToolWorkspaceGitRepository(
 		JSONObject jsonObject) {
 
 		super(jsonObject);
 	}
 
-	protected LiferayReleaseToolEEWorkspaceGitRepository(
+	protected LiferayReleaseToolWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName) {
 
 		super(pullRequest, upstreamBranchName);
 	}
 
-	protected LiferayReleaseToolEEWorkspaceGitRepository(
+	protected LiferayReleaseToolWorkspaceGitRepository(
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef, upstreamBranchName);

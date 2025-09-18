@@ -366,7 +366,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		_updateWorkspaceGitRepository(
 			"git-commit/liferay-release-tool-ee", "liferay-release-tool-ee");
 
-		LiferayReleaseToolEEWorkspaceGitRepository
+		LiferayReleaseToolWorkspaceGitRepository
 			liferayReleaseToolEEWorkspaceGitRepository =
 				_getLiferayReleaseToolEEWorkspaceGitRepository();
 
@@ -447,19 +447,19 @@ public class PortalWorkspace extends BaseWorkspace {
 		}
 	}
 
-	private LiferayReleaseToolEEWorkspaceGitRepository
+	private LiferayReleaseToolWorkspaceGitRepository
 		_getLiferayReleaseToolEEWorkspaceGitRepository() {
 
 		WorkspaceGitRepository workspaceGitRepository =
 			getWorkspaceGitRepository("liferay-release-tool-ee");
 
 		if (!(workspaceGitRepository instanceof
-				LiferayReleaseToolEEWorkspaceGitRepository)) {
+				LiferayReleaseToolWorkspaceGitRepository)) {
 
 			return null;
 		}
 
-		return (LiferayReleaseToolEEWorkspaceGitRepository)
+		return (LiferayReleaseToolWorkspaceGitRepository)
 			workspaceGitRepository;
 	}
 

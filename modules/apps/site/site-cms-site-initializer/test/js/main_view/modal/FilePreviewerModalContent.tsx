@@ -38,16 +38,6 @@ const baseVideoFile = {
 	thumbnailURL: '/thumbs/video1?version=1.0',
 };
 
-jest.mock('document-library-preview-image', () => ({
-	ImagePreviewer: (props: any) => (
-		<img
-			alt={props.alt}
-			data-testid="image-previewer"
-			src={props.imageURL}
-		/>
-	),
-}));
-
 describe('FilePreviewerModalContent', () => {
 	it('renders the file name and download link', () => {
 		const {getByRole, getByText} = render(

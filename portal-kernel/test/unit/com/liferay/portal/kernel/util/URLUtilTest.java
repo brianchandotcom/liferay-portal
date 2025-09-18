@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.net.URL;
 
@@ -15,34 +14,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Dante Wang
  */
-public class JarUtilTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
+public class URLUtilTest {
 
 	@Test
 	public void testDownloadAndInstallJar() throws Exception {
-		_testDownloadAndInstallJar(_SHA1_REAL);
-		_testDownloadAndInstallJar(_SHA1_FAKE);
+		_testDownload(_SHA1_REAL);
+		_testDownload(_SHA1_FAKE);
 	}
 
-	private void _testDownloadAndInstallJar(String sha1) throws Exception {
-		URL url = JarUtilTest.class.getResource("dependencies/test.jar");
+	private void _testDownload(String sha1) throws Exception {
+		URL url = URLUtilTest.class.getResource("dependencies/test.jar");
 
 		Path tempFilePath = Files.createTempFile(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		try {
-			JarUtil.downloadAndInstallJar(url, tempFilePath, sha1);
+			URLUtil.download(url, tempFilePath, sha1);
 
 			if (sha1.equals(_SHA1_FAKE)) {
 				Assert.fail(

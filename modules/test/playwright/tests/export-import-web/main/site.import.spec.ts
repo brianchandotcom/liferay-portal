@@ -22,7 +22,6 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
-import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
@@ -36,10 +35,6 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {openImportFieldset} from './utils/openImportFieldset';
-import {
-	getOverallMaximumUploadRequestSize,
-	setOverallMaximumUploadRequestSize,
-} from './utils/systemSettingsUtil';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
@@ -79,7 +74,6 @@ export const testWithExportImportAtInstanceLevelFF = mergeTests(
 		'LPD-44771': {enabled: true},
 	}),
 	loginTest(),
-	systemSettingsPageTest,
 	uiElementsPageTest
 );
 
@@ -420,7 +414,11 @@ test('Can import a lar file selecting some items to import', async ({
 testWithExportImportAtInstanceLevelFF(
 	'Can export and import a site with all the exportable items and created with the test site initializer',
 	{tag: '@LPD-64056'},
-	async ({apiHelpers, exportImportPage, systemSettingsPage}) => {
+	async ({
+		apiHelpers,
+		exportImportPage,
+		uploadServletRequestSystemSettingsPage,
+	}) => {
 		test.setTimeout(180000);
 
 		let exportFilePath: string;
@@ -429,17 +427,20 @@ testWithExportImportAtInstanceLevelFF(
 		let exportableItems2: Map<string, number>;
 		let exportableItems3: Map<string, number>;
 		let originalOverallMaximumUploadRequestSize: string;
-		let site1;
-		let site2;
+		let site1: Site;
+		let site2: Site;
 
 		await test.step('Increase the maximum upload request size', async () => {
-			originalOverallMaximumUploadRequestSize =
-				await getOverallMaximumUploadRequestSize(systemSettingsPage);
+			await uploadServletRequestSystemSettingsPage.goto();
 
-			await setOverallMaximumUploadRequestSize({
-				size: '200000000',
-				systemSettingsPage,
-			});
+			originalOverallMaximumUploadRequestSize =
+				await uploadServletRequestSystemSettingsPage.getOverallMaximumUploadRequestSize();
+
+			await uploadServletRequestSystemSettingsPage.setOverallMaximumUploadRequestSize(
+				{
+					size: '200000000',
+				}
+			);
 		});
 
 		try {
@@ -466,11 +467,7 @@ testWithExportImportAtInstanceLevelFF(
 				await exportImportPage.exportAll(exportName);
 
 				await expect(
-					exportImportPage.page
-						.locator('[data-qa-id="row"]', {
-							hasText: exportName,
-						})
-						.getByText('Successful')
+					exportImportPage.taskSuccessLabel(exportName)
 				).toBeVisible({timeout: 60000});
 
 				exportFilePath =
@@ -495,11 +492,7 @@ testWithExportImportAtInstanceLevelFF(
 				await exportImportPage.import(exportFilePath);
 
 				await expect(
-					exportImportPage.page
-						.locator('[data-qa-id="row"]', {
-							hasText: exportName,
-						})
-						.getByText('Successful')
+					exportImportPage.taskSuccessLabel(exportName)
 				).toBeVisible({timeout: 60000});
 			});
 
@@ -560,10 +553,13 @@ testWithExportImportAtInstanceLevelFF(
 		}
 		finally {
 			await test.step('Restore the initial maximum upload request size', async () => {
-				await setOverallMaximumUploadRequestSize({
-					size: originalOverallMaximumUploadRequestSize,
-					systemSettingsPage,
-				});
+				await uploadServletRequestSystemSettingsPage.goto();
+
+				await uploadServletRequestSystemSettingsPage.setOverallMaximumUploadRequestSize(
+					{
+						size: originalOverallMaximumUploadRequestSize,
+					}
+				);
 			});
 		}
 	}

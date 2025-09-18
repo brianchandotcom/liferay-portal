@@ -7,16 +7,21 @@ import {test} from '@playwright/test';
 
 import {ExportImportFramePage} from '../pages/ExportImportFramePage';
 import {ExportImportPage} from '../pages/ExportImportPage';
+import {UploadServletRequestSystemSettingsPage} from '../pages/UploadServletRequestSystemSettingsPage';
 
 const exportImportPagesTest = test.extend<{
 	exportImportFramePage: ExportImportFramePage;
 	exportImportPage: ExportImportPage;
+	uploadServletRequestSystemSettingsPage: UploadServletRequestSystemSettingsPage;
 }>({
 	exportImportFramePage: async ({page}, use) => {
 		await use(new ExportImportFramePage(page));
 	},
 	exportImportPage: async ({page}, use) => {
 		await use(new ExportImportPage(page));
+	},
+	uploadServletRequestSystemSettingsPage: async ({page}, use) => {
+		await use(new UploadServletRequestSystemSettingsPage(page));
 	},
 });
 

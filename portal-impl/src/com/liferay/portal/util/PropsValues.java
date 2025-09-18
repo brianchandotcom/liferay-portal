@@ -5,7 +5,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -821,9 +820,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(
 				PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED));
-
-	public static final String FEATURE_FLAGS_JSON = String.valueOf(
-		new JSONObjectImpl(PropsUtil.getProperties("feature.flag.", true)));
 
 	public static final String[] FIELD_EDITABLE_DOMAINS = PropsUtil.getArray(
 		PropsKeys.FIELD_EDITABLE_DOMAINS);

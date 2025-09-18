@@ -11,7 +11,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class FeatureFlagsBag {
 
 	public String getJSON() {
 		if (_featureFlagsMap.isEmpty()) {
-			return PropsValues.FEATURE_FLAGS_JSON;
+			return _FEATURE_FLAGS_JSON;
 		}
 
 		String json = _json;
@@ -110,6 +110,10 @@ public class FeatureFlagsBag {
 			featureFlag = featureFlagWrapper.getFeatureFlag();
 		}
 	}
+
+	private static final String _FEATURE_FLAGS_JSON = String.valueOf(
+		JSONFactoryUtil.createJSONObject(
+			PropsUtil.getProperties("feature.flag.", true)));
 
 	private final long _companyId;
 	private final Map<String, FeatureFlag> _featureFlagsMap;

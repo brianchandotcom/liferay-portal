@@ -1404,15 +1404,14 @@ public class ObjectDefinitionTreeUtilTest {
 
 		ObjectEntry objectEntryA1 = _addObjectEntry(
 			_objectDefinitionA, Map.of());
+		ObjectEntry objectEntryA2 = _addObjectEntry(
+			_objectDefinitionA, Map.of());
 
 		ObjectEntry objectEntryAA1 = _addObjectEntry(
 			_objectDefinitionAA,
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA1.getObjectEntryId()));
-
-		ObjectEntry objectEntryA2 = _addObjectEntry(
-			_objectDefinitionA, Map.of());
 
 		ObjectEntry objectEntryAA2 = _addObjectEntry(
 			_objectDefinitionAA,
@@ -1474,12 +1473,6 @@ public class ObjectDefinitionTreeUtilTest {
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA.getObjectEntryId()));
 
-		ObjectEntry objectEntryAAA1 = _addObjectEntry(
-			_objectDefinitionAAA,
-			Map.of(
-				_objectRelationshipAA_AAAObjectField2.getName(),
-				objectEntryAA1.getObjectEntryId()));
-
 		ObjectEntry objectEntryB = _addObjectEntry(
 			_objectDefinitionB, Map.of());
 
@@ -1489,14 +1482,20 @@ public class ObjectDefinitionTreeUtilTest {
 				_objectRelationshipB_AAObjectField2.getName(),
 				objectEntryB.getObjectEntryId()));
 
+		ObjectEntry objectEntryAA3 = _addObjectEntry(
+			_objectDefinitionAA, Map.of());
+
+		ObjectEntry objectEntryAAA1 = _addObjectEntry(
+			_objectDefinitionAAA,
+			Map.of(
+				_objectRelationshipAA_AAAObjectField2.getName(),
+				objectEntryAA1.getObjectEntryId()));
+
 		ObjectEntry objectEntryAAA2 = _addObjectEntry(
 			_objectDefinitionAAA,
 			Map.of(
 				_objectRelationshipAA_AAAObjectField2.getName(),
 				objectEntryAA2.getObjectEntryId()));
-
-		ObjectEntry objectEntryAA3 = _addObjectEntry(
-			_objectDefinitionAA, Map.of());
 
 		ObjectEntry objectEntryAAA3 = _addObjectEntry(
 			_objectDefinitionAAA, Map.of());
@@ -1555,21 +1554,14 @@ public class ObjectDefinitionTreeUtilTest {
 
 		ObjectEntry objectEntryA1 = _addObjectEntry(
 			_objectDefinitionA, Map.of());
+		ObjectEntry objectEntryA2 = _addObjectEntry(
+			_objectDefinitionA, Map.of());
 
 		ObjectEntry objectEntryAA1 = _addObjectEntry(
 			_objectDefinitionAA,
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA1.getObjectEntryId()));
-
-		ObjectEntry objectEntryAAA1 = _addObjectEntry(
-			_objectDefinitionAAA,
-			Map.of(
-				_objectRelationshipAA_AAAObjectField2.getName(),
-				objectEntryAA1.getObjectEntryId()));
-
-		ObjectEntry objectEntryA2 = _addObjectEntry(
-			_objectDefinitionA, Map.of());
 
 		ObjectEntry objectEntryAA2 = _addObjectEntry(
 			_objectDefinitionAA,
@@ -1579,6 +1571,12 @@ public class ObjectDefinitionTreeUtilTest {
 
 		ObjectEntry objectEntryAA3 = _addObjectEntry(
 			_objectDefinitionAA, Map.of());
+
+		ObjectEntry objectEntryAAA1 = _addObjectEntry(
+			_objectDefinitionAAA,
+			Map.of(
+				_objectRelationshipAA_AAAObjectField2.getName(),
+				objectEntryAA1.getObjectEntryId()));
 
 		ObjectEntry objectEntryAAA2 = _addObjectEntry(
 			_objectDefinitionAAA,
@@ -1643,21 +1641,14 @@ public class ObjectDefinitionTreeUtilTest {
 
 		ObjectEntry objectEntryA1 = _addObjectEntry(
 			_objectDefinitionA, Map.of());
+		ObjectEntry objectEntryA2 = _addObjectEntry(
+			_objectDefinitionA, Map.of());
 
 		ObjectEntry objectEntryAA1 = _addObjectEntry(
 			_objectDefinitionAA,
 			Map.of(
 				_objectRelationshipA_AAObjectField2.getName(),
 				objectEntryA1.getObjectEntryId()));
-
-		ObjectEntry objectEntryAAA1 = _addObjectEntry(
-			_objectDefinitionAAA,
-			Map.of(
-				_objectRelationshipAA_AAAObjectField2.getName(),
-				objectEntryAA1.getObjectEntryId()));
-
-		ObjectEntry objectEntryA2 = _addObjectEntry(
-			_objectDefinitionA, Map.of());
 
 		ObjectEntry objectEntryAA2 = _addObjectEntry(
 			_objectDefinitionAA,
@@ -1667,6 +1658,12 @@ public class ObjectDefinitionTreeUtilTest {
 
 		ObjectEntry objectEntryAA3 = _addObjectEntry(
 			_objectDefinitionAA, Map.of());
+
+		ObjectEntry objectEntryAAA1 = _addObjectEntry(
+			_objectDefinitionAAA,
+			Map.of(
+				_objectRelationshipAA_AAAObjectField2.getName(),
+				objectEntryAA1.getObjectEntryId()));
 
 		ObjectEntry objectEntryAAA2 = _addObjectEntry(
 			_objectDefinitionAAA,

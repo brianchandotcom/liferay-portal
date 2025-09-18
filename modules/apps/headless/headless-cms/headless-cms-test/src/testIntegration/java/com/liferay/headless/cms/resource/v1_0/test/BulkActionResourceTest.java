@@ -383,19 +383,81 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		BulkAction bulkAction = new DeleteBulkAction();
 
+		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
+
+		_testPostBulkActionItemPreviewPageWithBulkActionItems(
+			bulkAction, expectedDeletionType, objectEntry, objectEntryFolder2);
+
+		_testPostBulkActionItemPreviewPageWithSelectAllAndFilter(
+			bulkAction, expectedDeletionType, objectEntryFolder1,
+			objectEntryFolder2);
+
+		_testPostBulkActionItemPreviewPageWithFetchChildrenEnabled(
+			bulkAction, expectedDeletionType, objectEntry, objectEntryFolder1,
+			objectEntryFolder2);
+	}
+
+	private void _testPostBulkActionItemPreviewPageWithBulkActionItems(
+			BulkAction bulkAction, String expectedDeletionType,
+			ObjectEntry objectEntry, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
 		bulkAction.setBulkActionItems(
 			new BulkActionItem[] {
 				_toBulkActionItem(
 					_basicWebContentObjectDefinition.getClassName(),
 					objectEntry),
-				_toBulkActionItem(objectEntryFolder2)
+				_toBulkActionItem(objectEntryFolder)
 			});
 		bulkAction.setSelectAll(false);
-		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
 
 		Page<BulkActionItem> page =
 			bulkActionResource.postBulkActionItemPreviewPage(
 				false, null, null, Pagination.of(1, 10), "name:desc",
+				bulkAction);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		List<BulkActionItem> items = ListUtil.fromCollection(page.getItems());
+
+		Assert.assertEquals(items.toString(), 2, items.size());
+
+		String name = objectEntry.getTitleValue(_LANGUAGE_ID);
+
+		if (name.compareTo(objectEntryFolder.getName()) < 0) {
+			_assertBulkActionItem(
+				items.get(0), objectEntryFolder.getObjectEntryFolderId(),
+				expectedDeletionType, null, objectEntryFolder.getName(),
+				"FOLDER", null);
+			_assertBulkActionItem(
+				items.get(1), objectEntry.getObjectEntryId(),
+				expectedDeletionType, "basic-web-content",
+				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
+		}
+		else {
+			_assertBulkActionItem(
+				items.get(0), objectEntry.getObjectEntryId(),
+				expectedDeletionType, "basic-web-content",
+				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
+			_assertBulkActionItem(
+				items.get(1), objectEntryFolder.getObjectEntryFolderId(),
+				expectedDeletionType, null, objectEntryFolder.getName(),
+				"FOLDER", null);
+		}
+	}
+
+	private void _testPostBulkActionItemPreviewPageWithFetchChildrenEnabled(
+			BulkAction bulkAction, String expectedDeletionType,
+			ObjectEntry objectEntry, ObjectEntryFolder objectEntryFolder1,
+			ObjectEntryFolder objectEntryFolder2)
+		throws Exception {
+
+		bulkAction.setBulkActionItems(
+			new BulkActionItem[] {_toBulkActionItem(objectEntryFolder1)});
+
+		Page<BulkActionItem> page =
+			bulkActionResource.postBulkActionItemPreviewPage(
+				true, null, null, Pagination.of(1, 10), "name:desc",
 				bulkAction);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -426,55 +488,32 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				expectedDeletionType, null, objectEntryFolder2.getName(),
 				"FOLDER", null);
 		}
+	}
+
+	private void _testPostBulkActionItemPreviewPageWithSelectAllAndFilter(
+			BulkAction bulkAction, String expectedDeletionType,
+			ObjectEntryFolder objectEntryFolder1,
+			ObjectEntryFolder objectEntryFolder2)
+		throws Exception {
 
 		bulkAction.setSelectAll(true);
 
-		page = bulkActionResource.postBulkActionItemPreviewPage(
-			false, objectEntryFolder2.getName(),
-			"folderId eq " + objectEntryFolder1.getObjectEntryFolderId(),
-			Pagination.of(1, 10), null, bulkAction);
+		Page<BulkActionItem> page =
+			bulkActionResource.postBulkActionItemPreviewPage(
+				false, objectEntryFolder2.getName(),
+				"folderId eq " + objectEntryFolder1.getObjectEntryFolderId(),
+				Pagination.of(1, 10), null, bulkAction);
 
-		items = ListUtil.fromCollection(page.getItems());
+		Assert.assertEquals(1, page.getTotalCount());
+
+		List<BulkActionItem> items = ListUtil.fromCollection(page.getItems());
 
 		Assert.assertEquals(items.toString(), 1, items.size());
-		Assert.assertEquals(items.toString(), 1, page.getTotalCount());
 
 		_assertBulkActionItem(
 			items.get(0), objectEntryFolder2.getObjectEntryFolderId(),
 			expectedDeletionType, null, objectEntryFolder2.getName(), "FOLDER",
 			null);
-
-		bulkAction.setBulkActionItems(
-			new BulkActionItem[] {_toBulkActionItem(objectEntryFolder1)});
-
-		page = bulkActionResource.postBulkActionItemPreviewPage(
-			true, null, null, Pagination.of(1, 10), null, bulkAction);
-
-		items = ListUtil.fromCollection(page.getItems());
-
-		Assert.assertEquals(items.toString(), 2, items.size());
-		Assert.assertEquals(items.toString(), 2, page.getTotalCount());
-
-		if (name.compareTo(objectEntryFolder2.getName()) < 0) {
-			_assertBulkActionItem(
-				items.get(0), objectEntryFolder2.getObjectEntryFolderId(),
-				expectedDeletionType, null, objectEntryFolder2.getName(),
-				"FOLDER", null);
-			_assertBulkActionItem(
-				items.get(1), objectEntry.getObjectEntryId(),
-				expectedDeletionType, "basic-web-content",
-				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
-		}
-		else {
-			_assertBulkActionItem(
-				items.get(0), objectEntry.getObjectEntryId(),
-				expectedDeletionType, "basic-web-content",
-				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
-			_assertBulkActionItem(
-				items.get(1), objectEntryFolder2.getObjectEntryFolderId(),
-				expectedDeletionType, null, objectEntryFolder2.getName(),
-				"FOLDER", null);
-		}
 	}
 
 	private void _testPostBulkActionWithTypeDefaultPermission()

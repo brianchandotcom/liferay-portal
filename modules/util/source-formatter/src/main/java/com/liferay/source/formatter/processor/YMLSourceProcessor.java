@@ -59,9 +59,11 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 
 		if (sb.length() > 0) {
 			matcher.appendTail(sb);
+
+			return super.postFormat(sb.toString(), originalReturnCharacter);
 		}
 
-		return super.postFormat(sb.toString(), originalReturnCharacter);
+		return super.postFormat(content, originalReturnCharacter);
 	}
 
 	@Override

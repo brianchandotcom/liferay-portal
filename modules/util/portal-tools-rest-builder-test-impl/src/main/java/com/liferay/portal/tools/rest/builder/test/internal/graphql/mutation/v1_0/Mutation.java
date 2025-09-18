@@ -205,17 +205,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteBatchTestEntityByExternalReferenceCode(
+	public boolean deleteBatchTestEntityByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_batchTestEntityResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			batchTestEntityResource ->
 				batchTestEntityResource.
 					deleteBatchTestEntityByExternalReferenceCode(
 						externalReferenceCode));
+
+		return true;
 	}
 
 	@GraphQLField

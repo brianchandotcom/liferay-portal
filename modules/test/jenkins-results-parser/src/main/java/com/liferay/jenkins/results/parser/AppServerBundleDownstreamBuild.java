@@ -25,9 +25,10 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 		Map<String, String> startPropertiesTempMap =
 			getStartPropertiesTempMap();
 
+		String filePath = getAxisVariable() + "/build-failure";
+
 		String s3ObjectPath =
-			startPropertiesTempMap.get("S3_BUCKET_DIST_PATH") +
-				"/build-failure";
+			startPropertiesTempMap.get("S3_BUCKET_DIST_PATH") + "/" + filePath;
 
 		if (CloudBucketUtil.isS3ObjectRefAvailable(s3ObjectPath)) {
 			return;
@@ -43,7 +44,7 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 
 		File directory = workspaceGitRepository.getDirectory();
 
-		File buildFailureFile = new File(directory, "build-failure");
+		File buildFailureFile = new File(directory, filePath);
 
 		buildFailureFile.createNewFile();
 
@@ -60,7 +61,8 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 		sb.append(workspaceGitRepository.getBaseBranchSHA());
 		sb.append("/");
 		sb.append(workspaceGitRepository.getSenderBranchSHA());
-		sb.append("/build-failure");
+		sb.append("/");
+		sb.append(filePath);
 
 		CloudBucketUtil.createS3ObjectRef(s3ObjectPath, sb.toString());
 

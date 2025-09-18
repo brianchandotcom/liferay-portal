@@ -142,6 +142,7 @@ public class DataRemovalExecutor {
 
 		if (clazz.equals(DDMDataCleanupPreupgradeProcess.class) ||
 			clazz.equals(DDMStorageLinkDataCleanupPreupgradeProcess.class)) {
+
 			return dataRemovalConfiguration.removeDDMOrphanData();
 		}
 

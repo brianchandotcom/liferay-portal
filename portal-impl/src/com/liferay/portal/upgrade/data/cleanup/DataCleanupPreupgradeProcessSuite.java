@@ -145,7 +145,7 @@ public class DataCleanupPreupgradeProcessSuite {
 					updateAllPrimaryKeysDataCleanupPreupgradeProcess,
 					userDataCleanupPreupgradeProcess)
 			).put(
-			ddmDataCleanupPreupgradeProcess,
+				ddmDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
 					groupDataCleanupPreupgradeProcess)
 			).put(

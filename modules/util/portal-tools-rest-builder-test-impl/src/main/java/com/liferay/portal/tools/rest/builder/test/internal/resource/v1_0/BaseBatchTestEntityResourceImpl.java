@@ -94,17 +94,14 @@ public abstract class BaseBatchTestEntityResourceImpl
 	@jakarta.ws.rs.Path(
 		"/batch-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Response deleteBatchTestEntityByExternalReferenceCode(
+	public void deleteBatchTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode)
 		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	/**

@@ -47,6 +47,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -249,17 +250,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				sb.append(
 					JenkinsResultsParserUtil.getBuildProperty(
 						"cloud.ci.s3.bucket.build.reports.path"));
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
 
-			sb.append("/");
-			sb.append(path);
+				sb.append("/");
+				sb.append(path);
 
-			CloudBucketUtil.syncS3Files(
-				JenkinsResultsParserUtil.getCanonicalPath(baseDir),
-				sb.toString());
+				CloudBucketUtil.syncS3Files(
+					JenkinsResultsParserUtil.getCanonicalPath(baseDir),
+					sb.toString());
+			}
+			catch (IOException | TimeoutException exception) {
+				System.out.println(
+					"Unable to sync cached build reports for " + path);
+				System.out.println(exception.getMessage());
+			}
 		}
 
 		File[] buildReportFiles = baseDir.listFiles();

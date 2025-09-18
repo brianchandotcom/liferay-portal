@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import {EViewsActionTypes} from '../views/viewsReducer';
 import {readStateFromURL, writeStateInURL} from './stateInURL';
@@ -70,7 +70,7 @@ function useGetter<K extends keyof IStateInURL>({
 }
 
 function useUpdaterThunk<K extends keyof IStateInURL>({
-	additionalStateDispatchers,
+	additionalStateDispatchers = [],
 	id,
 	key,
 	stateInURLSettings,
@@ -86,6 +86,19 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 	stateInURLSettings: EStateInURLSettings;
 	type: EViewsActionTypes;
 }): IStateInURLUpdaterThunk<K> {
+	const additionalStateDispatchersKey = JSON.stringify(
+		additionalStateDispatchers
+	);
+
+	const memoizedAdditionalStateDispatchers: {
+		key: keyof IStateInURL;
+		type: EViewsActionTypes;
+		value: any;
+	}[] = useMemo(
+		() => JSON.parse(additionalStateDispatchersKey),
+		[additionalStateDispatchersKey]
+	);
+
 	return useCallback(
 		(value: IStateInURL[K]) => {
 			return (viewsDispatch: Function) => {
@@ -94,8 +107,8 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 				};
 
 				if (
-					!additionalStateDispatchers ||
-					!additionalStateDispatchers.length
+					!memoizedAdditionalStateDispatchers ||
+					!memoizedAdditionalStateDispatchers.length
 				) {
 					viewsDispatch({
 						type,
@@ -113,14 +126,17 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 						value,
 					});
 
-					additionalStateDispatchers.forEach((stateDispatcher) => {
-						stateUpdates.push({
-							type: stateDispatcher.type,
-							value: stateDispatcher.value,
-						});
+					memoizedAdditionalStateDispatchers.forEach(
+						(stateDispatcher) => {
+							stateUpdates.push({
+								type: stateDispatcher.type,
+								value: stateDispatcher.value,
+							});
 
-						newState[stateDispatcher.key] = stateDispatcher.value;
-					});
+							newState[stateDispatcher.key] =
+								stateDispatcher.value;
+						}
+					);
 
 					viewsDispatch({
 						type: EViewsActionTypes.BATCH_UPDATE,
@@ -131,7 +147,7 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 				writeStateInURL(id, newState, stateInURLSettings);
 			};
 		},
-		[additionalStateDispatchers, id, key, stateInURLSettings, type]
+		[memoizedAdditionalStateDispatchers, id, key, stateInURLSettings, type]
 	);
 }
 

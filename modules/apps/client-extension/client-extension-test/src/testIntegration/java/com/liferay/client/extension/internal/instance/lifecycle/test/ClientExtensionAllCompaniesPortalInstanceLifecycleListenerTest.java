@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -25,9 +26,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +47,19 @@ public class ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() {
+		Map<String, String> priorities = Log4JUtil.getPriorities();
+
+		_priority = priorities.get(
+			"com.liferay.client.extension.type.internal.manager." +
+				"CETManagerImpl");
+
+		Log4JUtil.setLevel(
+			"com.liferay.client.extension.type.internal.manager.CETManagerImpl",
+			"ERROR", false);
+	}
+
 	@After
 	public void tearDown() {
 		for (AutoCloseable autoCloseable : _autoCloseables) {
@@ -54,6 +70,10 @@ public class ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest {
 				_log.error(exception);
 			}
 		}
+
+		Log4JUtil.setLevel(
+			"com.liferay.client.extension.type.internal.manager.CETManagerImpl",
+			_priority, false);
 	}
 
 	@Test
@@ -153,5 +173,7 @@ public class ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest {
 
 	@Inject
 	private CETManager _cetManager;
+
+	private String _priority;
 
 }

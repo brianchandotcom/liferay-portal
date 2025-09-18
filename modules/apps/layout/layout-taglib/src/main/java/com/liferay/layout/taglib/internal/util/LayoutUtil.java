@@ -198,11 +198,7 @@ public class LayoutUtil {
 	}
 
 	private static boolean _isExcludedLayout(Layout layout) {
-		if (layout.isTypeEmpty()) {
-			return true;
-		}
-
-		if (!layout.isTypeContent()) {
+		if (!layout.isTypeContent() && !layout.isTypeEmpty()) {
 			return false;
 		}
 

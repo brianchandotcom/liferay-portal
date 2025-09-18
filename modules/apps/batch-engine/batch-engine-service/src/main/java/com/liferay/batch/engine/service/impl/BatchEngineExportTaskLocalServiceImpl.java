@@ -40,9 +40,24 @@ public class BatchEngineExportTaskLocalServiceImpl
 		Map<String, Serializable> parameters, String taskItemDelegateName) {
 
 		BatchEngineExportTask batchEngineExportTask =
-			batchEngineExportTaskPersistence.create(
+			batchEngineExportTaskLocalService.createBatchEngineExportTask(
 				counterLocalService.increment(
-					BatchEngineExportTask.class.getName()));
+					BatchEngineExportTask.class.getName()),
+				externalReferenceCode, companyId, userId, callbackURL,
+				className, contentType, executeStatus, fieldNames, parameters,
+				taskItemDelegateName);
+
+		return batchEngineExportTaskPersistence.update(batchEngineExportTask);
+	}
+
+	public BatchEngineExportTask createBatchEngineExportTask(
+		long batchEngineExportTaskId, String externalReferenceCode,
+		long companyId, long userId, String callbackURL, String className,
+		String contentType, String executeStatus, List<String> fieldNames,
+		Map<String, Serializable> parameters, String taskItemDelegateName) {
+
+		BatchEngineExportTask batchEngineExportTask =
+			batchEngineExportTaskPersistence.create(batchEngineExportTaskId);
 
 		batchEngineExportTask.setExternalReferenceCode(externalReferenceCode);
 		batchEngineExportTask.setCompanyId(companyId);
@@ -57,7 +72,7 @@ public class BatchEngineExportTaskLocalServiceImpl
 		batchEngineExportTask.setParameters(parameters);
 		batchEngineExportTask.setTaskItemDelegateName(taskItemDelegateName);
 
-		return batchEngineExportTaskPersistence.update(batchEngineExportTask);
+		return batchEngineExportTask;
 	}
 
 	@Override

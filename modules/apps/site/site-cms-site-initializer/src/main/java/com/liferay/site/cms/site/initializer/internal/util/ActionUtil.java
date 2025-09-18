@@ -488,21 +488,21 @@ public class ActionUtil {
 					httpServletRequest,
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)));
 
-		List<DropdownItem> customDropdownItems = getContentsCustomDropdownItems(
+		List<DropdownItem> contentsCustomDropdownItems = getContentsCustomDropdownItems(
 			httpServletRequest,
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
 
-		customDropdownItems.addAll(
+		contentsCustomDropdownItems.addAll(
 			getFilesCustomDropdownItems(
 				httpServletRequest,
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES));
 
-		customDropdownItems.sort(
+		contentsCustomDropdownItems.sort(
 			Comparator.comparing(
 				dropdownItem -> (String)dropdownItem.get("label"),
 				String.CASE_INSENSITIVE_ORDER));
 
-		dropdownItems.addAll(customDropdownItems);
+		dropdownItems.addAll(contentsCustomDropdownItems);
 
 		return dropdownItems;
 	}
@@ -628,15 +628,15 @@ public class ActionUtil {
 					httpServletRequest,
 					objectEntryFolderExternalReferenceCode)));
 
-		List<DropdownItem> customDropdownItems = getContentsCustomDropdownItems(
+		List<DropdownItem> contentsCustomDropdownItems = getContentsCustomDropdownItems(
 			httpServletRequest, objectEntryFolderExternalReferenceCode);
 
-		customDropdownItems.sort(
+		contentsCustomDropdownItems.sort(
 			Comparator.comparing(
 				dropdownItem -> (String)dropdownItem.get("label"),
 				String.CASE_INSENSITIVE_ORDER));
 
-		dropdownItems.addAll(customDropdownItems);
+		dropdownItems.addAll(contentsCustomDropdownItems);
 
 		return dropdownItems;
 	}
@@ -832,15 +832,15 @@ public class ActionUtil {
 					httpServletRequest,
 					objectEntryFolderExternalReferenceCode)));
 
-		List<DropdownItem> customDropdownItems = getFilesCustomDropdownItems(
+		List<DropdownItem> filesCustomDropdownItems = getFilesCustomDropdownItems(
 			httpServletRequest, objectEntryFolderExternalReferenceCode);
 
-		customDropdownItems.sort(
+		filesCustomDropdownItems.sort(
 			Comparator.comparing(
 				dropdownItem -> (String)dropdownItem.get("label"),
 				String.CASE_INSENSITIVE_ORDER));
 
-		dropdownItems.addAll(customDropdownItems);
+		dropdownItems.addAll(filesCustomDropdownItems);
 
 		return dropdownItems;
 	}

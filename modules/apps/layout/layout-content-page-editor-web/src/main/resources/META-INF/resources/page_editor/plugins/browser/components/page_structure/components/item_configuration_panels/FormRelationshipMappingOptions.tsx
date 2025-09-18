@@ -42,6 +42,7 @@ export default function FormRelationshipMappingOptions({
 						? ''
 						: Liferay.Language.get('select-a-content-type')
 				}
+				id={selectId}
 				onChange={(event) => {
 					updateItemLocalConfig(item.itemId, {
 						loading: true,
@@ -51,7 +52,7 @@ export default function FormRelationshipMappingOptions({
 						updateItemConfig({
 							itemConfig: {
 								...item.config,
-								contentType: event.target.value,
+								contentType: event.target.value || null,
 							},
 							itemIds: [item.itemId],
 						})
@@ -64,7 +65,7 @@ export default function FormRelationshipMappingOptions({
 				options={[
 					{
 						label: Liferay.Language.get('none'),
-						value: '0',
+						value: '',
 					},
 					...fieldSets.map(({label, name}) => ({
 						label,
@@ -72,6 +73,7 @@ export default function FormRelationshipMappingOptions({
 					})),
 				]}
 				sizing="sm"
+				value={item.config.contentType || ''}
 			/>
 		</ClayForm.Group>
 	);

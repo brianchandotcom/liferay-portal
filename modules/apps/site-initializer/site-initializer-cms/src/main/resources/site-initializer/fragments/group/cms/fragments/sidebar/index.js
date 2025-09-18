@@ -9,16 +9,21 @@ const sidebarId = `${fragmentEntryLinkNamespace}sidebar`;
 const sidebarOpenKey = `${fragmentEntryLinkNamespace}sidebarOpen`;
 
 const sidebar = fragmentElement.querySelector('.sidebar-container');
+const sidebarCloseButton = fragmentElement.querySelector(
+	'.sidebar-close-button'
+);
 const sidebarContainer = fragmentElement.querySelector('.sidebar-layout');
 const sidebarTrigger = fragmentElement.querySelector('.sidebar-toggle');
-const sidebarSRClose = fragmentElement.querySelector('.sidebar-close-button');
 
 if (sidebarTrigger) {
-	setupTrigger(sidebarTrigger);
+	sidebar.setAttribute('id', sidebarId);
+	sidebarTrigger.setAttribute('aria-controls', sidebarId);
+
+	addSidebarToggleClickEventListener(sidebarTrigger);
 }
 
-if (sidebarSRClose) {
-	setupTrigger(sidebarSRClose);
+if (sidebarCloseButton) {
+	addSidebarToggleClickEventListener(sidebarCloseButton);
 }
 
 const sidebarOpenString = Liferay.Util.LocalStorage.getItem(
@@ -48,13 +53,6 @@ function handleSidebarToggleClick() {
 		sidebarOpen,
 		Liferay.Util.LocalStorage.TYPES.FUNCTIONAL
 	);
-}
-
-function setupTrigger(triggerElement) {
-	sidebar.setAttribute('id', sidebarId);
-	sidebarTrigger.setAttribute('aria-controls', sidebarId);
-
-	addSidebarToggleClickEventListener(triggerElement);
 }
 
 function toggleSidebar(moveFocus = true) {

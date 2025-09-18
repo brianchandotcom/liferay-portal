@@ -40,11 +40,18 @@ public class CSPOSGiCommands implements OSGiCommands {
 				ContentSecurityPolicyConfiguration.class,
 				GetterUtil.getLong(companyId));
 
-		if (contentSecurityPolicyConfiguration != null) {
-			_configurationProvider.deleteCompanyConfiguration(
-				ContentSecurityPolicyConfiguration.class,
-				GetterUtil.getLong(companyId));
+		if (contentSecurityPolicyConfiguration == null) {
+			System.out.println(
+				"There is no company level " +
+					"ContentSecurityPolicyConfiguration for companyId " +
+						companyId);
+
+			return;
 		}
+
+		_configurationProvider.deleteCompanyConfiguration(
+			ContentSecurityPolicyConfiguration.class,
+			GetterUtil.getLong(companyId));
 	}
 
 	public void resetGroupConfiguration(String groupId)
@@ -55,11 +62,17 @@ public class CSPOSGiCommands implements OSGiCommands {
 				ContentSecurityPolicyConfiguration.class,
 				GetterUtil.getLong(groupId));
 
-		if (contentSecurityPolicyConfiguration != null) {
-			_configurationProvider.deleteGroupConfiguration(
-				ContentSecurityPolicyConfiguration.class,
-				GetterUtil.getLong(groupId));
+		if (contentSecurityPolicyConfiguration == null) {
+			System.out.println(
+				"There is no group level ContentSecurityPolicyConfiguration " +
+					"for groupId " + groupId);
+
+			return;
 		}
+
+		_configurationProvider.deleteGroupConfiguration(
+			ContentSecurityPolicyConfiguration.class,
+			GetterUtil.getLong(groupId));
 	}
 
 	public void resetSystemConfiguration() throws ConfigurationException {
@@ -67,10 +80,15 @@ public class CSPOSGiCommands implements OSGiCommands {
 			_configurationProvider.getSystemConfiguration(
 				ContentSecurityPolicyConfiguration.class);
 
-		if (contentSecurityPolicyConfiguration != null) {
-			_configurationProvider.deleteSystemConfiguration(
-				ContentSecurityPolicyConfiguration.class);
+		if (contentSecurityPolicyConfiguration == null) {
+			System.out.println(
+				"There is no system level ContentSecurityPolicyConfiguration");
+
+			return;
 		}
+
+		_configurationProvider.deleteSystemConfiguration(
+			ContentSecurityPolicyConfiguration.class);
 	}
 
 	@Activate

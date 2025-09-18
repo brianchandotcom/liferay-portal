@@ -209,10 +209,6 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			ServiceReference<VulcanBatchEngineTaskItemDelegate>
 				serviceReference,
 			ServiceRegistration<PortletDataHandler> serviceRegistration) {
-
-			removedService(serviceReference, serviceRegistration);
-
-			addingService(serviceReference);
 		}
 
 		@Override

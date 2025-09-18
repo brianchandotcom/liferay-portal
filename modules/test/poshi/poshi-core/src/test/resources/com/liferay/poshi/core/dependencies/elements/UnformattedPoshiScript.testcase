@@ -1,7 +1,7 @@
 @component-name = "portal-ci-infrastructure"
 @ignore = "true"
 definition {
-		property chrome.version = "100";
+		property browser.chrome.version = "100.0";
 
     property app.server.bundles.size = "12890";
 	property portal.release = "true";

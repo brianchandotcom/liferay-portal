@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property osgi.modules.includes = "site-initializer-liferay-marketplace";
 	property portal.release = "false";
 	property portal.upstream = "true";

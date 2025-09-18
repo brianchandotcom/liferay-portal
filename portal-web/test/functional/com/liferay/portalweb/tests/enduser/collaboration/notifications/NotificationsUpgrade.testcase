@@ -1,7 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.acceptance = "true";
 	property portal.release = "true";

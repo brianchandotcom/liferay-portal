@@ -1,7 +1,7 @@
 @component-name = "portal-content-management"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property ci.retries.disabled = "true";
 	property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";

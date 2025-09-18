@@ -1,7 +1,7 @@
 @component-name = "portal-db-infrastructure"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
 	property portal.smoke.upgrades = "false";

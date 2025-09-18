@@ -144,7 +144,7 @@
 
 			<#if isSelected>
 				<#if hasTaxonomyProperty(item, "skipNextLevel", "true")>
-					<#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${item.id}/taxonomy-categories") />
+					<#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${item.id}/taxonomy-categories?sort=name:asc") />
 
 					<#if childCategories.items?has_content>
 						<#list childCategories.items as childCategory>
@@ -161,7 +161,7 @@
 								type="checkbox"
 							/>
 
-							<#assign grandChildCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${childCategory.id}/taxonomy-categories") />
+							<#assign grandChildCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${childCategory.id}/taxonomy-categories?sort=name:asc") />
 
 							<@panel_item
 								categories = grandChildCategories
@@ -172,7 +172,7 @@
 						</#list>
 					</#if>
 				<#else>
-					<#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${item.id}/taxonomy-categories") />
+					<#assign childCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${item.id}/taxonomy-categories?sort=name:asc") />
 
 					<@panel_item
 						categories = childCategories
@@ -199,7 +199,7 @@
 
 <#list assetCategoriesSearchFacetDisplayContext.getParameterValues() as categoryId>
 	<#attempt>
-		<#assign category = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + categoryId) />
+		<#assign category = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${categoryId}?sort=name:asc") />
 
 		<#if category?has_content>
 			<#assign currentCategory = category />
@@ -221,7 +221,7 @@
 					<#if currentCategory.parentTaxonomyCategory?has_content && (currentCategory.parentTaxonomyCategory.id?string) != "0">
 						<#assign
 							parentId = currentCategory.parentTaxonomyCategory.id
-							currentCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/" + parentId)
+							currentCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${parentId}?sort=name:asc")
 						/>
 					<#else>
 						<#break />
@@ -243,7 +243,7 @@
 			assetCategoryId = assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)[0].getAssetCategoryId()
 
 			category = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${assetCategoryId}")
-			categories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${category.parentTaxonomyVocabulary.id}/taxonomy-categories")
+			categories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${category.parentTaxonomyVocabulary.id}/taxonomy-categories?sort=name:asc")
 		/>
 
 		<#if categories?has_content>

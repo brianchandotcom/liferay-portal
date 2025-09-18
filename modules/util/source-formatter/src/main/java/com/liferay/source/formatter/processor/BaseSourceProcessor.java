@@ -264,9 +264,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Set<String> modifiedContents = new HashSet<>();
 		Set<String> modifiedMessages = new TreeSet<>();
 
-		List<String> checkCategoryNames =
-			_sourceFormatterArgs.getCheckCategoryNames();
-
 		String originalReturnCharacter = StringPool.NEW_LINE;
 
 		if (content.contains(StringPool.RETURN_NEW_LINE)) {
@@ -277,16 +274,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		content = preFormat(
-			file, fileName, content, checkCategoryNames, modifiedMessages,
-			originalReturnCharacter);
+			file, fileName, content, modifiedMessages, originalReturnCharacter);
 
 		String newContent = format(
 			file, fileName, absolutePath, content, content,
 			new ArrayList<>(_sourceChecks), modifiedContents, modifiedMessages,
 			0);
 
-		newContent = postFormat(
-			newContent, checkCategoryNames, originalReturnCharacter);
+		newContent = postFormat(newContent, originalReturnCharacter);
 
 		return processFormattedFile(
 			file, fileName, content, newContent, modifiedMessages);
@@ -442,8 +437,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String postFormat(
-		String content, List<String> checkCategoryNames,
-		String originalReturnCharacter) {
+		String content, String originalReturnCharacter) {
+
+		List<String> checkCategoryNames =
+			_sourceFormatterArgs.getCheckCategoryNames();
 
 		if (!originalReturnCharacter.equals(StringPool.NEW_LINE) &&
 			checkCategoryNames.isEmpty() && isPortalSource()) {
@@ -460,9 +457,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected String preFormat(
 			File file, String fileName, String content,
-			List<String> checkCategoryNames, Set<String> modifiedMessages,
-			String originalReturnCharacter)
+			Set<String> modifiedMessages, String originalReturnCharacter)
 		throws Exception {
+
+		List<String> checkCategoryNames =
+			_sourceFormatterArgs.getCheckCategoryNames();
 
 		if (checkCategoryNames.isEmpty() && isPortalSource()) {
 			_checkUTF8(file, fileName);

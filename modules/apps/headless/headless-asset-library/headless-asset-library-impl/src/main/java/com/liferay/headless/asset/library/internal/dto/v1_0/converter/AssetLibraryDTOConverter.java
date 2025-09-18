@@ -186,6 +186,7 @@ public class AssetLibraryDTOConverter
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getNameMap()));
+
 				setSearchable(depotEntryGroupRel::isSearchable);
 			}
 		};

@@ -395,7 +395,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		Page<BulkActionItem> page =
 			bulkActionResource.postBulkActionItemPreviewPage(
-				null, null, Pagination.of(1, 10), "name:desc", bulkAction);
+				false, null, null, Pagination.of(1, 10), "name:desc",
+				bulkAction);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -429,7 +430,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		bulkAction.setSelectAll(true);
 
 		page = bulkActionResource.postBulkActionItemPreviewPage(
-			objectEntryFolder2.getName(),
+			false, objectEntryFolder2.getName(),
 			"folderId eq " + objectEntryFolder1.getObjectEntryFolderId(),
 			Pagination.of(1, 10), null, bulkAction);
 
@@ -442,6 +443,38 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			items.get(0), objectEntryFolder2.getObjectEntryFolderId(),
 			expectedDeletionType, null, objectEntryFolder2.getName(), "FOLDER",
 			null);
+
+		bulkAction.setBulkActionItems(
+			new BulkActionItem[] {_toBulkActionItem(objectEntryFolder1)});
+
+		page = bulkActionResource.postBulkActionItemPreviewPage(
+			true, null, null, Pagination.of(1, 10), null, bulkAction);
+
+		items = ListUtil.fromCollection(page.getItems());
+
+		Assert.assertEquals(items.toString(), 2, items.size());
+		Assert.assertEquals(items.toString(), 2, page.getTotalCount());
+
+		if (name.compareTo(objectEntryFolder2.getName()) < 0) {
+			_assertBulkActionItem(
+				items.get(0), objectEntryFolder2.getObjectEntryFolderId(),
+				expectedDeletionType, null, objectEntryFolder2.getName(),
+				"FOLDER", null);
+			_assertBulkActionItem(
+				items.get(1), objectEntry.getObjectEntryId(),
+				expectedDeletionType, "basic-web-content",
+				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
+		}
+		else {
+			_assertBulkActionItem(
+				items.get(0), objectEntry.getObjectEntryId(),
+				expectedDeletionType, "basic-web-content",
+				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
+			_assertBulkActionItem(
+				items.get(1), objectEntryFolder2.getObjectEntryFolderId(),
+				expectedDeletionType, null, objectEntryFolder2.getName(),
+				"FOLDER", null);
+		}
 	}
 
 	private void _testPostBulkActionWithTypeDefaultPermission()

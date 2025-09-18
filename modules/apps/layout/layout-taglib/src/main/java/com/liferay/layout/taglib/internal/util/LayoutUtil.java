@@ -101,13 +101,13 @@ public class LayoutUtil {
 		List<Layout> layouts = ListUtil.filter(
 			LayoutServiceUtil.getLayouts(
 				groupId, privateLayout, parentLayoutId),
-			layout -> !_isExcludedLayout(layout));
+			layout -> _isIncluded(layout));
 
 		for (Layout layout : ListUtil.subList(layouts, start, end)) {
 			List<Layout> childLayouts = ListUtil.filter(
 				LayoutServiceUtil.getLayouts(
 					groupId, layout.isPrivateLayout(), layout.getLayoutId()),
-				curLayout -> !_isExcludedLayout(curLayout));
+				curLayout -> _isIncluded(curLayout));
 
 			jsonArray.put(
 				JSONUtil.put(
@@ -197,24 +197,20 @@ public class LayoutUtil {
 		);
 	}
 
-	private static boolean _isExcludedLayout(Layout layout) {
-		if (layout.isTypeEmpty()) {
+	private static boolean _isIncluded(Layout layout) {
+		if (!layout.isTypeContent() && !layout.isTypeEmpty()) {
 			return true;
 		}
 
-		if (!layout.isTypeContent()) {
-			return false;
-		}
-
 		if (layout.fetchDraftLayout() != null) {
-			return !layout.isPublished();
+			return layout.isPublished();
 		}
 
 		if (layout.isApproved() && !layout.isHidden() && !layout.isSystem()) {
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 }

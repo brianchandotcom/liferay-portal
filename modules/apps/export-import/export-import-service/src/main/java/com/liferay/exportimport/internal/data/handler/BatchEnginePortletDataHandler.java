@@ -221,38 +221,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
 
-			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-				exportImportDescriptor =
-					_exportImportVulcanBatchEngineTaskItemDelegate.
-						getExportImportDescriptor();
-
-			BatchEngineExportTaskExecutor.Result result =
-				_batchEngineExportTaskExecutor.execute(
-					_batchEngineExportTaskLocalService.
-						createBatchEngineExportTask(
-							0L, null, portletDataContext.getCompanyId(),
-							_getUserId(), null, _className, "JSON",
-							BatchEngineTaskExecuteStatus.INITIAL.name(),
-							Collections.emptyList(),
-							BatchEnginePortletDataHandlerUtil.
-								buildExportParameters(
-									exportImportDescriptor.getNestedFields(),
-									exportImportDescriptor.getParameters(),
-									portletDataContext),
-							_taskItemDelegateName),
-					new BatchEngineExportTaskExecutor.Settings() {
-
-						@Override
-						public boolean isCompressContent() {
-							return false;
-						}
-
-						@Override
-						public boolean isPersist() {
-							return false;
-						}
-
-					});
+			BatchEngineExportTaskExecutor.Result result = _executeExportTask(
+				Integer.MAX_VALUE, portletDataContext);
 
 			portletDataContext.addZipEntry(
 				_normalize(_fileName, portletDataContext.getScopeGroupId()),
@@ -357,43 +327,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
 
-			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-				exportImportDescriptor =
-					_exportImportVulcanBatchEngineTaskItemDelegate.
-						getExportImportDescriptor();
-
-			BatchEngineExportTaskExecutor.Result result =
-				_batchEngineExportTaskExecutor.execute(
-					_batchEngineExportTaskLocalService.
-						createBatchEngineExportTask(
-							0L, null, portletDataContext.getCompanyId(),
-							_getUserId(), null, _className, "JSON",
-							BatchEngineTaskExecuteStatus.INITIAL.name(),
-							Collections.emptyList(),
-							BatchEnginePortletDataHandlerUtil.
-								buildExportParameters(
-									exportImportDescriptor.getNestedFields(),
-									exportImportDescriptor.getParameters(),
-									portletDataContext),
-							_taskItemDelegateName),
-					new BatchEngineExportTaskExecutor.Settings() {
-
-						@Override
-						public int getMaxItems() {
-							return 1;
-						}
-
-						@Override
-						public boolean isCompressContent() {
-							return false;
-						}
-
-						@Override
-						public boolean isPersist() {
-							return false;
-						}
-
-					});
+			BatchEngineExportTaskExecutor.Result result = _executeExportTask(
+				1, portletDataContext);
 
 			BatchEngineExportTask batchEngineExportTask =
 				result.getBatchEngineExportTask();
@@ -419,6 +354,43 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	protected static final TransactionConfig transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
+
+	private BatchEngineExportTaskExecutor.Result _executeExportTask(
+		int maxItems, PortletDataContext portletDataContext) {
+
+		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+			exportImportDescriptor =
+				_exportImportVulcanBatchEngineTaskItemDelegate.
+					getExportImportDescriptor();
+
+		return _batchEngineExportTaskExecutor.execute(
+			_batchEngineExportTaskLocalService.createBatchEngineExportTask(
+				0L, null, portletDataContext.getCompanyId(), _getUserId(), null,
+				_className, "JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
+				Collections.emptyList(),
+				BatchEnginePortletDataHandlerUtil.buildExportParameters(
+					exportImportDescriptor.getNestedFields(),
+					exportImportDescriptor.getParameters(), portletDataContext),
+				_taskItemDelegateName),
+			new BatchEngineExportTaskExecutor.Settings() {
+
+				@Override
+				public int getMaxItems() {
+					return maxItems;
+				}
+
+				@Override
+				public boolean isCompressContent() {
+					return false;
+				}
+
+				@Override
+				public boolean isPersist() {
+					return false;
+				}
+
+			});
+	}
 
 	private byte[] _getBytes(String fileName, InputStream inputStream)
 		throws Exception {

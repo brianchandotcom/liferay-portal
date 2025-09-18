@@ -293,7 +293,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				String versionLabel = String.valueOf(
 					versionLabelPath.getFileName());
 
-				if (StringUtil.equals(
+				if (StringUtil.startsWith(
 						versionLabel,
 						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 

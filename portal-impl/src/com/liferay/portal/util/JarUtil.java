@@ -40,16 +40,19 @@ public class JarUtil {
 			Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
 		}
 
-		try (InputStream inputStream = Files.newInputStream(path)) {
-			String digest = DigesterUtil.digestHex(
-				DigesterUtil.SHA_1, inputStream);
+		String digest = null;
 
-			if (!StringUtil.equalsIgnoreCase(sha1, digest)) {
-				throw new Exception(
-					StringBundler.concat(
-						"Unable to download ", url, " to ", path, " because ",
-						sha1, " does not equal ", digest));
-			}
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			digest = DigesterUtil.digestHex(DigesterUtil.SHA_1, inputStream);
+		}
+
+		if (!StringUtil.equalsIgnoreCase(sha1, digest)) {
+			Files.delete(path);
+
+			throw new Exception(
+				StringBundler.concat(
+					"Unable to download ", url, " to ", path, " because ", sha1,
+					" does not equal ", digest));
 		}
 
 		if (_log.isInfoEnabled()) {

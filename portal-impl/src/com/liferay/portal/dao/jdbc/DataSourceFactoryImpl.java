@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.hibernate.DialectDetector;
-import com.liferay.portal.util.JarUtil;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -38,9 +38,11 @@ import java.io.Closeable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.sql.Connection;
@@ -282,7 +284,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 
 			try {
-				JarUtil.downloadAndInstallJar(
+				_downloadAndInstallJar(
 					new URL(url),
 					Paths.get(
 						PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
@@ -327,6 +329,29 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 		catch (Exception exception) {
 			_log.error("Unable to check SQL Server", exception);
+		}
+	}
+
+	private void _downloadAndInstallJar(
+			URL url, Path path, URLClassLoader urlClassLoader, String sha1)
+		throws Exception {
+
+		URLUtil.download(url, path, sha1);
+
+		URI uri = path.toUri();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Installing ", path, " to ", urlClassLoader));
+		}
+
+		_addURLMethod.invoke(urlClassLoader, uri.toURL());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Installed ", path, " to ", urlClassLoader));
 		}
 	}
 
@@ -570,6 +595,18 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataSourceFactoryImpl.class);
+
+	private static final Method _addURLMethod;
+
+	static {
+		try {
+			_addURLMethod = ReflectionUtil.getDeclaredMethod(
+				URLClassLoader.class, "addURL", URL.class);
+		}
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
+	}
 
 	private static class JNDIDataSourceWrapper extends DataSourceWrapper {
 

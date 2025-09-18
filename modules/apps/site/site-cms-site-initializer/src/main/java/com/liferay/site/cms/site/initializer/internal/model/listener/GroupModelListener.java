@@ -218,8 +218,12 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				return;
 			}
 
-			Group siteGroup = _groupLocalService.getGroup(
+			Group siteGroup = _groupLocalService.fetchGroup(
 				group.getCompanyId(), GroupConstants.CMS);
+
+			if (siteGroup == null) {
+				return;
+			}
 
 			Long[] groupIds = _getDepotGroupIds(group.getCompanyId());
 

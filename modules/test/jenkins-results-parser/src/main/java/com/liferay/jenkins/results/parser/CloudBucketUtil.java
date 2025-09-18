@@ -339,56 +339,53 @@ public class CloudBucketUtil {
 				"gcloud storage rsync --recursive", destination, source));
 	}
 
-	public static void syncS3Files(String destination, String source) {
+	public static void syncS3Files(String destination, String source)
+		throws IOException, TimeoutException {
+
 		_executeCommands(
 			_getFileTransferCommand(
 				"aws s3 sync --no-progress", destination, source));
 
-		try {
-			Matcher destinationS3ObjectPathMatcher =
-				_s3ObjectPathPattern.matcher(destination);
+		Matcher destinationS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			destination);
 
-			if (destinationS3ObjectPathMatcher.find()) {
-				Matcher listS3FilesMatcher = _listS3FilesPattern.matcher(
-					listS3Files(destination));
+		if (destinationS3ObjectPathMatcher.find()) {
+			Matcher listS3FilesMatcher = _listS3FilesPattern.matcher(
+				listS3Files(destination));
 
-				while (listS3FilesMatcher.find()) {
-					String fileName = listS3FilesMatcher.group("fileName");
+			while (listS3FilesMatcher.find()) {
+				String fileName = listS3FilesMatcher.group("fileName");
 
-					if (!fileName.endsWith(_CHECKSUM_FILE_EXTENSION)) {
-						_createChecksumFile(
-							destination + "/" + fileName,
-							new File(source + "/" + fileName));
-					}
-
-					createS3ObjectRef(destination + "/" + fileName);
+				if (!fileName.endsWith(_CHECKSUM_FILE_EXTENSION)) {
+					_createChecksumFile(
+						destination + "/" + fileName,
+						new File(source + "/" + fileName));
 				}
-			}
 
-			Matcher sourceS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
-				source);
-
-			if (sourceS3ObjectPathMatcher.find()) {
-				Matcher listS3FilesMatcher = _listS3FilesPattern.matcher(
-					listS3Files(source));
-
-				while (listS3FilesMatcher.find()) {
-					String fileName = listS3FilesMatcher.group("fileName");
-
-					if (!fileName.endsWith(_CHECKSUM_FILE_EXTENSION) &&
-						!fileName.equals("build-database.json")) {
-
-						_validateChecksumFile(
-							new File(destination + "/" + fileName),
-							source + "/" + fileName);
-					}
-
-					createS3ObjectRef(source + "/" + fileName);
-				}
+				createS3ObjectRef(destination + "/" + fileName);
 			}
 		}
-		catch (IOException | TimeoutException exception) {
-			throw new RuntimeException(exception);
+
+		Matcher sourceS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			source);
+
+		if (sourceS3ObjectPathMatcher.find()) {
+			Matcher listS3FilesMatcher = _listS3FilesPattern.matcher(
+				listS3Files(source));
+
+			while (listS3FilesMatcher.find()) {
+				String fileName = listS3FilesMatcher.group("fileName");
+
+				if (!fileName.endsWith(_CHECKSUM_FILE_EXTENSION) &&
+					!fileName.equals("build-database.json")) {
+
+					_validateChecksumFile(
+						new File(destination + "/" + fileName),
+						source + "/" + fileName);
+				}
+
+				createS3ObjectRef(source + "/" + fileName);
+			}
 		}
 
 		System.out.println("Synced " + source + " to " + destination);

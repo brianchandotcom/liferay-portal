@@ -29,6 +29,10 @@ public interface BatchEngineExportTaskExecutor {
 
 	public interface Settings {
 
+		public default int getMaxItems() {
+			return Integer.MAX_VALUE;
+		}
+
 		public boolean isCompressContent();
 
 		public boolean isPersistContent();

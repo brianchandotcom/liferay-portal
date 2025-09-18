@@ -95,6 +95,11 @@ public class BatchEngineExportTaskExecutorImpl
 				"Uncompressed content cannot be stored in the database");
 		}
 
+		if (settings.getMaxItems() < 0) {
+			throw new IllegalArgumentException(
+				"The maximum number of items must be a positive number");
+		}
+
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				batchEngineExportTask.getCompanyId(),
@@ -200,8 +205,11 @@ public class BatchEngineExportTaskExecutorImpl
 					NestedFieldsContextUtil.toList(
 						MapUtil.getString(parameters, "batchNestedFields"))));
 
-			int exportBatchSize = _getExportBatchSize(
-				batchEngineExportTask.getCompanyId());
+			int maxItems = settings.getMaxItems();
+
+			int exportBatchSize = Math.min(
+				maxItems,
+				_getExportBatchSize(batchEngineExportTask.getCompanyId()));
 
 			BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor =
@@ -213,6 +221,8 @@ public class BatchEngineExportTaskExecutorImpl
 						parameters,
 						_userLocalService.getUser(
 							batchEngineExportTask.getUserId()));
+
+			batchEngineExportTask.setProcessedItemsCount(0);
 
 			Page<?> page = batchEngineTaskItemDelegateExecutor.getItems(
 				1, exportBatchSize);
@@ -237,7 +247,10 @@ public class BatchEngineExportTaskExecutorImpl
 					throw new InterruptedException();
 				}
 
-				if (!page.hasNext()) {
+				if (!page.hasNext() ||
+					(batchEngineExportTask.getProcessedItemsCount() >=
+						maxItems)) {
+
 					break;
 				}
 

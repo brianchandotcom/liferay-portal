@@ -36,6 +36,10 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {openImportFieldset} from './utils/openImportFieldset';
+import {
+	getOverallMaximumUploadRequestSize,
+	setOverallMaximumUploadRequestSize,
+} from './utils/systemSettingsUtil';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
@@ -68,7 +72,6 @@ export const testWithExportImportAtInstanceLevelFF = mergeTests(
 	companyExportImportPageTest,
 	exportImportPagesTest,
 	dataApiHelpersTest,
-	systemSettingsPageTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
 		'LPD-35914': {enabled: true, system: true},
@@ -76,6 +79,7 @@ export const testWithExportImportAtInstanceLevelFF = mergeTests(
 		'LPD-44771': {enabled: true},
 	}),
 	loginTest(),
+	systemSettingsPageTest,
 	uiElementsPageTest
 );
 
@@ -429,21 +433,13 @@ testWithExportImportAtInstanceLevelFF(
 		let site2;
 
 		await test.step('Increase the maximum upload request size', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Infrastructure',
-				'Upload Servlet Request'
-			);
-
 			originalOverallMaximumUploadRequestSize =
-				await systemSettingsPage.page
-					.getByLabel('Overall Maximum Upload Request Size')
-					.textContent();
+				await getOverallMaximumUploadRequestSize(systemSettingsPage);
 
-			await systemSettingsPage.page
-				.getByLabel('Overall Maximum Upload Request Size')
-				.fill('200000000');
-
-			await systemSettingsPage.saveButton.click();
+			await setOverallMaximumUploadRequestSize({
+				size: '200000000',
+				systemSettingsPage,
+			});
 		});
 
 		try {
@@ -471,11 +467,9 @@ testWithExportImportAtInstanceLevelFF(
 
 				await expect(
 					exportImportPage.page
-						.locator(
-							'//h2[span[normalize-space()="' + exportName + '"]]'
-						)
-						.first()
-						.locator('../..')
+						.locator('[data-qa-id="row"]', {
+							hasText: exportName,
+						})
 						.getByText('Successful')
 				).toBeVisible({timeout: 60000});
 
@@ -502,8 +496,9 @@ testWithExportImportAtInstanceLevelFF(
 
 				await expect(
 					exportImportPage.page
-						.getByText(exportName)
-						.locator('../../..')
+						.locator('[data-qa-id="row"]', {
+							hasText: exportName,
+						})
 						.getByText('Successful')
 				).toBeVisible({timeout: 60000});
 			});
@@ -565,16 +560,10 @@ testWithExportImportAtInstanceLevelFF(
 		}
 		finally {
 			await test.step('Restore the initial maximum upload request size', async () => {
-				await systemSettingsPage.goToSystemSetting(
-					'Infrastructure',
-					'Upload Servlet Request'
-				);
-
-				await systemSettingsPage.page
-					.getByLabel('Overall Maximum Upload Request Size')
-					.fill(originalOverallMaximumUploadRequestSize);
-
-				await systemSettingsPage.saveButton.click();
+				await setOverallMaximumUploadRequestSize({
+					size: originalOverallMaximumUploadRequestSize,
+					systemSettingsPage,
+				});
 			});
 		}
 	}

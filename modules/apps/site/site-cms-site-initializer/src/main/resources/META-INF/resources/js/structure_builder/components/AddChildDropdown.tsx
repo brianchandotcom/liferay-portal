@@ -89,6 +89,7 @@ export default function AddChildDropdown({
 							displayType="secondary"
 							size="sm"
 							symbol="plus"
+							title={Liferay.Language.get('add-field')}
 						/>
 					)
 				}

@@ -16,8 +16,8 @@ export class OpenIdInstanceSettingsPage {
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly openIdConnectMenuItem: Locator;
 	readonly enabledCheckbox: Locator;
-	readonly expandoColumnSelect: Locator;
-	readonly oidcProviderCustomClaimField: Locator;
+	readonly userCustomFieldsSelect: Locator;
+	readonly customClaimField: Locator;
 	readonly saveButton: Locator;
 	readonly openIDConnectProviderConnection: Locator;
 	readonly addButton: Locator;
@@ -49,10 +49,8 @@ export class OpenIdInstanceSettingsPage {
 		this.openIDConnectClientSecret = page.getByLabel(
 			'OpenID Connect Client Secret'
 		);
-		this.expandoColumnSelect = page.getByLabel('Expando Column');
-		this.oidcProviderCustomClaimField = page.getByLabel(
-			'OIDC Provider Custom Claim'
-		);
+		this.userCustomFieldsSelect = page.getByLabel('User Custom Fields');
+		this.customClaimField = page.getByLabel('Custom Claim');
 	}
 
 	async goto() {
@@ -94,10 +92,10 @@ export class OpenIdInstanceSettingsPage {
 		await this.openIDConnectClientSecret.fill(getRandomString());
 
 		if (customClaim) {
-			await this.expandoColumnSelect.selectOption({
+			await this.userCustomFieldsSelect.selectOption({
 				label: customClaim.expandoColumnName,
 			});
-			await this.oidcProviderCustomClaimField.fill(
+			await this.customClaimField.fill(
 				customClaim.oidcProviderCustomClaim
 			);
 		}

@@ -7,6 +7,7 @@ package com.liferay.users.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -102,6 +103,12 @@ public class EditUserMVCActionCommandTest {
 
 	@Test
 	public void testEditUserWithPrefixAndSuffixFields() throws Exception {
+		String[] fieldEditableDomainFirstName = PropsUtil.getArray(
+			PropsKeys.FIELD_EDITABLE_DOMAINS, new Filter("firstName"));
+		String[] fieldEditableDomainPrefix = PropsUtil.getArray(
+			PropsKeys.FIELD_EDITABLE_DOMAINS, new Filter("prefix"));
+		String[] fieldEditableDomainSuffix = PropsUtil.getArray(
+			PropsKeys.FIELD_EDITABLE_DOMAINS, new Filter("suffix"));
 		String[] fieldEditableUserTypes = PropsValues.FIELD_EDITABLE_USER_TYPES;
 
 		try {
@@ -127,7 +134,7 @@ public class EditUserMVCActionCommandTest {
 			Assert.assertTrue(
 				UsersAdminUtil.hasUpdateFieldPermission(
 					adminPermissionChecker, TestPropsValues.getUser(),
-					TestPropsValues.getUser(), "suffixListTypeId"));
+					TestPropsValues.getUser(), "suffix"));
 
 			ListType prefixListType = _listTypeLocalService.getListType(
 				TestPropsValues.getCompanyId(), "dr",
@@ -158,7 +165,7 @@ public class EditUserMVCActionCommandTest {
 
 			Assert.assertFalse(
 				UsersAdminUtil.hasUpdateFieldPermission(
-					userPermissionChecker, user, user, "suffixListTypeId"));
+					userPermissionChecker, user, user, "suffix"));
 
 			String firstName = RandomTestUtil.randomString();
 
@@ -185,6 +192,16 @@ public class EditUserMVCActionCommandTest {
 				suffixListType.getListTypeId(), contact.getSuffixListTypeId());
 		}
 		finally {
+			PropsUtil.set(
+				PropsKeys.FIELD_EDITABLE_DOMAINS + "[firstName]",
+				StringUtil.merge(
+					fieldEditableDomainFirstName, StringPool.COMMA));
+			PropsUtil.set(
+				PropsKeys.FIELD_EDITABLE_DOMAINS + "[prefix]",
+				StringUtil.merge(fieldEditableDomainPrefix, StringPool.COMMA));
+			PropsUtil.set(
+				PropsKeys.FIELD_EDITABLE_DOMAINS + "[suffix]",
+				StringUtil.merge(fieldEditableDomainSuffix, StringPool.COMMA));
 			PropsUtil.set(
 				PropsKeys.FIELD_EDITABLE_USER_TYPES,
 				StringUtil.merge(fieldEditableUserTypes, StringPool.COMMA));

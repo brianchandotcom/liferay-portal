@@ -615,17 +615,25 @@ public class EditUserMVCActionCommand
 			User currentUser = _portal.getUser(portletRequest);
 			User selUser = _portal.getSelectedUser(portletRequest);
 
-			if (!UsersAdminUtil.hasUpdateFieldPermission(
-					_permissionCheckerFactory.create(currentUser), currentUser,
-					selUser, parameterName)) {
+			if (type.equals(ListTypeConstants.CONTACT_PREFIX)) {
+				if (!UsersAdminUtil.hasUpdateFieldPermission(
+						_permissionCheckerFactory.create(currentUser),
+						currentUser, selUser, "prefix")) {
 
-				Contact contact = selUser.getContact();
+					Contact contact = selUser.getContact();
 
-				if (parameterName.equals("prefixListTypeValue")) {
 					return contact.getPrefixListTypeId();
 				}
+			}
+			else {
+				if (!UsersAdminUtil.hasUpdateFieldPermission(
+						_permissionCheckerFactory.create(currentUser),
+						currentUser, selUser, "suffix")) {
 
-				return contact.getSuffixListTypeId();
+					Contact contact = selUser.getContact();
+
+					return contact.getSuffixListTypeId();
+				}
 			}
 
 			return 0;

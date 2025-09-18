@@ -106,17 +106,25 @@ public class EditAccountUserMVCActionCommand
 		if (Validator.isNull(parameterValue)) {
 			User currentUser = _portal.getUser(portletRequest);
 
-			if (!UsersAdminUtil.hasUpdateFieldPermission(
-					_permissionCheckerFactory.create(currentUser), currentUser,
-					accountUser, parameterName)) {
+			if (type.equals(ListTypeConstants.CONTACT_PREFIX)) {
+				if (!UsersAdminUtil.hasUpdateFieldPermission(
+						_permissionCheckerFactory.create(currentUser),
+						currentUser, accountUser, "prefix")) {
 
-				Contact contact = accountUser.getContact();
+					Contact contact = accountUser.getContact();
 
-				if (parameterName.equals("prefixListTypeValue")) {
 					return contact.getPrefixListTypeId();
 				}
+			}
+			else {
+				if (!UsersAdminUtil.hasUpdateFieldPermission(
+						_permissionCheckerFactory.create(currentUser),
+						currentUser, accountUser, "suffix")) {
 
-				return contact.getSuffixListTypeId();
+					Contact contact = accountUser.getContact();
+
+					return contact.getSuffixListTypeId();
+				}
 			}
 
 			return 0;

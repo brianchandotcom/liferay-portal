@@ -6263,7 +6263,9 @@ public class ObjectEntryLocalServiceImpl
 				long relatedObjectEntryId = resultSet.getLong(
 					objectDefinition2.getPKObjectFieldDBColumnName());
 
-				if (ArrayUtil.isEmpty(objectDefinition2RootObjectDefinitionIds)) {
+				if (ArrayUtil.isEmpty(
+						objectDefinition2RootObjectDefinitionIds)) {
+
 					preparedStatement2.setLong(1, rootObjectEntryId);
 					preparedStatement2.setLong(2, relatedObjectEntryId);
 

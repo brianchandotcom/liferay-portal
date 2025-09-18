@@ -233,6 +233,21 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public boolean isRootDescendantNode() {
+		if (isRootNode()) {
+			return false;
+		}
+
+		long[] rootObjectDefinitionIds = getRootObjectDefinitionIds();
+
+		if (rootObjectDefinitionIds.length > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRootDescendantNode(long rootObjectDefinitionId) {
 		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-34594")) {
 			return false;

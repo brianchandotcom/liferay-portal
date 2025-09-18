@@ -146,7 +146,7 @@ const FrontendDataSetContent = ({
 	const fdsRef = useRef(null);
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
 
-	const [getDelta, setDelta] = useStateInURL({
+	const [getDelta, updateDeltaThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
 			key: EStateInURLKeys.DELTA,
@@ -162,7 +162,7 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const [getView, setView] = useStateInURL({
+	const [getView, updateViewThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
 			key: EStateInURLKeys.VIEW_NAME,
@@ -359,11 +359,9 @@ const FrontendDataSetContent = ({
 
 	const handleDeltaChange = useCallback(
 		(delta: number) => {
-			setPageNumber(1);
-
-			viewsDispatch(setDelta(delta));
+			viewsDispatch(updateDeltaThunk(delta));
 		},
-		[setDelta, setPageNumber, viewsDispatch]
+		[updateDeltaThunk, viewsDispatch]
 	);
 
 	const {
@@ -1360,7 +1358,6 @@ const FrontendDataSetContent = ({
 				selectedItemsValue,
 				selectionType,
 				setSearching,
-				setView,
 				showBulkActionsManagementBar,
 				showBulkActionsManagementBarActions,
 				showInfoPanel: infoPanelComponent ? true : false,
@@ -1371,6 +1368,7 @@ const FrontendDataSetContent = ({
 				uniformActionsDisplay,
 				updateDataSetItems,
 				updateItem,
+				updateViewThunk,
 			}}
 		>
 			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>

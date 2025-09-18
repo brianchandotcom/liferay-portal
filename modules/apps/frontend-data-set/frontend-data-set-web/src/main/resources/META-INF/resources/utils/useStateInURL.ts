@@ -11,7 +11,7 @@ import {
 	EStateInURLSettings,
 	IStateInURL,
 	IStateInURLGetter,
-	IStateInURLSetter,
+	IStateInURLUpdaterThunk,
 	IStateInitializer,
 } from './types';
 
@@ -28,12 +28,12 @@ function useStateInURL<K extends keyof IStateInURL>({
 	};
 	stateInURLSettings: EStateInURLSettings;
 	stateInitializer: IStateInitializer<K>;
-}): [IStateInURLGetter<K>, IStateInURLSetter<K>] {
+}): [IStateInURLGetter<K>, IStateInURLUpdaterThunk<K>] {
 	const {key, type} = stateDispatcher;
 
 	return [
 		useGetter({id, key, stateInitializer}),
-		useSetter({
+		useUpdaterThunk({
 			id,
 			key,
 			stateInURLSettings,
@@ -62,7 +62,7 @@ function useGetter<K extends keyof IStateInURL>({
 	}, [id, stateInitializer, key]);
 }
 
-function useSetter<K extends keyof IStateInURL>({
+function useUpdaterThunk<K extends keyof IStateInURL>({
 	id,
 	key,
 	stateInURLSettings,

@@ -27,11 +27,13 @@ const ActiveViewSelectorTrigger = React.forwardRef(
 );
 
 function ActiveViewSelector({views}) {
-	const {appURL, id, portletId, setView} = useContext(FrontendDataSetContext);
+	const {appURL, id, portletId, updateViewThunk} = useContext(
+		FrontendDataSetContext
+	);
 	const [{activeView}, viewsDispatch] = useContext(ViewsContext);
 
 	const handleSelectionChange = (value) => {
-		viewsDispatch(setView(value));
+		viewsDispatch(updateViewThunk(value));
 
 		saveViewSettings({
 			appURL,

@@ -1160,3 +1160,97 @@ test('LPD-52731 Product shows in catalog after updating Account Group Visibility
 
 	await expect(page.getByText(product.name['en_US'])).toBeVisible();
 });
+
+test(
+	'If AccountGroupFilter is enabled and the relationship is deleted, product should not show',
+	{tag: '@LPD-65844'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		page,
+		productPublisherPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: getRandomString(),
+			});
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['test@liferay.com']
+		);
+
+		const accountGroup =
+			await apiHelpers.headlessAdminUser.postAccountGroup({
+				name: getRandomString(),
+			});
+
+		apiHelpers.data.push({id: accountGroup.id, type: 'accountGroup'});
+
+		await apiHelpers.headlessAdminUser.assignAccountToAccountGroup(
+			account.externalReferenceCode,
+			accountGroup.externalReferenceCode
+		);
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: getRandomString()},
+				productAccountGroupFilter: true,
+				productAccountGroups: [
+					{accountGroupId: accountGroup.id, id: 0},
+				],
+			});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Product Publisher');
+
+		await expect(
+			productPublisherPage.productCard(product.name.en_US)
+		).toBeVisible();
+
+		await page.goto(`/web/${site.name}`);
+
+		await expect(
+			productPublisherPage.productCard(product.name.en_US)
+		).toBeVisible();
+
+		const productAccountGroups =
+			await apiHelpers.headlessCommerceAdminCatalog.getProductAccountGroups(
+				product.productId
+			);
+
+		await apiHelpers.headlessCommerceAdminCatalog.deleteProductAccountGroup(
+			productAccountGroups.items[0].id
+		);
+
+		await page.goto(`/web/${site.name}`);
+
+		await expect(
+			productPublisherPage.productCard(product.name.en_US)
+		).not.toBeVisible();
+	}
+);

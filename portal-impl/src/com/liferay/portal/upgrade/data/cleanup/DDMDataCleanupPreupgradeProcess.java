@@ -8,6 +8,10 @@ package com.liferay.portal.upgrade.data.cleanup;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Luis Ortiz
@@ -17,101 +21,165 @@ public class DDMDataCleanupPreupgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(
+		DataCleanupPreupgradeProcess ddmStructureDataCleanupPreupgradeProcess =
+			_getDDMStructureDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess
+			ddmStructureVersionDataCleanupPreupgradeProcess =
+				_getDDMStructureVersionDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess ddmTemplateDataCleanupPreupgradeProcess =
+			_getDDMTemplateDataCleanupPreupgradeProcess();
+
+		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
+			dataCleanupPreupgradeProcessMap =
+				HashMapBuilder.
+					<DataCleanupPreupgradeProcess,
+					 List<DataCleanupPreupgradeProcess>>put(
+						_getDDMFieldDataCleanupPreupgradeProcess(),
+						dependsOn(
+							ddmStructureVersionDataCleanupPreupgradeProcess)
+					).put(
+						_getDDMFormInstanceDataCleanupPreupgradeProcess(),
+						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+					).put(
+						ddmStructureDataCleanupPreupgradeProcess, dependsOn()
+					).put(
+						ddmStructureVersionDataCleanupPreupgradeProcess,
+						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+					).put(
+						ddmTemplateDataCleanupPreupgradeProcess,
+						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+					).put(
+						_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess62(),
+						dependsOn(ddmTemplateDataCleanupPreupgradeProcess)
+					).put(
+						_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73(),
+						dependsOn(ddmTemplateDataCleanupPreupgradeProcess)
+					).put(
+						_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess74(),
+						dependsOn(ddmTemplateDataCleanupPreupgradeProcess)
+					).build();
+
+		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
+			getSortedDataCleanupPreupgradeProcesses(
+				dataCleanupPreupgradeProcessMap);
+
+		for (DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess :
+				dataCleanupPreupgradeProcesses) {
+
+			dataCleanupPreupgradeProcess.upgrade();
+		}
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getDDMFieldDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "fieldId", "DDMFieldAttribute", "fieldId", "DDMField"));
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getDDMFormInstanceDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "formInstanceId", "DDMFormInstanceRecord",
+				"formInstanceId", "DDMFormInstance"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "formInstanceId", "DDMFormInstanceRecordVersion",
+				"formInstanceId", "DDMFormInstance"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "formInstanceId", "DDMFormInstanceReport",
+				"formInstanceId", "DDMFormInstance"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "formInstanceId", "DDMFormInstanceReportVersion",
+				"formInstanceId", "DDMFormInstance"));
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getDDMStructureDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				"classNameId = (select classNameId from ClassName_ where " +
 					"value = 'com.liferay.dynamic.data.mapping.model." +
 						"DDMStructure')",
 				new String[] {"classNameId"}, "classPK",
-				new String[] {"structureId"}, "DDMStructure"));
-		upgrade(
+				new String[] {"structureId"}, "DDMStructure"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "structureId", "DDMFormInstance", "structureId",
+				"DDMStructure"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "structureId", "DDMStorageLink", "structureId",
+				"DDMStructure"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "structureId", "DDMStructureLink", "structureId",
+				"DDMStructure"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "structureId", "DDMStructureVersion", "structureId",
+				"DDMStructure"));
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getDDMStructureVersionDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "structureVersionId", "DDMField", "structureVersionId",
+				"DDMStructureVersion"),
+			new TableOrphanReferencesDataCleanupPreupgradeProcess(
+				null, "structureVersionId", "DDMStructureLayout",
+				"structureVersionId", "DDMStructureVersion"));
+	}
+
+	private DataCleanupPreupgradeProcess
+		_getDDMTemplateDataCleanupPreupgradeProcess() {
+
+		return new DataCleanupPreupgradeProcess(
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				"classNameId = (select classNameId from ClassName_ where " +
 					"value = 'com.liferay.dynamic.data.mapping.model." +
 						"DDMTemplate')",
 				new String[] {"classNameId"}, "classPK",
-				new String[] {"templateId"}, "DDMTemplate"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "DDMFormInstance", "structureId",
-				"DDMStructure"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "DDMStorageLink", "structureId",
-				"DDMStructure"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "DDMStructureLink", "structureId",
-				"DDMStructure"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "DDMStructureVersion", "structureId",
-				"DDMStructure"));
-		upgrade(
+				new String[] {"templateId"}, "DDMTemplate"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null, "templateId", "DDMTemplateLink", "templateId",
 				"DDMTemplate"));
+	}
 
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "formInstanceId", "DDMFormInstanceRecord",
-				"formInstanceId", "DDMFormInstance"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "formInstanceId", "DDMFormInstanceRecordVersion",
-				"formInstanceId", "DDMFormInstance"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "formInstanceId", "DDMFormInstanceReport",
-				"formInstanceId", "DDMFormInstance"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "formInstanceId", "DDMFormInstanceReportVersion",
-				"formInstanceId", "DDMFormInstance"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureVersionId", "DDMField", "structureVersionId",
-				"DDMStructureVersion"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureVersionId", "DDMStructureLayout",
-				"structureVersionId", "DDMStructureVersion"));
+	private DataCleanupPreupgradeProcess
+		_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess62() {
 
-		upgrade(
+		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "fieldId", "DDMFieldAttribute", "fieldId", "DDMField"));
-
-		// Upgrade from 7.4
-
-		upgrade(
+				null, "structureId", "JournalArticle", "structureKey",
+				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "DDMStructureId", "JournalArticle", "structureId",
+				null, "structureId", "JournalFeed", "structureKey",
 				"DDMStructure"));
-		upgrade(
-			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "DDMStructureId", "JournalFeed", "structureId",
-				"DDMStructure"));
+	}
 
-		// Upgrade from 7.0 to 7.3
+	private DataCleanupPreupgradeProcess
+		_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73() {
 
-		upgrade(
+		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null, "DDMStructureKey", "JournalArticle", "structureKey",
-				"DDMStructure"));
-		upgrade(
+				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null, "DDMStructureKey", "JournalFeed", "structureKey",
 				"DDMStructure"));
+	}
 
-		// Upgrade from 6.2
+	private DataCleanupPreupgradeProcess
+		_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess74() {
 
-		upgrade(
+		return new DataCleanupPreupgradeProcess(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "JournalArticle", "structureKey",
-				"DDMStructure"));
-		upgrade(
+				null, "DDMStructureId", "JournalArticle", "structureId",
+				"DDMStructure"),
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
-				null, "structureId", "JournalFeed", "structureKey",
+				null, "DDMStructureId", "JournalFeed", "structureId",
 				"DDMStructure"));
 	}
 

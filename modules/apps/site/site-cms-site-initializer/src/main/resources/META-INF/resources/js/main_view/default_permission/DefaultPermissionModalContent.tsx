@@ -7,7 +7,9 @@ import '../../../css/components/DefaultPermission.scss';
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
@@ -122,6 +124,18 @@ export default function DefaultPermissionModalContent({
 					Liferay.Language.get('edit-x'),
 					Liferay.Language.get('default-permissions')
 				)}
+
+				<ClayTooltipProvider>
+					<span
+						className="pl-2 text-3"
+						data-tooltip-align="bottom"
+						title={Liferay.Language.get(
+							'once-you-set-default-permissions-for-this-folder,-they-will-be-automatically-applied-to-all-newly-created-entities'
+						)}
+					>
+						<ClayIcon aria-label="Info" symbol="info-circle" />
+					</span>
+				</ClayTooltipProvider>
 			</ClayModal.Header>
 
 			<ClayModal.Body className="p-0">
@@ -136,16 +150,35 @@ export default function DefaultPermissionModalContent({
 
 			<ClayModal.Footer
 				first={
-					<ClayCheckbox
-						checked={propagate}
-						data-testid="checkbox-propagate"
-						disabled={loading}
-						inline
-						label="Text"
-						onChange={() => {
-							setPropagate(!propagate);
-						}}
-					/>
+					<div className="d-flex">
+						<ClayCheckbox
+							checked={propagate}
+							data-testid="checkbox-propagate"
+							disabled={loading}
+							inline
+							label={Liferay.Language.get(
+								'propagate-default-permissions-to-new-and-existing-subfolders'
+							)}
+							onChange={() => {
+								setPropagate(!propagate);
+							}}
+						/>
+
+						<ClayTooltipProvider>
+							<span
+								className="pl-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'if-checked,-this-permissions-configuration-will-be-applied-to-the-default-permissions-of-any-subfolders-created-in-this-folder'
+								)}
+							>
+								<ClayIcon
+									aria-label="Info"
+									symbol="info-circle"
+								/>
+							</span>
+						</ClayTooltipProvider>
+					</div>
 				}
 				last={
 					<ClayButton.Group spaced>

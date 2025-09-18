@@ -95,6 +95,7 @@ export default function DefaultPermissionForm({
 								onChange={({target: {value}}) => {
 									setSearch(value);
 								}}
+								placeholder={Liferay.Language.get('search-for')}
 								type="text"
 								value={search}
 							/>

@@ -12,18 +12,22 @@ import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Dictionary;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -32,7 +36,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -43,27 +46,29 @@ public class BatchEnginePortletDataHandlerRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_serviceRegistrations = ServiceTrackerListFactory.open(
+			bundleContext, null, "(batch.engine.task.item.delegate=true)",
+			new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
+				bundleContext));
+
 		_serviceRegistration = bundleContext.registerService(
 			FeatureFlagListener.class,
 			(companyId, featureFlagKey, enabled) -> {
 				if (enabled) {
-					_serviceTrackers.put(
-						companyId,
-						ServiceTrackerFactory.open(
-							bundleContext,
-							"(batch.engine.task.item.delegate=true)",
-							new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-								bundleContext, companyId)));
+					_enabledCompanyIds.add(companyId);
 				}
 				else {
-					ServiceTracker
-						<VulcanBatchEngineTaskItemDelegate,
-						 ServiceRegistration<PortletDataHandler>>
-							serviceTracker = _serviceTrackers.remove(companyId);
+					_enabledCompanyIds.remove(companyId);
+				}
 
-					if (serviceTracker != null) {
-						serviceTracker.close();
-					}
+				for (ServiceRegistration<PortletDataHandler>
+						serviceRegistration : _serviceRegistrations) {
+
+					Dictionary<String, Object> properties = _toProperties(
+						serviceRegistration.getReference());
+
+					serviceRegistration.setProperties(
+						_setEnabledCompanyIds(properties));
 				}
 			},
 			MapUtil.singletonDictionary("feature.flag.key", "LPD-35914"));
@@ -72,14 +77,32 @@ public class BatchEnginePortletDataHandlerRegistry {
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistration.unregister();
+		_serviceRegistrations.close();
+	}
 
-		for (ServiceTracker
-				<VulcanBatchEngineTaskItemDelegate,
-				 ServiceRegistration<PortletDataHandler>> serviceTracker :
-					_serviceTrackers.values()) {
+	private Dictionary<String, Object> _setEnabledCompanyIds(
+		Dictionary<String, Object> properties) {
 
-			serviceTracker.close();
+		return HashMapDictionaryBuilder.<String, Object>putAll(
+			properties
+		).put(
+			"companyId",
+			TransformUtil.transform(_enabledCompanyIds, String::valueOf)
+		).build();
+	}
+
+	private Dictionary<String, Object> _toProperties(
+		ServiceReference<?> serviceReference) {
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		for (String key : serviceReference.getPropertyKeys()) {
+			Object value = serviceReference.getProperty(key);
+
+			properties.put(key, value);
 		}
+
+		return properties;
 	}
 
 	@Reference
@@ -102,14 +125,11 @@ public class BatchEnginePortletDataHandlerRegistry {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	private final Set<Long> _enabledCompanyIds = new HashSet<>();
 	private volatile ServiceRegistration<FeatureFlagListener>
 		_serviceRegistration;
-	private final Map
-		<Long,
-		 ServiceTracker
-			 <VulcanBatchEngineTaskItemDelegate,
-			  ServiceRegistration<PortletDataHandler>>> _serviceTrackers =
-				new ConcurrentHashMap<>();
+	private ServiceTrackerList<ServiceRegistration<PortletDataHandler>>
+		_serviceRegistrations;
 
 	@Reference
 	private UserLocalService _userLocalService;
@@ -120,10 +140,9 @@ public class BatchEnginePortletDataHandlerRegistry {
 			 ServiceRegistration<PortletDataHandler>> {
 
 		public VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-			BundleContext bundleContext, long companyId) {
+			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;
-			_companyId = companyId;
 		}
 
 		@Override
@@ -174,16 +193,15 @@ public class BatchEnginePortletDataHandlerRegistry {
 
 			return _bundleContext.registerService(
 				PortletDataHandler.class, batchEnginePortletDataHandler,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"batch.engine.task.item.delegate.item.class.name",
-					exportImportDescriptor.getItemClassName()
-				).put(
-					"company.id", () -> _companyId
-				).put(
-					"jakarta.portlet.name", portletId
-				).put(
-					"service.ranking", Integer.MAX_VALUE
-				).build());
+				_setEnabledCompanyIds(
+					HashMapDictionaryBuilder.<String, Object>put(
+						"batch.engine.task.item.delegate.item.class.name",
+						exportImportDescriptor.getItemClassName()
+					).put(
+						"jakarta.portlet.name", portletId
+					).put(
+						"service.ranking", Integer.MAX_VALUE
+					).build()));
 		}
 
 		@Override
@@ -207,7 +225,6 @@ public class BatchEnginePortletDataHandlerRegistry {
 		}
 
 		private final BundleContext _bundleContext;
-		private final long _companyId;
 
 	}
 

@@ -202,9 +202,9 @@ public abstract class BaseSectionDisplayContextTestCase
 
 		_testGetCreationMenu(getCreationMenu(), expectedCreationMenuItems);
 
-		ObjectFolder objectFolder = null;
 		TreeMap<String, String> expectedCustomCreationMenuItems = new TreeMap<>(
 			String.CASE_INSENSITIVE_ORDER);
+		ObjectFolder objectFolder = null;
 
 		for (String objectFolderExternalReferenceCode :
 				getObjectFolderExternalReferenceCodes()) {

@@ -205,11 +205,11 @@ export function TrafficChannels() {
 					maxWidth={320}
 					title={Liferay.Language.get('no-data-available-yet')}
 				>
-					<ClayLink target="_blank">
+					<ClayLink
+						href="https://learn.liferay.com/w/content-management-system/analytics-and-monitoring"
+						target="_blank"
+					>
 						<span className="mr-1">
-
-							{/* TODO: Add link to the documentation when it is done. */}
-
 							{Liferay.Language.get(
 								'learn-more-about-asset-performance'
 							)}

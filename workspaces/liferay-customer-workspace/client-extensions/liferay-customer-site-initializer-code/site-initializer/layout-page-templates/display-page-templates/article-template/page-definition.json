@@ -320,6 +320,7 @@
 													},
 													{
 														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] img {\n  max-width: 100%;\n}\n\n.[$FRAGMENT_CLASS$] table {\n  display: block;\n  max-width: 100%;\n overflow-x: auto;\n  overflow-y: auto;\n  white-space: nowrap;\n} \n\n.[$FRAGMENT_CLASS$] * + table {\n  clear: left; \n}\n\n.[$FRAGMENT_CLASS$] table + * {\n  clear: left; \n} ",
 															"fragment": {
 																"key": "cp-text",
 																"siteKey": "Customer Portal"

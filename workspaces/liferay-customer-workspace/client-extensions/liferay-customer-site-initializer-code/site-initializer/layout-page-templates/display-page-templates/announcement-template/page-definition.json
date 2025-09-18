@@ -321,6 +321,9 @@
 									}
 								}
 							],
+							"fragmentStyle": {
+								"hidden": true
+							},
 							"indexed": true
 						},
 						"id": "6099cb2e-eb0f-2c10-7a58-0ae098a17995",

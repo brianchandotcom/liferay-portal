@@ -146,7 +146,7 @@
 
 		[#if articleFetchCategoryId?has_content]
 			[#attempt]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${articleFetchCategoryId}&flatten=true") /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?search=${articleFetchCategoryId}&page=1&pageSize=100&flatten=true") /]
 
 				[#if articles.items?has_content]
 					[#list articles.items as article]

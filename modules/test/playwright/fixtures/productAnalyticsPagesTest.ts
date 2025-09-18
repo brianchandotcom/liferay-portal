@@ -5,8 +5,8 @@
 
 import {test} from '@playwright/test';
 
-import {ProductAnalyticsBannerPage} from '../pages/cookies-banner-web/ProductAnalyticsBannerPage';
-import {ProductAnalyticsConsentPanelPage} from '../pages/cookies-banner-web/ProductAnalyticsConsentPanelPage';
+import {ProductAnalyticsBannerPage} from '../pages/product-analytics-web/ProductAnalyticsBannerPage';
+import {ProductAnalyticsConsentPanelPage} from '../pages/product-analytics-web/ProductAnalyticsConsentPanelPage';
 
 const productAnalyticsPagesTest = test.extend<{
 	productAnalyticsBannerPage: ProductAnalyticsBannerPage;

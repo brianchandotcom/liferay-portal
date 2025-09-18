@@ -35,7 +35,7 @@ public interface BatchEngineExportTaskExecutor {
 
 		public boolean isCompressContent();
 
-		public boolean isPersistContent();
+		public boolean isPersist();
 
 	}
 

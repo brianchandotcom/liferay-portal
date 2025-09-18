@@ -290,7 +290,7 @@ public class BatchEngineExportTaskExecutorTest
 							}
 
 							@Override
-							public boolean isPersistContent() {
+							public boolean isPersist() {
 								return false;
 							}
 
@@ -353,7 +353,7 @@ public class BatchEngineExportTaskExecutorTest
 					}
 
 					@Override
-					public boolean isPersistContent() {
+					public boolean isPersist() {
 						return true;
 					}
 

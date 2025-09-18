@@ -246,7 +246,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						}
 
 						@Override
-						public boolean isPersistContent() {
+						public boolean isPersist() {
 							return false;
 						}
 
@@ -385,7 +385,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						}
 
 						@Override
-						public boolean isPersistContent() {
+						public boolean isPersist() {
 							return false;
 						}
 

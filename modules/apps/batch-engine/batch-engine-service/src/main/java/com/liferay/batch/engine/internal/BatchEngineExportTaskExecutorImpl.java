@@ -79,7 +79,7 @@ public class BatchEngineExportTaskExecutorImpl
 				}
 
 				@Override
-				public boolean isPersistContent() {
+				public boolean isPersist() {
 					return true;
 				}
 
@@ -90,7 +90,7 @@ public class BatchEngineExportTaskExecutorImpl
 	public Result execute(
 		BatchEngineExportTask batchEngineExportTask, Settings settings) {
 
-		if (settings.isPersistContent() && !settings.isCompressContent()) {
+		if (settings.isPersist() && !settings.isCompressContent()) {
 			throw new IllegalArgumentException(
 				"Uncompressed content cannot be stored in the database");
 		}
@@ -267,7 +267,7 @@ public class BatchEngineExportTaskExecutorImpl
 
 		byte[] content = unsyncByteArrayOutputStream.toByteArray();
 
-		if (settings.isPersistContent()) {
+		if (settings.isPersist()) {
 			batchEngineExportTask.setContent(
 				new OutputBlob(
 					new UnsyncByteArrayInputStream(content), content.length));

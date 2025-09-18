@@ -114,7 +114,7 @@ export class ContentsPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 	}
 
-	async deleteContent(title: string, recycleBinEnabled: boolean = false) {
+	async deleteContent(title: string, recycleBinEnabled: boolean = true) {
 		const card = this.page
 			.locator('tr', {hasText: title})
 			.or(this.page.locator('.card-row', {hasText: title}));

@@ -12,6 +12,7 @@ import selectStructureUuid from '../selectors/selectStructureUuid';
 import {ReferencedStructure} from '../types/Structure';
 import {
 	FIELD_TYPES,
+	FIELD_TYPE_ICON,
 	FIELD_TYPE_LABEL,
 	Field,
 	getDefaultField,
@@ -22,6 +23,7 @@ type Item = {
 	className?: string;
 	label: string;
 	onClick: () => void;
+	symbolLeft: string;
 };
 
 export default function AddChildDropdown({
@@ -63,6 +65,7 @@ export default function AddChildDropdown({
 						(type): Item => ({
 							label: FIELD_TYPE_LABEL[type],
 							onClick: () => addField(type),
+							symbolLeft: FIELD_TYPE_ICON[type],
 						})
 					),
 					{type: 'divider'},
@@ -70,6 +73,7 @@ export default function AddChildDropdown({
 						className: 'dropdown-item-cms-warning',
 						label: Liferay.Language.get('referenced-structure'),
 						onClick: () => setShowStructuresModal(true),
+						symbolLeft: 'edit-layout',
 					},
 				]}
 				menuElementAttrs={{className: 'dropdown-menu-cms'}}

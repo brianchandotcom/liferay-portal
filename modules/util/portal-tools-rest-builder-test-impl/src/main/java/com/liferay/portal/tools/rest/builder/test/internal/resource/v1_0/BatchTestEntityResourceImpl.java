@@ -19,8 +19,6 @@ import com.liferay.portal.tools.rest.builder.test.resource.v1_0.CompanyTestEntit
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 
-import jakarta.ws.rs.core.Response;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -43,26 +41,16 @@ public class BatchTestEntityResourceImpl
 	implements ExportImportVulcanBatchEngineTaskItemDelegate<BatchTestEntity> {
 
 	@Override
-	public Response deleteBatchTestEntityByExternalReferenceCode(
+	public void deleteBatchTestEntityByExternalReferenceCode(
 		String externalReferenceCode) {
 
 		BatchTestEntity batchTestEntity = _fetchBatchTestEntity(
 			externalReferenceCode);
 
-		if (batchTestEntity == null) {
-			return Response.status(
-				204
-			).build();
+		if (batchTestEntity != null) {
+			_batchTestEntities.remove(batchTestEntity.getId());
+			_relationships.remove(batchTestEntity.getId());
 		}
-
-		long batchTestEntityId = batchTestEntity.getId();
-
-		_batchTestEntities.remove(batchTestEntityId);
-		_relationships.remove(batchTestEntityId);
-
-		return Response.status(
-			204
-		).build();
 	}
 
 	@Override

@@ -576,11 +576,11 @@ public class ActionUtil {
 		HttpServletRequest httpServletRequest,
 		String objectEntryFolderExternalReferenceCode) {
 
+		List<DropdownItem> dropdownItems = new ArrayList<>();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		List<DropdownItem> dropdownItems = new ArrayList<>();
 
 		for (ObjectDefinition objectDefinition :
 				ObjectDefinitionServiceUtil.getCMSObjectDefinitions(
@@ -782,11 +782,11 @@ public class ActionUtil {
 		HttpServletRequest httpServletRequest,
 		String objectEntryFolderExternalReferenceCode) {
 
+		List<DropdownItem> dropdownItems = new ArrayList<>();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		List<DropdownItem> dropdownItems = new ArrayList<>();
 
 		for (ObjectDefinition objectDefinition :
 				ObjectDefinitionServiceUtil.getCMSObjectDefinitions(

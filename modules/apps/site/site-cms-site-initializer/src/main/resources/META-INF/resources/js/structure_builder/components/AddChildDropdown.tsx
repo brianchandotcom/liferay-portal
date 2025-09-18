@@ -77,6 +77,7 @@ export default function AddChildDropdown({
 					},
 				]}
 				menuElementAttrs={{className: 'dropdown-menu-cms'}}
+				menuHeight="auto"
 				trigger={
 					triggerType === 'text' ? (
 						<ClayButton displayType="secondary" size="sm">

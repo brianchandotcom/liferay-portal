@@ -787,6 +787,25 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"deletionType",
 				() -> _getDeletionType(objectEntryFolder.getGroupId())
 			).put(
+				"itemsCount",
+				() -> {
+					long itemsCount =
+						_objectEntryFolderLocalService.
+							getObjectEntryFoldersCount(
+								objectEntryFolder.getGroupId(),
+								objectEntryFolder.getCompanyId(),
+								objectEntryFolder.
+									getParentObjectEntryFolderId());
+
+					itemsCount +=
+						_objectEntryLocalService.
+							getObjectEntryFolderObjectEntriesCount(
+								objectEntryFolder.getGroupId(),
+								objectEntryFolder.getObjectEntryFolderId());
+
+					return itemsCount;
+				}
+			).put(
 				"type", "FOLDER"
 			).build());
 		bulkActionItem.setClassName(objectEntryFolder::getModelClassName);

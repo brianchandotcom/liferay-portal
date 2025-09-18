@@ -13,7 +13,7 @@ import ViewsContext from '../../views/ViewsContext';
 
 // @ts-ignore
 
-import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
+import {EViewsActionTypes} from '../../views/viewsReducer';
 
 function SortDropdown() {
 	const [{sorts}, viewsDispatch]: [{sorts: TSort[]}, Function] =
@@ -84,7 +84,7 @@ function SortDropdown() {
 									setSelectedKey(sort.key);
 
 									viewsDispatch({
-										type: VIEWS_ACTION_TYPES.UPDATE_SORTING,
+										type: EViewsActionTypes.UPDATE_SORTING,
 										value: sorts.map((sortItem) =>
 											sort.key === sortItem.key
 												? {...sortItem, active: true}
@@ -113,7 +113,7 @@ function SortDropdown() {
 						setSelectedDirection('asc');
 
 						viewsDispatch({
-							type: VIEWS_ACTION_TYPES.UPDATE_SORTING,
+							type: EViewsActionTypes.UPDATE_SORTING,
 							value: sorts.map((sortItem) => ({
 								...sortItem,
 								direction: 'asc',
@@ -131,7 +131,7 @@ function SortDropdown() {
 						setSelectedDirection('desc');
 
 						viewsDispatch({
-							type: VIEWS_ACTION_TYPES.UPDATE_SORTING,
+							type: EViewsActionTypes.UPDATE_SORTING,
 							value: sorts.map((sortItem) => ({
 								...sortItem,
 								direction: 'desc',

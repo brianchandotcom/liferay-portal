@@ -6,7 +6,7 @@
 import {IView} from '../utils/types';
 import getViewComponent from './getViewComponent';
 
-export enum VIEWS_ACTION_TYPES {
+export enum EViewsActionTypes {
 	ADD_OR_UPDATE_CUSTOM_VIEW = 'ADD_OR_UPDATE_CUSTOM_VIEW',
 	BATCH_UPDATE = 'BATCH_UPDATE',
 	DELETE_CUSTOM_VIEW = 'DELETE_CUSTOM_VIEW',
@@ -22,12 +22,12 @@ export enum VIEWS_ACTION_TYPES {
 	UPDATE_VISIBLE_FIELD_NAMES = 'UPDATE_VISIBLE_FIELD_NAMES',
 }
 
-type VIEWS_ACTIONS_TYPE = {
-	[K in VIEWS_ACTION_TYPES]: (state: any, value: any) => object;
+type TViewsActions = {
+	[K in EViewsActionTypes]: (state: any, value: any) => object;
 };
 
-const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
-	[VIEWS_ACTION_TYPES.ADD_OR_UPDATE_CUSTOM_VIEW]: (state, value) => {
+const viewsActions: TViewsActions = {
+	[EViewsActionTypes.ADD_OR_UPDATE_CUSTOM_VIEW]: (state, value) => {
 		const {customViews} = state;
 
 		const {id, viewState} = value;
@@ -42,7 +42,7 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			viewUpdated: false,
 		};
 	},
-	[VIEWS_ACTION_TYPES.BATCH_UPDATE]: (state, stateUpdates) => {
+	[EViewsActionTypes.BATCH_UPDATE]: (state, stateUpdates) => {
 		if (!Array.isArray(stateUpdates) || !stateUpdates.length) {
 			return state;
 		}
@@ -51,15 +51,15 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			const {
 				type,
 				value,
-			}: {type: keyof typeof VIEWS_ACTIONS; value: any} = current;
-			if (!VIEWS_ACTIONS[type]) {
+			}: {type: keyof typeof viewsActions; value: any} = current;
+			if (!viewsActions[type]) {
 				return acc;
 			}
 
-			return VIEWS_ACTIONS[type](acc, value);
+			return viewsActions[type](acc, value);
 		}, state);
 	},
-	[VIEWS_ACTION_TYPES.DELETE_CUSTOM_VIEW]: (state, value) => {
+	[EViewsActionTypes.DELETE_CUSTOM_VIEW]: (state, value) => {
 		const {customViews, defaultView} = state;
 
 		const {[value.id]: _unusedVar, ...remainingCustomViews} = customViews;
@@ -72,7 +72,7 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			viewUpdated: false,
 		};
 	},
-	[VIEWS_ACTION_TYPES.RENAME_ACTIVE_CUSTOM_VIEW]: (state, value) => {
+	[EViewsActionTypes.RENAME_ACTIVE_CUSTOM_VIEW]: (state, value) => {
 		const {activeCustomViewId, customViews} = state;
 
 		const customView = customViews[activeCustomViewId];
@@ -87,7 +87,7 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			},
 		};
 	},
-	[VIEWS_ACTION_TYPES.RESET_TO_DEFAULT_VIEW]: (state) => {
+	[EViewsActionTypes.RESET_TO_DEFAULT_VIEW]: (state) => {
 		const {defaultView} = state;
 
 		return {
@@ -98,7 +98,7 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			viewUpdated: false,
 		};
 	},
-	[VIEWS_ACTION_TYPES.UPDATE_ACTIVE_CUSTOM_VIEW]: (state, value) => {
+	[EViewsActionTypes.UPDATE_ACTIVE_CUSTOM_VIEW]: (state, value) => {
 		const {customViews, defaultView} = state;
 
 		const activeCustomView = customViews[value];
@@ -123,7 +123,7 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			viewUpdated: false,
 		};
 	},
-	[VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW]: (state, value) => {
+	[EViewsActionTypes.UPDATE_ACTIVE_VIEW]: (state, value) => {
 		const {views} = state;
 
 		const activeView = views.find(
@@ -140,14 +140,14 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			viewUpdated: true,
 		};
 	},
-	[VIEWS_ACTION_TYPES.UPDATE_FILTERS]: (state, value) => {
+	[EViewsActionTypes.UPDATE_FILTERS]: (state, value) => {
 		return {
 			...state,
 			filters: value,
 			viewUpdated: true,
 		};
 	},
-	[VIEWS_ACTION_TYPES.UPDATE_FIELD]: (state, value) => {
+	[EViewsActionTypes.UPDATE_FIELD]: (state, value) => {
 		const {modifiedFields} = state;
 
 		const {name} = value;
@@ -162,14 +162,14 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			},
 		};
 	},
-	[VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA]: (state, value) => {
+	[EViewsActionTypes.UPDATE_PAGINATION_DELTA]: (state, value) => {
 		return {
 			...state,
 			paginationDelta: value,
 			viewUpdated: true,
 		};
 	},
-	[VIEWS_ACTION_TYPES.UPDATE_SORTING]: (state, value) => {
+	[EViewsActionTypes.UPDATE_SORTING]: (state, value) => {
 		return {
 			...state,
 			sorts: value,
@@ -177,7 +177,7 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 		};
 	},
 
-	[VIEWS_ACTION_TYPES.UPDATE_VIEW_COMPONENT]: (state, value) => {
+	[EViewsActionTypes.UPDATE_VIEW_COMPONENT]: (state, value) => {
 		const {activeView, views} = state;
 
 		const {component, name} = value;
@@ -201,7 +201,7 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 			),
 		};
 	},
-	[VIEWS_ACTION_TYPES.UPDATE_VISIBLE_FIELD_NAMES]: (state, value) => {
+	[EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES]: (state, value) => {
 		const {modifiedFields} = state;
 
 		const fieldNames = Object.keys(value);
@@ -228,10 +228,10 @@ const VIEWS_ACTIONS: VIEWS_ACTIONS_TYPE = {
 
 const viewsReducer = (
 	state: any,
-	{type, value}: {type: keyof VIEWS_ACTIONS_TYPE; value: any}
+	{type, value}: {type: keyof TViewsActions; value: any}
 ) => {
-	if (VIEWS_ACTIONS[type]) {
-		return VIEWS_ACTIONS[type](state, value);
+	if (viewsActions[type]) {
+		return viewsActions[type](state, value);
 	}
 
 	return state;

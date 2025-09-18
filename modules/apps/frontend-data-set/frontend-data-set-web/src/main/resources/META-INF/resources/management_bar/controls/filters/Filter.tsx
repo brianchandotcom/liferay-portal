@@ -12,7 +12,7 @@ import ViewsContext from '../../../views/ViewsContext';
 
 // @ts-ignore
 
-import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
+import {EViewsActionTypes} from '../../../views/viewsReducer';
 import clientExtensionFilterImplementation from './implementation/ClientExtensionFilter';
 import dateRangeFilterImplementation from './implementation/DateRangeFilter';
 import selectionFilterImplementation from './implementation/SelectionFilter';
@@ -109,7 +109,7 @@ const Filter = ({
 		setSearching(true);
 
 		viewsDispatch({
-			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+			type: EViewsActionTypes.UPDATE_FILTERS,
 			value: filters.map((filter: FilterConfiguration) =>
 				filter.id === filterId ? newFilter : filter
 			),

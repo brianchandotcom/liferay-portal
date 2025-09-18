@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -89,7 +90,7 @@ public class SelectLayoutTagTest {
 
 	@Test
 	public void testEmptyLayouts() throws Exception {
-		LayoutTestUtil.addTypeEmptyLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeEmptyLayout(_group);
 
 		SelectLayoutTag selectLayoutTag = new SelectLayoutTag();
 
@@ -106,7 +107,24 @@ public class SelectLayoutTagTest {
 
 		JSONObject nodeJSONObject = nodesJSONArray.getJSONObject(0);
 
-		Assert.assertTrue(nodeJSONObject.getBoolean("disabled"));
+		JSONArray childrenJSONArray = nodeJSONObject.getJSONArray("children");
+
+		boolean found = false;
+
+		for (JSONObject childrenJSONObject :
+				(Iterable<JSONObject>)childrenJSONArray) {
+
+			if (StringUtil.contains(
+					childrenJSONObject.getString("externalReferenceCode"),
+					layout.getExternalReferenceCode())) {
+
+				found = true;
+
+				break;
+			}
+		}
+
+		Assert.assertFalse(found);
 	}
 
 	@Test

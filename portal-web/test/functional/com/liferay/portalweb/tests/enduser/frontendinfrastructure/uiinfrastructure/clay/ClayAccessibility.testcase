@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 	property portal.accessibility = "true";
 	property portal.release = "true";

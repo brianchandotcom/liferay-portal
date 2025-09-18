@@ -1,5 +1,5 @@
 definition {
-		property chrome.version = "100";
+		property browser.chrome.version = "100.0";
 
 	static var testCaseStaticVar = "A static var set in the definition.";
 

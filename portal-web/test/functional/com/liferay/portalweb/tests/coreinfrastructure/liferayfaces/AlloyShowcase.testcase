@@ -1,7 +1,7 @@
 @component-name = "portal-core-infra"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property liferay.faces = "true";
 	property portal.release = "true";
 	property portal.upstream = "quarantine";

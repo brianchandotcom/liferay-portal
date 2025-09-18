@@ -2,7 +2,7 @@
 @ignore = "true"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property custom.properties = "dl.actions.visible=true";
 	property osgi.modules.includes = "sharepoint-rest";
 	property portal.release = "true";

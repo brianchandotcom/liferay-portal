@@ -1,7 +1,7 @@
 @component-name = "portal-bpm"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";

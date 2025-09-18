@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property custom.properties = "feature.flag.LPS-172903=true";
 	property portal.release = "true";
 	property portal.upstream = "true";

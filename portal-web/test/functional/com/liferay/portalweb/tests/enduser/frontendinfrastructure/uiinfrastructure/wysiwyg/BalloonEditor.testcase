@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property osgi.modules.includes = "frontend-editor-ckeditor-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";

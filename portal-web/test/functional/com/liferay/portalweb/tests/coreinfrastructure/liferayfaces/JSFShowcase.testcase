@@ -1,7 +1,7 @@
 @component-name = "portal-core-infra"
 definition {
 
-	property chrome.version = "100";
+	property browser.chrome.version = "100.0";
 	property ci.retries.disabled = "true";
 	property custom.properties = "company.default.time.zone=America/Los_Angeles";
 	property liferay.faces = "true";

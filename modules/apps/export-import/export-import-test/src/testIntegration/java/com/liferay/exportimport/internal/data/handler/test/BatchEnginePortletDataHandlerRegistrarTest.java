@@ -67,7 +67,7 @@ import org.osgi.framework.ServiceRegistration;
  */
 @FeatureFlag("LPD-35914")
 @RunWith(Arquillian.class)
-public class BatchEnginePortletDataHandlerRegistryTest {
+public class BatchEnginePortletDataHandlerRegistrarTest {
 
 	@ClassRule
 	@Rule
@@ -145,7 +145,7 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 		Class<S> clazz, S service, Dictionary<String, ?> properties) {
 
 		Bundle bundle = FrameworkUtil.getBundle(
-			BatchEnginePortletDataHandlerRegistryTest.class);
+			BatchEnginePortletDataHandlerRegistrarTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

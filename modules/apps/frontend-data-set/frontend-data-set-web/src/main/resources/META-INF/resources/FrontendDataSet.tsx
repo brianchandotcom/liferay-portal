@@ -697,7 +697,7 @@ const FrontendDataSetContent = ({
 
 	const handlePopState = useCallback(() => {
 		const stateUpdates: Array<{
-			type: keyof VIEWS_ACTION_TYPES;
+			type: VIEWS_ACTION_TYPES;
 			value: IStateInURL[keyof IStateInURL];
 		}> = [];
 

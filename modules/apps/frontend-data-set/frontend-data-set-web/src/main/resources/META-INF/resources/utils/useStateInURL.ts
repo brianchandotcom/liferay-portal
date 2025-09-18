@@ -5,6 +5,7 @@
 
 import {useCallback} from 'react';
 
+import {VIEWS_ACTION_TYPES} from '../views/viewsReducer';
 import {readStateFromURL, writeStateInURL} from './stateInURL';
 import {
 	EStateInURLSettings,
@@ -23,7 +24,7 @@ function useStateInURL<K extends keyof IStateInURL>({
 	id: string;
 	stateDispatcher: {
 		key: K;
-		type: string;
+		type: VIEWS_ACTION_TYPES;
 	};
 	stateInURLSettings: EStateInURLSettings;
 	stateInitializer: IStateInitializer<K>;
@@ -70,7 +71,7 @@ function useSetter<K extends keyof IStateInURL>({
 	id: string;
 	key: K;
 	stateInURLSettings: EStateInURLSettings;
-	type: string;
+	type: VIEWS_ACTION_TYPES;
 }) {
 	return useCallback(
 		(value: IStateInURL[K]) => {

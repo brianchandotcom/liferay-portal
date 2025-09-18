@@ -27,6 +27,8 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -67,11 +70,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Marco Galluzzi
@@ -85,7 +91,9 @@ public abstract class BaseSectionDisplayContextTestCase
 			"getAdditionalProps", new Class<?>[0]);
 	}
 
-	public HashMap<String, Object> getBaseAdditionalProps() {
+	public HashMap<String, Object> getBaseAdditionalProps()
+		throws PortalException {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -148,6 +156,48 @@ public abstract class BaseSectionDisplayContextTestCase
 				return collaboratorURL;
 			}
 		).put(
+			"commentsProps",
+			() -> HashMapBuilder.<String, Object>put(
+				"addCommentURL",
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/add_content_item_comment")
+			).put(
+				"deleteCommentURL",
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/delete_content_item_comment")
+			).put(
+				"editCommentURL",
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/edit_content_item_comment")
+			).put(
+				"editorConfig",
+				() -> {
+					EditorConfiguration contentItemCommentEditorConfiguration =
+						EditorConfigurationFactoryUtil.getEditorConfiguration(
+							StringPool.BLANK, "contentItemCommentEditor",
+							StringPool.BLANK, Collections.emptyMap(),
+							themeDisplay,
+							RequestBackedPortletURLFactoryUtil.create(
+								getMockHttpServletRequest()));
+
+					Map<String, Object> data =
+						contentItemCommentEditorConfiguration.getData();
+
+					return data.get("editorConfig");
+				}
+			).put(
+				"getCommentsURL",
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL, "/get_asset_comments")
+			).build()
+		).put(
 			"contentViewURL",
 			StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
@@ -186,6 +236,12 @@ public abstract class BaseSectionDisplayContextTestCase
 		).put(
 			"redirect", "http://localhost:8080/currentURL"
 		).build();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_mockHttpServletRequest = null;
+		_objectEntryFolder = null;
 	}
 
 	@Test
@@ -454,6 +510,23 @@ public abstract class BaseSectionDisplayContextTestCase
 			"getFDSActionDropdownItems", new Class<?>[0]);
 	}
 
+	@Override
+	protected MockHttpServletRequest getMockHttpServletRequest(
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		if ((_mockHttpServletRequest == null) ||
+			(_objectEntryFolder != objectEntryFolder)) {
+
+			_mockHttpServletRequest = super.getMockHttpServletRequest(
+				objectEntryFolder);
+
+			_objectEntryFolder = objectEntryFolder;
+		}
+
+		return _mockHttpServletRequest;
+	}
+
 	protected abstract String getObjectFolderExternalReferenceCode();
 
 	protected String[] getObjectFolderExternalReferenceCodes() {
@@ -464,8 +537,10 @@ public abstract class BaseSectionDisplayContextTestCase
 		ObjectDefinition objectDefinition,
 		String objectEntryFolderExternalReferenceCode) {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
+		sb.append("http://localhost:8080");
+		sb.append(portal.getPathMain());
 		sb.append("/cms/add_structured_content_item?objectDefinitionId=");
 		sb.append(objectDefinition.getObjectDefinitionId());
 		sb.append("&objectEntryFolderExternalReferenceCode=");
@@ -872,6 +947,9 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	private MockHttpServletRequest _mockHttpServletRequest;
+	private ObjectEntryFolder _objectEntryFolder;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

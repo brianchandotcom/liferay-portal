@@ -11,14 +11,9 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -27,8 +22,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,47 +48,6 @@ public class ViewContentsSectionDisplayContextTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Override
-	public HashMap<String, Object> getBaseAdditionalProps() {
-		HashMap<String, Object> additionalProps =
-			super.getBaseAdditionalProps();
-
-		return HashMapBuilder.<String, Object>putAll(
-			additionalProps
-		).put(
-			"commentsProps",
-			HashMapBuilder.<String, Object>put(
-				"addCommentURL",
-				GroupConstants.CMS_FRIENDLY_URL + "/add_content_item_comment"
-			).put(
-				"deleteCommentURL",
-				GroupConstants.CMS_FRIENDLY_URL + "/delete_content_item_comment"
-			).put(
-				"editCommentURL",
-				GroupConstants.CMS_FRIENDLY_URL + "/edit_content_item_comment"
-			).put(
-				"editorConfig",
-				() -> {
-					EditorConfiguration contentItemCommentEditorConfiguration =
-						EditorConfigurationFactoryUtil.getEditorConfiguration(
-							StringPool.BLANK, "contentItemCommentEditor",
-							StringPool.BLANK, Collections.emptyMap(),
-							themeDisplay,
-							RequestBackedPortletURLFactoryUtil.create(
-								mockHttpServletRequest));
-
-					Map<String, Object> data =
-						contentItemCommentEditorConfiguration.getData();
-
-					return data.get("editorConfig");
-				}
-			).put(
-				"getCommentsURL",
-				GroupConstants.CMS_FRIENDLY_URL + "/get_asset_comments"
-			).build()
-		).build();
-	}
 
 	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {

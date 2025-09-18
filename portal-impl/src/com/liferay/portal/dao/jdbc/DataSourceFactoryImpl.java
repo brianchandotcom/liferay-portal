@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.hibernate.DialectDetector;
@@ -35,6 +36,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.io.Closeable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -61,8 +63,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 
 import javax.sql.DataSource;
-
-import jodd.bean.BeanUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -224,7 +224,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			// Set HikariCP property
 
 			try {
-				BeanUtil.pojo.setProperty(hikariDataSource, key, value);
+				_setProperty(hikariDataSource, key, value);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -444,6 +444,48 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 
 		return newURL;
+	}
+
+	private void _setProperty(
+			HikariDataSource hikariDataSource, String key, String value)
+		throws Exception {
+
+		String keyName = TextFormatter.format(key, TextFormatter.G);
+
+		Method getterMethod = ReflectionUtil.fetchMethod(
+			HikariDataSource.class, "get" + keyName, new Class<?>[0]);
+
+		if (getterMethod == null) {
+			getterMethod = ReflectionUtil.fetchMethod(
+				HikariDataSource.class, "is" + keyName, new Class<?>[0]);
+		}
+
+		Class<?> returnType = getterMethod.getReturnType();
+
+		Method setterMethod = ReflectionUtil.fetchMethod(
+			HikariDataSource.class, "set" + keyName,
+			new Class<?>[] {returnType});
+
+		setterMethod.invoke(hikariDataSource, _toTypedValue(returnType, value));
+	}
+
+	private Object _toTypedValue(Class<?> clazz, String value) {
+
+		// HikariDataSource setters only take boolean/int/long/String parameter
+
+		if (clazz == boolean.class) {
+			return Boolean.valueOf(value);
+		}
+
+		if (clazz == int.class) {
+			return Integer.valueOf(value);
+		}
+
+		if (clazz == long.class) {
+			return Long.valueOf(value);
+		}
+
+		return value;
 	}
 
 	private void _waitForJDBCConnection(Properties properties) {

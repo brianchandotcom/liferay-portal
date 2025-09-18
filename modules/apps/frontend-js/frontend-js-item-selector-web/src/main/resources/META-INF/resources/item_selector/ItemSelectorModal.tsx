@@ -30,12 +30,16 @@ type IItemSelectorModalFDSProps = Omit<
 >;
 
 export interface IItemSelectorModalProps<T> {
-	breadcrumbs?: React.ComponentProps<typeof ClayBreadcrumb>['items'];
 
 	/**
 	 * The URL that will be fetched to return the items.
 	 */
 	apiURL: string;
+
+	/**
+	 * Configuration of @clayui/breadcrumb items to show above the FDS table
+	 */
+	breadcrumbs?: React.ComponentProps<typeof ClayBreadcrumb>['items'];
 
 	/**
 	 * Configuration properties of the Frontend Data Set used to display data.

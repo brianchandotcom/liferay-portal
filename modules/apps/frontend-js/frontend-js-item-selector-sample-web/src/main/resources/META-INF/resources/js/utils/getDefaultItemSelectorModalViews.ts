@@ -5,16 +5,10 @@
 
 import {IView} from '@liferay/frontend-data-set-web';
 
-import {
-	assetLibraryViews,
-	cmsFileViews,
-	documentViews,
-	userViews,
-} from './defaultViews';
+import {assetLibraryViews, documentViews, userViews} from './defaultViews';
 
 export enum EItemSelectorModalViewsConfig {
 	ASSET_LIBRARIES = 'assetLibraries',
-	CMS_FILES = 'cmsFiles',
 	DOCUMENTS = 'documents',
 	USER_ACCOUNTS = 'userAccounts',
 }
@@ -29,9 +23,6 @@ export const getDefaultItemSelectorModalViews = function ({
 	}
 	else if (viewsConfig === EItemSelectorModalViewsConfig.ASSET_LIBRARIES) {
 		return assetLibraryViews;
-	}
-	else if (viewsConfig === EItemSelectorModalViewsConfig.CMS_FILES) {
-		return cmsFileViews;
 	}
 	else if (viewsConfig === EItemSelectorModalViewsConfig.DOCUMENTS) {
 		return documentViews;

@@ -8,7 +8,7 @@ import {IView} from '@liferay/frontend-data-set-web';
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-import ItemSelectorModal, {IItemSelectorModalProps} from './itemSelectorModal';
+import ItemSelectorModal, {IItemSelectorModalProps} from './ItemSelectorModal';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -33,22 +33,19 @@ function getCMSChildFolderURL(folderId: string) {
 	}).toString()}`;
 }
 
-type Document = {
-	contentUrl: string;
-	creator: {
-		name: string;
-	};
-	encodingFormat: string;
-	fileName: string;
-	id: string;
+type CMSFile = {
+	id: number;
 	title: string;
 };
 
 function CMSFilesItemSelectorModal({
 	fdsProps,
 	...otherProps
-}: Omit<IItemSelectorModalProps<Document>, 'fdsProps' | 'type'> & {
-	fdsProps?: IItemSelectorModalProps<Document>['fdsProps'];
+}: Omit<
+	IItemSelectorModalProps<CMSFile>,
+	'itemTypeLabel' | 'fdsProps' | 'apiURL'
+> & {
+	fdsProps?: IItemSelectorModalProps<CMSFile>['fdsProps'];
 }) {
 	const [folderStructure, setFolderStructure] = useState<
 		{folderId: string; folderName: string}[]
@@ -58,6 +55,7 @@ function CMSFilesItemSelectorModal({
 	return (
 		<ItemSelectorModal
 			{...otherProps}
+			apiURL={url}
 			breadcrumbs={
 				folderStructure.length
 					? [
@@ -93,7 +91,6 @@ function CMSFilesItemSelectorModal({
 			}
 			fdsProps={{
 				...fdsProps,
-				apiURL: url,
 				customRenderers: {
 					tableCell: [
 						{
@@ -230,12 +227,12 @@ function CMSFilesItemSelectorModal({
 					},
 				] as IView[],
 			}}
+			itemTypeLabel={Liferay.Language.get('files')}
 			locator={{
 				id: 'embedded.id',
 				label: 'embedded.title',
 				value: 'embedded.id',
 			}}
-			type={Liferay.Language.get('document')}
 		/>
 	);
 }

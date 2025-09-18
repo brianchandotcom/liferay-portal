@@ -93,7 +93,7 @@ export class StructureBuilderPage {
 		let trigger: Locator;
 
 		if (hasFields) {
-			trigger = this.page.getByLabel('Add Field');
+			trigger = this.page.getByTitle('Add Field');
 		}
 		else {
 			trigger = this.page.getByText('Add Field');

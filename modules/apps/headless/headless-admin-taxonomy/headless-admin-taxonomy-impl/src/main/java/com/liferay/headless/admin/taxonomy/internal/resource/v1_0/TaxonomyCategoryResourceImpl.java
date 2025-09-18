@@ -709,40 +709,18 @@ public class TaxonomyCategoryResourceImpl
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		if (taxonomyCategory.getTaxonomyVocabularyId() != null) {
-			if (taxonomyCategory.getTaxonomyVocabularyId() !=
-					assetCategory.getVocabularyId()) {
-
-				_assetVocabularyService.getVocabulary(
-					taxonomyCategory.getTaxonomyVocabularyId());
-			}
+		if ((taxonomyCategory.getTaxonomyVocabularyId() != null) &&
+			(taxonomyCategory.getTaxonomyVocabularyId() ==
+				assetCategory.getVocabularyId())) {
 
 			return taxonomyCategory.getTaxonomyVocabularyId();
 		}
-		else if (taxonomyCategory.getParentTaxonomyVocabulary() != null) {
-			ParentTaxonomyVocabulary parentTaxonomyVocabulary =
-				taxonomyCategory.getParentTaxonomyVocabulary();
 
-			String taxonomyVocabularyExternalReferenceCode =
-				parentTaxonomyVocabulary.getExternalReferenceCode();
+		Long taxonomyVocabularyId = _getTaxonomyVocabularyId(
+			groupId, taxonomyCategory);
 
-			if (Validator.isNotNull(taxonomyVocabularyExternalReferenceCode)) {
-				if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-					AssetVocabulary assetVocabulary =
-						_assetVocabularyService.
-							getAssetVocabularyByExternalReferenceCode(
-								groupId,
-								taxonomyVocabularyExternalReferenceCode);
-
-					return assetVocabulary.getVocabularyId();
-				}
-
-				AssetVocabulary assetVocabulary =
-					_assetVocabularyService.getOrAddEmptyVocabulary(
-						taxonomyVocabularyExternalReferenceCode, groupId);
-
-				return assetVocabulary.getVocabularyId();
-			}
+		if (taxonomyVocabularyId != null) {
+			return taxonomyVocabularyId;
 		}
 
 		return assetCategory.getVocabularyId();
@@ -912,8 +890,7 @@ public class TaxonomyCategoryResourceImpl
 		}
 
 		if (Validator.isBlank(taxonomyVocabularyExternalReferenceCode)) {
-			throw new BadRequestException(
-				"Taxonomy vocabulary external reference code is required");
+			return null;
 		}
 
 		AssetVocabulary assetVocabulary = null;
@@ -992,12 +969,20 @@ public class TaxonomyCategoryResourceImpl
 			long groupId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
+		Long taxonomyVocabularyId = _getTaxonomyVocabularyId(
+			groupId, taxonomyCategory);
+
+		if (taxonomyVocabularyId == null) {
+			throw new BadRequestException(
+				"Taxonomy vocabulary id or external reference code is " +
+					"required");
+		}
+
 		return _addTaxonomyCategory(
 			taxonomyCategory.getExternalReferenceCode(), groupId,
 			contextAcceptLanguage.getPreferredLanguageId(),
 			_getParentTaxonomyCategoryId(groupId, taxonomyCategory),
-			taxonomyCategory,
-			_getTaxonomyVocabularyId(groupId, taxonomyCategory));
+			taxonomyCategory, taxonomyVocabularyId);
 	}
 
 	private TaxonomyCategory _putTaxonomyCategory(

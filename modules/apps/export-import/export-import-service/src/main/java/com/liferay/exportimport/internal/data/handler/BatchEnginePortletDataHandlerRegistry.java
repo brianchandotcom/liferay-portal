@@ -8,7 +8,7 @@ package com.liferay.exportimport.internal.data.handler;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
-import com.liferay.batch.engine.service.BatchEngineExportTaskService;
+import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
@@ -68,7 +68,8 @@ public class BatchEnginePortletDataHandlerRegistry {
 	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;
 
 	@Reference
-	private BatchEngineExportTaskService _batchEngineExportTaskService;
+	private BatchEngineExportTaskLocalService
+		_batchEngineExportTaskLocalService;
 
 	@Reference
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
@@ -132,7 +133,7 @@ public class BatchEnginePortletDataHandlerRegistry {
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
 				new BatchEnginePortletDataHandler(
 					_batchEngineExportTaskExecutor,
-					_batchEngineExportTaskService,
+					_batchEngineExportTaskLocalService,
 					_batchEngineImportTaskExecutor,
 					_batchEngineImportTaskService,
 					_batchEngineTaskItemDelegateRegistry,

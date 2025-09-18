@@ -14,7 +14,7 @@ import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.service.BatchEngineExportTaskService;
+import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
@@ -67,7 +67,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	public BatchEnginePortletDataHandler(
 		BatchEngineExportTaskExecutor batchEngineExportTaskExecutor,
-		BatchEngineExportTaskService batchEngineExportTaskService,
+		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
 		BatchEngineImportTaskService batchEngineImportTaskService,
 		BatchEngineTaskItemDelegateRegistry batchEngineTaskItemDelegateRegistry,
@@ -78,7 +78,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		UserLocalService userLocalService) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
-		_batchEngineExportTaskService = batchEngineExportTaskService;
+		_batchEngineExportTaskLocalService = batchEngineExportTaskLocalService;
 		_batchEngineImportTaskExecutor = batchEngineImportTaskExecutor;
 		_batchEngineImportTaskService = batchEngineImportTaskService;
 		_batchEngineTaskItemDelegateRegistry =
@@ -228,16 +228,18 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 			BatchEngineExportTaskExecutor.Result result =
 				_batchEngineExportTaskExecutor.execute(
-					_batchEngineExportTaskService.addBatchEngineExportTask(
-						null, portletDataContext.getCompanyId(), _getUserId(),
-						null, _className, "JSON",
-						BatchEngineTaskExecuteStatus.INITIAL.name(),
-						Collections.emptyList(),
-						BatchEnginePortletDataHandlerUtil.buildExportParameters(
-							exportImportDescriptor.getNestedFields(),
-							exportImportDescriptor.getParameters(),
-							portletDataContext),
-						_taskItemDelegateName),
+					_batchEngineExportTaskLocalService.
+						createBatchEngineExportTask(
+							0L, null, portletDataContext.getCompanyId(),
+							_getUserId(), null, _className, "JSON",
+							BatchEngineTaskExecuteStatus.INITIAL.name(),
+							Collections.emptyList(),
+							BatchEnginePortletDataHandlerUtil.
+								buildExportParameters(
+									exportImportDescriptor.getNestedFields(),
+									exportImportDescriptor.getParameters(),
+									portletDataContext),
+							_taskItemDelegateName),
 					new BatchEngineExportTaskExecutor.Settings() {
 
 						@Override
@@ -362,16 +364,18 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 			BatchEngineExportTaskExecutor.Result result =
 				_batchEngineExportTaskExecutor.execute(
-					_batchEngineExportTaskService.addBatchEngineExportTask(
-						null, portletDataContext.getCompanyId(), _getUserId(),
-						null, _className, "JSON",
-						BatchEngineTaskExecuteStatus.INITIAL.name(),
-						Collections.emptyList(),
-						BatchEnginePortletDataHandlerUtil.buildExportParameters(
-							exportImportDescriptor.getNestedFields(),
-							exportImportDescriptor.getParameters(),
-							portletDataContext),
-						_taskItemDelegateName),
+					_batchEngineExportTaskLocalService.
+						createBatchEngineExportTask(
+							0L, null, portletDataContext.getCompanyId(),
+							_getUserId(), null, _className, "JSON",
+							BatchEngineTaskExecuteStatus.INITIAL.name(),
+							Collections.emptyList(),
+							BatchEnginePortletDataHandlerUtil.
+								buildExportParameters(
+									exportImportDescriptor.getNestedFields(),
+									exportImportDescriptor.getParameters(),
+									portletDataContext),
+							_taskItemDelegateName),
 					new BatchEngineExportTaskExecutor.Settings() {
 
 						@Override
@@ -450,7 +454,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	private final BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;
-	private final BatchEngineExportTaskService _batchEngineExportTaskService;
+	private final BatchEngineExportTaskLocalService
+		_batchEngineExportTaskLocalService;
 	private final BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
 	private final BatchEngineTaskItemDelegateRegistry

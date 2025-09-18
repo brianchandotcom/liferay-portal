@@ -971,9 +971,12 @@ paths:
                     schema:
                         type: string
             responses:
-                204:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
                     description:
-                        "No Content"
+                        "OK"
             tags: ["BatchTestEntity"]
         get:
             operationId: getBatchTestEntityByExternalReferenceCode

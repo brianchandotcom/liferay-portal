@@ -68,7 +68,7 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 
 		NotificationUtil.sendSlackNotification(
 			getBuildURL(), "#ci-aws-notifications", ":ci:",
-			"Bundle Builder Failure", "Liferay CI");
+			"Bundle Builder Failure (" + getAxisVariable() + ")", "Liferay CI");
 	}
 
 }

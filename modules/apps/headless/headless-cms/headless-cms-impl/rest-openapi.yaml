@@ -170,6 +170,10 @@ paths:
             operationId: postBulkActionItemPreviewPage
             parameters:
                 -   in: query
+                    name: fetchChildren
+                    schema:
+                        type: boolean
+                -   in: query
                     name: filter
                     schema:
                         type: string

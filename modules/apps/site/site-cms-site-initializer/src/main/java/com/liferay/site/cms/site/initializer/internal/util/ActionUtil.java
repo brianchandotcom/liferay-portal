@@ -470,7 +470,7 @@ public class ActionUtil {
 					httpServletRequest,
 					ObjectEntryFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENTS),
-				getBasicDocumentDropdown(
+				getBasicDocumentDropdownItem(
 					httpServletRequest,
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES),
 				getUploadMultipleFilesDropdownItem(
@@ -545,7 +545,7 @@ public class ActionUtil {
 			StringPool.SLASH);
 	}
 
-	public static DropdownItem getBasicDocumentDropdown(
+	public static DropdownItem getBasicDocumentDropdownItem(
 		HttpServletRequest httpServletRequest,
 		String objectEntryFolderExternalReferenceCode) {
 
@@ -822,7 +822,7 @@ public class ActionUtil {
 
 		List<DropdownItem> dropdownItems = new ArrayList<>(
 			List.of(
-				getBasicDocumentDropdown(
+				getBasicDocumentDropdownItem(
 					httpServletRequest, objectEntryFolderExternalReferenceCode),
 				getUploadMultipleFilesDropdownItem(
 					httpServletRequest, objectEntryFolderExternalReferenceCode),

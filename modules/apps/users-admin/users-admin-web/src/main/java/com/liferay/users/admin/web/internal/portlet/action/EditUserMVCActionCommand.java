@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -611,6 +612,23 @@ public class EditUserMVCActionCommand
 			portletRequest, parameterName);
 
 		if (Validator.isNull(parameterValue)) {
+			User currentUser = _portal.getUser(portletRequest);
+			User selUser = _userLocalService.getUser(
+				ParamUtil.getLong(portletRequest, "userId"));
+
+			if (!UsersAdminUtil.hasUpdateFieldPermission(
+					_permissionCheckerFactory.create(currentUser), currentUser,
+					selUser, parameterName)) {
+
+				Contact contact = selUser.getContact();
+
+				if (parameterName.equals("prefixListTypeValue")) {
+					return contact.getPrefixListTypeId();
+				}
+
+				return contact.getSuffixListTypeId();
+			}
+
 			return 0;
 		}
 
@@ -694,6 +712,9 @@ public class EditUserMVCActionCommand
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private Portal _portal;

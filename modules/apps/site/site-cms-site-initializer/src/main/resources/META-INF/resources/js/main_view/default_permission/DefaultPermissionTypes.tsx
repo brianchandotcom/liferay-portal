@@ -4,6 +4,7 @@
  */
 
 export interface Action {
+	guestUnsupported?: boolean;
 	key: string;
 	label: string;
 }

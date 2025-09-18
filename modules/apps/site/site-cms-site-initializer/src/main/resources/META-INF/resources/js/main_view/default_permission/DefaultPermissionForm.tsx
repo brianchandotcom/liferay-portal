@@ -198,7 +198,12 @@ export default function DefaultPermissionForm({
 																]
 															}
 															data-testid={`row-checkbox-${role.key}_${action.key}`}
-															disabled={disabled}
+															disabled={
+																disabled ||
+																(action.guestUnsupported &&
+																	role.key ===
+																		'Guest')
+															}
 															inline
 															key={`${role.key}_${action.key}`}
 															onChange={

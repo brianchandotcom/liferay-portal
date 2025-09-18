@@ -8,16 +8,12 @@ package com.liferay.exportimport.internal.data.handler;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
-import com.liferay.batch.engine.jaxrs.uri.BatchEngineUriInfo;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.pagination.Page;
-import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
@@ -38,7 +34,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -355,40 +350,57 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
-			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
-				portletDataContext.getCompanyId(), _className,
-				_taskItemDelegateName);
+		try (SafeCloseable safeCloseable =
+				PortletDataContextThreadLocal.
+					setPortletDataContextWithSafeCloseable(
+						portletDataContext)) {
 
-		batchEngineTaskItemDelegate.setContextCompany(
-			_companyLocalService.getCompany(portletDataContext.getCompanyId()));
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					_exportImportVulcanBatchEngineTaskItemDelegate.
+						getExportImportDescriptor();
 
-		BatchEngineUriInfo.Builder builder = new BatchEngineUriInfo.Builder();
+			BatchEngineExportTaskExecutor.Result result =
+				_batchEngineExportTaskExecutor.execute(
+					_batchEngineExportTaskService.addBatchEngineExportTask(
+						null, portletDataContext.getCompanyId(), _getUserId(),
+						null, _className, "JSON",
+						BatchEngineTaskExecuteStatus.INITIAL.name(),
+						Collections.emptyList(),
+						BatchEnginePortletDataHandlerUtil.buildExportParameters(
+							exportImportDescriptor.getNestedFields(),
+							exportImportDescriptor.getParameters(),
+							portletDataContext),
+						_taskItemDelegateName),
+					new BatchEngineExportTaskExecutor.Settings() {
 
-		Map<String, Serializable> parameters =
-			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				Collections.emptyList(), null, portletDataContext);
+						@Override
+						public int getMaxItems() {
+							return 1;
+						}
 
-		for (Map.Entry<String, Serializable> entry : parameters.entrySet()) {
-			builder.queryParameter(
-				entry.getKey(), String.valueOf(entry.getValue()));
+						@Override
+						public boolean isCompressContent() {
+							return false;
+						}
+
+						@Override
+						public boolean isPersistContent() {
+							return false;
+						}
+
+					});
+
+			BatchEngineExportTask batchEngineExportTask =
+				result.getBatchEngineExportTask();
+
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			manifestSummary.addModelAdditionCount(
+				new StagedModelType(_itemClassName),
+				batchEngineExportTask.getTotalItemsCount());
 		}
-
-		batchEngineTaskItemDelegate.setContextUriInfo(builder.build());
-
-		User user = _userLocalService.getUser(_getUserId());
-
-		batchEngineTaskItemDelegate.setContextUser(user);
-		batchEngineTaskItemDelegate.setLanguageId(user.getLanguageId());
-
-		Page<?> page = batchEngineTaskItemDelegate.read(
-			null, Pagination.of(1, 1), null, parameters, null);
-
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
-		manifestSummary.addModelAdditionCount(
-			new StagedModelType(_itemClassName), page.getTotalCount());
 	}
 
 	@Override

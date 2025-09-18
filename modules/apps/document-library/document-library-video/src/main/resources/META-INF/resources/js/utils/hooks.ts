@@ -5,18 +5,30 @@
 
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {cancelDebounce, debounce} from 'frontend-js-web';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 import updateDLVideoFields from './updateDLVideoFields';
 import validateUrl from './validateUrl';
 
-function useDebounceCallback<T extends (...args: any[]) => any>(
+function useDebounceCallback<T extends (...args: any[]) => void>(
 	callback: T,
-	milliseconds: number
-): [T, () => void] {
-	const callbackRef = useRef(debounce(callback, milliseconds) as T);
+	ms: number
+): [(...args: Parameters<T>) => void, () => void] {
+	const debounced = useMemo(
+		() => debounce(callback, ms) as T,
+		[callback, ms]
+	);
 
-	return [callbackRef.current, () => cancelDebounce(callbackRef.current)];
+	useEffect(() => {
+		return () => cancelDebounce(debounced);
+	}, [debounced]);
+
+	return [
+		debounced,
+		() => {
+			cancelDebounce(debounced);
+		},
+	];
 }
 
 export function useDLVideoExternalShortcutFields({
@@ -35,7 +47,7 @@ export function useDLVideoExternalShortcutFields({
 
 	const [getFields] = useDebounceCallback(
 		async (dlVideoExternalShortcutURL: string) => {
-			updateDLVideoFields({
+			await updateDLVideoFields({
 				getVideoFieldsURL: getDLVideoExternalShortcutFieldsURL,
 				namespace,
 				onError: () => {

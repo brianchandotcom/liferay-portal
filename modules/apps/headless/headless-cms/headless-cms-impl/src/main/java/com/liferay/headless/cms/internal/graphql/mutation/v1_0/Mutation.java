@@ -65,6 +65,7 @@ public class Mutation {
 		description = "Creates a preview for each item based on the bulk action type"
 	)
 	public java.util.Collection<BulkActionItem> createBulkActionItemPreviewPage(
+			@GraphQLName("fetchChildren") Boolean fetchChildren,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -79,7 +80,7 @@ public class Mutation {
 			bulkActionResource -> {
 				Page paginationPage =
 					bulkActionResource.postBulkActionItemPreviewPage(
-						search,
+						fetchChildren, search,
 						_filterBiFunction.apply(
 							bulkActionResource, filterString),
 						Pagination.of(page, pageSize),

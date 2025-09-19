@@ -65,10 +65,12 @@ describe('refreshReferencedStructures', () => {
 		};
 
 		const objectDefinition: ObjectDefinition = {
+			enableComments: true,
 			enableFriendlyURLCustomization: true,
 			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,
+			enableObjectEntryHistory: true,
 			enableObjectEntrySchedule: true,
 			enableObjectEntryVersioning: true,
 			externalReferenceCode: 'referenced-structure-erc',

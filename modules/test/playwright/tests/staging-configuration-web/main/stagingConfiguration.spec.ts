@@ -26,6 +26,7 @@ import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {enableLocalStaging} from '../../../utils/staging';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {exportImportPagesTest} from '../../export-import-web/main/fixtures/exportImportPagesTest';
 import {stagingPageTest} from '../../export-import-web/main/fixtures/stagingPageTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {portletPublishToLivePageTest} from './fixtures/portletPublishToLivePageTest';
@@ -34,6 +35,7 @@ import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageT
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
+	exportImportPagesTest,
 	loginTest(),
 	instanceSettingsPagesTest,
 	pageViewModePagesTest,
@@ -69,7 +71,7 @@ test(
 	{tag: ['@LPS-189238']},
 	async ({
 		apiHelpers,
-		instanceSettingsPage,
+		exportImportStagingInstanceSettingsPage,
 		page,
 		portletPublishToLivePage,
 	}) => {
@@ -85,39 +87,46 @@ test(
 			title: getRandomString(),
 		});
 
-		await instanceSettingsPage.goToInstanceSetting(
-			'Infrastructure',
-			'Export/Import, Staging'
-		);
-
-		await instanceSettingsPage.checkOption(
-			'Show Advanced Staging Configuration by Default',
-			true
-		);
-
-		await instanceSettingsPage.saveAndWaitForAlert();
-
-		await enableLocalStaging(apiHelpers, page, site);
-
-		const stagingSite =
-			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-				`${site.friendlyUrlPath}-staging`
-			);
-
-		await page.goto(
-			`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
-		);
-		await reloadUntilVisible({
-			myLocator: portletPublishToLivePage.publishToLiveButton,
-			page,
+		await exportImportStagingInstanceSettingsPage.goto();
+		await exportImportStagingInstanceSettingsPage.checkConfigurationOption({
+			checked: true,
+			label: 'Show Advanced Staging Configuration by Default',
 		});
-		await portletPublishToLivePage.publishToLiveButton.click();
 
-		await expect(
-			portletPublishToLivePage.publishToLiveIframe.getByRole('link', {
-				name: 'Switch to Simple Publish Process',
-			})
-		).toBeVisible();
+		try {
+			await exportImportStagingInstanceSettingsPage.instanceSettingsPage.saveAndWaitForAlert();
+
+			await enableLocalStaging(apiHelpers, page, site);
+
+			const stagingSite =
+				await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+					`${site.friendlyUrlPath}-staging`
+				);
+
+			await page.goto(
+				`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
+			);
+			await reloadUntilVisible({
+				myLocator: portletPublishToLivePage.publishToLiveButton,
+				page,
+			});
+			await portletPublishToLivePage.publishToLiveButton.click();
+
+			await expect(
+				portletPublishToLivePage.publishToLiveIframe.getByRole('link', {
+					name: 'Switch to Simple Publish Process',
+				})
+			).toBeVisible();
+		}
+		finally {
+			await exportImportStagingInstanceSettingsPage.goto();
+			await exportImportStagingInstanceSettingsPage.checkConfigurationOption(
+				{
+					checked: false,
+					label: 'Show Advanced Staging Configuration by Default',
+				}
+			);
+		}
 	}
 );
 
@@ -126,9 +135,9 @@ test(
 	{tag: ['@LPS-189238']},
 	async ({
 		apiHelpers,
+		exportImportStagingSystemSettingsPage,
 		page,
 		portletPublishToLivePage,
-		systemSettingsPage,
 	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -142,39 +151,40 @@ test(
 			title: getRandomString(),
 		});
 
-		await systemSettingsPage.goToSystemSetting(
-			'Infrastructure',
-			'Export/Import, Staging'
-		);
-
-		await systemSettingsPage.checkOption(
-			'Show Advanced Staging Configuration by Default',
+		await exportImportStagingSystemSettingsPage.goto();
+		await exportImportStagingSystemSettingsPage.checkShowAdvancedStagingConfiguration(
 			true
 		);
 
-		await systemSettingsPage.saveAndWaitForAlert();
+		try {
+			await enableLocalStaging(apiHelpers, page, site);
 
-		await enableLocalStaging(apiHelpers, page, site);
+			const stagingSite =
+				await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+					`${site.friendlyUrlPath}-staging`
+				);
 
-		const stagingSite =
-			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-				`${site.friendlyUrlPath}-staging`
+			await page.goto(
+				`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
 			);
+			await reloadUntilVisible({
+				myLocator: portletPublishToLivePage.publishToLiveButton,
+				page,
+			});
+			await portletPublishToLivePage.publishToLiveButton.click();
 
-		await page.goto(
-			`/web${stagingSite.friendlyUrlPath}${layout.friendlyURL}`
-		);
-		await reloadUntilVisible({
-			myLocator: portletPublishToLivePage.publishToLiveButton,
-			page,
-		});
-		await portletPublishToLivePage.publishToLiveButton.click();
-
-		await expect(
-			portletPublishToLivePage.publishToLiveIframe.getByRole('link', {
-				name: 'Switch to Simple Publish Process',
-			})
-		).toBeVisible();
+			await expect(
+				portletPublishToLivePage.publishToLiveIframe.getByRole('link', {
+					name: 'Switch to Simple Publish Process',
+				})
+			).toBeVisible();
+		}
+		finally {
+			await exportImportStagingSystemSettingsPage.goto();
+			await exportImportStagingSystemSettingsPage.checkShowAdvancedStagingConfiguration(
+				false
+			);
+		}
 	}
 );
 
@@ -270,7 +280,7 @@ test(
 	{tag: ['@LPS-189191', '@LPS-190360']},
 	async ({
 		apiHelpers,
-		instanceSettingsPage,
+		exportImportStagingInstanceSettingsPage,
 		page,
 		portletPublishToLivePage,
 	}) => {
@@ -286,14 +296,11 @@ test(
 			title: getRandomString(),
 		});
 
-		await instanceSettingsPage.goToInstanceSetting(
-			'Infrastructure',
-			'Export/Import, Staging'
-		);
-
-		await instanceSettingsPage.assertOptionChecked(
-			'Include Thumbnails And Previews During Staging'
-		);
+		await exportImportStagingInstanceSettingsPage.goto();
+		await exportImportStagingInstanceSettingsPage.checkConfigurationOption({
+			checked: true,
+			label: 'Include Thumbnails And Previews During Staging',
+		});
 
 		await enableLocalStaging(apiHelpers, page, site);
 
@@ -318,9 +325,9 @@ test(
 		);
 
 		await reloadUntilVisible({
-				myLocator: portletPublishToLivePage.publishToLiveButton,
-				page,
-			});
+			myLocator: portletPublishToLivePage.publishToLiveButton,
+			page,
+		});
 
 		await portletPublishToLivePage.goToPortletAdvancedStagings();
 
@@ -455,8 +462,6 @@ testFlagsEnabled(
 		await enableLocalStaging(apiHelpers, page, site);
 
 		await webContentDisplayPage.gotoWebContentAdmin(layout.plid);
-		await page
-			.getByRole('link', {name: webContentName})
-			.waitFor({state: 'visible'});
+		await page.getByText(webContentName).waitFor({state: 'visible'});
 	}
 );

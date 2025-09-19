@@ -27,12 +27,6 @@ export class InstanceSettingsPage {
 		await this.applicationsMenuPage.goToInstanceSettings(forceReload);
 	}
 
-	async assertOptionChecked(label?: string) {
-		const checkbox = this.page.getByLabel(label).first();
-		await expect(checkbox).toBeVisible();
-		await expect(checkbox).toBeChecked();
-	}
-
 	async checkOption(label: string, checked: boolean) {
 		const checkbox = this.page.getByLabel(label).first();
 		await expect(checkbox).toBeVisible();

@@ -36,11 +36,15 @@ export class PortletPublishToLivePage {
 				name: 'Publish to Live',
 			}
 		);
-		this.switchToAdvancedPublish = this.publishToLiveIframe
-			.getByRole('link', {name: 'Switch to Advanced Publish'});
+		this.switchToAdvancedPublish = this.publishToLiveIframe.getByRole(
+			'link',
+			{name: 'Switch to Advanced Publish'}
+		);
 
-		this.switchToSimplePublish = this.publishToLiveIframe
-			.getByRole('link', {name: 'Switch to Simple Publish'});
+		this.switchToSimplePublish = this.publishToLiveIframe.getByRole(
+			'link',
+			{name: 'Switch to Simple Publish'}
+		);
 	}
 
 	async goToPortletAdvancedStagings() {

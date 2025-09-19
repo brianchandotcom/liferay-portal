@@ -36,6 +36,9 @@ const CKEditor5ReactClassicEditor = ({
 				'|',
 				'bookmark',
 				'timestamp',
+				'|',
+				'headlessImageSelector',
+				'headlessVideoSelector',
 			],
 		},
 	};

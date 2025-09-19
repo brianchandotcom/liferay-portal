@@ -5,10 +5,12 @@
 
 import ClayButton from '@clayui/button';
 import {IView} from '@liferay/frontend-data-set-web';
+import {
+	IItemSelectorModalProps,
+	ItemSelectorModal,
+} from 'frontend-js-item-selector-web';
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
-
-import ItemSelectorModal, {IItemSelectorModalProps} from './ItemSelectorModal';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -171,7 +173,6 @@ function CMSFilesItemSelectorModal({
 							) {
 								return {
 									...props,
-									href: '#',
 									onClick: () => {
 										onChildFolderClick({
 											folderId: item.embedded.id,

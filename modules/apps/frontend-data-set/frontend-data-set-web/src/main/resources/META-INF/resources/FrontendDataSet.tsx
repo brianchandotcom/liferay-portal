@@ -185,6 +185,35 @@ const FrontendDataSetContent = ({
 		},
 	});
 
+	const shouldWriteSearchParamInURL = useCallback(
+		(searchParam: string | undefined): boolean => {
+			if (searchParam && !!searchParam.length) {
+				return true;
+			}
+
+			return false;
+		},
+		[]
+	);
+
+	const [getSearchParam, updateSearchParamThunk] = useStateInURL({
+		id,
+		shouldWriteInURL: shouldWriteSearchParamInURL,
+		stateDispatcher: {
+			key: EStateInURLKeys.SEARCH_PARAM,
+			type: EViewsActionTypes.UPDATE_SEARCH_PARAM,
+		},
+		stateInURLSettings,
+		stateInitializer: (searchParam: string) => {
+			if (!searchParam) {
+				return '';
+			}
+
+			return searchParam;
+		},
+		shouldWriteInURL: shouldWriteSearchParamInURL,
+	});
+
 	const [getView, updateViewThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
@@ -219,8 +248,6 @@ const FrontendDataSetContent = ({
 	const [searching, setSearching] = useState(!!apiURL);
 	const [items, setItems] = useState(itemsProp || []);
 	const [itemsChanges, setItemsChanges] = useState<{[key: string]: any}>({});
-
-	const [searchParam, setSearchParam] = useState('');
 
 	const [allItemsSelectedActive, setAllItemsSelectedActive] = useState(false);
 
@@ -343,6 +370,8 @@ const FrontendDataSetContent = ({
 			pagination?.initialPageNumber ||
 			DEFAULT_PAGINATION_PAGE_NUMBER;
 
+		const searchParam = getSearchParam();
+
 		// viewsDispatch is not available here, so we can't use state in url
 		// setters at this point. writeStateInURL low level utility does the job
 
@@ -353,6 +382,9 @@ const FrontendDataSetContent = ({
 					[EStateInURLKeys.DELTA]: paginationDelta,
 				}),
 				[EStateInURLKeys.PAGE_NUMBER]: pageNumber,
+				...(shouldWriteSearchParamInURL(searchParam) && {
+					[EStateInURLKeys.SEARCH_PARAM]: searchParam,
+				}),
 				[EStateInURLKeys.VIEW_NAME]: activeView.name,
 			},
 			stateInURLSettings
@@ -373,6 +405,7 @@ const FrontendDataSetContent = ({
 			modifiedFields: {},
 			pageNumber,
 			paginationDelta,
+			searchParam,
 			sorts: sortsProp,
 			views: [...views, ...customInternalViews],
 			visibleFieldNames: initialVisibleFieldNames,
@@ -383,8 +416,14 @@ const FrontendDataSetContent = ({
 		useReducer(viewsReducer, getInitialViewsState())
 	);
 
-	const {activeView, filters, pageNumber, paginationDelta, sorts} =
-		viewsState;
+	const {
+		activeView,
+		filters,
+		pageNumber,
+		paginationDelta,
+		searchParam,
+		sorts,
+	} = viewsState;
 
 	const handleDeltaChange = useCallback(
 		(delta: number) => {
@@ -447,7 +486,7 @@ const FrontendDataSetContent = ({
 			if (apiURL || appURL) {
 				setSearching(true);
 
-				setSearchParam(query);
+				viewsDispatch(updateSearchParamThunk(query));
 			}
 			else {
 				setItems(
@@ -461,7 +500,7 @@ const FrontendDataSetContent = ({
 				);
 			}
 		},
-		[apiURL, appURL, itemsProp]
+		[apiURL, appURL, itemsProp, updateSearchParamThunk, viewsDispatch]
 	);
 
 	const onClearFilters = useCallback(() => {
@@ -761,6 +800,15 @@ const FrontendDataSetContent = ({
 			value: getPageNumber() || 1,
 		});
 
+		const searchParam = getSearchParam();
+
+		if (searchParam && !!searchParam.length) {
+			stateUpdates.push({
+				type: EViewsActionTypes.UPDATE_SEARCH_PARAM,
+				value: searchParam,
+			});
+		}
+
 		if (stateUpdates.length) {
 			viewsDispatch({
 				type: EViewsActionTypes.BATCH_UPDATE,
@@ -771,6 +819,7 @@ const FrontendDataSetContent = ({
 		appURL,
 		getDelta,
 		getPageNumber,
+		getSearchParam,
 		getView,
 		id,
 		paginationDelta,

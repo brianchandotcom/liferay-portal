@@ -266,7 +266,7 @@ export function SpaceMembersWithList({
 
 		const {error} = await SpaceService.linkUserGroupToSpace({
 			spaceExternalReferenceCode: externalReferenceCode,
-			userGroupId: item.id,
+			userGroupExternalReferenceCode: item.externalReferenceCode,
 		});
 
 		if (error) {
@@ -330,7 +330,7 @@ export function SpaceMembersWithList({
 
 		const {error} = await SpaceService.unlinkUserGroupFromSpace({
 			spaceExternalReferenceCode: externalReferenceCode,
-			userGroupId: item.id,
+			userGroupExternalReferenceCode: item.externalReferenceCode,
 		});
 
 		if (error) {
@@ -390,7 +390,8 @@ export function SpaceMembersWithList({
 				: await SpaceService.updateUserGroupRoles({
 						roleNames: newRoles,
 						spaceExternalReferenceCode: externalReferenceCode,
-						userGroupId: itemToUpdate.id,
+						userGroupExternalReferenceCode:
+							itemToUpdate.externalReferenceCode,
 					});
 
 			if (error) {

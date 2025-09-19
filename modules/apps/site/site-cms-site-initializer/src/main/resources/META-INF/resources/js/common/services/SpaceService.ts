@@ -153,13 +153,13 @@ async function linkUserToSpace({
 
 async function linkUserGroupToSpace({
 	spaceExternalReferenceCode,
-	userGroupId,
+	userGroupExternalReferenceCode,
 }: {
 	spaceExternalReferenceCode: string;
-	userGroupId: string;
+	userGroupExternalReferenceCode: string;
 }) {
 	return await ApiHelper.put(
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/${userGroupId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/by-external-reference-code/${userGroupExternalReferenceCode}`
 	);
 }
 
@@ -177,13 +177,13 @@ async function unlinkUserFromSpace({
 
 async function unlinkUserGroupFromSpace({
 	spaceExternalReferenceCode,
-	userGroupId,
+	userGroupExternalReferenceCode,
 }: {
 	spaceExternalReferenceCode: string;
-	userGroupId: string;
+	userGroupExternalReferenceCode: string;
 }) {
 	return await ApiHelper.delete(
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/${userGroupId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/by-external-reference-code/${userGroupExternalReferenceCode}`
 	);
 }
 
@@ -215,16 +215,20 @@ async function updateUserRoles(payload: {
 async function updateUserGroupRoles(payload: {
 	roleNames: string[];
 	spaceExternalReferenceCode: string;
-	userGroupId: string;
+	userGroupExternalReferenceCode: string;
 }) {
-	const {roleNames, spaceExternalReferenceCode, userGroupId} = payload;
+	const {
+		roleNames,
+		spaceExternalReferenceCode,
+		userGroupExternalReferenceCode,
+	} = payload;
 
 	const body = roleNames.map((roleName) => ({
 		name: roleName,
 	}));
 
 	return await ApiHelper.put(
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/${userGroupId}/roles`,
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/by-external-reference-code/${userGroupExternalReferenceCode}/roles`,
 		body
 	);
 }

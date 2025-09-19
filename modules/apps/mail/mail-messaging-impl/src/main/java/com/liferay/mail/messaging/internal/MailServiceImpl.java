@@ -11,9 +11,11 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration;
+import com.liferay.mail.settings.configuration.MailSettingSystemConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.cluster.Clusterable;
@@ -48,13 +50,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(service = AopService.class)
+@Component(
+	configurationPid = "com.liferay.mail.settings.configuration.MailSettingSystemConfiguration",
+	service = AopService.class
+)
 @CTAware
 public class MailServiceImpl
 	implements AopService, IdentifiableOSGiService, MailService {
@@ -152,7 +159,7 @@ public class MailServiceImpl
 			return session;
 		}
 
-		String jndiName = PropsUtil.get("mail.session.jndi.name");
+		String jndiName = _mailSettingSystemConfiguration.jndiName();
 
 		if (Validator.isNotNull(jndiName)) {
 			try {
@@ -380,6 +387,13 @@ public class MailServiceImpl
 			});
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_mailSettingSystemConfiguration = ConfigurableUtil.createConfigurable(
+			MailSettingSystemConfiguration.class, properties);
+	}
+
 	private void _debug(Properties properties) {
 		if (!_log.isDebugEnabled()) {
 			return;
@@ -436,6 +450,8 @@ public class MailServiceImpl
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	private volatile MailSettingSystemConfiguration
+		_mailSettingSystemConfiguration;
 	private final Map<Long, Session> _sessions = new ConcurrentHashMap<>();
 
 }

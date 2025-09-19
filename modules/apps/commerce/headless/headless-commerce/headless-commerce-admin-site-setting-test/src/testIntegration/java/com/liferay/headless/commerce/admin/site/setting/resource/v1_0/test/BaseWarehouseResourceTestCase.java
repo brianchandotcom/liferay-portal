@@ -1600,8 +1600,9 @@ public abstract class BaseWarehouseResourceTestCase {
 		}
 
 		if (entityFieldName.equals("mvccVersion")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(warehouse.getMvccVersion()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -1851,6 +1852,7 @@ public abstract class BaseWarehouseResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				latitude = RandomTestUtil.randomDouble();
 				longitude = RandomTestUtil.randomDouble();
+				mvccVersion = RandomTestUtil.randomInt();
 				primary = RandomTestUtil.randomBoolean();
 				street1 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street2 = StringUtil.toLowerCase(RandomTestUtil.randomString());

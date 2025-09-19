@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayLink from '@clayui/link';
+import ClayButton from '@clayui/button';
 import {IView} from '@liferay/frontend-data-set-web';
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
@@ -83,7 +83,6 @@ function CMSFilesItemSelectorModal({
 							},
 							...folderStructure.map(
 								({folderId, folderName}, index) => ({
-									href: '#',
 									label: folderName,
 									onClick: () => {
 										setFolderStructure(
@@ -111,22 +110,24 @@ function CMSFilesItemSelectorModal({
 					tableCell: [
 						{
 							component: ({itemData, value}) => {
-								const {embedded} = itemData;
+								const {embedded, entryClassName} = itemData;
 
-								return (
-									<div className="align-items-center d-flex table-list-title">
-										<ClayLink
-											href="#"
-											onClick={() => {
-												onChildFolderClick({
-													folderId: embedded.id,
-													folderName: embedded.title,
-												});
-											}}
-										>
-											{value}
-										</ClayLink>
-									</div>
+								return entryClassName ===
+									OBJECT_ENTRY_FOLDER_CLASS_NAME ? (
+									<ClayButton
+										className="c-p-0"
+										displayType="link"
+										onClick={() => {
+											onChildFolderClick({
+												folderId: embedded.id,
+												folderName: embedded.title,
+											});
+										}}
+									>
+										{value}
+									</ClayButton>
+								) : (
+									value
 								);
 							},
 							name: 'cmsFilesTitleCellRenderer',

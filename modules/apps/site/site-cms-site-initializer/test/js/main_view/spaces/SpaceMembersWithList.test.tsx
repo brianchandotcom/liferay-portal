@@ -726,7 +726,8 @@ describe('SpaceMembersWithList', () => {
 						roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
 						spaceExternalReferenceCode:
 							testSpace.externalReferenceCode,
-						userGroupId: testUserGroups[0].id,
+						userGroupExternalReferenceCode:
+							testUserGroups[0].externalReferenceCode,
 					},
 					error: null,
 				});
@@ -758,7 +759,8 @@ describe('SpaceMembersWithList', () => {
 				expect(updateUserGroupRolesSpy).toHaveBeenCalledWith({
 					roleNames: [SPACE_MEMBER_ROLE_NAME, 'Role 1'],
 					spaceExternalReferenceCode: testSpace.externalReferenceCode,
-					userGroupId: testUserGroups[0].id,
+					userGroupExternalReferenceCode:
+						testUserGroups[0].externalReferenceCode,
 				});
 			});
 

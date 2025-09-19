@@ -231,10 +231,12 @@ describe('buildState', () => {
 
 	it('It works with Double fields ', () => {
 		const objectDefinition = {
+			enableComments: true,
 			enableFriendlyURLCustomization: true,
 			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,
+			enableObjectEntryHistory: true,
 			enableObjectEntrySchedule: true,
 			enableObjectEntryVersioning: true,
 			externalReferenceCode: 'ca7f96e2-3436-4aa4-9626-265d006bea87',

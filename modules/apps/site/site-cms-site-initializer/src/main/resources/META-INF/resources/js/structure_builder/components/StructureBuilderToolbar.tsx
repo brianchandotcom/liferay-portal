@@ -48,12 +48,8 @@ export default function StructureBuilderToolbar() {
 					: Liferay.Language.get('new-structure')
 			}
 		>
-			<Toolbar.Item>
+			<Toolbar.Item className="nav-divider-end">
 				<CustomizeExperienceButton />
-			</Toolbar.Item>
-
-			<Toolbar.Item>
-				<div className="vertical-divider" />
 			</Toolbar.Item>
 
 			<Toolbar.Item>
@@ -93,7 +89,7 @@ function CustomizeExperienceButton() {
 	return (
 		<ClayButton
 			borderless
-			className="font-weight-semi-bold"
+			className="font-weight-semi-bold mr-2"
 			displayType="primary"
 			onClick={() => {
 				if (status === 'published' && history.deletedChildren) {

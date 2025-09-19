@@ -92,6 +92,14 @@ test(
 				).toBeVisible();
 			});
 
+			await test.step('Check that the "Clear Filters" button has btn-secondary class', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.getByRole('button', {
+						name: 'Clear Filters',
+					})
+				).toHaveClass(/btn-secondary/);
+			});
+
 			await test.step('Check that when clicking the button "Clear Filters", the filters are removed', async () => {
 				await fdsSamplePage.emptyStateContainer
 					.getByRole('button', {name: 'Clear Filters'})
@@ -151,6 +159,14 @@ test(
 						name: 'Clear Search',
 					})
 				).toBeVisible();
+			});
+
+			await test.step('Check that the "Clear Search" button has btn-secondary class', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.getByRole('button', {
+						name: 'Clear Search',
+					})
+				).toHaveClass(/btn-secondary/);
 			});
 
 			await test.step('Check that when clicking the button "Clear Search", the search is removed', async () => {
@@ -235,6 +251,14 @@ test(
 						name: 'Clear Search And Filters',
 					})
 				).toBeVisible();
+			});
+
+			await test.step('Check that the "Clear Search And Filters" button has btn-secondary class', async () => {
+				await expect(
+					fdsSamplePage.emptyStateContainer.getByRole('button', {
+						name: 'Clear Search And Filters',
+					})
+				).toHaveClass(/btn-secondary/);
 			});
 
 			await test.step('Check that when clicking the button "Clear Search And Filters", the search and filters are removed', async () => {

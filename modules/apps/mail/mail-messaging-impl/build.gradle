@@ -9,5 +9,6 @@ dependencies {
 	compileOnly project(":apps:mail:mail-settings-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal:portal-aop-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-string")
 }

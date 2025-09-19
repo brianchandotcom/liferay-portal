@@ -75,9 +75,11 @@ import {
 	IRequestOptions,
 	IStateInURL,
 	ISuccessNotification,
+	ITableSchema,
 	IView,
 	TRenderer,
 	TSort,
+	VisibleFieldNames,
 } from './utils/types';
 import useStateInURL from './utils/useStateInURL';
 import ViewsContext from './views/ViewsContext';
@@ -211,7 +213,6 @@ const FrontendDataSetContent = ({
 
 			return searchParam;
 		},
-		shouldWriteInURL: shouldWriteSearchParamInURL,
 	});
 
 	const [getView, updateViewThunk] = useStateInURL({
@@ -226,6 +227,58 @@ const FrontendDataSetContent = ({
 
 			if (view) {
 				return viewName;
+			}
+
+			return undefined;
+		},
+	});
+
+	const shouldWriteVisibleFieldsInURL = useCallback(
+		(visibleFields: VisibleFieldNames | undefined): boolean => {
+			if (visibleFields) {
+				return Object.values(visibleFields).some((value: boolean) => {
+					return value !== undefined && value === false;
+				});
+			}
+
+			return false;
+		},
+		[]
+	);
+
+	const [getVisibleFields, updateVisibleFieldsThunk] = useStateInURL({
+		id,
+		shouldWriteInURL: shouldWriteVisibleFieldsInURL,
+		stateDispatcher: {
+			key: EStateInURLKeys.VISIBLE_FIELDS,
+			type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
+		},
+		stateInURLSettings,
+		stateInitializer: (visibleFieldNames: VisibleFieldNames) => {
+			const view = views.find(
+				({name}) => name && name.toLowerCase().includes('table')
+			);
+
+			if (view) {
+				const tableSchema = view.schema as ITableSchema;
+
+				const updatedVisibleFieldNames: VisibleFieldNames = {};
+
+				tableSchema.fields.forEach((field: IField) => {
+					const fieldName: string = String(field.fieldName);
+
+					if (visibleFieldNames[fieldName] !== undefined) {
+						{
+							updatedVisibleFieldNames[fieldName] =
+								visibleFieldNames[fieldName];
+						}
+					}
+					else {
+						updatedVisibleFieldNames[fieldName] = true;
+					}
+				});
+
+				return updatedVisibleFieldNames;
 			}
 
 			return undefined;
@@ -320,6 +373,12 @@ const FrontendDataSetContent = ({
 			}
 		}
 
+		const visibleFieldNames = getVisibleFields();
+
+		if (visibleFieldNames) {
+			initialVisibleFieldNames = visibleFieldNames;
+		}
+
 		const view = getView();
 
 		if (view) {
@@ -386,6 +445,9 @@ const FrontendDataSetContent = ({
 					[EStateInURLKeys.SEARCH_PARAM]: searchParam,
 				}),
 				[EStateInURLKeys.VIEW_NAME]: activeView.name,
+				...(shouldWriteVisibleFieldsInURL(visibleFieldNames) && {
+					[EStateInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
+				}),
 			},
 			stateInURLSettings
 		);
@@ -809,6 +871,15 @@ const FrontendDataSetContent = ({
 			});
 		}
 
+		const visibleFields = getVisibleFields();
+
+		if (visibleFields) {
+			stateUpdates.push({
+				type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
+				value: visibleFields,
+			});
+		}
+
 		if (stateUpdates.length) {
 			viewsDispatch({
 				type: EViewsActionTypes.BATCH_UPDATE,
@@ -821,6 +892,7 @@ const FrontendDataSetContent = ({
 		getPageNumber,
 		getSearchParam,
 		getView,
+		getVisibleFields,
 		id,
 		paginationDelta,
 		portletId,
@@ -1466,6 +1538,7 @@ const FrontendDataSetContent = ({
 				updateDataSetItems,
 				updateItem,
 				updateViewThunk,
+				updateVisibleFieldsThunk,
 			}}
 		>
 			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>

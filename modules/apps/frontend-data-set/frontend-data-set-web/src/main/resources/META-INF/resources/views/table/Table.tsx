@@ -27,20 +27,19 @@ import Actions from '../../actions/Actions';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
 import FDSDndProvider from '../../dnd/FDSDndProvider';
 import useFDSDrop from '../../dnd/useFDSDrop';
-import persistVisibleFieldNames, {
-	VisibleFieldNames,
-} from '../../thunks/persistVisibleFieldNames';
 import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
 import {getInputRendererById} from '../../utils/renderer';
+import {saveViewSettings} from '../../utils/saveViewSettings';
 import {
 	IItemsActions,
 	ITableSchema,
 	IView,
 	TRenderer,
 	TSort,
+	VisibleFieldNames,
 } from '../../utils/types';
 import ViewsContext, {
 	IViewsContext,
@@ -739,6 +738,7 @@ const Table = ({
 		portletId,
 		selectable,
 		selectionType,
+		updateVisibleFieldsThunk,
 	} = useContext(FrontendDataSetContext);
 
 	const [{sorts, visibleFieldNames}, viewsDispatch] =
@@ -857,14 +857,14 @@ const Table = ({
 						visibleFieldNames[key] = true;
 					});
 
-					viewsDispatch(
-						persistVisibleFieldNames({
-							appURL,
-							id,
-							portletId,
-							visibleFieldNames,
-						})
-					);
+					viewsDispatch(updateVisibleFieldsThunk(visibleFieldNames));
+
+					saveViewSettings({
+						appURL,
+						id,
+						portletId,
+						settings: {visibleFieldNames},
+					});
 
 					setVisibleColumns(visibleColumns);
 				}}

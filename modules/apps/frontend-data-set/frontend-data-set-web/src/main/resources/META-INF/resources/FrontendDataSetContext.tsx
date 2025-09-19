@@ -93,6 +93,7 @@ export interface IFrontendDataSetContext {
 	}: IDataSetData) => void;
 	updateItem: Function;
 	updateViewThunk: IStateInURLUpdaterThunk<EStateInURLKeys.VIEW_NAME>;
+	updateVisibleFieldsThunk: IStateInURLUpdaterThunk<EStateInURLKeys.VISIBLE_FIELDS>;
 }
 
 const FrontendDataSetContext = React.createContext({

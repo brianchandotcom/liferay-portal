@@ -18,9 +18,9 @@ components:
                     description:
                         The asset library's key.
                     type: string
-                connectedSiteId:
+                siteId:
                     description:
-                        The asset library's connected site ID.
+                        The asset library's site ID.
                     format: int64
                     readOnly: true
                     type: integer

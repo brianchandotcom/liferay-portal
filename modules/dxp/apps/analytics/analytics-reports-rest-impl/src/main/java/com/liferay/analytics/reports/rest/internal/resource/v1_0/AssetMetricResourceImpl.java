@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 
+import jakarta.ws.rs.BadRequestException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,9 +42,16 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 			Integer rangeKey, String[] selectedMetrics)
 		throws Exception {
 
-		List<Long> analyticsCloudChannelIds = new ArrayList<>();
-
 		Group group = _groupLocalService.getGroup(groupId);
+
+		if (!_analyticsSettingsManager.isSiteIdSynced(
+				group.getCompanyId(), group.getGroupId())) {
+
+			throw new BadRequestException(
+				"Analytics Cloud is not enabled for groupId " + groupId);
+		}
+
+		List<Long> analyticsCloudChannelIds = new ArrayList<>();
 
 		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
 			groupId);

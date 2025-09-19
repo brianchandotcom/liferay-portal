@@ -184,10 +184,8 @@ public class MCPServerServlet extends HttpServlet {
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
-				StringBundler.concat(
-					"Calls an HTTP endpoint from a Liferay OpenAPI. Never ",
-					"call a batch endpoint or you will suffer the ",
-					"consequences, always use individual operations."),
+				"Calls an HTTP endpoint from a Liferay OpenAPI. Never call a " +
+					"batch endpoint, always use individual operations.",
 				JSONUtil.put(
 					"additionalProperties", false
 				).put(

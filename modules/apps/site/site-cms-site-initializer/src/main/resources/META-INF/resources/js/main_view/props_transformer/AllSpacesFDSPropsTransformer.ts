@@ -43,7 +43,13 @@ export default function AllSpacesFDSPropsTransformer({
 		customRenderers: {
 			tableCell: [
 				{
-					component: SpaceRenderer,
+					component: ({itemData, value}) =>
+						SpaceRenderer({
+							href: additionalProps.baseSpaceURL + itemData.id,
+							itemData,
+							size: 'sm',
+							value,
+						}),
 					name: 'spaceTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

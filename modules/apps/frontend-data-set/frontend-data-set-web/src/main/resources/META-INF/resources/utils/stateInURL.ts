@@ -53,6 +53,18 @@ export function writeStateInURL(
 		return;
 	}
 
+	Object.keys(state).forEach((key: string) => {
+		const stateKey: keyof IStateInURL = key as keyof IStateInURL;
+
+		if (state[stateKey] === undefined) {
+			delete state[stateKey];
+
+			if (currentState && currentState[stateKey]) {
+				delete currentState[stateKey];
+			}
+		}
+	});
+
 	const params = new URLSearchParams(window.location.search);
 
 	params.set(

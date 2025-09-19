@@ -84,6 +84,14 @@ public class JavaClassParser {
 			DetailASTUtil.getAllChildTokens(
 				siblingDetailAST, true, TokenTypes.LITERAL_NEW);
 
+		JavaClass parentJavaClass = null;
+
+		if (!leteralNewDetailASTList.isEmpty() &&
+			(siblingDetailAST.getType() == TokenTypes.CLASS_DEF)) {
+
+			parentJavaClass = parseJavaClass(content, detailAST, fileContents);
+		}
+
 		for (DetailAST leteralNewDetailAST : leteralNewDetailASTList) {
 			DetailAST objBlockDetailAST = leteralNewDetailAST.findFirstToken(
 				TokenTypes.OBJBLOCK);
@@ -107,7 +115,7 @@ public class JavaClassParser {
 				JavaTerm.ACCESS_MODIFIER_PRIVATE, true, classContent,
 				leteralNewDetailAST.getLineNo(), StringPool.BLANK, importNames,
 				false, false, false, false, false, false, packageName, false,
-				fileContents, leteralNewDetailAST);
+				fileContents, leteralNewDetailAST, parentJavaClass);
 
 			anonymousClasses.add(anonymousClass);
 		}
@@ -208,7 +216,7 @@ public class JavaClassParser {
 			nameDetailAST.getText(), JavaSourceUtil.getImportNames(content),
 			isAbstract, isFinal, isInterface, false, isStrictfp, nonsealed,
 			JavaSourceUtil.getPackageName(content), sealed, fileContents,
-			siblingDetailAST);
+			siblingDetailAST, null);
 
 		_parseExtendsImplementsPermits(javaClass, siblingDetailAST);
 
@@ -417,7 +425,7 @@ public class JavaClassParser {
 				accessModifier, false, javaTermContent, detailAST.getLineNo(),
 				className, importNames, isAbstract, isFinal, isInterface,
 				isStatic, isStrictfp, nonsealed, packageName, sealed,
-				fileContents, detailAST);
+				fileContents, detailAST, null);
 
 			_parseExtendsImplementsPermits(javaClass, detailAST);
 
@@ -588,7 +596,7 @@ public class JavaClassParser {
 			boolean isAbstract, boolean isFinal, boolean isInterface,
 			boolean isStatic, boolean isStrictfp, boolean nonsealed,
 			String packageName, boolean sealed, FileContents fileContents,
-			DetailAST detailAST)
+			DetailAST detailAST, JavaClass parentJavaClass)
 		throws IOException, ParseException {
 
 		DetailAST objBlockDetailAST = detailAST.findFirstToken(
@@ -670,6 +678,7 @@ public class JavaClassParser {
 
 		JavaMethod javaMethod = (JavaMethod)javaTerm;
 
+		javaClass.setParentJavaClass(parentJavaClass);
 		javaClass.setParentJavaMethod(javaMethod);
 
 		return javaClass;

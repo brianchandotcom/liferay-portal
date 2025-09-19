@@ -12,21 +12,21 @@ import FilePreview from './FilePreview';
 
 const Arrow = ({
 	ariaLabel,
-	direction,
+	control,
 	handleClick,
 }: {
 	ariaLabel: string;
-	direction: string;
+	control: 'next' | 'previous';
 	handleClick: any;
 }) => (
-	<div className={`position-absolute pull-${direction}`}>
+	<div className={`position-absolute carousel-${control}`}>
 		<ClayButtonWithIcon
 			aria-label={ariaLabel}
 			displayType="secondary"
 			onClick={handleClick}
 			outline
 			rounded
-			symbol={`angle-${direction}`}
+			symbol={`angle-${{next: 'right', previous: 'left'}[control]}`}
 		/>
 	</div>
 );
@@ -47,14 +47,21 @@ export default function Carousel({
 	return (
 		<div className="carousel d-flex h-100">
 			{showArrows && (
-				<Arrow
-					ariaLabel={Liferay.Language.get('previous')}
-					direction="left"
-					handleClick={handleClickPrevious}
-				/>
+				<>
+					<Arrow
+						ariaLabel={Liferay.Language.get('previous')}
+						control="previous"
+						handleClick={handleClickPrevious}
+					/>
+					<Arrow
+						ariaLabel={Liferay.Language.get('next')}
+						control="next"
+						handleClick={handleClickNext}
+					/>
+				</>
 			)}
 
-			<div className="preview-container h-100 mx-6 w-100">
+			<div className="h-100 mx-6 preview-container w-100">
 				{currentItem.embedded?.file ? (
 					<FilePreview file={currentItem.embedded.file} />
 				) : (
@@ -63,14 +70,6 @@ export default function Carousel({
 					/>
 				)}
 			</div>
-
-			{showArrows && (
-				<Arrow
-					ariaLabel={Liferay.Language.get('next')}
-					direction="right"
-					handleClick={handleClickNext}
-				/>
-			)}
 		</div>
 	);
 }

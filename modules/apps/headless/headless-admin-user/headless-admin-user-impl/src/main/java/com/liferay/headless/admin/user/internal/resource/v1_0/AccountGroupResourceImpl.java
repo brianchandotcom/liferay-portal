@@ -212,7 +212,7 @@ public class AccountGroupResourceImpl
 
 			@Override
 			public List<String> getNestedFields() {
-				return List.of("accountBriefs");
+				return List.of("accountBriefs", "creator");
 			}
 
 			@Override

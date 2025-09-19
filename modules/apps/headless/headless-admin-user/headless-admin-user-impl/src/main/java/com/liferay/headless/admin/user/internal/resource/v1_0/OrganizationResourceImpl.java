@@ -309,7 +309,7 @@ public class OrganizationResourceImpl
 			@Override
 			public List<String> getNestedFields() {
 				return List.of(
-					"accountBriefs", "imageBase64", "roleBriefs",
+					"accountBriefs", "creator", "imageBase64", "roleBriefs",
 					"taxonomyCategoryBriefs", "userAccountBriefs");
 			}
 

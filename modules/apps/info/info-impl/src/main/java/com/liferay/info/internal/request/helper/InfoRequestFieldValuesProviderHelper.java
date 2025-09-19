@@ -157,7 +157,8 @@ public class InfoRequestFieldValuesProviderHelper {
 			if (regularParameters == null) {
 				if ((infoField.getInfoFieldType() instanceof
 						BooleanInfoFieldType) &&
-					ArrayUtil.contains(checkboxNames, infoField.getName())) {
+					ArrayUtil.contains(
+						checkboxNames, infoField.getUniqueId())) {
 
 					infoFieldValues.put(
 						infoField.getUniqueId(),
@@ -169,7 +170,8 @@ public class InfoRequestFieldValuesProviderHelper {
 
 				if ((infoField.getInfoFieldType() instanceof
 						MultiselectInfoFieldType) &&
-					ArrayUtil.contains(checkboxNames, infoField.getName())) {
+					ArrayUtil.contains(
+						checkboxNames, infoField.getUniqueId())) {
 
 					infoFieldValues.put(
 						infoField.getUniqueId(),

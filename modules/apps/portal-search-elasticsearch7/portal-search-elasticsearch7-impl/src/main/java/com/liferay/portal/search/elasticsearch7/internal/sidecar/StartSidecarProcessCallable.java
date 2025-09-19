@@ -22,6 +22,22 @@ public class StartSidecarProcessCallable
 
 	@Override
 	public Serializable call() throws ProcessException {
+		System.setProperty("es.distribution.type", "tar");
+		System.setProperty("es.networkaddress.cache.negative.ttl", "10");
+		System.setProperty("es.networkaddress.cache.ttl", "60");
+		System.setProperty("file.encoding", "UTF-8");
+		System.setProperty("io.netty.noKeySetOptimization", "true");
+		System.setProperty("io.netty.noUnsafe", "true");
+		System.setProperty("io.netty.recycler.maxCapacityPerThread", "0");
+		System.setProperty("java.awt.headless", "true");
+		System.setProperty("jna.nosys", "true");
+		System.setProperty("log4j.shutdownHookEnabled", "false");
+		System.setProperty("log4j2.disable.jmx", "true");
+		System.setProperty("log4j2.formatMsgNoLookups", "true");
+		System.setProperty(
+			"org.apache.lucene.vectorization.upperJavaFeatureVersion", "21");
+		System.setProperty("jdk.module.main", "org.elasticsearch.server");
+
 		ElasticsearchServerUtil.start(_sidecarServerArgs);
 
 		return null;

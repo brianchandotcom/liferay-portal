@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServerFeatures;
@@ -31,7 +30,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -76,20 +74,6 @@ public class MCPServerServlet extends GenericServlet {
 	public void service(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
-
-		// TODO Validate token using oauth2 infra
-
-		if ((servletRequest instanceof HttpServletRequest httpServletRequest) &&
-			Validator.isNull(httpServletRequest.getHeader("Authorization")) &&
-			(servletResponse instanceof
-				HttpServletResponse httpServletResponse)) {
-
-			httpServletResponse.setHeader(
-				"WWW-Authenticate", "Bearer error=\"invalid_request\"");
-			httpServletResponse.setStatus(401);
-
-			return;
-		}
 
 		Servlet servlet = _servlets.computeIfAbsent(
 			_portal.getCompanyId((HttpServletRequest)servletRequest),
@@ -163,7 +147,8 @@ public class MCPServerServlet extends GenericServlet {
 			MCPServerToolCallHandler.of(
 				(exchange, arguments) -> MCPServerHttpUtil.callEndpoint(
 					"GET", baseURL + "/openapi", null,
-					mcpServerTransportProvider.getAccessToken(exchange)))
+					mcpServerTransportProvider.getAuthorizationHeader(
+						exchange)))
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -182,7 +167,8 @@ public class MCPServerServlet extends GenericServlet {
 			MCPServerToolCallHandler.of(
 				(exchange, arguments) -> MCPServerHttpUtil.callEndpoint(
 					"GET", String.valueOf(arguments.get("url")), null,
-					mcpServerTransportProvider.getAccessToken(exchange)))
+					mcpServerTransportProvider.getAuthorizationHeader(
+						exchange)))
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
@@ -238,7 +224,8 @@ public class MCPServerServlet extends GenericServlet {
 					return MCPServerHttpUtil.callEndpoint(
 						String.valueOf(arguments.get("method")), baseURL + path,
 						String.valueOf(arguments.get("payload")),
-						mcpServerTransportProvider.getAccessToken(exchange));
+						mcpServerTransportProvider.getAuthorizationHeader(
+							exchange));
 				})
 		).prompts(
 			_getSyncPromptSpecifications(companyId)

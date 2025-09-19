@@ -56,7 +56,6 @@ export function AddSpaceMembers({
 				>
 					<SpaceMembersWithList
 						assetLibraryCreatorUserId={assetLibraryCreatorUserId}
-						assetLibraryId={assetLibraryId}
 						externalReferenceCode={externalReferenceCode}
 						hasAssignMembersPermission={hasAssignMembersPermission}
 						onHasSelectedMembersChange={setHasSelectedMembers}

@@ -29,7 +29,6 @@ import {
 } from './SpaceMembersInputWithSelect';
 export interface SpaceMembersWithListProps {
 	assetLibraryCreatorUserId: string;
-	assetLibraryId: string;
 	className?: string;
 	externalReferenceCode: string;
 	hasAssignMembersPermission: boolean;
@@ -41,7 +40,6 @@ const DEFAULT_PAGE_SIZE = 20;
 
 export function SpaceMembersWithList({
 	assetLibraryCreatorUserId,
-	assetLibraryId,
 	externalReferenceCode,
 	hasAssignMembersPermission,
 	className,
@@ -104,7 +102,7 @@ export function SpaceMembersWithList({
 		};
 
 		fetchMembers();
-	}, [assetLibraryId, externalReferenceCode, pageSize]);
+	}, [externalReferenceCode, pageSize]);
 
 	useEffect(() => {
 		const hasMembers =

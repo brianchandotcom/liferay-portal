@@ -111,7 +111,6 @@ describe('SpaceMembersWithList', () => {
 
 	const props: SpaceMembersWithListProps = {
 		assetLibraryCreatorUserId: testUsers[0].id,
-		assetLibraryId: testSpace.id,
 		externalReferenceCode: testSpace.externalReferenceCode,
 		hasAssignMembersPermission: true,
 	};

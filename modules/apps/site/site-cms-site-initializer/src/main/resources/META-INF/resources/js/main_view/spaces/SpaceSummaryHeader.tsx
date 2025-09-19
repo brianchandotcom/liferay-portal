@@ -27,7 +27,6 @@ export type SpaceSummaryHeaderPermissions = {
 type SpaceModalPropsType = {
 	action: SpaceSummaryHeaderActions;
 	assetLibraryCreatorUserId: string;
-	assetLibraryId: string;
 	externalReferenceCode: string;
 };
 
@@ -49,15 +48,10 @@ export default function SpaceSummaryHeader({
 	const loadData = () => window.location.reload();
 
 	const openMembersModal = (props: SpaceModalPropsType) => {
-		const {
-			assetLibraryCreatorUserId,
-			assetLibraryId,
-			externalReferenceCode,
-		} = props;
+		const {assetLibraryCreatorUserId, externalReferenceCode} = props;
 
 		const data: ManageMembersData = {
 			assetLibraryCreatorUserId,
-			assetLibraryId,
 			externalReferenceCode,
 			hasAssignMembersPermission: Boolean(
 				permissions?.hasAssignMembersPermission

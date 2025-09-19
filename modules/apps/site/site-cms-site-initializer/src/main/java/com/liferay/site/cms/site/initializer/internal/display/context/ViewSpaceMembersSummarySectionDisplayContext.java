@@ -124,8 +124,6 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 			).put(
 				"assetLibraryCreatorUserId", _getAssetLibraryCreatorUserId()
 			).put(
-				"assetLibraryId", String.valueOf(_groupId)
-			).put(
 				"externalReferenceCode", _externalReferenceCode
 			).build(),
 			_getSpaceMembersHeaderTitle(), StringPool.BLANK);

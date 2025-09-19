@@ -142,12 +142,10 @@ export default function AllSpacesFDSPropsTransformer({
 				const hasAssignMembersPermission =
 					action.data.permissionKey === 'assign-members';
 				const assetLibraryCreatorUserId = itemData.creatorUserId;
-				const assetLibraryId = itemData.id;
 				const externalReferenceCode = itemData.externalReferenceCode;
 
 				const data: ManageMembersData = {
 					assetLibraryCreatorUserId,
-					assetLibraryId,
 					externalReferenceCode,
 					hasAssignMembersPermission,
 					title: Liferay.Language.get('all-members'),

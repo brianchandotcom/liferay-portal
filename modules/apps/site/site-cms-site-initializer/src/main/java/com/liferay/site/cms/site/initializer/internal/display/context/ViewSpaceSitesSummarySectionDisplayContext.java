@@ -110,8 +110,6 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"action", "open-sites-modal"
 			).put(
-				"assetLibraryId", String.valueOf(_groupId)
-			).put(
 				"externalReferenceCode", _externalReferenceCode
 			).build(),
 			_getSpaceSitesHeaderTitle(), StringPool.BLANK);

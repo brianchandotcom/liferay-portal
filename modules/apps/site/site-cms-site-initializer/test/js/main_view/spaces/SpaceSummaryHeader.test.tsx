@@ -84,7 +84,6 @@ describe('SpaceSummaryHeader', () => {
 				const spaceModalProps = {
 					action: SpaceSummaryHeaderActions.OPEN_MEMBERS_MODAL,
 					assetLibraryCreatorUserId: '123',
-					assetLibraryId: '456',
 					externalReferenceCode: '789',
 				};
 
@@ -113,7 +112,6 @@ describe('SpaceSummaryHeader', () => {
 					{
 						assetLibraryCreatorUserId:
 							spaceModalProps.assetLibraryCreatorUserId,
-						assetLibraryId: spaceModalProps.assetLibraryId,
 						externalReferenceCode:
 							spaceModalProps.externalReferenceCode,
 						hasAssignMembersPermission:
@@ -184,7 +182,6 @@ describe('SpaceSummaryHeader', () => {
 			spaceModalProps: {
 				action: 'some-other-action' as any,
 				assetLibraryCreatorUserId: '1',
-				assetLibraryId: '2',
 				externalReferenceCode: '3',
 			},
 		};

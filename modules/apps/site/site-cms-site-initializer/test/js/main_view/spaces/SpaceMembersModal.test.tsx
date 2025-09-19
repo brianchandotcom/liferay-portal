@@ -37,7 +37,6 @@ const mockUsers = [
 describe('SpaceMembersModal', () => {
 	const props = {
 		assetLibraryCreatorUserId: '1',
-		assetLibraryId: '123',
 		externalReferenceCode: 'ERC',
 		hasAssignMembersPermission: true,
 	};

@@ -70,27 +70,6 @@ public class AssetLibrary implements Cloneable, Serializable {
 
 	protected String assetLibraryKey;
 
-	public Long getConnectedSiteId() {
-		return connectedSiteId;
-	}
-
-	public void setConnectedSiteId(Long connectedSiteId) {
-		this.connectedSiteId = connectedSiteId;
-	}
-
-	public void setConnectedSiteId(
-		UnsafeSupplier<Long, Exception> connectedSiteIdUnsafeSupplier) {
-
-		try {
-			connectedSiteId = connectedSiteIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long connectedSiteId;
-
 	public ConnectedSite[] getConnectedSites() {
 		return connectedSites;
 	}
@@ -384,6 +363,27 @@ public class AssetLibrary implements Cloneable, Serializable {
 	}
 
 	protected Settings settings;
+
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long siteId;
 
 	public Type getType() {
 		return type;

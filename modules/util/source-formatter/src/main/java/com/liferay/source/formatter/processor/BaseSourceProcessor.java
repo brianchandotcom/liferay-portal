@@ -273,15 +273,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			originalReturnCharacter = StringPool.RETURN;
 		}
 
-		content = preFormat(
+		String preFormattedContent = preFormat(
 			file, fileName, content, modifiedMessages, originalReturnCharacter);
 
-		String newContent = format(
-			file, fileName, absolutePath, content, content,
-			new ArrayList<>(_sourceChecks), modifiedContents, modifiedMessages,
-			0);
+		preFormattedContent = format(
+			file, fileName, absolutePath, preFormattedContent,
+			preFormattedContent, new ArrayList<>(_sourceChecks),
+			modifiedContents, modifiedMessages, 0);
 
-		newContent = postFormat(newContent, originalReturnCharacter);
+		String newContent = postFormat(
+			preFormattedContent, originalReturnCharacter);
 
 		return processFormattedFile(
 			file, fileName, content, newContent, modifiedMessages);
@@ -442,8 +443,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> checkCategoryNames =
 			_sourceFormatterArgs.getCheckCategoryNames();
 
-		if (!originalReturnCharacter.equals(StringPool.NEW_LINE) &&
-			checkCategoryNames.isEmpty() && isPortalSource()) {
+		if (originalReturnCharacter.equals(StringPool.NEW_LINE) &&
+			checkCategoryNames.isEmpty() &&
+			(isPortalSource() || isSubrepository())) {
 
 			return content;
 		}
@@ -463,18 +465,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> checkCategoryNames =
 			_sourceFormatterArgs.getCheckCategoryNames();
 
-		if (checkCategoryNames.isEmpty() && isPortalSource()) {
+		if (checkCategoryNames.isEmpty() &&
+			(isPortalSource() || isSubrepository())) {
+
 			_checkUTF8(file, fileName);
+		}
+
+		if (originalReturnCharacter.equals(StringPool.NEW_LINE)) {
+			return content;
 		}
 
 		String newContent = StringUtil.replace(
 			content, originalReturnCharacter, StringPool.NEW_LINE);
 
-		if (content.equals(newContent)) {
-			return newContent;
-		}
+		if (checkCategoryNames.isEmpty() &&
+			(isPortalSource() || isSubrepository())) {
 
-		if (checkCategoryNames.isEmpty() && isPortalSource()) {
 			modifiedMessages.add(file.toString() + " (ReturnCharacter)");
 		}
 

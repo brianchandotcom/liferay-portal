@@ -137,12 +137,6 @@ public class ContentSecurityPolicyFilterTest {
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
 				"http://" + company.getVirtualHostname() + ":8080/web/guest");
 
-			Map<String, List<String>> headerFields =
-				httpURLConnection.getHeaderFields();
-
-			Assert.assertTrue(
-				headerFields.containsKey("Content-Security-Policy"));
-
 			Assert.assertEquals(
 				httpURLConnection.getHeaderField("Content-Security-Policy"),
 				policy);
@@ -157,13 +151,6 @@ public class ContentSecurityPolicyFilterTest {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
 				"http://" + company.getVirtualHostname() + ":8080/web/guest");
-
-			Map<String, List<String>> headerFields =
-				httpURLConnection.getHeaderFields();
-
-			Assert.assertTrue(
-				headerFields.containsKey(
-					"Content-Security-Policy-Report-Only"));
 
 			Assert.assertEquals(
 				httpURLConnection.getHeaderField(

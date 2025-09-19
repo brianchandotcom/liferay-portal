@@ -1119,6 +1119,13 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
 
+		User user3 = TestPropsValues.getUser();
+
+		Assert.assertTrue(
+			Objects.equals(
+				creator.getExternalReferenceCode(),
+				user3.getExternalReferenceCode()));
+
 		Assert.assertNotNull(getOrganization.getImageBase64());
 		Assert.assertNotEquals(
 			0, GetterUtil.getLong(getOrganization.getImageId()));

@@ -84,6 +84,14 @@ public class ViewSharedWithMeSectionDisplayContext {
 
 				return collaboratorURLs;
 			}
+		).put(
+			"contentViewURL",
+			StringBundler.concat(
+				_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/edit_content_item?&p_l_mode=read&p_p_state=",
+				LiferayWindowState.POP_UP, "&redirect=",
+				_themeDisplay.getURLCurrent(), "&objectEntryId={embedded.id}")
 		).build();
 	}
 
@@ -153,7 +161,7 @@ public class ViewSharedWithMeSectionDisplayContext {
 					_themeDisplay.getURLCurrent(), "&objectEntryId={classPK}"),
 				"view", "view-content",
 				LanguageUtil.get(_httpServletRequest, "view"), "get", null,
-				"modal"),
+				null),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),

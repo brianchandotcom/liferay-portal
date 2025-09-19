@@ -6,7 +6,8 @@
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
-import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
+import ItemNavigationModalContent from '../modal/item_navigation_view/ItemNavigationModalContent';
+import {AdditionalProps} from './AssetsFDSPropsTransformer';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SharedItemRenderer from './cell_renderers/SharedItemRenderer';
@@ -19,10 +20,7 @@ export default function SharedWithMeFDSPropsTransformer({
 	itemsActions = [],
 	...otherProps
 }: {
-	additionalProps: {
-		autocompleteURL: string;
-		collaboratorURLs: Record<string, string>;
-	};
+	additionalProps: AdditionalProps;
 	itemsActions?: any[];
 	otherProps: any;
 }) {
@@ -88,12 +86,6 @@ export default function SharedWithMeFDSPropsTransformer({
 			else if (action?.data?.id === 'view-content') {
 				return {
 					...action,
-					data: {
-						...action.data,
-						disableHeader: false,
-						size: 'full-screen',
-						title: 'View',
-					},
 					isVisible: (item: any) =>
 						Boolean(
 							item?.className !==
@@ -116,10 +108,14 @@ export default function SharedWithMeFDSPropsTransformer({
 		}),
 		onActionDropdownItemClick: ({
 			action,
+			event,
 			itemData,
+			items,
 		}: {
 			action: any;
+			event: Event;
 			itemData: any;
+			items: any;
 		}) => {
 			if (action?.data?.id === 'share') {
 				const {autocompleteURL, collaboratorURLs} = additionalProps;
@@ -132,15 +128,34 @@ export default function SharedWithMeFDSPropsTransformer({
 					title: itemData?.title,
 				});
 			}
-			else if (action?.data?.id === 'view-file') {
+			else if (
+				action?.data?.id === 'view-content' ||
+				action?.data?.id === 'view-file'
+			) {
+				event?.preventDefault();
+
+				const currentItemPos = items.findIndex(
+					(item: any) => item.id === itemData.id
+				);
+
+				const transformedItems = items.map((item: any) => ({
+					...item,
+					embedded: {
+						file: item.file ?? undefined,
+						id: item.classPK,
+						title: item.title,
+					},
+				}));
+
 				openModal({
 					containerProps: {
 						className: '',
 					},
 					contentComponent: () =>
-						FilePreviewerModalContent({
-							file: itemData.file,
-							headerName: itemData?.title,
+						ItemNavigationModalContent({
+							contentViewURL: additionalProps.contentViewURL,
+							currentIndex: currentItemPos,
+							items: transformedItems,
 						}),
 					size: 'full-screen',
 				});

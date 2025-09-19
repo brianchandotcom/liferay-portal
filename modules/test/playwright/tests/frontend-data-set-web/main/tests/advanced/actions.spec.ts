@@ -482,5 +482,89 @@ for (const tab of TABS) {
 				});
 			}
 		);
+
+		if (tab.name === TAB_NAME.ITEMS_ACTIONS_GROUPS) {
+			test(
+				'Behavior of items actions groups',
+				{tag: '@LPD-65429'},
+				async ({fdsSamplePage, page}) => {
+					await test.step('Assert that "Group Permission Test" does not appear in the actions dropdown menu', async () => {
+						const tableItemActionButton =
+							fdsSamplePage.table.itemActionButtons.first();
+
+						await tableItemActionButton.click();
+
+						const dropdownMenu = page.locator(
+							'.dropdown-menu.show'
+						);
+						await dropdownMenu.waitFor();
+
+						await expect(
+							dropdownMenu.getByRole('menuitem', {
+								name: 'Group Permission Test',
+							})
+						).not.toBeVisible();
+
+						await page.keyboard.press('Escape');
+					});
+
+					await test.step('Assert that “Group Item” is visible and clicking on it shows an alert "You clicked on an item in a group"', async () => {
+						let dialogMessage = '';
+
+						page.on('dialog', async (dialog) => {
+							dialogMessage = dialog.message();
+
+							await dialog.accept();
+						});
+
+						await fdsSamplePage.clickItemAction('Group Item');
+
+						expect(dialogMessage).toBe(
+							'You clicked on an item in a group'
+						);
+					});
+
+					await test.step('Assert that a separator is not shown in the first group', async () => {
+						await fdsSamplePage.table.itemActionButtons
+							.first()
+							.click();
+
+						const dropdownMenu = page.locator(
+							'.dropdown-menu.show'
+						);
+						await dropdownMenu.waitFor();
+
+						const firstGroup = dropdownMenu
+							.locator('ul[role="group"]')
+							.first();
+
+						await expect(
+							firstGroup.locator('li[role="separator"]')
+						).not.toBeVisible();
+
+						await page.keyboard.press('Escape');
+					});
+
+					await test.step('Assert that 2 separators in a row do not display', async () => {
+						await fdsSamplePage.table.itemActionButtons
+							.first()
+							.click();
+
+						const dropdownMenu = page.locator(
+							'.dropdown-menu.show'
+						);
+						await dropdownMenu.waitFor();
+
+						await expect(
+							dropdownMenu.locator(
+								'li[role="presentation"]:has(> ul[role="group"] > li[role="separator"]:only-child) + li[role="presentation"]:has(> ul[role="group"] > li[role="separator"]:first-child)'
+							)
+						).toHaveCount(0);
+
+						await page.keyboard.press('Escape');
+					});
+				}
+			);
+		}
 	});
 }

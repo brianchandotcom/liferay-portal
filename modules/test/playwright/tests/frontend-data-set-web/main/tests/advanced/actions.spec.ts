@@ -332,5 +332,155 @@ for (const tab of TABS) {
 				await page.keyboard.press('Escape');
 			});
 		});
+
+		test(
+			'Check behavior of quick actions',
+			{tag: '@LPS-153220'},
+			async ({fdsSamplePage, page}) => {
+				const firstRowItemActionButton =
+					fdsSamplePage.table.itemActionButtons.first();
+				const thirdRowItemActionButton =
+					fdsSamplePage.table.itemActionButtons.nth(2);
+
+				const firstRowSampleEditQuickActionLink =
+					fdsSamplePage.table.bodyRows
+						.first()
+						.getByLabel('Sample Edit');
+
+				const firstTableHeadCell =
+					fdsSamplePage.table.headerCells.first();
+
+				await test.step('Assert that "#test-pencil" is appended to browser URL after clicking', async () => {
+					await firstTableHeadCell.hover();
+
+					await firstTableHeadCell.click();
+
+					await firstRowItemActionButton.hover();
+
+					await firstRowSampleEditQuickActionLink.click();
+
+					expect(page.url()).toContain('#test-pencil');
+				});
+
+				await test.step('Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu', async () => {
+					await firstRowItemActionButton.hover();
+
+					await firstRowSampleEditQuickActionLink.click();
+
+					const pageURLAfterQuickAction = page.url();
+
+					expect(pageURLAfterQuickAction).toContain('#test-pencil');
+
+					await firstRowItemActionButton.click();
+
+					await page
+						.getByRole('menuitem', {
+							name: 'Sample Edit',
+						})
+						.click();
+
+					expect(page.url()).toEqual(pageURLAfterQuickAction);
+				});
+
+				await test.step('Assert that hover over mouse off of the table body quick action menu is not visible', async () => {
+					await firstRowItemActionButton.hover();
+
+					await expect(
+						firstRowSampleEditQuickActionLink
+					).toBeVisible();
+
+					await firstTableHeadCell.hover();
+
+					await expect(
+						firstRowSampleEditQuickActionLink
+					).not.toBeVisible();
+				});
+
+				await test.step('When hovering over the first line item and the quick action menu is displayed on the 1st line', async () => {
+					const firstTableRow = fdsSamplePage.table.bodyRows.first();
+
+					await firstTableRow.hover();
+
+					await expect(
+						firstRowSampleEditQuickActionLink
+					).toBeVisible();
+				});
+
+				await test.step('When clicking on the ellipsis and hovering over another row, multiple quick action menus are displayed', async () => {
+					await thirdRowItemActionButton.click();
+
+					await expect(
+						page.locator('.dropdown-menu.show')
+					).toBeVisible();
+
+					await fdsSamplePage.table.bodyRows.first().hover();
+
+					await expect(
+						firstRowSampleEditQuickActionLink
+					).toBeVisible();
+
+					await firstTableHeadCell.click(); // Close dropdown
+				});
+
+				await test.step('Assert quick action can be displayed on only one active row', async () => {
+					await firstRowItemActionButton.hover();
+
+					await expect(
+						firstRowSampleEditQuickActionLink
+					).toBeVisible();
+
+					await thirdRowItemActionButton.hover();
+
+					await thirdRowItemActionButton.click();
+
+					await expect(
+						firstRowSampleEditQuickActionLink
+					).not.toBeVisible();
+
+					await firstTableHeadCell.click(); // Close dropdown
+				});
+
+				await test.step('Assert that quick action icons list should be limited to three actions', async () => {
+					await firstRowItemActionButton.hover();
+
+					await expect(
+						fdsSamplePage.table.bodyRows
+							.first()
+							.getByLabel('View Details')
+					).toBeVisible();
+
+					await expect(
+						fdsSamplePage.table.bodyRows
+							.first()
+							.getByLabel('Sample View')
+					).toBeVisible();
+
+					await expect(
+						fdsSamplePage.table.bodyRows
+							.first()
+							.getByLabel('Sample Edit')
+					).toBeVisible();
+
+					await expect(
+						fdsSamplePage.table.bodyRows
+							.first()
+							.getByLabel('Sample Copy')
+					).not.toBeVisible();
+				});
+
+				await test.step('Assert the quick action is not visible when the row checkbox is checked', async () => {
+					await fdsSamplePage.table.bodyRows
+						.first()
+						.getByRole('checkbox')
+						.click();
+
+					await firstRowItemActionButton.hover();
+
+					await expect(
+						firstRowSampleEditQuickActionLink
+					).not.toBeVisible();
+				});
+			}
+		);
 	});
 }

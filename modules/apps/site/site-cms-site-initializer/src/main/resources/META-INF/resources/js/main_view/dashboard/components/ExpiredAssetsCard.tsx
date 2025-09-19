@@ -11,7 +11,7 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
 import formatActionURL from '../../../common/utils/formatActionURL';
@@ -23,6 +23,7 @@ import {
 
 	AssetTypeIcons as _AssetTypeIcons,
 } from '../utils/assetTypes';
+import usePagination from '../utils/usePagination';
 import {BaseCard} from './BaseCard';
 import {Item} from './FilterDropdown';
 
@@ -46,15 +47,21 @@ type ExpiredAssetsApiResponse = {
 
 async function fetchExpiredAssetsData({
 	language,
+	page,
+	pageSize,
 	space,
 }: {
 	language: Item;
+	page: number;
+	pageSize: number;
 	space: Item;
 }) {
 	const queryParams = buildQueryString(
 		{
 			depotEntryId: space?.value,
 			languageId: language?.value,
+			page: page.toString(),
+			pageSize: pageSize.toString(),
 		},
 		{
 			shouldIgnoreParam: (value) => value === 'all',
@@ -203,20 +210,24 @@ function ExpiredAssetsCard() {
 	const {
 		filters: {language, space},
 	} = useContext(ViewDashboardContext);
+
 	const [expiredAssetsList, setExpiredAssetsList] =
 		useState<ExpiredAssetsApiResponse>();
-	const [pagination, setPagination] = useState<{delta: number; page: number}>(
-		{
-			delta: 10,
-			page: 1,
-		}
-	);
+
 	const [loading, setLoading] = useState(true);
+
+	const {handleDeltaChange, handlePageChange, pagination} = usePagination();
 
 	useEffect(() => {
 		async function fetchData() {
 			setLoading(true);
-			const data = await fetchExpiredAssetsData({language, space});
+
+			const data = await fetchExpiredAssetsData({
+				language,
+				page: pagination.page,
+				pageSize: pagination.pageSize,
+				space,
+			});
 
 			if (data) {
 				setExpiredAssetsList(data);
@@ -226,22 +237,7 @@ function ExpiredAssetsCard() {
 		}
 
 		fetchData();
-	}, [language, space]);
-
-	const handlePageChange = (newPage: number) => {
-		setPagination({...pagination, page: newPage});
-	};
-
-	const handleDeltaChange = (newDelta: number) => {
-		setPagination({delta: newDelta, page: 1});
-	};
-
-	const displayedItems = useMemo(() => {
-		const startIndex = (pagination.page - 1) * pagination.delta;
-		const endIndex = startIndex + pagination.delta;
-
-		return expiredAssetsList?.items.slice(startIndex, endIndex) || [];
-	}, [pagination, expiredAssetsList]);
+	}, [language, pagination, space]);
 
 	if (loading) {
 		return (
@@ -263,7 +259,7 @@ function ExpiredAssetsCard() {
 			title={Liferay.Language.get('expired-assets')}
 		>
 			<Table borderless striped={true}>
-				<Body items={displayedItems}>
+				<Body items={expiredAssetsList?.items || []}>
 					{(row) => (
 						<Row>
 							<Cell className="border-0">
@@ -286,19 +282,17 @@ function ExpiredAssetsCard() {
 				<EmptyState />
 			) : (
 				<ClayPaginationBarWithBasicItems
-					activeDelta={pagination.delta}
+					active={pagination.page}
+					activeDelta={pagination.pageSize}
 					className="mx-3"
+					deltas={pagination.deltas}
 					ellipsisBuffer={3}
 					ellipsisProps={{
 						'aria-label': Liferay.Language.get('more'),
 						'title': Liferay.Language.get('more'),
 					}}
-					onActiveChange={(newPage: number) =>
-						handlePageChange(newPage)
-					}
-					onDeltaChange={(newDelta: number) =>
-						handleDeltaChange(newDelta)
-					}
+					onActiveChange={handlePageChange}
+					onDeltaChange={handleDeltaChange}
 					totalItems={expiredAssetsList?.totalCount || 0}
 				/>
 			)}

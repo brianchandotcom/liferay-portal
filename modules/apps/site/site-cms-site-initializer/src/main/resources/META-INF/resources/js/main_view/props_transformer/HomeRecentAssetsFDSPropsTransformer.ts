@@ -7,7 +7,7 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
 import formatActionURL from '../../common/utils/formatActionURL';
-import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
+import ItemNavigationModalContent from '../modal/item_navigation_view/ItemNavigationModalContent';
 import {AdditionalProps} from './AssetsFDSPropsTransformer';
 import deleteItemAction from './actions/deleteItemAction';
 import shareAction from './actions/shareAction';
@@ -71,11 +71,13 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 			action,
 			event,
 			itemData,
+			items,
 			loadData,
 		}: {
 			action: any;
 			event: Event;
 			itemData: any;
+			items: any;
 			loadData: () => {};
 		}) {
 			if (action?.data?.id === 'delete') {
@@ -94,24 +96,25 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 					url: formatActionURL(itemData, action.href),
 				});
 			}
-			else if (action?.data?.id === 'view-content') {
+			else if (
+				action?.data?.id === 'view-content' ||
+				action?.data?.id === 'view-file'
+			) {
 				event?.preventDefault();
 
-				openModal({
-					size: 'full-screen',
-					title: itemData.embedded.title,
-					url: formatActionURL(itemData, action.href),
-				});
-			}
-			else if (action?.data?.id === 'view-file') {
+				const currentItemPos = items.findIndex(
+					(item: any) => item.embedded.id === itemData.embedded.id
+				);
+
 				openModal({
 					containerProps: {
 						className: '',
 					},
 					contentComponent: () =>
-						FilePreviewerModalContent({
-							file: itemData.embedded.file,
-							headerName: itemData.embedded.title,
+						ItemNavigationModalContent({
+							contentViewURL: additionalProps.contentViewURL,
+							currentIndex: currentItemPos,
+							items,
 						}),
 					size: 'full-screen',
 				});

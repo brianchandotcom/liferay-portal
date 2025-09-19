@@ -6,6 +6,7 @@
 package com.liferay.customer.model;
 
 import com.liferay.customer.constants.JiraIssueConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,13 +64,7 @@ public class JiraSupportIssue {
 	}
 
 	public boolean isClosed() {
-		if (_status.equals(JiraIssueConstants.STATUS_CLOSED) ||
-			_status.equals(JiraIssueConstants.STATUS_SOLUTION_ACCEPTED)) {
-
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(JiraIssueConstants.STATUSES_CLOSED, _status);
 	}
 
 	private final String _key;

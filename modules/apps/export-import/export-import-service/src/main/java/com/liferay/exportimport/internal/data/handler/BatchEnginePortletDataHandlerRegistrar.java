@@ -65,9 +65,11 @@ public class BatchEnginePortletDataHandlerRegistrar {
 				}
 
 				if (_enabledCompanyIds.isEmpty()) {
-					_serviceRegistrations.close();
+					if (_serviceRegistrations != null) {
+						_serviceRegistrations.close();
 
-					_serviceRegistrations = null;
+						_serviceRegistrations = null;
+					}
 
 					return;
 				}

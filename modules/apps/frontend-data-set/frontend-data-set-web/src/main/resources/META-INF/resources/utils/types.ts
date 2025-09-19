@@ -411,12 +411,14 @@ export {
 export enum EStateInURLKeys {
 	DELTA = 'delta',
 	PAGE_NUMBER = 'page',
+	SEARCH_PARAM = 'q',
 	VIEW_NAME = 'view',
 }
 
 export interface IStateInURL {
 	[EStateInURLKeys.DELTA]: number;
 	[EStateInURLKeys.PAGE_NUMBER]: number;
+	[EStateInURLKeys.SEARCH_PARAM]: string;
 	[EStateInURLKeys.VIEW_NAME]: string;
 }
 

@@ -18,6 +18,7 @@ export enum EViewsActionTypes {
 	UPDATE_FILTERS = 'UPDATE_FILTERS',
 	UPDATE_PAGE_NUMBER = 'UPDATE_PAGE_NUMBER',
 	UPDATE_PAGINATION_DELTA = 'UPDATE_PAGINATION_DELTA',
+	UPDATE_SEARCH_PARAM = 'UPDATE_SEARCH_PARAM',
 	UPDATE_SORTING = 'UPDATE_SORTING',
 	UPDATE_VIEW_COMPONENT = 'UPDATE_VIEW_COMPONENT',
 	UPDATE_VISIBLE_FIELD_NAMES = 'UPDATE_VISIBLE_FIELD_NAMES',
@@ -173,6 +174,13 @@ const viewsActions: TViewsActions = {
 			...state,
 			paginationDelta: value,
 			viewUpdated: true,
+		};
+	},
+	[EViewsActionTypes.UPDATE_SEARCH_PARAM]: (state, value) => {
+		return {
+			...state,
+			searchParam: value,
+			viewUpdated: false,
 		};
 	},
 	[EViewsActionTypes.UPDATE_SORTING]: (state, value) => {

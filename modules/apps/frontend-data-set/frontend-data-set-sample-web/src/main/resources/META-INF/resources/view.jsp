@@ -64,6 +64,12 @@ String navigation = ParamUtil.getString(request, "navigation", "advanced");
 							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "single-selection");
 							navigationItem.setLabel("Single Selection");
 						});
+					add(
+						navigationItem -> {
+							navigationItem.setActive(navigation.equals("items-actions-groups"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "items-actions-groups");
+							navigationItem.setLabel("Items Actions Groups");
+						});
 				}
 			}
 		%>'
@@ -81,6 +87,9 @@ String navigation = ParamUtil.getString(request, "navigation", "advanced");
 		</c:when>
 		<c:when test='<%= navigation.equals("empty") %>'>
 			<liferay-util:include page="/partials/empty.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("items-actions-groups") %>'>
+			<liferay-util:include page="/partials/items_actions_groups.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= navigation.equals("minimum") %>'>
 			<liferay-util:include page="/partials/minimum.jsp" servletContext="<%= application %>" />

@@ -24,7 +24,7 @@ import type {
 } from '@liferay/frontend-data-set-web';
 
 export default function propsTransformer({
-	additionalProps: {greeting},
+	additionalProps: {enableItemsActionsGroups, greeting},
 	itemsActions,
 	selectedItemsKey,
 	...otherProps
@@ -130,56 +130,53 @@ export default function propsTransformer({
 		},
 		fileDropSettings,
 		infoPanelComponent: SampleInfoPanel,
-
-		// Ideally, placing items in groups should happen in the definition of
-		// the actions (AdvancedFDSItemsActions.java) but this is done here in
-		// the meantime while the java API is being decided on.
-
-		itemsActions: [
-			{
-				items: itemActionsWithStyling,
-				separator: true,
-				type: 'group',
-			},
-			{
-				items: [
+		itemsActions: enableItemsActionsGroups
+			? [
 					{
-						data: {
-							id: 'emptyGroupTest',
-							permissionKey: 'nonexistentPermissionKey',
-						},
-						icon: 'hidden',
-						label: 'Empty Group Test',
-					},
-				],
-				separator: true,
-				type: 'group',
-			},
-			{
-				items: [
-					{
-						data: {
-							id: 'groupItem',
-						},
-						icon: 'separator',
-						label: 'Group Item',
-						onClick: () => {
-							alert('You clicked on an item in a group');
-						},
+						items: itemActionsWithStyling,
+						separator: true,
+						type: 'group',
 					},
 					{
-						data: {
-							id: 'groupPermissionTest',
-							permissionKey: 'nonexistentPermissionKey',
-						},
-						icon: 'hidden',
-						label: 'Group Permission Test',
+						items: [
+							{
+								data: {
+									id: 'emptyGroupTest',
+									permissionKey: 'nonexistentPermissionKey',
+								},
+								icon: 'hidden',
+								label: 'Empty Group Test',
+							},
+						],
+						separator: true,
+						type: 'group',
 					},
-				],
-				separator: true,
-				type: 'group',
-			},
-		],
+					{
+						items: [
+							{
+								data: {
+									id: 'groupItem',
+								},
+								icon: 'separator',
+								label: 'Group Item',
+								onClick: () => {
+									alert('You clicked on an item in a group');
+								},
+							},
+							{
+								data: {
+									id: 'groupPermissionTest',
+									permissionKey: 'nonexistentPermissionKey',
+								},
+								icon: 'hidden',
+								label: 'Group Permission Test',
+							},
+						],
+						separator: true,
+						type: 'group',
+					},
+				]
+			: itemActionsWithStyling,
 		onActionDropdownItemClick({
 			action,
 			itemData,

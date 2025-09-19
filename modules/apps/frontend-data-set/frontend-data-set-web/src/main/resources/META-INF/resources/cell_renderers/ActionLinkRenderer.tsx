@@ -26,6 +26,25 @@ interface IActionLinkRendererProps {
 	value: number | string;
 }
 
+const findAction = (
+	actions: IItemsActions[],
+	actionId: string
+): IItemsActions | undefined => {
+	for (const action of actions) {
+		if (action.data?.id === actionId) {
+			return action;
+		}
+
+		if (action.type === EItemActionsType.GROUP && action.items) {
+			const foundAction = findAction(action.items, actionId);
+
+			if (foundAction) {
+				return foundAction;
+			}
+		}
+	}
+};
+
 function ActionLinkRenderer({
 	actions,
 	itemData,
@@ -59,9 +78,7 @@ function ActionLinkRenderer({
 	});
 
 	const currentAction = options?.actionId
-		? formattedActions.find(
-				(action) => action.data?.id === options.actionId
-			)
+		? findAction(formattedActions, options.actionId)
 		: formattedActions[0]?.type === EItemActionsType.GROUP
 			? formattedActions[0]?.items?.[0]
 			: formattedActions[0];

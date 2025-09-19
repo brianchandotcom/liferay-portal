@@ -52,6 +52,21 @@ function CMSFilesItemSelectorModal({
 	>([]);
 	const [url, setURL] = useState(CMS_ROOT_FILES_URL);
 
+	function onChildFolderClick({
+		folderId,
+		folderName,
+	}: {
+		folderId: string;
+		folderName: string;
+	}) {
+		setFolderStructure((prevStructure) => [
+			...prevStructure,
+			{folderId, folderName},
+		]);
+
+		setURL(getCMSChildFolderURL(folderId));
+	}
+
 	return (
 		<ItemSelectorModal
 			{...otherProps}
@@ -67,7 +82,7 @@ function CMSFilesItemSelectorModal({
 								},
 							},
 							...folderStructure.map(
-								({folderId, folderName}) => ({
+								({folderId, folderName}, index) => ({
 									href: '#',
 									label: folderName,
 									onClick: () => {
@@ -75,10 +90,7 @@ function CMSFilesItemSelectorModal({
 											(prevFolderStructure) =>
 												prevFolderStructure.slice(
 													0,
-													prevFolderStructure.findIndex(
-														({folderId: id}) =>
-															folderId === id
-													) + 1
+													index + 1
 												)
 										);
 
@@ -102,22 +114,10 @@ function CMSFilesItemSelectorModal({
 										<ClayLink
 											href="#"
 											onClick={() => {
-												const folderId = embedded.id;
-												const folderName =
-													embedded.title;
-
-												setFolderStructure(
-													(prevStructure) => [
-														...prevStructure,
-														{folderId, folderName},
-													]
-												);
-
-												setURL(
-													getCMSChildFolderURL(
-														folderId
-													)
-												);
+												onChildFolderClick({
+													folderId: embedded.id,
+													folderName: embedded.title,
+												});
 											}}
 										>
 											{value}
@@ -156,15 +156,10 @@ function CMSFilesItemSelectorModal({
 									...props,
 									href: '#',
 									onClick: () => {
-										const folderId = item.embedded.id;
-										const folderName = item.embedded.title;
-
-										setFolderStructure((prevStructure) => [
-											...prevStructure,
-											{folderId, folderName},
-										]);
-
-										setURL(getCMSChildFolderURL(folderId));
+										onChildFolderClick({
+											folderId: item.embedded.id,
+											folderName: item.embedded.title,
+										});
 									},
 									onSelectChange: null,
 									symbol: 'folder',

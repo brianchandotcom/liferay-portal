@@ -6,6 +6,7 @@
 import '../../../css/components/Toolbar.scss';
 
 import ClayToolbar from '@clayui/toolbar';
+import classNames from 'classnames';
 import React from 'react';
 
 type Props = {
@@ -63,13 +64,18 @@ function Toolbar({
 
 export function Item({
 	children,
+	className,
 	expand,
 }: {
 	children: React.ReactNode;
+	className?: string;
 	expand?: boolean;
 }) {
 	return (
-		<ClayToolbar.Item className="text-left" expand={expand}>
+		<ClayToolbar.Item
+			className={classNames('text-left', className)}
+			expand={expand}
+		>
 			<ClayToolbar.Section>{children}</ClayToolbar.Section>
 		</ClayToolbar.Item>
 	);

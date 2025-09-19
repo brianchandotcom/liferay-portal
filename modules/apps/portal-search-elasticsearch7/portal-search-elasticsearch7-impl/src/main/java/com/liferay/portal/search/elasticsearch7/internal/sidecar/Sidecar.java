@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsHelperImpl;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.constants.SidecarConstants;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch7.sidecar.agent.SidecarAgent;
@@ -464,25 +465,118 @@ public class Sidecar {
 	}
 
 	private byte[] _getSettings() {
+		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
+			Settings.builder());
+
+		String defaultConfigurations = ResourceUtil.getResourceAsString(
+			getClass(),
+			SidecarConstants.ELASTICSEARCH_OPTIONAL_DEFAULTS_FILE_NAME);
+
+		settingsHelperImpl.loadFromSource(defaultConfigurations);
+
+		settingsHelperImpl.put("action.auto_create_index", false);
+		settingsHelperImpl.put(
+			"bootstrap.memory_lock",
+			_elasticsearchConfigurationWrapper.bootstrapMlockAll());
+
+		// config clustering
+
+		settingsHelperImpl.put("cluster.name", _getClusterName());
+		settingsHelperImpl.put(
+			"cluster.routing.allocation.disk.threshold_enabled", false);
+		settingsHelperImpl.put("discovery.type", "single-node");
+
+		// config http
+
+		HttpPortRange httpPortRange = new HttpPortRange(
+			_elasticsearchConfigurationWrapper);
+
+		settingsHelperImpl.put("http.port", httpPortRange.toSettingsString());
+
+		settingsHelperImpl.put(
+			"http.cors.enabled",
+			_elasticsearchConfigurationWrapper.httpCORSEnabled());
+
+		if (_elasticsearchConfigurationWrapper.httpCORSEnabled()) {
+			settingsHelperImpl.put(
+				"http.cors.allow-origin",
+				_elasticsearchConfigurationWrapper.httpCORSAllowOrigin());
+
+			settingsHelperImpl.loadFromSource(
+				_elasticsearchConfigurationWrapper.httpCORSConfigurations());
+		}
+
+		// config networking
+
+		String networkBindHost =
+			_elasticsearchConfigurationWrapper.networkBindHost();
+		String networkHost = _elasticsearchConfigurationWrapper.networkHost();
+		String networkPublishHost =
+			_elasticsearchConfigurationWrapper.networkPublishHost();
+
+		if (Validator.isNotNull(networkBindHost)) {
+			settingsHelperImpl.put("network.bind_host", networkBindHost);
+		}
+
+		if (Validator.isNotNull(networkHost)) {
+			settingsHelperImpl.put("network.host", networkHost);
+		}
+
+		if (Validator.isNotNull(networkPublishHost)) {
+			settingsHelperImpl.put("network.publish_host", networkPublishHost);
+		}
+
+		String transportTcpPort =
+			_elasticsearchConfigurationWrapper.transportTcpPort();
+
+		if (Validator.isNotNull(transportTcpPort)) {
+			settingsHelperImpl.put("transport.port", transportTcpPort);
+		}
+
+		settingsHelperImpl.put("node.name", _getNodeName());
+		settingsHelperImpl.put(
+			"node.roles", List.of("master", "ingest", "data"));
+
+		// config paths
+
+		Path workPath = _elasticsearchInstancePaths.getWorkPath();
+
+		Path dataParentPath = workPath.resolve("data/elasticsearch7");
+
+		Path homePath = _elasticsearchInstancePaths.getHomePath();
+
+		if (homePath == null) {
+			homePath = workPath.resolve("data/elasticsearch7");
+		}
+
+		settingsHelperImpl.put(
+			"path.data", String.valueOf(dataParentPath.resolve("indices")));
+
+		settingsHelperImpl.put(
+			"path.home", String.valueOf(homePath.toAbsolutePath()));
+
+		settingsHelperImpl.put(
+			"path.logs", String.valueOf(workPath.resolve("logs")));
+
+		settingsHelperImpl.put(
+			"path.repo", String.valueOf(dataParentPath.resolve("repo")));
+
+		if (JavaDetector.isJDK21()) {
+			settingsHelperImpl.put("thread_pool.warmer.max", "20");
+		}
+
+		settingsHelperImpl.put("node.store.allow_mmap", false);
+
+		settingsHelperImpl.loadFromSource(
+			_elasticsearchConfigurationWrapper.additionalConfigurations());
+
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 			StreamOutput streamOutput = new OutputStreamStreamOutput(
 				unsyncByteArrayOutputStream)) {
 
 			Settings.writeSettingsToStream(
-				ElasticsearchInstanceSettingsBuilder.builder(
-				).clusterName(
-					_getClusterName()
-				).elasticsearchConfigurationWrapper(
-					_elasticsearchConfigurationWrapper
-				).elasticsearchInstancePaths(
-					_elasticsearchInstancePaths
-				).httpPortRange(
-					new HttpPortRange(_elasticsearchConfigurationWrapper)
-				).nodeName(
-					_getNodeName()
-				).build(),
-				streamOutput);
+				settingsHelperImpl.build(), streamOutput);
 
 			streamOutput.flush();
 

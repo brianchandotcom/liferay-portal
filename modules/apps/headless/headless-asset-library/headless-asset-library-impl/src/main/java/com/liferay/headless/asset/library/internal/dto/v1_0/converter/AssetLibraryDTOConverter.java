@@ -161,14 +161,13 @@ public class AssetLibraryDTOConverter
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
+		Group group = _groupLocalService.getGroup(
+			depotEntryGroupRel.getToGroupId());
+
 		return new ConnectedSite() {
 			{
-				Group group = _groupLocalService.getGroup(
-					depotEntryGroupRel.getToGroupId());
-
 				setExternalReferenceCode(group::getExternalReferenceCode);
 				setId(group::getGroupId);
-
 				setLogo(
 					() -> {
 						ThemeDisplay themeDisplay = new ThemeDisplay() {

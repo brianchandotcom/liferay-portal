@@ -46,6 +46,12 @@ test(
 				page.getByText('Start creating one to show your data.')
 			).toBeVisible();
 		});
+
+		await test.step('Check that the "Create New Item" button has btn-primary class', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Create New Item'})
+			).toHaveClass(/btn-primary/);
+		});
 	}
 );
 

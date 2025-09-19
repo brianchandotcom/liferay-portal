@@ -285,7 +285,9 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 					));
 			}
 		).put(
-			"url", GroupConstants.CMS_FRIENDLY_URL + "/home"
+			"url",
+			themeDisplay.getPathFriendlyURLPublic() +
+				GroupConstants.CMS_FRIENDLY_URL + "/home"
 		);
 	}
 

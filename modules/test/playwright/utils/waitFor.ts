@@ -48,12 +48,20 @@ export enum EFDSVisualizationMode {
 }
 
 export async function waitForFDS({
+	empty = false,
 	page,
 	visualizationMode = EFDSVisualizationMode.TABLE,
 }: {
+	empty?: boolean;
 	page: Page;
 	visualizationMode?: EFDSVisualizationMode;
 }) {
+	if (empty) {
+		await page.locator('.fds .c-empty-state').waitFor({state: 'visible'});
+
+		return;
+	}
+
 	if (visualizationMode === EFDSVisualizationMode.CARDS) {
 		await page.locator('.fds .cards-container').waitFor({state: 'visible'});
 	}

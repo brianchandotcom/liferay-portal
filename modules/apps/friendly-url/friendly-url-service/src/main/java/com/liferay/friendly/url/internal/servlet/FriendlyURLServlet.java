@@ -301,7 +301,7 @@ public class FriendlyURLServlet extends HttpServlet {
 									 group.getCompanyId(),
 									 RoleConstants.CMS_ADMINISTRATOR,
 									 user.getUserId(), true) &&
-								 !_isSpaceMember(user)) {
+								 !_hasDeptEntryTypeSpace(user)) {
 
 							throw new NoSuchLayoutException();
 						}
@@ -1179,7 +1179,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		return false;
 	}
 
-	private boolean _isSpaceMember(User user) throws PortalException {
+	private boolean _hasDeptEntryTypeSpace(User user) throws PortalException {
 		for (Group group : user.getGroups()) {
 			if (group.isDepot()) {
 				DepotEntry depotEntry =

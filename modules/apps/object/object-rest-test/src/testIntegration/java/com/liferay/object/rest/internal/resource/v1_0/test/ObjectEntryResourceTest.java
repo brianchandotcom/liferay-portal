@@ -9386,13 +9386,13 @@ public class ObjectEntryResourceTest {
 
 		// Company-Site scope: with 'scopeKey'
 
-		_objectRelationship3 = ObjectRelationshipTestUtil.addObjectRelationship(
+		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition1, _siteScopedObjectDefinition2,
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		objectEntryJSONObject = JSONUtil.put(
-			_objectRelationship3.getName(),
+			_objectRelationship2.getName(),
 			_withScopeKey(
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
@@ -9415,7 +9415,7 @@ public class ObjectEntryResourceTest {
 			));
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-			_objectRelationship3.getName());
+			_objectRelationship2.getName());
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
@@ -9428,11 +9428,11 @@ public class ObjectEntryResourceTest {
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
 				objectEntryId, "?nestedFields=",
-				_objectRelationship3.getName()),
+				_objectRelationship2.getName()),
 			Http.Method.GET);
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-			_objectRelationship3.getName());
+			_objectRelationship2.getName());
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
@@ -9441,7 +9441,7 @@ public class ObjectEntryResourceTest {
 		// Company-Site scope: with empty 'scopeKey'
 
 		objectEntryJSONObject = JSONUtil.put(
-			_objectRelationship3.getName(),
+			_objectRelationship2.getName(),
 			_withScopeKey(
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
@@ -9466,7 +9466,7 @@ public class ObjectEntryResourceTest {
 		// Company-Site scope: with nonexistent 'scopeKey'
 
 		objectEntryJSONObject = JSONUtil.put(
-			_objectRelationship3.getName(),
+			_objectRelationship2.getName(),
 			_withScopeKey(
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
@@ -9491,7 +9491,7 @@ public class ObjectEntryResourceTest {
 		// Company-Site scope: without 'scopeKey'
 
 		objectEntryJSONObject = JSONUtil.put(
-			_objectRelationship3.getName(),
+			_objectRelationship2.getName(),
 			_createObjectEntriesJSONArray(
 				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME_2,
 				new String[] {
@@ -9515,13 +9515,13 @@ public class ObjectEntryResourceTest {
 
 		// Site scope
 
-		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
+		_objectRelationship3 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		objectEntryJSONObject = JSONUtil.put(
-			_objectRelationship2.getName(),
+			_objectRelationship3.getName(),
 			_createObjectEntriesJSONArray(
 				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME_2,
 				new String[] {
@@ -9542,7 +9542,7 @@ public class ObjectEntryResourceTest {
 			));
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-			_objectRelationship2.getName());
+			_objectRelationship3.getName());
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
@@ -9555,11 +9555,11 @@ public class ObjectEntryResourceTest {
 			StringBundler.concat(
 				_siteScopedObjectDefinition1.getRESTContextPath(),
 				StringPool.SLASH, objectEntryId, "?nestedFields=",
-				_objectRelationship2.getName()),
+				_objectRelationship3.getName()),
 			Http.Method.GET);
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-			_objectRelationship2.getName());
+			_objectRelationship3.getName());
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 

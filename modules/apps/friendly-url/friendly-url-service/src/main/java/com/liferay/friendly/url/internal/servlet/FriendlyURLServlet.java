@@ -1130,6 +1130,23 @@ public class FriendlyURLServlet extends HttpServlet {
 		return user;
 	}
 
+	private boolean _hasDeptEntryTypeSpace(User user) throws PortalException {
+		for (Group group : user.getGroups()) {
+			if (!group.isDepot()) {
+				continue;
+			}
+
+			DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
+				group.getGroupId());
+
+			if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isImpersonated(
 		HttpServletRequest httpServletRequest, long userId) {
 
@@ -1174,23 +1191,6 @@ public class FriendlyURLServlet extends HttpServlet {
 			return refererURL.contains(
 				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR +
 					GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
-		}
-
-		return false;
-	}
-
-	private boolean _hasDeptEntryTypeSpace(User user) throws PortalException {
-		for (Group group : user.getGroups()) {
-			if (!group.isDepot()) {
-				continue;
-			}
-
-			DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
-				group.getGroupId());
-
-			if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
-				return true;
-			}
 		}
 
 		return false;

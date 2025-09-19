@@ -148,49 +148,6 @@ public class AssetLibrary implements Serializable {
 	private Supplier<String> _assetLibraryKeySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library's connected site ID."
-	)
-	public Long getConnectedSiteId() {
-		if (_connectedSiteIdSupplier != null) {
-			connectedSiteId = _connectedSiteIdSupplier.get();
-
-			_connectedSiteIdSupplier = null;
-		}
-
-		return connectedSiteId;
-	}
-
-	public void setConnectedSiteId(Long connectedSiteId) {
-		this.connectedSiteId = connectedSiteId;
-
-		_connectedSiteIdSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setConnectedSiteId(
-		UnsafeSupplier<Long, Exception> connectedSiteIdUnsafeSupplier) {
-
-		_connectedSiteIdSupplier = () -> {
-			try {
-				return connectedSiteIdUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The asset library's connected site ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long connectedSiteId;
-
-	@JsonIgnore
-	private Supplier<Long> _connectedSiteIdSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The asset library's connected sites."
 	)
 	@Valid
@@ -804,6 +761,49 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's site ID."
+	)
+	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+
+		_siteIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's site ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long siteId;
+
+	@JsonIgnore
+	private Supplier<Long> _siteIdSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("type")
 	@Valid
@@ -1002,18 +1002,6 @@ public class AssetLibrary implements Serializable {
 			sb.append("\"");
 		}
 
-		Long connectedSiteId = getConnectedSiteId();
-
-		if (connectedSiteId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"connectedSiteId\": ");
-
-			sb.append(connectedSiteId);
-		}
-
 		ConnectedSite[] connectedSites = getConnectedSites();
 
 		if (connectedSites != null) {
@@ -1210,6 +1198,18 @@ public class AssetLibrary implements Serializable {
 			sb.append("\"settings\": ");
 
 			sb.append(String.valueOf(settings));
+		}
+
+		Long siteId = getSiteId();
+
+		if (siteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(siteId);
 		}
 
 		Type type = getType();

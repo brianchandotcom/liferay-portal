@@ -1747,6 +1747,10 @@ public interface UserLocalService
 			String keywords, int start, int end)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchBySocialCount(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords);
+
 	/**
 	 * Returns the number of users who match the keywords and status.
 	 *

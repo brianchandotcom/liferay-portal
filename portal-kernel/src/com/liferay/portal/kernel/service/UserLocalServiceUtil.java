@@ -2153,6 +2153,13 @@ public class UserLocalServiceUtil {
 			groupIds, userId, socialRelationTypes, keywords, start, end);
 	}
 
+	public static int searchBySocialCount(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords) {
+
+		return getService().searchBySocialCount(
+			companyId, groupIds, userGroupIds, keywords);
+	}
+
 	/**
 	 * Returns the number of users who match the keywords and status.
 	 *

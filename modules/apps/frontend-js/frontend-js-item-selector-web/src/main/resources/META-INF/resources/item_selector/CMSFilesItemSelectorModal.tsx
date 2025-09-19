@@ -102,6 +102,10 @@ function CMSFilesItemSelectorModal({
 					: undefined
 			}
 			fdsProps={{
+				pagination: {
+					deltas: [{label: 20}, {label: 40}, {label: 60}],
+					initialDelta: 20,
+				},
 				...fdsProps,
 				customRenderers: {
 					tableCell: [
@@ -130,7 +134,19 @@ function CMSFilesItemSelectorModal({
 						},
 					],
 				},
-				id: `itemSelectorModal-documents-${uuidv4()}`,
+				filters: [
+					{
+						apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
+						entityFieldType: 'collection',
+						id: 'groupIds',
+						itemKey: 'siteId',
+						itemLabel: 'name',
+						label: Liferay.Language.get('space'),
+						multiple: true,
+						type: 'selection',
+					},
+				],
+				id: `itemSelectorModal-cms-${uuidv4()}`,
 				views: [
 					{
 						contentRenderer: 'cards',

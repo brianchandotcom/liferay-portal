@@ -9,6 +9,7 @@ import {ClayInput} from '@clayui/form';
 import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
+import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 import {
 	CMSFilesItemSelectorModal,
 	ItemSelector,
@@ -72,6 +73,14 @@ type User = {
 	roleBriefs?: {
 		name: string;
 	}[];
+};
+
+const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
+	pagination: {
+		deltas: [{label: 20}, {label: 40}, {label: 60}],
+		initialDelta: 20,
+	},
+	selectionType: 'single',
 };
 
 const assetLibrariesItemSelectorConfig = {
@@ -256,6 +265,7 @@ export default function ItemSelectorSamples() {
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					itemSelectorModalProps={{
 						fdsProps: {
+							...FDS_DEFAULT_PROPS,
 							id: `itemSelectorModal-users-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -287,6 +297,7 @@ export default function ItemSelectorSamples() {
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					itemSelectorModalProps={{
 						fdsProps: {
+							...FDS_DEFAULT_PROPS,
 							id: `itemSelectorModal-documents-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -321,6 +332,7 @@ export default function ItemSelectorSamples() {
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 					itemSelectorModalProps={{
 						fdsProps: {
+							...FDS_DEFAULT_PROPS,
 							id: `itemSelectorModal-spaces-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -352,6 +364,7 @@ export default function ItemSelectorSamples() {
 					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
 					itemSelectorModalProps={{
 						fdsProps: {
+							...FDS_DEFAULT_PROPS,
 							id: `itemSelectorModal-spaces-${getRandomId()}`,
 							views: getDefaultItemSelectorModalViews({
 								viewsConfig:
@@ -463,6 +476,7 @@ export default function ItemSelectorSamples() {
 				<ItemSelectorModal<Document>
 					apiURL={documentsItemSelectorConfig.apiURL}
 					fdsProps={{
+						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-documents-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:
@@ -484,6 +498,7 @@ export default function ItemSelectorSamples() {
 				<ItemSelectorModal<Space>
 					apiURL={assetLibrariesItemSelectorConfig.apiURL}
 					fdsProps={{
+						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-assets-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:
@@ -506,6 +521,7 @@ export default function ItemSelectorSamples() {
 				<ItemSelectorModal<User>
 					apiURL={userAccountsItemSelectorConfig.apiURL}
 					fdsProps={{
+						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-users-${getRandomId()}`,
 						views: getDefaultItemSelectorModalViews({
 							viewsConfig:

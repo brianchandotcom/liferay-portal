@@ -91,7 +91,9 @@ describe('PageContentSelectors', () => {
 	it('If no experiences available renders empty experiences message', async () => {
 		jest.useFakeTimers();
 
-		render(<PageContentSelectors {...mockProps} segmentsEntries={[]} />);
+		render(
+			<PageContentSelectors {...mockProps} segmentsExperiences={[]} />
+		);
 
 		const previewBySelector = screen.getByRole('combobox', {
 			name: /preview-by/i,

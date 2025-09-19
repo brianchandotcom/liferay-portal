@@ -69,11 +69,11 @@ export class ItemSelectorSamplePage {
 		});
 		this.selectCMSFileButton = page.getByRole('button', {
 			exact: true,
-			name: 'Select CMS File',
+			name: 'Select CMS Files',
 		});
 		this.selectCMSFileModalHeader = page.getByRole('heading', {
 			exact: true,
-			name: 'Select File',
+			name: 'Select Files',
 		});
 		this.selectDocumentButton = page.getByRole('button', {
 			exact: true,

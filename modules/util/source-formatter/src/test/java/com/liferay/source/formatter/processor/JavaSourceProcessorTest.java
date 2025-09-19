@@ -20,6 +20,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testAnonymousInnerClass() throws Exception {
+		test("AnonymousInnerClass.testjava");
+	}
+
+	@Test
 	public void testAssertUsage() throws Exception {
 		test(
 			"AssertUsage.testjava",

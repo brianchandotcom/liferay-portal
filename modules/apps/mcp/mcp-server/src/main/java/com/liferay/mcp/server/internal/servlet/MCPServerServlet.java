@@ -15,6 +15,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -29,7 +30,9 @@ import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -57,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Servlet.class
 )
-public class MCPServerServlet extends GenericServlet {
+public class MCPServerServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {
@@ -72,14 +75,23 @@ public class MCPServerServlet extends GenericServlet {
 
 	@Override
 	public void service(
-			ServletRequest servletRequest, ServletResponse servletResponse)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
+		long companyId = _portal.getCompanyId(httpServletRequest);
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
+		}
+
 		Servlet servlet = _servlets.computeIfAbsent(
-			_portal.getCompanyId((HttpServletRequest)servletRequest),
-			companyId -> {
+			companyId,
+			__ -> {
 				String baseURL =
-					_portal.getPortalURL((HttpServletRequest)servletRequest) +
+					_portal.getPortalURL(httpServletRequest) +
 						_portal.getPathModule();
 
 				MCPServerTransportProvider mcpServerTransportProvider =
@@ -108,7 +120,7 @@ public class MCPServerServlet extends GenericServlet {
 				};
 			});
 
-		servlet.service(servletRequest, servletResponse);
+		servlet.service(httpServletRequest, httpServletResponse);
 	}
 
 	@Deactivate

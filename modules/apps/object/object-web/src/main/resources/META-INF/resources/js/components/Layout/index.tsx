@@ -125,7 +125,11 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					objectDefinition
 				);
 
-			const {objectRelationships} = objectDefinition;
+			const objectRelationships =
+				await API.getObjectDefinitionByExternalReferenceCodeObjectRelationships(
+					objectDefinitionExternalReferenceCode,
+					{filter: 'edge eq false'}
+				);
 
 			const objectLayout = {
 				defaultObjectLayout,

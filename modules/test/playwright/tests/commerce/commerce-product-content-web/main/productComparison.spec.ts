@@ -123,7 +123,7 @@ test(
 
 test(
 	'Product Compare is removed upon logout and login',
-	{tag: ['@LPD-37427']},
+	{tag: ['@LPD-37427', '@LPD-60912']},
 	async ({apiHelpers, applicationsMenuPage, page, productComparisonPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
@@ -167,6 +167,10 @@ test(
 		await applicationsMenuPage.goToSite(site.name);
 
 		await page.getByRole('checkbox', {disabled: false}).first().click();
+
+		await expect(productComparisonPage.compareBar).toHaveCount(1);
+
+		await page.reload();
 
 		await expect(productComparisonPage.compareBar).toHaveCount(1);
 

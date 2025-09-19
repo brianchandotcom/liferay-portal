@@ -484,6 +484,9 @@ public interface ContactsEngineClient {
 
 	public void setEngineURL(String engineURL);
 
+	public void updateBQProject(FaroProject faroProject, Date startDate)
+		throws Exception;
+
 	public DataSource updateDataSource(
 		FaroProject faroProject, String id, Credentials credentials,
 		long userId, String name, String url, Provider provider, Event event,

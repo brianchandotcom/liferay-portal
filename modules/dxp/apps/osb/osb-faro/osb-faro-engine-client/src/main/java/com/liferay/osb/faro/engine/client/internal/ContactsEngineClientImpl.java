@@ -2624,6 +2624,17 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public void updateBQProject(FaroProject faroProject, Date startDate)
+		throws Exception {
+
+		patch(
+			faroProject, Collections.emptyMap(), "/bq-projects",
+			Collections.emptyMap(),
+			new AsahProject(faroProject.getProjectId(), startDate), Void.class,
+			Collections.emptyMap());
+	}
+
+	@Override
 	public DataSource updateDataSource(
 		FaroProject faroProject, String id, Credentials credentials,
 		long userId, String name, String url, Provider provider, Event event,

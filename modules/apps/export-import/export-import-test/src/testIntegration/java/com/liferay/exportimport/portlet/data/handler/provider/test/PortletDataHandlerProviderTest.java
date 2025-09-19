@@ -3,20 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.exportimport.kernel.lar.test;
+package com.liferay.exportimport.portlet.data.handler.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerRegistry;
+import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import jakarta.portlet.GenericPortlet;
+import jakarta.portlet.Portlet;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class PortletDataHandlerRegistryTest {
+public class PortletDataHandlerProviderTest {
 
 	@ClassRule
 	@Rule
@@ -43,12 +45,7 @@ public class PortletDataHandlerRegistryTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetPortletDataHandler() throws Exception {
-		Assert.assertEquals(
-			_defaultPortletDataHandler,
-			_portletDataHandlerRegistry.getPortletDataHandler(
-				TestPropsValues.getCompanyId(), RandomTestUtil.randomString()));
-
+	public void test() throws Exception {
 		long companyId1 = RandomTestUtil.randomLong();
 		long companyId2 = RandomTestUtil.randomLong();
 
@@ -66,68 +63,63 @@ public class PortletDataHandlerRegistryTest {
 		String portletId1 = RandomTestUtil.randomString();
 		String portletId2 = RandomTestUtil.randomString();
 		String portletId3 = RandomTestUtil.randomString();
+		String portletId4 = RandomTestUtil.randomString();
 
-		try (SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
+		try (SafeCloseable safeCloseable1 = _registerWithSafeCloseable(
+				portletId1);
+			SafeCloseable safeCloseable2 = _registerWithSafeCloseable(
+				portletId2);
+			SafeCloseable safeCloseable3 = _registerWithSafeCloseable(
+				portletId3);
+			SafeCloseable safeCloseable4 = _registerWithSafeCloseable(
+				portletId4);
+			SafeCloseable safeCloseable5 = _registerWithSafeCloseable(
 				null, portletDataHandler1, portletId1);
-			SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
+			SafeCloseable safeCloseable6 = _registerWithSafeCloseable(
 				null, portletDataHandler2, portletId2);
-			SafeCloseable safeCloseable3 = _registerServiceWithSafeCloseable(
+			SafeCloseable safeCloseable7 = _registerWithSafeCloseable(
 				List.of(companyId1), portletDataHandler3, portletId1);
-			SafeCloseable safeCloseable4 = _registerServiceWithSafeCloseable(
+			SafeCloseable safeCloseable8 = _registerWithSafeCloseable(
 				List.of(companyId2), portletDataHandler4, portletId2);
-			SafeCloseable safeCloseable5 = _registerServiceWithSafeCloseable(
+			SafeCloseable safeCloseable9 = _registerWithSafeCloseable(
 				List.of(companyId1, companyId2), portletDataHandler5,
 				portletId3)) {
 
-			Assert.assertEquals(
-				portletDataHandler1,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					RandomTestUtil.randomLong(), portletId1));
-			Assert.assertEquals(
-				portletDataHandler2,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					RandomTestUtil.randomLong(), portletId2));
-			Assert.assertEquals(
-				_defaultPortletDataHandler,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					companyId1, RandomTestUtil.randomString()));
+			Thread.sleep(1000);
+
 			Assert.assertEquals(
 				portletDataHandler3,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					companyId1, portletId1));
+				_portletDataHandlerProvider.provide(companyId1, portletId1));
 			Assert.assertEquals(
 				portletDataHandler2,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					companyId1, portletId2));
+				_portletDataHandlerProvider.provide(companyId1, portletId2));
 			Assert.assertEquals(
 				portletDataHandler5,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					companyId1, portletId3));
+				_portletDataHandlerProvider.provide(companyId1, portletId3));
 			Assert.assertEquals(
 				_defaultPortletDataHandler,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					companyId2, RandomTestUtil.randomString()));
+				_portletDataHandlerProvider.provide(companyId1, portletId4));
 			Assert.assertEquals(
 				portletDataHandler1,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					companyId2, portletId1));
+				_portletDataHandlerProvider.provide(companyId2, portletId1));
 			Assert.assertEquals(
 				portletDataHandler4,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					companyId2, portletId2));
+				_portletDataHandlerProvider.provide(companyId2, portletId2));
 			Assert.assertEquals(
 				portletDataHandler5,
-				_portletDataHandlerRegistry.getPortletDataHandler(
-					companyId2, portletId3));
+				_portletDataHandlerProvider.provide(companyId2, portletId3));
+			Assert.assertEquals(
+				_defaultPortletDataHandler,
+				_portletDataHandlerProvider.provide(companyId2, portletId4));
 		}
 	}
 
-	private SafeCloseable _registerServiceWithSafeCloseable(
+	private SafeCloseable _registerWithSafeCloseable(
 		List<Long> companyIds, PortletDataHandler portletDataHandler,
 		String portletId) {
 
 		Bundle bundle = FrameworkUtil.getBundle(
-			PortletDataHandlerRegistryTest.class);
+			PortletDataHandlerProviderTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -145,11 +137,29 @@ public class PortletDataHandlerRegistryTest {
 		return serviceRegistration::unregister;
 	}
 
+	private SafeCloseable _registerWithSafeCloseable(String portletId) {
+		Bundle bundle = FrameworkUtil.getBundle(
+			PortletDataHandlerProviderTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<Portlet> serviceRegistration =
+			bundleContext.registerService(
+				Portlet.class,
+				new GenericPortlet() {
+				},
+				HashMapDictionaryBuilder.<String, Object>put(
+					"jakarta.portlet.name", portletId
+				).build());
+
+		return serviceRegistration::unregister;
+	}
+
 	@Inject(filter = "jakarta.portlet.name=ALL")
 	private PortletDataHandler _defaultPortletDataHandler;
 
 	@Inject
-	private PortletDataHandlerRegistry _portletDataHandlerRegistry;
+	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 	private static class TestPortletDataHandler extends BasePortletDataHandler {
 	}

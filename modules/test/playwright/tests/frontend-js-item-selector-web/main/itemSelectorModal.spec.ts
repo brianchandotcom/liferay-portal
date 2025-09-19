@@ -312,3 +312,61 @@ test('Check space selection via modal in multiselect input', async ({
 		).toBeVisible();
 	});
 });
+
+test(
+	'Open Item Selector Modal With JS Utility',
+	{
+		tag: ['@LPD-49253'],
+	},
+	async ({itemSelectorSamplePage, page}) => {
+		await test.step('Click on the "Open Modal With JS Utility" button opens an item selector modal with an FDS component', async () => {
+			await itemSelectorSamplePage.jsUtilityButton.click();
+
+			await expect(
+				itemSelectorSamplePage.selectUserModalHeader
+			).toBeVisible();
+
+			waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
+		});
+
+		await test.step('Select an item', async () => {
+			const items = itemSelectorSamplePage.page.locator(
+				'.card:has(>.custom-radio)'
+			);
+
+			const userLabel = items.getByText('Test', {exact: true});
+
+			await userLabel.click();
+
+			await expect(
+				itemSelectorSamplePage.modal.selectButton
+			).toBeEnabled();
+
+			await expect(
+				itemSelectorSamplePage.page.getByText(`Test Selected`)
+			).toBeVisible();
+
+			await itemSelectorSamplePage.modal.selectButton.click();
+		});
+
+		await test.step('Assert that item is selected', async () => {
+			await expect(
+				itemSelectorSamplePage.page.getByText('Test Test')
+			).toBeVisible();
+		});
+
+		await test.step('Opening item selector modal again autoselects previous selection', async () => {
+			await itemSelectorSamplePage.jsUtilityButton.click();
+
+			await expect(
+				itemSelectorSamplePage.selectUserModalHeader
+			).toBeVisible();
+
+			waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
+
+			await expect(
+				itemSelectorSamplePage.page.getByText(`Test Selected`)
+			).toBeVisible();
+		});
+	}
+);

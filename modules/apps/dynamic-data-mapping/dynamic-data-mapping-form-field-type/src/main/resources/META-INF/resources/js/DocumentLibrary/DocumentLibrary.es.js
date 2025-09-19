@@ -636,6 +636,7 @@ const Main = ({
 			{...otherProps}
 			displayErrors={hasCustomError ? true : displayErrors}
 			errorMessage={errorMessage}
+			fieldName={fieldName}
 			id={id}
 			name={name}
 			overMaximumRepetitionsLimit={

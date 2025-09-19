@@ -84,7 +84,7 @@ public class AssetLibraryDTOConverter
 			{
 				setActions(dtoConverterContext::getActions);
 				setAssetLibraryKey(group::getGroupKey);
-				setConnectedSiteId(group::getGroupId);
+				setSiteId(group::getGroupId);
 				setConnectedSites(
 					() -> NestedFieldsSupplier.supply(
 						"connectedSites",

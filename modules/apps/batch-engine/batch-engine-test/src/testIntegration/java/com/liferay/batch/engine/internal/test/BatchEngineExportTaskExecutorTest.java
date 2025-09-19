@@ -263,6 +263,7 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	@Test
+	@TestInfo("LPD-65748")
 	public void testExportBlogPostingsWithMaxItems() throws Throwable {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 

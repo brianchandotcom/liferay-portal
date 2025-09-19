@@ -35,10 +35,22 @@ public abstract class BaseDisplayContext {
 	public BaseDisplayContext(
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest) {
 
 		_layoutUtilityPageEntryLayoutProvider =
 			layoutUtilityPageEntryLayoutProvider;
+		_httpServletRequest = httpServletRequest;
+	}
+
+	public BaseDisplayContext(
+		LayoutUtilityPageEntryLayoutProvider
+			layoutUtilityPageEntryLayoutProvider,
+		RenderRequest renderRequest) {
+
+		this(
+			layoutUtilityPageEntryLayoutProvider,
+			PortalUtil.getHttpServletRequest(renderRequest));
+
 		_renderRequest = renderRequest;
 	}
 
@@ -80,8 +92,9 @@ public abstract class BaseDisplayContext {
 	}
 
 	public String getPrivacyPolicyLink() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout =
 			_layoutUtilityPageEntryLayoutProvider.
@@ -124,6 +137,10 @@ public abstract class BaseDisplayContext {
 		return consentCookieTypeNamesJSONArray;
 	}
 
+	protected HttpServletRequest getHttpServletRequest() {
+		return _httpServletRequest;
+	}
+
 	protected RenderRequest getRenderRequest() {
 		return _renderRequest;
 	}
@@ -134,15 +151,16 @@ public abstract class BaseDisplayContext {
 		return new ConsentCookieType(
 			new LocalizedValuesMap(
 				LanguageUtil.get(
-					_renderRequest.getLocale(),
+					_httpServletRequest.getLocale(),
 					"cookies-description[" + name + "]")),
 			hideFromEndUser, name, prechecked);
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LayoutUtilityPageEntryLayoutProvider
 		_layoutUtilityPageEntryLayoutProvider;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
-	private final RenderRequest _renderRequest;
+	private RenderRequest _renderRequest;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 
 }

@@ -41,14 +41,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		return this;
 	}
 
-	public ElasticsearchInstanceSettingsBuilder discoveryTypeSingleNode(
-		boolean discoveryTypeSingleNode) {
-
-		_discoveryTypeSingleNode = discoveryTypeSingleNode;
-
-		return this;
-	}
-
 	public ElasticsearchInstanceSettingsBuilder
 		elasticsearchConfigurationWrapper(
 			ElasticsearchConfigurationWrapper
@@ -116,10 +108,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 	private void _configureClustering() {
 		put("cluster.name", _clusterName);
 		put("cluster.routing.allocation.disk.threshold_enabled", false);
-
-		if (_discoveryTypeSingleNode) {
-			put("discovery.type", "single-node");
-		}
+		put("discovery.type", "single-node");
 	}
 
 	private void _configureHttp() {
@@ -222,7 +211,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 	}
 
 	private String _clusterName;
-	private boolean _discoveryTypeSingleNode;
 	private ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 	private ElasticsearchInstancePaths _elasticsearchInstancePaths;

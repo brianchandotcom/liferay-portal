@@ -199,33 +199,29 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			assetLibraryId, _updateUser(assetLibraryId, userAccountId, true));
 	}
 
-	private void _checkAssetLibraryAdminOrAssetLibraryMember(
-			long assetLibraryId)
+	private void _checkAssetLibraryAdminOrAssetLibraryMember(long groupId)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (permissionChecker.isGroupAdmin(assetLibraryId)) {
+		if (permissionChecker.isGroupAdmin(groupId)) {
 			return;
 		}
 
-		if (!_userService.hasGroupUser(
-				assetLibraryId, contextUser.getUserId())) {
-
+		if (!_userService.hasGroupUser(groupId, contextUser.getUserId())) {
 			throw new PrincipalException.MustHavePermission(
 				contextUser.getUserId(), ActionKeys.VIEW);
 		}
 	}
 
-	private void _checkAssetLibraryMember(long assetLibraryId, long userId)
+	private void _checkAssetLibraryMember(long groupId, long userId)
 		throws Exception {
 
-		if (!_userLocalService.hasGroupUser(assetLibraryId, userId)) {
+		if (!_userLocalService.hasGroupUser(groupId, userId)) {
 			throw new NoSuchUserException(
 				StringBundler.concat(
-					"User ", userId, " is not associated to group ",
-					assetLibraryId));
+					"User ", userId, " is not associated to group ", groupId));
 		}
 	}
 

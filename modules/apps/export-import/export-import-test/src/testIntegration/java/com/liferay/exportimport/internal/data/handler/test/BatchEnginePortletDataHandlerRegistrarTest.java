@@ -100,9 +100,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				new GenericPortlet() {
 				},
 				HashMapDictionaryBuilder.<String, Object>put(
-					"com.liferay.portlet.company",
-					TestPropsValues.getCompanyId()
-				).put(
 					"jakarta.portlet.name", portletId
 				).build());
 			SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
@@ -138,6 +135,11 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					_portletDataHandlerProvider.provide(
 						TestPropsValues.getCompanyId(), portletId)),
 				CoreMatchers.containsString("BatchEnginePortletDataHandler"));
+			Assert.assertThat(
+				ClassUtil.getClassName(
+					_portletDataHandlerProvider.provide(
+						RandomTestUtil.randomLong(), portletId)),
+				CoreMatchers.containsString("DefaultPortletDataHandler"));
 		}
 	}
 

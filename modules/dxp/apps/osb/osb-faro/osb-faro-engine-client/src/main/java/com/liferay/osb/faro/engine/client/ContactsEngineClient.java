@@ -454,6 +454,9 @@ public interface ContactsEngineClient {
 		FaroProject faroProject, int cur, int delta,
 		List<OrderByField> orderByFields);
 
+	public void insertBQProjects(List<FaroProject> faroProjects)
+		throws Exception;
+
 	public Channel patchChannel(
 		FaroProject faroProject, String id, String name);
 

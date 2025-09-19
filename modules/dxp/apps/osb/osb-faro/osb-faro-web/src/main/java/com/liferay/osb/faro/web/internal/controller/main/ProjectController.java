@@ -654,6 +654,66 @@ public class ProjectController extends BaseFaroController {
 		}
 	}
 
+	@Path("/populate-bq-projects")
+	@POST
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public void populateBQProjects() throws Exception {
+		ExecutorService executorService =
+			_portalExecutorManager.getPortalExecutor(
+				ProjectController.class.getName());
+
+		executorService.submit(
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					Map<String, List<FaroProject>> faroProjectsMap =
+						new HashMap<>();
+
+					for (FaroProject faroProject :
+							faroProjectLocalService.getFaroProjects(
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+						faroProjectsMap.putIfAbsent(
+							faroProject.getServerLocation(),
+							new ArrayList<FaroProject>());
+
+						List<FaroProject> faroProjects = faroProjectsMap.get(
+							faroProject.getServerLocation());
+
+						faroProjects.add(faroProject);
+					}
+
+					for (Map.Entry<String, List<FaroProject>> faroProjects :
+							faroProjectsMap.entrySet()) {
+
+						try {
+							if (_log.isInfoEnabled()) {
+								_log.info(
+									"Populating BQProjects in location " +
+										faroProjects.getKey());
+							}
+
+							contactsEngineClient.insertBQProjects(
+								faroProjects.getValue());
+
+							if (_log.isInfoEnabled()) {
+								_log.info(
+									"BQProjects were populated in location " +
+										faroProjects.getKey() +
+											" successfully");
+							}
+						}
+						catch (Exception exception) {
+							_log.error(
+								"Fail to populate BQProjects in location " +
+									faroProjects.getKey(),
+								exception);
+						}
+					}
+
+					return null;
+				}));
+	}
+
 	@DELETE
 	@Path("/usage/reset")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)

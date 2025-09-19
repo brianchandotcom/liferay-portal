@@ -177,6 +177,13 @@ public class MockContactsEngineClientImpl
 	}
 
 	@Override
+	public void insertBQProjects(List<FaroProject> faroProjects)
+		throws Exception {
+
+		contactsEngineClient.insertBQProjects(faroProjects);
+	}
+
+	@Override
 	public void updateBQProject(FaroProject faroProject, Date startDate)
 		throws Exception {
 

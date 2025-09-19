@@ -326,7 +326,7 @@ public class AccountResourceImpl
 			@Override
 			public List<String> getNestedFields() {
 				return List.of(
-					"accountGroupBriefs", "accountRoles", "keywords",
+					"accountGroupBriefs", "accountRoles", "creator", "keywords",
 					"logoBase64", "postalAddresses", "taxonomyCategoryBriefs");
 			}
 

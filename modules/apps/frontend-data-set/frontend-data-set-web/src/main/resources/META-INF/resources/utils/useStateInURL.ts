@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useMemo} from 'react';
+import {useCallback, useLayoutEffect, useMemo, useRef} from 'react';
 
 import {EViewsActionTypes} from '../views/viewsReducer';
 import {readStateFromURL, writeStateInURL} from './stateInURL';
@@ -18,6 +18,7 @@ import {
 function useStateInURL<K extends keyof IStateInURL>({
 	additionalStateDispatchers = [],
 	id,
+	shouldWriteInURL = (_value: IStateInURL[K]) => true,
 	stateDispatcher,
 	stateInURLSettings,
 	stateInitializer,
@@ -28,6 +29,7 @@ function useStateInURL<K extends keyof IStateInURL>({
 		value: any;
 	}[];
 	id: string;
+	shouldWriteInURL?: (value: IStateInURL[K]) => boolean;
 	stateDispatcher: {
 		key: K;
 		type: EViewsActionTypes;
@@ -43,6 +45,7 @@ function useStateInURL<K extends keyof IStateInURL>({
 			additionalStateDispatchers,
 			id,
 			key,
+			shouldWriteInURL,
 			stateInURLSettings,
 			type,
 		}),
@@ -73,6 +76,7 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 	additionalStateDispatchers = [],
 	id,
 	key,
+	shouldWriteInURL = (_value: IStateInURL[K]) => true,
 	stateInURLSettings,
 	type,
 }: {
@@ -83,6 +87,7 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 	}[];
 	id: string;
 	key: K;
+	shouldWriteInURL?: (value: IStateInURL[K]) => boolean;
 	stateInURLSettings: EStateInURLSettings;
 	type: EViewsActionTypes;
 }): IStateInURLUpdaterThunk<K> {
@@ -98,6 +103,12 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 		() => JSON.parse(additionalStateDispatchersKey),
 		[additionalStateDispatchersKey]
 	);
+
+	const shouldWriteInURLRef = useRef(shouldWriteInURL);
+
+	useLayoutEffect(() => {
+		shouldWriteInURLRef.current = shouldWriteInURL;
+	});
 
 	return useCallback(
 		(value: IStateInURL[K]) => {
@@ -144,10 +155,24 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 					});
 				}
 
+				const shouldWriteInURL =
+					shouldWriteInURLRef.current?.(value) ?? true;
+
+				if (!shouldWriteInURL) {
+					newState[key] = undefined;
+				}
+
 				writeStateInURL(id, newState, stateInURLSettings);
 			};
 		},
-		[memoizedAdditionalStateDispatchers, id, key, stateInURLSettings, type]
+		[
+			id,
+			key,
+			memoizedAdditionalStateDispatchers,
+			stateInURLSettings,
+			type,
+			shouldWriteInURLRef,
+		]
 	);
 }
 

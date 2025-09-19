@@ -823,10 +823,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					objectEntry.getObjectEntryId())
 			).build());
 
-		bulkActionItem.setClassName(objectDefinition::getClassName);
-
 		bulkActionItem.setClassExternalReferenceCode(
 			objectEntry::getExternalReferenceCode);
+		bulkActionItem.setClassName(objectDefinition::getClassName);
 		bulkActionItem.setName(
 			() -> objectEntry.getTitleValue(
 				LocaleUtil.toLanguageId(contextUser.getLocale()), true));
@@ -867,9 +866,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).put(
 				"type", "FOLDER"
 			).build());
-		bulkActionItem.setClassName(objectEntryFolder::getModelClassName);
 		bulkActionItem.setClassExternalReferenceCode(
 			objectEntryFolder::getExternalReferenceCode);
+		bulkActionItem.setClassName(objectEntryFolder::getModelClassName);
 		bulkActionItem.setName(objectEntryFolder::getName);
 
 		return bulkActionItem;

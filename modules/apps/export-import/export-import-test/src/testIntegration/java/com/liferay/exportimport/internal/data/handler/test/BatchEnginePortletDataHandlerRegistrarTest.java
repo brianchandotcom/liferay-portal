@@ -6,12 +6,12 @@
 package com.liferay.exportimport.internal.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
@@ -49,9 +49,7 @@ import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,12 +58,13 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alejandro Tardín
  */
-@FeatureFlag("LPD-35914")
 @RunWith(Arquillian.class)
 public class BatchEnginePortletDataHandlerRegistrarTest {
 
@@ -74,18 +73,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 	public static final AggregateTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws PortalException {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
-	}
-
+	@FeatureFlag("LPD-35914")
 	@Test
 	@TestInfo("LPD-56301")
 	public void test() throws Exception {
@@ -128,19 +116,51 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					RandomTestUtil.randomString()
 				).build())) {
 
+			Assert.assertEquals(
+				0, _getRegisteredPortletDataHandlersCount(portletId));
+
+			FeatureFlagTestUtil.invokeFeatureFlagListeners(
+				TestPropsValues.getCompanyId(), true, "LPD-35914");
+
 			Thread.sleep(1000);
 
-			Assert.assertThat(
-				ClassUtil.getClassName(
-					_portletDataHandlerProvider.provide(
-						TestPropsValues.getCompanyId(), portletId)),
-				CoreMatchers.containsString("BatchEnginePortletDataHandler"));
-			Assert.assertThat(
-				ClassUtil.getClassName(
-					_portletDataHandlerProvider.provide(
-						RandomTestUtil.randomLong(), portletId)),
-				CoreMatchers.containsString("DefaultPortletDataHandler"));
+			Assert.assertEquals(
+				1, _getRegisteredPortletDataHandlersCount(portletId));
+
+			try {
+				Assert.assertThat(
+					ClassUtil.getClassName(
+						_portletDataHandlerProvider.provide(
+							TestPropsValues.getCompanyId(), portletId)),
+					CoreMatchers.containsString(
+						"BatchEnginePortletDataHandler"));
+				Assert.assertThat(
+					ClassUtil.getClassName(
+						_portletDataHandlerProvider.provide(
+							RandomTestUtil.randomLong(), portletId)),
+					CoreMatchers.containsString("DefaultPortletDataHandler"));
+			}
+			finally {
+				FeatureFlagTestUtil.invokeFeatureFlagListeners(
+					TestPropsValues.getCompanyId(), false, "LPD-35914");
+			}
 		}
+	}
+
+	private int _getRegisteredPortletDataHandlersCount(String portletId)
+		throws InvalidSyntaxException {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			BatchEnginePortletDataHandlerRegistrarTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Collection<ServiceReference<PortletDataHandler>> serviceReferences =
+			bundleContext.getServiceReferences(
+				PortletDataHandler.class,
+				"(jakarta.portlet.name=" + portletId + ")");
+
+		return serviceReferences.size();
 	}
 
 	private <S> SafeCloseable _registerServiceWithSafeCloseable(

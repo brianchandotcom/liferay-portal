@@ -46,19 +46,30 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceRegistrations = ServiceTrackerListFactory.open(
-			bundleContext, null, "(batch.engine.task.item.delegate=true)",
-			new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-				bundleContext));
-
 		_serviceRegistration = bundleContext.registerService(
 			FeatureFlagListener.class,
 			(companyId, featureFlagKey, enabled) -> {
 				if (enabled) {
 					_enabledCompanyIds.add(companyId);
+
+					if (_serviceRegistrations == null) {
+						_serviceRegistrations = ServiceTrackerListFactory.open(
+							bundleContext, null,
+							"(batch.engine.task.item.delegate=true)",
+							new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
+								bundleContext));
+					}
 				}
 				else {
 					_enabledCompanyIds.remove(companyId);
+				}
+
+				if (_enabledCompanyIds.isEmpty()) {
+					_serviceRegistrations.close();
+
+					_serviceRegistrations = null;
+
+					return;
 				}
 
 				for (ServiceRegistration<PortletDataHandler>
@@ -77,7 +88,10 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistration.unregister();
-		_serviceRegistrations.close();
+
+		if (_serviceRegistrations != null) {
+			_serviceRegistrations.close();
+		}
 	}
 
 	private Dictionary<String, Object> _setEnabledCompanyIds(

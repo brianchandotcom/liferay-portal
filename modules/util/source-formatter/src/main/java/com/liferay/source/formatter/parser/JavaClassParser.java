@@ -636,6 +636,8 @@ public class JavaClassParser {
 			return javaClass;
 		}
 
+		javaClass.setParentJavaClass(parentJavaClass);
+
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		while (true) {
@@ -669,7 +671,6 @@ public class JavaClassParser {
 
 		JavaMethod javaMethod = (JavaMethod)javaTerm;
 
-		javaClass.setParentJavaClass(parentJavaClass);
 		javaClass.setParentJavaMethod(javaMethod);
 
 		return javaClass;

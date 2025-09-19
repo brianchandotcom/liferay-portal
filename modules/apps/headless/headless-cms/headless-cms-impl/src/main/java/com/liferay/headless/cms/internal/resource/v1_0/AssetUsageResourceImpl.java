@@ -73,6 +73,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 
+	@Override
 	public Page<AssetUsage> getAssetUsagesAssetPage(
 			Long assetId, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {

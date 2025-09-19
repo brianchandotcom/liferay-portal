@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {waitForEditor} from '../../../../../utils/waitFor';
+import {waitForEditor, waitForFDS} from '../../../../../utils/waitFor';
 import {ckeditorSamplePageTest} from './../../fixtures/ckeditorSamplePageTest';
 import {classicPageTest} from './fixtures/classicPageTest';
 
@@ -37,7 +37,7 @@ test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 test(
 	'Editor configuration is applied',
 	{tag: '@LPD-11235'},
-	async ({classicPage}) => {
+	async ({classicPage, page}) => {
 		await test.step('Initial data is set', async () => {
 			await expect(
 				classicPage.editable.getByText('Lorem ipsum dolor sit amet')
@@ -52,6 +52,8 @@ test(
 				'Italic',
 				'Bookmark',
 				'Timestamp',
+				'Image',
+				'Video',
 			];
 
 			const availableButtons =
@@ -77,6 +79,46 @@ test(
 			await expect(
 				timestampButton.locator('svg use[href*="/clay/"]')
 			).toBeAttached();
+		});
+
+		await test.step('Item selector controls open item selector modal', async () => {
+			const imageButton = classicPage.toolbar.container.getByRole(
+				'button',
+				{
+					name: 'Image',
+				}
+			);
+
+			await imageButton.click();
+
+			await expect(page.getByText('Select Image')).toBeVisible();
+
+			await waitForFDS({empty: true, page});
+
+			const modal = page.locator('.modal');
+
+			const cancelButton = modal.getByRole('button', {
+				name: 'Cancel',
+			});
+
+			await cancelButton.click();
+
+			await expect(page.getByText('Select Image')).not.toBeAttached();
+
+			const videoButton = classicPage.toolbar.container.getByRole(
+				'button',
+				{
+					name: 'Video',
+				}
+			);
+
+			await videoButton.click();
+
+			await expect(page.getByText('Select Video')).toBeVisible();
+
+			await cancelButton.click();
+
+			await expect(page.getByText('Select Video')).not.toBeAttached();
 		});
 	}
 );

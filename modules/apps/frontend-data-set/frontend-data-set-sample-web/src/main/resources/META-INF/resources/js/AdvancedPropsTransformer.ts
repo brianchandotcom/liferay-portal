@@ -110,6 +110,19 @@ export default function propsTransformer({
 		return props;
 	};
 
+	const itemActionsWithStyling = itemsActions.map((action: IItemsActions) => {
+		const key = action?.data?.id as string;
+
+		if (!key || key !== 'sampleDeleteMessage') {
+			return action;
+		}
+
+		return {
+			...action,
+			className: 'text-danger',
+		};
+	});
+
 	return {
 		...otherProps,
 		customRenderers: {
@@ -117,18 +130,56 @@ export default function propsTransformer({
 		},
 		fileDropSettings,
 		infoPanelComponent: SampleInfoPanel,
-		itemsActions: itemsActions.map((action: IItemsActions) => {
-			const key = action?.data?.id as string;
 
-			if (!key || key !== 'sampleDeleteMessage') {
-				return action;
-			}
+		// Ideally, placing items in groups should happen in the definition of
+		// the actions (AdvancedFDSItemsActions.java) but this is done here in
+		// the meantime while the java API is being decided on.
 
-			return {
-				...action,
-				className: 'text-danger',
-			};
-		}),
+		itemsActions: [
+			{
+				items: itemActionsWithStyling,
+				separator: true,
+				type: 'group',
+			},
+			{
+				items: [
+					{
+						data: {
+							id: 'emptyGroupTest',
+							permissionKey: 'nonexistentPermissionKey',
+						},
+						icon: 'hidden',
+						label: 'Empty Group Test',
+					},
+				],
+				separator: true,
+				type: 'group',
+			},
+			{
+				items: [
+					{
+						data: {
+							id: 'groupItem',
+						},
+						icon: 'separator',
+						label: 'Group Item',
+						onClick: () => {
+							alert('You clicked on an item in a group');
+						},
+					},
+					{
+						data: {
+							id: 'groupPermissionTest',
+							permissionKey: 'nonexistentPermissionKey',
+						},
+						icon: 'hidden',
+						label: 'Group Permission Test',
+					},
+				],
+				separator: true,
+				type: 'group',
+			},
+		],
 		onActionDropdownItemClick({
 			action,
 			itemData,

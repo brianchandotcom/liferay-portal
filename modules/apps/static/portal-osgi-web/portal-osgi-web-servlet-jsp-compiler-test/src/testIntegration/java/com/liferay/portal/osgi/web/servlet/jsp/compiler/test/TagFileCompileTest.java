@@ -27,12 +27,15 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.portlet.Portlet;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -78,14 +81,39 @@ public class TagFileCompileTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		File tempDirFile = new File(
+			System.getProperty("java.io.tmpdir"),
+			TagFileCompileTest.class.getName());
+
+		tempDirFile.mkdirs();
+
+		InputStream inputStream1 = _createTagBundle();
+
+		inputStream1.mark(0);
+
+		File tagJarFile = new File(tempDirFile, "tag.jar");
+
+		StreamUtil.transfer(inputStream1, new FileOutputStream(tagJarFile));
+
+		inputStream1.reset();
+
 		Bundle tagBundle = bundleContext.installBundle(
-			TagFileCompileTest.class.getName() + ".tag", _createTagBundle());
+			tagJarFile.toURI().toURL().toString(), inputStream1);
 
 		tagBundle.start();
 
+		InputStream inputStream2 = _createPortletBundle();
+
+		inputStream2.mark(0);
+
+		File portletJarFile = new File(tempDirFile, "portlet.jar");
+
+		StreamUtil.transfer(inputStream2, new FileOutputStream(portletJarFile));
+
+		inputStream2.reset();
+
 		Bundle portletBundle = bundleContext.installBundle(
-			TagFileCompileTest.class.getName() + ".portlet",
-			_createPortletBundle());
+			portletJarFile.toURI().toURL().toString(), inputStream2);
 
 		portletBundle.start();
 
@@ -102,9 +130,13 @@ public class TagFileCompileTest {
 
 			Assert.assertTrue(content.contains("Tag File Test"));
 		}
+		finally {
+			portletBundle.uninstall();
 
-		portletBundle.uninstall();
-		tagBundle.uninstall();
+			tagBundle.uninstall();
+
+			FileUtil.deltree(tempDirFile);
+		}
 	}
 
 	private String _buildImportPackage(Class<?>... classes) {

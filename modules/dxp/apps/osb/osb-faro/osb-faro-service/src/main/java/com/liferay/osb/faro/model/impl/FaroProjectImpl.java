@@ -39,6 +39,27 @@ public class FaroProjectImpl extends FaroProjectBaseImpl {
 	}
 
 	@Override
+	public Date getStartDate() throws Exception {
+		if (_subscriptionJSONObject == null) {
+			_subscriptionJSONObject = JSONFactoryUtil.createJSONObject(
+				getSubscription());
+		}
+
+		return new Date(
+			_subscriptionJSONObject.getLong("startDate", getCreateTime()));
+	}
+
+	@Override
+	public String getSubscriptionName() throws Exception {
+		if (_subscriptionJSONObject == null) {
+			_subscriptionJSONObject = JSONFactoryUtil.createJSONObject(
+				getSubscription());
+		}
+
+		return _subscriptionJSONObject.getString("name");
+	}
+
+	@Override
 	public boolean isAllowedIPAddress(String ipAddress) {
 		try {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(

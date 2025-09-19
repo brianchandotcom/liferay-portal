@@ -11,7 +11,14 @@ import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserGroupResource;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CatalogResource;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
@@ -21,12 +28,14 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -62,6 +71,31 @@ public class MarketplaceCommandLineRunner
 		_processOrdersTotalAmount();
 
 		_processProjectsUsingMarketplaceApps();
+
+		_processPublisherSalesSummary();
+	}
+
+	private JSONObject _createPublisherSalesSummary(
+		long accountId, String publisherName, String quarter) {
+
+		return new JSONObject(
+			post(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_liferayOAuthApplicationExternalReferenceCodes),
+				new JSONObject(
+				).put(
+					"paymentStatus", "unpaid"
+				).put(
+					"publisherName", publisherName
+				).put(
+					"quarter", quarter
+				).put(
+					"r_accountToPublisher_accountEntryId", accountId
+				).toString(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/publishersalessummaries/"
+				).build(
+				).toUri()));
 	}
 
 	private void _forEachOrder(
@@ -87,6 +121,22 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
+	private String _formatYearQuarter(Date date) {
+		Instant instant = date.toInstant();
+
+		LocalDate localDate = instant.atZone(
+			ZoneOffset.UTC
+		).toLocalDate();
+
+		int year = localDate.getYear();
+
+		int month = localDate.getMonthValue();
+
+		int quarter = ((month - 1) / 3) + 1;
+
+		return year + "Q" + quarter;
+	}
+
 	private JSONObject _getAvailabilityJSONObject() {
 		return new JSONObject(
 			get(
@@ -96,6 +146,17 @@ public class MarketplaceCommandLineRunner
 					_liferayMarketplaceEtcSpringBootURL + "/trial/availability"
 				).build(
 				).toUri()));
+	}
+
+	private CatalogResource _getCatalogResource() throws Exception {
+		return CatalogResource.builder(
+		).endpoint(
+			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes)
+		).build();
 	}
 
 	private JSONArray _getContactTeamsJSONArray(String emailAddress) {
@@ -206,6 +267,20 @@ public class MarketplaceCommandLineRunner
 		).build();
 	}
 
+	private JSONObject _getOrdersJSONObject() {
+		return new JSONObject(
+			get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_liferayOAuthApplicationExternalReferenceCodes),
+				UriComponentsBuilder.fromPath(
+					StringBundler.concat(
+						"/o/headless-commerce-admin-order/v1.0/orders",
+						"?nestedFields=orderItems",
+						"&filter=totalAmount gt 0.0&page=-1&pageSize=-1")
+				).build(
+				).toUri()));
+	}
+
 	private Page<Order> _getOrdersPage(
 			String filterString, int page, int pageSize)
 		throws Exception {
@@ -214,6 +289,57 @@ public class MarketplaceCommandLineRunner
 
 		return orderResource.getOrdersPage(
 			"", filterString, Pagination.of(page, pageSize), "");
+	}
+
+	private ProductResource _getProductResource() throws Exception {
+		return ProductResource.builder(
+		).endpoint(
+			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes)
+		).build();
+	}
+
+	private int _getPublisherSalesSummaryId(
+		long accountId, String currentQuarter) {
+
+		JSONObject publisherSalesSummariesJSONObject = new JSONObject(
+			get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_liferayOAuthApplicationExternalReferenceCodes),
+				UriComponentsBuilder.fromPath(
+					StringBundler.concat(
+						"/o/c/publishersalessummaries",
+						"?filter=r_accountToPublisher_accountEntryId eq '",
+						accountId, "' and quarter eq '", currentQuarter, "'")
+				).build(
+				).toUri()));
+
+		JSONArray itemsJSONArray =
+			publisherSalesSummariesJSONObject.optJSONArray("items");
+
+		int id = -1;
+
+		if ((itemsJSONArray != null) && !itemsJSONArray.isEmpty()) {
+			JSONObject firstItemJSONObject = itemsJSONArray.getJSONObject(0);
+
+			id = firstItemJSONObject.getInt("id");
+		}
+
+		return id;
+	}
+
+	private SkuResource _getSkuResource() throws Exception {
+		return SkuResource.builder(
+		).endpoint(
+			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes)
+		).build();
 	}
 
 	private UserAccount _getUserAccount(
@@ -248,6 +374,21 @@ public class MarketplaceCommandLineRunner
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
+	}
+
+	private void _patchOrder(long orderId, int publisherSalesSummaryId) {
+		patch(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
+			new JSONObject(
+			).put(
+				"r_publisherToCommerceOrder_c_publisherSalesSummaryId",
+				publisherSalesSummaryId
+			).toString(),
+			UriComponentsBuilder.fromPath(
+				"/o/headless-commerce-admin-order/v1.0/orders/" + orderId
+			).build(
+			).toUri());
 	}
 
 	private void _patchReport(String data, String externalReferenceCode) {
@@ -587,6 +728,61 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
+	private void _processPublisherSalesSummary() throws Exception {
+		JSONObject ordersJSONObject = _getOrdersJSONObject();
+
+		JSONArray itemsJSONArray = ordersJSONObject.getJSONArray("items");
+
+		String currentQuarter = _formatYearQuarter(new Date());
+
+		CatalogResource catalogResource = _getCatalogResource();
+		ProductResource productResource = _getProductResource();
+		SkuResource skuResource = _getSkuResource();
+
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject orderJSONObject = itemsJSONArray.getJSONObject(i);
+
+			Order order = Order.toDTO(
+				itemsJSONArray.getJSONObject(
+					i
+				).toString());
+
+			long publisherToCommerceOrderId = orderJSONObject.optLong(
+				"r_publisherToCommerceOrder_c_publisherSalesSummaryId", -1);
+
+			if ((order.getPaymentStatus() != _ORDER_PAYMENT_STATUS_COMPLETED) ||
+				(publisherToCommerceOrderId != 0)) {
+
+				continue;
+			}
+
+			OrderItem[] orderItems = order.getOrderItems();
+
+			Sku sku = skuResource.getSku(orderItems[0].getSkuId());
+
+			Product product = productResource.getProduct(sku.getProductId());
+
+			Catalog catalog = catalogResource.getCatalog(
+				product.getCatalogId());
+
+			int publisherSalesSummariesId =
+					_getPublisherSalesSummaryId(
+					catalog.getAccountId(), currentQuarter);
+
+			if (publisherSalesSummariesId == -1) {
+				JSONObject publisherSalesSummaryJSONObject =
+					_createPublisherSalesSummary(
+						catalog.getAccountId(), catalog.getName(),
+						currentQuarter);
+
+				publisherSalesSummariesId =
+					publisherSalesSummaryJSONObject.getInt("id");
+			}
+
+			_patchOrder(order.getId(), publisherSalesSummariesId);
+		}
+	}
+
 	private void _updateOrder(long orderId, int orderStatus) throws Exception {
 		OrderResource orderResource = _getOrderResource();
 
@@ -596,6 +792,8 @@ public class MarketplaceCommandLineRunner
 
 		orderResource.patchOrder(orderId, order);
 	}
+
+	private static final int _ORDER_PAYMENT_STATUS_COMPLETED = 0;
 
 	private static final int _ORDER_STATUS_COMPLETED = 0;
 

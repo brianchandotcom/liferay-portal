@@ -1181,14 +1181,15 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private boolean _hasDeptEntryTypeSpace(User user) throws PortalException {
 		for (Group group : user.getGroups()) {
-			if (group.isDepot()) {
-				DepotEntry depotEntry =
-					depotEntryLocalService.getGroupDepotEntry(
-						group.getGroupId());
+			if (!group.isDepot()) {
+				continue;
+			}
 
-				if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
-					return true;
-				}
+			DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
+				group.getGroupId());
+
+			if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+				return true;
 			}
 		}
 

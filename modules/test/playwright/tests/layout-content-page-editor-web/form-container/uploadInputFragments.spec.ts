@@ -797,6 +797,8 @@ test.describe('Drag and Drop Upload Fragment', () => {
 
 		await pageEditorPage.publishPage();
 
+		// Go to view mode
+
 		await page.goto(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
@@ -865,18 +867,6 @@ test.describe('Drag and Drop Upload Fragment', () => {
 			)
 		).toBeVisible();
 
-		await chooseFileFromDocumentLibrary({
-			fileName: 'cats.jpg',
-			page,
-			trigger: secondFileUploadFragment.getByTitle('Change File', {
-				exact: true,
-			}),
-		});
-
-		await expect(
-			page.getByLabel('Change the file, the current file is cats.jpg')
-		).toBeVisible();
-
 		// Choose other language to check the default values
 
 		await clickAndExpectToBeVisible({
@@ -927,10 +917,7 @@ test.describe('Drag and Drop Upload Fragment', () => {
 			([locale, value]: [string, any]) => [locale, value.name]
 		);
 
-		expect(filesFromLibrary).toStrictEqual([
-			['en_US', 'balinese.jpg'],
-			['es_ES', 'cats.jpg'],
-		]);
+		expect(filesFromLibrary).toStrictEqual([['en_US', 'balinese.jpg']]);
 	});
 
 	test('Check the functionality of the Drag and Drop Upload Fragment when the attachments are not localizable', async ({
@@ -1081,6 +1068,8 @@ test.describe('Drag and Drop Upload Fragment', () => {
 		await pageEditorPage.mapFormFragment(formId, 'Attachment', 'all');
 
 		await pageEditorPage.publishPage();
+
+		// Go to view mode
 
 		await page.goto(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`

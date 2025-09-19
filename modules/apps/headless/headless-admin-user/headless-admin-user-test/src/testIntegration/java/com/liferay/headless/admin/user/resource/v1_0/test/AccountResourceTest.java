@@ -1434,14 +1434,14 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		Account postAccount = _postAccount(randomAccount);
 
-		User user = UserTestUtil.addUser();
+		User user = TestPropsValues.getUser();
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			postAccount.getId(), user.getUserId());
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
-			StringPool.BLANK, TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_accountGroupRelLocalService.addAccountGroupRel(
@@ -1449,7 +1449,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			postAccount.getId());
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), user.getUserId(),
 			postAccount.getId(), RandomTestUtil.randomString(), null, null);
 
 		_resourcePermissionLocalService.setResourcePermissions(
@@ -1485,10 +1485,6 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Account getAccount = accountResource.getAccount(postAccount.getId());
 
 		Assert.assertNotNull(getAccount.getCreator());
-
-		Creator creator = getAccount.getCreator();
-
-		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
 
 		Assert.assertTrue(
 			ArrayUtil.exists(
@@ -1532,6 +1528,14 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				taxonomyCategoryBrief -> Objects.equals(
 					taxonomyCategoryBrief.getTaxonomyCategoryId(),
 					assetCategory.getCategoryId())));
+
+		Creator creator = getAccount.getCreator();
+
+		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
+		Assert.assertTrue(
+			Objects.equals(
+				creator.getExternalReferenceCode(),
+				user.getExternalReferenceCode()));
 	}
 
 	private void _testPatchAccountByExternalReferenceCodeWithMoreExternalReferenceCodes()

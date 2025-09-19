@@ -31,10 +31,12 @@ export type ObjectRelationship = {
 };
 
 export type ObjectDefinition = {
+	enableComments: boolean;
 	enableFriendlyURLCustomization: boolean;
 	enableIndexSearch: boolean;
 	enableLocalization: boolean;
 	enableObjectEntryDraft: boolean;
+	enableObjectEntryHistory: boolean;
 	enableObjectEntrySchedule: boolean;
 	enableObjectEntryVersioning: boolean;
 	externalReferenceCode: string;

@@ -39,10 +39,12 @@ export default function buildObjectDefinition({
 	status?: Structure['status'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
+		enableComments: true,
 		enableFriendlyURLCustomization: true,
 		enableIndexSearch: true,
 		enableLocalization: true,
 		enableObjectEntryDraft: true,
+		enableObjectEntryHistory: true,
 		enableObjectEntrySchedule: true,
 		enableObjectEntryVersioning: true,
 		externalReferenceCode: erc,

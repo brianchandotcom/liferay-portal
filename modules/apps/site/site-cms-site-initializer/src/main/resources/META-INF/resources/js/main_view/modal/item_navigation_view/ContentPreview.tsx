@@ -8,12 +8,7 @@ import React from 'react';
 export default function ContentPreview({url}: {url: string}) {
 	return (
 		<div className="h-100">
-			<iframe
-				height="100%"
-				src={url}
-				style={{border: 'none'}}
-				width="100%"
-			/>
+			<iframe className="border-0" height="100%" src={url} width="100%" />
 		</div>
 	);
 }

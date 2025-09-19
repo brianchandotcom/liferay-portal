@@ -205,6 +205,71 @@ baseTest(
 );
 
 baseTest(
+	'Check that upload field is marked as translated',
+	{
+		tag: '@LPD-66008',
+	},
+
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const structureName = 'Test Structure';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [
+				{
+					fieldType: 'document_library',
+					name: 'Upload',
+				},
+			],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.fillTitle(title);
+
+		await journalEditArticlePage.selectFileFromDocumentsAndMedia(
+			'astronaut.png'
+		);
+
+		const translationButton = page.getByLabel('Select a language, current');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
+
+		await journalEditArticlePage.selectFileFromDocumentsAndMedia(
+			'planet.png'
+		);
+
+		await translateNameAndMetadataFields(page, structureName);
+
+		await journalEditArticlePage.publishArticle();
+
+		await journalEditArticlePage.editArticle(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Translated',
+			}),
+			trigger: translationButton,
+		});
+	}
+);
+
+baseTest(
 	'Select web content display template with the Preview feature',
 	{
 		tag: '@LPD-31427',

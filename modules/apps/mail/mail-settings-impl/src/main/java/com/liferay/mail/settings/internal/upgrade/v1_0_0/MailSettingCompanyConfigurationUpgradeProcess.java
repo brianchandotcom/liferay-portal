@@ -27,8 +27,7 @@ public class MailSettingCompanyConfigurationUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
-			MailSettingCompanyConfiguration.class,
+		KeyValuePair[] keyValuePairs = {
 			new KeyValuePair(
 				"pop.server.notifications.enabled",
 				"enablePOPServerNotifications"),
@@ -50,42 +49,17 @@ public class MailSettingCompanyConfigurationUpgradeProcess
 			new KeyValuePair("mail.session.mail.smtp.password", "smtpPassword"),
 			new KeyValuePair(
 				"mail.session.mail.advanced.properties",
-				"additionalJavaMailProperties"));
+				"additionalJavaMailProperties")
+		};
+
+		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
+			MailSettingCompanyConfiguration.class, keyValuePairs);
 
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId ->
 				_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 					companyId, MailSettingCompanyConfiguration.class,
-					new KeyValuePair(
-						"pop.server.notifications.enabled",
-						"enablePOPServerNotifications"),
-					new KeyValuePair(
-						"mail.session.mail.pop3.host", "incomingPOPServer"),
-					new KeyValuePair(
-						"mail.session.mail.pop3.port", "incomingPOPPort"),
-					new KeyValuePair(
-						"mail.session.mail.store.protocol", "storeProtocol"),
-					new KeyValuePair(
-						"mail.session.mail.transport.protocol",
-						"transportProtocol"),
-					new KeyValuePair(
-						"mail.session.mail.pop3.user", "popUserName"),
-					new KeyValuePair(
-						"mail.session.mail.pop3.password", "popPassword"),
-					new KeyValuePair(
-						"mail.session.mail.smtp.host", "outgoingSMTPServer"),
-					new KeyValuePair(
-						"mail.session.mail.smtp.port", "outgoingSMTPPort"),
-					new KeyValuePair(
-						"mail.session.mail.smtp.starttls.enable",
-						"enableStartTLS"),
-					new KeyValuePair(
-						"mail.session.mail.smtp.user", "smtpUserName"),
-					new KeyValuePair(
-						"mail.session.mail.smtp.password", "smtpPassword"),
-					new KeyValuePair(
-						"mail.session.mail.advanced.properties",
-						"additionalJavaMailProperties")));
+					keyValuePairs));
 	}
 
 	private final PrefsPropsToConfigurationUpgradeHelper

@@ -39,17 +39,84 @@ public class ElasticsearchInstanceSettingsBuilder {
 			"bootstrap.memory_lock",
 			_elasticsearchConfigurationWrapper.bootstrapMlockAll());
 
-		_configureClustering();
+		// config clustering
 
-		_configureHttp();
+		_settingsHelperImpl.put("cluster.name", _clusterName);
+		_settingsHelperImpl.put(
+			"cluster.routing.allocation.disk.threshold_enabled", false);
+		_settingsHelperImpl.put("discovery.type", "single-node");
 
-		_configureNetworking();
+		// config http
+
+		_settingsHelperImpl.put("http.port", _httpPortRange.toSettingsString());
+
+		_settingsHelperImpl.put(
+			"http.cors.enabled",
+			_elasticsearchConfigurationWrapper.httpCORSEnabled());
+
+		if (_elasticsearchConfigurationWrapper.httpCORSEnabled()) {
+			_settingsHelperImpl.put(
+				"http.cors.allow-origin",
+				_elasticsearchConfigurationWrapper.httpCORSAllowOrigin());
+
+			_settingsHelperImpl.loadFromSource(
+				_elasticsearchConfigurationWrapper.httpCORSConfigurations());
+		}
+
+		// config networking
+
+		String networkBindHost =
+			_elasticsearchConfigurationWrapper.networkBindHost();
+		String networkHost = _elasticsearchConfigurationWrapper.networkHost();
+		String networkPublishHost =
+			_elasticsearchConfigurationWrapper.networkPublishHost();
+
+		if (Validator.isNotNull(networkBindHost)) {
+			_settingsHelperImpl.put("network.bind_host", networkBindHost);
+		}
+
+		if (Validator.isNotNull(networkHost)) {
+			_settingsHelperImpl.put("network.host", networkHost);
+		}
+
+		if (Validator.isNotNull(networkPublishHost)) {
+			_settingsHelperImpl.put("network.publish_host", networkPublishHost);
+		}
+
+		String transportTcpPort =
+			_elasticsearchConfigurationWrapper.transportTcpPort();
+
+		if (Validator.isNotNull(transportTcpPort)) {
+			_settingsHelperImpl.put("transport.port", transportTcpPort);
+		}
 
 		_settingsHelperImpl.put("node.name", _nodeName);
 		_settingsHelperImpl.put(
 			"node.roles", List.of("master", "ingest", "data"));
 
-		_configurePaths();
+		// config paths
+
+		Path workPath = _elasticsearchInstancePaths.getWorkPath();
+
+		Path dataParentPath = workPath.resolve("data/elasticsearch7");
+
+		Path homePath = _elasticsearchInstancePaths.getHomePath();
+
+		if (homePath == null) {
+			homePath = workPath.resolve("data/elasticsearch7");
+		}
+
+		_settingsHelperImpl.put(
+			"path.data", String.valueOf(dataParentPath.resolve("indices")));
+
+		_settingsHelperImpl.put(
+			"path.home", String.valueOf(homePath.toAbsolutePath()));
+
+		_settingsHelperImpl.put(
+			"path.logs", String.valueOf(workPath.resolve("logs")));
+
+		_settingsHelperImpl.put(
+			"path.repo", String.valueOf(dataParentPath.resolve("repo")));
 
 		if (JavaDetector.isJDK21()) {
 			_settingsHelperImpl.put("thread_pool.warmer.max", "20");
@@ -101,83 +168,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		_nodeName = nodeName;
 
 		return this;
-	}
-
-	private void _configureClustering() {
-		_settingsHelperImpl.put("cluster.name", _clusterName);
-		_settingsHelperImpl.put(
-			"cluster.routing.allocation.disk.threshold_enabled", false);
-		_settingsHelperImpl.put("discovery.type", "single-node");
-	}
-
-	private void _configureHttp() {
-		_settingsHelperImpl.put("http.port", _httpPortRange.toSettingsString());
-
-		_settingsHelperImpl.put(
-			"http.cors.enabled",
-			_elasticsearchConfigurationWrapper.httpCORSEnabled());
-
-		if (!_elasticsearchConfigurationWrapper.httpCORSEnabled()) {
-			return;
-		}
-
-		_settingsHelperImpl.put(
-			"http.cors.allow-origin",
-			_elasticsearchConfigurationWrapper.httpCORSAllowOrigin());
-
-		_settingsHelperImpl.loadFromSource(
-			_elasticsearchConfigurationWrapper.httpCORSConfigurations());
-	}
-
-	private void _configureNetworking() {
-		String networkBindHost =
-			_elasticsearchConfigurationWrapper.networkBindHost();
-		String networkHost = _elasticsearchConfigurationWrapper.networkHost();
-		String networkPublishHost =
-			_elasticsearchConfigurationWrapper.networkPublishHost();
-
-		if (Validator.isNotNull(networkBindHost)) {
-			_settingsHelperImpl.put("network.bind_host", networkBindHost);
-		}
-
-		if (Validator.isNotNull(networkHost)) {
-			_settingsHelperImpl.put("network.host", networkHost);
-		}
-
-		if (Validator.isNotNull(networkPublishHost)) {
-			_settingsHelperImpl.put("network.publish_host", networkPublishHost);
-		}
-
-		String transportTcpPort =
-			_elasticsearchConfigurationWrapper.transportTcpPort();
-
-		if (Validator.isNotNull(transportTcpPort)) {
-			_settingsHelperImpl.put("transport.port", transportTcpPort);
-		}
-	}
-
-	private void _configurePaths() {
-		Path workPath = _elasticsearchInstancePaths.getWorkPath();
-
-		Path dataParentPath = workPath.resolve("data/elasticsearch7");
-
-		Path homePath = _elasticsearchInstancePaths.getHomePath();
-
-		if (homePath == null) {
-			homePath = workPath.resolve("data/elasticsearch7");
-		}
-
-		_settingsHelperImpl.put(
-			"path.data", String.valueOf(dataParentPath.resolve("indices")));
-
-		_settingsHelperImpl.put(
-			"path.home", String.valueOf(homePath.toAbsolutePath()));
-
-		_settingsHelperImpl.put(
-			"path.logs", String.valueOf(workPath.resolve("logs")));
-
-		_settingsHelperImpl.put(
-			"path.repo", String.valueOf(dataParentPath.resolve("repo")));
 	}
 
 	private String _clusterName;

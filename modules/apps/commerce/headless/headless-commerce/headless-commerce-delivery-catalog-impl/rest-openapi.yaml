@@ -193,8 +193,6 @@ components:
                     format: int32
                     readOnly: true
                     type: integer
-            required:
-                -   sku
             type: object
         Availability:
             properties:

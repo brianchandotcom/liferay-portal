@@ -24,7 +24,7 @@ export default function FilePreview({file}: {file: File}) {
 	) : isVideo ? (
 		<DLVideoIframe videoPreviewURL={previewURL} />
 	) : (
-		<div className="bg-light d-flex height-100">
+		<div className="bg-light d-flex h-100">
 			<ClayEmptyState
 				description={Liferay.Language.get(
 					'hmm-looks-like-this-item-does-not-have-a-preview-we-can-show-you'

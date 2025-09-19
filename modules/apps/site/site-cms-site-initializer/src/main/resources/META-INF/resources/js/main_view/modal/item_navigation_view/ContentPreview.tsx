@@ -7,7 +7,7 @@ import React from 'react';
 
 export default function ContentPreview({url}: {url: string}) {
 	return (
-		<div className="height-100">
+		<div className="h-100">
 			<iframe
 				height="100%"
 				src={url}

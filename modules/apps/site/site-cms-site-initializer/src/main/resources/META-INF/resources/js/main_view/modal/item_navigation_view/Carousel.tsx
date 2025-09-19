@@ -45,7 +45,7 @@ export default function Carousel({
 	showArrows: boolean;
 }) {
 	return (
-		<div className="carousel height-100">
+		<div className="carousel d-flex h-100">
 			{showArrows && (
 				<Arrow
 					ariaLabel={Liferay.Language.get('previous')}
@@ -54,7 +54,7 @@ export default function Carousel({
 				/>
 			)}
 
-			<div className="preview-container">
+			<div className="preview-container h-100 mx-6 w-100">
 				{currentItem.embedded?.file ? (
 					<FilePreview file={currentItem.embedded.file} />
 				) : (

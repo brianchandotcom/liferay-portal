@@ -127,10 +127,6 @@ public class SearchPermissionDocumentContributorImpl
 				companyId, permissionName, ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(classPK), viewActionId);
 
-			if (roles.isEmpty()) {
-				return;
-			}
-
 			List<Long> roleIds = new ArrayList<>();
 			List<String> groupRoleIds = new ArrayList<>();
 
@@ -161,9 +157,15 @@ public class SearchPermissionDocumentContributorImpl
 							role -> roleIds.add(role.getRoleId())));
 			}
 
-			document.addKeyword(Field.ROLE_ID, roleIds.toArray(new Long[0]));
-			document.addKeyword(
-				Field.GROUP_ROLE_ID, groupRoleIds.toArray(new String[0]));
+			if (!roleIds.isEmpty()) {
+				document.addKeyword(
+					Field.ROLE_ID, roleIds.toArray(new Long[0]));
+			}
+
+			if (!groupRoleIds.isEmpty()) {
+				document.addKeyword(
+					Field.GROUP_ROLE_ID, groupRoleIds.toArray(new String[0]));
+			}
 		}
 		catch (NoSuchResourceException noSuchResourceException) {
 			if (_log.isDebugEnabled()) {

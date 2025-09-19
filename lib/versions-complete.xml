@@ -231,7 +231,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!httpclient5.jar</file-name>
-				<version>5.4.1</version>
+				<version>5.4.4</version>
 				<project-name>Apache HttpClient</project-name>
 				<licenses>
 					<license>
@@ -242,7 +242,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!httpcore5-h2.jar</file-name>
-				<version>5.3.2</version>
+				<version>5.3.4</version>
 				<project-name>Apache HttpComponents Core HTTP/2</project-name>
 				<licenses>
 					<license>
@@ -2188,17 +2188,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.osgi.web.http.servlet.impl.jar!org.eclipse.equinox.http.servlet.jar</file-name>
-				<version>1.2.2.v20211118-0920.LIFERAY-PATCHED-4.JAKARTA-LIFERAY-PATCHED-1</version>
-				<project-name>com.liferay:org.eclipse.equinox.http.servlet</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!wsdl4j.jar</file-name>
 				<version>1.6.3</version>
 				<project-name>WSDL4J</project-name>
@@ -2679,7 +2668,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!httpclient5.jar</file-name>
-				<version>5.2</version>
+				<version>5.4.4</version>
 				<project-name>Apache HttpClient</project-name>
 				<licenses>
 					<license>
@@ -2690,7 +2679,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!httpcore5-h2.jar</file-name>
-				<version>5.2</version>
+				<version>5.3.4</version>
 				<project-name>Apache HttpComponents Core HTTP/2</project-name>
 				<licenses>
 					<license>
@@ -2701,7 +2690,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!httpcore5.jar</file-name>
-				<version>5.2</version>
+				<version>5.3.2</version>
 				<project-name>Apache HttpComponents Core HTTP/1.1</project-name>
 				<licenses>
 					<license>
@@ -2963,7 +2952,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.azure.jar!reactor-netty-http.jar</file-name>
-				<version>1.0.45</version>
+				<version>1.2.10</version>
 				<project-name>HTTP functionality for the Reactor Netty library</project-name>
 				<project-url>https://github.com/reactor/reactor-netty</project-url>
 				<licenses>
@@ -5344,18 +5333,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.shared.dependencies.netty.jar!nimbus-jose-jwt.jar</file-name>
-				<version>10.4</version>
-				<project-name>Nimbus JOSE+JWT</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!oauth2-oidc-sdk.jar</file-name>
 				<version>11.13</version>
 				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
@@ -5494,6 +5471,18 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!curvesapi.jar</file-name>
+				<version>1.08</version>
+				<project-name>curvesapi</project-name>
+				<project-url>https://github.com/virtuald/curvesapi</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
 					</license>
 				</licenses>
 			</library>

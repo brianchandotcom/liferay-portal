@@ -10,8 +10,6 @@ package com.liferay.mcp.server.internal.constants;
  */
 public class MCPServerConstants {
 
-	public static final String MCP_SERVER_OAUTH2_CLIENT_ID = "MCPServer";
-
 	public static final String MCP_SERVER_PROMPT_OBJECT_DEFINITION_ERC =
 		"L_MCP_SERVER_PROMPT";
 

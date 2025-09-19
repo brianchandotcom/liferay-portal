@@ -21,8 +21,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Javier Gamarra
@@ -92,10 +90,7 @@ public class KeywordDTOActionProvider implements DTOActionProvider {
 		return actions;
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ScopeChecker _scopeChecker;
+	@Reference
+	private ScopeChecker _scopeChecker;
 
 }

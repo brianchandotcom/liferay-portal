@@ -38,7 +38,7 @@ public class MCPServerTransportProvider
 		super(new ObjectMapper(), baseURL, "/message", "/sse");
 	}
 
-	public String getAccessToken(McpSyncServerExchange exchange) {
+	public String getAuthorizationHeader(McpSyncServerExchange exchange) {
 		try {
 			Field exchangeField = McpSyncServerExchange.class.getDeclaredField(
 				"exchange");
@@ -53,7 +53,7 @@ public class MCPServerTransportProvider
 			Session session = (Session)sessionField.get(
 				exchangeField.get(exchange));
 
-			return session.getAccessToken();
+			return session.getAuthorizationHeader();
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -71,36 +71,31 @@ public class MCPServerTransportProvider
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		String accessToken = null;
-		String authorization = httpServletRequest.getHeader("Authorization");
-
-		if ((authorization != null) && authorization.startsWith("Bearer ")) {
-			accessToken = authorization.substring("Bearer ".length());
-		}
-
 		try (SafeCloseable safeCloseable =
-				AccessTokenThreadLocal.setAccessTokenWithSafeCloseable(
-					accessToken)) {
+				AuthorizationHeaderThreadLocal.
+					setAuthorizationHeaderWithSafeCloseable(
+						httpServletRequest.getHeader("Authorization"))) {
 
 			super.doGet(httpServletRequest, httpServletResponse);
 		}
 	}
 
-	private static class AccessTokenThreadLocal {
+	private static class AuthorizationHeaderThreadLocal {
 
 		public static String get() {
-			return _accessToken.get();
+			return _authorizationHeader.get();
 		}
 
-		public static SafeCloseable setAccessTokenWithSafeCloseable(
-			String accessToken) {
+		public static SafeCloseable setAuthorizationHeaderWithSafeCloseable(
+			String authorizationHeader) {
 
-			return _accessToken.setWithSafeCloseable(accessToken);
+			return _authorizationHeader.setWithSafeCloseable(
+				authorizationHeader);
 		}
 
-		private static final CentralizedThreadLocal<String> _accessToken =
-			new CentralizedThreadLocal<>(
-				AccessTokenThreadLocal.class + "._accessToken");
+		private static final CentralizedThreadLocal<String>
+			_authorizationHeader = new CentralizedThreadLocal<>(
+				AuthorizationHeaderThreadLocal.class + "._authorizationHeader");
 
 	}
 
@@ -117,11 +112,11 @@ public class MCPServerTransportProvider
 				id, requestTimeout, transport, initHandler,
 				initNotificationHandler, requestHandlers, notificationHandlers);
 
-			_accessToken = AccessTokenThreadLocal.get();
+			_authorizationHeader = AuthorizationHeaderThreadLocal.get();
 		}
 
-		public String getAccessToken() {
-			return _accessToken;
+		public String getAuthorizationHeader() {
+			return _authorizationHeader;
 		}
 
 		public static class Factory implements McpServerSession.Factory {
@@ -187,7 +182,7 @@ public class MCPServerTransportProvider
 
 		}
 
-		private final String _accessToken;
+		private final String _authorizationHeader;
 
 	}
 

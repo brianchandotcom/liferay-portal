@@ -482,6 +482,32 @@ export class JournalEditArticlePage {
 			.waitFor();
 	}
 
+	async selectFileFromDocumentsAndMedia(fileName: string) {
+		await this.page.getByLabel('File', {exact: true}).click();
+
+		const selectDocumentIframe = this.page.frameLocator(
+			'iframe[title="Select Document"]'
+		);
+
+		await selectDocumentIframe
+			.getByRole('link', {name: 'Sites and Libraries'})
+			.click();
+
+		await selectDocumentIframe
+			.getByRole('link', {name: 'Liferay DXP'})
+			.click();
+
+		await selectDocumentIframe
+			.getByRole('link', {name: 'Provided by Liferay'})
+			.click();
+
+		await expect(
+			selectDocumentIframe.getByLabel('Search for', {exact: true})
+		).toBeEnabled();
+
+		await selectDocumentIframe.getByText(fileName).dblclick();
+	}
+
 	async selectSpecificDisplayPage(displayPageName: string) {
 		await this.openFieldSet('Display Page', 'displayPage');
 		await this.page

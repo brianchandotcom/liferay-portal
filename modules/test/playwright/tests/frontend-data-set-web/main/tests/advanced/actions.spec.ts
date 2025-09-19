@@ -334,7 +334,7 @@ for (const tab of TABS) {
 		});
 
 		test(
-			'Check behavior of quick actions',
+			'Behavior of quick actions',
 			{tag: '@LPS-153220'},
 			async ({fdsSamplePage, page}) => {
 				const firstRowItemActionButton =

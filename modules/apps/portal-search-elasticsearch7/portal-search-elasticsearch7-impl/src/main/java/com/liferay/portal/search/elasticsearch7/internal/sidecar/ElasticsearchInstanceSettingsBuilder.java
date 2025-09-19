@@ -5,9 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.JavaDetector;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsHelperImpl;
@@ -186,14 +184,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("path.repo", String.valueOf(dataParentPath.resolve("repo")));
 	}
 
-	private void _configureTestMode() {
-		if (!PortalRunMode.isTestMode()) {
-			return;
-		}
-
-		put("monitor.jvm.gc.enabled", StringPool.FALSE);
-	}
-
 	private void _loadAdditionalConfigurations() {
 		_settingsHelperImpl.loadFromSource(
 			_elasticsearchConfigurationWrapper.additionalConfigurations());
@@ -221,8 +211,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("node.roles", List.of("master", "ingest", "data"));
 
 		_configurePaths();
-
-		_configureTestMode();
 
 		if (JavaDetector.isJDK21()) {
 			put("thread_pool.warmer.max", "20");

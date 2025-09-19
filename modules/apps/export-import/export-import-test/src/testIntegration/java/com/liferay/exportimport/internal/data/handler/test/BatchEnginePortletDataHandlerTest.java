@@ -29,6 +29,7 @@ import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandler
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -46,6 +47,9 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -58,8 +62,15 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -80,6 +91,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.odata.entity.DateTimeEntityField;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -87,7 +101,17 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.staging.StagingGroupHelper;
+
+import jakarta.portlet.GenericPortlet;
+import jakarta.portlet.Portlet;
+
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -95,12 +119,15 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -113,6 +140,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
@@ -568,6 +596,77 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Test
 	public void testGetExportModelCount() throws Exception {
+		String portletId = RandomTestUtil.randomString();
+
+		Assert.assertNull(
+			_portletDataHandlerProvider.provide(
+				TestPropsValues.getCompanyId(), portletId));
+
+		try (SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
+				Portlet.class,
+				new GenericPortlet() {
+				},
+				MapUtil.singletonDictionary("jakarta.portlet.name", portletId));
+			SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
+				VulcanBatchEngineTaskItemDelegate.class,
+				new TestExportImportVulcanBatchEngineTaskItemDelegate(
+					filter -> {
+						if (filter != null) {
+							return Page.of(Arrays.asList(new TestItem(1)));
+						}
+
+						return Page.of(
+							Arrays.asList(
+								new TestItem(1), new TestItem(2),
+								new TestItem(3)));
+					},
+					portletId),
+				HashMapDictionaryBuilder.put(
+					"batch.engine.task.item.delegate", "true"
+				).put(
+					"batch.engine.task.item.delegate.class.name",
+					TestItem.class.getName()
+				).put(
+					"batch.engine.task.item.delegate.name",
+					RandomTestUtil.randomString()
+				).build())) {
+
+			Thread.sleep(1000);
+
+			PortletDataHandler portletDataHandler =
+				_portletDataHandlerProvider.provide(portletId);
+
+			// Filter is not null
+
+			Assert.assertEquals(
+				1,
+				portletDataHandler.getExportModelCount(
+					_getManifestSummary(
+						PortletDataContextFactoryUtil.
+							createExportPortletDataContext(
+								TestPropsValues.getCompanyId(), 0L,
+								new HashMap<>(),
+								new Date(System.currentTimeMillis() - 10000),
+								new Date(System.currentTimeMillis() - 5000),
+								null),
+						portletDataHandler)));
+
+			// Filter is null
+
+			Assert.assertEquals(
+				3,
+				portletDataHandler.getExportModelCount(
+					_getManifestSummary(
+						PortletDataContextFactoryUtil.
+							createExportPortletDataContext(
+								TestPropsValues.getCompanyId(), 0L,
+								new HashMap<>(), null, null, null),
+						portletDataHandler)));
+		}
+	}
+
+	@Test
+	public void testGetExportModelCountWithObjectEntries() throws Exception {
 		_testGetExportModelCount(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			_addObjectDefinition(ObjectDefinitionConstants.SCOPE_COMPANY));
@@ -618,6 +717,24 @@ public class BatchEnginePortletDataHandlerTest {
 		_assertNull(
 			objectDefinition.getObjectDefinitionId(), objectEntries[0],
 			objectEntries[1]);
+	}
+
+	public static class TestItem implements Serializable {
+
+		public TestItem(long id) {
+			this.id = id;
+		}
+
+		public long getId() {
+			return id;
+		}
+
+		public void setId(long id) {
+			this.id = id;
+		}
+
+		protected long id;
+
 	}
 
 	protected LogCapture getLogCapture(boolean expectError) {
@@ -1092,6 +1209,20 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
+	private <S> SafeCloseable _registerServiceWithSafeCloseable(
+		Class<S> clazz, S service, Dictionary<String, ?> properties) {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			BatchEnginePortletDataHandlerRegistryTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<S> serviceRegistration =
+			bundleContext.registerService(clazz, service, properties);
+
+		return serviceRegistration::unregister;
+	}
+
 	private void _testExportImportObjectEntriesToSameGroup(
 			Group group, String scope)
 		throws Exception {
@@ -1377,5 +1508,147 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private StagingLocalService _stagingLocalService;
+
+	private static class TestExportImportVulcanBatchEngineTaskItemDelegate
+		implements EntityModelResource,
+				   ExportImportVulcanBatchEngineTaskItemDelegate<TestItem>,
+				   VulcanBatchEngineTaskItemDelegate<TestItem> {
+
+		public TestExportImportVulcanBatchEngineTaskItemDelegate(
+			Function<Filter, Page<TestItem>> function, String portletId) {
+
+			_function = function;
+			_portletId = portletId;
+		}
+
+		@Override
+		public void create(
+			Collection<TestItem> items, Map<String, Serializable> parameters) {
+		}
+
+		@Override
+		public void delete(
+			Collection<TestItem> items, Map<String, Serializable> parameters) {
+		}
+
+		@Override
+		public EntityModel getEntityModel(
+			Map<String, List<String>> multivaluedMap) {
+
+			return _getEntityModel();
+		}
+
+		@Override
+		public EntityModel getEntityModel(MultivaluedMap<?, ?> multivaluedMap)
+			throws Exception {
+
+			return _getEntityModel();
+		}
+
+		@Override
+		public ExportImportDescriptor getExportImportDescriptor() {
+			return new ExportImportDescriptor() {
+
+				@Override
+				public String getItemClassName() {
+					return _itemClassName;
+				}
+
+				@Override
+				public String getPortletId() {
+					return _portletId;
+				}
+
+				@Override
+				public Scope getScope() {
+					return Scope.COMPANY;
+				}
+
+			};
+		}
+
+		@Override
+		public Page<TestItem> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search) {
+
+			return _function.apply(filter);
+		}
+
+		@Override
+		public void setContextBatchUnsafeBiConsumer(
+			UnsafeBiConsumer
+				<Collection<TestItem>,
+				 UnsafeFunction<TestItem, TestItem, Exception>, Exception>
+					contextBatchUnsafeBiConsumer) {
+		}
+
+		@Override
+		public void setContextCompany(Company contextCompany) {
+		}
+
+		@Override
+		public void setContextUriInfo(UriInfo uriInfo) {
+		}
+
+		@Override
+		public void setContextUser(User contextUser) {
+		}
+
+		@Override
+		public void setGroupLocalService(GroupLocalService groupLocalService) {
+		}
+
+		@Override
+		public void setLanguageId(String languageId) {
+		}
+
+		@Override
+		public void setResourceActionLocalService(
+			ResourceActionLocalService resourceActionLocalService) {
+		}
+
+		@Override
+		public void setResourcePermissionLocalService(
+			ResourcePermissionLocalService resourcePermissionLocalService) {
+		}
+
+		@Override
+		public void setRoleLocalService(RoleLocalService roleLocalService) {
+		}
+
+		@Override
+		public void update(
+			Collection<TestItem> testItems,
+			Map<String, Serializable> parameters) {
+		}
+
+		private EntityModel _getEntityModel() {
+			return new EntityModel() {
+
+				@Override
+				public Map<String, EntityField> getEntityFieldsMap() {
+					return HashMapBuilder.<String, EntityField>put(
+						"dateModified",
+						new DateTimeEntityField(
+							"dateModified", locale -> "dateModified",
+							locale -> "dateModified")
+					).build();
+				}
+
+				@Override
+				public String getName() {
+					return "TestEntityModel";
+				}
+
+			};
+		}
+
+		private static String _itemClassName = RandomTestUtil.randomString();
+
+		private final Function<Filter, Page<TestItem>> _function;
+		private final String _portletId;
+
+	}
 
 }

@@ -473,8 +473,6 @@ public class Sidecar {
 				ElasticsearchInstanceSettingsBuilder.builder(
 				).clusterName(
 					_getClusterName()
-				).discoveryTypeSingleNode(
-					true
 				).elasticsearchConfigurationWrapper(
 					_elasticsearchConfigurationWrapper
 				).elasticsearchInstancePaths(

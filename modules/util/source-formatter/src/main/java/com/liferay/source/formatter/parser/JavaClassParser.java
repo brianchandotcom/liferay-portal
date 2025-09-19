@@ -33,15 +33,6 @@ import java.util.List;
 public class JavaClassParser {
 
 	public static List<JavaClass> parseAnonymousClasses(
-			String fileName, String content, FileContents fileContents)
-		throws IOException, ParseException {
-
-		return parseAnonymousClasses(
-			fileName, content, null, Collections.emptyList(), null,
-			fileContents);
-	}
-
-	public static List<JavaClass> parseAnonymousClasses(
 			String fileName, String content, String packageName,
 			List<String> importNames, DetailAST detailAST,
 			FileContents fileContents)

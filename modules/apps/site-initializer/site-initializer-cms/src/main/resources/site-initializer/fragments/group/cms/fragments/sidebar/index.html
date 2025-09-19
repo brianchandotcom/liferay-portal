@@ -4,12 +4,10 @@
 
 <div class="open sidebar-layout">
 	<nav aria-label="${configuration.sidebarAriaLabel}" class="sidebar-container">
-		<div class="sidebar sidebar-light">
-			<div class="d-flex justify-content-end p-2 pb-0 sidebar-close-button-container">
-			<button class="btn btn-monospaced btn-secondary btn-sm btn-unstyled lfr-portal-tooltip m-2 sidebar-close-button sr-only sr-only-focusable" title="${languageUtil.get(locale, 'close-cms-product-menu')}" type="button">
-					[@clay["icon"] symbol="times" /]
-				</button>
-			</div>
+		<div class="position-relative sidebar sidebar-light">
+			<button class="close lfr-portal-tooltip m-2 p-2 rounded-lg sidebar-close-button sr-only sr-only-focusable" disabled title="${languageUtil.get(locale, 'close-product-menu')}" type="button">
+				[@clay["icon"] symbol="times" /]
+			</button>
 
 			<div class="px-0 sidebar-body">
 				<lfr-drop-zone data-lfr-drop-zone-id="sidebarBody"></lfr-drop-zone>

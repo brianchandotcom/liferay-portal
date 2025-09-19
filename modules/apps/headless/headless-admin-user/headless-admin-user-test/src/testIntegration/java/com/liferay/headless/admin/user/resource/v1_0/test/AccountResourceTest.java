@@ -1893,6 +1893,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				name = accountGroup1.getName();
 			}
 		};
+
 		AccountGroupBrief accountGroupBrief2 = new AccountGroupBrief() {
 			{
 				externalReferenceCode = RandomTestUtil.randomString();
@@ -1952,6 +1953,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 					serviceBuilderRole1.getType());
 			}
 		};
+
 		Permission permission2 = new Permission() {
 			{
 				actionIds = new String[] {ActionKeys.UPDATE};
@@ -1980,6 +1982,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 					siteKey = group.getGroupKey();
 				}
 			};
+
 		TaxonomyCategoryReference taxonomyCategoryReference2 =
 			new TaxonomyCategoryReference() {
 				{

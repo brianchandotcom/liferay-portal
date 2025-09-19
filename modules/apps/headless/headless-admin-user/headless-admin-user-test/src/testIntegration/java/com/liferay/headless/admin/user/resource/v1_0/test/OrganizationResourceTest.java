@@ -1241,6 +1241,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				type = accountEntry1.getType();
 			}
 		};
+
 		AccountBrief accountBrief2 = new AccountBrief() {
 			{
 				externalReferenceCode = RandomTestUtil.randomString();
@@ -1269,6 +1270,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				roleType = RoleConstants.getTypeLabel(role1.getType());
 			}
 		};
+
 		Permission permission2 = new Permission() {
 			{
 				actionIds = new String[] {ActionKeys.UPDATE};
@@ -1291,6 +1293,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				roleType = role2.getType();
 			}
 		};
+
 		RoleBrief roleBrief2 = new RoleBrief() {
 			{
 				externalReferenceCode = RandomTestUtil.randomString();
@@ -1317,6 +1320,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 					siteKey = group.getGroupKey();
 				}
 			};
+
 		TaxonomyCategoryReference taxonomyCategoryReference2 =
 			new TaxonomyCategoryReference() {
 				{

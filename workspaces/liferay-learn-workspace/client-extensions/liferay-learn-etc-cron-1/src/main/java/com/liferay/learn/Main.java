@@ -1529,6 +1529,7 @@ public class Main {
 							_isShowChildrenCards(englishFile)));
 				}
 			};
+
 		String englishTitle = _getTitle(englishText);
 
 		File japaneseFile = new File(

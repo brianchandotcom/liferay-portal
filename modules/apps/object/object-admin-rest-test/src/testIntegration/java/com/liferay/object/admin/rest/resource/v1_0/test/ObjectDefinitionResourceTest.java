@@ -1972,6 +1972,7 @@ public class ObjectDefinitionResourceTest
 
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			randomObjectDefinition());
+
 		WorkflowDefinition workflowDefinition1 =
 			_workflowDefinitionManager.getWorkflowDefinition(
 				WorkflowDefinitionConstants.

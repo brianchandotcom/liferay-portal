@@ -624,6 +624,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 				type = serviceBuilderAccountEntry1.getType();
 			}
 		};
+
 		AccountBrief accountBrief2 = new AccountBrief() {
 			{
 				externalReferenceCode = RandomTestUtil.randomString();
@@ -648,6 +649,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 					serviceBuilderRole1.getType());
 			}
 		};
+
 		Permission permission2 = new Permission() {
 			{
 				actionIds = new String[] {ActionKeys.UPDATE};

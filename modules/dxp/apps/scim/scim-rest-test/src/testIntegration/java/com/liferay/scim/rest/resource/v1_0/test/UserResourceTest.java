@@ -254,6 +254,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 					}
 				}
 			});
+
 		patchOp.setSchemas(
 			new String[] {"\"urn:ietf:params:scim:api:messages:2.0:PatchOp\""});
 

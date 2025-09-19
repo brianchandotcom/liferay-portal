@@ -630,6 +630,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 					}
 				}
 			});
+
 		bulkAction.setSelectAll(false);
 
 		bulkActionTask = bulkActionResource.postBulkAction(

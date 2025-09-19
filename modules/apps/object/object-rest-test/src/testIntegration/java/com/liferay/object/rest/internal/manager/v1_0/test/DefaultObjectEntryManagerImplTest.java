@@ -6511,6 +6511,7 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			});
+
 		assertEquals(
 			_defaultObjectEntryManager.partialUpdateObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition2,
@@ -6771,6 +6772,7 @@ public class DefaultObjectEntryManagerImplTest
 				"No FileEntry exists with the key {fileEntryId=",
 				tempFileEntryId2, "}"),
 			() -> _dlAppLocalService.getFileEntry(tempFileEntryId2));
+
 		Assert.assertNotNull(
 			_dlAppLocalService.getFileEntry(fileEntry1.getId()));
 

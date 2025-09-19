@@ -1543,7 +1543,7 @@ export class PageEditorPage {
 
 		if (source === 'relationship') {
 			await this.page
-				.getByLabel('Relationship')
+				.getByLabel('Relationship', {exact: true})
 				.selectOption(mappingConfiguration.relationship);
 		}
 

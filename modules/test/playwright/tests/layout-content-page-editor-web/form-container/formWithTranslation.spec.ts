@@ -663,13 +663,23 @@ test(
 			trigger: page.getByLabel('Select a language, current language:'),
 		});
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option', {
-				name: 'Germany',
-			}),
-			trigger: page.getByPlaceholder('Choose an Option'),
-		});
+		await expect(async () => {
+			await page
+				.getByPlaceholder('Choose an Option')
+				.click({timeout: 1000});
+
+			await expect(
+				page.getByRole('option', {
+					name: 'Germany',
+				})
+			).toBeVisible({timeout: 1000});
+
+			await page
+				.getByRole('option', {
+					name: 'Germany',
+				})
+				.click({timeout: 1000});
+		}).toPass();
 
 		// Check the translation in the localization select
 

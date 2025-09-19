@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
 import cx from 'classnames';
 import React from 'react';
@@ -31,11 +32,13 @@ function getDisplayType(char: string): LogoColor {
 export default function SpaceSticker({
 	displayType,
 	hideName,
+	href,
 	name,
 	size,
 	...otherProps
 }: {
 	hideName?: boolean;
+	href?: string;
 	name: string;
 } & Pick<
 	React.ComponentProps<typeof ClaySticker>,
@@ -54,7 +57,12 @@ export default function SpaceSticker({
 				{name.charAt(0).toUpperCase()}
 			</ClaySticker>
 
-			{!hideName && <span>{name}</span>}
+			{!hideName &&
+				(href ? (
+					<ClayLink href={href}>{name}</ClayLink>
+				) : (
+					<span>{name}</span>
+				))}
 		</div>
 	);
 }

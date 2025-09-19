@@ -42,6 +42,7 @@ import {
 import {sub} from 'frontend-js-web';
 
 import AICreator from '../plugins/AICreator';
+import HeadlessItemSelector from '../plugins/HeadlessItemSelector';
 import ItemSelector from '../plugins/ItemSelector';
 import {EEditorConfigPreset, EEditorVariant} from './types';
 
@@ -123,8 +124,8 @@ const getDefaultEditorConfig = ({
 		BlockQuote,
 		Font,
 		Heading,
+		HeadlessItemSelector,
 		HorizontalLine,
-		ItemSelector,
 		ImageBlock,
 		ImageCaption,
 		ImageInline,
@@ -132,8 +133,9 @@ const getDefaultEditorConfig = ({
 		ImageStyle,
 		ImageToolbar,
 		Indent,
-		RemoveFormat,
+		ItemSelector,
 		MediaEmbed,
+		RemoveFormat,
 		Strikethrough,
 		Style,
 		Table,
@@ -184,10 +186,10 @@ const getDefaultEditorConfig = ({
 		'alignment',
 		'|',
 		'aiCreator',
-		'|',
 	];
 
 	if (editorVariant === EEditorVariant.CLASSIC) {
+		toolbarItems.push('|');
 		toolbarItems.push('sourceEditing');
 	}
 

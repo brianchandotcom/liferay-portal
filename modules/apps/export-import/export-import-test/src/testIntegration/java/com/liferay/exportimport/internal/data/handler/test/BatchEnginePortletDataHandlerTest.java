@@ -595,6 +595,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
+	@TestInfo("LPD-65748")
 	public void testGetExportModelCount() throws Exception {
 		String portletId = RandomTestUtil.randomString();
 

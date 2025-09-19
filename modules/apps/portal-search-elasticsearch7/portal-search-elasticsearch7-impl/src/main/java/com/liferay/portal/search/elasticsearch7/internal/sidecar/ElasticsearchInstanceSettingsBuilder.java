@@ -88,33 +88,23 @@ public class ElasticsearchInstanceSettingsBuilder {
 	protected void load() {
 		_loadDefaultConfigurations();
 
-		_loadSidecarConfigurations();
+		_settingsHelperImpl.put("node.store.allow_mmap", false);
 
-		_loadAdditionalConfigurations();
-	}
-
-	protected void put(String key, boolean value) {
-		_settingsHelperImpl.put(key, value);
-	}
-
-	protected void put(String key, List<String> values) {
-		_settingsHelperImpl.put(key, values);
-	}
-
-	protected void put(String key, String value) {
-		_settingsHelperImpl.put(key, value);
+		_settingsHelperImpl.loadFromSource(
+			_elasticsearchConfigurationWrapper.additionalConfigurations());
 	}
 
 	private void _configureClustering() {
-		put("cluster.name", _clusterName);
-		put("cluster.routing.allocation.disk.threshold_enabled", false);
-		put("discovery.type", "single-node");
+		_settingsHelperImpl.put("cluster.name", _clusterName);
+		_settingsHelperImpl.put(
+			"cluster.routing.allocation.disk.threshold_enabled", false);
+		_settingsHelperImpl.put("discovery.type", "single-node");
 	}
 
 	private void _configureHttp() {
-		put("http.port", _httpPortRange.toSettingsString());
+		_settingsHelperImpl.put("http.port", _httpPortRange.toSettingsString());
 
-		put(
+		_settingsHelperImpl.put(
 			"http.cors.enabled",
 			_elasticsearchConfigurationWrapper.httpCORSEnabled());
 
@@ -122,7 +112,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 			return;
 		}
 
-		put(
+		_settingsHelperImpl.put(
 			"http.cors.allow-origin",
 			_elasticsearchConfigurationWrapper.httpCORSAllowOrigin());
 
@@ -138,22 +128,22 @@ public class ElasticsearchInstanceSettingsBuilder {
 			_elasticsearchConfigurationWrapper.networkPublishHost();
 
 		if (Validator.isNotNull(networkBindHost)) {
-			put("network.bind_host", networkBindHost);
+			_settingsHelperImpl.put("network.bind_host", networkBindHost);
 		}
 
 		if (Validator.isNotNull(networkHost)) {
-			put("network.host", networkHost);
+			_settingsHelperImpl.put("network.host", networkHost);
 		}
 
 		if (Validator.isNotNull(networkPublishHost)) {
-			put("network.publish_host", networkPublishHost);
+			_settingsHelperImpl.put("network.publish_host", networkPublishHost);
 		}
 
 		String transportTcpPort =
 			_elasticsearchConfigurationWrapper.transportTcpPort();
 
 		if (Validator.isNotNull(transportTcpPort)) {
-			put("transport.port", transportTcpPort);
+			_settingsHelperImpl.put("transport.port", transportTcpPort);
 		}
 	}
 
@@ -164,18 +154,17 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		Path homePath = getHomePath();
 
-		put("path.data", String.valueOf(dataParentPath.resolve("indices")));
+		_settingsHelperImpl.put(
+			"path.data", String.valueOf(dataParentPath.resolve("indices")));
 
-		put("path.home", String.valueOf(homePath.toAbsolutePath()));
+		_settingsHelperImpl.put(
+			"path.home", String.valueOf(homePath.toAbsolutePath()));
 
-		put("path.logs", String.valueOf(workPath.resolve("logs")));
+		_settingsHelperImpl.put(
+			"path.logs", String.valueOf(workPath.resolve("logs")));
 
-		put("path.repo", String.valueOf(dataParentPath.resolve("repo")));
-	}
-
-	private void _loadAdditionalConfigurations() {
-		_settingsHelperImpl.loadFromSource(
-			_elasticsearchConfigurationWrapper.additionalConfigurations());
+		_settingsHelperImpl.put(
+			"path.repo", String.valueOf(dataParentPath.resolve("repo")));
 	}
 
 	private void _loadDefaultConfigurations() {
@@ -185,8 +174,8 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		_settingsHelperImpl.loadFromSource(defaultConfigurations);
 
-		put("action.auto_create_index", false);
-		put(
+		_settingsHelperImpl.put("action.auto_create_index", false);
+		_settingsHelperImpl.put(
 			"bootstrap.memory_lock",
 			_elasticsearchConfigurationWrapper.bootstrapMlockAll());
 
@@ -196,18 +185,15 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		_configureNetworking();
 
-		put("node.name", _nodeName);
-		put("node.roles", List.of("master", "ingest", "data"));
+		_settingsHelperImpl.put("node.name", _nodeName);
+		_settingsHelperImpl.put(
+			"node.roles", List.of("master", "ingest", "data"));
 
 		_configurePaths();
 
 		if (JavaDetector.isJDK21()) {
-			put("thread_pool.warmer.max", "20");
+			_settingsHelperImpl.put("thread_pool.warmer.max", "20");
 		}
-	}
-
-	private void _loadSidecarConfigurations() {
-		put("node.store.allow_mmap", false);
 	}
 
 	private String _clusterName;

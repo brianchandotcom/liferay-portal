@@ -610,7 +610,8 @@ public class EditInfoItemStrutsActionTest {
 		ObjectEntry objectEntry = objectEntries.get(0);
 
 		regularParameters.put(
-			"checkboxNames", Collections.singletonList("myBoolean"));
+			"checkboxNames",
+			Collections.singletonList("ObjectField_myBoolean"));
 		regularParameters.put(
 			"classNameId", Collections.singletonList(_classNameId));
 		regularParameters.put(

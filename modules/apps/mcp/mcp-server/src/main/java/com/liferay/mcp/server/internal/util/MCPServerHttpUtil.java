@@ -23,7 +23,8 @@ import java.nio.charset.StandardCharsets;
 public class MCPServerHttpUtil {
 
 	public static String callEndpoint(
-		String method, String path, String payload, String accessToken) {
+		String method, String path, String payload,
+		String authorizationHeader) {
 
 		try {
 			URL url = new URL(path);
@@ -31,11 +32,9 @@ public class MCPServerHttpUtil {
 			HttpURLConnection connection =
 				(HttpURLConnection)url.openConnection();
 
-			// TODO Allow guest access?
-
-			if (accessToken != null) {
+			if (authorizationHeader != null) {
 				connection.setRequestProperty(
-					"Authorization", "Bearer " + accessToken);
+					"Authorization", authorizationHeader);
 			}
 
 			connection.setDoOutput(true);

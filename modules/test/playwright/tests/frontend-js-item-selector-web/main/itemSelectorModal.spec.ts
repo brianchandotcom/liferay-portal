@@ -28,6 +28,7 @@ const test = mergeTests(
 	loginTest()
 );
 
+let user: null | TUserAccount = null;
 let imageFile: any;
 let jsonFile: any;
 
@@ -58,6 +59,10 @@ test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 		);
 	});
 
+	await test.step('Create extra user', async () => {
+		user = await apiHelpers.headlessAdminUser.postUserAccount();
+	});
+
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
 			getWidgetDefinition({
@@ -77,6 +82,10 @@ test.afterEach(async ({apiHelpers}) => {
 	imageFile &&
 		(await apiHelpers.headlessDelivery.deleteDocument(imageFile.id));
 	jsonFile && (await apiHelpers.headlessDelivery.deleteDocument(jsonFile.id));
+
+	if (user) {
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+	}
 });
 
 test('Item Selector Modal with single selection', async ({
@@ -100,10 +109,21 @@ test('Item Selector Modal with single selection', async ({
 	await test.step('Check that a single item can be selected in the Cards visualization mode', async () => {
 		await expect(itemSelectorSamplePage.modal.selectButton).toBeDisabled();
 
-		await itemSelectorSamplePage.page
-			.locator('.custom-radio')
-			.first()
-			.click();
+		const items = itemSelectorSamplePage.page.locator(
+			'.card:has(>.custom-radio)'
+		);
+
+		const numOfItems = await items.count();
+
+		expect(numOfItems > 1).toEqual(true);
+
+		const testItem = items.getByText('Test', {exact: true});
+
+		const itemUser = items.getByText(user?.givenName, {exact: true});
+
+		expect(testItem).not.toBe(itemUser);
+
+		await testItem.click();
 
 		await expect(itemSelectorSamplePage.modal.selectButton).toBeEnabled();
 
@@ -111,13 +131,10 @@ test('Item Selector Modal with single selection', async ({
 			itemSelectorSamplePage.page.getByText(`Test Selected`)
 		).toBeVisible();
 
-		await itemSelectorSamplePage.page
-			.locator('.custom-radio')
-			.last()
-			.click();
+		await itemUser.click();
 
 		await expect(
-			itemSelectorSamplePage.page.getByText(`Test Selected`)
+			itemSelectorSamplePage.page.getByText(`${user?.givenName} Selected`)
 		).toBeVisible();
 	});
 

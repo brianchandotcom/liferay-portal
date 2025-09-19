@@ -28,7 +28,37 @@ public class ElasticsearchInstanceSettingsBuilder {
 	}
 
 	public Settings build() {
-		load();
+		String defaultConfigurations = ResourceUtil.getResourceAsString(
+			getClass(),
+			SidecarConstants.ELASTICSEARCH_OPTIONAL_DEFAULTS_FILE_NAME);
+
+		_settingsHelperImpl.loadFromSource(defaultConfigurations);
+
+		_settingsHelperImpl.put("action.auto_create_index", false);
+		_settingsHelperImpl.put(
+			"bootstrap.memory_lock",
+			_elasticsearchConfigurationWrapper.bootstrapMlockAll());
+
+		_configureClustering();
+
+		_configureHttp();
+
+		_configureNetworking();
+
+		_settingsHelperImpl.put("node.name", _nodeName);
+		_settingsHelperImpl.put(
+			"node.roles", List.of("master", "ingest", "data"));
+
+		_configurePaths();
+
+		if (JavaDetector.isJDK21()) {
+			_settingsHelperImpl.put("thread_pool.warmer.max", "20");
+		}
+
+		_settingsHelperImpl.put("node.store.allow_mmap", false);
+
+		_settingsHelperImpl.loadFromSource(
+			_elasticsearchConfigurationWrapper.additionalConfigurations());
 
 		return _settingsHelperImpl.build();
 	}
@@ -71,27 +101,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		_nodeName = nodeName;
 
 		return this;
-	}
-
-	protected Path getHomePath() {
-		Path homePath = _elasticsearchInstancePaths.getHomePath();
-
-		if (homePath != null) {
-			return homePath;
-		}
-
-		Path workPath = _elasticsearchInstancePaths.getWorkPath();
-
-		return workPath.resolve("data/elasticsearch7");
-	}
-
-	protected void load() {
-		_loadDefaultConfigurations();
-
-		_settingsHelperImpl.put("node.store.allow_mmap", false);
-
-		_settingsHelperImpl.loadFromSource(
-			_elasticsearchConfigurationWrapper.additionalConfigurations());
 	}
 
 	private void _configureClustering() {
@@ -152,7 +161,11 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		Path dataParentPath = workPath.resolve("data/elasticsearch7");
 
-		Path homePath = getHomePath();
+		Path homePath = _elasticsearchInstancePaths.getHomePath();
+
+		if (homePath == null) {
+			homePath = workPath.resolve("data/elasticsearch7");
+		}
 
 		_settingsHelperImpl.put(
 			"path.data", String.valueOf(dataParentPath.resolve("indices")));
@@ -165,35 +178,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		_settingsHelperImpl.put(
 			"path.repo", String.valueOf(dataParentPath.resolve("repo")));
-	}
-
-	private void _loadDefaultConfigurations() {
-		String defaultConfigurations = ResourceUtil.getResourceAsString(
-			getClass(),
-			SidecarConstants.ELASTICSEARCH_OPTIONAL_DEFAULTS_FILE_NAME);
-
-		_settingsHelperImpl.loadFromSource(defaultConfigurations);
-
-		_settingsHelperImpl.put("action.auto_create_index", false);
-		_settingsHelperImpl.put(
-			"bootstrap.memory_lock",
-			_elasticsearchConfigurationWrapper.bootstrapMlockAll());
-
-		_configureClustering();
-
-		_configureHttp();
-
-		_configureNetworking();
-
-		_settingsHelperImpl.put("node.name", _nodeName);
-		_settingsHelperImpl.put(
-			"node.roles", List.of("master", "ingest", "data"));
-
-		_configurePaths();
-
-		if (JavaDetector.isJDK21()) {
-			_settingsHelperImpl.put("thread_pool.warmer.max", "20");
-		}
 	}
 
 	private String _clusterName;

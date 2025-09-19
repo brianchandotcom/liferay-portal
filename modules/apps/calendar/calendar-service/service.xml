@@ -240,7 +240,6 @@
 		<exception>CalendarName</exception>
 		<exception>CalendarResourceCode</exception>
 		<exception>CalendarResourceName</exception>
-		<exception>DuplicateCalendarBookingExternalReferenceCode</exception>
 		<exception>DuplicateCalendarResource</exception>
 		<exception>RequiredCalendar</exception>
 	</exceptions>

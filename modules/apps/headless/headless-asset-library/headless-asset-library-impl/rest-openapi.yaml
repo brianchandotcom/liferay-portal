@@ -18,12 +18,6 @@ components:
                     description:
                         The asset library's key.
                     type: string
-                siteId:
-                    description:
-                        The asset library's site ID.
-                    format: int64
-                    readOnly: true
-                    type: integer
                 connectedSites:
                     description:
                         The asset library's connected sites.
@@ -98,6 +92,12 @@ components:
                     $ref: "#/components/schemas/Settings"
                     description:
                         The asset library's settings.
+                siteId:
+                    description:
+                        The asset library's site ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
                 type:
                     default: AssetLibrary
                     enum: [AssetLibrary, Space]

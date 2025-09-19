@@ -11,16 +11,17 @@
 }
 
 .carousel {
-	.pull-left,
-	.pull-right {
-		top: calc(50% - 32px);
+	.carousel-previous,
+	.carousel-next {
+		top: 50%;
+		transform: translateY(-50%);
 	}
 
-	.pull-left {
+	.carousel-previous {
 		left: 0;
 	}
 
-	.pull-right {
+	.carousel-next {
 		right: 0;
 	}
 }

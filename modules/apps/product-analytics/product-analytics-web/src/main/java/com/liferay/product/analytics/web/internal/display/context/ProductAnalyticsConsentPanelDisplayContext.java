@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import jakarta.portlet.RenderRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 
@@ -23,9 +23,9 @@ public class ProductAnalyticsConsentPanelDisplayContext
 	public ProductAnalyticsConsentPanelDisplayContext(
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest) {
 
-		super(layoutUtilityPageEntryLayoutProvider, renderRequest);
+		super(layoutUtilityPageEntryLayoutProvider, httpServletRequest);
 	}
 
 	public Map<String, Object> getContext() {
@@ -41,10 +41,11 @@ public class ProductAnalyticsConsentPanelDisplayContext
 	}
 
 	public boolean isShowButtons() {
-		RenderRequest renderRequest = getRenderRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return !themeDisplay.isStatePopUp();
 	}

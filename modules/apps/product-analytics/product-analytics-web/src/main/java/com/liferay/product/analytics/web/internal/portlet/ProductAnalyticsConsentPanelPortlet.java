@@ -64,7 +64,8 @@ public class ProductAnalyticsConsentPanelPortlet extends MVCPortlet {
 		ProductAnalyticsConsentPanelDisplayContext
 			productAnalyticsConsentPanelDisplayContext =
 				new ProductAnalyticsConsentPanelDisplayContext(
-					_layoutUtilityPageEntryLayoutProvider, renderRequest);
+					_layoutUtilityPageEntryLayoutProvider,
+					_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(
 			ProductAnalyticsWebKeys.

@@ -529,6 +529,10 @@
 			<category name="Styling" />
 			<description name="Finds unnecessary call to no-argument constructor of the superclass." />
 		</check>
+		<check name="JavaDefaultAdminScreenNameCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that we do not use `PropsKeys.DEFAULT_ADMIN_SCREEN_NAME` or `PropsValues.DEFAULT_ADMIN_SCREEN_NAME`." />
+		</check>
 		<check name="JavaDeserializationSecurityCheck">
 			<category name="Security" />
 			<description name="Finds Java serialization vulnerabilities." />

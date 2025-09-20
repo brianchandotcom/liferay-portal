@@ -9,6 +9,7 @@ import com.liferay.analytics.reports.rest.dto.v1_0.AssetAppearsOnHistogramMetric
 import com.liferay.analytics.reports.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetAppearsOnHistogramMetricResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.analytics.settings.rest.util.AnalyticsSettingsManagerUtil;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -16,8 +17,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
-
-import jakarta.ws.rs.BadRequestException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,12 +46,8 @@ public class AssetAppearsOnHistogramMetricResourceImpl
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		if (!_analyticsSettingsManager.isSiteIdSynced(
-				group.getCompanyId(), group.getGroupId())) {
-
-			throw new BadRequestException(
-				"Analytics Cloud is not enabled for groupId " + groupId);
-		}
+		AnalyticsSettingsManagerUtil.checkSiteIdSynced(
+			_analyticsSettingsManager, group);
 
 		List<Long> analyticsCloudChannelIds = new ArrayList<>();
 

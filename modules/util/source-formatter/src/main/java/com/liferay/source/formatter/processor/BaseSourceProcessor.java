@@ -36,8 +36,6 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URISyntaxException;
-
 import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;

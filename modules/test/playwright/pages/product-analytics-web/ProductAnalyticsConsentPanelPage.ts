@@ -8,6 +8,7 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 export class ProductAnalyticsConsentPanelPage {
 	readonly acceptAllButton: Locator;
 	readonly acceptSelectedButton: Locator;
+	readonly consentPanelFormLocator: Locator;
 	readonly consentPanelIFrame: FrameLocator;
 	readonly page: Page;
 	readonly panelLocator: Locator;
@@ -24,6 +25,9 @@ export class ProductAnalyticsConsentPanelPage {
 			exact: true,
 			name: 'Accept Selected',
 		});
+		this.consentPanelFormLocator = page.locator(
+			'[id="_com_liferay_my_account_web_portlet_MyAccountPortlet_productAnalyticsConsentPanelForm"]'
+		);
 		this.consentPanelIFrame = page.frameLocator(
 			'iframe[title="Liferay Platform Consent Preferences"]'
 		);
@@ -37,9 +41,16 @@ export class ProductAnalyticsConsentPanelPage {
 		);
 	}
 
-	async getCookieTypeToggle(cookieType: string) {
-		return this.consentPanelIFrame.locator(
-			`[data-cookie-key="${cookieType}"]`
-		);
+	async getCookieTypeToggle(cookieType: string, useIFrame = true) {
+		if (useIFrame) {
+			return this.consentPanelIFrame.locator(
+				`[data-cookie-key="${cookieType}"]`
+			);
+		}
+		else {
+			return this.consentPanelFormLocator.locator(
+				`[data-cookie-key="${cookieType}"]`
+			);
+		}
 	}
 }

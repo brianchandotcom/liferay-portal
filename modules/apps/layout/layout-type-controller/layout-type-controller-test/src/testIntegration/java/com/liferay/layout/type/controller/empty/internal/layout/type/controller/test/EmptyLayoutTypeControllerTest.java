@@ -73,20 +73,19 @@ public class EmptyLayoutTypeControllerTest {
 		Assert.assertEquals(
 			LayoutConstants.TYPE_EMPTY, _layoutTypeController.getType());
 
-		try {
-			Assert.assertFalse(
-				_layoutTypeController.includeLayoutContent(
-					_getMockHttpServletRequest(
-						_layout.getFriendlyURL(), TestPropsValues.getUser()),
-					new MockHttpServletResponse(), _layout));
+		Assert.assertFalse(
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(
+					_layout.getFriendlyURL(), TestPropsValues.getUser()),
+				new MockHttpServletResponse(), _layout));
 
-			Assert.assertFalse(
-				_layoutTypeController.includeLayoutContent(
-					_getMockHttpServletRequest(
-						_layout.getFriendlyURL(),
-						_userLocalService.getGuestUser(
-							TestPropsValues.getCompanyId())),
-					new MockHttpServletResponse(), _layout));
+		try {
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(
+					_layout.getFriendlyURL(),
+					_userLocalService.getGuestUser(
+						TestPropsValues.getCompanyId())),
+				new MockHttpServletResponse(), _layout);
 
 			Assert.fail();
 		}

@@ -441,9 +441,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> checkCategoryNames =
 			_sourceFormatterArgs.getCheckCategoryNames();
 
-		if (originalReturnCharacter.equals(StringPool.NEW_LINE) &&
-			checkCategoryNames.isEmpty() &&
-			(isPortalSource() || isSubrepository())) {
+		if (checkCategoryNames.isEmpty() &&
+			(isPortalSource() || isSubrepository()) &&
+			originalReturnCharacter.equals(StringPool.NEW_LINE)) {
 
 			return content;
 		}

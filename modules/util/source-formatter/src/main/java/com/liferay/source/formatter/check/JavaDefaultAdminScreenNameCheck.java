@@ -32,7 +32,7 @@ public class JavaDefaultAdminScreenNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Do not use \"PropsKeys.DEFAULT_ADMIN_SCREEN_NAME\" or " +
-					"\"PropsValues.DEFAULT_ADMIN_SCREEN_NAME\"");
+					"\"PropsValues.DEFAULT_ADMIN_SCREEN_NAME\", see LPD-59150");
 		}
 
 		return content;

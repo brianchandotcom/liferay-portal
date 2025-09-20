@@ -21,7 +21,7 @@ import {cmsPagesTest} from './fixtures/cmsPagesTest';
 async function getSampleStructureDefinition(apiHelpers: ApiHelpers) {
 	const assetLibraries =
 		await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
-			encodeURIComponent("type eq 'Space'")
+			"type eq 'Space'"
 		);
 
 	const defaultSpaceERC = assetLibraries.find(

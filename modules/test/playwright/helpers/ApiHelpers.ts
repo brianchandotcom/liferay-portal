@@ -471,9 +471,7 @@ export class DataApiHelpers extends ApiHelpers {
 				await this.apiBuilder.deleteApiApplication(item.id);
 			}
 			else if (item.type === 'assetLibrary') {
-				await this.headlessAssetLibrary.deleteAssetLibrariesPage(
-					item.id
-				);
+				await this.headlessAssetLibrary.deleteAssetLibrary(item.id);
 			}
 			else if (item.type === 'catalog') {
 				await this.headlessCommerceAdminCatalog.deleteCatalog(item.id);

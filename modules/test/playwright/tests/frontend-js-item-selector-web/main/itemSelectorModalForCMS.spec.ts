@@ -66,12 +66,11 @@ const createObjectEntryData = ({title}: {title: string}) => {
 
 test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 	await test.step('Create Space', async () => {
-		newSpace =
-			(await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			})) as SpaceTest;
+		newSpace = (await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		})) as SpaceTest;
 	});
 
 	await test.step('Upload sample files', async () => {

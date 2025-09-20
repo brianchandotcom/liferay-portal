@@ -167,7 +167,7 @@ test(
 		const spaceName = `Space ${getRandomString()}`;
 		let objectEntry1;
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,
 			settings: {
 				logoColor: 'outline-3',

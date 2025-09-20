@@ -70,7 +70,7 @@ export class ContentsPage {
 	async createContent(type: string, space: string = 'Default') {
 		const assetLibraries =
 			await this.apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
-				encodeURIComponent("type eq 'Space'")
+				"type eq 'Space'"
 			);
 
 		await clickAndExpectToBeVisible({

@@ -1589,6 +1589,10 @@
 			<category name="Styling" />
 			<description name="Validates comments in `.properties` files." />
 		</check>
+		<check name="PropertiesDefaultAdminScreenNameCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that we do not use `default.admin.screen.name`." />
+		</check>
 		<check name="PropertiesDefinitionKeysCheck">
 			<category name="Styling" />
 			<description name="Sorts definition keys in `liferay-plugin-package.properties` file." />

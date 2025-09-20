@@ -517,7 +517,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected File processFormattedFile(
 			File file, String fileName, String content, String newContent,
 			Set<String> modifiedMessages)
-		throws IOException, URISyntaxException {
+		throws IOException {
 
 		if (!content.equals(newContent)) {
 			if (_sourceFormatterArgs.isPrintErrors()) {

@@ -36,7 +36,7 @@ test(
 		const file1Title = `title ${getRandomString()}`;
 		const file2Title = `title ${getRandomString()}`;
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceNameWithRecycleBin,
 			settings: {
 				logoColor: 'outline-3',
@@ -46,7 +46,7 @@ test(
 			type: 'Space',
 		});
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceNameWithoutRecycleBin,
 			settings: {
 				logoColor: 'outline-3',
@@ -113,7 +113,7 @@ test(
 		const file1Title = `title ${getRandomString()}`;
 		const file2Title = `title ${getRandomString()}`;
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,
 			settings: {
 				logoColor: 'outline-3',
@@ -178,7 +178,7 @@ test(
 		const file1Title = `title ${getRandomString()}`;
 		const file2Title = `title ${getRandomString()}`;
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,
 			settings: {
 				logoColor: 'outline-3',
@@ -235,7 +235,7 @@ test(
 		const spaceName = `Space ${getRandomString()}`;
 		let objectEntry1;
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,
 			settings: {
 				logoColor: 'outline-3',
@@ -282,7 +282,7 @@ test(
 
 		const file1Title = `title ${getRandomString()}`;
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,
 			settings: {
 				logoColor: 'outline-3',

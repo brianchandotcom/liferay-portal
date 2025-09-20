@@ -90,7 +90,7 @@ test(
 
 		const applicationName = 'cms/basic-web-contents';
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,
 			settings: {
 				logoColor: 'outline-3',
@@ -171,7 +171,7 @@ test(
 
 		const applicationName = 'cms/basic-web-contents';
 
-		await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,
 			settings: {
 				logoColor: 'outline-3',

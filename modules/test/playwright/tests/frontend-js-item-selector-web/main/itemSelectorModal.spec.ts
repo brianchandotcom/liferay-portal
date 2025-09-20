@@ -252,7 +252,7 @@ test('Check space selection via modal in autocomplete input', async ({
 }) => {
 	const spaceName = `Space ${getRandomString()}`;
 
-	await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+	await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 		name: spaceName,
 		settings: {},
 		type: 'Space',
@@ -287,7 +287,7 @@ test('Check space selection via modal in multiselect input', async ({
 }) => {
 	const spaceName = `Space ${getRandomString()}`;
 
-	await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+	await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 		name: spaceName,
 		settings: {},
 		type: 'Space',

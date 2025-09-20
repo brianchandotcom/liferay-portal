@@ -77,7 +77,9 @@ test(
 	async ({apiHelpers, assetsPage, page}) => {
 		await test.step('Check number of existing Spaces', async () => {
 			const assetLibraries =
-				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage();
+				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
+					"type eq 'Space'"
+				);
 
 			expect(
 				assetLibraries.length,
@@ -113,18 +115,25 @@ test(
 	'The Space selector dialog is shown when creating a Basic Document when multiple Spaces exist',
 	{tag: '@LPD-57827'},
 	async ({apiHelpers, assetsPage, page}) => {
-		const depotName = getRandomString();
+		const assetLibraryName = getRandomString();
 
-		const depotEntryId = await test.step('Create a new Space', async () => {
-			const depot =
-				await apiHelpers.jsonWebServicesDepot.addDepotEntry(depotName);
+		const assetLibraryId =
+			await test.step('Create a new Space', async () => {
+				const assetLibrary =
+					await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+						name: assetLibraryName,
+						settings: {},
+						type: 'Space',
+					});
 
-			return depot.depotEntryId;
-		});
+				return assetLibrary.id;
+			});
 
 		await test.step('Check number of existing Spaces', async () => {
 			const assetLibraries =
-				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage();
+				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
+					"type eq 'Space'"
+				);
 
 			expect(
 				assetLibraries.length,
@@ -143,7 +152,7 @@ test(
 
 			await page.getByLabel('SpaceRequired').click();
 
-			await page.getByRole('option', {name: depotName}).click();
+			await page.getByRole('option', {name: assetLibraryName}).click();
 
 			await page.getByRole('button', {name: 'Save'}).click();
 		});
@@ -157,10 +166,12 @@ test(
 				'//span[contains(@class,"sticker")]//following-sibling::span[1]'
 			);
 
-			await expect(spaceSpan).toContainText(depotName);
+			await expect(spaceSpan).toContainText(assetLibraryName);
 		});
 
-		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(depotEntryId);
+		await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
+			assetLibraryId
+		);
 	}
 );
 
@@ -168,18 +179,25 @@ test(
 	'The Space selector dialog is not shown when creating a Basic Document inside a folder when multiple Spaces exist',
 	{tag: '@LPD-57827'},
 	async ({apiHelpers, assetsPage, page}) => {
-		const depotName = getRandomString();
+		const assetLibraryName = getRandomString();
 
-		const depotEntryId = await test.step('Create a new Space', async () => {
-			const depot =
-				await apiHelpers.jsonWebServicesDepot.addDepotEntry(depotName);
+		const assetLibraryId =
+			await test.step('Create a new Space', async () => {
+				const assetLibrary =
+					await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+						name: assetLibraryName,
+						settings: {},
+						type: 'Space',
+					});
 
-			return depot.depotEntryId;
-		});
+				return assetLibrary.id;
+			});
 
 		await test.step('Check number of existing Spaces', async () => {
 			const assetLibraries =
-				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage();
+				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
+					"type eq 'Space'"
+				);
 
 			expect(
 				assetLibraries.length,
@@ -189,7 +207,7 @@ test(
 
 		const folderData = await test.step('Create a folder', async () => {
 			return await apiHelpers.objectFolder.createObjectEntryFolder({
-				scopeKey: depotName,
+				scopeKey: assetLibraryName,
 				title: getRandomString(),
 			});
 		});
@@ -222,10 +240,12 @@ test(
 				'//span[contains(@class,"sticker")]//following-sibling::span[1]'
 			);
 
-			await expect(spaceSpan).toContainText(depotName);
+			await expect(spaceSpan).toContainText(assetLibraryName);
 		});
 
-		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(depotEntryId);
+		await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
+			assetLibraryId
+		);
 	}
 );
 

@@ -525,7 +525,6 @@ public class ConfigurationHandler {
 	private static final int _TOKEN_VAL_OPEN = '"'; // '{';
 
 	private static final Map<Integer, Class<?>> _codeToType = new HashMap<>();
-
 	private static final Map<Class<?>, Integer> _typeToCode =
 		HashMapBuilder.<Class<?>, Integer>put(
 			Boolean.class, _TOKEN_BOOLEAN

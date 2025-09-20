@@ -47,7 +47,10 @@ export default function ({
 			'.product-analytics-banner'
 		);
 
-		if (productAnalyticsBanner) {
+		if (
+			productAnalyticsBanner &&
+			productAnalyticsBanner.style.display === 'block'
+		) {
 			cookieBanner.style.display = 'none';
 		}
 		else {

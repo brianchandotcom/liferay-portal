@@ -409,9 +409,9 @@ public class ObjectDefinitionTreeUtil {
 				dynamicQuery.add(
 					RestrictionsFactoryUtil.sqlRestriction(
 						StringBundler.concat(
-							"NOT EXISTS (SELECT 1 from ObjectEntry WHERE ",
-							"objectEntryId = this_.rootObjectEntryId AND ",
-							"objectDefinitionId IN (",
+							"not exists (select 1 from ObjectEntry where ",
+							"objectEntryId = this_.rootObjectEntryId and ",
+							"objectDefinitionId in (",
 							StringUtil.merge(
 								objectDefinition.getRootObjectDefinitionIds()),
 							"))")));

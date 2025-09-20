@@ -12,6 +12,7 @@ import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -36,7 +37,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Alejandro Tardín
@@ -58,6 +58,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 							"(batch.engine.task.item.delegate=true)",
 							new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
 								bundleContext));
+
+						return;
 					}
 				}
 				else {
@@ -151,7 +153,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	private UserLocalService _userLocalService;
 
 	private class VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
+		implements EagerServiceTrackerCustomizer
 			<VulcanBatchEngineTaskItemDelegate,
 			 ServiceRegistration<PortletDataHandler>> {
 

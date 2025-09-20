@@ -209,8 +209,11 @@ function isCookieTypesAccepted(cookieTypes) {
 
 function setBannerVisibility(productAnalyticsBanner) {
 	const cookieBanner = document.querySelector('.cookies-banner');
+	const productAnalytics = document.getElementById(
+		'_com_liferay_my_account_web_portlet_MyAccountPortlet_productAnalyticsConsentPanelForm'
+	);
 
-	if (getCookie(productAnalyticsConfiguredCookieName)) {
+	if (getCookie(productAnalyticsConfiguredCookieName) || productAnalytics) {
 		productAnalyticsBanner.style.display = 'none';
 
 		if (cookieBanner) {

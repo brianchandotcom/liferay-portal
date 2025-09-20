@@ -118,6 +118,7 @@ const Toggle: React.FC<ISwitcherProps> = ({
 
 export default function CheckboxBase({
 	checked,
+	displayErrors,
 	editOnlyInDefaultLanguage,
 	isLocalizationSupported,
 	name,
@@ -125,6 +126,7 @@ export default function CheckboxBase({
 	showAsSwitcher = true,
 	showLabel = true,
 	showMaximumRepetitionsInfo = false,
+	valid,
 	...otherProps
 }: IProps) {
 	return (
@@ -134,6 +136,7 @@ export default function CheckboxBase({
 					...((otherProps.errorMessage || otherProps.tip) && {
 						'aria-describedby': `${otherProps.id ?? name}_fieldFeedback`,
 					}),
+					...(displayErrors && !valid && {'aria-invalid': true}),
 					'aria-required': !!otherProps.required,
 				}}
 				checked={checked}
@@ -187,6 +190,7 @@ interface ISwitcherProps extends ICheckboxBaseProps {
 }
 
 interface IProps extends ICheckboxBaseProps {
+	displayErrors?: boolean;
 	editOnlyInDefaultLanguage: boolean;
 	errorMessage: string;
 	id?: string;
@@ -197,5 +201,6 @@ interface IProps extends ICheckboxBaseProps {
 	showMaximumRepetitionsInfo?: boolean;
 	systemSettingsURL: string;
 	tip: string;
+	valid?: boolean;
 	visible?: boolean;
 }

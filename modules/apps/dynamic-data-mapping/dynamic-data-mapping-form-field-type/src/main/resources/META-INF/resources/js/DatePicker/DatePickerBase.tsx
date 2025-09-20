@@ -267,6 +267,7 @@ export default function DatePickerBase({
 						'aria-describedby': `${id ?? name}_fieldFeedback`,
 					})}
 					aria-required={required}
+					{...(displayErrors && !valid && {'aria-invalid': true})}
 					ariaLabels={{
 						buttonChooseDate: `${Liferay.Language.get(
 							'select-date'

@@ -29,7 +29,9 @@ public class PropertiesDefaultAdminScreenNameCheck extends BaseFileCheck {
 		properties.load(new StringReader(content));
 
 		if (properties.containsKey("default.admin.screen.name")) {
-			addMessage(fileName, "Do not use \"default.admin.screen.name\"");
+			addMessage(
+				fileName,
+				"Do not use \"default.admin.screen.name\", see LPD-59150");
 		}
 
 		return content;

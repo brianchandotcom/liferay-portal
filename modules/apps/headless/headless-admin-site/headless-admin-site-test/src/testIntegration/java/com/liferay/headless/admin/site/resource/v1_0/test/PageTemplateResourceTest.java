@@ -767,8 +767,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		return new ContentPageTemplate() {
 			{
-				creatorExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();
@@ -928,8 +926,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		return new WidgetPageTemplate() {
 			{
 				active = RandomTestUtil.randomBoolean();
-				creatorExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();

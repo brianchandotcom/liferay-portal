@@ -1353,14 +1353,15 @@ public class LayoutStructureRenderer {
 							ServletContextUtil.
 								getFragmentEntryConfigurationParser();
 
-					String fieldName = GetterUtil.getString(
+					String infoFieldUniqueId = GetterUtil.getString(
 						fragmentEntryConfigurationParser.getFieldValue(
 							fragmentEntryLink.getEditableValuesJSONObject(),
 							new FragmentConfigurationField(
 								"inputFieldId", "string", "", false, "text"),
 							_themeDisplay.getLocale()));
 
-					InfoField<?> infoField = infoForm.getInfoField(fieldName);
+					InfoField<?> infoField = infoForm.getInfoField(
+						infoFieldUniqueId);
 
 					if (infoField != null) {
 						InfoFieldType infoFieldType =
@@ -1371,7 +1372,7 @@ public class LayoutStructureRenderer {
 
 							jspWriter.write("<input name=\"checkboxNames\" ");
 							jspWriter.write("type=\"hidden\" value=\"");
-							jspWriter.write(fieldName);
+							jspWriter.write(infoFieldUniqueId);
 							jspWriter.write("\">");
 						}
 

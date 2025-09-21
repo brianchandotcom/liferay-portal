@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Hugo Huijser
  */
-public class JavaDeprecatedKernelClassesCheck extends BaseFileCheck {
+public class DeprecatedClassesCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

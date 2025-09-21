@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.tools.ToolsUtil;
+
 /**
  * @author Alan Huang
  */
@@ -26,16 +28,34 @@ public class JavaDefaultAdminScreenNameCheck extends BaseFileCheck {
 			return content;
 		}
 
-		if (content.contains("PropsKeys.DEFAULT_ADMIN_SCREEN_NAME") ||
-			content.contains("PropsValues.DEFAULT_ADMIN_SCREEN_NAME")) {
-
-			addMessage(
-				fileName,
-				"Do not use \"PropsKeys.DEFAULT_ADMIN_SCREEN_NAME\" or " +
-					"\"PropsValues.DEFAULT_ADMIN_SCREEN_NAME\", see LPD-59150");
-		}
+		_checkDefaultAdminScreenName(
+			fileName, content, "PropsKeys.DEFAULT_ADMIN_SCREEN_NAME");
+		_checkDefaultAdminScreenName(
+			fileName, content, "PropsValues.DEFAULT_ADMIN_SCREEN_NAME");
 
 		return content;
+	}
+
+	private void _checkDefaultAdminScreenName(
+		String fileName, String content, String name) {
+
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf(name, x + 1);
+
+			if (x == -1) {
+				return;
+			}
+
+			if (ToolsUtil.isInsideQuotes(content, x)) {
+				continue;
+			}
+
+			addMessage(
+				fileName, "Do not use \"" + name + "\", see LPD-59150",
+				getLineNumber(content, x));
+		}
 	}
 
 }

@@ -731,6 +731,10 @@
 			<category name="Styling" />
 			<description name="Validates `copyright` header." />
 		</check>
+		<check name="DeprecatedClassesCheck">
+			<category name="Bug Prevention" />
+			<description name="Replaces deprecated classes." />
+		</check>
 		<check name="IllegalImportsCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases of incorrect use of certain classes." />
@@ -776,10 +780,6 @@
 		<check name="JavaDeprecatedJavadocCheck">
 			<category name="Javadoc" />
 			<description name="Checks if the `@deprecated` javadoc is pointing to the correct version." />
-		</check>
-		<check name="JavaDeprecatedKernelClassesCheck">
-			<category name="Bug Prevention" />
-			<description name="Finds calls to deprecated classes `com.liferay.portal.kernel.util.CharPool` and `com.liferay.portal.kernel.util.StringPool`." />
 		</check>
 		<check name="JavaFeatureFlagManagerUtilCheck">
 			<category name="Bug Prevention" />
@@ -1336,6 +1336,10 @@
 		<check name="CopyrightCheck">
 			<category name="Styling" />
 			<description name="Validates `copyright` header." />
+		</check>
+		<check name="DeprecatedClassesCheck">
+			<category name="Bug Prevention" />
+			<description name="Replaces deprecated classes." />
 		</check>
 		<check name="JSPCoreTaglibCheck">
 			<category name="Styling" />

@@ -518,6 +518,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		_configuration.setLocalizedLookup(
 			_freeMarkerEngineConfiguration.localizedLookup());
 		_configuration.setNewBuiltinClassResolver(_templateClassResolver);
+		_configuration.setNumberFormat("computer");
 
 		try {
 			_configuration.setLogTemplateExceptions(

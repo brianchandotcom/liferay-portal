@@ -25,11 +25,13 @@ public class JavaDeprecatedKernelClassesCheck extends BaseFileCheck {
 			content,
 			new String[] {
 				"com.liferay.portal.kernel.util.CharPool",
-				"com.liferay.portal.kernel.util.StringPool"
+				"com.liferay.portal.kernel.util.StringPool",
+				"com.liferay.portal.util.PropsValues"
 			},
 			new String[] {
 				"com.liferay.petra.string.CharPool",
-				"com.liferay.petra.string.StringPool"
+				"com.liferay.petra.string.StringPool",
+				"com.liferay.portal.kernel.util.PropsValues"
 			});
 	}
 

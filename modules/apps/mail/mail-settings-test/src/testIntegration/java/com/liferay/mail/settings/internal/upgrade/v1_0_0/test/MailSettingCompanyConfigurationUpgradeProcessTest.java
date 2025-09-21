@@ -7,12 +7,15 @@ package com.liferay.mail.settings.internal.upgrade.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -100,17 +103,17 @@ public class MailSettingCompanyConfigurationUpgradeProcessTest {
 		_populatePreferences(
 			_testCompanyIdPortletPreferences, stringValue, intValue);
 
-		_upgradeProcess.upgrade();
+		ConfigurationTestUtil.updateFactoryConfiguration(
+			MailSettingCompanyConfiguration.class.getName() + ".scoped~",
+			_upgradeProcess::upgrade);
 
-		Thread.sleep(2000);
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			StringBundler.concat(
+				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
+				MailSettingCompanyConfiguration.class.getName(),
+				".scoped)(companyId=", TestPropsValues.getCompanyId(), "))"));
 
-		MailSettingCompanyConfiguration mailSettingCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				MailSettingCompanyConfiguration.class,
-				TestPropsValues.getCompanyId());
-
-		_assertConfiguration(
-			stringValue, intValue, mailSettingCompanyConfiguration);
+		_assertConfiguration(stringValue, intValue, configurations[0]);
 	}
 
 	@Test
@@ -123,52 +126,58 @@ public class MailSettingCompanyConfigurationUpgradeProcessTest {
 		_populatePreferences(
 			_testSystemIdPortletPreferences, stringValue, intValue);
 
-		_upgradeProcess.upgrade();
+		Configuration configuration = ConfigurationTestUtil.updateConfiguration(
+			MailSettingCompanyConfiguration.class.getName(),
+			_upgradeProcess::upgrade);
 
-		Thread.sleep(2000);
-
-		MailSettingCompanyConfiguration mailSettingCompanyConfiguration =
-			_configurationProvider.getSystemConfiguration(
-				MailSettingCompanyConfiguration.class);
-
-		_assertConfiguration(
-			stringValue, intValue, mailSettingCompanyConfiguration);
+		_assertConfiguration(stringValue, intValue, configuration);
 	}
 
 	private void _assertConfiguration(
-		String stringValue, String intValue,
-		MailSettingCompanyConfiguration mailSettingCompanyConfiguration) {
+		String stringValue, String intValue, Configuration configuration) {
 
-		Assert.assertTrue(
-			mailSettingCompanyConfiguration.enablePOPServerNotifications());
-		Assert.assertEquals(
-			stringValue, mailSettingCompanyConfiguration.incomingPOPServer());
-		Assert.assertEquals(
-			intValue, mailSettingCompanyConfiguration.incomingPOPPort());
-
-		Assert.assertEquals(
-			stringValue, mailSettingCompanyConfiguration.storeProtocol());
-		Assert.assertEquals(
-			stringValue, mailSettingCompanyConfiguration.transportProtocol());
-		Assert.assertEquals(
-			stringValue, mailSettingCompanyConfiguration.popUserName());
-
-		Assert.assertEquals(
-			stringValue, mailSettingCompanyConfiguration.popPassword());
-		Assert.assertEquals(
-			stringValue, mailSettingCompanyConfiguration.outgoingSMTPServer());
-		Assert.assertEquals(
-			intValue, mailSettingCompanyConfiguration.outgoingSMTPPort());
-
-		Assert.assertFalse(mailSettingCompanyConfiguration.enableStartTLS());
-		Assert.assertEquals(
-			stringValue, mailSettingCompanyConfiguration.smtpUserName());
-		Assert.assertEquals(
-			stringValue, mailSettingCompanyConfiguration.smtpPassword());
+		Dictionary<String, Object> properties = configuration.getProperties();
 
 		Assert.assertEquals(
 			stringValue,
-			mailSettingCompanyConfiguration.additionalJavaMailProperties());
+			GetterUtil.getString(
+				properties.get("additionalJavaMailProperties")));
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				properties.get("enablePOPServerNotifications")));
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(properties.get("enableStartTLS")));
+
+		Assert.assertEquals(
+			intValue, GetterUtil.getString(properties.get("incomingPOPPort")));
+		Assert.assertEquals(
+			stringValue,
+			GetterUtil.getString(properties.get("incomingPOPServer")));
+
+		Assert.assertEquals(
+			intValue, GetterUtil.getString(properties.get("outgoingSMTPPort")));
+		Assert.assertEquals(
+			stringValue,
+			GetterUtil.getString(properties.get("outgoingSMTPServer")));
+
+		Assert.assertEquals(
+			stringValue, GetterUtil.getString(properties.get("popPassword")));
+		Assert.assertEquals(
+			stringValue, GetterUtil.getString(properties.get("popUserName")));
+
+		Assert.assertEquals(
+			stringValue, GetterUtil.getString(properties.get("smtpPassword")));
+
+		Assert.assertEquals(
+			stringValue, GetterUtil.getString(properties.get("smtpUserName")));
+
+		Assert.assertEquals(
+			stringValue, GetterUtil.getString(properties.get("storeProtocol")));
+		Assert.assertEquals(
+			stringValue,
+			GetterUtil.getString(properties.get("transportProtocol")));
 	}
 
 	private void _populatePreferences(

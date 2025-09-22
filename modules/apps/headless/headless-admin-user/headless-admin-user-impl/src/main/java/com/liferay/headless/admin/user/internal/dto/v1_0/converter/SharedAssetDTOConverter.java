@@ -14,7 +14,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.admin.user.dto.v1_0.FileEntry;
 import com.liferay.headless.admin.user.dto.v1_0.Link;
 import com.liferay.headless.admin.user.dto.v1_0.SharedAsset;
-import com.liferay.headless.admin.user.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;

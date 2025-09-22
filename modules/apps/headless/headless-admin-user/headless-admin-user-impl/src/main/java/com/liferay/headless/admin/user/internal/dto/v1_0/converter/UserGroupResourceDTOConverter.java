@@ -7,7 +7,7 @@ package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountBrief;
-import com.liferay.headless.admin.user.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.RoleBriefUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.UserAccountBriefUtil;

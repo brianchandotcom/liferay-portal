@@ -12,7 +12,7 @@ import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.AccountBriefUtil;
-import com.liferay.headless.admin.user.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Company;

@@ -17,14 +17,11 @@ import java.io.Serializable;
 public class SidecarMainProcessCallable
 	implements ProcessCallable<Serializable> {
 
-	public SidecarMainProcessCallable(long heartbeatInterval) {
-		_heartbeatInterval = heartbeatInterval;
-	}
-
 	@Override
 	public Serializable call() throws ProcessException {
 		LocalProcessLauncher.ProcessContext.attach(
-			"SidecarMainProcessCallable", _heartbeatInterval,
+			"SidecarMainProcessCallable",
+			Long.valueOf(System.getProperty("sidecar.heart.beat.interval")),
 			(shutdownCode, shutdownThrowable) -> {
 				ElasticsearchServerUtil.shutdown();
 
@@ -37,7 +34,5 @@ public class SidecarMainProcessCallable
 	}
 
 	private static final long serialVersionUID = 1L;
-
-	private final long _heartbeatInterval;
 
 }

@@ -134,9 +134,7 @@ public class Sidecar {
 					StringBundler.concat(
 						bundleURL.getPath(), File.pathSeparator,
 						bootstrapClassPath)),
-				new SidecarMainProcessCallable(
-					_elasticsearchConfigurationWrapper.
-						sidecarHeartbeatInterval()));
+				new SidecarMainProcessCallable());
 		}
 		catch (ProcessException processException) {
 			throw new RuntimeException(
@@ -387,6 +385,9 @@ public class Sidecar {
 		arguments.add("-Des.path.log=" + _sidecarHomePath.resolve("logs"));
 		arguments.add(
 			"-Djava.io.tmpdir=" + System.getProperty("java.io.tmpdir"));
+		arguments.add(
+			"-Dsidecar.heart.beat.interval=" +
+				_elasticsearchConfigurationWrapper.sidecarHeartbeatInterval());
 		arguments.add("--enable-native-access=ALL-UNNAMED");
 		arguments.add(
 			"--enable-native-access=org.elasticsearch.nativeaccess," +

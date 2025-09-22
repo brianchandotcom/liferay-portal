@@ -28,6 +28,26 @@ public class PortalWorkspace extends BaseWorkspace {
 		return Job.BuildProfile.getByString(buildProfileString);
 	}
 
+	public WorkspaceGitRepository getLiferayOSBAsahWorkspaceGitRepository() {
+		return getWorkspaceGitRepository("com-liferay-osb-asah-private");
+	}
+
+	public WorkspaceGitRepository getLiferayOSBFaroWorkspaceGitRepository() {
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			getPortalWorkspaceGitRepository();
+
+		String portalUpstreamBranchName =
+			portalWorkspaceGitRepository.getUpstreamBranchName();
+
+		String repositoryName = "liferay-portal";
+
+		if (!portalUpstreamBranchName.startsWith("release-")) {
+			repositoryName += "-ee";
+		}
+
+		return getWorkspaceGitRepository(repositoryName);
+	}
+
 	public WorkspaceGitRepository
 		getLiferayQAPortalLegacyWorkspaceGitRepository() {
 
@@ -96,8 +116,8 @@ public class PortalWorkspace extends BaseWorkspace {
 		_configureLiferayFacesPortalWorkspaceGitRepository();
 		_configureLiferayFacesShowcaseWorkspaceGitRepository();
 		_configureLiferayOSBAsahWorkspaceGitRepository();
+		_configureLiferayOSBFaroWorkspaceGitRepository();
 		_configureLiferayReleaseToolWorkspaceGitRepository();
-		_configureOSBFaroWorkspaceGitRepository();
 		_configurePluginsWorkspaceGitRepository();
 		_configurePortalsPlutoWorkspaceGitRepository();
 		_configurePortletAPIGitRepository();
@@ -228,10 +248,6 @@ public class PortalWorkspace extends BaseWorkspace {
 				" for testing on CI"));
 	}
 
-	protected WorkspaceGitRepository getLiferayOSBAsahWorkspaceGitRepository() {
-		return getWorkspaceGitRepository("com-liferay-osb-asah-private");
-	}
-
 	protected void updateOSBAsahModule() {
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			getPortalWorkspaceGitRepository();
@@ -360,6 +376,21 @@ public class PortalWorkspace extends BaseWorkspace {
 		workspaceGitRepository.setGitHubURL(_osbAsahGitHubURL);
 	}
 
+	private void _configureLiferayOSBFaroWorkspaceGitRepository() {
+		if (_osbFaroGitHubURL == null) {
+			return;
+		}
+
+		WorkspaceGitRepository liferayOSBFaroWorkspaceGitRepository =
+			getLiferayOSBFaroWorkspaceGitRepository();
+
+		if (liferayOSBFaroWorkspaceGitRepository == null) {
+			return;
+		}
+
+		liferayOSBFaroWorkspaceGitRepository.setGitHubURL(_osbFaroGitHubURL);
+	}
+
 	private void _configureLiferayReleaseToolWorkspaceGitRepository() {
 		_updateWorkspaceGitRepository(
 			"git-commit/liferay-release-tool-ee", "liferay-release-tool-ee");
@@ -377,33 +408,6 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		liferayReleaseToolEEWorkspaceGitRepository.setPortalUpstreamBranchName(
 			portalWorkspaceGitRepository.getUpstreamBranchName());
-	}
-
-	private void _configureOSBFaroWorkspaceGitRepository() {
-		if (_osbFaroGitHubURL == null) {
-			return;
-		}
-
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			getPortalWorkspaceGitRepository();
-
-		String portalUpstreamBranchName =
-			portalWorkspaceGitRepository.getUpstreamBranchName();
-
-		String repositoryName = "liferay-portal";
-
-		if (!portalUpstreamBranchName.startsWith("release-")) {
-			repositoryName += "-ee";
-		}
-
-		WorkspaceGitRepository workspaceGitRepository =
-			getWorkspaceGitRepository(repositoryName);
-
-		if (workspaceGitRepository == null) {
-			return;
-		}
-
-		workspaceGitRepository.setGitHubURL(_osbFaroGitHubURL);
 	}
 
 	private void _configurePluginsWorkspaceGitRepository() {

@@ -8,17 +8,21 @@ import ClayEmptyState from '@clayui/empty-state';
 // @ts-ignore
 
 import {ImagePreviewer} from 'document-library-preview-image';
+import {DLVideoIframe} from 'document-library-video';
 import React from 'react';
 
 import {File} from '../FilePreviewerModalContent';
 
 export default function FilePreview({file}: {file: File}) {
-	const {link, name, thumbnailURL} = file;
+	const {link, mimeType, name, previewURL, thumbnailURL} = file;
 	const params = new URLSearchParams(thumbnailURL);
 	const hasImagePreview = params.has('imageThumbnail');
+	const isVideo = mimeType.startsWith('video/') && previewURL;
 
 	return hasImagePreview ? (
 		<ImagePreviewer alt={name} imageURL={link.href} />
+	) : isVideo ? (
+		<DLVideoIframe videoPreviewURL={previewURL} />
 	) : (
 		<div className="bg-light d-flex height-100">
 			<ClayEmptyState

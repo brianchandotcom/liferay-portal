@@ -30,6 +30,7 @@ export default function buildObjectDefinition({
 	name,
 	spaces,
 	status = 'draft',
+	workflows,
 }: {
 	children?: Structure['children'];
 	erc: Structure['erc'];
@@ -37,6 +38,7 @@ export default function buildObjectDefinition({
 	name: Structure['name'];
 	spaces: Structure['spaces'];
 	status?: Structure['status'];
+	workflows?: Structure['workflows'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
 		enableComments: true,
@@ -84,6 +86,11 @@ export default function buildObjectDefinition({
 				value: spaces.join(','),
 			},
 		];
+	}
+
+	if (workflows && Object.keys(workflows).length) {
+		objectDefinition.workflowDefinitionLinks =
+			buildWorkflowDefinitionLinks(workflows);
 	}
 
 	return objectDefinition;
@@ -186,4 +193,22 @@ function buildRelationships({
 	}
 
 	return relationships;
+}
+
+function buildWorkflowDefinitionLinks(workflows: Structure['workflows']) {
+	const definitionLinks: ObjectDefinition['workflowDefinitionLinks'] = [];
+
+	for (const [
+		groupExternalReferenceCode,
+		workflowDefinitionName,
+	] of Object.entries(workflows)) {
+		if (workflowDefinitionName) {
+			definitionLinks.push({
+				groupExternalReferenceCode,
+				workflowDefinitionName,
+			});
+		}
+	}
+
+	return definitionLinks;
 }

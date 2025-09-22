@@ -2861,16 +2861,16 @@ public abstract class BaseStructuredContentResourceImpl
 				_parseBoolean((String)parameters.get("flatten")), search, null,
 				filter, pagination, sorts);
 		}
+		else if (parameters.containsKey("contentStructureId")) {
+			return getContentStructureStructuredContentsPage(
+				_parseLong((String)parameters.get("contentStructureId")),
+				search, null, filter, pagination, sorts);
+		}
 		else if (parameters.containsKey("siteId")) {
 			return getSiteStructuredContentsPage(
 				(Long)parameters.get("siteId"),
 				_parseBoolean((String)parameters.get("flatten")), search, null,
 				filter, pagination, sorts);
-		}
-		else if (parameters.containsKey("contentStructureId")) {
-			return getContentStructureStructuredContentsPage(
-				_parseLong((String)parameters.get("contentStructureId")),
-				search, null, filter, pagination, sorts);
 		}
 		else if (parameters.containsKey("structuredContentFolderId")) {
 			return getStructuredContentFolderStructuredContentsPage(
@@ -2880,7 +2880,7 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be specified: [assetLibraryId, siteId, contentStructureId, structuredContentFolderId]");
+				"One of the following parameters must be specified: [assetLibraryId, contentStructureId, siteId, structuredContentFolderId]");
 		}
 	}
 

@@ -2726,12 +2726,7 @@ public abstract class BaseUserAccountResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("siteId")) {
-			return getSiteUserAccountsPage(
-				(Long)parameters.get("siteId"), search, filter, pagination,
-				sorts);
-		}
-		else if (parameters.containsKey("accountId")) {
+		if (parameters.containsKey("accountId")) {
 			return getAccountUserAccountsPage(
 				_parseLong((String)parameters.get("accountId")), search, filter,
 				pagination, sorts);
@@ -2740,6 +2735,11 @@ public abstract class BaseUserAccountResourceImpl
 			return getOrganizationUserAccountsPage(
 				(String)parameters.get("organizationId"), search, filter,
 				pagination, sorts);
+		}
+		else if (parameters.containsKey("siteId")) {
+			return getSiteUserAccountsPage(
+				(Long)parameters.get("siteId"), search, filter, pagination,
+				sorts);
 		}
 		else {
 			return getUserAccountsPage(search, filter, pagination, sorts);

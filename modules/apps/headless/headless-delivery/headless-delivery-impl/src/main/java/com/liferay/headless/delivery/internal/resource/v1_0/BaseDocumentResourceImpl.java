@@ -2351,21 +2351,21 @@ public abstract class BaseDocumentResourceImpl
 				_parseBoolean((String)parameters.get("flatten")), search, null,
 				filter, pagination, sorts);
 		}
-		else if (parameters.containsKey("siteId")) {
-			return getSiteDocumentsPage(
-				(Long)parameters.get("siteId"),
-				_parseBoolean((String)parameters.get("flatten")), search, null,
-				filter, pagination, sorts);
-		}
 		else if (parameters.containsKey("documentFolderId")) {
 			return getDocumentFolderDocumentsPage(
 				_parseLong((String)parameters.get("documentFolderId")),
 				_parseBoolean((String)parameters.get("flatten")), search, null,
 				filter, pagination, sorts);
 		}
+		else if (parameters.containsKey("siteId")) {
+			return getSiteDocumentsPage(
+				(Long)parameters.get("siteId"),
+				_parseBoolean((String)parameters.get("flatten")), search, null,
+				filter, pagination, sorts);
+		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be specified: [assetLibraryId, siteId, documentFolderId]");
+				"One of the following parameters must be specified: [assetLibraryId, documentFolderId, siteId]");
 		}
 	}
 

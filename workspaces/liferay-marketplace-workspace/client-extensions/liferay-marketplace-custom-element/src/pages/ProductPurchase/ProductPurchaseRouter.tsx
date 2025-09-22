@@ -37,7 +37,7 @@ export const productTypeRoutes = {
 		metadata: {
 			isNavigationStepVisible: (product: DeliveryProduct) =>
 				getProductPriceModel(product).isPaidApp,
-			tineStepsDisplay: true,
+			tinyStepsDisplay: true,
 			useCart: true,
 		},
 		routes: [
@@ -66,7 +66,7 @@ export const productTypeRoutes = {
 	[ProductTypeVocabulary.SOLUTION]: {
 		metadata: {
 			skipSingleAccountSelection: true,
-			tineStepsDisplay: false,
+			tinyStepsDisplay: false,
 		},
 		routes: [
 			{

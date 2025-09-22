@@ -10,6 +10,7 @@ import paypal from '../../../../../assets/images/paypal.png';
 import {RadioCard} from '../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../components/Section/Section';
 import {Tooltip} from '../../../../../components/Tooltip/Tooltip';
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import i18n from '../../../../../i18n';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';
@@ -17,7 +18,8 @@ import {PaymentMethodType} from '../../../types';
 
 const PaymentTypeSelector = () => {
 	const {context} = productPurchaseStore.getSnapshot();
-	const {selectedAccount} = useProductPurchaseOutletContext();
+	const {myUserAccount} = useMarketplaceContext();
+	const {productPurchaseCart} = useProductPurchaseOutletContext();
 
 	const invoice = useSelector(
 		productPurchaseStore,
@@ -46,7 +48,9 @@ const PaymentTypeSelector = () => {
 						<div className="align-items-center d-flex">
 							<p className="mb-0 mr-3">PayPal with card</p>
 							<Tooltip
-								tooltip="you-ll-be-redirected-to-paypal-to-complete-your-purchase-securely-after-your-payment-you-are-able-to-activate-the-license-on-customer-dashboard-right-awayy"
+								tooltip={i18n.translate(
+									'you-ll-be-redirected-to-paypal-to-complete-your-purchase-securely-after-your-payment-you-are-able-to-activate-the-license-on-customer-dashboard-right-away'
+								)}
 								tooltipText={i18n.translate('more-info')}
 							/>
 						</div>
@@ -69,9 +73,10 @@ const PaymentTypeSelector = () => {
 				productPurchaseStore.send({
 					invoice: {
 						...invoice,
-						email: selectedAccount.emailAddress,
-						purchaseOrderNumber: context.payment.billingAddress
-							.phoneNumber as string,
+						email: myUserAccount.emailAddress,
+						purchaseOrderNumber:
+							(productPurchaseCart?.cart
+								?.id as unknown as string) || '',
 					},
 					type: 'setInvoice',
 				});
@@ -91,12 +96,16 @@ const PaymentTypeSelector = () => {
 							<p className="mb-0 mr-3">PayPal with invoice</p>
 
 							<Tooltip
-								tooltip="you-will-receive-an-invoice-via-email-with-all-the-details-needed-to-complete-your-payment-after-you-complete-the-payment-you-can-activate-your-license-from-the-customer-dashboard"
+								tooltip={i18n.translate(
+									'you-will-receive-an-invoice-via-email-with-all-the-details-needed-to-complete-your-payment-after-you-complete-the-payment-you-can-activate-your-license-from-the-customer-dashboard'
+								)}
 								tooltipText={i18n.translate('more-info')}
 							/>
 						</div>
 						<p className="font-weight-normal mb-0 text-black-50">
-							Offline payemnts using the invoice
+							{i18n.translate(
+								'offline-payments-using-the-invoice'
+							)}
 						</p>
 					</div>
 				</div>

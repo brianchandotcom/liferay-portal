@@ -18,19 +18,21 @@ import getPostalAddressDescription from './getPostalAddressDescription';
 
 type BillingAddressProps = {
 	addresses: BillingAddress[];
-	billingAddress: BillingAddress;
 	mutateUserAccoutAddress: KeyedMutator<{items: BillingAddress[]}>;
 	setBillingAddress: React.Dispatch<BillingAddress>;
 };
 
-export function BillingAddress(props: BillingAddressProps) {
+const BillingAddress: React.FC<BillingAddressProps> = ({
+	addresses,
+	mutateUserAccoutAddress,
+	setBillingAddress,
+}) => {
 	const {selectedAccount} = useProductPurchaseOutletContext();
 	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 	const {data: regionsResponse} = useCommerceRegions();
-	const [selectedAddress, setSelectedAddress] = useState('');
-	const regions = regionsResponse?.items ?? [];
+	const [selectedAddress, setSelectedAddress] = useState<string>();
 
-	const {addresses, setBillingAddress} = props;
+	const regions = regionsResponse?.items ?? [];
 
 	const onSelectAddress = async ({
 		address,
@@ -39,7 +41,7 @@ export function BillingAddress(props: BillingAddressProps) {
 		address: BillingAddress;
 		title: string | undefined;
 	}) => {
-		setSelectedAddress(address.name as string);
+		setSelectedAddress(address.name);
 
 		const postalAddress = addresses.find(
 			(address) => address.name === title
@@ -54,7 +56,6 @@ export function BillingAddress(props: BillingAddressProps) {
 			regionISOCode: postalAddress?.regionISOCode,
 			street1: postalAddress?.street1,
 			street2: postalAddress?.street2,
-			vatNumber: props?.billingAddress?.vatNumber,
 			zip: postalAddress?.zip,
 		};
 
@@ -117,15 +118,18 @@ export function BillingAddress(props: BillingAddressProps) {
 			}
 		);
 
-		props.mutateUserAccoutAddress((aadressCash) => ({
-			...aadressCash,
+		await mutateUserAccoutAddress((addressCache) => ({
+			...addressCache,
 			items: [...addresses, postAddress],
 		}));
 
-		await onSelectAddress({
-			address: {...postAddress, vatNumber: billingAddress.vatNumber},
-			title: postAddress.name,
-		});
+		setSelectedAddress(billingAddress.name);
+
+		setBillingAddress(billingAddress);
+
+		if (!showNewAddressButton) {
+			setShowNewAddressButton(true);
+		}
 	};
 
 	return (
@@ -151,7 +155,6 @@ export function BillingAddress(props: BillingAddressProps) {
 			})}
 
 			<BillingAddressForm
-				{...props}
 				saveAddress={saveAddress}
 				setBillingAddress={setBillingAddress}
 				setSelectedAddress={setSelectedAddress}
@@ -160,4 +163,6 @@ export function BillingAddress(props: BillingAddressProps) {
 			/>
 		</Section>
 	);
-}
+};
+
+export default BillingAddress;

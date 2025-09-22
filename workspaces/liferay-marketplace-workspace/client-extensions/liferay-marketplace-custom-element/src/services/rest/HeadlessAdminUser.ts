@@ -71,6 +71,16 @@ export default class HeadlessAdminUser {
 		);
 	}
 
+	static async updateAccount(
+		accountId: number | string,
+		data: Partial<Account>
+	) {
+		return fetcher.patch(
+			`/o/headless-admin-user/v1.0/accounts/${accountId}`,
+			data
+		);
+	}
+
 	static async updateUserAccount(data: unknown, accountId: number) {
 		return fetcher.patch(
 			`/o/headless-admin-user/v1.0/user-accounts/${accountId}`,

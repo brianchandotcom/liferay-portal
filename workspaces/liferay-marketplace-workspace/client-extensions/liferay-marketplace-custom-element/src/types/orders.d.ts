@@ -60,6 +60,7 @@ type CartItem = {
 	settings: {
 		maxQuantity: number;
 	};
+	sku?: string;
 	skuId: number;
 };
 

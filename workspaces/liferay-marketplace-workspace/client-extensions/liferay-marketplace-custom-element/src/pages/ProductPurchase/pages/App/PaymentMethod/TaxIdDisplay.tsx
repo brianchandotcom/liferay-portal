@@ -15,39 +15,31 @@ const TaxIdDisplay = () => {
 	const {selectedAccount} = useProductPurchaseOutletContext();
 
 	const {context} = productPurchaseStore.getSnapshot();
-	const billingAddress = context.payment.billingAddress;
+	const contextTaxId = context.account.taxId;
 
-	const initialVat =
-		selectedAccount?.taxId || billingAddress?.vatNumber || '';
+	const formInitialvalueTaxid = selectedAccount?.taxId || contextTaxId;
 
-	const [vatNumber, setVatNumber] = useState(initialVat);
+	const [taxId, setTaxId] = useState(formInitialvalueTaxid);
 
 	const handleChange = useCallback(
 		({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-			setVatNumber(value);
+			setTaxId(value);
 
 			productPurchaseStore.send({
-				billingAddress: {...billingAddress, vatNumber: value},
-				type: 'setBillingAddress',
+				account: {taxId: value},
+				type: 'setAccountTaxId',
 			});
 		},
-		[billingAddress]
+		[]
 	);
 
 	return (
-		<Section
-			label="VAT ID"
-			tooltip={i18n.translate(
-				'standard-licenses-cover-the-following-dxp-environments-production-non-production-uat-and-backup-dr-for-both-standalone-and-virtual-cluster-servers'
-			)}
-			tooltipText={i18n.translate('more-info')}
-		>
+		<Section label={i18n.translate('vat-id')}>
 			<Input
 				disabled={!!selectedAccount?.taxId}
-				label={i18n.translate('purchase-order-number')}
 				onChange={handleChange}
 				required
-				value={vatNumber}
+				value={taxId}
 			/>
 		</Section>
 	);

@@ -30,11 +30,11 @@ const CircleSteps: React.FC<CircleStepsProps> = ({
 	const activeStepIndex = steps.findIndex(({active}) => active);
 
 	const stepIcon = (step: any, index: number) => {
-		if (step.active === true) {
+		if (step.active) {
 			return 'radio-button';
 		}
 
-		if (index < activeStepIndex === true) {
+		if (index < activeStepIndex) {
 			return 'check';
 		}
 
@@ -51,16 +51,16 @@ const CircleSteps: React.FC<CircleStepsProps> = ({
 			{steps.map((step, index) => (
 				<div
 					className={classNames('step', {
-						done: index < activeStepIndex === true,
-						selected: step.active === true,
+						done: index < activeStepIndex,
+						selected: step.active,
 					})}
 					key={index}
 					onClick={() => onClickIndicator(step)}
 				>
 					<ClayIcon
 						className={classNames('mr-2 step', {
-							done: index < activeStepIndex === true,
-							selected: step.active === true,
+							done: index < activeStepIndex,
+							selected: step.active,
 						})}
 						symbol={stepIcon(step, index)}
 					/>

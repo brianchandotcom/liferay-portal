@@ -20,7 +20,7 @@ export function formatAddress(address: BillingAddress) {
 		address.city,
 		address.regionISOCode,
 		address.zip,
-		displayNames.of(address.countryISOCode),
+		displayNames.of(address.countryISOCode as string),
 	]
 		.filter(Boolean)
 		.join(', ');

@@ -45,10 +45,12 @@ describe('ImportStructureModalContent', () => {
 		renderComponent();
 
 		expect(
-			screen.getByText('import-and-override-structure')
+			screen.getByText('import-and-override-content-structure')
 		).toBeInTheDocument();
 		expect(
-			screen.getByText('import-and-override-structure-warning-message')
+			screen.getByText(
+				'import-and-override-content-structure-warning-message'
+			)
 		).toBeInTheDocument();
 	});
 

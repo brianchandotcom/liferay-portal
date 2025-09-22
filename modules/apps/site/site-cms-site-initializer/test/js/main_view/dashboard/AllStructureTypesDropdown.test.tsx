@@ -76,7 +76,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		render(<WrappedComponent onSelectItem={onSelectItem} />);
 
 		const button = screen.getByRole('button', {
-			name: 'all-structures',
+			name: 'all-content-structures',
 		});
 
 		expect(button).toBeInTheDocument();
@@ -84,7 +84,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		fireEvent.click(button);
 
 		expect(
-			screen.queryByText('filter-by-structure-type')
+			screen.queryByText('filter-by-content-structure-type')
 		).toBeInTheDocument();
 
 		expect(screen.queryByPlaceholderText('search')).toBeInTheDocument();
@@ -94,7 +94,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		expect(screen.getAllByRole('menuitem').length).toBe(1);
 
 		const menuitem = screen.getByRole('menuitem', {
-			name: 'all-structures',
+			name: 'all-content-structures',
 		});
 
 		expect(menuitem).toBeInTheDocument();
@@ -104,7 +104,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		expect(onSelectItem).toHaveBeenCalledTimes(1);
 
 		expect(onSelectItem).toHaveBeenCalledWith({
-			label: 'all-structures',
+			label: 'all-content-structures',
 			value: 'all',
 		});
 	});
@@ -118,7 +118,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
 		const button = screen.getByRole('button', {
-			name: 'all-structures',
+			name: 'all-content-structures',
 		});
 
 		fireEvent.click(button);
@@ -128,7 +128,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		expect(screen.getAllByRole('menuitem').length).toBe(3);
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'all-structures'})
+			screen.queryByRole('menuitem', {name: 'all-content-structures'})
 		).toBeInTheDocument();
 
 		expect(
@@ -165,7 +165,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
 		const dropdownButton = screen.getByRole('button', {
-			name: 'all-structures',
+			name: 'all-content-structures',
 		});
 
 		fireEvent.click(dropdownButton);
@@ -195,7 +195,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		).not.toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'all-structures'})
+			screen.queryByRole('menuitem', {name: 'all-content-structures'})
 		).not.toBeInTheDocument();
 
 		jest.useRealTimers();
@@ -219,7 +219,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
 		const structuresDropdownButton = screen.getByRole('button', {
-			name: 'all-structures',
+			name: 'all-content-structures',
 		});
 
 		fireEvent.click(structuresDropdownButton);
@@ -254,7 +254,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		});
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'all-structures'})
+			screen.queryByRole('menuitem', {name: 'all-content-structures'})
 		).not.toBeInTheDocument();
 
 		jest.useRealTimers();
@@ -269,7 +269,7 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 		render(<WrappedComponent onSelectItem={() => {}} />);
 
 		expect(screen.getByTestId('structures')).toHaveTextContent(
-			'all-structures'
+			'all-content-structures'
 		);
 
 		fireEvent.click(screen.getByTestId('structures'));

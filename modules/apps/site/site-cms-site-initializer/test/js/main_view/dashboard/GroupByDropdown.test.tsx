@@ -39,7 +39,7 @@ const structureTypes: Item[] = [
 	{label: 'category', value: 'category'},
 	{label: 'vocabulary', value: 'vocabulary'},
 	{label: 'tag', value: 'tag'},
-	{label: 'structure-label', value: 'structure'},
+	{label: 'content-structure-label', value: 'structure'},
 ];
 
 const WrappedComponent = ({

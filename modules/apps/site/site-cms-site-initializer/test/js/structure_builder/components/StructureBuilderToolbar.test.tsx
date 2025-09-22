@@ -163,7 +163,7 @@ describe('StructureBuilderToolbar', () => {
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'you-removed-one-or-more-fields-from-the-structure',
+					text: 'you-removed-one-or-more-fields-from-the-content-structure',
 				})
 			);
 		});
@@ -191,7 +191,7 @@ describe('StructureBuilderToolbar', () => {
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'to-customize-the-experience-you-need-to-publish-the-structure-first',
+					text: 'to-customize-the-experience-you-need-to-publish-the-content-structure-first',
 				})
 			);
 		});
@@ -217,7 +217,7 @@ describe('StructureBuilderToolbar', () => {
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'to-customize-the-experience-you-need-to-publish-the-structure-first',
+					text: 'to-customize-the-experience-you-need-to-publish-the-content-structure-first',
 				})
 			);
 		});
@@ -243,7 +243,7 @@ describe('StructureBuilderToolbar', () => {
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'to-customize-the-experience-you-need-to-publish-the-structure-first.-you-removed-one-or-more-fields-from-the-structure',
+					text: 'to-customize-the-experience-you-need-to-publish-the-content-structure-first.-you-removed-one-or-more-fields-from-the-content-structure',
 				})
 			);
 		});

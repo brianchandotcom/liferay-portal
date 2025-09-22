@@ -338,7 +338,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				portletDataContext.getZipEntryAsInputStream(normalizedFileName);
 
 			if (inputStream == null) {
-				return portletPreferences;
+				continue;
 			}
 
 			BatchEngineImportTask batchEngineImportTask =

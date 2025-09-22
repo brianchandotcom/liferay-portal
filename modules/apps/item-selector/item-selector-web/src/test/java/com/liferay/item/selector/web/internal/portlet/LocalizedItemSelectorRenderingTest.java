@@ -87,8 +87,6 @@ public class LocalizedItemSelectorRenderingTest {
 		Map<String, String> data = (Map<String, String>)navigationItem.get(
 			"data");
 
-		Assert.assertTrue(MapUtil.isNotEmpty(data));
-
 		Assert.assertEquals(id, String.valueOf(data.get("id")));
 	}
 

@@ -409,6 +409,27 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 
 	protected Date removedDate;
 
+	public Long getScopeId() {
+		return scopeId;
+	}
+
+	public void setScopeId(Long scopeId) {
+		this.scopeId = scopeId;
+	}
+
+	public void setScopeId(
+		UnsafeSupplier<Long, Exception> scopeIdUnsafeSupplier) {
+
+		try {
+			scopeId = scopeIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long scopeId;
+
 	public String getScopeKey() {
 		return scopeKey;
 	}

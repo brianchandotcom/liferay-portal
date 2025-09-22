@@ -275,6 +275,16 @@ public class ObjectEntryFolderSerDes {
 			sb.append("\"");
 		}
 
+		if (objectEntryFolder.getScopeId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scopeId\": ");
+
+			sb.append(objectEntryFolder.getScopeId());
+		}
+
 		if (objectEntryFolder.getScopeKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -495,6 +505,13 @@ public class ObjectEntryFolderSerDes {
 					objectEntryFolder.getRemovedDate()));
 		}
 
+		if (objectEntryFolder.getScopeId() == null) {
+			map.put("scopeId", null);
+		}
+		else {
+			map.put("scopeId", String.valueOf(objectEntryFolder.getScopeId()));
+		}
+
 		if (objectEntryFolder.getScopeKey() == null) {
 			map.put("scopeKey", null);
 		}
@@ -599,6 +616,9 @@ public class ObjectEntryFolderSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "removedDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "scopeId")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
@@ -747,6 +767,12 @@ public class ObjectEntryFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setRemovedDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "scopeId")) {
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.setScopeId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {

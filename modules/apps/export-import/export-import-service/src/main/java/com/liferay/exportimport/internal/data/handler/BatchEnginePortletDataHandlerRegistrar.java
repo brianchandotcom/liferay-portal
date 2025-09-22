@@ -15,10 +15,11 @@ import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngin
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -26,8 +27,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import java.util.Dictionary;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -50,34 +52,40 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			(companyId, featureFlagKey, enabled) -> {
 				if (enabled) {
 					_enabledCompanyIds.add(companyId);
-
-					if (_serviceRegistrations == null) {
-						_serviceRegistrations = ServiceTrackerListFactory.open(
-							bundleContext, null,
-							"(export.import.vulcan.batch.engine.task.item." +
-								"delegate=true)",
-							new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-								bundleContext));
-
-						return;
-					}
 				}
 				else {
 					_enabledCompanyIds.remove(companyId);
 				}
 
 				if (_enabledCompanyIds.isEmpty()) {
-					if (_serviceRegistrations != null) {
-						_serviceRegistrations.close();
-
-						_serviceRegistrations = null;
-					}
+					_serviceTrackerListDCLSingleton.destroy(
+						ServiceTrackerList::close);
 
 					return;
 				}
 
+				AtomicBoolean newOpen = new AtomicBoolean();
+
+				ServiceTrackerList<ServiceRegistration<PortletDataHandler>>
+					serviceTrackerList =
+						_serviceTrackerListDCLSingleton.getSingleton(
+							() -> {
+								newOpen.set(true);
+
+								return ServiceTrackerListFactory.open(
+									bundleContext, null,
+									"(export.import.vulcan.batch.engine.task." +
+										"item.delegate=true)",
+									new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
+										bundleContext));
+							});
+
+				if (newOpen.get()) {
+					return;
+				}
+
 				for (ServiceRegistration<PortletDataHandler>
-						serviceRegistration : _serviceRegistrations) {
+						serviceRegistration : serviceTrackerList) {
 
 					Dictionary<String, Object> properties = _toProperties(
 						serviceRegistration.getReference());
@@ -93,9 +101,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	protected void deactivate() {
 		_serviceRegistration.unregister();
 
-		if (_serviceRegistrations != null) {
-			_serviceRegistrations.close();
-		}
+		_serviceTrackerListDCLSingleton.destroy(ServiceTrackerList::close);
 	}
 
 	private Dictionary<String, Object> _setEnabledCompanyIds(
@@ -104,8 +110,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 		return HashMapDictionaryBuilder.<String, Object>putAll(
 			properties
 		).put(
-			"companyId",
-			TransformUtil.transform(_enabledCompanyIds, String::valueOf)
+			"companyId", ArrayUtil.toStringArray(_enabledCompanyIds)
 		).build();
 	}
 
@@ -143,11 +148,12 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final Set<Long> _enabledCompanyIds = new HashSet<>();
+	private final List<Long> _enabledCompanyIds = new CopyOnWriteArrayList<>();
 	private volatile ServiceRegistration<FeatureFlagListener>
 		_serviceRegistration;
-	private ServiceTrackerList<ServiceRegistration<PortletDataHandler>>
-		_serviceRegistrations;
+	private final DCLSingleton
+		<ServiceTrackerList<ServiceRegistration<PortletDataHandler>>>
+			_serviceTrackerListDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private UserLocalService _userLocalService;

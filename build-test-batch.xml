@@ -1843,6 +1843,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<macrodef name="run-bundle-blacklist-restart-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<var name="database.type" value="@{database.type}" />
@@ -1990,6 +1991,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<macrodef name="run-empty-osgi-core-dir-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<var name="database.type" value="@{database.type}" />
@@ -2388,11 +2390,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-lpkg-container-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" stop.app.server="true">
 						<test-action>
 							<antcall inheritAll="false" target="prepare-log4j-ext-xml">
 								<param name="database.type" value="@{database.type}" />
@@ -2441,11 +2444,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-lpkg-controller-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" stop.app.server="true">
 						<test-action>
 							<setup-lpkg-test database.type="@{database.type}" />
 
@@ -2486,11 +2490,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-lpkg-override-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" stop.app.server="true">
 						<test-action>
 							<setup-lpkg-test database.type="@{database.type}" />
 
@@ -2598,11 +2603,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-lpkg-persistence-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" stop.app.server="true">
 						<test-action>
 							<antcall inheritAll="false" target="prepare-log4j-ext-xml">
 								<param name="database.type" value="@{database.type}" />
@@ -2706,11 +2712,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-lpkg-startup-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" stop.app.server="true">
 						<test-action>
 							<setup-lpkg-test database.type="@{database.type}" />
 
@@ -3533,6 +3540,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-release-osgi-state-exploded-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
@@ -3592,6 +3600,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-release-osgi-state-lpkg-change-directory-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
@@ -3663,6 +3672,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-release-osgi-state-lpkg-test">
 		<attribute name="database.type" />
+		<attribute name="database.version" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
@@ -4267,6 +4277,10 @@ information. Make sure to commit in all build-lib-versions results.
 		<run-bundle-blacklist-restart-test database.type="mysql" />
 	</target>
 
+	<target name="bundle-blacklist-restart-mysql80">
+		<run-bundle-blacklist-restart-test database.type="mysql" database.version="8.0" />
+	</target>
+
 	<target name="bundle-blacklist-restart-postgresql163">
 		<run-bundle-blacklist-restart-test database.type="postgresql" />
 	</target>
@@ -4367,6 +4381,10 @@ information. Make sure to commit in all build-lib-versions results.
 
 	<target name="empty-osgi-core-dir-mysql57-jdk21_zulu">
 		<run-empty-osgi-core-dir-test database.type="mysql" />
+	</target>
+
+	<target name="empty-osgi-core-dir-mysql80">
+		<run-empty-osgi-core-dir-test database.type="mysql" database.version="8.0" />
 	</target>
 
 	<target name="empty-osgi-core-dir-postgresql163">
@@ -5368,6 +5386,18 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="jboss" app.server.version="8.0.0" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-jboss80-mysql80">
+		<set-app-server-version-number app.server.type="jboss" app.server.version="8.0.0" />
+
+		<run-functional-test app.server.type="jboss" app.server.version="8.0.0" database.type="mysql" database.version="8.0" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-jboss80-mysql80-jdk21_zulu">
+		<set-app-server-version-number app.server.type="jboss" app.server.version="8.0.0" />
+
+		<run-functional-test app.server.type="jboss" app.server.version="8.0.0" database.type="mysql" database.version="8.0" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-jboss80-postgresql">
 		<set-app-server-version-number app.server.type="jboss" app.server.version="8.0.0" />
 
@@ -6112,6 +6142,14 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="functional-smoke-wildfly300-mysql57-jdk21_zulu">
 		<antcall target="functional-wildfly300-mysql57-jdk21_zulu" />
+	</target>
+
+	<target name="functional-smoke-wildfly300-mysql80">
+		<antcall target="functional-wildfly300-mysql80" />
+	</target>
+
+	<target name="functional-smoke-wildfly300-mysql80-jdk21_zulu">
+		<antcall target="functional-wildfly300-mysql80-jdk21_zulu" />
 	</target>
 
 	<target name="functional-smoke-wildfly300-postgresql-jdk21_zulu">
@@ -7199,6 +7237,18 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="wildfly" app.server.version="30.0.0" database.type="mysql" />
 	</target>
 
+	<target name="functional-wildfly300-mysql80">
+		<set-app-server-version-number app.server.type="wildfly" app.server.version="30.0.0" />
+
+		<run-functional-test app.server.type="wildfly" app.server.version="30.0.0" database.type="mysql" database.version="8.0" />
+	</target>
+
+	<target name="functional-wildfly300-mysql80-jdk21_zulu">
+		<set-app-server-version-number app.server.type="wildfly" app.server.version="30.0.0" />
+
+		<run-functional-test app.server.type="wildfly" app.server.version="30.0.0" database.type="mysql" database.version="8.0" />
+	</target>
+
 	<target name="functional-wildfly300-postgresql">
 		<set-app-server-version-number app.server.type="wildfly" app.server.version="30.0.0" />
 
@@ -7666,12 +7716,20 @@ information. Make sure to commit in all format-javadoc results.
 		<run-lpkg-container-test database.type="mysql" />
 	</target>
 
+	<target name="lpkg-container-mysql80">
+		<run-lpkg-container-test database.type="mysql" database.version="8.0" />
+	</target>
+
 	<target name="lpkg-container-postgresql163">
 		<run-lpkg-container-test database.type="postgresql" />
 	</target>
 
 	<target name="lpkg-controller-mysql57">
 		<run-lpkg-controller-test database.type="mysql" />
+	</target>
+
+	<target name="lpkg-controller-mysql80">
+		<run-lpkg-controller-test database.type="mysql" database.version="8.0" />
 	</target>
 
 	<target name="lpkg-controller-postgresql163">
@@ -7682,6 +7740,10 @@ information. Make sure to commit in all format-javadoc results.
 		<run-lpkg-override-test database.type="mysql" />
 	</target>
 
+	<target name="lpkg-override-mysql80">
+		<run-lpkg-override-test database.type="mysql" database.version="8.0" />
+	</target>
+
 	<target name="lpkg-override-postgresql163">
 		<run-lpkg-override-test database.type="postgresql" />
 	</target>
@@ -7690,12 +7752,20 @@ information. Make sure to commit in all format-javadoc results.
 		<run-lpkg-persistence-test database.type="mysql" />
 	</target>
 
+	<target name="lpkg-persistence-mysql80">
+		<run-lpkg-persistence-test database.type="mysql" database.version="8.0" />
+	</target>
+
 	<target name="lpkg-persistence-postgresql163">
 		<run-lpkg-persistence-test database.type="postgresql" />
 	</target>
 
 	<target name="lpkg-startup-mysql57">
 		<run-lpkg-startup-test database.type="mysql" />
+	</target>
+
+	<target name="lpkg-startup-mysql80">
+		<run-lpkg-startup-test database.type="mysql" database.version="8.0" />
 	</target>
 
 	<target name="lpkg-startup-postgresql163">
@@ -8107,6 +8177,10 @@ information. Make sure to commit in all format-javadoc results.
 	</target>
 
 	<target name="modules-integration-mysql80">
+		<run-modules-integration-test database.type="mysql" database.version="8.0" />
+	</target>
+
+	<target name="modules-integration-mysql80-jdk21_zulu">
 		<run-modules-integration-test database.type="mysql" database.version="8.0" />
 	</target>
 
@@ -10087,6 +10161,10 @@ ${output.content}</echo>
 		<run-release-osgi-state-exploded-test database.type="mysql" />
 	</target>
 
+	<target name="release-osgi-state-exploded-test-mysql80">
+		<run-release-osgi-state-exploded-test database.type="mysql" database.version="8.0" />
+	</target>
+
 	<target name="release-osgi-state-exploded-test-postgresql155">
 		<run-release-osgi-state-exploded-test database.type="postgresql" />
 	</target>
@@ -10095,12 +10173,20 @@ ${output.content}</echo>
 		<run-release-osgi-state-lpkg-change-directory-test database.type="mysql" />
 	</target>
 
+	<target name="release-osgi-state-lpkg-change-directory-test-mysql80">
+		<run-release-osgi-state-lpkg-change-directory-test database.type="mysql" database.version="8.0" />
+	</target>
+
 	<target name="release-osgi-state-lpkg-change-directory-test-postgresql155">
 		<run-release-osgi-state-lpkg-change-directory-test database.type="postgresql" />
 	</target>
 
 	<target name="release-osgi-state-lpkg-test-mysql57">
 		<run-release-osgi-state-lpkg-test database.type="mysql" />
+	</target>
+
+	<target name="release-osgi-state-lpkg-test-mysql80">
+		<run-release-osgi-state-lpkg-test database.type="mysql" database.version="8.0" />
 	</target>
 
 	<target name="release-osgi-state-lpkg-test-postgresql155">

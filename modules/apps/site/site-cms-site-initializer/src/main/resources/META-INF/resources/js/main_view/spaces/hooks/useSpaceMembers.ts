@@ -81,7 +81,10 @@ function reducer(state: State, action: Action): State {
 	}
 }
 
-export function useSpaceMembers(assetLibraryId: string, pageSize: number) {
+export function useSpaceMembers(
+	externalReferenceCode: string,
+	pageSize: number
+) {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	useEffect(() => {
@@ -92,16 +95,16 @@ export function useSpaceMembers(assetLibraryId: string, pageSize: number) {
 				const [spaceUsers, spaceUserGroups, userRoles] =
 					await Promise.all([
 						SpaceService.getSpaceUsers({
+							externalReferenceCode,
 							nestedFields: 'roles',
 							page: 1,
 							pageSize,
-							spaceId: assetLibraryId,
 						}),
 						SpaceService.getSpaceUserGroups({
+							externalReferenceCode,
 							nestedFields: 'numberOfUserAccounts,roles',
 							page: 1,
 							pageSize,
-							spaceId: assetLibraryId,
 						}),
 						AdminUserService.getUserRoles({
 							filter: "name ne 'Asset Library Connected Site Member' and type eq 5",
@@ -124,7 +127,7 @@ export function useSpaceMembers(assetLibraryId: string, pageSize: number) {
 		};
 
 		fetchMembers();
-	}, [assetLibraryId, pageSize]);
+	}, [externalReferenceCode, pageSize]);
 
 	return {state};
 }

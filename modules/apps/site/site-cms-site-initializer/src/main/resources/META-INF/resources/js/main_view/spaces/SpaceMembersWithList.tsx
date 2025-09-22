@@ -18,15 +18,14 @@ import React, {
 	useState,
 } from 'react';
 
-import AdminUserService from '../../common/services/AdminUserService';
 import SpaceService from '../../common/services/SpaceService';
-import {Role} from '../../common/types/Role';
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 import {MembersListItem} from './MemberListItem';
 import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
+import {useSpaceMembers} from './hooks/useSpaceMembers';
 export interface SpaceMembersWithListProps {
 	assetLibraryCreatorUserId: string;
 	className?: string;
@@ -48,79 +47,34 @@ export function SpaceMembersWithList({
 }: SpaceMembersWithListProps) {
 	const listLabelId = useId();
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
-	const [isFetchingMembers, setIsFetchingMembers] = useState(false);
+	const {state} = useSpaceMembers(externalReferenceCode, pageSize);
+	const {
+		groups,
+		isFetching: isFetchingMembers,
+		roles: spacePermissionsRoles,
+		users,
+	} = state;
+
 	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
-	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>([]);
-	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
-		[]
+	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>(
+		users.items
 	);
-	const [usersLastPage, setUsersLastPage] = useState(0);
+	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
+		groups.items
+	);
 	const [usersPage, setUsersPage] = useState(1);
-	const [userGroupsLastPage, setUserGroupsLastPage] = useState(0);
 	const [userGroupsPage, setUserGroupsPage] = useState(1);
 	const sentinelRef = useRef(null);
-	const [spacePermissionsRoles, setSpacePermissionsRoles] = useState<Role[]>(
-		[]
-	);
 
 	useEffect(() => {
-		const fetchMembers = async () => {
-			setIsFetchingMembers(true);
+		const loadMoreItems = async () => {
+			if (selectedOption === SelectOptions.USERS) {
+				const newUsersPage = usersPage + 1;
 
-			try {
-				const [spaceUsers, spaceUserGroups, userRoles] =
-					await Promise.all([
-						SpaceService.getSpaceUsers({
-							externalReferenceCode,
-							nestedFields: 'roles',
-							page: 1,
-							pageSize,
-						}),
-						SpaceService.getSpaceUserGroups({
-							externalReferenceCode,
-							nestedFields: 'numberOfUserAccounts,roles',
-							page: 1,
-							pageSize,
-						}),
-						AdminUserService.getUserRoles({
-							filter: "name ne 'Asset Library Connected Site Member' and type eq 5",
-						}),
-					]);
+				if (newUsersPage > users.lastPage) {
+					return;
+				}
 
-				setSelectedUsers(spaceUsers.items);
-				setSelectedUserGroups(spaceUserGroups.items);
-				setUserGroupsLastPage(spaceUserGroups.lastPage);
-				setUsersLastPage(spaceUsers.lastPage);
-				setSpacePermissionsRoles(userRoles.items);
-			}
-			catch (error) {
-				console.error(error);
-			}
-			finally {
-				setIsFetchingMembers(false);
-			}
-		};
-
-		fetchMembers();
-	}, [externalReferenceCode, pageSize]);
-
-	useEffect(() => {
-		const hasMembers =
-			selectedUsers?.length > 1 || selectedUserGroups?.length > 1;
-		onHasSelectedMembersChange?.(hasMembers);
-	}, [onHasSelectedMembersChange, selectedUsers, selectedUserGroups]);
-
-	const loadMoreItems = useCallback(async () => {
-		if (selectedOption === SelectOptions.USERS) {
-			const newUsersPage = usersPage + 1;
-
-			if (newUsersPage > usersLastPage) {
-				return;
-			}
-
-			setIsFetchingMembers(true);
-
-			try {
 				const spaceUsers = await SpaceService.getSpaceUsers({
 					externalReferenceCode,
 					nestedFields: 'roles',
@@ -133,26 +87,15 @@ export function SpaceMembersWithList({
 					...spaceUsers.items,
 				]);
 				setUsersPage(newUsersPage);
-				setUsersLastPage(spaceUsers.lastPage);
-			}
-			catch (error) {
-				console.error(error);
-			}
-			finally {
-				setIsFetchingMembers(false);
+
+				return;
 			}
 
-			return;
-		}
+			const newUserGroupsPage = userGroupsPage + 1;
+			if (newUserGroupsPage > groups.lastPage) {
+				return;
+			}
 
-		const newUserGroupsPage = userGroupsPage + 1;
-		if (newUserGroupsPage > userGroupsLastPage) {
-			return;
-		}
-
-		setIsFetchingMembers(true);
-
-		try {
 			const spaceUserGroups = await SpaceService.getSpaceUserGroups({
 				externalReferenceCode,
 				nestedFields: 'numberOfUserAccounts,roles',
@@ -165,22 +108,17 @@ export function SpaceMembersWithList({
 				...spaceUserGroups.items,
 			]);
 			setUserGroupsPage(newUserGroupsPage);
-			setUserGroupsLastPage(spaceUserGroups.lastPage);
-		}
-		catch (error) {
-			console.error(error);
-		}
-		finally {
-			setIsFetchingMembers(false);
-		}
+		};
+
+		loadMoreItems();
 	}, [
 		externalReferenceCode,
+		groups.lastPage,
 		pageSize,
 		selectedOption,
 		userGroupsPage,
 		usersPage,
-		userGroupsLastPage,
-		usersLastPage,
+		users.lastPage,
 	]);
 
 	useEffect(() => {
@@ -191,7 +129,9 @@ export function SpaceMembersWithList({
 		const observer = new IntersectionObserver(
 			(entries) => {
 				if (entries[0].isIntersecting) {
-					loadMoreItems();
+
+					// loadMoreItems();
+
 				}
 			},
 			{
@@ -204,7 +144,21 @@ export function SpaceMembersWithList({
 		return () => {
 			observer.disconnect();
 		};
-	}, [sentinelRef, loadMoreItems]);
+	}, [sentinelRef]);
+
+	useEffect(() => {
+		setSelectedUsers(users.items);
+	}, [users.items]);
+
+	useEffect(() => {
+		setSelectedUserGroups(groups.items);
+	}, [groups.items]);
+
+	useEffect(() => {
+		const hasMembers =
+			selectedUsers.length > 0 || selectedUserGroups.length > 0;
+		onHasSelectedMembersChange?.(hasMembers);
+	}, [onHasSelectedMembersChange, selectedUsers, selectedUserGroups]);
 
 	const onAutocompleteItemSelected = async (
 		item: UserAccount | UserGroup

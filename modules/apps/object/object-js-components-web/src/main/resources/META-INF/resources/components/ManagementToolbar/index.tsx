@@ -31,7 +31,7 @@ interface ManagementToolbarProps {
 	isApproved?: boolean;
 	isRootDescendantNode?: boolean;
 	label: string;
-	loading: boolean;
+	loading?: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionExternalReferenceCodeSaveURL: string;
 	onExternalReferenceCodeChange?: (value: string) => void;

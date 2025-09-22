@@ -111,9 +111,7 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
 
@@ -157,8 +155,7 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 	}
 
 	private List<AssetUsage> _getLayoutAssetUsages(
-			Long assetId, String className, String search)
-		throws Exception {
+		Long assetId, String className, String search) {
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(contextUser);

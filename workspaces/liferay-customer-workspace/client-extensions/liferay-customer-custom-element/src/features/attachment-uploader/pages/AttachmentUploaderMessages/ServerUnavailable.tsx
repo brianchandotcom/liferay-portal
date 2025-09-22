@@ -3,21 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import i18n from '~/utils/I18n';
 import routerPath from '~/utils/routerPath';
 
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
 interface IProps {
-	ticketId: string;
+	ticketURL: string;
 	uploadAccountKey: string;
 }
 
-const ServerUnavailable = ({ticketId, uploadAccountKey}: IProps) => {
+const ServerUnavailable = ({ticketURL, uploadAccountKey}: IProps) => {
 	const pageRoutes = routerPath();
-
-	const {helpCenterURL} = useAppPropertiesContext();
 
 	return (
 		<AttachmentMessage
@@ -34,10 +31,10 @@ const ServerUnavailable = ({ticketId, uploadAccountKey}: IProps) => {
 				</a>
 			)}
 
-			{ticketId && (
+			{ticketURL && (
 				<a
 					className="btn btn-primary uploader-primary-button"
-					href={`${helpCenterURL}/${ticketId}`}
+					href={`${ticketURL}`}
 				>
 					{i18n.translate('return-to-ticket')}
 				</a>

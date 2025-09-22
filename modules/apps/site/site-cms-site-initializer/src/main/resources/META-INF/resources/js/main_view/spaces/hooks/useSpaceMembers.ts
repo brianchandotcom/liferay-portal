@@ -47,6 +47,10 @@ type Action =
 	| {payload: UserGroup; type: 'ADD_GROUP_SUCCESS'}
 	| {payload: {id: number | string}; type: 'ADD_USER_FAILURE'}
 	| {payload: {id: number | string}; type: 'ADD_GROUP_FAILURE'}
+	| {payload: {id: number | string}; type: 'REMOVE_USER_SUCCESS'}
+	| {payload: {id: number | string}; type: 'REMOVE_GROUP_SUCCESS'}
+	| {payload: UserAccount; type: 'REMOVE_USER_FAILURE'}
+	| {payload: UserGroup; type: 'REMOVE_GROUP_FAILURE'}
 	| {
 			payload: {
 				items: UserAccount[];
@@ -139,6 +143,42 @@ function reducer(state: State, action: Action): State {
 					),
 				},
 				isFetching: false,
+			};
+		case 'REMOVE_USER_SUCCESS':
+			return {
+				...state,
+				users: {
+					...state.users,
+					items: state.users.items.filter(
+						(user) => user.id !== action.payload.id
+					),
+				},
+			};
+		case 'REMOVE_GROUP_SUCCESS':
+			return {
+				...state,
+				groups: {
+					...state.groups,
+					items: state.groups.items.filter(
+						(group) => group.id !== action.payload.id
+					),
+				},
+			};
+		case 'REMOVE_USER_FAILURE':
+			return {
+				...state,
+				users: {
+					...state.users,
+					items: [...state.users.items, action.payload],
+				},
+			};
+		case 'REMOVE_GROUP_FAILURE':
+			return {
+				...state,
+				groups: {
+					...state.groups,
+					items: [...state.groups.items, action.payload],
+				},
 			};
 		case 'LOAD_MORE_USERS_SUCCESS':
 			return {
@@ -370,5 +410,86 @@ export function useSpaceMembers(
 		[externalReferenceCode, state.users.items, state.groups.items]
 	);
 
-	return {addMember, loadMore, state};
+	const removeMember = useCallback(
+		async (item: UserAccount | UserGroup, type: SelectOptions) => {
+			if (type === SelectOptions.USERS) {
+				dispatch({payload: {id: item.id}, type: 'REMOVE_USER_SUCCESS'});
+
+				const {error} = await SpaceService.unlinkUserFromSpace({
+					spaceExternalReferenceCode: externalReferenceCode,
+					userExternalReferenceCode: item.externalReferenceCode,
+				});
+
+				if (error) {
+					dispatch({
+						payload: item as UserAccount,
+						type: 'REMOVE_USER_FAILURE',
+					});
+
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'unable-to-remove-user-x-from-space'
+							),
+							[`<strong>${item.name}</strong>`]
+						),
+						type: 'danger',
+					});
+				}
+				else {
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'user-x-successfully-removed-from-space'
+							),
+							[`<strong>${item.name}</strong>`]
+						),
+						type: 'success',
+					});
+				}
+			}
+			else {
+				dispatch({
+					payload: {id: item.id},
+					type: 'REMOVE_GROUP_SUCCESS',
+				});
+
+				const {error} = await SpaceService.unlinkUserGroupFromSpace({
+					spaceExternalReferenceCode: externalReferenceCode,
+					userGroupExternalReferenceCode: item.externalReferenceCode,
+				});
+
+				if (error) {
+					dispatch({
+						payload: item as UserGroup,
+						type: 'REMOVE_GROUP_FAILURE',
+					});
+
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'unable-to-remove-group-x-from-space'
+							),
+							[`<strong>${item.name}</strong>`]
+						),
+						type: 'danger',
+					});
+				}
+				else {
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'group-x-successfully-removed-from-space'
+							),
+							[`<strong>${item.name}</strong>`]
+						),
+						type: 'success',
+					});
+				}
+			}
+		},
+		[externalReferenceCode]
+	);
+
+	return {addMember, loadMore, removeMember, state};
 }

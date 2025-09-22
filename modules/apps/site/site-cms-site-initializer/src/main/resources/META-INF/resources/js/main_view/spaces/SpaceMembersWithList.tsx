@@ -47,7 +47,7 @@ export function SpaceMembersWithList({
 }: SpaceMembersWithListProps) {
 	const listLabelId = useId();
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
-	const {addMember, loadMore, state} = useSpaceMembers(
+	const {addMember, loadMore, removeMember, state} = useSpaceMembers(
 		externalReferenceCode,
 		pageSize
 	);
@@ -103,72 +103,6 @@ export function SpaceMembersWithList({
 			selectedUsers.length > 0 || selectedUserGroups.length > 0;
 		onHasSelectedMembersChange?.(hasMembers);
 	}, [onHasSelectedMembersChange, selectedUsers, selectedUserGroups]);
-
-	const onRemoveItem = async (item: UserAccount | UserGroup) => {
-		if (selectedOption === SelectOptions.USERS) {
-			setSelectedUsers(selectedUsers.filter((u) => u.id !== item.id));
-
-			const {error} = await SpaceService.unlinkUserFromSpace({
-				spaceExternalReferenceCode: externalReferenceCode,
-				userExternalReferenceCode: item.externalReferenceCode,
-			});
-
-			if (error) {
-				openToast({
-					message: sub(
-						Liferay.Language.get(
-							'unable-to-remove-user-x-from-space'
-						),
-						[`<strong>${item.name}</strong>`]
-					),
-					type: 'danger',
-				});
-			}
-			else {
-				openToast({
-					message: sub(
-						Liferay.Language.get(
-							'user-x-successfully-removed-from-space'
-						),
-						[`<strong>${item.name}</strong>`]
-					),
-					type: 'success',
-				});
-			}
-
-			return;
-		}
-
-		setSelectedUserGroups(
-			selectedUserGroups.filter((u) => u.id !== item.id)
-		);
-
-		const {error} = await SpaceService.unlinkUserGroupFromSpace({
-			spaceExternalReferenceCode: externalReferenceCode,
-			userGroupExternalReferenceCode: item.externalReferenceCode,
-		});
-
-		if (error) {
-			openToast({
-				message: sub(
-					Liferay.Language.get('unable-to-remove-group-x-from-space'),
-					[`<strong>${item.name}</strong>`]
-				),
-				type: 'danger',
-			});
-		}
-		else {
-			openToast({
-				message: sub(
-					Liferay.Language.get(
-						'group-x-successfully-removed-from-space'
-					),
-					[`<strong>${item.name}</strong>`]
-				),
-				type: 'success',
-			});
-		}
-	};
 
 	const onUpdateItemRoles = useCallback(
 		async (itemToUpdate: UserAccount | UserGroup, newRoles: string[]) => {
@@ -294,7 +228,9 @@ export function SpaceMembersWithList({
 								}
 								itemType="user"
 								items={selectedUsers}
-								onRemoveItem={onRemoveItem}
+								onRemoveItem={(item) =>
+									removeMember(item, selectedOption)
+								}
 								onUpdateItemRoles={onUpdateItemRoles}
 								roles={spacePermissionsRoles}
 							/>
@@ -305,7 +241,9 @@ export function SpaceMembersWithList({
 								}
 								itemType="group"
 								items={selectedUserGroups}
-								onRemoveItem={onRemoveItem}
+								onRemoveItem={(item) =>
+									removeMember(item, selectedOption)
+								}
 								onUpdateItemRoles={onUpdateItemRoles}
 								roles={spacePermissionsRoles}
 							/>

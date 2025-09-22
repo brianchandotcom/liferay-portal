@@ -125,8 +125,6 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(contextUser);
 
-		String languageId = contextUser.getLanguageId();
-
 		for (Object[] objects :
 				_getLayoutClassedModelUsageObjectsList(
 					className, assetId, search)) {
@@ -143,7 +141,8 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 				() -> _getName(
 					layout.isDraftLayout(),
 					_localization.getLocalization(
-						(String)objects[2], languageId, true)));
+						(String)objects[2], contextUser.getLanguageId(),
+						true)));
 			assetUsage.setType(
 				() -> _getLayoutUsageTypeLabel((Integer)objects[1]));
 

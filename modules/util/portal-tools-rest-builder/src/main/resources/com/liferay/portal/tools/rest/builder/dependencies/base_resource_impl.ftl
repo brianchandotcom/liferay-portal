@@ -173,16 +173,10 @@ public abstract class Base${schemaName}ResourceImpl
 				<#assign getByExternalReferenceCodeBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaNames + "Page")>
-			<#if stringUtil.equals(javaMethodSignature.methodName, "getAssetLibrary" + schemaNames + "Page")>
-				<#assign getAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaNames + "Page")>
-				<#assign getSiteBatchJavaMethodSignature = javaMethodSignature />
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaNames + "Page")>
-				<#if parentSchemaName?has_content>
-					<#assign getParentBatchJavaMethodSignatures = getParentBatchJavaMethodSignatures + [javaMethodSignature] />
-				<#else>
-					<#assign getBatchJavaMethodSignature = javaMethodSignature />
-				</#if>
+			<#if parentSchemaName?has_content>
+				<#assign getParentBatchJavaMethodSignatures = getParentBatchJavaMethodSignatures + [javaMethodSignature] />
+			<#else>
+				<#assign getBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "patch" + schemaName)>
 			<#assign patchBatchJavaMethodSignature = javaMethodSignature />
@@ -1190,48 +1184,24 @@ public abstract class Base${schemaName}ResourceImpl
 
 		@Override
 		public Page<${javaDataType}> read(com.liferay.portal.kernel.search.filter.Filter filter, Pagination pagination, com.liferay.portal.kernel.search.Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
+
 			<#if freeMarkerTool.hasReadVulcanBatchImplementation(javaMethodSignatures)>
+
 				<#assign parentParameterNames = [] />
 
-				<#if getAssetLibraryBatchJavaMethodSignature??>
-					<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"] />
+				<#list getParentBatchJavaMethodSignatures as getParentBatchJavaMethodSignature>
+					<#assign parentParameterNames = parentParameterNames + [getParentBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
 
-					if (parameters.containsKey("assetLibraryId")) {
-						return ${getAssetLibraryBatchJavaMethodSignature.methodName}(
-							<@getReadBatchJavaMethodParameters javaMethodParameters = getAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
+					if (parameters.containsKey("${getParentBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
+						return ${getParentBatchJavaMethodSignature.methodName}(
+							<@getReadBatchJavaMethodParameters javaMethodParameters = getParentBatchJavaMethodSignature.javaMethodParameters />
 						);
 					}
 					else
-				</#if>
-
-				<#if getSiteBatchJavaMethodSignature??>
-					<#assign parentParameterNames = parentParameterNames + ["siteId"] />
-
-					if (parameters.containsKey("siteId")) {
-						return ${getSiteBatchJavaMethodSignature.methodName}(
-							<@getReadBatchJavaMethodParameters javaMethodParameters = getSiteBatchJavaMethodSignature.javaMethodParameters />
-						);
-					}
-					else
-				</#if>
-
-				<#if getParentBatchJavaMethodSignatures?has_content>
-					<#list getParentBatchJavaMethodSignatures as parentBatchJavaMethodSignature>
-						<#assign
-							parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"]
-						/>
-
-						if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"}")) {
-							return ${parentBatchJavaMethodSignature.methodName}(
-								<@getReadBatchJavaMethodParameters javaMethodParameters = parentBatchJavaMethodSignature.javaMethodParameters />
-							);
-						}
-						else
-					</#list>
-				</#if>
+				</#list>
 
 				<#if getBatchJavaMethodSignature??>
-					<#if getAssetLibraryBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature?? || getParentBatchJavaMethodSignatures?has_content>
+					<#if getParentBatchJavaMethodSignatures?has_content>
 						{
 					</#if>
 
@@ -1239,7 +1209,7 @@ public abstract class Base${schemaName}ResourceImpl
 						<@getReadBatchJavaMethodParameters javaMethodParameters = getBatchJavaMethodSignature.javaMethodParameters />
 					);
 
-					<#if getAssetLibraryBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature?? || getParentBatchJavaMethodSignatures?has_content>
+					<#if getParentBatchJavaMethodSignatures?has_content>
 						}
 					</#if>
 				<#else>

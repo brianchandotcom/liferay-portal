@@ -1686,7 +1686,10 @@ public class DefaultObjectEntryManagerImpl
 
 		if (serviceBuilderObjectEntry.isInTrash()) {
 			throw new ObjectEntryStatusException(
-				"Must not copy an object entry that is in the trash");
+				String.format(
+					"The object entry %s cannot be copied because it is in " +
+						"trash",
+					serviceBuilderObjectEntry.getObjectEntryId()));
 		}
 
 		objectEntry.setExpirationDate(() -> null);

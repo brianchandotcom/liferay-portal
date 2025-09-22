@@ -47,7 +47,7 @@ export function SpaceMembersWithList({
 }: SpaceMembersWithListProps) {
 	const listLabelId = useId();
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
-	const {state} = useSpaceMembers(externalReferenceCode, pageSize);
+	const {loadMore, state} = useSpaceMembers(externalReferenceCode, pageSize);
 	const {
 		groups,
 		isFetching: isFetchingMembers,
@@ -62,64 +62,7 @@ export function SpaceMembersWithList({
 	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
 		groups.items
 	);
-	const [usersPage, setUsersPage] = useState(1);
-	const [userGroupsPage, setUserGroupsPage] = useState(1);
 	const sentinelRef = useRef(null);
-
-	useEffect(() => {
-		const loadMoreItems = async () => {
-			if (selectedOption === SelectOptions.USERS) {
-				const newUsersPage = usersPage + 1;
-
-				if (newUsersPage > users.lastPage) {
-					return;
-				}
-
-				const spaceUsers = await SpaceService.getSpaceUsers({
-					externalReferenceCode,
-					nestedFields: 'roles',
-					page: newUsersPage,
-					pageSize,
-				});
-
-				setSelectedUsers((currentSelectedUsers) => [
-					...currentSelectedUsers,
-					...spaceUsers.items,
-				]);
-				setUsersPage(newUsersPage);
-
-				return;
-			}
-
-			const newUserGroupsPage = userGroupsPage + 1;
-			if (newUserGroupsPage > groups.lastPage) {
-				return;
-			}
-
-			const spaceUserGroups = await SpaceService.getSpaceUserGroups({
-				externalReferenceCode,
-				nestedFields: 'numberOfUserAccounts,roles',
-				page: newUserGroupsPage,
-				pageSize,
-			});
-
-			setSelectedUserGroups((currentSelectedUserGroups) => [
-				...currentSelectedUserGroups,
-				...spaceUserGroups.items,
-			]);
-			setUserGroupsPage(newUserGroupsPage);
-		};
-
-		loadMoreItems();
-	}, [
-		externalReferenceCode,
-		groups.lastPage,
-		pageSize,
-		selectedOption,
-		userGroupsPage,
-		usersPage,
-		users.lastPage,
-	]);
 
 	useEffect(() => {
 		if (!sentinelRef.current) {
@@ -128,10 +71,8 @@ export function SpaceMembersWithList({
 
 		const observer = new IntersectionObserver(
 			(entries) => {
-				if (entries[0].isIntersecting) {
-
-					// loadMoreItems();
-
+				if (entries[0].isIntersecting && !isFetchingMembers) {
+					loadMore(selectedOption);
 				}
 			},
 			{
@@ -144,7 +85,7 @@ export function SpaceMembersWithList({
 		return () => {
 			observer.disconnect();
 		};
-	}, [sentinelRef]);
+	}, [sentinelRef, loadMore, selectedOption, isFetchingMembers]);
 
 	useEffect(() => {
 		setSelectedUsers(users.items);

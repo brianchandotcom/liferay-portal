@@ -13,6 +13,9 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.product.analytics.web.internal.configuration.ProductAnalyticsConfiguration;
 import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsScreenNavigationEntryConstants;
@@ -93,7 +96,22 @@ public class UserProductAnalyticsScreenNavigationEntry
 			return false;
 		}
 
-		return true;
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(selUser);
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return true;
+		}
+
+		for (long groupId :
+				_groupLocalService.getActiveGroupIds(selUser.getUserId())) {
+
+			if (permissionChecker.isGroupAdmin(groupId)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -134,6 +152,9 @@ public class UserProductAnalyticsScreenNavigationEntry
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

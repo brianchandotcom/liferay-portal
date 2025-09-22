@@ -12,7 +12,7 @@ import {
 	IStateInURL,
 	IStateInURLGetter,
 	IStateInURLUpdaterThunk,
-	IStateInitializer,
+	IStateReader,
 } from './types';
 
 function useStateInURL<K extends keyof IStateInURL>({
@@ -21,7 +21,7 @@ function useStateInURL<K extends keyof IStateInURL>({
 	shouldWriteInURL = (_value: IStateInURL[K]) => true,
 	stateDispatcher,
 	stateInURLSettings,
-	stateInitializer,
+	stateReader,
 }: {
 	additionalStateDispatchers?: {
 		key: keyof IStateInURL;
@@ -35,12 +35,12 @@ function useStateInURL<K extends keyof IStateInURL>({
 		type: EViewsActionTypes;
 	};
 	stateInURLSettings: EStateInURLSettings;
-	stateInitializer: IStateInitializer<K>;
+	stateReader: IStateReader<K>;
 }): [IStateInURLGetter<K>, IStateInURLUpdaterThunk<K>] {
 	const {key, type} = stateDispatcher;
 
 	return [
-		useGetter({id, key, stateInitializer}),
+		useGetter({id, key, stateReader}),
 		useUpdaterThunk({
 			additionalStateDispatchers,
 			id,
@@ -55,11 +55,11 @@ function useStateInURL<K extends keyof IStateInURL>({
 function useGetter<K extends keyof IStateInURL>({
 	id,
 	key,
-	stateInitializer,
+	stateReader,
 }: {
 	id: string;
 	key: K;
-	stateInitializer: IStateInitializer<K>;
+	stateReader: IStateReader<K>;
 }): IStateInURLGetter<K> {
 	return useCallback((): IStateInURL[K] | undefined => {
 		const state: Partial<IStateInURL> | null = readStateFromURL(id);
@@ -68,8 +68,8 @@ function useGetter<K extends keyof IStateInURL>({
 			return undefined;
 		}
 
-		return stateInitializer(state[key] as IStateInURL[K]);
-	}, [id, stateInitializer, key]);
+		return stateReader(state[key] as IStateInURL[K]);
+	}, [id, stateReader, key]);
 }
 
 function useUpdaterThunk<K extends keyof IStateInURL>({

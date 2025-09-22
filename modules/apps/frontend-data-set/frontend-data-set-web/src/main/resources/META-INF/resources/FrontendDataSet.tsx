@@ -162,7 +162,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_PAGINATION_DELTA,
 		},
 		stateInURLSettings,
-		stateInitializer: (delta: number) => {
+		stateReader: (delta: number) => {
 			if (isNaN(delta) || delta < 1) {
 				return undefined;
 			}
@@ -178,7 +178,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
 		},
 		stateInURLSettings,
-		stateInitializer: (pageNumber: number) => {
+		stateReader: (pageNumber: number) => {
 			if (isNaN(pageNumber) || pageNumber < 1) {
 				return 1;
 			}
@@ -206,7 +206,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_SEARCH_PARAM,
 		},
 		stateInURLSettings,
-		stateInitializer: (searchParam: string) => {
+		stateReader: (searchParam: string) => {
 			if (!searchParam) {
 				return '';
 			}
@@ -222,7 +222,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
 		},
 		stateInURLSettings,
-		stateInitializer: (viewName: string) => {
+		stateReader: (viewName: string) => {
 			const view = views.find(({name}) => name === viewName);
 
 			if (view) {
@@ -254,7 +254,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
 		},
 		stateInURLSettings,
-		stateInitializer: (visibleFieldNames: VisibleFieldNames) => {
+		stateReader: (visibleFieldNames: VisibleFieldNames) => {
 			const view = views.find(
 				({name}) => name && name.toLowerCase().includes('table')
 			);

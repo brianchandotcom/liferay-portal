@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.headless.admin.site.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.RowPageElementDefinition;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -22,22 +22,22 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.layout.util.structure.RowStyledLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class RowPageElementDefinitionDTOConverter
+public class GridPageElementDefinitionDTOConverter
 	implements DTOConverter
-		<RowStyledLayoutStructureItem, RowPageElementDefinition> {
+		<RowStyledLayoutStructureItem, GridPageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return RowPageElementDefinition.class.getSimpleName();
+		return GridPageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public RowPageElementDefinition toDTO(
+	public GridPageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			RowStyledLayoutStructureItem rowStyledLayoutStructureItem)
 		throws Exception {
 
-		return new RowPageElementDefinition() {
+		return new GridPageElementDefinition() {
 			{
 				setCssClasses(
 					() -> {
@@ -56,10 +56,10 @@ public class RowPageElementDefinitionDTOConverter
 				setModulesPerRow(
 					rowStyledLayoutStructureItem::getModulesPerRow);
 				setName(rowStyledLayoutStructureItem::getName);
-				setNumberOfColumns(
+				setNumberOfModules(
 					rowStyledLayoutStructureItem::getNumberOfColumns);
 				setReverseOrder(rowStyledLayoutStructureItem::isReverseOrder);
-				setType(PageElementDefinition.Type.ROW);
+				setType(PageElementDefinition.Type.GRID);
 				setVerticalAlignment(
 					rowStyledLayoutStructureItem::getVerticalAlignment);
 			}

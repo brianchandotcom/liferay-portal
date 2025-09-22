@@ -64,7 +64,6 @@ import {loadData} from './utils/loadData';
 
 import {logError} from './utils/logError';
 import {saveViewSettings} from './utils/saveViewSettings';
-import {writeStateInURL} from './utils/stateInURL';
 import {
 	EStateInURLKeys,
 	EStateInURLSettings,
@@ -81,7 +80,7 @@ import {
 	TSort,
 	VisibleFieldNames,
 } from './utils/types';
-import useStateInURL from './utils/useStateInURL';
+import useStateInURL, {useUpdateState} from './utils/useStateInURL';
 import ViewsContext from './views/ViewsContext';
 
 // @ts-ignore
@@ -283,6 +282,8 @@ const FrontendDataSetContent = ({
 		},
 	});
 
+	const updateState = useUpdateState({id, stateInURLSettings});
+
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
@@ -421,19 +422,15 @@ const FrontendDataSetContent = ({
 		const searchParam = getSearchParam();
 
 		// viewsDispatch is not available here, so we can't use state in url
-		// setters at this point. writeStateInURL low level utility does the job
+		// setters at this point. hook does the job
 
-		writeStateInURL(
-			id,
-			{
-				[EStateInURLKeys.DELTA]: paginationDelta,
-				[EStateInURLKeys.PAGE_NUMBER]: pageNumber,
-				[EStateInURLKeys.SEARCH_PARAM]: searchParam,
-				[EStateInURLKeys.VIEW_NAME]: activeView.name,
-				[EStateInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
-			},
-			stateInURLSettings
-		);
+		updateState({
+			[EStateInURLKeys.DELTA]: paginationDelta,
+			[EStateInURLKeys.PAGE_NUMBER]: pageNumber,
+			[EStateInURLKeys.SEARCH_PARAM]: searchParam,
+			[EStateInURLKeys.VIEW_NAME]: activeView.name,
+			[EStateInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
+		});
 
 		return {
 			activeView,

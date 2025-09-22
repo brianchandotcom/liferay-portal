@@ -18,8 +18,7 @@ enum ActionTypes {
 	FetchSuccess = 'FETCH_SUCCESS',
 	FetchError = 'FETCH_ERROR',
 	LoadMoreStart = 'LOAD_MORE_START',
-	LoadMoreUsersSuccess = 'LOAD_MORE_USERS_SUCCESS',
-	LoadMoreGroupsSuccess = 'LOAD_MORE_GROUPS_SUCCESS',
+	LoadMoreSuccess = 'LOAD_MORE_SUCCESS',
 	LoadMoreError = 'LOAD_MORE_ERROR',
 	AddMemberStart = 'ADD_MEMBER_START',
 	AddMemberSuccess = 'ADD_MEMBER_SUCCESS',
@@ -95,17 +94,11 @@ type Action =
 	  }
 	| {
 			payload: {
-				items: UserAccount[];
+				items: (UserAccount | UserGroup)[];
 				page: number;
+				type: SelectOptions;
 			};
-			type: ActionTypes.LoadMoreUsersSuccess;
-	  }
-	| {
-			payload: {
-				items: UserGroup[];
-				page: number;
-			};
-			type: ActionTypes.LoadMoreGroupsSuccess;
+			type: ActionTypes.LoadMoreSuccess;
 	  };
 
 const initialState: State = {
@@ -200,26 +193,21 @@ function reducer(state: State, action: Action): State {
 				},
 			};
 		}
-		case ActionTypes.LoadMoreUsersSuccess:
+		case ActionTypes.LoadMoreSuccess: {
+			const {items, page, type} = action.payload;
+
+			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+
 			return {
 				...state,
 				isFetching: false,
-				users: {
-					...state.users,
-					items: [...state.users.items, ...action.payload.items],
-					page: action.payload.page,
+				[key]: {
+					...state[key],
+					items: [...state[key].items, ...items],
+					page,
 				},
 			};
-		case ActionTypes.LoadMoreGroupsSuccess:
-			return {
-				...state,
-				groups: {
-					...state.groups,
-					items: [...state.groups.items, ...action.payload.items],
-					page: action.payload.page,
-				},
-				isFetching: false,
-			};
+		}
 		case ActionTypes.UpdateRolesSuccess:
 			return {
 				...state,
@@ -327,48 +315,35 @@ export function useSpaceMembers(
 				return;
 			}
 
+			const isUser = type === SelectOptions.USERS;
+			const currentState = isUser ? state.users : state.groups;
+			const newPage = currentState.page + 1;
+
+			if (newPage > currentState.lastPage) {
+				return;
+			}
+
 			dispatch({type: ActionTypes.LoadMoreStart});
 
 			try {
-				if (type === SelectOptions.USERS) {
-					const newPage = state.users.page + 1;
-
-					if (newPage > state.users.lastPage) {
-						return;
-					}
-
-					const spaceUsers = await SpaceService.getSpaceUsers({
-						externalReferenceCode,
-						nestedFields: 'roles',
-						page: newPage,
-						pageSize,
-					});
-
-					dispatch({
-						payload: {items: spaceUsers.items, page: newPage},
-						type: ActionTypes.LoadMoreUsersSuccess,
-					});
-				}
-				else {
-					const newPage = state.groups.page + 1;
-
-					if (newPage > state.groups.lastPage) {
-						return;
-					}
-
-					const spaceUserGroups =
-						await SpaceService.getSpaceUserGroups({
+				const {items} = isUser
+					? await SpaceService.getSpaceUsers({
+							externalReferenceCode,
+							nestedFields: 'roles',
+							page: newPage,
+							pageSize,
+						})
+					: await SpaceService.getSpaceUserGroups({
 							externalReferenceCode,
 							nestedFields: 'numberOfUserAccounts,roles',
 							page: newPage,
 							pageSize,
 						});
 
-					dispatch({
-						payload: {items: spaceUserGroups.items, page: newPage},
-						type: ActionTypes.LoadMoreGroupsSuccess,
-					});
-				}
+				dispatch({
+					payload: {items, page: newPage, type},
+					type: ActionTypes.LoadMoreSuccess,
+				});
 			}
 			catch (error) {
 				dispatch({
@@ -382,96 +357,64 @@ export function useSpaceMembers(
 
 	const addMember = useCallback(
 		async (item: UserAccount | UserGroup, type: SelectOptions) => {
+			const isUser = type === SelectOptions.USERS;
+			const items = isUser ? state.users.items : state.groups.items;
+
+			if (items.some((existingItem) => existingItem.id === item.id)) {
+				return;
+			}
+
 			const itemWithEmptyRoles = {
 				...item,
 				roles: [],
 			};
 
-			if (type === SelectOptions.USERS) {
-				if (state.users.items.some((user) => user.id === item.id)) {
-					return;
-				}
+			dispatch({
+				payload: {item: itemWithEmptyRoles, type},
+				type: ActionTypes.AddMemberSuccess,
+			});
 
+			const {error} = isUser
+				? await SpaceService.linkUserToSpace({
+						spaceExternalReferenceCode: externalReferenceCode,
+						userExternalReferenceCode: item.externalReferenceCode,
+					})
+				: await SpaceService.linkUserGroupToSpace({
+						spaceExternalReferenceCode: externalReferenceCode,
+						userGroupExternalReferenceCode:
+							item.externalReferenceCode,
+					});
+
+			if (error) {
 				dispatch({
-					payload: {item: itemWithEmptyRoles, type},
-					type: ActionTypes.AddMemberSuccess,
+					payload: {id: item.id, type},
+					type: ActionTypes.AddMemberFailure,
 				});
 
-				const {error} = await SpaceService.linkUserToSpace({
-					spaceExternalReferenceCode: externalReferenceCode,
-					userExternalReferenceCode: item.externalReferenceCode,
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							isUser
+								? 'failed-to-add-user-x-to-space'
+								: 'failed-to-add-group-x-to-space'
+						),
+						[`<strong>${item.name}</strong>`]
+					),
+					type: 'danger',
 				});
-
-				if (error) {
-					dispatch({
-						payload: {id: item.id, type},
-						type: ActionTypes.AddMemberFailure,
-					});
-
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'failed-to-add-user-x-to-space'
-							),
-							[`<strong>${item.name}</strong>`]
-						),
-						type: 'danger',
-					});
-				}
-				else {
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'user-x-successfully-added-to-space'
-							),
-							[`<strong>${item.name}</strong>`]
-						),
-						type: 'success',
-					});
-				}
 			}
 			else {
-				if (state.groups.items.some((group) => group.id === item.id)) {
-					return;
-				}
-
-				dispatch({
-					payload: {item: itemWithEmptyRoles, type},
-					type: ActionTypes.AddMemberSuccess,
-				});
-
-				const {error} = await SpaceService.linkUserGroupToSpace({
-					spaceExternalReferenceCode: externalReferenceCode,
-					userGroupExternalReferenceCode: item.externalReferenceCode,
-				});
-
-				if (error) {
-					dispatch({
-						payload: {id: item.id, type},
-						type: ActionTypes.AddMemberFailure,
-					});
-
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'failed-to-add-group-x-to-space'
-							),
-							[`<strong>${item.name}</strong>`]
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							isUser
+								? 'user-x-successfully-added-to-space'
+								: 'group-x-successfully-added-to-space'
 						),
-						type: 'danger',
-					});
-				}
-				else {
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'group-x-successfully-added-to-space'
-							),
-							[`<strong>${item.name}</strong>`]
-						),
-						type: 'success',
-					});
-				}
+						[`<strong>${item.name}</strong>`]
+					),
+					type: 'success',
+				});
 			}
 		},
 		[externalReferenceCode, state.users.items, state.groups.items]
@@ -479,83 +422,53 @@ export function useSpaceMembers(
 
 	const removeMember = useCallback(
 		async (item: UserAccount | UserGroup, type: SelectOptions) => {
-			if (type === SelectOptions.USERS) {
+			const isUser = type === SelectOptions.USERS;
+
+			dispatch({
+				payload: {id: item.id, type},
+				type: ActionTypes.RemoveMemberSuccess,
+			});
+
+			const {error} = isUser
+				? await SpaceService.unlinkUserFromSpace({
+						spaceExternalReferenceCode: externalReferenceCode,
+						userExternalReferenceCode: item.externalReferenceCode,
+					})
+				: await SpaceService.unlinkUserGroupFromSpace({
+						spaceExternalReferenceCode: externalReferenceCode,
+						userGroupExternalReferenceCode:
+							item.externalReferenceCode,
+					});
+			if (error) {
 				dispatch({
-					payload: {id: item.id, type},
-					type: ActionTypes.RemoveMemberSuccess,
+					payload: {item, type},
+					type: ActionTypes.RemoveMemberFailure,
 				});
 
-				const {error} = await SpaceService.unlinkUserFromSpace({
-					spaceExternalReferenceCode: externalReferenceCode,
-					userExternalReferenceCode: item.externalReferenceCode,
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							isUser
+								? 'unable-to-remove-user-x-from-space'
+								: 'unable-to-remove-group-x-from-space'
+						),
+						[`<strong>${item.name}</strong>`]
+					),
+					type: 'danger',
 				});
-
-				if (error) {
-					dispatch({
-						payload: {item, type},
-						type: ActionTypes.RemoveMemberFailure,
-					});
-
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'unable-to-remove-user-x-from-space'
-							),
-							[`<strong>${item.name}</strong>`]
-						),
-						type: 'danger',
-					});
-				}
-				else {
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'user-x-successfully-removed-from-space'
-							),
-							[`<strong>${item.name}</strong>`]
-						),
-						type: 'success',
-					});
-				}
 			}
 			else {
-				dispatch({
-					payload: {id: item.id, type},
-					type: ActionTypes.RemoveMemberSuccess,
-				});
-
-				const {error} = await SpaceService.unlinkUserGroupFromSpace({
-					spaceExternalReferenceCode: externalReferenceCode,
-					userGroupExternalReferenceCode: item.externalReferenceCode,
-				});
-
-				if (error) {
-					dispatch({
-						payload: {item, type},
-						type: ActionTypes.RemoveMemberFailure,
-					});
-
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'unable-to-remove-group-x-from-space'
-							),
-							[`<strong>${item.name}</strong>`]
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							isUser
+								? 'user-x-successfully-removed-from-space'
+								: 'group-x-successfully-removed-from-space'
 						),
-						type: 'danger',
-					});
-				}
-				else {
-					openToast({
-						message: sub(
-							Liferay.Language.get(
-								'group-x-successfully-removed-from-space'
-							),
-							[`<strong>${item.name}</strong>`]
-						),
-						type: 'success',
-					});
-				}
+						[`<strong>${item.name}</strong>`]
+					),
+					type: 'success',
+				});
 			}
 		},
 		[externalReferenceCode]

@@ -2102,20 +2102,20 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("siteId")) {
+		if (parameters.containsKey("messageBoardThreadId")) {
+			return getMessageBoardThreadMessageBoardMessagesPage(
+				_parseLong((String)parameters.get("messageBoardThreadId")),
+				search, null, filter, pagination, sorts);
+		}
+		else if (parameters.containsKey("siteId")) {
 			return getSiteMessageBoardMessagesPage(
 				(Long)parameters.get("siteId"),
 				_parseBoolean((String)parameters.get("flatten")), search, null,
 				filter, pagination, sorts);
 		}
-		else if (parameters.containsKey("messageBoardThreadId")) {
-			return getMessageBoardThreadMessageBoardMessagesPage(
-				_parseLong((String)parameters.get("messageBoardThreadId")),
-				search, null, filter, pagination, sorts);
-		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be specified: [siteId, messageBoardThreadId]");
+				"One of the following parameters must be specified: [messageBoardThreadId, siteId]");
 		}
 	}
 

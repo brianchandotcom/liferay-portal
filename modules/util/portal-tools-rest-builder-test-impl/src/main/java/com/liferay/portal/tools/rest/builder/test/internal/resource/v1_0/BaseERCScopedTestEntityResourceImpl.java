@@ -923,17 +923,17 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("assetLibraryId")) {
+		if (parameters.containsKey("assetLibraryExternalReferenceCode")) {
 			return getAssetLibraryERCScopedTestEntitiesPage(
 				(String)parameters.get("assetLibraryExternalReferenceCode"));
 		}
-		else if (parameters.containsKey("siteId")) {
+		else if (parameters.containsKey("siteExternalReferenceCode")) {
 			return getSiteERCScopedTestEntitiesPage(
 				(String)parameters.get("siteExternalReferenceCode"));
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be specified: [assetLibraryId, siteId]");
+				"One of the following parameters must be specified: [assetLibraryExternalReferenceCode, siteExternalReferenceCode]");
 		}
 	}
 

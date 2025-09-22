@@ -924,13 +924,13 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("assetLibraryId")) {
+		if (parameters.containsKey("assetLibraryExternalReferenceCode")) {
 			return getAssetLibraryERCAssetLibraryTestEntitiesPage(
 				(String)parameters.get("assetLibraryExternalReferenceCode"));
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be specified: [assetLibraryId]");
+				"One of the following parameters must be specified: [assetLibraryExternalReferenceCode]");
 		}
 	}
 

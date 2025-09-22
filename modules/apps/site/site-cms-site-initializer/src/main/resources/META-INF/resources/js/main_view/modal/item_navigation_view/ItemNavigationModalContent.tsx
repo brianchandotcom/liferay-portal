@@ -3,16 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {SidePanel} from '@clayui/core';
 import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import AssetTypeInfoPanel from '../../info_panel/AssetTypeInfoPanelContent';
 import Carousel from './Carousel';
 import Header from './Header';
 
 import '../../../../css/components/ItemNavigation.scss';
 
 interface ItemNavigationModalContent {
+	additionalProps: any;
 	contentViewURL: string;
 	currentIndex: number;
 	items: ItemData[];
@@ -24,11 +27,14 @@ const KEY_CODE = {
 };
 
 export default function ItemNavigationModalContent({
+	additionalProps,
 	contentViewURL,
 	currentIndex = 0,
 	items,
 }: ItemNavigationModalContent) {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
+	const [openSidePanel, setOpenSidePanel] = useState(false);
+	const containerRef = useRef(null);
 
 	const currentItem = items[currentItemIndex];
 
@@ -84,17 +90,33 @@ export default function ItemNavigationModalContent({
 	return (
 		<>
 			<ClayModal.Header>
-				<Header item={currentItem} />
+				<Header
+					handleClickInfo={() => setOpenSidePanel(!openSidePanel)}
+					item={currentItem}
+				/>
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<Carousel
-					contentViewURL={contentViewURL}
-					currentItem={currentItem}
-					handleClickNext={handleClickNext}
-					handleClickPrevious={handleClickPrevious}
-					showArrows={items.length > 1}
-				/>
+				<div className="h-100" ref={containerRef}>
+					<Carousel
+						contentViewURL={contentViewURL}
+						currentItem={currentItem}
+						handleClickNext={handleClickNext}
+						handleClickPrevious={handleClickPrevious}
+						showArrows={items.length > 1}
+					/>
+
+					<SidePanel
+						containerRef={containerRef}
+						onOpenChange={setOpenSidePanel}
+						open={openSidePanel}
+					>
+						<AssetTypeInfoPanel
+							additionalProps={additionalProps as any}
+							items={[currentItem]}
+						/>
+					</SidePanel>
+				</div>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

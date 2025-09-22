@@ -21,6 +21,7 @@ import ERCInput from '../ERCInput';
 import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';
 import Spaces from '../Spaces';
+import WorkflowTab from './WorkflowTab';
 
 export default function StructureSettings() {
 	const dispatch = useStateDispatch();
@@ -115,8 +116,4 @@ function GeneralTab() {
 			<Spaces structure={state.structure} />
 		</div>
 	);
-}
-
-function WorkflowTab() {
-	return <div></div>;
 }

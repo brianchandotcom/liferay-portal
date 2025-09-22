@@ -10,7 +10,6 @@ import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLay
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -60,21 +59,16 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
-			PortletConfig portletConfig =
-				(PortletConfig)httpServletRequest.getAttribute(
-					JavaConstants.JAKARTA_PORTLET_CONFIG);
+		PortletConfig portletConfig =
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAKARTA_PORTLET_CONFIG);
 
-			String portletName = portletConfig.getPortletName();
+		String portletName = portletConfig.getPortletName();
 
-			if (portletName.equals(LoginPortletKeys.CREATE_ACCOUNT) &&
-				Validator.isNull(mvcRenderCommandName)) {
+		if ((portletName.equals(LoginPortletKeys.CREATE_ACCOUNT) &&
+			 Validator.isNull(mvcRenderCommandName)) ||
+			Objects.equals(mvcRenderCommandName, "/login/create_account")) {
 
-				return;
-			}
-		}
-
-		if (Objects.equals(mvcRenderCommandName, "/login/create_account")) {
 			return;
 		}
 
@@ -96,25 +90,17 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		try {
 			String url = StringPool.BLANK;
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
-				Layout layout =
-					_layoutUtilityPageEntryLayoutProvider.
-						getDefaultLayoutUtilityPageEntryLayout(
-							themeDisplay.getScopeGroupId(),
-							LayoutUtilityPageEntryConstants.
-								TYPE_CREATE_ACCOUNT);
+			Layout layout =
+				_layoutUtilityPageEntryLayoutProvider.
+					getDefaultLayoutUtilityPageEntryLayout(
+						themeDisplay.getScopeGroupId(),
+						LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT);
 
-				if (layout != null) {
-					url = _portal.getLayoutURL(layout, themeDisplay);
-				}
-				else {
-					url = _getCreateAccountURL(
-						httpServletRequest, themeDisplay);
-				}
+			if (layout != null) {
+				url = _portal.getLayoutURL(layout, themeDisplay);
 			}
 			else {
-				url = _portal.getCreateAccountURL(
-					httpServletRequest, themeDisplay);
+				url = _getCreateAccountURL(httpServletRequest, themeDisplay);
 			}
 
 			iconTag.setUrl(url);

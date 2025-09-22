@@ -8,7 +8,6 @@ package com.liferay.login.web.internal.servlet.taglib.include;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -55,21 +54,16 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
-			PortletConfig portletConfig =
-				(PortletConfig)httpServletRequest.getAttribute(
-					JavaConstants.JAKARTA_PORTLET_CONFIG);
+		PortletConfig portletConfig =
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAKARTA_PORTLET_CONFIG);
 
-			String portletName = portletConfig.getPortletName();
+		String portletName = portletConfig.getPortletName();
 
-			if (portletName.equals(LoginPortletKeys.FORGOT_PASSWORD) &&
-				Validator.isNull(mvcRenderCommandName)) {
+		if ((portletName.equals(LoginPortletKeys.FORGOT_PASSWORD) &&
+			 Validator.isNull(mvcRenderCommandName)) ||
+			Objects.equals(mvcRenderCommandName, "/login/forgot_password")) {
 
-				return;
-			}
-		}
-
-		if (Objects.equals(mvcRenderCommandName, "/login/forgot_password")) {
 			return;
 		}
 
@@ -84,16 +78,11 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 		}
 
 		try {
-			Layout layout = null;
-
-			if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
-				layout =
-					_layoutUtilityPageEntryLayoutProvider.
-						getDefaultLayoutUtilityPageEntryLayout(
-							themeDisplay.getScopeGroupId(),
-							LayoutUtilityPageEntryConstants.
-								TYPE_FORGOT_PASSWORD);
-			}
+			Layout layout =
+				_layoutUtilityPageEntryLayoutProvider.
+					getDefaultLayoutUtilityPageEntryLayout(
+						themeDisplay.getScopeGroupId(),
+						LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD);
 
 			String forgetPasswordURL = null;
 

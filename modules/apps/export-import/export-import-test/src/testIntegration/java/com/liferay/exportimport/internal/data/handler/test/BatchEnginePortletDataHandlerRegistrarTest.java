@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -87,9 +88,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				Portlet.class,
 				new GenericPortlet() {
 				},
-				HashMapDictionaryBuilder.<String, Object>put(
-					"jakarta.portlet.name", portletId
-				).build());
+				MapUtil.singletonDictionary("jakarta.portlet.name", portletId));
 			SafeCloseable safeCloseable2 = _registerServiceWithSafeCloseable(
 				VulcanBatchEngineTaskItemDelegate.class,
 				new TestExportImportVulcanBatchEngineTaskItemDelegate(

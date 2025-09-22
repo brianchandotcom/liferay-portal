@@ -80,6 +80,7 @@ function Toolbar({
 					className="flex-grow-1 my-3"
 					label={Liferay.Language.get('search-fields')}
 					onChange={setSearch}
+					size="sm"
 					variant="white"
 				/>
 

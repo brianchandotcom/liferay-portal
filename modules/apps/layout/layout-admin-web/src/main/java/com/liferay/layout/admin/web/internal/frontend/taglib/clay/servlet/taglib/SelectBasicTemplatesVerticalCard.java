@@ -117,14 +117,14 @@ public class SelectBasicTemplatesVerticalCard implements VerticalCard {
 
 			if ((layout != null) && layout.isTypeEmpty()) {
 				addLayoutURL.setParameter(
-					"initialType", LayoutConstants.TYPE_EMPTY);
-				addLayoutURL.setParameter(
 					"editAction",
 					String.valueOf(
 						ParamUtil.getBoolean(
 							_httpServletRequest, "editAction")));
 				addLayoutURL.setParameter(
 					"externalReferenceCode", layout.getExternalReferenceCode());
+				addLayoutURL.setParameter(
+					"initialType", LayoutConstants.TYPE_EMPTY);
 			}
 		}
 

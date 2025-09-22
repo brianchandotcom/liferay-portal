@@ -73,13 +73,10 @@ public class GetLayoutActionsMVCResourceCommandTest {
 	@Test
 	@TestInfo("LPS-132422")
 	public void testGetActionDropdownItems() throws Exception {
-		String[] actions = {
-			"Edit", "Translate", "View", "Preview Draft",
+		_assertActionDropdownItems(
+			_layout.getPlid(), "Edit", "Translate", "View", "Preview Draft",
 			"Convert to Page Template", "Make a Copy", "Export for Translation",
-			"Import Translation", "Configure", "Permissions", "Delete"
-		};
-
-		_assertActionDropdownItems(_layout.getPlid(), actions);
+			"Import Translation", "Configure", "Permissions", "Delete");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -96,11 +93,10 @@ public class GetLayoutActionsMVCResourceCommandTest {
 			LayoutConstants.TYPE_EMPTY, false, StringPool.BLANK,
 			serviceContext);
 
-		_assertActionDropdownItems(
-			layout.getPlid(), new String[] {"Edit", "Delete"});
+		_assertActionDropdownItems(layout.getPlid(), "Edit", "Delete");
 	}
 
-	private void _assertActionDropdownItems(long plid, String[] actions)
+	private void _assertActionDropdownItems(long plid, String... actions)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =

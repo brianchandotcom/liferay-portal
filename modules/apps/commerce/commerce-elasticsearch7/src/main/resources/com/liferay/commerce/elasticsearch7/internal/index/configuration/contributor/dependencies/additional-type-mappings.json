@@ -119,6 +119,9 @@
 		"orderTypeId": {
 			"type": "keyword"
 		},
+		"paymentStatus": {
+			"type": "integer"
+		},
 		"productTypeName": {
 			"type": "keyword"
 		},

@@ -42,6 +42,7 @@ public class OrderEntityModel implements EntityModel {
 			new DoubleEntityField("totalAmount", locale -> "totalAmount"),
 			new IntegerEntityField("channelId", locale -> "commerceChannelId"),
 			new IntegerEntityField("orderId", locale -> Field.ENTRY_CLASS_PK),
+			new IntegerEntityField("paymentStatus", locale -> "paymentStatus"),
 			new IntegerEntityField(
 				"orderTypeId", locale -> "commerceOrderTypeId"),
 			new StringEntityField(

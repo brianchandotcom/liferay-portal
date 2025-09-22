@@ -5,6 +5,7 @@
 
 import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 
+export const ACCOUNT_SELECTOR_UPDATED = 'account-selector-updated';
 export const ADD_ITEM_TO_CART = 'add-item-to-cart';
 export const AUTOCOMPLETE_VALUE_UPDATED = 'autocomplete-updated';
 export const CART_PRODUCT_QUANTITY_CHANGED = 'quantity-changed-from-cart';

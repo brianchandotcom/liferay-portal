@@ -873,6 +873,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 	private void _testPostSiteSuccessSiteTemplate() throws Exception {
 		Site randomSite = randomSite();
+
 		LayoutSetPrototype layoutSetPrototype =
 			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
 				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
@@ -901,10 +902,10 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	private void _testPostSiteWithLocalizedDescription() throws Exception {
+		Site randomSite = randomSite();
+
 		String description1 = RandomTestUtil.randomString();
 		String description2 = RandomTestUtil.randomString();
-
-		Site randomSite = randomSite();
 
 		randomSite.setDescription(
 			LinkedHashMapBuilder.put(
@@ -926,10 +927,10 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	private void _testPostSiteWithLocalizedName() throws Exception {
+		Site randomSite = randomSite();
+
 		String name1 = RandomTestUtil.randomString();
 		String name2 = RandomTestUtil.randomString();
-
-		Site randomSite = randomSite();
 
 		randomSite.setName(
 			LinkedHashMapBuilder.put(

@@ -606,23 +606,25 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	private Site _toSite(Group group) {
+		String[] availableLanguageIds = group.getAvailableLanguageIds();
+
 		return new Site() {
 			{
-				String[] availableLanguages = group.getAvailableLanguageIds();
-
 				setActive(group::getActive);
 				setDescription(
 					() -> {
 						Map<String, String> descriptionMap =
 							new LinkedHashMap<>();
 
-						for (String availableLanguage : availableLanguages) {
+						for (String availableLanguageId :
+								availableLanguageIds) {
+
 							String description = group.getDescription(
-								availableLanguage, false);
+								availableLanguageId, false);
 
 							if (Validator.isNotNull(description)) {
 								descriptionMap.put(
-									availableLanguage, description);
+									availableLanguageId, description);
 							}
 						}
 
@@ -641,12 +643,14 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					() -> {
 						Map<String, String> nameMap = new LinkedHashMap<>();
 
-						for (String availableLanguage : availableLanguages) {
+						for (String availableLanguageId :
+								availableLanguageIds) {
+
 							String name = group.getName(
-								availableLanguage, false);
+								availableLanguageId, false);
 
 							if (Validator.isNotNull(name)) {
-								nameMap.put(availableLanguage, name);
+								nameMap.put(availableLanguageId, name);
 							}
 						}
 

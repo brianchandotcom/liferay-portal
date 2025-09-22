@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"cssClasses": [
+						"marketplace-header"
+					],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\n\nposition:sticky;\ntop:-48px;\nz-index:970;\n}",
 					"fragmentStyle": {
 						"backgroundColor": "#FFFFFF"
@@ -22,9 +25,6 @@
 						"pageElements": [
 							{
 								"definition": {
-									"cssClasses": [
-										"marketplace-header"
-									],
 									"customCSS": ".[$FRAGMENT_CLASS$] .nav-mobile-class {\ndisplay: flex !important;\n}",
 									"fragmentStyle": {
 										"borderWidth": "0",

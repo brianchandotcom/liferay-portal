@@ -141,8 +141,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 		_serviceContext = new ServiceContext() {
 			{
-				setAttribute(
-					"friendlyUrlMap", new HashMap<String, String>());
+				setAttribute("friendlyUrlMap", new HashMap<String, String>());
 				setCompanyId(testGroup.getCompanyId());
 				setUserId(TestPropsValues.getUserId());
 			}
@@ -282,7 +281,8 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			testGroup.getGroupId(), StringPool.BLANK,
-			_portal.getClassNameId(_basicDocumentObjectDefinition.getClassName()),
+			_portal.getClassNameId(
+				_basicDocumentObjectDefinition.getClassName()),
 			assetId, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 			layoutPageTemplateEntry.getPlid(), _serviceContext);
 
@@ -342,6 +342,9 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 	private static final String _LANGUAGE_ID = "en_US";
 
+	private ObjectDefinition _basicDocumentObjectDefinition;
+	private ObjectDefinition _basicWebContentObjectDefinition;
+
 	@Inject
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
@@ -356,8 +359,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	private ObjectDefinition _basicDocumentObjectDefinition;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService
@@ -392,6 +393,5 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 	private ObjectField _relationshipObjectField;
 	private ServiceContext _serviceContext;
-	private ObjectDefinition _basicWebContentObjectDefinition;
 
 }

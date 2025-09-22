@@ -7,7 +7,6 @@ package com.liferay.layout.utility.page.forgot.password.internal;
 
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 
 import jakarta.servlet.RequestDispatcher;
@@ -41,11 +40,6 @@ public class ForgotPasswordLayoutUtilityPageEntryViewRenderer
 	@Override
 	public String getType() {
 		return LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return FeatureFlagManagerUtil.isEnabled("LPD-6378");
 	}
 
 	@Override

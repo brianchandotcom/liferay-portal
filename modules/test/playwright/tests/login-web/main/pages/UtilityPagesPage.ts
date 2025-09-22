@@ -15,6 +15,9 @@ export class UtilityPagesPage {
 	constructor(page: Page) {
 		this.newButton = page.getByRole('button', {name: 'New'});
 		this.page = page;
+		this.page.on('dialog', async (dialog) => {
+			await dialog.accept();
+		});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

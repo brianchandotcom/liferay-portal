@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -191,21 +190,17 @@ public class LoginUtil {
 			HttpServletRequest httpServletRequest, long plid)
 		throws PortletModeException, WindowStateException {
 
-		String portletName = LoginPortletKeys.LOGIN;
+		PortletConfig portletConfig =
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAKARTA_PORTLET_CONFIG);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
-			PortletConfig portletConfig =
-				(PortletConfig)httpServletRequest.getAttribute(
-					JavaConstants.JAKARTA_PORTLET_CONFIG);
+		String portletName = portletConfig.getPortletName();
 
-			portletName = portletConfig.getPortletName();
+		if (!portletName.equals(LoginPortletKeys.CREATE_ACCOUNT) &&
+			!portletName.equals(LoginPortletKeys.LOGIN) &&
+			!portletName.equals(LoginPortletKeys.FORGOT_PASSWORD)) {
 
-			if (!portletName.equals(LoginPortletKeys.CREATE_ACCOUNT) &&
-				!portletName.equals(LoginPortletKeys.LOGIN) &&
-				!portletName.equals(LoginPortletKeys.FORGOT_PASSWORD)) {
-
-				portletName = LoginPortletKeys.LOGIN;
-			}
+			portletName = LoginPortletKeys.LOGIN;
 		}
 
 		return PortletURLBuilder.create(

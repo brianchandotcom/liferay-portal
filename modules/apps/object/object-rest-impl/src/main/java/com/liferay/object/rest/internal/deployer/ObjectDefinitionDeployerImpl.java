@@ -575,6 +575,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 										ObjectDefinition.class.getName())
 							).put(
 								"crud.item.delegate", "true"
+							).put(
+								"export.import.vulcan.batch.engine.task.item." +
+									"delegate",
+								"true"
 							).build()),
 						_bundleContext.registerService(
 							ObjectRelationshipElementsParser.class,

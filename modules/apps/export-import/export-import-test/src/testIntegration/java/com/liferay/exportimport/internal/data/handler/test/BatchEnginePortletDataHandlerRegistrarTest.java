@@ -102,6 +102,9 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				).put(
 					"batch.engine.task.item.delegate.name",
 					RandomTestUtil.randomString()
+				).put(
+					"export.import.vulcan.batch.engine.task.item.delegate",
+					"true"
 				).build());
 			SafeCloseable safeCloseable3 = _registerServiceWithSafeCloseable(
 				VulcanBatchEngineTaskItemDelegate.class,
@@ -114,6 +117,9 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				).put(
 					"batch.engine.task.item.delegate.name",
 					RandomTestUtil.randomString()
+				).put(
+					"export.import.vulcan.batch.engine.task.item.delegate",
+					"true"
 				).build())) {
 
 			Assert.assertEquals(

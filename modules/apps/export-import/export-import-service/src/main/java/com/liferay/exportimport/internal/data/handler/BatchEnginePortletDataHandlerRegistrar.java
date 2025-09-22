@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import java.util.Dictionary;
@@ -55,7 +54,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 					if (_serviceRegistrations == null) {
 						_serviceRegistrations = ServiceTrackerListFactory.open(
 							bundleContext, null,
-							"(batch.engine.task.item.delegate=true)",
+							"(export.import.vulcan.batch.engine.task.item." +
+								"delegate=true)",
 							new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
 								bundleContext));
 
@@ -168,27 +168,15 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			ServiceReference<VulcanBatchEngineTaskItemDelegate>
 				serviceReference) {
 
-			VulcanBatchEngineTaskItemDelegate<?>
-				vulcanBatchEngineTaskItemDelegate = _bundleContext.getService(
-					serviceReference);
-
-			if (!(vulcanBatchEngineTaskItemDelegate instanceof
-					ExportImportVulcanBatchEngineTaskItemDelegate<?>
-						exportImportVulcanBatchEngineTaskItemDelegate)) {
-
-				return null;
-			}
+			ExportImportVulcanBatchEngineTaskItemDelegate<?>
+				exportImportVulcanBatchEngineTaskItemDelegate =
+					(ExportImportVulcanBatchEngineTaskItemDelegate<?>)
+						_bundleContext.getService(serviceReference);
 
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 				exportImportDescriptor =
 					exportImportVulcanBatchEngineTaskItemDelegate.
 						getExportImportDescriptor();
-
-			String portletId = exportImportDescriptor.getPortletId();
-
-			if (Validator.isNull(portletId)) {
-				return null;
-			}
 
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
 				new BatchEnginePortletDataHandler(
@@ -204,7 +192,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 							"batch.engine.entity.class.name")),
 					_companyLocalService,
 					exportImportVulcanBatchEngineTaskItemDelegate,
-					exportImportDescriptor.getItemClassName(), portletId,
+					exportImportDescriptor.getItemClassName(),
+					exportImportDescriptor.getPortletId(),
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"),
 					_userLocalService);
@@ -216,7 +205,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 						"batch.engine.task.item.delegate.item.class.name",
 						exportImportDescriptor.getItemClassName()
 					).put(
-						"jakarta.portlet.name", portletId
+						"jakarta.portlet.name",
+						exportImportDescriptor.getPortletId()
 					).put(
 						"service.ranking", Integer.MAX_VALUE
 					).build()));

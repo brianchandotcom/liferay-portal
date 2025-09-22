@@ -117,13 +117,13 @@ test('Item Selector Modal with single selection', async ({
 
 		expect(numOfItems > 1).toEqual(true);
 
-		const testItem = items.getByText('Test', {exact: true});
+		const user1Label = items.getByText('Test', {exact: true});
 
-		const itemUser = items.getByText(user?.givenName, {exact: true});
+		const user2Label = items.getByText(user?.givenName, {exact: true});
 
-		expect(testItem).not.toBe(itemUser);
+		expect(user1Label).not.toBe(user2Label);
 
-		await testItem.click();
+		await user1Label.click();
 
 		await expect(itemSelectorSamplePage.modal.selectButton).toBeEnabled();
 
@@ -131,7 +131,7 @@ test('Item Selector Modal with single selection', async ({
 			itemSelectorSamplePage.page.getByText(`Test Selected`)
 		).toBeVisible();
 
-		await itemUser.click();
+		await user2Label.click();
 
 		await expect(
 			itemSelectorSamplePage.page.getByText(`${user?.givenName} Selected`)

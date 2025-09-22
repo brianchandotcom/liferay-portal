@@ -240,8 +240,8 @@ public class CPConfigurationListLocalServiceImpl
 				return cpConfigurationListLocalService.
 					updateCPConfigurationList(
 						externalReferenceCode,
-						cpConfigurationList.getCPConfigurationListId(), groupId,
-						userId, parentCPConfigurationListId, master, name,
+						cpConfigurationList.getCPConfigurationListId(), userId,
+						groupId, parentCPConfigurationListId, master, name,
 						priority, displayDateMonth, displayDateDay,
 						displayDateYear, displayDateHour, displayDateMinute,
 						expirationDateMonth, expirationDateDay,

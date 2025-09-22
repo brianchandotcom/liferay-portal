@@ -363,8 +363,6 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 		_userGroupLocalService.addUserUserGroup(
 			user1.getUserId(), userGroup1.getUserGroupId());
-		_userGroupLocalService.addUserUserGroup(
-			user2.getUserId(), userGroup1.getUserGroupId());
 
 		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
 

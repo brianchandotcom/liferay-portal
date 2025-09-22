@@ -17,9 +17,11 @@
 
 		<clay:button
 			cssClass="alert-btn btn flex-shrink-0 ml-4"
+			data-testid="editEmptyLayoutButton"
 			displayType="secondary"
 			id="editButton"
 			label='<%= LanguageUtil.format(locale, "edit-x", "page") %>'
+			onClick='<%= "location.href='" + HtmlUtil.escapeJS((String)request.getAttribute("editURL")) + "';" %>'
 		/>
 	</div>
 </clay:alert>

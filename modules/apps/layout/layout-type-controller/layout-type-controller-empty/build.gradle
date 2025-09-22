@@ -7,6 +7,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:layout:layout-admin-api")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-content-page-editor-api")
 	compileOnly project(":apps:layout:layout-taglib")

@@ -7,19 +7,8 @@ import '../../../css/spaces/SpaceMembersWithList.scss';
 
 import LoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {openToast} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
-import React, {
-	useCallback,
-	useEffect,
-	useId,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import React, {useEffect, useId, useMemo, useRef, useState} from 'react';
 
-import SpaceService from '../../common/services/SpaceService';
-import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 import {MembersListItem} from './MemberListItem';
 import {
 	SelectOptions,
@@ -47,10 +36,8 @@ export function SpaceMembersWithList({
 }: SpaceMembersWithListProps) {
 	const listLabelId = useId();
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
-	const {addMember, loadMore, removeMember, state} = useSpaceMembers(
-		externalReferenceCode,
-		pageSize
-	);
+	const {addMember, loadMore, removeMember, state, updateMemberRoles} =
+		useSpaceMembers(externalReferenceCode, pageSize);
 	const {
 		groups,
 		isFetching: isFetchingMembers,
@@ -59,12 +46,6 @@ export function SpaceMembersWithList({
 	} = state;
 
 	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
-	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>(
-		users.items
-	);
-	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
-		groups.items
-	);
 	const sentinelRef = useRef(null);
 
 	useEffect(() => {
@@ -91,99 +72,17 @@ export function SpaceMembersWithList({
 	}, [sentinelRef, loadMore, selectedOption, isFetchingMembers]);
 
 	useEffect(() => {
-		setSelectedUsers(users.items);
-	}, [users.items]);
-
-	useEffect(() => {
-		setSelectedUserGroups(groups.items);
-	}, [groups.items]);
-
-	useEffect(() => {
-		const hasMembers =
-			selectedUsers.length > 0 || selectedUserGroups.length > 0;
+		const hasMembers = users.items.length > 0 || groups.items.length > 0;
 		onHasSelectedMembersChange?.(hasMembers);
-	}, [onHasSelectedMembersChange, selectedUsers, selectedUserGroups]);
-
-	const onUpdateItemRoles = useCallback(
-		async (itemToUpdate: UserAccount | UserGroup, newRoles: string[]) => {
-			const isUser = selectedOption === SelectOptions.USERS;
-			const originalRoles = itemToUpdate.roles;
-
-			const newRoleObjects = spacePermissionsRoles.filter((role) =>
-				newRoles.includes(role.name)
-			);
-
-			const stateUpdater = isUser
-				? setSelectedUsers
-				: setSelectedUserGroups;
-
-			const setStateUpdater = stateUpdater as React.Dispatch<
-				React.SetStateAction<(UserAccount | UserGroup)[]>
-			>;
-
-			setStateUpdater((current) =>
-				current.map((item) =>
-					item.name === itemToUpdate.name
-						? {...item, roles: newRoleObjects}
-						: item
-				)
-			);
-
-			const {error} = isUser
-				? await SpaceService.updateUserRoles({
-						roleNames: newRoles,
-						spaceExternalReferenceCode: externalReferenceCode,
-						userExternalReferenceCode:
-							itemToUpdate.externalReferenceCode,
-					})
-				: await SpaceService.updateUserGroupRoles({
-						roleNames: newRoles,
-						spaceExternalReferenceCode: externalReferenceCode,
-						userGroupExternalReferenceCode:
-							itemToUpdate.externalReferenceCode,
-					});
-
-			if (error) {
-				setStateUpdater((current) =>
-					current.map((item) =>
-						item.id === itemToUpdate.id
-							? {...item, roles: originalRoles}
-							: item
-					)
-				);
-
-				openToast({
-					message: sub(
-						Liferay.Language.get(
-							isUser
-								? 'unable-to-update-roles-for-user-x'
-								: 'unable-to-update-roles-for-group-x'
-						),
-						[`<strong>${itemToUpdate.name}</strong>`]
-					),
-					type: 'danger',
-				});
-			}
-			else {
-				openToast({
-					message: sub(
-						Liferay.Language.get('x-role-was-successfully-updated'),
-						[`<strong>${itemToUpdate.name}</strong>`]
-					),
-					type: 'success',
-				});
-			}
-		},
-		[externalReferenceCode, selectedOption, spacePermissionsRoles]
-	);
+	}, [onHasSelectedMembersChange, users.items, groups.items]);
 
 	const hasMembersSelected = useMemo(() => {
 		if (selectedOption === SelectOptions.USERS) {
-			return selectedUsers.length;
+			return users.items.length;
 		}
 
-		return selectedUserGroups.length;
-	}, [selectedOption, selectedUsers, selectedUserGroups]);
+		return groups.items.length;
+	}, [selectedOption, users.items, groups.items]);
 
 	return (
 		<div className={classNames('space-members-with-list', className)}>
@@ -227,11 +126,17 @@ export function SpaceMembersWithList({
 									hasAssignMembersPermission
 								}
 								itemType="user"
-								items={selectedUsers}
+								items={users.items}
 								onRemoveItem={(item) =>
 									removeMember(item, selectedOption)
 								}
-								onUpdateItemRoles={onUpdateItemRoles}
+								onUpdateItemRoles={(item, newRoles) =>
+									updateMemberRoles(
+										item,
+										newRoles,
+										selectedOption
+									)
+								}
 								roles={spacePermissionsRoles}
 							/>
 						) : (
@@ -240,11 +145,17 @@ export function SpaceMembersWithList({
 									hasAssignMembersPermission
 								}
 								itemType="group"
-								items={selectedUserGroups}
+								items={groups.items}
 								onRemoveItem={(item) =>
 									removeMember(item, selectedOption)
 								}
-								onUpdateItemRoles={onUpdateItemRoles}
+								onUpdateItemRoles={(item, newRoles) =>
+									updateMemberRoles(
+										item,
+										newRoles,
+										selectedOption
+									)
+								}
 								roles={spacePermissionsRoles}
 							/>
 						)}

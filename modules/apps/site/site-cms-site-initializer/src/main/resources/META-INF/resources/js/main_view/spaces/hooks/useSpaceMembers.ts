@@ -52,6 +52,14 @@ type Action =
 	| {payload: UserAccount; type: 'REMOVE_USER_FAILURE'}
 	| {payload: UserGroup; type: 'REMOVE_GROUP_FAILURE'}
 	| {
+			payload: {id: number | string; roles: Role[]};
+			type: 'UPDATE_ROLES_SUCCESS';
+	  }
+	| {
+			payload: {id: number | string; originalRoles: Role[]};
+			type: 'UPDATE_ROLES_FAILURE';
+	  }
+	| {
 			payload: {
 				items: UserAccount[];
 				page: number;
@@ -199,6 +207,38 @@ function reducer(state: State, action: Action): State {
 					page: action.payload.page,
 				},
 				isFetching: false,
+			};
+		case 'UPDATE_ROLES_SUCCESS':
+			return {
+				...state,
+				groups: {
+					...state.groups,
+					items: state.groups.items.map((item) =>
+						item.id === action.payload.id
+							? {...item, roles: action.payload.roles}
+							: item
+					),
+				},
+				users: {
+					...state.users,
+					items: state.users.items.map((item) =>
+						item.id === action.payload.id
+							? {...item, roles: action.payload.roles}
+							: item
+					),
+				},
+			};
+		case 'UPDATE_ROLES_FAILURE':
+			return {
+				...state,
+				users: {
+					...state.users,
+					items: state.users.items.map((item) =>
+						item.id === action.payload.id
+							? {...item, roles: action.payload.originalRoles}
+							: item
+					),
+				},
 			};
 		case 'FETCH_ERROR':
 		case 'LOAD_MORE_ERROR':
@@ -491,5 +531,83 @@ export function useSpaceMembers(
 		[externalReferenceCode]
 	);
 
-	return {addMember, loadMore, removeMember, state};
+	const updateMemberRoles = useCallback(
+		async (
+			itemToUpdate: UserAccount | UserGroup,
+			newRoles: string[],
+			type: SelectOptions
+		) => {
+			const isUser = type === SelectOptions.USERS;
+			const originalRoles = itemToUpdate.roles;
+
+			const newRoleObjects = state.roles.filter((role) =>
+				newRoles.includes(role.name)
+			);
+
+			dispatch({
+				payload: {id: itemToUpdate.id, roles: newRoleObjects},
+				type: 'UPDATE_ROLES_SUCCESS',
+			});
+
+			const {error} = isUser
+				? await SpaceService.updateUserRoles({
+						roleNames: newRoles,
+						spaceExternalReferenceCode: externalReferenceCode,
+						userExternalReferenceCode:
+							itemToUpdate.externalReferenceCode,
+					})
+				: await SpaceService.updateUserGroupRoles({
+						roleNames: newRoles,
+						spaceExternalReferenceCode: externalReferenceCode,
+						userGroupExternalReferenceCode:
+							itemToUpdate.externalReferenceCode,
+					});
+
+			if (error) {
+				dispatch({
+					payload: {
+						id: itemToUpdate.id,
+						originalRoles:
+							originalRoles?.map(
+								(originalRole) =>
+									state.roles.find(
+										(role) => role.id === originalRole.id
+									)!
+							) || [],
+					},
+					type: 'UPDATE_ROLES_FAILURE',
+				});
+
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							isUser
+								? 'unable-to-update-roles-for-user-x'
+								: 'unable-to-update-roles-for-group-x'
+						),
+						[`<strong>${itemToUpdate.name}</strong>`]
+					),
+					type: 'danger',
+				});
+			}
+			else {
+				openToast({
+					message: sub(
+						Liferay.Language.get('x-role-was-successfully-updated'),
+						[`<strong>${itemToUpdate.name}</strong>`]
+					),
+					type: 'success',
+				});
+			}
+		},
+		[externalReferenceCode, state.roles]
+	);
+
+	return {
+		addMember,
+		loadMore,
+		removeMember,
+		state,
+		updateMemberRoles,
+	};
 }

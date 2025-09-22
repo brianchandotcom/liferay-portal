@@ -59,6 +59,10 @@ export type ObjectDefinition = {
 		code: number;
 	};
 	titleObjectFieldName?: string;
+	workflowDefinitionLinks?: {
+		groupExternalReferenceCode: string;
+		workflowDefinitionName: string;
+	}[];
 };
 
 export type ObjectDefinitions = Record<

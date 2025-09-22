@@ -29,6 +29,7 @@ import selectStructureLocalizedLabel from '../selectors/selectStructureLocalized
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureStatus from '../selectors/selectStructureStatus';
+import selectStructureWorkflows from '../selectors/selectStructureWorkflows';
 import selectUnsavedChanges from '../selectors/selectUnsavedChanges';
 import DisplayPageService from '../services/DisplayPageService';
 import StructureService from '../services/StructureService';
@@ -175,6 +176,7 @@ function SaveButton() {
 	const name = useSelector(selectStructureName);
 	const spaces = useSelector(selectStructureSpaces);
 	const status = useSelector(selectStructureStatus);
+	const workflows = useSelector(selectStructureWorkflows);
 
 	const onError = (error: string) =>
 		dispatch({
@@ -201,6 +203,7 @@ function SaveButton() {
 				name,
 				spaces,
 				status: 'draft',
+				workflows,
 			});
 
 			if (error) {
@@ -220,6 +223,7 @@ function SaveButton() {
 				name,
 				spaces,
 				status: 'draft',
+				workflows,
 			});
 
 			if (error) {
@@ -358,6 +362,7 @@ async function publishStructure({
 	const spaces = selectStructureSpaces(state);
 	const status = selectStructureStatus(state);
 	const structureERC = selectStructureERC(state);
+	const workflows = selectStructureWorkflows(state);
 
 	const onSuccess = async () => {
 		staleCache('object-definitions');
@@ -432,6 +437,7 @@ async function publishStructure({
 			name,
 			spaces,
 			status: 'published',
+			workflows,
 		});
 
 		if (error) {
@@ -451,6 +457,7 @@ async function publishStructure({
 			name,
 			spaces,
 			status: 'published',
+			workflows,
 		});
 
 		if (error) {
@@ -470,6 +477,7 @@ async function publishStructure({
 			name,
 			spaces,
 			status: 'published',
+			workflows,
 		});
 
 		if (error) {

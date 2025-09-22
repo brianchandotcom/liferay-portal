@@ -28,9 +28,9 @@ const test = mergeTests(
 	loginTest()
 );
 
-let user: null | TUserAccount = null;
 let imageFile: any;
 let jsonFile: any;
+let user: null | TUserAccount = null;
 
 test.beforeEach(async ({apiHelpers, itemSelectorSamplePage, site}) => {
 	await test.step('Upload sample documents', async () => {

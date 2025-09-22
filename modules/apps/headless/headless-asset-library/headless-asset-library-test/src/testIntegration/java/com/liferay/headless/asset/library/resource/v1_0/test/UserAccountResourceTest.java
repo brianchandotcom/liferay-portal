@@ -70,7 +70,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		super.testGetAssetLibraryByExternalReferenceCodeUserAccountsPage();
 
-		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithAssetLibraryMember();
+		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithAssetLibraryMember(
+			"");
+		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithAssetLibraryMember(
+			"roles");
 		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithSortId();
 	}
 
@@ -87,7 +90,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testGetAssetLibraryUserAccountsPage() throws Exception {
 		super.testGetAssetLibraryUserAccountsPage();
 
-		_testGetAssetLibraryUserAccountsPageWithAssetLibraryMember();
+		_testGetAssetLibraryUserAccountsPageWithAssetLibraryMember("");
+		_testGetAssetLibraryUserAccountsPageWithAssetLibraryMember("roles");
 		_testGetAssetLibraryUserAccountsPageWithSortId();
 	}
 
@@ -250,7 +254,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return group.getExternalReferenceCode();
 	}
 
-	private UserAccountResource _getUserAccountResource() throws Exception {
+	private UserAccountResource _getUserAccountResource(String nestedFields)
+		throws Exception {
+
 		String password = RandomTestUtil.randomString();
 
 		User user = UserTestUtil.addUser(
@@ -270,6 +276,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", nestedFields
 		).build();
 	}
 
@@ -280,7 +288,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode_addUserAccount();
 
 		UserAccountResource assetLibraryMemberUserAccountResource =
-			_getUserAccountResource();
+			_getUserAccountResource("");
 
 		UserAccount getUserAccount =
 			assetLibraryMemberUserAccountResource.
@@ -292,14 +300,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		assertValid(getUserAccount);
 	}
 
-	private void _testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithAssetLibraryMember()
+	private void
+			_testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithAssetLibraryMember(
+				String nestedFields)
 		throws Exception {
 
 		String externalReferenceCode =
 			testGetAssetLibraryByExternalReferenceCodeUserAccountsPage_getExternalReferenceCode();
 
 		UserAccountResource assetLibraryMemberUserAccountResource =
-			_getUserAccountResource();
+			_getUserAccountResource(nestedFields);
 
 		Page<UserAccount> page =
 			assetLibraryMemberUserAccountResource.
@@ -342,14 +352,15 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			});
 	}
 
-	private void _testGetAssetLibraryUserAccountsPageWithAssetLibraryMember()
+	private void _testGetAssetLibraryUserAccountsPageWithAssetLibraryMember(
+			String nestedFields)
 		throws Exception {
 
 		Long assetLibraryId =
 			testGetAssetLibraryUserAccountsPage_getAssetLibraryId();
 
 		UserAccountResource assetLibraryMemberUserAccountResource =
-			_getUserAccountResource();
+			_getUserAccountResource(nestedFields);
 
 		Page<UserAccount> page =
 			assetLibraryMemberUserAccountResource.
@@ -397,7 +408,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			testGetAssetLibraryUserAccount_addUserAccount();
 
 		UserAccountResource assetLibraryMemberUserAccountResource =
-			_getUserAccountResource();
+			_getUserAccountResource("");
 
 		UserAccount getUserAccount =
 			assetLibraryMemberUserAccountResource.getAssetLibraryUserAccount(

@@ -2275,6 +2275,68 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
+	test('error message is displayed in the language of the site context', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'Text',
+					label: {ar_SA: 'النص مطلوب', en_US: 'Text Required'},
+					required: true,
+				},
+			],
+		});
+
+		const objectDefinitionName = 'ObjectDefinition' + getRandomInt();
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				label: {
+					ar_SA: objectDefinitionName + 'ar_SA',
+					en_US: objectDefinitionName + 'en_US',
+				},
+				name: objectDefinitionName,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionName + 's',
+				},
+				scope: 'company',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		siteLanguage = 'ar';
+
+		await viewObjectEntriesPage.goto(
+			objectDefinition.className,
+			siteLanguage
+		);
+
+		await page
+			.getByRole('button', {
+				name: `إضافة ${objectDefinition.label['ar_SA']}`,
+			})
+			.first()
+			.click();
+
+		await page.getByRole('textbox', {name: 'النص مطلوب'}).click();
+
+		await viewObjectEntriesPage.saveObjectEntryButtonArabic.click();
+
+		await expect(page.getByText('هذا الحقل مطلوب.')).toBeVisible();
+	});
+
 	test(
 		'error message is displayed when trying to view a deleted object entry with a user with view-only permissions',
 		{tag: ['@LPD-61276']},

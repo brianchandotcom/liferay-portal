@@ -7,6 +7,7 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
+import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import deleteEntryAction from './actions/deleteEntryAction';
 import manageConnectedSitesAction, {
@@ -19,6 +20,7 @@ import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
 const ACTIONS = {};
+const DEPOT_CLASS_NAME = 'com.liferay.depot.model.DepotEntry';
 
 export default function AllSpacesFDSPropsTransformer({
 	additionalProps,
@@ -110,7 +112,7 @@ export default function AllSpacesFDSPropsTransformer({
 								{}),
 							classExternalReferenceCode:
 								itemData.externalReferenceCode,
-							className: 'com.liferay.depot.model.DepotEntry',
+							className: DEPOT_CLASS_NAME,
 							closeModal,
 						}),
 					size: 'full-screen',
@@ -163,6 +165,22 @@ export default function AllSpacesFDSPropsTransformer({
 				};
 
 				manageConnectedSitesAction(data, loadData);
+			}
+		},
+		onBulkActionItemClick: ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			if (action?.data?.id === 'default-permissions') {
+				defaultPermissionsBulkAction({
+					className: DEPOT_CLASS_NAME,
+					defaultPermissionAdditionalProps:
+						additionalProps.defaultPermissionAdditionalProps || {},
+					selectedData,
+				});
 			}
 		},
 	};

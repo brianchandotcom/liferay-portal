@@ -42,7 +42,6 @@ import {InfoPanel} from './info_panel/InfoPanel';
 // @ts-ignore
 
 import ManagementBar from './management_bar/ManagementBar';
-import {FILTER_IMPLEMENTATIONS} from './management_bar/controls/filters/Filter';
 
 // @ts-ignore
 
@@ -53,6 +52,7 @@ import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
 import EVENTS from './utils/eventsDefinitions';
+import {activateFilter} from './utils/filters/activateFilter';
 import getRandomId from './utils/getRandomId';
 
 // @ts-ignore
@@ -399,19 +399,10 @@ const FrontendDataSetContent = ({
 					const preloadedData = filter.preloadedData;
 
 					if (preloadedData) {
-						filter.active = true;
-						filter.selectedData = preloadedData;
-
-						const filterType: keyof typeof FILTER_IMPLEMENTATIONS =
-							filter.type;
-
-						const filterImplementation =
-							FILTER_IMPLEMENTATIONS[filterType];
-
-						filter.odataFilterString =
-							filterImplementation.getOdataString(filter);
-						filter.selectedItemsLabel =
-							filterImplementation.getSelectedItemsLabel(filter);
+						filter = activateFilter({
+							filter,
+							selectedData: preloadedData,
+						});
 					}
 
 					return filter;

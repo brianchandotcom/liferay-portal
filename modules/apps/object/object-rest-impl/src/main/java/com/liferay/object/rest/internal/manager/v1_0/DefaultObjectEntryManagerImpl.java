@@ -689,7 +689,7 @@ public class DefaultObjectEntryManagerImpl
 			).put(
 				"deleteBatch",
 				ActionUtil.addAction(
-					ActionKeys.DELETE, ObjectEntryResourceImpl.class, null,
+					ActionKeys.DELETE, ObjectEntryResourceImpl.class, 0L,
 					"deleteObjectEntryBatch", null,
 					objectDefinition.getUserId(),
 					objectDefinition.getResourceName(), groupId,
@@ -704,7 +704,7 @@ public class DefaultObjectEntryManagerImpl
 			).put(
 				"updateBatch",
 				ActionUtil.addAction(
-					ActionKeys.UPDATE, ObjectEntryResourceImpl.class, null,
+					ActionKeys.UPDATE, ObjectEntryResourceImpl.class, 0L,
 					"putObjectEntryBatch", null, objectDefinition.getUserId(),
 					objectDefinition.getResourceName(), groupId,
 					dtoConverterContext.getUriInfo())

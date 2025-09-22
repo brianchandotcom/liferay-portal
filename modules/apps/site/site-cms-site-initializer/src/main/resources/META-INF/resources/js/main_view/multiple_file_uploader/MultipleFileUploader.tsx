@@ -218,9 +218,9 @@ export default function MultipleFileUploader({
 									invisible: isLoading,
 								})}
 							>
-								<p className="text-3 text-secondary text-uppercase">
+								<h2 className="font-weight-semi-bold mb-3 text-3 text-secondary text-uppercase">
 									{Liferay.Language.get('files-to-upload')}
-								</p>
+								</h2>
 
 								{filesToUpload.map((fileData, index) => (
 									<>

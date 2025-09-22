@@ -90,7 +90,7 @@ const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 				setLoading(false);
 			}}
 			selectedItem={item}
-			title={Liferay.Language.get('filter-by-structure-type')}
+			title={Liferay.Language.get('filter-by-content-structure-type')}
 		/>
 	);
 };

@@ -56,7 +56,7 @@ export default function ImportStructureModalContent({
 
 			openToast({
 				message: Liferay.Language.get(
-					'the-structure-was-successfully-imported-and-the-existing-structure-was-overwritten'
+					'the-content-structure-was-successfully-imported-and-the-existing-content-structure-was-overwritten'
 				),
 				type: 'success',
 			});
@@ -71,7 +71,7 @@ export default function ImportStructureModalContent({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Language.get('import-and-override-structure')}
+				{Liferay.Language.get('import-and-override-content-structure')}
 			</ClayModal.Header>
 
 			{warning && (
@@ -84,7 +84,7 @@ export default function ImportStructureModalContent({
 					variant="stripe"
 				>
 					{Liferay.Language.get(
-						'import-and-override-structure-warning-message'
+						'import-and-override-content-structure-warning-message'
 					)}
 				</ClayAlert>
 			)}

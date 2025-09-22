@@ -7,7 +7,7 @@ import {Button as ClayButton} from '@clayui/core';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useState} from 'react';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
+import useJiraTicketURL from '~/hooks/useJiraTicketURL';
 import i18n from '~/utils/I18n';
 
 import './AttachmentUploader.css';
@@ -39,13 +39,14 @@ const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {
 	const [comment, setComment] = useState<string>('');
 	const [file, setFile] = useState<File>();
 	const [hasPersonalData, setHasPersonalData] = useState<boolean>(false);
-	const {helpCenterURL} = useAppPropertiesContext();
 
 	const [uploadResult, setUploadResult] = useState<
 		'IDLE' | 'SUCCESS' | 'COMMENT_ERROR' | 'SERVER_ERROR'
 	>('IDLE');
 
 	const {ticketId} = useParams();
+
+	const ticketURL = useJiraTicketURL(ticketId ?? '');
 
 	const {deleteAttachment} = useTicketAttachmentsDelete();
 
@@ -199,7 +200,7 @@ const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {
 		return (
 			<UploadConfirmation
 				attachmentName={uploadStateData.attachmentName ?? ''}
-				ticketId={uploadStateData.ticketId ?? ''}
+				ticketURL={ticketURL ?? ''}
 				uploadAccountKey={uploadStateData.uploadAccountKey ?? ''}
 			/>
 		);
@@ -208,7 +209,7 @@ const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {
 	if (uploadResult === 'COMMENT_ERROR' && uploadStateData) {
 		return (
 			<CommentPostFailed
-				ticketId={uploadStateData.ticketId ?? ''}
+				ticketURL={ticketURL ?? ''}
 				uploadAccountKey={uploadStateData.uploadAccountKey ?? ''}
 			/>
 		);
@@ -217,7 +218,7 @@ const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {
 	if (uploadResult === 'SERVER_ERROR' && uploadStateData) {
 		return (
 			<ServerUnavailable
-				ticketId={uploadStateData.ticketId ?? ''}
+				ticketURL={ticketURL ?? ''}
 				uploadAccountKey={uploadStateData.uploadAccountKey ?? ''}
 			/>
 		);
@@ -232,9 +233,7 @@ const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {
 							dangerouslySetInnerHTML={{
 								__html: i18n.sub('attach-file-to-ticket-x', [
 									'<a href="' +
-										helpCenterURL +
-										'/' +
-										ticketId +
+										ticketURL +
 										'">' +
 										ticketId +
 										'</a>',

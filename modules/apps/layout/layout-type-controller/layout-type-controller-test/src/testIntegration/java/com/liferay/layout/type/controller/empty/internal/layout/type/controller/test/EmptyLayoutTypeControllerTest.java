@@ -9,8 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -73,28 +71,20 @@ public class EmptyLayoutTypeControllerTest {
 		Assert.assertEquals(
 			LayoutConstants.TYPE_EMPTY, _layoutTypeController.getType());
 
-		try {
-			Assert.assertFalse(
-				_layoutTypeController.includeLayoutContent(
-					_getMockHttpServletRequest(
-						_layout.getFriendlyURL(), TestPropsValues.getUser()),
-					new MockHttpServletResponse(), _layout));
+		Assert.assertFalse(
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(
+					_layout.getFriendlyURL(), TestPropsValues.getUser()),
+				new MockHttpServletResponse(), _layout));
 
-			Assert.assertFalse(
-				_layoutTypeController.includeLayoutContent(
-					_getMockHttpServletRequest(
-						_layout.getFriendlyURL(),
-						_userLocalService.getGuestUser(
-							TestPropsValues.getCompanyId())),
-					new MockHttpServletResponse(), _layout));
-
-			Assert.fail();
-		}
-		catch (NoSuchLayoutException noSuchLayoutException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchLayoutException);
-			}
-		}
+		Assert.assertThrows(
+			NoSuchLayoutException.class,
+			() -> _layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(
+					_layout.getFriendlyURL(),
+					_userLocalService.getGuestUser(
+						TestPropsValues.getCompanyId())),
+				new MockHttpServletResponse(), _layout));
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -154,9 +144,6 @@ public class EmptyLayoutTypeControllerTest {
 
 		return themeDisplay;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EmptyLayoutTypeControllerTest.class);
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

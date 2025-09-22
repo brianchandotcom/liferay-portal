@@ -22,19 +22,44 @@ export class DefaultPermissionsPage {
 			this.permissionsModal.getByTestId('button-save');
 	}
 
-	async checkPermissionAndSave(role: string, action: string) {
-		await this.permissionsModal
-			.getByTestId(`row-checkbox-${role}_${action}`)
-			.check();
+	async checkPermissionsAndSave(
+		permissions: Array<{action: string; role: string}>
+	) {
+		await expect(this.permissionsModal).toBeVisible();
+
+		for (const permission of permissions) {
+			await this.permissionsModal
+				.getByTestId(
+					`row-checkbox-${permission.role}_${permission.action}`
+				)
+				.check();
+		}
+
 		await this.permissionsModalSaveButton.click();
 
 		await waitForAlert(this.page);
 	}
 
-	async verifyPermissionIsChecked(role: string, action: string) {
+	async verifyPermissions(
+		permissions: Array<{action: string; checked: boolean; role: string}>
+	) {
 		await expect(this.permissionsModal).toBeVisible();
-		await expect(
-			this.permissionsModal.getByTestId(`row-checkbox-${role}_${action}`)
-		).toBeChecked();
+
+		for (const permission of permissions) {
+			if (permission.checked) {
+				await expect(
+					this.permissionsModal.getByTestId(
+						`row-checkbox-${permission.role}_${permission.action}`
+					)
+				).toBeChecked();
+			}
+			else {
+				await expect(
+					this.permissionsModal.getByTestId(
+						`row-checkbox-${permission.role}_${permission.action}`
+					)
+				).not.toBeChecked();
+			}
+		}
 	}
 }

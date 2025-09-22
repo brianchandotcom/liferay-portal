@@ -9,14 +9,14 @@ import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ThumbnailUtil;
-import com.liferay.headless.admin.user.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -53,10 +53,21 @@ public class UtilityPageDTOConverter
 		return new UtilityPage() {
 			{
 				setCreator(
-					() -> CreatorUtil.toCreator(
-						_portal,
-						_userLocalService.fetchUser(
-							layoutUtilityPageEntry.getUserId())));
+					() -> {
+						User user = _userLocalService.fetchUser(
+							layoutUtilityPageEntry.getUserId());
+
+						if (user == null) {
+							return null;
+						}
+
+						return new Creator() {
+							{
+								setExternalReferenceCode(
+									user.getExternalReferenceCode());
+							}
+						};
+					});
 				setDateCreated(layoutUtilityPageEntry::getCreateDate);
 				setDateModified(layoutUtilityPageEntry::getModifiedDate);
 				setDatePublished(layout::getPublishDate);
@@ -130,9 +141,6 @@ public class UtilityPageDTOConverter
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useLayoutEffect, useMemo, useRef} from 'react';
+import {
+	MutableRefObject,
+	useCallback,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+} from 'react';
 
 import {EViewsActionTypes} from '../views/viewsReducer';
 import {readStateFromURL, writeStateInURL} from './stateInURL';
@@ -15,6 +21,77 @@ import {
 	IStateReader,
 	IStateWriter,
 } from './types';
+
+type stateWriters = Record<
+	string,
+	Partial<{
+		[key in keyof IStateInURL]: MutableRefObject<IStateWriter<key>>;
+	}>
+>;
+
+const STATE_WRITERS: stateWriters = {};
+
+function registerStateWriter<K extends keyof IStateInURL>({
+	id,
+	key,
+	stateWriterRef,
+}: {
+	id: string;
+	key: K;
+	stateWriterRef: MutableRefObject<IStateWriter<K>>;
+}): void {
+	if (!STATE_WRITERS[id]) {
+		STATE_WRITERS[id] = {};
+	}
+
+	(
+		STATE_WRITERS[id] as Record<
+			keyof IStateInURL,
+			MutableRefObject<IStateWriter<any>>
+		>
+	)[key] = stateWriterRef;
+}
+
+function updateState({
+	id,
+	state,
+	stateInURLSettings,
+}: {
+	id: string;
+	state: Partial<IStateInURL>;
+	stateInURLSettings: EStateInURLSettings;
+}) {
+	const updatedState: Partial<IStateInURL> = {};
+
+	Object.keys(state).forEach((key: string) => {
+		const stateWriterRef = (
+			STATE_WRITERS[id] as Record<
+				keyof IStateInURL,
+				MutableRefObject<IStateWriter<any>>
+			>
+		)[key as keyof IStateInURL];
+
+		updatedState[key as keyof IStateInURL] = stateWriterRef.current?.(
+			state[key as keyof IStateInURL]
+		);
+	});
+
+	writeStateInURL(id, updatedState, stateInURLSettings);
+}
+
+export function useUpdateState({
+	id,
+	stateInURLSettings,
+}: {
+	id: string;
+	stateInURLSettings: EStateInURLSettings;
+}): Function {
+	return useCallback(
+		(state: Partial<IStateInURL>) =>
+			updateState({id, state, stateInURLSettings}),
+		[id, stateInURLSettings]
+	);
+}
 
 function useStateInURL<K extends keyof IStateInURL>({
 	additionalStateDispatchers = [],
@@ -78,7 +155,7 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 	id,
 	key,
 	stateInURLSettings,
-	stateWriter,
+	stateWriter = (value: IStateInURL[K]) => value,
 	type,
 }: {
 	additionalStateDispatchers?: {
@@ -111,11 +188,15 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 		stateWriterRef.current = stateWriter;
 	});
 
+	registerStateWriter({id, key, stateWriterRef});
+
+	const updateState = useUpdateState({id, stateInURLSettings});
+
 	return useCallback(
 		(value: IStateInURL[K]) => {
 			return (viewsDispatch: Function) => {
 				const newState: Partial<IStateInURL> = {
-					[key]: stateWriterRef.current?.(value),
+					[key]: value,
 				};
 
 				if (
@@ -156,17 +237,10 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 					});
 				}
 
-				writeStateInURL(id, newState, stateInURLSettings);
+				updateState(newState);
 			};
 		},
-		[
-			id,
-			key,
-			memoizedAdditionalStateDispatchers,
-			stateInURLSettings,
-			type,
-			stateWriterRef,
-		]
+		[key, memoizedAdditionalStateDispatchers, type, updateState]
 	);
 }
 

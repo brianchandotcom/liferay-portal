@@ -376,6 +376,39 @@ public class WabProcessorTest {
 	}
 
 	@Test
+	public void testLiferayConfigurationPolicyBundleHeaderExists()
+		throws Exception {
+
+		File file = getFile("dependencies/liferay-sample-global-css-1.zip");
+
+		WabProcessor wabProcessor = new TestWabProcessor(
+			file,
+			HashMapBuilder.put(
+				Constants.BUNDLE_SYMBOLICNAME,
+				new String[] {"liferaysampleglobalcss1"}
+			).put(
+				Constants.BUNDLE_VERSION, new String[] {"7.4.13"}
+			).put(
+				"fileExtension", new String[] {"zip"}
+			).put(
+				"Web-ContextPath", new String[] {"/liferaysampleglobalcss1"}
+			).build());
+
+		File processedFile = wabProcessor.getProcessedFile();
+
+		Assert.assertNotNull(processedFile);
+
+		try (Jar jar = new Jar(processedFile)) {
+			Manifest manifest = jar.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			Assert.assertEquals(
+				"always", attributes.getValue("Liferay-Configurator-Policy"));
+		}
+	}
+
+	@Test
 	public void testSkinnyCDIWabGainsOSGiCDIIntegration() throws Exception {
 		WabProcessor wabProcessor = new TestWabProcessor(
 			getFile("dependencies/PortletV3AnnotatedDemo.war"),

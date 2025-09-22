@@ -141,7 +141,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 		_serviceContext = new ServiceContext() {
 			{
-				_setAttribute(
+				setAttribute(
 					"friendlyUrlMap", new HashMap<String, String>());
 				setCompanyId(testGroup.getCompanyId());
 				setUserId(TestPropsValues.getUserId());

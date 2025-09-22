@@ -186,6 +186,8 @@ public class ViewAllSpacesDisplayContext {
 				).setParameter(
 					"modelResourceDescription", "{name}"
 				).setParameter(
+					"resourceGroupId", "{siteId}"
+				).setParameter(
 					"resourcePrimKey", "{id}"
 				).setWindowState(
 					LiferayWindowState.POP_UP

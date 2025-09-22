@@ -66,7 +66,7 @@ public class BreadcrumbDisplayContext {
 					"href",
 					PermissionsURLTag.doTag(
 						StringPool.BLANK, DepotEntry.class.getName(),
-						group.getName(), null,
+						group.getName(), group.getGroupId(),
 						String.valueOf(group.getClassPK()),
 						LiferayWindowState.POP_UP.toString(), null,
 						_httpServletRequest)

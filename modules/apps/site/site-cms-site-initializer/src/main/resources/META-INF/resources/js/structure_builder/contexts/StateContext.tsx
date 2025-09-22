@@ -12,6 +12,8 @@ import React, {
 	useReducer,
 } from 'react';
 
+import {Space} from '../../common/types/Space';
+import {Workflow} from '../../common/types/Workflow';
 import {ObjectDefinitions} from '../types/ObjectDefinition';
 import {
 	ReferencedStructure,
@@ -81,6 +83,7 @@ const INITIAL_STATE: State = {
 		spaces: [],
 		status: 'new',
 		uuid: getUuid(),
+		workflows: {},
 	},
 	unsavedChanges: false,
 };
@@ -127,6 +130,12 @@ type SetErrorAction = {error: string | null; type: 'set-error'};
 type SetSelection = {
 	selection: State['selection'];
 	type: 'set-selection';
+};
+
+type SetWorkflowAction = {
+	name: Workflow['name'];
+	spaceERC?: Space['externalReferenceCode'];
+	type: 'set-workflow';
 };
 
 type UngroupAction = {
@@ -180,6 +189,7 @@ export type Action =
 	| RefreshReferencedStructuresAction
 	| SetErrorAction
 	| SetSelection
+	| SetWorkflowAction
 	| UngroupAction
 	| UpdateFieldAction
 	| UpdateRepeatableGroupAction
@@ -485,6 +495,21 @@ function reducer(state: State, action: Action): State {
 			const {selection} = action;
 
 			return {...state, selection};
+		}
+		case 'set-workflow': {
+			const {name, spaceERC} = action;
+
+			const {structure} = state;
+
+			const nextStructure = {
+				...structure,
+				workflows: {
+					...structure.workflows,
+					[spaceERC || '']: name,
+				},
+			};
+
+			return {...state, structure: nextStructure};
 		}
 		case 'ungroup': {
 			const {publishedChildren, structure} = state;

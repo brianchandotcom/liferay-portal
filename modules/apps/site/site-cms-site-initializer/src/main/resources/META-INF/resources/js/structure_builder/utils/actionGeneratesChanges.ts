@@ -11,6 +11,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'add-referenced-structures':
 		case 'add-repeatable-group':
 		case 'delete-child':
+		case 'set-workflow':
 		case 'ungroup':
 		case 'update-field':
 		case 'update-repeatable-group':

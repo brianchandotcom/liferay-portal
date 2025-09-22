@@ -265,6 +265,7 @@ export default function AssetsFDSPropsTransformer({
 					},
 					contentComponent: () =>
 						ItemNavigationModalContent({
+							additionalProps,
 							contentViewURL: additionalProps.contentViewURL,
 							currentIndex: currentItemPos,
 							items: filteredItems,

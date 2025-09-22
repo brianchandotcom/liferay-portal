@@ -13,6 +13,7 @@ import {
 	IStateInURLGetter,
 	IStateInURLUpdaterThunk,
 	IStateReader,
+	IStateWriter,
 } from './types';
 
 function useStateInURL<K extends keyof IStateInURL>({
@@ -22,6 +23,7 @@ function useStateInURL<K extends keyof IStateInURL>({
 	stateDispatcher,
 	stateInURLSettings,
 	stateReader,
+	stateWriter = (value: IStateInURL[K]) => value,
 }: {
 	additionalStateDispatchers?: {
 		key: keyof IStateInURL;
@@ -36,6 +38,7 @@ function useStateInURL<K extends keyof IStateInURL>({
 	};
 	stateInURLSettings: EStateInURLSettings;
 	stateReader: IStateReader<K>;
+	stateWriter?: IStateWriter<K>;
 }): [IStateInURLGetter<K>, IStateInURLUpdaterThunk<K>] {
 	const {key, type} = stateDispatcher;
 
@@ -47,6 +50,7 @@ function useStateInURL<K extends keyof IStateInURL>({
 			key,
 			shouldWriteInURL,
 			stateInURLSettings,
+			stateWriter,
 			type,
 		}),
 	];
@@ -78,6 +82,7 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 	key,
 	shouldWriteInURL = (_value: IStateInURL[K]) => true,
 	stateInURLSettings,
+	stateWriter,
 	type,
 }: {
 	additionalStateDispatchers?: {
@@ -89,6 +94,7 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 	key: K;
 	shouldWriteInURL?: (value: IStateInURL[K]) => boolean;
 	stateInURLSettings: EStateInURLSettings;
+	stateWriter?: IStateWriter<K>;
 	type: EViewsActionTypes;
 }): IStateInURLUpdaterThunk<K> {
 	const additionalStateDispatchersKey = JSON.stringify(
@@ -106,15 +112,18 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 
 	const shouldWriteInURLRef = useRef(shouldWriteInURL);
 
+	const stateWriterRef = useRef(stateWriter);
+
 	useLayoutEffect(() => {
 		shouldWriteInURLRef.current = shouldWriteInURL;
+		stateWriterRef.current = stateWriter;
 	});
 
 	return useCallback(
 		(value: IStateInURL[K]) => {
 			return (viewsDispatch: Function) => {
 				const newState: Partial<IStateInURL> = {
-					[key]: value,
+					[key]: stateWriterRef.current?.(value),
 				};
 
 				if (
@@ -172,6 +181,7 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 			stateInURLSettings,
 			type,
 			shouldWriteInURLRef,
+			stateWriterRef,
 		]
 	);
 }

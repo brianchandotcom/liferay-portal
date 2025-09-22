@@ -117,7 +117,7 @@ function SpaceWorkflowPanel({
 			<ClayPanel.Body className="pt-4">
 				<p className="mb-4 text-secondary">
 					{Liferay.Language.get(
-						'assign-a-specific-workflow-to-each-space-for-entries-created-with-this-structure-type'
+						'assign-a-specific-workflow-to-each-space-for-entries-created-with-this-content-structure'
 					)}
 				</p>
 

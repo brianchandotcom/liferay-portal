@@ -2209,8 +2209,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									/>
 								}
 							},
-							new GraphQLField("page"),
-							new GraphQLField("totalCount"));
+							new GraphQLField("page"), new GraphQLField("totalCount"));
 
 						JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(invokeGraphQLQuery(graphQLField), "JSONObject/data", "JSONObject/${propertyName}");
 
@@ -2265,9 +2264,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									</#list>
 								}
 							},
-							new GraphQLField("items", getGraphQLFields()),
-							new GraphQLField("page"),
-							new GraphQLField("totalCount"));
+							new GraphQLField("items", getGraphQLFields()), new GraphQLField("page"), new GraphQLField("totalCount"));
 
 						<#if !configYAML.getGraphQLNamespace()?has_content>
 							// No namespace

@@ -31,21 +31,29 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTable;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -115,6 +123,33 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 		return _entityModel;
 	}
 
+	private ThemeDisplay _createThemeDisplay(Layout layout) throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(contextCompany);
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLocale(contextAcceptLanguage.getPreferredLocale());
+		themeDisplay.setPathMain(_portal.getPathMain());
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setPlid(layout.getPlid());
+
+		String portalURL = _portal.getPortalURL(contextHttpServletRequest);
+
+		themeDisplay.setPortalDomain(HttpComponentsUtil.getDomain(portalURL));
+		themeDisplay.setPortalURL(portalURL);
+
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+		themeDisplay.setRequest(contextHttpServletRequest);
+		themeDisplay.setScopeGroupId(layout.getGroupId());
+		themeDisplay.setSiteGroupId(layout.getGroupId());
+		themeDisplay.setURLCurrent(
+			_portal.getCurrentURL(contextHttpServletRequest));
+		themeDisplay.setUser(contextUser);
+
+		return themeDisplay;
+	}
+
 	private List<AssetUsage> _getAssetUsages(Long assetId, String search)
 		throws Exception {
 
@@ -165,7 +200,23 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 			objects -> {
 				Layout layout = _layoutLocalService.getLayout((Long)objects[0]);
 
-				if (!_hasViewPermission(layout, permissionChecker)) {
+				Integer finalType = (Integer)objects[1];
+
+				if ((finalType ==
+						LayoutClassedModelUsageConstants.
+							TYPE_DISPLAY_PAGE_TEMPLATE) ||
+					(finalType ==
+						LayoutClassedModelUsageConstants.TYPE_PAGE_TEMPLATE)) {
+
+					if (!_hasPermission(
+							ActionKeys.UPDATE, layout, permissionChecker)) {
+
+						return null;
+					}
+				}
+				else if (!_hasPermission(
+							ActionKeys.VIEW, layout, permissionChecker)) {
+
 					return null;
 				}
 
@@ -177,9 +228,8 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 								_localization.getLocalization(
 									(String)objects[2],
 									contextUser.getLanguageId(), true)));
-						setType(
-							() -> _getLayoutUsageTypeLabel(
-								(Integer)objects[1]));
+						setType(() -> _getLayoutUsageTypeLabel(finalType));
+						setUrl(() -> _getLayoutURL(layout, finalType));
 					}
 				};
 			});
@@ -219,6 +269,30 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 							"%</Name>%"))
 				)
 			));
+	}
+
+	private String _getLayoutURL(Layout layout, Integer type) throws Exception {
+		if (type ==
+				LayoutClassedModelUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
+
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = _createThemeDisplay(layout);
+
+		if (type == LayoutClassedModelUsageConstants.TYPE_PAGE_TEMPLATE) {
+			String layoutFullURL = PortalUtil.getLayoutFullURL(
+				layout, themeDisplay);
+
+			layoutFullURL = HttpComponentsUtil.addParameter(
+				layoutFullURL, "p_l_mode", Constants.PREVIEW);
+
+			return HttpComponentsUtil.addParameter(
+				layoutFullURL, "p_p_auth",
+				AuthTokenUtil.getToken(contextHttpServletRequest));
+		}
+
+		return _portal.getLayoutURL(layout, themeDisplay);
 	}
 
 	private String _getLayoutUsageTypeLabel(long type) {
@@ -299,6 +373,16 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 							setType(
 								() -> relatedObjectDefinition.getLabel(
 									languageId));
+							setUrl(
+								() -> StringBundler.concat(
+									_portal.getPortalURL(
+										contextHttpServletRequest),
+									_portal.getPathMain(),
+									GroupConstants.CMS_FRIENDLY_URL,
+									"/edit_content_item?&p_l_mode=read&",
+									"p_p_state=", LiferayWindowState.POP_UP,
+									"&objectEntryId=",
+									objectEntry.getObjectEntryId()));
 						}
 					});
 			}
@@ -343,8 +427,8 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 		return depotEntries;
 	}
 
-	private boolean _hasViewPermission(
-			Layout layout, PermissionChecker permissionChecker)
+	private boolean _hasPermission(
+			String actionId, Layout layout, PermissionChecker permissionChecker)
 		throws Exception {
 
 		long plid = layout.getPlid();
@@ -353,8 +437,7 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 			plid = layout.getClassPK();
 		}
 
-		return LayoutPermissionUtil.contains(
-			permissionChecker, plid, ActionKeys.VIEW);
+		return LayoutPermissionUtil.contains(permissionChecker, plid, actionId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

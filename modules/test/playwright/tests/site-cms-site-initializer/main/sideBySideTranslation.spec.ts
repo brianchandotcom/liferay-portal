@@ -29,10 +29,12 @@ async function getSampleStructureDefinition(apiHelpers: ApiHelpers) {
 	).externalReferenceCode;
 
 	const SAMPLE_STRUCTURE_DEFINITION: ObjectDefinition = {
+		enableComments: true,
 		enableFriendlyURLCustomization: true,
 		enableIndexSearch: true,
 		enableLocalization: true,
 		enableObjectEntryDraft: true,
+		enableObjectEntryHistory: true,
 		enableObjectEntrySchedule: true,
 		enableObjectEntryVersioning: true,
 		externalReferenceCode: getRandomString(),

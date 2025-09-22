@@ -1184,9 +1184,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 		@Override
 		public Page<${javaDataType}> read(com.liferay.portal.kernel.search.filter.Filter filter, Pagination pagination, com.liferay.portal.kernel.search.Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
-
 			<#if freeMarkerTool.hasReadVulcanBatchImplementation(javaMethodSignatures)>
-
 				<#assign parentParameterNames = [] />
 
 				<#list getParentBatchJavaMethodSignatures as getParentBatchJavaMethodSignature>

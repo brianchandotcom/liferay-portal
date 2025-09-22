@@ -791,7 +791,10 @@ public class ObjectEntryLocalServiceImpl
 
 		if (objectEntry.isInTrash()) {
 			throw new ObjectEntryStatusException(
-				"Must not expire an object entry that is in the trash");
+				String.format(
+					"The object entry %s cannot be expired because it is in " +
+						"the trash",
+					objectEntry.getObjectEntryId()));
 		}
 
 		return updateStatus(
@@ -6025,7 +6028,10 @@ public class ObjectEntryLocalServiceImpl
 
 		if (objectEntry.isInTrash()) {
 			throw new ObjectEntryStatusException(
-				"Must not update an object entry that is in the trash");
+				String.format(
+					"The object entry %s cannot be updated because it is in " +
+						"the trash",
+					objectEntry.getObjectEntryId()));
 		}
 
 		User user = _userLocalService.getUser(userId);

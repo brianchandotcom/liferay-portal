@@ -146,7 +146,16 @@ public class ObjectEntryVersionLocalServiceImpl
 			long objectEntryId, int version)
 		throws PortalException {
 
-		_validateObjectEntryStatus(objectEntryId);
+		ObjectEntry objectEntry = _objectEntryPersistence.fetchByPrimaryKey(
+			objectEntryId);
+
+		if (objectEntry.isInTrash()) {
+			throw new ObjectEntryStatusException(
+				String.format(
+					"The object entry %s with version %s cannot be deleted " +
+						"because it is in the trash",
+					objectEntryId, version));
+		}
 
 		if (getObjectEntryVersionsCount(objectEntryId) == 1) {
 			throw new RequiredObjectEntryVersionException.MustHaveOneVersion(
@@ -323,12 +332,22 @@ public class ObjectEntryVersionLocalServiceImpl
 			long userId, ObjectEntryVersion objectEntryVersion)
 		throws PortalException {
 
-		_validateObjectEntryStatus(objectEntryVersion.getObjectEntryId());
-
 		if (objectEntryVersion.isDraft() || objectEntryVersion.isExpired() ||
 			objectEntryVersion.isPending()) {
 
 			return objectEntryVersion;
+		}
+
+		ObjectEntry objectEntry = _objectEntryPersistence.fetchByPrimaryKey(
+			objectEntryVersion.getObjectEntryId());
+
+		if (objectEntry.isInTrash()) {
+			throw new ObjectEntryStatusException(
+				String.format(
+					"The object entry %s with version %s cannot be expired " +
+						"because it is in the trash",
+					objectEntryVersion.getObjectEntryId(),
+					objectEntryVersion.getVersion()));
 		}
 
 		Date date = new Date();
@@ -359,8 +378,6 @@ public class ObjectEntryVersionLocalServiceImpl
 			ObjectEntry objectEntry, ObjectEntryVersion objectEntryVersion,
 			int version)
 		throws PortalException {
-
-		_validateObjectEntryStatus(objectEntry.getObjectEntryId());
 
 		User user = _userLocalService.getUser(objectEntry.getUserId());
 
@@ -417,19 +434,6 @@ public class ObjectEntryVersionLocalServiceImpl
 		objectEntryVersion.setStatusDate(date);
 
 		return objectEntryVersionPersistence.update(objectEntryVersion);
-	}
-
-	private void _validateObjectEntryStatus(long objectEntryId)
-		throws PortalException {
-
-		ObjectEntry objectEntry = _objectEntryPersistence.fetchByPrimaryKey(
-			objectEntryId);
-
-		if (objectEntry.isInTrash()) {
-			throw new ObjectEntryStatusException(
-				"Object entry version operations are not allowed when the " +
-					"object entry is in trash");
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

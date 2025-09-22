@@ -3296,12 +3296,16 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Status in trash
 
+		long objectEntryId = _getTrashedObjectEntryId();
+
 		AssertUtils.assertFailure(
 			ObjectEntryStatusException.class,
-			"Must not copy an object entry that is in the trash",
+			String.format(
+				"The object entry %s cannot be copied because it is in the " +
+					"trash",
+				objectEntryId),
 			() -> _defaultObjectEntryManager.copyObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition4,
-				_getTrashedObjectEntryId(), 1));
+				dtoConverterContext, _objectDefinition4, objectEntryId, 1));
 	}
 
 	@Test
@@ -3622,12 +3626,16 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Status in trash
 
+		long objectEntryId = _getTrashedObjectEntryId();
+
 		AssertUtils.assertFailure(
 			ObjectEntryStatusException.class,
-			"Object entry version operations are not allowed when the object " +
-				"entry is in trash",
+			String.format(
+				"The object entry %s with version 2 cannot be deleted " +
+					"because it is in the trash",
+				objectEntryId),
 			() -> _defaultObjectEntryManager.deleteObjectEntryByVersion(
-				_objectDefinition4, _getTrashedObjectEntryId(), 2));
+				_objectDefinition4, objectEntryId, 2));
 	}
 
 	@Test
@@ -4236,12 +4244,16 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Status in trash
 
+		long objectEntryId = _getTrashedObjectEntryId();
+
 		AssertUtils.assertFailure(
 			ObjectEntryStatusException.class,
-			"Must not expire an object entry that is in the trash",
+			String.format(
+				"The object entry %s cannot be expired because it is in the " +
+					"trash",
+				objectEntryId),
 			() -> _defaultObjectEntryManager.expireObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition4,
-				_getTrashedObjectEntryId(), 1));
+				dtoConverterContext, _objectDefinition4, objectEntryId, 1));
 	}
 
 	@Test
@@ -6982,12 +6994,16 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Status in trash
 
+		long objectEntryId = _getTrashedObjectEntryId();
+
 		AssertUtils.assertFailure(
 			ObjectEntryStatusException.class,
-			"Must not update an object entry that is in the trash",
+			String.format(
+				"The object entry %s cannot be updated because it is in the " +
+					"trash",
+				objectEntryId),
 			() -> _defaultObjectEntryManager.restoreObjectEntryByVersion(
-				dtoConverterContext, _objectDefinition4,
-				_getTrashedObjectEntryId(), 1));
+				dtoConverterContext, _objectDefinition4, objectEntryId, 1));
 	}
 
 	@FeatureFlag("LPD-17564")

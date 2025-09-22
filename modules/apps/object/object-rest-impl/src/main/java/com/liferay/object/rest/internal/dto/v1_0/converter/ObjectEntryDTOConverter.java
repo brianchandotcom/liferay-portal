@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.processor.PDFProcessorUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -78,6 +79,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -87,6 +89,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -767,6 +770,12 @@ public class ObjectEntryDTOConverter
 			return fileEntry;
 		}
 
+		LiferayFileEntry liferayFileEntry = new LiferayFileEntry(dlFileEntry);
+
+		FileVersion fileVersion = liferayFileEntry.getFileVersion();
+
+		fileEntry.setAlternativeText(fileVersion::getDescription);
+
 		fileEntry.setExternalReferenceCode(
 			dlFileEntry::getExternalReferenceCode);
 
@@ -830,15 +839,29 @@ public class ObjectEntryDTOConverter
 				objectEntry.getGroupId(),
 				objectDefinition.getExternalReferenceCode(),
 				objectEntry.getExternalReferenceCode(), _portal));
+		fileEntry.setMetadata(
+			() -> NestedFieldsSupplier.supply(
+				objectFieldName + ".metadata",
+				fieldName -> {
+					if ((fileVersion == null) || (fileVersion.getSize() == 0) ||
+						(!PDFProcessorUtil.hasImages(fileVersion) &&
+						 !PDFProcessorUtil.isDocumentSupported(
+							 fileVersion.getMimeType()))) {
+
+						return null;
+					}
+
+					return HashMapBuilder.<String, Object>put(
+						"numberOfPages",
+						PDFProcessorUtil.getPreviewFileCount(fileVersion)
+					).build();
+				}));
 		fileEntry.setMimeType(dlFileEntry::getMimeType);
 		fileEntry.setName(dlFileEntry::getFileName);
 		fileEntry.setPreviewURL(
 			() -> NestedFieldsSupplier.supply(
 				objectFieldName + ".previewURL",
 				fieldName -> {
-					LiferayFileEntry liferayFileEntry = new LiferayFileEntry(
-						dlFileEntry);
-
 					String previewURL = _getPreviewURL(liferayFileEntry);
 
 					if (Validator.isNull(previewURL)) {

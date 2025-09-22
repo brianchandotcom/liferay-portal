@@ -109,7 +109,11 @@ public class ViewAllSpacesDisplayContext {
 			new FDSActionDropdownItem(
 				"#", "document", "sampleBulkAction",
 				LanguageUtil.get(_httpServletRequest, "label"), null, null,
-				null));
+				null),
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies", "default-permissions",
+				LanguageUtil.get(_httpServletRequest, "default-permissions"),
+				null, null, null));
 	}
 
 	public CreationMenu getCreationMenu() {

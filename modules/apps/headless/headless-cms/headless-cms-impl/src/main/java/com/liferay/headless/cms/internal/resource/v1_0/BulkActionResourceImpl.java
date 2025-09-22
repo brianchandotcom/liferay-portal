@@ -336,6 +336,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		BulkActionTask bulkActionTask = _addBulkActionTask(
 			deleteBulkAction.getTypeAsString());
 
+		List<BulkActionItem> bulkActionItems = new ArrayList<>();
+
 		ImportTaskResource importTaskResource =
 			_importTaskResourceFactory.create(
 			).httpServletRequest(
@@ -347,8 +349,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).user(
 				contextUser
 			).build();
-
-		List<BulkActionItem> bulkActionItems = new ArrayList<>();
 
 		for (Map.Entry<String, List<BulkActionItem>> entry :
 				bulkActionItemsMap.entrySet()) {

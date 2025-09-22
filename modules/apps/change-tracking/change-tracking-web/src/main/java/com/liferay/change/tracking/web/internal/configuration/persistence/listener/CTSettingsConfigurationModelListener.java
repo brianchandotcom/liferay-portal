@@ -94,14 +94,14 @@ public class CTSettingsConfigurationModelListener
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-186360")) {
-			properties.put("remoteEnabled", false);
-		}
-
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
 			long companyId = GetterUtil.getLong(properties.get("companyId"));
+
+			if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-186360")) {
+				properties.put("remoteEnabled", false);
+			}
 
 			boolean enabled = GetterUtil.getBoolean(properties.get("enabled"));
 

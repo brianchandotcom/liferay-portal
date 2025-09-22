@@ -308,18 +308,19 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		).build();
 
 		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		boolean cMS = false;
+		boolean cms = false;
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPD-17564") &&
 			scopeGroup.isCMS()) {
 
-			cMS = true;
+			cms = true;
 		}
 
-		if ((ctCollection != null) && !cMS) {
+		if ((ctCollection != null) && !cms) {
 			ctCollectionId = ctCollection.getCtCollectionId();
 
 			data.put("disableDropdown", false);
@@ -388,7 +389,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 		else {
-			if (cMS) {
+			if (cms) {
 				data.put("disableDropdown", true);
 			}
 			else {

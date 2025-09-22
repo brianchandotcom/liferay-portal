@@ -63,6 +63,7 @@ import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -376,6 +377,40 @@ public class WabProcessorTest {
 	}
 
 	@Test
+	public void testLiferayConfigurationPolicyBundleHeaderExists()
+		throws Exception {
+
+		File file = _createZipFileFromExplodedDir(
+			getFile("dependencies/liferay-sample-global-css-1.zip/"));
+
+		WabProcessor wabProcessor = new TestWabProcessor(
+			file,
+			HashMapBuilder.put(
+				Constants.BUNDLE_SYMBOLICNAME,
+				new String[] {"liferaysampleglobalcss1"}
+			).put(
+				Constants.BUNDLE_VERSION, new String[] {"7.4.13"}
+			).put(
+				"fileExtension", new String[] {"zip"}
+			).put(
+				"Web-ContextPath", new String[] {"/liferaysampleglobalcss1"}
+			).build());
+
+		File processedFile = wabProcessor.getProcessedFile();
+
+		Assert.assertNotNull(processedFile);
+
+		try (Jar jar = new Jar(processedFile)) {
+			Manifest manifest = jar.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			Assert.assertEquals(
+				"always", attributes.getValue("Liferay-Configurator-Policy"));
+		}
+	}
+
+	@Test
 	public void testSkinnyCDIWabGainsOSGiCDIIntegration() throws Exception {
 		WabProcessor wabProcessor = new TestWabProcessor(
 			getFile("dependencies/PortletV3AnnotatedDemo.war"),
@@ -598,6 +633,46 @@ public class WabProcessorTest {
 		Path path = Paths.get(url.toURI());
 
 		return path.toFile();
+	}
+
+	private File _createZipFileFromExplodedDir(File file) throws Exception {
+		if (!file.isDirectory()) {
+			throw new IllegalArgumentException(file + " is not a directory");
+		}
+
+		File tempFile = FileUtil.createTempFile("zip");
+
+		tempFile.deleteOnExit();
+
+		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
+				new FileOutputStream(tempFile))) {
+
+			Path srcPath = file.toPath();
+
+			Files.walkFileTree(
+				srcPath,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						zipOutputStream.putNextEntry(
+							new ZipEntry(
+								String.valueOf(srcPath.relativize(path))));
+
+						Files.copy(path, zipOutputStream);
+
+						zipOutputStream.closeEntry();
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+
+		return tempFile;
 	}
 
 	private Map.Entry<String, Attrs> _findRequirement(

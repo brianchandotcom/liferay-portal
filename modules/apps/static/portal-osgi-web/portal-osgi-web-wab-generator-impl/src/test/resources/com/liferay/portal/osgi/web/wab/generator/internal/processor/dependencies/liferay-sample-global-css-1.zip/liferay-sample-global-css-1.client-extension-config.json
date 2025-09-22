@@ -1,0 +1,17 @@
+{
+  "com.liferay.client.extension.type.configuration.CETConfiguration~liferay-sample-global-css-1" : {
+    ":configurator:policy" : "force",
+    "baseURL" : "${portalURL}/o/liferay-sample-global-css-1",
+    "buildTimestamp" : 1758577288687,
+    "description" : "",
+    "dxp.lxc.liferay.com.virtualInstanceId" : "default",
+    "name" : "Liferay Sample Global CSS 1",
+    "projectId" : "liferaysampleglobalcss1",
+    "projectName" : "liferay-sample-global-css-1",
+    "properties" : [ ],
+    "sourceCodeURL" : "",
+    "type" : "globalCSS",
+    "typeSettings" : [ "url=global.b5d59573c187989c3bf28db9f07841b318eea91.css", "scope=company" ],
+    "webContextPath" : "/liferay-sample-global-css-1"
+  }
+}

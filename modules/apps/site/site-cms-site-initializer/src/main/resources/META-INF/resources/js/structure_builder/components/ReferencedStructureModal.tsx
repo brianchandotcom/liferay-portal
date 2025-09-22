@@ -69,19 +69,19 @@ export default function ReferencedStructureModal({
 	return (
 		<ClayModal observer={observer}>
 			<ClayModal.Header>
-				{Liferay.Language.get('referenced-structure')}
+				{Liferay.Language.get('referenced-content-structure')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<p className="text-secondary">
 					{Liferay.Language.get(
-						'select-the-structures-to-be-referenced'
+						'select-the-content-structures-to-be-referenced'
 					)}
 				</p>
 
 				<ClayForm.Group className={classNames({'has-error': hasError})}>
 					<label htmlFor={id}>
-						{Liferay.Language.get('structures')}
+						{Liferay.Language.get('content-structures')}
 
 						<ClayIcon
 							className="ml-1 reference-mark"

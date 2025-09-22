@@ -48,7 +48,7 @@ export default function Spaces({
 
 			<p>
 				{Liferay.Language.get(
-					'select-the-spaces-where-this-structure-will-be-available-for-use'
+					'select-the-spaces-where-this-content-structure-will-be-available-for-use'
 				)}
 			</p>
 
@@ -112,7 +112,7 @@ export default function Spaces({
 					checked={structureSpaces === 'all'}
 					disabled={disabled}
 					label={Liferay.Language.get(
-						'make-this-structure-available-in-all-spaces'
+						'make-this-content-structure-available-in-all-spaces'
 					)}
 					onChange={(event) => {
 						dispatch({

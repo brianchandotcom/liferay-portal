@@ -46,7 +46,7 @@ export default function StructureBuilderToolbar() {
 			title={
 				status === 'published'
 					? label
-					: Liferay.Language.get('new-structure')
+					: Liferay.Language.get('new-content-structure')
 			}
 		>
 			<Toolbar.Item className="nav-divider-end">
@@ -109,7 +109,7 @@ function CustomizeExperienceButton() {
 						},
 						status: 'danger',
 						text: Liferay.Language.get(
-							'to-customize-the-experience-you-need-to-publish-the-structure-first.-you-removed-one-or-more-fields-from-the-structure'
+							'to-customize-the-experience-you-need-to-publish-the-content-structure-first.-you-removed-one-or-more-fields-from-the-content-structure'
 						),
 						title: Liferay.Language.get(
 							'publish-to-customize-experience'
@@ -131,7 +131,7 @@ function CustomizeExperienceButton() {
 						},
 						status: 'warning',
 						text: Liferay.Language.get(
-							'to-customize-the-experience-you-need-to-publish-the-structure-first'
+							'to-customize-the-experience-you-need-to-publish-the-content-structure-first'
 						),
 						title: Liferay.Language.get(
 							'publish-to-customize-experience'
@@ -183,7 +183,7 @@ function SaveButton() {
 			error:
 				error ||
 				Liferay.Language.get(
-					'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
 				),
 			type: 'set-error',
 		});
@@ -312,9 +312,11 @@ async function publishStructure({
 				center: true,
 				status: 'warning',
 				text: Liferay.Language.get(
-					'this-structure-is-being-used-in-other-existing-structures'
+					'this-content-structure-is-being-used-in-other-existing-content-structures'
 				),
-				title: Liferay.Language.get('publish-structure-changes'),
+				title: Liferay.Language.get(
+					'publish-content-structure-changes'
+				),
 			}))
 		) {
 			return;
@@ -328,9 +330,11 @@ async function publishStructure({
 				center: true,
 				status: 'danger',
 				text: Liferay.Language.get(
-					'you-removed-one-or-more-fields-from-the-structure'
+					'you-removed-one-or-more-fields-from-the-content-structure'
 				),
-				title: Liferay.Language.get('publish-structure-changes'),
+				title: Liferay.Language.get(
+					'publish-content-structure-changes'
+				),
 			}))
 		) {
 			return;
@@ -344,9 +348,11 @@ async function publishStructure({
 				center: true,
 				status: 'danger',
 				text: Liferay.Language.get(
-					'you-removed-one-or-more-fields-from-the-structure-and-this-structure-is-being-used'
+					'you-removed-one-or-more-fields-from-the-content-structure-and-this-content-structure-is-being-used'
 				),
-				title: Liferay.Language.get('publish-structure-changes'),
+				title: Liferay.Language.get(
+					'publish-content-structure-changes'
+				),
 			}))
 		) {
 			return;
@@ -424,7 +430,7 @@ async function publishStructure({
 			error:
 				error ||
 				Liferay.Language.get(
-					'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
 				),
 			type: 'set-error',
 		});

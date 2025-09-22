@@ -64,6 +64,8 @@ describe('[CMS Dashboard] Components: GroupByDropdown - All Options', () => {
 			{count: 10, key: '1', title: 'Item 1'},
 			{count: 20, key: '2', title: 'Item 2'},
 		],
+		page: 1,
+		pageSize: 20,
 		totalCount: 30,
 	};
 

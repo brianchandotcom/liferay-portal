@@ -9,7 +9,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {InventoryAnalysisDataType} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/InventoryAnalysisCard';
@@ -72,9 +72,68 @@ const mockData: InventoryAnalysisDataType = {
 			key: 'title-11',
 			title: 'title 11',
 		},
+		{
+			count: 100,
+			key: 'title-12',
+			title: 'title 12',
+		},
+		{
+			count: 300,
+			key: 'title-13',
+			title: 'title 13',
+		},
+		{
+			count: 50,
+			key: 'title-14',
+			title: 'title 14',
+		},
+		{
+			count: 200,
+			key: 'title-15',
+			title: 'title 15',
+		},
+		{
+			count: 150,
+			key: 'title-16',
+			title: 'title 16',
+		},
+		{
+			count: 400,
+			key: 'title-17',
+			title: 'title 17',
+		},
+		{
+			count: 250,
+			key: 'title-18',
+			title: 'title 18',
+		},
+		{
+			count: 350,
+			key: 'title-19',
+			title: 'title 19',
+		},
+		{
+			count: 500,
+			key: 'title-20',
+			title: 'title 20',
+		},
+		{
+			count: 600,
+			key: 'title-21',
+			title: 'title 21',
+		},
+		{
+			count: 700,
+			key: 'title-22',
+			title: 'title 22',
+		},
 	],
+	page: 1,
+	pageSize: 20,
 	totalCount: 4050,
 };
+
+const deltas = [{label: 20}, {label: 40}, {label: 60}];
 
 const WrappedComponent = ({
 	currentStructureTypeLabel,
@@ -86,7 +145,11 @@ const WrappedComponent = ({
 }) => (
 	<PaginatedTable
 		currentStructureTypeLabel={currentStructureTypeLabel}
+		deltas={deltas}
+		handleDeltaChange={() => {}}
+		handlePageChange={() => {}}
 		inventoryAnalysisData={inventoryAnalysisData}
+		pagination={{page: 1, pageSize: 20}}
 		viewType="chart"
 	/>
 );
@@ -105,7 +168,8 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 		expect(table).toBeInTheDocument();
 
 		const tableRows = table.querySelectorAll('tr');
-		expect(tableRows.length).toBe(11);
+
+		expect(tableRows.length).toBe(23);
 	});
 
 	it('renders its data correctly in table view', async () => {
@@ -121,7 +185,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 		expect(table).toBeInTheDocument();
 
 		const tableRows = table.querySelectorAll('tr');
-		expect(tableRows.length).toBe(11);
+		expect(tableRows.length).toBe(23);
 	});
 
 	it('displays the default delta options in the items per page dropdown', async () => {
@@ -139,7 +203,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 
 		await itemsPerPageDropdown.click();
 
-		const expectedOptions = ['10', '20', '30', '50'];
+		const expectedOptions = ['20', '40', '60'];
 		const dropdownOptions = screen.getAllByRole('option');
 
 		expect(dropdownOptions).toHaveLength(expectedOptions.length);
@@ -150,25 +214,57 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 	});
 
 	it('paginates items correctly when navigating between pages', async () => {
-		render(
-			<WrappedComponent
+		const handlePageChange = jest.fn();
+		const handleDeltaChange = jest.fn();
+
+		const {rerender} = render(
+			<PaginatedTable
 				currentStructureTypeLabel="Category"
-				inventoryAnalysisData={mockData}
+				deltas={deltas}
+				handleDeltaChange={handleDeltaChange}
+				handlePageChange={handlePageChange}
+				inventoryAnalysisData={{
+					...mockData,
+					inventoryAnalysisItems:
+						mockData.inventoryAnalysisItems.slice(0, 19),
+					totalCount: mockData.inventoryAnalysisItems.length,
+				}}
+				pagination={{page: 1, pageSize: 20}}
 				viewType="chart"
 			/>
 		);
+
+		let tableRows = screen.getAllByRole('row');
+
+		expect(tableRows.length).toBe(20);
 
 		const nextPageButton = screen.getByRole('button', {
 			name: 'Go to the next page, 2',
 		});
 
-		let tableRows = screen.getAllByRole('row');
-		expect(tableRows.length).toBe(11);
+		fireEvent.click(nextPageButton);
 
-		await nextPageButton.click();
+		expect(handlePageChange).toHaveBeenCalledWith(2);
+
+		rerender(
+			<PaginatedTable
+				currentStructureTypeLabel="Category"
+				deltas={deltas}
+				handleDeltaChange={handleDeltaChange}
+				handlePageChange={handlePageChange}
+				inventoryAnalysisData={{
+					...mockData,
+					inventoryAnalysisItems:
+						mockData.inventoryAnalysisItems.slice(19, 21),
+					totalCount: mockData.inventoryAnalysisItems.length,
+				}}
+				pagination={{page: 2, pageSize: 20}}
+				viewType="chart"
+			/>
+		);
 
 		tableRows = screen.getAllByRole('row');
-		expect(tableRows.length).toBe(2);
+		expect(tableRows.length).toBe(3);
 	});
 
 	it('paginates items according to selected delta', async () => {
@@ -192,7 +288,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 		const table = screen.getByRole('table');
 		const tableRows = table.querySelectorAll('tr');
 
-		expect(tableRows.length).toBe(12);
+		expect(tableRows.length).toBe(23);
 	});
 
 	it('displays the total count', async () => {
@@ -206,7 +302,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 
 		const totalItems = screen.getByText(/Showing \d+ to \d+ of \d+/);
 
-		expect(totalItems).toHaveTextContent('Showing 1 to 10 of 11');
+		expect(totalItems).toHaveTextContent('Showing 1 to 20 of 4050');
 	});
 
 	it('displays the correct item range per page', async () => {
@@ -226,7 +322,7 @@ describe('[CMS Dashboard] Components: PaginatedTable', () => {
 
 		const paginationResults = screen.getByText(/Showing \d+ to \d+ of \d+/);
 
-		expect(paginationResults).toHaveTextContent('Showing 11 to 11 of 11');
+		expect(paginationResults).toHaveTextContent('Showing 1 to 20 of 4050');
 	});
 
 	it('displays the name, count, and assets percentage for each item', async () => {

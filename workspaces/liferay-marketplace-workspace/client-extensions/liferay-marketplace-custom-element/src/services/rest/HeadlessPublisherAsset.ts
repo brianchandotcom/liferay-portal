@@ -21,7 +21,7 @@ export default class HeadlessPublisherAsset {
 	static getProductPublisherAssetsByProductId(productId: number | string) {
 		const searchParams = new URLSearchParams({
 			filter: SearchBuilder.eq(
-				'r_productEntryToPublisherAssets_CPDefinitionId',
+				'r_productEntryToPublisherAssets_CProductId',
 				productId
 			),
 		});

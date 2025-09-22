@@ -111,7 +111,7 @@ export default class PublisherAsset {
 				name: this.product.name.en_US,
 				publisherAssetType: PICK_LIST_ASSET_TYPE,
 				r_accountEntryToPublisherAssets_accountEntryId: accountId,
-				r_productEntryToPublisherAssets_CPDefinitionId: this.product
+				r_productEntryToPublisherAssets_CProductId: this.product
 					.id as unknown as string,
 				sourceCode: appDocumentId,
 				version: this.versions,

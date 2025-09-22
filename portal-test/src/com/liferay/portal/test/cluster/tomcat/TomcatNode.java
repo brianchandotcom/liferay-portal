@@ -266,11 +266,7 @@ public class TomcatNode {
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{nodeId=");
-		sb.append(_nodeId);
-		sb.append(", liferayHome=");
-		sb.append(_liferayHome);
-		sb.append(", catalinaBase=");
+		sb.append("{catalinaBase=");
 		sb.append(_catalinaBase);
 		sb.append(", catalinaHome=");
 		sb.append(_catalinaHome);
@@ -278,14 +274,18 @@ public class TomcatNode {
 		sb.append(_connectorPort);
 		sb.append(", gogoShellPort=");
 		sb.append(_gogoShellPort);
-		sb.append(", shutdownPort=");
-		sb.append(_shutdownPort);
-		sb.append(", jvmArgs=");
-		sb.append(_jvmArgs);
 		sb.append(", jpdaEnabled=");
 		sb.append(_jpdaEnabled);
 		sb.append(", jpdaPort=");
 		sb.append(_jpdaPort);
+		sb.append(", jvmArgs=");
+		sb.append(_jvmArgs);
+		sb.append(", liferayHome=");
+		sb.append(_liferayHome);
+		sb.append(", nodeId=");
+		sb.append(_nodeId);
+		sb.append(", shutdownPort=");
+		sb.append(_shutdownPort);
 		sb.append("}");
 
 		return sb.toString();

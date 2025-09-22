@@ -16,8 +16,8 @@ import java.io.Serializable;
 public class StartSidecarProcessCallable
 	implements ProcessCallable<Serializable> {
 
-	public StartSidecarProcessCallable(byte[] sidecarServerArgs) {
-		_sidecarServerArgs = sidecarServerArgs;
+	public StartSidecarProcessCallable(byte[] settings) {
+		_settings = settings;
 	}
 
 	@Override
@@ -38,13 +38,13 @@ public class StartSidecarProcessCallable
 			"org.apache.lucene.vectorization.upperJavaFeatureVersion", "21");
 		System.setProperty("jdk.module.main", "org.elasticsearch.server");
 
-		ElasticsearchServerUtil.start(_sidecarServerArgs);
+		ElasticsearchServerUtil.start(_settings);
 
 		return null;
 	}
 
 	private static final long serialVersionUID = 1L;
 
-	private final byte[] _sidecarServerArgs;
+	private final byte[] _settings;
 
 }

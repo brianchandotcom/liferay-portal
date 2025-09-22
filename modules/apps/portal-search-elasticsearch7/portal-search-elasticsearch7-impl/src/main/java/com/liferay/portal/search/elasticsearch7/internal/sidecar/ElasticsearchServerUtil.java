@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.reflect.ReflectionUtil;
 
@@ -13,6 +14,11 @@ import java.io.InputStream;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+
+import java.security.MessageDigest;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -23,6 +29,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.elasticsearch.cli.ExitCodes;
+import org.elasticsearch.common.hash.MessageDigests;
+import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
+import org.elasticsearch.common.io.stream.StreamOutput;
+import org.elasticsearch.common.settings.KeyStoreWrapper;
 import org.elasticsearch.common.transport.BoundTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.http.HttpServerTransport;
@@ -49,7 +59,7 @@ public class ElasticsearchServerUtil {
 				(HttpServerTransport)getInstanceMethod.invoke(
 					injectorMethod.invoke(
 						_nodeField.get(_instanceField.get(null))),
-						HttpServerTransport.class);
+					HttpServerTransport.class);
 
 			BoundTransportAddress boundTransportAddress =
 				httpServerTransport.boundAddress();
@@ -79,11 +89,12 @@ public class ElasticsearchServerUtil {
 		_shutdownCountDownLatch.countDown();
 	}
 
-	public static void start(byte[] sidecarServerArgs) throws ProcessException {
+	public static void start(byte[] settings) throws ProcessException {
 		InputStream originalSystemInInputStream = System.in;
 
 		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				new UnsyncByteArrayInputStream(sidecarServerArgs)) {
+				new UnsyncByteArrayInputStream(
+					_getSidecarServerArgs(settings))) {
 
 			System.setIn(unsyncByteArrayInputStream);
 
@@ -154,6 +165,51 @@ public class ElasticsearchServerUtil {
 				"Elasticsearch Server Shutdown Hook");
 
 			hooks.put(shutdownHook, shutdownHook);
+		}
+	}
+
+	private static byte[] _getSidecarServerArgs(byte[] settings) {
+		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+			StreamOutput streamOutput = new OutputStreamStreamOutput(
+				unsyncByteArrayOutputStream)) {
+
+			streamOutput.writeBoolean(false);
+			streamOutput.writeBoolean(false);
+			streamOutput.writeOptionalString(null);
+			streamOutput.writeString(KeyStoreWrapper.class.getName());
+
+			try (KeyStoreWrapper keyStoreWrapper = KeyStoreWrapper.create()) {
+				streamOutput.writeInt(keyStoreWrapper.getFormatVersion());
+				streamOutput.writeBoolean(keyStoreWrapper.hasPassword());
+				streamOutput.writeBoolean(false);
+				streamOutput.writeVInt(1);
+				streamOutput.writeString(KeyStoreWrapper.SEED_SETTING.getKey());
+
+				ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(
+					ElasticsearchServerUtil.class.getSimpleName());
+
+				byte[] bytes = byteBuffer.array();
+
+				MessageDigest messageDigest = MessageDigests.sha256();
+
+				streamOutput.writeByteArray(bytes);
+				streamOutput.writeByteArray(messageDigest.digest(bytes));
+				streamOutput.writeBoolean(false);
+			}
+
+			streamOutput.writeBytes(settings);
+
+			streamOutput.writeString(System.getProperty("es.path.conf"));
+			streamOutput.writeString(System.getProperty("es.path.log"));
+
+			streamOutput.flush();
+
+			return unsyncByteArrayOutputStream.toByteArray();
+		}
+		catch (Exception exception) {
+			throw new IllegalStateException(
+				"Unable to prepare sidecar server arguments", exception);
 		}
 	}
 

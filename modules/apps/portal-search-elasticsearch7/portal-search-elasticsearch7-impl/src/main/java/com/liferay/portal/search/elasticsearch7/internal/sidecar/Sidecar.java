@@ -35,15 +35,12 @@ import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.security.CodeSource;
-import java.security.MessageDigest;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
@@ -55,10 +52,8 @@ import java.util.Objects;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.elasticsearch.common.hash.MessageDigests;
 import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
 import org.elasticsearch.common.io.stream.StreamOutput;
-import org.elasticsearch.common.settings.KeyStoreWrapper;
 import org.elasticsearch.common.settings.Settings;
 
 /**
@@ -154,7 +149,7 @@ public class Sidecar {
 		_addFutureListener(processChannel, futureListener);
 
 		NoticeableFuture<Serializable> noticeableFuture = processChannel.write(
-			new StartSidecarProcessCallable(_getSidecarServerArgs()));
+			new StartSidecarProcessCallable(_getSettings()));
 
 		try {
 			noticeableFuture.get();
@@ -388,6 +383,7 @@ public class Sidecar {
 
 		arguments.add(
 			"-Des.path.conf=" + _elasticsearchInstancePaths.getConfigPath());
+		arguments.add("-Des.path.log=" + _sidecarHomePath.resolve("logs"));
 		arguments.add(
 			"-Djava.io.tmpdir=" + System.getProperty("java.io.tmpdir"));
 		arguments.add("--enable-native-access=ALL-UNNAMED");
@@ -467,59 +463,28 @@ public class Sidecar {
 		return "liferay_sidecar";
 	}
 
-	private Settings _getSettings() {
-		return ElasticsearchInstanceSettingsBuilder.builder(
-		).clusterName(
-			_getClusterName()
-		).discoveryTypeSingleNode(
-			true
-		).elasticsearchConfigurationWrapper(
-			_elasticsearchConfigurationWrapper
-		).elasticsearchInstancePaths(
-			_elasticsearchInstancePaths
-		).httpPortRange(
-			new HttpPortRange(_elasticsearchConfigurationWrapper)
-		).nodeName(
-			_getNodeName()
-		).build();
-	}
-
-	private byte[] _getSidecarServerArgs() {
+	private byte[] _getSettings() {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 			StreamOutput streamOutput = new OutputStreamStreamOutput(
 				unsyncByteArrayOutputStream)) {
 
-			streamOutput.writeBoolean(false);
-			streamOutput.writeBoolean(false);
-			streamOutput.writeOptionalString(null);
-			streamOutput.writeString(KeyStoreWrapper.class.getName());
-
-			try (KeyStoreWrapper keyStoreWrapper = KeyStoreWrapper.create()) {
-				streamOutput.writeInt(keyStoreWrapper.getFormatVersion());
-				streamOutput.writeBoolean(keyStoreWrapper.hasPassword());
-				streamOutput.writeBoolean(false);
-				streamOutput.writeVInt(1);
-				streamOutput.writeString(KeyStoreWrapper.SEED_SETTING.getKey());
-
-				ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(
-					ElasticsearchServerUtil.class.getSimpleName());
-
-				byte[] bytes = byteBuffer.array();
-
-				MessageDigest messageDigest = MessageDigests.sha256();
-
-				streamOutput.writeByteArray(bytes);
-				streamOutput.writeByteArray(messageDigest.digest(bytes));
-				streamOutput.writeBoolean(false);
-			}
-
-			Settings.writeSettingsToStream(_getSettings(), streamOutput);
-
-			streamOutput.writeString(
-				String.valueOf(_elasticsearchInstancePaths.getConfigPath()));
-			streamOutput.writeString(
-				String.valueOf(_sidecarHomePath.resolve("logs")));
+			Settings.writeSettingsToStream(
+				ElasticsearchInstanceSettingsBuilder.builder(
+				).clusterName(
+					_getClusterName()
+				).discoveryTypeSingleNode(
+					true
+				).elasticsearchConfigurationWrapper(
+					_elasticsearchConfigurationWrapper
+				).elasticsearchInstancePaths(
+					_elasticsearchInstancePaths
+				).httpPortRange(
+					new HttpPortRange(_elasticsearchConfigurationWrapper)
+				).nodeName(
+					_getNodeName()
+				).build(),
+				streamOutput);
 
 			streamOutput.flush();
 

@@ -492,7 +492,7 @@ public class PortletBagImpl implements PortletBag {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static ScopedServiceTrackerMap<PortletDataHandler>
+	private static final ScopedServiceTrackerMap<PortletDataHandler>
 		_serviceTrackerMap;
 
 	private final Snapshot<ConfigurationAction> _configurationActionSnapshot;

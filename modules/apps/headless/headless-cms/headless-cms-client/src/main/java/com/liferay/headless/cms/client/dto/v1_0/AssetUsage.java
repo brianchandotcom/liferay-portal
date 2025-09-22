@@ -63,6 +63,25 @@ public class AssetUsage implements Cloneable, Serializable {
 
 	protected String type;
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setUrl(UnsafeSupplier<String, Exception> urlUnsafeSupplier) {
+		try {
+			url = urlUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String url;
+
 	@Override
 	public AssetUsage clone() throws CloneNotSupportedException {
 		return (AssetUsage)super.clone();

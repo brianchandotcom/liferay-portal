@@ -98,8 +98,6 @@ public class ObjectEntryInfoPermissionProviderTest {
 					InfoPermissionProvider.class,
 					objectDefinition.getClassName());
 
-			Assert.assertNotNull(infoPermissionProvider);
-
 			Assert.assertEquals(
 				expectedResult,
 				infoPermissionProvider.hasViewPermission(
@@ -142,8 +140,6 @@ public class ObjectEntryInfoPermissionProviderTest {
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoPermissionProvider.class,
 					objectDefinition.getClassName());
-
-			Assert.assertNotNull(infoPermissionProvider);
 
 			Assert.assertEquals(
 				expectedResult,

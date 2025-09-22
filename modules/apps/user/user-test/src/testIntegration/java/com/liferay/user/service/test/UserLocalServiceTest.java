@@ -1111,6 +1111,38 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchBySocial() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		List<User> users = _userLocalService.searchBySocial(
+			TestPropsValues.getCompanyId(), null, null, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(users.contains(user));
+
+		_testSearchBySocialWithGroup();
+		_testSearchBySocialWithUserGroup();
+		_testSearchBySocialWithGroupAndUserGroup();
+	}
+
+	@Test
+	public void testSearchCountBySocial() throws Exception {
+		int usersCount1 = _userLocalService.searchCountBySocial(
+			TestPropsValues.getCompanyId(), null, null, null);
+
+		UserTestUtil.addUser();
+
+		int usersCount2 = _userLocalService.searchCountBySocial(
+			TestPropsValues.getCompanyId(), null, null, null);
+
+		Assert.assertEquals(usersCount1 + 1, usersCount2);
+
+		_testSearchCountBySocialWithGroup();
+		_testSearchCountBySocialWithUserGroup();
+		_testSearchCountBySocialWithGroupAndUserGroup();
+	}
+
+	@Test
 	public void testSearchCounts() throws Exception {
 
 		// LPS-119805
@@ -1826,6 +1858,146 @@ public class UserLocalServiceTest {
 				PasswordEncryptorUtil.getEncryptedPasswordAlgorithmSettings(
 					user.getPassword()));
 		}
+	}
+
+	private void _testSearchBySocialWithGroup() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		User user = UserTestUtil.addUser();
+
+		List<User> users = _userLocalService.searchBySocial(
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
+			null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertFalse(users.contains(user));
+
+		_userLocalService.addGroupUser(group.getGroupId(), user);
+
+		users = _userLocalService.searchBySocial(
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
+			null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(users.contains(user));
+	}
+
+	private void _testSearchBySocialWithGroupAndUserGroup() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		User user1 = UserTestUtil.addUser();
+
+		_userLocalService.addGroupUser(group.getGroupId(), user1);
+
+		User user2 = UserTestUtil.addUser();
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addUserUserGroup(user2.getUserId(), userGroup);
+
+		List<User> users = _userLocalService.searchBySocial(
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
+			new long[] {userGroup.getUserGroupId()}, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertFalse(users.contains(user1));
+		Assert.assertFalse(users.contains(user2));
+
+		_userLocalService.addGroupUser(group.getGroupId(), user2);
+		_userGroupLocalService.addUserUserGroup(user1.getUserId(), userGroup);
+
+		users = _userLocalService.searchBySocial(
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
+			new long[] {userGroup.getUserGroupId()}, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(users.contains(user1));
+		Assert.assertTrue(users.contains(user2));
+	}
+
+	private void _testSearchBySocialWithUserGroup() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		List<User> users = _userLocalService.searchBySocial(
+			TestPropsValues.getCompanyId(), null,
+			new long[] {userGroup.getUserGroupId()}, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertFalse(users.contains(user));
+
+		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
+
+		users = _userLocalService.searchBySocial(
+			TestPropsValues.getCompanyId(), null,
+			new long[] {userGroup.getUserGroupId()}, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(users.contains(user));
+	}
+
+	private void _testSearchCountBySocialWithGroup() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		User user = UserTestUtil.addUser();
+
+		int usersCount1 = _userLocalService.searchCountBySocial(
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
+			null, null);
+
+		_userLocalService.addGroupUser(group.getGroupId(), user);
+
+		int usersCount2 = _userLocalService.searchCountBySocial(
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
+			null, null);
+
+		Assert.assertEquals(usersCount1 + 1, usersCount2);
+	}
+
+	private void _testSearchCountBySocialWithGroupAndUserGroup()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		User user1 = UserTestUtil.addUser();
+
+		_userLocalService.addGroupUser(group.getGroupId(), user1);
+
+		User user2 = UserTestUtil.addUser();
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addUserUserGroup(user2.getUserId(), userGroup);
+
+		int usersCount1 = _userLocalService.searchCountBySocial(
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
+			new long[] {userGroup.getUserGroupId()}, null);
+
+		_userLocalService.addGroupUser(group.getGroupId(), user2);
+		_userGroupLocalService.addUserUserGroup(user1.getUserId(), userGroup);
+
+		int usersCount2 = _userLocalService.searchCountBySocial(
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
+			new long[] {userGroup.getUserGroupId()}, null);
+
+		Assert.assertEquals(usersCount1 + 2, usersCount2);
+	}
+
+	private void _testSearchCountBySocialWithUserGroup() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		int usersCount1 = _userLocalService.searchCountBySocial(
+			TestPropsValues.getCompanyId(), null,
+			new long[] {userGroup.getUserGroupId()}, null);
+
+		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
+
+		int usersCount2 = _userLocalService.searchCountBySocial(
+			TestPropsValues.getCompanyId(), null,
+			new long[] {userGroup.getUserGroupId()}, null);
+
+		Assert.assertEquals(usersCount1 + 1, usersCount2);
 	}
 
 	private void _testVerifyEmailAddress(boolean expired) throws Exception {

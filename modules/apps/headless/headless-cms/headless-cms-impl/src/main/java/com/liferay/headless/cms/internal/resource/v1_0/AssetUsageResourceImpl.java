@@ -239,7 +239,7 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 	}
 
 	private String _getName(boolean draft, String name) {
-		if (!draft) {
+		if (draft) {
 			name += StringBundler.concat(
 				StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
 				LanguageUtil.get(

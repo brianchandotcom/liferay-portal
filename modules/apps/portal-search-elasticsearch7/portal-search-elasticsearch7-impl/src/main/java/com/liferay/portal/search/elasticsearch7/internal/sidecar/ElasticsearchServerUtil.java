@@ -34,25 +34,22 @@ public class ElasticsearchServerUtil {
 
 	public static String getAddress() throws ProcessException {
 		try {
-			Object nodeObject = _nodeField.get(_instanceField.get(null));
-
 			ClassLoader classLoader =
 				ElasticsearchServerUtil.class.getClassLoader();
 
+			Method getInstanceMethod = ReflectionUtil.getDeclaredMethod(
+				classLoader.loadClass(
+					"org.elasticsearch.injection.guice.Injector"),
+				"getInstance", Class.class);
 			Method injectorMethod = ReflectionUtil.getDeclaredMethod(
 				classLoader.loadClass("org.elasticsearch.node.Node"),
 				"injector");
 
-			Object injectorObject = injectorMethod.invoke(nodeObject);
-
-			Method method = ReflectionUtil.getDeclaredMethod(
-				classLoader.loadClass(
-					"org.elasticsearch.injection.guice.Injector"),
-				"getInstance", Class.class);
-
 			HttpServerTransport httpServerTransport =
-				(HttpServerTransport)method.invoke(
-					injectorObject, HttpServerTransport.class);
+				(HttpServerTransport)getInstanceMethod.invoke(
+					injectorMethod.invoke(
+						_nodeField.get(_instanceField.get(null))),
+						HttpServerTransport.class);
 
 			BoundTransportAddress boundTransportAddress =
 				httpServerTransport.boundAddress();
@@ -98,7 +95,7 @@ public class ElasticsearchServerUtil {
 		}
 		catch (Exception exception) {
 			throw new ProcessException(
-				"Unable to start elasticsearch server", exception);
+				"Unable to start Elasticsearch server", exception);
 		}
 		finally {
 			System.setIn(originalSystemInInputStream);

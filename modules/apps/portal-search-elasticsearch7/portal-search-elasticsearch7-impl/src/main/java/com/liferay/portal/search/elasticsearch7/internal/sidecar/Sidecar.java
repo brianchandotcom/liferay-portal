@@ -126,9 +126,8 @@ public class Sidecar {
 					_sidecarHomePath);
 		}
 
-		URL bundleURL = _getBundleURL(Sidecar.class);
-
 		String bootstrapClassPath = _getBootstrapClassPath();
+		URL bundleURL = _getBundleURL(Sidecar.class);
 
 		ProcessChannel<Serializable> processChannel = null;
 
@@ -459,7 +458,7 @@ public class Sidecar {
 			outputStreamWriter.write(
 				StringBundler.concat(
 					"logger.bootstrapchecks.name=org.elasticsearch.bootstrap.",
-					"BootstrapChecks\n", "logger.bootstrapchecks.level=error\n",
+					"BootstrapChecks\nlogger.bootstrapchecks.level=error\n",
 					"logger.deprecation.name=org.elasticsearch.deprecation\n",
 					"logger.deprecation.level=error\n"));
 

@@ -61,7 +61,6 @@ export const ViewContainer: React.FC<Omit<IViewProps, 'channel'>> = ({
 		<SafeResults
 			data={data}
 			error={error}
-			loading={loading}
 			errorProps={{
 				href: toRoute(Routes.SETTINGS_CHANNELS, {groupId}),
 				linkLabel: Liferay.Language.get('go-to-properties'),
@@ -70,6 +69,7 @@ export const ViewContainer: React.FC<Omit<IViewProps, 'channel'>> = ({
 				),
 				subtitle: Liferay.Language.get('property-not-found')
 			}}
+			loading={loading}
 			onReload={refetch}
 			pageDisplay
 			spacer
@@ -260,8 +260,9 @@ const View: React.FC<IViewProps> = ({
 												</p>
 											</>
 										),
-										deleteButtonLabel:
-											Liferay.Language.get('clear-data'),
+										deleteButtonLabel: Liferay.Language.get(
+											'clear-data'
+										),
 										deleteConfirmationText: sub(
 											Liferay.Language.get('clear-x'),
 											[name]
@@ -274,10 +275,9 @@ const View: React.FC<IViewProps> = ({
 													ids: [id]
 												})
 												.then(() => {
-													const clearedMessage =
-														Liferay.Language.get(
-															'data-from-x-has-been-cleared'
-														);
+													const clearedMessage = Liferay.Language.get(
+														'data-from-x-has-been-cleared'
+													);
 
 													addAlert({
 														alertType:
@@ -299,10 +299,10 @@ const View: React.FC<IViewProps> = ({
 															UNAUTHORIZED_ACCESS
 																? Liferay.Language.get(
 																		'unauthorized-access'
-																	)
+																  )
 																: Liferay.Language.get(
 																		'error'
-																	),
+																  ),
 														timeout: false
 													})
 												);
@@ -354,8 +354,9 @@ const View: React.FC<IViewProps> = ({
 												</p>
 											</>
 										),
-										deleteButtonLabel:
-											Liferay.Language.get('delete'),
+										deleteButtonLabel: Liferay.Language.get(
+											'delete'
+										),
 										deleteConfirmationText: sub(
 											Liferay.Language.get('delete-x'),
 											[name]
@@ -368,10 +369,9 @@ const View: React.FC<IViewProps> = ({
 													ids: [id]
 												})
 												.then(() => {
-													const deletedMessage =
-														Liferay.Language.get(
-															'x-has-been-deleted'
-														);
+													const deletedMessage = Liferay.Language.get(
+														'x-has-been-deleted'
+													);
 
 													close();
 
@@ -398,8 +398,7 @@ const View: React.FC<IViewProps> = ({
 														defaultChannelId === id
 													) {
 														updateDefaultChannelId({
-															defaultChannelId:
-																null,
+															defaultChannelId: null,
 															groupId
 														});
 
@@ -422,10 +421,10 @@ const View: React.FC<IViewProps> = ({
 															UNAUTHORIZED_ACCESS
 																? Liferay.Language.get(
 																		'unauthorized-access'
-																	)
+																  )
 																: Liferay.Language.get(
 																		'error'
-																	),
+																  ),
 														timeout: false
 													})
 												);

@@ -53,6 +53,7 @@ import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
 import EVENTS from './utils/eventsDefinitions';
 import {activateFilter} from './utils/filters/activateFilter';
+import {deactivateFilter} from './utils/filters/deactivateFilter';
 import getRandomId from './utils/getRandomId';
 
 // @ts-ignore
@@ -146,6 +147,35 @@ const FrontendDataSetContent = ({
 }: IFrontendDataSetProps) => {
 	const fdsRef = useRef(null);
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
+
+	const [getActiveFilters, updateActiveFiltersThunk] = useStateInURL({
+		id,
+		stateDispatcher: {
+			key: EStateInURLKeys.ACTIVE_FILTERS,
+			type: EViewsActionTypes.UPDATE_FILTERS,
+		},
+		stateInURLSettings,
+		stateReader: (filters: Array<any>) => {
+			return filters;
+		},
+		stateWriter: (
+			filters: Array<any> | undefined
+		): Array<any> | undefined => {
+			if (filters?.every((filter) => !filter.active)) {
+				return [];
+			}
+
+			return filters
+				?.filter((filter: any) => filter.active)
+				.map((filter: any) => {
+					return {
+						id: filter.id,
+						selectedData: filter.selectedData,
+						type: filter.type,
+					};
+				});
+		},
+	});
 
 	const [getDelta, updateDeltaThunk] = useStateInURL({
 		additionalStateDispatchers: [
@@ -328,6 +358,33 @@ const FrontendDataSetContent = ({
 
 	const isMounted = useIsMounted();
 
+	const updateFilterActivation = ({
+		newFilters,
+		oldFilters,
+	}: {
+		newFilters: Array<any> | undefined;
+		oldFilters: Array<any>;
+	}): Array<any> => {
+		if (!newFilters) {
+			return oldFilters;
+		}
+
+		return oldFilters?.map((filter: any): any => {
+			const newFilter = newFilters.find(
+				(newFilter: any) => newFilter.id === filter.id
+			);
+
+			if (newFilter) {
+				return activateFilter({
+					filter,
+					selectedData: newFilter.selectedData,
+				});
+			}
+
+			return deactivateFilter(filter);
+		});
+	};
+
 	const getInitialViewsState = () => {
 		const customInternalViews =
 			customRenderers?.views?.map((customRenderer: TRenderer) => ({
@@ -394,17 +451,20 @@ const FrontendDataSetContent = ({
 		};
 
 		const filters = initialFilters
-			? initialFilters.map((filter) => {
-					const preloadedData = filter.preloadedData;
+			? updateFilterActivation({
+					newFilters: getActiveFilters(),
+					oldFilters: initialFilters.map((filter) => {
+						const preloadedData = filter.preloadedData;
 
-					if (preloadedData) {
-						filter = activateFilter({
-							filter,
-							selectedData: preloadedData,
-						});
-					}
+						if (preloadedData) {
+							filter = activateFilter({
+								filter,
+								selectedData: preloadedData,
+							});
+						}
 
-					return filter;
+						return filter;
+					}),
 				})
 			: [];
 
@@ -425,6 +485,7 @@ const FrontendDataSetContent = ({
 		// setters at this point. hook does the job
 
 		updateState({
+			[EStateInURLKeys.ACTIVE_FILTERS]: filters,
 			[EStateInURLKeys.DELTA]: paginationDelta,
 			[EStateInURLKeys.PAGE_NUMBER]: pageNumber,
 			[EStateInURLKeys.SEARCH_PARAM]: searchParam,
@@ -548,18 +609,14 @@ const FrontendDataSetContent = ({
 	const onClearFilters = useCallback(() => {
 		setSearching(true);
 
-		viewsDispatch({
-			type: EViewsActionTypes.UPDATE_FILTERS,
-			value: filters.map((filter: any) => ({
-				...filter,
-				active: false,
-				odataFilterString: undefined,
-				selectedData: undefined,
-			})),
-		});
+		viewsDispatch(
+			updateActiveFiltersThunk(
+				filters.map((filter: any) => deactivateFilter(filter))
+			)
+		);
 
 		onSearch({query: ''});
-	}, [filters, onSearch, viewsDispatch]);
+	}, [filters, onSearch, updateActiveFiltersThunk, viewsDispatch]);
 
 	const updateDataSetItems = useCallback(
 		(dataSetData: IDataSetData) => {
@@ -630,10 +687,7 @@ const FrontendDataSetContent = ({
 						return filter;
 					});
 
-					viewsDispatch({
-						type: EViewsActionTypes.UPDATE_FILTERS,
-						value: newFilters,
-					});
+					viewsDispatch(updateActiveFiltersThunk(newFilters || []));
 				},
 			},
 			{
@@ -700,7 +754,7 @@ const FrontendDataSetContent = ({
 				},
 			},
 		]);
-	}, [initialFilters, views, viewsDispatch]);
+	}, [initialFilters, views, updateActiveFiltersThunk, viewsDispatch]);
 
 	useEffect(() => {
 		if (itemsProp) {
@@ -812,6 +866,18 @@ const FrontendDataSetContent = ({
 			value: IStateInURL[keyof IStateInURL];
 		}> = [];
 
+		const activeFilters = getActiveFilters();
+
+		if (activeFilters) {
+			stateUpdates.push({
+				type: EViewsActionTypes.UPDATE_FILTERS,
+				value: updateFilterActivation({
+					newFilters: activeFilters,
+					oldFilters: filters,
+				}),
+			});
+		}
+
 		const delta = getDelta();
 
 		if (delta && delta !== paginationDelta) {
@@ -868,6 +934,8 @@ const FrontendDataSetContent = ({
 		}
 	}, [
 		appURL,
+		filters,
+		getActiveFilters,
 		getDelta,
 		getPageNumber,
 		getSearchParam,
@@ -1515,6 +1583,7 @@ const FrontendDataSetContent = ({
 				style,
 				toggleItemInlineEdit,
 				uniformActionsDisplay,
+				updateActiveFiltersThunk,
 				updateDataSetItems,
 				updateItem,
 				updateViewThunk,

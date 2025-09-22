@@ -84,6 +84,7 @@ export interface IFrontendDataSetContext {
 	style?: string;
 	toggleItemInlineEdit: Function;
 	uniformActionsDisplay?: boolean;
+	updateActiveFiltersThunk: IStateInURLUpdaterThunk<EStateInURLKeys.ACTIVE_FILTERS>;
 	updateDataSetItems: ({
 		items,
 		lastPage,

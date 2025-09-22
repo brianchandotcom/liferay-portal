@@ -11,14 +11,17 @@ import React, {useContext} from 'react';
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import {deactivateFilter} from '../../../utils/filters/deactivateFilter';
 import ViewsContext from '../../../views/ViewsContext';
-import {EViewsActionTypes} from '../../../views/viewsReducer';
 import FilterResume from './FilterResume';
 import SearchResume from './SearchResume';
 
 function ActiveFiltersBar({dataLoading, disabled, total}) {
-	const {onSearch, searchParam, searching, setSearching} = useContext(
-		FrontendDataSetContext
-	);
+	const {
+		onSearch,
+		searchParam,
+		searching,
+		setSearching,
+		updateActiveFiltersThunk,
+	} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const searchActive = Boolean(searchParam?.trim());
@@ -26,10 +29,11 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 	const resetFiltersValue = () => {
 		setSearching(true);
 
-		viewsDispatch({
-			type: EViewsActionTypes.UPDATE_FILTERS,
-			value: filters.map((filter) => deactivateFilter(filter)),
-		});
+		viewsDispatch(
+			updateActiveFiltersThunk(
+				filters.map((filter) => deactivateFilter(filter))
+			)
+		);
 
 		onSearch({query: ''});
 	};

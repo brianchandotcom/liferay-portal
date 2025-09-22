@@ -409,6 +409,7 @@ export {
 } from '../constants';
 
 export enum EStateInURLKeys {
+	ACTIVE_FILTERS = 'filters',
 	DELTA = 'delta',
 	PAGE_NUMBER = 'page',
 	SEARCH_PARAM = 'q',
@@ -417,6 +418,7 @@ export enum EStateInURLKeys {
 }
 
 export interface IStateInURL {
+	[EStateInURLKeys.ACTIVE_FILTERS]: Array<any>;
 	[EStateInURLKeys.DELTA]: number;
 	[EStateInURLKeys.PAGE_NUMBER]: number;
 	[EStateInURLKeys.SEARCH_PARAM]: string;

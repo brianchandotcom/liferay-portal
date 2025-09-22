@@ -8,11 +8,11 @@ import {loadModule} from 'frontend-js-web';
 import React, {ReactElement, useContext, useEffect, useState} from 'react';
 
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
+import {activateFilter} from '../../../utils/filters/activateFilter';
 import ViewsContext from '../../../views/ViewsContext';
 
 // @ts-ignore
 
-import {EViewsActionTypes} from '../../../views/viewsReducer';
 import clientExtensionFilterImplementation from './implementation/ClientExtensionFilter';
 import dateRangeFilterImplementation from './implementation/DateRangeFilter';
 import selectionFilterImplementation from './implementation/SelectionFilter';
@@ -63,7 +63,9 @@ const Filter = ({
 	type,
 	...otherProps
 }: FilterComponentArgs) => {
-	const {setSearching} = useContext(FrontendDataSetContext);
+	const {setSearching, updateActiveFiltersThunk} = useContext(
+		FrontendDataSetContext
+	);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const filterImplementation = FILTER_IMPLEMENTATIONS[type];
@@ -97,23 +99,20 @@ const Filter = ({
 			...filters.find(
 				(filter: FilterConfiguration) => filter.id === filterId
 			),
-			selectedData,
 			...otherProps,
 		};
 
-		newFilter.odataFilterString =
-			filterImplementation.getOdataString(newFilter);
-		newFilter.selectedItemsLabel =
-			filterImplementation.getSelectedItemsLabel(newFilter);
+		activateFilter({filter: newFilter, selectedData});
 
 		setSearching(true);
 
-		viewsDispatch({
-			type: EViewsActionTypes.UPDATE_FILTERS,
-			value: filters.map((filter: FilterConfiguration) =>
-				filter.id === filterId ? newFilter : filter
-			),
-		});
+		viewsDispatch(
+			updateActiveFiltersThunk(
+				filters.map((filter: FilterConfiguration) =>
+					filter.id === filterId ? newFilter : filter
+				)
+			)
+		);
 	};
 
 	return Component ? (

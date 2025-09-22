@@ -13,11 +13,12 @@ import React, {useContext, useState} from 'react';
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import {deactivateFilter} from '../../../utils/filters/deactivateFilter';
 import ViewsContext from '../../../views/ViewsContext';
-import {EViewsActionTypes} from '../../../views/viewsReducer';
 import Filter from './Filter';
 
 function FilterResume(props) {
-	const {setSearching} = useContext(FrontendDataSetContext);
+	const {setSearching, updateActiveFiltersThunk} = useContext(
+		FrontendDataSetContext
+	);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const [open, setOpen] = useState(false);
@@ -67,15 +68,16 @@ function FilterResume(props) {
 				onClick={() => {
 					setSearching(true);
 
-					viewsDispatch({
-						type: EViewsActionTypes.UPDATE_FILTERS,
-						value: filters.map((filter) => ({
-							...filter,
-							...(filter.id === props.id
-								? deactivateFilter(filter)
-								: {}),
-						})),
-					});
+					viewsDispatch(
+						updateActiveFiltersThunk(
+							filters.map((filter) => ({
+								...filter,
+								...(filter.id === props.id
+									? deactivateFilter(filter)
+									: {}),
+							}))
+						)
+					);
 				}}
 				size="sm"
 				title={Liferay.Language.get('remove-filter')}

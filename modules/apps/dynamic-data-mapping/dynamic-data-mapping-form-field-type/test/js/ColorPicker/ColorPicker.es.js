@@ -24,6 +24,14 @@ describe('Field Color Picker', () => {
 	// eslint-disable-next-line no-console
 	const originalWarn = console.warn;
 
+	afterAll(() => {
+
+		// eslint-disable-next-line no-console
+		console.warn = originalWarn;
+	});
+
+	afterEach(cleanup);
+
 	beforeAll(() => {
 
 		// eslint-disable-next-line no-console
@@ -35,17 +43,34 @@ describe('Field Color Picker', () => {
 		};
 	});
 
-	afterAll(() => {
-
-		// eslint-disable-next-line no-console
-		console.warn = originalWarn;
-	});
-
-	afterEach(cleanup);
-
 	beforeEach(() => {
 		jest.useFakeTimers();
 		fetch.mockResponseOnce(JSON.stringify({}));
+	});
+
+	it.skip('should call the onChange callback on the field change', () => {
+		const handleFieldEdited = jest.fn();
+
+		render(
+			<ColorPickerWithProvider
+				name={name}
+				onChange={handleFieldEdited}
+				spritemap={spritemap}
+			/>
+		);
+
+		userEvent.click(document.body.querySelector('input'), {
+			target: {value: 'ffffff'},
+		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(handleFieldEdited).toHaveBeenCalled();
+
+		const inputEl = document.body.querySelector('input');
+		expect(inputEl.value).toBe('ffffff');
 	});
 
 	it('renders field disabled', () => {
@@ -114,30 +139,5 @@ describe('Field Color Picker', () => {
 		});
 
 		expect(container.querySelector('input').value).toBe(color);
-	});
-
-	it.skip('should call the onChange callback on the field change', () => {
-		const handleFieldEdited = jest.fn();
-
-		render(
-			<ColorPickerWithProvider
-				name={name}
-				onChange={handleFieldEdited}
-				spritemap={spritemap}
-			/>
-		);
-
-		userEvent.click(document.body.querySelector('input'), {
-			target: {value: 'ffffff'},
-		});
-
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(handleFieldEdited).toHaveBeenCalled();
-
-		const inputEl = document.body.querySelector('input');
-		expect(inputEl.value).toBe('ffffff');
 	});
 });

@@ -222,7 +222,8 @@ public class LayoutStructureRenderer {
 		return false;
 	}
 
-	private boolean _hasUpdatePermission(
+	private boolean _hasPermission(
+			String actionId,
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider)
 		throws Exception {
 
@@ -239,7 +240,7 @@ public class LayoutStructureRenderer {
 			 infoItemPermissionProvider.hasPermission(
 				 _themeDisplay.getPermissionChecker(),
 				 layoutDisplayPageObjectProvider.getDisplayObject(),
-				 ActionKeys.UPDATE))) {
+				 actionId))) {
 
 			return true;
 		}
@@ -1053,10 +1054,35 @@ public class LayoutStructureRenderer {
 
 		String className = formStyledLayoutStructureItem.getClassName();
 
-		if (Validator.isNull(className) || (infoForm == null) ||
+		if (Validator.isNull(className) || (infoForm == null)) {
+			return;
+		}
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			(LayoutDisplayPageObjectProvider<?>)
+				_httpServletRequest.getAttribute(
+					LayoutDisplayPageWebKeys.
+						LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
+		if ((layoutDisplayPageObjectProvider == null) &&
 			!_hasAddPermission(className)) {
 
 			return;
+		}
+
+		if ((layoutDisplayPageObjectProvider != null) &&
+			!_hasPermission(ActionKeys.VIEW, layoutDisplayPageObjectProvider)) {
+
+			return;
+		}
+
+		boolean readOnly = false;
+
+		if ((layoutDisplayPageObjectProvider != null) &&
+			!_hasPermission(
+				ActionKeys.UPDATE, layoutDisplayPageObjectProvider)) {
+
+			readOnly = true;
 		}
 
 		JspWriter jspWriter = _pageContext.getOut();
@@ -1154,14 +1180,6 @@ public class LayoutStructureRenderer {
 		jspWriter.write(
 			String.valueOf(formStyledLayoutStructureItem.getClassTypeId()));
 
-		boolean readOnly = false;
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			(LayoutDisplayPageObjectProvider<?>)
-				_httpServletRequest.getAttribute(
-					LayoutDisplayPageWebKeys.
-						LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
-
 		if ((layoutDisplayPageObjectProvider != null) &&
 			(layoutDisplayPageObjectProvider.getClassNameId() ==
 				formStyledLayoutStructureItem.getClassNameId())) {
@@ -1185,10 +1203,6 @@ public class LayoutStructureRenderer {
 					"\"><input name=\"scopeExternalReferenceCode\"");
 				jspWriter.write(" type=\"hidden\" value=\"");
 				jspWriter.write(scopeExternalReferenceCode);
-			}
-
-			if (!_hasUpdatePermission(layoutDisplayPageObjectProvider)) {
-				readOnly = true;
 			}
 		}
 

@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
+import com.liferay.headless.admin.site.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.dto.v1_0.RowPageElementDefinition;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -40,35 +40,36 @@ public class RowLayoutStructureItemImporter
 						pageElement, layoutStructure),
 					pageElement.getPosition());
 
-		RowPageElementDefinition rowPageElementDefinition =
-			(RowPageElementDefinition)pageElement.getPageElementDefinition();
+		GridPageElementDefinition gridPageElementDefinition =
+			(GridPageElementDefinition)pageElement.getPageElementDefinition();
 
-		if (rowPageElementDefinition == null) {
+		if (gridPageElementDefinition == null) {
 			return rowStyledLayoutStructureItem;
 		}
 
 		rowStyledLayoutStructureItem.setCssClasses(
-			SetUtil.fromArray(rowPageElementDefinition.getCssClasses()));
+			SetUtil.fromArray(gridPageElementDefinition.getCssClasses()));
 		rowStyledLayoutStructureItem.setCustomCSS(
-			rowPageElementDefinition.getCustomCSS());
+			gridPageElementDefinition.getCustomCSS());
 		rowStyledLayoutStructureItem.setGutters(
 			GetterUtil.getBoolean(
-				rowPageElementDefinition.getGutters(), Boolean.TRUE));
+				gridPageElementDefinition.getGutters(), Boolean.TRUE));
 		rowStyledLayoutStructureItem.setIndexed(
 			GetterUtil.getBoolean(
-				rowPageElementDefinition.getIndexed(), Boolean.TRUE));
+				gridPageElementDefinition.getIndexed(), Boolean.TRUE));
 		rowStyledLayoutStructureItem.setModulesPerRow(
-			GetterUtil.getInteger(rowPageElementDefinition.getModulesPerRow()));
+			GetterUtil.getInteger(
+				gridPageElementDefinition.getModulesPerRow()));
 		rowStyledLayoutStructureItem.setName(
-			rowPageElementDefinition.getName());
+			gridPageElementDefinition.getName());
 		rowStyledLayoutStructureItem.setNumberOfColumns(
 			GetterUtil.getInteger(
-				rowPageElementDefinition.getNumberOfColumns()));
+				gridPageElementDefinition.getNumberOfModules()));
 		rowStyledLayoutStructureItem.setReverseOrder(
-			GetterUtil.getBoolean(rowPageElementDefinition.getReverseOrder()));
+			GetterUtil.getBoolean(gridPageElementDefinition.getReverseOrder()));
 		rowStyledLayoutStructureItem.setVerticalAlignment(
 			GetterUtil.getString(
-				rowPageElementDefinition.getVerticalAlignment(),
+				gridPageElementDefinition.getVerticalAlignment(),
 				StyledLayoutStructureConstants.VERTICAL_ALIGNMENT_TOP));
 
 		return rowStyledLayoutStructureItem;

@@ -10,20 +10,31 @@ import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {COMPLETED, ITask, STATUS_PROPERTIES} from '../TaskStatusType';
+import {
+	ActionId,
+	IBulkActionTaskItem,
+	STATUS_PROPERTIES,
+} from '../TaskStatusType';
 
 import '../../../../css/components/AssetTaskStatus.scss';
 
 import moment from 'moment';
 
-function TaskStatusDropdownItemList({items}: any) {
+import {TASKS_REPORT_URL, TASK_ITEMS_REPORT_URL} from '../util';
+import handleMessageAndName from '../util/HandleMessageAndName';
+
+function TaskStatusDropdownItemList({items, taskClassNameId}: any) {
 	return (
 		<>
 			<DropDown.ItemList className="task-status" items={items}>
 				{(rawTask: unknown) => {
-					const {taskResult = COMPLETED, ...task} = rawTask as ITask;
+					const {...task} = rawTask as IBulkActionTaskItem;
 
-					const properties = STATUS_PROPERTIES[taskResult];
+					const {name} = handleMessageAndName(
+						task.actionName as ActionId
+					);
+
+					const properties = STATUS_PROPERTIES[task.executionStatus];
 
 					return (
 						<ClayPanel
@@ -43,9 +54,7 @@ function TaskStatusDropdownItemList({items}: any) {
 
 									<div className="task-status-item-text">
 										<p className="h5 m-0 mr-1">
-											{Liferay.Language.get(
-												task.actionName
-											)}
+											{Liferay.Language.get(name)}
 										</p>
 
 										<span className="d-flex">
@@ -54,7 +63,7 @@ function TaskStatusDropdownItemList({items}: any) {
 													Liferay.Language.get(
 														'x-items'
 													),
-													[task.taskItems]
+													[task.numberOfItems]
 												)}
 											</p>
 
@@ -76,7 +85,7 @@ function TaskStatusDropdownItemList({items}: any) {
 												}
 											>
 												{Liferay.Language.get(
-													taskResult
+													properties.label
 												)}
 											</Label>
 										</p>
@@ -87,19 +96,18 @@ function TaskStatusDropdownItemList({items}: any) {
 							showCollapseIcon={true}
 						>
 							<ClayPanel.Body className="d-flex">
-								<Button
-									className="btn-xs"
-									displayType="success"
+								<a
+									href={`${TASK_ITEMS_REPORT_URL}${taskClassNameId}/${task.id}`}
 								>
-									{Liferay.Language.get('dismiss')}
-								</Button>
-
-								<Button
-									className="border-success btn-xs text-success"
-									displayType="secondary"
-								>
-									{Liferay.Language.get('view')}
-								</Button>
+									<Button
+										className={
+											properties.viewButtonClassName
+										}
+										displayType="secondary"
+									>
+										{Liferay.Language.get('view')}
+									</Button>
+								</a>
 							</ClayPanel.Body>
 						</ClayPanel>
 					);
@@ -107,7 +115,7 @@ function TaskStatusDropdownItemList({items}: any) {
 			</DropDown.ItemList>
 			<a
 				className="border-top btn btn-link text-secondary w-100"
-				href="#"
+				href={TASKS_REPORT_URL}
 			>
 				{Liferay.Language.get('view-all-tasks')}
 			</a>

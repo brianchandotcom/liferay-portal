@@ -150,7 +150,7 @@ public class TomcatCluster {
 			if (_liferayHome == null) {
 				try {
 					Path path = Files.createTempDirectory(
-						"Node-" + _nodeId + "-liferay-home-");
+						"tomcat-node-" + _nodeId + "-liferay-home-");
 
 					_liferayHome = path.toString();
 				}

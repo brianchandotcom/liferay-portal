@@ -28,6 +28,7 @@ const DATE_TIME_FIELD: Field = {
 	indexableConfig: {indexed: false},
 	label: {en_US: 'Date and Time Field'},
 	localized: true,
+	locked: false,
 	name: 'datetimeField',
 	parent: getUuid(),
 	required: false,
@@ -47,6 +48,7 @@ const TEXT_FIELD: Field = {
 	},
 	label: {en_US: 'Text Field'},
 	localized: false,
+	locked: false,
 	name: 'textField',
 	parent: getUuid(),
 	required: true,
@@ -76,6 +78,7 @@ describe('buildState', () => {
 			status: 'draft',
 			type: 'L_CMS_CONTENT_STRUCTURES',
 			uuid: getUuid(),
+			workflows: {},
 		};
 
 		const initialState: State = {
@@ -125,6 +128,7 @@ describe('buildState', () => {
 			status: 'published',
 			type: 'L_CMS_CONTENT_STRUCTURES',
 			uuid: getUuid(),
+			workflows: {},
 		};
 
 		const initialState: State = {
@@ -182,6 +186,7 @@ describe('buildState', () => {
 			status: 'published',
 			type: 'L_CMS_CONTENT_STRUCTURES',
 			uuid: getUuid(),
+			workflows: {},
 		};
 
 		const initialState: State = {
@@ -255,6 +260,7 @@ describe('buildState', () => {
 					localized: true,
 					name: 'decimal',
 					required: false,
+					system: false,
 					type: 'Double',
 				},
 			],

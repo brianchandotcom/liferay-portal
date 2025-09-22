@@ -27,6 +27,7 @@ describe('refreshReferencedStructures', () => {
 				en_US: 'Field',
 			},
 			localized: false,
+			locked: false,
 			name: 'field-name',
 			parent: referencedStructureUuid,
 			required: false,
@@ -48,6 +49,7 @@ describe('refreshReferencedStructures', () => {
 			spaces: [],
 			type: 'referenced-structure',
 			uuid: referencedStructureUuid,
+			workflows: {},
 		};
 
 		const root: Structure = {
@@ -62,6 +64,7 @@ describe('refreshReferencedStructures', () => {
 			spaces: [],
 			status: 'published',
 			uuid: structureUuid,
+			workflows: {},
 		};
 
 		const objectDefinition: ObjectDefinition = {
@@ -94,6 +97,7 @@ describe('refreshReferencedStructures', () => {
 					name: 'field-name',
 					objectFieldSettings: [],
 					required: false,
+					system: false,
 				},
 				{
 					DBType: 'String',
@@ -109,6 +113,7 @@ describe('refreshReferencedStructures', () => {
 					name: 'new-field-name',
 					objectFieldSettings: [],
 					required: false,
+					system: false,
 				},
 			],
 			objectRelationships: [],

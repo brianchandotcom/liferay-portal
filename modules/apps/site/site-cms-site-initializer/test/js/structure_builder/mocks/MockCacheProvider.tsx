@@ -7,8 +7,10 @@ import React, {ReactNode} from 'react';
 
 import PicklistService from '../../../../src/main/resources/META-INF/resources/js/common/services/PicklistService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
+import {getWorkflowDefinitions} from '../../../../src/main/resources/META-INF/resources/js/common/services/WorkflowService';
 import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/common/types/Picklist';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
+import {Workflow} from '../../../../src/main/resources/META-INF/resources/js/common/types/Workflow';
 import {CacheContext} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/CacheContext';
 import ObjectDefinitionService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/ObjectDefinitionService';
 import {ObjectDefinitions} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/ObjectDefinition';
@@ -17,10 +19,12 @@ function getCache({
 	objectDefinitions,
 	picklists,
 	spaces,
+	workflows,
 }: {
 	objectDefinitions?: ObjectDefinitions;
 	picklists?: Picklist[];
 	spaces?: Space[];
+	workflows?: Workflow[];
 }) {
 	return {
 		'object-definitions': {
@@ -36,6 +40,11 @@ function getCache({
 		'spaces': {
 			data: spaces || [],
 			fetcher: SpaceService.getSpaces,
+			status: spaces ? ('saved' as const) : ('idle' as const),
+		},
+		'workflows': {
+			data: workflows || [],
+			fetcher: getWorkflowDefinitions,
 			status: spaces ? ('saved' as const) : ('idle' as const),
 		},
 	};

@@ -34,6 +34,7 @@ const FIELD: Field = {
 		es_ES: 'Campo de Prueba',
 	},
 	localized: false,
+	locked: false,
 	name: 'TextField',
 	parent: getUuid(),
 	required: false,
@@ -56,6 +57,7 @@ const DEFAULT_STATE: State = {
 		spaces: [],
 		status: 'new',
 		uuid: getUuid(),
+		workflows: {},
 	},
 	unsavedChanges: false,
 };

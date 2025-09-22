@@ -295,8 +295,9 @@ public class FriendlyURLServlet extends HttpServlet {
 								return new Redirect("/web/cms/new-space");
 							}
 						}
-						else if (!permissionChecker.isGroupAdmin(
-									layout.getGroupId()) &&
+						else if (!layout.isTypeAssetDisplay() &&
+								 !permissionChecker.isGroupAdmin(
+									 layout.getGroupId()) &&
 								 !userLocalService.hasRoleUser(
 									 group.getCompanyId(),
 									 RoleConstants.CMS_ADMINISTRATOR,

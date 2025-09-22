@@ -185,7 +185,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		assetUsage1.setType(
 			() -> _basicWebContentObjectDefinition.getLabel(_LANGUAGE_ID));
 
-		AssetUsage assetUsage2 = _addAssetLayoutUsage(
+		AssetUsage assetUsage2 = _addLayoutAssetUsage(
 			randomAssetUsage(), assetId,
 			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
@@ -234,7 +234,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 			Long assetId, AssetUsage assetUsage)
 		throws Exception {
 
-		return _addAssetLayoutUsage(
+		return _addLayoutAssetUsage(
 			assetUsage, assetId,
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 	}
@@ -268,7 +268,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		return objectEntry.getObjectEntryId();
 	}
 
-	private AssetUsage _addAssetLayoutUsage(
+	private AssetUsage _addLayoutAssetUsage(
 			AssetUsage assetUsage, Long assetId, int type)
 		throws Exception {
 

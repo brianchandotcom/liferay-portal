@@ -564,7 +564,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-17564") &&
-			(objectEntryFolderId ==
+			(objectEntryFolderId !=
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT)) {
 

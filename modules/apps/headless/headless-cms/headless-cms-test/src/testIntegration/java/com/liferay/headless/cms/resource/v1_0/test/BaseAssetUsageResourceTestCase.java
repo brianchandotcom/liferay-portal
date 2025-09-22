@@ -171,6 +171,7 @@ public abstract class BaseAssetUsageResourceTestCase {
 
 		assetUsage.setName(regex);
 		assetUsage.setType(regex);
+		assetUsage.setUrl(regex);
 
 		String json = AssetUsageSerDes.toJSON(assetUsage);
 
@@ -180,6 +181,7 @@ public abstract class BaseAssetUsageResourceTestCase {
 
 		Assert.assertEquals(regex, assetUsage.getName());
 		Assert.assertEquals(regex, assetUsage.getType());
+		Assert.assertEquals(regex, assetUsage.getUrl());
 	}
 
 	@Test
@@ -562,6 +564,14 @@ public abstract class BaseAssetUsageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("url", additionalAssertFieldName)) {
+				if (assetUsage.getUrl() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -691,6 +701,16 @@ public abstract class BaseAssetUsageResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						assetUsage1.getType(), assetUsage2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("url", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetUsage1.getUrl(), assetUsage2.getUrl())) {
 
 					return false;
 				}
@@ -897,6 +917,52 @@ public abstract class BaseAssetUsageResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("url")) {
+			Object object = assetUsage.getUrl();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -944,6 +1010,7 @@ public abstract class BaseAssetUsageResourceTestCase {
 			{
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				url = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

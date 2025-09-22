@@ -72,6 +72,20 @@ public class AssetUsageSerDes {
 			sb.append("\"");
 		}
 
+		if (assetUsage.getUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"url\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(assetUsage.getUrl()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -104,6 +118,13 @@ public class AssetUsageSerDes {
 			map.put("type", String.valueOf(assetUsage.getType()));
 		}
 
+		if (assetUsage.getUrl() == null) {
+			map.put("url", null);
+		}
+		else {
+			map.put("url", String.valueOf(assetUsage.getUrl()));
+		}
+
 		return map;
 	}
 
@@ -128,6 +149,9 @@ public class AssetUsageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "url")) {
+				return false;
+			}
 
 			return false;
 		}
@@ -145,6 +169,11 @@ public class AssetUsageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					assetUsage.setType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "url")) {
+				if (jsonParserFieldValue != null) {
+					assetUsage.setUrl((String)jsonParserFieldValue);
 				}
 			}
 		}

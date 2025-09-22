@@ -124,6 +124,45 @@ public class AssetUsage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getUrl() {
+		if (_urlSupplier != null) {
+			url = _urlSupplier.get();
+
+			_urlSupplier = null;
+		}
+
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+
+		_urlSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUrl(UnsafeSupplier<String, Exception> urlUnsafeSupplier) {
+		_urlSupplier = () -> {
+			try {
+				return urlUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String url;
+
+	@JsonIgnore
+	private Supplier<String> _urlSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -179,6 +218,22 @@ public class AssetUsage implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(type));
+
+			sb.append("\"");
+		}
+
+		String url = getUrl();
+
+		if (url != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"url\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(url));
 
 			sb.append("\"");
 		}

@@ -175,6 +175,7 @@ public class TomcatNode {
 			arguments, StringUtil.split(_jvmArgs, CharPool.SPACE));
 
 		builder.setArguments(arguments);
+
 		builder.setBootstrapClassPath(_buildBoostrapClassPath());
 		builder.setEnvironment(System.getenv());
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
@@ -586,7 +587,7 @@ public class TomcatNode {
 
 					if (runtimeClassPath == null) {
 						throw new IllegalStateException(
-							"Missing bridge classpath");
+							"Runtime class path is null");
 					}
 
 					List<URL> urls = new ArrayList<>();
@@ -608,8 +609,7 @@ public class TomcatNode {
 
 					if (completableFuture == null) {
 						throw new IllegalStateException(
-							"Missing ShieldedContainerClassLoader syncing " +
-								"CompletableFuture");
+							"Completable future is null");
 					}
 
 					_bridgeClassLoader = new URLClassLoader(
@@ -648,9 +648,9 @@ public class TomcatNode {
 
 	}
 
-	// TomcatNode class is loaded by the testee jvm before tomcat starts.
-	// Lazy loading Log to make sure it is only used on the tester jvm side,
-	// never attempted to be used on the testee jvm side.
+	// This class is loaded by the testee JVM before Tomcat starts. Lazy load
+	// Log to make sure it is only used on the tester JVM and never by the
+	// testee JVM.
 
 	private static class LogHolder {
 

@@ -65,7 +65,7 @@ export default function ReferencedStructureSettings({
 					</ClayTabs.Item>
 
 					<ClayTabs.Item>
-						{Liferay.Language.get('validations')}
+						{Liferay.Language.get('workflow')}
 					</ClayTabs.Item>
 				</ClayTabs.List>
 
@@ -75,7 +75,7 @@ export default function ReferencedStructureSettings({
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane className="px-0">
-						<ValidationsTab />
+						<WorkflowTab />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>
@@ -117,6 +117,6 @@ function GeneralTab({
 	);
 }
 
-function ValidationsTab() {
+function WorkflowTab() {
 	return <div></div>;
 }

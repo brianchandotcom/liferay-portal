@@ -5,8 +5,15 @@
 
 import getPaginatedList from '../../main_view/home/util/getPaginatedList';
 import {AssignableUser} from '../types/AssignableUser';
+import {Workflow} from '../types/Workflow';
 import {WorkflowTask} from '../types/WorkflowTask';
 import ApiHelper from './ApiHelper';
+
+export async function getWorkflowDefinitions(): Promise<Workflow[]> {
+	return await ApiHelper.getAll<Workflow>({
+		url: '/o/headless-admin-workflow/v1.0/workflow-definitions',
+	});
+}
 
 export async function getWorkflowTasksAssignedToMe({
 	page,

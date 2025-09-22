@@ -296,7 +296,7 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 	}
 
 	private String _getName(boolean draft, String name) {
-		if (draft) {
+		if (!draft) {
 			name += StringBundler.concat(
 				StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
 				LanguageUtil.get(
@@ -346,27 +346,17 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 	}
 
 	private boolean _hasViewPermission(
-		Layout layout, PermissionChecker permissionChecker) {
+			Layout layout, PermissionChecker permissionChecker)
+		throws Exception {
 
-		try {
-			long plid = layout.getPlid();
+		long plid = layout.getPlid();
 
-			if (layout.isDraftLayout()) {
-				plid = layout.getClassPK();
-			}
-
-			LayoutPermissionUtil.check(
-				permissionChecker, plid, ActionKeys.VIEW);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return false;
+		if (layout.isDraftLayout()) {
+			plid = layout.getClassPK();
 		}
 
-		return true;
+		return LayoutPermissionUtil.contains(
+			permissionChecker, plid, ActionKeys.VIEW);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -142,11 +142,11 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 							() -> _getName(
 								layout.isDraftLayout(),
 								_localization.getLocalization(
-									(String)objects[2], contextUser.getLanguageId(),
-									true)));
+									(String)objects[2],
+									contextUser.getLanguageId(), true)));
 						setType(
-							() -> _getLayoutUsageTypeLabel((Integer)objects[1]));
-
+							() -> _getLayoutUsageTypeLabel(
+								(Integer)objects[1]));
 					}
 				});
 		}

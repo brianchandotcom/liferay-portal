@@ -3,108 +3,218 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Button, {ClayButtonWithIcon} from '@clayui/button';
-import DropDown from '@clayui/drop-down';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import '../../../css/components/AssetTaskStatus.scss';
 
-import Badge from '@clayui/badge';
-import classnames from 'classnames';
+import {sub} from 'frontend-js-web';
 
-import {ITask} from './TaskStatusType';
-import TaskStatusDropdownItemList from './components/TaskStatusDropdownItemList';
+import {START_TASK} from '../../common/utils/events';
+import {
+	ActionId,
+	BulkActionDataDTO,
+	IBulkActionSelectedData,
+	IBulkActionTaskItem,
+} from './TaskStatusType';
+import TaskStatusDropdown from './components/TaskStatusDropdown';
+import BulkActionService from './services/BulkActionService';
+import {TASK_ITEMS_REPORT_URL} from './util';
+import generateUrlParams from './util/GenerateUrlParams';
+import handleMessageAndName from './util/HandleMessageAndName';
 
-function TaskStatusManager({items = [], totalCount = 0}: any) {
-	const [active, setActive] = useState(false);
-	const [isVisible, setIsVisible] = useState(false);
-	const [processingTasks] = useState(totalCount);
-	const [tasks] = useState<ITask[]>(items);
+function TaskStatusManager({
+	bulkActionTaskClassNameId,
+}: {
+	bulkActionTaskClassNameId: number;
+}) {
+	const [active, setActive] = useState<boolean>(false);
+	const [disable, setDisable] = useState(true);
+	const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(
+		null
+	);
+	const [processingTasks, setProcessingTask] = useState(0);
+	const [taskItems, setTaskItems] = useState<IBulkActionTaskItem[]>([]);
+	const updateOpenDropdownRef = useRef(false);
+
+	const getTaskReportLink = (
+		bulkActionTaskClassNameId: number,
+		taskId: number
+	) => {
+		return `<a href="${TASK_ITEMS_REPORT_URL}${bulkActionTaskClassNameId}/${taskId}" class="alert-link lead"><strong>${Liferay.Language.get('task-report')}</strong></a>`;
+	};
+
+	const getTaskItems = useCallback(async () => {
+		const tasks = await BulkActionService.getTasks({
+			pageSize: 5,
+			sort: 'dateCreated:desc',
+		});
+
+		if (tasks?.items?.length) {
+			setDisable(false);
+		}
+
+		setTaskItems(tasks?.items || []);
+	}, [setDisable, setTaskItems]);
+
+	const stopPolling = useCallback(() => {
+		if (intervalRef.current) {
+			clearInterval(intervalRef.current);
+			intervalRef.current = null;
+		}
+	}, []);
+
+	const retryStrategy = useCallback(() => {
+		const TIMEOUT = 10000;
+
+		if (intervalRef.current) {
+			return;
+		}
+
+		const pollingTasks = async () => {
+			try {
+				const tasks = await BulkActionService.getTasks({
+					filter: `executionStatus eq 'STARTED'`,
+				});
+
+				if (tasks?.totalCount === 0) {
+					stopPolling();
+				}
+
+				if (updateOpenDropdownRef.current) {
+					getTaskItems();
+				}
+				setProcessingTask(tasks?.totalCount || 0);
+			}
+			catch {
+				stopPolling();
+			}
+		};
+
+		pollingTasks();
+		intervalRef.current = setInterval(pollingTasks, TIMEOUT);
+	}, [getTaskItems, setProcessingTask, stopPolling]);
+
+	const postBulkAction = useCallback(
+		async ({
+			actionId,
+			data,
+			selectedData,
+			...otherProps
+		}: {
+			actionId: ActionId;
+			data: BulkActionDataDTO;
+			otherProps: any;
+			selectedData: IBulkActionSelectedData;
+		}) => {
+			try {
+				const urlParams = generateUrlParams(selectedData, otherProps);
+
+				const response = await BulkActionService.createTask(
+					actionId,
+					selectedData,
+					data,
+					urlParams
+				);
+
+				const {infoMessage} = handleMessageAndName(
+					actionId,
+					selectedData
+				);
+
+				if (response.data) {
+					Liferay.Util.openToast({
+						message: sub(infoMessage, [
+							selectedData.items.length,
+							getTaskReportLink(
+								bulkActionTaskClassNameId,
+								response.data.id
+							),
+						]),
+						type: 'info',
+					});
+
+					setDisable(false);
+					retryStrategy();
+				}
+
+				if (response.error) {
+					Liferay.Util.openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-system-error-occurred'
+						),
+						type: 'danger',
+					});
+				}
+			}
+			catch {
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-system-error-occurred'
+					),
+					type: 'danger',
+				});
+			}
+		},
+		[bulkActionTaskClassNameId, retryStrategy, setDisable]
+	);
 
 	useEffect(() => {
-		if (processingTasks > 0) {
-			setIsVisible(true);
+		function post({
+			actionId,
+			data,
+			selectedData,
+			...otherProps
+		}: {
+			actionId: ActionId;
+			data: BulkActionDataDTO;
+			otherProps: any;
+			selectedData: IBulkActionSelectedData;
+		}) {
+			if (actionId) {
+				return postBulkAction({
+					actionId,
+					data,
+					selectedData,
+					...otherProps,
+				});
+			}
+			else {
+				setDisable(false);
+			}
 		}
-	}, [processingTasks, setIsVisible]);
+
+		Liferay.on(START_TASK, post);
+
+		return () => {
+			Liferay.detach(START_TASK, post);
+			stopPolling();
+		};
+	}, [postBulkAction, setDisable, stopPolling]);
+
+	useEffect(() => {
+		retryStrategy();
+	}, [retryStrategy]);
+
+	useEffect(() => {
+		if (disable) {
+			getTaskItems();
+		}
+	}, [disable, getTaskItems]);
+
+	useEffect(() => {
+		updateOpenDropdownRef.current = active;
+	}, [active]);
 
 	return (
-		<>
-			{isVisible ? (
-				<div className="p-2">
-					<span className="d-flex">
-						{processingTasks > 0 ? (
-							<DropDown
-								active={active}
-								onActiveChange={setActive}
-								trigger={
-									<Button
-										className={classnames({
-											'btn-sm border-info text-info pb-1':
-												!active,
-											'btn-sm btn-info pb-1': active,
-										})}
-										displayType="secondary"
-									>
-										<Badge
-											className={classnames({
-												'mr-2 badge-info': !active,
-												'mr-2 badge-light': active,
-											})}
-											label={processingTasks}
-										/>
-
-										{processingTasks === 1
-											? Liferay.Language.get(
-													'processing-task'
-												)
-											: Liferay.Language.get(
-													'processing-tasks'
-												)}
-									</Button>
-								}
-								triggerIcon={
-									active ? 'caret-top' : 'caret-bottom'
-								}
-							>
-								<TaskStatusDropdownItemList items={tasks} />
-							</DropDown>
-						) : (
-							<Button.Group>
-								<ClayButtonWithIcon
-									aria-label="close"
-									className="btn-sm close-button"
-									displayType="secondary"
-									onClick={() => setIsVisible(false)}
-									symbol="times"
-									title="close"
-								/>
-
-								<DropDown
-									active={active}
-									className="task-status-dropdown"
-									onActiveChange={setActive}
-									trigger={
-										<Button
-											className="btn-sm"
-											displayType="secondary"
-										>
-											{Liferay.Language.get(
-												'no-processing-tasks'
-											)}
-										</Button>
-									}
-									triggerIcon={
-										active ? 'caret-top' : 'caret-bottom'
-									}
-								>
-									<TaskStatusDropdownItemList items={tasks} />
-								</DropDown>
-							</Button.Group>
-						)}
-					</span>
-				</div>
-			) : null}
-		</>
+		<TaskStatusDropdown
+			active={active}
+			disable={disable}
+			getTaskItems={getTaskItems}
+			processingTasks={processingTasks}
+			setActive={setActive}
+			taskClassNameId={bulkActionTaskClassNameId}
+			taskItems={taskItems}
+		/>
 	);
 }
 

@@ -281,12 +281,14 @@ export default function AssetsFDSPropsTransformer({
 			else if (action?.data?.id === 'delete') {
 				deleteAssetEntriesBulkAction({
 					selectedData,
+					...otherProps,
 				});
 			}
 			else if (action?.data?.id === 'download') {
 				Liferay.fire(START_TASK, {
 					actionId: action.data.id,
 					selectedData,
+					...otherProps,
 				});
 			}
 			else if (action?.data?.id === 'permissions') {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.depot.internal.search.spi.model.permission.role.contributor;
+package com.liferay.depot.internal.search.spi.model.permission.contributor;
 
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.search.spi.model.permission.role.contributor.SearchPermissionRoleContributor;
+import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionRoleContributor;
 
 import java.util.function.Consumer;
 

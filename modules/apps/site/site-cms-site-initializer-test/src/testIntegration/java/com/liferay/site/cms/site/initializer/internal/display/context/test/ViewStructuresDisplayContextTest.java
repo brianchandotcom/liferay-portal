@@ -112,8 +112,6 @@ public class ViewStructuresDisplayContextTest
 		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
 		String label, String method, Map<String, Object> visibilityFilters) {
 
-		Assert.assertNotNull(fdsActionDropdownItem);
-
 		Map<String, Object> data =
 			(Map<String, Object>)fdsActionDropdownItem.get("data");
 

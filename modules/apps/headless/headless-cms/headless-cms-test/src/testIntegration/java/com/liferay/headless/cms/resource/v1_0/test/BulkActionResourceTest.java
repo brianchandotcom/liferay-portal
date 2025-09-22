@@ -387,13 +387,11 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		_testPostBulkActionItemPreviewPageWithBulkActionItems(
 			bulkAction, expectedDeletionType, objectEntry, objectEntryFolder2);
-
-		_testPostBulkActionItemPreviewPageWithSelectAllAndFilter(
-			bulkAction, expectedDeletionType, objectEntryFolder1,
-			objectEntryFolder2);
-
 		_testPostBulkActionItemPreviewPageWithFetchChildrenEnabled(
 			bulkAction, expectedDeletionType, objectEntry, objectEntryFolder1,
+			objectEntryFolder2);
+		_testPostBulkActionItemPreviewPageWithSelectAllAndFilter(
+			bulkAction, expectedDeletionType, objectEntryFolder1,
 			objectEntryFolder2);
 	}
 

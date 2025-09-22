@@ -2027,6 +2027,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#assign generateTestGraphQLAddMethod = true />
 
 					<#if !configYAML.getGraphQLNamespace()?has_content>
+
 						// No namespace
 
 						${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
@@ -2045,8 +2046,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 												/>
 											}
 										})),
-								"JSONObject/data",
-								"Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
+								"JSONObject/data", "Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
 
 						<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 							<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete")) />
@@ -2070,6 +2070,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							Assert.assertTrue(errorsJSONArray1.length() > 0);
 						</#if>
 					<#else>
+
 						// Using the configured namespace ${configYAML.getGraphQLNamespace()}
 
 						${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
@@ -2090,9 +2091,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													/>
 												}
 											}))),
-								"JSONObject/data",
-								"JSONObject/${configYAML.getGraphQLNamespace()}",
-								"Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
+								"JSONObject/data", "JSONObject/${configYAML.getGraphQLNamespace()}", "Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
 
 						<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 							<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(
@@ -2144,9 +2143,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													/>
 												}
 										}))),
-								"JSONObject/data",
-								"JSONObject/${graphQLNamespace}",
-								"Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
+								"JSONObject/data", "JSONObject/${graphQLNamespace}", "Object/${freeMarkerTool.getGraphQLMutationName(javaMethodSignature.methodName)}"));
 
 						<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 							JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
@@ -2215,10 +2212,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							new GraphQLField("page"),
 							new GraphQLField("totalCount"));
 
-						JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
-							invokeGraphQLQuery(graphQLField),
-							"JSONObject/data",
-							"JSONObject/${propertyName}");
+						JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(invokeGraphQLQuery(graphQLField), "JSONObject/data", "JSONObject/${propertyName}");
 
 						Assert.assertNotNull(${propertyName}JSONObject);
 					}
@@ -2278,10 +2272,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#if !configYAML.getGraphQLNamespace()?has_content>
 							// No namespace
 
-							JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
-								invokeGraphQLQuery(graphQLField),
-								"JSONObject/data",
-								"JSONObject/${propertyName}");
+							JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(invokeGraphQLQuery(graphQLField), "JSONObject/data", "JSONObject/${propertyName}");
 
 							long totalCount = ${propertyName}JSONObject.getLong("totalCount");
 
@@ -2307,10 +2298,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 								random${schemaName}());
 
-							${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
-								invokeGraphQLQuery(graphQLField),
-								"JSONObject/data",
-								"JSONObject/${propertyName}");
+							${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(invokeGraphQLQuery(graphQLField), "JSONObject/data", "JSONObject/${propertyName}");
 
 							Assert.assertEquals(totalCount + 2, ${propertyName}JSONObject.getLong("totalCount"));
 
@@ -2323,11 +2311,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#else>
 							// Using the configured namespace ${configYAML.getGraphQLNamespace()}
 
-							JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
-								invokeGraphQLQuery(new GraphQLField("${configYAML.getGraphQLNamespace()}", graphQLField)),
-								"JSONObject/data",
-								"JSONObject/${configYAML.getGraphQLNamespace()}",
-								"JSONObject/${propertyName}");
+							JSONObject ${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(invokeGraphQLQuery(new GraphQLField("${configYAML.getGraphQLNamespace()}", graphQLField)), "JSONObject/data", "JSONObject/${configYAML.getGraphQLNamespace()}", "JSONObject/${propertyName}");
 
 							long totalCount = ${propertyName}JSONObject.getLong("totalCount");
 
@@ -2353,11 +2337,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 								random${schemaName}());
 
-							${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
-								invokeGraphQLQuery(new GraphQLField("${configYAML.getGraphQLNamespace()}", graphQLField)),
-								"JSONObject/data",
-								"JSONObject/${configYAML.getGraphQLNamespace()}",
-								"JSONObject/${propertyName}");
+							${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(invokeGraphQLQuery(new GraphQLField("${configYAML.getGraphQLNamespace()}", graphQLField)), "JSONObject/data", "JSONObject/${configYAML.getGraphQLNamespace()}", "JSONObject/${propertyName}");
 
 							Assert.assertEquals(totalCount + 2, ${propertyName}JSONObject.getLong("totalCount"));
 
@@ -2373,11 +2353,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 							// Using the namespace ${graphQLNamespace}
 
-							${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(
-								invokeGraphQLQuery(new GraphQLField("${graphQLNamespace}", graphQLField)),
-								"JSONObject/data",
-								"JSONObject/${graphQLNamespace}",
-								"JSONObject/${propertyName}");
+							${propertyName}JSONObject = JSONUtil.getValueAsJSONObject(invokeGraphQLQuery(new GraphQLField("${graphQLNamespace}", graphQLField)), "JSONObject/data", "JSONObject/${graphQLNamespace}", "JSONObject/${propertyName}");
 
 							Assert.assertEquals(totalCount + 2, ${propertyName}JSONObject.getLong("totalCount"));
 
@@ -2435,8 +2411,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 												}
 											},
 											getGraphQLFields())),
-									"JSONObject/data",
-									"Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
+									"JSONObject/data", "Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
 					<#else>
 						// Using the configured namespace ${configYAML.getGraphQLNamespace()}
 
@@ -2459,9 +2434,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													}
 												},
 												getGraphQLFields()))),
-									"JSONObject/data",
-									"JSONObject/${configYAML.getGraphQLNamespace()}",
-									"Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
+									"JSONObject/data", "JSONObject/${configYAML.getGraphQLNamespace()}", "Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
 					</#if>
 
 					<#if freeMarkerTool.isVersionCompatible(configYAML, 5)>
@@ -2487,9 +2460,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													}
 												},
 												getGraphQLFields()))),
-									"JSONObject/data",
-									"JSONObject/${graphQLNamespace}",
-									"Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
+									"JSONObject/data", "JSONObject/${graphQLNamespace}", "Object/${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
 					</#if>
 				<#else>
 					Assert.assertTrue(false);
@@ -3189,8 +3160,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 										}
 									},
 									graphQLFields)),
-							"JSONObject/data",
-							"JSONObject/create${postJavaMethodSignature.parentSchemaName!""}${schemaName}"),
+							"JSONObject/data", "JSONObject/create${postJavaMethodSignature.parentSchemaName!""}${schemaName}"),
 						${schemaName}.class);
 				}
 			<#else>

@@ -13,6 +13,24 @@ import {Role} from '../../../common/types/Role';
 import {UserAccount, UserGroup} from '../../../common/types/UserAccount';
 import {SelectOptions} from '../SpaceMembersInputWithSelect';
 
+enum ActionTypes {
+	FetchStart = 'FETCH_START',
+	FetchSuccess = 'FETCH_SUCCESS',
+	FetchError = 'FETCH_ERROR',
+	LoadMoreStart = 'LOAD_MORE_START',
+	LoadMoreUsersSuccess = 'LOAD_MORE_USERS_SUCCESS',
+	LoadMoreGroupsSuccess = 'LOAD_MORE_GROUPS_SUCCESS',
+	LoadMoreError = 'LOAD_MORE_ERROR',
+	AddMemberStart = 'ADD_MEMBER_START',
+	AddMemberSuccess = 'ADD_MEMBER_SUCCESS',
+	AddMemberFailure = 'ADD_MEMBER_FAILURE',
+	AddMemberError = 'ADD_MEMBER_ERROR',
+	RemoveMemberSuccess = 'REMOVE_MEMBER_SUCCESS',
+	RemoveMemberFailure = 'REMOVE_MEMBER_FAILURE',
+	UpdateRolesSuccess = 'UPDATE_ROLES_SUCCESS',
+	UpdateRolesFailure = 'UPDATE_ROLES_FAILURE',
+}
+
 interface State {
 	error: Error | null;
 	groups: {
@@ -30,48 +48,64 @@ interface State {
 }
 
 type Action =
-	| {type: 'FETCH_START' | 'LOAD_MORE_START' | 'ADD_MEMBER_START'}
+	| {
+			type:
+				| ActionTypes.FetchStart
+				| ActionTypes.LoadMoreStart
+				| ActionTypes.AddMemberStart;
+	  }
 	| {
 			payload: {
 				groups: {items: UserGroup[]; lastPage: number};
 				roles: Role[];
 				users: {items: UserAccount[]; lastPage: number};
 			};
-			type: 'FETCH_SUCCESS';
+			type: ActionTypes.FetchSuccess;
 	  }
 	| {
 			payload: Error;
-			type: 'FETCH_ERROR' | 'LOAD_MORE_ERROR' | 'ADD_MEMBER_ERROR';
+			type:
+				| ActionTypes.FetchError
+				| ActionTypes.LoadMoreError
+				| ActionTypes.AddMemberError;
 	  }
-	| {payload: UserAccount; type: 'ADD_USER_SUCCESS'}
-	| {payload: UserGroup; type: 'ADD_GROUP_SUCCESS'}
-	| {payload: {id: number | string}; type: 'ADD_USER_FAILURE'}
-	| {payload: {id: number | string}; type: 'ADD_GROUP_FAILURE'}
-	| {payload: {id: number | string}; type: 'REMOVE_USER_SUCCESS'}
-	| {payload: {id: number | string}; type: 'REMOVE_GROUP_SUCCESS'}
-	| {payload: UserAccount; type: 'REMOVE_USER_FAILURE'}
-	| {payload: UserGroup; type: 'REMOVE_GROUP_FAILURE'}
+	| {
+			payload: {item: UserAccount | UserGroup; type: SelectOptions};
+			type: ActionTypes.AddMemberSuccess;
+	  }
+	| {
+			payload: {id: number | string; type: SelectOptions};
+			type: ActionTypes.AddMemberFailure;
+	  }
+	| {
+			payload: {id: number | string; type: SelectOptions};
+			type: ActionTypes.RemoveMemberSuccess;
+	  }
+	| {
+			payload: {item: UserAccount | UserGroup; type: SelectOptions};
+			type: ActionTypes.RemoveMemberFailure;
+	  }
 	| {
 			payload: {id: number | string; roles: Role[]};
-			type: 'UPDATE_ROLES_SUCCESS';
+			type: ActionTypes.UpdateRolesSuccess;
 	  }
 	| {
 			payload: {id: number | string; originalRoles: Role[]};
-			type: 'UPDATE_ROLES_FAILURE';
+			type: ActionTypes.UpdateRolesFailure;
 	  }
 	| {
 			payload: {
 				items: UserAccount[];
 				page: number;
 			};
-			type: 'LOAD_MORE_USERS_SUCCESS';
+			type: ActionTypes.LoadMoreUsersSuccess;
 	  }
 	| {
 			payload: {
 				items: UserGroup[];
 				page: number;
 			};
-			type: 'LOAD_MORE_GROUPS_SUCCESS';
+			type: ActionTypes.LoadMoreGroupsSuccess;
 	  };
 
 const initialState: State = {
@@ -92,11 +126,11 @@ const initialState: State = {
 
 function reducer(state: State, action: Action): State {
 	switch (action.type) {
-		case 'FETCH_START':
-		case 'LOAD_MORE_START':
-		case 'ADD_MEMBER_START':
+		case ActionTypes.FetchStart:
+		case ActionTypes.LoadMoreStart:
+		case ActionTypes.AddMemberStart:
 			return {...state, error: null, isFetching: true};
-		case 'FETCH_SUCCESS':
+		case ActionTypes.FetchSuccess:
 			return {
 				...state,
 				groups: {
@@ -112,83 +146,61 @@ function reducer(state: State, action: Action): State {
 					lastPage: action.payload.users.lastPage,
 				},
 			};
-		case 'ADD_USER_SUCCESS':
+		case ActionTypes.AddMemberSuccess: {
+			const {item, type} = action.payload;
+
+			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+
 			return {
 				...state,
 				isFetching: false,
-				users: {
-					...state.users,
-					items: [action.payload, ...state.users.items],
+				[key]: {
+					...state[key],
+					items: [item, ...state[key].items],
 				},
 			};
-		case 'ADD_GROUP_SUCCESS':
-			return {
-				...state,
-				groups: {
-					...state.groups,
-					items: [action.payload, ...state.groups.items],
-				},
-				isFetching: false,
-			};
-		case 'ADD_USER_FAILURE':
+		}
+		case ActionTypes.AddMemberFailure: {
+			const {id, type} = action.payload;
+
+			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+
 			return {
 				...state,
 				isFetching: false,
-				users: {
-					...state.users,
-					items: state.users.items.filter(
-						(user) => user.id !== action.payload.id
-					),
+				[key]: {
+					...state[key],
+					items: state[key].items.filter((item) => item.id !== id),
 				},
 			};
-		case 'ADD_GROUP_FAILURE':
+		}
+		case ActionTypes.RemoveMemberSuccess: {
+			const {id, type} = action.payload;
+
+			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+
 			return {
 				...state,
-				groups: {
-					...state.groups,
-					items: state.groups.items.filter(
-						(group) => group.id !== action.payload.id
-					),
+				[key]: {
+					...state[key],
+					items: state[key].items.filter((item) => item.id !== id),
 				},
-				isFetching: false,
 			};
-		case 'REMOVE_USER_SUCCESS':
+		}
+		case ActionTypes.RemoveMemberFailure: {
+			const {item, type} = action.payload;
+
+			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+
 			return {
 				...state,
-				users: {
-					...state.users,
-					items: state.users.items.filter(
-						(user) => user.id !== action.payload.id
-					),
+				[key]: {
+					...state[key],
+					items: [...state[key].items, item],
 				},
 			};
-		case 'REMOVE_GROUP_SUCCESS':
-			return {
-				...state,
-				groups: {
-					...state.groups,
-					items: state.groups.items.filter(
-						(group) => group.id !== action.payload.id
-					),
-				},
-			};
-		case 'REMOVE_USER_FAILURE':
-			return {
-				...state,
-				users: {
-					...state.users,
-					items: [...state.users.items, action.payload],
-				},
-			};
-		case 'REMOVE_GROUP_FAILURE':
-			return {
-				...state,
-				groups: {
-					...state.groups,
-					items: [...state.groups.items, action.payload],
-				},
-			};
-		case 'LOAD_MORE_USERS_SUCCESS':
+		}
+		case ActionTypes.LoadMoreUsersSuccess:
 			return {
 				...state,
 				isFetching: false,
@@ -198,7 +210,7 @@ function reducer(state: State, action: Action): State {
 					page: action.payload.page,
 				},
 			};
-		case 'LOAD_MORE_GROUPS_SUCCESS':
+		case ActionTypes.LoadMoreGroupsSuccess:
 			return {
 				...state,
 				groups: {
@@ -208,7 +220,7 @@ function reducer(state: State, action: Action): State {
 				},
 				isFetching: false,
 			};
-		case 'UPDATE_ROLES_SUCCESS':
+		case ActionTypes.UpdateRolesSuccess:
 			return {
 				...state,
 				groups: {
@@ -228,21 +240,30 @@ function reducer(state: State, action: Action): State {
 					),
 				},
 			};
-		case 'UPDATE_ROLES_FAILURE':
+		case ActionTypes.UpdateRolesFailure: {
+			const {id, originalRoles} = action.payload;
+
 			return {
 				...state,
+				groups: {
+					...state.groups,
+					items: state.groups.items.map((item) =>
+						item.id === id ? {...item, roles: originalRoles} : item
+					),
+				},
 				users: {
 					...state.users,
 					items: state.users.items.map((item) =>
 						item.id === action.payload.id
-							? {...item, roles: action.payload.originalRoles}
+							? {...item, roles: originalRoles}
 							: item
 					),
 				},
 			};
-		case 'FETCH_ERROR':
-		case 'LOAD_MORE_ERROR':
-		case 'ADD_MEMBER_ERROR':
+		}
+		case ActionTypes.FetchError:
+		case ActionTypes.LoadMoreError:
+		case ActionTypes.AddMemberError:
 			return {...state, error: action.payload, isFetching: false};
 		default:
 			return state;
@@ -257,7 +278,7 @@ export function useSpaceMembers(
 
 	useEffect(() => {
 		const fetchMembers = async () => {
-			dispatch({type: 'FETCH_START'});
+			dispatch({type: ActionTypes.FetchStart});
 
 			try {
 				const [spaceUsers, spaceUserGroups, userRoles] =
@@ -285,12 +306,15 @@ export function useSpaceMembers(
 						roles: userRoles.items,
 						users: spaceUsers,
 					},
-					type: 'FETCH_SUCCESS',
+					type: ActionTypes.FetchSuccess,
 				});
 			}
 			catch (error) {
 				console.error(error);
-				dispatch({payload: error as Error, type: 'FETCH_ERROR'});
+				dispatch({
+					payload: error as Error,
+					type: ActionTypes.FetchError,
+				});
 			}
 		};
 
@@ -303,7 +327,7 @@ export function useSpaceMembers(
 				return;
 			}
 
-			dispatch({type: 'LOAD_MORE_START'});
+			dispatch({type: ActionTypes.LoadMoreStart});
 
 			try {
 				if (type === SelectOptions.USERS) {
@@ -322,7 +346,7 @@ export function useSpaceMembers(
 
 					dispatch({
 						payload: {items: spaceUsers.items, page: newPage},
-						type: 'LOAD_MORE_USERS_SUCCESS',
+						type: ActionTypes.LoadMoreUsersSuccess,
 					});
 				}
 				else {
@@ -342,12 +366,15 @@ export function useSpaceMembers(
 
 					dispatch({
 						payload: {items: spaceUserGroups.items, page: newPage},
-						type: 'LOAD_MORE_GROUPS_SUCCESS',
+						type: ActionTypes.LoadMoreGroupsSuccess,
 					});
 				}
 			}
 			catch (error) {
-				dispatch({payload: error as Error, type: 'LOAD_MORE_ERROR'});
+				dispatch({
+					payload: error as Error,
+					type: ActionTypes.LoadMoreError,
+				});
 			}
 		},
 		[externalReferenceCode, pageSize, state]
@@ -366,8 +393,8 @@ export function useSpaceMembers(
 				}
 
 				dispatch({
-					payload: itemWithEmptyRoles as UserAccount,
-					type: 'ADD_USER_SUCCESS',
+					payload: {item: itemWithEmptyRoles, type},
+					type: ActionTypes.AddMemberSuccess,
 				});
 
 				const {error} = await SpaceService.linkUserToSpace({
@@ -377,8 +404,8 @@ export function useSpaceMembers(
 
 				if (error) {
 					dispatch({
-						payload: {id: item.id},
-						type: 'ADD_USER_FAILURE',
+						payload: {id: item.id, type},
+						type: ActionTypes.AddMemberFailure,
 					});
 
 					openToast({
@@ -409,8 +436,8 @@ export function useSpaceMembers(
 				}
 
 				dispatch({
-					payload: itemWithEmptyRoles as UserGroup,
-					type: 'ADD_GROUP_SUCCESS',
+					payload: {item: itemWithEmptyRoles, type},
+					type: ActionTypes.AddMemberSuccess,
 				});
 
 				const {error} = await SpaceService.linkUserGroupToSpace({
@@ -420,8 +447,8 @@ export function useSpaceMembers(
 
 				if (error) {
 					dispatch({
-						payload: {id: item.id},
-						type: 'ADD_GROUP_FAILURE',
+						payload: {id: item.id, type},
+						type: ActionTypes.AddMemberFailure,
 					});
 
 					openToast({
@@ -453,7 +480,10 @@ export function useSpaceMembers(
 	const removeMember = useCallback(
 		async (item: UserAccount | UserGroup, type: SelectOptions) => {
 			if (type === SelectOptions.USERS) {
-				dispatch({payload: {id: item.id}, type: 'REMOVE_USER_SUCCESS'});
+				dispatch({
+					payload: {id: item.id, type},
+					type: ActionTypes.RemoveMemberSuccess,
+				});
 
 				const {error} = await SpaceService.unlinkUserFromSpace({
 					spaceExternalReferenceCode: externalReferenceCode,
@@ -462,8 +492,8 @@ export function useSpaceMembers(
 
 				if (error) {
 					dispatch({
-						payload: item as UserAccount,
-						type: 'REMOVE_USER_FAILURE',
+						payload: {item, type},
+						type: ActionTypes.RemoveMemberFailure,
 					});
 
 					openToast({
@@ -490,8 +520,8 @@ export function useSpaceMembers(
 			}
 			else {
 				dispatch({
-					payload: {id: item.id},
-					type: 'REMOVE_GROUP_SUCCESS',
+					payload: {id: item.id, type},
+					type: ActionTypes.RemoveMemberSuccess,
 				});
 
 				const {error} = await SpaceService.unlinkUserGroupFromSpace({
@@ -501,8 +531,8 @@ export function useSpaceMembers(
 
 				if (error) {
 					dispatch({
-						payload: item as UserGroup,
-						type: 'REMOVE_GROUP_FAILURE',
+						payload: {item, type},
+						type: ActionTypes.RemoveMemberFailure,
 					});
 
 					openToast({
@@ -546,7 +576,7 @@ export function useSpaceMembers(
 
 			dispatch({
 				payload: {id: itemToUpdate.id, roles: newRoleObjects},
-				type: 'UPDATE_ROLES_SUCCESS',
+				type: ActionTypes.UpdateRolesSuccess,
 			});
 
 			const {error} = isUser
@@ -575,7 +605,7 @@ export function useSpaceMembers(
 									)!
 							) || [],
 					},
-					type: 'UPDATE_ROLES_FAILURE',
+					type: ActionTypes.UpdateRolesFailure,
 				});
 
 				openToast({

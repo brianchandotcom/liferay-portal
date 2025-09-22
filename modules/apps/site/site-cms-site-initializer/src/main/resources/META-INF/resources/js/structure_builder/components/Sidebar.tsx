@@ -22,7 +22,7 @@ export default function () {
 	return (
 		<div className="border structure-builder__sidebar">
 			<h3 className="font-weight-semi-bold pt-4 px-4 text-4">
-				{Liferay.Language.get('structure-fields')}
+				{Liferay.Language.get('content-structure-fields')}
 			</h3>
 
 			<Content />
@@ -53,7 +53,7 @@ function EmptyState() {
 		<ClayEmptyState
 			className="mt-6 px-4 structure-builder__empty-state"
 			description={Liferay.Language.get(
-				'add-new-fields-to-start-building-your-structure'
+				'add-new-fields-to-start-building-your-content-structure'
 			)}
 			imgSrc={getImage('structure_fields_empty_state.svg')}
 			imgSrcReducedMotion={getImage('structure_fields_empty_state.svg')}

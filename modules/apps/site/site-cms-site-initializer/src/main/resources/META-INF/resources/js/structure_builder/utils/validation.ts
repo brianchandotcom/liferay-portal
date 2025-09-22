@@ -161,7 +161,7 @@ export function useValidate() {
 		if (!fields.length) {
 			dispatch({
 				error: Liferay.Language.get(
-					'at-least-one-field-must-be-added-to-save-or-publish-the-structure'
+					'at-least-one-field-must-be-added-to-save-or-publish-the-content-structure'
 				),
 				type: 'set-error',
 			});

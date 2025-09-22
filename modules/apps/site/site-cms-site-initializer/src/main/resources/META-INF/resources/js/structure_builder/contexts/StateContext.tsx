@@ -49,7 +49,9 @@ import {
 	validateStructure,
 } from '../utils/validation';
 
-const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
+const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get(
+	'untitled-content-structure'
+);
 
 type History = {
 	deletedChildren: boolean;

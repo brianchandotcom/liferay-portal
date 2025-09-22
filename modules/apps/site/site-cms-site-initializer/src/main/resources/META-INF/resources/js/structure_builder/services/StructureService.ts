@@ -40,7 +40,7 @@ async function createStructure({
 		if (error) {
 			return {
 				error: Liferay.Language.get(
-					'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
 				),
 			};
 		}
@@ -95,7 +95,7 @@ async function updateStructure({
 		if (error) {
 			return {
 				error: Liferay.Language.get(
-					'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
 				),
 			};
 		}

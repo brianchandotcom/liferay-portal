@@ -39,7 +39,9 @@ export default function ReferencedStructureSettings({
 			>
 				<span>
 					{sub(
-						Liferay.Language.get('x-is-a-referenced-structure'),
+						Liferay.Language.get(
+							'x-is-a-referenced-content-structure'
+						),
 						label
 					)}
 				</span>
@@ -99,13 +101,13 @@ function GeneralTab({
 				</p>
 
 				<ClayLabel displayType="warning">
-					{Liferay.Language.get('referenced-structure')}
+					{Liferay.Language.get('referenced-content-structure')}
 				</ClayLabel>
 			</div>
 
 			<Input
 				disabled
-				label={Liferay.Language.get('structure-name')}
+				label={Liferay.Language.get('content-structure-name')}
 				onValueChange={() => {}}
 				required
 				value={name}

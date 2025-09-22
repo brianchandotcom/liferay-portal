@@ -62,7 +62,7 @@ export default function StructureSettings() {
 			</ClayLabel>
 
 			<LocalizedInput
-				aria-label={Liferay.Language.get('structure-label')}
+				aria-label={Liferay.Language.get('content-structure-label')}
 				className="form-control-inline structure-builder__title-input"
 				formGroupClassName="ml-n3"
 				onSave={(translations) => {
@@ -111,7 +111,7 @@ function GeneralTab() {
 		<div>
 			<Input
 				disabled={status === 'published'}
-				label={Liferay.Language.get('structure-name')}
+				label={Liferay.Language.get('content-structure-name')}
 				onValueChange={(value) =>
 					dispatch({name: value, type: 'update-structure'})
 				}

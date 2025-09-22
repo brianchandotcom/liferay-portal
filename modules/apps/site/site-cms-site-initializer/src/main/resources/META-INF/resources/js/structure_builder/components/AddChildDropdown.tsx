@@ -71,7 +71,9 @@ export default function AddChildDropdown({
 					{type: 'divider'},
 					{
 						className: 'dropdown-item-cms-warning',
-						label: Liferay.Language.get('referenced-structure'),
+						label: Liferay.Language.get(
+							'referenced-content-structure'
+						),
 						onClick: () => setShowStructuresModal(true),
 						symbolLeft: 'edit-layout',
 					},

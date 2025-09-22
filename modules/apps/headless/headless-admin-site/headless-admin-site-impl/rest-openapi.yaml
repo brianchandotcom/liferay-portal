@@ -1851,9 +1851,9 @@ components:
                                 $ref: "#/components/schemas/RowViewport"
                             type: array
                         verticalAlignment:
-                            # @review
                             description:
                                 The vertical alignment property of the row page element.
+                            enum: [Bottom, Middle, Top]
                             type: string
             # @review
             description:
@@ -2603,6 +2603,7 @@ components:
                             # @review
                             description:
                                 The vertical alignment property of the row viewport.
+                            enum: [Bottom, Middle, Top]
                             type: string
                     type: object
             required:

@@ -19,7 +19,6 @@ import {
 function useStateInURL<K extends keyof IStateInURL>({
 	additionalStateDispatchers = [],
 	id,
-	shouldWriteInURL = (_value: IStateInURL[K]) => true,
 	stateDispatcher,
 	stateInURLSettings,
 	stateReader,
@@ -31,7 +30,6 @@ function useStateInURL<K extends keyof IStateInURL>({
 		value: any;
 	}[];
 	id: string;
-	shouldWriteInURL?: (value: IStateInURL[K]) => boolean;
 	stateDispatcher: {
 		key: K;
 		type: EViewsActionTypes;
@@ -48,7 +46,6 @@ function useStateInURL<K extends keyof IStateInURL>({
 			additionalStateDispatchers,
 			id,
 			key,
-			shouldWriteInURL,
 			stateInURLSettings,
 			stateWriter,
 			type,
@@ -80,7 +77,6 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 	additionalStateDispatchers = [],
 	id,
 	key,
-	shouldWriteInURL = (_value: IStateInURL[K]) => true,
 	stateInURLSettings,
 	stateWriter,
 	type,
@@ -92,7 +88,6 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 	}[];
 	id: string;
 	key: K;
-	shouldWriteInURL?: (value: IStateInURL[K]) => boolean;
 	stateInURLSettings: EStateInURLSettings;
 	stateWriter?: IStateWriter<K>;
 	type: EViewsActionTypes;
@@ -110,12 +105,9 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 		[additionalStateDispatchersKey]
 	);
 
-	const shouldWriteInURLRef = useRef(shouldWriteInURL);
-
 	const stateWriterRef = useRef(stateWriter);
 
 	useLayoutEffect(() => {
-		shouldWriteInURLRef.current = shouldWriteInURL;
 		stateWriterRef.current = stateWriter;
 	});
 
@@ -164,13 +156,6 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 					});
 				}
 
-				const shouldWriteInURL =
-					shouldWriteInURLRef.current?.(value) ?? true;
-
-				if (!shouldWriteInURL) {
-					newState[key] = undefined;
-				}
-
 				writeStateInURL(id, newState, stateInURLSettings);
 			};
 		},
@@ -180,7 +165,6 @@ function useUpdaterThunk<K extends keyof IStateInURL>({
 			memoizedAdditionalStateDispatchers,
 			stateInURLSettings,
 			type,
-			shouldWriteInURLRef,
 			stateWriterRef,
 		]
 	);

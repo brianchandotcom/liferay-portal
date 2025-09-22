@@ -246,6 +246,7 @@ export default {
 	'environment-type': 'Environment Type',
 	'environments': 'Environments',
 	'error-details': 'Error Details',
+	'excluding-vat': 'Excluding VAT',
 	'exit': 'Exit',
 	'exit-from-providing-app-build': 'Exit from providing app build',
 	'exp-date': 'Exp. Date',
@@ -388,6 +389,7 @@ export default {
 	'name': 'Name',
 	'net-price': 'Net Price',
 	'never-expires': 'Never Expires',
+	'new-address': 'New Address',
 	'new-app': 'New App',
 	'new-potential-expiration-date': 'New Potential Expiration Date',
 	'new-trial': 'New Trial',
@@ -408,6 +410,7 @@ export default {
 	'object-action': 'Object Action',
 	'objective': 'Objective',
 	'of-target': 'of target',
+	'offline-payments-using-the-invoice': 'Offline payments using the invoice',
 	'on-hold': 'On Hold',
 	'only-gif-jpg-jpeg-png-are-allowed-max-file-size-is-5mb':
 		'Only GIF, JPG, JPEG, and PNG are allowed. Max file size is 5MB.',
@@ -492,6 +495,7 @@ export default {
 	'publishers': 'Publishers',
 	'purchase-and-install-new-apps-and-they-will-show-up-here':
 		'Purchase and install new apps and they will show up here.',
+	'purchase-app': 'Purchase Aapp',
 	'purchase-completed': 'Purchase Completed',
 	'purchase-date': 'Purchase Date',
 	'purchase-failed': 'Purchase Failed',
@@ -593,6 +597,8 @@ export default {
 	'tax-id': 'Tax ID',
 	'tax-vat': 'Tax/VAT',
 	'terms-of-service': 'Terms of Service',
+	'terms-privacy-returns-or-contact-support-all-costs-are-in-us-dollars':
+		'Terms, privacy, returns, or contact support. All costs are in US Dollars',
 	'text-block': 'Text Block',
 	'text-images-block': 'Text Images Block',
 	'text-video-block': 'Text Video Block',
@@ -691,6 +697,7 @@ export default {
 		'Users requests to become a publisher',
 	'value-between-1-and-60': 'Value between 1 and 60.',
 	'vat': 'VAT',
+	'vat-id': 'VAT ID',
 	'vat-number': 'VAT Number',
 	'version': 'Version',
 	'via-github-repo': 'Via GitHub Repo',

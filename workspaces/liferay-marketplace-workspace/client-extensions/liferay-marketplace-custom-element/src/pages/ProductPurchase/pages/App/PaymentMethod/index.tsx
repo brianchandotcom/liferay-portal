@@ -3,20 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import {useSelector} from '@xstate/store/react';
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import useAccountAddresses from '../../../../../hooks/useAccountAddresses';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
+import HeadlessAdminUser from '../../../../../services/rest/HeadlessAdminUser';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import ProductPurchaseApp from '../../../services/ProductPurchaseApp';
 import {cartStore} from '../../../store';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';
 import {PaymentMethodType} from '../../../types';
-import {BillingAddress} from './BillingAddress/BillingAddress';
+import BillingAddress from './BillingAddress/BillingAddress';
 import {PaymentTypeSelector} from './PaymentTypeSelector';
 import TaxIdDisplay from './TaxIdDisplay';
 import {TrialMethod} from './TrialMethod/TrialMethod';
@@ -33,34 +35,35 @@ const PaymentMethodFlows = {
 	},
 };
 
-const isPrimaryButtonActive = () => {
-	const {context} = productPurchaseStore.getSnapshot();
-
-	const {type: paymentMethodType} = context.payment;
-
-	const isAddressValid = zodSchema.billingAddress.safeParse(
-		context.payment.billingAddress
-	);
-
-	if (paymentMethodType === PaymentMethodType.TRIAL) {
-		return isAddressValid.success && true;
-	}
-
-	if (paymentMethodType === PaymentMethodType.PAY_NOW) {
-		return isAddressValid.success;
-	}
-
-	const invoiceValues = Object.values(context.payment.invoice);
-
-	return (
-		!!invoiceValues.length && invoiceValues.every((value) => value.trim())
-	);
-};
-
 export default function PaymentMethod() {
 	const navigate = useNavigate();
-	const {context} = productPurchaseStore.getSnapshot();
-	const {type: paymentMethodType} = context.payment;
+
+	const {account, payment} = useSelector(
+		productPurchaseStore,
+		(state) => state.context
+	);
+
+	const isPrimaryButtonActive = useMemo(() => {
+		const isAddressValid = zodSchema.billingAddress.safeParse(
+			payment.billingAddress
+		);
+
+		if (payment.type === PaymentMethodType.TRIAL) {
+			return isAddressValid.success;
+		}
+
+		if (payment.type === PaymentMethodType.PAY_NOW) {
+			return isAddressValid.success;
+		}
+
+		if (payment.type === PaymentMethodType.INVOICE) {
+			const invoiceValues = Object.values(payment.invoice);
+
+			return !!invoiceValues.length && isAddressValid.success;
+		}
+	}, [payment]);
+
+	const {type: paymentMethodType} = payment;
 
 	const {licenseType, payment: paymentStore} = useSelector(
 		productPurchaseStore,
@@ -73,23 +76,6 @@ export default function PaymentMethod() {
 		productPurchaseCart,
 		selectedAccount,
 	} = useProductPurchaseOutletContext();
-
-	const onClickContinue = async () => {
-		if (licenseType === 'TRIAL') {
-			return handlePurchase(ProductPurchaseApp, undefined, {
-				isTrialSKU: true,
-			});
-		}
-
-		const updatedCart = await productPurchaseCart.updateCart(
-			productPurchaseCart.cart.id,
-			{billingAddress: context.payment.billingAddress}
-		);
-
-		cartStore.send({cart: updatedCart, type: 'setCart'});
-
-		nextStep();
-	};
 
 	useEffect(() => {
 		if (!licenseType) {
@@ -110,6 +96,29 @@ export default function PaymentMethod() {
 			paymentStore.type as keyof typeof PaymentMethodFlows
 		];
 
+	const onClickContinue = async () => {
+		if (licenseType === 'TRIAL') {
+			return handlePurchase(ProductPurchaseApp, undefined, {
+				isTrialSKU: true,
+			});
+		}
+
+		const updatedCart = await productPurchaseCart.updateCart(
+			productPurchaseCart.cart.id,
+			{billingAddress: payment.billingAddress}
+		);
+
+		if (!selectedAccount.taxId) {
+			await HeadlessAdminUser.updateAccount(selectedAccount.id, {
+				taxId: account.taxId,
+			});
+		}
+
+		cartStore.send({cart: updatedCart, type: 'setCart'});
+
+		nextStep();
+	};
+
 	return (
 		<ProductPurchase.Shell
 			className="select-payment-step"
@@ -119,15 +128,22 @@ export default function PaymentMethod() {
 				},
 				continueButtonProps: {
 					children: actionMessage,
-					disabled: !isPrimaryButtonActive(),
+					disabled: !isPrimaryButtonActive,
 					onClick: onClickContinue,
 				},
+				termsAndConditions: (
+					<span className="text-2">
+						<ClayIcon className="mr-2" symbol="info-panel-open" />
+						{i18n.translate(
+							'terms-privacy-returns-or-contact-support-all-costs-are-in-us-dollars'
+						)}
+					</span>
+				),
 			}}
 			title={i18n.translate('payment-method')}
 		>
 			<BillingAddress
 				addresses={addressResponse.items}
-				billingAddress={paymentStore.billingAddress as BillingAddress}
 				mutateUserAccoutAddress={mutateUserAccoutAddress}
 				setBillingAddress={(billingAddress) =>
 					productPurchaseStore.send({

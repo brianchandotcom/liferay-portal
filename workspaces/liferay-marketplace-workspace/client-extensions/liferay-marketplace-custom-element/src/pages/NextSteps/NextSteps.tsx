@@ -20,7 +20,6 @@ import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
 import HeadlessAdminUser from '../../services/rest/HeadlessAdminUser';
-import {getProductPriceModel} from '../../utils/productUtils';
 import {getSiteURL} from '../../utils/site';
 import {getAccountImage} from '../../utils/util';
 
@@ -47,7 +46,6 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 
 	const isCloudApp =
 		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.CLOUDAPP;
-	const isPaidApp = getProductPriceModel(product as DeliveryProduct);
 
 	const continueButtonKey =
 		paymentStatus === PaymentStatus.PAID
@@ -93,13 +91,11 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 				description={
 					<span>
 						<p className="mb-4 text-center">
-							Congratulations on the purchase of{' '}
-							<strong>{productName}</strong>.{' '}
-							{isPaidApp &&
-								'Your payment has been successfully processed via PayPal. '}
-							You will now need to install the app by clicking on
-							the &quot;{i18n.translate(continueButtonKey)}&quot;
-							button below.
+							Thank you for choosing{' '}
+							<strong>{productName}</strong>. Your purchase has
+							been successfully processed. To continue, please
+							click the button below to download or install the
+							app.
 						</p>
 
 						<p className="align-items-end d-flex justify-content-center mb-0">
@@ -108,9 +104,9 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 								className="next-step-page-text-bold"
 								href={`${getSiteURL()}/customer-dashboard#/order/${orderId}`}
 							>
-								<h2 className="mb-0 next-step-page-order next-step-page-text-bold">
+								<span className="mb-0 next-step-page-order next-step-page-text-bold span">
 									{orderId}
-								</h2>
+								</span>
 							</a>
 						</p>
 					</span>
@@ -226,7 +222,10 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 
 			{paymentStatus === PaymentStatus.PAID && (
 				<div className="d-flex justify-content-center next-step-page-learn-more">
-					<a href="https://learn.liferay.com/w/dxp/development/marketplace">
+					<a
+						href="https://learn.liferay.com/w/dxp/development/marketplace"
+						target="_blank"
+					>
 						Learn more about App Configuration
 					</a>
 				</div>

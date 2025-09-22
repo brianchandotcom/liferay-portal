@@ -14,7 +14,10 @@ import {Section} from '../../../../../../components/Section/Section';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 import {formatCurrency} from '../../../../../../utils/currencies';
-import {getLicenseTagText} from '../../../../../../utils/productUtils';
+import {
+	getLicenseTagText,
+	getProductPriceModel,
+} from '../../../../../../utils/productUtils';
 import {useProductPurchaseOutletContext} from '../../../../ProductPurchaseOutlet';
 import ProductPurchaseApp from '../../../../services/ProductPurchaseApp';
 import {productPurchaseStore} from '../../../../store/AppPurchaseStore';
@@ -75,6 +78,8 @@ const OrderSummary = () => {
 		productPurchaseCart,
 	} = useProductPurchaseOutletContext();
 
+	const {isFreeApp} = getProductPriceModel(product);
+
 	const {cart, cartItems} = productPurchaseCart;
 
 	const {licenseType, payment: paymentStore} = useSelector(
@@ -130,47 +135,64 @@ const OrderSummary = () => {
 					onClick: previousStep,
 				},
 				continueButtonProps: {
-					children: 'Purchase App',
+					children: i18n.translate(
+						isFreeApp ? 'get-app' : 'purchase-app'
+					),
 					disabled: !context.payment.eulaAgreement,
-					onClick: onClickPayNow,
+					onClick: () => {
+						if (isFreeApp) {
+							return handlePurchase(ProductPurchaseApp);
+						}
+
+						onClickPayNow();
+					},
 				},
 			}}
 			title={i18n.translate('payment-method')}
 		>
-			<Section label={i18n.translate('billing-address')}>
-				<div className="align-items-center d-flex p-4 section-card">
-					<div>
-						<ClayIcon
-							className="mr-3"
-							color=" #0B5FFF"
-							fontSize={16}
-							symbol="geolocation"
-						/>
-					</div>
-					<div>
-						<div className="font-weight-bold section-card-title">
-							{context.payment.billingAddress.name}
+			{!isFreeApp && (
+				<>
+					<Section label={i18n.translate('billing-address')}>
+						<div className="align-items-center d-flex p-4 section-card">
+							<div>
+								<ClayIcon
+									className="mr-3"
+									color="#0B5FFF"
+									fontSize={16}
+									symbol="geolocation"
+								/>
+							</div>
+							<div>
+								<div className="font-weight-bold section-card-title">
+									{context.payment.billingAddress.name}
+								</div>
+								<div className="section-card-subtitle text-black-50">
+									{`${billingAddress.street1}, ${billingAddress.city}, ${billingAddress.regionISOCode}, ${billingAddress.country}`}
+								</div>
+							</div>
 						</div>
-						<div className="section-card-subtitle text-black-50">
-							{`${billingAddress.street1}, ${billingAddress.city}, ${billingAddress.regionISOCode}, ${billingAddress.country}`}
-						</div>
-					</div>
-				</div>
-			</Section>
+					</Section>
 
-			<Section label={i18n.translate('payment-method')}>
-				<div className="align-items-center d-flex p-4 section-card">
-					<div>{PaymentMethods[context.payment.type].icon}</div>
-					<div>
-						<div className="font-weight-bold section-card-title">
-							{PaymentMethods[context.payment.type].title}
+					<Section label={i18n.translate('payment-method')}>
+						<div className="align-items-center d-flex p-4 section-card">
+							<div>
+								{PaymentMethods[context.payment.type].icon}
+							</div>
+							<div>
+								<div className="font-weight-bold section-card-title">
+									{PaymentMethods[context.payment.type].title}
+								</div>
+								<div className="section-card-subtitle text-black-50">
+									{
+										PaymentMethods[context.payment.type]
+											.subtitle
+									}
+								</div>
+							</div>
 						</div>
-						<div className="section-card-subtitle text-black-50">
-							{PaymentMethods[context.payment.type].subtitle}
-						</div>
-					</div>
-				</div>
-			</Section>
+					</Section>
+				</>
+			)}
 
 			<Section label="Order Summary">
 				<div className="d-flex mx-5">
@@ -198,9 +220,12 @@ const OrderSummary = () => {
 					<span className="font-weight-bold ml-2">
 						{valueFallBack(summary?.totalFormatted)}
 					</span>
-					<div className="license-tag ml-3 px-2 py-1">
-						{getLicenseTagText(product as DeliveryProduct)}
-					</div>
+
+					{!isFreeApp && (
+						<div className="license-tag ml-3 px-2 py-1">
+							{getLicenseTagText(product as DeliveryProduct)}
+						</div>
+					)}
 				</div>
 			</Section>
 

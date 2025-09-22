@@ -17,6 +17,9 @@ type Invoice = {
 
 export const productPurchaseStore = createStore({
 	context: {
+		account: {
+			taxId: '',
+		},
 		licenseType: null as unknown as LicenseType,
 		payment: {
 			billingAddress: {
@@ -28,7 +31,6 @@ export const productPurchaseStore = createStore({
 				regionISOCode: '',
 				street1: '',
 				street2: '',
-				vatNumber: '',
 				zip: '',
 			} as BillingAddress,
 			eulaAgreement: false,
@@ -41,6 +43,12 @@ export const productPurchaseStore = createStore({
 		project: null as unknown as ConsoleUserProject,
 	},
 	on: {
+		setAccountTaxId: {
+			account: (context, event: {account: Partial<Account>}) => ({
+				...context.account,
+				taxId: event.account.taxId as string,
+			}),
+		},
 		setBillingAddress: {
 			payment: (
 				context,

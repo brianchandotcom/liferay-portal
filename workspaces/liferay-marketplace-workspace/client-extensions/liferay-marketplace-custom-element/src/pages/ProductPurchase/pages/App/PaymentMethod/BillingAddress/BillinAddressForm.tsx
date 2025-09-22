@@ -7,17 +7,20 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {Input} from '../../../../../../components/Input/Input';
 import Select from '../../../../../../components/Select/Select';
 import useCommerceRegions from '../../../../../../hooks/useCommerceRegions';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 
 import './BillingAddress.scss';
-import {productPurchaseStore} from '../../../../store';
+
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useForm} from 'react-hook-form';
+
+import FormInput from '../../../../../../components/Input/formInput';
+import zodSchema from '../../../../../../schema/zod';
 
 type BillingAddressProps = {
-	billingAddress: BillingAddress;
 	saveAddress: (address: BillingAddress) => void;
 	setBillingAddress: React.Dispatch<BillingAddress>;
 	setSelectedAddress: React.Dispatch<string>;
@@ -37,32 +40,54 @@ const defaultBillingAddress = {
 	zip: '',
 };
 
-const BillingAddressForm: React.FC<
-	BillingAddressProps & {
-		setSelectedAddress: React.Dispatch<string>;
-	}
-> = ({
-	billingAddress,
+const BillingAddressForm: React.FC<BillingAddressProps> = ({
 	saveAddress,
 	setBillingAddress,
 	setSelectedAddress,
 	setShowNewAddressButton,
 	showNewAddressButton,
 }) => {
+	const {
+		formState: {errors, isValid},
+		handleSubmit,
+		register,
+		reset,
+		setValue,
+		watch,
+	} = useForm({
+		defaultValues: {
+			city: '',
+			country: '',
+			countryISOCode: '',
+			name: '',
+			phoneNumber: '',
+			regionISOCode: '',
+			street1: '',
+			street2: '',
+			zip: '',
+		},
+		mode: 'onChange',
+		resolver: zodResolver(zodSchema.billingAddress),
+	});
+
+	const inputProps = {
+		errors,
+		register,
+		required: true,
+	};
+
+	const {country, regionISOCode} = watch();
+
 	const {data: regionsResponse} = useCommerceRegions();
-	const {context} = productPurchaseStore.getSnapshot();
 
 	const regions = regionsResponse?.items || [];
 
 	const states =
-		regions.find((region) => region.a2 === billingAddress.country)
-			?.regions ?? [];
+		regions.find((region) => region.a2 === country)?.regions ?? [];
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setBillingAddress({
-			...billingAddress,
-			[event.target.name]: event.target.value,
-		});
+	const onSubmit = (form: any) => {
+		saveAddress(form);
+		reset();
 	};
 
 	if (showNewAddressButton) {
@@ -80,7 +105,7 @@ const BillingAddressForm: React.FC<
 			>
 				<ClayIcon symbol="plus" />
 
-				<span>New Address</span>
+				<span>{i18n.translate('new-address')}</span>
 			</button>
 		);
 	}
@@ -88,7 +113,9 @@ const BillingAddressForm: React.FC<
 	return (
 		<div className="billing-address-section-card-container h-auto mt-4 rounded">
 			<div className="align-items-center billing-address-section-card-header d-flex justify-content-between">
-				<small className="font-weight-bold">New Address</small>
+				<small className="font-weight-bold">
+					{i18n.translate('new-address')}
+				</small>
 
 				<ClayButton
 					onClick={() => {
@@ -103,28 +130,25 @@ const BillingAddressForm: React.FC<
 			</div>
 
 			<div className="billing-address-section-container d-flex flex-column p-4 w-100">
-				<Input
+				<FormInput
+					{...inputProps}
 					label="Full Name"
 					name="name"
-					onChange={onChange}
 					required
-					value={billingAddress?.name}
 				/>
 
-				<Input
+				<FormInput
+					{...inputProps}
 					label="Address"
 					name="street1"
-					onChange={onChange}
 					placeholder="Address 1"
 					required
-					value={billingAddress?.street1}
 				/>
 
-				<Input
+				<FormInput
+					{...inputProps}
 					name="street2"
-					onChange={onChange}
 					placeholder="Address 2"
-					value={billingAddress?.street2}
 				/>
 
 				<Select
@@ -137,14 +161,12 @@ const BillingAddressForm: React.FC<
 							regions.find((region) => region.a2 === value)
 								?.regions ?? [];
 
-						setBillingAddress({
-							...billingAddress,
-							country: value,
-							countryISOCode: value,
-							...(!!states.length && {
-								regionISOCode: states[0].regionCode,
-							}),
-						});
+						const regionISOCode =
+							!!states.length && states[0].regionCode;
+
+						setValue('country', value);
+						setValue('countryISOCode', value);
+						setValue('regionISOCode', regionISOCode as string);
 					}}
 					options={regions.map((region) => ({
 						key: region.a2,
@@ -158,7 +180,7 @@ const BillingAddressForm: React.FC<
 							region.name,
 					}))}
 					required
-					value={billingAddress?.country}
+					value={country}
 				/>
 
 				<Select
@@ -168,48 +190,34 @@ const BillingAddressForm: React.FC<
 					disabled={!states.length}
 					label="State"
 					name="regionISOCode"
-					onChange={onChange}
 					options={states.map((state) => ({
 						key: state.regionCode,
 						name: state.name,
 					}))}
 					required={!!states.length}
-					value={billingAddress?.regionISOCode}
+					value={regionISOCode}
 				/>
 
-				<Input
-					label="City"
-					name="city"
-					onChange={onChange}
-					required
-					value={billingAddress?.city}
-				/>
+				<FormInput {...inputProps} label="City" name="city" required />
 
-				<Input
+				<FormInput
+					{...inputProps}
 					label="Zip/Area Code"
 					name="zip"
-					onChange={onChange}
 					required
-					value={billingAddress?.zip}
 				/>
 
-				<Input
+				<FormInput
+					{...inputProps}
 					label="Phone"
 					name="phoneNumber"
-					onChange={onChange}
 					required
-					value={billingAddress?.phoneNumber}
 				/>
 
 				<div className="d-flex justify-content-end">
 					<ClayButton
-						onClick={() =>
-							saveAddress({
-								...billingAddress,
-								vatNumber:
-									context.payment.billingAddress.vatNumber,
-							})
-						}
+						disabled={errors && !isValid}
+						onClick={handleSubmit(onSubmit)}
 					>
 						{i18n.translate('save')}
 					</ClayButton>

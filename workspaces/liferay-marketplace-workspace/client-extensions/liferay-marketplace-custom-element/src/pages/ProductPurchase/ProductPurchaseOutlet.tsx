@@ -19,6 +19,7 @@ import useProductPurchaseCart from '../../hooks/useProductPurchaseCart';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
 import {scrollToMiddleOfPage} from '../../utils/browser';
+import {getProductPriceModel} from '../../utils/productUtils';
 import ProductPurchasePrice from './ProductPurchasePrice';
 import {productTypeRoutes} from './ProductPurchaseRouter';
 import useAccounts from './hooks/useAccounts';
@@ -136,7 +137,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		? metadata.isNavigationStepVisible(product)
 		: true;
 
-	const isTinyDisplay = metadata?.tineStepsDisplay;
+	const isTinyDisplay = metadata?.tinyStepsDisplay;
 
 	const context = {
 		accounts,
@@ -156,13 +157,33 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	useEffect(() => {
 		if (selectedAccount?.taxId) {
 			productPurchaseStore.send({
-				billingAddress: {
-					vatNumber: selectedAccount.taxId,
+				account: {
+					taxId: selectedAccount.taxId,
 				},
-				type: 'setBillingAddress',
+				type: 'setAccountTaxId',
 			});
 		}
 	}, [selectedAccount?.taxId]);
+
+	useEffect(() => {
+		const {isFreeApp} = getProductPriceModel(product);
+
+		if (isFreeApp) {
+			if (accounts.length === 1 && !selectedAccount) {
+				setSelectedAccount(accounts[0]);
+			}
+
+			navigate('summary', {replace: true});
+
+			return;
+		}
+
+		if (accounts.length === 1 && !selectedAccount) {
+			setSelectedAccount(accounts[0]);
+
+			navigate('license', {replace: true});
+		}
+	}, [accounts, selectedAccount, product, navigate, setSelectedAccount]);
 
 	return (
 		<ProductPurchase className="my-7">
@@ -177,7 +198,10 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 				product={product}
 				rightNode={
 					metadata.useCart ? (
-						<ProductPurchasePrice product={product} />
+						<ProductPurchasePrice
+							product={product}
+							productPurchaseCart={productPurchaseCart}
+						/>
 					) : null
 				}
 			>

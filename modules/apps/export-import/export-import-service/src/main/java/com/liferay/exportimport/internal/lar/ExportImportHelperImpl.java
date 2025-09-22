@@ -204,9 +204,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		if (stagingGroupHelper.isDepotGroup(groupId)) {
-			return _getPortlets(
-				companyId, new DataLevel[] {DataLevel.DEPOT},
-				excludeDataAlwaysStaged);
+			return _getDepotPortlets(companyId, excludeDataAlwaysStaged);
 		}
 
 		return _getPortlets(
@@ -1244,6 +1242,67 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return _createPortletConfigurablePortletSetupControlsMap(
 			parameterMap, portletConfiguration, portletArchivedSetupKey,
 			portletSetupKey, portletUserPreferencesKey);
+	}
+
+	private List<Portlet> _getDepotPortlets(
+		long companyId, boolean excludeDataAlwaysStaged) {
+
+		List<Portlet> portlets = new ArrayList<>();
+
+		Map<Integer, List<Portlet>> rankedPortletsMap = new TreeMap<>();
+
+		for (Portlet portlet : _portletLocalService.getPortlets(companyId)) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if (portletDataHandler == null) {
+				continue;
+			}
+
+			if ((!portletDataHandler.isBatch() &&
+				 portletDataHandler.isDataPortalLevel()) ||
+				(excludeDataAlwaysStaged &&
+				 portletDataHandler.isDataAlwaysStaged())) {
+
+				continue;
+			}
+
+			boolean include = false;
+
+			if (portletDataHandler.getDataLevel() == DataLevel.DEPOT) {
+				include = true;
+			}
+			else if ((portletDataHandler.getDataLevel() == DataLevel.SITE) &&
+					 !portletDataHandler.isBatch()) {
+
+				include = true;
+			}
+
+			if (!include) {
+				continue;
+			}
+
+			List<Portlet> rankedPortlets = rankedPortletsMap.get(
+				portletDataHandler.getRank());
+
+			if (rankedPortlets == null) {
+				rankedPortlets = new ArrayList<>();
+			}
+
+			rankedPortlets.add(portlet);
+
+			rankedPortletsMap.put(portletDataHandler.getRank(), rankedPortlets);
+		}
+
+		for (List<Portlet> rankedPortlets : rankedPortletsMap.values()) {
+			portlets.addAll(rankedPortlets);
+		}
+
+		return portlets;
 	}
 
 	private boolean _getExportPortletData(

@@ -446,6 +446,11 @@
 			<property name="description" value="Finds cases where `*Factory` should be used when creating new instances of an object." />
 			<message key="factory.use" value="Use &quot;{0}&quot; to create new instance of &quot;{1}&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.FeatureFlagManagerUtilCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks that FeatureFlagManagerUtil.isEnabled(String key) is being used instead of FeatureFlagManagerUtil.isEnabled(long companyId, String key)." />
+			<message key="avoid.method.call" value="Avoid usage of FeatureFlagManagerUtil.isEnabled(String key), use FeatureFlagManagerUtil.isEnabled(long companyId, String key) instead." />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.FilterStringWhitespaceCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`." />

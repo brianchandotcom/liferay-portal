@@ -45,6 +45,7 @@ EmptyConstructorCheck | .java | Finds unnecessary empty constructors. |
 [EqualsHashCodeCheck](https://checkstyle.sourceforge.io/checks/coding/equalshashcode.html) | .java | Checks that classes that either override `equals()` or `hashCode()` also overrides the other. |
 ExceptionPrintStackTraceCheck | .java | Avoid using printStackTrace. |
 FactoryCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds cases where `*Factory` should be used when creating new instances of an object. |
+FeatureFlagManagerUtilCheck | .java | Checks that FeatureFlagManagerUtil.isEnabled(String key) is being used instead of FeatureFlagManagerUtil.isEnabled(long companyId, String key). |
 FilterStringWhitespaceCheck | .java | Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`. |
 [GenericTypeCheck](check/generic_type_check.md#generictypecheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that generics are always specified to provide compile-time checking and removing the risk of `ClassCastException` during runtime. |
 GradleCommerceDependenciesCheck | .gradle | Checks the modules that are outside of Commerce are not allowed to depend on Commerce modules. |

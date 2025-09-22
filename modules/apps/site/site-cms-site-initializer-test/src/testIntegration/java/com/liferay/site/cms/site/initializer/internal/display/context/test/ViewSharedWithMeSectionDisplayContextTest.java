@@ -13,6 +13,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -55,6 +57,12 @@ public class ViewSharedWithMeSectionDisplayContextTest
 	@Override
 	@Test
 	public void testGetAdditionalProps() throws Exception {
+
+		/*	HttpServletRequest mockHttpServletRequest = new MockHttpServletResponse();
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)mockHttpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);*/
+
 		Assert.assertEquals(
 			HashMapBuilder.<String, Object>put(
 				"autocompleteURL",
@@ -87,6 +95,15 @@ public class ViewSharedWithMeSectionDisplayContextTest
 
 					return collaboratorURLs;
 				}
+			).put(
+				"contentViewURL",
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/edit_content_item?&p_l_mode=read&p_p_state=",
+					LiferayWindowState.POP_UP, "&redirect=",
+					themeDisplay.getURLCurrent(),
+					"&objectEntryId={embedded.id}")
 			).build(),
 			getAdditionalProps());
 	}

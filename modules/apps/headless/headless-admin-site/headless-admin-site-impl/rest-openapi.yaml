@@ -233,28 +233,6 @@ components:
                 -   id
                 -   collectionViewportDefinition
             type: object
-        ColumnPageElementDefinition:
-            allOf:
-                -   $ref: "#/components/schemas/PageElementDefinition"
-                -   properties:
-                        columnViewports:
-                            # @review
-                            description:
-                                A list of column viewports of the column page element.
-                            items:
-                                $ref: "#/components/schemas/ColumnViewport"
-                            type: array
-                        size:
-                            # @review
-                            description:
-                                The page column's size.
-                            maximum: 12
-                            minimum: 1
-                            type: integer
-            # @review
-            description:
-                The page element definition of a Column.
-            type: object
         ColumnViewport:
             # @review
             description:
@@ -1807,6 +1785,87 @@ components:
                         The old localized relative URLs to the page's rendered content.
                     type: object
             type: object
+        GridPageElementDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/PageElementDefinition"
+                -   properties:
+                        cssClasses:
+                            # @review
+                            description:
+                                A list of CSS classes that are applied to the row page element.
+                            items:
+                                type: string
+                            type: array
+                        customCSS:
+                            # @review
+                            description:
+                                Custom CSS that is applied on the row page element.
+                            type: string
+                        customCSSViewports:
+                            # @review
+                            description:
+                                The custom CSS viewports of the row page element.
+                            items:
+                                $ref: "#/components/schemas/CustomCSSViewport"
+                            type: array
+                        fragmentStyle:
+                            $ref: "#/components/schemas/FragmentStyle"
+                            # @review
+                            description:
+                                The fragment style of the row page element.
+                        fragmentViewports:
+                            # @review
+                            description:
+                                A list of fragment viewports of a row page element.
+                            items:
+                                $ref: "#/components/schemas/FragmentViewport"
+                            type: array
+                        gutters:
+                            # @review
+                            description:
+                                A flag that indicates whether the row page element has gutters.
+                            type: boolean
+                        indexed:
+                            # @review
+                            description:
+                                A flag that indicates whether the row page element is indexed or not.
+                            type: boolean
+                        modulesPerRow:
+                            # @review
+                            description:
+                                The row page element's modules per row.
+                            type: integer
+                        name:
+                            # @review
+                            description:
+                                The custom name of a row page element.
+                            type: string
+                        numberOfColumns:
+                            # @review
+                            description:
+                                The row page element's number of columns.
+                            type: integer
+                        reverseOrder:
+                            # @review
+                            description:
+                                A flag that indicates whether the row page element has reverse order.
+                            type: boolean
+                        rowViewports:
+                            # @review
+                            description:
+                                A list of viewports of the row page element.
+                            items:
+                                $ref: "#/components/schemas/RowViewport"
+                            type: array
+                        verticalAlignment:
+                            # @review
+                            description:
+                                The vertical alignment property of the row page element.
+                            type: string
+            # @review
+            description:
+                The page element definition of a row.
+            type: object
         HtmlProperties:
             properties:
                 htmlTag:
@@ -1940,6 +1999,28 @@ components:
                 showNotification:
                     type: boolean
             type: object
+        ModulePageElementDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/PageElementDefinition"
+                -   properties:
+                        columnViewports:
+                            # @review
+                            description:
+                                A list of column viewports of the column page element.
+                            items:
+                                $ref: "#/components/schemas/ColumnViewport"
+                            type: array
+                        size:
+                            # @review
+                            description:
+                                The page column's size.
+                            maximum: 12
+                            minimum: 1
+                            type: integer
+            # @review
+            description:
+                The page element definition of a Column.
+            type: object
         NavigationSettings:
             # @review
             description:
@@ -2056,7 +2137,6 @@ components:
                 mapping:
                     Collection: "#/components/schemas/CollectionPageElementDefinition"
                     CollectionItem: "#/components/schemas/CollectionItemPageElementDefinition"
-                    Column: "#/components/schemas/ColumnPageElementDefinition"
                     Container: "#/components/schemas/ContainerPageElementDefinition"
                     DropZone: "#/components/schemas/DropZonePageElementDefinition"
                     Form: "#/components/schemas/FormPageElementDefinition"
@@ -2065,20 +2145,20 @@ components:
                     Fragment: "#/components/schemas/FragmentInstancePageElementDefinition"
                     FragmentComposition: "#/components/schemas/FragmentCompositionInstancePageElementDefinition"
                     FragmentDropZone: "#/components/schemas/FragmentDropZonePageElementDefinition"
-                    Row: "#/components/schemas/RowPageElementDefinition"
+                    Grid: "#/components/schemas/GridPageElementDefinition"
+                    Module: "#/components/schemas/ModulePageElementDefinition"
                     Widget: "#/components/schemas/WidgetInstancePageElementDefinition"
                 propertyName: type
             properties:
                 type:
                     # @review
                     description:
-                        The page element definition's type (collection, collection item, column, container, drop zone,
-                        form, form step, form step container, fragment, fragment composition, fragment drop zone, row or
-                        widget).
+                        The page element definition's type (collection, collection item, container, drop zone, form,
+                        form step, form step container, fragment, fragment composition, fragment drop zone, grid, 
+                        module or widget).
                     enum:
                         -   Collection
                         -   CollectionItem
-                        -   Column
                         -   Container
                         -   DropZone
                         -   Form
@@ -2087,7 +2167,8 @@ components:
                         -   Fragment
                         -   FragmentComposition
                         -   FragmentDropZone
-                        -   Row
+                        -   Grid
+                        -   Module
                         -   Widget
                     type: string
             type: object
@@ -2499,87 +2580,6 @@ components:
                         -   ContentPageTemplateSettings
                         -   WidgetPageTemplateSettings
                     type: string
-            type: object
-        RowPageElementDefinition:
-            allOf:
-                -   $ref: "#/components/schemas/PageElementDefinition"
-                -   properties:
-                        cssClasses:
-                            # @review
-                            description:
-                                A list of CSS classes that are applied to the row page element.
-                            items:
-                                type: string
-                            type: array
-                        customCSS:
-                            # @review
-                            description:
-                                Custom CSS that is applied on the row page element.
-                            type: string
-                        customCSSViewports:
-                            # @review
-                            description:
-                                The custom CSS viewports of the row page element.
-                            items:
-                                $ref: "#/components/schemas/CustomCSSViewport"
-                            type: array
-                        fragmentStyle:
-                            $ref: "#/components/schemas/FragmentStyle"
-                            # @review
-                            description:
-                                The fragment style of the row page element.
-                        fragmentViewports:
-                            # @review
-                            description:
-                                A list of fragment viewports of a row page element.
-                            items:
-                                $ref: "#/components/schemas/FragmentViewport"
-                            type: array
-                        gutters:
-                            # @review
-                            description:
-                                A flag that indicates whether the row page element has gutters.
-                            type: boolean
-                        indexed:
-                            # @review
-                            description:
-                                A flag that indicates whether the row page element is indexed or not.
-                            type: boolean
-                        modulesPerRow:
-                            # @review
-                            description:
-                                The row page element's modules per row.
-                            type: integer
-                        name:
-                            # @review
-                            description:
-                                The custom name of a row page element.
-                            type: string
-                        numberOfColumns:
-                            # @review
-                            description:
-                                The row page element's number of columns.
-                            type: integer
-                        reverseOrder:
-                            # @review
-                            description:
-                                A flag that indicates whether the row page element has reverse order.
-                            type: boolean
-                        rowViewports:
-                            # @review
-                            description:
-                                A list of viewports of the row page element.
-                            items:
-                                $ref: "#/components/schemas/RowViewport"
-                            type: array
-                        verticalAlignment:
-                            # @review
-                            description:
-                                The vertical alignment property of the row page element.
-                            type: string
-            # @review
-            description:
-                The page element definition of a row.
             type: object
         RowViewport:
             # @review

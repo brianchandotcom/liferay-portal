@@ -330,6 +330,18 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		for (Registration registration : _registrations) {
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					registration.getExportImportDescriptor();
+
+			if ((_registrations.size() > 1) &&
+				!portletDataContext.getBooleanParameter(
+					getPortletId(),
+					exportImportDescriptor.getItemClassName())) {
+
+				continue;
+			}
+
 			String normalizedFileName = _normalize(
 				registration.getFileName(),
 				portletDataContext.getSourceGroupId());

@@ -53,15 +53,6 @@ public class ContentPageEditorConstants {
 						"itemType", "form"
 					).put(
 						"languageKey", "form-container"
-					).build(),
-					HashMapBuilder.<String, Object>put(
-						"fragmentEntryKey", "formRelationship"
-					).put(
-						"icon", "form-extensions"
-					).put(
-						"itemType", "form-relationship"
-					).put(
-						"languageKey", "form-relationship"
 					).build())
 			).put(
 				"content-display",

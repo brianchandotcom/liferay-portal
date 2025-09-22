@@ -278,12 +278,12 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 					search, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			for (ObjectEntry objectEntry : objectEntries) {
-				String name = _getName(
+				String finalName = _getName(
 					objectEntry.isDraft(),
 					objectEntry.getTitleValue(languageId));
 
 				if (!Validator.isBlank(search) &&
-					!StringUtil.containsIgnoreCase(name, search)) {
+					!StringUtil.containsIgnoreCase(finalName, search)) {
 
 					continue;
 				}
@@ -295,7 +295,7 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 				assetUsages.add(
 					new AssetUsage() {
 						{
-							setName(() -> name);
+							setName(() -> finalName);
 							setType(
 								() -> relatedObjectDefinition.getLabel(
 									languageId));

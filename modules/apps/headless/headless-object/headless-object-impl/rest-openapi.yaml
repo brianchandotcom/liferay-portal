@@ -156,6 +156,13 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                scopeId:
+                    # @review
+                    description:
+                        The scope id of the object entry folder.
+                    format: int64
+                    readOnly: true
+                    type: integer
                 scopeKey:
                     # @review
                     description:

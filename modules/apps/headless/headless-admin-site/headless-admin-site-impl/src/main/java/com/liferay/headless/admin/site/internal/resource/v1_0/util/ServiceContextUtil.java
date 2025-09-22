@@ -9,10 +9,15 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -30,7 +35,8 @@ public class ServiceContextUtil {
 			ItemExternalReference[] assetCategoriesItemExternalReferences,
 			long companyId, Date createDate, long groupId,
 			HttpServletRequest httpServletRequest, String[] keywords,
-			Date modifiedDate, long userId, String uuid)
+			Date modifiedDate, long userId, String uuid,
+			WidgetPageSettings widgetPageSettings)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
@@ -46,6 +52,38 @@ public class ServiceContextUtil {
 		serviceContext.setModifiedDate(modifiedDate);
 		serviceContext.setUserId(userId);
 		serviceContext.setUuid(uuid);
+
+		if (widgetPageSettings != null) {
+			serviceContext.setAttribute(
+				"layoutPrototypeLinkEnabled",
+				widgetPageSettings.getInheritChanges());
+
+			ItemExternalReference itemExternalReference =
+				widgetPageSettings.getWidgetPageTemplateReference();
+
+			if (itemExternalReference != null) {
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					LayoutPageTemplateEntryLocalServiceUtil.
+						fetchLayoutPageTemplateEntryByExternalReferenceCode(
+							itemExternalReference.getExternalReferenceCode(),
+							groupId);
+
+				if (layoutPageTemplateEntry == null) {
+					throw new UnsupportedOperationException();
+				}
+
+				LayoutPrototype layoutPrototype =
+					LayoutPrototypeLocalServiceUtil.fetchLayoutPrototype(
+						layoutPageTemplateEntry.getLayoutPrototypeId());
+
+				if (layoutPrototype == null) {
+					throw new UnsupportedOperationException();
+				}
+
+				serviceContext.setAttribute(
+					"layoutPrototypeUuid", layoutPrototype.getUuid());
+			}
+		}
 
 		return serviceContext;
 	}

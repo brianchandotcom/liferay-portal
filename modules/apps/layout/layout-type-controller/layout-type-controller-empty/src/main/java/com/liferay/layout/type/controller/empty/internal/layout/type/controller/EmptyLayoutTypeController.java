@@ -5,6 +5,7 @@
 
 package com.liferay.layout.type.controller.empty.internal.layout.type.controller;
 
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
@@ -12,10 +13,16 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletResponse;
@@ -68,6 +75,41 @@ public class EmptyLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 			throw new NoSuchLayoutException();
 		}
+
+		String backURL = themeDisplay.getURLCurrent();
+
+		httpServletRequest.setAttribute(
+			"editURL",
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/layout_admin/select_layout_page_template_entry"
+			).setRedirect(
+				() -> {
+					String redirect = ParamUtil.getString(
+						httpServletRequest, "redirect");
+
+					if (Validator.isNull(redirect)) {
+						redirect = _portal.escapeRedirect(backURL);
+					}
+
+					return redirect;
+				}
+			).setBackURL(
+				backURL
+			).setParameter(
+				"emptyLayout", Boolean.TRUE
+			).setParameter(
+				"externalReferenceCode", layout.getExternalReferenceCode()
+			).setParameter(
+				"groupId", layout.getGroupId()
+			).setParameter(
+				"privateLayout", layout.isPrivateLayout()
+			).setParameter(
+				"selPlid", layout.getPlid()
+			).buildString());
 
 		return super.includeLayoutContent(
 			httpServletRequest, httpServletResponse, layout);
@@ -131,6 +173,9 @@ public class EmptyLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private LayoutPermission _layoutPermission;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.empty)"

@@ -236,9 +236,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_randomPageElement(
 				PageElementDefinition.Type.COLLECTION_ITEM, StringPool.BLANK));
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				PageElementDefinition.Type.COLUMN, StringPool.BLANK));
-		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
 				null, "custom css 1", null, null, "FileEntry_fileName", null,
 				false, RandomTestUtil.randomString()));
@@ -320,7 +317,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_randomPageElement(
-				PageElementDefinition.Type.ROW, StringPool.BLANK));
+				PageElementDefinition.Type.MODULE, StringPool.BLANK));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_randomPageElement(
+				PageElementDefinition.Type.GRID, StringPool.BLANK));
 	}
 
 	@Ignore

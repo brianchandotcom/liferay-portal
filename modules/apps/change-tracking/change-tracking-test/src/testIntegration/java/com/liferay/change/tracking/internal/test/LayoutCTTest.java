@@ -424,7 +424,7 @@ public class LayoutCTTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		Layout draftLayout;
+		Layout draftLayout = null;
 
 		try (SafeCloseable safeCloseable1 =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -445,11 +445,9 @@ public class LayoutCTTest {
 
 		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
 
-		Assert.assertEquals(
-			draftLayout.getPlid(),
-			lockedLayouts.get(
-				0
-			).getPlid());
+		LockedLayout lockedLayout = lockedLayouts.get(0);
+
+		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
 	}
 
 	@Test

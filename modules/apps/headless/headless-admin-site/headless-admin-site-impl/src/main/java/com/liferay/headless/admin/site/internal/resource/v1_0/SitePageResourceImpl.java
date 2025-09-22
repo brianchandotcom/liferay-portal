@@ -1,6 +1,5 @@
-
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -23,7 +22,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -199,7 +197,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					new TermFilter(Field.GROUP_ID, String.valueOf(groupId)),
 					BooleanClauseOccur.MUST);
 			},
-
 			filter, Layout.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
@@ -209,7 +206,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				searchContext.setAttribute(
 					Field.TYPE,
 					new String[] {
-						LayoutConstants.TYPE_COLLECTION,
 						LayoutConstants.TYPE_CONTENT,
 						LayoutConstants.TYPE_PORTLET
 					});
@@ -225,7 +221,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					document.get(Field.ENTRY_CLASS_PK));
 
 				return _toSitePage(_layoutLocalService.getLayout(plid));
-
 			});
 	}
 

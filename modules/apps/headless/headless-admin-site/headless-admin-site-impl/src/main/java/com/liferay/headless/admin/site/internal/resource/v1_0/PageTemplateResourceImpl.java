@@ -654,7 +654,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			pageTemplate.getTaxonomyCategoryItemExternalReferences(),
 			contextCompany.getCompanyId(), pageTemplate.getDateCreated(),
 			groupId, contextHttpServletRequest, pageTemplate.getKeywords(),
-			pageTemplate.getDateModified(), contextUser.getUserId(), uuid);
+			pageTemplate.getDateModified(), contextUser.getUserId(), uuid,
+			null);
 	}
 
 	private UnicodeProperties

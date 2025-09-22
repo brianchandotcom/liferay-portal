@@ -377,7 +377,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			contextCompany.getCompanyId(), masterPage.getDateCreated(), groupId,
 			contextHttpServletRequest, masterPage.getKeywords(),
 			masterPage.getDateModified(), contextUser.getUserId(),
-			masterPage.getUuid());
+			masterPage.getUuid(), null);
 	}
 
 	private static final EntityModel _entityModel = new MasterPageEntityModel();

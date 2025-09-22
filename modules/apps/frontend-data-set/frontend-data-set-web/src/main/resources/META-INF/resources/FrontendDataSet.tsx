@@ -187,20 +187,8 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const shouldWriteSearchParamInURL = useCallback(
-		(searchParam: string | undefined): boolean => {
-			if (searchParam && !!searchParam.length) {
-				return true;
-			}
-
-			return false;
-		},
-		[]
-	);
-
 	const [getSearchParam, updateSearchParamThunk] = useStateInURL({
 		id,
-		shouldWriteInURL: shouldWriteSearchParamInURL,
 		stateDispatcher: {
 			key: EStateInURLKeys.SEARCH_PARAM,
 			type: EViewsActionTypes.UPDATE_SEARCH_PARAM,
@@ -209,6 +197,13 @@ const FrontendDataSetContent = ({
 		stateReader: (searchParam: string) => {
 			if (!searchParam) {
 				return '';
+			}
+
+			return searchParam;
+		},
+		stateWriter: (searchParam: string | undefined): string | undefined => {
+			if (!searchParam || !searchParam.length) {
+				return undefined;
 			}
 
 			return searchParam;
@@ -233,22 +228,8 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const shouldWriteVisibleFieldsInURL = useCallback(
-		(visibleFields: VisibleFieldNames | undefined): boolean => {
-			if (visibleFields) {
-				return Object.values(visibleFields).some((value: boolean) => {
-					return value !== undefined && value === false;
-				});
-			}
-
-			return false;
-		},
-		[]
-	);
-
 	const [getVisibleFields, updateVisibleFieldsThunk] = useStateInURL({
 		id,
-		shouldWriteInURL: shouldWriteVisibleFieldsInURL,
 		stateDispatcher: {
 			key: EStateInURLKeys.VISIBLE_FIELDS,
 			type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
@@ -279,6 +260,23 @@ const FrontendDataSetContent = ({
 				});
 
 				return updatedVisibleFieldNames;
+			}
+
+			return undefined;
+		},
+		stateWriter: (
+			visibleFields: VisibleFieldNames | undefined
+		): VisibleFieldNames | undefined => {
+			if (visibleFields) {
+				const someFieldHidden = Object.values(visibleFields).some(
+					(value: boolean) => {
+						return value !== undefined && value === false;
+					}
+				);
+
+				if (someFieldHidden) {
+					return visibleFields;
+				}
 			}
 
 			return undefined;
@@ -428,17 +426,11 @@ const FrontendDataSetContent = ({
 		writeStateInURL(
 			id,
 			{
-				...(paginationDelta && {
-					[EStateInURLKeys.DELTA]: paginationDelta,
-				}),
+				[EStateInURLKeys.DELTA]: paginationDelta,
 				[EStateInURLKeys.PAGE_NUMBER]: pageNumber,
-				...(shouldWriteSearchParamInURL(searchParam) && {
-					[EStateInURLKeys.SEARCH_PARAM]: searchParam,
-				}),
+				[EStateInURLKeys.SEARCH_PARAM]: searchParam,
 				[EStateInURLKeys.VIEW_NAME]: activeView.name,
-				...(shouldWriteVisibleFieldsInURL(visibleFieldNames) && {
-					[EStateInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
-				}),
+				[EStateInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
 			},
 			stateInURLSettings
 		);

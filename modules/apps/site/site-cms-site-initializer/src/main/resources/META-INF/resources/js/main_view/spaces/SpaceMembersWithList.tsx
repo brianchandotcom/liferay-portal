@@ -47,7 +47,10 @@ export function SpaceMembersWithList({
 }: SpaceMembersWithListProps) {
 	const listLabelId = useId();
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
-	const {loadMore, state} = useSpaceMembers(externalReferenceCode, pageSize);
+	const {addMember, loadMore, state} = useSpaceMembers(
+		externalReferenceCode,
+		pageSize
+	);
 	const {
 		groups,
 		isFetching: isFetchingMembers,
@@ -100,87 +103,6 @@ export function SpaceMembersWithList({
 			selectedUsers.length > 0 || selectedUserGroups.length > 0;
 		onHasSelectedMembersChange?.(hasMembers);
 	}, [onHasSelectedMembersChange, selectedUsers, selectedUserGroups]);
-
-	const onAutocompleteItemSelected = async (
-		item: UserAccount | UserGroup
-	) => {
-		const itemWithEmptyRoles = {
-			...item,
-			roles: [],
-		};
-
-		if (selectedOption === SelectOptions.USERS) {
-			if (selectedUsers.some((user) => user.id === item.id)) {
-				return;
-			}
-
-			setSelectedUsers([
-				itemWithEmptyRoles as UserAccount,
-				...selectedUsers,
-			]);
-
-			const {error} = await SpaceService.linkUserToSpace({
-				spaceExternalReferenceCode: externalReferenceCode,
-				userExternalReferenceCode: item.externalReferenceCode,
-			});
-
-			if (error) {
-				openToast({
-					message: sub(
-						Liferay.Language.get('failed-to-add-user-x-to-space'),
-						[`<strong>${item.name}</strong>`]
-					),
-					type: 'danger',
-				});
-			}
-			else {
-				openToast({
-					message: sub(
-						Liferay.Language.get(
-							'user-x-successfully-added-to-space'
-						),
-						[`<strong>${item.name}</strong>`]
-					),
-					type: 'success',
-				});
-			}
-
-			return;
-		}
-
-		if (selectedUserGroups.some((group) => group.id === item.id)) {
-			return;
-		}
-
-		setSelectedUserGroups([
-			itemWithEmptyRoles as UserGroup,
-			...selectedUserGroups,
-		]);
-
-		const {error} = await SpaceService.linkUserGroupToSpace({
-			spaceExternalReferenceCode: externalReferenceCode,
-			userGroupExternalReferenceCode: item.externalReferenceCode,
-		});
-
-		if (error) {
-			openToast({
-				message: sub(
-					Liferay.Language.get('failed-to-add-group-x-to-space'),
-					[`<strong>${item.name}</strong>`]
-				),
-				type: 'danger',
-			});
-		}
-		else {
-			openToast({
-				message: sub(
-					Liferay.Language.get('group-x-successfully-added-to-space'),
-					[`<strong>${item.name}</strong>`]
-				),
-				type: 'success',
-			});
-		}
-	};
 
 	const onRemoveItem = async (item: UserAccount | UserGroup) => {
 		if (selectedOption === SelectOptions.USERS) {
@@ -333,7 +255,9 @@ export function SpaceMembersWithList({
 		<div className={classNames('space-members-with-list', className)}>
 			<SpaceMembersInputWithSelect
 				disabled={!hasAssignMembersPermission}
-				onAutocompleteItemSelected={onAutocompleteItemSelected}
+				onAutocompleteItemSelected={(item) =>
+					addMember(item, selectedOption)
+				}
 				onSelectChange={(value) => {
 					setSelectedOption(value);
 				}}

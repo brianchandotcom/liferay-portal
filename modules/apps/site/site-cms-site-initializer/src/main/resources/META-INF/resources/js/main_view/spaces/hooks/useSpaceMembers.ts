@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import {useCallback, useEffect, useReducer} from 'react';
 
 import AdminUserService from '../../../common/services/AdminUserService';
@@ -28,7 +30,7 @@ interface State {
 }
 
 type Action =
-	| {type: 'FETCH_START' | 'LOAD_MORE_START'}
+	| {type: 'FETCH_START' | 'LOAD_MORE_START' | 'ADD_MEMBER_START'}
 	| {
 			payload: {
 				groups: {items: UserGroup[]; lastPage: number};
@@ -37,7 +39,14 @@ type Action =
 			};
 			type: 'FETCH_SUCCESS';
 	  }
-	| {payload: Error; type: 'FETCH_ERROR' | 'LOAD_MORE_ERROR'}
+	| {
+			payload: Error;
+			type: 'FETCH_ERROR' | 'LOAD_MORE_ERROR' | 'ADD_MEMBER_ERROR';
+	  }
+	| {payload: UserAccount; type: 'ADD_USER_SUCCESS'}
+	| {payload: UserGroup; type: 'ADD_GROUP_SUCCESS'}
+	| {payload: {id: number | string}; type: 'ADD_USER_FAILURE'}
+	| {payload: {id: number | string}; type: 'ADD_GROUP_FAILURE'}
 	| {
 			payload: {
 				items: UserAccount[];
@@ -73,6 +82,7 @@ function reducer(state: State, action: Action): State {
 	switch (action.type) {
 		case 'FETCH_START':
 		case 'LOAD_MORE_START':
+		case 'ADD_MEMBER_START':
 			return {...state, error: null, isFetching: true};
 		case 'FETCH_SUCCESS':
 			return {
@@ -89,6 +99,46 @@ function reducer(state: State, action: Action): State {
 					items: action.payload.users.items,
 					lastPage: action.payload.users.lastPage,
 				},
+			};
+		case 'ADD_USER_SUCCESS':
+			return {
+				...state,
+				isFetching: false,
+				users: {
+					...state.users,
+					items: [action.payload, ...state.users.items],
+				},
+			};
+		case 'ADD_GROUP_SUCCESS':
+			return {
+				...state,
+				groups: {
+					...state.groups,
+					items: [action.payload, ...state.groups.items],
+				},
+				isFetching: false,
+			};
+		case 'ADD_USER_FAILURE':
+			return {
+				...state,
+				isFetching: false,
+				users: {
+					...state.users,
+					items: state.users.items.filter(
+						(user) => user.id !== action.payload.id
+					),
+				},
+			};
+		case 'ADD_GROUP_FAILURE':
+			return {
+				...state,
+				groups: {
+					...state.groups,
+					items: state.groups.items.filter(
+						(group) => group.id !== action.payload.id
+					),
+				},
+				isFetching: false,
 			};
 		case 'LOAD_MORE_USERS_SUCCESS':
 			return {
@@ -112,6 +162,7 @@ function reducer(state: State, action: Action): State {
 			};
 		case 'FETCH_ERROR':
 		case 'LOAD_MORE_ERROR':
+		case 'ADD_MEMBER_ERROR':
 			return {...state, error: action.payload, isFetching: false};
 		default:
 			return state;
@@ -222,5 +273,102 @@ export function useSpaceMembers(
 		[externalReferenceCode, pageSize, state]
 	);
 
-	return {loadMore, state};
+	const addMember = useCallback(
+		async (item: UserAccount | UserGroup, type: SelectOptions) => {
+			const itemWithEmptyRoles = {
+				...item,
+				roles: [],
+			};
+
+			if (type === SelectOptions.USERS) {
+				if (state.users.items.some((user) => user.id === item.id)) {
+					return;
+				}
+
+				dispatch({
+					payload: itemWithEmptyRoles as UserAccount,
+					type: 'ADD_USER_SUCCESS',
+				});
+
+				const {error} = await SpaceService.linkUserToSpace({
+					spaceExternalReferenceCode: externalReferenceCode,
+					userExternalReferenceCode: item.externalReferenceCode,
+				});
+
+				if (error) {
+					dispatch({
+						payload: {id: item.id},
+						type: 'ADD_USER_FAILURE',
+					});
+
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'failed-to-add-user-x-to-space'
+							),
+							[`<strong>${item.name}</strong>`]
+						),
+						type: 'danger',
+					});
+				}
+				else {
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'user-x-successfully-added-to-space'
+							),
+							[`<strong>${item.name}</strong>`]
+						),
+						type: 'success',
+					});
+				}
+			}
+			else {
+				if (state.groups.items.some((group) => group.id === item.id)) {
+					return;
+				}
+
+				dispatch({
+					payload: itemWithEmptyRoles as UserGroup,
+					type: 'ADD_GROUP_SUCCESS',
+				});
+
+				const {error} = await SpaceService.linkUserGroupToSpace({
+					spaceExternalReferenceCode: externalReferenceCode,
+					userGroupExternalReferenceCode: item.externalReferenceCode,
+				});
+
+				if (error) {
+					dispatch({
+						payload: {id: item.id},
+						type: 'ADD_GROUP_FAILURE',
+					});
+
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'failed-to-add-group-x-to-space'
+							),
+							[`<strong>${item.name}</strong>`]
+						),
+						type: 'danger',
+					});
+				}
+				else {
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'group-x-successfully-added-to-space'
+							),
+							[`<strong>${item.name}</strong>`]
+						),
+						type: 'success',
+					});
+				}
+			}
+		},
+		[externalReferenceCode, state.users.items, state.groups.items]
+	);
+
+	return {addMember, loadMore, state};
 }

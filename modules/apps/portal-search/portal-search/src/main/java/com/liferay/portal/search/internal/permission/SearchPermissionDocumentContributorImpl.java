@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.internal.SearchPermissionFieldContributorRegistryUtil;
 import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
 import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFieldContributor;
-import com.liferay.portal.search.spi.model.permission.role.contributor.SearchPermissionRoleContributor;
+import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionRoleContributor;
 
 import java.util.ArrayList;
 import java.util.List;

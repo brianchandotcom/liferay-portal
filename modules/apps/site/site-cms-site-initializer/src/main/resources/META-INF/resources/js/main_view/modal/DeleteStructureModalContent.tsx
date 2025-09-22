@@ -47,7 +47,7 @@ export default function DeleteStructureModalContent({
 			<ClayModal.Body>
 				<p>
 					{Liferay.Language.get(
-						'deleting-a-structure-will-also-remove-all-of-its-associated-entries'
+						'deleting-a-content-structure-will-also-remove-all-of-its-associated-entries'
 					)}
 				</p>
 
@@ -90,7 +90,9 @@ export default function DeleteStructureModalContent({
 					onChange={({target: {value}}) => {
 						setValue(value);
 					}}
-					placeholder={Liferay.Language.get('confirm-structure-name')}
+					placeholder={Liferay.Language.get(
+						'confirm-content-structure-name'
+					)}
 					value={value}
 				/>
 			</ClayModal.Body>

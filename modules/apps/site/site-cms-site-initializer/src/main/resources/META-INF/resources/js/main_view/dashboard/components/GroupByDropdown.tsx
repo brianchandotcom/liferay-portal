@@ -22,7 +22,7 @@ const defaultStructureTypes: Item[] = [
 		value: 'tag',
 	},
 	{
-		label: Liferay.Language.get('structure-label'),
+		label: Liferay.Language.get('content-structure-label'),
 		value: 'structure',
 	},
 ];

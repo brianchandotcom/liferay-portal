@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useReducer} from 'react';
+import {useCallback, useEffect, useReducer} from 'react';
 
 import AdminUserService from '../../../common/services/AdminUserService';
 import SpaceService from '../../../common/services/SpaceService';
 import {Role} from '../../../common/types/Role';
 import {UserAccount, UserGroup} from '../../../common/types/UserAccount';
+import {SelectOptions} from '../SpaceMembersInputWithSelect';
 
 interface State {
 	error: Error | null;
@@ -27,7 +28,7 @@ interface State {
 }
 
 type Action =
-	| {type: 'FETCH_START'}
+	| {type: 'FETCH_START' | 'LOAD_MORE_START'}
 	| {
 			payload: {
 				groups: {items: UserGroup[]; lastPage: number};
@@ -36,7 +37,21 @@ type Action =
 			};
 			type: 'FETCH_SUCCESS';
 	  }
-	| {payload: Error; type: 'FETCH_ERROR'};
+	| {payload: Error; type: 'FETCH_ERROR' | 'LOAD_MORE_ERROR'}
+	| {
+			payload: {
+				items: UserAccount[];
+				page: number;
+			};
+			type: 'LOAD_MORE_USERS_SUCCESS';
+	  }
+	| {
+			payload: {
+				items: UserGroup[];
+				page: number;
+			};
+			type: 'LOAD_MORE_GROUPS_SUCCESS';
+	  };
 
 const initialState: State = {
 	error: null,
@@ -57,6 +72,7 @@ const initialState: State = {
 function reducer(state: State, action: Action): State {
 	switch (action.type) {
 		case 'FETCH_START':
+		case 'LOAD_MORE_START':
 			return {...state, error: null, isFetching: true};
 		case 'FETCH_SUCCESS':
 			return {
@@ -74,7 +90,28 @@ function reducer(state: State, action: Action): State {
 					lastPage: action.payload.users.lastPage,
 				},
 			};
+		case 'LOAD_MORE_USERS_SUCCESS':
+			return {
+				...state,
+				isFetching: false,
+				users: {
+					...state.users,
+					items: [...state.users.items, ...action.payload.items],
+					page: action.payload.page,
+				},
+			};
+		case 'LOAD_MORE_GROUPS_SUCCESS':
+			return {
+				...state,
+				groups: {
+					...state.groups,
+					items: [...state.groups.items, ...action.payload.items],
+					page: action.payload.page,
+				},
+				isFetching: false,
+			};
 		case 'FETCH_ERROR':
+		case 'LOAD_MORE_ERROR':
 			return {...state, error: action.payload, isFetching: false};
 		default:
 			return state;
@@ -129,5 +166,61 @@ export function useSpaceMembers(
 		fetchMembers();
 	}, [externalReferenceCode, pageSize]);
 
-	return {state};
+	const loadMore = useCallback(
+		async (type: SelectOptions) => {
+			if (state.isFetching) {
+				return;
+			}
+
+			dispatch({type: 'LOAD_MORE_START'});
+
+			try {
+				if (type === SelectOptions.USERS) {
+					const newPage = state.users.page + 1;
+
+					if (newPage > state.users.lastPage) {
+						return;
+					}
+
+					const spaceUsers = await SpaceService.getSpaceUsers({
+						externalReferenceCode,
+						nestedFields: 'roles',
+						page: newPage,
+						pageSize,
+					});
+
+					dispatch({
+						payload: {items: spaceUsers.items, page: newPage},
+						type: 'LOAD_MORE_USERS_SUCCESS',
+					});
+				}
+				else {
+					const newPage = state.groups.page + 1;
+
+					if (newPage > state.groups.lastPage) {
+						return;
+					}
+
+					const spaceUserGroups =
+						await SpaceService.getSpaceUserGroups({
+							externalReferenceCode,
+							nestedFields: 'numberOfUserAccounts,roles',
+							page: newPage,
+							pageSize,
+						});
+
+					dispatch({
+						payload: {items: spaceUserGroups.items, page: newPage},
+						type: 'LOAD_MORE_GROUPS_SUCCESS',
+					});
+				}
+			}
+			catch (error) {
+				dispatch({payload: error as Error, type: 'LOAD_MORE_ERROR'});
+			}
+		},
+		[externalReferenceCode, pageSize, state]
+	);
+
+	return {loadMore, state};
 }

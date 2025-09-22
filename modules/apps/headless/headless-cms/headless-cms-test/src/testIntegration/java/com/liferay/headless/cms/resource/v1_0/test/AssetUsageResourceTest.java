@@ -227,44 +227,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	}
 
 	@Override
-	@Test
-	public void testGetAssetUsagesAssetPageWithPagination() throws Exception {
-		Long assetId = testGetAssetUsagesAssetPage_getAssetId();
-
-		AssetUsage assetUsage1 = testGetAssetUsagesAssetPage_addAssetUsage(
-			assetId, randomAssetUsage());
-
-		AssetUsage assetUsage2 = testGetAssetUsagesAssetPage_addAssetUsage(
-			assetId, randomAssetUsage());
-
-		AssetUsage assetUsage3 = testGetAssetUsagesAssetPage_addAssetUsage(
-			assetId, randomAssetUsage());
-
-		Page<AssetUsage> page1 = assetUsageResource.getAssetUsagesAssetPage(
-			assetId, null, Pagination.of(1, 2), null);
-
-		List<AssetUsage> assetUsages1 = (List<AssetUsage>)page1.getItems();
-
-		Assert.assertEquals(assetUsages1.toString(), 2, assetUsages1.size());
-
-		Page<AssetUsage> page2 = assetUsageResource.getAssetUsagesAssetPage(
-			assetId, null, Pagination.of(2, 2), null);
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<AssetUsage> assetUsages2 = (List<AssetUsage>)page2.getItems();
-
-		Assert.assertEquals(assetUsages2.toString(), 1, assetUsages2.size());
-
-		Page<AssetUsage> page3 = assetUsageResource.getAssetUsagesAssetPage(
-			assetId, null, Pagination.of(1, 3), null);
-
-		assertContains(assetUsage1, (List<AssetUsage>)page3.getItems());
-		assertContains(assetUsage2, (List<AssetUsage>)page3.getItems());
-		assertContains(assetUsage3, (List<AssetUsage>)page3.getItems());
-	}
-
-	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name", "type"};
 	}

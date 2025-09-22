@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -49,25 +48,24 @@ public class DepotEntryUtil {
 	}
 
 	public static Long[] getGroupIds(List<DepotEntry> depotEntries) {
-		Long[] groupIds = new Long[0];
+		List<Long> groupIds = new ArrayList<>();
 
 		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService =
 			_depotEntryGroupRelLocalServiceSnapshot.get();
 
 		for (DepotEntry depotEntry : depotEntries) {
-			groupIds = ArrayUtil.append(groupIds, depotEntry.getGroupId());
+			groupIds.add(depotEntry.getGroupId());
 
 			List<DepotEntryGroupRel> depotEntryGroupRels =
 				depotEntryGroupRelLocalService.getDepotEntryGroupRels(
 					depotEntry);
 
 			for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
-				groupIds = ArrayUtil.append(
-					groupIds, depotEntryGroupRel.getGroupId());
+				groupIds.add(depotEntryGroupRel.getGroupId());
 			}
 		}
 
-		return groupIds;
+		return groupIds.toArray(new Long[0]);
 	}
 
 	private static List<DepotEntry> _getViewableDepotEntries(

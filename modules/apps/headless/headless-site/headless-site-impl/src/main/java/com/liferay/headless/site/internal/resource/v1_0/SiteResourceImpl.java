@@ -207,8 +207,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	public Site postSiteSiteInitializer(MultipartBody multipartBody)
 		throws Exception {
 
-		Site site = postSite(
-			multipartBody.getValueAsInstance("site", Site.class));
+		Site site = multipartBody.getValueAsInstance("site", Site.class);
 
 		return putSiteByExternalReferenceCode(
 			site.getExternalReferenceCode(), multipartBody);

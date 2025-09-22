@@ -145,6 +145,7 @@ public class ObjectEntryFolderDTOConverter
 
 						return null;
 					});
+				setScopeId(objectEntryFolder::getGroupId);
 				setScopeKey(
 					() -> {
 						Group group = _groupLocalService.fetchGroup(

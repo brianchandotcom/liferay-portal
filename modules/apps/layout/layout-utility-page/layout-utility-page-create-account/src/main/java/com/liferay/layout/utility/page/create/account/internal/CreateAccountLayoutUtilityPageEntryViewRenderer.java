@@ -7,7 +7,6 @@ package com.liferay.layout.utility.page.create.account.internal;
 
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
@@ -33,11 +32,6 @@ public class CreateAccountLayoutUtilityPageEntryViewRenderer
 	@Override
 	public String getType() {
 		return LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return FeatureFlagManagerUtil.isEnabled("LPD-6378");
 	}
 
 	@Reference

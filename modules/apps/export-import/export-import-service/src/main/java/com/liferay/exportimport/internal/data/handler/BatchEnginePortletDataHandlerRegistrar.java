@@ -199,10 +199,12 @@ public class BatchEnginePortletDataHandlerRegistrar {
 					_companyLocalService,
 					exportImportVulcanBatchEngineTaskItemDelegate,
 					exportImportDescriptor.getItemClassName(),
-					exportImportDescriptor.getPortletId(),
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"),
 					_userLocalService);
+
+			batchEnginePortletDataHandler.setPortletId(
+				exportImportDescriptor.getPortletId());
 
 			return _bundleContext.registerService(
 				PortletDataHandler.class, batchEnginePortletDataHandler,

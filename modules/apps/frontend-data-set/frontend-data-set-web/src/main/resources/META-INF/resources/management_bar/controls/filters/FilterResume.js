@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
+import {deactivateFilter} from '../../../utils/filters/deactivateFilter';
 import ViewsContext from '../../../views/ViewsContext';
 import {EViewsActionTypes} from '../../../views/viewsReducer';
 import Filter from './Filter';
@@ -71,11 +72,7 @@ function FilterResume(props) {
 						value: filters.map((filter) => ({
 							...filter,
 							...(filter.id === props.id
-								? {
-										active: false,
-										odataFilterString: undefined,
-										selectedData: undefined,
-									}
+								? deactivateFilter(filter)
 								: {}),
 						})),
 					});

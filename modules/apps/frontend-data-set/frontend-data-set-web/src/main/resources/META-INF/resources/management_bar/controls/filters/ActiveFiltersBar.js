@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
+import {deactivateFilter} from '../../../utils/filters/deactivateFilter';
 import ViewsContext from '../../../views/ViewsContext';
 import {EViewsActionTypes} from '../../../views/viewsReducer';
 import FilterResume from './FilterResume';
@@ -27,12 +28,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 
 		viewsDispatch({
 			type: EViewsActionTypes.UPDATE_FILTERS,
-			value: filters.map((filter) => ({
-				...filter,
-				active: false,
-				odataFilterString: undefined,
-				selectedData: undefined,
-			})),
+			value: filters.map((filter) => deactivateFilter(filter)),
 		});
 
 		onSearch({query: ''});

@@ -632,12 +632,12 @@ public class BatchEnginePortletDataHandlerTest {
 					RandomTestUtil.randomString()
 				).build())) {
 
+			// Filter is not null
+
 			Thread.sleep(1000);
 
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(portletId);
-
-			// Filter is not null
 
 			Assert.assertEquals(
 				1,

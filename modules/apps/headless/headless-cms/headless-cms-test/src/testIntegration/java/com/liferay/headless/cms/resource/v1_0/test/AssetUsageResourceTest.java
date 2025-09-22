@@ -130,7 +130,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 			}
 		}
 
-		_documentObjectDefinition =
+		_basicDocumentObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_BASIC_DOCUMENT", testCompany.getCompanyId());
@@ -165,7 +165,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	@Test
 	public void testGetAssetUsagesAssetPage() throws Exception {
 		_addObjectRelationship(
-			_documentObjectDefinition, _basicWebContentObjectDefinition);
+			_basicDocumentObjectDefinition, _basicWebContentObjectDefinition);
 
 		long assetId = testGetAssetUsagesAssetPage_getAssetId();
 
@@ -259,7 +259,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_depotEntry.getGroupId(), _depotEntry.getUserId(),
-			_documentObjectDefinition.getObjectDefinitionId(),
+			_basicDocumentObjectDefinition.getObjectDefinitionId(),
 			_objectEntryFolder.getObjectEntryFolderId(), _LANGUAGE_ID,
 			HashMapBuilder.<String, Serializable>put(
 				"file", String.valueOf(dlFileEntry.getFileEntryId())
@@ -283,7 +283,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			testGroup.getGroupId(), StringPool.BLANK,
-			_portal.getClassNameId(_documentObjectDefinition.getClassName()),
+			_portal.getClassNameId(_basicDocumentObjectDefinition.getClassName()),
 			assetId, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 			layoutPageTemplateEntry.getPlid(), _serviceContext);
 
@@ -358,7 +358,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
-	private ObjectDefinition _documentObjectDefinition;
+	private ObjectDefinition _basicDocumentObjectDefinition;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService

@@ -98,13 +98,13 @@ public class MailServiceTest {
 					_configurationProvider.getCompanyConfiguration(
 						MailSettingCompanyConfiguration.class, companyId1);
 
-				mailSettingCompanyConfiguration2 =
-					_configurationProvider.getCompanyConfiguration(
-						MailSettingCompanyConfiguration.class, companyId2);
-
 				Assert.assertTrue(
 					mailSettingCompanyConfiguration1.
 						enablePOPServerNotifications());
+
+				mailSettingCompanyConfiguration2 =
+					_configurationProvider.getCompanyConfiguration(
+						MailSettingCompanyConfiguration.class, companyId2);
 
 				Assert.assertFalse(
 					mailSettingCompanyConfiguration2.

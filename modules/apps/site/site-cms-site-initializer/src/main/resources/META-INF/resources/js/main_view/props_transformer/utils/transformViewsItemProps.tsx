@@ -91,7 +91,11 @@ export function getFileMimeTypeObjectDefinitionStickerValue(
 			fileMimeTypeValues &&
 			objectDefinitionExternalReferenceCode === 'L_BASIC_DOCUMENT'
 		) {
-			const mimeType = item.embedded.file.mimeType;
+			const mimeType = item.embedded.file?.mimeType;
+
+			if (!mimeType) {
+				return fileMimeTypeValues['default'];
+			}
 
 			const fileMimeTypeCssClass = fileMimeTypeValues[mimeType];
 

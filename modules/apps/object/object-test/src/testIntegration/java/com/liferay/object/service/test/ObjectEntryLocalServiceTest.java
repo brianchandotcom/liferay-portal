@@ -4663,7 +4663,6 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				exportImportReportEntries.toString(), 1,
 				exportImportReportEntries.size());
-
 			Assert.assertTrue(
 				ListUtil.exists(
 					exportImportReportEntries,

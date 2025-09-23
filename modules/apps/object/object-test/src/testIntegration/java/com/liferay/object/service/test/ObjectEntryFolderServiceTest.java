@@ -71,9 +71,9 @@ public class ObjectEntryFolderServiceTest {
 
 		// Lazy referencing disabled
 
-		String externalReferenceCode = RandomTestUtil.randomString();
-
 		_setUser(_adminUser);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryFolderException.class,

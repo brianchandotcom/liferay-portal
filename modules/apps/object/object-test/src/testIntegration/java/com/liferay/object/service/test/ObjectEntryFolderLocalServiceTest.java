@@ -345,8 +345,8 @@ public class ObjectEntryFolderLocalServiceTest {
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryFolderException.class,
 			String.format(
-				"No ObjectEntryFolder exists with the key {externalReference" +
-					"Code=%s, groupId=%s, companyId=%s}",
+				"No ObjectEntryFolder exists with the key {" +
+					"externalReferenceCode=%s, groupId=%s, companyId=%s}",
 				externalReferenceCode, TestPropsValues.getGroupId(),
 				TestPropsValues.getCompanyId()),
 			() -> _objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
@@ -382,7 +382,6 @@ public class ObjectEntryFolderLocalServiceTest {
 			Assert.assertEquals(
 				exportImportReportEntries.toString(), 1,
 				exportImportReportEntries.size());
-
 			Assert.assertTrue(
 				ListUtil.exists(
 					exportImportReportEntries,

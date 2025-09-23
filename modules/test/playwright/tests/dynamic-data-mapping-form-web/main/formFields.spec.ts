@@ -457,7 +457,41 @@ test.describe('Manage fields through Form Builder page', () => {
 		).toBeVisible();
 	});
 
-	test('fields group can be translated and collapsed', async ({
+	test('Can move the last field of a child group into the parent group field', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		page,
+	}) => {
+		await test.step('go to form builder and create structure with two levels of nesting and one field in each', async () => {
+			await formBuilderPage.goToNew();
+
+			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+			await formBuilderSidePanelPage.backButton.click();
+
+			await formBuilderSidePanelPage.addFieldToFieldGroup('Text', 0);
+
+			await formBuilderSidePanelPage.backButton.click();
+
+			await formBuilderSidePanelPage.addFieldToFieldGroup('Text', 2);
+
+			await page.getByLabel('Actions').nth(4).click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+		});
+
+		await test.step('drag field from child into the parent one to create new fieldGroup', async () => {
+			await page
+				.locator('.ddm-drag')
+				.nth(3)
+				.dragTo(page.locator('.ddm-drag').nth(1));
+		});
+
+		await expect(
+			page.getByLabel('Fields Group', {exact: true})
+		).toHaveCount(2);
+	});
+
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		page,

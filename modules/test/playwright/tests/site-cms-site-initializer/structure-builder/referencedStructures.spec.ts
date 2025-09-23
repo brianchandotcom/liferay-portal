@@ -1,0 +1,299 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {cmsPagesTest} from '../main/fixtures/cmsPagesTest';
+import {structureBuilderPagesTest} from './fixtures/structureBuilderPagesTest';
+import {StructureBuilderPage} from './pages/StructureBuilderPage';
+
+const test = mergeTests(
+	cmsPagesTest,
+	featureFlagsTest({
+		'LPD-17564': {enabled: true},
+		'LPS-179669': {enabled: true},
+	}),
+	loginTest(),
+	pageEditorPagesTest,
+	structureBuilderPagesTest
+);
+
+let structureIds = [];
+
+test.beforeEach(() => {
+	structureIds = [];
+});
+
+test.afterEach(async ({structureBuilderPage}) => {
+	for (const id of structureIds) {
+		await structureBuilderPage.deleteStructure(Number(id));
+	}
+});
+
+test(
+	'Can reference several structures and they are persisted',
+	{
+		tag: '@LPD-49645',
+	},
+	async ({page, structureBuilderPage}) => {
+		const label1 = getRandomString();
+		const label2 = getRandomString();
+		const label3 = getRandomString();
+		const label4 = getRandomString();
+
+		const name1 = `StructureName${getRandomInt()}`;
+		const name2 = `StructureName${getRandomInt()}`;
+
+		// Create three structures, one of them in draft
+
+		await structureBuilderPage.createStructureFromData({
+			label: label1,
+			name: name1,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			label: label2,
+			name: name2,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			label: label3,
+			page: structureBuilderPage,
+			publish: false,
+			structureIds,
+		});
+
+		// Create another one and reference the first two
+
+		const externalReferenceCode4 =
+			await structureBuilderPage.createStructureFromData({
+				label: label4,
+				page: structureBuilderPage,
+				structureIds,
+			});
+
+		await structureBuilderPage.addReferencedStructures([label1, label2]);
+
+		// Assert correct label style
+
+		await expect(
+			page.locator('.label-warning', {
+				hasText: 'Referenced Structure',
+			})
+		).toBeVisible();
+
+		// Check the one in draft can't be referenced
+
+		await expect(async () => {
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('menuitem', {
+					exact: true,
+					name: 'Referenced Structure',
+				}),
+				trigger: page.getByLabel('Add Field'),
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.locator('.modal-title', {
+					hasText: 'Referenced Structure',
+				}),
+				timeout: 2000,
+				trigger: page.getByRole('menuitem', {
+					exact: true,
+					name: 'Referenced Structure',
+				}),
+			});
+
+			await page.getByLabel('Structures').click({timeout: 1000});
+
+			await expect(
+				page.getByRole('option', {name: label1})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('option', {name: label3})
+			).not.toBeVisible();
+
+			// Check we can't click Add without structures
+
+			await page
+				.locator('.modal-title', {
+					hasText: 'Referenced Structure',
+				})
+				.click({timeout: 500});
+
+			await clickAndExpectToBeVisible({
+				target: page
+					.locator('.modal-body')
+					.getByText('This field is required'),
+				trigger: page.locator('.modal-footer').getByText('Add'),
+			});
+
+			// Close modal
+
+			await clickAndExpectToBeHidden({
+				target: page.locator('.modal-title', {
+					hasText: 'Referenced Structure',
+				}),
+				timeout: 2000,
+				trigger: page.locator('.modal-header .close'),
+			});
+		}).toPass();
+
+		// Publish the structure
+
+		await structureBuilderPage.publishStructure();
+
+		// Check everything is persisted
+
+		await structureBuilderPage.editStructure(externalReferenceCode4);
+
+		await expect(
+			page.locator('.treeview-link', {hasText: label1})
+		).toBeVisible();
+
+		await expect(
+			page.locator('.treeview-link', {hasText: label2})
+		).toBeVisible();
+
+		// Select referenced structures and check correct values are shown
+
+		await structureBuilderPage.selectFields([{label: label1}]);
+
+		await expect(page.getByLabel('Structure Name')).toHaveValue(name1);
+
+		await structureBuilderPage.selectFields([{label: label2}]);
+
+		await expect(page.getByLabel('Structure Name')).toHaveValue(name2);
+	}
+);
+
+test(
+	'Can edit referenced structure in another tab',
+	{
+		tag: '@LPD-49645',
+	},
+	async ({context, page, structureBuilderPage}) => {
+		const label1 = getRandomString();
+		const label2 = getRandomString();
+
+		// Create one structure
+
+		await structureBuilderPage.createStructureFromData({
+			label: label1,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		// Create another one and reference the first one
+
+		await structureBuilderPage.createStructureFromData({
+			label: label2,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		await structureBuilderPage.addReferencedStructures([label1]);
+
+		// Check we can't edit referenced structure
+
+		await structureBuilderPage.selectFields([{label: label1}]);
+
+		await expect(page.getByLabel('Structure Name')).toBeDisabled();
+		await expect(page.getByLabel('ERC')).toBeDisabled();
+		await expect(structureBuilderPage.spaceSelector).toBeDisabled();
+
+		// Check we can't edit referenced structure fields
+
+		await structureBuilderPage.selectFields([{label: 'Title', nth: 1}]);
+
+		await expect(
+			page.getByRole('button', {name: 'Field Options'})
+		).not.toBeVisible();
+
+		await expect(page.getByLabel('Label')).toBeDisabled();
+		await expect(page.getByLabel('ERC')).toBeDisabled();
+		await expect(page.getByLabel('Field Name')).toBeDisabled();
+
+		// Publish the structure
+
+		await structureBuilderPage.publishStructure();
+
+		// Edit referenced structure in another tab
+
+		const pagePromise = context.waitForEvent('page');
+
+		await structureBuilderPage.selectFields([{label: label1}]);
+
+		await structureBuilderPage.clickFieldAction({label: label1}, 'Edit');
+
+		const newPage = await pagePromise;
+
+		const newStructureBuilderPage = new StructureBuilderPage(newPage);
+
+		await newPage.locator('.component-tbar').getByText(label1).waitFor();
+
+		// Add new fields and publish
+
+		await newStructureBuilderPage.addField('Date');
+		await newStructureBuilderPage.addField('Long Text');
+
+		await expect(async () => {
+			await newStructureBuilderPage.publishButton.click({
+				timeout: 500,
+			});
+
+			await expect(
+				newPage.locator('.modal-title', {hasText: 'Publish'})
+			).toBeVisible({timeout: 3000});
+
+			await newPage
+				.getByText('Publish and Propagate')
+				.click({timeout: 500});
+
+			await waitForAlert(newPage, 'published', {timeout: 2000});
+		}).toPass();
+
+		// Check in first structure that the tree is updated with the new field
+
+		await structureBuilderPage.expandField({label: label1});
+
+		const dateTreeItem = page.locator('.treeview-link', {
+			hasText: 'Date',
+		});
+
+		await expect(dateTreeItem).toBeVisible();
+
+		// Check we can't delete referenced structure fields
+
+		await structureBuilderPage.selectFields([{label: 'Date'}]);
+
+		await expect(
+			dateTreeItem.getByLabel('Field Options')
+		).not.toBeVisible();
+
+		// Change field and check correct values are shown
+
+		await structureBuilderPage.selectFields([{label: 'Long Text'}]);
+
+		await expect(page.getByLabel('Label')).toHaveValue('Long Text');
+
+		await structureBuilderPage.selectFields([{label: 'Date'}]);
+
+		await expect(page.getByLabel('Label')).toHaveValue('Date');
+	}
+);

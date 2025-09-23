@@ -5,6 +5,8 @@
 
 package com.liferay.fragment.internal.exportimport.content.processor;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -87,6 +89,25 @@ public class EditableValuesMappingExportImportContentProcessor
 
 	@Override
 	public void validateContentReferences(long groupId, JSONObject jsonObject) {
+	}
+
+	private void _exportAssetVocabularyReference(
+			String mappedField, PortletDataContext portletDataContext,
+			StagedModel stagedModel)
+		throws Exception {
+
+		long assetVocabularyId = GetterUtil.getLong(
+			mappedField.substring(_ASSET_VOCABULARY.length()));
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchAssetVocabulary(
+				assetVocabularyId);
+
+		if (assetVocabulary != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, assetVocabulary,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
 	}
 
 	private void _exportLayoutPageTemplateEntryReference(
@@ -244,8 +265,12 @@ public class EditableValuesMappingExportImportContentProcessor
 			GetterUtil.getString(
 				mappedField, editableJSONObject.getString("fieldId")));
 
-		if (mappedField.startsWith(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+		if (mappedField.startsWith(_ASSET_VOCABULARY)) {
+			_exportAssetVocabularyReference(
+				mappedField, portletDataContext, stagedModel);
+		}
+		else if (mappedField.startsWith(
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
 			_exportTemplateReference(
 				mappedField, portletDataContext, stagedModel);
@@ -282,8 +307,22 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		String mappedField = editableJSONObject.getString(key);
 
-		if (mappedField.startsWith(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+		if (mappedField.startsWith(_ASSET_VOCABULARY)) {
+			long assetVocabularyId = GetterUtil.getLong(
+				mappedField.substring(_ASSET_VOCABULARY.length()));
+
+			Map<Long, Long> assetVocabularyIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					AssetVocabulary.class);
+
+			long importedAssetVocabularyId = MapUtil.getLong(
+				assetVocabularyIds, assetVocabularyId, assetVocabularyId);
+
+			editableJSONObject.put(
+				key, _ASSET_VOCABULARY + importedAssetVocabularyId);
+		}
+		else if (mappedField.startsWith(
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
 			editableJSONObject.put(
 				key,
@@ -317,12 +356,18 @@ public class EditableValuesMappingExportImportContentProcessor
 		}
 	}
 
+	private static final String _ASSET_VOCABULARY =
+		AssetVocabulary.class.getSimpleName() + StringPool.UNDERLINE;
+
 	private static final String _LAYOUT_PAGE_TEMPLATE_ENTRY =
 		LayoutPageTemplateEntry.class.getSimpleName() + StringPool.UNDERLINE;
 
 	private static final String _TEMPLATE =
 		PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + StringPool.UNDERLINE +
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;

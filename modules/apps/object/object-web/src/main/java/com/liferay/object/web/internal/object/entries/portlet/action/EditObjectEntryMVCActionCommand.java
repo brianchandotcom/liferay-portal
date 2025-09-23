@@ -6,7 +6,7 @@
 package com.liferay.object.web.internal.object.entries.portlet.action;
 
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.exception.ObjectDefinitionScopeException;
+import com.liferay.object.exception.ObjectEntryScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -132,7 +132,7 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof ObjectDefinitionScopeException ||
+			if (exception instanceof ObjectEntryScopeException ||
 				exception instanceof ObjectEntryValuesException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());

@@ -31,12 +31,13 @@ jest.mock(
 const mockedOpenToast = openToast as jest.Mock;
 
 describe('useSpaceMembers', () => {
-	const assetLibraryId = '123';
+	const externalReferenceCode = '123';
 	const pageSize = 20;
 
 	const testUsers = [
 		{
 			emailAddress: 'john.doe@example.com',
+			externalReferenceCode: '1',
 			id: '1',
 			image: '/image/user_portrait',
 			imageId: '1',
@@ -45,6 +46,7 @@ describe('useSpaceMembers', () => {
 		},
 		{
 			emailAddress: 'jane.smith@example.com',
+			externalReferenceCode: '2',
 			id: '2',
 			image: '/image/user_portrait',
 			imageId: '1',
@@ -55,6 +57,7 @@ describe('useSpaceMembers', () => {
 
 	const newUser = {
 		emailAddress: 'user3@example.com',
+		externalReferenceCode: '3',
 		id: '3',
 		image: '/image/user_portrait',
 		imageId: '3',
@@ -63,6 +66,7 @@ describe('useSpaceMembers', () => {
 	} as UserAccount;
 
 	const newGroup = {
+		externalReferenceCode: '3',
 		id: '3',
 		name: 'Group 3',
 		roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
@@ -70,11 +74,13 @@ describe('useSpaceMembers', () => {
 
 	const testUserGroups = [
 		{
+			externalReferenceCode: '1',
 			id: '1',
 			name: 'Group 1',
 			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
 		},
 		{
+			externalReferenceCode: '2',
 			id: '2',
 			name: 'Group 2',
 			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
@@ -141,17 +147,23 @@ describe('useSpaceMembers', () => {
 
 	it('fetches initial members, groups, and roles on mount', async () => {
 		const {result} = renderHook(() =>
-			useSpaceMembers(assetLibraryId, pageSize)
+			useSpaceMembers(externalReferenceCode, pageSize)
 		);
 
 		expect(result.current.state.isFetching).toBe(true);
 
 		await waitFor(() => {
 			expect(getSpaceUsersSpy).toHaveBeenCalledWith(
-				expect.objectContaining({page: 1, spaceId: assetLibraryId})
+				expect.objectContaining({
+					externalReferenceCode,
+					page: 1,
+				})
 			);
 			expect(getSpaceUserGroupsSpy).toHaveBeenCalledWith(
-				expect.objectContaining({page: 1, spaceId: assetLibraryId})
+				expect.objectContaining({
+					externalReferenceCode,
+					page: 1,
+				})
 			);
 			expect(getUserRolesSpy).toHaveBeenCalled();
 		});
@@ -169,7 +181,7 @@ describe('useSpaceMembers', () => {
 		getSpaceUsersSpy.mockRejectedValue(error);
 
 		const {result} = renderHook(() =>
-			useSpaceMembers(assetLibraryId, pageSize)
+			useSpaceMembers(externalReferenceCode, pageSize)
 		);
 
 		await waitFor(() => {
@@ -197,7 +209,7 @@ describe('useSpaceMembers', () => {
 			getSpy.mockResolvedValueOnce(moreItems);
 
 			const {result} = renderHook(() =>
-				useSpaceMembers(assetLibraryId, pageSize)
+				useSpaceMembers(externalReferenceCode, pageSize)
 			);
 
 			await waitFor(() =>
@@ -227,7 +239,7 @@ describe('useSpaceMembers', () => {
 		getSpaceUsersSpy.mockRejectedValueOnce(error);
 
 		const {result} = renderHook(() =>
-			useSpaceMembers(assetLibraryId, pageSize)
+			useSpaceMembers(externalReferenceCode, pageSize)
 		);
 
 		await waitFor(() =>
@@ -245,7 +257,7 @@ describe('useSpaceMembers', () => {
 
 	it('does not load more if on the last page', async () => {
 		const {result} = renderHook(() =>
-			useSpaceMembers(assetLibraryId, pageSize)
+			useSpaceMembers(externalReferenceCode, pageSize)
 		);
 		await act(async () => result.current.loadMore(SelectOptions.GROUPS));
 		expect(getSpaceUserGroupsSpy).toHaveBeenCalledTimes(1);
@@ -262,7 +274,7 @@ describe('useSpaceMembers', () => {
 					.mockResolvedValue({data: {}, error: null});
 
 				const {result} = renderHook(() =>
-					useSpaceMembers(assetLibraryId, pageSize)
+					useSpaceMembers(externalReferenceCode, pageSize)
 				);
 
 				await waitFor(() =>
@@ -277,9 +289,18 @@ describe('useSpaceMembers', () => {
 					newItem.name
 				);
 
+				const externalReferenceCodeKey =
+					type === SelectOptions.USERS
+						? 'userExternalReferenceCode'
+						: 'userGroupExternalReferenceCode';
+
 				await waitFor(() => {
 					expect(linkSpy).toHaveBeenCalledWith(
-						expect.objectContaining({spaceId: assetLibraryId})
+						expect.objectContaining({
+							[externalReferenceCodeKey]:
+								newItem.externalReferenceCode,
+							spaceExternalReferenceCode: externalReferenceCode,
+						})
 					);
 				});
 
@@ -298,7 +319,7 @@ describe('useSpaceMembers', () => {
 				});
 
 				const {result} = renderHook(() =>
-					useSpaceMembers(assetLibraryId, pageSize)
+					useSpaceMembers(externalReferenceCode, pageSize)
 				);
 
 				await waitFor(() =>
@@ -336,7 +357,7 @@ describe('useSpaceMembers', () => {
 
 		it('does not add a member if they already exist', async () => {
 			const {result} = renderHook(() =>
-				useSpaceMembers(assetLibraryId, pageSize)
+				useSpaceMembers(externalReferenceCode, pageSize)
 			);
 
 			await waitFor(() =>
@@ -388,7 +409,7 @@ describe('useSpaceMembers', () => {
 					.mockResolvedValue({data: null, error: null});
 
 				const {result} = renderHook(() =>
-					useSpaceMembers(assetLibraryId, pageSize)
+					useSpaceMembers(externalReferenceCode, pageSize)
 				);
 
 				await waitFor(() =>
@@ -403,9 +424,18 @@ describe('useSpaceMembers', () => {
 				expect(items).toHaveLength(1);
 				expect(items[0].name).toBe(remainingItemName);
 
+				const externalReferenceCodeKey =
+					type === SelectOptions.USERS
+						? 'userExternalReferenceCode'
+						: 'userGroupExternalReferenceCode';
+
 				await waitFor(() => {
 					expect(unlinkSpy).toHaveBeenCalledWith(
-						expect.objectContaining({spaceId: assetLibraryId})
+						expect.objectContaining({
+							[externalReferenceCodeKey]:
+								itemToRemove.externalReferenceCode,
+							spaceExternalReferenceCode: externalReferenceCode,
+						})
 					);
 				});
 
@@ -420,7 +450,7 @@ describe('useSpaceMembers', () => {
 					.mockResolvedValue({data: null, error: 'API Error'});
 
 				const {result} = renderHook(() =>
-					useSpaceMembers(assetLibraryId, pageSize)
+					useSpaceMembers(externalReferenceCode, pageSize)
 				);
 
 				await waitFor(() =>
@@ -448,19 +478,9 @@ describe('useSpaceMembers', () => {
 
 	describe('updateMemberRoles', () => {
 		describe.each([
-			[
-				SelectOptions.USERS,
-				mockUsers.items[0],
-				'updateUserRoles',
-				'userId',
-			],
-			[
-				SelectOptions.GROUPS,
-				mockGroups.items[0],
-				'updateUserGroupRoles',
-				'userGroupId',
-			],
-		])('for %s', (type, itemToUpdate, serviceMethod, idKey) => {
+			[SelectOptions.USERS, mockUsers.items[0], 'updateUserRoles'],
+			[SelectOptions.GROUPS, mockGroups.items[0], 'updateUserGroupRoles'],
+		])('for %s', (type, itemToUpdate, serviceMethod) => {
 			it(`optimistically updates ${type} roles and shows a success toast`, async () => {
 				const updateSpy = jest
 					.spyOn(SpaceService, serviceMethod as any)
@@ -468,7 +488,7 @@ describe('useSpaceMembers', () => {
 				const newRoles = ['Role 1'];
 
 				const {result} = renderHook(() =>
-					useSpaceMembers(assetLibraryId, pageSize)
+					useSpaceMembers(externalReferenceCode, pageSize)
 				);
 
 				await waitFor(() =>
@@ -487,11 +507,17 @@ describe('useSpaceMembers', () => {
 					[{id: 101, name: 'Role 1'}]
 				);
 
+				const externalReferenceCodeKey =
+					type === SelectOptions.USERS
+						? 'userExternalReferenceCode'
+						: 'userGroupExternalReferenceCode';
+
 				await waitFor(() => {
 					expect(updateSpy).toHaveBeenCalledWith({
-						[idKey]: itemToUpdate.id,
+						[externalReferenceCodeKey]:
+							itemToUpdate.externalReferenceCode,
 						roleNames: newRoles,
-						spaceId: assetLibraryId,
+						spaceExternalReferenceCode: externalReferenceCode,
 					});
 				});
 
@@ -506,7 +532,7 @@ describe('useSpaceMembers', () => {
 					.mockResolvedValue({data: null, error: 'API Error'});
 
 				const {result} = renderHook(() =>
-					useSpaceMembers(assetLibraryId, pageSize)
+					useSpaceMembers(externalReferenceCode, pageSize)
 				);
 
 				await waitFor(() =>

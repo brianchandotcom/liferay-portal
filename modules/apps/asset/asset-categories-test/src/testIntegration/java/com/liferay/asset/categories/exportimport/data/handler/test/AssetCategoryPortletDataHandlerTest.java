@@ -67,43 +67,7 @@ public class AssetCategoryPortletDataHandlerTest
 		}
 	)
 	@Test
-	public void testExportImportAssetCategory() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			CompanyConstants.SYSTEM, true, "LPD-35914");
-
-		AssetVocabulary assetVocabulary = _addAssetVocabulary();
-
-		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
-
-		File larFile = _exportLayouts();
-
-		_assetCategoryLocalService.deleteCategory(assetCategory);
-
-		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
-
-		ExportImportConfiguration exportImportConfiguration =
-			_setUpExportImportConfiguration();
-
-		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, larFile);
-
-		Assert.assertNotNull(
-			_assetCategoryLocalService.
-				fetchAssetCategoryByExternalReferenceCode(
-					assetCategory.getExternalReferenceCode(),
-					stagingGroup.getGroupId()));
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			CompanyConstants.SYSTEM, false, "LPD-35914");
-	}
-
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-35914")
-		}
-	)
-	@Test
-	public void testExportImportCategoriesWithErrorReport() throws Exception {
+	public void testAssetCategoryExportImportReportEntries() throws Exception {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
@@ -143,6 +107,42 @@ public class AssetCategoryPortletDataHandlerTest
 						originalExternalReferenceCode) &&
 					(exportImportReportEntry.getType() ==
 						ExportImportReportEntryConstants.TYPE_ERROR)));
+	}
+
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-35914")
+		}
+	)
+	@Test
+	public void testExportImportAssetCategory() throws Exception {
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			CompanyConstants.SYSTEM, true, "LPD-35914");
+
+		AssetVocabulary assetVocabulary = _addAssetVocabulary();
+
+		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
+
+		File larFile = _exportLayouts();
+
+		_assetCategoryLocalService.deleteCategory(assetCategory);
+
+		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+
+		ExportImportConfiguration exportImportConfiguration =
+			_setUpExportImportConfiguration();
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
+
+		Assert.assertNotNull(
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					assetCategory.getExternalReferenceCode(),
+					stagingGroup.getGroupId()));
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			CompanyConstants.SYSTEM, false, "LPD-35914");
 	}
 
 	@Override

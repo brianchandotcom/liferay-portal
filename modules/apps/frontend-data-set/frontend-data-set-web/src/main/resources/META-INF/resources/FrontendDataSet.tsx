@@ -148,6 +148,34 @@ const FrontendDataSetContent = ({
 	const fdsRef = useRef(null);
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
 
+	const [getActiveSorts, updateActiveSortsThunk] = useStateInURL({
+		id,
+		stateDispatcher: {
+			key: EStateInURLKeys.ACTIVE_SORTS,
+			type: EViewsActionTypes.UPDATE_SORTING,
+		},
+		stateInURLSettings,
+		stateReader: (sorts: Array<TSort>) => {
+			return sorts;
+		},
+		stateWriter: (
+			sorts: Array<TSort> | undefined
+		): Array<TSort> | undefined => {
+			if (sorts?.every((sort: TSort) => !sort.active)) {
+				return [];
+			}
+
+			return sorts
+				?.filter((sort: TSort) => sort.active)
+				.map((sort: TSort) => {
+					return {
+						direction: sort.direction,
+						key: sort.key,
+					};
+				});
+		},
+	});
+
 	const [getActiveFilters, updateActiveFiltersThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
@@ -385,6 +413,50 @@ const FrontendDataSetContent = ({
 		});
 	};
 
+	const updateSortsActivation = ({
+		newSorts,
+		oldSorts,
+	}: {
+		newSorts: Array<TSort> | undefined;
+		oldSorts: Array<TSort>;
+	}): Array<TSort> => {
+		if (!newSorts) {
+			return oldSorts;
+		}
+
+		const remainingNewSorts = [...newSorts];
+
+		return [
+			...oldSorts?.map((sort: TSort) => {
+				const activeSortIndex = remainingNewSorts?.findIndex(
+					(activeSort: TSort) => {
+						return activeSort.key === sort.key;
+					}
+				);
+
+				if (activeSortIndex !== -1) {
+					const activeSort = remainingNewSorts[activeSortIndex];
+
+					remainingNewSorts.splice(activeSortIndex, 1);
+
+					return {
+						...sort,
+						active: true,
+						direction: activeSort.direction,
+					};
+				}
+
+				return {
+					...sort,
+					active: false,
+				};
+			}),
+			...remainingNewSorts.map((sort: TSort) => {
+				return {...sort, active: true};
+			}),
+		];
+	};
+
 	const getInitialViewsState = () => {
 		const customInternalViews =
 			customRenderers?.views?.map((customRenderer: TRenderer) => ({
@@ -481,11 +553,17 @@ const FrontendDataSetContent = ({
 
 		const searchParam = getSearchParam();
 
+		const sorts = updateSortsActivation({
+			newSorts: getActiveSorts(),
+			oldSorts: sortsProp,
+		});
+
 		// viewsDispatch is not available here, so we can't use state in url
 		// setters at this point. hook does the job
 
 		updateState({
 			[EStateInURLKeys.ACTIVE_FILTERS]: filters,
+			[EStateInURLKeys.ACTIVE_SORTS]: sorts,
 			[EStateInURLKeys.DELTA]: paginationDelta,
 			[EStateInURLKeys.PAGE_NUMBER]: pageNumber,
 			[EStateInURLKeys.SEARCH_PARAM]: searchParam,
@@ -501,7 +579,7 @@ const FrontendDataSetContent = ({
 				activeView,
 				filters,
 				paginationDelta,
-				sorts: sortsProp,
+				sorts,
 				visibleFieldNames: initialVisibleFieldNames,
 			},
 			filters,
@@ -509,7 +587,7 @@ const FrontendDataSetContent = ({
 			pageNumber,
 			paginationDelta,
 			searchParam,
-			sorts: sortsProp,
+			sorts,
 			views: [...views, ...customInternalViews],
 			visibleFieldNames: initialVisibleFieldNames,
 		};
@@ -878,6 +956,18 @@ const FrontendDataSetContent = ({
 			});
 		}
 
+		const activeSorts = getActiveSorts();
+
+		if (activeSorts) {
+			stateUpdates.push({
+				type: EViewsActionTypes.UPDATE_SORTING,
+				value: updateSortsActivation({
+					newSorts: activeSorts,
+					oldSorts: sorts,
+				}),
+			});
+		}
+
 		const delta = getDelta();
 
 		if (delta && delta !== paginationDelta) {
@@ -936,6 +1026,7 @@ const FrontendDataSetContent = ({
 		appURL,
 		filters,
 		getActiveFilters,
+		getActiveSorts,
 		getDelta,
 		getPageNumber,
 		getSearchParam,
@@ -944,6 +1035,7 @@ const FrontendDataSetContent = ({
 		id,
 		paginationDelta,
 		portletId,
+		sorts,
 		viewsDispatch,
 	]);
 
@@ -1584,6 +1676,7 @@ const FrontendDataSetContent = ({
 				toggleItemInlineEdit,
 				uniformActionsDisplay,
 				updateActiveFiltersThunk,
+				updateActiveSortsThunk,
 				updateDataSetItems,
 				updateItem,
 				updateViewThunk,

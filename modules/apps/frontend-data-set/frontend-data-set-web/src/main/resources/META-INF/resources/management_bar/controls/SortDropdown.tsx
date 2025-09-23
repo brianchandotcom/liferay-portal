@@ -8,14 +8,12 @@ import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect, useState} from 'react';
 
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {TSort} from '../../utils/types';
 import ViewsContext from '../../views/ViewsContext';
 
-// @ts-ignore
-
-import {EViewsActionTypes} from '../../views/viewsReducer';
-
 function SortDropdown() {
+	const {updateActiveSortsThunk} = useContext(FrontendDataSetContext);
 	const [{sorts}, viewsDispatch]: [{sorts: TSort[]}, Function] =
 		useContext(ViewsContext);
 
@@ -83,14 +81,21 @@ function SortDropdown() {
 								onClick={() => {
 									setSelectedKey(sort.key);
 
-									viewsDispatch({
-										type: EViewsActionTypes.UPDATE_SORTING,
-										value: sorts.map((sortItem) =>
-											sort.key === sortItem.key
-												? {...sortItem, active: true}
-												: {...sortItem, active: false}
-										),
-									});
+									viewsDispatch(
+										updateActiveSortsThunk(
+											sorts.map((sortItem) =>
+												sort.key === sortItem.key
+													? {
+															...sortItem,
+															active: true,
+														}
+													: {
+															...sortItem,
+															active: false,
+														}
+											)
+										)
+									);
 								}}
 								symbolLeft={
 									selectedKey === sort.key ? 'check' : ''
@@ -112,13 +117,14 @@ function SortDropdown() {
 					onClick={() => {
 						setSelectedDirection('asc');
 
-						viewsDispatch({
-							type: EViewsActionTypes.UPDATE_SORTING,
-							value: sorts.map((sortItem) => ({
-								...sortItem,
-								direction: 'asc',
-							})),
-						});
+						viewsDispatch(
+							updateActiveSortsThunk(
+								sorts.map((sortItem) => ({
+									...sortItem,
+									direction: 'asc',
+								}))
+							)
+						);
 					}}
 					symbolLeft={selectedDirection === 'asc' ? 'check' : ''}
 				>
@@ -130,13 +136,14 @@ function SortDropdown() {
 					onClick={() => {
 						setSelectedDirection('desc');
 
-						viewsDispatch({
-							type: EViewsActionTypes.UPDATE_SORTING,
-							value: sorts.map((sortItem) => ({
-								...sortItem,
-								direction: 'desc',
-							})),
-						});
+						viewsDispatch(
+							updateActiveSortsThunk(
+								sorts.map((sortItem) => ({
+									...sortItem,
+									direction: 'desc',
+								}))
+							)
+						);
 					}}
 					symbolLeft={selectedDirection === 'desc' ? 'check' : ''}
 				>

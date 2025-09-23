@@ -13,39 +13,34 @@ test(
 	'Check error message disappears',
 	{tag: ['@LPD-65813']},
 	async ({page}) => {
-		await page.getByLabel('Open Applications MenuCtrl+').click();
+		const portletId =
+			'com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
 
-		await page.getByRole('tab', {name: 'Control Panel'}).click();
-
-		await page
-			.getByRole('menuitem', {name: 'Server Administration'})
-			.click();
-
-		await page.getByRole('link', {name: 'Script'}).click();
-
-		const textVerification = page.locator(
-			'[id="_com_liferay_server_admin_web_portlet_ServerAdminPortlet_captchaText"]'
+		await page.goto(
+			`/group/control_panel/manage?p_p_id=${portletId}` +
+				`&_${portletId}_mvcRenderCommandName=%2Fclient_extension_admin%2Fedit_client_extension_entry` +
+				`&_${portletId}_type=customElement`
 		);
 
-		await textVerification.waitFor({state: 'visible'});
+		await page
+			.getByRole('button', {name: 'Publish'})
+			.waitFor({state: 'visible'});
 
-		await textVerification.fill('test');
+		await page.locator(`[id=_${portletId}_name]`).fill('X');
 
-		await page.getByRole('button', {name: 'Execute'}).click();
+		await page.locator(`[id=_${portletId}_htmlElementName]`).fill('X');
 
-		const errorMessage = page.getByText('Close Error:Text verification');
+		await page.locator(`[id=_${portletId}_urls]`).fill('X');
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		const errorMessage = page.getByText(
+			'Error:Your request failed to complete.'
+		);
 
 		await errorMessage.waitFor({state: 'visible'});
 
-		const closeButton = page
-			.locator(
-				'[id="_com_liferay_server_admin_web_portlet_ServerAdminPortlet_fm"]'
-			)
-			.getByLabel('Close');
-
-		await closeButton.waitFor({state: 'visible'});
-
-		await closeButton.click();
+		await page.locator('#ToastAlertContainer').getByLabel('Close').click();
 
 		await expect(errorMessage).not.toBeVisible();
 	}

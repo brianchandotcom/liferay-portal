@@ -12,6 +12,7 @@ import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
 
 export class ExportImportPage {
+	readonly cancelButton: Locator;
 	readonly continueButton: Locator;
 	readonly copyAsNewRadioButton: Locator;
 	readonly deleteApplicationDataAlert: Locator;
@@ -40,6 +41,7 @@ export class ExportImportPage {
 	readonly warningHeader: Locator;
 
 	constructor(page: Page) {
+		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.copyAsNewRadioButton = page.getByLabel('Copy as new');
 		this.deleteApplicationDataAlert = page.locator('[role="alert"]', {
@@ -115,6 +117,32 @@ export class ExportImportPage {
 		await this.exportButton.click();
 	}
 
+	async exportAll(title: string, itemLabel?: string) {
+		await this.newExportButton.click();
+
+		await this.title.fill(title);
+
+		if (itemLabel) {
+			await this.page.getByLabel(itemLabel, {exact: true}).click();
+		}
+
+		const portletListContainer = this.page.locator(
+			'#_com_liferay_exportimport_web_portlet_ExportPortlet_selectContents .portlet-list'
+		);
+
+		await portletListContainer.waitFor();
+
+		const checkBoxes = portletListContainer.locator(
+			'input[type="checkbox"]'
+		);
+
+		for (const checkbox of await checkBoxes.all()) {
+			await checkbox.check();
+		}
+
+		await this.exportButton.click();
+	}
+
 	async checkItemInNewlyCreatedImportProcess(
 		folderPath: string,
 		itemToCheck: string
@@ -168,10 +196,13 @@ export class ExportImportPage {
 			)
 			.click();
 
-		await this.page
+		const utilityPages = this.page
 			.locator('#PagesContent')
-			.getByText('Utility Pages')
-			.click();
+			.getByText('Utility Pages');
+
+		if (await utilityPages.isVisible()) {
+			await utilityPages.click();
+		}
 
 		await this.page
 			.locator(
@@ -179,7 +210,12 @@ export class ExportImportPage {
 			)
 			.click();
 
-		await this.page.getByText('Comments', {exact: true}).click();
+		await this.page
+			.locator(
+				'[id="_com_liferay_exportimport_web_portlet_ImportPortlet_contentOptions"]'
+			)
+			.getByText('Comments')
+			.click();
 
 		await this.page
 			.locator(
@@ -189,6 +225,41 @@ export class ExportImportPage {
 			.click();
 
 		await this.importButton.click();
+	}
+
+	async getExportableItems() {
+		await this.newExportButton.click();
+
+		const portletListContainer = this.page.locator(
+			'#_com_liferay_exportimport_web_portlet_ExportPortlet_selectContents .portlet-list'
+		);
+
+		await portletListContainer.waitFor();
+
+		const itemsLocator = portletListContainer.locator(
+			'.custom-control-label-text:has(strong)'
+		);
+
+		const itemsMap = new Map();
+
+		for (const itemLocator of await itemsLocator.all()) {
+			const title = await itemLocator.locator('strong').textContent();
+			const countText = await itemLocator
+				.locator('.staging-taglib-checkbox-items')
+				.textContent();
+
+			const countMatch = countText ? countText.match(/\d+/) : null;
+
+			if (title && countMatch) {
+				const countAsNumber = parseInt(countMatch[0], 10);
+
+				itemsMap.set(title.trim(), countAsNumber);
+			}
+		}
+
+		await this.cancelButton.click();
+
+		return itemsMap;
 	}
 
 	async downloadExportProcess(name: string) {

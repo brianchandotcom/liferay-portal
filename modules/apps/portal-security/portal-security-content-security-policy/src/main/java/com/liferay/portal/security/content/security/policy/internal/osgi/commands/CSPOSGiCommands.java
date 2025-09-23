@@ -40,9 +40,8 @@ public class CSPOSGiCommands implements OSGiCommands {
 
 		if (contentSecurityPolicyConfiguration == null) {
 			System.out.println(
-				"There is no company level " +
-					"content security policy configuration for company " +
-						companyId);
+				"There is no company level content security policy " +
+					"configuration for company " + companyId);
 
 			return;
 		}

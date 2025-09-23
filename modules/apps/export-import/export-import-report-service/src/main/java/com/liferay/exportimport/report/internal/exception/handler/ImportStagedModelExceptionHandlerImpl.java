@@ -76,7 +76,7 @@ public class ImportStagedModelExceptionHandlerImpl
 					GetterUtil.getLong(
 						portletDataContext.getExportImportProcessId()),
 					portletDataException.getMessage(),
-					_getTraceString(portletDataException), modelName,
+					_getErrorStackTrace(portletDataException), modelName,
 					ExportImportReportEntryUtil.getOrigin(), scope,
 					ExportImportReportEntryUtil.getScopeKey(group));
 		}
@@ -90,7 +90,7 @@ public class ImportStagedModelExceptionHandlerImpl
 		}
 	}
 
-	private String _getTraceString(Throwable throwable) {
+	private String _getErrorStackTrace(Throwable throwable) {
 		OutputStream outputStream = new ByteArrayOutputStream();
 
 		throwable.printStackTrace(new PrintStream(outputStream));

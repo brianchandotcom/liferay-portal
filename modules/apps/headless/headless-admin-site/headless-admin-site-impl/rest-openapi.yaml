@@ -1867,6 +1867,7 @@ components:
                     # @review
                     description:
                         The grid viewport's ID.
+                    enum: [LandscapeMobile, PortraitMobile, Tablet]
                     type: string
             required:
                 -   gridViewportDefinition
@@ -2031,6 +2032,7 @@ components:
                 A module in a viewport.
             properties:
                 id:
+                    enum: [LandscapeMobile, PortraitMobile, Tablet]
                     type: string
                 moduleViewportDefinition:
                     properties:

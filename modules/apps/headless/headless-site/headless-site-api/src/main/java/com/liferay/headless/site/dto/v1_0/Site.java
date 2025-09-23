@@ -22,7 +22,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -443,8 +443,7 @@ public class Site implements Serializable {
 	private Supplier<MembershipType> _membershipTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public Map<String, String> getName() {
+	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
 
@@ -454,16 +453,14 @@ public class Site implements Serializable {
 		return name;
 	}
 
-	public void setName(Map<String, String> name) {
+	public void setName(String name) {
 		this.name = name;
 
 		_nameSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setName(
-		UnsafeSupplier<Map<String, String>, Exception> nameUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		_nameSupplier = () -> {
 			try {
 				return nameUnsafeSupplier.get();
@@ -479,11 +476,54 @@ public class Site implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Map<String, String> name;
+	@NotEmpty
+	protected String name;
 
 	@JsonIgnore
-	private Supplier<Map<String, String>> _nameSupplier;
+	private Supplier<String> _nameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Map<String, String> getName_i18n() {
+		if (_name_i18nSupplier != null) {
+			name_i18n = _name_i18nSupplier.get();
+
+			_name_i18nSupplier = null;
+		}
+
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+
+		_name_i18nSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		_name_i18nSupplier = () -> {
+			try {
+				return name_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> name_i18n;
+
+	@JsonIgnore
+	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public String getParentSiteKey() {
@@ -815,7 +855,7 @@ public class Site implements Serializable {
 			sb.append("\"");
 		}
 
-		Map<String, String> name = getName();
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -824,7 +864,23 @@ public class Site implements Serializable {
 
 			sb.append("\"name\": ");
 
-			sb.append(_toJSON(name));
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		Map<String, String> name_i18n = getName_i18n();
+
+		if (name_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(name_i18n));
 		}
 
 		String parentSiteKey = getParentSiteKey();

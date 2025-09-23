@@ -326,7 +326,7 @@ public abstract class BaseSiteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-site/v1.0/sites' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "manualMembership": ___, "membershipRestriction": ___, "membershipType": ___, "name": ___, "parentSiteKey": ___, "templateKey": ___, "templateType": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-site/v1.0/sites' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "manualMembership": ___, "membershipRestriction": ___, "membershipType": ___, "name": ___, "name_i18n": ___, "parentSiteKey": ___, "templateKey": ___, "templateType": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(description = "Adds a new site")
 	@io.swagger.v3.oas.annotations.tags.Tags(
@@ -485,7 +485,7 @@ public abstract class BaseSiteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-site/v1.0/sites' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "manualMembership": ___, "membershipRestriction": ___, "membershipType": ___, "name": ___, "parentSiteKey": ___, "templateKey": ___, "templateType": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-site/v1.0/sites' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "manualMembership": ___, "membershipRestriction": ___, "membershipType": ___, "name": ___, "name_i18n": ___, "parentSiteKey": ___, "templateKey": ___, "templateType": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates a site and all of its associated content."

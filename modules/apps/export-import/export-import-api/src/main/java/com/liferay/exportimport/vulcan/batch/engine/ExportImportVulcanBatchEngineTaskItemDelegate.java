@@ -24,6 +24,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public String getItemClassName();
 
+		public default String getItemModelName() {
+			return getItemClassName();
+		}
+
 		public default List<String> getNestedFields() {
 			return null;
 		}

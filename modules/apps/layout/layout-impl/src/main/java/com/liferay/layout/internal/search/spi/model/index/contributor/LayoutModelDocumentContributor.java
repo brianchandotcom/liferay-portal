@@ -60,6 +60,8 @@ public class LayoutModelDocumentContributor
 		document.addText(Field.TYPE, layout.getType());
 		document.addText(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+		document.addText(
+			"systemLayout", String.valueOf(layout.isSystem()));
 		document.addLocalizedKeyword(
 			"localized_title",
 			_localization.populateLocalizationMap(

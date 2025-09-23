@@ -7,6 +7,8 @@ import {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
+import {getNonLocalizableFieldMessage} from '../api/FieldBase/translation';
+
 import type {FieldChangeEventHandler, LocalizedValue} from '../types';
 
 const Switcher: React.FC<ISwitcherProps> = ({
@@ -150,15 +152,9 @@ export default function CheckboxBase({
 					className="c-ml-2 text-4 text-secondary"
 					data-testid="tooltip"
 					tabIndex={0}
-					title={
+					title={getNonLocalizableFieldMessage(
 						isLocalizationSupported
-							? Liferay.Language.get(
-									'translation-is-disabled-for-this-field'
-								)
-							: Liferay.Language.get(
-									'this-field-does-not-support-translations'
-								)
-					}
+					)}
 				>
 					<ClayIcon symbol="question-circle-full" />
 				</span>

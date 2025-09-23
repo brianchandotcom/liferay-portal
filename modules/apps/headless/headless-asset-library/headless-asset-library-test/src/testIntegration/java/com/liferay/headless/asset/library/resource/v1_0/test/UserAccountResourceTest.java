@@ -82,7 +82,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testGetAssetLibraryUserAccount() throws Exception {
 		super.testGetAssetLibraryUserAccount();
 
-		_testGetAssetLibraryUserAccountWithAssetLibraryMember();
+		UserAccount postUserAccount =
+			testGetAssetLibraryUserAccount_addUserAccount();
+
+		UserAccountResource assetLibraryMemberUserAccountResource =
+			_getUserAccountResource("");
+
+		UserAccount getUserAccount =
+			assetLibraryMemberUserAccountResource.getAssetLibraryUserAccount(
+				testGetAssetLibraryUserAccount_getAssetLibraryId(),
+				postUserAccount.getId());
+
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
 	}
 
 	@Override
@@ -399,24 +411,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			EntityField.Type.ID,
 			(entityField, userAccount1, userAccount2) -> {
 			});
-	}
-
-	private void _testGetAssetLibraryUserAccountWithAssetLibraryMember()
-		throws Exception {
-
-		UserAccount postUserAccount =
-			testGetAssetLibraryUserAccount_addUserAccount();
-
-		UserAccountResource assetLibraryMemberUserAccountResource =
-			_getUserAccountResource("");
-
-		UserAccount getUserAccount =
-			assetLibraryMemberUserAccountResource.getAssetLibraryUserAccount(
-				testGetAssetLibraryUserAccount_getAssetLibraryId(),
-				postUserAccount.getId());
-
-		assertEquals(postUserAccount, getUserAccount);
-		assertValid(getUserAccount);
 	}
 
 	private User _testUser;

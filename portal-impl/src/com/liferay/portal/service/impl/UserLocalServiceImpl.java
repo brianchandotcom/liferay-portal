@@ -3545,6 +3545,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			start, end, null);
 	}
 
+	@Override
 	public int searchBySocialCount(
 		long companyId, long[] groupIds, long[] userGroupIds, String keywords) {
 

@@ -74,8 +74,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 						return ServiceTrackerListFactory.open(
 							bundleContext, null,
-							"(export.import.vulcan.batch.engine.task." +
-								"item.delegate=true)",
+							"(export.import.vulcan.batch.engine.task.item." +
+								"delegate=true)",
 							new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
 								bundleContext));
 					});

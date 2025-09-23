@@ -786,6 +786,7 @@ function getDefaultChildren(structureUuid: Uuid) {
 
 	const title = getDefaultField({
 		label: Liferay.Language.get('title'),
+		locked: true,
 		name: 'title',
 		parent: structureUuid,
 		required: true,
@@ -797,6 +798,7 @@ function getDefaultChildren(structureUuid: Uuid) {
 	if (type === 'L_CMS_FILE_TYPES') {
 		const file = getDefaultField({
 			label: Liferay.Language.get('file'),
+			locked: true,
 			name: 'file',
 			parent: structureUuid,
 			required: true,

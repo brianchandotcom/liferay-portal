@@ -6,6 +6,10 @@
 package com.liferay.fragment.internal.exportimport.content.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -24,6 +28,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -82,6 +87,106 @@ public class EditableValuesExportImportContentProcessorTest {
 		_layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
 		_draftLayout = _layout.fetchDraftLayout();
+	}
+
+	@Test
+	public void testEditableValuesWithAssetVocabulary() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_stagingGroup.getGroupId(), 0);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		FragmentEntryLink draftFragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"classNameId",
+							_portal.getClassNameId(JournalArticle.class)
+						).put(
+							"classPK",
+							String.valueOf(journalArticle.getResourcePrimKey())
+						).put(
+							"classTypeId",
+							String.valueOf(journalArticle.getDDMStructureId())
+						).put(
+							"defaultValue",
+							" A paragraph is a self-contained..."
+						).put(
+							"externalReferenceCode",
+							journalArticle.getExternalReferenceCode()
+						).put(
+							"fieldId",
+							"AssetVocabulary_" +
+								assetVocabulary.getVocabularyId()
+						).put(
+							"itemSubtype", "Basic Web Content"
+						).put(
+							"itemType", "Web ContentArticle"
+						).put(
+							"title", "Title"
+						))
+				).toString(),
+				_fragmentRendererRegistry.getFragmentRenderer(
+					"com.liferay.fragment.internal.renderer." +
+						"ContentObjectFragmentRenderer"),
+				draftLayout, null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				layout.getGroupId(),
+				draftFragmentEntryLink.getFragmentEntryLinkId(),
+				layout.getPlid());
+
+		_publishLayouts();
+
+		AssetVocabulary importedAssetVocabulary =
+			_assetVocabularyLocalService.getAssetVocabularyByUuidAndGroupId(
+				assetVocabulary.getUuid(), _liveGroup.getGroupId());
+
+		FragmentEntryLink importedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				fragmentEntryLink.getUuid(), _liveGroup.getGroupId());
+
+		JSONObject jsonObject =
+			importedFragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject editableJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject elementTextJSONObject = editableJSONObject.getJSONObject(
+			"element-text");
+
+		Assert.assertEquals(
+			"AssetVocabulary_" + importedAssetVocabulary.getVocabularyId(),
+			elementTextJSONObject.get("fieldId"));
 	}
 
 	@Test
@@ -509,6 +614,12 @@ public class EditableValuesExportImportContentProcessorTest {
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			_liveGroup.getGroupId(), false, parameterMap);
 	}
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

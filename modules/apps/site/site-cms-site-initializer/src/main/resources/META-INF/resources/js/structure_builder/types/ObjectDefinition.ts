@@ -18,7 +18,7 @@ export type ObjectField = {
 	name: string;
 	objectFieldSettings?: {name: string; value: boolean | string | number}[];
 	required: boolean;
-	system?: boolean;
+	system: boolean;
 };
 
 export type ObjectRelationship = {

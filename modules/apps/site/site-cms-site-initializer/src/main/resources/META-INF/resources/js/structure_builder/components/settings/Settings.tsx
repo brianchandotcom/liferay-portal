@@ -42,7 +42,7 @@ export default function Settings() {
 	if (item.type === 'field') {
 		return (
 			<StructureFieldSettings
-				disabled={item.referenced}
+				disabled={item.referenced || item.field.locked}
 				field={item.field}
 				key={item.field.uuid}
 			/>

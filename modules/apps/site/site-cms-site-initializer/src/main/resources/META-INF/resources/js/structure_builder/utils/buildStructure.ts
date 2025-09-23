@@ -141,6 +141,7 @@ export function buildField({
 		indexableConfig,
 		label: objectField.label,
 		localized: objectField.localized,
+		locked: objectField.system,
 		name: objectField.name,
 		parent,
 		required: objectField.required,

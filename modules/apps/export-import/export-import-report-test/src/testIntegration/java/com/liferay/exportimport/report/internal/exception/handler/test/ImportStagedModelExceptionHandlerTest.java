@@ -68,7 +68,6 @@ public class ImportStagedModelExceptionHandlerTest {
 	public void setUp() throws Exception {
 		_companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -98,10 +97,10 @@ public class ImportStagedModelExceptionHandlerTest {
 			ExportImportTestUtil.getImportPortletDataContext(
 				group.getGroupId());
 
-		long importProcessId = RandomTestUtil.randomLong();
+		long exportImportProcessId = RandomTestUtil.randomLong();
 
 		portletDataContext.setExportImportProcessId(
-			String.valueOf(importProcessId));
+			String.valueOf(exportImportProcessId));
 
 		long exportImportReportEntriesCount =
 			_exportImportReportEntryLocalService.
@@ -147,7 +146,7 @@ public class ImportStagedModelExceptionHandlerTest {
 
 		List<ExportImportReportEntry> exportImportReportEntries =
 			_exportImportReportEntryLocalService.getExportImportReportEntries(
-				TestPropsValues.getCompanyId(), importProcessId);
+				TestPropsValues.getCompanyId(), exportImportProcessId);
 
 		Assert.assertEquals(
 			exportImportReportEntries.toString(), 1,
@@ -162,7 +161,7 @@ public class ImportStagedModelExceptionHandlerTest {
 			TestPropsValues.getCompanyId(),
 			exportImportReportEntry.getCompanyId());
 		Assert.assertEquals(
-			importProcessId,
+			exportImportProcessId,
 			exportImportReportEntry.getExportImportConfigurationId());
 		Assert.assertEquals(
 			externalReferenceCode,
@@ -203,9 +202,9 @@ public class ImportStagedModelExceptionHandlerTest {
 	private class TestStagedModel
 		implements ExternalReferenceCodeModel, StagedModel {
 
-		public TestStagedModel(String externalReferenceCode, long id) {
+		public TestStagedModel(String externalReferenceCode, long primaryKey) {
 			_externalReferenceCode = externalReferenceCode;
-			_id = id;
+			_primaryKey = primaryKey;
 		}
 
 		@Override
@@ -250,7 +249,7 @@ public class ImportStagedModelExceptionHandlerTest {
 
 		@Override
 		public Serializable getPrimaryKeyObj() {
-			return _id;
+			return _primaryKey;
 		}
 
 		@Override
@@ -290,7 +289,7 @@ public class ImportStagedModelExceptionHandlerTest {
 		}
 
 		private final String _externalReferenceCode;
-		private final long _id;
+		private final long _primaryKey;
 
 	}
 

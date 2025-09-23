@@ -263,6 +263,31 @@ public class Site implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
+	public String getParentSiteExternalReferenceCode() {
+		return parentSiteExternalReferenceCode;
+	}
+
+	public void setParentSiteExternalReferenceCode(
+		String parentSiteExternalReferenceCode) {
+
+		this.parentSiteExternalReferenceCode = parentSiteExternalReferenceCode;
+	}
+
+	public void setParentSiteExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			parentSiteExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			parentSiteExternalReferenceCode =
+				parentSiteExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String parentSiteExternalReferenceCode;
+
 	public String getParentSiteKey() {
 		return parentSiteKey;
 	}

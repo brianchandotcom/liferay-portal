@@ -526,6 +526,51 @@ public class Site implements Serializable {
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getParentSiteExternalReferenceCode() {
+		if (_parentSiteExternalReferenceCodeSupplier != null) {
+			parentSiteExternalReferenceCode =
+				_parentSiteExternalReferenceCodeSupplier.get();
+
+			_parentSiteExternalReferenceCodeSupplier = null;
+		}
+
+		return parentSiteExternalReferenceCode;
+	}
+
+	public void setParentSiteExternalReferenceCode(
+		String parentSiteExternalReferenceCode) {
+
+		this.parentSiteExternalReferenceCode = parentSiteExternalReferenceCode;
+
+		_parentSiteExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setParentSiteExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			parentSiteExternalReferenceCodeUnsafeSupplier) {
+
+		_parentSiteExternalReferenceCodeSupplier = () -> {
+			try {
+				return parentSiteExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parentSiteExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _parentSiteExternalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getParentSiteKey() {
 		if (_parentSiteKeySupplier != null) {
 			parentSiteKey = _parentSiteKeySupplier.get();
@@ -881,6 +926,23 @@ public class Site implements Serializable {
 			sb.append("\"name_i18n\": ");
 
 			sb.append(_toJSON(name_i18n));
+		}
+
+		String parentSiteExternalReferenceCode =
+			getParentSiteExternalReferenceCode();
+
+		if (parentSiteExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentSiteExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parentSiteExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		String parentSiteKey = getParentSiteKey();

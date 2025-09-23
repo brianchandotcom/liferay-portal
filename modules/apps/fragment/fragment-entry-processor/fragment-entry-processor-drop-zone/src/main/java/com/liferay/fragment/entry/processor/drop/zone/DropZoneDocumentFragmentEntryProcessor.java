@@ -124,19 +124,23 @@ public class DropZoneDocumentFragmentEntryProcessor
 
 			if (!idsAvailable) {
 				if (elements.size() != dropZoneItemIds.size()) {
-					Layout layout = _layoutLocalService.getLayout(
-						fragmentEntryLink.getPlid());
+					if (_log.isWarnEnabled()) {
+						Layout layout = _layoutLocalService.getLayout(
+							fragmentEntryLink.getPlid());
 
-					_log.error(
-						StringBundler.concat(
-							"Dropzone UUID missing for fragment entry link ID ",
-							fragmentEntryLink.getFragmentEntryLinkId(),
-							", friendly URL ", layout.getFriendlyURL(),
-							", and layout structure item ID ",
-							layoutStructureItem.getItemId(),
-							" because it is expected to have ", elements.size(),
-							" dropzone elements but found ",
-							dropZoneItemIds.size()));
+						_log.warn(
+							StringBundler.concat(
+								"Dropzone UUID missing for fragment entry ",
+								"link ID ",
+								fragmentEntryLink.getFragmentEntryLinkId(),
+								", friendly URL ", layout.getFriendlyURL(),
+								", and layout structure item ID ",
+								layoutStructureItem.getItemId(),
+								" because it is expected to have ",
+								elements.size(),
+								" dropzone elements but found ",
+								dropZoneItemIds.size()));
+					}
 				}
 
 				for (int i = 0;

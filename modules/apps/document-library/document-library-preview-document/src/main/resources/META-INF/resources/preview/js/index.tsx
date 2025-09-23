@@ -58,17 +58,14 @@ const DocumentPreviewer = ({
 			pagePromise: Promise.resolve(),
 		},
 	});
-	const [nextPageDisabled, setNextPageDisabled] = useState<boolean>(
-		currentPage === totalPages
-	);
-	const [previousPageDisabled, setPreviousPageDisabled] = useState<boolean>(
-		currentPage === 1
-	);
 	const [showPageInput, setShowPageInput] = useState<boolean>(false);
 
 	const imageContainerRef = useRef<HTMLDivElement>(null);
 	const pageInputRef = useRef<HTMLInputElement>(null);
 	const showPageInputButtonRef = useRef<HTMLButtonElement>(null);
+
+	const nextPageDisabled = currentPage === totalPages;
+	const previousPageDisabled = currentPage === 1;
 
 	const isMounted = useIsMounted();
 
@@ -146,9 +143,6 @@ const DocumentPreviewer = ({
 	}, WAIT_BETWEEN_GO_TO_PAGE);
 
 	const goToPage = (page: number) => {
-		setNextPageDisabled(page === totalPages);
-		setPreviousPageDisabled(page === 1);
-
 		if (!loadedPages[page] || !loadedPages[page].loaded) {
 			setCurrentPageLoading(true);
 			loadCurrentPage(page);
@@ -207,6 +201,10 @@ const DocumentPreviewer = ({
 	useEffect(() => {
 		loadAdjacentPages(initialPage);
 	}, [initialPage, loadAdjacentPages]);
+
+	useEffect(() => {
+		setCurrentPage(initialPage);
+	}, [initialPage]);
 
 	return (
 		<div className="preview-file">

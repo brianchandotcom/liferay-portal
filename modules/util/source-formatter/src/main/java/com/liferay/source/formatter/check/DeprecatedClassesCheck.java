@@ -7,6 +7,8 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
@@ -21,18 +23,23 @@ public class DeprecatedClassesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		return StringUtil.replace(
-			content,
-			new String[] {
-				"com.liferay.portal.kernel.util.CharPool",
-				"com.liferay.portal.kernel.util.StringPool",
-				"com.liferay.portal.util.PropsValues"
-			},
-			new String[] {
-				"com.liferay.petra.string.CharPool",
-				"com.liferay.petra.string.StringPool",
-				"com.liferay.portal.kernel.util.PropsValues"
-			});
+		List<String> deprecatedClassNames = getAttributeValues(
+			_DEPRECATED_CLASS_NAMES_KEY, absolutePath);
+
+		for (String deprecatedClassName : deprecatedClassNames) {
+			String[] parts = StringUtil.split(deprecatedClassName, "->");
+
+			if (parts.length != 2) {
+				continue;
+			}
+
+			content = StringUtil.replace(content, parts[0], parts[1]);
+		}
+
+		return content;
 	}
+
+	private static final String _DEPRECATED_CLASS_NAMES_KEY =
+		"deprecatedClassNames";
 
 }

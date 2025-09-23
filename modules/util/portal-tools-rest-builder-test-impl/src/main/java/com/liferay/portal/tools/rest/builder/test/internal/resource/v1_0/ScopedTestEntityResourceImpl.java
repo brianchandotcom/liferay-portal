@@ -58,6 +58,9 @@ public class ScopedTestEntityResourceImpl
 			Long assetLibraryId)
 		throws Exception {
 
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
+			assetLibraryId);
+
 		List<ScopedTestEntity> scopedTestEntities = new ArrayList<>();
 
 		for (ScopedTestEntity scopedTestEntity : _scopedTestEntities) {
@@ -68,9 +71,6 @@ public class ScopedTestEntityResourceImpl
 				scopedTestEntities.add(scopedTestEntity);
 			}
 		}
-
-		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
-			assetLibraryId);
 
 		return Page.of(
 			HashMapBuilder.<String, Map<String, String>>put(

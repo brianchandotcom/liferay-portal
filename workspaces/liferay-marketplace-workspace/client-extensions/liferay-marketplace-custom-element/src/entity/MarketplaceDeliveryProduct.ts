@@ -5,6 +5,7 @@
 
 import {
 	ProductLicense,
+	ProductLicenseType,
 	ProductPriceModel,
 	ProductSpecificationKey,
 	ProductType,
@@ -64,6 +65,13 @@ export class MarketplaceDeliveryProduct {
 
 	get friendlyURL() {
 		return this.product.urls.en_US;
+	}
+
+	public get isPerpetualLicense() {
+		const licenseType = this.specificationValues
+			.APP_LICENSING_TYPE as string;
+
+		return licenseType === ProductLicenseType.PERPETUAL;
 	}
 
 	get productImage() {
@@ -225,6 +233,18 @@ export class MarketplaceDeliveryProduct {
 		}
 
 		return true;
+	}
+
+	public getLicenseTagText() {
+		if (!this.specificationValues.APP_LICENSING_TYPE) {
+			return '';
+		}
+
+		if (this.isPerpetualLicense) {
+			return 'One-Time';
+		}
+
+		return 'Anually';
 	}
 
 	protected getCategories(vocabulary: string) {

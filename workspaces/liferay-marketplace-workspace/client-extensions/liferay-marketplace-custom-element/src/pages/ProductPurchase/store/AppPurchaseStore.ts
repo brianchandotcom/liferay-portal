@@ -38,15 +38,16 @@ export const productPurchaseStore = createStore({
 				email: '',
 				purchaseOrderNumber: '',
 			} as Invoice,
+			taxId: '',
 			type: PaymentMethodType.PAY_NOW,
 		},
 		project: null as unknown as ConsoleUserProject,
 	},
 	on: {
 		setAccountTaxId: {
-			account: (context, event: {account: Partial<Account>}) => ({
-				...context.account,
-				taxId: event.account.taxId as string,
+			payment: (context, event: {taxId: string}) => ({
+				...context.payment,
+				taxId: event.taxId,
 			}),
 		},
 		setBillingAddress: {

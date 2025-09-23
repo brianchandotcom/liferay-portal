@@ -495,7 +495,7 @@ export default {
 	'publishers': 'Publishers',
 	'purchase-and-install-new-apps-and-they-will-show-up-here':
 		'Purchase and install new apps and they will show up here.',
-	'purchase-app': 'Purchase Aapp',
+	'purchase-app': 'Purchase App',
 	'purchase-completed': 'Purchase Completed',
 	'purchase-date': 'Purchase Date',
 	'purchase-failed': 'Purchase Failed',

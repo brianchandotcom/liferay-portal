@@ -52,6 +52,7 @@ const ProductCardRevamp = ({
 					<img
 						alt="App Icon"
 						className="object-fit-cover rounded"
+						draggable={false}
 						height="64px"
 						src={icon}
 						width="64px"

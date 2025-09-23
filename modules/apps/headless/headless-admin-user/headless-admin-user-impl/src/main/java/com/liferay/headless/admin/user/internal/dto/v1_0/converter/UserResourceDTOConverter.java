@@ -305,8 +305,7 @@ public class UserResourceDTOConverter
 					});
 				setRoleBriefs(
 					() -> {
-						UserBag userBag = UserBagFactoryUtil.create(
-							user.getUserId());
+						UserBag userBag = UserBagFactoryUtil.create(user);
 
 						return _toRoleBriefs(
 							dtoConverterContext, userBag.getRoles());

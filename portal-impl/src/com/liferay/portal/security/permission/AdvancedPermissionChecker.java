@@ -123,7 +123,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	@Override
 	public UserBag getUserBag() throws PortalException {
-		return UserBagFactoryUtil.create(getUserId());
+		return UserBagFactoryUtil.create(getUser());
 	}
 
 	@Override

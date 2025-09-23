@@ -36,6 +36,7 @@ const DEFAULT_ASSET_TYPES: Array<AssetType> = [
 export default function DefaultPermissionFormContainer({
 	actions,
 	disabled,
+	infoBoxMessage,
 	onChange,
 	roles,
 	types,
@@ -131,6 +132,7 @@ export default function DefaultPermissionFormContainer({
 				<DefaultPermissionForm
 					actions={activeActions}
 					disabled={disabled}
+					infoBoxMessage={infoBoxMessage}
 					onChange={handlePermissionsChange}
 					roles={roles}
 					values={activeValues}

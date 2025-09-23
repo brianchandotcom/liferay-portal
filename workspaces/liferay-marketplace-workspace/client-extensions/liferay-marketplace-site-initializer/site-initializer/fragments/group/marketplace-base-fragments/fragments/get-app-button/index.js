@@ -10,9 +10,7 @@
 const contactPublisherButtonElement = fragmentElement.querySelector(
 	'button#contact-publisher'
 );
-const contactPublisherModal = document.querySelector(
-	'#contact-publisher'
-);
+const contactPublisherModal = document.querySelector('#contact-publisher');
 const getAppButtonElement = fragmentElement.querySelector('button#get-app');
 const getAppDescriptionElement = fragmentElement.querySelector(
 	'#get-app-description'

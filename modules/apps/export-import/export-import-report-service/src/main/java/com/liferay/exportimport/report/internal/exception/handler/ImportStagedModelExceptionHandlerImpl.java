@@ -65,7 +65,7 @@ public class ImportStagedModelExceptionHandlerImpl
 			if (StringUtil.equals(
 					scope, ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
-				groupId = 0L;
+				groupId = 0;
 			}
 
 			_exportImportReportEntryLocalService.

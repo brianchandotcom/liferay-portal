@@ -13,12 +13,17 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -33,6 +38,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
@@ -62,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.DownloadObjectEntryFolderServlet",
 		"osgi.http.whiteboard.servlet.pattern=/cms/download-folder/*",
-		"servlet.init.httpMethods=GET"
+		"servlet.init.httpMethods=GET,POST"
 	},
 	service = Servlet.class
 )
@@ -93,6 +99,20 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		}
 	}
 
+	@Override
+	protected void doPost(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException, ServletException {
+
+		try {
+			_downloadBulkAction(httpServletRequest, httpServletResponse);
+		}
+		catch (PortalException portalException) {
+			throw new ServletException(portalException);
+		}
+	}
+
 	private void _createContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -107,6 +127,109 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 			if (_log.isDebugEnabled()) {
 				_log.debug(actionException);
 			}
+		}
+	}
+
+	private void _downloadBulkAction(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException, PortalException {
+
+		httpServletResponse.addHeader(
+			HttpHeaders.CACHE_CONTROL,
+			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+
+		String content = StreamUtil.toString(
+			httpServletRequest.getInputStream(), StringPool.UTF8);
+		JSONObject jsonObject;
+
+		try {
+			jsonObject = _jsonFactory.createJSONObject(content);
+		}
+		catch (JSONException jsonException) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+			_log.error(jsonException);
+
+			return;
+		}
+
+		String type = jsonObject.getString("type");
+
+		if (!StringUtil.equalsIgnoreCase("DownloadBulkAction", type)) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+			_log.error("Unsupported Operation");
+
+			return;
+		}
+
+		boolean selectAll = jsonObject.getBoolean("selectAll");
+
+		if (selectAll) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+			_log.error("Unsupported Operation");
+
+			return;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = jsonObject.getJSONArray("bulkActionItems");
+
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject itemJSONObject = jsonArray.getJSONObject(i);
+
+			String className = itemJSONObject.getString("className");
+			long classPK = itemJSONObject.getLong("classPK");
+
+			if (StringUtil.equalsIgnoreCase(
+					className, ObjectEntryFolder.class.getName())) {
+
+				ObjectEntryFolder objectEntryFolder =
+					_objectEntryFolderService.getObjectEntryFolder(classPK);
+
+				_zipObjectEntryFolder(
+					objectEntryFolder.getGroupId(), classPK,
+					objectEntryFolder.getName(), themeDisplay, zipWriter);
+			}
+			else if (StringUtil.equalsIgnoreCase(
+						className,
+						"com.liferay.object.model.ObjectDefinition#Z7P5")) {
+
+				_zipObjectEntry(
+					_objectEntryLocalService.getObjectEntry(classPK),
+					StringPool.SLASH, themeDisplay.getPermissionChecker(),
+					zipWriter);
+			}
+			else {
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_BAD_REQUEST);
+
+				_log.error("Unsupported Operation");
+
+				return;
+			}
+		}
+
+		try (InputStream inputStream = new FileInputStream(
+				zipWriter.getFile())) {
+
+			ServletResponseUtil.sendFile(
+				httpServletRequest, httpServletResponse,
+				"download-" + Time.getTimestamp() + ".zip", inputStream, 0,
+				ContentTypes.APPLICATION_ZIP,
+				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+		}
+		finally {
+			File file = zipWriter.getFile();
+
+			file.delete();
 		}
 	}
 
@@ -250,6 +373,9 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;

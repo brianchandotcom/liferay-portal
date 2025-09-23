@@ -282,7 +282,6 @@ public class ObjectEntryFolderLocalServiceImpl
 		throws PortalException {
 
 		return _emptyModelManager.getOrAddEmptyModel(
-			ObjectEntryFolder.class.getName(),
 			ObjectEntryFolder.class.getName(), companyId,
 			() -> _addObjectEntryFolder(
 				externalReferenceCode, groupId,
@@ -298,7 +297,7 @@ public class ObjectEntryFolderLocalServiceImpl
 			(_externalReferenceCode, _groupId) ->
 				getObjectEntryFolderByExternalReferenceCode(
 					_externalReferenceCode, _groupId, companyId),
-			groupId);
+			groupId, ObjectEntryFolder.class.getName());
 	}
 
 	@Override

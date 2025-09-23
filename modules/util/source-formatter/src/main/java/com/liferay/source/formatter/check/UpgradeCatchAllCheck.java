@@ -202,7 +202,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	private static String _getMessage(JSONObject jsonObject) {
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("See ");
+		sb.append("See https://liferay.atlassian.net/browse/");
 		sb.append(jsonObject.getString("issueKey"));
 		sb.append(StringPool.COMMA_AND_SPACE);
 

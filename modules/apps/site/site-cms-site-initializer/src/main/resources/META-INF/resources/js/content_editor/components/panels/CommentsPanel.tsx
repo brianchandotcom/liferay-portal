@@ -43,9 +43,7 @@ export default function CommentsPanel({
 			CommentService.getComments({
 				url: getCommentsURL,
 			}).then(({data: comments}) => {
-				if (comments) {
-					setComments(comments);
-				}
+				setComments(comments ?? []);
 			});
 		}
 		else {

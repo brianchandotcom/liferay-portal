@@ -1077,24 +1077,6 @@ public class JournalArticleActionDropdownItemsProvider {
 		};
 	}
 
-	private boolean _hasTranslatePermission() {
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
-		long scopeGroupId = _themeDisplay.getScopeGroupId();
-
-		for (Locale locale : LanguageUtil.getAvailableLocales(scopeGroupId)) {
-			if (_translationPermission.contains(
-					permissionChecker, scopeGroupId,
-					LanguageUtil.getLanguageId(locale),
-					TranslationActionKeys.TRANSLATE)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _hasDeleteArticleAction() throws PortalException {
 		if (!JournalArticlePermission.contains(
 				_themeDisplay.getPermissionChecker(), _article,
@@ -1108,6 +1090,24 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		if (count > 1) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasTranslatePermission() {
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+		long scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales(scopeGroupId)) {
+			if (_translationPermission.contains(
+					permissionChecker, scopeGroupId,
+					LanguageUtil.getLanguageId(locale),
+					TranslationActionKeys.TRANSLATE)) {
+
+				return true;
+			}
 		}
 
 		return false;

@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../../../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../../../../../fixtures/loginTest';
-import {PORTLET_URLS} from '../../../../../../utils/portletUrls';
-import {waitForAlert} from '../../../../../../utils/waitForAlert';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 const test = mergeTests(dataApiHelpersTest, loginTest());
 

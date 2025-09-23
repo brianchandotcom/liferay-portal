@@ -37,7 +37,11 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -45,11 +49,15 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -157,6 +165,8 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 				getObjectEntryFolderByExternalReferenceCode(
 					"L_FILES", _depotEntry.getGroupId(),
 					testCompany.getCompanyId());
+
+		_themeDisplay = _getThemeDisplay();
 	}
 
 	@Override
@@ -172,7 +182,10 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 			_basicWebContentObjectDefinition.getObjectDefinitionId(),
 			_objectEntryFolder.getObjectEntryFolderId(), null,
 			HashMapBuilder.<String, Serializable>put(
-				"title", RandomTestUtil.randomString()
+				"title_i18n",
+				HashMapBuilder.<String, Serializable>put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
 			).put(
 				_relationshipObjectField.getName(), assetId
 			).build(),
@@ -183,6 +196,13 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		assetUsage1.setName(() -> objectEntry.getTitleValue(_LANGUAGE_ID));
 		assetUsage1.setType(
 			() -> _basicWebContentObjectDefinition.getLabel(_LANGUAGE_ID));
+		assetUsage1.setUrl(
+			() -> StringBundler.concat(
+				_themeDisplay.getPortalURL(), _portal.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/edit_content_item?&p_l_mode=read&p_p_state=",
+				LiferayWindowState.POP_UP, "&objectEntryId=",
+				objectEntry.getObjectEntryId()));
 
 		AssetUsage assetUsage2 = _addLayoutAssetUsage(
 			randomAssetUsage(), assetId,
@@ -224,8 +244,32 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	}
 
 	@Override
+	protected boolean equals(AssetUsage assetUsage1, AssetUsage assetUsage2) {
+		if (!Objects.deepEquals(
+				HttpComponentsUtil.removeParameter(
+					assetUsage1.getUrl(), "p_p_auth"),
+				HttpComponentsUtil.removeParameter(
+					assetUsage2.getUrl(), "p_p_auth"))) {
+
+			return false;
+		}
+
+		return super.equals(assetUsage1, assetUsage2);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name", "type"};
+	}
+
+	@Override
+	protected AssetUsage randomAssetUsage() throws Exception {
+		return new AssetUsage() {
+			{
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
 	}
 
 	@Override
@@ -293,6 +337,13 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		}
 		else if (type == LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
 			assetUsage.setType("Page Template");
+			assetUsage.setUrl(
+				() -> HttpComponentsUtil.addParameter(
+					PortalUtil.getLayoutFullURL(
+						_layoutLocalService.getLayout(
+							layoutPageTemplateEntry.getPlid()),
+						_themeDisplay),
+					"p_l_mode", Constants.PREVIEW));
 		}
 
 		return assetUsage;
@@ -325,6 +376,24 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		if ((file != null) && file.exists()) {
 			file.delete();
 		}
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(testCompany);
+		themeDisplay.setLanguageId(testGroup.getDefaultLanguageId());
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(testGroup.getDefaultLanguageId()));
+		themeDisplay.setPortalDomain("localhost");
+		themeDisplay.setPortalURL(
+			testCompany.getPortalURL(testGroup.getGroupId()));
+		themeDisplay.setServerName("localhost");
+		themeDisplay.setServerPort(8080);
+		themeDisplay.setSiteGroupId(testGroup.getGroupId());
+		themeDisplay.setUser(testCompany.getGuestUser());
+
+		return themeDisplay;
 	}
 
 	private boolean _isCMSSiteInitialized() throws Exception {
@@ -365,6 +434,9 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		_layoutClassedModelUsageLocalService;
 
 	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
@@ -393,5 +465,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 	private ObjectField _relationshipObjectField;
 	private ServiceContext _serviceContext;
+	private ThemeDisplay _themeDisplay;
 
 }

@@ -211,6 +211,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					});
 				searchContext.setAttribute(
 					"privateLayout", Boolean.FALSE.toString());
+				searchContext.setAttribute(
+					"systemLayout", Boolean.FALSE.toString());
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {groupId});
 				searchContext.setKeywords(search);

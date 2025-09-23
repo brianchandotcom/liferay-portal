@@ -14,6 +14,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
+import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
@@ -21,7 +22,6 @@ import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdExce
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.exception.ObjectRelationshipSystemException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
-import com.liferay.object.exception.ObjectScopeException;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -181,7 +181,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		AssertUtils.assertFailure(
-			ObjectScopeException.class,
+			ObjectDefinitionScopeException.class,
 			"An object definition scoped by depot can only be related to " +
 				"object definitions of the same scope",
 			() -> _objectRelationshipLocalService.addObjectRelationship(
@@ -193,7 +193,7 @@ public class ObjectRelationshipLocalServiceTest {
 				"able", false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
 				null));
 		AssertUtils.assertFailure(
-			ObjectScopeException.class,
+			ObjectDefinitionScopeException.class,
 			"An object definition scoped by depot can only be related to " +
 				"object definitions of the same scope",
 			() -> _objectRelationshipLocalService.addObjectRelationship(

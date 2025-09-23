@@ -163,7 +163,9 @@ function reducer(state: State, action: Action): State {
 				isFetching: false,
 				[key]: {
 					...state[key],
-					items: state[key].items.filter((item) => item.id !== id),
+					items: (
+						state[key].items as (UserAccount | UserGroup)[]
+					).filter((item) => item.id !== id),
 				},
 			};
 		}
@@ -176,7 +178,9 @@ function reducer(state: State, action: Action): State {
 				...state,
 				[key]: {
 					...state[key],
-					items: state[key].items.filter((item) => item.id !== id),
+					items: (
+						state[key].items as (UserAccount | UserGroup)[]
+					).filter((item) => item.id !== id),
 				},
 			};
 		}

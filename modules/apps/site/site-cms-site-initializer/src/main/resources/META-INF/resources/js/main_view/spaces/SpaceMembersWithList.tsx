@@ -72,7 +72,7 @@ export function SpaceMembersWithList({
 	}, [sentinelRef, loadMore, selectedOption, isFetchingMembers]);
 
 	useEffect(() => {
-		const hasMembers = users.items.length > 0 || groups.items.length > 0;
+		const hasMembers = !!users.items.length || !!groups.items.length;
 		onHasSelectedMembersChange?.(hasMembers);
 	}, [onHasSelectedMembersChange, users.items, groups.items]);
 

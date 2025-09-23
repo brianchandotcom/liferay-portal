@@ -13,12 +13,12 @@ import {
 	UserGroup,
 } from '../../../../src/main/resources/META-INF/resources/js/common/types/UserAccount';
 import {SelectOptions} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersInputWithSelect';
-import {useSpaceMembers} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/hooks/useSpaceMembers';
 import {SPACE_MEMBER_ROLE_NAME} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersPermissionSelect';
 import {
 	SpaceMembersWithList,
 	SpaceMembersWithListProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersWithList';
+import {useSpaceMembers} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/hooks/useSpaceMembers';
 import {mockFetch} from '../../__mocks__/frontend-js-web';
 
 jest.mock(

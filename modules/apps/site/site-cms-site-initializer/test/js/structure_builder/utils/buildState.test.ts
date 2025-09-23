@@ -22,6 +22,7 @@ jest.mock(
 
 const DATE_TIME_FIELD_UUID = getUuid();
 const TEXT_FIELD_UUID = getUuid();
+const TITLE_FIELD_UUID = getUuid();
 
 const DATE_TIME_FIELD: Field = {
 	erc: 'datetime-field',
@@ -57,6 +58,24 @@ const TEXT_FIELD: Field = {
 	uuid: TEXT_FIELD_UUID,
 };
 
+const TITLE_FIELD: Field = {
+	erc: 'title-field',
+	indexableConfig: {
+		indexed: true,
+		indexedAsKeyword: true,
+		indexedLanguageId: undefined,
+	},
+	label: {en_US: 'Title Field'},
+	localized: false,
+	locked: true,
+	name: 'titleField',
+	parent: getUuid(),
+	required: true,
+	settings: {},
+	type: 'text',
+	uuid: TITLE_FIELD_UUID,
+};
+
 function getChildren(fields: Field[]) {
 	const children = new Map();
 
@@ -68,7 +87,7 @@ function getChildren(fields: Field[]) {
 }
 
 describe('buildState', () => {
-	it('Builds state with two fields ', () => {
+	it('Builds state with two editable fields and one locked field', () => {
 		const structure: State['structure'] = {
 			children: new Map(),
 			erc: 'structureERC',
@@ -92,7 +111,7 @@ describe('buildState', () => {
 		};
 
 		const objectDefinition = buildObjectDefinition({
-			children: getChildren([TEXT_FIELD, DATE_TIME_FIELD]),
+			children: getChildren([TEXT_FIELD, DATE_TIME_FIELD, TITLE_FIELD]),
 			erc: structure.erc,
 			label: structure.label,
 			name: structure.name,
@@ -176,7 +195,7 @@ describe('buildState', () => {
 		expect(result).toEqual(nextState);
 	});
 
-	it('Takes into account spaces', () => {
+	it('Takes into account spaces and workflows', () => {
 		const structure: State['structure'] = {
 			children: new Map(),
 			erc: 'structureERC',
@@ -186,7 +205,10 @@ describe('buildState', () => {
 			status: 'published',
 			type: 'L_CMS_CONTENT_STRUCTURES',
 			uuid: getUuid(),
-			workflows: {},
+			workflows: {
+				'': 'Workflow 2',
+				'space-1-erc': 'Workflow 1',
+			},
 		};
 
 		const initialState: State = {
@@ -205,6 +227,7 @@ describe('buildState', () => {
 			label: structure.label,
 			name: structure.name,
 			spaces: structure.spaces,
+			workflows: structure.workflows,
 		});
 
 		const result = buildState({

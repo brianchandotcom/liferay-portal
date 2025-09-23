@@ -47,6 +47,20 @@ const TEXT_FIELD: Field = {
 	uuid: getUuid(),
 };
 
+const TITLE_FIELD: Field = {
+	erc: 'title-field',
+	indexableConfig: {indexed: true, indexedAsKeyword: true},
+	label: {en_US: 'Title Field'},
+	localized: false,
+	locked: true,
+	name: 'titleField',
+	parent: getUuid(),
+	required: true,
+	settings: {},
+	type: 'text',
+	uuid: getUuid(),
+};
+
 function getChildren(fields: Field[]) {
 	const children = new Map();
 
@@ -58,9 +72,9 @@ function getChildren(fields: Field[]) {
 }
 
 describe('buildObjectDefinition', () => {
-	it('Builds objectDefinition with a field without settings', () => {
+	it('builds objectDefinition with a field without settings and a locked field', () => {
 		const result = buildObjectDefinition({
-			children: getChildren([TEXT_FIELD]),
+			children: getChildren([TEXT_FIELD, TITLE_FIELD]),
 			erc: 'structureERC',
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -95,6 +109,20 @@ describe('buildObjectDefinition', () => {
 					required: true,
 					system: false,
 				},
+				{
+					DBType: 'String',
+					businessType: 'Text',
+					externalReferenceCode: 'title-field',
+					indexed: true,
+					indexedAsKeyword: true,
+					indexedLanguageId: '',
+					label: {en_US: 'Title Field'},
+					localized: false,
+					name: 'titleField',
+					objectFieldSettings: [],
+					required: true,
+					system: true,
+				},
 			],
 			objectRelationships: [],
 			pluralLabel: {en_US: 'Structure'},
@@ -106,7 +134,7 @@ describe('buildObjectDefinition', () => {
 		});
 	});
 
-	it('Builds objectDefinition with a field with settings', () => {
+	it('builds objectDefinition with a field with settings', () => {
 		const result = buildObjectDefinition({
 			children: getChildren([DATE_TIME_FIELD]),
 			erc: 'structureERC',
@@ -154,7 +182,7 @@ describe('buildObjectDefinition', () => {
 		});
 	});
 
-	it('Builds objectDefinition with spaces selected', () => {
+	it('builds objectDefinition with spaces and workflows selected', () => {
 		const result = buildObjectDefinition({
 			children: getChildren([TEXT_FIELD]),
 			erc: 'structureERC',
@@ -162,6 +190,7 @@ describe('buildObjectDefinition', () => {
 			name: 'myStructure',
 			spaces: ['space-1-erc', 'space-2-erc'],
 			status: 'published',
+			workflows: {'': 'Workflow 2', 'space-1-erc': 'Workflow 1'},
 		});
 
 		expect(result).toEqual({
@@ -205,6 +234,16 @@ describe('buildObjectDefinition', () => {
 				code: 0,
 			},
 			titleObjectFieldName: 'title',
+			workflowDefinitionLinks: [
+				{
+					groupExternalReferenceCode: '',
+					workflowDefinitionName: 'Workflow 2',
+				},
+				{
+					groupExternalReferenceCode: 'space-1-erc',
+					workflowDefinitionName: 'Workflow 1',
+				},
+			],
 		});
 	});
 });

@@ -57,7 +57,7 @@ public class ImportStagedModelExceptionHandlerImpl
 		try {
 			long groupId = portletDataContext.getGroupId();
 
-			Group group = _groupLocalService.fetchGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			String scope = ExportImportReportEntryUtil.getScope(group);
 

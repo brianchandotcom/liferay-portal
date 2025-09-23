@@ -364,6 +364,15 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public ObjectField fetchObjectFieldByBusinessType(
+		long objectDefinitionId, String businessType,
+		OrderByComparator<ObjectField> orderByComparator) {
+
+		return objectFieldPersistence.fetchByODI_BT_First(
+			objectDefinitionId, businessType, orderByComparator);
+	}
+
+	@Override
 	public List<ObjectField> getActiveObjectFields(
 			List<ObjectField> objectFields)
 		throws PortalException {

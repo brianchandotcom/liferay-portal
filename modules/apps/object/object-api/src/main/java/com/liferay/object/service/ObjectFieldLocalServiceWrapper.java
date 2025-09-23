@@ -345,6 +345,16 @@ public class ObjectFieldLocalServiceWrapper
 			externalReferenceCode, objectDefinitionId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectField fetchObjectFieldByBusinessType(
+		long objectDefinitionId, String businessType,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.object.model.ObjectField> orderByComparator) {
+
+		return _objectFieldLocalService.fetchObjectFieldByBusinessType(
+			objectDefinitionId, businessType, orderByComparator);
+	}
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *

@@ -7,7 +7,9 @@ package com.liferay.exportimport.internal.data.handler;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -69,7 +71,8 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, null, _mockPortletDataContext(endDate, null, null));
+				_mockExportImportDescriptor(),
+				_mockPortletDataContext(endDate, null, null));
 
 		Assert.assertEquals(
 			"dateModified le " + _dateFormat.format(endDate),
@@ -83,7 +86,8 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, null, _mockPortletDataContext(endDate, null, startDate));
+				_mockExportImportDescriptor(),
+				_mockPortletDataContext(endDate, null, startDate));
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -93,17 +97,43 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
+	public void testBuildExportParametersWithItemClassName() {
+		String itemClassName = RandomTestUtil.randomString();
+
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_mockExportImportDescriptor(itemClassName, null, null, null),
+				_mockPortletDataContext());
+
+		Assert.assertEquals(itemClassName, parameters.get("itemClassName"));
+	}
+
+	@Test
+	public void testBuildExportParametersWithItemModelName() {
+		String itemModelName = RandomTestUtil.randomString();
+
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_mockExportImportDescriptor(null, itemModelName, null, null),
+				_mockPortletDataContext());
+
+		Assert.assertEquals(itemModelName, parameters.get("itemModelName"));
+	}
+
+	@Test
 	public void testBuildExportParametersWithNestedFields() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				List.of("nestedField1", "nestedField2"), null,
-				_mockPortletDataContext(null, null, null));
+				_mockExportImportDescriptor(
+					null, null, List.of("nestedField1", "nestedField2"), null),
+				_mockPortletDataContext());
 
 		Assert.assertEquals(
 			"nestedField1,nestedField2", parameters.get("batchNestedFields"));
 
 		parameters = BatchEnginePortletDataHandlerUtil.buildExportParameters(
-			List.of("nestedField1", "nestedField2"), null,
+			_mockExportImportDescriptor(
+				null, null, List.of("nestedField1", "nestedField2"), null),
 			_mockPortletDataContext(
 				null,
 				HashMapBuilder.put(
@@ -120,7 +150,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithNoDates() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, null, _mockPortletDataContext(null, null, null));
+				_mockExportImportDescriptor(), _mockPortletDataContext());
 
 		Assert.assertNull(parameters.get("filter"));
 	}
@@ -129,13 +159,14 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithParameters() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null,
-				HashMapBuilder.<String, Serializable>put(
-					"param1", "value1"
-				).put(
-					"param2", "value2"
-				).build(),
-				_mockPortletDataContext(null, null, null));
+				_mockExportImportDescriptor(
+					null, null, null,
+					HashMapBuilder.<String, Serializable>put(
+						"param1", "value1"
+					).put(
+						"param2", "value2"
+					).build()),
+				_mockPortletDataContext());
 
 		Assert.assertEquals("value1", parameters.get("param1"));
 		Assert.assertEquals("value2", parameters.get("param2"));
@@ -147,11 +178,36 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				null, null, _mockPortletDataContext(null, null, startDate));
+				_mockExportImportDescriptor(),
+				_mockPortletDataContext(null, null, startDate));
 
 		Assert.assertEquals(
 			"dateModified ge " + _dateFormat.format(startDate),
 			parameters.get("filter"));
+	}
+
+	@Test
+	public void testBuildImportParametersWithItemClassName() {
+		String itemClassName = RandomTestUtil.randomString();
+
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildImportParameters(
+				_mockExportImportDescriptor(itemClassName, null, null, null),
+				_mockPortletDataContext());
+
+		Assert.assertEquals(itemClassName, parameters.get("itemClassName"));
+	}
+
+	@Test
+	public void testBuildImportParametersWithItemModelName() {
+		String itemModelName = RandomTestUtil.randomString();
+
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildImportParameters(
+				_mockExportImportDescriptor(null, itemModelName, null, null),
+				_mockPortletDataContext());
+
+		Assert.assertEquals(itemModelName, parameters.get("itemModelName"));
 	}
 
 	private Date _getDate(int days) {
@@ -162,11 +218,57 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		return calendar.getTime();
 	}
 
+	private ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+		_mockExportImportDescriptor() {
+
+		return Mockito.mock(
+			ExportImportVulcanBatchEngineTaskItemDelegate.
+				ExportImportDescriptor.class);
+	}
+
+	private ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+		_mockExportImportDescriptor(
+			String itemClassName, String itemModelName,
+			List<String> nestedFields, Map<String, Serializable> parameters) {
+
+		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+			exportImportDescriptor = _mockExportImportDescriptor();
+
+		Mockito.when(
+			exportImportDescriptor.getItemClassName()
+		).thenReturn(
+			itemClassName
+		);
+
+		Mockito.when(
+			exportImportDescriptor.getItemModelName()
+		).thenReturn(
+			itemModelName
+		);
+
+		Mockito.when(
+			exportImportDescriptor.getNestedFields()
+		).thenReturn(
+			nestedFields
+		);
+
+		Mockito.when(
+			exportImportDescriptor.getParameters()
+		).thenReturn(
+			parameters
+		);
+
+		return exportImportDescriptor;
+	}
+
+	private PortletDataContext _mockPortletDataContext() {
+		return Mockito.mock(PortletDataContext.class);
+	}
+
 	private PortletDataContext _mockPortletDataContext(
 		Date endDate, Map<String, String[]> parameterMap, Date startDate) {
 
-		PortletDataContext portletDataContext = Mockito.mock(
-			PortletDataContext.class);
+		PortletDataContext portletDataContext = _mockPortletDataContext();
 
 		Mockito.when(
 			portletDataContext.getEndDate()

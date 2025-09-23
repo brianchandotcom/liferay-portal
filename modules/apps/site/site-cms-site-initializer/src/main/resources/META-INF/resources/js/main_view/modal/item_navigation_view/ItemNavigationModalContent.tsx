@@ -8,6 +8,7 @@ import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import CommentsPanel from '../../../content_editor/components/panels/CommentsPanel';
 import AssetTypeInfoPanel from '../../info_panel/AssetTypeInfoPanelContent';
 import Carousel from './Carousel';
 import Header from './Header';
@@ -26,6 +27,38 @@ const KEY_CODE = {
 	RIGHT: 39,
 };
 
+const PANELS = {
+	commentPanel: 'commentPanel',
+	infoPanel: 'infoPanel',
+};
+
+const AssetNavigationCommentsPanel = ({
+	additionalProps: {commentsProps},
+	item,
+}: {
+	additionalProps: any;
+	item: ItemData;
+}) => {
+	const {addCommentURL, editCommentURL, getCommentsURL} = commentsProps;
+	const {
+		embedded: {id},
+		entryClassName,
+	}: ItemData = item;
+
+	const dynamicURL = `?className=${encodeURIComponent(
+		entryClassName
+	)}&classPK=${id}`;
+
+	return (
+		<CommentsPanel
+			{...commentsProps}
+			addCommentURL={`${addCommentURL}${dynamicURL}`}
+			editCommentURL={`${editCommentURL}${dynamicURL}`}
+			getCommentsURL={`${getCommentsURL}${dynamicURL}`}
+		></CommentsPanel>
+	);
+};
+
 export default function ItemNavigationModalContent({
 	additionalProps,
 	contentViewURL,
@@ -34,8 +67,8 @@ export default function ItemNavigationModalContent({
 }: ItemNavigationModalContent) {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [openSidePanel, setOpenSidePanel] = useState(false);
+	const [currentPanel, setCurrentPanel] = useState<String>();
 	const containerRef = useRef(null);
-
 	const currentItem = items[currentItemIndex];
 
 	const handleClickNext = useCallback(() => {
@@ -76,6 +109,28 @@ export default function ItemNavigationModalContent({
 		[handleClickNext, handleClickPrevious]
 	);
 
+	const handleClickComments = () => {
+		if (currentPanel === PANELS.commentPanel && openSidePanel) {
+			setOpenSidePanel(false);
+
+			return;
+		}
+
+		setCurrentPanel(PANELS.commentPanel);
+		setOpenSidePanel(true);
+	};
+
+	const handleClickInfo = () => {
+		if (currentPanel === PANELS.infoPanel && openSidePanel) {
+			setOpenSidePanel(false);
+
+			return;
+		}
+
+		setCurrentPanel(PANELS.infoPanel);
+		setOpenSidePanel(true);
+	};
+
 	useEffect(() => {
 		document.documentElement.addEventListener('keydown', handleOnKeyDown);
 
@@ -91,7 +146,8 @@ export default function ItemNavigationModalContent({
 		<>
 			<ClayModal.Header>
 				<Header
-					handleClickInfo={() => setOpenSidePanel(!openSidePanel)}
+					handleClickComments={handleClickComments}
+					handleClickInfo={handleClickInfo}
 					item={currentItem}
 				/>
 			</ClayModal.Header>
@@ -111,10 +167,17 @@ export default function ItemNavigationModalContent({
 						onOpenChange={setOpenSidePanel}
 						open={openSidePanel}
 					>
-						<AssetTypeInfoPanel
-							additionalProps={additionalProps as any}
-							items={[currentItem]}
-						/>
+						{currentPanel === PANELS.commentPanel ? (
+							<AssetNavigationCommentsPanel
+								additionalProps={additionalProps as any}
+								item={currentItem}
+							/>
+						) : (
+							<AssetTypeInfoPanel
+								additionalProps={additionalProps as any}
+								items={[currentItem]}
+							/>
+						)}
 					</SidePanel>
 				</div>
 			</ClayModal.Body>

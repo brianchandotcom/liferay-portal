@@ -572,7 +572,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		_assertSettings(
 			assetLibrary, autoTaggingEnabled, availableLanguageIds,
-			defaultLanguageId, "outline-0", new MimeTypeLimit[0], false,
+			defaultLanguageId, "outline-0", new MimeTypeLimit[0], true,
 			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
 	}
 

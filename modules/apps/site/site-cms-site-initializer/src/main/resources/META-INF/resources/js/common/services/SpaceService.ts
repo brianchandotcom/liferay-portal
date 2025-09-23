@@ -133,15 +133,10 @@ async function getSpaceUsers({
 }
 
 async function getSpaces(): Promise<Space[]> {
-	const {data, error} = await ApiHelper.get<{items: Space[]}>(
-		"/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'"
-	);
-
-	if (data) {
-		return data.items;
-	}
-
-	throw new Error(error);
+	return await ApiHelper.getAll<Space>({
+		filter: "type eq 'Space'",
+		url: '/o/headless-asset-library/v1.0/asset-libraries',
+	});
 }
 
 async function linkUserToSpace({

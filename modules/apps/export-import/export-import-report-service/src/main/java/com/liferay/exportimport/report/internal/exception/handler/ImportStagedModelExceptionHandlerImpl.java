@@ -84,9 +84,9 @@ public class ImportStagedModelExceptionHandlerImpl
 		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
-					"Error adding ErrorExportImportReportEntry with ",
-					"externalReferenceCode: ", externalReferenceCode,
-					" and modelName ", modelName),
+					"Unable to add error export import report entry with ",
+					"external reference code \"", externalReferenceCode,
+					"\" and model name \"", modelName, "\""),
 				exception);
 		}
 	}

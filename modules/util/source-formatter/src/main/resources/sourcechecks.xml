@@ -787,7 +787,7 @@
 		</check>
 		<check name="JavaFeatureFlagManagerUtilCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used." />
+			<description name="Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used and incorrect use of it." />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaFeatureFlagsAndTestInfoAnnotationCheck">

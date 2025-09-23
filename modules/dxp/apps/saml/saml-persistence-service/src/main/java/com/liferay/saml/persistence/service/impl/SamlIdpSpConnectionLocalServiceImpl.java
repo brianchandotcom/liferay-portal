@@ -41,11 +41,11 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 	@Override
 	public SamlIdpSpConnection addSamlIdpSpConnection(
-			int assertionLifetime, String attributeNames,
+			String samlSpEntityId, int assertionLifetime, String attributeNames,
 			boolean attributesEnabled, boolean attributesNamespaceEnabled,
 			boolean enabled, boolean encryptionForced, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
-			String nameIdAttribute, String nameIdFormat, String samlSpEntityId,
+			String nameIdAttribute, String nameIdFormat,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -85,6 +85,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setEnabled(enabled);
 		samlIdpSpConnection.setEncryptionForced(encryptionForced);
 		samlIdpSpConnection.setMetadataUpdatedDate(date);
+		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -113,7 +114,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setName(name);
 		samlIdpSpConnection.setNameIdAttribute(nameIdAttribute);
 		samlIdpSpConnection.setNameIdFormat(nameIdFormat);
-		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		return samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
@@ -202,12 +202,12 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 	@Override
 	public SamlIdpSpConnection updateSamlIdpSpConnection(
-			long samlIdpSpConnectionId, int assertionLifetime,
-			String attributeNames, boolean attributesEnabled,
-			boolean attributesNamespaceEnabled, boolean enabled,
-			boolean encryptionForced, String metadataUrl,
+			long samlIdpSpConnectionId, String samlSpEntityId,
+			int assertionLifetime, String attributeNames,
+			boolean attributesEnabled, boolean attributesNamespaceEnabled,
+			boolean enabled, boolean encryptionForced, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
-			String nameIdAttribute, String nameIdFormat, String samlSpEntityId,
+			String nameIdAttribute, String nameIdFormat,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -243,6 +243,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setEnabled(enabled);
 		samlIdpSpConnection.setEncryptionForced(encryptionForced);
 		samlIdpSpConnection.setMetadataUrl(StringPool.BLANK);
+		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -276,7 +277,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setName(name);
 		samlIdpSpConnection.setNameIdAttribute(nameIdAttribute);
 		samlIdpSpConnection.setNameIdFormat(nameIdFormat);
-		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		return samlIdpSpConnectionPersistence.update(samlIdpSpConnection);

@@ -27,7 +27,7 @@ public class SamlSpMessageLocalServiceImpl
 
 	@Override
 	public SamlSpMessage addSamlSpMessage(
-		String samlIdpEntityId, String samlIdpResponseKey, Date expirationDate,
+		String samlIdpEntityId, Date expirationDate, String samlIdpResponseKey,
 		ServiceContext serviceContext) {
 
 		long samlSpMessageId = counterLocalService.increment(

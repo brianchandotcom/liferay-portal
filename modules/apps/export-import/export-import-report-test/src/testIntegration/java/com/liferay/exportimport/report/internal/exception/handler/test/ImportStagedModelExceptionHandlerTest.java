@@ -85,12 +85,12 @@ public class ImportStagedModelExceptionHandlerTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		String errorMessage = RandomTestUtil.randomString();
+		String error = RandomTestUtil.randomString();
 
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
 				StagedModelDataHandler.class,
-				new TestStagedModelDataHandler(errorMessage),
+				new TestStagedModelDataHandler(error),
 				MapUtil.singletonDictionary("companyId", group.getCompanyId()));
 
 		PortletDataContext portletDataContext =
@@ -130,8 +130,7 @@ public class ImportStagedModelExceptionHandlerTest {
 			PortletDataException portletDataException =
 				(PortletDataException)throwable;
 
-			Assert.assertEquals(
-				errorMessage, portletDataException.getMessage());
+			Assert.assertEquals(error, portletDataException.getMessage());
 		}
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
@@ -170,7 +169,7 @@ public class ImportStagedModelExceptionHandlerTest {
 			_classNameLocalService.getClassNameId(TestStagedModel.class),
 			exportImportReportEntry.getClassNameId());
 		Assert.assertEquals(id, exportImportReportEntry.getClassPK());
-		Assert.assertEquals(errorMessage, exportImportReportEntry.getError());
+		Assert.assertEquals(error, exportImportReportEntry.getError());
 		Assert.assertNotNull(exportImportReportEntry.getErrorStacktrace());
 		Assert.assertEquals(
 			TestStagedModel.class.getName(),
@@ -300,8 +299,8 @@ public class ImportStagedModelExceptionHandlerTest {
 			TestStagedModel.class.getName()
 		};
 
-		public TestStagedModelDataHandler(String errorMessage) {
-			_errorMessage = errorMessage;
+		public TestStagedModelDataHandler(String error) {
+			_error = error;
 		}
 
 		@Override
@@ -333,7 +332,7 @@ public class ImportStagedModelExceptionHandlerTest {
 				TestStagedModel stagedModel)
 			throws PortletDataException {
 
-			throw new PortletDataException(_errorMessage);
+			throw new PortletDataException(_error);
 		}
 
 		@Override
@@ -350,7 +349,7 @@ public class ImportStagedModelExceptionHandlerTest {
 			throws Exception {
 		}
 
-		private final String _errorMessage;
+		private final String _error;
 
 	}
 

@@ -469,9 +469,11 @@ describe('useSpaceMembers', () => {
 
 				const items = result.current.state[type].items;
 				expect(items).toHaveLength(2);
-				expect(items.find((item) => item.id === itemToRemove.id)).toBe(
-					itemToRemove
-				);
+				expect(
+					(items as (UserAccount | UserGroup)[]).find(
+						(item) => item.id === itemToRemove.id
+					)
+				).toBe(itemToRemove);
 			});
 		});
 	});

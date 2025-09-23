@@ -76,7 +76,11 @@ function getBulkDeleteMessage(selectedData: any): {
 async function getEntriesSpaces(items: any[]): Promise<any[]> {
 	const promises = items
 		.filter((item) => item.embedded.scopeId)
-		.map((item) => SpaceService.getSpace({spaceId: item.embedded.scopeId}));
+		.map((item) =>
+			SpaceService.getSpace({
+				externalReferenceCode: item.embedded.scopeId,
+			})
+		);
 
 	return (await Promise.all(promises)).filter(Boolean);
 }

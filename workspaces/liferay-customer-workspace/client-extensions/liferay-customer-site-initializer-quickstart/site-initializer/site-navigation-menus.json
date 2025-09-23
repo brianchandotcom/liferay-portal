@@ -307,7 +307,7 @@
 									"pt_BR": "Ajuda do Portal do Cliente"
 								},
 								"type": "url",
-								"url": "http://localhost:8080/web/customer-portal/v/34667",
+								"url": "http://localhost:8080/web/customer-portal",
 								"useNewTab": true
 							}
 						],
@@ -374,15 +374,15 @@
 							},
 							{
 								"externalReferenceCode": "securityReportsMenuItem",
-								"friendlyURL": "/security-vulnerabilities",
 								"name_i18n": {
 									"en_US": "Security Reports",
 									"es_ES": "Informes de seguridad",
 									"ja_JP": "セキュリティレポート",
 									"pt_BR": "Relatórios de segurança"
 								},
-								"type": "layout",
-								"useCustomName": true
+								"type": "url",
+								"url": "http://localhost:8080/web/customer-portal/security-vulnerabilities",
+								"useNewTab": true
 							}
 						],
 						"name_i18n": {
@@ -484,15 +484,15 @@
 							},
 							{
 								"externalReferenceCode": "escalateATicketMenuItem",
-								"friendlyURL": "/escalation-request",
 								"name_i18n": {
 									"en_US": "Escalate a Ticket",
 									"es_ES": "Escala un ticket",
 									"ja_JP": "チケットのエスカレーション",
 									"pt_BR": "Escalar um ticket"
 								},
-								"type": "layout",
-								"useCustomName": true
+								"type": "url",
+								"url": "http://localhost:8080/web/customer-portal/support-ticket-escalation",
+								"useNewTab": true
 							}
 						],
 						"name_i18n": {
@@ -516,7 +516,7 @@
 									"pt_BR": "Cobertura de suporte"
 								},
 								"type": "url",
-								"url": "http://localhost:8080/web/customer-portal/v/34562",
+								"url": "http://localhost:8080/web/customer-portal",
 								"useNewTab": true
 							},
 							{
@@ -528,7 +528,7 @@
 									"pt_BR": "Serviços e Compatibilidade"
 								},
 								"type": "url",
-								"url": "http://localhost:8080/web/customer-portal/v/34701",
+								"url": "http://localhost:8080/web/customer-portal",
 								"useNewTab": true
 							}
 						],
@@ -546,27 +546,27 @@
 						"menuItems": [
 							{
 								"externalReferenceCode": "contactUsMenuItem",
-								"friendlyURL": "/callback-request",
 								"name_i18n": {
 									"en_US": "Contact Us",
 									"es_ES": "Contáctanos",
 									"ja_JP": "お問い合わせ",
 									"pt_BR": "Fale conosco"
 								},
-								"type": "layout",
-								"useCustomName": true
+								"type": "url",
+								"url": "http://localhost:8080/web/customer-portal/callback-request",
+								"useNewTab": true
 							},
 							{
 								"externalReferenceCode": "customerEventsMenuItem",
-								"friendlyURL": "/announcements",
 								"name_i18n": {
 									"en_US": "Customer Events",
 									"es_ES": "Eventos de cliente",
 									"ja_JP": "カスタマーイベント",
 									"pt_BR": "Eventos para clientes"
 								},
-								"type": "layout",
-								"useCustomName": true
+								"type": "url",
+								"url": "http://localhost:8080/web/customer-portal/announcements",
+								"useNewTab": true
 							}
 						],
 						"name_i18n": {

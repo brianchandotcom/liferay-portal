@@ -1122,8 +1122,9 @@ nav.public-sites-navigation .nav-items-wrapper .adt-nav-item .adt-submenu {
 }
 
 .adt-nav-item .adt-submenu-header-image {
-	height: 2rem;
+	height: 1.125rem;
 	margin-right: 0.4rem;
+	margin-top: -0.125rem;
 	width: 1rem;
 }
 

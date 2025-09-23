@@ -8,7 +8,6 @@ package com.liferay.portal.dao.jdbc;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.dao.jdbc.util.AntiTimeDriftDataSourceWrapper;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -163,12 +162,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		DBType dbType = DBManagerUtil.getDBType(
 			DialectDetector.getDialect(dataSource));
-
-		if (Boolean.getBoolean("jdbc.data.source.anti.time.drift") &&
-			(dbType == DBType.DB2)) {
-
-			dataSource = new AntiTimeDriftDataSourceWrapper(dataSource);
-		}
 
 		if (dbType == DBType.SQLSERVER) {
 			_checkSQLServer(dataSource);

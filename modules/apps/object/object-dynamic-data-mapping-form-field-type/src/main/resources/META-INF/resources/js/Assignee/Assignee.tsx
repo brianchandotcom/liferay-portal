@@ -41,6 +41,7 @@ interface Assignee {
 	label: string;
 	name: string;
 	onChange: (event: {target: {value: any}}) => void;
+	readOnly?: boolean;
 	value?: AssigneeValue;
 }
 
@@ -48,6 +49,7 @@ export default function Assignee({
 	label,
 	name,
 	onChange,
+	readOnly,
 	value,
 	...otherProps
 }: Assignee) {
@@ -67,10 +69,16 @@ export default function Assignee({
 	});
 
 	return (
-		<FieldBase accessible={false} label={label} {...otherProps}>
+		<FieldBase
+			accessible={false}
+			label={label}
+			readOnly={readOnly}
+			{...otherProps}
+		>
 			<Autocomplete
 				aria-label={label}
 				defaultValue={value?.name ?? ''}
+				disabled={readOnly}
 				items={resource ? resource.items : []}
 				loadingState={networkStatus}
 				menuTrigger="focus"

@@ -264,6 +264,11 @@ public interface ObjectFieldLocalService
 	public ObjectField fetchObjectField(
 		String externalReferenceCode, long objectDefinitionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectField fetchObjectFieldByBusinessType(
+		long objectDefinitionId, String businessType,
+		OrderByComparator<ObjectField> orderByComparator);
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *

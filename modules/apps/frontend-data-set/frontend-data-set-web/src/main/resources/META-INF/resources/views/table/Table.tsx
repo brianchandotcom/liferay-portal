@@ -738,6 +738,7 @@ const Table = ({
 		portletId,
 		selectable,
 		selectionType,
+		updateActiveSortsThunk,
 		updateVisibleFieldsThunk,
 	} = useContext(FrontendDataSetContext);
 
@@ -811,10 +812,7 @@ const Table = ({
 			});
 		}
 
-		viewsDispatch({
-			type: EViewsActionTypes.UPDATE_SORTING,
-			value: updatedSorts,
-		});
+		viewsDispatch(updateActiveSortsThunk(updatedSorts));
 	};
 
 	return (

@@ -1364,10 +1364,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPatchSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate()
 		throws Exception {
 
-		SitePage randomSitePage = _getRandomSitePageWithWidgetPageTemplate();
+		SitePage sitePageWithWidgetPageTemplate =
+			_getRandomSitePageWithWidgetPageTemplate();
 
 		SitePage sitePage = _testPutSiteSitePage(
-			randomSitePage, randomSitePage);
+			sitePageWithWidgetPageTemplate, sitePageWithWidgetPageTemplate);
 
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)sitePage.getPageSettings();
@@ -1619,14 +1620,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePage(_getRandomSitePageWithWidgetPageTemplate());
 
-		SitePage sitePage = _getRandomSitePageWithWidgetPageTemplate();
+		SitePage sitePageWithWidgetPageTemplate =
+			_getRandomSitePageWithWidgetPageTemplate();
 
 		WidgetPageSettings widgetPageSettings =
-			(WidgetPageSettings)sitePage.getPageSettings();
+			(WidgetPageSettings)
+				sitePageWithWidgetPageTemplate.getPageSettings();
 
 		widgetPageSettings.setInheritChanges(false);
 
-		_testPostSiteSitePage(sitePage);
+		_testPostSiteSitePage(sitePageWithWidgetPageTemplate);
 	}
 
 	private void _testPutSiteSitePage(
@@ -1921,10 +1924,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPutSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate()
 		throws Exception {
 
-		SitePage randomSitePage = _getRandomSitePageWithWidgetPageTemplate();
+		SitePage sitePageWithWidgetPageTemplate =
+			_getRandomSitePageWithWidgetPageTemplate();
 
 		SitePage sitePage = _testPutSiteSitePage(
-			randomSitePage, randomSitePage);
+			sitePageWithWidgetPageTemplate, sitePageWithWidgetPageTemplate);
 
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)sitePage.getPageSettings();

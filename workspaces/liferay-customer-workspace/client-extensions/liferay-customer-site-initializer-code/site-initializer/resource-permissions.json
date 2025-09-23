@@ -715,6 +715,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_ARTICLE",
 			"ADD_SUBFOLDER",
 			"DELETE",
 			"PERMISSIONS",
@@ -728,6 +729,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_ARTICLE",
 			"ADD_SUBFOLDER",
 			"DELETE",
 			"PERMISSIONS",

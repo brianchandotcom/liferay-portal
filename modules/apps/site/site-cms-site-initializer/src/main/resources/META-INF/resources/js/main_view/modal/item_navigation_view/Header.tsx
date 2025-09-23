@@ -9,9 +9,11 @@ import ClayLink from '@clayui/link';
 import React from 'react';
 
 export default function Header({
+	handleClickComments,
 	handleClickInfo,
 	item,
 }: {
+	handleClickComments: () => void;
 	handleClickInfo: () => void;
 	item: ItemData;
 }) {
@@ -27,6 +29,15 @@ export default function Header({
 
 			<div className="align-items-center c-gap-2 d-flex">
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('show-comments')}
+					borderless
+					displayType="secondary"
+					onClick={handleClickComments}
+					symbol="message"
+				/>
+
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('show-details')}
 					borderless
 					displayType="secondary"
 					onClick={handleClickInfo}

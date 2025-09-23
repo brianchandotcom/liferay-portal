@@ -75,6 +75,7 @@ DTOEnumCreationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-
 DatabaseMetaDataCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks usages of `java.sql.DatabaseMetaData`. |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/checks/coding/defaultcomeslast.html) | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that the `default` is after all the cases in a `switch` statement. |
 DeprecatedAPICheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds calls to deprecated classes, constructors, fields or methods. |
+DeprecatedClassesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Replaces deprecated classes. |
 DockerfileEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | Dockerfile | Finds missing and unnecessary empty lines. |
 DockerfileInstructionCheck | [Styling](styling_checks.md#styling-checks) | Dockerfile | Performs styling rules on instructions in `Dockerfile` files. |
 EmptyCollectionCheck | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that there are no calls to `Collections.EMPTY_LIST`, `Collections.EMPTY_MAP` or `Collections.EMPTY_SET`. |
@@ -231,7 +232,6 @@ JavaConstantsFileCheck | [Naming Conventions](naming_conventions_checks.md#namin
 [JavaConstructorParametersCheck](check/java_constructor_parameters_check.md#javaconstructorparameterscheck) | [Styling](styling_checks.md#styling-checks) | .java | Checks that the order of variable assignments matches the order of the parameters in the constructor signature. |
 JavaConstructorSuperCallCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds unnecessary call to no-argument constructor of the superclass. |
 JavaDeprecatedJavadocCheck | [Javadoc](javadoc_checks.md#javadoc-checks) | .java | Checks if the `@deprecated` javadoc is pointing to the correct version. |
-JavaDeprecatedKernelClassesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds calls to deprecated classes `com.liferay.portal.kernel.util.CharPool` and `com.liferay.portal.kernel.util.StringPool`. |
 JavaDeserializationSecurityCheck | [Security](security_checks.md#security-checks) | .java | Finds Java serialization vulnerabilities. |
 JavaDiamondOperatorCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Finds cases where Diamond Operator is not used. |
 JavaDuplicateVariableCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Finds variables where a variable with the same name already exists in an extended class. |

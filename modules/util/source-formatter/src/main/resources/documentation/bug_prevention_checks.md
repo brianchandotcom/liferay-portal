@@ -40,6 +40,7 @@ ConsumerTypeAnnotationCheck | .java | Performs several checks on classes with @C
 DTOEnumCreationCheck | .java | Checks the creation of DTO enum. |
 DatabaseMetaDataCheck | .java | Checks usages of `java.sql.DatabaseMetaData`. |
 DeprecatedAPICheck | .java | Finds calls to deprecated classes, constructors, fields or methods. |
+DeprecatedClassesCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Replaces deprecated classes. |
 EmptyConstructorCheck | .java | Finds unnecessary empty constructors. |
 [EqualsHashCodeCheck](https://checkstyle.sourceforge.io/checks/coding/equalshashcode.html) | .java | Checks that classes that either override `equals()` or `hashCode()` also overrides the other. |
 ExceptionPrintStackTraceCheck | .java | Avoid using printStackTrace. |
@@ -98,7 +99,6 @@ JavaCompanyScopedIdsCheck | .java | Finds cases where company scoped ids are use
 JavaComponentAnnotationsCheck | .java | Performs several checks on classes with `@Component` annotation. |
 [JavaConfigurationAdminCheck](check/java_configuration_admin_check.md#javaconfigurationadmincheck) | .java | Checks for correct use of `location == ?` when calling `org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration`. |
 [JavaConfigurationCategoryCheck](check/java_configuration_category_check.md#javaconfigurationcategorycheck) | .java | Checks that the value of `category` in `@ExtendedObjectClassDefinition` matches the `categoryKey` of the corresponding class that implements `ConfigurationCategory`. |
-JavaDeprecatedKernelClassesCheck | .java | Finds calls to deprecated classes `com.liferay.portal.kernel.util.CharPool` and `com.liferay.portal.kernel.util.StringPool`. |
 JavaFeatureFlagManagerUtilCheck | .java | Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used. |
 [JavaFinderCacheCheck](check/java_finder_cache_check.md#javafindercachecheck) | .java | Checks that the method `BasePersistenceImpl.fetchByPrimaryKey` is overridden, when using `FinderPath`. |
 JavaFinderImplCustomSQLCheck | .java | Checks that hardcoded SQL values in `*FinderImpl` classes match the SQL in the `.xml` file in the `custom-sql` directory. |

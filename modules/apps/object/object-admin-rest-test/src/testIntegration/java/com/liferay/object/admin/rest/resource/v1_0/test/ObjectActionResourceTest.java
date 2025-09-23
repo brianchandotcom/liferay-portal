@@ -109,13 +109,6 @@ public class ObjectActionResourceTest extends BaseObjectActionResourceTestCase {
 		return _addObjectAction();
 	}
 
-	protected ObjectAction
-			testGetObjectActionByExternalReferenceCode_addObjectAction()
-		throws Exception {
-
-		return _addObjectAction();
-	}
-
 	@Override
 	protected ObjectAction
 			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(

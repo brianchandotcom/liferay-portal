@@ -173,12 +173,14 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 			_toAttachmentBase64(randomAttachment()));
 	}
 
+	@Override
 	protected Long testGraphQLDeleteCartAttachment_getCartId()
 		throws Exception {
 
 		return _commerceOrder.getCommerceOrderId();
 	}
 
+	@Override
 	protected String
 			testGraphQLDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
 				Attachment attachment)

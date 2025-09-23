@@ -1150,6 +1150,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		return _journalArticle.getExternalReferenceCode();
 	}
 
+	@Override
 	protected Comment testGraphQLSiteComment_addComment() throws Exception {
 		return _addBlogPostingComment();
 	}

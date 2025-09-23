@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringParser;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.exception.UpgradeCatchAllException;
@@ -511,27 +512,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			}
 		}
 
-		if (!content.equals(newContent)) {
-			newContent = _addReplacementDependencies(
-				fileName, jsonObject, newContent);
-		}
-		else if (!_newMessage) {
-			Set<String> keys = jsonObject.keySet();
-
-			if (keys.contains("hasMessage")) {
-				Pattern pattern = _getPattern(jsonObject);
-
-				Matcher matcher = pattern.matcher(content);
-
-				if (matcher.find()) {
-					addMessage(fileName, _getMessage(jsonObject));
-
-					_newMessage = true;
-				}
-			}
-		}
-
-		return newContent;
+		return _processReplacementOrMessage(
+			content, fileName, jsonObject, newContent);
 	}
 
 	private String _formatGeneral(
@@ -635,12 +617,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			newContent = _formatMethodSignature(newContent, methodJSONObject);
 		}
 
-		if (!content.equals(newContent)) {
-			newContent = _addReplacementDependencies(
-				fileName, jsonObject, newContent);
-		}
-
-		return newContent;
+		return _processReplacementOrMessage(
+			content, fileName, jsonObject, newContent);
 	}
 
 	private String _formatMethodCall(
@@ -657,7 +635,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		if (!_hasValidMethodCall(
 				fileName, from, javaMethodContent, jsonObject, newContent,
-				parameterNames, lineNumber)) {
+				parameterNames, lineNumber, to)) {
 
 			return newContent;
 		}
@@ -803,7 +781,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	private boolean _hasValidMethodCall(
 		String fileName, String from, String javaMethodContent,
 		JSONObject jsonObject, String newContent, List<String> parameterNames,
-		int lineNumber) {
+		int lineNumber, String to) {
 
 		List<String> fromParameters = JavaSourceUtil.getParameterNames(from);
 
@@ -830,6 +808,36 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			hasMessage = true;
 		}
 		else if (fileName.endsWith(".java")) {
+			List<String> toParameters = JavaSourceUtil.getParameterNames(to);
+
+			if (parameterNames.size() == toParameters.size()) {
+				for (int i = 0; i < toParameters.size(); i++) {
+					String toParameter = toParameters.get(i);
+
+					toParameter = toParameter.replaceFirst(
+						"param\\#\\d+\\#", "\\$\\$");
+
+					if (StringUtil.equals(toParameter, "$$")) {
+						continue;
+					}
+
+					toParameter = StringParser.escapeRegex(toParameter);
+
+					toParameter = StringUtil.replace(
+						toParameter, "\\$\\$", "(.+)");
+
+					String parameterName = parameterNames.get(i);
+
+					Pattern pattern = Pattern.compile(toParameter);
+
+					Matcher matcher = pattern.matcher(parameterName);
+
+					if (matcher.find()) {
+						return false;
+					}
+				}
+			}
+
 			for (int i = 0; i < fromParameters.size(); i++) {
 				String parameterName = parameterNames.get(i);
 
@@ -993,6 +1001,35 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		newFileContentSB.append(fileContent.substring(endIndex));
 
 		return newFileContentSB.toString();
+	}
+
+	private String _processReplacementOrMessage(
+		String content, String fileName, JSONObject jsonObject,
+		String newContent) {
+
+		if (!content.equals(newContent)) {
+			newContent = _addReplacementDependencies(
+				fileName, jsonObject, newContent);
+		}
+		else if (!_newMessage) {
+			Set<String> keys = jsonObject.keySet();
+
+			if (keys.contains("hasMessage")) {
+				Pattern pattern = _getPattern(jsonObject);
+
+				Matcher matcher = pattern.matcher(content);
+
+				if (matcher.find()) {
+					addMessage(
+						fileName, _getMessage(jsonObject),
+						getLineNumber(content, matcher.start()));
+
+					_newMessage = true;
+				}
+			}
+		}
+
+		return newContent;
 	}
 
 	private static final String _CONSTRUCTOR_REGEX =

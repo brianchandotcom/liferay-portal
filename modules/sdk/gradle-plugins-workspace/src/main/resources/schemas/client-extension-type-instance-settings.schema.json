@@ -3310,6 +3310,30 @@
 		},
 		{
 			"properties": {
+				"enableDeepPagination": {
+					"default": false,
+					"description": "Enable deep pagination to paginate through all the results of a search query.",
+					"title": "Enable Deep Pagination",
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.portal.search.elasticsearch8.configuration.DeepPaginationConfiguration",
+					"title": "Deep Pagination Configuration"
+				},
+				"pointInTimeKeepAliveSeconds": {
+					"default": 60,
+					"description": "The amount of time in seconds the search engine will keep a point in time alive (between 1 and 60).",
+					"title": "Point in Time Keep Alive",
+					"type": "number"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Deep Pagination Configuration"
+		},
+		{
+			"properties": {
 				"cacheTimeout": {
 					"default": 14400,
 					"title": "Cache Timeout",
@@ -4885,6 +4909,7 @@
 				"com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration",
 				"com.liferay.portal.search.configuration.SemanticSearchConfiguration",
 				"com.liferay.portal.search.elasticsearch7.configuration.DeepPaginationConfiguration",
+				"com.liferay.portal.search.elasticsearch8.configuration.DeepPaginationConfiguration",
 				"com.liferay.portal.search.internal.configuration.SiteActivityAsahConfiguration",
 				"com.liferay.portal.search.internal.configuration.UserActivityAsahConfiguration",
 				"com.liferay.portal.search.opensearch2.configuration.DeepPaginationConfiguration",

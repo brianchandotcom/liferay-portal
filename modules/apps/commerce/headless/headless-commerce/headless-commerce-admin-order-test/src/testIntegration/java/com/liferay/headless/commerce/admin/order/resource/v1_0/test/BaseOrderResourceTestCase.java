@@ -211,6 +211,7 @@ public abstract class BaseOrderResourceTestCase {
 
 		order.setAccountExternalReferenceCode(regex);
 		order.setAdvanceStatus(regex);
+		order.setAuthor(regex);
 		order.setBillingAddressExternalReferenceCode(regex);
 		order.setChannelExternalReferenceCode(regex);
 		order.setCouponCode(regex);
@@ -255,6 +256,7 @@ public abstract class BaseOrderResourceTestCase {
 
 		Assert.assertEquals(regex, order.getAccountExternalReferenceCode());
 		Assert.assertEquals(regex, order.getAdvanceStatus());
+		Assert.assertEquals(regex, order.getAuthor());
 		Assert.assertEquals(
 			regex, order.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(regex, order.getChannelExternalReferenceCode());
@@ -1582,6 +1584,14 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("author", additionalAssertFieldName)) {
+				if (order.getAuthor() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("billingAddress", additionalAssertFieldName)) {
 				if (order.getBillingAddress() == null) {
 					valid = false;
@@ -2789,6 +2799,16 @@ public abstract class BaseOrderResourceTestCase {
 			if (Objects.equals("advanceStatus", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						order1.getAdvanceStatus(), order2.getAdvanceStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("author", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						order1.getAuthor(), order2.getAuthor())) {
 
 					return false;
 				}
@@ -4303,6 +4323,52 @@ public abstract class BaseOrderResourceTestCase {
 
 		if (entityFieldName.equals("advanceStatus")) {
 			Object object = order.getAdvanceStatus();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("author")) {
+			Object object = order.getAuthor();
 
 			String value = String.valueOf(object);
 
@@ -6519,6 +6585,7 @@ public abstract class BaseOrderResourceTestCase {
 				accountId = RandomTestUtil.randomLong();
 				advanceStatus = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				billingAddressExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				billingAddressId = RandomTestUtil.randomLong();

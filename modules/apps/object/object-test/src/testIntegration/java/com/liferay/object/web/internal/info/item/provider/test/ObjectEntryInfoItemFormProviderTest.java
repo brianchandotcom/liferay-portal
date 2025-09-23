@@ -42,7 +42,6 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
-import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -50,8 +49,8 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
+import com.liferay.object.test.util.ObjectActionTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -65,6 +64,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -88,6 +88,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-50377")
+	}
+)
 @RunWith(Arquillian.class)
 public class ObjectEntryInfoItemFormProviderTest {
 
@@ -213,146 +218,6 @@ public class ObjectEntryInfoItemFormProviderTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
-	@Test
-	public void testObjectEntryInfoItemFormProvider() throws Exception {
-		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_childObjectDefinition.getObjectDefinitionId(), true,
-			StringPool.BLANK, RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_WEBHOOK,
-			ObjectActionTriggerConstants.KEY_STANDALONE,
-			UnicodePropertiesBuilder.put(
-				"url", RandomTestUtil.randomString()
-			).build(),
-			false);
-
-		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class,
-				_childObjectDefinition.getClassName());
-
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			String.valueOf(_childObjectDefinition.getObjectDefinitionId()), 0);
-
-		Assert.assertNotNull(infoForm);
-		Assert.assertNotNull(infoForm.getInfoField(objectAction.getName()));
-		Assert.assertNotNull(
-			infoForm.getInfoField("attachmentObjectFieldName"));
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			_childObjectDefinition.getObjectDefinitionId(),
-			"attachmentObjectFieldName");
-
-		Assert.assertNotNull(
-			infoForm.getInfoField(
-				objectField.getObjectFieldId() + "#downloadURL"));
-		Assert.assertNotNull(
-			infoForm.getInfoField(
-				objectField.getObjectFieldId() + "#fileName"));
-		Assert.assertNotNull(
-			infoForm.getInfoField(
-				objectField.getObjectFieldId() + "#mimeType"));
-		Assert.assertNotNull(
-			infoForm.getInfoField(objectField.getObjectFieldId() + "#size"));
-
-		Assert.assertNotNull(
-			infoForm.getInfoField("parentTextObjectFieldName"));
-
-		_assertOptionInfoFieldTypes(
-			infoForm, _listTypeEntry1.getKey(), _listTypeEntry2.getKey());
-
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			TestPropsValues.getGroupId(),
-			_childObjectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"picklistObjectFieldName", _listTypeEntry2.getKey()
-			).build());
-
-		try {
-			ServiceContextThreadLocal.pushServiceContext(
-				_getServiceContext(objectEntry));
-
-			_assertOptionInfoFieldTypes(
-				infoItemFormProvider.getInfoForm(
-					String.valueOf(
-						_childObjectDefinition.getObjectDefinitionId()),
-					0),
-				_listTypeEntry2.getKey(), _listTypeEntry3.getKey());
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			MockHttpServletRequest mockHttpServletRequest =
-				(MockHttpServletRequest)serviceContext.getRequest();
-
-			JournalArticle journalArticle = JournalTestUtil.addArticle(
-				TestPropsValues.getGroupId(), 0);
-
-			mockHttpServletRequest.setAttribute(
-				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-				_journalArticleLayoutDisplayPageProvider.
-					getLayoutDisplayPageObjectProvider(
-						new InfoItemReference(
-							JournalArticle.class.getName(),
-							journalArticle.getResourcePrimKey())));
-
-			_assertOptionInfoFieldTypes(
-				infoItemFormProvider.getInfoForm(
-					String.valueOf(
-						_childObjectDefinition.getObjectDefinitionId()),
-					0),
-				_listTypeEntry1.getKey(), _listTypeEntry2.getKey());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-	}
-
-	@FeatureFlag("LPD-50377")
-	@Test
-	public void testParentObjectEntryInfoItemFormProvider() throws Exception {
-		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class,
-				_parentObjectDefinition.getClassName());
-
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			String.valueOf(_parentObjectDefinition.getObjectDefinitionId()), 0);
-
-		Assert.assertNotNull(infoForm);
-		Assert.assertNotNull(
-			infoForm.getInfoField("parentTextObjectFieldName"));
-
-		InfoFieldSetEntry infoFieldSetEntry = infoForm.getInfoFieldSetEntry(
-			_parentObjectDefinition.getName());
-
-		Assert.assertNotNull(infoFieldSetEntry);
-		Assert.assertTrue(infoFieldSetEntry instanceof InfoFieldSet);
-
-		InfoFieldSet defaultInfoFieldSet = (InfoFieldSet)infoFieldSetEntry;
-
-		InfoFieldSetEntry relationshipInfoFieldSetEntry =
-			defaultInfoFieldSet.getInfoFieldSetEntry(
-				_objectRelationship.getName());
-
-		Assert.assertNotNull(relationshipInfoFieldSetEntry);
-		Assert.assertTrue(
-			relationshipInfoFieldSetEntry instanceof InfoFieldSet);
-
-		InfoFieldSet relationshipInfoFieldSet =
-			(InfoFieldSet)relationshipInfoFieldSetEntry;
-
-		Assert.assertNotNull(
-			relationshipInfoFieldSet.getInfoFieldSetEntry(
-				"attachmentObjectFieldName"));
-		Assert.assertNotNull(
-			relationshipInfoFieldSet.getInfoFieldSetEntry(
-				"picklistObjectFieldName"));
-	}
-
 	private ListTypeEntry _addListTypeEntry() throws Exception {
 		String listTypeEntryKey = RandomTestUtil.randomString();
 
@@ -361,6 +226,15 @@ public class ObjectEntryInfoItemFormProviderTest {
 			_listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey,
 			LocalizedMapUtil.getLocalizedMap(listTypeEntryKey),
 			_listTypeDefinition.isSystem());
+	}
+
+	@Test
+	public void testGetInfoForm() throws Exception {
+		_testGetInfoFormWithAttachmentObjectField();
+		_testGetInfoFormWithEnableObjectEntrySchedule();
+		_testGetInfoFormWithParentObjectDefinition();
+		_testGetInfoFormWithPicklistObjectField();
+		_testGetInfoFormWithStandaloneObjectAction();
 	}
 
 	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
@@ -465,6 +339,239 @@ public class ObjectEntryInfoItemFormProviderTest {
 		return serviceContext;
 	}
 
+	private void _testGetInfoFormWithAttachmentObjectField() throws Exception {
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				_childObjectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			String.valueOf(_childObjectDefinition.getObjectDefinitionId()), 0);
+
+		Assert.assertNotNull(
+			infoForm.getInfoField("attachmentObjectFieldName"));
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			_childObjectDefinition.getObjectDefinitionId(),
+			"attachmentObjectFieldName");
+
+		Assert.assertNotNull(
+			infoForm.getInfoField(
+				objectField.getObjectFieldId() + "#downloadURL"));
+		Assert.assertNotNull(
+			infoForm.getInfoField(
+				objectField.getObjectFieldId() + "#fileName"));
+		Assert.assertNotNull(
+			infoForm.getInfoField(
+				objectField.getObjectFieldId() + "#mimeType"));
+		Assert.assertNotNull(
+			infoForm.getInfoField(objectField.getObjectFieldId() + "#size"));
+	}
+
+	private void _testGetInfoFormWithEnableObjectEntrySchedule()
+		throws Exception {
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				_childObjectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			String.valueOf(_childObjectDefinition.getObjectDefinitionId()), 0);
+
+		InfoField<?> displayDateInfoField = infoForm.getInfoField(
+			"displayDate");
+
+		Assert.assertFalse(displayDateInfoField.isEditable());
+
+		InfoField<?> expirationDateInfoField = infoForm.getInfoField(
+			"expirationDate");
+
+		Assert.assertFalse(expirationDateInfoField.isEditable());
+
+		InfoField<?> reviewDateInfoField = infoForm.getInfoField("reviewDate");
+
+		Assert.assertFalse(reviewDateInfoField.isEditable());
+
+		_childObjectDefinition =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				_childObjectDefinition.getExternalReferenceCode(),
+				_childObjectDefinition.getObjectDefinitionId(),
+				_childObjectDefinition.getAccountEntryRestrictedObjectFieldId(),
+				_childObjectDefinition.getDescriptionObjectFieldId(),
+				_childObjectDefinition.getObjectFolderId(),
+				_childObjectDefinition.getTitleObjectFieldId(),
+				_childObjectDefinition.isAccountEntryRestricted(),
+				_childObjectDefinition.isActive(),
+				_childObjectDefinition.getClassName(),
+				_childObjectDefinition.isEnableCategorization(),
+				_childObjectDefinition.isEnableComments(),
+				_childObjectDefinition.isEnableFormContainer(),
+				_childObjectDefinition.isEnableFriendlyURLCustomization(),
+				_childObjectDefinition.isEnableIndexSearch(),
+				_childObjectDefinition.isEnableLocalization(),
+				_childObjectDefinition.isEnableObjectEntryDraft(),
+				_childObjectDefinition.isEnableObjectEntryHistory(), true,
+				_childObjectDefinition.isEnableObjectEntrySubscription(),
+				_childObjectDefinition.isEnableObjectEntryVersioning(),
+				_childObjectDefinition.getFriendlyURLSeparator(),
+				_childObjectDefinition.getLabelMap(),
+				_childObjectDefinition.getName(),
+				_childObjectDefinition.getPanelAppOrder(),
+				_childObjectDefinition.getPanelCategoryKey(),
+				_childObjectDefinition.isPortlet(),
+				_childObjectDefinition.getPluralLabelMap(),
+				_childObjectDefinition.getScope(),
+				_childObjectDefinition.getStatus(),
+				_childObjectDefinition.getObjectDefinitionSettings(),
+				Collections.emptyList());
+
+		infoItemFormProvider = _infoItemServiceRegistry.getFirstInfoItemService(
+			InfoItemFormProvider.class, _childObjectDefinition.getClassName());
+
+		infoForm = infoItemFormProvider.getInfoForm(
+			String.valueOf(_childObjectDefinition.getObjectDefinitionId()), 0);
+
+		displayDateInfoField = infoForm.getInfoField("displayDate");
+
+		Assert.assertTrue(displayDateInfoField.isEditable());
+
+		expirationDateInfoField = infoForm.getInfoField("expirationDate");
+
+		Assert.assertTrue(expirationDateInfoField.isEditable());
+
+		reviewDateInfoField = infoForm.getInfoField("reviewDate");
+
+		Assert.assertTrue(reviewDateInfoField.isEditable());
+	}
+
+	private void _testGetInfoFormWithParentObjectDefinition() throws Exception {
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				_childObjectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			String.valueOf(_childObjectDefinition.getObjectDefinitionId()), 0);
+
+		Assert.assertNotNull(
+			infoForm.getInfoField("parentTextObjectFieldName"));
+
+		infoItemFormProvider = _infoItemServiceRegistry.getFirstInfoItemService(
+			InfoItemFormProvider.class, _parentObjectDefinition.getClassName());
+
+		infoForm = infoItemFormProvider.getInfoForm(
+			String.valueOf(_parentObjectDefinition.getObjectDefinitionId()), 0);
+
+		Assert.assertNotNull(infoForm);
+		Assert.assertNotNull(
+			infoForm.getInfoField("parentTextObjectFieldName"));
+
+		InfoFieldSetEntry infoFieldSetEntry = infoForm.getInfoFieldSetEntry(
+			_parentObjectDefinition.getName());
+
+		Assert.assertNotNull(infoFieldSetEntry);
+		Assert.assertTrue(infoFieldSetEntry instanceof InfoFieldSet);
+
+		InfoFieldSet defaultInfoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+		InfoFieldSetEntry relationshipInfoFieldSetEntry =
+			defaultInfoFieldSet.getInfoFieldSetEntry(
+				_objectRelationship.getName());
+
+		Assert.assertNotNull(relationshipInfoFieldSetEntry);
+		Assert.assertTrue(
+			relationshipInfoFieldSetEntry instanceof InfoFieldSet);
+
+		InfoFieldSet relationshipInfoFieldSet =
+			(InfoFieldSet)relationshipInfoFieldSetEntry;
+
+		Assert.assertNotNull(
+			relationshipInfoFieldSet.getInfoFieldSetEntry(
+				"attachmentObjectFieldName"));
+		Assert.assertNotNull(
+			relationshipInfoFieldSet.getInfoFieldSetEntry(
+				"picklistObjectFieldName"));
+	}
+
+	private void _testGetInfoFormWithPicklistObjectField() throws Exception {
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				_childObjectDefinition.getClassName());
+
+		_assertOptionInfoFieldTypes(
+			infoItemFormProvider.getInfoForm(
+				String.valueOf(_childObjectDefinition.getObjectDefinitionId()),
+				0),
+			_listTypeEntry1.getKey(), _listTypeEntry2.getKey());
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			TestPropsValues.getGroupId(),
+			_childObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"picklistObjectFieldName", _listTypeEntry2.getKey()
+			).build());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(
+				_getServiceContext(objectEntry));
+
+			_assertOptionInfoFieldTypes(
+				infoItemFormProvider.getInfoForm(
+					String.valueOf(
+						_childObjectDefinition.getObjectDefinitionId()),
+					0),
+				_listTypeEntry2.getKey(), _listTypeEntry3.getKey());
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			MockHttpServletRequest mockHttpServletRequest =
+				(MockHttpServletRequest)serviceContext.getRequest();
+
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				TestPropsValues.getGroupId(), 0);
+
+			mockHttpServletRequest.setAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				_journalArticleLayoutDisplayPageProvider.
+					getLayoutDisplayPageObjectProvider(
+						new InfoItemReference(
+							JournalArticle.class.getName(),
+							journalArticle.getResourcePrimKey())));
+
+			_assertOptionInfoFieldTypes(
+				infoItemFormProvider.getInfoForm(
+					String.valueOf(
+						_childObjectDefinition.getObjectDefinitionId()),
+					0),
+				_listTypeEntry1.getKey(), _listTypeEntry2.getKey());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	private void _testGetInfoFormWithStandaloneObjectAction() throws Exception {
+		ObjectAction objectAction = ObjectActionTestUtil.addObjectAction(
+			ObjectActionExecutorConstants.KEY_WEBHOOK,
+			ObjectActionTriggerConstants.KEY_STANDALONE, _childObjectDefinition,
+			UnicodePropertiesBuilder.put(
+				"url", RandomTestUtil.randomString()
+			).build());
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				_childObjectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			String.valueOf(_childObjectDefinition.getObjectDefinitionId()), 0);
+
+		Assert.assertNotNull(infoForm.getInfoField(objectAction.getName()));
+	}
+
 	private ObjectDefinition _childObjectDefinition;
 
 	@Inject
@@ -497,9 +604,6 @@ public class ObjectEntryInfoItemFormProviderTest {
 
 	@Inject
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Inject
-	private ObjectActionLocalService _objectActionLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

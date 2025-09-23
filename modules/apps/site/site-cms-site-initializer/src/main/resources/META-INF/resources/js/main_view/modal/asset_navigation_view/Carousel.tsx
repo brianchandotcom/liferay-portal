@@ -4,6 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import classNames from 'classnames';
 import React from 'react';
 
 import formatActionURL from '../../../common/utils/formatActionURL';
@@ -12,14 +13,21 @@ import FilePreview from './FilePreview';
 
 const Arrow = ({
 	ariaLabel,
+	className,
 	control,
 	handleClick,
 }: {
 	ariaLabel: string;
+	className?: string;
 	control: 'next' | 'previous';
 	handleClick: any;
 }) => (
-	<div className={`position-absolute carousel-${control}`}>
+	<div
+		className={classNames(
+			`position-absolute carousel-${control}`,
+			className
+		)}
+	>
 		<ClayButtonWithIcon
 			aria-label={ariaLabel}
 			displayType="secondary"
@@ -50,18 +58,20 @@ export default function Carousel({
 				<>
 					<Arrow
 						ariaLabel={Liferay.Language.get('previous')}
+						className="ml-4"
 						control="previous"
 						handleClick={handleClickPrevious}
 					/>
 					<Arrow
 						ariaLabel={Liferay.Language.get('next')}
+						className="mr-4"
 						control="next"
 						handleClick={handleClickNext}
 					/>
 				</>
 			)}
 
-			<div className="h-100 mx-6 preview-container w-100">
+			<div className="h-100 mx-6 preview-container py-4 w-100">
 				{currentItem.embedded?.file ? (
 					<FilePreview file={currentItem.embedded.file} />
 				) : (

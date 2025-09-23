@@ -122,7 +122,7 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 		for (ObjectEntry objectEntry :
 				_objectEntryLocalService.getOneToManyObjectEntries(
 					0, objectRelationship.getObjectRelationshipId(), null,
-					primaryKey, true, null, QueryUtil.ALL_POS,
+					false, primaryKey, true, null, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
 			Map<String, Serializable> values = objectEntry.getValues();
@@ -276,7 +276,7 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 					BulkActionExecutionStatusConstants.INITIAL, "','",
 					BulkActionExecutionStatusConstants.STARTED, "')"),
 				objectDefinition),
-			null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			false, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (ListUtil.isEmpty(primaryKeys)) {
 			return;

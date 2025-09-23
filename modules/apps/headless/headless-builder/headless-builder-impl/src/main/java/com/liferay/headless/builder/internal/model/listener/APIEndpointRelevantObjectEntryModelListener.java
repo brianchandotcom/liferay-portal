@@ -196,7 +196,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 				objectEntry.getObjectDefinitionId(),
 				_filterFactory.create(
 					filterString, apiEndpointObjectDefinition),
-				null);
+				false, null);
 
 			if (count > 0) {
 				throw new ObjectEntryValuesException.InvalidObjectField(

@@ -315,7 +315,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		List<Long> primaryKeys = _objectEntryLocalService.getPrimaryKeys(
 			new Long[0], _depotEntry2.getCompanyId(),
 			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), predicate, null,
+			objectDefinition.getObjectDefinitionId(), predicate, false, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
@@ -341,8 +341,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 					_bulkActionTaskObjectDefinition.getObjectDefinitionId(),
 					"bulkActionTaskToBulkActionTaskItems"
 				).getObjectRelationshipId(),
-				null, bulkActionTaskObjectEntry.getObjectEntryId(), true, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				null, false, bulkActionTaskObjectEntry.getObjectEntryId(), true,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			objectEntry -> Objects.equals(
 				GetterUtil.getLong(
 					objectEntry.getValues(
@@ -387,8 +387,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 					_bulkActionTaskObjectDefinition.getObjectDefinitionId(),
 					"bulkActionTaskToBulkActionTaskItems"
 				).getObjectRelationshipId(),
-				null, bulkActionTaskObjectEntry.getObjectEntryId(), true, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				null, false, bulkActionTaskObjectEntry.getObjectEntryId(), true,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			objectEntry -> Objects.equals(
 				GetterUtil.getLong(
 					objectEntry.getValues(

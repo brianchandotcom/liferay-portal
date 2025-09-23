@@ -134,7 +134,7 @@ public class CommerceReturnObjectEntryValuesContributor
 					originalObjectEntry.getObjectDefinitionId(),
 					"commerceReturnToCommerceReturnItems"
 				).getObjectRelationshipId(),
-				null, originalObjectEntry.getObjectEntryId(), true, null,
+				null, false, originalObjectEntry.getObjectEntryId(), true, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Map<String, List<ObjectEntry>> returnItemStatusObjectEntriesMap =

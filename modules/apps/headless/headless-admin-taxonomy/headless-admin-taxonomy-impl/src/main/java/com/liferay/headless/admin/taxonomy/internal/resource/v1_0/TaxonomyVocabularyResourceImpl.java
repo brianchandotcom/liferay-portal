@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -67,6 +68,8 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.core.MultivaluedMap;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -185,6 +188,33 @@ public class TaxonomyVocabularyResourceImpl
 			).build());
 
 		return _toTaxonomyVocabulary(assetVocabulary);
+	}
+
+	@Override
+	public Page<TaxonomyVocabulary> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		if (parameters.containsKey("siteId")) {
+			TermsFilter siteFilter = new TermsFilter(Field.GROUP_ID);
+
+			siteFilter.addValue(String.valueOf(parameters.get("siteId")));
+
+			if (filter != null) {
+				BooleanFilter booleanFilter = new BooleanFilter();
+
+				booleanFilter.add(filter, BooleanClauseOccur.MUST);
+				booleanFilter.add(siteFilter, BooleanClauseOccur.MUST);
+
+				filter = booleanFilter;
+			}
+			else {
+				filter = siteFilter;
+			}
+		}
+
+		return super.read(filter, pagination, sorts, parameters, search);
 	}
 
 	@Override

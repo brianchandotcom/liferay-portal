@@ -22,10 +22,10 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryCountE
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryExpirationDateExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryGroupIdExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryManagerHttpExceptionMapper;
+import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryScopeExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryStatusExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValuesExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectRelationshipDeletionTypeExceptionMapper;
-import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectScopeExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectEntryVersionExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.UnsupportedOperationExceptionMapper;
@@ -817,7 +817,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			Arrays.<Supplier<ExceptionMapper<?>>>asList(
 				ObjectEntryManagerHttpExceptionMapper::new,
 				() -> new ObjectAssetCategoryExceptionMapper(_language),
-				ObjectScopeExceptionMapper::new,
+				ObjectEntryScopeExceptionMapper::new,
 				() -> new ObjectEntryCountExceptionMapper(_language),
 				() -> new ObjectEntryExpirationDateExceptionMapper(_language),
 				() -> new ObjectEntryGroupIdExceptionMapper(_language),

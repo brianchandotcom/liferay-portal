@@ -5,7 +5,7 @@
 
 package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 
-import com.liferay.object.exception.ObjectDefinitionScopeException;
+import com.liferay.object.exception.ObjectEntryScopeException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -15,14 +15,14 @@ import jakarta.ws.rs.ext.Provider;
  * @author Alberto Javier Moreno Lage
  */
 @Provider
-public class ObjectScopeExceptionMapper
-	extends BaseExceptionMapper<ObjectDefinitionScopeException> {
+public class ObjectEntryScopeExceptionMapper
+	extends BaseExceptionMapper<ObjectEntryScopeException> {
 
 	@Override
 	protected Problem getProblem(
-		ObjectDefinitionScopeException objectDefinitionScopeException) {
+		ObjectEntryScopeException objectEntryScopeException) {
 
-		return new Problem(objectDefinitionScopeException);
+		return new Problem(objectEntryScopeException);
 	}
 
 }

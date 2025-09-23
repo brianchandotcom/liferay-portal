@@ -139,8 +139,6 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 				return sortedCustomizableSectionIds.toArray(new String[0]);
 			});
-		widgetPageSettings.setInheritChanges(
-			layout::isLayoutPrototypeLinkEnabled);
 		widgetPageSettings.setLayoutTemplateId(
 			() -> layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
@@ -168,6 +166,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 				if (layoutPageTemplateEntry == null) {
 					return null;
 				}
+
+				widgetPageSettings.setInheritChanges(
+					layout::isLayoutPrototypeLinkEnabled);
 
 				return new ItemExternalReference() {
 					{

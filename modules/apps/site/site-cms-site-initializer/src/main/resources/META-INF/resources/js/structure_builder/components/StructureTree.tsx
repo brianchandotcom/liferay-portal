@@ -35,6 +35,7 @@ import {
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
+import isLocked from '../utils/isLocked';
 
 type TreeItem = {
 	actions?: Array<{
@@ -52,6 +53,7 @@ type TreeItem = {
 	id: Uuid;
 	invalid?: boolean;
 	label: string;
+	locked?: boolean;
 	name?: string;
 	type?: FieldType | ReferencedStructure['type'] | RepeatableGroup['type'];
 };
@@ -284,6 +286,12 @@ export default function StructureTree({search}: {search: string}) {
 									<ItemStatus item={childItem} />
 								</span>
 
+								{childItem.locked ? (
+									<ClayIcon className="ml-2" symbol="lock" />
+								) : (
+									<></>
+								)}
+
 								{childItem.invalid ? (
 									<ClayIcon
 										className="ml-2 text-danger"
@@ -445,6 +453,7 @@ function buildItems({
 						id: child.uuid,
 						invalid: invalids.has(child.uuid),
 						label: getLocalizedValue(child.label),
+						locked: child.locked,
 						type: child.type,
 					});
 				}
@@ -473,6 +482,10 @@ function getItemActions({
 	isReferenced?: boolean;
 	item: StructureChild;
 }) {
+	if (isLocked(item)) {
+		return [];
+	}
+
 	const actions = [];
 
 	if (item.type === 'referenced-structure' && item.erc) {

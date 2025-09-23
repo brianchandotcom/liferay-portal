@@ -131,6 +131,7 @@ function buildFields(fields: Field[]) {
 			localized: field.localized,
 			name: field.name,
 			required: field.required,
+			system: field.locked,
 		};
 
 		if (field.indexableConfig.indexed) {

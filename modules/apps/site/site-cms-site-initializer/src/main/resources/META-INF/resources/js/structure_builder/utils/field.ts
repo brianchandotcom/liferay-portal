@@ -95,6 +95,7 @@ type BaseField = {
 		  };
 	label: Liferay.Language.LocalizedValue<string>;
 	localized: boolean;
+	locked: boolean;
 	name: string;
 	parent: Uuid;
 	required: boolean;
@@ -188,12 +189,14 @@ export type FieldBusinessType =
 
 export function getDefaultField({
 	label,
+	locked = false,
 	name,
 	parent,
 	required = false,
 	type,
 }: {
 	label?: string;
+	locked?: boolean;
 	name?: string;
 	parent: Uuid;
 	required?: boolean;
@@ -211,6 +214,7 @@ export function getDefaultField({
 				label ?? FIELD_TYPE_LABEL[type],
 		},
 		localized: Liferay.FeatureFlags['LPD-32050'],
+		locked,
 		name: name ?? normalizeName(type),
 		parent,
 		required,

@@ -6,5 +6,13 @@
 import {ObjectField} from '../types/ObjectDefinition';
 
 export default function isCustomObjectField(objectField: ObjectField) {
-	return !objectField.system && objectField.businessType !== 'Relationship';
+	if (objectField.businessType === 'Relationship') {
+		return false;
+	}
+
+	if (objectField.system && !['title', 'file'].includes(objectField.name)) {
+		return false;
+	}
+
+	return true;
 }

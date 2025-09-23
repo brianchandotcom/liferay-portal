@@ -701,14 +701,13 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					contextUser
 				).build();
 
-			int page = 1;
 			int pageSize = 500;
-			Page<SearchResult> searchPage;
 
-			do {
-				searchPage = searchResultResource.getSearchPage(
-					null, true, null, null, search, filter,
-					Pagination.of(page, pageSize), null);
+			for (int page = 1;; page++) {
+				Page<SearchResult> searchPage =
+					searchResultResource.getSearchPage(
+						null, true, null, null, search, filter,
+						Pagination.of(page, pageSize), null);
 
 				for (SearchResult searchResult : searchPage.getItems()) {
 					JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -729,9 +728,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					);
 				}
 
-				page++;
+				if ((page * pageSize) >= searchPage.getTotalCount()) {
+					break;
+				}
 			}
-			while (((page - 1) * pageSize) < searchPage.getTotalCount());
 
 			return bulkActionItemsMap;
 		}

@@ -271,6 +271,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		return _addAssetLibrary();
 	}
 
+	@Override
 	protected AssetLibrary
 			testDeleteAssetLibraryByExternalReferenceCode_addAssetLibrary()
 		throws Exception {

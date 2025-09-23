@@ -117,6 +117,7 @@ public class BlogPostingImageResourceTest
 		return testGroup.getGroupId();
 	}
 
+	@Override
 	protected BlogPostingImage
 			testGraphQLSiteBlogPostingImage_addBlogPostingImage(
 				Long siteId, BlogPostingImage blogPostingImage)

@@ -149,6 +149,7 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 		return _postChannelWishList(randomWishList());
 	}
 
+	@Override
 	protected WishList testPatchChannelWishList_addWishList() throws Exception {
 		return _postChannelWishList(randomWishList());
 	}

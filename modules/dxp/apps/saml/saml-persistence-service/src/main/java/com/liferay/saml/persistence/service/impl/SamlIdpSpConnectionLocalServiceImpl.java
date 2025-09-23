@@ -77,6 +77,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setCompanyId(serviceContext.getCompanyId());
 		samlIdpSpConnection.setCreateDate(date);
 		samlIdpSpConnection.setModifiedDate(date);
+		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 		samlIdpSpConnection.setAssertionLifetime(assertionLifetime);
 		samlIdpSpConnection.setAttributeNames(attributeNames);
 		samlIdpSpConnection.setAttributesEnabled(attributesEnabled);
@@ -85,7 +86,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setEnabled(enabled);
 		samlIdpSpConnection.setEncryptionForced(encryptionForced);
 		samlIdpSpConnection.setMetadataUpdatedDate(date);
-		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -194,8 +194,8 @@ public class SamlIdpSpConnectionLocalServiceImpl
 				"Unable to parse SAML metadata from " + metadataUrl, exception);
 		}
 
-		samlIdpSpConnection.setMetadataXml(metadataXml);
 		samlIdpSpConnection.setMetadataUpdatedDate(new Date());
+		samlIdpSpConnection.setMetadataXml(metadataXml);
 
 		samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
 	}
@@ -235,6 +235,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 		samlIdpSpConnection.setModifiedDate(date);
 
+		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 		samlIdpSpConnection.setAssertionLifetime(assertionLifetime);
 		samlIdpSpConnection.setAttributeNames(attributeNames);
 		samlIdpSpConnection.setAttributesEnabled(attributesEnabled);
@@ -243,7 +244,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setEnabled(enabled);
 		samlIdpSpConnection.setEncryptionForced(encryptionForced);
 		samlIdpSpConnection.setMetadataUrl(StringPool.BLANK);
-		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -270,8 +270,8 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(metadataXml)) {
-			samlIdpSpConnection.setMetadataXml(metadataXml);
 			samlIdpSpConnection.setMetadataUpdatedDate(date);
+			samlIdpSpConnection.setMetadataXml(metadataXml);
 		}
 
 		samlIdpSpConnection.setName(name);

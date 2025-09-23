@@ -247,11 +247,11 @@ public abstract class BaseSamlTestCase {
 
 		samlPeerBinding.setSamlPeerBindingId(_samlPeerBindings.size() + 1);
 		samlPeerBinding.setCompanyId(COMPANY_ID);
+		samlPeerBinding.setSamlPeerEntityId(peerEntityId);
 		samlPeerBinding.setDeleted(false);
 		samlPeerBinding.setSamlNameIdFormat(samlNameIdFormat);
 		samlPeerBinding.setSamlNameIdNameQualifier(samlNameIdNameQualifier);
 		samlPeerBinding.setSamlNameIdValue(samlNameIdValue);
-		samlPeerBinding.setSamlPeerEntityId(peerEntityId);
 
 		_samlPeerBindings.put(
 			samlPeerBinding.getSamlPeerBindingId(), samlPeerBinding);

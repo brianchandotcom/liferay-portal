@@ -46,12 +46,12 @@ public class SamlPeerBindingLocalServiceImpl
 		samlPeerBinding.setCompanyId(user.getCompanyId());
 		samlPeerBinding.setUserId(user.getUserId());
 		samlPeerBinding.setUserName(user.getFullName());
+		samlPeerBinding.setSamlPeerEntityId(samlPeerEntityId);
 		samlPeerBinding.setSamlNameIdFormat(samlNameIdFormat);
 		samlPeerBinding.setSamlNameIdNameQualifier(samlNameIdNameQualifier);
 		samlPeerBinding.setSamlNameIdSpNameQualifier(samlNameIdSpNameQualifier);
 		samlPeerBinding.setSamlNameIdSpProvidedId(samlNameIdSpProvidedId);
 		samlPeerBinding.setSamlNameIdValue(samlNameIdValue);
-		samlPeerBinding.setSamlPeerEntityId(samlPeerEntityId);
 
 		return samlPeerBindingPersistence.update(samlPeerBinding);
 	}

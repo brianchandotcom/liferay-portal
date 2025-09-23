@@ -154,9 +154,6 @@ components:
                 accountExternalReferenceCode:
                     example: AAB-34098-789-N
                     type: string
-                author:
-                    readOnly: true
-                    type: string
                 accountId:
                     example: 30130
                     format: int64
@@ -171,6 +168,9 @@ components:
                     type: object
                 advanceStatus:
                     example: trasmitted
+                    type: string
+                author:
+                    readOnly: true
                     type: string
                 billingAddress:
                     $ref: "#/components/schemas/BillingAddress"

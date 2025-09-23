@@ -236,7 +236,6 @@
 	"fix-versions": "修正バージョン",
 	"fls-partner": " FLS Partner",
 	"for": ":",
-	"for-information-on-previously-addressed-cves-fixed-in-dxp-2024-q1-1-or-earlier-please-x": "DXP 2024.Q1.1.1 またはそれ以前のバージョンで修正されたCVEについては、{0}をご覧ください。",
 	"for-instructions-on-how-to-activate-your-liferay-dxp-or-liferay-portal-instance-please-read-the": "Liferay DXP または Liferay Portal インスタンスのライセンス認証方法については、",
 	"for-instructions-on-how-to-setup-your-liferay-enterprise-search-software-please-read-the": "Liferay Enterprise Search ソフトウェアのセットアップ方法については、",
 	"for-more-information-about-the-availability-of-your-x-activation-keys-please": " For more information about the availability of your {0} activation keys, please ",

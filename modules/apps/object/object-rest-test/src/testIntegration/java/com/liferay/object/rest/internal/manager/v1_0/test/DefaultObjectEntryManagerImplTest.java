@@ -1384,6 +1384,69 @@ public class DefaultObjectEntryManagerImplTest
 			() -> _addObjectEntry(accountEntry));
 	}
 
+	@FeatureFlag("LPD-6233")
+	@Test
+	public void testAddObjectEntryWithAssigneeObjectField() throws Exception {
+		ObjectFieldUtil.addCustomObjectField(
+			new AssigneeObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"assignee"
+			).objectDefinitionId(
+				_objectDefinition1.getObjectDefinitionId()
+			).required(
+				true
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			String externalReferenceCode = RandomTestUtil.randomString();
+			String name = RandomTestUtil.randomString();
+
+			_addObjectEntryWithAssigneeObjectField(
+				HashMapBuilder.put(
+					"externalReferenceCode", externalReferenceCode
+				).put(
+					"name", name
+				).put(
+					"type", "Role"
+				).build());
+
+			Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
+				externalReferenceCode, TestPropsValues.getCompanyId());
+
+			Assert.assertEquals(name, role.getName());
+		}
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"assignee\"",
+			() -> _addObjectEntryWithAssigneeObjectField(
+				HashMapBuilder.put(
+					"externalReferenceCode", RandomTestUtil.randomString()
+				).put(
+					"type", "Role"
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"assignee\"",
+			() -> _addObjectEntryWithAssigneeObjectField(
+				HashMapBuilder.put(
+					"externalReferenceCode", RandomTestUtil.randomString()
+				).put(
+					"type", "User"
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.Required.class,
+			"No value was provided for required object field \"assignee\"",
+			() -> _addObjectEntryWithAssigneeObjectField(
+				Collections.emptyMap()));
+	}
+
 	@Test
 	public void testAddObjectEntryWithAttachmentObjectField() throws Exception {
 		String dlFolderName = RandomTestUtil.randomString();
@@ -8807,6 +8870,22 @@ public class DefaultObjectEntryManagerImplTest
 		return _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition, objectEntry,
 			scopeKey);
+	}
+
+	private ObjectEntry _addObjectEntryWithAssigneeObjectField(
+			Map<String, String> assigneeMap)
+		throws Exception {
+
+		return _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"assignee", assigneeMap
+					).build();
+				}
+			},
+			null);
 	}
 
 	private void _addObjectFieldSettingWithDefaultValue(

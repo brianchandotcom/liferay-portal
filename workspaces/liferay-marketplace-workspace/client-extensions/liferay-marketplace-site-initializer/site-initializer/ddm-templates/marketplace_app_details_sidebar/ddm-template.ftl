@@ -157,7 +157,7 @@
 		</div>
 
 		<div class="d-flex">
-			<span class="help-and-support-link-icon">
+			<span class="help-and-support-link-icon" id="contact-publisher">
 				<@clay["icon"] symbol="document" />
 			</span>
 

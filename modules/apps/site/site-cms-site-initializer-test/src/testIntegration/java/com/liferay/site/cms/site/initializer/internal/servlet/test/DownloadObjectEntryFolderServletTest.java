@@ -13,8 +13,10 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -68,28 +70,103 @@ public class DownloadObjectEntryFolderServletTest {
 	}
 
 	@Test
+	public void testDownloadBulkAction() throws Exception {
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
+			ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
+				_depotEntry.getGroupId());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(
+					_jsonFactory.createJSONObject(
+					).put(
+						"bulkActionItems",
+						_jsonFactory.createJSONArray(
+						).put(
+							_jsonFactory.createJSONObject(
+							).put(
+								"className",
+								"com.liferay.object.model.ObjectEntryFolder"
+							).put(
+								"classPK",
+								objectEntryFolder.getObjectEntryFolderId()
+							).put(
+								"classExternalReferenceCode",
+								objectEntryFolder.getExternalReferenceCode()
+							).put(
+								"name", objectEntryFolder.getName()
+							)
+						)
+					).put(
+						"selectAll", false
+					).put(
+						"type", "DownloadBulkAction"
+					).toString(
+					).getBytes(),
+					HttpMethods.POST, 0);
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+			Assert.assertEquals(
+				ContentTypes.APPLICATION_ZIP,
+				mockHttpServletResponse.getContentType());
+			Assert.assertEquals(
+				HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+	}
+
+	@Test
 	public void testDownloadFolder() throws Exception {
-		ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
-			_depotEntry.getGroupId());
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(objectEntryFolder);
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+			ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
+				_depotEntry.getGroupId());
 
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(
+					null, HttpMethods.GET,
+					objectEntryFolder.getObjectEntryFolderId());
 
-		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
 
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_ZIP,
-			mockHttpServletResponse.getContentType());
-		Assert.assertEquals(
-			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+			_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+			Assert.assertEquals(
+				ContentTypes.APPLICATION_ZIP,
+				mockHttpServletResponse.getContentType());
+			Assert.assertEquals(
+				HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -116,7 +193,7 @@ public class DownloadObjectEntryFolderServletTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-			ObjectEntryFolder objectEntryFolder)
+			byte[] content, String method, long objectEntryFolderId)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -128,13 +205,22 @@ public class DownloadObjectEntryFolderServletTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 		mockHttpServletRequest.setAttribute(
 			WebKeys.USER, TestPropsValues.getUserId());
+
+		if (content != null) {
+			mockHttpServletRequest.setContent(content);
+		}
+
 		mockHttpServletRequest.setContextPath("/o");
-		mockHttpServletRequest.setMethod(HttpMethods.GET);
-		mockHttpServletRequest.setRequestURI(
-			StringBundler.concat(
-				"/o/cmd/download-folder/",
-				_portal.getClassNameId(ObjectEntryFolder.class), "/",
-				objectEntryFolder.getObjectEntryFolderId()));
+		mockHttpServletRequest.setMethod(method);
+
+		if (objectEntryFolderId != 0) {
+			mockHttpServletRequest.setRequestURI(
+				StringBundler.concat(
+					"/o/cmd/download-folder/",
+					_portal.getClassNameId(ObjectEntryFolder.class), "/",
+					objectEntryFolderId));
+		}
+
 		mockHttpServletRequest.setServletPath("/cms/download-folder");
 
 		return mockHttpServletRequest;
@@ -164,6 +250,9 @@ public class DownloadObjectEntryFolderServletTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

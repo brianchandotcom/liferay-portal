@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -14,12 +15,12 @@ import {
 
 import Loading from '../../components/Loading';
 import ProductPurchase from '../../components/ProductPurchase';
+import {MarketplaceDeliveryProduct} from '../../entity/MarketplaceDeliveryProduct';
 import {SolutionTypes} from '../../enums/Product';
 import useProductPurchaseCart from '../../hooks/useProductPurchaseCart';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
 import {scrollToMiddleOfPage} from '../../utils/browser';
-import {getProductPriceModel} from '../../utils/productUtils';
 import ProductPurchasePrice from './ProductPurchasePrice';
 import {productTypeRoutes} from './ProductPurchaseRouter';
 import useAccounts from './hooks/useAccounts';
@@ -48,6 +49,7 @@ export type ProductPurchaseOutletContext = {
 		cart?: Cart | undefined,
 		cartOptions?: any
 	) => Promise<void>;
+	marketplaceDeliveryProduct: MarketplaceDeliveryProduct;
 	product: DeliveryProduct;
 	productPurchaseCart: ReturnType<typeof useProductPurchaseCart>;
 	productTypeRoute: ProductPurchaseOutletProps['productTypeRoute'];
@@ -73,6 +75,10 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 
 		ProductPurchaseApp.getOrderTypeExternalReferenceCode(product)
 	);
+
+	const marketplaceDeliveryProduct = useMemo(() => {
+		return new MarketplaceDeliveryProduct(product);
+	}, [product]);
 
 	const {metadata, routes = []} = productTypeRoute || {};
 
@@ -133,10 +139,6 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		setSubmitting(false);
 	};
 
-	const displaySteps = metadata?.isNavigationStepVisible
-		? metadata.isNavigationStepVisible(product)
-		: true;
-
 	const isTinyDisplay = metadata?.tinyStepsDisplay;
 
 	const context = {
@@ -146,6 +148,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			previousStep: () => stepNavigate(-1),
 		},
 		handlePurchase,
+		marketplaceDeliveryProduct,
 		product,
 		productPurchaseCart,
 		routes: steps,
@@ -157,33 +160,11 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	useEffect(() => {
 		if (selectedAccount?.taxId) {
 			productPurchaseStore.send({
-				account: {
-					taxId: selectedAccount.taxId,
-				},
+				taxId: selectedAccount.taxId,
 				type: 'setAccountTaxId',
 			});
 		}
 	}, [selectedAccount?.taxId]);
-
-	useEffect(() => {
-		const {isFreeApp} = getProductPriceModel(product);
-
-		if (isFreeApp) {
-			if (accounts.length === 1 && !selectedAccount) {
-				setSelectedAccount(accounts[0]);
-			}
-
-			navigate('summary', {replace: true});
-
-			return;
-		}
-
-		if (accounts.length === 1 && !selectedAccount) {
-			setSelectedAccount(accounts[0]);
-
-			navigate('license', {replace: true});
-		}
-	}, [accounts, selectedAccount, product, navigate, setSelectedAccount]);
 
 	return (
 		<ProductPurchase className="my-7">
@@ -205,10 +186,24 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 					) : null
 				}
 			>
+				{marketplaceDeliveryProduct.isPerpetualLicense && (
+					<div className="mt-2 text-black-50">
+						<ClayIcon
+							className="mr-1"
+							color="#2E5AAC"
+							symbol="exclamation-full"
+						/>{' '}
+						<small>
+							A perpetual license never expires. Support is not
+							included.
+						</small>
+					</div>
+				)}
+
 				<ProductPurchase.HeaderAccount account={selectedAccount} />
 			</ProductPurchase.Header>
 
-			{displaySteps && !isTinyDisplay && (
+			{!isTinyDisplay && (
 				<ProductPurchase.Steps
 					className="mt-5 px-8"
 					onClickIndicator={(step) => navigate(step.key)}
@@ -219,7 +214,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			<ProductPurchase.Body
 				className={classNames('mt-7', {'mt-7': accounts.length === 1})}
 			>
-				{displaySteps && isTinyDisplay && (
+				{isTinyDisplay && (
 					<ProductPurchase.CircleSteps
 						className="my-5 px-8"
 						onClickIndicator={(step) => navigate(step.key)}

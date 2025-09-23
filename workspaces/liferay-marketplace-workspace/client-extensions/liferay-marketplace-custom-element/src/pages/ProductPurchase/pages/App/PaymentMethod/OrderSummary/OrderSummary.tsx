@@ -14,10 +14,7 @@ import {Section} from '../../../../../../components/Section/Section';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 import {formatCurrency} from '../../../../../../utils/currencies';
-import {
-	getLicenseTagText,
-	getProductPriceModel,
-} from '../../../../../../utils/productUtils';
+import {getProductPriceModel} from '../../../../../../utils/productUtils';
 import {useProductPurchaseOutletContext} from '../../../../ProductPurchaseOutlet';
 import ProductPurchaseApp from '../../../../services/ProductPurchaseApp';
 import {productPurchaseStore} from '../../../../store/AppPurchaseStore';
@@ -68,12 +65,11 @@ const PaymentMethods = {
 
 const OrderSummary = () => {
 	const navigate = useNavigate();
-	const {context} = productPurchaseStore.getSnapshot();
 
-	const {type: paymentMethodType} = context.payment;
 	const {
 		actions: {previousStep},
 		handlePurchase,
+		marketplaceDeliveryProduct,
 		product,
 		productPurchaseCart,
 	} = useProductPurchaseOutletContext();
@@ -88,17 +84,17 @@ const OrderSummary = () => {
 	);
 
 	const summary = productPurchaseCart.cart.summary;
-	const billingAddress = context.payment.billingAddress;
+	const billingAddress = paymentStore.billingAddress;
 	const currencyCode = Liferay.CommerceContext.currency.currencyCode;
 
 	useEffect(() => {
-		if (!licenseType) {
+		if (!isFreeApp && !licenseType) {
 
 			// Force redirect to checkout homepage
 
 			navigate('/');
 		}
-	}, [licenseType, navigate]);
+	}, [isFreeApp, licenseType, navigate]);
 
 	const onClickPayNow = async () => {
 		if (licenseType === 'TRIAL') {
@@ -107,7 +103,7 @@ const OrderSummary = () => {
 			});
 		}
 
-		if (paymentMethodType === PaymentMethodType.INVOICE) {
+		if (paymentStore.type === PaymentMethodType.INVOICE) {
 			return handlePurchase(ProductPurchaseApp, undefined);
 		}
 
@@ -138,7 +134,7 @@ const OrderSummary = () => {
 					children: i18n.translate(
 						isFreeApp ? 'get-app' : 'purchase-app'
 					),
-					disabled: !context.payment.eulaAgreement,
+					disabled: !paymentStore.eulaAgreement,
 					onClick: () => {
 						if (isFreeApp) {
 							return handlePurchase(ProductPurchaseApp);
@@ -148,7 +144,13 @@ const OrderSummary = () => {
 					},
 				},
 			}}
-			title={i18n.translate('payment-method')}
+			subtitle={
+				<small className="text-black-50">
+					Please review the order summary below and flag the checkbox
+					to complete your purchase
+				</small>
+			}
+			title={i18n.translate('summary')}
 		>
 			{!isFreeApp && (
 				<>
@@ -164,7 +166,7 @@ const OrderSummary = () => {
 							</div>
 							<div>
 								<div className="font-weight-bold section-card-title">
-									{context.payment.billingAddress.name}
+									{paymentStore.billingAddress.name}
 								</div>
 								<div className="section-card-subtitle text-black-50">
 									{`${billingAddress.street1}, ${billingAddress.city}, ${billingAddress.regionISOCode}, ${billingAddress.country}`}
@@ -175,18 +177,13 @@ const OrderSummary = () => {
 
 					<Section label={i18n.translate('payment-method')}>
 						<div className="align-items-center d-flex p-4 section-card">
-							<div>
-								{PaymentMethods[context.payment.type].icon}
-							</div>
+							<div>{PaymentMethods[paymentStore.type].icon}</div>
 							<div>
 								<div className="font-weight-bold section-card-title">
-									{PaymentMethods[context.payment.type].title}
+									{PaymentMethods[paymentStore.type].title}
 								</div>
 								<div className="section-card-subtitle text-black-50">
-									{
-										PaymentMethods[context.payment.type]
-											.subtitle
-									}
+									{PaymentMethods[paymentStore.type].subtitle}
 								</div>
 							</div>
 						</div>
@@ -223,7 +220,7 @@ const OrderSummary = () => {
 
 					{!isFreeApp && (
 						<div className="license-tag ml-3 px-2 py-1">
-							{getLicenseTagText(product as DeliveryProduct)}
+							{marketplaceDeliveryProduct.getLicenseTagText()}
 						</div>
 					)}
 				</div>

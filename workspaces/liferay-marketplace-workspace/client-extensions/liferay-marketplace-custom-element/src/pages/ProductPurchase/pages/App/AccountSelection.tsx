@@ -4,6 +4,8 @@
  */
 
 import {useSelector} from '@xstate/store/react';
+import {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import i18n from '../../../../i18n';
 import {getProductPriceModel} from '../../../../utils/productUtils';
@@ -15,11 +17,33 @@ import LicenseTermsCheckbox from './License/LicenseTermsCheckbox';
 
 const AccountSelection = () => {
 	const {
+		accounts,
 		actions: {nextStep},
 		handlePurchase,
 		product,
 		selectedAccount,
+		setSelectedAccount,
 	} = useProductPurchaseOutletContext();
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const {isFreeApp} = getProductPriceModel(product);
+
+		if (isFreeApp) {
+			if (accounts.length === 1 && !selectedAccount) {
+				setSelectedAccount(accounts[0]);
+			}
+
+			return navigate('summary', {replace: true});
+		}
+
+		if (accounts.length === 1 && !selectedAccount) {
+			setSelectedAccount(accounts[0]);
+
+			navigate('license', {replace: true});
+		}
+	}, [accounts, selectedAccount, product, navigate, setSelectedAccount]);
 
 	const eulaAgreement = useSelector(
 		productPurchaseStore,

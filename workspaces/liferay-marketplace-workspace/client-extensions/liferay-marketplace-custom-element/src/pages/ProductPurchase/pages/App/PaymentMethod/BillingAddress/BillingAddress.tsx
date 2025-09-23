@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useSelector} from '@xstate/store/react';
 import React, {useState} from 'react';
 import {KeyedMutator} from 'swr';
 
@@ -13,6 +14,7 @@ import {Liferay} from '../../../../../../liferay/liferay';
 import HeadlessAdminUser from '../../../../../../services/rest/HeadlessAdminUser';
 import {Region} from '../../../../../../services/rest/HeadlessCommerceAdminAddress';
 import {useProductPurchaseOutletContext} from '../../../../ProductPurchaseOutlet';
+import {productPurchaseStore} from '../../../../store';
 import BillingAddressForm from './BillinAddressForm';
 import getPostalAddressDescription from './getPostalAddressDescription';
 
@@ -27,10 +29,18 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 	mutateUserAccoutAddress,
 	setBillingAddress,
 }) => {
+	const {billingAddress} = useSelector(
+		productPurchaseStore,
+		(state) => state.context.payment
+	);
+
+	const billingAdressName = billingAddress.name || '';
+
 	const {selectedAccount} = useProductPurchaseOutletContext();
 	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 	const {data: regionsResponse} = useCommerceRegions();
-	const [selectedAddress, setSelectedAddress] = useState<string>();
+	const [selectedAddress, setSelectedAddress] =
+		useState<string>(billingAdressName);
 
 	const regions = regionsResponse?.items ?? [];
 
@@ -41,7 +51,7 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 		address: BillingAddress;
 		title: string | undefined;
 	}) => {
-		setSelectedAddress(address.name);
+		setSelectedAddress(address.name as string);
 
 		const postalAddress = addresses.find(
 			(address) => address.name === title
@@ -123,7 +133,7 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 			items: [...addresses, postAddress],
 		}));
 
-		setSelectedAddress(billingAddress.name);
+		setSelectedAddress(billingAddress.name as string);
 
 		setBillingAddress(billingAddress);
 

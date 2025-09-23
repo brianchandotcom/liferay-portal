@@ -52,6 +52,8 @@ public class ObjectEntryInfoItemFields {
 			TextInfoFieldType.INSTANCE
 		).name(
 			"externalReferenceCode"
+		).editable(
+			true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "external-reference-code")
@@ -110,6 +112,36 @@ public class ObjectEntryInfoItemFields {
 				ObjectEntryInfoItemFields.class, "user-profile-image")
 		).build();
 
+	public static InfoField<DateTimeInfoFieldType> getDisplayDateInfoField(
+		ObjectDefinition objectDefinition) {
+
+		return BuilderHolder._builder.infoFieldType(
+			DateTimeInfoFieldType.INSTANCE
+		).name(
+			"displayDate"
+		).editable(
+			objectDefinition.isEnableObjectEntrySchedule()
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFields.class, "display-date")
+		).build();
+	}
+
+	public static InfoField<DateTimeInfoFieldType> getExpirationDateInfoField(
+		ObjectDefinition objectDefinition) {
+
+		return BuilderHolder._builder.infoFieldType(
+			DateTimeInfoFieldType.INSTANCE
+		).name(
+			"expirationDate"
+		).editable(
+			objectDefinition.isEnableObjectEntrySchedule()
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFields.class, "expiration-date")
+		).build();
+	}
+
 	public static InfoField getFriendlyURLInfoField(
 		boolean editable, String name, String namespace) {
 
@@ -143,6 +175,21 @@ public class ObjectEntryInfoItemFields {
 				ObjectEntryInfoItemFields.class, "friendly-url")
 		).localizable(
 			true
+		).build();
+	}
+
+	public static InfoField<DateTimeInfoFieldType> getReviewDateInfoField(
+		ObjectDefinition objectDefinition) {
+
+		return BuilderHolder._builder.infoFieldType(
+			DateTimeInfoFieldType.INSTANCE
+		).name(
+			"reviewDate"
+		).editable(
+			objectDefinition.isEnableObjectEntrySchedule()
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFields.class, "review-date")
 		).build();
 	}
 

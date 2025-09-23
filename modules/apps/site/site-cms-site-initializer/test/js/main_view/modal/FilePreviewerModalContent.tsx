@@ -38,6 +38,21 @@ const baseVideoFile = {
 	thumbnailURL: '/thumbs/video1?version=1.0',
 };
 
+const baseDocumentFile = {
+	alternativeText: 'Preview of Document 1',
+	externalReferenceCode: 'pdf-001',
+	id: 301,
+	link: {
+		href: '/pdfs/doc1.pdf',
+		label: 'Download PDF',
+	},
+	mimeType: 'application/pdf',
+	name: 'Document 1',
+	numberOfPages: 5,
+	previewURL: '/preview/doc1.pdf',
+	thumbnailURL: '/thumbs/doc1.pdf?version=1.0',
+};
+
 describe('FilePreviewerModalContent', () => {
 	it('renders the file name and download link', () => {
 		const {getByRole, getByText} = render(
@@ -92,5 +107,19 @@ describe('FilePreviewerModalContent', () => {
 
 		expect(videoIframe).toBeInTheDocument();
 		expect(videoIframe).toHaveAttribute('src', baseVideoFile.previewURL);
+	});
+
+	it('shows PDF preview when numberOfPages and previewURL is present', () => {
+		const {getByRole} = render(
+			<FilePreviewerModalContent file={baseDocumentFile} />
+		);
+
+		const documentImagePreview = getByRole('img');
+
+		expect(documentImagePreview).toBeInTheDocument();
+		expect(documentImagePreview).toHaveAttribute(
+			'src',
+			'http://localhost/preview/doc1.pdf?previewFileIndex=1'
+		);
 	});
 });

@@ -428,6 +428,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			DepotEntry depotEntry, String expectedDeletionType)
 		throws Exception {
 
+		BulkAction bulkAction = new DeleteBulkAction();
+
+		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
+
 		ObjectEntryFolder contentObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -456,10 +460,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		ObjectEntryFolder objectEntryFolder2 = _addObjectEntryFolder(
 			depotEntry.getGroupId(),
 			objectEntryFolder1.getObjectEntryFolderId());
-
-		BulkAction bulkAction = new DeleteBulkAction();
-
-		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
 
 		_testPostBulkActionItemPreviewPageWithBulkActionItems(
 			bulkAction, expectedDeletionType, objectEntry, objectEntryFolder2);
@@ -772,22 +772,23 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	}
 
 	private void _testPostBulkActionWithTypeKeyword() throws Exception {
+		KeywordBulkAction keywordBulkAction = new KeywordBulkAction();
+
 		ObjectEntry basicWebContentObjectEntry =
 			ObjectEntryTestUtil.addObjectEntry(
 				_depotEntry2.getGroupId(), _basicWebContentObjectDefinition,
 				Collections.emptyMap());
 
-		KeywordBulkAction keywordBulkAction = new KeywordBulkAction();
-
 		keywordBulkAction.setBulkActionItems(
 			_createBulkActionItems(basicWebContentObjectEntry));
-		keywordBulkAction.setType(BulkAction.Type.KEYWORD_BULK_ACTION);
 
 		String[] keywords = {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString()
 		};
 
 		keywordBulkAction.setKeywords(keywords);
+
+		keywordBulkAction.setType(BulkAction.Type.KEYWORD_BULK_ACTION);
 
 		_postBulkAction(keywordBulkAction);
 
@@ -799,6 +800,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	}
 
 	private void _testPostBulkActionWithTypePermission() throws Exception {
+		PermissionBulkAction permissionBulkAction = new PermissionBulkAction();
+
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_roleLocalService.addGroupRole(
@@ -808,8 +811,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			ObjectEntryTestUtil.addObjectEntry(
 				_depotEntry2.getGroupId(), _basicWebContentObjectDefinition,
 				Collections.emptyMap());
-
-		PermissionBulkAction permissionBulkAction = new PermissionBulkAction();
 
 		permissionBulkAction.setBulkActionItems(
 			_createBulkActionItems(basicWebContentObjectEntry));
@@ -844,19 +845,16 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private void _testPostBulkActionWithTypeTaxonomyCategory()
 		throws Exception {
 
+		TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
+			new TaxonomyCategoryBulkAction();
+
 		ObjectEntry basicWebContentObjectEntry =
 			ObjectEntryTestUtil.addObjectEntry(
 				_depotEntry2.getGroupId(), _basicWebContentObjectDefinition,
 				Collections.emptyMap());
 
-		TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
-			new TaxonomyCategoryBulkAction();
-
 		taxonomyCategoryBulkAction.setBulkActionItems(
 			_createBulkActionItems(basicWebContentObjectEntry));
-
-		taxonomyCategoryBulkAction.setType(
-			BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
@@ -880,6 +878,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		};
 
 		taxonomyCategoryBulkAction.setTaxonomyCategoryIds(taxonomyCategoryIds);
+
+		taxonomyCategoryBulkAction.setType(
+			BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION);
 
 		_postBulkAction(taxonomyCategoryBulkAction);
 

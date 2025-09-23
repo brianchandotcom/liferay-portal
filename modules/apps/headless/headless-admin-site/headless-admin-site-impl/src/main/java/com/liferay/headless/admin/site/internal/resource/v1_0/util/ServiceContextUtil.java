@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
@@ -36,7 +37,7 @@ public class ServiceContextUtil {
 			long companyId, Date createDate, long groupId,
 			HttpServletRequest httpServletRequest, String[] keywords,
 			Date modifiedDate, long userId, String uuid,
-			WidgetPageSettings widgetPageSettings)
+			PageSettings pageSettings)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
@@ -53,7 +54,10 @@ public class ServiceContextUtil {
 		serviceContext.setUserId(userId);
 		serviceContext.setUuid(uuid);
 
-		if (widgetPageSettings != null) {
+		if ((pageSettings instanceof WidgetPageSettings)) {
+			WidgetPageSettings widgetPageSettings =
+				(WidgetPageSettings)pageSettings;
+
 			serviceContext.setAttribute(
 				"layoutPrototypeLinkEnabled",
 				widgetPageSettings.getInheritChanges());

@@ -282,18 +282,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		WidgetPageSettings widgetPageSettings = null;
-
-		if (Objects.equals(sitePage.getType(), SitePage.Type.WIDGET_PAGE)) {
-			widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
-		}
-
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			sitePage.getTaxonomyCategoryItemExternalReferences(),
 			contextCompany.getCompanyId(), sitePage.getDateCreated(), groupId,
 			contextHttpServletRequest, sitePage.getKeywords(),
 			sitePage.getDateModified(), contextUser.getUserId(),
-			sitePage.getUuid(), widgetPageSettings);
+			sitePage.getUuid(), sitePage.getPageSettings());
 
 		_validatePageSpecificationExternalReferenceCode(
 			serviceContext, sitePage);
@@ -462,18 +456,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				sitePage.getFriendlyUrlPath_i18n());
 		}
 
-		WidgetPageSettings widgetPageSettings = null;
-
-		if (Objects.equals(sitePage.getType(), SitePage.Type.WIDGET_PAGE)) {
-			widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
-		}
-
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			sitePage.getTaxonomyCategoryItemExternalReferences(),
 			contextCompany.getCompanyId(), sitePage.getDateCreated(),
 			layout.getGroupId(), contextHttpServletRequest,
 			sitePage.getKeywords(), sitePage.getDateModified(),
-			contextUser.getUserId(), sitePage.getUuid(), widgetPageSettings);
+			contextUser.getUserId(), sitePage.getUuid(),
+			sitePage.getPageSettings());
 
 		serviceContext.setAttribute(
 			"hidden",

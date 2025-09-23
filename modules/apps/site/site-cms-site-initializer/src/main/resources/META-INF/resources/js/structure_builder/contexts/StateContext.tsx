@@ -36,7 +36,6 @@ import getRandomId from '../utils/getRandomId';
 import getUuid from '../utils/getUuid';
 import insertGroup from '../utils/insertGroup';
 import normalizeName from '../utils/normalizeName';
-import openDeletionModal from '../utils/openDeletionModal';
 import refreshReferencedStructures from '../utils/refreshReferencedStructures';
 import sortChildren from '../utils/sortChildren';
 import ungroup from '../utils/ungroup';
@@ -388,15 +387,6 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
-			if (
-				child.parent === structure.uuid &&
-				structure.children.size === 1
-			) {
-				openDeletionModal();
-
-				return state;
-			}
-
 			const nextChildren = deleteChildren({
 				root: structure,
 				uuids: [child.uuid],
@@ -435,12 +425,6 @@ function reducer(state: State, action: Action): State {
 				root: structure,
 				uuids: selection,
 			});
-
-			if (nextChildren.size === 0) {
-				openDeletionModal();
-
-				return state;
-			}
 
 			return {
 				...state,

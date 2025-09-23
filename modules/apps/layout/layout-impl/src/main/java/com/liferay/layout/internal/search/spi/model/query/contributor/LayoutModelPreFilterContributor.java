@@ -64,6 +64,16 @@ public class LayoutModelPreFilterContributor
 			booleanFilter.add(privateLayoutTermFilter, BooleanClauseOccur.MUST);
 		}
 
+		String systemLayout = (String)searchContext.getAttribute(
+			"systemLayout");
+
+		if (Validator.isNotNull(systemLayout)) {
+			TermFilter systemLayoutTermFilter = new TermFilter(
+				"systemLayout", systemLayout);
+
+			booleanFilter.add(systemLayoutTermFilter, BooleanClauseOccur.MUST);
+		}
+
 		int[] statuses = GetterUtil.getIntegerValues(
 			searchContext.getAttribute(Field.STATUS));
 

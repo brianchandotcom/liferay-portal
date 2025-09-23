@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 // eslint-disable-next-line
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
-import {render, screen, waitFor, within} from '@testing-library/react';
+import {act, render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {openToast} from 'frontend-js-components-web';
 import React from 'react';
@@ -92,7 +92,13 @@ const assertErrorToast = async () => {
 	});
 };
 
-describe('SpaceSitesModal', () => {
+const waitForComponentRendering = async () => {
+	const connectedSite = await screen.findByText('Connected Site 1');
+
+	expect(connectedSite).toBeInTheDocument();
+};
+
+describe('SpaceConnectedSitesModal', () => {
 	const {ResizeObserver: ResizeObserverOriginal} = window;
 
 	beforeAll(() => {
@@ -148,7 +154,9 @@ describe('SpaceSitesModal', () => {
 	it('checks the accessibility of the modal', async () => {
 		const {container} = renderComponent();
 
-		await checkAccessibility({bestPractices: true, context: container});
+		await act(async () => {
+			await checkAccessibility({bestPractices: true, context: container});
+		});
 	});
 
 	it('renders the modal header', async () => {
@@ -187,10 +195,7 @@ describe('SpaceSitesModal', () => {
 			});
 
 			renderComponent();
-
-			await waitFor(() => {
-				expect(mockGetAllSites).toHaveBeenCalled();
-			});
+			await waitForComponentRendering();
 
 			await userEvent.click(screen.getByPlaceholderText('select-a-site'));
 
@@ -226,10 +231,7 @@ describe('SpaceSitesModal', () => {
 			});
 
 			renderComponent();
-
-			await waitFor(() => {
-				expect(mockGetAllSites).toHaveBeenCalled();
-			});
+			await waitForComponentRendering();
 
 			await userEvent.click(screen.getByPlaceholderText('select-a-site'));
 
@@ -246,6 +248,7 @@ describe('SpaceSitesModal', () => {
 
 		it('allows disconnecting a site', async () => {
 			renderComponent();
+			await waitForComponentRendering();
 
 			const site1Row = (
 				await screen.findByText('Connected Site 1')
@@ -278,6 +281,7 @@ describe('SpaceSitesModal', () => {
 			});
 
 			renderComponent();
+			await waitForComponentRendering();
 
 			const site1Row = (
 				await screen.findByText('Connected Site 1')
@@ -296,10 +300,11 @@ describe('SpaceSitesModal', () => {
 
 		it('allows changing a site to be unsearchable', async () => {
 			renderComponent();
+			await waitForComponentRendering();
 
-			const site1Row = (
-				await screen.findByText('Connected Site 1')
-			).closest('li')!;
+			const site1Row = screen
+				.getByText('Connected Site 1')
+				.closest('li')!;
 
 			expect(
 				within(site1Row).getByText(/searchable-content: yes/)
@@ -335,10 +340,11 @@ describe('SpaceSitesModal', () => {
 			});
 
 			renderComponent();
+			await waitForComponentRendering();
 
-			const site1Row = (
-				await screen.findByText('Connected Site 1')
-			).closest('li')!;
+			const site1Row = screen
+				.getByText('Connected Site 1')
+				.closest('li')!;
 
 			expect(
 				within(site1Row).getByText(/searchable-content: yes/)
@@ -364,12 +370,7 @@ describe('SpaceSitesModal', () => {
 
 		it('does not render the site selector', async () => {
 			renderComponent(propsWithoutPermission);
-
-			await waitFor(() => {
-				expect(
-					screen.getByText('Connected Site 1')
-				).toBeInTheDocument();
-			});
+			await waitForComponentRendering();
 
 			expect(
 				screen.queryByRole('combobox', {name: 'site'})
@@ -381,10 +382,11 @@ describe('SpaceSitesModal', () => {
 
 		it('does not render site actions', async () => {
 			renderComponent(propsWithoutPermission);
+			await waitForComponentRendering();
 
-			const site1Row = (
-				await screen.findByText('Connected Site 1')
-			).closest('li')!;
+			const site1Row = screen
+				.getByText('Connected Site 1')
+				.closest('li')!;
 			expect(
 				within(site1Row).queryByRole('button', {name: 'site-actions'})
 			).not.toBeInTheDocument();

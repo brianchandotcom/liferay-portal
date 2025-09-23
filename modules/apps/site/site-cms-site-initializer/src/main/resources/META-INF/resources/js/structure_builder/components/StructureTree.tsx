@@ -98,6 +98,7 @@ export default function StructureTree({search}: {search: string}) {
 				}),
 				icon: 'edit-layout',
 				id: structureUuid,
+				invalid: invalids.has(structureUuid),
 				label: structureLabel,
 				uuid: structureUuid,
 			},

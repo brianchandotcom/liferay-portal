@@ -45,7 +45,6 @@ public class MailServiceTest {
 
 		long companyId1 = RandomTestUtil.randomLong();
 		long companyId2 = RandomTestUtil.randomLong();
-
 		MailSettingCompanyConfiguration mailSettingCompanyConfiguration1;
 		MailSettingCompanyConfiguration mailSettingCompanyConfiguration2;
 
@@ -72,13 +71,13 @@ public class MailServiceTest {
 				_configurationProvider.getCompanyConfiguration(
 					MailSettingCompanyConfiguration.class, companyId1);
 
-			mailSettingCompanyConfiguration2 =
-				_configurationProvider.getCompanyConfiguration(
-					MailSettingCompanyConfiguration.class, companyId2);
-
 			Assert.assertFalse(
 				mailSettingCompanyConfiguration1.
 					enablePOPServerNotifications());
+
+			mailSettingCompanyConfiguration2 =
+				_configurationProvider.getCompanyConfiguration(
+					MailSettingCompanyConfiguration.class, companyId2);
 
 			Assert.assertFalse(
 				mailSettingCompanyConfiguration2.

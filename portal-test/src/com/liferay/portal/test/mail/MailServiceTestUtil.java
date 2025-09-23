@@ -139,11 +139,12 @@ public class MailServiceTestUtil {
 
 		mailService = aopInvocationHandler.getTarget();
 
+		Class<?> clazz = mailService.getClass();
+
 		ReflectionTestUtil.setFieldValue(
 			mailService, "_sessions",
 			ProxyUtil.newProxyInstance(
-				mailService.getClass(
-				).getClassLoader(),
+				clazz.getClassLoader(),
 				new Class<?>[] {Map.class},
 				new InvocationHandler() {
 

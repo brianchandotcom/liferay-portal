@@ -1,5 +1,5 @@
 {
-	"@generated": "cb1cf6452a93b6c0c23f9e29a688cd1a105cdc25",
+	"@generated": "db00bf523909fd9beefc7d88139828f601bafab2",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -12,7 +12,7 @@
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/analytics-reports-js-components-web": [
-				"../../../../dxp/apps/analytics/analytics-reports-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+				"../../../analytics/analytics-reports-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"@liferay/frontend-data-set-web": [
 				"../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
@@ -67,7 +67,7 @@
 	],
 	"references": [
 		{
-			"path": "../../../../dxp/apps/analytics/analytics-reports-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+			"path": "../../../analytics/analytics-reports-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/tsconfig.json"

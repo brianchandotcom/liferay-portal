@@ -35,6 +35,8 @@ import {getChildrenUuids} from '../utils/getChildrenUuids';
 import getRandomId from '../utils/getRandomId';
 import getUuid from '../utils/getUuid';
 import insertGroup from '../utils/insertGroup';
+import isLocked from '../utils/isLocked';
+import isReferenced from '../utils/isReferenced';
 import normalizeName from '../utils/normalizeName';
 import refreshReferencedStructures from '../utils/refreshReferencedStructures';
 import sortChildren from '../utils/sortChildren';
@@ -280,7 +282,23 @@ function reducer(state: State, action: Action): State {
 			}
 
 			for (const child of groupChildren) {
-				if (publishedChildren.has(child.uuid)) {
+				if (isLocked(child)) {
+					showWarning({
+						text: Liferay.Language.get(
+							'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-system-fields'
+						),
+						title: Liferay.Language.get(
+							'repeatable-group-creation-not-allowed'
+						),
+					});
+
+					return state;
+				}
+
+				if (
+					publishedChildren.has(child.uuid) ||
+					isReferenced({item: child, root: structure})
+				) {
 					showWarning({
 						text: Liferay.Language.get(
 							'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-already-published'
@@ -421,14 +439,46 @@ function reducer(state: State, action: Action): State {
 		case 'delete-selection': {
 			const {selection, structure} = state;
 
+			const items = selection.map(
+				(uuid) => findChild({root: structure, uuid})!
+			);
+
+			if (items.some((item) => isLocked(item))) {
+				showWarning({
+					text: Liferay.Language.get(
+						'system-fields-cannot-be-deleted'
+					),
+					title: Liferay.Language.get(
+						'some-fields-cannot-be-deleted'
+					),
+				});
+			}
+			else if (
+				items.some((item) => isReferenced({item, root: structure}))
+			) {
+				showWarning({
+					text: Liferay.Language.get(
+						'referenced-content-structure-fields-cannot-be-deleted'
+					),
+					title: Liferay.Language.get(
+						'some-fields-cannot-be-deleted'
+					),
+				});
+			}
+
 			const nextChildren = deleteChildren({
 				root: structure,
 				uuids: selection,
 			});
 
+			const undeletableItems = items.filter(
+				(item) =>
+					isLocked(item) || isReferenced({item, root: structure})
+			);
+
 			return {
 				...state,
-				selection: INITIAL_STATE.selection,
+				selection: undeletableItems.map(({uuid}) => uuid),
 				structure: {
 					...structure,
 					children: nextChildren,

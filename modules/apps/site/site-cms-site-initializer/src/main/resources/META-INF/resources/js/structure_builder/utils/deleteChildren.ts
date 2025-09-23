@@ -5,6 +5,7 @@
 
 import {RepeatableGroup, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
+import isLocked from './isLocked';
 
 export default function deleteChildren({
 	root,
@@ -21,7 +22,7 @@ export default function deleteChildren({
 
 		// Delete child if it applies
 
-		if (uuids.includes(child.uuid)) {
+		if (uuids.includes(child.uuid) && !isLocked(child)) {
 			children.delete(child.uuid);
 		}
 

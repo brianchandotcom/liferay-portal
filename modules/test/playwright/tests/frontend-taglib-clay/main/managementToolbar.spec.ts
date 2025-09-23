@@ -319,7 +319,7 @@ test.describe('Management Toolbar Active State', () => {
 });
 
 test.describe('Management Toolbar Using Display Context', () => {
-	test.skip(
+	test(
 		'Assert the order button can display the correct icons',
 		{tag: '@LPS-144536'},
 		async ({claySamplePage, page}) => {
@@ -351,10 +351,7 @@ test.describe('Management Toolbar Using Display Context', () => {
 			});
 
 			await test.step('Navigate to management toolbar tab', async () => {
-				await page
-					.getByRole('tablist')
-					.getByText('Management Toolbars')
-					.click();
+				await claySamplePage.selectTab(TabName.MANAGEMENT_TOOLBARS);
 			});
 
 			await test.step('Open the order dropdown', async () => {

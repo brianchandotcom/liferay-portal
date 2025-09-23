@@ -101,11 +101,26 @@ test('Empty pages show correct label in UI and correct alert in view mode', asyn
 
 	await pageTreePage.open();
 
-	await expect(page.getByRole('link', {name: layoutName})).toBeVisible();
+	const pageTreeItem = page.getByRole('treeitem', {name: layoutName});
+
+	await expect(pageTreeItem).toBeVisible();
 
 	await expect(
 		page.locator('.treeview-item').getByText('Empty').nth(0)
 	).toBeVisible();
+
+	await pageTreeItem.hover();
+
+	await pageTreeItem.locator('button.dropdown-toggle').click();
+
+	await expect(
+		page.getByRole('menuitem', {name: 'Add Child Page'})
+	).toBeVisible();
+	await expect(page.getByRole('menuitem', {name: 'Delete'})).toBeVisible();
+	await expect(page.getByRole('menuitem', {name: 'Configure'})).toBeHidden();
+	await expect(
+		page.getByRole('menuitem', {name: 'Permissions'})
+	).toBeHidden();
 
 	// Assert label is in Group Pages Portlet Miller Columns
 

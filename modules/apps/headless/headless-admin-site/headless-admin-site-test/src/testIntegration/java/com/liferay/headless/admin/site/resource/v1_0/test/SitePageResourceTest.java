@@ -299,6 +299,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePageWithPageSpecifications();
 		_testPutSiteSitePageWithPriority();
 		_testPutSiteSitePageWithWidgetPageSettings();
+		_testPutSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate();
 
 		Layout layout = _addLayout(
 			LayoutConstants.TYPE_CONTENT, null, serviceContext);
@@ -1863,6 +1864,43 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		expectedWidgetPageSettings.setLayoutTemplateId("2_columns_ii");
 
 		_testPutSiteSitePage(expectedSitePage, sitePage);
+	}
+
+	private void _testPutSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate()
+		throws Exception {
+
+		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)randomSitePage.getPageSettings();
+
+		widgetPageSettings.setInheritChanges(true);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.
+				getWidgetPageLayoutPageTemplateEntry(
+					ServiceContextTestUtil.getServiceContext(
+						testGroup.getGroupId()));
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference() {
+				{
+					setExternalReferenceCode(
+						layoutPageTemplateEntry.getExternalReferenceCode());
+				}
+			};
+
+		widgetPageSettings.setWidgetPageTemplateReference(
+			itemExternalReference);
+
+		SitePage sitePage = _testPutSiteSitePage(
+			randomSitePage, randomSitePage);
+
+		widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setInheritChanges(false);
+
+		_testPutSiteSitePage(sitePage, sitePage);
 	}
 
 	private void _testUpdateSiteSitePageWithPriority(

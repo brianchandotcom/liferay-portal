@@ -142,26 +142,21 @@ public class MailSettingCompanyConfigurationUpgradeProcessTest {
 			stringValue,
 			GetterUtil.getString(
 				properties.get("additionalJavaMailProperties")));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				properties.get("enablePOPServerNotifications")));
-
 		Assert.assertFalse(
 			GetterUtil.getBoolean(properties.get("enableStartTLS")));
-
 		Assert.assertEquals(
 			intValue, GetterUtil.getString(properties.get("incomingPOPPort")));
 		Assert.assertEquals(
 			stringValue,
 			GetterUtil.getString(properties.get("incomingPOPServer")));
-
 		Assert.assertEquals(
 			intValue, GetterUtil.getString(properties.get("outgoingSMTPPort")));
 		Assert.assertEquals(
 			stringValue,
 			GetterUtil.getString(properties.get("outgoingSMTPServer")));
-
 		Assert.assertEquals(
 			stringValue, GetterUtil.getString(properties.get("popPassword")));
 		Assert.assertEquals(

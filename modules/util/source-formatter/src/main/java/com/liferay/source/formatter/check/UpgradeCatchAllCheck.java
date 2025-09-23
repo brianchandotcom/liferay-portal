@@ -561,7 +561,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				Set<String> keys = jsonObject.keySet();
 
 				if (keys.contains("hasMessage")) {
-					addMessage(fileName, _getMessage(jsonObject));
+					addMessage(
+						fileName, _getMessage(jsonObject), matcher.start());
 
 					_newMessage = true;
 
@@ -646,6 +647,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		String fileName, String from, String javaMethodContent,
 		JSONObject jsonObject, Matcher matcher, String newContent, String to) {
 
+		int lineNumber = getLineNumber(javaMethodContent, matcher.start());
+
 		String methodCall = JavaSourceUtil.getMethodCall(
 			javaMethodContent, matcher.start());
 
@@ -654,7 +657,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		if (!_hasValidMethodCall(
 				fileName, from, javaMethodContent, jsonObject, newContent,
-				parameterNames)) {
+				parameterNames, lineNumber)) {
 
 			return newContent;
 		}
@@ -663,9 +666,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			String newJavaMethodContent = StringUtil.removeFirst(
 				javaMethodContent, methodCall);
 
-			String line = getLine(
-				newJavaMethodContent,
-				getLineNumber(newJavaMethodContent, matcher.start()));
+			String line = getLine(newJavaMethodContent, lineNumber);
 
 			return StringUtil.replaceFirst(
 				newContent, javaMethodContent,
@@ -801,7 +802,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 	private boolean _hasValidMethodCall(
 		String fileName, String from, String javaMethodContent,
-		JSONObject jsonObject, String newContent, List<String> parameterNames) {
+		JSONObject jsonObject, String newContent, List<String> parameterNames,
+		int lineNumber) {
 
 		List<String> fromParameters = JavaSourceUtil.getParameterNames(from);
 
@@ -847,7 +849,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		}
 
 		if (hasMessage) {
-			addMessage(fileName, _getMessage(jsonObject));
+			addMessage(fileName, _getMessage(jsonObject), lineNumber);
 
 			_newMessage = true;
 

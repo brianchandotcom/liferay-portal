@@ -1262,6 +1262,7 @@
 		<exception>ObjectEntryFolderParentObjectEntryFolderId</exception>
 		<exception>ObjectEntryFolderScope</exception>
 		<exception>ObjectEntryGroupId</exception>
+		<exception>ObjectEntryScope</exception>
 		<exception>ObjectEntryValues</exception>
 		<exception>ObjectFieldBusinessType</exception>
 		<exception>ObjectFieldDBType</exception>

@@ -218,7 +218,7 @@ const DocumentPreviewer = ({
 					<img
 						alt={alt}
 						className={`preview-file-document ${
-							!expanded && 'preview-file-document-fit'
+							!expanded ? 'preview-file-document-fit' : ''
 						}`}
 						src={createImageURL(currentPage)}
 					/>

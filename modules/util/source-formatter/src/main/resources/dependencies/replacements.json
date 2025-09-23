@@ -4912,6 +4912,21 @@
 		"to": "\"xml\""
 	},
 	{
+		"from": "PropsFiles.CAPTCHA",
+		"issueKey": "LPD-66321",
+		"to": "\"captcha\""
+	},
+	{
+		"from": "PropsFiles.CONTENT_TYPES",
+		"issueKey": "LPD-66321",
+		"to": "\"content-types\""
+	},
+	{
+		"from": "PropsFiles.PORTAL",
+		"issueKey": "LPD-66321",
+		"to": "\"portal\""
+	},
+	{
 		"classNames": [
 			"CommercePriceEntryLocalService",
 			"CommercePriceEntryLocalServiceUtil",

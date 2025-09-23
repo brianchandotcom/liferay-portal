@@ -362,6 +362,7 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 		_checkObjectEntryStatus(serviceBuilderObjectEntry);
@@ -385,6 +386,7 @@ public class DefaultObjectEntryManagerImpl
 				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId());
 
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 		_checkObjectEntryStatus(serviceBuilderObjectEntry);
@@ -1028,6 +1030,7 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			objectEntryLocalService.getObjectEntry(objectEntryId);
 
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
@@ -1676,6 +1679,19 @@ public class DefaultObjectEntryManagerImpl
 				scopeKey));
 	}
 
+	private void _checkHeadObjectEntry(
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
+		throws Exception {
+
+		if (serviceBuilderObjectEntry.getObjectEntryId() ==
+				serviceBuilderObjectEntry.getHeadObjectEntryId()) {
+
+			return;
+		}
+
+		throw new NoSuchObjectEntryException();
+	}
+
 	private void _checkObjectEntryObjectDefinitionId(
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
@@ -1824,6 +1840,7 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 		_checkRootDescendantNode(serviceBuilderObjectEntry, false);
@@ -1856,6 +1873,7 @@ public class DefaultObjectEntryManagerImpl
 			long parentObjectEntryId)
 		throws Exception {
 
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
@@ -1979,6 +1997,7 @@ public class DefaultObjectEntryManagerImpl
 			int version)
 		throws Exception {
 
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 		_checkObjectEntryStatus(serviceBuilderObjectEntry);
@@ -2154,6 +2173,7 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
@@ -2167,6 +2187,7 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
+		_checkHeadObjectEntry(serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 		_checkRootDescendantNode(serviceBuilderObjectEntry, false);

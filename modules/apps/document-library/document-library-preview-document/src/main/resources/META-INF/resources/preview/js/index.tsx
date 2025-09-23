@@ -12,6 +12,8 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import '@liferay/document-library-preview-css';
 
+import '../css/main.scss';
+
 const KEY_CODE_ENTER = 13;
 
 const KEY_CODE_ESC = 27;

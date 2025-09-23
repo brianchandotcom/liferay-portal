@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
@@ -25,6 +26,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplat
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -199,6 +201,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPatchSiteSitePageWithPageSpecifications();
 		_testPatchSiteSitePageWithPriority();
 		_testPatchSiteSitePageWithWidgetPageSettings();
+		_testPatchSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -1352,6 +1355,61 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						new WidgetPageSettings() {
 							{
 								setType(Type.WIDGET_PAGE_SETTINGS);
+							}
+						});
+					setType(SitePage.Type.WIDGET_PAGE);
+				}
+			});
+	}
+
+	private void _testPatchSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate()
+		throws Exception {
+
+		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)randomSitePage.getPageSettings();
+
+		widgetPageSettings.setInheritChanges(true);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.
+				getWidgetPageLayoutPageTemplateEntry(
+					ServiceContextTestUtil.getServiceContext(
+						testGroup.getGroupId()));
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference() {
+				{
+					setExternalReferenceCode(
+						layoutPageTemplateEntry.getExternalReferenceCode());
+				}
+			};
+
+		widgetPageSettings.setWidgetPageTemplateReference(
+			itemExternalReference);
+
+		SitePage sitePage = _testPutSiteSitePage(
+			randomSitePage, randomSitePage);
+
+		widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
+
+		widgetPageSettings.setInheritChanges(false);
+		widgetPageSettings.setLayoutTemplateId("2_columns_ii");
+
+		_testPatchSiteSitePage(
+			sitePage,
+			new SitePage() {
+				{
+					setExternalReferenceCode(
+						sitePage.getExternalReferenceCode());
+					setPageSettings(
+						new WidgetPageSettings() {
+							{
+								setInheritChanges(false);
+								setType(Type.WIDGET_PAGE_SETTINGS);
+								setWidgetPageTemplateReference(
+									itemExternalReference);
 							}
 						});
 					setType(SitePage.Type.WIDGET_PAGE);

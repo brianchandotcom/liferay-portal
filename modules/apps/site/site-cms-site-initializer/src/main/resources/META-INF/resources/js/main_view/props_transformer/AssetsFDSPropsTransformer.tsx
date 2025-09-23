@@ -146,6 +146,7 @@ export default function AssetsFDSPropsTransformer({
 			else if (
 				action?.data?.id === 'export-for-translation' ||
 				action?.data?.id === 'import-translation' ||
+				action?.data?.id === 'translate' ||
 				action?.data?.id === 'view-content'
 			) {
 				return {

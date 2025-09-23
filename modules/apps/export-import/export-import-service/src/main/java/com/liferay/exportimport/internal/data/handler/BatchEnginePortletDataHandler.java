@@ -271,6 +271,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
 				BatchEngineTaskOperation.CREATE.name(),
 				BatchEnginePortletDataHandlerUtil.buildImportParameters(
+					_exportImportVulcanBatchEngineTaskItemDelegate.
+						getExportImportDescriptor(),
 					portletDataContext),
 				_taskItemDelegateName);
 
@@ -358,19 +360,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private BatchEngineExportTaskExecutor.Result _executeExportTask(
 		int maxItems, PortletDataContext portletDataContext) {
 
-		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-			exportImportDescriptor =
-				_exportImportVulcanBatchEngineTaskItemDelegate.
-					getExportImportDescriptor();
-
 		return _batchEngineExportTaskExecutor.execute(
 			_batchEngineExportTaskLocalService.createBatchEngineExportTask(
 				0L, null, portletDataContext.getCompanyId(), _getUserId(), null,
 				_className, "JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyList(),
 				BatchEnginePortletDataHandlerUtil.buildExportParameters(
-					exportImportDescriptor.getNestedFields(),
-					exportImportDescriptor.getParameters(), portletDataContext),
+					_exportImportVulcanBatchEngineTaskItemDelegate.
+						getExportImportDescriptor(),
+					portletDataContext),
 				_taskItemDelegateName),
 			new BatchEngineExportTaskExecutor.Settings() {
 

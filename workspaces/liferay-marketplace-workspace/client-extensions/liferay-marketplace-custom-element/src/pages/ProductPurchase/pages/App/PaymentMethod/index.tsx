@@ -38,9 +38,9 @@ const PaymentMethodFlows = {
 export default function PaymentMethod() {
 	const navigate = useNavigate();
 
-	const {account, payment} = useSelector(
+	const payment = useSelector(
 		productPurchaseStore,
-		(state) => state.context
+		(state) => state.context.payment
 	);
 
 	const isPrimaryButtonActive = useMemo(() => {
@@ -108,9 +108,9 @@ export default function PaymentMethod() {
 			{billingAddress: payment.billingAddress}
 		);
 
-		if (!selectedAccount.taxId) {
+		if (payment.taxId && !selectedAccount.taxId) {
 			await HeadlessAdminUser.updateAccount(selectedAccount.id, {
-				taxId: account.taxId,
+				taxId: payment.taxId,
 			});
 		}
 

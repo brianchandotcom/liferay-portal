@@ -39,14 +39,16 @@ const PaymentTypeSelector = () => {
 						<img
 							alt="paypal"
 							className="mr-3"
+							draggable={false}
 							height={18}
 							src={paypal}
 							width={16}
 						/>
 					</div>
+
 					<div>
 						<div className="align-items-center d-flex">
-							<p className="mb-0 mr-3">PayPal with card</p>
+							<p className="mb-0 mr-3">Pay with Card</p>
 							<Tooltip
 								tooltip={i18n.translate(
 									'you-ll-be-redirected-to-paypal-to-complete-your-purchase-securely-after-your-payment-you-are-able-to-activate-the-license-on-customer-dashboard-right-away'
@@ -55,7 +57,7 @@ const PaymentTypeSelector = () => {
 							/>
 						</div>
 						<p className="font-weight-normal mb-0 text-black-50">
-							Online payments with PayPal
+							Online payments with <b>PayPal</b>
 						</p>
 					</div>
 				</div>
@@ -93,7 +95,7 @@ const PaymentTypeSelector = () => {
 					</div>
 					<div>
 						<div className="align-items-center d-flex">
-							<p className="mb-0 mr-3">PayPal with invoice</p>
+							<p className="mb-0 mr-3">Pay with Invoice</p>
 
 							<Tooltip
 								tooltip={i18n.translate(

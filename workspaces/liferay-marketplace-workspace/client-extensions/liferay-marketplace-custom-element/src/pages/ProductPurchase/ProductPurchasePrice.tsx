@@ -3,20 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useSelector} from '@xstate/store/react';
 import classNames from 'classnames';
+import {useMemo} from 'react';
 
 import ProductPurchase from '../../components/ProductPurchase';
-import {SkuOptions} from '../../enums/Product';
+import {MarketplaceDeliveryProduct} from '../../entity/MarketplaceDeliveryProduct';
+import {ProductPriceModel} from '../../enums/Product';
 import useProductPurchaseCart from '../../hooks/useProductPurchaseCart';
 import i18n from '../../i18n';
-import {Liferay} from '../../liferay/liferay';
-import {formatCurrency} from '../../utils/currencies';
-import {
-	getLicenseTagText,
-	getProductPrice,
-	getProductPriceModel,
-	getSkuByOptionValueKey,
-} from '../../utils/productUtils';
+import {cartStore} from './store';
 
 type ProductPurchasePriceProps = {
 	product: DeliveryProduct;
@@ -25,42 +21,35 @@ type ProductPurchasePriceProps = {
 
 const ProductPurchasePrice: React.FC<ProductPurchasePriceProps> = ({
 	product,
-	productPurchaseCart,
 }) => {
-	const currencyCode = Liferay.CommerceContext.currency.currencyCode;
+	const cart = useSelector(cartStore, ({context}) => context.cart);
 
-	const getFormattedPrice = (): string => {
-		const trialSku = getSkuByOptionValueKey(product, SkuOptions.TRIAL);
-		const standardSku = getSkuByOptionValueKey(
-			product,
-			SkuOptions.STANDARD
-		);
+	const marketplaceDeliveryProduct = useMemo(() => {
+		return new MarketplaceDeliveryProduct(product);
+	}, [product]);
 
-		const trialSkuId = trialSku?.id;
+	const getFormattedPrice = () => {
+		const productPrice =
+			cart?.summary?.totalFormatted ||
+			marketplaceDeliveryProduct.getPrice();
 
-		const hasNoTrialLicense = productPurchaseCart?.cartItems?.some(
-			(item: CartItem) => item?.skuId !== trialSkuId
-		);
+		const vatText =
+			marketplaceDeliveryProduct.getPriceModel() ===
+			ProductPriceModel.PAID
+				? `(${i18n.translate('excluding-vat')})`
+				: '';
 
-		if (hasNoTrialLicense && standardSku?.price?.priceFormatted) {
-			return `${standardSku.price.priceFormatted} (${i18n.translate('excluding-vat')})`;
-		}
-
-		const {isFreeApp} = getProductPriceModel(product);
-
-		if (isFreeApp) {
-			return 'Free';
-		}
-
-		return `${getProductPrice(product)} (${i18n.translate('excluding-vat')})`;
+		return `${productPrice} ${vatText}`;
 	};
 
 	return (
 		<ProductPurchase.Price
-			className={classNames('mr-1 py-2 text-nowrap')}
-			price={getFormattedPrice() || formatCurrency(0, currencyCode)}
+			className={classNames('mr-1 pr--2 py-2 text-nowrap')}
+			price={getFormattedPrice()}
 		>
-			<div className="license-tag px-2">{getLicenseTagText(product)}</div>
+			<div className="license-tag px-2">
+				{marketplaceDeliveryProduct.getLicenseTagText()}
+			</div>
 		</ProductPurchase.Price>
 	);
 };
